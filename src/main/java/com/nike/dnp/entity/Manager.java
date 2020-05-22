@@ -1,7 +1,10 @@
 package com.nike.dnp.entity;
 
 import com.nike.dnp.util.DateUtil;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -18,14 +21,13 @@ public class Manager {
 
     private String managerId;
     private String password;
-    private long authSeq;
+
+    //private long authSeq;
+    @OneToOne
+    @JoinColumn(name = "authSeq")
+    private ManagerAuth managerAuth;
+
     private String useIp;
     private String loginDt = DateUtil.getToday("yyyy.MM.dd HH:mm:ss");
-
-    @Builder
-    public Manager(String managerId, String password) {
-        this.managerId = managerId;
-        this.password = password;
-    }
 
 }

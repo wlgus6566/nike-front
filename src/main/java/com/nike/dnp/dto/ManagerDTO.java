@@ -1,5 +1,7 @@
 package com.nike.dnp.dto;
 
+import com.nike.dnp.entity.Manager;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,9 +17,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ManagerDTO {
+public class ManagerDTO extends Manager {
 
     private String managerId;
     private String password;
 
+    @Builder
+    public ManagerDTO(String managerId, String password) {
+        this.managerId = managerId;
+        this.password = password;
+    }
 }
