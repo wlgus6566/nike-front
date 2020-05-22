@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.navercorp.com/lucy-xss-servlet">
+   <defenders>
+       <!-- XssPreventer 등록 -->
+       <defender>
+           <name>xssPreventerDefender</name>
+           <class>com.navercorp.lucy.security.xss.servletfilter.defender.XssPreventerDefender</class>
+       </defender>
+   </defenders>
+
+    <!-- default defender 선언, 별다른 defender 선언이 없으면 default defender를 사용해 필터링 한다. -->
+    <default>
+        <defender>xssPreventerDefender</defender>
+    </default>
+    
+     <global>
+
+        <!-- 모든 url에서 들어오는 globalParameter 파라메터는 필터링 되지 않으며 
+                또한 globalPrefixParameter로 시작하는 파라메터도 필터링 되지 않는다. -->
+        <!-- <params>
+            <param name="enter_add_cont" useDefender="false" />
+            <param name="exchg_alert_text" useDefender="false" />
+            <param name="present_detail_text" useDefender="false" />
+            <param name="delivery_header_text" useDefender="false" />
+            <param name="delivery_check_header_text" useDefender="false" />
+            <param name="enter_disp_nm" useDefender="false" />
+            <param name="txt_exchange" useDefender="false" />
+            <param name="enter_present_disp_nm" useDefender="false" />
+            <param name="cont" useDefender="false" />
+            <param name="otr_content" useDefender="false" />
+            <param name="header_content" useDefender="false" />
+            <param name="body_content" useDefender="false" />
+            <param name="footer_content" useDefender="false" />
+            <param name="not_more_text" useDefender="false" />
+            <param name="enter_page_disp_nm" useDefender="false" />
+            <param name="giftbox_title" useDefender="false" />
+            <param name="giftbox_header_content" useDefender="false" />
+            <param name="giftbox_body_content" useDefender="false" />
+            <param name="giftbox_footer_content" useDefender="false" />
+            <param name="cancel_alert_content" useDefender="false" />
+            <param name="cancel_complete_content" useDefender="false" />
+            <param name="enter_win_disp_nm" useDefender="false" />
+            <param name="enter_page_disp_nm" useDefender="false" />
+            <param name="enter_alert_disp_nm" useDefender="false" />
+        </params> -->
+    </global>
+    
+</config>
