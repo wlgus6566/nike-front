@@ -22,6 +22,7 @@
 	<logger name="org.springframework" level="INFO" />
 	<logger name="com.nike.dnp" level="INFO" />
 	<logger name="jdbc.sqlonly" level="INFO" />
+	<logger name="jdbc.resultsettable" level="INFO" />
 
 	<root level="ERROR">
 		<appender-ref ref="ROLLING" />

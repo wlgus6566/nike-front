@@ -1,8 +1,6 @@
 package com.nike.dnp.config;
 
-import com.nike.dnp.service.MemberServiceImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,12 +25,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private MemberServiceImpl memberService;
-
 	private static final String[] PUBLIC = new String[] {
 		"/error", "/login", "/logout", "/api/**", "/h2-console", "/h2-console/**"
-		,"/memberTest/**", "/memberTest"
+		,"/manager/**", "/manager", "/test"
 	};
 
 	@Bean

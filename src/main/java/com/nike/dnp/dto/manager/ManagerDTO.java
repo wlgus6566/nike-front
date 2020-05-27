@@ -1,7 +1,6 @@
-package com.nike.dnp.dto;
+package com.nike.dnp.dto.manager;
 
-import com.nike.dnp.entity.Manager;
-import lombok.Builder;
+import com.nike.dnp.entity.manager.Manager;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,10 +20,8 @@ public class ManagerDTO extends Manager {
 
     private String managerId;
     private String password;
+    private String managerName;
+    private Long authSeq;
 
-    @Builder
-    public ManagerDTO(String managerId, String password) {
-        this.managerId = managerId;
-        this.password = password;
-    }
+
 }
