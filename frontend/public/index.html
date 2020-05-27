@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=1440, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" name="viewport">
+	<meta content="ie=edge" http-equiv="X-UA-Compatible">
+	<link href="<%= BASE_URL %>favicon.ico" rel="icon">
+	<title><%= htmlWebpackPlugin.options.title %></title>
+	<title>NIKE</title>
+	<style>
+		#wrap {display:flex; flex-wrap:wrap;}
+		header {position:relative; flex:0 0 200px; padding:0 0 130px; background:red;}
+		header.depth {background:}
+		#container {flex:1 1 auto; min-height:calc(100vh - 144px); padding:80px 60px 130px; background:blue;}
+		aside {flex:0 0 300px; padding:80px 30px 130px; background:#F7F7F7;}
+		footer {flex:0 0 100%; height:144px; background:#000;}
+	</style>
+</head>
+<body>
+<noscript>
+	<strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+</noscript>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+</body>
+</html>
+
