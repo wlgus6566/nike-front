@@ -1,6 +1,6 @@
-package com.nike.dnp.dto.manager;
+package com.nike.dnp.dto.manage;
 
-import com.nike.dnp.entity.manager.ManagerMenu;
+import com.nike.dnp.entity.manage.ManagerMenu;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +16,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ManagerAuthDTO extends ManagerMenu {
+public class ManagerMenuDTO extends ManagerMenu {
 
 }

@@ -1,8 +1,8 @@
-package com.nike.dnp.service.manager;
+package com.nike.dnp.service.manage;
 
-import com.nike.dnp.dto.manager.ManagerMenuDTO;
-import com.nike.dnp.entity.manager.ManagerMenu;
-import com.nike.dnp.repository.manager.ManagerMenuRepository;
+import com.nike.dnp.dto.manage.ManagerMenuDTO;
+import com.nike.dnp.entity.manage.ManagerMenu;
+import com.nike.dnp.repository.manage.ManagerMenuRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,18 +38,18 @@ public class ManagerMenuService {
     }
 
     /**
-     * 전체목록
+     * 전체조회
      *
      * @return the list
      */
     public List<ManagerMenu> findAll() {
         List<ManagerMenu> managerMenus = new ArrayList<>();
-        managerMenuRepository.findAll().forEach(e -> managerMenus.add(e));
+        managerMenus.addAll(managerMenuRepository.findAll());
         return managerMenus;
     }
 
     /**
-     * 상세
+     * 상세조회
      *
      * @param menuSeq the menu seq
      * @return the optional
@@ -64,7 +64,7 @@ public class ManagerMenuService {
      *
      * @param menuSeq the menu seq
      */
-    public void deleteById(Long menuSeq) {
+    public void delete(Long menuSeq) {
         managerMenuRepository.deleteById(menuSeq);
     }
 

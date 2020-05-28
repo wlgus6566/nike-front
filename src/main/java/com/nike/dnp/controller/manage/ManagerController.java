@@ -1,8 +1,8 @@
-package com.nike.dnp.controller.manager;
+package com.nike.dnp.controller.manage;
 
-import com.nike.dnp.dto.manager.ManagerDTO;
-import com.nike.dnp.entity.manager.Manager;
-import com.nike.dnp.service.manager.ManagerService;
+import com.nike.dnp.dto.manage.ManagerDTO;
+import com.nike.dnp.entity.manage.Manager;
+import com.nike.dnp.service.manage.ManagerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/manager")
+@RequestMapping("/manage/manager")
 public class ManagerController {
 
     /**
@@ -104,7 +104,7 @@ public class ManagerController {
      * @return the response entity
      */
     @PostMapping
-    public ResponseEntity<Manager> save(ManagerDTO managerDTO) {
+    public ResponseEntity<Manager> insertManager(ManagerDTO managerDTO) {
         return new ResponseEntity(managerService.save(managerDTO), HttpStatus.OK);
     }
 

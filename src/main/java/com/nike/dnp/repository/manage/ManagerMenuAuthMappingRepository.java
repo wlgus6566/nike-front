@@ -1,8 +1,10 @@
-package com.nike.dnp.repository.manager;
+package com.nike.dnp.repository.manage;
 
-import com.nike.dnp.entity.manager.ManagerMenu;
+import com.nike.dnp.entity.manage.ManagerMenuAuthMapping;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * ManagerMenuAuthMappingRepository
@@ -15,5 +17,8 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface ManagerMenuAuthMappingRepository extends JpaRepository<ManagerMenu, Long> {
+public interface ManagerMenuAuthMappingRepository extends JpaRepository<ManagerMenuAuthMapping, Long> {
+
+    List<ManagerMenuAuthMapping> findByManagerMenu(Long authSeq);
+
 }

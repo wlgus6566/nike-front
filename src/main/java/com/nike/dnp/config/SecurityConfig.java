@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final String[] PUBLIC = new String[] {
 		"/error", "/login", "/logout", "/api/**", "/h2-console", "/h2-console/**"
-		,"/manager/**", "/manager", "/test"
+		,"/manage/**"
 	};
 
 	@Bean

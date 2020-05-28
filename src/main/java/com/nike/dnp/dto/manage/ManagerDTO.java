@@ -1,6 +1,6 @@
-package com.nike.dnp.dto.manager;
+package com.nike.dnp.dto.manage;
 
-import com.nike.dnp.entity.manager.Manager;
+import com.nike.dnp.entity.manage.Manager;
 import lombok.Getter;
 import lombok.Setter;
 

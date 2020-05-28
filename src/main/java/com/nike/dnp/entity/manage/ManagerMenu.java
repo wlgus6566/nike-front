@@ -1,4 +1,4 @@
-package com.nike.dnp.entity.manager;
+package com.nike.dnp.entity.manage;
 
 import com.nike.dnp.entity.BaseTimeEntity;
 import lombok.*;

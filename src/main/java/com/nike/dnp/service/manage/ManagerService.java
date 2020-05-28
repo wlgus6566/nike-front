@@ -1,10 +1,10 @@
-package com.nike.dnp.service.manager;
+package com.nike.dnp.service.manage;
 
-import com.nike.dnp.dto.manager.ManagerDTO;
-import com.nike.dnp.entity.manager.Manager;
-import com.nike.dnp.entity.manager.ManagerAuth;
-import com.nike.dnp.repository.manager.ManagerAuthRepository;
-import com.nike.dnp.repository.manager.ManagerRepository;
+import com.nike.dnp.dto.manage.ManagerDTO;
+import com.nike.dnp.entity.manage.Manager;
+import com.nike.dnp.entity.manage.ManagerAuth;
+import com.nike.dnp.repository.manage.ManagerAuthRepository;
+import com.nike.dnp.repository.manage.ManagerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,7 +49,8 @@ public class ManagerService {
      */
     public List<Manager> findAll() {
         List<Manager> managers = new ArrayList<>();
-        managerRepository.findAll().forEach(e -> managers.add(e));
+        //managerRepository.findAll().forEach(e -> managers.add(e));
+        managers.addAll(managerRepository.findAll());
         return managers;
     }
 
@@ -70,7 +71,7 @@ public class ManagerService {
      * @param managerSeq the manager seq
      */
     public void delete(Long managerSeq) {
-        //managerRepository.deleteById(managerSeq);
+        managerRepository.deleteById(managerSeq);
     }
 
     /**
