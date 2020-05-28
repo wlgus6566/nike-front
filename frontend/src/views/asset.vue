@@ -1,9 +1,11 @@
 <template>
-	asset
+	<div>
+		asset
+	</div>
 </template>
 <script>
 	export default {
-		name: "asset.vue"
+		name: "asset"
 	}
 </script>
 <style scoped></style>
