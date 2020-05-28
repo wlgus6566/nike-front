@@ -1,19 +1,19 @@
 package com.nike.dnp.repository.manager;
 
-import com.nike.dnp.entity.manager.ManagerAuth;
+import com.nike.dnp.entity.manager.ManagerMenu;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * ManagerAuthRepository
+ * ManagerMenuRepository
  *
  * @since 2020.05.22
  * @author [오지훈]
- * @Description 관리권한 Repository 작성
+ * @Description 관리메뉴 Repository 작성
  * @history [오지훈] [2020.05.22] [최초 작성]
  *
  */
 
 @Repository
-public interface ManagerAuthRepository extends JpaRepository<ManagerAuth, Long> {
+public interface ManagerMenuRepository extends JpaRepository<ManagerMenu, Long> {
 }

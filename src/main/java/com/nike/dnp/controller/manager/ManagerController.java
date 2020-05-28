@@ -80,7 +80,7 @@ public class ManagerController {
      */
     @DeleteMapping(value = "/{managerSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> deleteManager(@PathVariable("managerSeq") Long managerSeq) {
-        managerService.deleteById(managerSeq);
+        managerService.delete(managerSeq);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
@@ -93,7 +93,7 @@ public class ManagerController {
      */
     @PutMapping(value = "/{managerSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Manager> updateManager(@PathVariable("managerSeq") Long managerSeq, ManagerDTO managerDTO) {
-        managerService.updateById(managerSeq, managerDTO);
+        managerService.update(managerSeq, managerDTO);
         return new ResponseEntity(managerSeq, HttpStatus.OK);
     }
 

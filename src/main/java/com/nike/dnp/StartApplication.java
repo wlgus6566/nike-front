@@ -6,11 +6,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 
 @EnableCaching
-@EnableScheduling
+//@EnableScheduling
+@EnableJpaAuditing
 @SpringBootApplication
 @Slf4j
 public class StartApplication extends SpringBootServletInitializer {

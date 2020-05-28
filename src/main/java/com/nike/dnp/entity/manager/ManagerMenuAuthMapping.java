@@ -6,11 +6,11 @@ import lombok.*;
 import javax.persistence.*;
 
 /**
- * ManagerAuth Entity
+ * ManagerMenuAuthMapping Entity
  *
  * @since 2020.05.22
  * @author [오지훈]
- * @Description ManagerAuth Entity 작성
+ * @Description ManagerMenuAuthMapping Entity 작성
  * @history [오지훈] [2020.05.22] [최초 작성]
  *
  */
@@ -20,19 +20,21 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
-@Table(name = "TB_MANAGER_AUTH")
-public class ManagerAuth extends BaseTimeEntity {
+@Table(name = "TB_MANAGER_MENU_AUTH_MAPPING")
+public class ManagerMenuAuthMapping extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "AUTH_SEQ")
-    private Long authSeq;
+    @Column(name = "MAPPING_SEQ")
+    private Long mappingSeq;
 
-    @Column(name = "AUTH_NAME")
-    private String authName;
+    @OneToOne
+    @JoinColumn(name = "MENU_SEQ")
+    private ManagerMenu managerMenu;
 
-    @Column(name = "ROLE_TYPE")
-    private String roleType;
+    @OneToOne
+    @JoinColumn(name = "AUTH_SEQ")
+    private ManagerAuth managerAuth;
 
     @Column(name = "USE_YN")
     private String useYn;

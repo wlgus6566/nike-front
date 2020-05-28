@@ -18,10 +18,6 @@ import lombok.Setter;
 @Setter
 public class ManagerDTO extends Manager {
 
-    private String managerId;
-    private String password;
-    private String managerName;
     private Long authSeq;
-
 
 }

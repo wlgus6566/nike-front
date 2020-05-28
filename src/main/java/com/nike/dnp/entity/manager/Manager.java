@@ -6,9 +6,19 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Manager Entity
+ *
+ * @since 2020.05.22
+ * @author [오지훈]
+ * @Description Manager Entity 작성
+ * @history [오지훈] [2020.05.22] [최초 작성]
+ *
+ */
+
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_MANAGER")
@@ -45,23 +55,31 @@ public class Manager extends BaseTimeEntity {
     private ManagerAuth managerAuth;
 
     @Builder
-    public Manager(String managerId
+    public Manager(
+            String managerId
             , String password
             , String managerName
             , ManagerAuth managerAuth
+            , Long registerSeq
     ) {
         this.managerId = managerId;
         this.password = password;
         this.managerName = managerName;
         this.managerAuth = managerAuth;
+        this.registerSeq = registerSeq;
+        this.updaterSeq = registerSeq;
     }
 
-    public void managerNameUpdate(String managerName
-            ,String password
-            ,ManagerAuth managerAuth) {
+    public void update(
+            String managerName
+            , String password
+            , ManagerAuth managerAuth
+            , Long updaterSeq
+    ) {
         this.managerName = managerName;
         this.password = password;
         this.managerAuth = managerAuth;
+        this.updaterSeq = updaterSeq;
     }
 
     public void loginDtUpdate() {
