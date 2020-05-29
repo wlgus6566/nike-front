@@ -1,11 +1,11 @@
 {
-  "name": "nike_test",
+  "name": "nike-front",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "../../nike_test/node_modules/.bin/vue-cli-service serve --port 80",
-    "build": "../../nike_test/node_modules/.bin/vue-cli-service build",
-    "lint": "../../nike_test/node_modules/.bin/vue-cli-service lint"
+    "serve": "../../nike-front/node_modules/.bin/vue-cli-service serve --port 80",
+    "build": "../../nike-front/node_modules/.bin/vue-cli-service build",
+    "lint": "../../nike-front/node_modules/.bin/vue-cli-service lint"
   },
   "dependencies": {
     "core-js": "^3.6.4",

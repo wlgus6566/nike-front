@@ -1,4 +1,4 @@
-# nike_test
+# nike-front
 
 ## Project setup
 ```
