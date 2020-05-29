@@ -4,6 +4,7 @@ import com.nike.dnp.entity.manage.Manager;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,6 +19,8 @@ import java.util.Optional;
 
 @Repository
 public interface ManagerRepository extends JpaRepository<Manager, Long> {
+
+    List<Manager> findAllByManagerIdLikeOrManagerNameLike(String managerId, String managerName);
 
     Optional<Manager> findByManagerSeq(Long managerSeq);
 

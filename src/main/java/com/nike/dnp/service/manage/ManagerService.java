@@ -1,6 +1,7 @@
 package com.nike.dnp.service.manage;
 
 import com.nike.dnp.dto.manage.ManagerDTO;
+import com.nike.dnp.dto.manage.ManagerSearchDTO;
 import com.nike.dnp.entity.manage.Manager;
 import com.nike.dnp.entity.manage.ManagerAuth;
 import com.nike.dnp.repository.manage.ManagerAuthRepository;
@@ -51,6 +52,13 @@ public class ManagerService {
         List<Manager> managers = new ArrayList<>();
         //managerRepository.findAll().forEach(e -> managers.add(e));
         managers.addAll(managerRepository.findAll());
+        return managers;
+    }
+
+    public List<Manager> findByConf(ManagerSearchDTO managerSearchDTO) {
+        List<Manager> managers = new ArrayList<>();
+        managers.addAll(managerRepository.findAllByManagerIdLikeOrManagerNameLike(
+                managerSearchDTO.getSearchManagerId(), managerSearchDTO.getSearchManagerName()));
         return managers;
     }
 

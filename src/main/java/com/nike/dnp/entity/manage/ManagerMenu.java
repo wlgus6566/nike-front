@@ -67,6 +67,9 @@ public class ManagerMenu extends BaseTimeEntity {
     @Column(name = "MENU_ORDER")
     private Long menuOrder;
 
+    @Column(name = "LOW_MENU_YN")
+    private String lowMenuYn;
+
     @Column(name = "USE_YN")
     private String useYn;
 

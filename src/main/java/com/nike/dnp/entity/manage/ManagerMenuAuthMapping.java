@@ -45,4 +45,15 @@ public class ManagerMenuAuthMapping extends BaseTimeEntity {
     @Column(name = "UPDATER_SEQ")
     private Long updaterSeq;
 
+    @Builder
+    public ManagerMenuAuthMapping(
+            ManagerMenu managerMenu
+            , ManagerAuth managerAuth
+            , String useYn
+            , Long registerSeq
+    ) {
+        this.managerMenu = managerMenu;
+        this.managerAuth = managerAuth;
+    }
+
 }

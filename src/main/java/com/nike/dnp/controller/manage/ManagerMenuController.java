@@ -106,7 +106,9 @@ public class ManagerMenuController {
      */
     @PostMapping
     public ResponseEntity<Manager> insertManagerMenu(ManagerMenuDTO managerMenuDTO) {
-        return new ResponseEntity(managerMenuService.save(managerMenuDTO), HttpStatus.OK);
+        Long menuSeq = managerMenuService.save(managerMenuDTO);
+
+        return new ResponseEntity(menuSeq, HttpStatus.OK);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.nike.dnp.controller.manage;
 
 import com.nike.dnp.dto.manage.ManagerDTO;
+import com.nike.dnp.dto.manage.ManagerSearchDTO;
 import com.nike.dnp.entity.manage.Manager;
 import com.nike.dnp.service.manage.ManagerService;
 import lombok.extern.slf4j.Slf4j;
@@ -46,9 +47,14 @@ public class ManagerController {
      *
      * @return all managers
      */
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<Manager>> getAllManagers() {
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "관리자 목록 조회")
+    public ResponseEntity<List<Manager>> getAllManagers(ManagerSearchDTO managerSearchDTO) {
         try {
+            if (!managerSearchDTO.getSearchManagerId().isEmpty()) {
+                List<Manager> managers = managerService.findByConf(managerSearchDTO);
+                return new ResponseEntity<>(managers, HttpStatus.OK);
+            }
+
             List<Manager> managers = managerService.findAll();
             return new ResponseEntity<>(managers, HttpStatus.OK);
         } catch (Exception e) {
