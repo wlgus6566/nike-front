@@ -16,8 +16,8 @@ const router =  new VueRouter({
 	]
 });
 
-router.afterEach((to, from) => {
+/*router.afterEach((to, from) => {
 
-});
+});*/
 
 export default router
