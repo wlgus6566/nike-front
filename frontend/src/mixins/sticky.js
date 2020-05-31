@@ -10,7 +10,7 @@ export default {
 	totalHeight: 0,
 	hidePosition: 0,
 	init : (tt, options) => {
-		const _this = this;
+		//const _this = this;
 		//const optionsE = $.extend(false, _this.defaults, options);
 		console.log(tt.$el)
 		window.addEventListener('scroll', function(){
