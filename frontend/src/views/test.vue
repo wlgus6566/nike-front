@@ -12,6 +12,7 @@
 </template>
 <script>
 	export default {
+		name : 'test',
 		data() {
 			return {
 				view: 'v-a'

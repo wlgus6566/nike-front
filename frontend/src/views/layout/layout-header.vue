@@ -3,20 +3,20 @@
 		<div class="inner">
 			<h1>
 				<router-link to="/" exact>
-					<img src="@/assets/images/logo-nike.svg" alt="">
+					<img src="@/assets/images/logo-nike.svg" v-on:click="navAni" alt="">
 				</router-link>
 			</h1>
-			<nav>
+			<nav v-bind:class="{ active: isActive }">
 				<ul>
-					<li>
-						<router-link to="/test" exact>TEST</router-link>
-					</li>
-					<li>
-						<router-link to="/main" exact>MAIN</router-link>
-					</li>
-					<li>
-						<router-link to="/asset" exact>ASSET</router-link>
-					</li>
+					<router-link to="/test" tag="li" exact>
+						<a v-on:click="navAni">TEST</a>
+					</router-link>
+					<router-link to="/" tag="li" exact>
+						<a v-on:click="navAni">MAIN</a>
+					</router-link>
+					<router-link to="/asset" tag="li" exact>
+						<a v-on:click="navAni">ASSET</a>
+					</router-link>
 					<li>
 						<router-link to="/toolkit" exact>TOOLKIT</router-link>
 					</li>
@@ -137,11 +137,27 @@
 	</header>
 </template>
 <script>
-	import sticky from '../../mixins/sticky'
+	import sticky from '@/mixins/sticky'
 
 	export default {
-		name : 'Aside',
-		mixins: [ sticky ]
+		name: 'layout-header',
+		data() {
+			return {
+				"isActive": false,
+			}
+		},
+		mixins: [sticky],
+		mounted() {
+			this.navAni();
+		},
+		methods: {
+			navAni: function () {
+				this.isActive = !this.isActive;
+			}
+		}
 	}
 </script>
-<style scoped></style>
+<style scoped>
+	nav.active{background:red;}
+	nav ul ul {display:none;}
+</style>

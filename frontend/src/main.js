@@ -5,6 +5,8 @@ import VueLodash from 'vue-lodash'
 import lodash from 'lodash'
 import velocity from 'velocity-animate'
 
+
+
 Vue.use(VueLodash, { name: 'custom' , lodash: lodash });
 Vue.use(velocity);
 

@@ -1,6 +1,7 @@
 module.exports = {
 	runtimeCompiler: true,
 	devServer: {
-		overlay: false
+		overlay: false,
+		port: 80
 	}
 }

@@ -40,32 +40,32 @@
 		},
 		methods : {
 			beforeEnter(){
-				console.log("beforeEnter")
+				//console.log("beforeEnter")
 			},
-			enter: function (el) {
-				console.log(el)
+			enter: function () {
+				//console.log(el)
 				// console.log("enter")
 				// Velocity(el, { opacity: 1, fontSize: '12.4em' }, { duration: 1000 });
 				// Velocity(el, { fontSize: '0.1em' }, { duration: 1000 }, { complete: done });
 				// Velocity(el, { fontSize: '1em' }, { complete: done })
 			},
 			afterEnter(){
-				console.log("afterEnter")
+				//console.log("afterEnter")
 			},
 			enterCancelled(){
-				console.log("enterCancelled")
+				//console.log("enterCancelled")
 			},
 			beforeLeave(){
-				console.log("beforeLeave")
+				//console.log("beforeLeave")
 			},
 			leave(){
-				console.log("leave")
+				//console.log("leave")
 			},
 			afterLeave(){
-				console.log("afterLeave")
+				//console.log("afterLeave")
 			},
 			leaveCancelled(){
-				console.log("leaveCancelled")
+				//console.log("leaveCancelled")
 			}
 		}
 	}

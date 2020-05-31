@@ -6,7 +6,7 @@
 	</aside>
 </template>
 <script>
-	import sticky from '../../mixins/sticky'
+	import sticky from '@/mixins/sticky'
 
 	export default {
 		name : 'Aside',
