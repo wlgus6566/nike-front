@@ -5,7 +5,7 @@
 </template>
 <script>
 	export default {
-		name: "mainP"
+
 	}
 </script>
 <style scoped></style>

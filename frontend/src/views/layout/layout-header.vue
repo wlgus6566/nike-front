@@ -2,10 +2,41 @@
 	<header>
 		<div class="inner">
 			<h1>
-				<router-link to="/" exact>가나다</router-link>
+				<router-link to="/" exact>
+					<img src="@/assets/images/logo-nike.svg" alt="">
+				</router-link>
 			</h1>
 			<nav>
 				<ul>
+					<li>
+						<router-link to="/test" exact>TEST</router-link>
+					</li>
+					<li>
+						<router-link to="/main" exact>MAIN</router-link>
+					</li>
+					<li>
+						<router-link to="/asset" exact>ASSET</router-link>
+					</li>
+					<li>
+						<router-link to="/toolkit" exact>TOOLKIT</router-link>
+					</li>
+					<li>
+						<router-link to="/foundation" exact>FOUNDATION</router-link>
+					</li>
+					<li>
+						<router-link to="/order" exact>ORDER</router-link>
+					</li>
+					<li>
+						<router-link to="/report" exact>REPORT</router-link>
+					</li>
+					<li>
+						<router-link to="/information" exact>INFORMATION</router-link>
+					</li>
+					<li>
+						<router-link to="/management" exact>MANAGEMENT</router-link>
+					</li>
+				</ul>
+				<!--<ul>
 					<li>
 						<router-link to="/test" exact>TEST</router-link>
 					</li>
@@ -100,7 +131,7 @@
 					<li>
 						<router-link to="/management" exact>MANAGEMENT</router-link>
 					</li>
-				</ul>
+				</ul>-->
 			</nav>
 		</div>
 	</header>

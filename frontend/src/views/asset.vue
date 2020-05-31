@@ -3,11 +3,11 @@
 		<button v-on:click="shuffle" type="button">Shuffle</button>
 		<button v-on:click="add" type="button">Add</button>
 		<button v-on:click="remove" type="button">Remove</button>
-		<transition-group name="list-complete" tag="ul">
+		<transition-group name="list-complete" class="list-complete" tag="ul">
 			<li
-				v-for="item in items"
-				v-bind:key="item"
-				class="list-complete-item"
+					v-for="item in items"
+					v-bind:key="item"
+					class="list-complete-item"
 			>
 				{{ item }}
 			</li>
@@ -18,7 +18,7 @@
 	export default {
 		data() {
 			return {
-				items: [1,2,3,4,5,6,7,8,9],
+				items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
 				nextNum: 10
 			}
 		},
@@ -33,24 +33,29 @@
 				this.items.splice(this.randomIndex(), 1)
 			},
 			shuffle: function () {
-				//this.items = [9,2,3,4,5,6,7,8,1]
-				//this.items = _.shuffle(this.items);
+				this.items = _.shuffle(this.items);
 			}
 		}
 	}
 </script>
 <style scoped>
-	.list-complete-item {
-		transition: all 1s;
-		display: inline-block;
-		margin-right: 10px;
+	.list-complete{
+		display:flex;
+		flex-wrap:wrap;
 	}
-	.list-complete-enter, .list-complete-leave-to
-		/* .list-complete-leave-active below version 2.1.8 */ {
-		opacity: 0;
-		transform: translateY(30px);
+	.list-complete-item{
+		flex:1 1 10%;
+		background:red;
+		transition:all 1s;
+		display:block;
+		margin:10px;
 	}
-	.list-complete-leave-active {
-		position: absolute;
+	.list-complete-enter,
+	.list-complete-leave-to{
+		opacity:0;
+		transform:translateY(30px);
+	}
+	.list-complete-leave-active{
+		position:absolute;
 	}
 </style>

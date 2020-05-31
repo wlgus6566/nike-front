@@ -11,6 +11,8 @@
     "core-js": "^3.6.4",
     "lodash": "^4.17.15",
     "swiper": "^5.4.1",
+    "velocity": "^0.7.2",
+    "velocity-animate": "^1.5.2",
     "vue": "^2.6.11",
     "vue-awesome-swiper": "^4.1.1",
     "vue-lodash": "^2.1.2",
