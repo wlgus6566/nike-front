@@ -2,10 +2,13 @@
 	<header>
 		<div class="inner">
 			<h1>
-				<router-link to="/" exact>MAIN</router-link>
+				<router-link to="/" exact>가나다</router-link>
 			</h1>
 			<nav>
 				<ul>
+					<li>
+						<router-link to="/test" exact>TEST</router-link>
+					</li>
 					<li>
 						<router-link to="/main" exact>MAIN</router-link>
 						<ul>

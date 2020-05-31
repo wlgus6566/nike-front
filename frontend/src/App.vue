@@ -15,8 +15,8 @@
 
 <script>
 	//import aSwiper from './components/swiper'
-	import layoutHeader from './views/layout/layout-header'
-	import layoutAside from './views/layout/layout-aside'
+	import layoutHeader from '@/views/layout/layout-header'
+	import layoutAside from '@/views/layout/layout-aside'
 
 	export default {
 		name: 'App',
