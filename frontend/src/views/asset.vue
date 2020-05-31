@@ -34,7 +34,7 @@
 			},
 			shuffle: function () {
 				//this.items = [9,2,3,4,5,6,7,8,1]
-				this.items = _.shuffle(this.items);
+				//this.items = _.shuffle(this.items);
 			}
 		}
 	}
