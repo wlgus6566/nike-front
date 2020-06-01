@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "../../nike-front/frontend/node_modules/.bin/vue-cli-service serve --port 80",
+    "serve": "../../nike-front/frontend/node_modules/.bin/vue-cli-service serve --port 8080",
     "build": "../../nike-front/frontend/node_modules/.bin/vue-cli-service build",
     "lint": "../../nike-front/frontend/node_modules/.bin/vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "lodash": "^4.17.15",
     "swiper": "^5.4.1",

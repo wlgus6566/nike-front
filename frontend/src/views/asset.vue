@@ -15,6 +15,8 @@
 	</div>
 </template>
 <script>
+	import api from '@/api/asset/assetApi';
+
 	export default {
 		data() {
 			return {
@@ -33,7 +35,14 @@
 				this.items.splice(this.randomIndex(), 1)
 			},
 			shuffle: function () {
-				this.items = _.shuffle(this.items);
+				let param = {'telNo': 'chejug@gmail.com','password':'pwd', 'name':'aa'};
+				api.list(param).then(response => {
+					console.log('=======param start=====');
+					console.log(response);
+					console.log('사용하는 데이터부분');
+					console.log(response.data);
+				});
+				// this.items = _.shuffle(this.items);
 			}
 		}
 	}
