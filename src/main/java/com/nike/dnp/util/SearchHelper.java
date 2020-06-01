@@ -20,7 +20,7 @@ public class SearchHelper {
 	/**
 	 * 검색 구분
 	 */
-	private String searchType = "";
+	private String keywordType = "";
 
 	/**
 	 * 검색어

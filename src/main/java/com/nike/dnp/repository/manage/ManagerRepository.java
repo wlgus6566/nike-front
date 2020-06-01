@@ -1,10 +1,11 @@
 package com.nike.dnp.repository.manage;
 
 import com.nike.dnp.entity.manage.Manager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -20,7 +21,7 @@ import java.util.Optional;
 @Repository
 public interface ManagerRepository extends JpaRepository<Manager, Long> {
 
-    List<Manager> findAllByManagerIdLikeOrManagerNameLike(String managerId, String managerName);
+    Page<Manager> findAllByManagerIdLikeOrManagerNameLike(Pageable pageable, String keyword1, String keyword2);
 
     Optional<Manager> findByManagerSeq(Long managerSeq);
 

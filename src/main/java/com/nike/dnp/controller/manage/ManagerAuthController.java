@@ -4,6 +4,7 @@ import com.nike.dnp.dto.manage.ManagerAuthDTO;
 import com.nike.dnp.entity.manage.Manager;
 import com.nike.dnp.entity.manage.ManagerAuth;
 import com.nike.dnp.service.manage.ManagerAuthService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,7 +26,8 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/manage/auth")
+@Api(description = "관리 정보", tags = "1_MANAGE")
+@RequestMapping(value = "/manage/auth", name = "권한")
 public class ManagerAuthController {
 
     /**

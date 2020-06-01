@@ -17,10 +17,6 @@ import lombok.Setter;
 @Setter
 public class ManagerSearchDTO {
 
-    private Long searchManagerSeq;
-
-    private String searchManagerName;
-
-    private String searchManagerId;
+    private String keyword = "";
 
 }

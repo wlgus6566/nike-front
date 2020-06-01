@@ -6,10 +6,11 @@ import com.nike.dnp.entity.manage.Manager;
 import com.nike.dnp.entity.manage.ManagerAuth;
 import com.nike.dnp.repository.manage.ManagerAuthRepository;
 import com.nike.dnp.repository.manage.ManagerRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,30 +37,36 @@ public class ManagerService {
      * @param managerRepository     the manager repository
      * @param managerAuthRepository the manager auth repository
      */
-    public ManagerService(ManagerRepository managerRepository
-                        , ManagerAuthRepository managerAuthRepository
+    public ManagerService(
+            ManagerRepository managerRepository
+            , ManagerAuthRepository managerAuthRepository
     ) {
         this.managerRepository = managerRepository;
         this.managerAuthRepository = managerAuthRepository;
     }
 
     /**
-     * 전체조회
+     * 전체조회(entire)
      *
      * @return the list
      */
     public List<Manager> findAll() {
-        List<Manager> managers = new ArrayList<>();
-        //managerRepository.findAll().forEach(e -> managers.add(e));
-        managers.addAll(managerRepository.findAll());
-        return managers;
+        return managerRepository.findAll();
     }
 
-    public List<Manager> findByConf(ManagerSearchDTO managerSearchDTO) {
-        List<Manager> managers = new ArrayList<>();
-        managers.addAll(managerRepository.findAllByManagerIdLikeOrManagerNameLike(
-                managerSearchDTO.getSearchManagerId(), managerSearchDTO.getSearchManagerName()));
-        return managers;
+    /**
+     * 전체조회(paging)
+     *
+     * @param pageable         the pageable
+     * @param managerSearchDTO the manager search dto
+     * @return the list
+     */
+    public Page<Manager> findAllPaging(Pageable pageable, ManagerSearchDTO managerSearchDTO) {
+        if (managerSearchDTO.getKeyword().isEmpty()) {
+            return managerRepository.findAll(pageable);
+        }
+        return managerRepository.findAllByManagerIdLikeOrManagerNameLike(
+                pageable, managerSearchDTO.getKeyword(), managerSearchDTO.getKeyword());
     }
 
     /**
