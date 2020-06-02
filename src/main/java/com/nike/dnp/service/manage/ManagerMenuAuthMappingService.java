@@ -1,6 +1,6 @@
 package com.nike.dnp.service.manage;
 
-import com.nike.dnp.dto.manage.menu.ManagerMenuAuthMappingDTO;
+import com.nike.dnp.dto.manage.menu.ManagerMenuAuthMappingSaveDTO;
 import com.nike.dnp.entity.manage.ManagerAuth;
 import com.nike.dnp.entity.manage.ManagerMenu;
 import com.nike.dnp.entity.manage.ManagerMenuAuthMapping;
@@ -59,19 +59,19 @@ public class ManagerMenuAuthMappingService {
     /**
      * 등록
      *
-     * @param managerMenuAuthMappingDTO the manager menu auth mapping dto
+     * @param managerMenuAuthMappingSaveDTO the manager menu auth mapping dto
      * @return the long
      */
     @Transactional
-    public Long save(ManagerMenuAuthMappingDTO managerMenuAuthMappingDTO) {
-        Optional<ManagerMenu> managerMenu = managerMenuRepository.findById(managerMenuAuthMappingDTO.getMenuSeq());
-        Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerMenuAuthMappingDTO.getAuthSeq());
+    public Long save(ManagerMenuAuthMappingSaveDTO managerMenuAuthMappingSaveDTO) {
+        Optional<ManagerMenu> managerMenu = managerMenuRepository.findById(managerMenuAuthMappingSaveDTO.getMenuSeq());
+        Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerMenuAuthMappingSaveDTO.getAuthSeq());
 
         return managerMenuAuthMappingRepository.save(ManagerMenuAuthMapping.builder()
                 .managerMenu(managerMenu.get())
                 .managerAuth(managerAuth.get())
-                .useYn(managerMenuAuthMappingDTO.getUseYn())
-                .registerSeq(managerMenuAuthMappingDTO.getRegisterSeq())
+                .useYn(managerMenuAuthMappingSaveDTO.getUseYn())
+                .registerSeq(managerMenuAuthMappingSaveDTO.getRegisterSeq())
                 .build()).getMappingSeq();
     }
 

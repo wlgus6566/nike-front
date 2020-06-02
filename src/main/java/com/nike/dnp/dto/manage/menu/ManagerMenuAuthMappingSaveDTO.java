@@ -15,7 +15,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ManagerMenuAuthMappingDTO {
+public class ManagerMenuAuthMappingSaveDTO {
 
     private Long menuSeq;
     private Long authSeq;
