@@ -49,8 +49,11 @@ public class ManagerMenu extends BaseTimeEntity {
     @Column(name = "DELETE_AUTH_YN")
     private String deleteAuthYn;
 
-    @Column(name = "READING_AUTH_YN")
-    private String readingAuthYn;
+    @Column(name = "LIST_AUTH_YN")
+    private String listAuthYn;
+
+    @Column(name = "DETAIL_AUTH_YN")
+    private String detailAuthYn;
 
     @Column(name = "DOWNLOAD_AUTH_YN")
     private String downloadAuthYn;
@@ -88,11 +91,13 @@ public class ManagerMenu extends BaseTimeEntity {
             , String creationAuthYn
             , String updateAuthYn
             , String deleteAuthYn
-            , String readingAuthYn
+            , String listAuthYn
+            , String detailAuthYn
             , String downloadAuthYn
             , String uploadAuthYn
             , String printingAuthYn
             , String excelAuthYn
+            , String lowMenuYn
             , Long menuOrder
             , String useYn
             , Long registerSeq
@@ -104,11 +109,13 @@ public class ManagerMenu extends BaseTimeEntity {
         this.creationAuthYn = creationAuthYn;
         this.updateAuthYn = updateAuthYn;
         this.deleteAuthYn = deleteAuthYn;
-        this.readingAuthYn = readingAuthYn;
+        this.listAuthYn = listAuthYn;
+        this.detailAuthYn = detailAuthYn;
         this.downloadAuthYn = downloadAuthYn;
         this.uploadAuthYn = uploadAuthYn;
         this.printingAuthYn = printingAuthYn;
         this.excelAuthYn = excelAuthYn;
+        this.lowMenuYn = lowMenuYn;
         this.menuOrder = menuOrder;
         this.useYn = useYn;
         this.registerSeq = registerSeq;
@@ -121,11 +128,13 @@ public class ManagerMenu extends BaseTimeEntity {
             , String creationAuthYn
             , String updateAuthYn
             , String deleteAuthYn
-            , String readingAuthYn
+            , String listAuthYn
+            , String detailAuthYn
             , String downloadAuthYn
             , String uploadAuthYn
             , String printingAuthYn
             , String excelAuthYn
+            , String lowMenuYn
             , Long menuOrder
             , String useYn
             , Long updaterSeq
@@ -135,11 +144,13 @@ public class ManagerMenu extends BaseTimeEntity {
         this.creationAuthYn = creationAuthYn;
         this.updateAuthYn = updateAuthYn;
         this.deleteAuthYn = deleteAuthYn;
-        this.readingAuthYn = readingAuthYn;
+        this.listAuthYn = listAuthYn;
+        this.detailAuthYn = detailAuthYn;
         this.downloadAuthYn = downloadAuthYn;
         this.uploadAuthYn = uploadAuthYn;
         this.printingAuthYn = printingAuthYn;
         this.excelAuthYn = excelAuthYn;
+        this.lowMenuYn = lowMenuYn;
         this.menuOrder = menuOrder;
         this.useYn = useYn;
         this.updaterSeq = updaterSeq;

@@ -1,6 +1,7 @@
 package com.nike.dnp.entity.manage;
 
 import com.nike.dnp.entity.BaseTimeEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -38,9 +39,11 @@ public class ManagerAuth extends BaseTimeEntity {
     private String useYn;
 
     @Column(name = "REGISTER_SEQ")
+    @ApiModelProperty(hidden = true)
     private Long registerSeq;
 
     @Column(name = "UPDATER_SEQ")
+    @ApiModelProperty(hidden = true)
     private Long updaterSeq;
 
     @Builder

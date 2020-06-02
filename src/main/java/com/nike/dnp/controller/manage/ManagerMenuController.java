@@ -1,6 +1,6 @@
 package com.nike.dnp.controller.manage;
 
-import com.nike.dnp.dto.manage.ManagerMenuDTO;
+import com.nike.dnp.dto.manage.menu.ManagerMenuSaveDTO;
 import com.nike.dnp.entity.manage.Manager;
 import com.nike.dnp.entity.manage.ManagerMenu;
 import com.nike.dnp.service.manage.ManagerMenuService;
@@ -89,24 +89,24 @@ public class ManagerMenuController {
      * 관리메뉴 수정
      *
      * @param menuSeq        the manager seq
-     * @param managerMenuDTO the manager menu dto
+     * @param managerMenuSaveDTO the manager menu dto
      * @return the response entity
      */
     @PutMapping(value = "/{menuSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Manager> updateManagerMenu(@PathVariable("menuSeq") Long menuSeq, ManagerMenuDTO managerMenuDTO) {
-        managerMenuService.update(menuSeq, managerMenuDTO);
+    public ResponseEntity<Manager> updateManagerMenu(@PathVariable("menuSeq") Long menuSeq, ManagerMenuSaveDTO managerMenuSaveDTO) {
+        managerMenuService.update(menuSeq, managerMenuSaveDTO);
         return new ResponseEntity(menuSeq, HttpStatus.OK);
     }
 
     /**
      * 관리메뉴 등록
      *
-     * @param managerMenuDTO the manager menu dto
+     * @param managerMenuSaveDTO the manager menu dto
      * @return the response entity
      */
     @PostMapping
-    public ResponseEntity<Manager> insertManagerMenu(ManagerMenuDTO managerMenuDTO) {
-        Long menuSeq = managerMenuService.save(managerMenuDTO);
+    public ResponseEntity<Manager> insertManagerMenu(ManagerMenuSaveDTO managerMenuSaveDTO) {
+        Long menuSeq = managerMenuService.save(managerMenuSaveDTO);
 
         return new ResponseEntity(menuSeq, HttpStatus.OK);
     }

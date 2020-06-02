@@ -1,6 +1,9 @@
 package com.nike.dnp.entity.manage;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nike.dnp.entity.BaseTimeEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,11 +25,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_MANAGER")
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Manager extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MANAGER_SEQ")
+    @ApiModelProperty(hidden = true)
     private Long managerSeq;
 
     @Column(name = "MANAGER_ID")
@@ -36,18 +41,24 @@ public class Manager extends BaseTimeEntity {
     private String managerName;
 
     @Column(name = "PASSWORD")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(name = "USE_IP")
+    @ApiModelProperty(hidden = true)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String useIp;
 
     @Column(name = "LOGIN_DT")
+    @ApiModelProperty(hidden = true)
     private LocalDateTime loginDt;
 
     @Column(name = "REGISTER_SEQ")
+    @ApiModelProperty(hidden = true)
     private Long registerSeq;
 
     @Column(name = "UPDATER_SEQ")
+    @ApiModelProperty(hidden = true)
     private Long updaterSeq;
 
     @OneToOne

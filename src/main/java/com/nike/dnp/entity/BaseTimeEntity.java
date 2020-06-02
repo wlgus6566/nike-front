@@ -1,5 +1,6 @@
 package com.nike.dnp.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -26,13 +27,13 @@ import java.time.LocalDateTime;
 public abstract class BaseTimeEntity {
 
     @Column(name = "REGISTRATION_DT")
-    //@CreatedDate
     @CreationTimestamp
+    @ApiModelProperty(hidden = true)
     private LocalDateTime registrationDt;
 
     @Column(name = "UPDATE_DT")
-    //@LastModifiedDate
     @UpdateTimestamp
+    @ApiModelProperty(hidden = true)
     private LocalDateTime updateDt;
 
 }

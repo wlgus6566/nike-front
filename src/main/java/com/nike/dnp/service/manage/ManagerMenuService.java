@@ -1,6 +1,6 @@
 package com.nike.dnp.service.manage;
 
-import com.nike.dnp.dto.manage.ManagerMenuDTO;
+import com.nike.dnp.dto.manage.menu.ManagerMenuSaveDTO;
 import com.nike.dnp.entity.manage.ManagerMenu;
 import com.nike.dnp.repository.manage.ManagerMenuRepository;
 import org.springframework.stereotype.Service;
@@ -71,27 +71,29 @@ public class ManagerMenuService {
     /**
      * 등록
      *
-     * @param managerMenuDTO the manager menu dto
+     * @param managerMenuSaveDTO the manager menu dto
      * @return the long
      */
     @Transactional
-    public Long save(ManagerMenuDTO managerMenuDTO) {
+    public Long save(ManagerMenuSaveDTO managerMenuSaveDTO) {
         return managerMenuRepository.save(ManagerMenu.builder()
-                .menuName(managerMenuDTO.getMenuName())
-                .menuPath(managerMenuDTO.getMenuPath())
-                .upperMenuCode(managerMenuDTO.getUpperMenuCode())
-                .menuCode(managerMenuDTO.getMenuCode())
-                .creationAuthYn(managerMenuDTO.getCreationAuthYn())
-                .updateAuthYn(managerMenuDTO.getUpdateAuthYn())
-                .deleteAuthYn(managerMenuDTO.getDeleteAuthYn())
-                .readingAuthYn(managerMenuDTO.getReadingAuthYn())
-                .downloadAuthYn(managerMenuDTO.getDownloadAuthYn())
-                .uploadAuthYn(managerMenuDTO.getUploadAuthYn())
-                .printingAuthYn(managerMenuDTO.getPrintingAuthYn())
-                .excelAuthYn(managerMenuDTO.getExcelAuthYn())
-                .menuOrder(managerMenuDTO.getMenuOrder())
-                .useYn(managerMenuDTO.getUseYn())
-                .registerSeq(managerMenuDTO.getRegisterSeq())
+                .menuName(managerMenuSaveDTO.getMenuName())
+                .menuPath(managerMenuSaveDTO.getMenuPath())
+                .upperMenuCode(managerMenuSaveDTO.getUpperMenuCode())
+                .menuCode(managerMenuSaveDTO.getMenuCode())
+                .creationAuthYn(managerMenuSaveDTO.getCreationAuthYn())
+                .updateAuthYn(managerMenuSaveDTO.getUpdateAuthYn())
+                .deleteAuthYn(managerMenuSaveDTO.getDeleteAuthYn())
+                .listAuthYn(managerMenuSaveDTO.getListAuthYn())
+                .detailAuthYn(managerMenuSaveDTO.getDetailAuthYn())
+                .downloadAuthYn(managerMenuSaveDTO.getDownloadAuthYn())
+                .uploadAuthYn(managerMenuSaveDTO.getUploadAuthYn())
+                .printingAuthYn(managerMenuSaveDTO.getPrintingAuthYn())
+                .excelAuthYn(managerMenuSaveDTO.getExcelAuthYn())
+                .lowMenuYn(managerMenuSaveDTO.getLowMenuYn())
+                .menuOrder(managerMenuSaveDTO.getMenuOrder())
+                .useYn(managerMenuSaveDTO.getUseYn())
+                .registerSeq(managerMenuSaveDTO.getRegisterSeq())
                 .build()).getMenuSeq();
     }
 
@@ -99,26 +101,28 @@ public class ManagerMenuService {
      * 수정
      *
      * @param menuSeq        the menu seq
-     * @param managerMenuDTO the manager menu dto
+     * @param managerMenuSaveDTO the manager menu dto
      */
     @Transactional
-    public void update(Long menuSeq, ManagerMenuDTO managerMenuDTO) {
+    public void update(Long menuSeq, ManagerMenuSaveDTO managerMenuSaveDTO) {
         Optional<ManagerMenu> e = managerMenuRepository.findById(menuSeq);
         if (e.isPresent()) {
             e.get().update(
-                managerMenuDTO.getMenuName()
-                , managerMenuDTO.getMenuPath()
-                , managerMenuDTO.getCreationAuthYn()
-                , managerMenuDTO.getUpdateAuthYn()
-                , managerMenuDTO.getDeleteAuthYn()
-                , managerMenuDTO.getReadingAuthYn()
-                , managerMenuDTO.getDownloadAuthYn()
-                , managerMenuDTO.getUploadAuthYn()
-                , managerMenuDTO.getPrintingAuthYn()
-                , managerMenuDTO.getExcelAuthYn()
-                , managerMenuDTO.getMenuOrder()
-                , managerMenuDTO.getUseYn()
-                , managerMenuDTO.getUpdaterSeq()
+                managerMenuSaveDTO.getMenuName()
+                , managerMenuSaveDTO.getMenuPath()
+                , managerMenuSaveDTO.getCreationAuthYn()
+                , managerMenuSaveDTO.getUpdateAuthYn()
+                , managerMenuSaveDTO.getDeleteAuthYn()
+                , managerMenuSaveDTO.getListAuthYn()
+                , managerMenuSaveDTO.getDetailAuthYn()
+                , managerMenuSaveDTO.getDownloadAuthYn()
+                , managerMenuSaveDTO.getUploadAuthYn()
+                , managerMenuSaveDTO.getPrintingAuthYn()
+                , managerMenuSaveDTO.getExcelAuthYn()
+                , managerMenuSaveDTO.getLowMenuYn()
+                , managerMenuSaveDTO.getMenuOrder()
+                , managerMenuSaveDTO.getUseYn()
+                , managerMenuSaveDTO.getUpdaterSeq()
             );
         }
     }

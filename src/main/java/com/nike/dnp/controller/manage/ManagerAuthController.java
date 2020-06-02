@@ -1,6 +1,6 @@
 package com.nike.dnp.controller.manage;
 
-import com.nike.dnp.dto.manage.ManagerAuthDTO;
+import com.nike.dnp.dto.manage.auth.ManagerAuthDTO;
 import com.nike.dnp.entity.manage.Manager;
 import com.nike.dnp.entity.manage.ManagerAuth;
 import com.nike.dnp.service.manage.ManagerAuthService;

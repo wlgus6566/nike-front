@@ -1,6 +1,6 @@
 package com.nike.dnp.service.manage;
 
-import com.nike.dnp.dto.manage.ManagerAuthDTO;
+import com.nike.dnp.dto.manage.auth.ManagerAuthDTO;
 import com.nike.dnp.entity.manage.ManagerAuth;
 import com.nike.dnp.repository.manage.ManagerAuthRepository;
 import org.springframework.stereotype.Service;

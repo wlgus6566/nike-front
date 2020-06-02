@@ -1,4 +1,4 @@
-package com.nike.dnp.dto.manage;
+package com.nike.dnp.dto.manage.manager;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,5 +18,6 @@ import lombok.Setter;
 public class ManagerSearchDTO {
 
     private String keyword = "";
+    private int page;
 
 }

@@ -1,7 +1,8 @@
 package com.nike.dnp.service.manage;
 
-import com.nike.dnp.dto.manage.ManagerDTO;
-import com.nike.dnp.dto.manage.ManagerSearchDTO;
+import com.nike.dnp.dto.manage.manager.ManagerSaveDTO;
+import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
+import com.nike.dnp.dto.manage.manager.ManagerUpdateDTO;
 import com.nike.dnp.entity.manage.Manager;
 import com.nike.dnp.entity.manage.ManagerAuth;
 import com.nike.dnp.repository.manage.ManagerAuthRepository;
@@ -92,37 +93,37 @@ public class ManagerService {
     /**
      * 등록
      *
-     * @param managerDTO the manager dto
+     * @param managerSaveDTO the manager dto
      * @return the long
      */
     @Transactional
-    public Long save(ManagerDTO managerDTO) {
-        Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerDTO.getAuthSeq());
+    public Long save(ManagerSaveDTO managerSaveDTO) {
+        Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerSaveDTO.getAuthSeq());
         return managerRepository.save(Manager.builder()
-                .managerId(managerDTO.getManagerId())
-                .managerName(managerDTO.getManagerName())
-                .password(managerDTO.getPassword())
+                .managerId(managerSaveDTO.getManagerId())
+                .managerName(managerSaveDTO.getManagerName())
+                .password(managerSaveDTO.getPassword())
                 .managerAuth(managerAuth.get())
-                .registerSeq(managerDTO.getRegisterSeq())
+                .registerSeq(managerSaveDTO.getRegisterSeq())
                 .build()).getManagerSeq();
     }
 
     /**
      * 수정
      *
-     * @param managerSeq the manager seq
-     * @param managerDTO the manager dto
+     * @param managerSeq       the manager seq
+     * @param managerUpdateDTO the manager update dto
      */
     @Transactional
-    public void update(Long managerSeq, ManagerDTO managerDTO) {
+    public void update(Long managerSeq, ManagerUpdateDTO managerUpdateDTO) {
         Optional<Manager> e = managerRepository.findById(managerSeq);
         if (e.isPresent()) {
-            Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerDTO.getAuthSeq());
+            Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerUpdateDTO.getAuthSeq());
             e.get().update(
-                managerDTO.getManagerName()
-                , managerDTO.getPassword()
-                , managerAuth.get()
-                , managerDTO.getUpdaterSeq()
+                    managerUpdateDTO.getManagerName()
+                    , managerUpdateDTO.getPassword()
+                    , managerAuth.get()
+                    , managerUpdateDTO.getUpdaterSeq()
             );
         }
     }

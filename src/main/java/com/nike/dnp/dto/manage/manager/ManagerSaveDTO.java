@@ -1,6 +1,5 @@
-package com.nike.dnp.dto.manage;
+package com.nike.dnp.dto.manage.manager;
 
-import com.nike.dnp.entity.manage.Manager;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,8 +15,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ManagerDTO extends Manager {
+public class ManagerSaveDTO {
 
     private Long authSeq;
+    private String managerId;
+    private String managerName;
+    private String password;
+    private Long registerSeq;
 
 }
