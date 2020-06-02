@@ -1,5 +1,6 @@
 package com.nike.dnp.dto.manage.manager;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,8 @@ public class ManagerUpdateDTO {
     private Long authSeq;
     private String managerName;
     private String password;
+
+    @ApiModelProperty(hidden = true)
     private Long updaterSeq;
 
 }

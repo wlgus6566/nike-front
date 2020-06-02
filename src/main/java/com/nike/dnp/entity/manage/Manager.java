@@ -31,38 +31,42 @@ public class Manager extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MANAGER_SEQ")
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(value = "사용자시퀀스", hidden = true)
     private Long managerSeq;
 
     @Column(name = "MANAGER_ID")
+    @ApiModelProperty(value = "사용자ID")
     private String managerId;
 
     @Column(name = "MANAGER_NAME")
+    @ApiModelProperty(value = "사용자명")
     private String managerName;
 
     @Column(name = "PASSWORD")
+    @ApiModelProperty(value = "비밀번호")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(name = "USE_IP")
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(value = "접속IP", hidden = true)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String useIp;
 
     @Column(name = "LOGIN_DT")
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(value = "최종로그인일자", hidden = true)
     private LocalDateTime loginDt;
 
     @Column(name = "REGISTER_SEQ")
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(value = "최초작성자", hidden = true)
     private Long registerSeq;
 
     @Column(name = "UPDATER_SEQ")
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(value = "최종수정자", hidden = true)
     private Long updaterSeq;
 
     @OneToOne
     @JoinColumn(name = "AUTH_SEQ")
+    @ApiModelProperty(value = "권한정보", hidden = true)
     private ManagerAuth managerAuth;
 
     @Builder

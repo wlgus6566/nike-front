@@ -8,7 +8,8 @@ import com.nike.dnp.entity.manage.ManagerAuth;
 import com.nike.dnp.repository.manage.ManagerAuthRepository;
 import com.nike.dnp.repository.manage.ManagerRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,16 +59,20 @@ public class ManagerService {
     /**
      * 전체조회(paging)
      *
-     * @param pageable         the pageable
      * @param managerSearchDTO the manager search dto
      * @return the list
      */
-    public Page<Manager> findAllPaging(Pageable pageable, ManagerSearchDTO managerSearchDTO) {
+    public Page<Manager> findAllPaging(ManagerSearchDTO managerSearchDTO) {
+        //Pageable pageable,
+        PageRequest pageRequest = PageRequest.of(managerSearchDTO.getPage()
+                , managerSearchDTO.getSize()
+                , Sort.by("registrationDt").descending());
+
         if (managerSearchDTO.getKeyword().isEmpty()) {
-            return managerRepository.findAll(pageable);
+            return managerRepository.findAll(pageRequest);
         }
         return managerRepository.findAllByManagerIdLikeOrManagerNameLike(
-                pageable, managerSearchDTO.getKeyword(), managerSearchDTO.getKeyword());
+                pageRequest, managerSearchDTO.getKeyword(), managerSearchDTO.getKeyword());
     }
 
     /**
