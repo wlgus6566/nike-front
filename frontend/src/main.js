@@ -3,12 +3,12 @@ import App from './App.vue'
 import router from './router'
 import VueLodash from 'vue-lodash'
 import lodash from 'lodash'
-import velocity from 'velocity-animate'
+// import velocity from 'velocity-animate'
+import axios from './axios'
 
-
-
+Vue.prototype.$axios = axios;
 Vue.use(VueLodash, { name: 'custom' , lodash: lodash });
-Vue.use(velocity);
+// Vue.use(velocity);
 
 Vue.config.productionTip = false;
 
