@@ -41,9 +41,9 @@ public class ResponseService {
     public <T> SingleResult<T> getSingleResult(T data, String msg) {
         SingleResult<T> result = new SingleResult<>();
         result.setData(data);
-        if (!msg.isEmpty()) {
+        /*if (!msg.isEmpty()) {
             result.setMsg(msg);
-        }
+        }*/
         setSuccessResult(result);
         return result;
     }
@@ -68,11 +68,20 @@ public class ResponseService {
         result.setMsg(CommonResponse.FAIL.getMsg());
         return result;
     }
+    public CommonResult getFailResult(String msg) {
+        CommonResult result = new CommonResult();
+        result.setSuccess(false);
+        result.setCode(CommonResponse.FAIL.getCode());
+        result.setMsg(CommonResponse.FAIL.getMsg());
+        //result.setMsg(msg.isEmpty() ? CommonResponse.FAIL.getMsg(): msg);
+        return result;
+    }
     // 결과 모델에 api 요청 성공 데이터를 세팅해주는 메소드
     private void setSuccessResult(CommonResult result) {
         result.setSuccess(true);
         result.setCode(CommonResponse.SUCCESS.getCode());
         result.setMsg(CommonResponse.SUCCESS.getMsg());
+        //result.setMsg(result.getMsg().isEmpty() ? CommonResponse.SUCCESS.getMsg(): result.getMsg());
     }
 
 }

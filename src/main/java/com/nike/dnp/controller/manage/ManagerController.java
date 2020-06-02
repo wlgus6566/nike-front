@@ -156,7 +156,9 @@ public class ManagerController {
     @GetMapping(value = "/{managerSeq}", name = "사용자 상세 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Manager> getManager(@PathVariable(name = "managerSeq") Long managerSeq) {
-        return responseService.getSingleResult(managerService.findById(managerSeq).orElseThrow(() -> new ManagerNotFoundException("fail")), "test");
+        return responseService.getSingleResult(
+                managerService.findById(managerSeq)
+                        .orElseThrow(() -> new ManagerNotFoundException()));
     }
 
     /**

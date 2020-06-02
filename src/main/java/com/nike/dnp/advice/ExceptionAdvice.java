@@ -24,8 +24,13 @@ public class ExceptionAdvice {
 //    }
 
     @ExceptionHandler(ManagerNotFoundException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    //@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.OK)
     protected CommonResult managerNotFoundException(HttpServletRequest request, ManagerNotFoundException e) {
+        System.out.println("==============");
+        System.out.println(e.getMessage());
+        System.out.println("==============");
+
         return responseService.getFailResult();
     }
 
