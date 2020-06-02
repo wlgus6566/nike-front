@@ -4,6 +4,8 @@ import com.nike.dnp.dto.manage.manager.ManagerSaveDTO;
 import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.manage.manager.ManagerUpdateDTO;
 import com.nike.dnp.entity.manage.Manager;
+import com.nike.dnp.exception.ManagerNotFoundException;
+import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.manage.ManagerService;
@@ -11,13 +13,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Optional;
 
 /**
  * ManagerController
@@ -75,7 +72,7 @@ public class ManagerController {
         + "size|사이즈|false|Integer\n"
         + "[하위 Parameters 참조]\n"
         + "\n\n\n"
-        + "## Paging Response ## \n"
+        + "## Public/Paging Response ## \n"
         + "필드명||필드설명|데이터 타입(길이)\n" + "-|-|-|-\n"
         + "content||본문내용|Array\n"
         + "totalPages||총페이지수|Integer\n"
@@ -112,11 +109,6 @@ public class ManagerController {
     })*/
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "사용자 목록 조회")
     public SingleResult<Page<Manager>> getAllManagers(ManagerSearchDTO managerSearchDTO) {
-        //Pageable pageable = Pageable.of()
-        //return managerService.findAllPaging(pageable, managerSearchDTO);
-
-        //return managerService.findAllPaging(managerSearchDTO);
-
         return responseService.getSingleResult(managerService.findAllPaging(managerSearchDTO));
     }
 
@@ -163,16 +155,8 @@ public class ManagerController {
     )
     @GetMapping(value = "/{managerSeq}", name = "사용자 상세 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Manager> getManager(@PathVariable(name = "managerSeq") Long managerSeq) {
-        HashMap<String, Object> result = new HashMap<>();
-        Optional<Manager> manager = managerService.findById(managerSeq);
-
-        if (manager.isPresent()) {
-            result.put("code", HttpStatus.OK);
-            result.put("result", manager.get());
-            return new ResponseEntity(result, HttpStatus.OK);
-        }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    public SingleResult<Manager> getManager(@PathVariable(name = "managerSeq") Long managerSeq) {
+        return responseService.getSingleResult(managerService.findById(managerSeq).orElseThrow(() -> new ManagerNotFoundException("fail")), "test");
     }
 
     /**
@@ -191,9 +175,9 @@ public class ManagerController {
     )
     @DeleteMapping(value = "/{managerSeq}", name = "사용자 삭제"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Void> deleteManager(@PathVariable(name = "managerSeq") Long managerSeq) {
+    public CommonResult deleteManager(@PathVariable(name = "managerSeq") Long managerSeq) {
         managerService.delete(managerSeq);
-        return new ResponseEntity(HttpStatus.OK);
+        return responseService.getSuccessResult();
     }
 
     /**
@@ -218,11 +202,10 @@ public class ManagerController {
     @PutMapping(value = "/{managerSeq}", name = "사용자 수정"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Manager> updateManager(
+    public SingleResult<Manager> updateManager(
             @PathVariable(name = "managerSeq") Long managerSeq
             ,@RequestBody ManagerUpdateDTO managerUpdateDTO) {
-        managerService.update(managerSeq, managerUpdateDTO);
-        return new ResponseEntity(managerSeq, HttpStatus.OK);
+        return responseService.getSingleResult(managerService.update(managerSeq, managerUpdateDTO));
     }
 
     /**
@@ -244,8 +227,8 @@ public class ManagerController {
     @PostMapping(name = "사용자 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Long> insertManager(@RequestBody ManagerSaveDTO managerSaveDTO) {
-        return new ResponseEntity(managerService.save(managerSaveDTO), HttpStatus.OK);
+    public SingleResult<Manager> insertManager(@RequestBody ManagerSaveDTO managerSaveDTO) {
+        return responseService.getSingleResult(managerService.save(managerSaveDTO));
     }
 
 }

@@ -63,7 +63,6 @@ public class ManagerService {
      * @return the list
      */
     public Page<Manager> findAllPaging(ManagerSearchDTO managerSearchDTO) {
-        //Pageable pageable,
         PageRequest pageRequest = PageRequest.of(managerSearchDTO.getPage()
                 , managerSearchDTO.getSize()
                 , Sort.by("registrationDt").descending());
@@ -102,7 +101,7 @@ public class ManagerService {
      * @return the long
      */
     @Transactional
-    public Long save(ManagerSaveDTO managerSaveDTO) {
+    public Manager save(ManagerSaveDTO managerSaveDTO) {
         Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerSaveDTO.getAuthSeq());
         return managerRepository.save(Manager.builder()
                 .managerId(managerSaveDTO.getManagerId())
@@ -110,7 +109,7 @@ public class ManagerService {
                 .password(managerSaveDTO.getPassword())
                 .managerAuth(managerAuth.get())
                 .registerSeq(managerSaveDTO.getRegisterSeq())
-                .build()).getManagerSeq();
+                .build());
     }
 
     /**
@@ -120,7 +119,7 @@ public class ManagerService {
      * @param managerUpdateDTO the manager update dto
      */
     @Transactional
-    public void update(Long managerSeq, ManagerUpdateDTO managerUpdateDTO) {
+    public Manager update(Long managerSeq, ManagerUpdateDTO managerUpdateDTO) {
         Optional<Manager> e = managerRepository.findById(managerSeq);
         if (e.isPresent()) {
             Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerUpdateDTO.getAuthSeq());
@@ -131,6 +130,7 @@ public class ManagerService {
                     , managerUpdateDTO.getUpdaterSeq()
             );
         }
+        return e.get();
     }
 
 }

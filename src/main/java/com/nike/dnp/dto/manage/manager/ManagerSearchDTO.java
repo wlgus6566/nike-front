@@ -1,5 +1,6 @@
 package com.nike.dnp.dto.manage.manager;
 
+import com.nike.dnp.dto.manage.SearchDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,15 +17,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ManagerSearchDTO {
+public class ManagerSearchDTO extends SearchDTO {
 
     @ApiModelProperty(value = "검색어")
     private String keyword = "";
-
-    @ApiModelProperty(value = "페이지")
-    private int page;
-
-    @ApiModelProperty(value = "사이즈")
-    private int size;
 
 }

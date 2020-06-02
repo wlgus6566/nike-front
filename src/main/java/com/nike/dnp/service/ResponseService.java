@@ -38,6 +38,15 @@ public class ResponseService {
         setSuccessResult(result);
         return result;
     }
+    public <T> SingleResult<T> getSingleResult(T data, String msg) {
+        SingleResult<T> result = new SingleResult<>();
+        result.setData(data);
+        if (!msg.isEmpty()) {
+            result.setMsg(msg);
+        }
+        setSuccessResult(result);
+        return result;
+    }
     // 다중건 결과를 처리하는 메소드
     public <T> ListResult<T> getListResult(List<T> list) {
         ListResult<T> result = new ListResult<>();
