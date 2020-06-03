@@ -1,20 +1,9 @@
 spring:
   profiles:
     active: local
-  datasource:
-    driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mysql://localhost:3306/nikednp?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
-    username: root
-    password: 'mariadb'
-  #h2:
-  #  console:
-  #    enabled: true
-  #datasource:
-  #  driverClassName: org.h2.Driver
-  #  url: jdbc:h2:mem:testdb
-  #  username: sa
-  #  password:
-
+  mvc:
+    favicon:
+      enabled: false
   jpa:
     database: mysql
     show-sql: true
@@ -27,5 +16,3 @@ spring:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      #naming:
-        #implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
