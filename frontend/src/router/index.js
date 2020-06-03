@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import test from '../views/test'
 import main from '../views/main.vue'
-import asset from '../views/asset.vue'
+import asset from '../views/asset/index.vue'
 
 Vue.use(VueRouter);
 
