@@ -27,7 +27,7 @@ import java.util.Optional;
  */
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class ManagerService {
 
     private final ManagerRepository managerRepository;
@@ -55,7 +55,7 @@ public class ManagerService {
     public List<Manager> findAll() {
         return managerRepository.findAll();
     }
-
+    
     /**
      * 전체조회(paging)
      *

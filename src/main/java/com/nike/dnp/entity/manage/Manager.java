@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
  */
 
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
@@ -64,7 +63,7 @@ public class Manager extends BaseTimeEntity {
     @ApiModelProperty(value = "최종수정자", hidden = true)
     private Long updaterSeq;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "AUTH_SEQ")
     @ApiModelProperty(value = "권한정보", hidden = true)
     private ManagerAuth managerAuth;

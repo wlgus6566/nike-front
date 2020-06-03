@@ -1,5 +1,6 @@
 package com.nike.dnp.config;
 
+import com.nike.dnp.common.GlobalVariable;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
@@ -50,9 +51,9 @@ public class RedisConfig extends CachingConfigurerSupport {
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
 		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(jedisPoolConfig());
-		/*jedisConnectionFactory.setHostName(GlobalVariable.GLOBAL_REDIS_HOST);
+		jedisConnectionFactory.setHostName(GlobalVariable.GLOBAL_REDIS_HOST);
 		jedisConnectionFactory.setPort(GlobalVariable.GLOBAL_REDIS_PORT);
-		jedisConnectionFactory.setPassword(GlobalVariable.GLOBAL_REDIS_PASSWORD);*/
+		/*jedisConnectionFactory.setPassword(GlobalVariable.GLOBAL_REDIS_PASSWORD);*/
 		jedisConnectionFactory.setUsePool(true);
 		return jedisConnectionFactory;
 	}
@@ -84,12 +85,9 @@ public class RedisConfig extends CachingConfigurerSupport {
 	@Override
 	public CacheManager cacheManager() {
 		RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory());
-
-		// 값은 json 문자열로 넣는다. @class 필드로 클래스 정보가 들어간다.
 		RedisCacheConfiguration defaultConfig = RedisCacheConfiguration.defaultCacheConfig()
 				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
 				.entryTtl(Duration.ofSeconds(60 * 60 * 24 * 30));
-
 		builder.cacheDefaults(defaultConfig);
 		return builder.build();
 	}
