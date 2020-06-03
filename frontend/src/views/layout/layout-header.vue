@@ -1,6 +1,7 @@
 <template>
-	<header>
-		<div class="inner">
+
+	<header data-v-sticky-container>
+		<div class="inner" v-vue-sticky-directive="{topSpacing:20, bottomSpacing:20}">
 			<h1>
 				<router-link to="/" exact>
 					<img src="@/assets/images/logo-nike.svg" v-on:click="navAni" alt="">
@@ -137,16 +138,19 @@
 	</header>
 </template>
 <script>
-	import sticky from '@/mixins/sticky'
+	import VueStickyDirective from "@renatodeleao/vue-sticky-directive";
 
+	console.log(VueStickyDirective)
 	export default {
 		name: 'layout-header',
+		directives: {
+			VueStickyDirective
+		},
 		data() {
 			return {
 				"isActive": false,
 			}
 		},
-		mixins: [sticky],
 		mounted() {
 			this.navAni();
 		},

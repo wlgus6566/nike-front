@@ -107,6 +107,10 @@ public class ManagerController {
                 , paramType = "query"
         )
     })*/
+    /*@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "사용자 목록 조회")
+    public SingleResult<Page<Manager>> getAllManagers(ManagerSearchDTO managerSearchDTO) {
+        return responseService.getSingleResult(managerService.findAllPaging(managerSearchDTO));
+    }*/
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "사용자 목록 조회")
     public SingleResult<Page<Manager>> getAllManagers(ManagerSearchDTO managerSearchDTO) {
         return responseService.getSingleResult(managerService.findAllPaging(managerSearchDTO));

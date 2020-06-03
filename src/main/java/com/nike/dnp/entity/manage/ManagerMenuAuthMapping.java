@@ -16,7 +16,6 @@ import javax.persistence.*;
  */
 
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
@@ -28,11 +27,11 @@ public class ManagerMenuAuthMapping extends BaseTimeEntity {
     @Column(name = "MAPPING_SEQ")
     private Long mappingSeq;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "MENU_SEQ")
     private ManagerMenu managerMenu;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "AUTH_SEQ")
     private ManagerAuth managerAuth;
 

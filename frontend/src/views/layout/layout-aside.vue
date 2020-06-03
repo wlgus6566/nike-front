@@ -6,15 +6,26 @@
 	</aside>
 </template>
 <script>
-	import sticky from '@/mixins/sticky'
+	import VueStickyDirective from "@renatodeleao/vue-sticky-directive";
 
+	console.log(VueStickyDirective)
 	export default {
-		name : 'Aside',
-		mixins: [ sticky ],
+		name: 'A',
+		directives: {
+			VueStickyDirective
+		},
+		data() {
+			return {
+				"isActive": false,
+			}
+		},
 		mounted() {
-			sticky.init( this,
-				{"test":"test"}
-			);
+			this.navAni();
+		},
+		methods: {
+			navAni: function () {
+				this.isActive = !this.isActive;
+			}
 		}
 	}
 </script>
