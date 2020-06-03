@@ -5,7 +5,7 @@ html, body {box-sizing:border-box; min-height:100%;}
 body {padding:var(--safeTop) 0 var(--safeBtm);}
 
 #wrap {display:flex; flex-wrap:wrap; min-width:1440px;}
-header {position:relative; flex:0 0 200px; padding:0 0 130px;}
+header {position:relative; flex:0 0 200px; padding:80px 0 130px;}
 header .inner {position:fixed; top:0; left:0; width:200px; box-sizing:border-box; max-height:100vh; padding:80px 30px 130px;}
 header h1 {}
 header h1 a {display:block; width:100px;}
