@@ -1,0 +1,31 @@
+spring:
+  profiles: dev
+  datasource:
+    driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://10.80.1.212:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
+    username: nikemanager
+    password: 'emotion!@'
+  devtools:
+    livereload:
+      enabled: false
+    restart:
+      enabled: false
+    output:
+      ansi:
+        enabled: always
+  redis:
+    host: 10.80.1.212
+    port: 6379
+    #password: 2motion1!!
+    cache:
+      redis:
+        cache-null-values: false
+        use-key-prefix: true
+      type: redis
+
+logging:
+  config: classpath:logback-dev.xml
+
+server:
+  domain: http://localhost
+  port: 8080
