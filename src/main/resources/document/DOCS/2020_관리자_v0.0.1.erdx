@@ -1,2 +1,503 @@
-<?xml version="1.1" encoding="utf-8"?>
-<e:Document xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:e="http://exerd.tomato.com/model" xmlns:mysql="http://exerd.tomato.com/mysql/model" UUID="Document_SjupUCL0Eeq2ucOzLborkg" activeBusinessArea="BArea_SjupXyL0Eeq2ucOzLborkg" activeSchema="Schema_81qYcSMJEeq2ucOzLborkg" version="3.2.3.20190724-2036" modelVersion="3.0.0.20190111-1604" productId="com.tomato.db.mysql" openedDiagrams="Diagram_SjupYCL0Eeq2ucOzLborkg"><relationManager><relation key="FKCGroup_iFSHx25YEeqPH6JfgOSEnw"><value foreignKeyColumnGroup="FKCGroup_iFSHx25YEeqPH6JfgOSEnw"/></relation><relation key="FKCGroup_yAoKIm5YEeqPH6JfgOSEnw"><value foreignKeyColumnGroup="FKCGroup_yAoKIm5YEeqPH6JfgOSEnw"/></relation><relation key="FKCGroup_IwhohW5kEeqPH6JfgOSEnw"><value foreignKeyColumnGroup="FKCGroup_IwhohW5kEeqPH6JfgOSEnw"/></relation><relation key="FKCGroup_F-uukHL_EeqP8Lk2M9dQdg"><value foreignKeyColumnGroup="FKCGroup_F-uukHL_EeqP8Lk2M9dQdg"/></relation><relation key="FKCGroup_Nqijk3lpEeqYd9sBoL8KXg"><value foreignKeyColumnGroup="FKCGroup_Nqijk3lpEeqYd9sBoL8KXg"/></relation></relationManager><configuration termFilePath="/cokeplay_admin/DOC/DB/ERD/CokePLAY_표준_용어사전_V1.0.1.xdic"><domainDefinition UUID="DDefinition_SjupUSL0Eeq2ucOzLborkg"><domain UUID="Domain_SjupUiL0Eeq2ucOzLborkg" name="문자" suggestedDataType="VARCHAR(255)"><domain UUID="Domain_SjupUyL0Eeq2ucOzLborkg" name="주민등록번호" suggestedDataType="VARCHAR(13)"/><domain UUID="Domain_SjupVCL0Eeq2ucOzLborkg" name="주소"/><domain UUID="Domain_SjupVSL0Eeq2ucOzLborkg" name="웹주소"/><domain UUID="Domain_SjupViL0Eeq2ucOzLborkg" name="전화번호" suggestedDataType="VARCHAR(30)"/><domain UUID="Domain_SjupVyL0Eeq2ucOzLborkg" name="이메일" suggestedDataType="VARCHAR(100)"/><domain UUID="Domain_SjupWCL0Eeq2ucOzLborkg" name="이름" suggestedDataType="VARCHAR(50)"/><domain UUID="Domain_ED3dUChhEeqRTva_vmDH2g" name="코드" suggestedDataType="VARCHAR(20)"/><domain UUID="Domain_csmg4CrCEeqRTva_vmDH2g" name="콘텐츠" suggestedDataType="TEXT"/><domain UUID="Domain_bVjvQCrfEeqfz-IPqhO_9w" name="암호화" suggestedDataType="VARCHAR(255)"/><domain UUID="Domain_Nz2XASz-Eeq4-KiuddssPg" name="아이피" suggestedDataType="VARCHAR(100)"/><domain UUID="Domain_h_kUUCz8EeqlubbcnTjcXw" name="단문" suggestedDataType="VARCHAR(50)"/><domain UUID="Domain_Nw40gSz8EeqlubbcnTjcXw" name="중문" suggestedDataType="VARCHAR(100)"/><domain UUID="Domain_rnTqoSz8Eeqf64cXuZBjCA" name="장문" suggestedDataType="VARCHAR(255)"/><domain UUID="Domain_tkNlMie3Eeqv3qTkO7xkhA" name="아이디" suggestedDataType="VARCHAR(20)"/><domain UUID="Domain_tkNlMSe3Eeqv3qTkO7xkhA" name="여부" suggestedDataType="CHAR(1)"/><domain UUID="Domain_Nz2XAiz-Eeq4-KiuddssPg" name="년월일" suggestedDataType="VARCHAR(10)"/></domain><domain UUID="Domain_SjupWSL0Eeq2ucOzLborkg" name="숫자" suggestedDataType="INTEGER"><domain UUID="Domain_SjupWiL0Eeq2ucOzLborkg" name="금액"/><domain UUID="Domain_baMjcCfFEeqU1rlS-ZRo3A" name="시퀀스" suggestedDataType="INTEGER"/><domain UUID="Domain_Nz2XAyz-Eeq4-KiuddssPg" name="번호" suggestedDataType="INTEGER"/><domain UUID="Domain_tkNlMCe3Eeqv3qTkO7xkhA" name="순서" suggestedDataType="INT"/></domain><domain UUID="Domain_SjupWyL0Eeq2ucOzLborkg" name="날짜" suggestedDataType="DATE"><domain UUID="Domain_rcgNoCe-EeqU1rlS-ZRo3A" name="일시" suggestedDataType="DATETIME"/></domain><domain UUID="Domain_SjupXCL0Eeq2ucOzLborkg" name="객체" suggestedDataType="BLOB"><domain UUID="Domain_SjupXSL0Eeq2ucOzLborkg" name="이미지" suggestedDataType="VARBINARY"/><domain UUID="Domain_SjupXiL0Eeq2ucOzLborkg" name="오디오" suggestedDataType="VARBINARY"/></domain><domain UUID="Domain_F-tgcHL_EeqP8Lk2M9dQdg" name="pk" suggestedDataType="INTEGER"/><domain UUID="Domain_F-tgcXL_EeqP8Lk2M9dQdg" name="Y/N" suggestedDataType="VARCHAR(1)"/><domain UUID="Domain_F-tgcnL_EeqP8Lk2M9dQdg" name="N/Y" suggestedDataType="VARCHAR(1)"/><domain UUID="Domain_F-tgc3L_EeqP8Lk2M9dQdg" name="날짜1" suggestedDataType="TIMESTAMP"/><domain UUID="Domain_F-tgdHL_EeqP8Lk2M9dQdg" name="제목" suggestedDataType="VARCHAR(100)"/><domain UUID="Domain_F-tgdXL_EeqP8Lk2M9dQdg" name="링크" suggestedDataType="VARCHAR(500)"/><domain UUID="Domain_F-tgdnL_EeqP8Lk2M9dQdg" name="수" suggestedDataType="INTEGER"/><domain UUID="Domain_F-tgd3L_EeqP8Lk2M9dQdg" name="id" suggestedDataType="VARCHAR(11)"/></domainDefinition><viewSettingsPreset name="eXERD 기본" showAltTableName="false"><cellsToShow>name</cellsToShow><cellsToShow>domain</cellsToShow><cellsToShow>dataType</cellsToShow></viewSettingsPreset><viewSettingsPreset name="엔티티 모드" showAltTableName="false"><cellsToShow>name</cellsToShow><cellsToShow>domain</cellsToShow></viewSettingsPreset><viewSettingsPreset name="E-R 개요 모드" columnFilter="tableOnly" showTableComment="true"><cellsToShow>name</cellsToShow><cellsToShow>domain</cellsToShow><cellsToShow>dataType</cellsToShow></viewSettingsPreset><viewSettingsPreset showColumnHeader="true" name="논리/물리 동시편집"><cellsToShow>name</cellsToShow><cellsToShow>oppositeModeName</cellsToShow><cellsToShow>domain</cellsToShow><cellsToShow>dataType</cellsToShow><cellsToShow>nullable</cellsToShow></viewSettingsPreset></configuration><businessAreas UUID="BArea_SjupXyL0Eeq2ucOzLborkg" logicalName="기본 업무영역" physicalName="DEFAULT_AREA" tables="Table_lHcoUG5EEeq0P9ycfOtEQA Table_Dfb6em5FEeq0P9ycfOtEQA Table_aDXaZG5FEeq0P9ycfOtEQA Table_-aLl9G5GEeq0P9ycfOtEQA Table_BaaWkW5kEeqPH6JfgOSEnw Table_F-uHgXL_EeqP8Lk2M9dQdg Table_F-uuk3L_EeqP8Lk2M9dQdg Table_F-uupHL_EeqP8Lk2M9dQdg Table_nN5pEXlpEeqYd9sBoL8KXg Table_n8_CMJvPEeqRI4wJS-uzaA"><diagrams UUID="Diagram_SjupYCL0Eeq2ucOzLborkg" logicalName="다이어그램" physicalName="diagram"><diagramEntry xsi:type="e:TableDiagram" UUID="TDiagram_lHcBQG5EEeq0P9ycfOtEQA" location="Point(368.0, 37.0)" table="Table_lHcoUG5EEeq0P9ycfOtEQA"/><diagramEntry xsi:type="e:Note" UUID="Note_Dfb6cG5FEeq0P9ycfOtEQA" location="Point(11.0, 25.0)" text="* 회원 마이그레이션 이슈 발생 고려&#xD;&#xA;   ㄴ 회원 : 시퀀스 시작 번호를 1,000,001부터 시작&#xD;&#xA;   ㄴ 관리자 : 시퀀스를 권한 별 그루핑&#xD;&#xA;        ㄴ 관리자는 1,000,000 이내 시퀀스 사용&#xD;&#xA;        ㄴ 시스템관리자, 수퍼관리자, 외부관리자 등&#xD;&#xA;&#xD;&#xA;* 회원과 관리자 데이터는 테이블은 분리 관리&#xD;&#xA;&#xD;&#xA;JOIN_GB&#x9;&#xD;&#xA;EMAIL&#x9;이메일&#xD;&#xA;FACEBOOK&#x9;페이스북&#xD;&#xA;KAKAOTALK&#x9;카카오톡&#xD;&#xA;TELNO&#x9;전화번호&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;소셜아이디 (소셜로그인 키)&#xD;&#xA;ㄴ 카카오 : 숫자 10자리&#xD;&#xA;ㄴ페이스북 : 숫자 16자리&#xD;&#xA;" textColor="RGB {0, 0, 0}" backgroundColor="RGB {255, 255, 255}" baloonPoint="Point(99.0, 99.0)"/><diagramEntry xsi:type="e:TableDiagram" UUID="TDiagram_Dfb6cW5FEeq0P9ycfOtEQA" location="Point(522.0, 527.0)" table="Table_Dfb6em5FEeq0P9ycfOtEQA"/><diagramEntry xsi:type="e:TableDiagram" UUID="TDiagram_aDXaYG5FEeq0P9ycfOtEQA" location="Point(1110.0, 563.0)" table="Table_aDXaZG5FEeq0P9ycfOtEQA"/><diagramEntry xsi:type="e:TableDiagram" UUID="TDiagram_-aLl8G5GEeq0P9ycfOtEQA" location="Point(824.0, 37.0)" table="Table_-aLl9G5GEeq0P9ycfOtEQA"/><diagramEntry xsi:type="e:TableDiagram" UUID="TDiagram_BaaWkG5kEeqPH6JfgOSEnw" location="Point(39.0, 363.0)" table="Table_BaaWkW5kEeqPH6JfgOSEnw"/><viewSettings showColumnHeader="true"><cellsToShow>name</cellsToShow><cellsToShow>oppositeModeName</cellsToShow><cellsToShow>domain</cellsToShow><cellsToShow>dataType</cellsToShow><cellsToShow>nullable</cellsToShow></viewSettings><printSettings marginTop="10" marginRight="10" marginBottom="10" marginLeft="10" paperKind="A4" paperOrientation="landscape" scale="0.5" header="${FILE} - ${DIAGRAM} - ${PAGENUM} / ${FULLPAGE}" footter="${YEAR}-${MONTH}-${DAY} ${HOUR}:${DAY}"/></diagrams></businessAreas><databaseModel UUID="DModel_SjupYSL0Eeq2ucOzLborkg" logicalName="새 데이터베이스" physicalName="NEW_DATABASE"><physicalProperties xsi:type="mysql:DatabaseProperties" UUID="DProperties_tkNlPSe3Eeqv3qTkO7xkhA"/><schema UUID="Schema_81qYcSMJEeq2ucOzLborkg" logicalName="cokeplay2018_new" physicalName="cokeplay2018_new"><tables UUID="Table_lHcoUG5EEeq0P9ycfOtEQA" logicalName="관리자" physicalName="TB_MANAGER"><physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_mzzccG5EEeq0P9ycfOtEQA"><partition UUID="Partition_mzzccW5EEeq0P9ycfOtEQA"><partitionAlgorithm UUID="PAlgorithm_mzzccm5EEeq0P9ycfOtEQA"/><subpartitionAlgorithm UUID="PAlgorithm_mzzcc25EEeq0P9ycfOtEQA"/></partition></physicalProperties><columns UUID="Column_lHcoUW5EEeq0P9ycfOtEQA" logicalName="관리자_시퀀스" physicalName="MANAGER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_mzzcdG5EEeq0P9ycfOtEQA" autoIncrement="true"/><memberships UUID="MEntry_mzzcdW5EEeq0P9ycfOtEQA" key="PKCGroup_mzzcd25EEeq0P9ycfOtEQA"><value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_mzzcdm5EEeq0P9ycfOtEQA" group="PKCGroup_mzzcd25EEeq0P9ycfOtEQA" entryIndex="0"/></memberships></columns><columns UUID="Column_ttROoW5EEeq0P9ycfOtEQA" logicalName="관리자_아이디" physicalName="MANAGER_ID" domain="Domain_Nw40gSz8EeqlubbcnTjcXw"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n88l8JvPEeqRI4wJS-uzaA"/></columns><columns UUID="Column_ttROom5EEeq0P9ycfOtEQA" logicalName="비밀번호" physicalName="PASSWORD" domain="Domain_bVjvQCrfEeqfz-IPqhO_9w"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n88l8ZvPEeqRI4wJS-uzaA"/></columns><columns UUID="Column_ttROoG5EEeq0P9ycfOtEQA" logicalName="관리자_이름" physicalName="MANAGER_NAME" domain="Domain_h_kUUCz8EeqlubbcnTjcXw"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n89NAJvPEeqRI4wJS-uzaA"/></columns><columns UUID="Column_iFSHxG5YEeqPH6JfgOSEnw" logicalName="권한_시퀀스" physicalName="AUTH_SEQ" derivedPhysicalName="true" derivedLogicalName="true" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n89NAZvPEeqRI4wJS-uzaA"/><memberships UUID="MEntry_iFSHxW5YEeqPH6JfgOSEnw" key="FKCGroup_iFSHx25YEeqPH6JfgOSEnw"><value xsi:type="e:ColumnReference" UUID="CReference_iFSHxm5YEeqPH6JfgOSEnw" group="FKCGroup_iFSHx25YEeqPH6JfgOSEnw" parentColumn="Column_Dfb6gG5FEeq0P9ycfOtEQA"/></memberships></columns><columns UUID="Column_YRz3AG5iEeqPH6JfgOSEnw" logicalName="사용_아이피" physicalName="USE_IP" domain="Domain_h_kUUCz8EeqlubbcnTjcXw"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n89NApvPEeqRI4wJS-uzaA"/></columns><columns UUID="Column_U4LCkJvREeqRI4wJS-uzaA" logicalName="로그인_일시" physicalName="LOGIN_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A"/><columns UUID="Column_Dfb6c25FEeq0P9ycfOtEQA" logicalName="등록자_시퀀스" physicalName="REGISTER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n89NA5vPEeqRI4wJS-uzaA"/></columns><columns UUID="Column_Dfb6dG5FEeq0P9ycfOtEQA" logicalName="등록_일시" physicalName="REGISTRATION_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n89NBJvPEeqRI4wJS-uzaA"/></columns><columns UUID="Column_Dfb6dW5FEeq0P9ycfOtEQA" logicalName="수정자_시퀀스" physicalName="UPDATER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n89NBZvPEeqRI4wJS-uzaA"/></columns><columns UUID="Column_Dfb6dm5FEeq0P9ycfOtEQA" logicalName="수정_일시" physicalName="UPDATE_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n89NBpvPEeqRI4wJS-uzaA"/></columns><columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_mzzcd25EEeq0P9ycfOtEQA" logicalName="관리자 기본키" physicalName="PK_TB_MANAGER" derivedPhysicalName="true" derivedLogicalName="true"><physicalProperties xsi:type="mysql:IndexProperties" UUID="IProperties_n89NB5vPEeqRI4wJS-uzaA"/><primaryKeyConstraint UUID="PKConstraint_mzzceG5EEeq0P9ycfOtEQA" logicalName="관리자 기본키" physicalName="PK_TB_MANAGER" derivedPhysicalName="true" derivedLogicalName="true"/></columnGroups><columnGroups xsi:type="e:ForeignKeyColumnGroup" UUID="FKCGroup_iFSHx25YEeqPH6JfgOSEnw" logicalName="관리자_권한 -> 관리자" physicalName="FK_TB_MANAGER_AUTH_TO_TB_MANAGER" derivedPhysicalName="true" derivedLogicalName="true" parentColumnGroup="PKCGroup_Dfb6hG5FEeq0P9ycfOtEQA"><foreignKeyConstraint UUID="FKConstraint_iFSu0G5YEeqPH6JfgOSEnw" logicalName="관리자_권한 -> 관리자" physicalName="FK_TB_MANAGER_AUTH_TO_TB_MANAGER" derivedPhysicalName="true" derivedLogicalName="true"><physicalProperties xsi:type="mysql:ForeignKeyConstraintProperties" UUID="FKCProperties_n89NCJvPEeqRI4wJS-uzaA"/></foreignKeyConstraint></columnGroups></tables><tables UUID="Table_Dfb6em5FEeq0P9ycfOtEQA" logicalName="관리자_권한" physicalName="TB_MANAGER_AUTH"><physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_Dfb6fG5FEeq0P9ycfOtEQA"><partition UUID="Partition_Dfb6fW5FEeq0P9ycfOtEQA"><partitionAlgorithm UUID="PAlgorithm_Dfb6fm5FEeq0P9ycfOtEQA"/><subpartitionAlgorithm UUID="PAlgorithm_Dfb6f25FEeq0P9ycfOtEQA"/></partition></physicalProperties><columns UUID="Column_Dfb6gG5FEeq0P9ycfOtEQA" logicalName="권한_시퀀스" physicalName="AUTH_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Dfb6gW5FEeq0P9ycfOtEQA" autoIncrement="true"/><memberships UUID="MEntry_Dfb6gm5FEeq0P9ycfOtEQA" key="PKCGroup_Dfb6hG5FEeq0P9ycfOtEQA"><value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_Dfb6g25FEeq0P9ycfOtEQA" group="PKCGroup_Dfb6hG5FEeq0P9ycfOtEQA" entryIndex="0"/></memberships></columns><columns UUID="Column_VLvrwJwGEeqRI4wJS-uzaA" logicalName="부모_권한_시퀀스" physicalName="PARENTS_AUTH_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="TRUE"/><columns UUID="Column_iFSu0W5YEeqPH6JfgOSEnw" logicalName="권한_이름" physicalName="AUTH_NAME" domain="Domain_Nw40gSz8EeqlubbcnTjcXw"/><columns UUID="Column_ayq9MJv0EeqRI4wJS-uzaA" logicalName="역할유형타입" physicalName="ROLE_TYPE" domain="Domain_ED3dUChhEeqRTva_vmDH2g"/><columns UUID="Column_MuglMG5dEeqPH6JfgOSEnw" logicalName="사용_여부" physicalName="USE_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA"/><columns UUID="Column_MuglMW5dEeqPH6JfgOSEnw" logicalName="등록자_시퀀스" physicalName="REGISTER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE"/><columns UUID="Column_MuglMm5dEeqPH6JfgOSEnw" logicalName="등록_일시" physicalName="REGISTRATION_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE"/><columns UUID="Column_MuglM25dEeqPH6JfgOSEnw" logicalName="수정자_시퀀스" physicalName="UPDATER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE"/><columns UUID="Column_MuglNG5dEeqPH6JfgOSEnw" logicalName="수정_일시" physicalName="UPDATE_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE"/><columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_Dfb6hG5FEeq0P9ycfOtEQA" logicalName="관리자_권한 기본키" physicalName="PK_TB_MANAGER_AUTH" derivedPhysicalName="true" derivedLogicalName="true"><primaryKeyConstraint UUID="PKConstraint_Dfb6hW5FEeq0P9ycfOtEQA" logicalName="관리자_권한 기본키" physicalName="PK_TB_MANAGER_AUTH" derivedPhysicalName="true" derivedLogicalName="true"/></columnGroups></tables><tables UUID="Table_aDXaZG5FEeq0P9ycfOtEQA" logicalName="관리자_메뉴_권한_매핑" physicalName="TB_MANAGER_MENU_AUTH_MAPPING"><physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_aDXaZm5FEeq0P9ycfOtEQA"><partition UUID="Partition_aDXaZ25FEeq0P9ycfOtEQA"><partitionAlgorithm UUID="PAlgorithm_aDXaaG5FEeq0P9ycfOtEQA"/><subpartitionAlgorithm UUID="PAlgorithm_aDXaaW5FEeq0P9ycfOtEQA"/></partition></physicalProperties><columns UUID="Column_aDXaam5FEeq0P9ycfOtEQA" logicalName="매핑_시퀀스" physicalName="MAPPING_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_90PlUG5cEeqPH6JfgOSEnw" autoIncrement="true"/><memberships UUID="MEntry_90PlUW5cEeqPH6JfgOSEnw" key="PKCGroup_90QMZ25cEeqPH6JfgOSEnw"><value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_90PlUm5cEeqPH6JfgOSEnw" group="PKCGroup_90QMZ25cEeqPH6JfgOSEnw" entryIndex="0"/></memberships></columns><columns UUID="Column_NqijkHlpEeqYd9sBoL8KXg" logicalName="메뉴_시퀀스" physicalName="MENU_SEQ" derivedPhysicalName="true" derivedLogicalName="true" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A"><memberships UUID="MEntry_NqijkXlpEeqYd9sBoL8KXg" key="FKCGroup_Nqijk3lpEeqYd9sBoL8KXg"><value xsi:type="e:ColumnReference" UUID="CReference_NqijknlpEeqYd9sBoL8KXg" group="FKCGroup_Nqijk3lpEeqYd9sBoL8KXg" parentColumn="Column_I9-t0HlpEeqYd9sBoL8KXg"/></memberships></columns><columns UUID="Column_yAnjEG5YEeqPH6JfgOSEnw" logicalName="권한_시퀀스" physicalName="AUTH_SEQ" derivedPhysicalName="true" derivedLogicalName="true" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="TRUE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_90QMYG5cEeqPH6JfgOSEnw"/><memberships UUID="MEntry_yAnjEW5YEeqPH6JfgOSEnw" key="FKCGroup_yAoKIm5YEeqPH6JfgOSEnw"><value xsi:type="e:ColumnReference" UUID="CReference_yAnjEm5YEeqPH6JfgOSEnw" group="FKCGroup_yAoKIm5YEeqPH6JfgOSEnw" parentColumn="Column_Dfb6gG5FEeq0P9ycfOtEQA"/></memberships></columns><columns UUID="Column_aDXaa25FEeq0P9ycfOtEQA" logicalName="사용_여부" physicalName="USE_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_90QMYm5cEeqPH6JfgOSEnw"/></columns><columns UUID="Column_aDXabG5FEeq0P9ycfOtEQA" logicalName="등록자_시퀀스" physicalName="REGISTER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_90QMY25cEeqPH6JfgOSEnw"/></columns><columns UUID="Column_aDXabW5FEeq0P9ycfOtEQA" logicalName="등록_일시" physicalName="REGISTRATION_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_90QMZG5cEeqPH6JfgOSEnw"/></columns><columns UUID="Column_aDXabm5FEeq0P9ycfOtEQA" logicalName="수정자_시퀀스" physicalName="UPDATER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_90QMZW5cEeqPH6JfgOSEnw"/></columns><columns UUID="Column_aDXab25FEeq0P9ycfOtEQA" logicalName="수정_일시" physicalName="UPDATE_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_90QMZm5cEeqPH6JfgOSEnw"/></columns><columnGroups xsi:type="e:ForeignKeyColumnGroup" UUID="FKCGroup_yAoKIm5YEeqPH6JfgOSEnw" logicalName="관리자_권한 -> 관리자_메뉴_권한_매핑" physicalName="FK_TB_MANAGER_AUTH_TO_TB_MANAGER_MENU_AUTH_MAPPING" derivedPhysicalName="true" derivedLogicalName="true" parentColumnGroup="PKCGroup_Dfb6hG5FEeq0P9ycfOtEQA"><foreignKeyConstraint UUID="FKConstraint_yAoKI25YEeqPH6JfgOSEnw" logicalName="관리자_권한 -> 관리자_메뉴_권한_매핑" physicalName="FK_TB_MANAGER_AUTH_TO_TB_MANAGER_MENU_AUTH_MAPPING" derivedPhysicalName="true" derivedLogicalName="true"><physicalProperties xsi:type="mysql:ForeignKeyConstraintProperties" UUID="FKCProperties_9Tu2EG5YEeqPH6JfgOSEnw" onDeleteRule="CASCADE" onUpdateRule="CASCADE"/></foreignKeyConstraint></columnGroups><columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_90QMZ25cEeqPH6JfgOSEnw" logicalName="관리자_메뉴_권한_매핑 기본키" physicalName="PK_TB_MANAGER_MENU_AUTH_MAPPING" derivedPhysicalName="true" derivedLogicalName="true"><primaryKeyConstraint UUID="PKConstraint_90QMaG5cEeqPH6JfgOSEnw" logicalName="관리자_메뉴_권한_매핑 기본키" physicalName="PK_TB_MANAGER_MENU_AUTH_MAPPING" derivedPhysicalName="true" derivedLogicalName="true"/></columnGroups><columnGroups xsi:type="e:ForeignKeyColumnGroup" UUID="FKCGroup_Nqijk3lpEeqYd9sBoL8KXg" logicalName="관리자_메뉴_목록 -> 관리자_메뉴_권한_매핑" physicalName="FK_TB_MANAGER_MENU_TO_TB_MANAGER_MENU_AUTH_MAPPING" derivedPhysicalName="true" derivedLogicalName="true" parentColumnGroup="PKCGroup_iFSu3m5YEeqPH6JfgOSEnw"><foreignKeyConstraint UUID="FKConstraint_NqijlHlpEeqYd9sBoL8KXg" logicalName="관리자_메뉴_목록 -> 관리자_메뉴_권한_매핑" physicalName="FK_TB_MANAGER_MENU_TO_TB_MANAGER_MENU_AUTH_MAPPING" derivedPhysicalName="true" derivedLogicalName="true"/></columnGroups></tables><tables UUID="Table_-aLl9G5GEeq0P9ycfOtEQA" logicalName="관리자_메뉴_목록" physicalName="TB_MANAGER_MENU"><physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_-aLl9m5GEeq0P9ycfOtEQA"><partition UUID="Partition_-aLl925GEeq0P9ycfOtEQA"><partitionAlgorithm UUID="PAlgorithm_-aLl-G5GEeq0P9ycfOtEQA"/><subpartitionAlgorithm UUID="PAlgorithm_-aLl-W5GEeq0P9ycfOtEQA"/></partition></physicalProperties><columns UUID="Column_I9-t0HlpEeqYd9sBoL8KXg" logicalName="메뉴_시퀀스" physicalName="MENU_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_I9-t0XlpEeqYd9sBoL8KXg" autoIncrement="true"/><memberships UUID="MEntry_I9-t0nlpEeqYd9sBoL8KXg" key="PKCGroup_iFSu3m5YEeqPH6JfgOSEnw"><value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_I9-t03lpEeqYd9sBoL8KXg" group="PKCGroup_iFSu3m5YEeqPH6JfgOSEnw"/></memberships></columns><columns UUID="Column_iFSu1W5YEeqPH6JfgOSEnw" logicalName="메뉴_이름" physicalName="MENU_NAME" domain="Domain_rnTqoSz8Eeqf64cXuZBjCA" notNull="TRUE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_I9-t1HlpEeqYd9sBoL8KXg"/></columns><columns UUID="Column_-aLl-m5GEeq0P9ycfOtEQA" logicalName="메뉴_경로" physicalName="MENU_PATH" domain="Domain_Nw40gSz8EeqlubbcnTjcXw" notNull="TRUE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_iFSu0m5YEeqPH6JfgOSEnw"/></columns><columns UUID="Column_yMnZYHlpEeqYd9sBoL8KXg" logicalName="메뉴_CODE" physicalName="MENU_CODE" domain="Domain_ED3dUChhEeqRTva_vmDH2g" notNull="TRUE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_YxIoEHlqEeqYd9sBoL8KXg"/></columns><columns UUID="Column_NNEvAHlqEeqYd9sBoL8KXg" logicalName="상위_메뉴_CODE" physicalName="UPPER_MENU_CODE" domain="Domain_ED3dUChhEeqRTva_vmDH2g"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_YxIoEXlqEeqYd9sBoL8KXg"/></columns><columns UUID="Column_kXilsJv0EeqRI4wJS-uzaA" logicalName="생성_권한_여부" physicalName="CREATION_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gQJ4vEeqB0vvB3rXaQA"/></columns><columns UUID="Column_kXilsZv0EeqRI4wJS-uzaA" logicalName="수정_권한_여부" physicalName="UPDATE_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gQZ4vEeqB0vvB3rXaQA"/></columns><columns UUID="Column_kXilspv0EeqRI4wJS-uzaA" logicalName="삭제_권한_여부" physicalName="DELETE_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gQp4vEeqB0vvB3rXaQA"/></columns><columns UUID="Column_kXils5v0EeqRI4wJS-uzaA" logicalName="읽기_권한_여부" physicalName="READING_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gQ54vEeqB0vvB3rXaQA"/></columns><columns UUID="Column_kXiltJv0EeqRI4wJS-uzaA" logicalName="다운로드_권한_여부" physicalName="DOWNLOAD_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gRJ4vEeqB0vvB3rXaQA"/></columns><columns UUID="Column_kXiltZv0EeqRI4wJS-uzaA" logicalName="업로드_권한_여부" physicalName="UPLOAD_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gRZ4vEeqB0vvB3rXaQA"/></columns><columns UUID="Column_VLvrwZwGEeqRI4wJS-uzaA" logicalName="인쇄_권한_여부" physicalName="PRINTING_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gRp4vEeqB0vvB3rXaQA"/></columns><columns UUID="Column_VLvrwpwGEeqRI4wJS-uzaA" logicalName="엑셀_권한_여부" physicalName="EXCEL_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gR54vEeqB0vvB3rXaQA"/></columns><columns UUID="Column_5SblgHlpEeqYd9sBoL8KXg" logicalName="메뉴_순서" physicalName="MENU_ORDER" domain="Domain_SjupWSL0Eeq2ucOzLborkg"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_YxIoEnlqEeqYd9sBoL8KXg"/></columns><columns UUID="Column_PqyuoHlqEeqYd9sBoL8KXg" logicalName="사용_여부" physicalName="USE_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_YxIoE3lqEeqYd9sBoL8KXg"/></columns><columns UUID="Column_iFSu2m5YEeqPH6JfgOSEnw" logicalName="등록자_시퀀스" physicalName="REGISTER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_I9-t2XlpEeqYd9sBoL8KXg"/></columns><columns UUID="Column_iFSu225YEeqPH6JfgOSEnw" logicalName="등록_일시" physicalName="REGISTRATION_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_I9-t2nlpEeqYd9sBoL8KXg"/></columns><columns UUID="Column_iFSu3G5YEeqPH6JfgOSEnw" logicalName="수정자_시퀀스" physicalName="UPDATER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_I9-t23lpEeqYd9sBoL8KXg"/></columns><columns UUID="Column_iFSu3W5YEeqPH6JfgOSEnw" logicalName="수정_일시" physicalName="UPDATE_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_I9-t3HlpEeqYd9sBoL8KXg"/></columns><columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_iFSu3m5YEeqPH6JfgOSEnw" logicalName="관리자_메뉴_목록 기본키" physicalName="PK_TB_MANAGER_MENU" derivedPhysicalName="true" derivedLogicalName="true"><physicalProperties xsi:type="mysql:IndexProperties" UUID="IProperties_I9-t3XlpEeqYd9sBoL8KXg"/><primaryKeyConstraint UUID="PKConstraint_iFSu325YEeqPH6JfgOSEnw" logicalName="관리자_메뉴_목록 기본키" physicalName="PK_TB_MANAGER_MENU" derivedPhysicalName="true" derivedLogicalName="true"/></columnGroups></tables><tables UUID="Table_BaaWkW5kEeqPH6JfgOSEnw" logicalName="관리자_로그인_이력" physicalName="TB_MANAGER_LOGIN_HISTORY"><physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_BaaWkm5kEeqPH6JfgOSEnw"><partition UUID="Partition_BaaWk25kEeqPH6JfgOSEnw"><partitionAlgorithm UUID="PAlgorithm_BaaWlG5kEeqPH6JfgOSEnw"/><subpartitionAlgorithm UUID="PAlgorithm_BaaWlW5kEeqPH6JfgOSEnw"/></partition></physicalProperties><columns UUID="Column_BaaWlm5kEeqPH6JfgOSEnw" logicalName="로그인_이력_시퀀스" physicalName="LOGIN_HISTORY_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="TRUE"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_BaaWl25kEeqPH6JfgOSEnw" autoIncrement="true"/><memberships UUID="MEntry_BaaWmG5kEeqPH6JfgOSEnw" key="PKCGroup_BaaWmm5kEeqPH6JfgOSEnw"><value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_BaaWmW5kEeqPH6JfgOSEnw" group="PKCGroup_BaaWmm5kEeqPH6JfgOSEnw" entryIndex="0"/></memberships></columns><columns UUID="Column_IwhogG5kEeqPH6JfgOSEnw" logicalName="관리자_시퀀스" physicalName="MANAGER_SEQ" derivedPhysicalName="true" derivedLogicalName="true" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n8-bIJvPEeqRI4wJS-uzaA"/><memberships UUID="MEntry_IwhogW5kEeqPH6JfgOSEnw" key="FKCGroup_IwhohW5kEeqPH6JfgOSEnw"><value xsi:type="e:ColumnReference" UUID="CReference_Iwhogm5kEeqPH6JfgOSEnw" group="FKCGroup_IwhohW5kEeqPH6JfgOSEnw" parentColumn="Column_lHcoUW5EEeq0P9ycfOtEQA"/></memberships></columns><columns UUID="Column_Iwhog25kEeqPH6JfgOSEnw" logicalName="로그인_아이피" physicalName="LOGIN_IP" domain="Domain_Nz2XASz-Eeq4-KiuddssPg"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n8-bIZvPEeqRI4wJS-uzaA"/></columns><columns UUID="Column_IwhohG5kEeqPH6JfgOSEnw" logicalName="로그인_일시" physicalName="LOGIN_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A"><physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n8-bIpvPEeqRI4wJS-uzaA"/></columns><columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_BaaWmm5kEeqPH6JfgOSEnw" logicalName="관리자_로그인_이력 기본키" physicalName="PK_TB_MANAGER_LOGIN_HISTORY" derivedPhysicalName="true" derivedLogicalName="true"><physicalProperties xsi:type="mysql:IndexProperties" UUID="IProperties_n8-bI5vPEeqRI4wJS-uzaA"/><primaryKeyConstraint UUID="PKConstraint_BaaWm25kEeqPH6JfgOSEnw" logicalName="관리자_로그인_이력 기본키" physicalName="PK_TB_MANAGER_LOGIN_HISTORY" derivedPhysicalName="true" derivedLogicalName="true"/></columnGroups><columnGroups xsi:type="e:ForeignKeyColumnGroup" UUID="FKCGroup_IwhohW5kEeqPH6JfgOSEnw" logicalName="관리자 -> 관리자_로그인_이력" physicalName="FK_TB_MANAGER_TO_TB_MANAGER_LOGIN_HISTORY" derivedPhysicalName="true" derivedLogicalName="true" parentColumnGroup="PKCGroup_mzzcd25EEeq0P9ycfOtEQA"><foreignKeyConstraint UUID="FKConstraint_Iwhohm5kEeqPH6JfgOSEnw" logicalName="관리자 -> 관리자_로그인_이력" physicalName="FK_TB_MANAGER_TO_TB_MANAGER_LOGIN_HISTORY" derivedPhysicalName="true" derivedLogicalName="true"><physicalProperties xsi:type="mysql:ForeignKeyConstraintProperties" UUID="FKCProperties_n8-bJJvPEeqRI4wJS-uzaA"/></foreignKeyConstraint></columnGroups></tables><tables UUID="Table_nN5pEXlpEeqYd9sBoL8KXg" logicalName="관리자_메뉴_목록2" physicalName="TB_MANAGER_MENU2"><physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_nN5pEnlpEeqYd9sBoL8KXg"><partition UUID="Partition_nN5pE3lpEeqYd9sBoL8KXg"><partitionAlgorithm UUID="PAlgorithm_nN5pFHlpEeqYd9sBoL8KXg"/><subpartitionAlgorithm UUID="PAlgorithm_nN5pFXlpEeqYd9sBoL8KXg"/></partition></physicalProperties><columns UUID="Column_nN5pFnlpEeqYd9sBoL8KXg" logicalName="메뉴_시퀀스" physicalName="MENU_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A"><memberships UUID="MEntry_nN5pF3lpEeqYd9sBoL8KXg" key="PKCGroup_nN6QKXlpEeqYd9sBoL8KXg"><value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_nN5pGHlpEeqYd9sBoL8KXg" group="PKCGroup_nN6QKXlpEeqYd9sBoL8KXg"/></memberships></columns><columns UUID="Column_nN5pGXlpEeqYd9sBoL8KXg" logicalName="요청_경로" physicalName="REQUEST_PATH" domain="Domain_Nw40gSz8EeqlubbcnTjcXw" notNull="TRUE"/><columns UUID="Column_nN6QIHlpEeqYd9sBoL8KXg" logicalName="요청_이름" physicalName="REQUEST_NAME" domain="Domain_rnTqoSz8Eeqf64cXuZBjCA"/><columns UUID="Column_nN6QIXlpEeqYd9sBoL8KXg" logicalName="요청_클래스" physicalName="REQUEST_CLASS" domain="Domain_h_kUUCz8EeqlubbcnTjcXw" tagColor="RGB {157, 77, 81}"/><columns UUID="Column_nN6QInlpEeqYd9sBoL8KXg" logicalName="요청_메소드" physicalName="REQUEST_METHOD" domain="Domain_h_kUUCz8EeqlubbcnTjcXw" tagColor="RGB {157, 77, 81}"/><columns UUID="Column_nN6QI3lpEeqYd9sBoL8KXg" logicalName="요청_파라미터" physicalName="REQUEST_PARAMETER" domain="Domain_rnTqoSz8Eeqf64cXuZBjCA" tagColor="RGB {157, 77, 81}"/><columns UUID="Column_nN6QJHlpEeqYd9sBoL8KXg" logicalName="반환_유형" physicalName="RETURN_TYPE" domain="Domain_h_kUUCz8EeqlubbcnTjcXw" tagColor="RGB {157, 77, 81}"/><columns UUID="Column_nN6QJXlpEeqYd9sBoL8KXg" logicalName="등록자_시퀀스" physicalName="REGISTER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE"/><columns UUID="Column_nN6QJnlpEeqYd9sBoL8KXg" logicalName="등록_일시" physicalName="REGISTRATION_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE"/><columns UUID="Column_nN6QJ3lpEeqYd9sBoL8KXg" logicalName="수정자_시퀀스" physicalName="UPDATER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE"/><columns UUID="Column_nN6QKHlpEeqYd9sBoL8KXg" logicalName="수정_일시" physicalName="UPDATE_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE"/><columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_nN6QKXlpEeqYd9sBoL8KXg" logicalName="관리자_메뉴_목록2 기본키" physicalName="PK_TB_MANAGER_MENU2" derivedPhysicalName="true" derivedLogicalName="true"><primaryKeyConstraint UUID="PKConstraint_nN6QKnlpEeqYd9sBoL8KXg" logicalName="관리자_메뉴_목록2 기본키" physicalName="PK_TB_MANAGER_MENU2" derivedPhysicalName="true" derivedLogicalName="true"/></columnGroups></tables><tables UUID="Table_n8_CMJvPEeqRI4wJS-uzaA" logicalName="새 테이블" physicalName="TABLE"/></schema><schema UUID="Schema_F-uHgHL_EeqP8Lk2M9dQdg" logicalName="내 스키마" physicalName="toyota"><tables UUID="Table_F-uHgXL_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴권한" physicalName="TB_MENU_AUTH" comment="[공통]_메뉴권한"><physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_I9-t3nlpEeqYd9sBoL8KXg"><partition UUID="Partition_I9-t33lpEeqYd9sBoL8KXg"><partitionAlgorithm UUID="PAlgorithm_I9-t4HlpEeqYd9sBoL8KXg"/><subpartitionAlgorithm UUID="PAlgorithm_I9-t4XlpEeqYd9sBoL8KXg"/></partition></physicalProperties><columns UUID="Column_F-uHgnL_EeqP8Lk2M9dQdg" logicalName="고유번호" physicalName="idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg"><memberships UUID="MEntry_F-uHg3L_EeqP8Lk2M9dQdg" key="PKCGroup_F-uHknL_EeqP8Lk2M9dQdg"><value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_F-uHhHL_EeqP8Lk2M9dQdg" group="PKCGroup_F-uHknL_EeqP8Lk2M9dQdg" entryIndex="0"/></memberships></columns><columns UUID="Column_F-uHhXL_EeqP8Lk2M9dQdg" logicalName="메뉴 고유번호" physicalName="menu_idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg" notNull="TRUE"><memberships UUID="MEntry_F-uHhnL_EeqP8Lk2M9dQdg" key="FKCGroup_F-uukHL_EeqP8Lk2M9dQdg"><value xsi:type="e:ColumnReference" UUID="CReference_F-uHh3L_EeqP8Lk2M9dQdg" group="FKCGroup_F-uukHL_EeqP8Lk2M9dQdg" parentColumn="Column_F-uulHL_EeqP8Lk2M9dQdg"/></memberships></columns><columns UUID="Column_F-uHiHL_EeqP8Lk2M9dQdg" logicalName="상위코드" physicalName="upcode" domain="Domain_ED3dUChhEeqRTva_vmDH2g" notNull="TRUE"/><columns UUID="Column_F-uHiXL_EeqP8Lk2M9dQdg" logicalName="관리자구분" physicalName="type" domain="Domain_ED3dUChhEeqRTva_vmDH2g" notNull="TRUE"><memberships UUID="MEntry_F-uHinL_EeqP8Lk2M9dQdg" key="IECGroup_F-uuknL_EeqP8Lk2M9dQdg"><value xsi:type="e:InversionEntryMembership" UUID="IEMembership_F-uHi3L_EeqP8Lk2M9dQdg" group="IECGroup_F-uuknL_EeqP8Lk2M9dQdg"/></memberships></columns><columns UUID="Column_F-uHjHL_EeqP8Lk2M9dQdg" logicalName="사용여부" physicalName="use_yn" domain="Domain_F-tgcXL_EeqP8Lk2M9dQdg" notNull="TRUE"/><columns UUID="Column_F-uHjXL_EeqP8Lk2M9dQdg" logicalName="삭제여부" physicalName="del_yn" domain="Domain_F-tgcnL_EeqP8Lk2M9dQdg" notNull="TRUE"/><columns UUID="Column_F-uHjnL_EeqP8Lk2M9dQdg" logicalName="최초등록자" physicalName="reg_idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg" notNull="TRUE"/><columns UUID="Column_F-uHj3L_EeqP8Lk2M9dQdg" logicalName="최초등록일" physicalName="reg_dt" domain="Domain_F-tgc3L_EeqP8Lk2M9dQdg" notNull="TRUE"/><columns UUID="Column_F-uHkHL_EeqP8Lk2M9dQdg" logicalName="수정자" physicalName="mod_idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg" notNull="FALSE"/><columns UUID="Column_F-uHkXL_EeqP8Lk2M9dQdg" logicalName="수정일" physicalName="mod_dt" domain="Domain_F-tgc3L_EeqP8Lk2M9dQdg" notNull="FALSE"/><columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_F-uHknL_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴권한 기본키" physicalName="PK_TB_MENU_AUTH" derivedPhysicalName="true" derivedLogicalName="true"><primaryKeyConstraint UUID="PKConstraint_F-uHk3L_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴권한 기본키" physicalName="PK_TB_MENU_AUTH" derivedPhysicalName="true" derivedLogicalName="true"/></columnGroups><columnGroups xsi:type="e:ForeignKeyColumnGroup" UUID="FKCGroup_F-uukHL_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴 -> [공통]_메뉴권한" physicalName="FK_TB_MENU_TO_TB_MENU_AUTH" derivedPhysicalName="true" derivedLogicalName="true" parentColumnGroup="PKCGroup_F-uuonL_EeqP8Lk2M9dQdg"><foreignKeyConstraint UUID="FKConstraint_F-uukXL_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴 -> [공통]_메뉴권한" physicalName="FK_TB_MENU_TO_TB_MENU_AUTH" derivedPhysicalName="true" derivedLogicalName="true"/></columnGroups><columnGroups xsi:type="e:InversionEntryColumnGroup" UUID="IECGroup_F-uuknL_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴권한 인덱스" physicalName="IX_TB_MENU_AUTH" derivedPhysicalName="true" derivedLogicalName="true"/></tables><tables UUID="Table_F-uuk3L_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴" physicalName="TB_MENU" comment="[공통]_메뉴"><physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_I9-t4nlpEeqYd9sBoL8KXg"><partition UUID="Partition_I9-t43lpEeqYd9sBoL8KXg"><partitionAlgorithm UUID="PAlgorithm_I9-t5HlpEeqYd9sBoL8KXg"/><subpartitionAlgorithm UUID="PAlgorithm_I9-t5XlpEeqYd9sBoL8KXg"/></partition></physicalProperties><columns UUID="Column_F-uulHL_EeqP8Lk2M9dQdg" logicalName="고유번호" physicalName="idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg"><memberships UUID="MEntry_F-uulXL_EeqP8Lk2M9dQdg" key="PKCGroup_F-uuonL_EeqP8Lk2M9dQdg"><value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_F-uulnL_EeqP8Lk2M9dQdg" group="PKCGroup_F-uuonL_EeqP8Lk2M9dQdg" entryIndex="0"/></memberships></columns><columns UUID="Column_F-uul3L_EeqP8Lk2M9dQdg" logicalName="메뉴코드" physicalName="code" domain="Domain_ED3dUChhEeqRTva_vmDH2g" notNull="TRUE"/><columns UUID="Column_F-uumHL_EeqP8Lk2M9dQdg" logicalName="상위메뉴코드" physicalName="upcode" domain="Domain_ED3dUChhEeqRTva_vmDH2g" notNull="TRUE"/><columns UUID="Column_F-uumXL_EeqP8Lk2M9dQdg" logicalName="코드명" physicalName="name" domain="Domain_F-tgdHL_EeqP8Lk2M9dQdg" notNull="TRUE"/><columns UUID="Column_F-uumnL_EeqP8Lk2M9dQdg" logicalName="코드설명" physicalName="link" domain="Domain_F-tgdXL_EeqP8Lk2M9dQdg"/><columns UUID="Column_F-uum3L_EeqP8Lk2M9dQdg" logicalName="순서" physicalName="sort" domain="Domain_F-tgdnL_EeqP8Lk2M9dQdg"/><columns UUID="Column_F-uunHL_EeqP8Lk2M9dQdg" logicalName="사용여부" physicalName="use_yn" domain="Domain_F-tgcXL_EeqP8Lk2M9dQdg" notNull="TRUE"/><columns UUID="Column_F-uunXL_EeqP8Lk2M9dQdg" logicalName="삭제여부" physicalName="del_yn" domain="Domain_F-tgcnL_EeqP8Lk2M9dQdg" notNull="TRUE"/><columns UUID="Column_F-uunnL_EeqP8Lk2M9dQdg" logicalName="최초등록자" physicalName="reg_idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg" notNull="TRUE"/><columns UUID="Column_F-uun3L_EeqP8Lk2M9dQdg" logicalName="최초등록일" physicalName="reg_dt" domain="Domain_F-tgc3L_EeqP8Lk2M9dQdg" notNull="TRUE"/><columns UUID="Column_F-uuoHL_EeqP8Lk2M9dQdg" logicalName="수정자" physicalName="mod_idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg" notNull="FALSE"/><columns UUID="Column_F-uuoXL_EeqP8Lk2M9dQdg" logicalName="수정일" physicalName="mod_dt" domain="Domain_F-tgc3L_EeqP8Lk2M9dQdg" notNull="FALSE"/><columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_F-uuonL_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴 기본키" physicalName="PK_TB_MENU" derivedPhysicalName="true" derivedLogicalName="true"><primaryKeyConstraint UUID="PKConstraint_F-uuo3L_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴 기본키" physicalName="PK_TB_MENU" derivedPhysicalName="true" derivedLogicalName="true"/></columnGroups></tables><tables UUID="Table_F-uupHL_EeqP8Lk2M9dQdg" logicalName="[서비스]_운영자" physicalName="TB_ADM" comment="[서비스]_운영자"><physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_I9-t5nlpEeqYd9sBoL8KXg"><partition UUID="Partition_I9-t53lpEeqYd9sBoL8KXg"><partitionAlgorithm UUID="PAlgorithm_I9-t6HlpEeqYd9sBoL8KXg"/><subpartitionAlgorithm UUID="PAlgorithm_I9-t6XlpEeqYd9sBoL8KXg"/></partition></physicalProperties><columns UUID="Column_F-uupXL_EeqP8Lk2M9dQdg" logicalName="고유번호" physicalName="idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg"><memberships UUID="MEntry_F-uupnL_EeqP8Lk2M9dQdg" key="PKCGroup_F-uuvXL_EeqP8Lk2M9dQdg"><value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_F-uup3L_EeqP8Lk2M9dQdg" group="PKCGroup_F-uuvXL_EeqP8Lk2M9dQdg" entryIndex="0"/></memberships></columns><columns UUID="Column_F-uuqHL_EeqP8Lk2M9dQdg" logicalName="id" physicalName="id" domain="Domain_F-tgd3L_EeqP8Lk2M9dQdg" notNull="TRUE"><memberships UUID="MEntry_F-uuqXL_EeqP8Lk2M9dQdg" key="AKCGroup_F-uuv3L_EeqP8Lk2M9dQdg"><value xsi:type="e:AlternateKeyMembership" UUID="AKMembership_F-uuqnL_EeqP8Lk2M9dQdg" group="AKCGroup_F-uuv3L_EeqP8Lk2M9dQdg" entryIndex="0"/></memberships></columns><columns UUID="Column_F-uuq3L_EeqP8Lk2M9dQdg" logicalName="운영자명" physicalName="name" domain="Domain_F-tgdHL_EeqP8Lk2M9dQdg" notNull="TRUE"/><columns UUID="Column_F-uurHL_EeqP8Lk2M9dQdg" logicalName="운영자타입" physicalName="type" domain="Domain_ED3dUChhEeqRTva_vmDH2g"/><columns UUID="Column_F-uurXL_EeqP8Lk2M9dQdg" logicalName="운영자비밀번호" physicalName="pwd" domain="Domain_F-tgdXL_EeqP8Lk2M9dQdg" notNull="TRUE"/><columns UUID="Column_F-uurnL_EeqP8Lk2M9dQdg" logicalName="운영자연락처" physicalName="numbers" domain="Domain_F-tgdHL_EeqP8Lk2M9dQdg"/><columns UUID="Column_F-uur3L_EeqP8Lk2M9dQdg" logicalName="운영자메일" physicalName="email" domain="Domain_F-tgdHL_EeqP8Lk2M9dQdg"/><columns UUID="Column_F-uusHL_EeqP8Lk2M9dQdg" logicalName="운영자IP" physicalName="ip" domain="Domain_F-tgdHL_EeqP8Lk2M9dQdg"/><columns UUID="Column_F-uusXL_EeqP8Lk2M9dQdg" logicalName="부서/팀" physicalName="team" domain="Domain_F-tgdHL_EeqP8Lk2M9dQdg"/><columns UUID="Column_F-uusnL_EeqP8Lk2M9dQdg" logicalName="직급" physicalName="rank" domain="Domain_F-tgdHL_EeqP8Lk2M9dQdg"/><columns UUID="Column_F-uus3L_EeqP8Lk2M9dQdg" logicalName="회사" physicalName="company" domain="Domain_ED3dUChhEeqRTva_vmDH2g"/><columns UUID="Column_F-uutHL_EeqP8Lk2M9dQdg" logicalName="최근접속일" physicalName="rec_dt" domain="Domain_F-tgc3L_EeqP8Lk2M9dQdg"/><columns UUID="Column_F-uutXL_EeqP8Lk2M9dQdg" logicalName="방문수" physicalName="visit" domain="Domain_F-tgdnL_EeqP8Lk2M9dQdg"/><columns UUID="Column_F-uutnL_EeqP8Lk2M9dQdg" logicalName="개인정보열람여부" physicalName="auth_yn" domain="Domain_F-tgcnL_EeqP8Lk2M9dQdg"/><columns UUID="Column_F-uut3L_EeqP8Lk2M9dQdg" logicalName="사용여부" physicalName="use_yn" domain="Domain_F-tgcXL_EeqP8Lk2M9dQdg" notNull="TRUE"/><columns UUID="Column_F-uuuHL_EeqP8Lk2M9dQdg" logicalName="삭제여부" physicalName="del_yn" domain="Domain_F-tgcnL_EeqP8Lk2M9dQdg" notNull="TRUE"/><columns UUID="Column_F-uuuXL_EeqP8Lk2M9dQdg" logicalName="최초등록자" physicalName="reg_idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg" notNull="TRUE"/><columns UUID="Column_F-uuunL_EeqP8Lk2M9dQdg" logicalName="최초등록일" physicalName="reg_dt" domain="Domain_F-tgc3L_EeqP8Lk2M9dQdg" notNull="TRUE"/><columns UUID="Column_F-uuu3L_EeqP8Lk2M9dQdg" logicalName="수정자" physicalName="mod_idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg"/><columns UUID="Column_F-uuvHL_EeqP8Lk2M9dQdg" logicalName="수정일" physicalName="mod_dt" domain="Domain_F-tgc3L_EeqP8Lk2M9dQdg"/><columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_F-uuvXL_EeqP8Lk2M9dQdg" logicalName="[서비스]_운영자 기본키" physicalName="PK_TB_ADM" derivedPhysicalName="true" derivedLogicalName="true"><primaryKeyConstraint UUID="PKConstraint_F-uuvnL_EeqP8Lk2M9dQdg" logicalName="[서비스]_운영자 기본키" physicalName="PK_TB_ADM" derivedPhysicalName="true" derivedLogicalName="true"/></columnGroups><columnGroups xsi:type="e:AlternateKeyColumnGroup" UUID="AKCGroup_F-uuv3L_EeqP8Lk2M9dQdg" logicalName="[서비스]_운영자 유니크 인덱스" physicalName="UIX_TB_ADM" derivedPhysicalName="true" derivedLogicalName="true"><uniqueConstraint UUID="UConstraint_F-uuwHL_EeqP8Lk2M9dQdg" logicalName="[서비스]_운영자 유니크 제약" physicalName="UK_TB_ADM" derivedPhysicalName="true" derivedLogicalName="true"/></columnGroups></tables></schema></databaseModel><sharedIcons UUID="SIcons_SjupYyL0Eeq2ucOzLborkg"/></e:Document>
+<?xml version="1.1" encoding="UTF-8"?>
+<e:Document xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:e="http://exerd.tomato.com/model" xmlns:mysql="http://exerd.tomato.com/mysql/model" UUID="Document_SjupUCL0Eeq2ucOzLborkg" activeBusinessArea="BArea_SjupXyL0Eeq2ucOzLborkg" activeSchema="Schema_81qYcSMJEeq2ucOzLborkg" version="3.3.3.20200424-1351" modelVersion="3.0.0.20190111-1604" productId="com.tomato.db.mysql" openedDiagrams="Diagram_SjupYCL0Eeq2ucOzLborkg">
+  <relationManager>
+    <relation key="FKCGroup_iFSHx25YEeqPH6JfgOSEnw">
+      <value foreignKeyColumnGroup="FKCGroup_iFSHx25YEeqPH6JfgOSEnw"/>
+    </relation>
+    <relation key="FKCGroup_yAoKIm5YEeqPH6JfgOSEnw">
+      <value foreignKeyColumnGroup="FKCGroup_yAoKIm5YEeqPH6JfgOSEnw"/>
+    </relation>
+    <relation key="FKCGroup_IwhohW5kEeqPH6JfgOSEnw">
+      <value foreignKeyColumnGroup="FKCGroup_IwhohW5kEeqPH6JfgOSEnw"/>
+    </relation>
+    <relation key="FKCGroup_F-uukHL_EeqP8Lk2M9dQdg">
+      <value foreignKeyColumnGroup="FKCGroup_F-uukHL_EeqP8Lk2M9dQdg"/>
+    </relation>
+    <relation key="FKCGroup_Nqijk3lpEeqYd9sBoL8KXg">
+      <value foreignKeyColumnGroup="FKCGroup_Nqijk3lpEeqYd9sBoL8KXg"/>
+    </relation>
+  </relationManager>
+  <configuration termFilePath="/cokeplay_admin/DOC/DB/ERD/CokePLAY_표준_용어사전_V1.0.1.xdic">
+    <domainDefinition UUID="DDefinition_SjupUSL0Eeq2ucOzLborkg">
+      <domain UUID="Domain_SjupUiL0Eeq2ucOzLborkg" name="문자" suggestedDataType="VARCHAR(255)">
+        <domain UUID="Domain_SjupUyL0Eeq2ucOzLborkg" name="주민등록번호" suggestedDataType="VARCHAR(13)"/>
+        <domain UUID="Domain_SjupVCL0Eeq2ucOzLborkg" name="주소"/>
+        <domain UUID="Domain_SjupVSL0Eeq2ucOzLborkg" name="웹주소"/>
+        <domain UUID="Domain_SjupViL0Eeq2ucOzLborkg" name="전화번호" suggestedDataType="VARCHAR(30)"/>
+        <domain UUID="Domain_SjupVyL0Eeq2ucOzLborkg" name="이메일" suggestedDataType="VARCHAR(100)"/>
+        <domain UUID="Domain_SjupWCL0Eeq2ucOzLborkg" name="이름" suggestedDataType="VARCHAR(50)"/>
+        <domain UUID="Domain_ED3dUChhEeqRTva_vmDH2g" name="코드" suggestedDataType="VARCHAR(20)"/>
+        <domain UUID="Domain_csmg4CrCEeqRTva_vmDH2g" name="콘텐츠" suggestedDataType="TEXT"/>
+        <domain UUID="Domain_bVjvQCrfEeqfz-IPqhO_9w" name="암호화" suggestedDataType="VARCHAR(255)"/>
+        <domain UUID="Domain_Nz2XASz-Eeq4-KiuddssPg" name="아이피" suggestedDataType="VARCHAR(100)"/>
+        <domain UUID="Domain_h_kUUCz8EeqlubbcnTjcXw" name="단문" suggestedDataType="VARCHAR(50)"/>
+        <domain UUID="Domain_Nw40gSz8EeqlubbcnTjcXw" name="중문" suggestedDataType="VARCHAR(100)"/>
+        <domain UUID="Domain_rnTqoSz8Eeqf64cXuZBjCA" name="장문" suggestedDataType="VARCHAR(255)"/>
+        <domain UUID="Domain_tkNlMie3Eeqv3qTkO7xkhA" name="아이디" suggestedDataType="VARCHAR(20)"/>
+        <domain UUID="Domain_tkNlMSe3Eeqv3qTkO7xkhA" name="여부" suggestedDataType="CHAR(1)"/>
+        <domain UUID="Domain_Nz2XAiz-Eeq4-KiuddssPg" name="년월일" suggestedDataType="VARCHAR(10)"/>
+      </domain>
+      <domain UUID="Domain_SjupWSL0Eeq2ucOzLborkg" name="숫자" suggestedDataType="INTEGER">
+        <domain UUID="Domain_SjupWiL0Eeq2ucOzLborkg" name="금액"/>
+        <domain UUID="Domain_baMjcCfFEeqU1rlS-ZRo3A" name="시퀀스" suggestedDataType="INTEGER"/>
+        <domain UUID="Domain_Nz2XAyz-Eeq4-KiuddssPg" name="번호" suggestedDataType="INTEGER"/>
+        <domain UUID="Domain_tkNlMCe3Eeqv3qTkO7xkhA" name="순서" suggestedDataType="INT"/>
+      </domain>
+      <domain UUID="Domain_SjupWyL0Eeq2ucOzLborkg" name="날짜" suggestedDataType="DATE">
+        <domain UUID="Domain_rcgNoCe-EeqU1rlS-ZRo3A" name="일시" suggestedDataType="DATETIME"/>
+      </domain>
+      <domain UUID="Domain_SjupXCL0Eeq2ucOzLborkg" name="객체" suggestedDataType="BLOB">
+        <domain UUID="Domain_SjupXSL0Eeq2ucOzLborkg" name="이미지" suggestedDataType="VARBINARY"/>
+        <domain UUID="Domain_SjupXiL0Eeq2ucOzLborkg" name="오디오" suggestedDataType="VARBINARY"/>
+      </domain>
+      <domain UUID="Domain_F-tgcHL_EeqP8Lk2M9dQdg" name="pk" suggestedDataType="INTEGER"/>
+      <domain UUID="Domain_F-tgcXL_EeqP8Lk2M9dQdg" name="Y/N" suggestedDataType="VARCHAR(1)"/>
+      <domain UUID="Domain_F-tgcnL_EeqP8Lk2M9dQdg" name="N/Y" suggestedDataType="VARCHAR(1)"/>
+      <domain UUID="Domain_F-tgc3L_EeqP8Lk2M9dQdg" name="날짜1" suggestedDataType="TIMESTAMP"/>
+      <domain UUID="Domain_F-tgdHL_EeqP8Lk2M9dQdg" name="제목" suggestedDataType="VARCHAR(100)"/>
+      <domain UUID="Domain_F-tgdXL_EeqP8Lk2M9dQdg" name="링크" suggestedDataType="VARCHAR(500)"/>
+      <domain UUID="Domain_F-tgdnL_EeqP8Lk2M9dQdg" name="수" suggestedDataType="INTEGER"/>
+      <domain UUID="Domain_F-tgd3L_EeqP8Lk2M9dQdg" name="id" suggestedDataType="VARCHAR(11)"/>
+    </domainDefinition>
+    <viewSettingsPreset name="eXERD 기본" showAltTableName="false">
+      <cellsToShow>name</cellsToShow>
+      <cellsToShow>domain</cellsToShow>
+      <cellsToShow>dataType</cellsToShow>
+    </viewSettingsPreset>
+    <viewSettingsPreset name="엔티티 모드" showAltTableName="false">
+      <cellsToShow>name</cellsToShow>
+      <cellsToShow>domain</cellsToShow>
+    </viewSettingsPreset>
+    <viewSettingsPreset name="E-R 개요 모드" columnFilter="tableOnly" showTableComment="true">
+      <cellsToShow>name</cellsToShow>
+      <cellsToShow>domain</cellsToShow>
+      <cellsToShow>dataType</cellsToShow>
+    </viewSettingsPreset>
+    <viewSettingsPreset showColumnHeader="true" name="논리/물리 동시편집">
+      <cellsToShow>name</cellsToShow>
+      <cellsToShow>oppositeModeName</cellsToShow>
+      <cellsToShow>domain</cellsToShow>
+      <cellsToShow>dataType</cellsToShow>
+      <cellsToShow>nullable</cellsToShow>
+    </viewSettingsPreset>
+  </configuration>
+  <businessAreas UUID="BArea_SjupXyL0Eeq2ucOzLborkg" logicalName="기본 업무영역" physicalName="DEFAULT_AREA" tables="Table_lHcoUG5EEeq0P9ycfOtEQA Table_Dfb6em5FEeq0P9ycfOtEQA Table_aDXaZG5FEeq0P9ycfOtEQA Table_-aLl9G5GEeq0P9ycfOtEQA Table_BaaWkW5kEeqPH6JfgOSEnw Table_F-uHgXL_EeqP8Lk2M9dQdg Table_F-uuk3L_EeqP8Lk2M9dQdg Table_F-uupHL_EeqP8Lk2M9dQdg Table_nN5pEXlpEeqYd9sBoL8KXg Table_n8_CMJvPEeqRI4wJS-uzaA">
+    <diagrams UUID="Diagram_SjupYCL0Eeq2ucOzLborkg" logicalName="다이어그램" physicalName="diagram">
+      <diagramEntry xsi:type="e:TableDiagram" UUID="TDiagram_lHcBQG5EEeq0P9ycfOtEQA" location="Point(368.0, 37.0)" table="Table_lHcoUG5EEeq0P9ycfOtEQA"/>
+      <diagramEntry xsi:type="e:Note" UUID="Note_Dfb6cG5FEeq0P9ycfOtEQA" location="Point(11.0, 25.0)" text="* 회원 마이그레이션 이슈 발생 고려&#xD;&#xA;   ㄴ 회원 : 시퀀스 시작 번호를 1,000,001부터 시작&#xD;&#xA;   ㄴ 관리자 : 시퀀스를 권한 별 그루핑&#xD;&#xA;        ㄴ 관리자는 1,000,000 이내 시퀀스 사용&#xD;&#xA;        ㄴ 시스템관리자, 수퍼관리자, 외부관리자 등&#xD;&#xA;&#xD;&#xA;* 회원과 관리자 데이터는 테이블은 분리 관리&#xD;&#xA;&#xD;&#xA;JOIN_GB&#x9;&#xD;&#xA;EMAIL&#x9;이메일&#xD;&#xA;FACEBOOK&#x9;페이스북&#xD;&#xA;KAKAOTALK&#x9;카카오톡&#xD;&#xA;TELNO&#x9;전화번호&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;소셜아이디 (소셜로그인 키)&#xD;&#xA;ㄴ 카카오 : 숫자 10자리&#xD;&#xA;ㄴ페이스북 : 숫자 16자리&#xD;&#xA;" textColor="RGB {0, 0, 0}" backgroundColor="RGB {255, 255, 255}" baloonPoint="Point(99.0, 99.0)"/>
+      <diagramEntry xsi:type="e:TableDiagram" UUID="TDiagram_Dfb6cW5FEeq0P9ycfOtEQA" location="Point(522.0, 527.0)" table="Table_Dfb6em5FEeq0P9ycfOtEQA"/>
+      <diagramEntry xsi:type="e:TableDiagram" UUID="TDiagram_aDXaYG5FEeq0P9ycfOtEQA" location="Point(1110.0, 563.0)" table="Table_aDXaZG5FEeq0P9ycfOtEQA"/>
+      <diagramEntry xsi:type="e:TableDiagram" UUID="TDiagram_-aLl8G5GEeq0P9ycfOtEQA" location="Point(824.0, 37.0)" table="Table_-aLl9G5GEeq0P9ycfOtEQA"/>
+      <diagramEntry xsi:type="e:TableDiagram" UUID="TDiagram_BaaWkG5kEeqPH6JfgOSEnw" location="Point(39.0, 363.0)" table="Table_BaaWkW5kEeqPH6JfgOSEnw"/>
+      <viewSettings showColumnHeader="true">
+        <cellsToShow>name</cellsToShow>
+        <cellsToShow>oppositeModeName</cellsToShow>
+        <cellsToShow>domain</cellsToShow>
+        <cellsToShow>dataType</cellsToShow>
+        <cellsToShow>nullable</cellsToShow>
+      </viewSettings>
+      <printSettings marginTop="10" marginRight="10" marginBottom="10" marginLeft="10" paperKind="A4" paperOrientation="landscape" scale="0.5" header="${FILE} - ${DIAGRAM} - ${PAGENUM} / ${FULLPAGE}" footter="${YEAR}-${MONTH}-${DAY} ${HOUR}:${DAY}"/>
+    </diagrams>
+  </businessAreas>
+  <databaseModel UUID="DModel_SjupYSL0Eeq2ucOzLborkg" logicalName="새 데이터베이스" physicalName="NEW_DATABASE">
+    <physicalProperties xsi:type="mysql:DatabaseProperties" UUID="DProperties_tkNlPSe3Eeqv3qTkO7xkhA"/>
+    <schema UUID="Schema_81qYcSMJEeq2ucOzLborkg" logicalName="nikedb" physicalName="nikedb">
+      <physicalProperties xsi:type="mysql:SchemaProperties" UUID="SProperties_J9r98KTEEeqc3eoGouBqkQ"/>
+      <tables UUID="Table_lHcoUG5EEeq0P9ycfOtEQA" logicalName="관리자" physicalName="TB_MANAGER">
+        <physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_mzzccG5EEeq0P9ycfOtEQA">
+          <partition UUID="Partition_mzzccW5EEeq0P9ycfOtEQA">
+            <partitionAlgorithm UUID="PAlgorithm_mzzccm5EEeq0P9ycfOtEQA"/>
+            <subpartitionAlgorithm UUID="PAlgorithm_mzzcc25EEeq0P9ycfOtEQA"/>
+          </partition>
+        </physicalProperties>
+        <columns UUID="Column_lHcoUW5EEeq0P9ycfOtEQA" logicalName="관리자_시퀀스" physicalName="MANAGER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_mzzcdG5EEeq0P9ycfOtEQA" autoIncrement="true"/>
+          <memberships UUID="MEntry_mzzcdW5EEeq0P9ycfOtEQA" key="PKCGroup_mzzcd25EEeq0P9ycfOtEQA">
+            <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_mzzcdm5EEeq0P9ycfOtEQA" group="PKCGroup_mzzcd25EEeq0P9ycfOtEQA" entryIndex="0"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_ttROoW5EEeq0P9ycfOtEQA" logicalName="관리자_아이디" physicalName="MANAGER_ID" domain="Domain_Nw40gSz8EeqlubbcnTjcXw" notNull="TRUE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n88l8JvPEeqRI4wJS-uzaA"/>
+        </columns>
+        <columns UUID="Column_ttROom5EEeq0P9ycfOtEQA" logicalName="비밀번호" physicalName="PASSWORD" domain="Domain_bVjvQCrfEeqfz-IPqhO_9w" notNull="FALSE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n88l8ZvPEeqRI4wJS-uzaA"/>
+        </columns>
+        <columns UUID="Column_ttROoG5EEeq0P9ycfOtEQA" logicalName="관리자_이름" physicalName="MANAGER_NAME" domain="Domain_h_kUUCz8EeqlubbcnTjcXw">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n89NAJvPEeqRI4wJS-uzaA"/>
+        </columns>
+        <columns UUID="Column_iFSHxG5YEeqPH6JfgOSEnw" logicalName="권한_시퀀스" physicalName="AUTH_SEQ" derivedPhysicalName="true" derivedLogicalName="true" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n89NAZvPEeqRI4wJS-uzaA"/>
+          <memberships UUID="MEntry_iFSHxW5YEeqPH6JfgOSEnw" key="FKCGroup_iFSHx25YEeqPH6JfgOSEnw">
+            <value xsi:type="e:ColumnReference" UUID="CReference_iFSHxm5YEeqPH6JfgOSEnw" group="FKCGroup_iFSHx25YEeqPH6JfgOSEnw" parentColumn="Column_Dfb6gG5FEeq0P9ycfOtEQA"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_YRz3AG5iEeqPH6JfgOSEnw" logicalName="사용_아이피" physicalName="USE_IP" domain="Domain_h_kUUCz8EeqlubbcnTjcXw">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n89NApvPEeqRI4wJS-uzaA"/>
+        </columns>
+        <columns UUID="Column_U4LCkJvREeqRI4wJS-uzaA" logicalName="로그인_일시" physicalName="LOGIN_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A"/>
+        <columns UUID="Column_Dfb6c25FEeq0P9ycfOtEQA" logicalName="등록자_시퀀스" physicalName="REGISTER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n89NA5vPEeqRI4wJS-uzaA"/>
+        </columns>
+        <columns UUID="Column_Dfb6dG5FEeq0P9ycfOtEQA" logicalName="등록_일시" physicalName="REGISTRATION_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n89NBJvPEeqRI4wJS-uzaA"/>
+        </columns>
+        <columns UUID="Column_Dfb6dW5FEeq0P9ycfOtEQA" logicalName="수정자_시퀀스" physicalName="UPDATER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n89NBZvPEeqRI4wJS-uzaA"/>
+        </columns>
+        <columns UUID="Column_Dfb6dm5FEeq0P9ycfOtEQA" logicalName="수정_일시" physicalName="UPDATE_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n89NBpvPEeqRI4wJS-uzaA"/>
+        </columns>
+        <columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_mzzcd25EEeq0P9ycfOtEQA" logicalName="관리자 기본키" physicalName="PK_TB_MANAGER" derivedPhysicalName="true" derivedLogicalName="true">
+          <physicalProperties xsi:type="mysql:IndexProperties" UUID="IProperties_n89NB5vPEeqRI4wJS-uzaA"/>
+          <primaryKeyConstraint UUID="PKConstraint_mzzceG5EEeq0P9ycfOtEQA" logicalName="관리자 기본키" physicalName="PK_TB_MANAGER" derivedPhysicalName="true" derivedLogicalName="true"/>
+        </columnGroups>
+        <columnGroups xsi:type="e:ForeignKeyColumnGroup" UUID="FKCGroup_iFSHx25YEeqPH6JfgOSEnw" logicalName="관리자_권한 -> 관리자" physicalName="FK_TB_MANAGER_AUTH_TO_TB_MANAGER" derivedPhysicalName="true" derivedLogicalName="true" parentColumnGroup="PKCGroup_Dfb6hG5FEeq0P9ycfOtEQA">
+          <foreignKeyConstraint UUID="FKConstraint_iFSu0G5YEeqPH6JfgOSEnw" logicalName="관리자_권한 -> 관리자" physicalName="FK_TB_MANAGER_AUTH_TO_TB_MANAGER" derivedPhysicalName="true" derivedLogicalName="true">
+            <physicalProperties xsi:type="mysql:ForeignKeyConstraintProperties" UUID="FKCProperties_n89NCJvPEeqRI4wJS-uzaA"/>
+          </foreignKeyConstraint>
+        </columnGroups>
+      </tables>
+      <tables UUID="Table_Dfb6em5FEeq0P9ycfOtEQA" logicalName="관리자_권한" physicalName="TB_MANAGER_AUTH">
+        <physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_Dfb6fG5FEeq0P9ycfOtEQA">
+          <partition UUID="Partition_Dfb6fW5FEeq0P9ycfOtEQA">
+            <partitionAlgorithm UUID="PAlgorithm_Dfb6fm5FEeq0P9ycfOtEQA"/>
+            <subpartitionAlgorithm UUID="PAlgorithm_Dfb6f25FEeq0P9ycfOtEQA"/>
+          </partition>
+        </physicalProperties>
+        <columns UUID="Column_Dfb6gG5FEeq0P9ycfOtEQA" logicalName="권한_시퀀스" physicalName="AUTH_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Dfb6gW5FEeq0P9ycfOtEQA" autoIncrement="true"/>
+          <memberships UUID="MEntry_Dfb6gm5FEeq0P9ycfOtEQA" key="PKCGroup_Dfb6hG5FEeq0P9ycfOtEQA">
+            <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_Dfb6g25FEeq0P9ycfOtEQA" group="PKCGroup_Dfb6hG5FEeq0P9ycfOtEQA" entryIndex="0"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_VLvrwJwGEeqRI4wJS-uzaA" logicalName="부모_권한_시퀀스" physicalName="PARENTS_AUTH_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="TRUE"/>
+        <columns UUID="Column_iFSu0W5YEeqPH6JfgOSEnw" logicalName="권한_이름" physicalName="AUTH_NAME" domain="Domain_Nw40gSz8EeqlubbcnTjcXw" notNull="FALSE"/>
+        <columns UUID="Column_ayq9MJv0EeqRI4wJS-uzaA" logicalName="역할유형타입" physicalName="ROLE_TYPE" domain="Domain_ED3dUChhEeqRTva_vmDH2g" notNull="FALSE"/>
+        <columns UUID="Column_MuglMG5dEeqPH6JfgOSEnw" logicalName="사용_여부" physicalName="USE_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA"/>
+        <columns UUID="Column_MuglMW5dEeqPH6JfgOSEnw" logicalName="등록자_시퀀스" physicalName="REGISTER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE"/>
+        <columns UUID="Column_MuglMm5dEeqPH6JfgOSEnw" logicalName="등록_일시" physicalName="REGISTRATION_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE"/>
+        <columns UUID="Column_MuglM25dEeqPH6JfgOSEnw" logicalName="수정자_시퀀스" physicalName="UPDATER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE"/>
+        <columns UUID="Column_MuglNG5dEeqPH6JfgOSEnw" logicalName="수정_일시" physicalName="UPDATE_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE"/>
+        <columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_Dfb6hG5FEeq0P9ycfOtEQA" logicalName="관리자_권한 기본키" physicalName="PK_TB_MANAGER_AUTH" derivedPhysicalName="true" derivedLogicalName="true">
+          <primaryKeyConstraint UUID="PKConstraint_Dfb6hW5FEeq0P9ycfOtEQA" logicalName="관리자_권한 기본키" physicalName="PK_TB_MANAGER_AUTH" derivedPhysicalName="true" derivedLogicalName="true"/>
+        </columnGroups>
+      </tables>
+      <tables UUID="Table_aDXaZG5FEeq0P9ycfOtEQA" logicalName="관리자_메뉴_권한_매핑" physicalName="TB_MANAGER_MENU_AUTH_MAPPING">
+        <physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_aDXaZm5FEeq0P9ycfOtEQA">
+          <partition UUID="Partition_aDXaZ25FEeq0P9ycfOtEQA">
+            <partitionAlgorithm UUID="PAlgorithm_aDXaaG5FEeq0P9ycfOtEQA"/>
+            <subpartitionAlgorithm UUID="PAlgorithm_aDXaaW5FEeq0P9ycfOtEQA"/>
+          </partition>
+        </physicalProperties>
+        <columns UUID="Column_aDXaam5FEeq0P9ycfOtEQA" logicalName="매핑_시퀀스" physicalName="MAPPING_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_90PlUG5cEeqPH6JfgOSEnw" autoIncrement="true"/>
+          <memberships UUID="MEntry_90PlUW5cEeqPH6JfgOSEnw" key="PKCGroup_90QMZ25cEeqPH6JfgOSEnw">
+            <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_90PlUm5cEeqPH6JfgOSEnw" group="PKCGroup_90QMZ25cEeqPH6JfgOSEnw" entryIndex="0"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_NqijkHlpEeqYd9sBoL8KXg" logicalName="메뉴_시퀀스" physicalName="MENU_SEQ" derivedPhysicalName="true" derivedLogicalName="true" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A">
+          <memberships UUID="MEntry_NqijkXlpEeqYd9sBoL8KXg" key="FKCGroup_Nqijk3lpEeqYd9sBoL8KXg">
+            <value xsi:type="e:ColumnReference" UUID="CReference_NqijknlpEeqYd9sBoL8KXg" group="FKCGroup_Nqijk3lpEeqYd9sBoL8KXg" parentColumn="Column_I9-t0HlpEeqYd9sBoL8KXg"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_yAnjEG5YEeqPH6JfgOSEnw" logicalName="권한_시퀀스" physicalName="AUTH_SEQ" derivedPhysicalName="true" derivedLogicalName="true" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="TRUE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_90QMYG5cEeqPH6JfgOSEnw"/>
+          <memberships UUID="MEntry_yAnjEW5YEeqPH6JfgOSEnw" key="FKCGroup_yAoKIm5YEeqPH6JfgOSEnw">
+            <value xsi:type="e:ColumnReference" UUID="CReference_yAnjEm5YEeqPH6JfgOSEnw" group="FKCGroup_yAoKIm5YEeqPH6JfgOSEnw" parentColumn="Column_Dfb6gG5FEeq0P9ycfOtEQA"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_aDXaa25FEeq0P9ycfOtEQA" logicalName="사용_여부" physicalName="USE_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_90QMYm5cEeqPH6JfgOSEnw"/>
+        </columns>
+        <columns UUID="Column_aDXabG5FEeq0P9ycfOtEQA" logicalName="등록자_시퀀스" physicalName="REGISTER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_90QMY25cEeqPH6JfgOSEnw"/>
+        </columns>
+        <columns UUID="Column_aDXabW5FEeq0P9ycfOtEQA" logicalName="등록_일시" physicalName="REGISTRATION_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_90QMZG5cEeqPH6JfgOSEnw"/>
+        </columns>
+        <columns UUID="Column_aDXabm5FEeq0P9ycfOtEQA" logicalName="수정자_시퀀스" physicalName="UPDATER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_90QMZW5cEeqPH6JfgOSEnw"/>
+        </columns>
+        <columns UUID="Column_aDXab25FEeq0P9ycfOtEQA" logicalName="수정_일시" physicalName="UPDATE_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_90QMZm5cEeqPH6JfgOSEnw"/>
+        </columns>
+        <columnGroups xsi:type="e:ForeignKeyColumnGroup" UUID="FKCGroup_yAoKIm5YEeqPH6JfgOSEnw" logicalName="관리자_권한 -> 관리자_메뉴_권한_매핑" physicalName="FK_TB_MANAGER_AUTH_TO_TB_MANAGER_MENU_AUTH_MAPPING" derivedPhysicalName="true" derivedLogicalName="true" parentColumnGroup="PKCGroup_Dfb6hG5FEeq0P9ycfOtEQA">
+          <foreignKeyConstraint UUID="FKConstraint_yAoKI25YEeqPH6JfgOSEnw" logicalName="관리자_권한 -> 관리자_메뉴_권한_매핑" physicalName="FK_TB_MANAGER_AUTH_TO_TB_MANAGER_MENU_AUTH_MAPPING" derivedPhysicalName="true" derivedLogicalName="true">
+            <physicalProperties xsi:type="mysql:ForeignKeyConstraintProperties" UUID="FKCProperties_9Tu2EG5YEeqPH6JfgOSEnw" onDeleteRule="CASCADE" onUpdateRule="CASCADE"/>
+          </foreignKeyConstraint>
+        </columnGroups>
+        <columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_90QMZ25cEeqPH6JfgOSEnw" logicalName="관리자_메뉴_권한_매핑 기본키" physicalName="PK_TB_MANAGER_MENU_AUTH_MAPPING" derivedPhysicalName="true" derivedLogicalName="true">
+          <primaryKeyConstraint UUID="PKConstraint_90QMaG5cEeqPH6JfgOSEnw" logicalName="관리자_메뉴_권한_매핑 기본키" physicalName="PK_TB_MANAGER_MENU_AUTH_MAPPING" derivedPhysicalName="true" derivedLogicalName="true"/>
+        </columnGroups>
+        <columnGroups xsi:type="e:ForeignKeyColumnGroup" UUID="FKCGroup_Nqijk3lpEeqYd9sBoL8KXg" logicalName="관리자_메뉴_목록 -> 관리자_메뉴_권한_매핑" physicalName="FK_TB_MANAGER_MENU_TO_TB_MANAGER_MENU_AUTH_MAPPING" derivedPhysicalName="true" derivedLogicalName="true" parentColumnGroup="PKCGroup_iFSu3m5YEeqPH6JfgOSEnw">
+          <foreignKeyConstraint UUID="FKConstraint_NqijlHlpEeqYd9sBoL8KXg" logicalName="관리자_메뉴_목록 -> 관리자_메뉴_권한_매핑" physicalName="FK_TB_MANAGER_MENU_TO_TB_MANAGER_MENU_AUTH_MAPPING" derivedPhysicalName="true" derivedLogicalName="true"/>
+        </columnGroups>
+      </tables>
+      <tables UUID="Table_-aLl9G5GEeq0P9ycfOtEQA" logicalName="관리자_메뉴_목록" physicalName="TB_MANAGER_MENU">
+        <physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_-aLl9m5GEeq0P9ycfOtEQA">
+          <partition UUID="Partition_-aLl925GEeq0P9ycfOtEQA">
+            <partitionAlgorithm UUID="PAlgorithm_-aLl-G5GEeq0P9ycfOtEQA"/>
+            <subpartitionAlgorithm UUID="PAlgorithm_-aLl-W5GEeq0P9ycfOtEQA"/>
+          </partition>
+        </physicalProperties>
+        <columns UUID="Column_I9-t0HlpEeqYd9sBoL8KXg" logicalName="메뉴_시퀀스" physicalName="MENU_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_I9-t0XlpEeqYd9sBoL8KXg" autoIncrement="true"/>
+          <memberships UUID="MEntry_I9-t0nlpEeqYd9sBoL8KXg" key="PKCGroup_iFSu3m5YEeqPH6JfgOSEnw">
+            <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_I9-t03lpEeqYd9sBoL8KXg" group="PKCGroup_iFSu3m5YEeqPH6JfgOSEnw"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_iFSu1W5YEeqPH6JfgOSEnw" logicalName="메뉴_이름" physicalName="MENU_NAME" domain="Domain_rnTqoSz8Eeqf64cXuZBjCA" notNull="TRUE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_I9-t1HlpEeqYd9sBoL8KXg"/>
+        </columns>
+        <columns UUID="Column_-aLl-m5GEeq0P9ycfOtEQA" logicalName="메뉴_경로" physicalName="MENU_PATH" domain="Domain_Nw40gSz8EeqlubbcnTjcXw" notNull="TRUE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_iFSu0m5YEeqPH6JfgOSEnw"/>
+        </columns>
+        <columns UUID="Column_yMnZYHlpEeqYd9sBoL8KXg" logicalName="메뉴_CODE" physicalName="MENU_CODE" domain="Domain_ED3dUChhEeqRTva_vmDH2g" notNull="TRUE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_YxIoEHlqEeqYd9sBoL8KXg"/>
+        </columns>
+        <columns UUID="Column_NNEvAHlqEeqYd9sBoL8KXg" logicalName="상위_메뉴_CODE" physicalName="UPPER_MENU_CODE" domain="Domain_ED3dUChhEeqRTva_vmDH2g">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_YxIoEXlqEeqYd9sBoL8KXg"/>
+        </columns>
+        <columns UUID="Column_kXilsJv0EeqRI4wJS-uzaA" logicalName="생성_권한_여부" physicalName="CREATION_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gQJ4vEeqB0vvB3rXaQA"/>
+        </columns>
+        <columns UUID="Column_kXilsZv0EeqRI4wJS-uzaA" logicalName="수정_권한_여부" physicalName="UPDATE_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gQZ4vEeqB0vvB3rXaQA"/>
+        </columns>
+        <columns UUID="Column_kXilspv0EeqRI4wJS-uzaA" logicalName="삭제_권한_여부" physicalName="DELETE_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gQp4vEeqB0vvB3rXaQA"/>
+        </columns>
+        <columns UUID="Column_kXils5v0EeqRI4wJS-uzaA" logicalName="읽기_권한_여부" physicalName="READING_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gQ54vEeqB0vvB3rXaQA"/>
+        </columns>
+        <columns UUID="Column_kXiltJv0EeqRI4wJS-uzaA" logicalName="다운로드_권한_여부" physicalName="DOWNLOAD_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gRJ4vEeqB0vvB3rXaQA"/>
+        </columns>
+        <columns UUID="Column_kXiltZv0EeqRI4wJS-uzaA" logicalName="업로드_권한_여부" physicalName="UPLOAD_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gRZ4vEeqB0vvB3rXaQA"/>
+        </columns>
+        <columns UUID="Column_VLvrwZwGEeqRI4wJS-uzaA" logicalName="인쇄_권한_여부" physicalName="PRINTING_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gRp4vEeqB0vvB3rXaQA"/>
+        </columns>
+        <columns UUID="Column_VLvrwpwGEeqRI4wJS-uzaA" logicalName="엑셀_권한_여부" physicalName="EXCEL_AUTH_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_Wi_gR54vEeqB0vvB3rXaQA"/>
+        </columns>
+        <columns UUID="Column_5SblgHlpEeqYd9sBoL8KXg" logicalName="메뉴_순서" physicalName="MENU_ORDER" domain="Domain_SjupWSL0Eeq2ucOzLborkg">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_YxIoEnlqEeqYd9sBoL8KXg"/>
+        </columns>
+        <columns UUID="Column_PqyuoHlqEeqYd9sBoL8KXg" logicalName="사용_여부" physicalName="USE_YN" domain="Domain_tkNlMSe3Eeqv3qTkO7xkhA">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_YxIoE3lqEeqYd9sBoL8KXg"/>
+        </columns>
+        <columns UUID="Column_iFSu2m5YEeqPH6JfgOSEnw" logicalName="등록자_시퀀스" physicalName="REGISTER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_I9-t2XlpEeqYd9sBoL8KXg"/>
+        </columns>
+        <columns UUID="Column_iFSu225YEeqPH6JfgOSEnw" logicalName="등록_일시" physicalName="REGISTRATION_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_I9-t2nlpEeqYd9sBoL8KXg"/>
+        </columns>
+        <columns UUID="Column_iFSu3G5YEeqPH6JfgOSEnw" logicalName="수정자_시퀀스" physicalName="UPDATER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_I9-t23lpEeqYd9sBoL8KXg"/>
+        </columns>
+        <columns UUID="Column_iFSu3W5YEeqPH6JfgOSEnw" logicalName="수정_일시" physicalName="UPDATE_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_I9-t3HlpEeqYd9sBoL8KXg"/>
+        </columns>
+        <columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_iFSu3m5YEeqPH6JfgOSEnw" logicalName="관리자_메뉴_목록 기본키" physicalName="PK_TB_MANAGER_MENU" derivedPhysicalName="true" derivedLogicalName="true">
+          <physicalProperties xsi:type="mysql:IndexProperties" UUID="IProperties_I9-t3XlpEeqYd9sBoL8KXg"/>
+          <primaryKeyConstraint UUID="PKConstraint_iFSu325YEeqPH6JfgOSEnw" logicalName="관리자_메뉴_목록 기본키" physicalName="PK_TB_MANAGER_MENU" derivedPhysicalName="true" derivedLogicalName="true"/>
+        </columnGroups>
+      </tables>
+      <tables UUID="Table_BaaWkW5kEeqPH6JfgOSEnw" logicalName="관리자_로그인_이력" physicalName="TB_MANAGER_LOGIN_HISTORY">
+        <physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_BaaWkm5kEeqPH6JfgOSEnw">
+          <partition UUID="Partition_BaaWk25kEeqPH6JfgOSEnw">
+            <partitionAlgorithm UUID="PAlgorithm_BaaWlG5kEeqPH6JfgOSEnw"/>
+            <subpartitionAlgorithm UUID="PAlgorithm_BaaWlW5kEeqPH6JfgOSEnw"/>
+          </partition>
+        </physicalProperties>
+        <columns UUID="Column_IwhohG5kEeqPH6JfgOSEnw" logicalName="로그인_일시" physicalName="LOGIN_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n8-bIpvPEeqRI4wJS-uzaA"/>
+          <memberships UUID="MEntry_e9A-8KTBEeqc3eoGouBqkQ" key="PKCGroup_BaaWmm5kEeqPH6JfgOSEnw">
+            <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_e9A-8aTBEeqc3eoGouBqkQ" group="PKCGroup_BaaWmm5kEeqPH6JfgOSEnw" entryIndex="0" sortType="DESC"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_BaaWlm5kEeqPH6JfgOSEnw" logicalName="로그인_이력_시퀀스" physicalName="LOGIN_HISTORY_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="TRUE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_BaaWl25kEeqPH6JfgOSEnw" autoIncrement="true"/>
+          <memberships UUID="MEntry_BaaWmG5kEeqPH6JfgOSEnw" key="PKCGroup_BaaWmm5kEeqPH6JfgOSEnw">
+            <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_BaaWmW5kEeqPH6JfgOSEnw" group="PKCGroup_BaaWmm5kEeqPH6JfgOSEnw" entryIndex="1" sortType="DESC"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_IwhogG5kEeqPH6JfgOSEnw" logicalName="관리자_시퀀스" physicalName="MANAGER_SEQ" derivedPhysicalName="true" derivedLogicalName="true" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="TRUE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n8-bIJvPEeqRI4wJS-uzaA"/>
+          <memberships UUID="MEntry_IwhogW5kEeqPH6JfgOSEnw" key="FKCGroup_IwhohW5kEeqPH6JfgOSEnw">
+            <value xsi:type="e:ColumnReference" UUID="CReference_Iwhogm5kEeqPH6JfgOSEnw" group="FKCGroup_IwhohW5kEeqPH6JfgOSEnw" parentColumn="Column_lHcoUW5EEeq0P9ycfOtEQA"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_Iwhog25kEeqPH6JfgOSEnw" logicalName="로그인_아이피" physicalName="LOGIN_IP" domain="Domain_Nz2XASz-Eeq4-KiuddssPg" notNull="TRUE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_n8-bIZvPEeqRI4wJS-uzaA"/>
+        </columns>
+        <columns UUID="Column_bbv3oKTBEeqc3eoGouBqkQ" logicalName="등록자_시퀀스" physicalName="REGISTER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="TRUE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_bbv3oaTBEeqc3eoGouBqkQ"/>
+        </columns>
+        <columns UUID="Column_bbv3oqTBEeqc3eoGouBqkQ" logicalName="등록_일시" physicalName="REGISTRATION_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="TRUE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_bbv3o6TBEeqc3eoGouBqkQ"/>
+        </columns>
+        <columns UUID="Column_bbv3pKTBEeqc3eoGouBqkQ" logicalName="수정자_시퀀스" physicalName="UPDATER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_bbv3paTBEeqc3eoGouBqkQ"/>
+        </columns>
+        <columns UUID="Column_bbwesKTBEeqc3eoGouBqkQ" logicalName="수정_일시" physicalName="UPDATE_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE">
+          <physicalProperties xsi:type="mysql:ColumnProperties" UUID="CProperties_bbwesaTBEeqc3eoGouBqkQ"/>
+        </columns>
+        <columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_BaaWmm5kEeqPH6JfgOSEnw" logicalName="관리자_로그인_이력 기본키" physicalName="PK_TB_MANAGER_LOGIN_HISTORY" derivedPhysicalName="true" derivedLogicalName="true">
+          <physicalProperties xsi:type="mysql:IndexProperties" UUID="IProperties_n8-bI5vPEeqRI4wJS-uzaA"/>
+          <primaryKeyConstraint UUID="PKConstraint_BaaWm25kEeqPH6JfgOSEnw" logicalName="관리자_로그인_이력 기본키" physicalName="PK_TB_MANAGER_LOGIN_HISTORY" derivedPhysicalName="true" derivedLogicalName="true"/>
+        </columnGroups>
+        <columnGroups xsi:type="e:ForeignKeyColumnGroup" UUID="FKCGroup_IwhohW5kEeqPH6JfgOSEnw" logicalName="관리자 -> 관리자_로그인_이력" physicalName="FK_TB_MANAGER_TO_TB_MANAGER_LOGIN_HISTORY" derivedPhysicalName="true" derivedLogicalName="true" parentColumnGroup="PKCGroup_mzzcd25EEeq0P9ycfOtEQA">
+          <foreignKeyConstraint UUID="FKConstraint_Iwhohm5kEeqPH6JfgOSEnw" logicalName="관리자 -> 관리자_로그인_이력" physicalName="FK_TB_MANAGER_TO_TB_MANAGER_LOGIN_HISTORY" derivedPhysicalName="true" derivedLogicalName="true">
+            <physicalProperties xsi:type="mysql:ForeignKeyConstraintProperties" UUID="FKCProperties_n8-bJJvPEeqRI4wJS-uzaA"/>
+          </foreignKeyConstraint>
+        </columnGroups>
+      </tables>
+      <tables UUID="Table_nN5pEXlpEeqYd9sBoL8KXg" logicalName="관리자_메뉴_목록2" physicalName="TB_MANAGER_MENU2">
+        <physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_nN5pEnlpEeqYd9sBoL8KXg">
+          <partition UUID="Partition_nN5pE3lpEeqYd9sBoL8KXg">
+            <partitionAlgorithm UUID="PAlgorithm_nN5pFHlpEeqYd9sBoL8KXg"/>
+            <subpartitionAlgorithm UUID="PAlgorithm_nN5pFXlpEeqYd9sBoL8KXg"/>
+          </partition>
+        </physicalProperties>
+        <columns UUID="Column_nN5pFnlpEeqYd9sBoL8KXg" logicalName="메뉴_시퀀스" physicalName="MENU_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A">
+          <memberships UUID="MEntry_nN5pF3lpEeqYd9sBoL8KXg" key="PKCGroup_nN6QKXlpEeqYd9sBoL8KXg">
+            <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_nN5pGHlpEeqYd9sBoL8KXg" group="PKCGroup_nN6QKXlpEeqYd9sBoL8KXg"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_nN5pGXlpEeqYd9sBoL8KXg" logicalName="요청_경로" physicalName="REQUEST_PATH" domain="Domain_Nw40gSz8EeqlubbcnTjcXw" notNull="TRUE"/>
+        <columns UUID="Column_nN6QIHlpEeqYd9sBoL8KXg" logicalName="요청_이름" physicalName="REQUEST_NAME" domain="Domain_rnTqoSz8Eeqf64cXuZBjCA"/>
+        <columns UUID="Column_nN6QIXlpEeqYd9sBoL8KXg" logicalName="요청_클래스" physicalName="REQUEST_CLASS" domain="Domain_h_kUUCz8EeqlubbcnTjcXw" tagColor="RGB {157, 77, 81}"/>
+        <columns UUID="Column_nN6QInlpEeqYd9sBoL8KXg" logicalName="요청_메소드" physicalName="REQUEST_METHOD" domain="Domain_h_kUUCz8EeqlubbcnTjcXw" tagColor="RGB {157, 77, 81}"/>
+        <columns UUID="Column_nN6QI3lpEeqYd9sBoL8KXg" logicalName="요청_파라미터" physicalName="REQUEST_PARAMETER" domain="Domain_rnTqoSz8Eeqf64cXuZBjCA" tagColor="RGB {157, 77, 81}"/>
+        <columns UUID="Column_nN6QJHlpEeqYd9sBoL8KXg" logicalName="반환_유형" physicalName="RETURN_TYPE" domain="Domain_h_kUUCz8EeqlubbcnTjcXw" tagColor="RGB {157, 77, 81}"/>
+        <columns UUID="Column_nN6QJXlpEeqYd9sBoL8KXg" logicalName="등록자_시퀀스" physicalName="REGISTER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE"/>
+        <columns UUID="Column_nN6QJnlpEeqYd9sBoL8KXg" logicalName="등록_일시" physicalName="REGISTRATION_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE"/>
+        <columns UUID="Column_nN6QJ3lpEeqYd9sBoL8KXg" logicalName="수정자_시퀀스" physicalName="UPDATER_SEQ" domain="Domain_baMjcCfFEeqU1rlS-ZRo3A" notNull="FALSE"/>
+        <columns UUID="Column_nN6QKHlpEeqYd9sBoL8KXg" logicalName="수정_일시" physicalName="UPDATE_DT" domain="Domain_rcgNoCe-EeqU1rlS-ZRo3A" notNull="FALSE"/>
+        <columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_nN6QKXlpEeqYd9sBoL8KXg" logicalName="관리자_메뉴_목록2 기본키" physicalName="PK_TB_MANAGER_MENU2" derivedPhysicalName="true" derivedLogicalName="true">
+          <primaryKeyConstraint UUID="PKConstraint_nN6QKnlpEeqYd9sBoL8KXg" logicalName="관리자_메뉴_목록2 기본키" physicalName="PK_TB_MANAGER_MENU2" derivedPhysicalName="true" derivedLogicalName="true"/>
+        </columnGroups>
+      </tables>
+      <tables UUID="Table_n8_CMJvPEeqRI4wJS-uzaA" logicalName="새 테이블" physicalName="TABLE">
+        <physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_YiYd0KTBEeqc3eoGouBqkQ">
+          <partition UUID="Partition_YiYd0aTBEeqc3eoGouBqkQ">
+            <partitionAlgorithm UUID="PAlgorithm_YiYd0qTBEeqc3eoGouBqkQ"/>
+            <subpartitionAlgorithm UUID="PAlgorithm_YiYd06TBEeqc3eoGouBqkQ"/>
+          </partition>
+        </physicalProperties>
+      </tables>
+    </schema>
+    <schema UUID="Schema_F-uHgHL_EeqP8Lk2M9dQdg" logicalName="내 스키마" physicalName="toyota">
+      <tables UUID="Table_F-uHgXL_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴권한" physicalName="TB_MENU_AUTH" comment="[공통]_메뉴권한">
+        <physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_I9-t3nlpEeqYd9sBoL8KXg">
+          <partition UUID="Partition_I9-t33lpEeqYd9sBoL8KXg">
+            <partitionAlgorithm UUID="PAlgorithm_I9-t4HlpEeqYd9sBoL8KXg"/>
+            <subpartitionAlgorithm UUID="PAlgorithm_I9-t4XlpEeqYd9sBoL8KXg"/>
+          </partition>
+        </physicalProperties>
+        <columns UUID="Column_F-uHgnL_EeqP8Lk2M9dQdg" logicalName="고유번호" physicalName="idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg">
+          <memberships UUID="MEntry_F-uHg3L_EeqP8Lk2M9dQdg" key="PKCGroup_F-uHknL_EeqP8Lk2M9dQdg">
+            <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_F-uHhHL_EeqP8Lk2M9dQdg" group="PKCGroup_F-uHknL_EeqP8Lk2M9dQdg" entryIndex="0"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_F-uHhXL_EeqP8Lk2M9dQdg" logicalName="메뉴 고유번호" physicalName="menu_idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg" notNull="TRUE">
+          <memberships UUID="MEntry_F-uHhnL_EeqP8Lk2M9dQdg" key="FKCGroup_F-uukHL_EeqP8Lk2M9dQdg">
+            <value xsi:type="e:ColumnReference" UUID="CReference_F-uHh3L_EeqP8Lk2M9dQdg" group="FKCGroup_F-uukHL_EeqP8Lk2M9dQdg" parentColumn="Column_F-uulHL_EeqP8Lk2M9dQdg"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_F-uHiHL_EeqP8Lk2M9dQdg" logicalName="상위코드" physicalName="upcode" domain="Domain_ED3dUChhEeqRTva_vmDH2g" notNull="TRUE"/>
+        <columns UUID="Column_F-uHiXL_EeqP8Lk2M9dQdg" logicalName="관리자구분" physicalName="type" domain="Domain_ED3dUChhEeqRTva_vmDH2g" notNull="TRUE">
+          <memberships UUID="MEntry_F-uHinL_EeqP8Lk2M9dQdg" key="IECGroup_F-uuknL_EeqP8Lk2M9dQdg">
+            <value xsi:type="e:InversionEntryMembership" UUID="IEMembership_F-uHi3L_EeqP8Lk2M9dQdg" group="IECGroup_F-uuknL_EeqP8Lk2M9dQdg"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_F-uHjHL_EeqP8Lk2M9dQdg" logicalName="사용여부" physicalName="use_yn" domain="Domain_F-tgcXL_EeqP8Lk2M9dQdg" notNull="TRUE"/>
+        <columns UUID="Column_F-uHjXL_EeqP8Lk2M9dQdg" logicalName="삭제여부" physicalName="del_yn" domain="Domain_F-tgcnL_EeqP8Lk2M9dQdg" notNull="TRUE"/>
+        <columns UUID="Column_F-uHjnL_EeqP8Lk2M9dQdg" logicalName="최초등록자" physicalName="reg_idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg" notNull="TRUE"/>
+        <columns UUID="Column_F-uHj3L_EeqP8Lk2M9dQdg" logicalName="최초등록일" physicalName="reg_dt" domain="Domain_F-tgc3L_EeqP8Lk2M9dQdg" notNull="TRUE"/>
+        <columns UUID="Column_F-uHkHL_EeqP8Lk2M9dQdg" logicalName="수정자" physicalName="mod_idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg" notNull="FALSE"/>
+        <columns UUID="Column_F-uHkXL_EeqP8Lk2M9dQdg" logicalName="수정일" physicalName="mod_dt" domain="Domain_F-tgc3L_EeqP8Lk2M9dQdg" notNull="FALSE"/>
+        <columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_F-uHknL_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴권한 기본키" physicalName="PK_TB_MENU_AUTH" derivedPhysicalName="true" derivedLogicalName="true">
+          <primaryKeyConstraint UUID="PKConstraint_F-uHk3L_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴권한 기본키" physicalName="PK_TB_MENU_AUTH" derivedPhysicalName="true" derivedLogicalName="true"/>
+        </columnGroups>
+        <columnGroups xsi:type="e:ForeignKeyColumnGroup" UUID="FKCGroup_F-uukHL_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴 -> [공통]_메뉴권한" physicalName="FK_TB_MENU_TO_TB_MENU_AUTH" derivedPhysicalName="true" derivedLogicalName="true" parentColumnGroup="PKCGroup_F-uuonL_EeqP8Lk2M9dQdg">
+          <foreignKeyConstraint UUID="FKConstraint_F-uukXL_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴 -> [공통]_메뉴권한" physicalName="FK_TB_MENU_TO_TB_MENU_AUTH" derivedPhysicalName="true" derivedLogicalName="true"/>
+        </columnGroups>
+        <columnGroups xsi:type="e:InversionEntryColumnGroup" UUID="IECGroup_F-uuknL_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴권한 인덱스" physicalName="IX_TB_MENU_AUTH" derivedPhysicalName="true" derivedLogicalName="true"/>
+      </tables>
+      <tables UUID="Table_F-uuk3L_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴" physicalName="TB_MENU" comment="[공통]_메뉴">
+        <physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_I9-t4nlpEeqYd9sBoL8KXg">
+          <partition UUID="Partition_I9-t43lpEeqYd9sBoL8KXg">
+            <partitionAlgorithm UUID="PAlgorithm_I9-t5HlpEeqYd9sBoL8KXg"/>
+            <subpartitionAlgorithm UUID="PAlgorithm_I9-t5XlpEeqYd9sBoL8KXg"/>
+          </partition>
+        </physicalProperties>
+        <columns UUID="Column_F-uulHL_EeqP8Lk2M9dQdg" logicalName="고유번호" physicalName="idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg">
+          <memberships UUID="MEntry_F-uulXL_EeqP8Lk2M9dQdg" key="PKCGroup_F-uuonL_EeqP8Lk2M9dQdg">
+            <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_F-uulnL_EeqP8Lk2M9dQdg" group="PKCGroup_F-uuonL_EeqP8Lk2M9dQdg" entryIndex="0"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_F-uul3L_EeqP8Lk2M9dQdg" logicalName="메뉴코드" physicalName="code" domain="Domain_ED3dUChhEeqRTva_vmDH2g" notNull="TRUE"/>
+        <columns UUID="Column_F-uumHL_EeqP8Lk2M9dQdg" logicalName="상위메뉴코드" physicalName="upcode" domain="Domain_ED3dUChhEeqRTva_vmDH2g" notNull="TRUE"/>
+        <columns UUID="Column_F-uumXL_EeqP8Lk2M9dQdg" logicalName="코드명" physicalName="name" domain="Domain_F-tgdHL_EeqP8Lk2M9dQdg" notNull="TRUE"/>
+        <columns UUID="Column_F-uumnL_EeqP8Lk2M9dQdg" logicalName="코드설명" physicalName="link" domain="Domain_F-tgdXL_EeqP8Lk2M9dQdg"/>
+        <columns UUID="Column_F-uum3L_EeqP8Lk2M9dQdg" logicalName="순서" physicalName="sort" domain="Domain_F-tgdnL_EeqP8Lk2M9dQdg"/>
+        <columns UUID="Column_F-uunHL_EeqP8Lk2M9dQdg" logicalName="사용여부" physicalName="use_yn" domain="Domain_F-tgcXL_EeqP8Lk2M9dQdg" notNull="TRUE"/>
+        <columns UUID="Column_F-uunXL_EeqP8Lk2M9dQdg" logicalName="삭제여부" physicalName="del_yn" domain="Domain_F-tgcnL_EeqP8Lk2M9dQdg" notNull="TRUE"/>
+        <columns UUID="Column_F-uunnL_EeqP8Lk2M9dQdg" logicalName="최초등록자" physicalName="reg_idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg" notNull="TRUE"/>
+        <columns UUID="Column_F-uun3L_EeqP8Lk2M9dQdg" logicalName="최초등록일" physicalName="reg_dt" domain="Domain_F-tgc3L_EeqP8Lk2M9dQdg" notNull="TRUE"/>
+        <columns UUID="Column_F-uuoHL_EeqP8Lk2M9dQdg" logicalName="수정자" physicalName="mod_idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg" notNull="FALSE"/>
+        <columns UUID="Column_F-uuoXL_EeqP8Lk2M9dQdg" logicalName="수정일" physicalName="mod_dt" domain="Domain_F-tgc3L_EeqP8Lk2M9dQdg" notNull="FALSE"/>
+        <columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_F-uuonL_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴 기본키" physicalName="PK_TB_MENU" derivedPhysicalName="true" derivedLogicalName="true">
+          <primaryKeyConstraint UUID="PKConstraint_F-uuo3L_EeqP8Lk2M9dQdg" logicalName="[공통]_메뉴 기본키" physicalName="PK_TB_MENU" derivedPhysicalName="true" derivedLogicalName="true"/>
+        </columnGroups>
+      </tables>
+      <tables UUID="Table_F-uupHL_EeqP8Lk2M9dQdg" logicalName="[서비스]_운영자" physicalName="TB_ADM" comment="[서비스]_운영자">
+        <physicalProperties xsi:type="mysql:TableProperties" UUID="TProperties_I9-t5nlpEeqYd9sBoL8KXg">
+          <partition UUID="Partition_I9-t53lpEeqYd9sBoL8KXg">
+            <partitionAlgorithm UUID="PAlgorithm_I9-t6HlpEeqYd9sBoL8KXg"/>
+            <subpartitionAlgorithm UUID="PAlgorithm_I9-t6XlpEeqYd9sBoL8KXg"/>
+          </partition>
+        </physicalProperties>
+        <columns UUID="Column_F-uupXL_EeqP8Lk2M9dQdg" logicalName="고유번호" physicalName="idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg">
+          <memberships UUID="MEntry_F-uupnL_EeqP8Lk2M9dQdg" key="PKCGroup_F-uuvXL_EeqP8Lk2M9dQdg">
+            <value xsi:type="e:PrimaryKeyMembership" UUID="PKMembership_F-uup3L_EeqP8Lk2M9dQdg" group="PKCGroup_F-uuvXL_EeqP8Lk2M9dQdg" entryIndex="0"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_F-uuqHL_EeqP8Lk2M9dQdg" logicalName="id" physicalName="id" domain="Domain_F-tgd3L_EeqP8Lk2M9dQdg" notNull="TRUE">
+          <memberships UUID="MEntry_F-uuqXL_EeqP8Lk2M9dQdg" key="AKCGroup_F-uuv3L_EeqP8Lk2M9dQdg">
+            <value xsi:type="e:AlternateKeyMembership" UUID="AKMembership_F-uuqnL_EeqP8Lk2M9dQdg" group="AKCGroup_F-uuv3L_EeqP8Lk2M9dQdg" entryIndex="0"/>
+          </memberships>
+        </columns>
+        <columns UUID="Column_F-uuq3L_EeqP8Lk2M9dQdg" logicalName="운영자명" physicalName="name" domain="Domain_F-tgdHL_EeqP8Lk2M9dQdg" notNull="TRUE"/>
+        <columns UUID="Column_F-uurHL_EeqP8Lk2M9dQdg" logicalName="운영자타입" physicalName="type" domain="Domain_ED3dUChhEeqRTva_vmDH2g"/>
+        <columns UUID="Column_F-uurXL_EeqP8Lk2M9dQdg" logicalName="운영자비밀번호" physicalName="pwd" domain="Domain_F-tgdXL_EeqP8Lk2M9dQdg" notNull="TRUE"/>
+        <columns UUID="Column_F-uurnL_EeqP8Lk2M9dQdg" logicalName="운영자연락처" physicalName="numbers" domain="Domain_F-tgdHL_EeqP8Lk2M9dQdg"/>
+        <columns UUID="Column_F-uur3L_EeqP8Lk2M9dQdg" logicalName="운영자메일" physicalName="email" domain="Domain_F-tgdHL_EeqP8Lk2M9dQdg"/>
+        <columns UUID="Column_F-uusHL_EeqP8Lk2M9dQdg" logicalName="운영자IP" physicalName="ip" domain="Domain_F-tgdHL_EeqP8Lk2M9dQdg"/>
+        <columns UUID="Column_F-uusXL_EeqP8Lk2M9dQdg" logicalName="부서/팀" physicalName="team" domain="Domain_F-tgdHL_EeqP8Lk2M9dQdg"/>
+        <columns UUID="Column_F-uusnL_EeqP8Lk2M9dQdg" logicalName="직급" physicalName="rank" domain="Domain_F-tgdHL_EeqP8Lk2M9dQdg"/>
+        <columns UUID="Column_F-uus3L_EeqP8Lk2M9dQdg" logicalName="회사" physicalName="company" domain="Domain_ED3dUChhEeqRTva_vmDH2g"/>
+        <columns UUID="Column_F-uutHL_EeqP8Lk2M9dQdg" logicalName="최근접속일" physicalName="rec_dt" domain="Domain_F-tgc3L_EeqP8Lk2M9dQdg"/>
+        <columns UUID="Column_F-uutXL_EeqP8Lk2M9dQdg" logicalName="방문수" physicalName="visit" domain="Domain_F-tgdnL_EeqP8Lk2M9dQdg"/>
+        <columns UUID="Column_F-uutnL_EeqP8Lk2M9dQdg" logicalName="개인정보열람여부" physicalName="auth_yn" domain="Domain_F-tgcnL_EeqP8Lk2M9dQdg"/>
+        <columns UUID="Column_F-uut3L_EeqP8Lk2M9dQdg" logicalName="사용여부" physicalName="use_yn" domain="Domain_F-tgcXL_EeqP8Lk2M9dQdg" notNull="TRUE"/>
+        <columns UUID="Column_F-uuuHL_EeqP8Lk2M9dQdg" logicalName="삭제여부" physicalName="del_yn" domain="Domain_F-tgcnL_EeqP8Lk2M9dQdg" notNull="TRUE"/>
+        <columns UUID="Column_F-uuuXL_EeqP8Lk2M9dQdg" logicalName="최초등록자" physicalName="reg_idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg" notNull="TRUE"/>
+        <columns UUID="Column_F-uuunL_EeqP8Lk2M9dQdg" logicalName="최초등록일" physicalName="reg_dt" domain="Domain_F-tgc3L_EeqP8Lk2M9dQdg" notNull="TRUE"/>
+        <columns UUID="Column_F-uuu3L_EeqP8Lk2M9dQdg" logicalName="수정자" physicalName="mod_idx" domain="Domain_F-tgcHL_EeqP8Lk2M9dQdg"/>
+        <columns UUID="Column_F-uuvHL_EeqP8Lk2M9dQdg" logicalName="수정일" physicalName="mod_dt" domain="Domain_F-tgc3L_EeqP8Lk2M9dQdg"/>
+        <columnGroups xsi:type="e:PrimaryKeyColumnGroup" UUID="PKCGroup_F-uuvXL_EeqP8Lk2M9dQdg" logicalName="[서비스]_운영자 기본키" physicalName="PK_TB_ADM" derivedPhysicalName="true" derivedLogicalName="true">
+          <primaryKeyConstraint UUID="PKConstraint_F-uuvnL_EeqP8Lk2M9dQdg" logicalName="[서비스]_운영자 기본키" physicalName="PK_TB_ADM" derivedPhysicalName="true" derivedLogicalName="true"/>
+        </columnGroups>
+        <columnGroups xsi:type="e:AlternateKeyColumnGroup" UUID="AKCGroup_F-uuv3L_EeqP8Lk2M9dQdg" logicalName="[서비스]_운영자 유니크 인덱스" physicalName="UIX_TB_ADM" derivedPhysicalName="true" derivedLogicalName="true">
+          <uniqueConstraint UUID="UConstraint_F-uuwHL_EeqP8Lk2M9dQdg" logicalName="[서비스]_운영자 유니크 제약" physicalName="UK_TB_ADM" derivedPhysicalName="true" derivedLogicalName="true"/>
+        </columnGroups>
+      </tables>
+    </schema>
+  </databaseModel>
+  <sharedIcons UUID="SIcons_SjupYyL0Eeq2ucOzLborkg"/>
+</e:Document>
