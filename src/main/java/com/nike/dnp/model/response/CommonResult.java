@@ -11,8 +11,8 @@ public class CommonResult {
     @ApiModelProperty(value = "응답 성공여부 : true/false")
     private boolean success;
 
-    @ApiModelProperty(value = "응답 코드 번호 : > 0 정상, < 0 비정상")
-    private int code;
+    @ApiModelProperty(value = "S0 : 정상 / 그 외 오류 (기본 E0, 각 서비스에 맞는 오류)")
+    private String code;
 
     @ApiModelProperty(value = "응답 메시지")
     private String msg;
