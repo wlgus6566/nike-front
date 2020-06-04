@@ -1,40 +1,39 @@
 <template>
-
-	<header data-v-sticky-container>
-		<div class="inner" v-vue-sticky-directive="{topSpacing:20, bottomSpacing:20}">
+	<header v-bind:class="{ active: propsdata }" sticky-container>
+		<div class="inner" sticky-offset="{top: 10, bottom: 30}" sticky-side="both" sticky-z-index="20" v-sticky>
 			<h1>
-				<router-link to="/" exact>
-					<img src="@/assets/images/logo-nike.svg" v-on:click="navAni" alt="">
+				<router-link exact to="/">
+					<img alt="" src="@/assets/images/logo-nike.svg">
 				</router-link>
 			</h1>
-			<nav v-bind:class="{ active: isActive }">
+			<nav>
 				<ul>
-					<router-link to="/test" tag="li" exact>
-						<a v-on:click="navAni">TEST</a>
+					<router-link exact tag="li" to="/test">
+						<a>TEST</a>
 					</router-link>
-					<router-link to="/" tag="li" exact>
-						<a v-on:click="navAni">MAIN</a>
+					<router-link exact tag="li" to="/">
+						<a>MAIN</a>
 					</router-link>
-					<router-link to="/asset" tag="li" exact>
-						<a v-on:click="navAni">ASSET</a>
+					<router-link exact tag="li" to="/asset">
+						<a>ASSET</a>
 					</router-link>
 					<li>
-						<router-link to="/toolkit" exact>TOOLKIT</router-link>
+						<router-link exact to="/toolkit">TOOLKIT</router-link>
 					</li>
 					<li>
-						<router-link to="/foundation" exact>FOUNDATION</router-link>
+						<router-link exact to="/foundation">FOUNDATION</router-link>
 					</li>
 					<li>
-						<router-link to="/order" exact>ORDER</router-link>
+						<router-link exact to="/order">ORDER</router-link>
 					</li>
 					<li>
-						<router-link to="/report" exact>REPORT</router-link>
+						<router-link exact to="/report">REPORT</router-link>
 					</li>
 					<li>
-						<router-link to="/information" exact>INFORMATION</router-link>
+						<router-link exact to="/information">INFORMATION</router-link>
 					</li>
 					<li>
-						<router-link to="/management" exact>MANAGEMENT</router-link>
+						<router-link exact to="/management">MANAGEMENT</router-link>
 					</li>
 				</ul>
 				<!--<ul>
@@ -138,30 +137,35 @@
 	</header>
 </template>
 <script>
-	import VueStickyDirective from "@renatodeleao/vue-sticky-directive";
+	import Sticky from 'vue-sticky-directive'
 
-	console.log(VueStickyDirective)
 	export default {
-		name: 'layout-header',
+		name: 'appHeader',
 		directives: {
-			VueStickyDirective
+			Sticky
 		},
-		data() {
-			return {
-				"isActive": false,
-			}
-		},
+		props :['propsdata'],
 		mounted() {
 			this.navAni();
 		},
 		methods: {
 			navAni: function () {
-				this.isActive = !this.isActive;
+				console.log(this.propsdata)
 			}
 		}
 	}
 </script>
 <style scoped>
-	nav.active{background:red;}
+	header {transition:background-color 300ms ease-in-out 0s}
+	header h1 {transition:transform 500ms ease-in-out 0s; transform-origin:0 0;}
+	header.active {background:red;}
+	header nav > ul {animation: mymove 5s infinite;}
+	header.active h1 {transform:translate(-22px, -30px) scale(0.25)}
+	header.active nav > ul {}
 	nav ul ul {display:none;}
+
+	@keyframes mymove {
+		from {transform:translateX(0%)}
+		to {transform:translateX(-100%)}
+	}
 </style>
