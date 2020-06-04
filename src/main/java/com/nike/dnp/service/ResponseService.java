@@ -12,8 +12,8 @@ public class ResponseService {
 
     // enum으로 api 요청 결과에 대한 code, message를 정의합니다.
     public enum CommonResponse {
-        SUCCESS("S0", "성공하였습니다."),
-        FAIL("E0", "실패하였습니다.");
+        SUCCESS("SUC", "성공"),
+        FAIL("ERR", "에러발생");
 
         String code;
         String msg;

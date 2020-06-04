@@ -163,7 +163,7 @@ public class ManagerController {
     public SingleResult<Manager> getManager(@PathVariable(name = "managerSeq") Long managerSeq) {
         return responseService.getSingleResult(
                 managerService.findById(managerSeq)
-                        .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.commonError.COME01.toString(), ErrorEnumCode.commonError.COME01.getMessage())));
+                        .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.manageError.MANE01.toString(), ErrorEnumCode.manageError.MANE01.getMessage())));
     }
 
     /**

@@ -72,7 +72,7 @@ public class ErrorEnumCode {
      */
     public enum manageError {
 
-        MANE01("관리자의 상세정보가 존재하지 않습니다.");
+        MANE01("해당 회원의 상세정보가 존재하지 않습니다.");
 
         manageError(String value) {
             this.value = value;
