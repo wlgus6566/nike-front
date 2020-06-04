@@ -12,7 +12,7 @@
 
 ### 응답예제
 * 성공
-    ~~~
+    ~~~ json
     {
         "success": true,
         "code": "SUC",
@@ -24,7 +24,7 @@
     ~~~
     
 * 실패(메세지반환)
-    ~~~
+    ~~~ json
     httpStatus : 200
   
     {
@@ -34,7 +34,7 @@
     }
     ~~~
 * 오류
-    ~~~
+    ~~~ json
     httpStatus : 500
     
     {
@@ -48,7 +48,7 @@
 1. ErrorEnumCode.class에 서비스 별로 에러코드, 메세지에 대한 enum값 정의
 
     > 에러 코드 생성 규칙 : 서비스명앞3자리 + E + 숫자
-    ~~~
+    ~~~ java
         public enum loginError {
     
             LOGE01("가입여부를 확인해주세요.\n등록된 정보가 없습니다."),
@@ -71,7 +71,7 @@
 1. 메세지를 반환해야 하는 부분에 custom exception인 CodeMessageHandelException 사용
 
     > 사용 : new CodeMessageHandleException(ErrorEnumCode에 정의한 코드, 메세지)
-    ~~~
+    ~~~ java
     /**
          * 상세조회
          *
