@@ -1,4 +1,4 @@
-## 메세지 반환(custom Exception)
+## 응답값, 실패 메세지 반환(custom Exception)
  
   **상태** | httpStatus | success(boolean) | code(string) |message(string) |
  :--------:|:--------:|:--------:|:--------:|:--------:|
