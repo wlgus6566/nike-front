@@ -164,8 +164,8 @@
 	header.active nav > ul {}
 	nav ul ul {display:none;}
 
-	@keyframes mymove {
-		from {transform:translateX(0%)}
-		to {transform:translateX(-100%)}
-	}
+	/*@keyframes mymove {*/
+	/*	from {transform:translateX(0%)}*/
+	/*	to {transform:translateX(-100%)}*/
+	/*}*/
 </style>
