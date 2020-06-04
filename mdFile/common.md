@@ -15,7 +15,7 @@
     ~~~
     {
         "success": true,
-        "code": "SC",
+        "code": "SUC",
         "msg": "성공하였습니다.",
         "data": {
         ...
