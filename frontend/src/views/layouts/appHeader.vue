@@ -17,9 +17,9 @@
 					<router-link exact tag="li" to="/asset">
 						<a>ASSET</a>
 					</router-link>
-					<li>
-						<router-link exact to="/toolkit">TOOLKIT</router-link>
-					</li>
+					<router-link exact tag="li" to="/toolkit">
+						<a>TOOLKIT</a>
+					</router-link>
 					<li>
 						<router-link exact to="/foundation">FOUNDATION</router-link>
 					</li>

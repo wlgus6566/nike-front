@@ -2,8 +2,6 @@
 	<div id="transition-components-demo" class="demo">
 		<input type="radio" value="v-a" id="a" v-model="view"> <label for="a">A</label>
 		<input type="radio" value="v-b" id="b" v-model="view"> <label for="b">B</label>
-
-
 		<transition name="component-fade" mode="out-in">
 			<component v-bind:is="view"></component>
 		</transition>

@@ -7,7 +7,6 @@
 <script>
 	import * as layouts from './views/layouts';
 
-
 	export default {
 		name: 'App',
 		data(){
@@ -17,7 +16,6 @@
 		},
 		computed: {
 			layout() {
-				console.log(this.$route.meta.layout)
 				return `${this.$route.meta.layout || 'default'}-layout`
 			}
 		},

@@ -4,7 +4,7 @@
 html, body {box-sizing:border-box; min-height:100%;}
 body {padding:var(--safeTop) 0 var(--safeBtm);}
 
-#app {display:flex; flex-wrap:wrap; min-width:1440px;}
+#wrap {display:flex; flex-wrap:wrap; min-width:1440px;}
 header {position:relative; flex:0 0 200px;}
 header .inner {width:200px; box-sizing:border-box; padding:80px 30px 130px;}
 header h1 {}

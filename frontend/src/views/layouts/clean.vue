@@ -1,9 +1,11 @@
 <template>
-
+	<div>
+		123
+	</div>
 </template>
 <script>
 	export default {
-		name: "Clean Layout"
+		name: "cleanLayout"
 	}
 </script>
 <style scoped></style>
