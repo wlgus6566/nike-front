@@ -93,7 +93,7 @@ public class ErrorSampleService {
     public SingleResult<Manager> findById(Long managerSeq) {
         return responseService.getSingleResult(
                 managerRepository.findById(managerSeq)
-                        .orElseThrow(() -> new Status200Exception(ErrorEnumCode.manageError.MANE01.toString(), ErrorEnumCode.manageError.MANE01.getMessage())));
+                        .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.manageError.MANE01.toString(), ErrorEnumCode.manageError.MANE01.getMessage())));
 //        return responseService.getSingleResult(
 //                managerRepository.findById(managerSeq)
 //                        .orElseThrow(() -> new ManagerNotFoundException()));
@@ -119,7 +119,7 @@ public class ErrorSampleService {
         Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerSaveDTO.getAuthSeq());
 
         if (null == managerSaveDTO.getManagerId()) {
-            new Status200Exception(ErrorEnumCode.loginError.LOGE01.toString(), ErrorEnumCode.loginError.LOGE01.getMessage());
+            new CodeMessageHandleException(ErrorEnumCode.loginError.LOGE01.toString(), ErrorEnumCode.loginError.LOGE01.getMessage());
         }
 
         return responseService.getSingleResult(managerRepository.save(Manager.builder()

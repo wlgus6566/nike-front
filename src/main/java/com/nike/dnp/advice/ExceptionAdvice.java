@@ -1,7 +1,6 @@
 package com.nike.dnp.advice;
 
-import com.nike.dnp.exception.Status200Exception;
-import com.nike.dnp.exception.Status500Exception;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.service.ResponseService;
 import org.apache.commons.lang.exception.ExceptionUtils;
@@ -40,31 +39,12 @@ public class ExceptionAdvice {
      * @param e
      * @return 상태값 : 200, 코드, 메세지
      */
-    @ExceptionHandler(Status200Exception.class)
+    @ExceptionHandler(CodeMessageHandleException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    protected CommonResult status200Exception(HttpServletRequest request, Status200Exception e) {
+    protected CommonResult codeMessageHandleException(HttpServletRequest request, CodeMessageHandleException e) {
         logger.error("==================ERROR===================");
         logger.error("Exception Status200Exception: "+ e.getMessage());
-
-        logger.error(e.getLocalizedMessage());
-        logger.error(ExceptionUtils.getStackTrace(e));
-        return responseService.getFailResult(e.getCode(), e.getMessage());
-    }
-
-    /**
-     * status 500 Exception
-     *
-     * @param request
-     * @param e
-     * @return 상태값 : 500, 코드, 메세지
-     */
-    @ExceptionHandler(Status500Exception.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected CommonResult status500Exception(HttpServletRequest request, Status500Exception e) {
-        logger.error("==================ERROR===================");
-        logger.error("Exception Status500Exception: "+ e.getMessage());
 
         logger.error(e.getLocalizedMessage());
         logger.error(ExceptionUtils.getStackTrace(e));
@@ -81,7 +61,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public CommonResult handleExcption(HttpServletRequest request, Exception e) {
+    public CommonResult globalHandelException(HttpServletRequest request, Exception e) {
         logger.error("==================Global ERROR===================");
         logger.error(e.getLocalizedMessage());
         logger.error(ExceptionUtils.getStackTrace(e));

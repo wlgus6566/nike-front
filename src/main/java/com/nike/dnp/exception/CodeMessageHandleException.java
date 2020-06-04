@@ -12,11 +12,11 @@ import lombok.Getter;
  *
  */
 @Getter
-public class Status500Exception extends RuntimeException {
+public class CodeMessageHandleException extends RuntimeException {
 
     private String code;
 
-    public Status500Exception(String code, String msg) {
+    public CodeMessageHandleException(String code, String msg) {
         super(msg);
         this.code = code;
     }
