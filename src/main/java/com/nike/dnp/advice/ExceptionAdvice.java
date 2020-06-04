@@ -1,8 +1,7 @@
 package com.nike.dnp.advice;
 
-import com.nike.dnp.exception.ErrorEnumCode;
-import com.nike.dnp.exception.NoRequiredValueException;
-import com.nike.dnp.exception.TargetNotFoundException;
+import com.nike.dnp.exception.Status200Exception;
+import com.nike.dnp.exception.Status500Exception;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.service.ResponseService;
 import org.apache.commons.lang.exception.ExceptionUtils;
@@ -35,43 +34,50 @@ public class ExceptionAdvice {
     }
 
     /**
-     * 조회한 값이 없을 경우 (목록 제외, ex_상세 페이지 등)
+     * status 200 Exception
      *
      * @param request
      * @param e
-     * @return 상태값 : 200, 실페 메세지
+     * @return 상태값 : 200, 코드, 메세지
      */
-    @ExceptionHandler(TargetNotFoundException.class)
+    @ExceptionHandler(Status200Exception.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    protected CommonResult targetNotFoundException(HttpServletRequest request, TargetNotFoundException e) {
+    protected CommonResult status200Exception(HttpServletRequest request, Status200Exception e) {
         logger.error("==================ERROR===================");
-        logger.error("Exception targetNotFoundException: "+ e.getMessage());
+        logger.error("Exception Status200Exception: "+ e.getMessage());
 
         logger.error(e.getLocalizedMessage());
         logger.error(ExceptionUtils.getStackTrace(e));
         return responseService.getFailResult(e.getCode(), e.getMessage());
     }
-//
+
     /**
-     * 필수 값이 없을 경우
+     * status 500 Exception
      *
      * @param request
      * @param e
-     * @return 상태값 : 200, 실페 메세지
+     * @return 상태값 : 500, 코드, 메세지
      */
-    @ExceptionHandler(NoRequiredValueException.class)
+    @ExceptionHandler(Status500Exception.class)
     @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    protected CommonResult noRequiredValueException(HttpServletRequest request, NoRequiredValueException e) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult status500Exception(HttpServletRequest request, Status500Exception e) {
         logger.error("==================ERROR===================");
-        logger.error("Exception nullPointException: "+ e.getMessage());
+        logger.error("Exception Status500Exception: "+ e.getMessage());
 
         logger.error(e.getLocalizedMessage());
         logger.error(ExceptionUtils.getStackTrace(e));
         return responseService.getFailResult(e.getCode(), e.getMessage());
     }
 
+    /**
+     * 정의 된 오류 외의 excpetion
+     *
+     * @param request the request
+     * @param e       the e
+     * @return the common result
+     */
     @ExceptionHandler(Exception.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

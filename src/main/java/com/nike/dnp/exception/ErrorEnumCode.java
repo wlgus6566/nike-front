@@ -19,31 +19,13 @@ import org.springframework.stereotype.Component;
 public class ErrorEnumCode {
 
     public enum commonError {
-        COME01("상세값을 찾을 수 없습니다.");
-
-        commonError(String value) {
-            this.value = value;
-        }
-        private final String value;
-        public String getMessage() {
-            return value;
-        }
-    }
-
-    public enum loginError {
-
-        LOGE01("가입여부를 확인해주세요.\n등록된 정보가 없습니다."),
-        LOGE02("이메일을 정확히 입력해주세요."),
-        LOGE03("비밀번호를 입력해주세요."),
-        LOGE04("이미 사용중인 이메일 입니다."),
-        LOGE05("사용할 수 없는 단어입니다."),
-        LOGE06("새 비밀번호를 입력해주세요.");
+        COME01("로그인이 필요합니다.");
 
         /**
          * 생성자
          * @param value - 에러 메시지
          */
-        loginError(String value) {
+        commonError(String value) {
             this.value = value;
         }
 
@@ -60,7 +42,48 @@ public class ErrorEnumCode {
         public String getMessage() {
             return value;
         }
+    }
+
+
+    /**
+     * The enum Login error.
+     */
+    public enum loginError {
+
+        LOGE01("가입여부를 확인해주세요.\n등록된 정보가 없습니다."),
+        LOGE02("이메일을 정확히 입력해주세요."),
+        LOGE03("비밀번호를 입력해주세요."),
+        LOGE04("이미 사용중인 이메일 입니다."),
+        LOGE05("사용할 수 없는 단어입니다."),
+        LOGE06("새 비밀번호를 입력해주세요.");
+
+        loginError(String value) {
+            this.value = value;
+        }
+        private final String value;
+        public String getMessage() {
+            return value;
+        }
 
     }
+
+    /**
+     * The enum Manage error.
+     */
+    public enum manageError {
+
+        MANE01("관리자의 상세정보가 존재하지 않습니다.");
+
+        manageError(String value) {
+            this.value = value;
+        }
+        private final String value;
+        public String getMessage() {
+            return value;
+        }
+
+    }
+
+
 
 }

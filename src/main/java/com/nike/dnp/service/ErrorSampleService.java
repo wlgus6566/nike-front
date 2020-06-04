@@ -5,10 +5,7 @@ import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.manage.manager.ManagerUpdateDTO;
 import com.nike.dnp.entity.manage.Manager;
 import com.nike.dnp.entity.manage.ManagerAuth;
-import com.nike.dnp.exception.ErrorEnumCode;
-import com.nike.dnp.exception.ManagerNotFoundException;
-import com.nike.dnp.exception.NoRequiredValueException;
-import com.nike.dnp.exception.TargetNotFoundException;
+import com.nike.dnp.exception.*;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.repository.manage.ManagerAuthRepository;
 import com.nike.dnp.repository.manage.ManagerRepository;
@@ -96,7 +93,7 @@ public class ErrorSampleService {
     public SingleResult<Manager> findById(Long managerSeq) {
         return responseService.getSingleResult(
                 managerRepository.findById(managerSeq)
-                        .orElseThrow(() -> new TargetNotFoundException(ErrorEnumCode.commonError.COME01.toString(), ErrorEnumCode.commonError.COME01.getMessage())));
+                        .orElseThrow(() -> new Status200Exception(ErrorEnumCode.manageError.MANE01.toString(), ErrorEnumCode.manageError.MANE01.getMessage())));
 //        return responseService.getSingleResult(
 //                managerRepository.findById(managerSeq)
 //                        .orElseThrow(() -> new ManagerNotFoundException()));
@@ -122,7 +119,7 @@ public class ErrorSampleService {
         Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerSaveDTO.getAuthSeq());
 
         if (null == managerSaveDTO.getManagerId()) {
-
+            new Status200Exception(ErrorEnumCode.loginError.LOGE01.toString(), ErrorEnumCode.loginError.LOGE01.getMessage());
         }
 
         return responseService.getSingleResult(managerRepository.save(Manager.builder()
@@ -152,6 +149,7 @@ public class ErrorSampleService {
                     , managerUpdateDTO.getUpdaterSeq()
             );
         }
+
         return responseService.getSingleResult(e.get());
     }
 
