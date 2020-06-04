@@ -54,8 +54,8 @@
             LOGE01("가입여부를 확인해주세요.\n등록된 정보가 없습니다."),
             LOGE02("이메일을 정확히 입력해주세요."),
             LOGE03("비밀번호를 입력해주세요."),
-            LOGE05("회원을 조회할 수 없습니다."),
-            LOGE04("이미 사용중인 이메일 입니다.");
+            LOGE04("회원을 조회할 수 없습니다."),
+            LOGE05("이미 사용중인 이메일 입니다.");
     
             loginError(String value) {
                 this.value = value;
@@ -81,7 +81,7 @@
         public SingleResult<Manager> findById(Long managerSeq) {
             return responseService.getSingleResult(
                     managerRepository.findById(managerSeq)
-                            .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.loginError.LOGE05.toString(), ErrorEnumCode.loginError.LOGE05.getMessage())));
+                            .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.loginError.LOGE04.toString(), ErrorEnumCode.loginError.LOGE04.getMessage())));
         }
     ~~~
 
