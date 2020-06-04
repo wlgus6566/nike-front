@@ -84,33 +84,6 @@ public class ManagerController {
         + "size||노출갯수|Integer\n"
         + "\n\n\n"
     )
-    /*@ApiImplicitParams({
-        @ApiImplicitParam(
-                name = "keyword"
-                , value = "master"
-                , required = false
-                , dataType = "String"
-                , paramType = "query"
-        )
-        ,@ApiImplicitParam(
-                name = "page"
-                , value = "0"
-                , required = false
-                , dataType = "int"
-                , paramType = "query"
-        )
-        ,@ApiImplicitParam(
-                name = "size"
-                , value = "20"
-                , required = false
-                , dataType = "int"
-                , paramType = "query"
-        )
-    })*/
-    /*@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "사용자 목록 조회")
-    public SingleResult<Page<Manager>> getAllManagers(ManagerSearchDTO managerSearchDTO) {
-        return responseService.getSingleResult(managerService.findAllPaging(managerSearchDTO));
-    }*/
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "사용자 목록 조회")
     public SingleResult<Page<Manager>> getAllManagers(ManagerSearchDTO managerSearchDTO) {
         return responseService.getSingleResult(managerService.findAllPaging(managerSearchDTO));
@@ -131,31 +104,6 @@ public class ManagerController {
         + "\n\n\n"
         + "## Response ## \n"
         + "[하위 Model 참조]\n"
-        /*+ "1depth|2depth|3depth|필드설명|데이터 타입(길이)\n" + "-|-|-|-\n"
-        + "result|||본문내용|\n"
-        + "|registrationDt||최초등록일|DateTime\n"
-        + "|updateDt||최종수정일|DateTime\n"
-        + "|registerSeq||최초작성자|Long\n"
-        + "|updaterSeq||최종수정자|Long\n"
-        + "|managerSeq||사용자시퀀스|Long\n"
-        + "|managerId||사용자ID|String\n"
-        + "|managerName||사용자명|String\n"
-        + "|useIp||접속IP|String\n"
-        + "|loginDt||로그인일자|DateTime\n"
-        + "|managerAuth||권한정보|\n"
-            + "||registrationDt|최초등록일|DateTime\n"
-            + "||updateDt|최종수정일|DateTime\n"
-            + "||registerSeq|최초작성자|Long\n"
-            + "||updaterSeq|최종수정자|Long\n"
-            + "||authSeq|권한시퀀스|Long\n"
-            + "||authName|권한명|String\n"
-            + "||roleType|권한타입|String\n"
-            + "||useYn|사용여부|String\n"
-        + "search|||검색정보|\n"
-        + "|keyword||검색어|String\n"
-        + "|page||현재페이지|Integer\n"
-        + "code|||응답코드|String\n"
-        + "\n\n\n"*/
     )
     @GetMapping(value = "/{managerSeq}", name = "사용자 상세 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
