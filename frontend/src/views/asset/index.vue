@@ -15,7 +15,7 @@
 	</div>
 </template>
 <script>
-	import api from '@/api/asset/assetApi';
+	import api from '../../api/asset/assetApi';
 
 	export default {
 		data() {

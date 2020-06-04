@@ -12,14 +12,14 @@
 1. 하이픈(-)은 2개 이상의 단어를 조합할 때만 사용한다.
 1. 하이픈(-)을 이용하여 3단계를 초과하여 사용하는 방법은 지양한다.
 
-####CSS 코드 작성 규칙
+#### CSS 코드 작성 규칙
 - 문서의 첫 줄에 인코딩을 선언하며 인코딩은 HTML과 동일한 인코딩을 지정한다. 작업 정보를 아래와 같은 방법으로 작성한다.
 ````css
 @charset "utf-8";
 body , html{margin:0; padding:0;}
 ````
 
-####모든 속성은 영문 소문자로만 작성한다
+#### 모든 속성은 영문 소문자로만 작성한다
 ````css
 /* 잘못된 예 */
 .contents{color:#FFF;}
@@ -27,7 +27,7 @@ body , html{margin:0; padding:0;}
 .contents{color:#fff;}
 ````
 
-####세미콜론(;)
+#### 세미콜론(;)
 - 마지막 선언된 속성에도 세미콜론(;)을 사용한다.
 ````css
 /* 잘못된 예 */
@@ -36,7 +36,7 @@ body , html{margin:0; padding:0;}
 .contents{color:#fff;  padding-left:0;}
 ````
 
-####들여쓰기/줄 바꿈
+#### 들여쓰기/줄 바꿈
 - CSS 코드 작성시 들여쓰기는 허용하지 않는다.
 - 공통으로 사용되는 속성의 선택자간의 줄 바꿈은 허용하며 이 외의 줄바꿈은 허용하지 않는다.
 ````css
@@ -53,7 +53,7 @@ body , html{margin:0; padding:0;}
 .box2{float:left; display:block;}
 ````
 
-####속성의 선언 순서
+#### 속성의 선언 순서
 - content, z-index, position, top, right, bottom, left, display, flex, visibility, float, clear, overflow, box-sizing, width, height, margin, padding, border 의 순서를 지킨다
 ````css
 /* 잘못된 예 */
@@ -63,7 +63,7 @@ body , html{margin:0; padding:0;}
 .contents{position:relative; display:block; width:10px; height:10px; margin:0; padding:0; font-size:12px; color:red;}
 ````
 
-####주석 / 빈줄
+#### 주석 / 빈줄
 - CSS 주석 처리는 시작 주석을 작성하며 종료 주석은 작성하지 않는다. 종료코드 이후에 오는 요소에 한 칸 띄어 쓰기를 허용한다.
 - 코드를 구분하기 위하여 코드 그룹 간 1줄의 빈 줄을 허용한다. 빈 줄의 1줄을 초과하지 않는다.
 ````css
@@ -76,7 +76,7 @@ body , html{margin:0; padding:0;}
 .btn-blue{position:relative; display:block; width:10px; height:10px; margin:0; padding:0; font-size:12px; color:blue;}
 ````
 
-####css 재정의
+#### css 재정의
 - margin, border, padding, font-size, text-align의 재정의 만 필요할 경우 하단의 클래스를 추가 하여 사용한다.
 - 하단의 클래스로 재정의가 불가능할 경우 하단의 클래스 규칙에 맞춰 클래스를 추가 하여 사용한다.
 - margin, padding의 경우 5px단위로만 정의 하여 사용한다.
@@ -116,7 +116,7 @@ body , html{margin:0; padding:0;}
 .bg-blue{padding-bottom:150px; background:#f4f7fd;}
 ````
 
-####웹폰트 정의 방법
+#### 웹폰트 정의 방법
 ````css
 @font-face {
 	font-family: 'Noto Sans KR';

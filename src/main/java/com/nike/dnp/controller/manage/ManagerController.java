@@ -4,7 +4,8 @@ import com.nike.dnp.dto.manage.manager.ManagerSaveDTO;
 import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.manage.manager.ManagerUpdateDTO;
 import com.nike.dnp.entity.manage.Manager;
-import com.nike.dnp.exception.ManagerNotFoundException;
+import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.ErrorEnumCode;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -110,7 +111,7 @@ public class ManagerController {
     public SingleResult<Manager> getManager(@PathVariable(name = "managerSeq") Long managerSeq) {
         return responseService.getSingleResult(
                 managerService.findById(managerSeq)
-                        .orElseThrow(() -> new ManagerNotFoundException()));
+                        .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.manageError.MANE01.toString(), ErrorEnumCode.manageError.MANE01.getMessage())));
     }
 
     /**

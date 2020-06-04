@@ -1,6 +1,6 @@
 <template>
 	<div id="wrap">
-		<layoutHeader/>
+		<appHeader v-bind:propsdata="navActive"/>
 		<section id="container">
 			<div class="contents">
 				<transition
@@ -20,7 +20,7 @@
 				</transition>
 			</div>
 		</section>
-		<layoutAside/>
+		<appAside/>
 		<footer>
 			footer
 		</footer>
@@ -28,35 +28,39 @@
 </template>
 
 <script>
-	//import aSwiper from './components/swiper'
-	import layoutHeader from '@/views/layout/layout-header'
-	import layoutAside from '@/views/layout/layout-aside'
+	import appHeader from '@/views/layout/appHeader.vue'
+	import appAside from '@/views/layout/appAside.vue'
 
 	export default {
 		name: 'App',
+		data(){
+			return {
+				navActive : true
+			}
+		},
 		components: {
-			layoutHeader,
-			layoutAside
+			appHeader,
+			appAside
 		},
 		methods : {
 			beforeEnter(){
-				//console.log("beforeEnter")
+				//console.log(this.$route.path)
 			},
 			enter: function () {
-				//console.log(el)
+				// console.log(el)
 				// console.log("enter")
 				// Velocity(el, { opacity: 1, fontSize: '12.4em' }, { duration: 1000 });
 				// Velocity(el, { fontSize: '0.1em' }, { duration: 1000 }, { complete: done });
 				// Velocity(el, { fontSize: '1em' }, { complete: done })
 			},
 			afterEnter(){
-				//console.log("afterEnter")
+				//console.log(this.$route.path)
 			},
 			enterCancelled(){
 				//console.log("enterCancelled")
 			},
 			beforeLeave(){
-				//console.log("beforeLeave")
+				this.navActive = this.$route.path === "/";
 			},
 			leave(){
 				//console.log("leave")

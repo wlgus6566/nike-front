@@ -1,18 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-//import VueLodash from 'vue-lodash'
-//import lodash from 'lodash'
-// import velocity from 'velocity-animate'
 import axios from './axios'
 
-import VueStickyDirective from "@renatodeleao/vue-sticky-directive";
-
-Vue.use(VueStickyDirective);
-
 Vue.prototype.$axios = axios;
-//Vue.use(VueLodash, { name: 'custom' , lodash: lodash });
-// Vue.use(velocity);
 
 Vue.config.productionTip = false;
 
