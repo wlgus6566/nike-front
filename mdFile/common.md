@@ -86,6 +86,3 @@
     ~~~
 
 1. 해당 swagger에 exception에 대한 코드, 메시지 기술
-
-1. CodeMessageHandelException이 발생할 경우 response
-
