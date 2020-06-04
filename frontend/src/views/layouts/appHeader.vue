@@ -1,6 +1,6 @@
 <template>
-	<header v-bind:class="{ active: propsdata }" sticky-container>
-		<div class="inner" sticky-offset="{top: 10, bottom: 30}" sticky-side="both" sticky-z-index="20" v-sticky>
+	<header v-bind:class="{ active: navActive }" sticky-container>
+		<div class="inner" sticky-offset="{top:0, bottom:0}" sticky-side="both" sticky-z-index="20" v-sticky>
 			<h1>
 				<router-link exact to="/">
 					<img alt="" src="@/assets/images/logo-nike.svg">
@@ -132,36 +132,50 @@
 						<router-link to="/management" exact>MANAGEMENT</router-link>
 					</li>
 				</ul>-->
+				<div class="bg" v-on:mouseenter="navIn">
+					<i></i>
+				</div>
 			</nav>
 		</div>
 	</header>
 </template>
 <script>
 	import Sticky from 'vue-sticky-directive'
+	import Velocity from 'velocity-animate'
 
 	export default {
 		name: 'appHeader',
 		directives: {
 			Sticky
 		},
-		props :['propsdata'],
+		props :['navActive'],
+		watch : {
+			navActive (){
+				this.navIn();
+			}
+		},
 		mounted() {
-			this.navAni();
+			//this.navAni();
 		},
 		methods: {
-			navAni: function () {
-				console.log(this.propsdata)
+			navIn(){
+				console.log(document.querySelector("#wrap"))
+				Velocity(this.$el, {opacity: 0.5});
 			}
 		}
 	}
 </script>
 <style scoped>
-	header {transition:background-color 300ms ease-in-out 0s}
-	header h1 {transition:transform 500ms ease-in-out 0s; transform-origin:0 0;}
-	header.active {background:red;}
-	header nav > ul {animation: mymove 5s infinite;}
-	header.active h1 {transform:translate(-22px, -30px) scale(0.25)}
-	header.active nav > ul {}
+	header {}
+	header h1 {transform-origin:0 0;}
+	header nav > ul {}
+
+
+
+
+	/*header.active {background:red;}*/
+	/*header.active h1 {transform:translate(-22px, -30px) scale(0.25)}*/
+	/*header.active nav > ul {}*/
 	nav ul ul {display:none;}
 
 	/*@keyframes mymove {*/
