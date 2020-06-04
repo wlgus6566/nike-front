@@ -1,18 +1,24 @@
 package com.nike.dnp.service.manage;
 
+import com.nike.dnp.dto.manage.manager.ManagerPredicate;
 import com.nike.dnp.dto.manage.manager.ManagerSaveDTO;
 import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.manage.manager.ManagerUpdateDTO;
 import com.nike.dnp.entity.manage.Manager;
 import com.nike.dnp.entity.manage.ManagerAuth;
+import com.nike.dnp.entity.manage.QManager;
 import com.nike.dnp.repository.manage.ManagerAuthRepository;
 import com.nike.dnp.repository.manage.ManagerRepository;
+import com.nike.dnp.repository.manage.ManagerRepositorySupport;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +37,7 @@ import java.util.Optional;
 public class ManagerService {
 
     private final ManagerRepository managerRepository;
+    private final ManagerRepositorySupport managerRepositorySupport;
     private final ManagerAuthRepository managerAuthRepository;
 
     /**
@@ -41,9 +48,11 @@ public class ManagerService {
      */
     public ManagerService(
             ManagerRepository managerRepository
+            , ManagerRepositorySupport managerRepositorySupport
             , ManagerAuthRepository managerAuthRepository
     ) {
         this.managerRepository = managerRepository;
+        this.managerRepositorySupport = managerRepositorySupport;
         this.managerAuthRepository = managerAuthRepository;
     }
 
@@ -72,6 +81,38 @@ public class ManagerService {
         }
         return managerRepository.findAllByManagerIdLikeOrManagerNameLike(
                 pageRequest, managerSearchDTO.getKeyword(), managerSearchDTO.getKeyword());
+    }
+
+    public Page<Manager> findAllPaging2(ManagerSearchDTO managerSearchDTO) {
+        PageRequest pageRequest = PageRequest.of(managerSearchDTO.getPage()
+                , managerSearchDTO.getSize()
+                , Sort.by("managerSeq").descending());
+
+        Page<Manager> result = managerRepository.findAll(
+                ManagerPredicate.search(managerSearchDTO),
+                pageRequest);
+
+        return result;
+    }
+
+    public List<Manager> findAllPaging3(ManagerSearchDTO managerSearchDTO) {
+        PageRequest pageRequest = PageRequest.of(managerSearchDTO.getPage()
+                , managerSearchDTO.getSize()
+                , Sort.by("managerSeq").descending());
+
+        List<Manager> result = managerRepositorySupport.findAlls(managerSearchDTO);
+
+        return result;
+    }
+
+    public List<Manager> findAllPaging4(ManagerSearchDTO managerSearchDTO) {
+        PageRequest pageRequest = PageRequest.of(managerSearchDTO.getPage()
+                , managerSearchDTO.getSize()
+                , Sort.by("managerSeq").descending());
+
+        List<Manager> result = managerRepositorySupport.findAlls(managerSearchDTO);
+
+        return result;
     }
 
     /**
@@ -132,5 +173,30 @@ public class ManagerService {
         }
         return e.get();
     }
+
+
+
+    @PersistenceContext // 영속성 객체를 자동으로 삽입해줌
+    private EntityManager em;
+
+    public void findByTestList() {
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+
+        QManager qManager = QManager.manager;
+
+        long result = queryFactory
+                .selectFrom(qManager)
+                .where(qManager.managerName.eq("master"))
+                .fetchCount();
+
+        List<Manager> result2 = queryFactory
+                .selectFrom(qManager)
+                .where(qManager.managerName.eq("master"), qManager.managerId.like("master"))
+                .fetch();
+
+        Manager result3 = managerRepositorySupport.getManager(17);
+
+    }
+
 
 }

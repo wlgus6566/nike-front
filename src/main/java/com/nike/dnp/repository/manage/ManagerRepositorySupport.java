@@ -1,5 +1,13 @@
 package com.nike.dnp.repository.manage;
 
+import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
+import com.nike.dnp.entity.manage.Manager;
+import com.nike.dnp.entity.manage.QManager;
+import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
  * ManagerRepository
  *
@@ -10,30 +18,35 @@ package com.nike.dnp.repository.manage;
  *
  */
 
-//@Repository
-//public class ManagerRepositorySupport extends QuerydslRepositorySupport {
-public class ManagerRepositorySupport {
+@Repository
+public class ManagerRepositorySupport extends QuerydslRepositorySupport {
 
-   /* private final JPAQueryFactory jpaQueryFactory;
-
-    public ManagerRepositorySupport(JPAQueryFactory jpaQueryFactory) {
+    public ManagerRepositorySupport() {
         super(Manager.class);
-        this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    public PageImpl<Tuple> findAllByManagerIdLikeOrManagerNameLike(
-            Pageable pageable, String keyword1, String keyword2
-    ) {
-        QManager qManager = manager;
+    public Manager getManager(long managerSeq) {
+        QManager qManager = QManager.manager;
+        return from(qManager)
+                .where(qManager.managerSeq.eq(1L))
+                .fetchOne();
+    }
+
+    public List<Manager> findAlls(ManagerSearchDTO managerSearchDTO) {
+        String keyword = managerSearchDTO.getKeyword();
+        QManager qManager = QManager.manager;
+        return from(qManager)
+                .where(qManager.managerName.eq(keyword)
+                        .or(qManager.managerId.eq(keyword)))
+                .orderBy(qManager.managerSeq.desc())
+                .offset(managerSearchDTO.getPage())
+                .limit(managerSearchDTO.getSize())
+                .fetch();
+    }
 
 
-        SearchResults<Tuple> list = jpaQueryFactory.from((EntityPath<?>) qManager).listResults();
-        *//*List<Manager> managers = query.from((EntityPath<?>) manager)
-                .where(manager.managerName.)
-                .orderBy(manager.managerSeq.desc())
-                .offset(10).limit(20).list(manager);*//*
-
-        return new PageImpl<Tuple>(list.getResults(), pageable, list.getTotal());
-    }*/
-
+    /*queryFactory
+            .selectFrom(qManager)
+            .where(qManager.managerName.eq("master"), qManager.managerId.like("master"))
+            .fetch();*/
 }
