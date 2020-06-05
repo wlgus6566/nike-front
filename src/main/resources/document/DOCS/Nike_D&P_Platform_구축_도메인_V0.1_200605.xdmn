@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<e:DomainDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:e="http://exerd.tomato.com/model" UUID="DDefinition_wmfeEKblEeq2vuQkHO6J8g" productId="com.tomato.db.mysql" version="3.3.3.20200424-1351">
+  <domain UUID="Domain_wmgFIKblEeq2vuQkHO6J8g" name="문자" suggestedDataType="VARCHAR(255)">
+    <domain UUID="Domain_wmgFIablEeq2vuQkHO6J8g" name="주민등록번호" suggestedDataType="VARCHAR(13)"/>
+    <domain UUID="Domain_wmgFIqblEeq2vuQkHO6J8g" name="주소"/>
+    <domain UUID="Domain_wmgFI6blEeq2vuQkHO6J8g" name="웹주소"/>
+    <domain UUID="Domain_wmgFJKblEeq2vuQkHO6J8g" name="전화번호" suggestedDataType="VARCHAR(30)"/>
+    <domain UUID="Domain_wmgFJablEeq2vuQkHO6J8g" name="이메일" suggestedDataType="VARCHAR(100)"/>
+    <domain UUID="Domain_wmgFJqblEeq2vuQkHO6J8g" name="이름" suggestedDataType="VARCHAR(50)"/>
+    <domain UUID="Domain_wmgFJ6blEeq2vuQkHO6J8g" name="코드" suggestedDataType="VARCHAR(20)"/>
+    <domain UUID="Domain_wmgFKKblEeq2vuQkHO6J8g" name="콘텐츠" suggestedDataType="TEXT"/>
+    <domain UUID="Domain_wmgFKablEeq2vuQkHO6J8g" name="암호화" suggestedDataType="VARCHAR(255)"/>
+    <domain UUID="Domain_wmgFKqblEeq2vuQkHO6J8g" name="아이피" suggestedDataType="VARCHAR(100)"/>
+    <domain UUID="Domain_wmgFK6blEeq2vuQkHO6J8g" name="단문" suggestedDataType="VARCHAR(50)"/>
+    <domain UUID="Domain_wmgFLKblEeq2vuQkHO6J8g" name="중문" suggestedDataType="VARCHAR(100)"/>
+    <domain UUID="Domain_wmgFLablEeq2vuQkHO6J8g" name="장문" suggestedDataType="VARCHAR(255)"/>
+    <domain UUID="Domain_wmgFLqblEeq2vuQkHO6J8g" name="아이디" suggestedDataType="VARCHAR(20)"/>
+    <domain UUID="Domain_wmgFL6blEeq2vuQkHO6J8g" name="여부" suggestedDataType="CHAR(1)"/>
+    <domain UUID="Domain_wmgFMKblEeq2vuQkHO6J8g" name="년월일" suggestedDataType="VARCHAR(10)"/>
+  </domain>
+  <domain UUID="Domain_wmgFMablEeq2vuQkHO6J8g" name="숫자" suggestedDataType="INTEGER">
+    <domain UUID="Domain_wmgFMqblEeq2vuQkHO6J8g" name="금액"/>
+    <domain UUID="Domain_wmgFM6blEeq2vuQkHO6J8g" name="시퀀스" suggestedDataType="INTEGER"/>
+    <domain UUID="Domain_wmgFNKblEeq2vuQkHO6J8g" name="번호" suggestedDataType="INTEGER"/>
+    <domain UUID="Domain_wmgFNablEeq2vuQkHO6J8g" name="순서" suggestedDataType="INT"/>
+  </domain>
+  <domain UUID="Domain_wmgFNqblEeq2vuQkHO6J8g" name="날짜" suggestedDataType="DATE">
+    <domain UUID="Domain_wmgFN6blEeq2vuQkHO6J8g" name="일시" suggestedDataType="DATETIME"/>
+  </domain>
+  <domain UUID="Domain_wmgFOKblEeq2vuQkHO6J8g" name="객체" suggestedDataType="BLOB">
+    <domain UUID="Domain_wmgFOablEeq2vuQkHO6J8g" name="이미지" suggestedDataType="VARBINARY"/>
+    <domain UUID="Domain_wmgFOqblEeq2vuQkHO6J8g" name="오디오" suggestedDataType="VARBINARY"/>
+  </domain>
+  <domain UUID="Domain_wmgFO6blEeq2vuQkHO6J8g" name="pk" suggestedDataType="INTEGER"/>
+  <domain UUID="Domain_wmgFPKblEeq2vuQkHO6J8g" name="Y/N" suggestedDataType="VARCHAR(1)"/>
+  <domain UUID="Domain_wmgFPablEeq2vuQkHO6J8g" name="N/Y" suggestedDataType="VARCHAR(1)"/>
+  <domain UUID="Domain_wmgFPqblEeq2vuQkHO6J8g" name="날짜1" suggestedDataType="TIMESTAMP"/>
+  <domain UUID="Domain_wmgFP6blEeq2vuQkHO6J8g" name="제목" suggestedDataType="VARCHAR(100)"/>
+  <domain UUID="Domain_wmgFQKblEeq2vuQkHO6J8g" name="링크" suggestedDataType="VARCHAR(500)"/>
+  <domain UUID="Domain_wmgFQablEeq2vuQkHO6J8g" name="수" suggestedDataType="INTEGER"/>
+  <domain UUID="Domain_wmgFQqblEeq2vuQkHO6J8g" name="id" suggestedDataType="VARCHAR(11)"/>
+</e:DomainDefinition>
