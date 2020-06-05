@@ -121,7 +121,7 @@
 	import Sticky from 'vue-sticky-directive'
 
 	export default {
-		name: 'appAside',
+		name: 'default-aside',
 		directives: {
 			Sticky
 		},

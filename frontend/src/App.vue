@@ -1,53 +1,49 @@
 <template>
 	<div id="app">
-		<component :is="layout" />
+		<transition mode="out-in" name="layout-change">
+			<component :is="layout"/>
+		</transition>
 	</div>
 </template>
-
 <script>
 	import * as layouts from './views/layouts';
 
 	export default {
 		name: 'App',
-		data(){
+		data() {
 			return {
-				navActive : true
+				navActive: true,
+				//layout: 'clean-layout'
 			}
 		},
 		computed: {
 			layout() {
+				console.log(this.$route.meta)
 				return `${this.$route.meta.layout || 'default'}-layout`
 			}
 		},
 		components: {
 			...layouts,
 		},
-		mounted(){
+		mounted() {
 			console.log(this.layout)
 		},
-		methods : {
-
-		}
+		methods: {}
 	}
 </script>
-
 <style>
 	@import url("assets/css/fonts.css");
 	@import url("assets/css/layout.css");
 	@import url("assets/css/reset.css");
 
-	.contents-ani-enter-active {
-		transition: all .3s ease-in-out;
+	.layout-change-enter-active,
+	.layout-change-leave-active {
+		transition:opacity .3s ease;
 	}
-	.contents-ani-leave-active {
-		transition: all .3s ease-in-out .3ms;
-
+	.layout-change-enter,
+	.layout-change-leave-to
+		/* .layout-change-leave-active below version 2.1.8 */ {
+		opacity:0;
 	}
-	.contents-ani-enter,
-	.contents-ani-leave-to {
-		transform: translateY(10px);
-		opacity: 0;
-	}
-
-
 </style>
+

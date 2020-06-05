@@ -17,6 +17,7 @@
     "vue": "^2.6.11",
     "vue-awesome-swiper": "^4.1.1",
     "vue-lodash": "^2.1.2",
+    "vue-meta": "^2.3.4",
     "vue-router": "^3.2.0",
     "vue-sticky": "^3.3.4",
     "vue-sticky-directive": "0.0.10",
