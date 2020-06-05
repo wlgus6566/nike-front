@@ -55,8 +55,7 @@ public class ManagerMenuService {
      * @return the optional
      */
     public Optional<ManagerMenu> findById(Long menuSeq) {
-        Optional<ManagerMenu> managerMenu = managerMenuRepository.findById(menuSeq);
-        return managerMenu;
+        return managerMenuRepository.findById(menuSeq);
     }
 
     /**
@@ -105,9 +104,9 @@ public class ManagerMenuService {
      */
     @Transactional
     public void update(Long menuSeq, ManagerMenuSaveDTO managerMenuSaveDTO) {
-        Optional<ManagerMenu> e = managerMenuRepository.findById(menuSeq);
-        if (e.isPresent()) {
-            e.get().update(
+        Optional<ManagerMenu> managerMenu = managerMenuRepository.findById(menuSeq);
+        if (managerMenu.isPresent()) {
+            managerMenu.get().update(
                 managerMenuSaveDTO.getMenuName()
                 , managerMenuSaveDTO.getMenuPath()
                 , managerMenuSaveDTO.getCreationAuthYn()

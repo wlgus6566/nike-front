@@ -3,6 +3,7 @@ package com.nike.dnp.dto.manage.manager;
 import com.nike.dnp.entity.manage.QManager;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import lombok.experimental.UtilityClass;
 
 /**
  * ManagerPredicate
@@ -14,6 +15,7 @@ import com.querydsl.core.types.Predicate;
  *
  */
 
+@UtilityClass
 public class ManagerPredicate {
 
     public static Predicate search(ManagerSearchDTO managerSearchDTO) {
@@ -23,10 +25,6 @@ public class ManagerPredicate {
         String keyword = managerSearchDTO.getKeyword();
 
         if (!keyword.isEmpty()) {
-            System.out.println("=======================================");
-            System.out.println(keyword);
-            System.out.println("=======================================");
-
             builder
                 .or(qManager.managerId.eq(keyword))
                 .or(qManager.managerName.eq(keyword));

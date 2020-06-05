@@ -4,8 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletContext;
-
 /**
  * GlobalVariable
  *
@@ -21,12 +19,6 @@ public class GlobalVariable {
     // Redis 관련
     public static String GLOBAL_REDIS_HOST;
     public static int GLOBAL_REDIS_PORT;
-
-    private final ServletContext servletContext;
-    public GlobalVariable(ServletContext servletContext) {
-        log.info("Component GlobalVariable Scan Complete.");
-        this.servletContext = servletContext;
-    }
 
     @Value("${spring.redis.host:}")
     public void setREDIS_HOST(String REDIS_HOST) {

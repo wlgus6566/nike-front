@@ -43,7 +43,7 @@ public class GlobalInterceptor extends HandlerInterceptorAdapter {
 	 * 컨트롤러 진입 후 view가 랜더링 된 후 동작
 	 */
 	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e)
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception)
 			throws Exception {
 		log.info("Interceptor > afterCompletion");
 	}

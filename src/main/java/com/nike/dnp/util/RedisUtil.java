@@ -17,18 +17,19 @@ import java.util.concurrent.TimeUnit;
  */
 
 @Component
+//@UtilityClass
 public class RedisUtil {
 
     /**
      * redis key set
-     * 
+     *
      * @param key     - 키명
-     * @param ob      - 데이터
+     * @param object  the object
      * @param timeout - 유지시간(분단위) - 0일 경우 무제한
      */
-    public static void set(String key, Object ob, long timeout) {
+    public static void set(String key, Object object, long timeout) {
         RedisTemplate<String, Object> redisTemplate = (RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate");
-        redisTemplate.opsForValue().set(key, ob);
+        redisTemplate.opsForValue().set(key, object);
         if (timeout > 0) {
             redisTemplate.expire(key, timeout, TimeUnit.MINUTES);
         }

@@ -1,5 +1,7 @@
 package com.nike.dnp.util;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * ObjectUtil
  *
@@ -9,7 +11,7 @@ package com.nike.dnp.util;
  * @history [오지훈] [2020.05.21] [최초 작성]
  * 
  */
-
+@UtilityClass
 public class ObjectUtil {
 
 	/**
@@ -20,34 +22,6 @@ public class ObjectUtil {
 	 */
 	public static boolean isNull(Object value) {
 		return (value == null) ? true : false;
-	}
-
-	public static boolean isNotNull(Object value) {
-		return (value == null) ? false : true;
-	}
-
-	/**
-	 * Object[] NULL 체크
-	 * 
-	 * @param value
-	 * @return
-	 */
-	public static boolean isNull(Object[] value) {
-		return (value != null && value.length > 0) ? false : true;
-	}
-
-	public static boolean isNotNull(Object[] value) {
-		return (value != null && value.length > 0) ? true : false;
-	}
-
-	/**
-	 * Object > Object 형변환
-	 * 
-	 * @param value
-	 * @return
-	 */
-	public static Object nvl(Object value) {
-		return (isNull(value)) ? "" : (isNull(StringUtil.nvl(String.valueOf(value)))) ? "" : StringUtil.nvl(String.valueOf(value));
 	}
 
 }

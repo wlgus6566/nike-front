@@ -26,9 +26,9 @@ public interface ManagerRepository extends JpaRepository<Manager, Long>, Queryds
 
     Optional<Manager> findByManagerSeq(Long managerSeq);
 
-    Long countByManagerSeqOrManagerSeq(Long id1, Long id2);
+    Long countByManagerSeqOrManagerSeq(Long managerSeq1, Long managerSeq2);
 
-    Long countByManagerSeqAndManagerName(Long id, String managerName);
+    Long countByManagerSeqAndManagerName(Long managerSeq, String managerName);
 
     Long countByManagerIdAndManagerName(String managerId, String managerName);
 

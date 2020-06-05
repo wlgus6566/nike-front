@@ -18,6 +18,33 @@ import org.springframework.stereotype.Component;
 @Component
 public class ErrorEnumCode {
 
+    public enum commonError {
+        COME01("로그인이 필요합니다.");
+
+        /**
+         * 에러 메시지
+         */
+        private final String value;
+
+        /**
+         * 생성자
+         * @param value - 에러 메시지
+         */
+        commonError(String value) {
+            this.value = value;
+        }
+
+        /**
+         * 에러 메시지 조회
+         *
+         * @return value - 에러 메시지
+         */
+        public String getMessage() {
+            return value;
+        }
+    }
+
+
     /**
      * The enum Login error.
      */

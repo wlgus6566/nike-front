@@ -6,19 +6,14 @@ import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.manage.manager.ManagerUpdateDTO;
 import com.nike.dnp.entity.manage.Manager;
 import com.nike.dnp.entity.manage.ManagerAuth;
-import com.nike.dnp.entity.manage.QManager;
 import com.nike.dnp.repository.manage.ManagerAuthRepository;
 import com.nike.dnp.repository.manage.ManagerRepository;
-import com.nike.dnp.repository.manage.ManagerRepositorySupport;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +32,6 @@ import java.util.Optional;
 public class ManagerService {
 
     private final ManagerRepository managerRepository;
-    private final ManagerRepositorySupport managerRepositorySupport;
     private final ManagerAuthRepository managerAuthRepository;
 
     /**
@@ -48,11 +42,9 @@ public class ManagerService {
      */
     public ManagerService(
             ManagerRepository managerRepository
-            , ManagerRepositorySupport managerRepositorySupport
             , ManagerAuthRepository managerAuthRepository
     ) {
         this.managerRepository = managerRepository;
-        this.managerRepositorySupport = managerRepositorySupport;
         this.managerAuthRepository = managerAuthRepository;
     }
 
@@ -88,14 +80,12 @@ public class ManagerService {
                 , managerSearchDTO.getSize()
                 , Sort.by("managerSeq").descending());
 
-        Page<Manager> result = managerRepository.findAll(
+        return managerRepository.findAll(
                 ManagerPredicate.search(managerSearchDTO),
                 pageRequest);
-
-        return result;
     }
 
-    public List<Manager> findAllPaging3(ManagerSearchDTO managerSearchDTO) {
+    /*public List<Manager> findAllPaging3(ManagerSearchDTO managerSearchDTO) {
         PageRequest pageRequest = PageRequest.of(managerSearchDTO.getPage()
                 , managerSearchDTO.getSize()
                 , Sort.by("managerSeq").descending());
@@ -113,7 +103,7 @@ public class ManagerService {
         List<Manager> result = managerRepositorySupport.findAlls(managerSearchDTO);
 
         return result;
-    }
+    }*/
 
     /**
      * 상세조회
@@ -122,8 +112,7 @@ public class ManagerService {
      * @return the optional
      */
     public Optional<Manager> findById(Long managerSeq) {
-        Optional<Manager> manager = managerRepository.findById(managerSeq);
-        return manager;
+        return managerRepository.findById(managerSeq);
     }
 
     /**
@@ -161,22 +150,22 @@ public class ManagerService {
      */
     @Transactional
     public Manager update(Long managerSeq, ManagerUpdateDTO managerUpdateDTO) {
-        Optional<Manager> e = managerRepository.findById(managerSeq);
-        if (e.isPresent()) {
+        Optional<Manager> manager = managerRepository.findById(managerSeq);
+        if (manager.isPresent()) {
             Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerUpdateDTO.getAuthSeq());
-            e.get().update(
+            manager.get().update(
                     managerUpdateDTO.getManagerName()
                     , managerUpdateDTO.getPassword()
                     , managerAuth.get()
                     , managerUpdateDTO.getUpdaterSeq()
             );
         }
-        return e.get();
+        return manager.get();
     }
 
 
 
-    @PersistenceContext // 영속성 객체를 자동으로 삽입해줌
+    /*@PersistenceContext // 영속성 객체를 자동으로 삽입해줌
     private EntityManager em;
 
     public void findByTestList() {
@@ -196,7 +185,7 @@ public class ManagerService {
 
         Manager result3 = managerRepositorySupport.getManager(17);
 
-    }
+    }*/
 
 
 }
