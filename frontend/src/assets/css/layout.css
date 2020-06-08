@@ -1,22 +1,77 @@
 @charset "UTF-8";
 
-:root {font-size:14px; --safeTop:env(safe-area-inset-top); --safeBtm:env(safe-area-inset-bottom);}
-html, body {box-sizing:border-box; min-height:100%;}
-body {padding:var(--safeTop) 0 var(--safeBtm);}
+:root {
+    font-size: 14px;
+    --safeTop: env(safe-area-inset-top);
+    --safeBtm: env(safe-area-inset-bottom);
+}
+html,
+body {
+    box-sizing: border-box;
+    min-height: 100%;
+}
+body {
+    padding: var(--safeTop) 0 var(--safeBtm);
+}
 
-#wrap {display:flex; flex-wrap:wrap; min-width:1440px;}
-header {position:relative; flex:0 0 200px;}
-header .inner {width:200px; box-sizing:border-box; padding:80px 30px 130px;}
-header h1 {}
-header h1 a {display:block; width:100px;}
-header h1 a img {vertical-align:top;}
-header.depth {}
-#container {display:flex; flex:1 1 auto; box-sizing:border-box; min-height:calc(100vh - 144px);}
-.contents {flex:1 1 auto; padding:80px 60px 130px;}
-aside {position:relative; flex:0 0 300px;  background:#F7F7F7;}
-aside .inner {width:300px; box-sizing:border-box; padding:80px 30px 130px;}
-footer {flex:0 0 100%; height:144px; background:#000;}
+#wrap {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 1440px;
+}
+header {
+    position: relative;
+    flex: 0 0 200px;
+}
+header .inner {
+    width: 200px;
+    box-sizing: border-box;
+    padding: 80px 30px 130px;
+}
+header h1 {
+}
+header h1 a {
+    display: block;
+    width: 100px;
+}
+header h1 a img {
+    vertical-align: top;
+}
+header.depth {
+}
+#container {
+    display: flex;
+    flex: 1 1 auto;
+    box-sizing: border-box;
+    min-height: calc(100vh - 144px);
+}
+.contents {
+    flex: 1 1 auto;
+    padding: 80px 60px 130px;
+}
+aside {
+    position: relative;
+    flex: 0 0 300px;
+    background: #f7f7f7;
+}
+aside .inner {
+    width: 300px;
+    box-sizing: border-box;
+    padding: 80px 30px 130px;
+}
+footer {
+    flex: 0 0 100%;
+    height: 144px;
+    background: #000;
+}
 
-
-nav {margin-top:30px; font-family:'Bebas Neue', sans-serif;}
-nav a {display:inline-block; font-size:16px; line-height:40px; letter-spacing:0.05em;}
+nav {
+    margin-top: 30px;
+    font-family: 'Bebas Neue', sans-serif;
+}
+nav a {
+    display: inline-block;
+    font-size: 16px;
+    line-height: 40px;
+    letter-spacing: 0.05em;
+}

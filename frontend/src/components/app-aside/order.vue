@@ -1,9 +1,9 @@
 <template>
-	<div></div>
+    <div></div>
 </template>
 <script>
-	export default {
-		name: 'order-aside',
-	}
+export default {
+    name: 'order-aside',
+}
 </script>
 <style scoped></style>

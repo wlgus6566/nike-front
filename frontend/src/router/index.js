@@ -1,36 +1,36 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import test from '../views/test'
-import main from '../views/main.vue'
-import asset from '../views/asset'
+import test from '@/views/test'
+import main from '@/views/main.vue'
+import asset from '@/views/asset'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const router = new VueRouter({
-	mode: 'history',
-	routes: [
-		{
-			path: '/test',
-			component: test,
-			meta: {layout: 'default'}
-		},
-		{
-			path: '/',
-			component: main,
-			meta: {layout: 'clean'}
-		},
-		{
-			path: '/asset',
-			component: asset,
-			meta: {layout: 'default', aside: 'order'}
-		},
-		{
-			path: '*',
-			component: {template: '<div>Not Found</div>'},
-			meta: {layout: 'clean'}
-		}
-	]
-});
+    mode: 'history',
+    routes: [
+        {
+            path: '/test',
+            component: test,
+            meta: { layout: 'default' },
+        },
+        {
+            path: '/',
+            component: main,
+            meta: { layout: 'clean' },
+        },
+        {
+            path: '/asset',
+            component: asset,
+            meta: { layout: 'default', aside: 'order' },
+        },
+        {
+            path: '*',
+            component: { template: '<div>Not Found</div>' },
+            meta: { layout: 'clean' },
+        },
+    ],
+})
 
 /*router.afterEach((to, from) => {
 

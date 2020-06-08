@@ -1,6 +1,5 @@
-import defaultAside from './default.vue';
-import fileAside from './file.vue';
-import orderAside from './order.vue';
+import defaultAside from './default.vue'
+import fileAside from './file.vue'
+import orderAside from './order.vue'
 
-export {defaultAside, fileAside, orderAside};
-
+export { defaultAside, fileAside, orderAside }
