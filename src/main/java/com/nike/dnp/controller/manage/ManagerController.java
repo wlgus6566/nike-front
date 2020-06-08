@@ -108,8 +108,7 @@ public class ManagerController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Manager> getManager(@PathVariable(name = "managerSeq") Long managerSeq) {
         return responseService.getSingleResult(
-                managerService.findById(managerSeq)
-                        .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.manageError.MANE01.toString(), ErrorEnumCode.manageError.MANE01.getMessage())));
+                managerService.findById(managerSeq));
     }
 
     /**
