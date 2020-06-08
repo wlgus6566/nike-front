@@ -1,7 +1,6 @@
 package com.nike.dnp.config.auth;
 
 import com.nike.dnp.exception.ErrorEnumCode;
-import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +10,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,9 +26,9 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 	ResponseService responseService;
 
 	@Override
-	public void onAuthenticationFailure(HttpServletRequest request,
-										HttpServletResponse response,
-										AuthenticationException e
+	public void onAuthenticationFailure(final HttpServletRequest request,
+										final HttpServletResponse response,
+										final AuthenticationException e
 	) throws IOException {
 		response.setContentType("application/json;charset=utf-8");
 		response.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -39,7 +36,6 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 		String errorCode = "";
 		for(ErrorEnumCode.loginError message : ErrorEnumCode.loginError.values()){
 			if(message.toString().equals(e.getMessage())){
-				log.debug("message.toString() > " + message.toString());
 				errorMessage = message.getMessage();
 				errorCode = e.getMessage();
 			}

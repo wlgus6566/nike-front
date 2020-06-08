@@ -16,12 +16,12 @@ public class PasswordEncryptorDelegator implements PasswordEncryptor {
 	 *
 	 * @param passwordEncoder the password encoder
 	 */
-	public PasswordEncryptorDelegator(PasswordEncoder passwordEncoder) {
+	public PasswordEncryptorDelegator(final PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
-	public String encrypt(String rawPassword) {
+	public String encrypt(final String rawPassword) {
 		return passwordEncoder.encode(rawPassword);
 	}
 }
