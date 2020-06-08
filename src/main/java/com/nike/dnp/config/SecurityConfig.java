@@ -25,11 +25,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	/**
+	 * ignore
+	 */
 	private static final String[] PUBLIC = new String[] {
 		"/error", "/login", "/logout", "/api/**", "/h2-console", "/h2-console/**"
 		,"/api/**"
 	};
 
+	/**
+	 * Password encoder password encoder.
+	 *
+	 * @return the password encoder
+	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

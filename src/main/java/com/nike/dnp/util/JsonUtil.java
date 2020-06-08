@@ -41,7 +41,7 @@ public class JsonUtil{
 			ObjectMapper objectMapper = new ObjectMapper();
 			return objectMapper.readValue(json, clazz);
 		}catch(IOException exception){
-			log.error("Failed to convert string '" + json + "' class '" + clazz.getName() + "'", exception);
+			log.error("Failed to convert string", "'" + json + "' class '" + clazz.getName() + "'", exception);
 			return null;
 		}
 	}

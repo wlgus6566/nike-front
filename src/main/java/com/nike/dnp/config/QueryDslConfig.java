@@ -2,6 +2,9 @@ package com.nike.dnp.config;
 
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * The type Query dsl config.
+ */
 @Configuration
 public class QueryDslConfig {
 

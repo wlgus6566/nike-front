@@ -24,6 +24,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @Slf4j
 public class StartApplication extends SpringBootServletInitializer {
 
+	/**
+	 * Instantiates a new Start application.
+	 */
 	public StartApplication() {
 		super();
 	}

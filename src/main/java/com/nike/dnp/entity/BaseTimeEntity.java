@@ -26,16 +26,25 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseTimeEntity {
 
+    /**
+     *
+     */
     @Column(name = "REGISTRATION_DT")
     @CreationTimestamp
     @ApiModelProperty(hidden = true)
     private LocalDateTime registrationDt;
 
+    /**
+     *
+     */
     @Column(name = "UPDATE_DT")
     @UpdateTimestamp
     @ApiModelProperty(hidden = true)
     private LocalDateTime updateDt;
 
+    /**
+     * Instantiates a new Base time entity.
+     */
     public BaseTimeEntity() {
         super();
     }
