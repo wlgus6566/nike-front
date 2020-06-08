@@ -6,7 +6,7 @@ import axios from 'axios'
     https://github.com/axios/axios 의 Request Config 챕터 확인
 */
 const instance = axios.create({
-    // baseURL: 'https://api.hnpwa.com/v0',
+    baseURL: process.env.VUE_APP_API_URL,
     timeout: 1000,
     // 해커 뉴스 API는 커스텀 헤더 넣으면 CORS 걸려서 주석처리했습니다.
     headers: { MEMBER_SEQ: 999999 },
