@@ -15,41 +15,41 @@
     </div>
 </template>
 <script>
-import api from '@/api/asset/assetApi'
+import api from '@/api/asset/assetApi';
 
 export default {
     data() {
         return {
             items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
             nextNum: 10,
-        }
+        };
     },
     methods: {
         randomIndex: function () {
-            return Math.floor(Math.random() * this.items.length)
+            return Math.floor(Math.random() * this.items.length);
         },
         add: function () {
-            this.items.splice(this.randomIndex(), 0, this.nextNum++)
+            this.items.splice(this.randomIndex(), 0, this.nextNum++);
         },
         remove: function () {
-            this.items.splice(this.randomIndex(), 1)
+            this.items.splice(this.randomIndex(), 1);
         },
         shuffle: function () {
             let param = {
                 telNo: 'chejug@gmail.com',
                 password: 'pwd',
                 name: 'aa',
-            }
+            };
             api.list(param).then((response) => {
-                console.log('=======param start=====')
-                console.log(response)
-                console.log('사용하는 데이터부분')
-                console.log(response.data)
-            })
+                console.log('=======param start=====');
+                console.log(response);
+                console.log('사용하는 데이터부분');
+                console.log(response.data);
+            });
             // this.items = _.shuffle(this.items);
         },
     },
-}
+};
 </script>
 <style scoped>
 .list-complete {
