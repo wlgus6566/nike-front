@@ -11,22 +11,54 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 
+/**
+ * AuthUserDTO
+ *
+ * @since 2020.05.22
+ * @author [윤태호]
+ * @Description
+ * @history [윤태호] [2020.05.22] [최초 작성]
+ *
+ */
+
 public class AuthUserDTO implements UserDetails, Serializable {
 
+	/**
+	 * @author [윤태호]
+	 */
+	private static final long serialVersionUID = 1L;
 
+	/**
+	 * @author [윤태호]
+	 */
 	private long managerSeq;
+
+	/**
+	 * @author [윤태호]
+	 */
 	private String managerName;
+
+	/**
+	 * @author [윤태호]
+	 */
 	private String managerId;
+
+	/**
+	 * @author [윤태호]
+	 */
 	private String password;
 
-
+	/**
+	 * Instantiates a new Auth user dto.
+	 *
+	 * @param manager the manager
+	 */
 	public AuthUserDTO(Manager manager) {
 		this.managerSeq = manager.getManagerSeq();
 		this.managerName = manager.getManagerName();
 		this.managerId = manager.getManagerId();
 		this.password = manager.getPassword();
 	}
-
 
 	@Override
 	public String getPassword() {

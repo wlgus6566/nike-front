@@ -25,14 +25,13 @@ public class ManagerPredicate {
      * @return the predicate
      */
     public static Predicate search(final ManagerSearchDTO managerSearchDTO) {
-        final QManager qManager = QManager.manager;
         final BooleanBuilder builder = new BooleanBuilder();
         final String keyword = managerSearchDTO.getKeyword();
 
         if (!keyword.isEmpty()) {
             builder
-                .or(qManager.managerId.eq(keyword))
-                .or(qManager.managerName.eq(keyword));
+                .or(QManager.manager.managerId.eq(keyword))
+                .or(QManager.manager.managerName.eq(keyword));
         }
 
         return builder;

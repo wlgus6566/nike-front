@@ -17,6 +17,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class BeanUtil implements ApplicationContextAware {
 
+    /**
+     * @author [오지훈]
+     */
     private static ApplicationContext context;
 
     @Override

@@ -47,6 +47,11 @@ public class Redis {
         Redis.redisPort = redisPort;
     }
 
+    /**
+     * Instantiates a new Redis.
+     *
+     * @author [오지훈]
+     */
     public Redis() {
         super();
         log.info("Redis Variable Loading");

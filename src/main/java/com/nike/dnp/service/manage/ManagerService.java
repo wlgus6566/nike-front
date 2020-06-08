@@ -40,7 +40,16 @@ import java.util.Optional;
 @Slf4j
 public class ManagerService implements UserDetailsService {
 
+    /**
+     * @author [오지훈]
+     * ManagerRepository
+     */
     private final ManagerRepository managerRepository;
+
+    /**
+     * @author [오지훈]
+     * ManagerAuthRepository
+     */
     private final ManagerAuthRepository authRepository;
 
     /**
@@ -110,7 +119,7 @@ public class ManagerService implements UserDetailsService {
      */
     public Manager findById(final Long managerSeq) {
         return managerRepository.findById(managerSeq)
-                .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.manageError.MANE01.toString(), ErrorEnumCode.manageError.MANE01.getMessage()));
+                .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.ManageError.MANE01.toString(), ErrorEnumCode.ManageError.MANE01.getMessage()));
     }
 
     /**
@@ -187,13 +196,13 @@ public class ManagerService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        log.debug("s > " + s);
-        Manager manager = managerRepository.findByManagerId(s);
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+        log.debug("username > ", username);
+        final Manager manager = managerRepository.findByManagerId(username);
         if(manager == null){
             throw new UserNotFoundException("유저 정보 없음");
         }
-        log.debug("manager > " + manager);
+        log.debug("manager > ", manager);
         return new AuthUserDTO(manager);
     }
 }

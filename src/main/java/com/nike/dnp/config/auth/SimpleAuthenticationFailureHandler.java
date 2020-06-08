@@ -34,7 +34,7 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 		response.setStatus(HttpStatus.BAD_REQUEST.value());
 		String errorMessage = "";
 		String errorCode = "";
-		for(ErrorEnumCode.loginError message : ErrorEnumCode.loginError.values()){
+		for(ErrorEnumCode.LoginError message : ErrorEnumCode.LoginError.values()){
 			if(message.toString().equals(e.getMessage())){
 				errorMessage = message.getMessage();
 				errorCode = e.getMessage();
@@ -42,13 +42,13 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 		}
 		if(e instanceof BadCredentialsException){
 			// 비밀번호 틀림
-			JsonUtil.write(response.getWriter(), responseService.getFailResult(ErrorEnumCode.loginError.LOGE07.toString(), ErrorEnumCode.loginError.LOGE07.getMessage()));
+			JsonUtil.write(response.getWriter(), responseService.getFailResult(ErrorEnumCode.LoginError.LOGE07.toString(), ErrorEnumCode.LoginError.LOGE07.getMessage()));
 		}else if(e instanceof InsufficientAuthenticationException){
 			// 아이디 비번 입력 안함
 			JsonUtil.write(response.getWriter(), responseService.getFailResult(errorCode, errorMessage));
 		}else if(e instanceof InternalAuthenticationServiceException){
 			// 계정 정보 없음..
-			JsonUtil.write(response.getWriter(), responseService.getFailResult(ErrorEnumCode.loginError.LOGE01.toString(), ErrorEnumCode.loginError.LOGE01.getMessage()));
+			JsonUtil.write(response.getWriter(), responseService.getFailResult(ErrorEnumCode.LoginError.LOGE01.toString(), ErrorEnumCode.LoginError.LOGE01.getMessage()));
 		}else{
 			JsonUtil.write(response.getWriter(), responseService.getFailResult("인증 실패 하였습니다."));
 		}

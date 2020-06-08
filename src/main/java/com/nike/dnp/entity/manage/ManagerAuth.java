@@ -23,28 +23,54 @@ import javax.persistence.*;
 @Table(name = "TB_MANAGER_AUTH")
 public class ManagerAuth extends BaseTimeEntity {
 
+    /**
+     * @author [오지훈]
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AUTH_SEQ")
     private Long authSeq;
 
+    /**
+     * @author [오지훈]
+     */
     @Column(name = "AUTH_NAME")
     private String authName;
 
+    /**
+     * @author [오지훈]
+     */
     @Column(name = "ROLE_TYPE")
     private String roleType;
 
+    /**
+     * @author [오지훈]
+     */
     @Column(name = "USE_YN")
     private String useYn;
 
+    /**
+     * @author [오지훈]
+     */
     @Column(name = "REGISTER_SEQ")
     @ApiModelProperty(hidden = true)
     private Long registerSeq;
 
+    /**
+     * @author [오지훈]
+     */
     @Column(name = "UPDATER_SEQ")
     @ApiModelProperty(hidden = true)
     private Long updaterSeq;
 
+    /**
+     * Instantiates a new Manager auth.
+     *
+     * @param authName    the auth name
+     * @param roleType    the role type
+     * @param useYn       the use yn
+     * @param registerSeq the register seq
+     */
     @Builder
     public ManagerAuth(
             final String authName
@@ -60,6 +86,14 @@ public class ManagerAuth extends BaseTimeEntity {
         this.updaterSeq = registerSeq;
     }
 
+    /**
+     * Update.
+     *
+     * @param authName   the auth name
+     * @param roleType   the role type
+     * @param useYn      the use yn
+     * @param updaterSeq the updater seq
+     */
     public void update(
             final String authName
             , final String roleType

@@ -21,10 +21,19 @@ import java.util.List;
 @Repository
 public class ManagerRepositorySupport extends QuerydslRepositorySupport {
 
+    /**
+     * Instantiates a new Manager repository support.
+     */
     public ManagerRepositorySupport() {
         super(Manager.class);
     }
 
+    /**
+     * Gets manager.
+     *
+     * @param managerSeq the manager seq
+     * @return the manager
+     */
     public Manager getManager(final long managerSeq) {
         final QManager qManager = QManager.manager;
         return from(qManager)
@@ -32,6 +41,12 @@ public class ManagerRepositorySupport extends QuerydslRepositorySupport {
                 .fetchOne();
     }
 
+    /**
+     * Find alls list.
+     *
+     * @param managerSearchDTO the manager search dto
+     * @return the list
+     */
     public List<Manager> findAlls(final ManagerSearchDTO managerSearchDTO) {
         final String keyword = managerSearchDTO.getKeyword();
         final QManager qManager = QManager.manager;
