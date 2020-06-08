@@ -18,12 +18,21 @@ import lombok.Setter;
 @Setter
 public class BasicDTO {
 
+    /**
+     *
+     */
     @ApiModelProperty(name = "사용여부", hidden = true)
     private String useYn;
 
+    /**
+     *
+     */
     @ApiModelProperty(name = "최초등록자", hidden = true)
     private Long registerSeq;
 
+    /**
+     *
+     */
     @ApiModelProperty(name = "최종수정자", hidden = true)
     private Long updaterSeq;
 

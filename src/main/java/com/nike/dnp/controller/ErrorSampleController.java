@@ -40,6 +40,12 @@ public class ErrorSampleController {
      */
     private final ErrorSampleService errorSampleService;
 
+    /**
+     * Instantiates a new Error sample controller.
+     *
+     * @param responseService    the response service
+     * @param errorSampleService the error sample service
+     */
     public ErrorSampleController(
             ResponseService responseService
             , ErrorSampleService errorSampleService

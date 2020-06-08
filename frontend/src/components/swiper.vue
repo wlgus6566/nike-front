@@ -6,7 +6,7 @@
 </template>
 
 <script>
-	import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
+	import {directive, Swiper, SwiperSlide} from 'vue-awesome-swiper'
 	import 'swiper/css/swiper.css'
 
 	export default {

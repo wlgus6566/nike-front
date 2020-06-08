@@ -1,6 +1,6 @@
 package com.nike.dnp.config;
 
-import com.nike.dnp.common.GlobalVariable;
+import com.nike.dnp.common.viriable.Redis;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -50,11 +51,15 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 */
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
-		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(jedisPoolConfig());
-		jedisConnectionFactory.setHostName(GlobalVariable.GLOBAL_REDIS_HOST);
-		jedisConnectionFactory.setPort(GlobalVariable.GLOBAL_REDIS_PORT);
-		/*jedisConnectionFactory.setPassword(GlobalVariable.GLOBAL_REDIS_PASSWORD);*/
-		jedisConnectionFactory.setUsePool(true);
+		RedisSentinelConfiguration standaloneConfiguration = new RedisSentinelConfiguration();
+		standaloneConfiguration.sentinel(Redis.GLOBAL_REDIS_HOST, Redis.GLOBAL_REDIS_PORT);
+		/*setHostName();
+		standaloneConfiguration.setPort();*/
+
+		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(standaloneConfiguration, jedisPoolConfig());
+		/*jedisConnectionFactory.setHostName(Redis.GLOBAL_REDIS_HOST);
+		jedisConnectionFactory.setPort(Redis.GLOBAL_REDIS_PORT);
+		jedisConnectionFactory.setUsePool(true);*/
 		return jedisConnectionFactory;
 	}
 

@@ -18,10 +18,24 @@ import lombok.Setter;
 @Setter
 public class ManagerUpdateDTO {
 
+    /**
+     *
+     */
     private Long authSeq;
+
+    /**
+     *
+     */
     private String managerName;
+
+    /**
+     *
+     */
     private String password;
 
+    /**
+     *
+     */
     @ApiModelProperty(hidden = true)
     private Long updaterSeq;
 

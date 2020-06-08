@@ -26,6 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ExceptionAdvice {
 
+    /**
+     * ResponseService
+     */
     private final ResponseService responseService;
 
     public ExceptionAdvice(ResponseService responseService) {
@@ -35,8 +38,8 @@ public class ExceptionAdvice {
     /**
      * status 200 Exception
      *
-     * @param request
-     * @param e
+     * @param request   the request
+     * @param exception the exception
      * @return 상태값 : 200, 코드, 메세지
      */
     @ExceptionHandler(CodeMessageHandleException.class)
@@ -51,8 +54,8 @@ public class ExceptionAdvice {
     /**
      * 정의 된 오류 외의 excpetion
      *
-     * @param request the request
-     * @param e       the e
+     * @param request   the request
+     * @param exception the e
      * @return the common result
      */
     @ExceptionHandler(Exception.class)

@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The type Simple logout success handler.
+ */
 public class SimpleLogoutSuccessHandler implements LogoutSuccessHandler {
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request,

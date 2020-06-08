@@ -18,6 +18,12 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ManagerPredicate {
 
+    /**
+     * Search predicate.
+     *
+     * @param managerSearchDTO the manager search dto
+     * @return the predicate
+     */
     public static Predicate search(ManagerSearchDTO managerSearchDTO) {
         QManager qManager = QManager.manager;
 

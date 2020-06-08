@@ -43,6 +43,9 @@ public class ManagerController {
      */
     private final ManagerService managerService;
 
+    /**
+     *
+     */
     private final String requestCharacter = "## Reqeust ## \n필드명|설명|필수여부|데이터 타입(길이)\\n\" + \"-|-|-|-\\n";
 
     /**

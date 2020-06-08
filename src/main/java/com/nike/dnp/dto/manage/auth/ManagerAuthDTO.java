@@ -18,14 +18,35 @@ import lombok.Setter;
 @Setter
 public class ManagerAuthDTO {
 
+    /**
+     *
+     */
     private Long authSeq;
+
+    /**
+     *
+     */
     private String authName;
+
+    /**
+     *
+     */
     private String roleType;
+
+    /**
+     *
+     */
     private String useYn;
 
+    /**
+     *
+     */
     @ApiModelProperty(hidden = true)
     private Long registerSeq;
 
+    /**
+     *
+     */
     @ApiModelProperty(hidden = true)
     private Long updaterSeq;
 

@@ -18,11 +18,29 @@ import lombok.Setter;
 @Setter
 public class ManagerSaveDTO {
 
+    /**
+     *
+     */
     private Long authSeq;
+
+    /**
+     *
+     */
     private String managerId;
+
+    /**
+     *
+     */
     private String managerName;
+
+    /**
+     *
+     */
     private String password;
 
+    /**
+     *
+     */
     @ApiModelProperty(hidden = true)
     private Long registerSeq;
 
