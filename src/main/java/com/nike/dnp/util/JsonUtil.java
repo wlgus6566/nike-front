@@ -1,9 +1,14 @@
 package com.nike.dnp.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,6 +25,7 @@ import java.util.Map;
  * 
  */
 
+@Slf4j
 public class JsonUtil {
 
 	/**
@@ -104,4 +110,47 @@ public class JsonUtil {
 		return jsonArray;
 	}
 
+	/**
+	 * 오브젝트 json으로 변환
+	 * @param object
+	 * @return
+	 */
+	public static String toJson(Object object) {
+		ObjectMapper mapper = new ObjectMapper();
+		try{
+			return mapper.writeValueAsString(object);
+		}catch(JsonProcessingException e){
+			log.error("Failed to convert object to JSON string", e);
+			return null;
+		}
+	}
+
+	/**
+	 * json > Class
+	 * @param json
+	 * @param clazz
+	 * @param <T>
+	 * @return
+	 */
+	public static <T> T toObject(String json,
+								 Class<T> clazz) {
+		try{
+			ObjectMapper objectMapper = new ObjectMapper();
+			return objectMapper.readValue(json, clazz);
+		}catch(IOException e){
+			log.error("Failed to convert string `" + json + "` class `" + clazz.getName() + "`", e);
+			return null;
+		}
+	}
+
+	/**
+	 * value  > json 형태로 writer
+	 * @param writer
+	 * @param value
+	 * @throws IOException
+	 */
+	public static void write(Writer writer,
+							 Object value) throws IOException {
+		new ObjectMapper().writeValue(writer, value);
+	}
 }
