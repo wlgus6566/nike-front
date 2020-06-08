@@ -2,7 +2,7 @@
     <div id="wrap">
         <section id="container">
             <div class="contents">
-                <transition name="contents-ani" mode="out-in">
+                <transition name="component-fade" mode="out-in">
                     <router-view></router-view>
                 </transition>
             </div>

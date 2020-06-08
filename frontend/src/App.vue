@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <transition mode="out-in" name="layout-change">
+        <transition name="component-fade" mode="out-in">
             <component :is="layout" />
         </transition>
     </div>
@@ -15,18 +15,21 @@ export default {
             navActive: true,
         };
     },
+    watch: {
+        layout() {
+            //console.log(this.layout);
+        },
+    },
     computed: {
         layout() {
-            return `${this.$route.meta.layout || 'default'}-layout`;
+            if (this.$route.meta.layout) {
+                return `${this.$route.meta.layout || 'default'}-layout`;
+            }
         },
     },
     components: {
         ...layouts,
     },
-    mounted() {
-        //console.log(this.layout)
-    },
-    methods: {},
 };
 </script>
 <style>
@@ -34,13 +37,13 @@ export default {
 @import url('assets/css/layout.css');
 @import url('assets/css/reset.css');
 
-.layout-change-enter-active,
-.layout-change-leave-active {
+.component-fade-enter-active,
+.component-fade-leave-active {
     transition: opacity 0.3s ease;
 }
-.layout-change-enter,
-	.layout-change-leave-to
-		/* .layout-change-leave-active below version 2.1.8 */ {
+.component-fade-enter,
+.component-fade-leave-to
+	/* .component-fade-leave-active below version 2.1.8 */ {
     opacity: 0;
 }
 </style>

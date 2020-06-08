@@ -3,7 +3,7 @@
         <appHeader />
         <section id="container">
             <div class="contents">
-                <transition name="contents-ani" mode="out-in">
+                <transition name="component-fade" mode="out-in">
                     <router-view></router-view>
                 </transition>
             </div>
@@ -17,40 +17,30 @@
     </div>
 </template>
 <script>
-import appHeader from '../../components/app-header'
-import * as appAside from '../../components/app-aside/index.js'
+import appHeader from '../../components/app-header';
+import * as appAside from '../../components/app-aside/index.js';
 
 export default {
     name: 'defaultLayout',
     data() {
         return {
             //aside : 'default-aside'
-        }
+        };
     },
     computed: {
         aside() {
-            return `${this.$route.meta.aside || 'default'}-aside`
+            if (this.$route.meta.aside) {
+                return `${this.$route.meta.aside || 'default'}-aside`;
+            }
         },
     },
     components: {
         appHeader,
         ...appAside,
     },
-}
+};
 </script>
 <style scoped>
-.contents-ani-enter-active {
-    transition: all 0.3s ease-in-out;
-}
-.contents-ani-leave-active {
-    transition: all 0.3s ease-in-out 0.3ms;
-}
-.contents-ani-enter,
-.contents-ani-leave-to {
-    opacity: 0;
-    transform: translateY(10px);
-}
-
 .aside-ani-enter-active {
     transition: all 0.3s ease-in-out;
 }

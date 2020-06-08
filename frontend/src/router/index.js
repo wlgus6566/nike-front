@@ -9,12 +9,12 @@ const router = new VueRouter({
         {
             path: '/test',
             component: () => import('@/views/test'),
-            meta: { layout: 'default' },
+            meta: { layout: 'clean' },
         },
         {
             path: '/',
             component: () => import('@/views/main.vue'),
-            meta: { layout: 'default' },
+            meta: { layout: 'default', aside: 'default' },
         },
         {
             path: '/asset',
