@@ -5,7 +5,8 @@ import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.manage.manager.ManagerUpdateDTO;
 import com.nike.dnp.entity.manage.Manager;
 import com.nike.dnp.entity.manage.ManagerAuth;
-import com.nike.dnp.exception.*;
+import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.ErrorEnumCode;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.repository.manage.ManagerAuthRepository;
 import com.nike.dnp.repository.manage.ManagerRepository;
@@ -139,10 +140,10 @@ public class ErrorSampleService {
      */
     @Transactional
     public SingleResult<Manager> update(Long managerSeq, ManagerUpdateDTO managerUpdateDTO) {
-        Optional<Manager> e = managerRepository.findById(managerSeq);
-        if (e.isPresent()) {
+        Optional<Manager> manager = managerRepository.findById(managerSeq);
+        if (manager.isPresent()) {
             Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerUpdateDTO.getAuthSeq());
-            e.get().update(
+            manager.get().update(
                     managerUpdateDTO.getManagerName()
                     , managerUpdateDTO.getPassword()
                     , managerAuth.get()
@@ -150,7 +151,7 @@ public class ErrorSampleService {
             );
         }
 
-        return responseService.getSingleResult(e.get());
+        return responseService.getSingleResult(manager.get());
     }
 
 }

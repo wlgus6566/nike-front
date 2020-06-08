@@ -22,17 +22,17 @@ public class ErrorEnumCode {
         COME01("로그인이 필요합니다.");
 
         /**
+         * 에러 메시지
+         */
+        private final String value;
+
+        /**
          * 생성자
          * @param value - 에러 메시지
          */
         commonError(String value) {
             this.value = value;
         }
-
-        /**
-         * 에러 메시지
-         */
-        private final String value;
 
         /**
          * 에러 메시지 조회
@@ -57,10 +57,24 @@ public class ErrorEnumCode {
         LOGE05("사용할 수 없는 단어입니다."),
         LOGE06("새 비밀번호를 입력해주세요.");
 
+        /**
+         * 생성자
+         * @param value - 에러 메시지
+         */
         loginError(String value) {
             this.value = value;
         }
+
+        /**
+         * 에러 메시지
+         */
         private final String value;
+
+        /**
+         * 에러 메시지 조회
+         *
+         * @return value - 에러 메시지
+         */
         public String getMessage() {
             return value;
         }

@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseTimeEntity {
+public class BaseTimeEntity {
 
     @Column(name = "REGISTRATION_DT")
     @CreationTimestamp

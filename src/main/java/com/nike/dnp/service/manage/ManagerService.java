@@ -1,5 +1,6 @@
 package com.nike.dnp.service.manage;
 
+import com.nike.dnp.dto.manage.manager.ManagerPredicate;
 import com.nike.dnp.dto.manage.manager.ManagerSaveDTO;
 import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.manage.manager.ManagerUpdateDTO;
@@ -74,6 +75,36 @@ public class ManagerService {
                 pageRequest, managerSearchDTO.getKeyword(), managerSearchDTO.getKeyword());
     }
 
+    public Page<Manager> findAllPaging2(ManagerSearchDTO managerSearchDTO) {
+        PageRequest pageRequest = PageRequest.of(managerSearchDTO.getPage()
+                , managerSearchDTO.getSize()
+                , Sort.by("managerSeq").descending());
+
+        return managerRepository.findAll(
+                ManagerPredicate.search(managerSearchDTO),
+                pageRequest);
+    }
+
+    /*public List<Manager> findAllPaging3(ManagerSearchDTO managerSearchDTO) {
+        PageRequest pageRequest = PageRequest.of(managerSearchDTO.getPage()
+                , managerSearchDTO.getSize()
+                , Sort.by("managerSeq").descending());
+
+        List<Manager> result = managerRepositorySupport.findAlls(managerSearchDTO);
+
+        return result;
+    }
+
+    public List<Manager> findAllPaging4(ManagerSearchDTO managerSearchDTO) {
+        PageRequest pageRequest = PageRequest.of(managerSearchDTO.getPage()
+                , managerSearchDTO.getSize()
+                , Sort.by("managerSeq").descending());
+
+        List<Manager> result = managerRepositorySupport.findAlls(managerSearchDTO);
+
+        return result;
+    }*/
+
     /**
      * 상세조회
      *
@@ -81,8 +112,7 @@ public class ManagerService {
      * @return the optional
      */
     public Optional<Manager> findById(Long managerSeq) {
-        Optional<Manager> manager = managerRepository.findById(managerSeq);
-        return manager;
+        return managerRepository.findById(managerSeq);
     }
 
     /**
@@ -120,17 +150,42 @@ public class ManagerService {
      */
     @Transactional
     public Manager update(Long managerSeq, ManagerUpdateDTO managerUpdateDTO) {
-        Optional<Manager> e = managerRepository.findById(managerSeq);
-        if (e.isPresent()) {
+        Optional<Manager> manager = managerRepository.findById(managerSeq);
+        if (manager.isPresent()) {
             Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerUpdateDTO.getAuthSeq());
-            e.get().update(
+            manager.get().update(
                     managerUpdateDTO.getManagerName()
                     , managerUpdateDTO.getPassword()
                     , managerAuth.get()
                     , managerUpdateDTO.getUpdaterSeq()
             );
         }
-        return e.get();
+        return manager.get();
     }
+
+
+
+    /*@PersistenceContext // 영속성 객체를 자동으로 삽입해줌
+    private EntityManager em;
+
+    public void findByTestList() {
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+
+        QManager qManager = QManager.manager;
+
+        long result = queryFactory
+                .selectFrom(qManager)
+                .where(qManager.managerName.eq("master"))
+                .fetchCount();
+
+        List<Manager> result2 = queryFactory
+                .selectFrom(qManager)
+                .where(qManager.managerName.eq("master"), qManager.managerId.like("master"))
+                .fetch();
+
+        Manager result3 = managerRepositorySupport.getManager(17);
+
+    }*/
+
 
 }

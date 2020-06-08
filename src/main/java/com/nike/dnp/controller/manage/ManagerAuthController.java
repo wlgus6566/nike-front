@@ -54,7 +54,7 @@ public class ManagerAuthController {
         try {
             List<ManagerAuth> managerAuths = managerAuthService.findAll();
             return new ResponseEntity<>(managerAuths, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (Exception exception) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -70,7 +70,7 @@ public class ManagerAuthController {
         try {
             Optional<ManagerAuth> managerAuth = managerAuthService.findById(authSeq);
             return new ResponseEntity<>(managerAuth.get(), HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (Exception exception) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -55,8 +55,7 @@ public class ManagerAuthService {
      * @return the optional
      */
     public Optional<ManagerAuth> findById(Long authSeq) {
-        Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(authSeq);
-        return managerAuth;
+        return managerAuthRepository.findById(authSeq);
     }
 
     /**
@@ -92,9 +91,9 @@ public class ManagerAuthService {
      */
     @Transactional
     public void update(Long authSeq, ManagerAuthDTO managerAuthDTO) {
-        Optional<ManagerAuth> e = managerAuthRepository.findById(authSeq);
-        if (e.isPresent()) {
-            e.get().update(
+        Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(authSeq);
+        if (managerAuth.isPresent()) {
+            managerAuth.get().update(
                 managerAuthDTO.getAuthName()
                 , managerAuthDTO.getRoleType()
                 , managerAuthDTO.getUseYn()

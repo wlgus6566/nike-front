@@ -4,6 +4,7 @@ import com.nike.dnp.entity.manage.Manager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -19,15 +20,15 @@ import java.util.Optional;
  */
 
 @Repository
-public interface ManagerRepository extends JpaRepository<Manager, Long> {
+public interface ManagerRepository extends JpaRepository<Manager, Long>, QuerydslPredicateExecutor<Manager> {
 
     Page<Manager> findAllByManagerIdLikeOrManagerNameLike(Pageable pageable, String keyword1, String keyword2);
 
     Optional<Manager> findByManagerSeq(Long managerSeq);
 
-    Long countByManagerSeqOrManagerSeq(Long id1, Long id2);
+    Long countByManagerSeqOrManagerSeq(Long managerSeq1, Long managerSeq2);
 
-    Long countByManagerSeqAndManagerName(Long id, String managerName);
+    Long countByManagerSeqAndManagerName(Long managerSeq, String managerName);
 
     Long countByManagerIdAndManagerName(String managerId, String managerName);
 

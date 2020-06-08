@@ -3,11 +3,12 @@ package com.nike.dnp.advice;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.service.ResponseService;
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,10 +22,9 @@ import javax.servlet.http.HttpServletRequest;
  *
  */
 
+@Slf4j
 @ControllerAdvice
 public class ExceptionAdvice {
-
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionAdvice.class);
 
     private final ResponseService responseService;
 
@@ -42,13 +42,10 @@ public class ExceptionAdvice {
     @ExceptionHandler(CodeMessageHandleException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    protected CommonResult codeMessageHandleException(HttpServletRequest request, CodeMessageHandleException e) {
-        logger.error("==================ERROR===================");
-        logger.error("Exception Status200Exception: "+ e.getMessage());
-
-        logger.error(e.getLocalizedMessage());
-        logger.error(ExceptionUtils.getStackTrace(e));
-        return responseService.getFailResult(e.getCode(), e.getMessage());
+    protected CommonResult codeMessageHandleException(HttpServletRequest request, CodeMessageHandleException exception) {
+        log.debug("==================ERROR===================");
+        log.debug("Exception Status200Exception", exception);
+        return responseService.getFailResult(exception.getCode(), exception.getMessage());
     }
 
     /**
@@ -61,11 +58,9 @@ public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public CommonResult globalHandelException(HttpServletRequest request, Exception e) {
-        logger.error("==================Global ERROR===================");
-        logger.error(e.getLocalizedMessage());
-        logger.error(ExceptionUtils.getStackTrace(e));
-
+    public CommonResult globalHandelException(HttpServletRequest request, Exception exception) {
+        log.debug("==================Global ERROR===================");
+        log.debug("Exception", exception);
         return responseService.getFailResult();
     }
 

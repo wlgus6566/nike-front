@@ -52,7 +52,7 @@ public class ManagerMenuController {
         try {
             List<ManagerMenu> managerMenus = managerMenuService.findAll();
             return new ResponseEntity<>(managerMenus, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (Exception exception) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -68,7 +68,7 @@ public class ManagerMenuController {
         try {
             Optional<ManagerMenu> managerMenu = managerMenuService.findById(menuSeq);
             return new ResponseEntity<>(managerMenu.get(), HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (Exception exception) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

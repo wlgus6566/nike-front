@@ -1,11 +1,8 @@
 package com.nike.dnp.service;
 
 import com.nike.dnp.model.response.CommonResult;
-import com.nike.dnp.model.response.ListResult;
 import com.nike.dnp.model.response.SingleResult;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ResponseService {

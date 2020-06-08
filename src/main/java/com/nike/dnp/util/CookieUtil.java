@@ -30,8 +30,9 @@ public class CookieUtil {
 	 */
 	public boolean existCookieValue(HttpServletRequest request, String name, String value) {
 		Cookie[] cookies = request.getCookies();
-		if (cookies == null || cookies.length == 0)
+		if (cookies == null || cookies.length == 0) {
 			return false;
+		}
 
 		boolean match = false;
 		for (Cookie cookie : cookies) {

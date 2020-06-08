@@ -1,6 +1,6 @@
 package com.nike.dnp.util;
 
-import java.util.Random;
+import lombok.experimental.UtilityClass;
 
 /**
  * NumberUtil
@@ -11,7 +11,7 @@ import java.util.Random;
  * @history [오지훈] [2020.05.21] [최초 작성]
  * 
  */
-
+@UtilityClass
 public class NumberUtil {
 
 	/**
@@ -21,7 +21,7 @@ public class NumberUtil {
 	 * @return
 	 */
 	public static int nvl(int value) {
-		return ("".equals(StringUtil.nvl(String.valueOf(value)))) ? 0 : value;
+		return "".equals(StringUtil.nvl(String.valueOf(value))) ? 0 : value;
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class NumberUtil {
 	 * @return
 	 */
 	public static int nvl(String value, int repairValue) {
-		return ("".equals(StringUtil.nvl(value))) ? NumberUtil.nvl(repairValue) : Integer.parseInt(value);
+		return "".equals(StringUtil.nvl(value)) ? NumberUtil.nvl(repairValue) : Integer.parseInt(value);
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class NumberUtil {
 	 * @return
 	 */
 	public static long nvl(long value) {
-		return ("".equals(StringUtil.nvl(String.valueOf(value)))) ? 0 : value;
+		return "".equals(StringUtil.nvl(String.valueOf(value))) ? 0 : value;
 	}
 
 	/**
@@ -102,36 +102,7 @@ public class NumberUtil {
 	 * @return
 	 */
 	public static long nvl(String value, long repairValue) {
-		return ("".equals(StringUtil.nvl(value))) ? NumberUtil.nvl(repairValue) : Long.parseLong(value);
-	}
-
-	public static long getSize(long[] value) {
-		return (ObjectUtil.isNull(value)) ? 0 : value.length;
-	}
-
-	/**
-	 * 임의 숫자
-	 * 
-	 * @param length(자리수)
-	 * @return
-	 */
-	public static int random(int length) {
-		String maximum = "1";
-		String minimum = "1";
-
-		for (int i = 0; i < length; i++) {
-			maximum += "0";
-			minimum += (i < length - 1) ? "0" : "";
-		}
-
-		Random random = new Random();
-		int result = random.nextInt(Integer.parseInt(maximum)) + Integer.parseInt(minimum);
-
-		if (result > Integer.parseInt(maximum)) {
-			result -= Integer.parseInt(minimum);
-		}
-
-		return result;
+		return "".equals(StringUtil.nvl(value)) ? NumberUtil.nvl(repairValue) : Long.parseLong(value);
 	}
 
 }

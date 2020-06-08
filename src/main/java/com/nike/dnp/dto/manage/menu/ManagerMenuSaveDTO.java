@@ -1,5 +1,6 @@
 package com.nike.dnp.dto.manage.menu;
 
+import com.nike.dnp.dto.manage.BasicDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +16,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ManagerMenuSaveDTO {
+public class ManagerMenuSaveDTO extends BasicDTO {
 
     private String menuName;
     private String menuPath;
@@ -32,8 +33,5 @@ public class ManagerMenuSaveDTO {
     private String excelAuthYn;
     private String lowMenuYn;
     private Long menuOrder;
-    private String useYn;
-    private Long registerSeq;
-    private Long updaterSeq;
 
 }
