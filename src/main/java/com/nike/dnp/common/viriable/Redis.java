@@ -16,6 +16,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component("Redis")
 public class Redis {
+
+    public Redis() {
+        super();
+        log.info("Redis Variable Loading");
+    }
+
     /**
      * The constant GLOBAL_REDIS_HOST.
      */

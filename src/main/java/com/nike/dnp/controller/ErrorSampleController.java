@@ -95,8 +95,7 @@ public class ErrorSampleController {
             , notes =
             "## Reqeust ## \n"
                     + "필드명|설명|필수여부|데이터 타입(길이)\n" + "-|-|-|-\n"
-                    + "managerSeq|사용자시퀀스|true|Long\n"
-                    + "\n\n\n"
+                    + "managerSeq|사용자시퀀스|true|Long\n\n\n\n"
     )
     @DeleteMapping(value = "/{managerSeq}", name = "ErrorSample 삭제"
             , produces = {MediaType.APPLICATION_JSON_VALUE})

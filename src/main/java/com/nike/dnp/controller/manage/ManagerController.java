@@ -74,8 +74,7 @@ public class ManagerController {
         + "keyword|검색어|false|String\n"
         + "page|페이지|false|Integer\n"
         + "size|사이즈|false|Integer\n"
-        + "[하위 Parameters 참조]\n"
-        + "\n\n\n"
+        + "[하위 Parameters 참조]\n\n\n\n"
         + "## Public/Paging Response ## \n"
         + "필드명||필드설명|데이터 타입(길이)\n" + "-|-|-|-\n"
         + "content||본문내용|Array\n"
@@ -85,8 +84,7 @@ public class ManagerController {
         + "last||마지막페이지여부|Boolean\n"
         + "empty||빈값여부|Boolean\n"
         + "number||현재페이지|Integer\n"
-        + "size||노출갯수|Integer\n"
-        + "\n\n\n"
+        + "size||노출갯수|Integer\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "사용자 목록 조회")
     public SingleResult<Page<Manager>> getAllManagers(ManagerSearchDTO managerSearchDTO) {
@@ -102,8 +100,7 @@ public class ManagerController {
     @ApiOperation(
         value = "사용자 상세 조회"
         , notes = requestCharacter
-        + "managerSeq|사용자시퀀스|true|Long\n"
-        + "\n\n\n"
+        + "managerSeq|사용자시퀀스|true|Long\n\n\n\n"
         + "## Response ## \n"
         + "[하위 Model 참조]\n"
     )
@@ -123,11 +120,8 @@ public class ManagerController {
      */
     @ApiOperation(
         value = "사용자 삭제"
-        , notes =
-        "## Reqeust ## \n"
-        + "필드명|설명|필수여부|데이터 타입(길이)\n" + "-|-|-|-\n"
-        + "managerSeq|사용자시퀀스|true|Long\n"
-        + "\n\n\n"
+        , notes = requestCharacter
+        + "managerSeq|사용자시퀀스|true|Long\n\n\n\n"
     )
     @DeleteMapping(value = "/{managerSeq}", name = "사용자 삭제"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -145,15 +139,10 @@ public class ManagerController {
      */
     @ApiOperation(
         value = "사용자 수정"
-        , notes =
-        "## Reqeust ## \n"
-        + "필드명|설명|필수여부|데이터 타입(길이)\n" + "-|-|-|-\n"
-        + "managerSeq|사용자시퀀스|true|Long\n"
-        + "\n\n\n"
+        , notes = requestCharacter
+        + "managerSeq|사용자시퀀스|true|Long\n\n\n\n"
         + "## Response ## \n"
-        + "필드명||필드설명|데이터 타입(길이)\n" + "-|-|-|-\n"
-
-        + "\n\n\n"
+        + "필드명||필드설명|데이터 타입(길이)\n" + "-|-|-|-\n\n\n\n"
     )
     @PutMapping(value = "/{managerSeq}", name = "사용자 수정"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
@@ -174,11 +163,9 @@ public class ManagerController {
         value = "사용자 등록"
         , notes =
         "## Reqeust ## \n"
-        + "[하위 Parameters 참조]\n"
-        + "\n\n\n"
+        + "[하위 Parameters 참조]\n\n\n\n"
         + "## Response ## \n"
-        + "[하위 Model 참조]\n"
-        + "\n\n\n"
+        + "[하위 Model 참조]\n\n\n\n"
     )
     @PostMapping(name = "사용자 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}

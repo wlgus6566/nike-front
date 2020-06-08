@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -51,15 +50,16 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 */
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
-		RedisSentinelConfiguration standaloneConfiguration = new RedisSentinelConfiguration();
-		standaloneConfiguration.sentinel(Redis.GLOBAL_REDIS_HOST, Redis.GLOBAL_REDIS_PORT);
+		//RedisSentinelConfiguration standaloneConfiguration = new RedisSentinelConfiguration();
+		//standaloneConfiguration.sentinel(Redis.GLOBAL_REDIS_HOST, Redis.GLOBAL_REDIS_PORT);
 		/*setHostName();
 		standaloneConfiguration.setPort();*/
 
-		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(standaloneConfiguration, jedisPoolConfig());
-		/*jedisConnectionFactory.setHostName(Redis.GLOBAL_REDIS_HOST);
+		//JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(standaloneConfiguration, jedisPoolConfig());
+		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(jedisPoolConfig());
+		jedisConnectionFactory.setHostName(Redis.GLOBAL_REDIS_HOST);
 		jedisConnectionFactory.setPort(Redis.GLOBAL_REDIS_PORT);
-		jedisConnectionFactory.setUsePool(true);*/
+		jedisConnectionFactory.setUsePool(true);
 		return jedisConnectionFactory;
 	}
 

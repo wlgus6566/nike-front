@@ -42,8 +42,7 @@ public class RedisUtil {
      * @return
      */
     public static Object get(String key) {
-        RedisTemplate<String, Object> redisTemplate = (RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate");
-        return redisTemplate.opsForValue().get(key);
+        return ((RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate")).opsForValue().get(key);
     }
 
     /**
@@ -52,8 +51,7 @@ public class RedisUtil {
      * @param key
      */
     public static void delete(String key) {
-        RedisTemplate<String, Object> redisTemplate = (RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate");
-        redisTemplate.delete(key);
+        ((RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate")).delete(key);
     }
 
     /**
@@ -62,7 +60,6 @@ public class RedisUtil {
      * @return string[]
      */
     public static Set<String> keys(String pattern) {
-        RedisTemplate<String, Object> redisTemplate = (RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate");
-        return redisTemplate.keys(pattern);
+        return ((RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate")).keys(pattern);
     }
 }
