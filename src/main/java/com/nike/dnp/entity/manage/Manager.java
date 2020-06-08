@@ -28,7 +28,8 @@ import java.time.LocalDateTime;
 public class Manager extends BaseTimeEntity {
 
     /**
-     *
+     * 사용자시퀀스
+     * @author [오지훈]
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,21 +38,24 @@ public class Manager extends BaseTimeEntity {
     private Long managerSeq;
 
     /**
-     *
+     * 사용자ID
+     * @author [오지훈]
      */
     @Column(name = "MANAGER_ID")
     @ApiModelProperty(value = "사용자ID")
     private String managerId;
 
     /**
-     *
+     * 사용자명
+     * @author [오지훈]
      */
     @Column(name = "MANAGER_NAME")
     @ApiModelProperty(value = "사용자명")
     private String managerName;
 
     /**
-     *
+     * 비밀번호
+     * @author [오지훈]
      */
     @Column(name = "PASSWORD")
     @ApiModelProperty(value = "비밀번호")
@@ -59,7 +63,8 @@ public class Manager extends BaseTimeEntity {
     private String password;
 
     /**
-     *
+     * 접속IP
+     * @author [오지훈]
      */
     @Column(name = "USE_IP")
     @ApiModelProperty(value = "접속IP", hidden = true)
@@ -67,28 +72,31 @@ public class Manager extends BaseTimeEntity {
     private String useIp;
 
     /**
-     *
+     * 최종로그인일자
+     * @author [오지훈]
      */
     @Column(name = "LOGIN_DT")
     @ApiModelProperty(value = "최종로그인일자", hidden = true)
     private LocalDateTime loginDt;
 
     /**
-     *
+     * 최초작성자
+     * @author [오지훈]
      */
     @Column(name = "REGISTER_SEQ")
     @ApiModelProperty(value = "최초작성자", hidden = true)
     private Long registerSeq;
 
     /**
-     *
+     * 최종수정자
+     * @author [오지훈]
      */
     @Column(name = "UPDATER_SEQ")
     @ApiModelProperty(value = "최종수정자", hidden = true)
     private Long updaterSeq;
 
     /**
-     *
+     * @author [오지훈]
      */
     @ManyToOne
     @JoinColumn(name = "AUTH_SEQ")
@@ -106,11 +114,11 @@ public class Manager extends BaseTimeEntity {
      */
     @Builder
     public Manager(
-            String managerId
-            , String password
-            , String managerName
-            , ManagerAuth managerAuth
-            , Long registerSeq
+            final String managerId
+            , final String password
+            , final String managerName
+            , final ManagerAuth managerAuth
+            , final Long registerSeq
     ) {
         super();
         this.managerId = managerId;
@@ -130,10 +138,10 @@ public class Manager extends BaseTimeEntity {
      * @param updaterSeq  the updater seq
      */
     public void update(
-            String managerName
-            , String password
-            , ManagerAuth managerAuth
-            , Long updaterSeq
+            final String managerName
+            , final String password
+            , final ManagerAuth managerAuth
+            , final Long updaterSeq
     ) {
         this.managerName = managerName;
         this.password = password;

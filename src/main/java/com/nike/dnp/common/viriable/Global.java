@@ -16,6 +16,11 @@ import org.springframework.stereotype.Component;
 @Component("Global")
 public class Global {
 
+    /**
+     * Instantiates a new Global.
+     *
+     * @author [오지훈]
+     */
     public Global() {
         super();
         log.info("Global Variable Loading");

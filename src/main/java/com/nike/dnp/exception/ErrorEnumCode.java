@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ErrorEnumCode {
 
-    public enum commonError {
+    public enum CommonError {
         COME01("로그인이 필요합니다.");
 
         /**
@@ -30,7 +30,7 @@ public class ErrorEnumCode {
          * 생성자
          * @param value - 에러 메시지
          */
-        commonError(String value) {
+        CommonError(final String value) {
             this.value = value;
         }
 
@@ -48,7 +48,7 @@ public class ErrorEnumCode {
     /**
      * The enum Login error.
      */
-    public enum loginError {
+    public enum LoginError {
 
         LOGE01("가입여부를 확인해주세요.\n등록된 정보가 없습니다."),
         LOGE02("이메일을 정확히 입력해주세요."),
@@ -67,7 +67,7 @@ public class ErrorEnumCode {
          * 생성자
          * @param value - 에러 메시지
          */
-        loginError(String value) {
+        LoginError(final String value) {
             this.value = value;
         }
 
@@ -85,13 +85,13 @@ public class ErrorEnumCode {
     /**
      * The enum Manage error.
      */
-    public enum manageError {
+    public enum ManageError {
 
         MANE01("해당 회원의 상세정보가 존재하지 않습니다.");
 
         private final String value;
 
-        manageError(String value) {
+        ManageError(final String value) {
             this.value = value;
         }
 

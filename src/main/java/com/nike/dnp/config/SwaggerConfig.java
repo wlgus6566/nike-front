@@ -39,15 +39,6 @@ public class SwaggerConfig implements WebMvcConfigurer {
 				// 할당된 모든 URL 리스트를 추출
 				.paths(PathSelectors.ant("/api/**")) // 그중 /api/** 인 URL들만 필터링
 				.build().apiInfo(apiInfo()).useDefaultResponseMessages(false);
-				/*.globalResponseMessage(RequestMethod.POST,
-						Arrays.asList(new ResponseMessageBuilder().code(200).message("해당 처리가 성공한한 경우의 응답입니다.").build(),
-								new ResponseMessageBuilder().code(400).message("정상적으로 조회되지 않았을 경우의 응답입니다.").build(),
-								new ResponseMessageBuilder().code(500).message("서버 오류입니다.").build()))
-				.globalResponseMessage(RequestMethod.GET,
-						Arrays.asList(new ResponseMessageBuilder().code(200).message("해당 처리가 성공한한 경우의 응답입니다.").build(),
-								new ResponseMessageBuilder().code(400).message("정상적으로 조회되지 않았을 경우의 응답입니다.").build(),
-								new ResponseMessageBuilder().code(406).message("서비스 점검 팝업입니다.").build(),
-								new ResponseMessageBuilder().code(500).message("서버 오류입니다.").build()));*/
 	}
 
 	private ApiInfo apiInfo() {

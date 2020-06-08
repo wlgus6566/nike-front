@@ -40,21 +40,30 @@ import java.util.Optional;
 @Slf4j
 public class ManagerService implements UserDetailsService {
 
+    /**
+     * @author [오지훈]
+     * ManagerRepository
+     */
     private final ManagerRepository managerRepository;
-    private final ManagerAuthRepository managerAuthRepository;
+
+    /**
+     * @author [오지훈]
+     * ManagerAuthRepository
+     */
+    private final ManagerAuthRepository authRepository;
 
     /**
      * Instantiates a new Manager service.
      *
      * @param managerRepository     the manager repository
-     * @param managerAuthRepository the manager auth repository
+     * @param authRepository the manager auth repository
      */
     public ManagerService(
-            ManagerRepository managerRepository
-            , ManagerAuthRepository managerAuthRepository
+            final ManagerRepository managerRepository
+            , final ManagerAuthRepository authRepository
     ) {
         this.managerRepository = managerRepository;
-        this.managerAuthRepository = managerAuthRepository;
+        this.authRepository = authRepository;
     }
 
     /**
@@ -72,20 +81,8 @@ public class ManagerService implements UserDetailsService {
      * @param managerSearchDTO the manager search dto
      * @return the list
      */
-    public Page<Manager> findAllPaging(ManagerSearchDTO managerSearchDTO) {
-        PageRequest pageRequest = PageRequest.of(managerSearchDTO.getPage()
-                , managerSearchDTO.getSize()
-                , Sort.by("registrationDt").descending());
-
-        if (managerSearchDTO.getKeyword().isEmpty()) {
-            return managerRepository.findAll(pageRequest);
-        }
-        return managerRepository.findAllByManagerIdLikeOrManagerNameLike(
-                pageRequest, managerSearchDTO.getKeyword(), managerSearchDTO.getKeyword());
-    }
-
-    public Page<Manager> findAllPaging2(ManagerSearchDTO managerSearchDTO) {
-        PageRequest pageRequest = PageRequest.of(managerSearchDTO.getPage()
+    public Page<Manager> findAllPaging(final ManagerSearchDTO managerSearchDTO) {
+        final PageRequest pageRequest = PageRequest.of(managerSearchDTO.getPage()
                 , managerSearchDTO.getSize()
                 , Sort.by("managerSeq").descending());
 
@@ -120,9 +117,9 @@ public class ManagerService implements UserDetailsService {
      * @param managerSeq the manager seq
      * @return the optional
      */
-    public Manager findById(Long managerSeq) {
+    public Manager findById(final Long managerSeq) {
         return managerRepository.findById(managerSeq)
-                .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.manageError.MANE01.toString(), ErrorEnumCode.manageError.MANE01.getMessage()));
+                .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.ManageError.MANE01.toString(), ErrorEnumCode.ManageError.MANE01.getMessage()));
     }
 
     /**
@@ -130,7 +127,7 @@ public class ManagerService implements UserDetailsService {
      *
      * @param managerSeq the manager seq
      */
-    public void delete(Long managerSeq) {
+    public void delete(final Long managerSeq) {
         managerRepository.deleteById(managerSeq);
     }
 
@@ -141,8 +138,8 @@ public class ManagerService implements UserDetailsService {
      * @return the long
      */
     @Transactional
-    public Manager save(ManagerSaveDTO managerSaveDTO) {
-        Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerSaveDTO.getAuthSeq());
+    public Manager save(final ManagerSaveDTO managerSaveDTO) {
+        final Optional<ManagerAuth> managerAuth = authRepository.findById(managerSaveDTO.getAuthSeq());
         return managerRepository.save(Manager.builder()
                 .managerId(managerSaveDTO.getManagerId())
                 .managerName(managerSaveDTO.getManagerName())
@@ -159,10 +156,10 @@ public class ManagerService implements UserDetailsService {
      * @param managerUpdateDTO the manager update dto
      */
     @Transactional
-    public Manager update(Long managerSeq, ManagerUpdateDTO managerUpdateDTO) {
-        Optional<Manager> manager = managerRepository.findById(managerSeq);
+    public Manager update(final Long managerSeq, final ManagerUpdateDTO managerUpdateDTO) {
+        final Optional<Manager> manager = managerRepository.findById(managerSeq);
         if (manager.isPresent()) {
-            Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerUpdateDTO.getAuthSeq());
+            final Optional<ManagerAuth> managerAuth = authRepository.findById(managerUpdateDTO.getAuthSeq());
             manager.get().update(
                     managerUpdateDTO.getManagerName()
                     , managerUpdateDTO.getPassword()
@@ -199,12 +196,13 @@ public class ManagerService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Manager manager = managerRepository.findByManagerId(s);
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+        log.debug("username > ", username);
+        final Manager manager = managerRepository.findByManagerId(username);
         if(manager == null){
             throw new UserNotFoundException(ErrorEnumCode.loginError.LOGE01.toString());
         }
-        log.debug("manager > " + manager);
+        log.debug("manager > ", manager);
         return new AuthUserDTO(manager);
     }
 }

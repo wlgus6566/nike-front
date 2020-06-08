@@ -9,16 +9,25 @@ import java.util.concurrent.TimeUnit;
 /**
  * RedisUtil
  *
- * @since 2020.05.21
  * @author [오지훈]
  * @Description RedisUtil 작성
  * @history [오지훈] [2020.05.21] [최초 작성]
- * 
+ * @since 2020.05.21
  */
-
 @Component
-//@UtilityClass
 public class RedisUtil {
+
+    /**
+     * The Redis template.
+     */
+    public static RedisTemplate<String, Object> redisTemplate;
+
+    /**
+     * Instantiates a new Redis util.
+     */
+    public RedisUtil() {
+        redisTemplate = (RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate");
+    }
 
     /**
      * redis key set
@@ -27,8 +36,7 @@ public class RedisUtil {
      * @param object  the object
      * @param timeout - 유지시간(분단위) - 0일 경우 무제한
      */
-    public static void set(String key, Object object, long timeout) {
-        RedisTemplate<String, Object> redisTemplate = (RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate");
+    public static void set(final String key, final String object, final long timeout) {
         redisTemplate.opsForValue().set(key, object);
         if (timeout > 0) {
             redisTemplate.expire(key, timeout, TimeUnit.MINUTES);
@@ -37,29 +45,30 @@ public class RedisUtil {
 
     /**
      * redis key get
-     * 
-     * @param key
-     * @return
+     *
+     * @param key 키
+     * @return Object object
      */
-    public static Object get(String key) {
-        return ((RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate")).opsForValue().get(key);
+    public static Object get(final String key) {
+        return redisTemplate.opsForValue().get(key);
     }
 
     /**
      * redis key delete
-     * 
-     * @param key
+     *
+     * @param key 키
      */
-    public static void delete(String key) {
-        ((RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate")).delete(key);
+    public static void delete(final String key) {
+        redisTemplate.delete(key);
     }
 
     /**
      * redis key array return
-     * @param pattern
-     * @return string[]
+     *
+     * @param pattern 패턴
+     * @return string[] set
      */
-    public static Set<String> keys(String pattern) {
-        return ((RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate")).keys(pattern);
+    public static Set<String> keys(final String pattern) {
+        return redisTemplate.keys(pattern);
     }
 }

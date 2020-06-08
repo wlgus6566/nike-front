@@ -42,10 +42,4 @@ public class BaseTimeEntity {
     @ApiModelProperty(hidden = true)
     private LocalDateTime updateDt;
 
-    /**
-     * Instantiates a new Base time entity.
-     */
-    public BaseTimeEntity() {
-        super();
-    }
 }

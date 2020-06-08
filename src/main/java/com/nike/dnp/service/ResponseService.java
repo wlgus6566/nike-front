@@ -4,10 +4,23 @@ import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import org.springframework.stereotype.Service;
 
+/**
+ * ResponseService
+ *
+ * @since 2020.05.22
+ * @author [오지훈]
+ * @Description 공통 response 서비스 작성
+ * @history [오지훈] [2020.05.22] [최초 작성]
+ *
+ */
+
 @Service
 public class ResponseService {
 
-    // enum으로 api 요청 결과에 대한 code, message를 정의합니다.
+    /**
+     * The enum Common response.
+     * enum으로 api 요청 결과에 대한 code, message를 정의합니다.
+     */
     public enum CommonResponse {
         SUCCESS("SUC", "성공"),
         FAIL("ERR", "에러발생");
@@ -15,7 +28,7 @@ public class ResponseService {
         String code;
         String msg;
 
-        CommonResponse(String code, String msg) {
+        CommonResponse(final String code, final String msg) {
             this.code = code;
             this.msg = msg;
         }
@@ -29,68 +42,76 @@ public class ResponseService {
         }
     }
 
-    // 단일건 결과를 처리하는 메소드
-    public <T> SingleResult<T> getSingleResult(T data) {
-        SingleResult<T> result = new SingleResult<>();
+    /**
+     * Gets single result.
+     * 단일건 결과를 처리하는 메소드
+     *
+     * @param data the data
+     * @return the single result
+     */
+    public <T> SingleResult<T> getSingleResult(final T data) {
+        final SingleResult<T> result = new SingleResult<>();
         result.setData(data);
         setSuccessResult(result);
         return result;
     }
 
-//    // 단일건 결과, 메세지 를 처리하는 메소드
-//    public <T> SingleResult<T> getSingleResult(T data, String msg) {
-//        SingleResult<T> result = new SingleResult<>();
-//        result.setData(data);
-//        /*if (!msg.isEmpty()) {
-//            result.setMsg(msg);
-//        }*/
-//        setSuccessResult(result);
-//        return result;
-//    }
-//
-//    // 다중건 결과를 처리하는 메소드
-//    public <T> ListResult<T> getListResult(List<T> list) {
-//        ListResult<T> result = new ListResult<>();
-//        result.setList(list);
-//        setSuccessResult(result);
-//        return result;
-//    }
-
-    // 성공 결과만 처리하는 메소드
+    /**
+     * Gets success result.
+     * 성공 결과만 처리하는 메소드
+     *
+     * @return the success result
+     */
     public CommonResult getSuccessResult() {
-        CommonResult result = new CommonResult();
+        final CommonResult result = new CommonResult();
         setSuccessResult(result);
         return result;
     }
 
-    // 실패 결과만 처리하는 메소드
+    /**
+     * Gets fail result.
+     * 실패 결과만 처리하는 메소드
+     *
+     * @return the fail result
+     */
     public CommonResult getFailResult() {
-        CommonResult result = new CommonResult();
+        final CommonResult result = new CommonResult();
         result.setSuccess(false);
         result.setCode(CommonResponse.FAIL.getCode());
         result.setMsg(CommonResponse.FAIL.getMsg());
         return result;
     }
 
-    // 실패 결과, 메세지를 처리하는 메소드
-    public CommonResult getFailResult(String code, String msg) {
-        CommonResult result = new CommonResult();
+    /**
+     * Gets fail result.
+     * 실패 결과, 메세지를 처리하는 메소드
+     *
+     * @param code the code
+     * @param msg  the msg
+     * @return the fail result
+     */
+    public CommonResult getFailResult(final String code, final String msg) {
+        final CommonResult result = new CommonResult();
         result.setSuccess(false);
         result.setCode(code);
         result.setMsg(msg);
         return result;
     }
 
-    public CommonResult getFailResult(String msg) {
-
+    /**
+     * Gets fail result.
+     *
+     * @param msg the msg
+     * @return the fail result
+     */
+    public CommonResult getFailResult(final String msg) {
         return getFailResult(CommonResponse.FAIL.getCode(),msg);
     }
 
-
-
-
-    // 결과 모델에 api 요청 성공 데이터를 세팅해주는 메소드
-    private void setSuccessResult(CommonResult result) {
+    /**
+     * 결과 모델에 api 요청 성공 데이터를 세팅해주는 메소드
+     */
+    private static void setSuccessResult(final CommonResult result) {
         result.setSuccess(true);
         result.setCode(CommonResponse.SUCCESS.getCode());
         result.setMsg(CommonResponse.SUCCESS.getMsg());

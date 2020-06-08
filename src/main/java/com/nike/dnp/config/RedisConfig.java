@@ -35,7 +35,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 */
 	@Bean
 	public JedisPoolConfig jedisPoolConfig() {
-		JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+		final JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
 		jedisPoolConfig.setMaxIdle(30);
 		jedisPoolConfig.setMinIdle(10);
 		jedisPoolConfig.setTestOnBorrow(true);
@@ -50,17 +50,11 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 */
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
-		//RedisSentinelConfiguration standaloneConfiguration = new RedisSentinelConfiguration();
-		//standaloneConfiguration.sentinel(Redis.GLOBAL_REDIS_HOST, Redis.GLOBAL_REDIS_PORT);
-		/*setHostName();
-		standaloneConfiguration.setPort();*/
-
-		//JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(standaloneConfiguration, jedisPoolConfig());
-		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(jedisPoolConfig());
-		jedisConnectionFactory.setHostName(Redis.REDIS_HOST);
-		jedisConnectionFactory.setPort(Redis.REDIS_PORT);
-		jedisConnectionFactory.setUsePool(true);
-		return jedisConnectionFactory;
+		final JedisConnectionFactory connectionFactory = new JedisConnectionFactory(jedisPoolConfig());
+		connectionFactory.setHostName(Redis.redisHost);
+		connectionFactory.setPort(Redis.redisPort);
+		connectionFactory.setUsePool(true);
+		return connectionFactory;
 	}
 
 	/**
@@ -70,7 +64,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 */
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate() {
-		RedisTemplate<String, Object> template = new RedisTemplate<>();
+		final RedisTemplate<String, Object> template = new RedisTemplate<>();
 		template.setConnectionFactory(redisConnectionFactory());
 		template.setKeySerializer(new StringRedisSerializer());
 		template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
@@ -89,8 +83,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 	@Bean
 	@Override
 	public CacheManager cacheManager() {
-		RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory());
-		RedisCacheConfiguration defaultConfig = RedisCacheConfiguration.defaultCacheConfig()
+		final RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory());
+		final RedisCacheConfiguration defaultConfig = RedisCacheConfiguration.defaultCacheConfig()
 				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
 				.entryTtl(Duration.ofSeconds(60 * 60 * 24 * 30));
 		builder.cacheDefaults(defaultConfig);

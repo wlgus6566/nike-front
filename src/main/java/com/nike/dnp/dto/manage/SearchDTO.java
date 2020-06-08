@@ -19,13 +19,15 @@ import lombok.Setter;
 public class SearchDTO {
 
     /**
-     *
+     * @author [오지훈]
+     * @default 0
      */
     @ApiModelProperty(value = "페이지")
     private int page;
 
     /**
-     *
+     * @author [오지훈]
+     * @default 20
      */
     @ApiModelProperty(value = "사이즈")
     private int size = 20;

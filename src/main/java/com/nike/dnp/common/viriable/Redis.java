@@ -17,20 +17,15 @@ import org.springframework.stereotype.Component;
 @Component("Redis")
 public class Redis {
 
-    public Redis() {
-        super();
-        log.info("Redis Variable Loading");
-    }
+    /**
+     * The constant redisHost.
+     */
+    public static String redisHost;
 
     /**
-     * The constant GLOBAL_REDIS_HOST.
+     * The constant redisPort.
      */
-    public static String REDIS_HOST;
-
-    /**
-     * The constant GLOBAL_REDIS_PORT.
-     */
-    public static int REDIS_PORT;
+    public static int redisPort;
 
     /**
      * Sets redis host.
@@ -38,8 +33,8 @@ public class Redis {
      * @param redisHost the redis host
      */
     @Value("${spring.redis.host:}")
-    public void setRedisHost(String redisHost) {
-        this.REDIS_HOST = redisHost;
+    public void setRedisHost(final String redisHost) {
+        Redis.redisHost = redisHost;
     }
 
     /**
@@ -48,8 +43,17 @@ public class Redis {
      * @param redisPort the redis port
      */
     @Value("${spring.redis.port:}")
-    public void setRedisPort(int redisPort) {
-        this.REDIS_PORT = redisPort;
+    public void setRedisPort(final int redisPort) {
+        Redis.redisPort = redisPort;
     }
 
+    /**
+     * Instantiates a new Redis.
+     *
+     * @author [오지훈]
+     */
+    public Redis() {
+        super();
+        log.info("Redis Variable Loading");
+    }
 }

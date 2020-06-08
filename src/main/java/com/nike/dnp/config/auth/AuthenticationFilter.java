@@ -36,10 +36,10 @@ public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter
 		final String password = String.valueOf(request.getParameter("password"));
 		if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
 			if("".equals(username)){
-				throw new InsufficientAuthenticationException(ErrorEnumCode.loginError.LOGE02.toString());
+				throw new InsufficientAuthenticationException(ErrorEnumCode.LoginError.LOGE02.toString());
 			}
 			if(StringUtils.isEmpty(password)){
-				throw new InsufficientAuthenticationException(ErrorEnumCode.loginError.LOGE03.toString());
+				throw new InsufficientAuthenticationException(ErrorEnumCode.LoginError.LOGE03.toString());
 			}
 		}
 		final UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);

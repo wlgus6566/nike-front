@@ -25,13 +25,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class StartApplication extends SpringBootServletInitializer {
 
 	/**
-	 * Instantiates a new Start application.
-	 */
-	public StartApplication() {
-		super();
-	}
-
-	/**
 	 * The entry point of application.
 	 *
 	 * @param args the input arguments
@@ -41,7 +34,7 @@ public class StartApplication extends SpringBootServletInitializer {
 	}
 
 	@Override
-	protected final SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+	protected final SpringApplicationBuilder configure(final SpringApplicationBuilder builder) {
 		return builder.sources(StartApplication.class);
 	}
 
