@@ -41,7 +41,7 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// 유저 권한 정보 조회
-		return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+		return Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN"));
 	}
 
 	@Override

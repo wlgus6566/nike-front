@@ -1,9 +1,6 @@
 package com.nike.dnp.config;
 
-import com.nike.dnp.config.auth.AuthenticationFilter;
-import com.nike.dnp.config.auth.SimpleAuthenticationFailureHandler;
-import com.nike.dnp.config.auth.SimpleAuthenticationSuccessHandler;
-import com.nike.dnp.config.auth.SimpleLogoutSuccessHandler;
+import com.nike.dnp.config.auth.*;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -37,8 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * ignore
 	 */
 	private static final String[] PUBLIC = new String[] {
-		"/error", "/login", "/logout", "/api/**", "/h2-console", "/h2-console/**"
-		,"/api/**"
+		"/error", "/login", "/logout", "/h2-console", "/h2-console/**"
+		,"/api/authentications"
 	};
 
 	/**
@@ -67,6 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers(PUBLIC).permitAll()
+				//.anyRequest().hasRole("ADMIN")
 				.anyRequest().authenticated()
 			.and()
 				.addFilterAt(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -76,6 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.logout()
 						.logoutUrl("/logout")
 						.logoutSuccessHandler(logoutSuccessHandler())
+			.and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
 			.and()
 				.csrf().disable().headers().frameOptions().disable();
 	}
@@ -103,5 +103,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public LogoutSuccessHandler logoutSuccessHandler() {
 		return new SimpleLogoutSuccessHandler();
 	}
+
+	@Bean
+	public AccessDeniedHandler accessDeniedHandler() {return new SimpleAccessDeniedHandler();}
 
 }

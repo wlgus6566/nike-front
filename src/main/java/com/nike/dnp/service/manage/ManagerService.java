@@ -200,10 +200,9 @@ public class ManagerService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        log.debug("s > " + s);
         Manager manager = managerRepository.findByManagerId(s);
         if(manager == null){
-            throw new UserNotFoundException("유저 정보 없음");
+            throw new UserNotFoundException(ErrorEnumCode.loginError.LOGE01.toString());
         }
         log.debug("manager > " + manager);
         return new AuthUserDTO(manager);
