@@ -1,23 +1,37 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import test from '../views/test'
-import main from '../views/main.vue'
-import asset from '../views/asset'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-const router =  new VueRouter({
-	mode: 'history',
-	routes: [
-		{path: '/test', component: test},
-		{path: '/', component: main},
-		{path: '/asset', component: asset},
-		{path: '*', component: {template: '<div>Not Found</div>'}}
-	]
+const router = new VueRouter({
+    mode: 'history',
+    routes: [
+        {
+            path: '/test',
+            component: () => import('@/views/test'),
+            meta: { layout: 'default' },
+        },
+        {
+            path: '/',
+            component: () => import('@/views/main.vue'),
+            meta: { layout: 'default' },
+        },
+        {
+            path: '/asset',
+            component: () => import('@/views/asset'),
+            meta: { layout: 'default', aside: 'order' },
+        },
+        {
+            path: '/login',
+            component: () => import('@/views/login'),
+            meta: { layout: 'clean', aside: 'order' },
+        },
+        {
+            path: '*',
+            component: { template: '<div>Not Found</div>' },
+            meta: { layout: 'clean' },
+        },
+    ],
 });
 
-/*router.afterEach((to, from) => {
-
-});*/
-
-export default router
+export default router;

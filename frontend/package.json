@@ -1,54 +1,43 @@
 {
-  "name": "nike-front",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve --port 8081",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "axios": "^0.19.2",
-    "core-js": "^3.6.4",
-    "cropperjs": "^1.5.7",
-    "lodash": "^4.17.15",
-    "swiper": "^5.4.1",
-    "velocity": "^0.7.2",
-    "velocity-animate": "^1.5.2",
-    "vue": "^2.6.11",
-    "vue-awesome-swiper": "^4.1.1",
-    "vue-lodash": "^2.1.2",
-    "vue-router": "^3.2.0",
-    "vue-sticky": "^3.3.4",
-    "vue-sticky-directive": "0.0.10",
-    "vue-style-loader": "^4.1.2"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.3.0",
-    "@vue/cli-plugin-eslint": "~4.3.0",
-    "@vue/cli-service": "~4.3.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
+    "name": "nike-front",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve --port 80",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint"
     },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
+    "dependencies": {
+        "axios": "^0.19.2",
+        "core-js": "^3.6.5",
+        "cropperjs": "^1.5.7",
+        "lodash": "^4.17.15",
+        "swiper": "^5.4.1",
+        "vue": "^2.6.11",
+        "vue-meta": "^2.3.4",
+        "vue-router": "^3.2.0",
+        "vue-sticky-directive": "0.0.10",
+        "vuex": "^3.4.0"
     },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "^4.4.0",
+        "@vue/cli-plugin-eslint": "^4.4.0",
+        "@vue/cli-plugin-router": "^4.4.0",
+        "@vue/cli-plugin-vuex": "^4.4.0",
+        "@vue/cli-service": "^4.4.0",
+        "@vue/eslint-config-prettier": "^6.0.0",
+        "babel-eslint": "^10.1.0",
+        "eslint": "6.8.0",
+        "eslint-config-airbnb": "18.1.0",
+        "eslint-plugin-import": "2.20.1",
+        "eslint-plugin-jsx-a11y": "6.2.3",
+        "eslint-plugin-prettier": "^3.1.3",
+        "eslint-plugin-react": "7.19.0",
+        "eslint-plugin-react-hooks": "2.5.0",
+        "eslint-plugin-vue": "^6.2.2",
+        "prettier": "1.19.1",
+        "stylus": "^0.54.7",
+        "stylus-loader": "^3.0.2",
+        "vue-template-compiler": "^2.6.11"
+    }
 }
