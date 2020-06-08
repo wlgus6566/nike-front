@@ -1,5 +1,9 @@
 package com.nike.dnp.config;
 
+import com.nike.dnp.config.auth.AuthenticationFilter;
+import com.nike.dnp.config.auth.SimpleAuthenticationFailureHandler;
+import com.nike.dnp.config.auth.SimpleAuthenticationSuccessHandler;
+import com.nike.dnp.config.auth.SimpleLogoutSuccessHandler;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +13,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 /**
  * Security Config
@@ -61,19 +69,39 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(PUBLIC).permitAll()
 				.anyRequest().authenticated()
 			.and()
+				.addFilterAt(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.formLogin()
 					.loginPage("/login")
 					.and()
 					.logout()
 						.logoutUrl("/logout")
-						.logoutSuccessUrl("/login?logged-out")
+						.logoutSuccessHandler(logoutSuccessHandler())
 			.and()
 				.csrf().disable().headers().frameOptions().disable();
 	}
 
-	/*@Override
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
-	}*/
+	@Bean
+	public AuthenticationFilter authenticationFilter() throws Exception{
+		AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+		authenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
+		authenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
+		authenticationFilter.setAuthenticationManager(authenticationManagerBean());
+		return authenticationFilter;
+	}
+
+	@Bean
+	public AuthenticationSuccessHandler authenticationSuccessHandler() {
+		return new SimpleAuthenticationSuccessHandler();
+	}
+
+	@Bean
+	public AuthenticationFailureHandler authenticationFailureHandler() {
+		return new SimpleAuthenticationFailureHandler();
+	}
+
+	@Bean
+	public LogoutSuccessHandler logoutSuccessHandler() {
+		return new SimpleLogoutSuccessHandler();
+	}
 
 }
