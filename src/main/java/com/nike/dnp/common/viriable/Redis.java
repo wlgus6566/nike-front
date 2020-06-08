@@ -25,31 +25,31 @@ public class Redis {
     /**
      * The constant GLOBAL_REDIS_HOST.
      */
-    public static String GLOBAL_REDIS_HOST;
+    public static String REDIS_HOST;
 
     /**
      * The constant GLOBAL_REDIS_PORT.
      */
-    public static int GLOBAL_REDIS_PORT;
+    public static int REDIS_PORT;
 
     /**
      * Sets redis host.
      *
-     * @param REDIS_HOST the redis host
+     * @param redisHost the redis host
      */
     @Value("${spring.redis.host:}")
-    public void setREDIS_HOST(String REDIS_HOST) {
-        this.GLOBAL_REDIS_HOST = REDIS_HOST;
+    public void setRedisHost(String redisHost) {
+        this.REDIS_HOST = redisHost;
     }
 
     /**
      * Sets redis port.
      *
-     * @param REDIS_PORT the redis port
+     * @param redisPort the redis port
      */
     @Value("${spring.redis.port:}")
-    public void setREDIS_PORT(int REDIS_PORT) {
-        this.GLOBAL_REDIS_PORT = REDIS_PORT;
+    public void setRedisPort(int redisPort) {
+        this.REDIS_PORT = redisPort;
     }
 
 }
