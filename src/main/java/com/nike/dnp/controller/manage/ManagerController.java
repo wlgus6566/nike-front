@@ -4,8 +4,6 @@ import com.nike.dnp.dto.manage.manager.ManagerSaveDTO;
 import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.manage.manager.ManagerUpdateDTO;
 import com.nike.dnp.entity.manage.Manager;
-import com.nike.dnp.exception.CodeMessageHandleException;
-import com.nike.dnp.exception.ErrorEnumCode;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -46,7 +44,7 @@ public class ManagerController {
     /**
      *
      */
-    private final String requestCharacter = "## Reqeust ## \n필드명|설명|필수여부|데이터 타입(길이)\\n\" + \"-|-|-|-\\n";
+    private static final String REQUEST_CHARACTER = "## Reqeust ## \n필드명|설명|필수여부|데이터 타입(길이)\\n\" + \"-|-|-|-\\n";
 
     /**
      * Instantiates a new Manager controller.
@@ -55,8 +53,8 @@ public class ManagerController {
      * @param managerService  the manager service
      */
     public ManagerController(
-            ResponseService responseService
-            , ManagerService managerService
+            final ResponseService responseService
+            , final ManagerService managerService
     ) {
         this.responseService = responseService;
         this.managerService = managerService;
@@ -70,7 +68,7 @@ public class ManagerController {
      */
     @ApiOperation(
         value = "사용자 목록 조회"
-        , notes = requestCharacter
+        , notes = REQUEST_CHARACTER
         + "keyword|검색어|false|String\n"
         + "page|페이지|false|Integer\n"
         + "size|사이즈|false|Integer\n"
@@ -87,8 +85,8 @@ public class ManagerController {
         + "size||노출갯수|Integer\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "사용자 목록 조회")
-    public SingleResult<Page<Manager>> getAllManagers(ManagerSearchDTO managerSearchDTO) {
-        return responseService.getSingleResult(managerService.findAllPaging2(managerSearchDTO));
+    public SingleResult<Page<Manager>> getAllManagers(final ManagerSearchDTO managerSearchDTO) {
+        return responseService.getSingleResult(managerService.findAllPaging(managerSearchDTO));
     }
 
     /**
@@ -99,14 +97,14 @@ public class ManagerController {
      */
     @ApiOperation(
         value = "사용자 상세 조회"
-        , notes = requestCharacter
+        , notes = REQUEST_CHARACTER
         + "managerSeq|사용자시퀀스|true|Long\n\n\n\n"
         + "## Response ## \n"
         + "[하위 Model 참조]\n"
     )
     @GetMapping(value = "/{managerSeq}", name = "사용자 상세 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Manager> getManager(@PathVariable(name = "managerSeq") Long managerSeq) {
+    public SingleResult<Manager> getManager(final @PathVariable(name = "managerSeq") Long managerSeq) {
         return responseService.getSingleResult(
                 managerService.findById(managerSeq));
     }
@@ -119,12 +117,12 @@ public class ManagerController {
      */
     @ApiOperation(
         value = "사용자 삭제"
-        , notes = requestCharacter
+        , notes = REQUEST_CHARACTER
         + "managerSeq|사용자시퀀스|true|Long\n\n\n\n"
     )
     @DeleteMapping(value = "/{managerSeq}", name = "사용자 삭제"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public CommonResult deleteManager(@PathVariable(name = "managerSeq") Long managerSeq) {
+    public CommonResult deleteManager(final @PathVariable(name = "managerSeq") Long managerSeq) {
         managerService.delete(managerSeq);
         return responseService.getSuccessResult();
     }
@@ -138,7 +136,7 @@ public class ManagerController {
      */
     @ApiOperation(
         value = "사용자 수정"
-        , notes = requestCharacter
+        , notes = REQUEST_CHARACTER
         + "managerSeq|사용자시퀀스|true|Long\n\n\n\n"
         + "## Response ## \n"
         + "필드명||필드설명|데이터 타입(길이)\n" + "-|-|-|-\n\n\n\n"
@@ -147,8 +145,8 @@ public class ManagerController {
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Manager> updateManager(
-            @PathVariable(name = "managerSeq") Long managerSeq
-            ,@RequestBody ManagerUpdateDTO managerUpdateDTO) {
+            final @PathVariable(name = "managerSeq") Long managerSeq
+            , final @RequestBody ManagerUpdateDTO managerUpdateDTO) {
         return responseService.getSingleResult(managerService.update(managerSeq, managerUpdateDTO));
     }
 
@@ -169,7 +167,7 @@ public class ManagerController {
     @PostMapping(name = "사용자 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Manager> insertManager(@RequestBody ManagerSaveDTO managerSaveDTO) {
+    public SingleResult<Manager> insertManager(final @RequestBody ManagerSaveDTO managerSaveDTO) {
         return responseService.getSingleResult(managerService.save(managerSaveDTO));
     }
 

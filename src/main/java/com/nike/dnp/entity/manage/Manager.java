@@ -27,69 +27,42 @@ import java.time.LocalDateTime;
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Manager extends BaseTimeEntity {
 
-    /**
-     *
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MANAGER_SEQ")
     @ApiModelProperty(value = "사용자시퀀스", hidden = true)
     private Long managerSeq;
 
-    /**
-     *
-     */
     @Column(name = "MANAGER_ID")
     @ApiModelProperty(value = "사용자ID")
     private String managerId;
 
-    /**
-     *
-     */
     @Column(name = "MANAGER_NAME")
     @ApiModelProperty(value = "사용자명")
     private String managerName;
 
-    /**
-     *
-     */
     @Column(name = "PASSWORD")
     @ApiModelProperty(value = "비밀번호")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    /**
-     *
-     */
     @Column(name = "USE_IP")
     @ApiModelProperty(value = "접속IP", hidden = true)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String useIp;
 
-    /**
-     *
-     */
     @Column(name = "LOGIN_DT")
     @ApiModelProperty(value = "최종로그인일자", hidden = true)
     private LocalDateTime loginDt;
 
-    /**
-     *
-     */
     @Column(name = "REGISTER_SEQ")
     @ApiModelProperty(value = "최초작성자", hidden = true)
     private Long registerSeq;
 
-    /**
-     *
-     */
     @Column(name = "UPDATER_SEQ")
     @ApiModelProperty(value = "최종수정자", hidden = true)
     private Long updaterSeq;
 
-    /**
-     *
-     */
     @ManyToOne
     @JoinColumn(name = "AUTH_SEQ")
     @ApiModelProperty(value = "권한정보", hidden = true)
@@ -106,11 +79,11 @@ public class Manager extends BaseTimeEntity {
      */
     @Builder
     public Manager(
-            String managerId
-            , String password
-            , String managerName
-            , ManagerAuth managerAuth
-            , Long registerSeq
+            final String managerId
+            , final String password
+            , final String managerName
+            , final ManagerAuth managerAuth
+            , final Long registerSeq
     ) {
         super();
         this.managerId = managerId;
@@ -130,10 +103,10 @@ public class Manager extends BaseTimeEntity {
      * @param updaterSeq  the updater seq
      */
     public void update(
-            String managerName
-            , String password
-            , ManagerAuth managerAuth
-            , Long updaterSeq
+            final String managerName
+            , final String password
+            , final ManagerAuth managerAuth
+            , final Long updaterSeq
     ) {
         this.managerName = managerName;
         this.password = password;

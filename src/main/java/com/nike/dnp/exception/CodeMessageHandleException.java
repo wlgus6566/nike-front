@@ -13,15 +13,8 @@ import lombok.Getter;
 @Getter
 public class CodeMessageHandleException extends RuntimeException {
 
-    /**
-     * The Serial version uid.
-     */
-    static final long serialVersionUID = 100L;
-
-    /**
-     *
-     */
-    private String code;
+    /* default */ static final long serialVersionUID = 100L;
+    /* default */ private String code;
 
     /**
      * Instantiates a new Code message handle exception.
@@ -29,7 +22,7 @@ public class CodeMessageHandleException extends RuntimeException {
      * @param code the code
      * @param msg  the msg
      */
-    public CodeMessageHandleException(String code, String msg) {
+    public CodeMessageHandleException(final String code, final String msg) {
         super(msg);
         this.code = code;
     }

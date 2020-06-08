@@ -19,9 +19,6 @@ import lombok.Setter;
 @Setter
 public class ManagerSearchDTO extends SearchDTO {
 
-    /**
-     *
-     */
     @ApiModelProperty(value = "검색어")
     private String keyword = "";
 

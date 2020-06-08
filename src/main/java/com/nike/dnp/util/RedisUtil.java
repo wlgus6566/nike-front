@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
  */
 
 @Component
-//@UtilityClass
 public class RedisUtil {
 
     /**
@@ -27,8 +26,8 @@ public class RedisUtil {
      * @param object  the object
      * @param timeout - 유지시간(분단위) - 0일 경우 무제한
      */
-    public static void set(String key, Object object, long timeout) {
-        RedisTemplate<String, Object> redisTemplate = (RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate");
+    public static void set(final String key, final Object object, final long timeout) {
+        final RedisTemplate<String, Object> redisTemplate = (RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate");
         redisTemplate.opsForValue().set(key, object);
         if (timeout > 0) {
             redisTemplate.expire(key, timeout, TimeUnit.MINUTES);
@@ -41,7 +40,7 @@ public class RedisUtil {
      * @param key
      * @return
      */
-    public static Object get(String key) {
+    public static Object get(final String key) {
         return ((RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate")).opsForValue().get(key);
     }
 
@@ -50,7 +49,7 @@ public class RedisUtil {
      * 
      * @param key
      */
-    public static void delete(String key) {
+    public static void delete(final String key) {
         ((RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate")).delete(key);
     }
 
@@ -59,7 +58,7 @@ public class RedisUtil {
      * @param pattern
      * @return string[]
      */
-    public static Set<String> keys(String pattern) {
+    public static Set<String> keys(final String pattern) {
         return ((RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate")).keys(pattern);
     }
 }

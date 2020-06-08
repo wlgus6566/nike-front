@@ -30,7 +30,7 @@ public class ErrorEnumCode {
          * 생성자
          * @param value - 에러 메시지
          */
-        commonError(String value) {
+        commonError(final String value) {
             this.value = value;
         }
 
@@ -66,7 +66,7 @@ public class ErrorEnumCode {
          * 생성자
          * @param value - 에러 메시지
          */
-        loginError(String value) {
+        loginError(final String value) {
             this.value = value;
         }
 
@@ -90,7 +90,7 @@ public class ErrorEnumCode {
 
         private final String value;
 
-        manageError(String value) {
+        manageError(final String value) {
             this.value = value;
         }
 

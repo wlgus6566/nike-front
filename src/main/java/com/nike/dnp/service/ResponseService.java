@@ -15,7 +15,7 @@ public class ResponseService {
         String code;
         String msg;
 
-        CommonResponse(String code, String msg) {
+        CommonResponse(final String code, final String msg) {
             this.code = code;
             this.msg = msg;
         }
@@ -30,8 +30,8 @@ public class ResponseService {
     }
 
     // 단일건 결과를 처리하는 메소드
-    public <T> SingleResult<T> getSingleResult(T data) {
-        SingleResult<T> result = new SingleResult<>();
+    public <T> SingleResult<T> getSingleResult(final T data) {
+        final SingleResult<T> result = new SingleResult<>();
         result.setData(data);
         setSuccessResult(result);
         return result;
@@ -58,14 +58,14 @@ public class ResponseService {
 
     // 성공 결과만 처리하는 메소드
     public CommonResult getSuccessResult() {
-        CommonResult result = new CommonResult();
+        final CommonResult result = new CommonResult();
         setSuccessResult(result);
         return result;
     }
 
     // 실패 결과만 처리하는 메소드
     public CommonResult getFailResult() {
-        CommonResult result = new CommonResult();
+        final CommonResult result = new CommonResult();
         result.setSuccess(false);
         result.setCode(CommonResponse.FAIL.getCode());
         result.setMsg(CommonResponse.FAIL.getMsg());
@@ -73,8 +73,8 @@ public class ResponseService {
     }
 
     // 실패 결과, 메세지를 처리하는 메소드
-    public CommonResult getFailResult(String code, String msg) {
-        CommonResult result = new CommonResult();
+    public CommonResult getFailResult(final String code, final String msg) {
+        final CommonResult result = new CommonResult();
         result.setSuccess(false);
         result.setCode(code);
         result.setMsg(msg);
@@ -82,7 +82,7 @@ public class ResponseService {
     }
 
     // 결과 모델에 api 요청 성공 데이터를 세팅해주는 메소드
-    private void setSuccessResult(CommonResult result) {
+    private void setSuccessResult(final CommonResult result) {
         result.setSuccess(true);
         result.setCode(CommonResponse.SUCCESS.getCode());
         result.setMsg(CommonResponse.SUCCESS.getMsg());

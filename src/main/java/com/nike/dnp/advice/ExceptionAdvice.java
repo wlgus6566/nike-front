@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * Global Exception Handler
  *
@@ -31,21 +29,20 @@ public class ExceptionAdvice {
      */
     private final ResponseService responseService;
 
-    public ExceptionAdvice(ResponseService responseService) {
+    public ExceptionAdvice(final ResponseService responseService) {
         this.responseService = responseService;
     }
 
     /**
      * status 200 Exception
      *
-     * @param request   the request
      * @param exception the exception
      * @return 상태값 : 200, 코드, 메세지
      */
     @ExceptionHandler(CodeMessageHandleException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    protected CommonResult codeMessageHandleException(HttpServletRequest request, CodeMessageHandleException exception) {
+    protected CommonResult codeMessageHandleException(final CodeMessageHandleException exception) {
         log.debug("==================ERROR===================");
         log.debug("Exception Status200Exception", exception);
         return responseService.getFailResult(exception.getCode(), exception.getMessage());
@@ -54,14 +51,13 @@ public class ExceptionAdvice {
     /**
      * 정의 된 오류 외의 excpetion
      *
-     * @param request   the request
      * @param exception the e
      * @return the common result
      */
     @ExceptionHandler(Exception.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public CommonResult globalHandelException(HttpServletRequest request, Exception exception) {
+    public CommonResult globalHandelException(final Exception exception) {
         log.debug("==================Global ERROR===================");
         log.debug("Exception", exception);
         return responseService.getFailResult();

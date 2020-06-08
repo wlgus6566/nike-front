@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	/**
 	 * ignore
 	 */
-	private static final String[] PUBLIC = new String[] {
+	private static final String[] PUBLIC = {
 		"/error", "/login", "/logout", "/api/**", "/h2-console", "/h2-console/**"
 		,"/api/**"
 	};
@@ -44,19 +44,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	public void configure(WebSecurity web) {
+	public void configure(final WebSecurity web) {
 		// 예외처리 목록 등록
-		String[] staticResourcePatterns = {
+		final String[] staticPatterns = {
 				"/resources/**", "/static/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/css/**", "/font/**", "/js/**", "/images/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**" // Swagger 관련
 
 		};
-		web.ignoring().antMatchers(staticResourcePatterns);
+		web.ignoring().antMatchers(staticPatterns);
 	}
 
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	protected void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers(PUBLIC).permitAll()
 				.anyRequest().authenticated()

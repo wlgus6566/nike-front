@@ -47,10 +47,10 @@ public class ManagerAuth extends BaseTimeEntity {
 
     @Builder
     public ManagerAuth(
-            String authName
-            , String roleType
-            , String useYn
-            , Long registerSeq
+            final String authName
+            , final String roleType
+            , final String useYn
+            , final Long registerSeq
     ) {
         super();
         this.authName = authName;
@@ -61,10 +61,10 @@ public class ManagerAuth extends BaseTimeEntity {
     }
 
     public void update(
-            String authName
-            , String roleType
-            , String useYn
-            , Long updaterSeq
+            final String authName
+            , final String roleType
+            , final String useYn
+            , final Long updaterSeq
     ) {
         this.authName = authName;
         this.roleType = roleType;
