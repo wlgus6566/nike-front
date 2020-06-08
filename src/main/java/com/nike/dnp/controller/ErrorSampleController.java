@@ -64,7 +64,7 @@ public class ErrorSampleController {
     @ApiOperation(
             value = "ErrorSample 목록 조회"
     )
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "ErrorSample 목록 조회")
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "사용자 목록 조회")
     public SingleResult<Page<Manager>> getAllManagers(ManagerSearchDTO managerSearchDTO) {
         return responseService.getSingleResult(errorSampleService.findAllPaging(managerSearchDTO));
     }
@@ -81,7 +81,8 @@ public class ErrorSampleController {
     @GetMapping(value = "/{managerSeq}", name = "ErrorSample 상세 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Manager> getManager(@PathVariable(name = "managerSeq") Long managerSeq) {
-        return errorSampleService.findById(managerSeq);
+        return responseService.getSingleResult(
+                errorSampleService.findById(managerSeq));
     }
 
     /**
@@ -130,7 +131,7 @@ public class ErrorSampleController {
     public SingleResult<Manager> updateManager(
             @PathVariable(name = "managerSeq") Long managerSeq
             ,@RequestBody ManagerUpdateDTO managerUpdateDTO) {
-        return errorSampleService.update(managerSeq, managerUpdateDTO);
+        return responseService.getSingleResult(errorSampleService.update(managerSeq, managerUpdateDTO));
     }
 
     /**
@@ -153,7 +154,7 @@ public class ErrorSampleController {
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Manager> insertManager(@RequestBody ManagerSaveDTO managerSaveDTO) {
-        return errorSampleService.save(managerSaveDTO);
+        return responseService.getSingleResult(errorSampleService.save(managerSaveDTO));
     }
 
 

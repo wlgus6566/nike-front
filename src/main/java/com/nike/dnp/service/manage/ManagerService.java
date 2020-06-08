@@ -6,6 +6,8 @@ import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.manage.manager.ManagerUpdateDTO;
 import com.nike.dnp.entity.manage.Manager;
 import com.nike.dnp.entity.manage.ManagerAuth;
+import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.ErrorEnumCode;
 import com.nike.dnp.repository.manage.ManagerAuthRepository;
 import com.nike.dnp.repository.manage.ManagerRepository;
 import org.springframework.data.domain.Page;
@@ -56,7 +58,7 @@ public class ManagerService {
     public List<Manager> findAll() {
         return managerRepository.findAll();
     }
-    
+
     /**
      * 전체조회(paging)
      *
@@ -111,8 +113,9 @@ public class ManagerService {
      * @param managerSeq the manager seq
      * @return the optional
      */
-    public Optional<Manager> findById(Long managerSeq) {
-        return managerRepository.findById(managerSeq);
+    public Manager findById(Long managerSeq) {
+        return managerRepository.findById(managerSeq)
+                .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.manageError.MANE01.toString(), ErrorEnumCode.manageError.MANE01.getMessage()));
     }
 
     /**

@@ -91,13 +91,9 @@ public class ErrorSampleService {
      * @param managerSeq the manager seq
      * @return the optional
      */
-    public SingleResult<Manager> findById(Long managerSeq) {
-        return responseService.getSingleResult(
-                managerRepository.findById(managerSeq)
-                        .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.manageError.MANE01.toString(), ErrorEnumCode.manageError.MANE01.getMessage())));
-//        return responseService.getSingleResult(
-//                managerRepository.findById(managerSeq)
-//                        .orElseThrow(() -> new ManagerNotFoundException()));
+    public Manager findById(Long managerSeq) {
+        return managerRepository.findById(managerSeq)
+                        .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.manageError.MANE01.toString(), ErrorEnumCode.manageError.MANE01.getMessage()));
     }
 
     /**
@@ -116,20 +112,20 @@ public class ErrorSampleService {
      * @return the long
      */
     @Transactional
-    public SingleResult<Manager> save(ManagerSaveDTO managerSaveDTO) {
+    public Manager save(ManagerSaveDTO managerSaveDTO) {
         Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerSaveDTO.getAuthSeq());
 
         if (null == managerSaveDTO.getManagerId()) {
             new CodeMessageHandleException(ErrorEnumCode.loginError.LOGE01.toString(), ErrorEnumCode.loginError.LOGE01.getMessage());
         }
 
-        return responseService.getSingleResult(managerRepository.save(Manager.builder()
+        return managerRepository.save(Manager.builder()
                 .managerId(managerSaveDTO.getManagerId())
                 .managerName(managerSaveDTO.getManagerName())
                 .password(managerSaveDTO.getPassword())
                 .managerAuth(managerAuth.get())
                 .registerSeq(managerSaveDTO.getRegisterSeq())
-                .build()));
+                .build());
     }
 
     /**
@@ -139,7 +135,7 @@ public class ErrorSampleService {
      * @param managerUpdateDTO the manager update dto
      */
     @Transactional
-    public SingleResult<Manager> update(Long managerSeq, ManagerUpdateDTO managerUpdateDTO) {
+    public Manager update(Long managerSeq, ManagerUpdateDTO managerUpdateDTO) {
         Optional<Manager> manager = managerRepository.findById(managerSeq);
         if (manager.isPresent()) {
             Optional<ManagerAuth> managerAuth = managerAuthRepository.findById(managerUpdateDTO.getAuthSeq());
@@ -151,7 +147,7 @@ public class ErrorSampleService {
             );
         }
 
-        return responseService.getSingleResult(manager.get());
+        return manager.get();
     }
 
 }
