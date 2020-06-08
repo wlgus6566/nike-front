@@ -37,18 +37,18 @@ public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request,
-												HttpServletResponse response) throws AuthenticationException, UsernameNotFoundException {
+												HttpServletResponse response) throws AuthenticationException {
 
-		log.debug("Processing login request");
+
 		String username = String.valueOf(request.getParameter("username"));
 		String password = String.valueOf(request.getParameter("password"));
 		log.debug("passwordEncryptorDelegator.encrypt(password) > ", passwordEncryptorDelegator.encrypt(password));
 		if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
 			if("".equals(username)){
-				throw new InsufficientAuthenticationException(ErrorEnumCode.loginError.LOGE02.getMessage());
+				throw new InsufficientAuthenticationException(ErrorEnumCode.loginError.LOGE02.toString());
 			}
 			if(StringUtils.isEmpty(password)){
-				throw new InsufficientAuthenticationException(ErrorEnumCode.loginError.LOGE03.getMessage());
+				throw new InsufficientAuthenticationException(ErrorEnumCode.loginError.LOGE03.toString());
 			}
 		}
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);

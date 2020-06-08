@@ -32,4 +32,5 @@ public interface ManagerRepository extends JpaRepository<Manager, Long>, Queryds
 
     Long countByManagerIdAndManagerName(String managerId, String managerName);
 
+    Manager findByManagerId(String managerId);
 }
