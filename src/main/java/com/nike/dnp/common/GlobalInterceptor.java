@@ -9,17 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Interceptor
- * 
+ *
  * @since 2020.05.21
  * @author [오지훈]
  * @Description Interceptor 작성
  * @history [오지훈] [2020.05.21] [최초 작성]
- * 
+ *
  */
 
 @Slf4j
 public class GlobalInterceptor extends HandlerInterceptorAdapter {
-	
+
 	/**
 	 * 컨트롤러 실행 직전에 동작
 	 */
@@ -56,5 +56,5 @@ public class GlobalInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		log.info("Interceptor > afterConcurrentHandlingStarted");
 	}
-	
+
 }

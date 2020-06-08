@@ -6,30 +6,28 @@
     </div>
 </template>
 <script>
-import * as layouts from './views/layouts'
+import * as layouts from './views/layouts';
 
 export default {
     name: 'App',
     data() {
         return {
             navActive: true,
-            //layout: 'clean-layout'
-        }
+        };
     },
     computed: {
         layout() {
-            console.log(this.$route.meta)
-            return `${this.$route.meta.layout || 'default'}-layout`
+            return `${this.$route.meta.layout || 'default'}-layout`;
         },
     },
     components: {
         ...layouts,
     },
     mounted() {
-        console.log(this.layout)
+        //console.log(this.layout)
     },
     methods: {},
-}
+};
 </script>
 <style>
 @import url('assets/css/fonts.css');
