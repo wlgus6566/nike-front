@@ -43,6 +43,8 @@ public class ManagerController {
      */
     private final ManagerService managerService;
 
+    private final String requestCharacter = "## Reqeust ## \n필드명|설명|필수여부|데이터 타입(길이)\\n\" + \"-|-|-|-\\n";
+
     /**
      * Instantiates a new Manager controller.
      *
@@ -65,9 +67,7 @@ public class ManagerController {
      */
     @ApiOperation(
         value = "사용자 목록 조회"
-        , notes =
-        "## Reqeust ## \n"
-        + "필드명|설명|필수여부|데이터 타입(길이)\n" + "-|-|-|-\n"
+        , notes = requestCharacter
         + "keyword|검색어|false|String\n"
         + "page|페이지|false|Integer\n"
         + "size|사이즈|false|Integer\n"
@@ -98,9 +98,7 @@ public class ManagerController {
      */
     @ApiOperation(
         value = "사용자 상세 조회"
-        , notes =
-        "## Reqeust ## \n"
-        + "필드명|설명|필수여부|데이터 타입(길이)\n" + "-|-|-|-\n"
+        , notes = requestCharacter
         + "managerSeq|사용자시퀀스|true|Long\n"
         + "\n\n\n"
         + "## Response ## \n"

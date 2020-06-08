@@ -76,6 +76,7 @@ public class Manager extends BaseTimeEntity {
             , ManagerAuth managerAuth
             , Long registerSeq
     ) {
+        super();
         this.managerId = managerId;
         this.password = password;
         this.managerName = managerName;

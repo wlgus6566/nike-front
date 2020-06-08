@@ -36,4 +36,7 @@ public class BaseTimeEntity {
     @ApiModelProperty(hidden = true)
     private LocalDateTime updateDt;
 
+    public BaseTimeEntity() {
+        super();
+    }
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PasswordEncryptorDelegator implements PasswordEncryptor {
 
-	private PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 
 	public PasswordEncryptorDelegator(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;

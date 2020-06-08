@@ -49,6 +49,7 @@ public class ManagerMenuAuthMapping extends BaseTimeEntity {
             ManagerMenu managerMenu
             , ManagerAuth managerAuth
     ) {
+        super();
         this.managerMenu = managerMenu;
         this.managerAuth = managerAuth;
     }

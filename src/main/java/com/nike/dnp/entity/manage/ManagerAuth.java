@@ -52,6 +52,7 @@ public class ManagerAuth extends BaseTimeEntity {
             , String useYn
             , Long registerSeq
     ) {
+        super();
         this.authName = authName;
         this.roleType = roleType;
         this.useYn = useYn;

@@ -101,6 +101,7 @@ public class ManagerMenu extends BaseTimeEntity {
             , String useYn
             , Long registerSeq
     ) {
+        super();
         this.upperMenuCode = upperMenuCode;
         this.menuCode = menuCode;
         this.menuName = menuName;

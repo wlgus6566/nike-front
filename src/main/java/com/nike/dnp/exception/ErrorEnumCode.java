@@ -58,17 +58,17 @@ public class ErrorEnumCode {
         LOGE06("새 비밀번호를 입력해주세요.");
 
         /**
+         * 에러 메시지
+         */
+        private final String value;
+
+        /**
          * 생성자
          * @param value - 에러 메시지
          */
         loginError(String value) {
             this.value = value;
         }
-
-        /**
-         * 에러 메시지
-         */
-        private final String value;
 
         /**
          * 에러 메시지 조회
@@ -88,10 +88,12 @@ public class ErrorEnumCode {
 
         MANE01("해당 회원의 상세정보가 존재하지 않습니다.");
 
+        private final String value;
+
         manageError(String value) {
             this.value = value;
         }
-        private final String value;
+
         public String getMessage() {
             return value;
         }

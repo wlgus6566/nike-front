@@ -22,8 +22,8 @@ public class JsonUtil{
 		ObjectMapper mapper = new ObjectMapper();
 		try{
 			return mapper.writeValueAsString(object);
-		}catch(JsonProcessingException e){
-			log.error("Failed to convert object to JSON string", e);
+		}catch(JsonProcessingException exception){
+			log.error("Failed to convert object to JSON string", exception);
 			return null;
 		}
 	}
@@ -36,13 +36,12 @@ public class JsonUtil{
 	 * @param clazz 맵핑 클래스
 	 * @return t
 	 */
-	public <T> T toObject(String json,
-								 Class<T> clazz) {
+	public <T> T toObject(String json, Class<T> clazz) {
 		try{
 			ObjectMapper objectMapper = new ObjectMapper();
 			return objectMapper.readValue(json, clazz);
-		}catch(IOException e){
-			log.error("Failed to convert string '" + json + "' class '" + clazz.getName() + "'", e);
+		}catch(IOException exception){
+			log.error("Failed to convert string '" + json + "' class '" + clazz.getName() + "'", exception);
 			return null;
 		}
 	}
@@ -54,8 +53,7 @@ public class JsonUtil{
 	 * @param value  the value
 	 * @throws IOException the io exception
 	 */
-	public void write(Writer writer,
-							 Object value) throws IOException {
+	public void write(Writer writer, Object value) throws IOException {
 		new ObjectMapper().writeValue(writer, value);
 	}
 
