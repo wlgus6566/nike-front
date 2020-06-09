@@ -241,12 +241,10 @@ public class ManagerService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        log.debug("username > ", username);
         final Manager manager = managerRepository.findByManagerId(username);
         if(manager == null){
             throw new UserNotFoundException(ErrorEnumCode.LoginError.LOGE01.toString());
         }
-        log.debug("manager > ", manager);
         return new AuthUserDTO(manager);
     }
 }
