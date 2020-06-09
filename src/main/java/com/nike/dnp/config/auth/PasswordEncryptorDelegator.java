@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class PasswordEncryptorDelegator implements PasswordEncryptor {
 
+	/**
+	 *
+	 */
 	private final PasswordEncoder passwordEncoder;
 
 	/**

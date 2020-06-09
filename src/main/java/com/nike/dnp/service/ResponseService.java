@@ -25,7 +25,14 @@ public class ResponseService {
         SUCCESS("SUC", "성공"),
         FAIL("ERR", "에러발생");
 
+        /**
+         *
+         */
         String code;
+
+        /**
+         *
+         */
         String msg;
 
         CommonResponse(final String code, final String msg) {

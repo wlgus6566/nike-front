@@ -3,7 +3,6 @@ package com.nike.dnp.service.manage;
 import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.nike.dnp.dto.manage.auth.AuthUserDTO;
 import com.nike.dnp.dto.manage.manager.ManagerPredicate;
-import com.nike.dnp.dto.manage.manager.ManagerSaveDTO;
 import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.manage.manager.ManagerUpdateDTO;
 import com.nike.dnp.entity.manage.Manager;
@@ -131,22 +130,67 @@ public class ManagerService implements UserDetailsService {
         managerRepository.deleteById(managerSeq);
     }
 
+//    /**
+//     * 등록
+//     *
+//     * @param managerSaveDTO the manager dto
+//     * @return the long
+//     */
+//    @Transactional
+//    public Manager save1(final ManagerSaveDTO managerSaveDTO) {
+//        final Optional<ManagerAuth> managerAuth = authRepository.findById(managerSaveDTO.getAuthSeq());
+//        return managerRepository.save(Manager.builder()
+//                .managerId(managerSaveDTO.getManagerId())
+//                .managerName(managerSaveDTO.getManagerName())
+//                .password(managerSaveDTO.getPassword())
+//                .managerAuth(managerAuth.get())
+//                .registerSeq(managerSaveDTO.getRegisterSeq())
+//                .build());
+//    }
+//    @Transactional
+//    public Manager save2(
+//            final String managerId
+//            , final String managerName
+//            , final String password
+//            , final long authSeq
+//            , final long registerSeq
+//    ) {
+//        final Optional<ManagerAuth> managerAuth = authRepository.findById(authSeq);
+//        return managerRepository.save(Manager.builder()
+//                .managerId(managerId)
+//                .managerName(managerName)
+//                .password(password)
+//                .managerAuth(managerAuth.get())
+//                .registerSeq(registerSeq)
+//                .build());
+//    }
+
     /**
      * 등록
      *
-     * @param managerSaveDTO the manager dto
-     * @return the long
+     * @param managerId   the manager id
+     * @param managerName the manager name
+     * @param password    the password
+     * @param authSeq     the auth seq
+     * @param registerSeq the register seq
+     * @return the manager
      */
     @Transactional
-    public Manager save(final ManagerSaveDTO managerSaveDTO) {
-        final Optional<ManagerAuth> managerAuth = authRepository.findById(managerSaveDTO.getAuthSeq());
-        return managerRepository.save(Manager.builder()
-                .managerId(managerSaveDTO.getManagerId())
-                .managerName(managerSaveDTO.getManagerName())
-                .password(managerSaveDTO.getPassword())
-                .managerAuth(managerAuth.get())
-                .registerSeq(managerSaveDTO.getRegisterSeq())
-                .build());
+    public Manager save(
+            final String managerId
+            , final String managerName
+            , final String password
+            , final long authSeq
+            , final long registerSeq
+    ) {
+        final ManagerAuth managerAuth = authRepository.findByAuthSeq(authSeq);
+        final Manager manager = new Manager();
+        manager.setManagerId(managerId);
+        manager.setManagerName(managerName);
+        manager.setPassword(password);
+        manager.setRegisterSeq(registerSeq);
+        manager.setManagerAuth(managerAuth);
+        return managerRepository.save(manager);
     }
 
     /**
@@ -156,7 +200,7 @@ public class ManagerService implements UserDetailsService {
      * @param managerUpdateDTO the manager update dto
      */
     @Transactional
-    public Manager update(final Long managerSeq, final ManagerUpdateDTO managerUpdateDTO) {
+    public Optional<Manager> update(final Long managerSeq, final ManagerUpdateDTO managerUpdateDTO) {
         final Optional<Manager> manager = managerRepository.findById(managerSeq);
         if (manager.isPresent()) {
             final Optional<ManagerAuth> managerAuth = authRepository.findById(managerUpdateDTO.getAuthSeq());
@@ -167,7 +211,7 @@ public class ManagerService implements UserDetailsService {
                     , managerUpdateDTO.getUpdaterSeq()
             );
         }
-        return manager.get();
+        return manager;
     }
 
 
@@ -200,7 +244,7 @@ public class ManagerService implements UserDetailsService {
         log.debug("username > ", username);
         final Manager manager = managerRepository.findByManagerId(username);
         if(manager == null){
-            throw new UserNotFoundException(ErrorEnumCode.loginError.LOGE01.toString());
+            throw new UserNotFoundException(ErrorEnumCode.LoginError.LOGE01.toString());
         }
         log.debug("manager > ", manager);
         return new AuthUserDTO(manager);

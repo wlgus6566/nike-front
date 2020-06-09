@@ -15,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 /**
  * ManagerController
  *
@@ -144,7 +146,7 @@ public class ManagerController {
     @PutMapping(value = "/{managerSeq}", name = "사용자 수정"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Manager> updateManager(
+    public SingleResult<Optional<Manager>> updateManager(
             final @PathVariable(name = "managerSeq") Long managerSeq
             , final @RequestBody ManagerUpdateDTO managerUpdateDTO) {
         return responseService.getSingleResult(managerService.update(managerSeq, managerUpdateDTO));
@@ -168,7 +170,14 @@ public class ManagerController {
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Manager> insertManager(final @RequestBody ManagerSaveDTO managerSaveDTO) {
-        return responseService.getSingleResult(managerService.save(managerSaveDTO));
+        return responseService.getSingleResult(
+                managerService.save(
+                        managerSaveDTO.getManagerId()
+                        , managerSaveDTO.getManagerName()
+                        , managerSaveDTO.getPassword()
+                        , managerSaveDTO.getAuthSeq()
+                        , managerSaveDTO.getRegisterSeq()
+        ));
     }
 
 }

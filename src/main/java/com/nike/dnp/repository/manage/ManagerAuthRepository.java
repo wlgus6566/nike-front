@@ -16,4 +16,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ManagerAuthRepository extends JpaRepository<ManagerAuth, Long> {
+
+    /**
+     * Find by auth seq manager auth.
+     *
+     * @param authSeq the auth seq
+     * @return the manager auth
+     */
+    ManagerAuth findByAuthSeq(long authSeq);
+
 }

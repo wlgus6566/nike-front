@@ -53,7 +53,7 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 *
 	 * @param manager the manager
 	 */
-	public AuthUserDTO(Manager manager) {
+	public AuthUserDTO(final Manager manager) {
 		this.managerSeq = manager.getManagerSeq();
 		this.managerName = manager.getManagerName();
 		this.managerId = manager.getManagerId();
@@ -97,12 +97,16 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if(this == o)
+	public boolean equals(final Object object) {
+		if(this == object) {
 			return true;
-		if(!(o instanceof AuthUserDTO))
+		}
+
+		if(!(object instanceof AuthUserDTO)) {
 			return false;
-		AuthUserDTO that = (AuthUserDTO) o;
+		}
+
+		final AuthUserDTO that = (AuthUserDTO) object;
 		return Objects.equals(managerName, that.managerName);
 	}
 

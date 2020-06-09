@@ -8,23 +8,28 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The type Simple access denied handler.
+ */
 public class SimpleAccessDeniedHandler implements AccessDeniedHandler {
 
+	/**
+	 * The Response service.
+	 */
 	@Autowired
-	ResponseService responseService;
+	/* default */ ResponseService responseService;
 
 	@Override
 	public void handle(final HttpServletRequest request,
 					   final HttpServletResponse response,
-					   final AccessDeniedException e) throws IOException, ServletException {
+					   final AccessDeniedException exception) throws IOException {
 		response.setContentType("application/json;charset=utf-8");
 		response.setStatus(HttpStatus.FORBIDDEN.value());
 
-		JsonUtil.write(response.getWriter(), responseService.getFailResult(ErrorEnumCode.commonError.COME01.toString(), ErrorEnumCode.commonError.COME01.getMessage()));
+		JsonUtil.write(response.getWriter(), responseService.getFailResult(ErrorEnumCode.CommonError.COME01.toString(), ErrorEnumCode.CommonError.COME01.getMessage()));
 	}
 }

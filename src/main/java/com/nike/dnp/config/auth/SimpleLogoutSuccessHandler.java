@@ -15,8 +15,11 @@ import java.io.IOException;
  * The type Simple logout success handler.
  */
 public class SimpleLogoutSuccessHandler implements LogoutSuccessHandler {
+	/**
+	 * The Response service.
+	 */
 	@Autowired
-	ResponseService responseService;
+	/* default */ ResponseService responseService;
 
 	@Override
 	public void onLogoutSuccess(final HttpServletRequest request,

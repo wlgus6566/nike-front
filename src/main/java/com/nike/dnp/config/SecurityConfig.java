@@ -80,30 +80,56 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.csrf().disable().headers().frameOptions().disable();
 	}
 
+	/**
+	 * Authentication filter authentication filter.
+	 *
+	 * @return the authentication filter
+	 * @throws Exception the exception
+	 */
 	@Bean
 	public AuthenticationFilter authenticationFilter() throws Exception{
-		AuthenticationFilter authenticationFilter = new AuthenticationFilter();
-		authenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
-		authenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
-		authenticationFilter.setAuthenticationManager(authenticationManagerBean());
-		return authenticationFilter;
+		final AuthenticationFilter filter = new AuthenticationFilter();
+		filter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
+		filter.setAuthenticationFailureHandler(authenticationFailureHandler());
+		filter.setAuthenticationManager(authenticationManagerBean());
+		return filter;
 	}
 
+	/**
+	 * Authentication success handler authentication success handler.
+	 *
+	 * @return the authentication success handler
+	 */
 	@Bean
 	public AuthenticationSuccessHandler authenticationSuccessHandler() {
 		return new SimpleAuthenticationSuccessHandler();
 	}
 
+	/**
+	 * Authentication failure handler authentication failure handler.
+	 *
+	 * @return the authentication failure handler
+	 */
 	@Bean
 	public AuthenticationFailureHandler authenticationFailureHandler() {
 		return new SimpleAuthenticationFailureHandler();
 	}
 
+	/**
+	 * Logout success handler logout success handler.
+	 *
+	 * @return the logout success handler
+	 */
 	@Bean
 	public LogoutSuccessHandler logoutSuccessHandler() {
 		return new SimpleLogoutSuccessHandler();
 	}
 
+	/**
+	 * Access denied handler access denied handler.
+	 *
+	 * @return the access denied handler
+	 */
 	@Bean
 	public AccessDeniedHandler accessDeniedHandler() {return new SimpleAccessDeniedHandler();}
 

@@ -22,31 +22,34 @@ import java.io.IOException;
 @Slf4j
 public class SimpleAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
+	/**
+	 * The Response service.
+	 */
 	@Autowired
-	ResponseService responseService;
+	/* default */ ResponseService responseService;
 
 	@Override
 	public void onAuthenticationFailure(final HttpServletRequest request,
 										final HttpServletResponse response,
-										final AuthenticationException e
+										final AuthenticationException exception
 	) throws IOException {
 		response.setContentType("application/json;charset=utf-8");
 		response.setStatus(HttpStatus.BAD_REQUEST.value());
 		String errorMessage = "";
 		String errorCode = "";
-		for(ErrorEnumCode.LoginError message : ErrorEnumCode.LoginError.values()){
-			if(message.toString().equals(e.getMessage())){
+		for(final ErrorEnumCode.LoginError message : ErrorEnumCode.LoginError.values()){
+			if(message.toString().equals(exception.getMessage())){
 				errorMessage = message.getMessage();
-				errorCode = e.getMessage();
+				errorCode = exception.getMessage();
 			}
 		}
-		if(e instanceof BadCredentialsException){
+		if(exception instanceof BadCredentialsException){
 			// 비밀번호 틀림
 			JsonUtil.write(response.getWriter(), responseService.getFailResult(ErrorEnumCode.LoginError.LOGE07.toString(), ErrorEnumCode.LoginError.LOGE07.getMessage()));
-		}else if(e instanceof InsufficientAuthenticationException){
+		}else if(exception instanceof InsufficientAuthenticationException){
 			// 아이디 비번 입력 안함
 			JsonUtil.write(response.getWriter(), responseService.getFailResult(errorCode, errorMessage));
-		}else if(e instanceof InternalAuthenticationServiceException){
+		}else if(exception instanceof InternalAuthenticationServiceException){
 			// 계정 정보 없음..
 			JsonUtil.write(response.getWriter(), responseService.getFailResult(ErrorEnumCode.LoginError.LOGE01.toString(), ErrorEnumCode.LoginError.LOGE01.getMessage()));
 		}else{
