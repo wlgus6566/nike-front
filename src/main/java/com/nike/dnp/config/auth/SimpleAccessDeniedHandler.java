@@ -21,7 +21,7 @@ public class SimpleAccessDeniedHandler implements AccessDeniedHandler {
 	 * The Response service.
 	 */
 	@Autowired
-	/* default */ ResponseService responseService;
+	/* default */ private transient ResponseService responseService;
 
 	@Override
 	public void handle(final HttpServletRequest request,

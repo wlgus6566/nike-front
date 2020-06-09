@@ -27,7 +27,7 @@ public class ExceptionAdvice {
     /**
      * ResponseService
      */
-    private final ResponseService responseService;
+    private final transient ResponseService responseService;
 
     /**
      * Instantiates a new Exception advice.
@@ -67,7 +67,5 @@ public class ExceptionAdvice {
         log.debug("Exception", exception);
         return responseService.getFailResult();
     }
-
-
 
 }

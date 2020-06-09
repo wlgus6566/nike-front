@@ -12,7 +12,7 @@ public class PasswordEncryptorDelegator implements PasswordEncryptor {
 	/**
 	 *
 	 */
-	private final PasswordEncoder passwordEncoder;
+	private final transient PasswordEncoder passwordEncoder;
 
 	/**
 	 * Instantiates a new Password encryptor delegator.

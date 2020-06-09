@@ -1,7 +1,8 @@
-package com.nike.dnp.util;
+package com.nike.dnp.service;
 
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -14,19 +15,29 @@ import java.util.concurrent.TimeUnit;
  * @history [오지훈] [2020.05.21] [최초 작성]
  * @since 2020.05.21
  */
-@Component
-public class RedisUtil {
+@Service
+public class RedisService {
 
     /**
-     * The Redis template.
+     * RedisTemplate
      */
-    public static RedisTemplate<String, Object> redisTemplate;
+    private final transient RedisTemplate redisTemplate;
 
     /**
-     * Instantiates a new Redis util.
+     * ValueOperations
      */
-    public RedisUtil() {
-        redisTemplate = (RedisTemplate<String, Object>) BeanUtil.getBean("redisTemplate");
+    private final transient ValueOperations valueOperations;
+
+    /**
+     * Instantiates a new Redis service.
+     *
+     * @param redisTemplate the redis template
+     */
+    public RedisService(
+            final RedisTemplate redisTemplate
+    ) {
+        this.redisTemplate = redisTemplate;
+        this.valueOperations = redisTemplate.opsForValue();
     }
 
     /**
@@ -36,8 +47,8 @@ public class RedisUtil {
      * @param object  the object
      * @param timeout - 유지시간(분단위) - 0일 경우 무제한
      */
-    public static void set(final String key, final String object, final long timeout) {
-        redisTemplate.opsForValue().set(key, object);
+    public void set(final String key, final Object object, final long timeout) {
+        valueOperations.set(key, object);
         if (timeout > 0) {
             redisTemplate.expire(key, timeout, TimeUnit.MINUTES);
         }
@@ -49,8 +60,8 @@ public class RedisUtil {
      * @param key 키
      * @return Object object
      */
-    public static Object get(final String key) {
-        return redisTemplate.opsForValue().get(key);
+    public Object get(final String key) {
+        return valueOperations.get(key);
     }
 
     /**
@@ -58,7 +69,7 @@ public class RedisUtil {
      *
      * @param key 키
      */
-    public static void delete(final String key) {
+    public void delete(final String key) {
         redisTemplate.delete(key);
     }
 
@@ -68,7 +79,8 @@ public class RedisUtil {
      * @param pattern 패턴
      * @return string[] set
      */
-    public static Set<String> keys(final String pattern) {
+    public Set<String> keys(final String pattern) {
         return redisTemplate.keys(pattern);
     }
+
 }

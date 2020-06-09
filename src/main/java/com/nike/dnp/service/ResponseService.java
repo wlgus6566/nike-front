@@ -1,5 +1,6 @@
 package com.nike.dnp.service;
 
+import com.nike.dnp.common.viriable.CommonResponse;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import org.springframework.stereotype.Service;
@@ -18,36 +19,14 @@ import org.springframework.stereotype.Service;
 public class ResponseService {
 
     /**
-     * The enum Common response.
-     * enum으로 api 요청 결과에 대한 code, message를 정의합니다.
+     *
      */
-    public enum CommonResponse {
-        SUCCESS("SUC", "성공"),
-        FAIL("ERR", "에러발생");
+    private static final CommonResponse FAIL = CommonResponse.FAIL;
 
-        /**
-         *
-         */
-        String code;
-
-        /**
-         *
-         */
-        String msg;
-
-        CommonResponse(final String code, final String msg) {
-            this.code = code;
-            this.msg = msg;
-        }
-
-        public String getCode() {
-            return code;
-        }
-
-        public String getMsg() {
-            return msg;
-        }
-    }
+    /**
+     *
+     */
+    private static final CommonResponse SUCCESS = CommonResponse.SUCCESS;
 
     /**
      * Gets single result.
@@ -84,8 +63,8 @@ public class ResponseService {
     public CommonResult getFailResult() {
         final CommonResult result = new CommonResult();
         result.setSuccess(false);
-        result.setCode(CommonResponse.FAIL.getCode());
-        result.setMsg(CommonResponse.FAIL.getMsg());
+        result.setCode(FAIL.getCode());
+        result.setMsg(FAIL.getMsg());
         return result;
     }
 
@@ -112,7 +91,7 @@ public class ResponseService {
      * @return the fail result
      */
     public CommonResult getFailResult(final String msg) {
-        return getFailResult(CommonResponse.FAIL.getCode(),msg);
+        return getFailResult(FAIL.getCode(),msg);
     }
 
     /**
@@ -120,8 +99,8 @@ public class ResponseService {
      */
     private static void setSuccessResult(final CommonResult result) {
         result.setSuccess(true);
-        result.setCode(CommonResponse.SUCCESS.getCode());
-        result.setMsg(CommonResponse.SUCCESS.getMsg());
+        result.setCode(SUCCESS.getCode());
+        result.setMsg(SUCCESS.getMsg());
     }
 
 }
