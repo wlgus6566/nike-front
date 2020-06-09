@@ -33,21 +33,27 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	@Override
 	public Authentication attemptAuthentication(final HttpServletRequest request,
-												final HttpServletResponse response) throws AuthenticationException {
+												final HttpServletResponse response) {
 
+		UsernamePasswordAuthenticationToken token = null;
 
-		final String username = obtainUsername(request);
-		final String password = obtainPassword(request);
-		if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
-			if("".equals(username)){
-				throw new InsufficientAuthenticationException(ErrorEnumCode.LoginError.LOGE02.toString());
+		try {
+			final String username = obtainUsername(request);
+			final String password = obtainPassword(request);
+			if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
+				if("".equals(username)){
+					throw new InsufficientAuthenticationException(ErrorEnumCode.LoginError.LOGE02.toString());
+				}
+				if(StringUtils.isEmpty(password)){
+					throw new InsufficientAuthenticationException(ErrorEnumCode.LoginError.LOGE03.toString());
+				}
 			}
-			if(StringUtils.isEmpty(password)){
-				throw new InsufficientAuthenticationException(ErrorEnumCode.LoginError.LOGE03.toString());
-			}
+
+			token = new UsernamePasswordAuthenticationToken(username, password);
+		} catch (AuthenticationException exception) {
+			throw exception;
 		}
 
-		final UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
 		return authManager.authenticate(token);
 
 	}

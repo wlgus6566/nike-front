@@ -4,7 +4,7 @@ import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.nike.dnp.common.viriable.ErrorEnumCode;
 import com.nike.dnp.common.viriable.ErrorEnumCode.LoginError;
 import com.nike.dnp.dto.manage.auth.AuthUserDTO;
-import com.nike.dnp.dto.manage.manager.ManagerPredicate;
+import com.nike.dnp.dto.manage.manager.ManagerHelper;
 import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.manage.manager.ManagerUpdateDTO;
 import com.nike.dnp.entity.manage.Manager;
@@ -70,7 +70,7 @@ public class ManagerService implements UserDetailsService {
      */
     public Page<Manager> findAllPaging(final ManagerSearchDTO managerSearchDTO) {
         return managerRepository.findAll(
-                ManagerPredicate.search(managerSearchDTO),
+                ManagerHelper.search(managerSearchDTO),
                 PageRequest.of(managerSearchDTO.getPage()
                         , managerSearchDTO.getSize()
                         , Sort.by("managerSeq").descending()));

@@ -7,8 +7,7 @@ import com.nike.dnp.config.auth.SimpleAuthenticationSuccessHandler;
 import com.nike.dnp.config.jwt.JwtAuthorizationFilter;
 import com.nike.dnp.repository.manage.ManagerRepository;
 import com.nike.dnp.service.ResponseService;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,13 +33,17 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
+	/**
+	 *
+	 */
 	private final ManagerRepository managerRepository;
 
-	@Autowired
+	/**
+	 *
+	 */
 	private final ResponseService responseService;
 
 	/**
@@ -97,12 +100,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * @throws Exception the exception
 	 */
 	@Bean
-	public AuthenticationFilter authenticationFilter() throws Exception{
-		AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManager());
-		authenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
-		authenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
-		authenticationFilter.setAuthenticationManager(authenticationManagerBean());
-		return authenticationFilter;
+	public AuthenticationFilter authenticationFilter() {
+		AuthenticationFilter filter = null;
+		try {
+			filter = new AuthenticationFilter(authenticationManager());
+			filter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
+			filter.setAuthenticationFailureHandler(authenticationFailureHandler());
+			filter.setAuthenticationManager(authenticationManagerBean());
+		} catch (Exception exception) {
+
+		}
+
+		return filter;
 	}
 
 	/**
@@ -112,7 +121,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public AuthenticationSuccessHandler authenticationSuccessHandler() {
-		return new SimpleAuthenticationSuccessHandler();
+		return new SimpleAuthenticationSuccessHandler(responseService);
 	}
 
 	/**
@@ -122,7 +131,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public AuthenticationFailureHandler authenticationFailureHandler() {
-		return new SimpleAuthenticationFailureHandler();
+		return new SimpleAuthenticationFailureHandler(responseService);
 	}
 
 	/**
@@ -131,6 +140,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * @return the logout success handler
 	 */
 	@Bean
-	public AccessDeniedHandler accessDeniedHandler() {return new SimpleAccessDeniedHandler(responseService);}
+	public AccessDeniedHandler accessDeniedHandler() {
+		return new SimpleAccessDeniedHandler(responseService);
+	}
 
 }

@@ -1,9 +1,12 @@
 package com.nike.dnp.config.jwt;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * The type Jwt properties.
  */
-public class JwtProperties {
+@UtilityClass
+public class JwtHelper {
 
 	/**
 	 *
@@ -14,7 +17,7 @@ public class JwtProperties {
 	 *
 	 */
 	//public static final int EXPIRATION_TIME = 86400000; // 하루
-	public static final Long EXPIRATION_TIME = 86400000* 365L;//365일
+	public static final Long EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 365L;//365일
 //	public static final int EXPIRATION_TIME = 3000; //3초
 
 	/**

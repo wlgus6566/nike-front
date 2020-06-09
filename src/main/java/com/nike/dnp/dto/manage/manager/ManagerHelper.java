@@ -16,7 +16,7 @@ import lombok.experimental.UtilityClass;
  */
 
 @UtilityClass
-public class ManagerPredicate {
+public class ManagerHelper {
 
     /**
      * Search predicate.

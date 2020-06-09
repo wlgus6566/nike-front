@@ -5,7 +5,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.nike.dnp.dto.manage.auth.AuthUserDTO;
 import com.nike.dnp.entity.manage.Manager;
 import com.nike.dnp.repository.manage.ManagerRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,13 +20,12 @@ import java.io.IOException;
 /**
  * The type Jwt authorization filter.
  */
-@RequiredArgsConstructor
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
 	/**
 	 *
 	 */
-	private final ManagerRepository managerRepository;
+	private transient final ManagerRepository managerRepository;
 
 	/**
 	 * Instantiates a new Jwt authorization filter.
@@ -46,8 +44,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	protected void doFilterInternal(final HttpServletRequest request,
 									final HttpServletResponse response,
 									final FilterChain chain) throws IOException, ServletException {
-		final String header = request.getHeader(JwtProperties.HEADER_STRING);
-		if(header == null  || !header.startsWith(JwtProperties.TOKEN_PREFIX)){
+		final String header = request.getHeader(JwtHelper.HEADER_STRING);
+		if(header == null  || !header.startsWith(JwtHelper.TOKEN_PREFIX)){
 			chain.doFilter(request,response);
 			return;
 		}
@@ -57,12 +55,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 		chain.doFilter(request,response);
 	}
 
-	private Authentication getUsernamePasswrodAuthentication(HttpServletRequest request) {
-
-		final String token = request.getHeader(JwtProperties.HEADER_STRING);
+	private Authentication getUsernamePasswrodAuthentication(final HttpServletRequest request) {
+		final String token = request.getHeader(JwtHelper.HEADER_STRING);
 		if(token != null){
 			// 토큰 디코드
-			final String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET.getBytes())).build().verify(token.replace(JwtProperties.TOKEN_PREFIX, "")).getSubject();
+			final String username = JWT.require(Algorithm.HMAC512(JwtHelper.SECRET.getBytes())).build().verify(token.replace(JwtHelper.TOKEN_PREFIX, "")).getSubject();
 			// username(managerId)로 유저정보 조회
 			// 유저정보 시큐리티에 넣음
 			if(username != null){
