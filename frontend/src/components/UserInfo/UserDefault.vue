@@ -1,13 +1,10 @@
 <template>
     <div class="user">
         <div class="user-info">
-            <div class="photo">
-                <img src="http://placehold.it/75x75" alt="" />
-            </div>
             <span class="label">PARTNER</span>
             <span class="name">김나이</span>
             <div class="side">
-                <button type="button" class="btn-alram">
+                <button type="button" class="btn-alram active">
                     <span>알람</span>
                 </button>
                 <div class="alram-box">
@@ -20,21 +17,20 @@
                         <span>닫기</span>
                     </button>
                 </div>
-                <button type="button" class="btn-menu">
-                    <span>멀까요?</span>
-                </button>
             </div>
         </div>
         <div class="space-info">
-            <p class="store">홍대 SKNRS</p>
-            <address>서울 마포구 와우산로 78</address>
+            <p class="store">WINWIN OFFICE</p>
+            <a href="mailto:nike@win-win.co.kr" class="mail"
+                >nike@win-win.co.kr</a
+            >
         </div>
     </div>
 </template>
 <script>
 export default {
-    name: 'user.vue',
-}
+    name: 'UserDefault.vue',
+};
 </script>
 <style scoped>
 .user-info {
@@ -45,18 +41,6 @@ export default {
     clear: both;
     display: block;
     overflow: hidden;
-}
-.user-info .photo {
-    clear: left;
-    display: none;
-    width: 75px;
-    height: 75px;
-    margin-bottom: 17px;
-    border-radius: 100%;
-    overflow: hidden;
-}
-.user-info .photo img {
-    vertical-align: top;
 }
 .user-info .label {
     float: left;
@@ -93,7 +77,7 @@ export default {
     display: block;
     width: 22px;
     height: 22px;
-    background: red;
+    background: no-repeat center;
 }
 .user-info .side [class^='btn-'] span {
     display: block;
@@ -105,6 +89,12 @@ export default {
 }
 .user-info .side [class^='btn-'] + [class^='btn-'] {
     margin-right: -2px;
+}
+.user-info .side .btn-alram {
+    background-image: url('../../assets/images/svg/icon-alarm-off.svg');
+}
+.user-info .side .btn-alram.active {
+    background-image: url('../../assets/images/svg/icon-alarm-on.svg');
 }
 .alram-box {
     z-index: 2;
@@ -144,15 +134,6 @@ export default {
 .alram-box.active {
     display: block;
 }
-.user-info.photo-type .photo {
-    display: block;
-}
-.user-info.photo-type .side {
-    top: 25px;
-}
-.user-info.photo-type .alram-box {
-    top: 60px;
-}
 
 .space-info {
     margin-top: 13px;
@@ -165,7 +146,7 @@ export default {
     height: 18px;
     align-content: center;
 }
-.space-info address {
+.space-info .mail {
     display: flex;
     height: 18px;
     margin-top: 1px;

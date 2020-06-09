@@ -22,8 +22,8 @@
 </template>
 <script>
 export default {
-    name: 'asideMenu.vue',
-}
+    name: 'AsidMyPage.vue',
+};
 </script>
 <style scoped>
 .aside-menu {
