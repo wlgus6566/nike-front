@@ -56,6 +56,7 @@ export default {
 </script>
 
 <style scoped>
+/* reset.css > html에 overflow-y:scroll 되어 있어서 로그인 페이지도 스크롤 영향이 생김 */
 #login {
     position: fixed;
     width: 100%;
