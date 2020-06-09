@@ -18,7 +18,7 @@
 </template>
 <script>
 import appHeader from '../../components/app-header';
-import * as appAside from '../../components/app-aside/index.js';
+import * as appAside from '../../components/AppAside/index.js';
 
 export default {
     name: 'defaultLayout',
