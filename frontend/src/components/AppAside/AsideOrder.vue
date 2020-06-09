@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-    name: 'order-aside',
+    name: 'AsideOrder',
 }
 </script>
 <style scoped></style>

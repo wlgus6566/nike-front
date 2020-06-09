@@ -9,27 +9,27 @@ const router = new VueRouter({
         {
             path: '/test',
             component: () => import('@/views/test'),
-            meta: { layout: 'clean' },
+            meta: { layout: 'Clean' },
         },
         {
             path: '/',
             component: () => import('@/views/main.vue'),
-            meta: { layout: 'default', aside: 'default' },
+            meta: { layout: 'Default', aside: 'Default' },
         },
         {
             path: '/asset',
             component: () => import('@/views/asset'),
-            meta: { layout: 'default', aside: 'order' },
+            meta: { layout: 'Default', aside: 'Order' },
         },
         {
             path: '/login',
             component: () => import('@/views/login'),
-            meta: { layout: 'clean', aside: 'order' },
+            meta: { layout: 'Clean', aside: 'Order' },
         },
         {
             path: '*',
             component: { template: '<div>Not Found</div>' },
-            meta: { layout: 'clean' },
+            meta: { layout: 'Clean' },
         },
     ],
 });

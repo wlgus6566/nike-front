@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-    name: 'file-aside',
+    name: 'AsideFile',
 }
 </script>
 <style scoped></style>

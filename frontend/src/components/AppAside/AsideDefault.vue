@@ -38,7 +38,7 @@ import asideMenu from '../../components/aside/asideMenu.vue'
 import file from '../../components/aside/file.vue'
 
 export default {
-    name: 'default-aside',
+    name: 'AsideDefault',
     directives: {
         Sticky,
     },

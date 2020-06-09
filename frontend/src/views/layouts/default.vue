@@ -17,20 +17,22 @@
     </div>
 </template>
 <script>
-import appHeader from '../../components/app-header';
-import * as appAside from '../../components/AppAside/index.js';
+import appHeader from '@/components/AppHeader';
+import * as appAside from '@/components/AppAside/index.js';
 
 export default {
-    name: 'defaultLayout',
+    name: 'default-layout',
     data() {
         return {
             //aside : 'default-aside'
         };
     },
+
+
     computed: {
         aside() {
             if (this.$route.meta.aside) {
-                return `${this.$route.meta.aside || 'default'}-aside`;
+                return `Aside${this.$route.meta.aside || 'Default'}`;
             }
         },
     },
