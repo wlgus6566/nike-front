@@ -49,7 +49,7 @@
 </script>
 
 <style scoped>
-    #login {position:fixed; width:100%; height:100%; font-family:'Noto Sans KR',sans-serif; background-color:#f0f0f0; }
+    #login {position:fixed; width:100%; height:100%; margin: -80px -60px -130px; font-family:'Noto Sans KR',sans-serif; background-color:#f0f0f0; }
     .logo a {display:block; text-align:center;}
     section {position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);}
     section .text {margin-top:23px; font-size:14px; text-align:center; color:#888; letter-spacing:-0.5px;}
