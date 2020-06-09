@@ -22,14 +22,14 @@ public class SearchDTO {
      * @author [오지훈]
      * @default 0
      */
-    @ApiModelProperty(value = "페이지")
+    @ApiModelProperty(value = "페이지", name = "page")
     private int page;
 
     /**
      * @author [오지훈]
      * @default 20
      */
-    @ApiModelProperty(value = "사이즈")
+    @ApiModelProperty(value = "사이즈", name = "size")
     private int size = 20;
 
 }

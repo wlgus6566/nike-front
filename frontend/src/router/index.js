@@ -27,6 +27,16 @@ const router = new VueRouter({
             meta: { layout: 'clean', aside: 'order' },
         },
         {
+            path: '/sampleBoard/list',
+            component: () => import('@/views/sampleBoard/sampleBoardList'),
+            meta: { layout: 'default' },
+        },
+        {
+            path: '/sampleBoard/:key',
+            component: () => import('@/views/sampleBoard/sampleBoardDetail'),
+            meta: { layout: 'default' },
+        },
+        {
             path: '*',
             component: { template: '<div>Not Found</div>' },
             meta: { layout: 'clean' },

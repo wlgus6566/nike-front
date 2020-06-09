@@ -29,6 +29,11 @@ public class ExceptionAdvice {
      */
     private final ResponseService responseService;
 
+    /**
+     * Instantiates a new Exception advice.
+     *
+     * @param responseService the response service
+     */
     public ExceptionAdvice(final ResponseService responseService) {
         this.responseService = responseService;
     }

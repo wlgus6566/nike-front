@@ -90,6 +90,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
 	}
 
+	/**
+	 * Authentication filter authentication filter.
+	 *
+	 * @return the authentication filter
+	 * @throws Exception the exception
+	 */
 	@Bean
 	public AuthenticationFilter authenticationFilter() throws Exception{
 		AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManager());
@@ -99,16 +105,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return authenticationFilter;
 	}
 
+	/**
+	 * Authentication success handler authentication success handler.
+	 *
+	 * @return the authentication success handler
+	 */
 	@Bean
 	public AuthenticationSuccessHandler authenticationSuccessHandler() {
 		return new SimpleAuthenticationSuccessHandler();
 	}
 
+	/**
+	 * Authentication failure handler authentication failure handler.
+	 *
+	 * @return the authentication failure handler
+	 */
 	@Bean
 	public AuthenticationFailureHandler authenticationFailureHandler() {
 		return new SimpleAuthenticationFailureHandler();
 	}
 
+	/**
+	 * Logout success handler logout success handler.
+	 *
+	 * @return the logout success handler
+	 */
 	@Bean
 	public AccessDeniedHandler accessDeniedHandler() {return new SimpleAccessDeniedHandler(responseService);}
 

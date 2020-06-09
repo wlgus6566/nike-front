@@ -20,7 +20,8 @@ import java.time.LocalDateTime;
  */
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_MANAGER")
@@ -34,7 +35,7 @@ public class Manager extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MANAGER_SEQ")
-    @ApiModelProperty(value = "사용자시퀀스", hidden = true)
+    @ApiModelProperty(value = "사용자시퀀스", hidden = true, name = "managerSeq")
     private Long managerSeq;
 
     /**
@@ -42,7 +43,7 @@ public class Manager extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "MANAGER_ID")
-    @ApiModelProperty(value = "사용자ID")
+    @ApiModelProperty(value = "사용자ID", name = "managerId")
     private String managerId;
 
     /**
@@ -50,7 +51,7 @@ public class Manager extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "MANAGER_NAME")
-    @ApiModelProperty(value = "사용자명")
+    @ApiModelProperty(value = "사용자명", name = "managerName")
     private String managerName;
 
     /**
@@ -58,7 +59,7 @@ public class Manager extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "PASSWORD")
-    @ApiModelProperty(value = "비밀번호")
+    @ApiModelProperty(value = "비밀번호", name = "password")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
@@ -67,7 +68,7 @@ public class Manager extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "USE_IP")
-    @ApiModelProperty(value = "접속IP", hidden = true)
+    @ApiModelProperty(value = "접속IP", hidden = true, name = "useIp")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String useIp;
 
@@ -76,7 +77,7 @@ public class Manager extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "LOGIN_DT")
-    @ApiModelProperty(value = "최종로그인일자", hidden = true)
+    @ApiModelProperty(value = "최종로그인일자", hidden = true, name = "loginDt")
     private LocalDateTime loginDt;
 
     /**
@@ -84,7 +85,7 @@ public class Manager extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "REGISTER_SEQ")
-    @ApiModelProperty(value = "최초작성자", hidden = true)
+    @ApiModelProperty(value = "최초작성자", hidden = true, name = "registerSeq")
     private Long registerSeq;
 
     /**
@@ -92,7 +93,7 @@ public class Manager extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "UPDATER_SEQ")
-    @ApiModelProperty(value = "최종수정자", hidden = true)
+    @ApiModelProperty(value = "최종수정자", hidden = true, name = "updaterSeq")
     private Long updaterSeq;
 
     /**
@@ -100,7 +101,7 @@ public class Manager extends BaseTimeEntity {
      */
     @ManyToOne
     @JoinColumn(name = "AUTH_SEQ")
-    @ApiModelProperty(value = "권한정보", hidden = true)
+    @ApiModelProperty(value = "권한정보", hidden = true, name = "managerAuth")
     private ManagerAuth managerAuth;
 
     /**

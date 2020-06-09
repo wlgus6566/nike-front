@@ -18,6 +18,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ErrorEnumCode {
 
+    /**
+     * The enum Common error.
+     */
     public enum CommonError {
         COME01("로그인이 필요합니다."),
         COME02("권한이 없습니다.");
@@ -90,12 +93,24 @@ public class ErrorEnumCode {
 
         MANE01("해당 회원의 상세정보가 존재하지 않습니다.");
 
+        /**
+         *
+         */
         private final String value;
 
+        /**
+         *
+         * @param value
+         */
         ManageError(final String value) {
             this.value = value;
         }
 
+        /**
+         * Gets message.
+         *
+         * @return the message
+         */
         public String getMessage() {
             return value;
         }

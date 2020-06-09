@@ -22,8 +22,11 @@ import java.util.Date;
  */
 @Slf4j
 public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+	/**
+	 * The Response service.
+	 */
 	@Autowired
-	ResponseService responseService;
+	/* default */ ResponseService responseService;
 
 	@Override
 	public void onAuthenticationSuccess(final HttpServletRequest request,

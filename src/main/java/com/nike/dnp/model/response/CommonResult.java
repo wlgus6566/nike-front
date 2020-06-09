@@ -21,19 +21,19 @@ public class CommonResult {
     /**
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "응답 성공여부 : true/false")
+    @ApiModelProperty(value = "응답 성공여부 : true/false", name = "success")
     private boolean success;
 
     /**
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "S0 : 정상 / 그 외 오류 (기본 E0, 각 서비스에 맞는 오류)")
+    @ApiModelProperty(value = "S0 : 정상 / 그 외 오류 (기본 E0, 각 서비스에 맞는 오류)", name = "code")
     private String code;
 
     /**
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "응답 메시지")
+    @ApiModelProperty(value = "응답 메시지", name = "msg")
     private String msg;
 
 }
