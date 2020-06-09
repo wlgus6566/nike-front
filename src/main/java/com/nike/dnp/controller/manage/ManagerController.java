@@ -11,6 +11,7 @@ import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.manage.ManagerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -34,6 +35,7 @@ import java.util.Optional;
 @RestController
 @Api(description = "관리 정보", tags = "1_MANAGE")
 @RequestMapping(value = "/api/manage/user", name = "사용자")
+@RequiredArgsConstructor
 public class ManagerController {
 
     /**
@@ -50,20 +52,6 @@ public class ManagerController {
      *
      */
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n필드명|설명|필수여부|데이터 타입(길이)\\n\" + \"-|-|-|-\\n";
-
-    /**
-     * Instantiates a new Manager controller.
-     *
-     * @param responseService the response service
-     * @param managerService  the manager service
-     */
-    public ManagerController(
-            final ResponseService responseService
-            , final ManagerService managerService
-    ) {
-        this.responseService = responseService;
-        this.managerService = managerService;
-    }
 
     /**
      * 사용자 전체목록 조회
@@ -90,7 +78,10 @@ public class ManagerController {
         + "size||노출갯수|Integer\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "사용자 목록 조회")
-    public SingleResult<Page<Manager>> getAllManagers(final ManagerSearchDTO managerSearchDTO,@ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO) {
+    public SingleResult<Page<Manager>> getAllManagers(
+            final ManagerSearchDTO managerSearchDTO
+            , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
+    ) {
         return responseService.getSingleResult(managerService.findAllPaging(managerSearchDTO));
     }
 
@@ -109,9 +100,10 @@ public class ManagerController {
     )
     @GetMapping(value = "/{managerSeq}", name = "사용자 상세 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Manager> getManager(final @PathVariable(name = "managerSeq") Long managerSeq,
-                                            @AuthenticationPrincipal AuthUserDTO authUserDTO) {
-
+    public SingleResult<Manager> getManager(
+            final @PathVariable(name = "managerSeq") Long managerSeq
+            , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
+    ) {
         return responseService.getSingleResult(
                 managerService.findById(managerSeq));
     }
@@ -153,7 +145,8 @@ public class ManagerController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Manager>> updateManager(
             final @PathVariable(name = "managerSeq") Long managerSeq
-            , final @RequestBody ManagerUpdateDTO managerUpdateDTO) {
+            , final @RequestBody ManagerUpdateDTO managerUpdateDTO
+    ) {
         return responseService.getSingleResult(managerService.update(managerSeq, managerUpdateDTO));
     }
 

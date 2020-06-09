@@ -2,6 +2,9 @@ package com.nike.dnp.dto.manage.auth;
 
 
 import com.nike.dnp.entity.manage.Manager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +23,9 @@ import java.util.Objects;
  * @history [윤태호] [2020.05.22] [최초 작성]
  *
  */
-
+@Setter
+@Getter
+@RequiredArgsConstructor
 public class AuthUserDTO implements UserDetails, Serializable {
 
 	/**

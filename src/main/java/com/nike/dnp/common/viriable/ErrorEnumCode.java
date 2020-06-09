@@ -1,4 +1,4 @@
-package com.nike.dnp.exception;
+package com.nike.dnp.common.viriable;
 
 import org.springframework.stereotype.Component;
 

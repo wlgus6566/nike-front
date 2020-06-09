@@ -1,6 +1,7 @@
 package com.nike.dnp.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,6 +20,7 @@ import java.io.Writer;
 
 @Slf4j
 @UtilityClass
+@RequiredArgsConstructor
 public class JsonUtil {
 
 	/**

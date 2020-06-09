@@ -3,6 +3,7 @@ package com.nike.dnp.service;
 import com.nike.dnp.common.viriable.CommonResponse;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@RequiredArgsConstructor
 public class ResponseService {
 
     /**

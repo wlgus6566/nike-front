@@ -1,10 +1,10 @@
 package com.nike.dnp.config.auth;
 
-import com.nike.dnp.exception.ErrorEnumCode;
+import com.nike.dnp.common.viriable.ErrorEnumCode;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.util.JsonUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -20,13 +20,13 @@ import java.io.IOException;
  * The type Simple authentication failure handler.
  */
 @Slf4j
+@RequiredArgsConstructor
 public class SimpleAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
 	/**
 	 * The Response service.
 	 */
-	@Autowired
-	/* default */ ResponseService responseService;
+	private final ResponseService responseService;
 
 	@Override
 	public void onAuthenticationFailure(final HttpServletRequest request,

@@ -1,5 +1,6 @@
 package com.nike.dnp.common;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @Slf4j
+@RequiredArgsConstructor
 public class GlobalInterceptor extends HandlerInterceptorAdapter {
 
 	/**

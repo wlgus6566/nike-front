@@ -6,6 +6,7 @@ import com.nike.dnp.config.jwt.JwtProperties;
 import com.nike.dnp.dto.manage.auth.AuthUserDTO;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.util.JsonUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,12 +22,13 @@ import java.util.Date;
  * The type Simple authentication success handler.
  */
 @Slf4j
+@RequiredArgsConstructor
 public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 	/**
 	 * The Response service.
 	 */
 	@Autowired
-	/* default */ ResponseService responseService;
+	private final ResponseService responseService;
 
 	@Override
 	public void onAuthenticationSuccess(final HttpServletRequest request,
@@ -34,9 +36,9 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 										final Authentication authentication) throws IOException {
 		response.setContentType("application/json;charset=utf-8");
 		response.setStatus(HttpStatus.OK.value());
-		AuthUserDTO authUserDTO = (AuthUserDTO) authentication.getPrincipal();
+		final AuthUserDTO authUserDTO = (AuthUserDTO) authentication.getPrincipal();
 
-		String token = JWT.create().withSubject(authUserDTO.getUsername())
+		final String token = JWT.create().withSubject(authUserDTO.getUsername())
 				.withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
 				.sign(Algorithm.HMAC512(JwtProperties.SECRET));
 

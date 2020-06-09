@@ -1,7 +1,7 @@
 package com.nike.dnp.config.auth;
 
 
-import com.nike.dnp.exception.ErrorEnumCode;
+import com.nike.dnp.common.viriable.ErrorEnumCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,8 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-	private final AuthenticationManager authenticationManager;
-
+	/**
+	 *
+	 */
+	private final AuthenticationManager authManager;
 
 	/**
 	 * Instantiates a new Authentication filter.
@@ -46,7 +48,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		}
 
 		final UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-		return authenticationManager.authenticate(token);
+		return authManager.authenticate(token);
 
 	}
 }

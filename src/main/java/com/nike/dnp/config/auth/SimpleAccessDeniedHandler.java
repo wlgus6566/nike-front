@@ -1,6 +1,6 @@
 package com.nike.dnp.config.auth;
 
-import com.nike.dnp.exception.ErrorEnumCode;
+import com.nike.dnp.common.viriable.ErrorEnumCode;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.util.JsonUtil;
 import lombok.RequiredArgsConstructor;

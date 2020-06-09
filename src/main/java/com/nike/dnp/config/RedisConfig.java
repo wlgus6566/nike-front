@@ -1,5 +1,6 @@
 package com.nike.dnp.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -26,6 +27,7 @@ import java.time.Duration;
  * @history [오지훈] [2020.05.21] [최초 작성]
  */
 @Configuration
+@RequiredArgsConstructor
 public class RedisConfig extends CachingConfigurerSupport {
 
 	/**

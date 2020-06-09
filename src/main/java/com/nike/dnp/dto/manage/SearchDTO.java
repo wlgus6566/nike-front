@@ -1,8 +1,7 @@
 package com.nike.dnp.dto.manage;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * SearchDTO
@@ -16,6 +15,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor
 public class SearchDTO {
 
     /**

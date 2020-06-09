@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.nike.dnp.dto.manage.auth.AuthUserDTO;
 import com.nike.dnp.entity.manage.Manager;
 import com.nike.dnp.repository.manage.ManagerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,43 +18,57 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The type Jwt authorization filter.
+ */
+@RequiredArgsConstructor
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-	private ManagerRepository managerRepository;
+	/**
+	 *
+	 */
+	private final ManagerRepository managerRepository;
 
-	public JwtAuthorizationFilter(AuthenticationManager authenticationManager,ManagerRepository managerRepository) {
-		super(authenticationManager);
+	/**
+	 * Instantiates a new Jwt authorization filter.
+	 *
+	 * @param authManager       the auth manager
+	 * @param managerRepository the manager repository
+	 */
+	public JwtAuthorizationFilter(
+			final AuthenticationManager authManager
+			, final ManagerRepository managerRepository) {
+		super(authManager);
 		this.managerRepository = managerRepository;
 	}
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request,
-									HttpServletResponse response,
-									FilterChain chain) throws IOException, ServletException {
-		String header = request.getHeader(JwtProperties.HEADER_STRING);
+	protected void doFilterInternal(final HttpServletRequest request,
+									final HttpServletResponse response,
+									final FilterChain chain) throws IOException, ServletException {
+		final String header = request.getHeader(JwtProperties.HEADER_STRING);
 		if(header == null  || !header.startsWith(JwtProperties.TOKEN_PREFIX)){
 			chain.doFilter(request,response);
 			return;
 		}
 
-		Authentication authentication = getUsernamePasswrodAuthentication(request);
+		final Authentication authentication = getUsernamePasswrodAuthentication(request);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		chain.doFilter(request,response);
 	}
 
 	private Authentication getUsernamePasswrodAuthentication(HttpServletRequest request) {
 
-		String token = request.getHeader(JwtProperties.HEADER_STRING);
+		final String token = request.getHeader(JwtProperties.HEADER_STRING);
 		if(token != null){
 			// 토큰 디코드
-			String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET.getBytes())).build().verify(token.replace(JwtProperties.TOKEN_PREFIX, "")).getSubject();
+			final String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET.getBytes())).build().verify(token.replace(JwtProperties.TOKEN_PREFIX, "")).getSubject();
 			// username(managerId)로 유저정보 조회
 			// 유저정보 시큐리티에 넣음
 			if(username != null){
-				Manager manager = managerRepository.findByManagerId(username);
-				AuthUserDTO authUserDTO = new AuthUserDTO(manager);
-				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(authUserDTO, null, authUserDTO.getAuthorities());
-				return auth;
+				final Manager manager = managerRepository.findByManagerId(username);
+				final AuthUserDTO authUserDTO = new AuthUserDTO(manager);
+				return new UsernamePasswordAuthenticationToken(authUserDTO, null, authUserDTO.getAuthorities());
 			}
 			return null;
 		}
