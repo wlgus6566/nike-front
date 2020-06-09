@@ -1,4 +1,4 @@
-import cleanLayout from './clean';
-import defaultLayout from './default';
+import LayoutDefault from './LayoutDefault';
+import LayoutClean from './LayoutClean';
 
-export { cleanLayout, defaultLayout };
+export { LayoutDefault, LayoutClean };

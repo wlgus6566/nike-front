@@ -22,9 +22,7 @@ export default {
     },
     computed: {
         layout() {
-            if (this.$route.meta.layout) {
-                return `${this.$route.meta.layout || 'default'}-layout`;
-            }
+            return `Layout${this.$route.meta.layout || 'Default'}`;
         },
     },
     components: {

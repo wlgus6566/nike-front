@@ -11,7 +11,7 @@
 </template>
 <script>
 export default {
-    name: 'cleanLayout',
+    name: 'LayoutClean',
 };
 </script>
 <style scoped></style>
