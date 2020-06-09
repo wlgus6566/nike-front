@@ -1,5 +1,6 @@
 package com.nike.dnp.controller.manage;
 
+import com.nike.dnp.dto.manage.auth.AuthUserDTO;
 import com.nike.dnp.dto.manage.manager.ManagerSaveDTO;
 import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.manage.manager.ManagerUpdateDTO;
@@ -13,7 +14,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * ManagerController
@@ -85,7 +88,7 @@ public class ManagerController {
         + "size||노출갯수|Integer\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "사용자 목록 조회")
-    public SingleResult<Page<Manager>> getAllManagers(final ManagerSearchDTO managerSearchDTO) {
+    public SingleResult<Page<Manager>> getAllManagers(final ManagerSearchDTO managerSearchDTO,@ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO) {
         return responseService.getSingleResult(managerService.findAllPaging(managerSearchDTO));
     }
 
@@ -104,7 +107,9 @@ public class ManagerController {
     )
     @GetMapping(value = "/{managerSeq}", name = "사용자 상세 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Manager> getManager(final @PathVariable(name = "managerSeq") Long managerSeq) {
+    public SingleResult<Manager> getManager(final @PathVariable(name = "managerSeq") Long managerSeq,
+                                            @AuthenticationPrincipal AuthUserDTO authUserDTO) {
+
         return responseService.getSingleResult(
                 managerService.findById(managerSeq));
     }

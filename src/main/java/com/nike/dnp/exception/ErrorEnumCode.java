@@ -19,7 +19,8 @@ import org.springframework.stereotype.Component;
 public class ErrorEnumCode {
 
     public enum CommonError {
-        COME01("로그인이 필요합니다.");
+        COME01("로그인이 필요합니다."),
+        COME02("권한이 없습니다.");
 
         /**
          * 에러 메시지
