@@ -62,6 +62,9 @@
                                 id="word1"
                                 value=""
                                 placeholder=""
+                                v-on:keypress="
+                                    $event.target.nextElementSibling.focus()
+                                "
                             />
                             <label for="word2"></label
                             ><input
@@ -70,6 +73,9 @@
                                 id="word2"
                                 value=""
                                 placeholder=""
+                                v-on:keypress="
+                                    $event.target.nextElementSibling.focus()
+                                "
                             />
                             <label for="word3"></label
                             ><input
@@ -78,6 +84,9 @@
                                 id="word3"
                                 value=""
                                 placeholder=""
+                                v-on:keypress="
+                                    $event.target.nextElementSibling.focus()
+                                "
                             />
                             <label for="word4"></label
                             ><input
@@ -86,6 +95,9 @@
                                 id="word4"
                                 value=""
                                 placeholder=""
+                                v-on:keypress="
+                                    $event.target.nextElementSibling.focus()
+                                "
                             />
                             <label for="word5"></label
                             ><input
@@ -94,6 +106,9 @@
                                 id="word5"
                                 value=""
                                 placeholder=""
+                                v-on:keypress="
+                                    $event.target.nextElementSibling.focus()
+                                "
                             />
                             <label for="word6"></label
                             ><input
@@ -102,6 +117,9 @@
                                 id="word6"
                                 value=""
                                 placeholder=""
+                                v-on:keypress="
+                                    $event.target.nextElementSibling.focus()
+                                "
                             />
                             <label for="word7"></label
                             ><input
@@ -110,6 +128,9 @@
                                 id="word7"
                                 value=""
                                 placeholder=""
+                                v-on:keypress="
+                                    $event.target.nextElementSibling.focus()
+                                "
                             />
                             <label for="word8"></label
                             ><input
@@ -118,6 +139,9 @@
                                 id="word8"
                                 value=""
                                 placeholder=""
+                                v-on:keypress="
+                                    $event.target.nextElementSibling.focus()
+                                "
                             />
                         </div>
                         <button type="button" class="btn-login">
@@ -260,6 +284,7 @@ section .text strong {
     font-size: 15px;
     background-color: rgba(255, 255, 255, 0.1);
     color: #fff;
+    letter-spacing: 0;
 }
 
 .input-group input ~ input {
