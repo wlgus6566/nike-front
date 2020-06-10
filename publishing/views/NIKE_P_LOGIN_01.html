@@ -20,20 +20,23 @@
                     </a>
                 </h1>
                 <div class="login-form">
-                    <form action="" method="" v-if="certification === 'success'">
+                    <form action="" method="">
                         <fieldset>
                             <legend>NIKE ND&P SERVICE</legend>
                             <h2 class="title">
                                 NIKE KOREA<span>는<br /> </span>PARTNER<span>와 함께합니다.</span>
                             </h2>
                             <div class="input-group"><label for="id"></label><input type="text" id="id" value="digitalplaform@nike.com" placeholder="ID" /> <label for="pw"></label><input type="password" id="pw" value="111111111111" placeholder="PW" maxlength="12" /></div>
-                            <button type="button" class="btn-login" @click="changeLogin">
+                            <button type="button" class="btn-login">
                                 LOGIN
                             </button>
                             <a href="javascript:void(0)" class="pw-find">비밀번호를 찾으시겠습니까?</a>
                         </fieldset>
                     </form>
-                    <form class="email-certification" action="" method="" v-else>
+                </div>
+                <!-- 로그인 : 이메일 인증 -->
+                <!--<div class="login-form">
+                    <form class="email-certification" action="" method="">
                         <fieldset>
                             <legend>NIKE ND&P SERVICE</legend>
                             <h2 class="title">
@@ -55,40 +58,18 @@
                             </button>
                         </fieldset>
                     </form>
-                </div>
+                </div>-->
+                <!-- //로그인 : 이메일 인증 -->
             </section>
         </div>
     </div>
 </div>
 </body>
 </html>
-
-<!--<script>
-    export default {
-        name: 'login',
-        data: function () {
-            return {
-                certification: 'success',
-                //on: '#ffffff',
-            };
-        },
-        methods: {
-            changeLogin() {
-                if (this.certification === 'success') {
-                    this.certification = '';
-                } else {
-                    this.certification = 'success';
-                }
-            },
-            changeBorderColor: function () {
-                console.log('input에 .on 추가 되면서 border-bottom color 변경 되여야 함');
-            },
-        },
-    };
-</script>-->
-
 <style>
-    /* reset.css > html에 overflow-y:scroll 되어 있어서 로그인 페이지도 스크롤 영향이 생김 */
+    html {
+        overflow-y: auto;
+    }
     #login {
         position: fixed;
         width: 100%;
