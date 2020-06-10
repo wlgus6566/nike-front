@@ -28,7 +28,7 @@ public class JsonUtil {
 	 * @param value  the value
 	 * @throws IOException the io exception
 	 */
-	public void write(final Writer writer, final Object value) throws IOException {
+	public static void write(final Writer writer, final Object value) throws IOException {
 		new ObjectMapper().writeValue(writer, value);
 	}
 

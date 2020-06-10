@@ -1,7 +1,6 @@
 package com.nike.dnp.model.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -17,6 +16,8 @@ import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor
 public class ListResult<T> extends CommonResult {
 
     /**

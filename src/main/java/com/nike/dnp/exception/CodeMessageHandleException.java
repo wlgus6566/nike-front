@@ -13,8 +13,15 @@ import lombok.Getter;
 @Getter
 public class CodeMessageHandleException extends RuntimeException {
 
-    /* default */ static final long serialVersionUID = 100L;
-    /* default */ private String code;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 100L;
+
+    /**
+     *
+     */
+    private String code;
 
     /**
      * Instantiates a new Code message handle exception.
