@@ -8,7 +8,7 @@
                 </transition>
             </div>
             <transition mode="out-in" name="aside-ani">
-                <component :is="aside" />
+                <component :is="AppAside" />
             </transition>
         </section>
         <footer>
@@ -18,24 +18,22 @@
 </template>
 <script>
 import appHeader from '@/components/app-header';
-import * as appAside from '@/components/app-aside/index.js';
 
 export default {
     name: 'LayoutDefault',
     data() {
-        return {
-            //aside : 'default-aside'
-        };
+        return {};
     },
-
     computed: {
-        aside() {
+        AppAside() {
             return `Aside${this.$route.meta.aside || 'Default'}`;
         },
     },
     components: {
         appHeader,
-        ...appAside,
+        AsideDefault: () => import('@/components/app-aside/AsideDefault.vue'),
+        AsideFile: () => import('@/components/app-aside/AsideDefault.vue'),
+        AsideOrder: () => import('@/components/app-aside/AsideOrder.vue'),
     },
 };
 </script>
@@ -50,5 +48,15 @@ export default {
 .aside-ani-leave-to {
     opacity: 0;
     transform: translateY(10px);
+}
+
+.component-fade-enter-active,
+.component-fade-leave-active {
+    transition: opacity 0.3s ease;
+}
+.component-fade-enter,
+.component-fade-leave-to
+	/* .component-fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
 }
 </style>
