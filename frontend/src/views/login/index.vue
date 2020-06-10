@@ -65,6 +65,7 @@
                                 v-on:keypress="
                                     $event.target.nextElementSibling.focus()
                                 "
+                                v-on:keyup="changeBorderColor()"
                             />
                             <label for="word2"></label
                             ><input
@@ -76,6 +77,7 @@
                                 v-on:keypress="
                                     $event.target.nextElementSibling.focus()
                                 "
+                                v-on:keyup="changeBorderColor()"
                             />
                             <label for="word3"></label
                             ><input
@@ -87,6 +89,7 @@
                                 v-on:keypress="
                                     $event.target.nextElementSibling.focus()
                                 "
+                                v-on:keyup="changeBorderColor()"
                             />
                             <label for="word4"></label
                             ><input
@@ -98,6 +101,7 @@
                                 v-on:keypress="
                                     $event.target.nextElementSibling.focus()
                                 "
+                                v-on:keyup="changeBorderColor()"
                             />
                             <label for="word5"></label
                             ><input
@@ -109,6 +113,7 @@
                                 v-on:keypress="
                                     $event.target.nextElementSibling.focus()
                                 "
+                                v-on:keyup="changeBorderColor()"
                             />
                             <label for="word6"></label
                             ><input
@@ -120,6 +125,7 @@
                                 v-on:keypress="
                                     $event.target.nextElementSibling.focus()
                                 "
+                                v-on:keyup="changeBorderColor()"
                             />
                             <label for="word7"></label
                             ><input
@@ -131,6 +137,7 @@
                                 v-on:keypress="
                                     $event.target.nextElementSibling.focus()
                                 "
+                                v-on:keyup="changeBorderColor()"
                             />
                             <label for="word8"></label
                             ><input
@@ -142,6 +149,7 @@
                                 v-on:keypress="
                                     $event.target.nextElementSibling.focus()
                                 "
+                                v-on:keyup="changeBorderColor()"
                             />
                         </div>
                         <button type="button" class="btn-login">
@@ -160,6 +168,7 @@ export default {
     data: function () {
         return {
             certification: 'success',
+            //on: '#ffffff',
         };
     },
     methods: {
@@ -169,6 +178,11 @@ export default {
             } else {
                 this.certification = 'success';
             }
+        },
+        changeBorderColor: function () {
+            console.log(
+                'input에 .on 추가 되면서 border-bottom color 변경 되여야 함'
+            );
         },
     },
 };
@@ -309,7 +323,9 @@ section .text strong {
     color: #fff;
     text-align: center;
 }
-
+.email-certification .input-group input.on {
+    border-bottom: 1px solid rgba(255, 255, 255, 1);
+}
 .email-certification .input-group input ~ input {
     margin-left: 10px;
     margin-top: 0;
