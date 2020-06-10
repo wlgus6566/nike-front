@@ -13,6 +13,7 @@
 	<version>ver1.0</version>
 	<name>nike-dnp-front</name>
 	<description>project for Spring Boot</description>
+	<packaging>war</packaging>
 
 	<properties>
 		<java.version>1.8</java.version>
