@@ -1,9 +1,9 @@
 <template>
     <div class="aside-menu">
-        <strong class="title">MANAGEMENT</strong>
+        <strong class="title" v-for="(mypageMenu, index) in propsdata" v-bind:key="index">{{ mypageMenu.title }}</strong>
         <ul class="menu">
-            <li>
-                <a href="#">파트너 계정관리</a>
+            <li v-for="(mypageMenu, index) in propsdata" v-bind:key="index">
+                <a href="#">{{mypageMenu[index].}}</a>
             </li>
             <li>
                 <a href="#">에이전시 계정관리</a>
@@ -23,11 +23,12 @@
 <script>
 export default {
     name: 'AsidMyPage.vue',
+    props: ['propsdata'],
 };
 </script>
 <style scoped>
 .aside-menu {
-    margin-top: 17px;
+    margin-top: 19px;
 }
 .aside-menu .title {
     display: block;

@@ -53,6 +53,30 @@ export default {
                     active: false,
                 },
             ],
+            mypageMenus: [
+                {
+                    title: 'HISTORY',
+                    depth: [
+                        {
+                            menuName: '내가 업로드한 폴더',
+                        },
+                        {
+                            menuName: '최근 본 폴더',
+                        },
+                    ],
+                },
+                {
+                    title: 'ORDER',
+                    depth: [
+                        {
+                            menuName: '주문내역확인',
+                        },
+                        {
+                            menuName: '위시리스트',
+                        },
+                    ],
+                },
+            ],
             historyTabs: [
                 {
                     tabName: 'ASSET',
@@ -96,29 +120,28 @@ export default {
 .tab-list a {
     display: block;
     padding: 0 10px;
-    font-family: 'Bebas Neue', sans-serif;
+}
+.tab-list a span {
+    display: inline-block;
+    line-height: 24px;
     font-size: 20px;
     line-height: 24px;
     color: #ccc;
-}
-.tab-list a span {
+    font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 0.5px;
 }
-.tab-list .active a {
-    color: #000;
-}
-.tab-list .active span {
+.tab-list .active a span {
     position: relative;
+    color: #000;
 }
 .tab-list .active span:before {
     content: '';
     position: absolute;
-    bottom: 2px;
+    bottom: 0;
     left: 0;
     display: block;
     width: 100%;
-    height: 2px;
-    background: #000;
+    border-bottom: 2px solid #000;
 }
 .history-box {
     margin-top: 63px;

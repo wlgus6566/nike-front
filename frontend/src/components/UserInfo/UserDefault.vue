@@ -9,8 +9,7 @@
                 <div class="alram-box">
                     <strong class="title">NEW</strong>
                     <p class="txt">
-                        에어맥스 2090 신제품 런칭 그래픽 자료가
-                        업데이트되었습니다.
+                        에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
                     </p>
                     <button type="button" class="btn-close">
                         <span>닫기</span>
@@ -20,9 +19,7 @@
         </div>
         <div class="space-info">
             <p class="store">WINWIN OFFICE</p>
-            <a href="mailto:nike@win-win.co.kr" class="mail"
-                >nike@win-win.co.kr</a
-            >
+            <a href="mailto:nike@win-win.co.kr" class="mail">nike@win-win.co.kr</a>
         </div>
     </div>
 </template>
@@ -34,6 +31,7 @@ export default {
 <style scoped>
 .user-info {
     position: relative;
+    height: 20px;
 }
 .user-info:after {
     content: '';
@@ -140,13 +138,13 @@ export default {
 }
 .space-info .store {
     display: flex;
-    height: 18px;
+    height: 14px;
     align-content: center;
 }
 .space-info .mail {
     display: flex;
-    height: 18px;
-    margin-top: 1px;
+    height: 14px;
+    margin-top: 5px;
     align-content: center;
     opacity: 0.6;
 }
