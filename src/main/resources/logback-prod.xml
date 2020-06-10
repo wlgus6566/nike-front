@@ -1,6 +1,6 @@
 <configuration scan="true" scanPeriod="30 seconds">
 
-    <property name="LOG_PATH" value="C:\\logs\\log\\"/>
+    <property name="LOG_PATH" value="/home/emotion/logs"/>
     <property name="LOG_FILE" value="catalina.log"/>
     <property name="LOG_ERROR_FILE" value="error.log"/>
 
