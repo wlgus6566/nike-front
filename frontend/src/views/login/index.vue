@@ -20,15 +20,16 @@
                             ><input
                                 type="text"
                                 id="id"
-                                value=""
+                                value="digitalplaform@nike.com"
                                 placeholder="ID"
                             />
                             <label for="pw"></label
                             ><input
                                 type="password"
                                 id="pw"
-                                value=""
+                                value="111111111111"
                                 placeholder="PW"
+                                maxlength="12"
                             />
                         </div>
                         <button
@@ -316,7 +317,6 @@ section .text strong {
 .email-certification .btn-login {
     font-size: 16px;
     font-family: inherit;
-    line-height: normal;
     letter-spacing: -0.57px;
 }
 
