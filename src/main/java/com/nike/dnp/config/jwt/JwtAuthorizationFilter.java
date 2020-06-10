@@ -2,9 +2,9 @@ package com.nike.dnp.config.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.nike.dnp.dto.manage.auth.AuthUserDTO;
-import com.nike.dnp.entity.manage.Manager;
-import com.nike.dnp.repository.manage.ManagerRepository;
+import com.nike.dnp.dto.example.auth.AuthUserDTO;
+import com.nike.dnp.entity.example.Manager;
+import com.nike.dnp.repository.example.ManagerRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

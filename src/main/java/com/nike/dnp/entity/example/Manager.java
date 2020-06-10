@@ -1,4 +1,4 @@
-package com.nike.dnp.entity.manage;
+package com.nike.dnp.entity.example;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

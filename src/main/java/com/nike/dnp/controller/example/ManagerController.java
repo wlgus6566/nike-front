@@ -1,14 +1,14 @@
-package com.nike.dnp.controller.manage;
+package com.nike.dnp.controller.example;
 
-import com.nike.dnp.dto.manage.auth.AuthUserDTO;
-import com.nike.dnp.dto.manage.manager.ManagerSaveDTO;
-import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
-import com.nike.dnp.dto.manage.manager.ManagerUpdateDTO;
-import com.nike.dnp.entity.manage.Manager;
+import com.nike.dnp.dto.example.auth.AuthUserDTO;
+import com.nike.dnp.dto.example.manager.ManagerSaveDTO;
+import com.nike.dnp.dto.example.manager.ManagerSearchDTO;
+import com.nike.dnp.dto.example.manager.ManagerUpdateDTO;
+import com.nike.dnp.entity.example.Manager;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
-import com.nike.dnp.service.manage.ManagerService;
+import com.nike.dnp.service.example.ManagerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

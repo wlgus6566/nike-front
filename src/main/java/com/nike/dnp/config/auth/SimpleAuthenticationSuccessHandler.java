@@ -3,7 +3,7 @@ package com.nike.dnp.config.auth;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.nike.dnp.config.jwt.JwtHelper;
-import com.nike.dnp.dto.manage.auth.AuthUserDTO;
+import com.nike.dnp.dto.example.auth.AuthUserDTO;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
