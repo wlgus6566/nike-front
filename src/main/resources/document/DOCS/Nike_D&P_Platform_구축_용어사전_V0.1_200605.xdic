@@ -13965,6 +13965,7 @@
   <term name="윈큐브" description="자판기 거래처" physicalName="WINCUBE" physicalDescription="wincube"/>
   <term name="경로" physicalName="PATH"/>
   <term name="메소드" description="메소드" physicalName="METHOD" physicalDescription="METHOD"/>
+  <term name="에이젼시" description="대리점, 대행사, (특정 서비스 제공) 단체" physicalName="AGENCY" physicalDescription="대리점, 대행사, (특정 서비스 제공) 단체" tag="//@tag.362"/>
   <tag name="기록물관리"/>
   <tag name="교육인적자원 행정지원"/>
   <tag name="재난예방 관리"/>
@@ -14327,4 +14328,5 @@
   <tag name="한의학연구 및 정책개발"/>
   <tag name="우주기술개발"/>
   <tag name="해양수산 행정지원"/>
+  <tag name="에이젼시"/>
 </tm:TermDictionary>
