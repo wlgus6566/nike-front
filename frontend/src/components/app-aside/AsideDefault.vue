@@ -4,10 +4,10 @@
             <div class="aside-wrap">
                 <UserDefault></UserDefault>
                 <ul class="tab-list">
-                    <li v-for="(tab, index) in tabs" v-bind:class="{ active: tab.active }" v-on:click="tabClick(tabs, index)">
-                        <a href="#"
-                            ><span>{{ tab.tabName }}</span></a
-                        >
+                    <li v-bind:class="{ active: tab.active }" v-bind:key="index" v-for="(tab, index) in tabs" v-on:click="tabClick(tabs, index)">
+                        <a href="#">
+                            <span>{{ tab.tabName }}</span>
+                        </a>
                     </li>
                 </ul>
                 <AsidMyPage v-if="tabs[0].active === true"></AsidMyPage>
@@ -16,10 +16,10 @@
                 <div class="history-box">
                     <strong class="title">HISTORY</strong>
                     <ul class="tab-list-history">
-                        <li v-for="(historyTab, index) in historyTabs" v-bind:class="{ active: historyTab.active }" v-on:click="tabClick(historyTabs, index)">
-                            <a href="#"
-                                ><span>{{ historyTab.tabName }}</span></a
-                            >
+                        <li v-bind:class="{ active: historyTab.active }" v-bind:key="index" v-for="(historyTab, index) in historyTabs" v-on:click="tabClick(historyTabs, index)">
+                            <a href="#">
+                                <span>{{ historyTab.tabName }}</span>
+                            </a>
                         </li>
                     </ul>
                     <AsideHistory v-if="historyTabs[0].active === true"></AsideHistory>
@@ -96,10 +96,10 @@ export default {
 .tab-list a {
     display: block;
     padding: 0 10px;
-    line-height: 24px;
-    font-size: 20px;
-    color: #ccc;
     font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    line-height: 24px;
+    color: #ccc;
 }
 .tab-list a span {
     letter-spacing: 0.5px;
@@ -111,10 +111,10 @@ export default {
     position: relative;
 }
 .tab-list .active span:before {
+    content: '';
     position: absolute;
     bottom: 2px;
     left: 0;
-    content: '';
     display: block;
     width: 100%;
     height: 2px;
@@ -125,12 +125,12 @@ export default {
 }
 .history-box .title {
     display: block;
-    font-size: 20px;
-    line-height: 24px;
-    color: #000;
     font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 0.5px;
+    font-size: 20px;
     font-weight: normal;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: #000;
 }
 .tab-list-history {
     display: flex;
@@ -153,8 +153,8 @@ export default {
 .tab-list-history a {
     display: block;
     padding: 10px 10px;
-    line-height: 17px;
     font-size: 14px;
+    line-height: 17px;
     color: #ccc;
 }
 .tab-list-history a span {
