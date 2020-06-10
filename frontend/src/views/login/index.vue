@@ -11,37 +11,13 @@
                     <fieldset>
                         <legend>NIKE ND&P SERVICE</legend>
                         <h2 class="title">
-                            NIKE KOREA<span>는<br /> </span>PARTNER<span
-                                >와 함께합니다.</span
-                            >
+                            NIKE KOREA<span>는<br /> </span>PARTNER<span>와 함께합니다.</span>
                         </h2>
-                        <div class="input-group">
-                            <label for="id"></label
-                            ><input
-                                type="text"
-                                id="id"
-                                value="digitalplaform@nike.com"
-                                placeholder="ID"
-                            />
-                            <label for="pw"></label
-                            ><input
-                                type="password"
-                                id="pw"
-                                value="111111111111"
-                                placeholder="PW"
-                                maxlength="12"
-                            />
-                        </div>
-                        <button
-                            type="button"
-                            class="btn-login"
-                            @click="changeLogin"
-                        >
+                        <div class="input-group"><label for="id"></label><input type="text" id="id" value="digitalplaform@nike.com" placeholder="ID" /> <label for="pw"></label><input type="password" id="pw" value="111111111111" placeholder="PW" maxlength="12" /></div>
+                        <button type="button" class="btn-login" @click="changeLogin">
                             LOGIN
                         </button>
-                        <a href="javascript:void(0)" class="pw-find"
-                            >비밀번호를 찾으시겠습니까?</a
-                        >
+                        <a href="javascript:void(0)" class="pw-find">비밀번호를 찾으시겠습니까?</a>
                     </fieldset>
                 </form>
                 <form class="email-certification" action="" method="" v-else>
@@ -50,99 +26,16 @@
                         <h2 class="title">
                             이메일 인증
                         </h2>
-                        <p>
-                            인증메일이 발송되었습니다.<br />메일함을 확인하여
-                            인증코드를 입력해주세요.
-                        </p>
+                        <p>인증메일이 발송되었습니다.<br />메일함을 확인하여 인증코드를 입력해주세요.</p>
                         <div class="input-group">
-                            <label for="word1"></label
-                            ><input
-                                type="text"
-                                maxlength="1"
-                                id="word1"
-                                value=""
-                                placeholder=""
-                                v-on:keypress="
-                                    $event.target.nextElementSibling.focus()
-                                "
-                            />
-                            <label for="word2"></label
-                            ><input
-                                type="text"
-                                maxlength="1"
-                                id="word2"
-                                value=""
-                                placeholder=""
-                                v-on:keypress="
-                                    $event.target.nextElementSibling.focus()
-                                "
-                            />
-                            <label for="word3"></label
-                            ><input
-                                type="text"
-                                maxlength="1"
-                                id="word3"
-                                value=""
-                                placeholder=""
-                                v-on:keypress="
-                                    $event.target.nextElementSibling.focus()
-                                "
-                            />
-                            <label for="word4"></label
-                            ><input
-                                type="text"
-                                maxlength="1"
-                                id="word4"
-                                value=""
-                                placeholder=""
-                                v-on:keypress="
-                                    $event.target.nextElementSibling.focus()
-                                "
-                            />
-                            <label for="word5"></label
-                            ><input
-                                type="text"
-                                maxlength="1"
-                                id="word5"
-                                value=""
-                                placeholder=""
-                                v-on:keypress="
-                                    $event.target.nextElementSibling.focus()
-                                "
-                            />
-                            <label for="word6"></label
-                            ><input
-                                type="text"
-                                maxlength="1"
-                                id="word6"
-                                value=""
-                                placeholder=""
-                                v-on:keypress="
-                                    $event.target.nextElementSibling.focus()
-                                "
-                            />
-                            <label for="word7"></label
-                            ><input
-                                type="text"
-                                maxlength="1"
-                                id="word7"
-                                value=""
-                                placeholder=""
-                                v-on:keypress="
-                                    $event.target.nextElementSibling.focus()
-                                "
-                            />
-                            <label for="word8"></label
-                            ><input
-                                type="text"
-                                maxlength="1"
-                                id="word8"
-                                value=""
-                                placeholder=""
-                                v-on:keypress="
-                                    $event.target.nextElementSibling.focus()
-                                "
-                            />
+                            <label for="word1"></label><input type="text" maxlength="1" id="word1" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word2"></label
+                            ><input type="text" maxlength="1" id="word2" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word3"></label
+                            ><input type="text" maxlength="1" id="word3" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word4"></label
+                            ><input type="text" maxlength="1" id="word4" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word5"></label
+                            ><input type="text" maxlength="1" id="word5" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word6"></label
+                            ><input type="text" maxlength="1" id="word6" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word7"></label
+                            ><input type="text" maxlength="1" id="word7" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word8"></label
+                            ><input type="text" maxlength="1" id="word8" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
                         </div>
                         <button type="button" class="btn-login">
                             인증하기
@@ -160,6 +53,7 @@ export default {
     data: function () {
         return {
             certification: 'success',
+            //on: '#ffffff',
         };
     },
     methods: {
@@ -169,6 +63,9 @@ export default {
             } else {
                 this.certification = 'success';
             }
+        },
+        changeBorderColor: function () {
+            console.log('input에 .on 추가 되면서 border-bottom color 변경 되여야 함');
         },
     },
 };
@@ -309,7 +206,9 @@ section .text strong {
     color: #fff;
     text-align: center;
 }
-
+.email-certification .input-group input.on {
+    border-bottom: 1px solid rgba(255, 255, 255, 1);
+}
 .email-certification .input-group input ~ input {
     margin-left: 10px;
     margin-top: 0;

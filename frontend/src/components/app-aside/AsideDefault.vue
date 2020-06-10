@@ -1,37 +1,28 @@
 <template>
     <aside class="sticky-container" sticky-container>
-        <div
-            class="inner"
-            on-stick="onStick"
-            sticky-offset="{top: 10, bottom: 30}"
-            sticky-side="both"
-            sticky-z-index="20"
-            v-sticky
-        >
+        <div class="inner" on-stick="onStick" sticky-offset="{top: 10, bottom: 30}" sticky-side="both" sticky-z-index="20" v-sticky>
             <div class="aside-wrap">
                 <UserDefault></UserDefault>
                 <ul class="tab-list">
-                    <li>
-                        <a href="#"><span>MY PAGE</span></a>
-                    </li>
-                    <li class="active">
-                        <a href="#"><span>FILE</span></a>
+                    <li v-for="(tab, index) in tabs" v-bind:class="{ active: tab.active }" v-on:click="tabClick(tabs, index)">
+                        <a href="#"
+                            ><span>{{ tab.tabName }}</span></a
+                        >
                     </li>
                 </ul>
-                <AsideFile></AsideFile>
-                <AsideOrder></AsideOrder>
-                <AsidMyPage></AsidMyPage>
+                <AsidMyPage v-if="tabs[0].active === true"></AsidMyPage>
+                <AsideFile v-if="tabs[1].active === true"></AsideFile>
+                <AsideOrder v-if="tabs[2].active === true"></AsideOrder>
                 <div class="history-box">
                     <strong class="title">HISTORY</strong>
                     <ul class="tab-list-history">
-                        <li class="active">
-                            <a href="#"><span>ASSET</span></a>
-                        </li>
-                        <li>
-                            <a href="#"><span>TOOLKIT</span></a>
+                        <li v-for="(historyTab, index) in historyTabs" v-bind:class="{ active: historyTab.active }" v-on:click="tabClick(historyTabs, index)">
+                            <a href="#"
+                                ><span>{{ historyTab.tabName }}</span></a
+                            >
                         </li>
                     </ul>
-                    <AsideHistory></AsideHistory>
+                    <AsideHistory v-if="historyTabs[0].active === true"></AsideHistory>
                 </div>
             </div>
         </div>
@@ -43,9 +34,37 @@ import UserDefault from '../UserInfo/UserDefault.vue';
 import AsideFile from './AsideFile.vue';
 import AsidMyPage from './AsidMyPage.vue';
 import AsideOrder from './AsideOrder';
-import AsideHistory from './AsidMyPage.vue';
+import AsideHistory from './AsideHistory.vue';
 
 export default {
+    data: function () {
+        return {
+            tabs: [
+                {
+                    tabName: 'MY page',
+                    active: true,
+                },
+                {
+                    tabName: 'FILE',
+                    active: false,
+                },
+                {
+                    tabName: 'ORDER',
+                    active: false,
+                },
+            ],
+            historyTabs: [
+                {
+                    tabName: 'ASSET',
+                    active: true,
+                },
+                {
+                    tabName: 'TOOLKIT',
+                    active: false,
+                },
+            ],
+        };
+    },
     name: 'AsideDefault',
     directives: {
         Sticky,
@@ -58,7 +77,15 @@ export default {
         AsideHistory,
     },
     mounted() {},
-    methods: {},
+    methods: {
+        tabClick(item, index) {
+            item.forEach((element) => (element.active = false));
+            if (item[index].active !== true) {
+                item[index].active = true;
+            }
+            console.log(item[index].active);
+        },
+    },
 };
 </script>
 <style scoped>
