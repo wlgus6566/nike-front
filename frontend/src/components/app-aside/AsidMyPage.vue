@@ -27,7 +27,7 @@ export default {
 </script>
 <style scoped>
 .aside-menu {
-    margin-top: 43px;
+    margin-top: 17px;
 }
 .aside-menu .title {
     display: block;
