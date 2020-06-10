@@ -1,11 +1,9 @@
 <template>
     <div id="wrap">
         <section id="container">
-            <div class="contents">
-                <transition name="component-fade" mode="out-in">
-                    <router-view></router-view>
-                </transition>
-            </div>
+            <transition name="component-fade" mode="out-in">
+                <router-view></router-view>
+            </transition>
         </section>
     </div>
 </template>

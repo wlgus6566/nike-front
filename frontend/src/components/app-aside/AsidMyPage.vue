@@ -22,8 +22,8 @@
 </template>
 <script>
 export default {
-    name: 'asideMenu.vue',
-}
+    name: 'AsidMyPage.vue',
+};
 </script>
 <style scoped>
 .aside-menu {
@@ -32,8 +32,10 @@ export default {
 .aside-menu .title {
     display: block;
     font-size: 14px;
-    font-weight: bold;
     line-height: 40px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.5px;
+    font-weight: normal;
 }
 .aside-menu .menu + .title {
     margin-top: 10px;

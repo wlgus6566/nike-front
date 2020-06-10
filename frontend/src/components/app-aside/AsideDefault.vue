@@ -9,33 +9,41 @@
             v-sticky
         >
             <div class="aside-wrap">
-                <user></user>
-                <asideMenu></asideMenu>
-                <file></file>
-                <div class="tab-box">
-                    <ul class="tab-list">
+                <UserDefault></UserDefault>
+                <ul class="tab-list">
+                    <li>
+                        <a href="#"><span>MY PAGE</span></a>
+                    </li>
+                    <li class="active">
+                        <a href="#"><span>FILE</span></a>
+                    </li>
+                </ul>
+                <AsideFile></AsideFile>
+                <AsideOrder></AsideOrder>
+                <AsidMyPage></AsidMyPage>
+                <div class="history-box">
+                    <strong class="title">HISTORY</strong>
+                    <ul class="tab-list-history">
                         <li class="active">
-                            <a href="#"><span>HISTORY</span></a>
+                            <a href="#"><span>ASSET</span></a>
                         </li>
                         <li>
-                            <a href="#"><span>ORDER</span></a>
+                            <a href="#"><span>TOOLKIT</span></a>
                         </li>
                     </ul>
-                    <div class="tab-contents">
-                        <ul>
-                            <li></li>
-                        </ul>
-                    </div>
+                    <AsideHistory></AsideHistory>
                 </div>
             </div>
         </div>
     </aside>
 </template>
 <script>
-import Sticky from 'vue-sticky-directive'
-import user from '../../components/aside/user.vue'
-import asideMenu from '../../components/aside/asideMenu.vue'
-import file from '../../components/aside/file.vue'
+import Sticky from 'vue-sticky-directive';
+import UserDefault from '../UserInfo/UserDefault.vue';
+import AsideFile from './AsideFile.vue';
+import AsidMyPage from './AsidMyPage.vue';
+import AsideOrder from './AsideOrder';
+import AsideHistory from './AsidMyPage.vue';
 
 export default {
     name: 'AsideDefault',
@@ -43,34 +51,90 @@ export default {
         Sticky,
     },
     components: {
-        user,
-        asideMenu,
-        file,
+        AsideOrder,
+        UserDefault,
+        AsideFile,
+        AsidMyPage,
+        AsideHistory,
     },
     mounted() {},
     methods: {},
-}
+};
 </script>
 <style scoped>
-.tab-box {
-    margin-top: 63px;
-}
 .tab-list {
     display: flex;
-    margin-left: -15px;
+    margin: 44px 0 0 -10px;
 }
 .tab-list a {
     display: block;
-    padding: 0 15px;
-    line-height: 40px;
-    font-size: 14px;
+    padding: 0 10px;
+    line-height: 24px;
+    font-size: 20px;
     color: #ccc;
-    font-weight: bold;
+    font-family: 'Bebas Neue', sans-serif;
+}
+.tab-list a span {
+    letter-spacing: 0.5px;
 }
 .tab-list .active a {
     color: #000;
 }
 .tab-list .active span {
-    text-decoration: underline;
+    position: relative;
+}
+.tab-list .active span:before {
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #000;
+}
+.history-box {
+    margin-top: 63px;
+}
+.history-box .title {
+    display: block;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.5px;
+    font-weight: normal;
+}
+.tab-list-history {
+    display: flex;
+    margin: 5px 0 0 -10px;
+}
+.tab-list-history li {
+    position: relative;
+}
+.tab-list-history li + li:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 10px;
+    margin-top: -5px;
+    background: #ddd;
+}
+.tab-list-history a {
+    display: block;
+    padding: 10px 10px;
+    line-height: 17px;
+    font-size: 14px;
+    color: #ccc;
+}
+.tab-list-history a span {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.58px;
+}
+.tab-list-history .active a {
+    color: #555;
 }
 </style>
