@@ -1,8 +1,7 @@
 <template>
     <div class="user">
         <div class="user-info">
-            <span class="label">PARTNER</span>
-            <span class="name">김나이</span>
+            <span class="store-name">홍대 SKNRS</span>
             <div class="side">
                 <button type="button" class="btn-alram active">
                     <span>알람</span>
@@ -56,10 +55,8 @@ export default {
     color: #fff;
     letter-spacing: 0;
 }
-.user-info .name {
-    float: left;
+.user-info .store-name {
     display: inline-flex;
-    margin-left: 6px;
     line-height: 16px;
     font-size: 14px;
     font-weight: bold;

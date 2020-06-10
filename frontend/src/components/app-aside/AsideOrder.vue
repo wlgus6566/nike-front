@@ -191,6 +191,9 @@
                 <button type="button" class="btn-del"><span>삭제</span></button>
             </li>
         </ul>
+        <button type="button" class="btn-order">
+            <span class="txt">ORDER</span>
+        </button>
     </div>
 </template>
 <script>
@@ -274,5 +277,22 @@ export default {
     display: block;
     overflow: hidden;
     text-indent: -9999px;
+}
+.btn-order {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 40px;
+    border-radius: 0;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: #fff;
+    background: #000;
+}
+.btn-order .txt {
+    position: relative;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.58px;
 }
 </style>

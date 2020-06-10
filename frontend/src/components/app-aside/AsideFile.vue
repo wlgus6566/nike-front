@@ -29,6 +29,51 @@
                         <span>삭제</span>
                     </button>
                 </li>
+                <li>
+                    <img
+                        src="../../assets/images/img-asset-none@2x.png"
+                        alt=""
+                    />
+                    <button type="button" class="btn-del">
+                        <span>삭제</span>
+                    </button>
+                </li>
+                <li>
+                    <img
+                        src="../../assets/images/img-asset-none@2x.png"
+                        alt=""
+                    />
+                    <button type="button" class="btn-del">
+                        <span>삭제</span>
+                    </button>
+                </li>
+                <li>
+                    <img
+                        src="../../assets/images/img-asset-none@2x.png"
+                        alt=""
+                    />
+                    <button type="button" class="btn-del">
+                        <span>삭제</span>
+                    </button>
+                </li>
+                <li>
+                    <img
+                        src="../../assets/images/img-asset-none@2x.png"
+                        alt=""
+                    />
+                    <button type="button" class="btn-del">
+                        <span>삭제</span>
+                    </button>
+                </li>
+                <li>
+                    <img
+                        src="../../assets/images/img-asset-none@2x.png"
+                        alt=""
+                    />
+                    <button type="button" class="btn-del">
+                        <span>삭제</span>
+                    </button>
+                </li>
             </ul>
             <button type="button" class="btn-down">
                 <span class="gage" style="width: 50%;"></span>
@@ -73,7 +118,7 @@ export default {
     box-sizing: border-box;
     height: 360px;
     margin-top: 15px;
-    padding: 15px;
+    padding: 15px 0 15px 15px;
     background: #eee;
     overflow: auto;
 }
@@ -126,8 +171,7 @@ export default {
     border-radius: 0;
     justify-content: center;
     align-items: center;
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 14px;
     color: #fff;
     background: #ccc;
 }
@@ -142,8 +186,8 @@ export default {
 }
 .btn-down .txt {
     position: relative;
-}
-.btn-down:disabled {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.58px;
 }
 .btn-down:disabled .gage {
     width: 0;
@@ -197,8 +241,9 @@ export default {
 .aside-menu .title {
     display: block;
     font-size: 14px;
-    font-weight: bold;
     line-height: 40px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.5px;
 }
 .aside-menu .menu + .title {
     margin-top: 10px;
