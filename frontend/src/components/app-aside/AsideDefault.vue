@@ -20,6 +20,7 @@
                 </ul>
                 <AsideFile></AsideFile>
                 <AsideOrder></AsideOrder>
+                <AsidMyPage></AsidMyPage>
                 <div class="history-box">
                     <strong class="title">HISTORY</strong>
                     <ul class="tab-list-history">
@@ -40,8 +41,9 @@
 import Sticky from 'vue-sticky-directive';
 import UserDefault from '../UserInfo/UserDefault.vue';
 import AsideFile from './AsideFile.vue';
+import AsidMyPage from './AsidMyPage.vue';
 import AsideOrder from './AsideOrder';
-import AsideHistory from './AsideHistory';
+import AsideHistory from './AsidMyPage.vue';
 
 export default {
     name: 'AsideDefault',
@@ -52,6 +54,7 @@ export default {
         AsideOrder,
         UserDefault,
         AsideFile,
+        AsidMyPage,
         AsideHistory,
     },
     mounted() {},
