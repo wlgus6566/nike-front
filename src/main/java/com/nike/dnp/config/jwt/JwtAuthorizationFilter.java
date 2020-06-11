@@ -2,9 +2,9 @@ package com.nike.dnp.config.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.nike.dnp.dto.manage.auth.AuthUserDTO;
-import com.nike.dnp.entity.manage.Manager;
-import com.nike.dnp.repository.manage.ManagerRepository;
+import com.nike.dnp.dto.example.auth.AuthUserDTO;
+import com.nike.dnp.entity.example.Manager;
+import com.nike.dnp.repository.example.ManagerRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +21,8 @@ import java.io.IOException;
  * The type Jwt authorization filter.
  */
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
+
+	private final String SECRET = JwtHelper.SECRET;
 
 	/**
 	 *
@@ -60,7 +62,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 		Authentication authentication = null;
 		if(token != null){
 			// 토큰 디코드
-			final String username = JWT.require(Algorithm.HMAC512(JwtHelper.SECRET.getBytes())).build().verify(token.replace(JwtHelper.TOKEN_PREFIX, "")).getSubject();
+			final String username = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build().verify(token.replace(JwtHelper.TOKEN_PREFIX, "")).getSubject();
 			// username(managerId)로 유저정보 조회
 			// 유저정보 시큐리티에 넣음
 			if(username != null){

@@ -1,6 +1,6 @@
-package com.nike.dnp.dto.manage.manager;
+package com.nike.dnp.dto.example.manager;
 
-import com.nike.dnp.entity.manage.QManager;
+import com.nike.dnp.entity.example.QManager;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import lombok.experimental.UtilityClass;

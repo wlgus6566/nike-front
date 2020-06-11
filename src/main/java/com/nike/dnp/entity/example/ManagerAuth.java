@@ -1,4 +1,4 @@
-package com.nike.dnp.entity.manage;
+package com.nike.dnp.entity.example;
 
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;

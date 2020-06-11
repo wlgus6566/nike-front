@@ -1,6 +1,6 @@
-package com.nike.dnp.repository.manage;
+package com.nike.dnp.repository.example;
 
-import com.nike.dnp.entity.manage.Manager;
+import com.nike.dnp.entity.example.Manager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

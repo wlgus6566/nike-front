@@ -1,8 +1,8 @@
-package com.nike.dnp.repository.manage;
+package com.nike.dnp.repository.example;
 
-import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
-import com.nike.dnp.entity.manage.Manager;
-import com.nike.dnp.entity.manage.QManager;
+import com.nike.dnp.dto.example.manager.ManagerSearchDTO;
+import com.nike.dnp.entity.example.Manager;
+import com.nike.dnp.entity.example.QManager;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 

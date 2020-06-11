@@ -1,14 +1,14 @@
-package com.nike.dnp.dto.manage;
+package com.nike.dnp.dto.example.manager;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 /**
- * BasicDTO
+ * ManagerDTO
  *
  * @since 2020.05.22
  * @author [오지훈]
- * @Description 공통 DTO 작성
+ * @Description Request > ManagerDTO 작성
  * @history [오지훈] [2020.05.22] [최초 작성]
  *
  */
@@ -17,24 +17,27 @@ import lombok.*;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class BasicDTO {
+public class ManagerUpdateDTO {
 
     /**
      *
      */
-    @ApiModelProperty(name = "사용여부", hidden = true)
-    private String useYn;
+    private Long authSeq;
 
     /**
      *
      */
-    @ApiModelProperty(name = "최초등록자", hidden = true)
-    private Long registerSeq;
+    private String managerName;
 
     /**
      *
      */
-    @ApiModelProperty(name = "최종수정자", hidden = true)
+    private String password;
+
+    /**
+     *
+     */
+    @ApiModelProperty(hidden = true)
     private Long updaterSeq;
 
 }

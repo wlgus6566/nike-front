@@ -1,6 +1,6 @@
-package com.nike.dnp.repository.manage;
+package com.nike.dnp.repository.example;
 
-import com.nike.dnp.entity.manage.ManagerAuth;
+import com.nike.dnp.entity.example.ManagerAuth;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -5,7 +5,7 @@ import com.nike.dnp.config.auth.SimpleAccessDeniedHandler;
 import com.nike.dnp.config.auth.SimpleAuthenticationFailureHandler;
 import com.nike.dnp.config.auth.SimpleAuthenticationSuccessHandler;
 import com.nike.dnp.config.jwt.JwtAuthorizationFilter;
-import com.nike.dnp.repository.manage.ManagerRepository;
+import com.nike.dnp.repository.example.ManagerRepository;
 import com.nike.dnp.service.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

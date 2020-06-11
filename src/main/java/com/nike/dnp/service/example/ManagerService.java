@@ -1,17 +1,17 @@
-package com.nike.dnp.service.manage;
+package com.nike.dnp.service.example;
 
 import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.nike.dnp.common.viriable.ErrorEnumCode;
 import com.nike.dnp.common.viriable.ErrorEnumCode.LoginError;
-import com.nike.dnp.dto.manage.auth.AuthUserDTO;
-import com.nike.dnp.dto.manage.manager.ManagerHelper;
-import com.nike.dnp.dto.manage.manager.ManagerSearchDTO;
-import com.nike.dnp.dto.manage.manager.ManagerUpdateDTO;
-import com.nike.dnp.entity.manage.Manager;
-import com.nike.dnp.entity.manage.ManagerAuth;
+import com.nike.dnp.dto.example.auth.AuthUserDTO;
+import com.nike.dnp.dto.example.manager.ManagerHelper;
+import com.nike.dnp.dto.example.manager.ManagerSearchDTO;
+import com.nike.dnp.dto.example.manager.ManagerUpdateDTO;
+import com.nike.dnp.entity.example.Manager;
+import com.nike.dnp.entity.example.ManagerAuth;
 import com.nike.dnp.exception.CodeMessageHandleException;
-import com.nike.dnp.repository.manage.ManagerAuthRepository;
-import com.nike.dnp.repository.manage.ManagerRepository;
+import com.nike.dnp.repository.example.ManagerAuthRepository;
+import com.nike.dnp.repository.example.ManagerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

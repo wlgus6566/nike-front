@@ -1,7 +1,7 @@
-package com.nike.dnp.dto.manage.auth;
+package com.nike.dnp.dto.example.auth;
 
 
-import com.nike.dnp.entity.manage.Manager;
+import com.nike.dnp.entity.example.Manager;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

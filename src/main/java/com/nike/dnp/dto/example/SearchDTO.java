@@ -1,4 +1,4 @@
-package com.nike.dnp.dto.manage;
+package com.nike.dnp.dto.example;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;

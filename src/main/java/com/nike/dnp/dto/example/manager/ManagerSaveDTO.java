@@ -1,4 +1,4 @@
-package com.nike.dnp.dto.manage.manager;
+package com.nike.dnp.dto.example.manager;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -17,12 +17,17 @@ import lombok.*;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class ManagerUpdateDTO {
+public class ManagerSaveDTO {
 
     /**
      *
      */
     private Long authSeq;
+
+    /**
+     *
+     */
+    private String managerId;
 
     /**
      *
@@ -38,6 +43,6 @@ public class ManagerUpdateDTO {
      *
      */
     @ApiModelProperty(hidden = true)
-    private Long updaterSeq;
+    private Long registerSeq;
 
 }
