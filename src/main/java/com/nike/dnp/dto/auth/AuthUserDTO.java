@@ -1,4 +1,4 @@
-package com.nike.dnp.dto.example.auth;
+package com.nike.dnp.dto.auth;
 
 
 import com.nike.dnp.entity.example.Manager;

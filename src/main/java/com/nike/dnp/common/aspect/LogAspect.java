@@ -1,6 +1,6 @@
 package com.nike.dnp.common.aspect;
 
-import com.nike.dnp.dto.example.auth.AuthUserDTO;
+import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.UserActionLogSaveDTO;
 import com.nike.dnp.service.log.UserActionLogService;
 import lombok.RequiredArgsConstructor;

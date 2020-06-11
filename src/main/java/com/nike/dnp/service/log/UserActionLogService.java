@@ -1,6 +1,6 @@
 package com.nike.dnp.service.log;
 
-import com.nike.dnp.dto.example.auth.AuthUserDTO;
+import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.UserActionLogSaveDTO;
 import com.nike.dnp.entity.log.UserActionLog;
 import com.nike.dnp.repository.log.UserActionLogRepository;

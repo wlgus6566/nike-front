@@ -1,6 +1,6 @@
 package com.nike.dnp.controller.example;
 
-import com.nike.dnp.dto.example.auth.AuthUserDTO;
+import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.example.manager.ManagerSaveDTO;
 import com.nike.dnp.dto.example.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.example.manager.ManagerUpdateDTO;

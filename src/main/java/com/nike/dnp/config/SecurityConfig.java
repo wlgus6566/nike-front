@@ -7,6 +7,7 @@ import com.nike.dnp.config.auth.SimpleAuthenticationSuccessHandler;
 import com.nike.dnp.config.jwt.JwtAuthorizationFilter;
 import com.nike.dnp.repository.example.ManagerRepository;
 import com.nike.dnp.service.ResponseService;
+import com.nike.dnp.service.log.UserLoginLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -56,6 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final ResponseService responseService;
 
 	/**
+	 *
+	 */
+	private final UserLoginLogService loginLogService;
+
+	/**
 	 * ignore
 	 */
 	private static final String[] PUBLIC = {
@@ -89,8 +95,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-
-				//.antMatchers(PUBLIC).permitAll()
+				.antMatchers(PUBLIC).permitAll()
 //				.antMatchers(HttpMethod.POST,"/login").permitAll()
 //				.antMatchers(HttpMethod.GET,"/api/manage/user").hasRole("ADMIN")
 //				.antMatchers(HttpMethod.GET,"/api/manage/user/**").hasRole("MANAGER")
@@ -139,7 +144,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public AuthenticationSuccessHandler authenticationSuccessHandler() {
-		return new SimpleAuthenticationSuccessHandler(responseService);
+		return new SimpleAuthenticationSuccessHandler(responseService, loginLogService);
 	}
 
 	/**

@@ -1,9 +1,6 @@
 package com.nike.dnp.service.example;
 
-import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.nike.dnp.common.viriable.ErrorEnumCode;
-import com.nike.dnp.common.viriable.ErrorEnumCode.LoginError;
-import com.nike.dnp.dto.example.auth.AuthUserDTO;
 import com.nike.dnp.dto.example.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.example.manager.ManagerUpdateDTO;
 import com.nike.dnp.entity.example.Manager;
@@ -17,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +34,7 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class ManagerService implements UserDetailsService {
+public class ManagerService {
 
     /**
      * @author [오지훈]
@@ -153,17 +148,4 @@ public class ManagerService implements UserDetailsService {
         return manager;
     }
 
-    /**
-     * 시큐리티 Db 유저 조회
-     * @param username
-     * @return
-     */
-    @Override
-    public UserDetails loadUserByUsername(final String username) {
-        final Manager manager = managerRepository.findByManagerId(username);
-        if(manager == null){
-            throw new UserNotFoundException(LoginError.LOGE01.toString());
-        }
-        return new AuthUserDTO(manager);
-    }
 }
