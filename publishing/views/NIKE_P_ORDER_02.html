@@ -30,16 +30,17 @@
 			<div class="contents">
 				<h2 class="page-title">NIKE BY YOU</h2>
 				<style>
-					.search-wrap{display:flex; margin-top:20px;}
-					.search-wrap .search-input{margin-left:auto;}
+					.summary_area{display:flex; margin-top:20px;}
+					.summary_area .search-input{margin-left:auto;}
 					.search-input{position:relative; display:inline-block;}
-					.search-input input{width:190px; height:40px; padding:0 25px 0 0; line-height:39px; border-bottom:1px solid #000;}
+					.search-input input{width:190px; height:40px; padding:0 25px 0 0; line-height:39px; border-bottom:1px solid #000; font-size:12px;}
+					.search-input input::placeholder{color:#888; font-size:12px; font-weight:300;}
 					.search-input button{position:absolute; top:0; right:-5px; width:30px; height:40px; background:url(../../frontend/src/assets/images/svg/icon-filter-search.svg) no-repeat center;}
 					.search-input button span{display:block; overflow:hidden; text-indent:-9999px;}
 				</style>
-				<div class="search-wrap">
+				<div class="summary_area">
 					<div class="search-input">
-						<input type="text">
+						<input type="text" placeholder="검색어를 입력해주세요.">
 						<button type="button"><span>검색</span></button>
 					</div>
 				</div>
@@ -56,7 +57,6 @@
 						display:block;
 						width:100%;
 						box-sizing:border-box;
-						padding-bottom:18px;
 						text-align:left;
 					}
 					.thumbnail{
