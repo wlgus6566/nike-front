@@ -10,7 +10,7 @@
                         </a>
                     </li>
                 </ul>
-                <AsidMyPage v-if="tabs[0].active === true"></AsidMyPage>
+                <AsideMyPage v-if="tabs[0].active === true" v-bind:propsdata="mypageMenus"></AsideMyPage>
                 <AsideFile v-if="tabs[1].active === true"></AsideFile>
                 <AsideOrder v-if="tabs[2].active === true"></AsideOrder>
                 <div class="history-box">
@@ -30,11 +30,11 @@
 </template>
 <script>
 import Sticky from 'vue-sticky-directive';
-import UserDefault from '../UserInfo/UserDefault.vue';
+import UserDefault from './UserDefault.vue';
 import AsideFile from './AsideFile.vue';
-import AsidMyPage from './AsidMyPage.vue';
+import AsideMyPage from './AsideMyPage.vue';
 import AsideOrder from './AsideOrder';
-import AsideHistory from './AsideHistory.vue';
+import AsideHistory from './History.vue';
 
 export default {
     data: function () {
@@ -58,10 +58,10 @@ export default {
                     title: 'HISTORY',
                     depth: [
                         {
-                            menuName: '내가 업로드한 폴더',
+                            title: '내가 업로드한 폴더',
                         },
                         {
-                            menuName: '최근 본 폴더',
+                            title: '최근 본 폴더',
                         },
                     ],
                 },
@@ -69,10 +69,10 @@ export default {
                     title: 'ORDER',
                     depth: [
                         {
-                            menuName: '주문내역확인',
+                            title: '주문내역확인',
                         },
                         {
-                            menuName: '위시리스트',
+                            title: '위시리스트',
                         },
                     ],
                 },
@@ -97,7 +97,7 @@ export default {
         AsideOrder,
         UserDefault,
         AsideFile,
-        AsidMyPage,
+        AsideMyPage,
         AsideHistory,
     },
     mounted() {},
