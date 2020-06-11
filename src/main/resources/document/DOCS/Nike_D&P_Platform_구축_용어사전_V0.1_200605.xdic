@@ -13966,6 +13966,7 @@
   <term name="경로" physicalName="PATH"/>
   <term name="메소드" description="메소드" physicalName="METHOD" physicalDescription="METHOD"/>
   <term name="에이젼시" description="대리점, 대행사, (특정 서비스 제공) 단체" physicalName="AGENCY" physicalDescription="대리점, 대행사, (특정 서비스 제공) 단체" tag="//@tag.362"/>
+  <term name="시그니처" description="서명" physicalName="SIGNATURE" physicalDescription="서명" tag="//@tag.363"/>
   <tag name="기록물관리"/>
   <tag name="교육인적자원 행정지원"/>
   <tag name="재난예방 관리"/>
@@ -14329,4 +14330,5 @@
   <tag name="우주기술개발"/>
   <tag name="해양수산 행정지원"/>
   <tag name="에이젼시"/>
+  <tag name="시그니처"/>
 </tm:TermDictionary>

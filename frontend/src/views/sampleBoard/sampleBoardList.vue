@@ -1,7 +1,6 @@
 <template>
 	<div id="list-complete-demo">
-		<button v-on:click="clickList" type="button">목록조회</button>|
-		<button v-on:click="add" type="button">등록 페이지22</button>
+		<button v-on:click="clickList" type="button">목록조회</button>
 
 		<br>
 		데이터 내용 {{ddd || formattedNumber('', '') }}<br>
@@ -15,39 +14,68 @@
 			</router-link>
 
 		</ul>
+		<div>
+
+			<paginate
+				:page-count="pageInfo.totalCount"
+				:page-range="3"
+				:margin-pages="3"
+				:click-handler="clickCallback"
+				:prev-text="'이전'"
+				:next-text="'다음'"
+				:container-class="'pagination'"
+				:page-class="'page-item'"
+			>
+
+			</paginate>
+
+		</div>
 	</div>
 </template>
 <script>
 	import api from '@/api/asset/assetApi';
+
+	import Paginate from 'vuejs-paginate';
 
 	export default {
 		data() {
 			return {
 				items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
 				nextNum: 10,
-				content: [{managerName:'test', managerSeq:1}],
-				searchParam:{userName:''},
-				ddd: 1591174782
+				content: null,
+				searchParam:{userName:'', page:0},
+				ddd: 1591174782,
+				page:10,
+				pageInfo: {
+					page: 1,
+					perPageNum: 20,
+					totalCount: 0
+				}
 			}
 		},
+		components:{
+			Paginate
+		},
 		methods: {
-			randomIndex: function () {
-				return Math.floor(Math.random() * this.items.length)
+			getList: function() {
+				console.log('=======param start=====');
+				console.log(this.searchParam);
+				api.list(this.searchParam).then(response => {
+					console.log(response.data.data);
+					let info = response.data.data;
+					this.content = info.content;
+					this.pageInfo.totalCount = info.totalPages;
+					console.log('==============='+info.totalPages);
+				});
 			},
-			add: function () {
-				this.items.splice(this.randomIndex(), 0, this.nextNum++)
-			},
-			remove: function () {
-				this.items.splice(this.randomIndex(), 1)
+			clickCallback: function(pageNum){
+				this.searchParam.page = pageNum-1;
+				console.log('pageNum');
+				console.log(pageNum);
+				this.getList();
 			},
 			clickList: function () {
-				// let param = {};
-				console.log('=======param start=====');
-				let vm = this;
-				api.list(vm.searchParam).then(response => {
-					console.log(response.data.data);
-					vm.content = response.data.data.content
-				});
+				this.getList();
 			}
 		}
 	}
