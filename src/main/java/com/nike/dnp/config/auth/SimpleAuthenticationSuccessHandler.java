@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.nike.dnp.config.jwt.JwtHelper;
 import com.nike.dnp.dto.example.auth.AuthUserDTO;
 import com.nike.dnp.service.ResponseService;
+import com.nike.dnp.service.log.UserLoginLogService;
 import com.nike.dnp.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 	 * The Response service.
 	 */
 	private final ResponseService responseService;
+	private final UserLoginLogService loginLogService;
 
 	@Override
 	public void onAuthenticationSuccess(final HttpServletRequest request,
@@ -45,5 +47,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		response.addHeader(JwtHelper.HEADER_STRING, JwtHelper.TOKEN_PREFIX +token);
 		JsonUtil.write(response.getWriter(), responseService.getSuccessResult());
 
+		//TODO 로그인 로그 구현
+		//loginLogService.save();
 	}
 }

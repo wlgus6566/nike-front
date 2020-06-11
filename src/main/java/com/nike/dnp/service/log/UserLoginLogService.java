@@ -1,6 +1,5 @@
 package com.nike.dnp.service.log;
 
-import com.nike.dnp.dto.example.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.UserLoginLogSaveDTO;
 import com.nike.dnp.entity.log.UserLoginLog;
 import com.nike.dnp.repository.log.UserLoginLogRepository;
@@ -37,15 +36,12 @@ public class UserLoginLogService {
      * @author [오지훈]
      */
     @Transactional
-    public UserLoginLog save(
-            final UserLoginLogSaveDTO saveDTO
-            , final AuthUserDTO authUserDTO
-    ) {
+    public UserLoginLog save(final UserLoginLogSaveDTO saveDTO) {
         final UserLoginLog saveLog = new UserLoginLog();
         saveLog.setUserSeq(saveDTO.getUserSeq());
         saveLog.setLoginIp(saveDTO.getLoginIp());
-        saveLog.setRegisterSeq(authUserDTO.getUserSeq()); //TODO DTO field명 수정예정
-        saveLog.setUpdaterSeq(authUserDTO.getUserSeq()); //TODO DTO field명 수정예정
+        saveLog.setRegisterSeq(saveDTO.getUserSeq());
+        saveLog.setUpdaterSeq(saveDTO.getUserSeq());
         return logRepository.save(saveLog);
     }
 

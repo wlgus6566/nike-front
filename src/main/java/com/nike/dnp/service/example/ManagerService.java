@@ -4,7 +4,6 @@ import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.nike.dnp.common.viriable.ErrorEnumCode;
 import com.nike.dnp.common.viriable.ErrorEnumCode.LoginError;
 import com.nike.dnp.dto.example.auth.AuthUserDTO;
-import com.nike.dnp.dto.example.manager.ManagerHelper;
 import com.nike.dnp.dto.example.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.example.manager.ManagerUpdateDTO;
 import com.nike.dnp.entity.example.Manager;
@@ -12,6 +11,7 @@ import com.nike.dnp.entity.example.ManagerAuth;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.example.ManagerAuthRepository;
 import com.nike.dnp.repository.example.ManagerRepository;
+import com.nike.dnp.repository.example.ManagerRepositorySupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -46,6 +46,7 @@ public class ManagerService implements UserDetailsService {
      * ManagerRepository
      */
     private final ManagerRepository managerRepository;
+    private final ManagerRepositorySupport managerRepositorySupport;
 
     /**
      * @author [오지훈]
@@ -69,8 +70,16 @@ public class ManagerService implements UserDetailsService {
      * @return the list
      */
     public Page<Manager> findAllPaging(final ManagerSearchDTO managerSearchDTO) {
+        /*
+        // Predicate 기능 이용
         return managerRepository.findAll(
                 ManagerHelper.search(managerSearchDTO),
+                PageRequest.of(managerSearchDTO.getPage()
+                        , managerSearchDTO.getSize()
+                        , Sort.by("managerSeq").descending()));*/
+        // QueryDsl 기능 이용
+        return managerRepositorySupport.findAlls(
+                managerSearchDTO,
                 PageRequest.of(managerSearchDTO.getPage()
                         , managerSearchDTO.getSize()
                         , Sort.by("managerSeq").descending()));
@@ -139,7 +148,6 @@ public class ManagerService implements UserDetailsService {
                     managerUpdateDTO.getManagerName()
                     , managerUpdateDTO.getPassword()
                     , managerAuth.get()
-                    , managerUpdateDTO.getUpdaterSeq()
             );
         }
         return manager;
