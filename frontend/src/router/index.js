@@ -12,6 +12,11 @@ const router = new VueRouter({
             meta: { layout: 'Clean' },
         },
         {
+            path: '/guide',
+            component: () => import('@/views/publishing/guide'),
+            meta: { layout: 'Clean' },
+        },
+        {
             path: '/',
             component: () => import('@/views/main.vue'),
             meta: { layout: 'Default', aside: 'Default' },
@@ -29,12 +34,12 @@ const router = new VueRouter({
         {
             path: '/sampleBoard/list',
             component: () => import('@/views/sampleBoard/sampleBoardList'),
-            meta: { layout: 'default' },
+            meta: { layout: 'Default' },
         },
         {
             path: '/sampleBoard/:key',
             component: () => import('@/views/sampleBoard/sampleBoardDetail'),
-            meta: { layout: 'default' },
+            meta: { layout: 'Default' },
         },
         {
             path: '*',

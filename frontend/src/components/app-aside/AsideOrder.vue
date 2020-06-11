@@ -1,298 +1,168 @@
 <template>
-    <div class="aside-order">
-        <ul class="order-list">
-            <li class="order-item">
-                <div class="thumbnail">
-                    <img
-                        src="../../assets/images/img-asset-none@2x.png"
-                        alt=""
-                    />
+    <aside class="sticky-container" sticky-container>
+        <div class="inner" on-stick="onStick" sticky-offset="{top: 10, bottom: 30}" sticky-side="both" sticky-z-index="20" v-sticky>
+            <div class="aside-wrap">
+                123
+                <UserDefault></UserDefault>
+                <ul class="tab-list">
+                    <li v-bind:class="{ active: tab.active }" v-bind:key="index" v-for="(tab, index) in tabs" v-on:click="tabClick(tabs, index)">
+                        <a href="#">
+                            <span>{{ tab.tabName }}</span>
+                        </a>
+                    </li>
+                </ul>
+                <AsidMyPage v-if="tabs[0].active === true"></AsidMyPage>
+                <AsideFile v-if="tabs[1].active === true"></AsideFile>
+                <AsideOrder v-if="tabs[2].active === true"></AsideOrder>
+                <div class="history-box">
+                    <strong class="title">HISTORY</strong>
+                    <ul class="tab-list-history">
+                        <li v-bind:class="{ active: historyTab.active }" v-bind:key="index" v-for="(historyTab, index) in historyTabs" v-on:click="tabClick(historyTabs, index)">
+                            <a href="#">
+                                <span>{{ historyTab.tabName }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <AsideHistory v-if="historyTabs[0].active === true"></AsideHistory>
                 </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="btn-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="btn-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
-            </li>
-            <li class="order-item">
-                <div class="thumbnail">
-                    <img
-                        src="../../assets/images/img-asset-none@2x.png"
-                        alt=""
-                    />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="btn-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="btn-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
-            </li>
-            <li class="order-item">
-                <div class="thumbnail">
-                    <img
-                        src="../../assets/images/img-asset-none@2x.png"
-                        alt=""
-                    />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="btn-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="btn-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
-            </li>
-            <li class="order-item">
-                <div class="thumbnail">
-                    <img
-                        src="../../assets/images/img-asset-none@2x.png"
-                        alt=""
-                    />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="btn-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="btn-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
-            </li>
-            <li class="order-item">
-                <div class="thumbnail">
-                    <img
-                        src="../../assets/images/img-asset-none@2x.png"
-                        alt=""
-                    />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="btn-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="btn-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
-            </li>
-            <li class="order-item">
-                <div class="thumbnail">
-                    <img
-                        src="../../assets/images/img-asset-none@2x.png"
-                        alt=""
-                    />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="btn-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="btn-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
-            </li>
-            <li class="order-item">
-                <div class="thumbnail">
-                    <img
-                        src="../../assets/images/img-asset-none@2x.png"
-                        alt=""
-                    />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="btn-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="btn-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
-            </li>
-            <li class="order-item">
-                <div class="thumbnail">
-                    <img
-                        src="../../assets/images/img-asset-none@2x.png"
-                        alt=""
-                    />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="btn-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="btn-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
-            </li>
-            <li class="order-item">
-                <div class="thumbnail">
-                    <img
-                        src="../../assets/images/img-asset-none@2x.png"
-                        alt=""
-                    />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="btn-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="btn-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
-            </li>
-        </ul>
-        <button type="button" class="btn-order">
-            <span class="txt">ORDER</span>
-        </button>
-    </div>
+            </div>
+        </div>
+    </aside>
 </template>
 <script>
+import Sticky from 'vue-sticky-directive';
+import UserDefault from '../UserInfo/UserDefault.vue';
+import AsideFile from './AsideFile.vue';
+import AsidMyPage from './AsidMyPage.vue';
+import AsideOrder from './AsideOrder';
+import AsideHistory from './AsideHistory.vue';
+
 export default {
-    name: 'AsideOrder',
+    data: function () {
+        return {
+            tabs: [
+                {
+                    tabName: 'MY page',
+                    active: true,
+                },
+                {
+                    tabName: 'FILE',
+                    active: false,
+                },
+                {
+                    tabName: 'ORDER',
+                    active: false,
+                },
+            ],
+            historyTabs: [
+                {
+                    tabName: 'ASSET',
+                    active: true,
+                },
+                {
+                    tabName: 'TOOLKIT',
+                    active: false,
+                },
+            ],
+        };
+    },
+    name: 'AsideDefault',
+    directives: {
+        Sticky,
+    },
+    components: {
+        AsideOrder,
+        UserDefault,
+        AsideFile,
+        AsidMyPage,
+        AsideHistory,
+    },
+    mounted() {},
+    methods: {
+        tabClick(item, index) {
+            item.forEach((element) => (element.active = false));
+            if (item[index].active !== true) {
+                item[index].active = true;
+            }
+            console.log(item[index].active);
+        },
+    },
 };
 </script>
 <style scoped>
-.aside-order {
-    margin-top: 15px;
-}
-.order-list {
-    box-sizing: border-box;
-    height: 360px;
-    padding: 8px 18px;
-    background: #eee;
-    overflow: auto;
-}
-.order-item {
-    position: relative;
-    box-sizing: border-box;
+.tab-list {
     display: flex;
-    padding: 10px 0;
-    align-items: center;
+    margin: 44px 0 0 -10px;
 }
-.order-item + .order-item {
-    border-top: 1px solid #e5e5e5;
-}
-.order-item .thumbnail {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-}
-.order-item .thumbnail img {
-    vertical-align: top;
-}
-.order-item .btn-del {
-    position: absolute;
-    top: 4px;
-    right: -4px;
+.tab-list a {
     display: block;
-    width: 30px;
-    height: 30px;
-    background: url(../../assets/images/svg/icon-close-small.svg) no-repeat
-        center;
+    padding: 0 10px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    line-height: 24px;
+    color: #ccc;
 }
-.order-item .btn-del span {
-    display: block;
-    overflow: hidden;
-    text-indent: -99999px;
+.tab-list a span {
+    letter-spacing: 0.5px;
 }
-.info-box .title {
-    display: block;
-    line-height: 18px;
-    font-size: 12px;
-    letter-spacing: -0.05px;
+.tab-list .active a {
     color: #000;
 }
-.quantity {
-    display: flex;
-}
-.quantity .num {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    font-size: 12px;
-    font-weight: bold;
-}
-.quantity [class*='btn-'] {
-    display: block;
-    width: 20px;
-    height: 20px;
-    background: url('../../assets/images/svg/icon-spinner-minus.svg') no-repeat
-        center;
-}
-.quantity .btn-up {
-    background-image: url('../../assets/images/svg/icon-spinner-plus.svg');
-}
-.quantity [class^='btn-'] span {
-    display: block;
-    overflow: hidden;
-    text-indent: -9999px;
-}
-.btn-order {
+.tab-list .active span {
     position: relative;
-    display: flex;
+}
+.tab-list .active span:before {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    display: block;
     width: 100%;
-    height: 40px;
-    border-radius: 0;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    color: #fff;
+    height: 2px;
     background: #000;
 }
-.btn-order .txt {
+.history-box {
+    margin-top: 63px;
+}
+.history-box .title {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: #000;
+}
+.tab-list-history {
+    display: flex;
+    margin: 5px 0 0 -10px;
+}
+.tab-list-history li {
     position: relative;
+}
+.tab-list-history li + li:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 10px;
+    margin-top: -5px;
+    background: #ddd;
+}
+.tab-list-history a {
+    display: block;
+    padding: 10px 10px;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ccc;
+}
+.tab-list-history a span {
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 0.58px;
+}
+.tab-list-history .active a {
+    color: #555;
 }
 </style>
