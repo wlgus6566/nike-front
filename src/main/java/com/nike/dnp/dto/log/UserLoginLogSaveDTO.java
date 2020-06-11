@@ -32,18 +32,13 @@ public class UserLoginLogSaveDTO {
     private String loginIp;
 
     /**
-     * 최초 작성자
-     * @author [오지훈]
+     * Method to String
+     * @return String
      */
-    @ApiModelProperty(name = "registerSeq", value = "최초 작성자 시퀀스", hidden = true)
-    private Long registerSeq;
-
-    /**
-     * 최종 수정자
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "updaterSeq", value = "최종 수정자 시퀀스", hidden = true)
-    private Long updaterSeq;
-
+    public String toString() {
+        return "ErrorLogSaveDTO{"
+                + "userSeq=" + userSeq
+                + ", loginIp=" + loginIp + '}';
+    }
 
 }

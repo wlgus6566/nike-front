@@ -23,7 +23,6 @@ public class SimpleAccessDeniedHandler implements AccessDeniedHandler {
 	 */
 	private final ResponseService responseService;
 
-
 	@Override
 	public void handle(final HttpServletRequest request,
 					   final HttpServletResponse response,

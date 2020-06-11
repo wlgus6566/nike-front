@@ -36,7 +36,7 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	/**
 	 * @author [윤태호]
 	 */
-	private long managerSeq;
+	private long userSeq;
 
 	/**
 	 * @author [윤태호]
@@ -59,7 +59,7 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 * @param manager the manager
 	 */
 	public AuthUserDTO(final Manager manager) {
-		this.managerSeq = manager.getManagerSeq();
+		this.userSeq = manager.getManagerSeq();
 		this.managerName = manager.getManagerId();
 		this.password = manager.getPassword();
 	}
@@ -74,7 +74,7 @@ public class AuthUserDTO implements UserDetails, Serializable {
 		return managerName;
 	}
 
-	public long getManagerSeq() {return managerSeq;}
+	public long getUserSeq() {return userSeq;}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -123,6 +123,6 @@ public class AuthUserDTO implements UserDetails, Serializable {
 
 	@Override
 	public String toString() {
-		return "AuthUserDTO{" + "managerSeq=" + managerSeq + ", managerName='" + managerName + '\'' + ", managerId='" + managerId + '\'' + ", password='" + password + '\'' + '}';
+		return "AuthUserDTO{" + "managerSeq=" + userSeq + ", managerName='" + managerName + '\'' + ", managerId='" + managerId + '\'' + ", password='" + password + '\'' + '}';
 	}
 }

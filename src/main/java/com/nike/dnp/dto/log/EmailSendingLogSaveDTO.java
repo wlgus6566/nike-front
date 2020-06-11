@@ -39,10 +39,14 @@ public class EmailSendingLogSaveDTO {
     private String contents;
 
     /**
-     * 최초 작성자
-     * @author [오지훈]
+     * Method to String
+     * @return String
      */
-    @ApiModelProperty(name = "registerSeq", value = "최초 작성자 시퀀스", hidden = true)
-    private Long registerSeq;
+    public String toString() {
+        return "EmailSendingLogSaveDTO{"
+                + "userSeq=" + userSeq
+                + ", size=" + title
+                + ", page=" + contents + '}';
+    }
 
 }

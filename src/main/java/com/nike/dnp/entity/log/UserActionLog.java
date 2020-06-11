@@ -49,27 +49,27 @@ public class UserActionLog extends BaseTimeEntity {
     private String url;
 
     /**
+     * 메소드 타입
+     * @author [오지훈]
+     */
+    @Column(name = "METHOD_TYPE_NAME")
+    @ApiModelProperty(name = "methodTypeName", value = "메소드 타입", required = true)
+    private String methodTypeName;
+
+    /**
+     * 호출 메소드 명
+     * @author [오지훈]
+     */
+    @Column(name = "METHOD_SIGNATURE")
+    @ApiModelProperty(name = "methodSignature", value = "호출 메소드 명", required = true)
+    private String methodSignature;
+
+    /**
      * Parameter
      * @author [오지훈]
      */
     @Column(name = "PARAMETER")
     @ApiModelProperty(name = "parameter", value = "Parameter", required = true)
     private String parameter;
-
-    /**
-     * 최초 작성자
-     * @author [오지훈]
-     */
-    @Column(name = "REGISTER_SEQ")
-    @ApiModelProperty(name = "registerSeq", value = "최초 작성자 시퀀스", hidden = true, required = true)
-    private Long registerSeq;
-
-    /**
-     * 최종 수정자
-     * @author [오지훈]
-     */
-    @Column(name = "UPDATER_SEQ")
-    @ApiModelProperty(name = "updaterSeq", value = "최종 수정자 시퀀스", hidden = true, required = true)
-    private Long updaterSeq;
 
 }

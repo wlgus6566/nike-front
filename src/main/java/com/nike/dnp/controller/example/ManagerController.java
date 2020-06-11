@@ -174,7 +174,7 @@ public class ManagerController {
                         , managerSaveDTO.getManagerName()
                         , managerSaveDTO.getPassword()
                         , managerSaveDTO.getAuthSeq()
-                        , managerSaveDTO.getRegisterSeq()
+                        , 0
         ));
     }
 
