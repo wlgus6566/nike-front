@@ -8,6 +8,7 @@
 	<link href="../../frontend/src/assets/css/reset.css" rel="stylesheet">
 	<link href="../../frontend/src/assets/css/fonts.css" rel="stylesheet">
 	<link href="../../frontend/src/assets/css/layout.css" rel="stylesheet">
+	<link href="../../frontend/src/assets/css/ul.nikeFront.css" rel="stylesheet">
 </head>
 <body>
 <div id="app">
@@ -27,9 +28,25 @@
 		</header>
 		<section id="container">
 			<div class="contents">
+				<h2 class="page-title">NIKE BY YOU</h2>
+				<style>
+					.search-wrap{display:flex; margin-top:20px;}
+					.search-wrap .search-input{margin-left:auto;}
+					.search-input{position:relative; display:inline-block;}
+					.search-input input{width:190px; height:40px; padding:0 25px 0 0; line-height:39px; border-bottom:1px solid #000;}
+					.search-input button{position:absolute; top:0; right:-5px; width:30px; height:40px; background:url(../../frontend/src/assets/images/svg/icon-filter-search.svg) no-repeat center;}
+					.search-input button span{display:block; overflow:hidden; text-indent:-9999px;}
+				</style>
+				<div class="search-wrap">
+					<div class="search-input">
+						<input type="text">
+						<button type="button"><span>검색</span></button>
+					</div>
+				</div>
 				<style>
 					.order-item{
 						position:relative;
+						margin-top:20px;
 					}
 					.order-item > div{position:relative;}
 					.order-item a,
@@ -67,6 +84,7 @@
 						-webkit-line-clamp: 2;
 						-webkit-box-orient: vertical;
 						overflow:hidden;
+						word-break:keep-all;
 					}
 					.info-box .txt{
 						margin-top:8px;
@@ -89,35 +107,10 @@
 					.order-item-list li:nth-child(4n+1){margin-left:0;}
 					.order-item-list li:nth-child(n+5){margin-top:30px}
 				</style>
-
-				<div class="order-item" style="width:300px;">
-					<div>
-						<a href="#">
-							<div class="thumbnail">
-								<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
-							</div>
-							<div class="info-box">
-								<strong class="title">타이틀입니다</strong>
-								<p class="txt">설명입니다</p>
-								<p class="desc">최소수문수량 <em>100</em>개</p>
-							</div>
-						</a>
-						<div class="btn-box">
-							<button type="button" class="btn-more"><span>크게보기</span></button>
-						</div>
-						<div class="check-wrap">
-							<span class="checkbox">
-								<input type="checkbox">
-								<span></span>
-							</span>
-						</div>
-					</div>
-				</div>
-
 				<ul class="order-item-list">
 					<li class="order-item">
 						<div>
-							<a href="#">
+							<button type="button">
 								<div class="thumbnail">
 									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
 								</div>
@@ -126,7 +119,7 @@
 									<p class="txt">설명입니다</p>
 									<p class="desc">최소수문수량 <em>100</em>개</p>
 								</div>
-							</a>
+							</button>
 							<div class="btn-box">
 								<button type="button" class="btn-more"><span>크게보기</span></button>
 							</div>
@@ -140,17 +133,16 @@
 					</li>
 					<li class="order-item">
 						<div>
-							<a href="#">
+							<button type="button">
 								<div class="thumbnail">
 									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
 								</div>
 								<div class="info-box">
-									<strong class="title">타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다
-									</strong>
+									<strong class="title">두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다</strong>
 									<p class="txt">설명입니다</p>
 									<p class="desc">최소수문수량 <em>100</em>개</p>
 								</div>
-							</a>
+							</button>
 							<div class="btn-box">
 								<button type="button" class="btn-more"><span>크게보기</span></button>
 							</div>
@@ -164,16 +156,16 @@
 					</li>
 					<li class="order-item">
 						<div>
-							<a href="#">
+							<button type="button">
 								<div class="thumbnail">
 									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
 								</div>
 								<div class="info-box">
-									<strong class="title">타이틀입니다</strong>
+									<strong class="title">두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다</strong>
 									<p class="txt">설명입니다</p>
 									<p class="desc">최소수문수량 <em>100</em>개</p>
 								</div>
-							</a>
+							</button>
 							<div class="btn-box">
 								<button type="button" class="btn-more"><span>크게보기</span></button>
 							</div>
@@ -187,16 +179,16 @@
 					</li>
 					<li class="order-item">
 						<div>
-							<a href="#">
+							<button type="button">
 								<div class="thumbnail">
 									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
 								</div>
 								<div class="info-box">
-									<strong class="title">타이틀입니다</strong>
+									<strong class="title">두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다</strong>
 									<p class="txt">설명입니다</p>
 									<p class="desc">최소수문수량 <em>100</em>개</p>
 								</div>
-							</a>
+							</button>
 							<div class="btn-box">
 								<button type="button" class="btn-more"><span>크게보기</span></button>
 							</div>
@@ -210,16 +202,16 @@
 					</li>
 					<li class="order-item">
 						<div>
-							<a href="#">
+							<button type="button">
 								<div class="thumbnail">
 									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
 								</div>
 								<div class="info-box">
-									<strong class="title">타이틀입니다</strong>
+									<strong class="title">두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다</strong>
 									<p class="txt">설명입니다</p>
 									<p class="desc">최소수문수량 <em>100</em>개</p>
 								</div>
-							</a>
+							</button>
 							<div class="btn-box">
 								<button type="button" class="btn-more"><span>크게보기</span></button>
 							</div>
@@ -233,16 +225,16 @@
 					</li>
 					<li class="order-item">
 						<div>
-							<a href="#">
+							<button type="button">
 								<div class="thumbnail">
 									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
 								</div>
 								<div class="info-box">
-									<strong class="title">타이틀입니다</strong>
+									<strong class="title">두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다</strong>
 									<p class="txt">설명입니다</p>
 									<p class="desc">최소수문수량 <em>100</em>개</p>
 								</div>
-							</a>
+							</button>
 							<div class="btn-box">
 								<button type="button" class="btn-more"><span>크게보기</span></button>
 							</div>
@@ -254,81 +246,11 @@
 							</div>
 						</div>
 					</li>
-					<li class="order-item">
-						<div>
-							<a href="#">
-								<div class="thumbnail">
-									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
-								</div>
-								<div class="info-box">
-									<strong class="title">타이틀입니다</strong>
-									<p class="txt">설명입니다</p>
-									<p class="desc">최소수문수량 <em>100</em>개</p>
-								</div>
-							</a>
-							<div class="btn-box">
-								<button type="button" class="btn-more"><span>크게보기</span></button>
-							</div>
-							<div class="check-wrap">
-								<span class="checkbox">
-									<input type="checkbox">
-									<span></span>
-								</span>
-							</div>
-						</div>
-					</li>
-					<li class="order-item">
-						<div>
-							<a href="#">
-								<div class="thumbnail">
-									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
-								</div>
-								<div class="info-box">
-									<strong class="title">타이틀입니다</strong>
-									<p class="txt">설명입니다</p>
-									<p class="desc">최소수문수량 <em>100</em>개</p>
-								</div>
-							</a>
-							<div class="btn-box">
-								<button type="button" class="btn-more"><span>크게보기</span></button>
-							</div>
-							<div class="check-wrap">
-								<span class="checkbox">
-									<input type="checkbox">
-									<span></span>
-								</span>
-							</div>
-						</div>
-					</li>
-					<li class="order-item">
-						<div>
-							<a href="#">
-								<div class="thumbnail">
-									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
-								</div>
-								<div class="info-box">
-									<strong class="title">타이틀입니다</strong>
-									<p class="txt">설명입니다</p>
-									<p class="desc">최소수문수량 <em>100</em>개</p>
-								</div>
-							</a>
-							<div class="btn-box">
-								<button type="button" class="btn-more"><span>크게보기</span></button>
-							</div>
-							<div class="check-wrap">
-								<span class="checkbox">
-									<input type="checkbox">
-									<span></span>
-								</span>
-							</div>
-						</div>
-					</li>
-
 				</ul>
 			</div>
 			<aside>
 				<div class="aside-wrap">
-
+					aside
 				</div>
 			</aside>
 		</section>
