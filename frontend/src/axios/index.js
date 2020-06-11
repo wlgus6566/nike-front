@@ -6,10 +6,10 @@ import axios from 'axios';
     https://github.com/axios/axios 의 Request Config 챕터 확인
 */
 const instance = axios.create({
-    baseURL: process.env.VUE_APP_API_URL,
-    timeout: 1000,
-    // 해커 뉴스 API는 커스텀 헤더 넣으면 CORS 걸려서 주석처리했습니다.
-    headers: { MEMBER_SEQ: 999999 },
+	// baseURL: '/api',
+	timeout: 1000,
+	// 해커 뉴스 API는 커스텀 헤더 넣으면 CORS 걸려서 주석처리했습니다.
+	// headers: {'MEMBER_SEQ': 999999}
 });
 
 /*
@@ -20,20 +20,20 @@ const instance = axios.create({
     2) 요청 에러 - 인자값: error
 */
 instance.interceptors.request.use(
-    function (config) {
-        // 요청 바로 직전
-        // axios 설정값에 대해 작성합니다.
-        let token = window.sessionStorage.getItem('token');
-        // 세션 스토리지에 토큰정보가 있을 때 토큰정보를 헤더에 담음
-        if (token !== null && token !== 'undefined') {
-            config.headers.Authorization = token;
-        }
-        return config;
-    },
-    function (error) {
-        // 요청 에러 처리를 작성합니다.
-        return Promise.reject(error);
-    }
+	function (config) {
+		// 요청 바로 직전
+		// axios 설정값에 대해 작성합니다.
+		let token = window.sessionStorage.getItem('token')
+		// 세션 스토리지에 토큰정보가 있을 때 토큰정보를 헤더에 담음
+		if (token !== null && token !== 'undefined') {
+			config.headers.Authorization = token
+		}
+		return config;
+	},
+	function (error) {
+		// 요청 에러 처리를 작성합니다.
+		return Promise.reject(error);
+	}
 );
 
 /*
@@ -44,24 +44,31 @@ instance.interceptors.request.use(
     2) 응답 에러 - 인자값: http error
 */
 instance.interceptors.response.use(
-    function (response) {
-        /*
-			http status가 200인 경우
-			응답 바로 직전에 대해 작성합니다.
-			.then() 으로 이어집니다.
-		*/
-        //cors 처리
-        //window.sessionStorage.setItem('token', data.token)
-        return response;
-    },
-    function (error) {
-        /*
-			http status가 200이 아닌 경우
-			응답 에러 처리를 작성합니다.
-			.catch() 으로 이어집니다.
-		*/
-        return Promise.reject(error);
-    }
+	function (response) {
+		/*
+            http status가 200인 경우
+            응답 바로 직전에 대해 작성합니다.
+            .then() 으로 이어집니다.
+        */
+		//cors 처리
+		//window.sessionStorage.setItem('token', data.token)
+		return response;
+	},
+	function (error) {
+		/*
+            http status가 200이 아닌 경우
+            응답 에러 처리를 작성합니다.
+            .catch() 으로 이어집니다.
+        */
+		console.log(...error);
+		let res = {...error}.response;
+		if(res.status === 500){
+			if(res.data.msg){
+				alert(res.data.msg);
+			}
+		}
+		return Promise.reject(error);
+	}
 );
 
 // 생성한 인스턴스를 익스포트 합니다.
