@@ -1,6 +1,8 @@
 <template>
     <div id="app">
-        <component :is="Applayout" />
+        <transition name="layout-change" mode="out-in">
+            <component :is="Applayout" />
+        </transition>
     </div>
 </template>
 <script>

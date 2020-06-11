@@ -1,6 +1,7 @@
 package com.nike.dnp.config;
 
-import com.nike.dnp.common.viriable.Redis;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +27,38 @@ import java.time.Duration;
  * @history [오지훈] [2020.05.21] [최초 작성]
  */
 @Configuration
+@RequiredArgsConstructor
 public class RedisConfig extends CachingConfigurerSupport {
+
+	/**
+	 * The constant redisHost.
+	 */
+	public static String redisHost;
+
+	/**
+	 * The constant redisPort.
+	 */
+	public static int redisPort;
+
+	/**
+	 * Sets redis host.
+	 *
+	 * @param redisHost the redis host
+	 */
+	@Value("${spring.redis.host:}")
+	public void setRedisHost(final String redisHost) {
+		this.redisHost = redisHost;
+	}
+
+	/**
+	 * Sets redis port.
+	 *
+	 * @param redisPort the redis port
+	 */
+	@Value("${spring.redis.port:}")
+	public void setRedisPort(final int redisPort) {
+		this.redisPort = redisPort;
+	}
 
 	/**
 	 * JedisPoolConfig 빈
@@ -51,8 +83,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
 		final JedisConnectionFactory connectionFactory = new JedisConnectionFactory(jedisPoolConfig());
-		connectionFactory.setHostName(Redis.redisHost);
-		connectionFactory.setPort(Redis.redisPort);
+		connectionFactory.setHostName(redisHost);
+		connectionFactory.setPort(redisPort);
 		connectionFactory.setUsePool(true);
 		return connectionFactory;
 	}

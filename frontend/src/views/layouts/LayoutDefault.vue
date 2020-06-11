@@ -42,21 +42,20 @@ export default {
     transition: all 0.3s ease-in-out;
 }
 .aside-ani-leave-active {
-    transition: all 0.3s ease-in-out 0.3ms;
+    transition: all 0.3s ease-in-out;
 }
 .aside-ani-enter,
 .aside-ani-leave-to {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateX(100%);
 }
 
-.component-fade-enter-active,
-.component-fade-leave-active {
-    transition: opacity 0.3s ease;
+.layout-change-enter-active,
+.layout-change-leave-active {
+    transition: opacity 1s ease;
 }
-.component-fade-enter,
-.component-fade-leave-to
-	/* .component-fade-leave-active below version 2.1.8 */ {
+.layout-change-enter,
+.layout-change-leave-to {
     opacity: 0;
 }
 </style>
