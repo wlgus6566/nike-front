@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<link href="../../frontend/src/assets/css/reset.css" rel="stylesheet">
+	<link href="../../frontend/src/assets/css/fonts.css" rel="stylesheet">
+	<link href="../../frontend/src/assets/css/layout.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+	<div id="wrap">
+		<header>
+			<div class="inner">
+				<h1><a href="#"><img alt="" src="../../frontend/src/assets/images/logo-nike.svg"></a></h1>
+				<nav>
+					<ul>
+						<li>
+							<a href="#">TEST</a>
+						</li>
+					</ul>
+					<div class="bg"></div>
+				</nav>
+			</div>
+		</header>
+		<section id="container">
+			<div class="contents">
+				<style>
+					.order-item{
+						position:relative;
+					}
+					.order-item > div{position:relative;}
+					.order-item a,
+					.order-item button{
+						z-index:2;
+						position:relative;
+						display:block;
+						width:100%;
+						box-sizing:border-box;
+						padding-bottom:18px;
+						text-align:left;
+					}
+					.thumbnail{
+						position:relative;
+						padding-top:100%;
+						overflow:hidden;
+					}
+					.thumbnail img{
+						position:absolute;
+						top:50%;
+						left:50%;
+						width:100%;
+						transform:translate(-50%, -50%);
+					}
+					.info-box{overflow:hidden;}
+					.info-box .title{
+						display:block;
+						display: -webkit-box;
+						margin-top:12px;
+						max-height:48px;
+						line-height:24px;
+						font-size:16px;
+						color:#000;
+						text-overflow: ellipsis;
+						-webkit-line-clamp: 2;
+						-webkit-box-orient: vertical;
+						overflow:hidden;
+					}
+					.info-box .txt{
+						margin-top:8px;
+						line-height:18px;
+						font-size:12px;
+						color:#555;
+					}
+					.desc{margin-top:7px; display:inline-flex; align-items:center; font-size:10px;  color:#888;}
+					.btn-box{position:absolute; bottom:0; right:0;}
+					.btn-more{margin-left:auto;}
+					.btn-more span{position:relative; font-size:10px; line-height:15px; color:#555; text-decoration:underline}
+					.check-wrap{position:absolute; top:0; left:0; width:100%; padding-top:100%;}
+					.checkbox{z-index:3; position:absolute;  top:10px; left:10px;display:inline-block; width:20px; height:20px;}
+					.checkbox input{position:absolute; top:0; left:0; width:100%; height:100%; opacity:0;}
+					.checkbox span{display:block; width:100%; height:100%; background:url('../../frontend/src/assets/images/svg/icon-checkbox-off.svg') no-repeat center;}
+					.checkbox input:checked + span{background-image:url('../../frontend/src/assets/images/svg/icon-checkbox-on.svg')}
+
+					.order-item-list{display:flex; flex-wrap:wrap;}
+					.order-item-list li{width:calc((100% - (20px * 3)) / 4); margin-left:20px;}
+					.order-item-list li:nth-child(4n+1){margin-left:0;}
+					.order-item-list li:nth-child(n+5){margin-top:30px}
+				</style>
+
+				<div class="order-item" style="width:300px;">
+					<div>
+						<a href="#">
+							<div class="thumbnail">
+								<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
+							</div>
+							<div class="info-box">
+								<strong class="title">타이틀입니다</strong>
+								<p class="txt">설명입니다</p>
+								<p class="desc">최소수문수량 <em>100</em>개</p>
+							</div>
+						</a>
+						<div class="btn-box">
+							<button type="button" class="btn-more"><span>크게보기</span></button>
+						</div>
+						<div class="check-wrap">
+							<span class="checkbox">
+								<input type="checkbox">
+								<span></span>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<ul class="order-item-list">
+					<li class="order-item">
+						<div>
+							<a href="#">
+								<div class="thumbnail">
+									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
+								</div>
+								<div class="info-box">
+									<strong class="title">타이틀입니다</strong>
+									<p class="txt">설명입니다</p>
+									<p class="desc">최소수문수량 <em>100</em>개</p>
+								</div>
+							</a>
+							<div class="btn-box">
+								<button type="button" class="btn-more"><span>크게보기</span></button>
+							</div>
+							<div class="check-wrap">
+								<span class="checkbox">
+									<input type="checkbox">
+									<span></span>
+								</span>
+							</div>
+						</div>
+					</li>
+					<li class="order-item">
+						<div>
+							<a href="#">
+								<div class="thumbnail">
+									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
+								</div>
+								<div class="info-box">
+									<strong class="title">타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다
+									</strong>
+									<p class="txt">설명입니다</p>
+									<p class="desc">최소수문수량 <em>100</em>개</p>
+								</div>
+							</a>
+							<div class="btn-box">
+								<button type="button" class="btn-more"><span>크게보기</span></button>
+							</div>
+							<div class="check-wrap">
+								<span class="checkbox">
+									<input type="checkbox">
+									<span></span>
+								</span>
+							</div>
+						</div>
+					</li>
+					<li class="order-item">
+						<div>
+							<a href="#">
+								<div class="thumbnail">
+									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
+								</div>
+								<div class="info-box">
+									<strong class="title">타이틀입니다</strong>
+									<p class="txt">설명입니다</p>
+									<p class="desc">최소수문수량 <em>100</em>개</p>
+								</div>
+							</a>
+							<div class="btn-box">
+								<button type="button" class="btn-more"><span>크게보기</span></button>
+							</div>
+							<div class="check-wrap">
+								<span class="checkbox">
+									<input type="checkbox">
+									<span></span>
+								</span>
+							</div>
+						</div>
+					</li>
+					<li class="order-item">
+						<div>
+							<a href="#">
+								<div class="thumbnail">
+									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
+								</div>
+								<div class="info-box">
+									<strong class="title">타이틀입니다</strong>
+									<p class="txt">설명입니다</p>
+									<p class="desc">최소수문수량 <em>100</em>개</p>
+								</div>
+							</a>
+							<div class="btn-box">
+								<button type="button" class="btn-more"><span>크게보기</span></button>
+							</div>
+							<div class="check-wrap">
+								<span class="checkbox">
+									<input type="checkbox">
+									<span></span>
+								</span>
+							</div>
+						</div>
+					</li>
+					<li class="order-item">
+						<div>
+							<a href="#">
+								<div class="thumbnail">
+									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
+								</div>
+								<div class="info-box">
+									<strong class="title">타이틀입니다</strong>
+									<p class="txt">설명입니다</p>
+									<p class="desc">최소수문수량 <em>100</em>개</p>
+								</div>
+							</a>
+							<div class="btn-box">
+								<button type="button" class="btn-more"><span>크게보기</span></button>
+							</div>
+							<div class="check-wrap">
+								<span class="checkbox">
+									<input type="checkbox">
+									<span></span>
+								</span>
+							</div>
+						</div>
+					</li>
+					<li class="order-item">
+						<div>
+							<a href="#">
+								<div class="thumbnail">
+									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
+								</div>
+								<div class="info-box">
+									<strong class="title">타이틀입니다</strong>
+									<p class="txt">설명입니다</p>
+									<p class="desc">최소수문수량 <em>100</em>개</p>
+								</div>
+							</a>
+							<div class="btn-box">
+								<button type="button" class="btn-more"><span>크게보기</span></button>
+							</div>
+							<div class="check-wrap">
+								<span class="checkbox">
+									<input type="checkbox">
+									<span></span>
+								</span>
+							</div>
+						</div>
+					</li>
+					<li class="order-item">
+						<div>
+							<a href="#">
+								<div class="thumbnail">
+									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
+								</div>
+								<div class="info-box">
+									<strong class="title">타이틀입니다</strong>
+									<p class="txt">설명입니다</p>
+									<p class="desc">최소수문수량 <em>100</em>개</p>
+								</div>
+							</a>
+							<div class="btn-box">
+								<button type="button" class="btn-more"><span>크게보기</span></button>
+							</div>
+							<div class="check-wrap">
+								<span class="checkbox">
+									<input type="checkbox">
+									<span></span>
+								</span>
+							</div>
+						</div>
+					</li>
+					<li class="order-item">
+						<div>
+							<a href="#">
+								<div class="thumbnail">
+									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
+								</div>
+								<div class="info-box">
+									<strong class="title">타이틀입니다</strong>
+									<p class="txt">설명입니다</p>
+									<p class="desc">최소수문수량 <em>100</em>개</p>
+								</div>
+							</a>
+							<div class="btn-box">
+								<button type="button" class="btn-more"><span>크게보기</span></button>
+							</div>
+							<div class="check-wrap">
+								<span class="checkbox">
+									<input type="checkbox">
+									<span></span>
+								</span>
+							</div>
+						</div>
+					</li>
+					<li class="order-item">
+						<div>
+							<a href="#">
+								<div class="thumbnail">
+									<img  src="../../frontend/src/assets/images/img-asset-none@2x.png" alt="">
+								</div>
+								<div class="info-box">
+									<strong class="title">타이틀입니다</strong>
+									<p class="txt">설명입니다</p>
+									<p class="desc">최소수문수량 <em>100</em>개</p>
+								</div>
+							</a>
+							<div class="btn-box">
+								<button type="button" class="btn-more"><span>크게보기</span></button>
+							</div>
+							<div class="check-wrap">
+								<span class="checkbox">
+									<input type="checkbox">
+									<span></span>
+								</span>
+							</div>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+			<aside>
+				<div class="aside-wrap">
+
+				</div>
+			</aside>
+		</section>
+		<footer></footer>
+	</div>
+</div>
+</body>
+</html>

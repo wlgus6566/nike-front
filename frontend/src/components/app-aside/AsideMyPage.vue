@@ -1,33 +1,24 @@
 <template>
     <div class="aside-menu">
-        <strong class="title">MANAGEMENT</strong>
         <ul class="menu">
-            <li>
-                <a href="#">파트너 계정관리</a>
-            </li>
-            <li>
-                <a href="#">에이전시 계정관리</a>
-            </li>
-        </ul>
-        <strong class="title">UPLOAD</strong>
-        <ul class="menu">
-            <li>
-                <a href="#">내가 업로드한 파일</a>
-            </li>
-            <li>
-                <a href="#">최근 업로드 파일</a>
+            <li v-for="(mypageMenu, index) in propsdata" v-bind:key="index">
+                <a href="#">{{ mypageMenu.title }}</a>
+                <ul v-if="mypageMenu.depth">
+                    <li></li>
+                </ul>
             </li>
         </ul>
     </div>
 </template>
 <script>
 export default {
-    name: 'AsidMyPage.vue',
+    name: 'AsideMyPage.vue',
+    props: ['propsdata'],
 };
 </script>
 <style scoped>
 .aside-menu {
-    margin-top: 17px;
+    margin-top: 19px;
 }
 .aside-menu .title {
     display: block;

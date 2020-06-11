@@ -10,7 +10,7 @@
                         </a>
                     </li>
                 </ul>
-                <AsidMyPage v-if="tabs[0].active === true"></AsidMyPage>
+                <AsideMyPage v-if="tabs[0].active === true" v-bind:propsdata="mypageMenus"></AsideMyPage>
                 <AsideFile v-if="tabs[1].active === true"></AsideFile>
                 <AsideOrder v-if="tabs[2].active === true"></AsideOrder>
                 <div class="history-box">
@@ -30,11 +30,11 @@
 </template>
 <script>
 import Sticky from 'vue-sticky-directive';
-import UserDefault from '../UserInfo/UserDefault.vue';
+import UserDefault from './UserDefault.vue';
 import AsideFile from './AsideFile.vue';
-import AsidMyPage from './AsidMyPage.vue';
+import AsideMyPage from './AsideMyPage.vue';
 import AsideOrder from './AsideOrder';
-import AsideHistory from './AsideHistory.vue';
+import AsideHistory from './History.vue';
 
 export default {
     data: function () {
@@ -51,6 +51,30 @@ export default {
                 {
                     tabName: 'ORDER',
                     active: false,
+                },
+            ],
+            mypageMenus: [
+                {
+                    title: 'HISTORY',
+                    depth: [
+                        {
+                            title: '내가 업로드한 폴더',
+                        },
+                        {
+                            title: '최근 본 폴더',
+                        },
+                    ],
+                },
+                {
+                    title: 'ORDER',
+                    depth: [
+                        {
+                            title: '주문내역확인',
+                        },
+                        {
+                            title: '위시리스트',
+                        },
+                    ],
                 },
             ],
             historyTabs: [
@@ -73,7 +97,7 @@ export default {
         AsideOrder,
         UserDefault,
         AsideFile,
-        AsidMyPage,
+        AsideMyPage,
         AsideHistory,
     },
     mounted() {},
@@ -96,29 +120,28 @@ export default {
 .tab-list a {
     display: block;
     padding: 0 10px;
-    font-family: 'Bebas Neue', sans-serif;
+}
+.tab-list a span {
+    display: inline-block;
+    line-height: 24px;
     font-size: 20px;
     line-height: 24px;
     color: #ccc;
-}
-.tab-list a span {
+    font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 0.5px;
 }
-.tab-list .active a {
-    color: #000;
-}
-.tab-list .active span {
+.tab-list .active a span {
     position: relative;
+    color: #000;
 }
 .tab-list .active span:before {
     content: '';
     position: absolute;
-    bottom: 2px;
+    bottom: 0;
     left: 0;
     display: block;
     width: 100%;
-    height: 2px;
-    background: #000;
+    border-bottom: 2px solid #000;
 }
 .history-box {
     margin-top: 63px;
