@@ -57,6 +57,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
 	private Authentication getUsernamePasswrodAuthentication(final HttpServletRequest request) {
 		final String token = request.getHeader(JwtHelper.HEADER_STRING);
+		Authentication authentication = null;
 		if(token != null){
 			// 토큰 디코드
 			final String username = JWT.require(Algorithm.HMAC512(JwtHelper.SECRET.getBytes())).build().verify(token.replace(JwtHelper.TOKEN_PREFIX, "")).getSubject();
@@ -65,10 +66,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 			if(username != null){
 				final Manager manager = managerRepository.findByManagerId(username);
 				final AuthUserDTO authUserDTO = new AuthUserDTO(manager);
-				return new UsernamePasswordAuthenticationToken(authUserDTO, null, authUserDTO.getAuthorities());
+				authentication = new UsernamePasswordAuthenticationToken(authUserDTO, null, authUserDTO.getAuthorities());
 			}
-			return null;
 		}
-		return null;
+		return authentication;
 	}
 }
