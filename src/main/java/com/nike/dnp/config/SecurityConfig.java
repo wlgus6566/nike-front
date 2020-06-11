@@ -10,6 +10,11 @@ import com.nike.dnp.service.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.vote.AuthenticatedVoter;
+import org.springframework.security.access.vote.RoleVoter;
+import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,8 +23,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Security Config
@@ -55,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	};
 
 	/**
-	 * Password encoder password encoder.
+	 * 암호화 모듈
 	 *
 	 * @return the password encoder
 	 */
@@ -74,27 +83,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		};
 		web.ignoring().antMatchers(staticPatterns);
+
 	}
 
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers(PUBLIC).permitAll()
+
+				//.antMatchers(PUBLIC).permitAll()
 //				.antMatchers(HttpMethod.POST,"/login").permitAll()
 //				.antMatchers(HttpMethod.GET,"/api/manage/user").hasRole("ADMIN")
 //				.antMatchers(HttpMethod.GET,"/api/manage/user/**").hasRole("MANAGER")
-				.anyRequest().authenticated()
+//				.anyRequest().authenticated().accessDecisionManager(accessDecisionManager())
 			.and()
-				.addFilter(authenticationFilter())
-				.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.managerRepository))
+				.addFilter(authenticationFilter()) // 인증 필터
+				.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.managerRepository)) //jwt 토큰 인증 필터
 				.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
 			.and()
 				.csrf().disable() // csrf 사용 안함
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
 	}
 
+	@Bean
+	public AccessDecisionManager accessDecisionManager() {
+		List<AccessDecisionVoter<? extends Object>> decisionVoters
+				= Arrays.asList(new AuthenticatedVoter(),new RoleVoter(),new WebExpressionVoter());
+		return new UnanimousBased(decisionVoters);
+
+	}
+
 	/**
-	 * Authentication filter authentication filter.
+	 * 인증 필터
 	 *
 	 * @return the authentication filter
 	 * @throws Exception the exception
@@ -104,18 +123,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		AuthenticationFilter filter = null;
 		try {
 			filter = new AuthenticationFilter(authenticationManager());
-			filter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
-			filter.setAuthenticationFailureHandler(authenticationFailureHandler());
+			filter.setAuthenticationSuccessHandler(authenticationSuccessHandler()); // 인증 성공 핸들러
+			filter.setAuthenticationFailureHandler(authenticationFailureHandler()); // 인증 실패 핸들러
 			filter.setAuthenticationManager(authenticationManagerBean());
 		} catch (Exception exception) {
 
 		}
-
 		return filter;
 	}
 
 	/**
-	 * Authentication success handler authentication success handler.
+	 * 승인 성공 후 핸들러
 	 *
 	 * @return the authentication success handler
 	 */
@@ -125,7 +143,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	/**
-	 * Authentication failure handler authentication failure handler.
+	 * 승인 실패 후 핸들러
 	 *
 	 * @return the authentication failure handler
 	 */
@@ -135,9 +153,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	/**
-	 * Logout success handler logout success handler.
+	 * 권한 실패 핸들러
 	 *
-	 * @return the logout success handler
+	 * @return the AccessDenied handler
 	 */
 	@Bean
 	public AccessDeniedHandler accessDeniedHandler() {

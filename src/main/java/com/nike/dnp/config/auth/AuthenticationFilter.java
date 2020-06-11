@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * The type Authentication filter.
+ * 인증 필터
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -28,7 +28,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	private final AuthenticationManager authManager;
 
 	/**
-	 * Instantiates a new Authentication filter.
+	 * 로그인 아이디 /비번 파라미터로 받아 인증 절차전 값 체크 및 인증 요청
 	 */
 
 	@Override

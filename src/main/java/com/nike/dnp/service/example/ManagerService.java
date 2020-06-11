@@ -145,6 +145,11 @@ public class ManagerService implements UserDetailsService {
         return manager;
     }
 
+    /**
+     * 시큐리티 Db 유저 조회
+     * @param username
+     * @return
+     */
     @Override
     public UserDetails loadUserByUsername(final String username) {
         final Manager manager = managerRepository.findByManagerId(username);

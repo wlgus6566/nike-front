@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * The type Jwt authorization filter.
+ * jwt 필터
  */
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 

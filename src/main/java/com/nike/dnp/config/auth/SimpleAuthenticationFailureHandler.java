@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * The type Simple authentication failure handler.
+ * 로그인 실패  핸들러
  */
 @Slf4j
 @RequiredArgsConstructor

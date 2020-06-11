@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.Date;
 
 /**
- * The type Simple authentication success handler.
+ * 로그인 성공 후 핸들러
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -36,10 +36,12 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		response.setStatus(HttpStatus.OK.value());
 		final AuthUserDTO authUserDTO = (AuthUserDTO) authentication.getPrincipal();
 
+		// jwt 토큰 생성
 		final String token = JWT.create().withSubject(authUserDTO.getUsername())
 				.withExpiresAt(new Date(System.currentTimeMillis() + JwtHelper.EXPIRATION_TIME))
 				.sign(Algorithm.HMAC512(JwtHelper.SECRET));
 
+		// header 에 토큰 입력
 		response.addHeader(JwtHelper.HEADER_STRING, JwtHelper.TOKEN_PREFIX +token);
 		JsonUtil.write(response.getWriter(), responseService.getSuccessResult());
 

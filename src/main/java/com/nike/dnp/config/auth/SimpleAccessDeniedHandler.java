@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * The type Simple access denied handler.
+ * 접속 실패 핸들러
  */
 @RequiredArgsConstructor
 public class SimpleAccessDeniedHandler implements AccessDeniedHandler {
