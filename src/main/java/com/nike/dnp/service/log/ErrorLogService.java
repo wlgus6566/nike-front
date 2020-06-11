@@ -44,8 +44,8 @@ public class ErrorLogService {
         final ErrorLog saveLog = new ErrorLog();
         saveLog.setUrl(saveDTO.getUrl());
         saveLog.setErrorContents(saveDTO.getErrorContents());
-        saveLog.setRegisterSeq(authUserDTO.getUserSeq()); //TODO DTO field명 수정예정
-        saveLog.setUpdaterSeq(authUserDTO.getUserSeq()); //TODO DTO field명 수정예정
+        saveLog.setRegisterSeq(authUserDTO.getUserSeq()); //TODO[ojh] DTO field명 수정예정
+        saveLog.setUpdaterSeq(authUserDTO.getUserSeq()); //TODO[ojh] DTO field명 수정예정
         return logRepository.save(saveLog);
     }
 

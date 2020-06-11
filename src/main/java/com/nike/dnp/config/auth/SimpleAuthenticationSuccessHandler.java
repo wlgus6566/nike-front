@@ -47,7 +47,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		response.addHeader(JwtHelper.HEADER_STRING, JwtHelper.TOKEN_PREFIX +token);
 		JsonUtil.write(response.getWriter(), responseService.getSuccessResult());
 
-		//TODO 로그인 로그 구현
+		//TODO[ojh] 로그인 로그 구현
 		//loginLogService.save();
 	}
 }
