@@ -3,6 +3,8 @@ package com.nike.dnp.dto.log;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.persistence.Column;
+
 /**
  * UserActionLogSaveDTO
  *
@@ -32,6 +34,20 @@ public class UserActionLogSaveDTO {
     private String url;
 
     /**
+     * 메소드 타입
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "methodTypeName", value = "메소드 타입", required = true)
+    private String methodTypeName;
+
+    /**
+     * 호출 메소드 명
+     * @author [오지훈]
+     */
+    @Column(name = "METHOD_SIGNATURE")
+    private String methodSignature;
+
+    /**
      * Parameter
      * @author [오지훈]
      */
@@ -39,10 +55,16 @@ public class UserActionLogSaveDTO {
     private String parameter;
 
     /**
-     * 최초 작성자
-     * @author [오지훈]
+     * Method to String
+     * @return String
      */
-    @ApiModelProperty(name = "registerSeq", value = "최초 작성자 시퀀스", hidden = true)
-    private Long registerSeq;
+    public String toString() {
+        return "ErrorLogSaveDTO{"
+                + "userSeq=" + userSeq
+                + ", url=" + url
+                + ", methodTypeName=" + methodTypeName
+                + ", methodSignature=" + methodSignature
+                + ", parameter=" + parameter + '}';
+    }
 
 }

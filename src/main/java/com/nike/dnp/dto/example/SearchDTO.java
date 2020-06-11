@@ -24,7 +24,7 @@ public class SearchDTO {
      * @default 0
      */
     @ApiModelProperty(value = "페이지", name = "page")
-    private int page;
+    private int page = 0;
 
     /**
      * @author [오지훈]

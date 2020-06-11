@@ -27,4 +27,15 @@ public class ManagerSearchDTO extends SearchDTO {
     @ApiModelProperty(value = "검색어", name = "keyword")
     private String keyword = "";
 
+    /**
+     * Method to String
+     * @return String
+     */
+    public String toString() {
+        return "ManagerSearchDTO{"
+                + "keyword=" + keyword
+                + ", size=" + getSize()
+                + ", page=" + getPage() + '}';
+    }
+
 }

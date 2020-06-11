@@ -1,7 +1,6 @@
 package com.nike.dnp.entity.example;
 
 import com.nike.dnp.entity.BaseTimeEntity;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -50,59 +49,38 @@ public class ManagerAuth extends BaseTimeEntity {
     private String useYn;
 
     /**
-     * @author [오지훈]
-     */
-    @Column(name = "REGISTER_SEQ")
-    @ApiModelProperty(hidden = true)
-    private Long registerSeq;
-
-    /**
-     * @author [오지훈]
-     */
-    @Column(name = "UPDATER_SEQ")
-    @ApiModelProperty(hidden = true)
-    private Long updaterSeq;
-
-    /**
      * Instantiates a new Manager auth.
      *
-     * @param authName    the auth name
-     * @param roleType    the role type
-     * @param useYn       the use yn
-     * @param registerSeq the register seq
+     * @param authName the auth name
+     * @param roleType the role type
+     * @param useYn    the use yn
      */
     @Builder
     public ManagerAuth(
             final String authName
             , final String roleType
             , final String useYn
-            , final Long registerSeq
     ) {
         super();
         this.authName = authName;
         this.roleType = roleType;
         this.useYn = useYn;
-        this.registerSeq = registerSeq;
-        this.updaterSeq = registerSeq;
     }
 
     /**
      * Update.
      *
-     * @param authName   the auth name
-     * @param roleType   the role type
-     * @param useYn      the use yn
-     * @param updaterSeq the updater seq
+     * @param authName the auth name
+     * @param roleType the role type
+     * @param useYn    the use yn
      */
     public void update(
             final String authName
             , final String roleType
             , final String useYn
-            , final Long updaterSeq
     ) {
         this.authName = authName;
         this.roleType = roleType;
         this.useYn = useYn;
-        this.updaterSeq = updaterSeq;
     }
 }

@@ -50,8 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * ignore
 	 */
 	private static final String[] PUBLIC = {
-		"/error", "/login", "/logout", "/api/**", "/h2-console", "/h2-console/**"
-		,"/api/**"
+		"/error", "/login", "/logout", "/h2-console", "/h2-console/**"
+		/*,"/api/**"*/
 	};
 
 	/**
