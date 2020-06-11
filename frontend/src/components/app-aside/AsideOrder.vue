@@ -31,11 +31,11 @@
 </template>
 <script>
 import Sticky from 'vue-sticky-directive';
-import UserDefault from '../UserInfo/UserDefault.vue';
+import UserDefault from './UserDefault.vue';
 import AsideFile from './AsideFile.vue';
-import AsidMyPage from './AsidMyPage.vue';
+import AsidMyPage from './AsideMyPage.vue';
 import AsideOrder from './AsideOrder';
-import AsideHistory from './AsideHistory.vue';
+import AsideHistory from './History.vue';
 
 export default {
     data: function () {

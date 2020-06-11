@@ -41,7 +41,7 @@ header.depth {
 }
 #container {
     display: flex;
-    flex: 1 1 auto;
+    flex: 1 1 calc(100% - 200px);
     box-sizing: border-box;
     min-height: calc(100vh - 144px);
 }
