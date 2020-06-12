@@ -25,7 +25,7 @@
 </template>
 <script>
 export default {
-    name: 'UserDefault.vue',
+    name: 'UserInfo.vue',
 };
 </script>
 <style scoped>

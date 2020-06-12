@@ -2,88 +2,33 @@
     <aside class="sticky-container" sticky-container>
         <div class="inner" on-stick="onStick" sticky-offset="{top: 10, bottom: 30}" sticky-side="both" sticky-z-index="20" v-sticky>
             <div class="aside-wrap">
-                <UserDefault></UserDefault>
-                <ul class="tab-list">
-                    <li v-bind:class="{ active: tab.active }" v-bind:key="index" v-for="(tab, index) in tabs" v-on:click="tabClick(tabs, index)">
-                        <a href="#">
-                            <span>{{ tab.tabName }}</span>
-                        </a>
-                    </li>
-                </ul>
-                <AsideMyPage v-if="tabs[0].active === true" v-bind:propsdata="mypageMenus"></AsideMyPage>
-                <AsideFile v-if="tabs[1].active === true"></AsideFile>
-                <AsideOrder v-if="tabs[2].active === true"></AsideOrder>
-                <div class="history-box">
-                    <strong class="title">HISTORY</strong>
-                    <ul class="tab-list-history">
-                        <li v-bind:class="{ active: historyTab.active }" v-bind:key="index" v-for="(historyTab, index) in historyTabs" v-on:click="tabClick(historyTabs, index)">
-                            <a href="#">
-                                <span>{{ historyTab.tabName }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <AsideHistory v-if="historyTabs[0].active === true"></AsideHistory>
-                </div>
+                <UserInfo></UserInfo>
+                <TabMenu v-bind:propsdata="tabMenus"></TabMenu>
+                <MypageMenu></MypageMenu>
             </div>
         </div>
     </aside>
 </template>
 <script>
 import Sticky from 'vue-sticky-directive';
-import UserDefault from './UserDefault.vue';
-import AsideFile from './AsideFile.vue';
-import AsideMyPage from './AsideMyPage.vue';
-import AsideOrder from './AsideOrder';
-import AsideHistory from './History.vue';
+import UserInfo from './UserInfo.vue';
+import MypageMenu from './MypageMenu.vue';
+import TabMenu from './TabMenu.vue';
 
 export default {
     data: function () {
         return {
-            tabs: [
+            tabMenus: [
                 {
-                    tabName: 'MY page',
+                    title: 'MYPAGE',
                     active: true,
                 },
                 {
-                    tabName: 'FILE',
+                    title: 'FILE',
                     active: false,
-                },
-                {
-                    tabName: 'ORDER',
-                    active: false,
-                },
-            ],
-            mypageMenus: [
-                {
-                    title: 'HISTORY',
-                    depth: [
-                        {
-                            title: '내가 업로드한 폴더',
-                        },
-                        {
-                            title: '최근 본 폴더',
-                        },
-                    ],
                 },
                 {
                     title: 'ORDER',
-                    depth: [
-                        {
-                            title: '주문내역확인',
-                        },
-                        {
-                            title: '위시리스트',
-                        },
-                    ],
-                },
-            ],
-            historyTabs: [
-                {
-                    tabName: 'ASSET',
-                    active: true,
-                },
-                {
-                    tabName: 'TOOLKIT',
                     active: false,
                 },
             ],
@@ -94,11 +39,9 @@ export default {
         Sticky,
     },
     components: {
-        AsideOrder,
-        UserDefault,
-        AsideFile,
-        AsideMyPage,
-        AsideHistory,
+        UserInfo,
+        TabMenu,
+        MypageMenu,
     },
     mounted() {},
     methods: {
@@ -112,79 +55,4 @@ export default {
     },
 };
 </script>
-<style scoped>
-.tab-list {
-    display: flex;
-    margin: 44px 0 0 -10px;
-}
-.tab-list a {
-    display: block;
-    padding: 0 10px;
-}
-.tab-list a span {
-    display: inline-block;
-    line-height: 24px;
-    font-size: 20px;
-    line-height: 24px;
-    color: #ccc;
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 0.5px;
-}
-.tab-list .active a span {
-    position: relative;
-    color: #000;
-}
-.tab-list .active span:before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    border-bottom: 2px solid #000;
-}
-.history-box {
-    margin-top: 63px;
-}
-.history-box .title {
-    display: block;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    font-weight: normal;
-    line-height: 24px;
-    letter-spacing: 0.5px;
-    color: #000;
-}
-.tab-list-history {
-    display: flex;
-    margin: 5px 0 0 -10px;
-}
-.tab-list-history li {
-    position: relative;
-}
-.tab-list-history li + li:before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    display: block;
-    width: 1px;
-    height: 10px;
-    margin-top: -5px;
-    background: #ddd;
-}
-.tab-list-history a {
-    display: block;
-    padding: 10px 10px;
-    font-size: 14px;
-    line-height: 17px;
-    color: #ccc;
-}
-.tab-list-history a span {
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 0.58px;
-}
-.tab-list-history .active a {
-    color: #555;
-}
-</style>
+<style scoped></style>
