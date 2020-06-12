@@ -3,10 +3,7 @@
         <div class="inner" on-stick="onStick" sticky-offset="{top: 10, bottom: 30}" sticky-side="both" sticky-z-index="20" v-sticky>
             <div class="aside-wrap">
                 <UserInfo></UserInfo>
-                <TabMenu v-bind:propsdata="tabMenus"></TabMenu>
-                <MypageMenu v-bind:propsdata="tabMenus"></MypageMenu>
-                <FileItem></FileItem>
-                <HistoryItem></HistoryItem>
+                <TabComponent v-bind:tabMenus="tabMenus"></TabComponent>
             </div>
         </div>
     </aside>
@@ -14,28 +11,20 @@
 <script>
 import Sticky from 'vue-sticky-directive';
 import UserInfo from './UserInfo.vue';
-import MypageMenu from './MypageMenu.vue';
-import TabMenu from './TabMenu.vue';
-import FileItem from './FileItem.vue';
-import HistoryItem from './HistoryItem.vue';
+import TabComponent from '@/components/tab-components/index.vue';
 
 export default {
     data: function () {
         return {
-            tabMenus: [
-                {
-                    title: 'MYPAGE',
-                    active: true,
-                },
-                {
-                    title: 'FILE',
-                    active: true,
-                },
-                {
-                    title: 'ORDER',
-                    active: false,
-                },
-            ],
+            tabMenus: {
+                tabClass: 'tab-list',
+                tabList: [
+                    {
+                        title: 'MYPAGE',
+                        component: 'ContentMypage',
+                    },
+                ],
+            },
         };
     },
     name: 'AsideDefault',
@@ -44,12 +33,9 @@ export default {
     },
     components: {
         UserInfo,
-        TabMenu,
-        MypageMenu,
-        FileItem,
-        HistoryItem,
+        TabComponent,
     },
-    mounted() {},
+    methods: {},
 };
 </script>
 <style scoped></style>

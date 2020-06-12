@@ -3,8 +3,7 @@
         <div class="inner" on-stick="onStick" sticky-offset="{top: 10, bottom: 30}" sticky-side="both" sticky-z-index="20" v-sticky>
             <div class="aside-wrap">
                 <UserInfo></UserInfo>
-                <TabMenu v-bind:propsdata="tabMenus"></TabMenu>
-                <MypageMenu></MypageMenu>
+                <TabComponent v-bind:tabMenus="tabMenus"></TabComponent>
             </div>
         </div>
     </aside>
@@ -12,26 +11,29 @@
 <script>
 import Sticky from 'vue-sticky-directive';
 import UserInfo from './UserInfo.vue';
-import MypageMenu from './MypageMenu.vue';
-import TabMenu from './TabMenu.vue';
+import TabComponent from '@/components/tab-components/index.vue';
 
 export default {
     data: function () {
         return {
-            tabMenus: [
-                {
-                    title: 'MYPAGE',
-                    active: true,
-                },
-                {
-                    title: 'FILE',
-                    active: false,
-                },
-                {
-                    title: 'ORDER',
-                    active: false,
-                },
-            ],
+            tabMenus: {
+                tabClass: 'tab-list',
+                tabList: [
+                    {
+                        title: 'MYPAGE',
+                        component: 'ContentMypage',
+                    },
+                ],
+            },
+            tabHisroty: {
+                tabClass: 'tab-list',
+                tabList: [
+                    {
+                        title: 'MYPAGE',
+                        component: 'ContentMypage',
+                    },
+                ],
+            },
         };
     },
     name: 'AsideDefault',
@@ -40,19 +42,9 @@ export default {
     },
     components: {
         UserInfo,
-        TabMenu,
-        MypageMenu,
+        TabComponent,
     },
-    mounted() {},
-    methods: {
-        tabClick(item, index) {
-            item.forEach((element) => (element.active = false));
-            if (item[index].active !== true) {
-                item[index].active = true;
-            }
-            console.log(item[index].active);
-        },
-    },
+    methods: {},
 };
 </script>
 <style scoped></style>

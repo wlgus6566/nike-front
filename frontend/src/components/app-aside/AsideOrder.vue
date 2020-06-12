@@ -3,8 +3,9 @@
         <div class="inner" on-stick="onStick" sticky-offset="{top: 10, bottom: 30}" sticky-side="both" sticky-z-index="20" v-sticky>
             <div class="aside-wrap">
                 <UserInfo></UserInfo>
-                <TabMenu v-bind:tabMenus="tabMenus" v-bind:tabActive="activeTabCont" v-on:tabClick="tabClick"></TabMenu>
-                <component v-bind:is="activeTabCont"></component>
+                <TabComponent v-bind:tabMenus="tabMenus"></TabComponent>
+                <strong class="tab-title">HISTPRY</strong>
+                <TabComponent v-bind:tabMenus="historyTab"></TabComponent>
             </div>
         </div>
     </aside>
@@ -12,22 +13,37 @@
 <script>
 import Sticky from 'vue-sticky-directive';
 import UserInfo from './UserInfo.vue';
-import MYPAGE from './MypageMenu.vue';
-import TabMenu from './TabMenu.vue';
-import FILE from './OderItem.vue';
+import TabComponent from '@/components/tab-components/index.vue';
 
 export default {
     data: function () {
         return {
-            activeTabCont: 0,
-            tabMenus: [
-                {
-                    title: 'MYPAGE',
-                },
-                {
-                    title: 'FILE',
-                },
-            ],
+            tabMenus: {
+                tabClass: 'tab-list',
+                tabList: [
+                    {
+                        title: 'MYPAGE',
+                        component: 'ContentMypage',
+                    },
+                    {
+                        title: 'CART',
+                        component: 'ContentOrder',
+                    },
+                ],
+            },
+            historyTab: {
+                tabClass: 'tab-list-sm',
+                tabList: [
+                    {
+                        title: 'MYPAGE',
+                        component: 'ContentMypage',
+                    },
+                    {
+                        title: 'CART',
+                        component: 'ContentOrder',
+                    },
+                ],
+            },
         };
     },
     name: 'AsideDefault',
@@ -35,17 +51,21 @@ export default {
         Sticky,
     },
     components: {
-        MYPAGE,
-        FILE,
         UserInfo,
-        TabMenu,
+        TabComponent,
     },
-    methods: {
-        tabClick(index) {
-            console.log(index);
-            this.activeTabCont = this.tabMenus[index];
-        },
-    },
+    methods: {},
 };
 </script>
-<style scoped></style>
+<style scoped>
+.tab-title {
+    display: block;
+    margin-top: 40px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: #000;
+}
+</style>
