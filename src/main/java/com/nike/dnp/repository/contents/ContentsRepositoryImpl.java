@@ -34,9 +34,6 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
         super(Manager.class);
     }
 
-//    @Autowired
-//    private EntityManager entityManager;
-
     @Override
     public Page<Contents> findAlls(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest) {
         final QContents qContents = QContents.contents;
