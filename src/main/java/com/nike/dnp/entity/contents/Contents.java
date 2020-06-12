@@ -1,7 +1,6 @@
 package com.nike.dnp.entity.contents;
 
 import com.nike.dnp.entity.BaseTimeEntity;
-import com.nike.dnp.entity.example.ManagerAuth;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 

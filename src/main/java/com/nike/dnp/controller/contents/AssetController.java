@@ -2,13 +2,10 @@ package com.nike.dnp.controller.contents;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
-import com.nike.dnp.dto.example.manager.ManagerSearchDTO;
 import com.nike.dnp.entity.contents.Contents;
-import com.nike.dnp.entity.example.Manager;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.contents.ContentsService;
-import com.nike.dnp.service.example.ManagerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -81,7 +78,7 @@ public class AssetController {
         + "size||노출갯수|Integer\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "콘텐츠 > Asset 목록 조회")
-    public SingleResult<Page<Contents>> getAllManagers(
+    public SingleResult<Page<Contents>> getAllContents(
             final ContentsSearchDTO contentsSearchDTO
             , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {

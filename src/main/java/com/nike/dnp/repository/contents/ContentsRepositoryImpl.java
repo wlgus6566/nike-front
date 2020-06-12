@@ -1,24 +1,17 @@
 package com.nike.dnp.repository.contents;
 
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
-import com.nike.dnp.dto.example.manager.ManagerSearchDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.QContents;
 import com.nike.dnp.entity.example.Manager;
-import com.nike.dnp.entity.example.QManager;
-import com.nike.dnp.repository.example.ManagerPredicateHelper;
-import com.nike.dnp.repository.example.ManagerRepositoryCustom;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 /**
@@ -45,7 +38,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
 //    private EntityManager entityManager;
 
     @Override
-    public Page<Contents> findAlls(ContentsSearchDTO contentsSearchDTO, PageRequest pageRequest) {
+    public Page<Contents> findAlls(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest) {
         final QContents qContents = QContents.contents;
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
         final String keyword = contentsSearchDTO.getKeyword();
@@ -65,8 +58,8 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @param keyword
      * @return
      */
-    private BooleanExpression eqFolderName(String keyword) {
-        return !keyword.isEmpty() ? QContents.contents.folderName.contains(keyword): null;
+    private BooleanExpression eqFolderName(final String keyword) {
+        return keyword.isEmpty() ? null : QContents.contents.folderName.contains(keyword);
     }
 
     /**
@@ -74,8 +67,8 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @param topMenuSeq
      * @return
      */
-    private BooleanExpression eqTopMenuSeq(Long topMenuSeq) {
-        return null != topMenuSeq && 0 != topMenuSeq ? QContents.contents.topMenuSeq.eq(topMenuSeq): null;
+    private BooleanExpression eqTopMenuSeq(final Long topMenuSeq) {
+        return null == topMenuSeq || 0 == topMenuSeq ? null : QContents.contents.topMenuSeq.eq(topMenuSeq);
     }
 
     /**
@@ -83,8 +76,8 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @param menuSeq
      * @return
      */
-    private BooleanExpression eqMenuSeq(Long menuSeq) {
-        return null != menuSeq && 0 != menuSeq ? QContents.contents.menuSeq.eq(menuSeq): null;
+    private BooleanExpression eqMenuSeq(final Long menuSeq) {
+        return null == menuSeq || 0 == menuSeq ? null : QContents.contents.menuSeq.eq(menuSeq);
     }
 
 }

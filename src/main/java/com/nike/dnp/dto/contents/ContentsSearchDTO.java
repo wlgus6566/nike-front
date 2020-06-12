@@ -56,7 +56,7 @@ public class ContentsSearchDTO extends SearchDTO {
      * @return String
      */
     public String toString() {
-        return "ManagerSearchDTO{"
+        return "ContentsSearchDTO{"
                 + "keyword=" + keyword
                 + ", orderType=" + orderType
                 + ", size=" + getSize()
