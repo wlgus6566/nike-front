@@ -5,8 +5,7 @@ import axios from './axios';
 import anime from 'animejs/lib/anime.es.js';
 
 Vue.prototype.$axios = axios;
-
-Vue.use(anime);
+Vue.prototype.$anime = anime;
 
 Vue.config.productionTip = false;
 
@@ -18,14 +17,13 @@ Vue.config.productionTip = false;
  * ex) 100000, ￦, '' ->  ￦100,000
  */
 Vue.filter('formattedNumber', (value, prefix, suffix) => {
-	console.log('filter');
-	if (!value || value.isNaN) {
-		return `${prefix} 0 ${suffix}`
-	}
-	const formatted = value.toFixed(0).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,')
-	return `${prefix} ${formatted} ${suffix}`
+    console.log('filter');
+    if (!value || value.isNaN) {
+        return `${prefix} 0 ${suffix}`;
+    }
+    const formatted = value.toFixed(0).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,');
+    return `${prefix} ${formatted} ${suffix}`;
 });
-
 
 new Vue({
     router,

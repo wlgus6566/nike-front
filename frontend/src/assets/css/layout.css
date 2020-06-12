@@ -2,8 +2,6 @@
 
 :root {
     font-size: 14px;
-    --safeTop: env(safe-area-inset-top);
-    --safeBtm: env(safe-area-inset-bottom);
 }
 html,
 body {
@@ -74,4 +72,28 @@ nav a {
     font-size: 16px;
     line-height: 40px;
     letter-spacing: 0.05em;
+}
+
+/*.aside-ani-enter-active {*/
+/*    transition: all 0.3s ease-in-out;*/
+/*}*/
+/*.aside-ani-leave-active {*/
+/*    transition: all 0.3s ease-in-out;*/
+/*}*/
+/*.aside-ani-enter,*/
+/*.aside-ani-leave-to {*/
+/*    opacity: 0;*/
+/*    transform: translateX(100%);*/
+/*}*/
+
+.component-fade-enter-active {
+    transition: all 0.3s ease-in-out;
+}
+.component-fade-leave-active {
+    transition: all 0.3s ease-in-out;
+}
+.component-fade-enter,
+.component-fade-leave-to {
+    opacity: 0;
+    transform: translateY(10px);
 }
