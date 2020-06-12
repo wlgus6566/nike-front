@@ -51,7 +51,7 @@ public class AssetController {
     /**
      *
      */
-    private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|ex\n" + "-|-|-|-|-\n";
+    private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
     /**
      * 콘텐츠>에셋 전체목록 조회
@@ -61,14 +61,13 @@ public class AssetController {
      * @return all managers
      */
     @ApiOperation(
-        value = "콘텐츠>에셋 목록 조회"
+        value = "콘텐츠 > Asset 목록 조회"
         , notes = REQUEST_CHARACTER
-        + "page|페이지|false|Integer\n"
+        + "page|페이지|false|Integer|0부터 시작\n"
         + "size|사이즈|false|Integer\n"
         + "keyword|검색어|false|String\n"
         + "orderType|정렬 타입|false|String|최신순:LATEST/시작일 순:START_DATE\n"
-        + "topMenuSeq|최고 메뉴 시퀀스|false|String\n"
-        + "menuSeq|메뉴 시퀀스|false|String\n"
+        + "menuSeq|2Depth 메뉴 시퀀스|false|String\n"
         + "[하위 Parameters 참조]\n\n\n\n"
         + "## Public/Paging Response ## \n"
         + "필드명||필드설명|데이터 타입(길이)\n" + "-|-|-|-\n"
@@ -81,11 +80,13 @@ public class AssetController {
         + "number||현재페이지|Integer\n"
         + "size||노출갯수|Integer\n\n\n\n"
     )
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "사용자 목록 조회")
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "콘텐츠 > Asset 목록 조회")
     public SingleResult<Page<Contents>> getAllManagers(
             final ContentsSearchDTO contentsSearchDTO
             , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
+        // Foundation 메뉴seq 넣어줌.
+        contentsSearchDTO.setTopMenuSeq((long) 1);
         return responseService.getSingleResult(contentsService.findAllPaging(contentsSearchDTO));
     }
 
