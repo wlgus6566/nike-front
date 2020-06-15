@@ -35,12 +35,16 @@ export default {
                 tabClass: 'tab-list-sm',
                 tabList: [
                     {
-                        title: 'MYPAGE',
-                        component: 'ContentMypage',
+                        title: 'ASSET',
+                        component: 'ContentAsset',
                     },
                     {
-                        title: 'CART',
-                        component: 'ContentOrder',
+                        title: 'TOOLKIT',
+                        component: 'ContentTooKlit',
+                    },
+                    {
+                        title: 'FOUNDATION',
+                        component: 'ContentFoundation',
                     },
                 ],
             },

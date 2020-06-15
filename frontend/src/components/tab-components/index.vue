@@ -26,7 +26,9 @@ export default {
         ContentMypage: () => import('@/components/tab-components/ContentMypage.vue'),
         ContentOrder: () => import('@/components/tab-components/ContentOrder.vue'),
         ContentFile: () => import('@/components/tab-components/ContentFile.vue'),
-        //ContentAsset: () => import('@/components/tab-components/ContentAsset.vue'),
+        ContentAsset: () => import('@/components/tab-components/ContentAsset.vue'),
+        ContentTooKlit: () => import('@/components/tab-components/ContentTooKlit.vue'),
+        ContentFoundation: () => import('@/components/tab-components/ContentFoundation.vue'),
     },
     methods: {
         tabClick(index) {
@@ -86,7 +88,7 @@ export default {
 }
 .tab-list-sm a {
     display: block;
-    padding: 10px 10px;
+    padding: 5px 10px;
     font-size: 14px;
     line-height: 17px;
     color: #ccc;

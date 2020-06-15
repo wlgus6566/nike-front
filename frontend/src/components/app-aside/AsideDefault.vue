@@ -25,15 +25,6 @@ export default {
                     },
                 ],
             },
-            tabHisroty: {
-                tabClass: 'tab-list',
-                tabList: [
-                    {
-                        title: 'MYPAGE',
-                        component: 'ContentMypage',
-                    },
-                ],
-            },
         };
     },
     name: 'AsideDefault',

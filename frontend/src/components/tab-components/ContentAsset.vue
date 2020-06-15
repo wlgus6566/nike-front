@@ -49,7 +49,7 @@ export default {
 </script>
 <style scoped>
 .history-box {
-    margin-top: 15px;
+    margin-top: 10px;
 }
 .item-list .item {
     display: flex;

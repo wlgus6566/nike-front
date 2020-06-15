@@ -23,6 +23,10 @@ export default {
                         title: 'MYPAGE',
                         component: 'ContentMypage',
                     },
+                    {
+                        title: 'FILE',
+                        component: 'ContentFile',
+                    },
                 ],
             },
         };
