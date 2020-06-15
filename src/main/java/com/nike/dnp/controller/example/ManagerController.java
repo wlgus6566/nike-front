@@ -9,6 +9,7 @@ import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.example.ManagerService;
+import com.nike.dnp.service.example.SecurityFillterMataService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,8 @@ public class ManagerController {
      * 사용자 서비스
      */
     private final ManagerService managerService;
+
+    private final SecurityFillterMataService securityFillterMataService;
 
     /**
      *

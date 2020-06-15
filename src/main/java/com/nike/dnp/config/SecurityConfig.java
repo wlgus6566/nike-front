@@ -1,21 +1,18 @@
 package com.nike.dnp.config;
 
-import com.nike.dnp.config.auth.AuthenticationFilter;
-import com.nike.dnp.config.auth.SimpleAccessDeniedHandler;
-import com.nike.dnp.config.auth.SimpleAuthenticationFailureHandler;
-import com.nike.dnp.config.auth.SimpleAuthenticationSuccessHandler;
+import com.nike.dnp.config.auth.*;
 import com.nike.dnp.config.jwt.JwtAuthorizationFilter;
 import com.nike.dnp.repository.example.ManagerRepository;
 import com.nike.dnp.service.ResponseService;
+import com.nike.dnp.service.example.SecurityFillterMataService;
 import com.nike.dnp.service.log.UserLoginLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDecisionVoter;
-import org.springframework.security.access.vote.AuthenticatedVoter;
+import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.RoleVoter;
-import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,7 +21,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -61,6 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	private final UserLoginLogService loginLogService;
 
+	private final SecurityFillterMataService securityFillterMataService;
+
 	/**
 	 * ignore
 	 */
@@ -68,6 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		"/error", "/login", "/logout", "/h2-console", "/h2-console/**"
 		/*,"/api/**"*/
 	};
+
 
 	/**
 	 * 암호화 모듈
@@ -80,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	public void configure(final WebSecurity web) {
+	public void configure(final WebSecurity web) throws Exception {
 		// 예외처리 목록 등록
 		final String[] staticPatterns = {
 				"/resources/**", "/static/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
@@ -94,27 +93,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
+
 		http.authorizeRequests()
-				.antMatchers(PUBLIC).permitAll()
-//				.antMatchers(HttpMethod.POST,"/login").permitAll()
-//				.antMatchers(HttpMethod.GET,"/api/manage/user").hasRole("ADMIN")
-//				.antMatchers(HttpMethod.GET,"/api/manage/user/**").hasRole("MANAGER")
-//				.anyRequest().authenticated().accessDecisionManager(accessDecisionManager())
+						.antMatchers(HttpMethod.POST,"/login").permitAll()
+						.anyRequest().authenticated().accessDecisionManager(accessDecisionManager());
+
+		http.addFilter(authenticationFilter()) // 인증 필터
+			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.managerRepository)) //jwt 토큰 인증 필터
+			.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
 			.and()
-				.addFilter(authenticationFilter()) // 인증 필터
-				.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.managerRepository)) //jwt 토큰 인증 필터
-				.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
-			.and()
-				.csrf().disable() // csrf 사용 안함
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
+			.csrf().disable() // csrf 사용 안함
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
+
 	}
 
 	@Bean
-	public AccessDecisionManager accessDecisionManager() {
-		List<AccessDecisionVoter<? extends Object>> decisionVoters
-				= Arrays.asList(new AuthenticatedVoter(),new RoleVoter(),new WebExpressionVoter());
-		return new UnanimousBased(decisionVoters);
-
+	public AffirmativeBased accessDecisionManager(){
+		List<AccessDecisionVoter<?>> decisionVoters = Arrays.asList(new RoleVoter(), new AuthAccessDecisionVoter(securityFillterMataService));
+		return new AffirmativeBased(decisionVoters);
 	}
 
 	/**

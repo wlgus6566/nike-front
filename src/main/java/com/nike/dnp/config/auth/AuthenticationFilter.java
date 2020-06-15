@@ -27,6 +27,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	 */
 	private final AuthenticationManager authManager;
 
+
 	/**
 	 * 로그인 아이디 /비번 파라미터로 받아 인증 절차전 값 체크 및 인증 요청
 	 */
@@ -34,9 +35,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	@Override
 	public Authentication attemptAuthentication(final HttpServletRequest request,
 												final HttpServletResponse response) {
-
+		//setFilterProcessesUrl("/auth/login");// TODO [yth] 추후 경로 확인
 		UsernamePasswordAuthenticationToken token = null;
-
 		try {
 			final String username = obtainUsername(request);
 			final String password = obtainPassword(request);
@@ -53,6 +53,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		} catch (AuthenticationException exception) {
 			throw exception;
 		}
+
 
 		return authManager.authenticate(token);
 
