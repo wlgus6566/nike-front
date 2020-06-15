@@ -12,11 +12,6 @@ const router = new VueRouter({
             meta: { layout: 'Clean' },
         },
         {
-            path: '/guide',
-            component: () => import('@/views/publishing/guide'),
-            meta: { layout: 'Clean' },
-        },
-        {
             path: '/',
             component: () => import('@/views/main.vue'),
             meta: { layout: 'Default', aside: 'Default' },
