@@ -1,5 +1,6 @@
 package com.nike.dnp.common.variable;
 
+import lombok.experimental.UtilityClass;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@UtilityClass
 public class EnumCode {
 
     /**

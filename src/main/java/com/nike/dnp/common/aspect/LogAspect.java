@@ -55,9 +55,7 @@ public class LogAspect {
             }
         }
         log.debug("========================= ActionLog End =========================");
-
-        final Object returnObj = joinPoint.proceed();
-        return returnObj;
+        return joinPoint.proceed();
     }
 
 }

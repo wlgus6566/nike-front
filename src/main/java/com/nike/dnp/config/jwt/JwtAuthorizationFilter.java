@@ -25,12 +25,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	/**
 	 *
 	 */
-	private final String SECRET = JwtHelper.SECRET;
-
-	/**
-	 *
-	 */
-	private transient final ManagerRepository managerRepository;
+	private final ManagerRepository managerRepository;
 
 	/**
 	 * Instantiates a new Jwt authorization filter.
@@ -64,8 +59,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 		final String token = request.getHeader(JwtHelper.HEADER_STRING);
 		Authentication authentication = null;
 		if(token != null){
+			final String secret = JwtHelper.SECRET;
 			// 토큰 디코드
-			final String username = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build().verify(token.replace(JwtHelper.TOKEN_PREFIX, "")).getSubject();
+			final String username = JWT.require(Algorithm.HMAC512(secret.getBytes())).build().verify(token.replace(JwtHelper.TOKEN_PREFIX, "")).getSubject();
 			// username(managerId)로 유저정보 조회
 			// 유저정보 시큐리티에 넣음
 			if(username != null){
