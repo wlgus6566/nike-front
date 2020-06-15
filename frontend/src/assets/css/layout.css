@@ -38,6 +38,7 @@ header h1 a img {
 header.depth {
 }
 #container {
+    overflow: hidden;
     display: flex;
     flex: 1 1 calc(100% - 200px);
     box-sizing: border-box;
