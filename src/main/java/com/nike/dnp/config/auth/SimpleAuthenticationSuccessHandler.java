@@ -28,6 +28,10 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 	 * The Response service.
 	 */
 	private final ResponseService responseService;
+
+	/**
+	 *
+	 */
 	private final UserLoginLogService loginLogService;
 
 	@Override

@@ -9,6 +9,7 @@ import com.nike.dnp.repository.example.ManagerRepository;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.log.UserLoginLogService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
@@ -40,7 +41,7 @@ import java.util.List;
  * @history [오지훈] [2020.05.21] [최초 작성]
  * 
  */
-
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -109,9 +110,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
 	}
 
+	/**
+	 * Access decision manager access decision manager.
+	 *
+	 * @return the access decision manager
+	 */
 	@Bean
 	public AccessDecisionManager accessDecisionManager() {
-		List<AccessDecisionVoter<? extends Object>> decisionVoters
+		final List<AccessDecisionVoter<? extends Object>> decisionVoters
 				= Arrays.asList(new AuthenticatedVoter(),new RoleVoter(),new WebExpressionVoter());
 		return new UnanimousBased(decisionVoters);
 
@@ -132,7 +138,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			filter.setAuthenticationFailureHandler(authenticationFailureHandler()); // 인증 실패 핸들러
 			filter.setAuthenticationManager(authenticationManagerBean());
 		} catch (Exception exception) {
-
+			log.error("Exception", exception);
 		}
 		return filter;
 	}

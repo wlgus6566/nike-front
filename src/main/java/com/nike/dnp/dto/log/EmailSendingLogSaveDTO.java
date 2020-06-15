@@ -13,6 +13,7 @@ import lombok.*;
  */
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class EmailSendingLogSaveDTO {
@@ -37,16 +38,5 @@ public class EmailSendingLogSaveDTO {
      */
     @ApiModelProperty(name = "contents", value = "내용", required = true)
     private String contents;
-
-    /**
-     * Method to String
-     * @return String
-     */
-    public String toString() {
-        return "EmailSendingLogSaveDTO{"
-                + "userSeq=" + userSeq
-                + ", size=" + title
-                + ", page=" + contents + '}';
-    }
 
 }

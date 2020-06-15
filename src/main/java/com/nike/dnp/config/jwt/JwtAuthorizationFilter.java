@@ -22,6 +22,9 @@ import java.io.IOException;
  */
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
+	/**
+	 *
+	 */
 	private final String SECRET = JwtHelper.SECRET;
 
 	/**

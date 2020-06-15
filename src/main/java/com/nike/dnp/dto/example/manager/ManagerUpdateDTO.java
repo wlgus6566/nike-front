@@ -15,6 +15,7 @@ import lombok.*;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class ManagerUpdateDTO {
@@ -39,16 +40,5 @@ public class ManagerUpdateDTO {
      */
     @ApiModelProperty(hidden = true)
     private Long updaterSeq;
-
-    /**
-     * Method to String
-     * @return String
-     */
-    public String toString() {
-        return "ManagerUpdateDTO{"
-                + "authSeq=" + authSeq
-                + ", managerName=" + managerName
-                + ", password=" + password + '}';
-    }
 
 }

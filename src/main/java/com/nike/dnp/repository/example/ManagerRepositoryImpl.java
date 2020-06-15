@@ -33,11 +33,9 @@ public class ManagerRepositoryImpl extends QuerydslRepositorySupport implements 
     }
 
     @Override
-    public Page<Manager> findAlls(ManagerSearchDTO managerSearchDTO, PageRequest pageRequest) {
+    public Page<Manager> findAlls(final ManagerSearchDTO managerSearchDTO, final PageRequest pageRequest) {
         final QManager qManager = QManager.manager;
-        final JPQLQuery<Manager> query;
-
-        query = from(qManager)
+        final JPQLQuery<Manager> query = from(qManager)
                 .where(ManagerPredicateHelper.search(managerSearchDTO))
                 .fetchAll();
 

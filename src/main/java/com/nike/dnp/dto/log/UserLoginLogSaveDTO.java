@@ -13,6 +13,7 @@ import lombok.*;
  */
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class UserLoginLogSaveDTO {
@@ -30,15 +31,5 @@ public class UserLoginLogSaveDTO {
      */
     @ApiModelProperty(name = "loginIp", value = "IP", required = true)
     private String loginIp;
-
-    /**
-     * Method to String
-     * @return String
-     */
-    public String toString() {
-        return "ErrorLogSaveDTO{"
-                + "userSeq=" + userSeq
-                + ", loginIp=" + loginIp + '}';
-    }
 
 }

@@ -16,43 +16,48 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
+/**
+ * The type Log aspect.
+ */
 @Slf4j
 @Aspect
 @Component
 @RequiredArgsConstructor
 public class LogAspect {
 
-    private final UserActionLogService userActionLogService;
+    /**
+     * UserActionLogService
+     */
+    private final UserActionLogService actionLogService;
 
+    /**
+     * On around action log object.
+     * 유저 활동 로그 등록
+     *
+     * @param joinPoint the join point
+     * @return the object
+     */
     //@Around("execution(public * com.nike.dnp.controller..*Controller.*(..)) && args(requestDTO,..)")
     @Around("execution(public * com.nike.dnp.controller..*Controller.*(..))")
-    public Object onAround(ProceedingJoinPoint joinPoint) {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    public Object onAroundActionLog(final ProceedingJoinPoint joinPoint) throws Throwable {
+        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
-        try {
-            log.debug("========================= ActionLog Start =========================");
-            for (Object obj : joinPoint.getArgs()) {
-                if (!ObjectUtils.isEmpty(obj)) {
-                    if (obj instanceof AuthUserDTO) {
-                        UserActionLogSaveDTO actionLog = new UserActionLogSaveDTO();
-                        actionLog.setUserSeq(((AuthUserDTO) obj).getUserSeq());
-                        actionLog.setUrl(request.getRequestURI());
-                        actionLog.setParameter(Arrays.toString(joinPoint.getArgs()));
-                        actionLog.setMethodTypeName(request.getMethod());
-                        actionLog.setMethodSignature(joinPoint.getSignature().getName());
-                        userActionLogService.save(actionLog, (AuthUserDTO) obj);
-                    }
-                }
+        log.debug("========================= ActionLog Start =========================");
+        final UserActionLogSaveDTO actionLog = new UserActionLogSaveDTO();
+        for (final Object obj : joinPoint.getArgs()) {
+            if (!ObjectUtils.isEmpty(obj) && obj instanceof AuthUserDTO) {
+                actionLog.setUserSeq(((AuthUserDTO) obj).getUserSeq());
+                actionLog.setUrl(request.getRequestURI());
+                actionLog.setParameter(Arrays.toString(joinPoint.getArgs()));
+                actionLog.setMethodTypeName(request.getMethod());
+                actionLog.setMethodSignature(joinPoint.getSignature().getName());
+                actionLogService.save(actionLog, (AuthUserDTO) obj);
             }
-            log.debug("========================= ActionLog End =========================");
-
-            Object returnObj = joinPoint.proceed();
-            return returnObj;
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
         }
+        log.debug("========================= ActionLog End =========================");
 
-        return new Object();
+        final Object returnObj = joinPoint.proceed();
+        return returnObj;
     }
 
 }

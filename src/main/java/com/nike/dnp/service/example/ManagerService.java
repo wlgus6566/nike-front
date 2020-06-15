@@ -1,6 +1,6 @@
 package com.nike.dnp.service.example;
 
-import com.nike.dnp.common.viriable.ErrorEnumCode;
+import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.dto.example.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.example.manager.ManagerUpdateDTO;
 import com.nike.dnp.entity.example.Manager;

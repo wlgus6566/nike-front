@@ -15,6 +15,7 @@ import lombok.*;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class SearchDTO {
@@ -24,7 +25,7 @@ public class SearchDTO {
      * @default 0
      */
     @ApiModelProperty(value = "페이지", name = "page")
-    private int page = 0;
+    private Integer page = 0;
 
     /**
      * @author [오지훈]

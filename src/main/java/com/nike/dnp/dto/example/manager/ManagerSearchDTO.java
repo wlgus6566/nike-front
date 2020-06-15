@@ -31,6 +31,7 @@ public class ManagerSearchDTO extends SearchDTO {
      * Method to String
      * @return String
      */
+    @Override
     public String toString() {
         return "ManagerSearchDTO{"
                 + "keyword=" + keyword

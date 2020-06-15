@@ -13,6 +13,7 @@ import lombok.*;
  */
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class ErrorLogSaveDTO {
@@ -30,15 +31,5 @@ public class ErrorLogSaveDTO {
      */
     @ApiModelProperty(name = "errorContents", value = "오류 내용", required = true)
     private String errorContents;
-
-    /**
-     * Method to String
-     * @return String
-     */
-    public String toString() {
-        return "ErrorLogSaveDTO{"
-                + "url=" + url
-                + ", errorContents=" + errorContents + '}';
-    }
 
 }
