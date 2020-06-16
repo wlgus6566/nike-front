@@ -22,5 +22,5 @@ spring:
 #시큐리티 url/ ip 체크 flag
 security:
   auth:
-    url: true
+    url: false
     ip : false
