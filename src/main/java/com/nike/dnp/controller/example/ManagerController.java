@@ -51,7 +51,7 @@ public class ManagerController {
     /**
      *
      */
-    private static final String REQUEST_CHARACTER = "## Reqeust ## \n필드명|설명|필수여부|데이터 타입(길이)\\n\" + \"-|-|-|-\\n";
+    private static final String REQUEST_CHARACTER = "## Reqeust ## \n필드명|설명|필수여부|데이터 타입(길이)\n" + "-|-|-|-\n";
 
     /**
      * 사용자 전체목록 조회
@@ -93,7 +93,7 @@ public class ManagerController {
      */
     @ApiOperation(
         value = "사용자 상세 조회"
-        , notes = REQUEST_CHARACTER
+        , notes = REQUEST_CHARACTER + "\n"
         + "managerSeq|사용자시퀀스|true|Long\n\n\n\n"
         + "## Response ## \n"
         + "[하위 Model 참조]\n"
@@ -116,7 +116,7 @@ public class ManagerController {
      */
     @ApiOperation(
         value = "사용자 삭제"
-        , notes = REQUEST_CHARACTER
+        , notes = REQUEST_CHARACTER + "\n"
         + "managerSeq|사용자시퀀스|true|Long\n\n\n\n"
     )
     @DeleteMapping(value = "/{managerSeq}", name = "사용자 삭제"
@@ -135,7 +135,7 @@ public class ManagerController {
      */
     @ApiOperation(
         value = "사용자 수정"
-        , notes = REQUEST_CHARACTER
+        , notes = REQUEST_CHARACTER + "\n"
         + "managerSeq|사용자시퀀스|true|Long\n\n\n\n"
         + "## Response ## \n"
         + "필드명||필드설명|데이터 타입(길이)\n" + "-|-|-|-\n\n\n\n"
