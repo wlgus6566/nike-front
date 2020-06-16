@@ -54,8 +54,7 @@ textarea,
 select,
 button,
 table {
-    font-family: 'Roboto', 'Noto Sans KR', 'Arial', 'Apple SD Gothic Neo',
-        sans-serif;
+    font-family: 'Roboto', 'Noto Sans KR', 'Arial', 'Apple SD Gothic Neo', sans-serif;
     font-size: inherit;
     font-weight: normal;
     line-height: 1.6;
@@ -178,13 +177,12 @@ input[type='password'],
 input[type='email'] {
     box-sizing: border-box;
     width: auto;
-    height: 46px;
-    padding: 0 0 15px 0;
-    font-size: 16px;
-    line-height: 30px;
+    height: 40px;
+    padding: 0 15px;
+    font-size: 14px;
+    line-height: 38px;
     color: #000;
-    border: 0;
-    border-bottom: 1px solid #ddd;
+    border: 1px solid #ddd;
     border-radius: 0;
     outline: none;
     transition: border-color 150ms ease-in-out 0s;
