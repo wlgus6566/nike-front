@@ -52,8 +52,8 @@
                     </div>
                 </div>
                 <div class="btn-area">
-                    <a href="#!" class="btn-bottom md white">이전</a>
-                    <a href="#!" class="btn-bottom md">확인</a>
+                    <button type="button" class="btn-d-white"><span>취소</span></button>
+                    <button type="button" class="btn-d-black"><span>저장</span></button>
                 </div>
             </div>
             </div>
@@ -76,11 +76,62 @@
     .agree-list .agree-content {margin-top:20px; height:160px; background-color:#f7f7f7;}
     .agree-list .agree-content .info {display:inline-block; margin:20px 0; width:calc(100% - 70px); height:120px; padding:0 30px 0 30px; overflow-y:auto; }
 
-    .btn-area {font-size:0; text-align:center; margin-top:40px;}
-    .btn-bottom {box-sizing:border-box;}
-    .btn-bottom.md {display:inline-block; width:120px; height:40px; line-height:40px; border-radius:0; font-weight:700; font-size:12px; background-color:#000; color:#fff; letter-spacing:-0.5px; vertical-align:bottom;}
-    .btn-bottom.md +.md {margin-left:10px;}
-    .btn-bottom.white {border:1px solid #000; background-color:#fff; color:#000;}
+    .btn-area {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+    }
+
+    [class^='btn-d'] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        min-width: 120px;
+        height: 40px;
+        padding: 0 20px;
+        border: 1px solid #000;
+        border-radius: 0;
+        font-size: 12px;
+        font-weight: bold;
+        color: #000;
+    }
+    [class^='btn-r'] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        min-width: 120px;
+        height: 40px;
+        padding: 0 20px;
+        border: 1px solid #000;
+        border-radius: 2;
+        font-size: 12px;
+        font-weight: bold;
+        color: #000;
+    }
+    [class^='btn-'] span {
+        position: relative;
+    }
+    [class^='btn-'] + [class^='btn-'] {
+        margin-left: 10px;
+    }
+    [class^='btn-'][class*='-sm'] {
+        min-width: 100px;
+        height: 30px;
+    }
+    [class^='btn-r'][class*='-sm'] {
+        color: #555;
+    }
+    [class^='btn-'][class*='-black'] {
+        background: #000;
+        color: #fff;
+    }
+    [class^='btn-'][class*='-gray'] {
+        border-color: #555;
+        background: #555;
+        color: #fff;
+    }
 </style>
 </body>
 </html>
