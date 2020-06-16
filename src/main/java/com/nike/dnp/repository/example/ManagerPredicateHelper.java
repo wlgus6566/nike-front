@@ -20,7 +20,7 @@ import lombok.experimental.UtilityClass;
 public class ManagerPredicateHelper {
 
     /**
-     * Search predicate.
+     * 검색 조건
      *
      * @param managerSearchDTO the manager search dto
      * @return the predicate
