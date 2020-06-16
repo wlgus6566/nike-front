@@ -1,6 +1,6 @@
 <template>
-    <header v-bind:class="{ active: NavStatus }" sticky-container>
-        <div class="inner" sticky-offset="{top:0, bottom:0}" sticky-side="both" sticky-z-index="20" v-sticky>
+    <header v-bind:class="{ active: NavStatus }">
+        <div class="inner">
             <h1>
                 <router-link exact to="/">
                     <img alt="" src="@/assets/images/logo-nike.svg" />
@@ -45,13 +45,12 @@
     </header>
 </template>
 <script>
-import Sticky from 'vue-sticky-directive';
-//import Velocity from 'velocity-animate'
+//import Sticky from 'vue-sticky-directive';
 
 export default {
     name: 'appHeader',
     directives: {
-        Sticky,
+        // Sticky,
     },
     computed: {
         NavStatus() {

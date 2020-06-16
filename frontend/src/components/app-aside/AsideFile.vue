@@ -1,9 +1,11 @@
 <template>
     <aside class="sticky-container" sticky-container>
-        <div class="inner" on-stick="onStick" sticky-offset="{top: 10, bottom: 30}" sticky-side="both" sticky-z-index="20" v-sticky>
-            <div class="aside-wrap">
-                <UserInfo></UserInfo>
-                <TabComponent v-bind:tabMenus="tabMenus"></TabComponent>
+        <div class="inner" sticky-offset="{top:0, bottom:0}" sticky-side="both" sticky-z-index="20" v-sticky="shouldStick">
+            <div class="test">
+                <div class="aside-wrap">
+                    <UserInfo></UserInfo>
+                    <TabComponent v-bind:tabMenus="tabMenus"></TabComponent>
+                </div>
             </div>
         </div>
     </aside>
@@ -14,6 +16,8 @@ import UserInfo from './UserInfo.vue';
 import TabComponent from '@/components/tab-components/index.vue';
 
 export default {
+    name: 'AsideFile',
+    props: ['shouldStick'],
     data: function () {
         return {
             tabMenus: {
@@ -31,7 +35,6 @@ export default {
             },
         };
     },
-    name: 'AsideDefault',
     directives: {
         Sticky,
     },

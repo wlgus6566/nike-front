@@ -8,7 +8,7 @@ const router = new VueRouter({
     routes: [
         {
             path: '/test',
-            component: () => import('@/views/test'),
+            component: () => import('@/views/testPage/testPage.vue'),
             meta: { layout: 'Clean' },
         },
         {
