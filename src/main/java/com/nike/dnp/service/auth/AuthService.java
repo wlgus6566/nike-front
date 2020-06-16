@@ -1,7 +1,7 @@
 package com.nike.dnp.service.auth;
 
 import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
-import com.nike.dnp.common.viriable.ErrorEnumCode.LoginError;
+import com.nike.dnp.common.variable.ErrorEnumCode.LoginError;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.entity.example.Manager;
 import com.nike.dnp.repository.example.ManagerRepository;

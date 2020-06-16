@@ -1,7 +1,7 @@
 package com.nike.dnp.config.auth;
 
 
-import com.nike.dnp.common.viriable.ErrorEnumCode;
+import com.nike.dnp.common.variable.ErrorEnumCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;

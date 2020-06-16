@@ -15,6 +15,7 @@ import javax.persistence.Column;
  */
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class UserActionLogSaveDTO {
@@ -53,18 +54,5 @@ public class UserActionLogSaveDTO {
      */
     @ApiModelProperty(name = "parameter", value = "Parameter", required = true)
     private String parameter;
-
-    /**
-     * Method to String
-     * @return String
-     */
-    public String toString() {
-        return "ErrorLogSaveDTO{"
-                + "userSeq=" + userSeq
-                + ", url=" + url
-                + ", methodTypeName=" + methodTypeName
-                + ", methodSignature=" + methodSignature
-                + ", parameter=" + parameter + '}';
-    }
 
 }

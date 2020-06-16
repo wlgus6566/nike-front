@@ -15,6 +15,7 @@ import lombok.*;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class ManagerSaveDTO {
@@ -45,15 +46,4 @@ public class ManagerSaveDTO {
     @ApiModelProperty(hidden = true)
     private Long registerSeq;
 
-    /**
-     * Method to String
-     * @return String
-     */
-    public String toString() {
-        return "ManagerSaveDTO{"
-                + "authSeq=" + authSeq
-                + ", managerId=" + managerId
-                + ", managerName=" + managerName
-                + ", password=" + password + '}';
-    }
 }

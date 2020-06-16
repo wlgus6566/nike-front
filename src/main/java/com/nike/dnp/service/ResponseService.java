@@ -1,6 +1,6 @@
 package com.nike.dnp.service;
 
-import com.nike.dnp.common.viriable.CommonResponse;
+import com.nike.dnp.common.variable.CommonResponse;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import lombok.RequiredArgsConstructor;

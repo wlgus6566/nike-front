@@ -31,7 +31,7 @@
 	<logger name="com.nike.dnp" level="INFO" />
 	<logger name="jdbc.sqlonly" level="ERROR" />
 
-	<root level="ERROR">
+	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="ERROR_FILE" />
 	</root>

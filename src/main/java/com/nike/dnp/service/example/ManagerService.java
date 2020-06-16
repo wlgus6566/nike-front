@@ -1,6 +1,6 @@
 package com.nike.dnp.service.example;
 
-import com.nike.dnp.common.viriable.ErrorEnumCode;
+import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.dto.example.manager.ManagerSearchDTO;
 import com.nike.dnp.dto.example.manager.ManagerUpdateDTO;
 import com.nike.dnp.entity.example.Manager;
@@ -8,7 +8,6 @@ import com.nike.dnp.entity.example.ManagerAuth;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.example.ManagerAuthRepository;
 import com.nike.dnp.repository.example.ManagerRepository;
-import com.nike.dnp.repository.example.ManagerRepositorySupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -41,7 +40,6 @@ public class ManagerService {
      * ManagerRepository
      */
     private final ManagerRepository managerRepository;
-    private final ManagerRepositorySupport managerRepositorySupport;
 
     /**
      * @author [오지훈]
@@ -73,11 +71,11 @@ public class ManagerService {
                         , managerSearchDTO.getSize()
                         , Sort.by("managerSeq").descending()));*/
         // QueryDsl 기능 이용
-        return managerRepositorySupport.findAlls(
+        return managerRepository.findAlls(
                 managerSearchDTO,
                 PageRequest.of(managerSearchDTO.getPage()
                         , managerSearchDTO.getSize()
-                        , Sort.by("managerSeq").descending()));
+                        , Sort.by("managerId").descending()));
     }
 
     /**

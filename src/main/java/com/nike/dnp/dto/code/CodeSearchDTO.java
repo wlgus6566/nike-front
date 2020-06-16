@@ -1,30 +1,28 @@
-package com.nike.dnp.dto.example.manager;
+package com.nike.dnp.dto.code;
 
 import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 /**
- * ManagerSearchDTO
+ * CodeSearchDTO
  *
- * @since 2020.05.22
  * @author [오지훈]
- * @Description Request > 검색용 DTO 작성
+ * @Description Code(공통코드) Search DTO 작성
  * @history [오지훈] [2020.05.22] [최초 작성]
- *
+ * @since 2020.05.22
  */
-
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class ManagerSearchDTO extends SearchDTO {
+public class CodeSearchDTO extends SearchDTO {
 
     /**
      * 검색어
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "검색어", name = "keyword")
+    @ApiModelProperty(name = "keyword", value = "검색어")
     private String keyword = "";
 
     /**
@@ -33,10 +31,9 @@ public class ManagerSearchDTO extends SearchDTO {
      */
     @Override
     public String toString() {
-        return "ManagerSearchDTO{"
+        return "CodeSearchDTO{"
                 + "keyword=" + keyword
                 + ", size=" + getSize()
                 + ", page=" + getPage() + '}';
     }
-
 }

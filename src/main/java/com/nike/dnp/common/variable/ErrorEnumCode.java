@@ -1,4 +1,4 @@
-package com.nike.dnp.common.viriable;
+package com.nike.dnp.common.variable;
 
 import org.springframework.stereotype.Component;
 
