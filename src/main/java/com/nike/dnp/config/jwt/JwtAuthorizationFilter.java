@@ -22,7 +22,10 @@ import java.io.IOException;
  */
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-	private final String SECRET = JwtHelper.SECRET;
+	/**
+	 *
+	 */
+	private static final String SECRET_KEY = JwtHelper.SECRET;
 
 	/**
 	 *
@@ -62,7 +65,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 		Authentication authentication = null;
 		if(token != null){
 			// 토큰 디코드
-			final String username = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build().verify(token.replace(JwtHelper.TOKEN_PREFIX, "")).getSubject();
+			final String username = JWT.require(Algorithm.HMAC512(SECRET_KEY.getBytes())).build().verify(token.replace(JwtHelper.TOKEN_PREFIX, "")).getSubject();
 			// username(managerId)로 유저정보 조회
 			// 유저정보 시큐리티에 넣음
 			if(username != null){

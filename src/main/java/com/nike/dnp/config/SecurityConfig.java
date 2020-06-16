@@ -4,9 +4,11 @@ import com.nike.dnp.config.auth.*;
 import com.nike.dnp.config.jwt.JwtAuthorizationFilter;
 import com.nike.dnp.repository.example.ManagerRepository;
 import com.nike.dnp.service.ResponseService;
-import com.nike.dnp.service.example.SecurityFillterMataService;
+import com.nike.dnp.service.example.SecurityFilterMataService;
 import com.nike.dnp.service.log.UserLoginLogService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -36,7 +38,7 @@ import java.util.List;
  * @history [오지훈] [2020.05.21] [최초 작성]
  * 
  */
-
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -57,15 +59,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	private final UserLoginLogService loginLogService;
 
-	private final SecurityFillterMataService securityFillterMataService;
+	/**
+	 * 필터 정보 서비스
+	 */
+	private final SecurityFilterMataService filterMataService;
 
 	/**
-	 * ignore
+	 * Auth url string.
+	 *
+	 * @param authUrl the auth url
+	 * @return the string
 	 */
-	private static final String[] PUBLIC = {
-		"/error", "/login", "/logout", "/h2-console", "/h2-console/**"
-		/*,"/api/**"*/
-	};
+	@Bean(name = "authUrl")
+	@Value("${security.auth.url:}")
+	public String authUrl(final String authUrl) {
+		return authUrl;
+	}
+
+	/**
+	 * Auth ip String.
+	 *
+	 * @param authIp the auth ip
+	 * @return the string
+	 */
+	@Bean(name = "authIp")
+	@Value("${security.auth.ip:}")
+	public String authIP(final String authIp) {
+		return authIp;
+	}
 
 
 	/**
@@ -95,8 +116,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(final HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
+						.accessDecisionManager(accessDecisionManager())
 						.antMatchers(HttpMethod.POST,"/login").permitAll()
-						.anyRequest().authenticated().accessDecisionManager(accessDecisionManager());
+						.anyRequest().authenticated();
+
+
 
 		http.addFilter(authenticationFilter()) // 인증 필터
 			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.managerRepository)) //jwt 토큰 인증 필터
@@ -107,9 +131,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	}
 
+	/**
+	 * 억세스 manager
+	 *
+	 * @return the affirmative based
+	 */
 	@Bean
 	public AffirmativeBased accessDecisionManager(){
-		List<AccessDecisionVoter<?>> decisionVoters = Arrays.asList(new RoleVoter(), new AuthAccessDecisionVoter(securityFillterMataService));
+		final List<AccessDecisionVoter<?>> decisionVoters = Arrays.asList(new RoleVoter(), new AuthAccessDecisionVoter(filterMataService));
 		return new AffirmativeBased(decisionVoters);
 	}
 
@@ -121,6 +150,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public AuthenticationFilter authenticationFilter() {
+
 		AuthenticationFilter filter = null;
 		try {
 			filter = new AuthenticationFilter(authenticationManager());
@@ -128,7 +158,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			filter.setAuthenticationFailureHandler(authenticationFailureHandler()); // 인증 실패 핸들러
 			filter.setAuthenticationManager(authenticationManagerBean());
 		} catch (Exception exception) {
-
+			log.error("exception", exception);
 		}
 		return filter;
 	}
@@ -162,5 +192,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public AccessDeniedHandler accessDeniedHandler() {
 		return new SimpleAccessDeniedHandler(responseService);
 	}
+
 
 }

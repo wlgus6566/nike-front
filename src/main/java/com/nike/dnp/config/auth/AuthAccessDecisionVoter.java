@@ -1,104 +1,133 @@
 package com.nike.dnp.config.auth;
 
-import com.nike.dnp.dto.example.manager.SecurityFilterMataDTO;
-import com.nike.dnp.entity.example.SecurityFilterMata;
-import com.nike.dnp.service.example.SecurityFillterMataService;
+import com.nike.dnp.entity.example.SecurityIpFilterMata;
+import com.nike.dnp.entity.example.SecurityUrlFilterMata;
+import com.nike.dnp.service.example.SecurityFilterMataService;
+import com.nike.dnp.util.BeanUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.FilterInvocation;
+import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * The type Auth access decision voter.
+ */
 @Slf4j
+@RequiredArgsConstructor
+@Component
 public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 
-	private SecurityFillterMataService securityFillterMataService;
+	/**
+	 *
+	 */
+	private final SecurityFilterMataService filterMataService;
 
-	public AuthAccessDecisionVoter(SecurityFillterMataService securityFillterMataService) {
-		 this.securityFillterMataService = securityFillterMataService;
-	}
-
-	private String _PASSMEHOD = "ALL";
-	private String _PERMITALL = "PERMITALL";
-
+	/**
+	 *
+	 */
+	private String permitAll = "PERMITALL";
 
 	@Override
-	public boolean supports(ConfigAttribute attribute) {
+	public boolean supports(final ConfigAttribute attribute) {
 		return true;
 	}
 
 	@Override
-	public boolean supports(Class<?> clazz) {
+	public boolean supports(final Class<?> clazz) {
 		return true;
 	}
 
 	@Override
-	public int vote(Authentication authentication,
-					Object object,
-					Collection<ConfigAttribute> attributes) {
+	public int vote(final Authentication authentication,
+					final Object object,
+					final Collection<ConfigAttribute> attributes) {
 
-		List<SecurityFilterMata> securityMetaList = securityFillterMataService.findAll();
+		final boolean authUrl = Boolean.valueOf(String.valueOf(BeanUtil.getBean("authUrl")));
+		final boolean authIp = Boolean.valueOf(String.valueOf(BeanUtil.getBean("authIp")));
+		int result = ACCESS_GRANTED;
 
+		if(authIp){
+			result = ipExpression(object);
+		}
 
-		String url = ((FilterInvocation) object).getRequestUrl();
-		AntPathMatcher antPathMatcher = new AntPathMatcher();
-		boolean check = false;
+		if(result == ACCESS_GRANTED && authUrl){
+			result = urlExpression(authentication,object);
+		}
 
+		return result;
+	}
 
-		SecurityFilterMataDTO securityFilterMataDTO = new SecurityFilterMataDTO();
-		for(SecurityFilterMata securityFilterMata : securityMetaList){
-			if(antPathMatcher.match(securityFilterMata.getAntPattern(),url)){
-				check = true;
-				securityFilterMataDTO.setAntPattern(securityFilterMata.getAntPattern());
-				if(String.valueOf(securityFilterMata.getHttpMethod()).isEmpty()){
-					securityFilterMataDTO.setHttpMethod(_PASSMEHOD);
-				}else{
-					securityFilterMataDTO.setHttpMethod(securityFilterMata.getHttpMethod());
-				}
-				securityFilterMataDTO.setExpression(securityFilterMata.getExpression());
+	/**
+	 * ip 권한 확인
+	 * @param object
+	 * @return
+	 */
+	private int ipExpression(final Object object) {
+
+		final List<SecurityIpFilterMata> ipFilterList = filterMataService.ipFindAll();
+		final String remoteAddr = ((FilterInvocation) object).getRequest().getRemoteAddr();
+		int result = ACCESS_DENIED;
+		for(final SecurityIpFilterMata ipFilter : ipFilterList){
+			final String ipFilterIp = ipFilter.getIp();
+			if(ipFilterIp.equals(String.valueOf(remoteAddr))){
+				result = ACCESS_GRANTED;
 				break;
 			}
 		}
-		int result = ACCESS_DENIED;
-		if(check && securityFilterMataDTO != null){
-			result = urlExpressionCheck(authentication,object,securityFilterMataDTO);
-		}
-
 		return result;
 	}
 
-	private int urlExpressionCheck(Authentication authentication,Object object,
-									   SecurityFilterMataDTO securityFilterMataDTO) {
+	/**
+	 * url 권한 확인
+	 * @param authentication
+	 * @param object
+	 * @return
+	 */
+	private int urlExpression(final Authentication authentication,final Object object) {
 
-		String method = ((FilterInvocation) object).getRequest().getMethod();
-		String url = ((FilterInvocation) object).getRequestUrl();
+		// 입력 받은 url
+		final String method = ((FilterInvocation) object).getRequest().getMethod();
+		final String url = ((FilterInvocation) object).getRequestUrl();
+		// DB url 조회
+		final List<SecurityUrlFilterMata> securityMetaList = filterMataService.urlFindAll();
+
 		//url 체크
-		AntPathMatcher antPathMatcher = new AntPathMatcher();
-		int result = ACCESS_DENIED;
-		if(antPathMatcher.match(securityFilterMataDTO.getAntPattern(),url) &&
-				(securityFilterMataDTO.getHttpMethod().equals(_PASSMEHOD) || securityFilterMataDTO.getHttpMethod().toUpperCase().equals(method.toUpperCase()))){
-			// 롤 체크
-			String [] roleArray = securityFilterMataDTO.getExpression().split(",");
-			for(String role : roleArray){
-				if(role.toUpperCase().equals(_PERMITALL)){
-					result = ACCESS_GRANTED;
-				}else{
-					for(GrantedAuthority authority : authentication.getAuthorities()){
-						if(authority.getAuthority().toUpperCase().equals(role.toUpperCase())){
+		final AntPathMatcher antPathMatcher = new AntPathMatcher();
+		int result = ACCESS_ABSTAIN;
+		for(final SecurityUrlFilterMata urlFilterMata : securityMetaList){
+			//url 매칭 되는것이 있는지 체크
+			if(antPathMatcher.match(urlFilterMata.getAntPattern(),url)){
+				// http 메소드 확인
+				if(String.valueOf(urlFilterMata.getHttpMethod()).isEmpty() || urlFilterMata.getHttpMethod().equalsIgnoreCase(method)){
+					final String[] roleArray = urlFilterMata.getExpression().split(",");
+					for(final String role : roleArray){
+						if(role.equalsIgnoreCase(permitAll)){
 							result = ACCESS_GRANTED;
-							break;
+						}else{
+							for(final GrantedAuthority authority : authentication.getAuthorities()){
+								if(authority.getAuthority().equalsIgnoreCase(role)){
+									result = ACCESS_GRANTED;
+									break;
+								}
+							}
 						}
 					}
+				}else{
+					result = ACCESS_DENIED;
 				}
+				break;
 			}
-		}else{
-			result = ACCESS_ABSTAIN;
 		}
 		return result;
 	}
+
+
 }

@@ -48,12 +48,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 					throw new InsufficientAuthenticationException(ErrorEnumCode.LoginError.LOGE03.toString());
 				}
 			}
-
 			token = new UsernamePasswordAuthenticationToken(username, password);
 		} catch (AuthenticationException exception) {
-			throw exception;
+			log.error("AuthenticationException", exception);
 		}
-
 
 		return authManager.authenticate(token);
 

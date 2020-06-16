@@ -16,3 +16,9 @@ spring:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+#시큐리티 url/ ip 체크 flag
+security:
+  auth:
+    url: true
+    ip : false
