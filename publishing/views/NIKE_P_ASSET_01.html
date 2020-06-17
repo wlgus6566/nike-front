@@ -8,7 +8,7 @@
 	<link href="../../frontend/src/assets/css/reset.css" rel="stylesheet">
 	<link href="../../frontend/src/assets/css/fonts.css" rel="stylesheet">
 	<link href="../../frontend/src/assets/css/layout.css" rel="stylesheet">
-	<link href="../../frontend/src/assets/css/ul.nikeFront.css" rel="stylesheet">
+	<link href="../../frontend/src/assets/css/ui.nikeFront.css" rel="stylesheet">
 </head>
 <body>
 <div id="app">
@@ -30,49 +30,7 @@
 			<div class="contents">
 				<h2 class="page-title">UPLOAD</h2>
 				<h3 class="form-title">캠페인 설정</h3>
-				<style>
-					[class^=hr-]{display:block; height:2px;  border:none; margin:0;}
-					.hr-black{background:#000;}
-					.hr-gray{height:1px; background:#ccc;}
-				</style>
 				<hr class="hr-black">
-				<style>
-					[class^=form-list]{}
-					.form-row{display:flex; padding:15px 0;}
-					.form-row + .form-row{border-top:1px solid #eee;}
-					.form-column{display:flex; flex:0 0 130px; box-sizing:border-box; padding:0 20px;}
-					.form-column + .form-column{padding:0 0 0 10px; flex:1 1 auto; align-items:center;}
-					.form-column .check-label{min-width:100px;}
-					.form-column input[type="text"]{width:100%;}
-					.form-list-thumb{position:relative; padding-left:250px;}
-					.form-list-thumb .thumb-row{position:absolute; top:0; left:0; padding:15px 20px; width:190px;}
-
-					.label-title{display:block; box-sizing:border-box; padding:5px 0; height:30px; font-size:14px; color:#333; font-weight:bold; line-height:20px;}
-					.label-title.required{position:relative; padding-right:8px;}
-					.label-title.required:before{content:"필수입력"; position:absolute; top:50%; right:0; display:block; width:3px; height:3px; border-radius:100%; background:#ed6161; text-indent:-9999px; overflow:hidden; transform:translateY(-50%)}
-
-					.check-label{display:inline-flex; padding-right:5px; align-items:center; box-sizing:border-box; color:#888888;}
-					.check-label .radio{margin-right:5px;}
-
-					.radio{position:relative; display:inline-block; width:20px; height:20px;}
-					.radio input{position:absolute; top:0; left:0; width:100%; height:100%; opacity:0;}
-					.radio span{display:block; width:100%; height:100%; background:url('../../frontend/src/assets/images/svg/icon-radio-off.svg') no-repeat center;}
-					.radio input:checked + span{background-image:url('../../frontend/src/assets/images/svg/icon-radio-on.svg')}
-
-					.textarea{display:block; width:100%;}
-					.textarea textarea{min-height:58px; height:auto; padding:10px 15px; border:1px solid #ddd; font-size:14px; line-height:20px;}
-					.textarea .count{display:block; height:14px; margin-top:10px; text-align:right; font-size:12px; color:#555; line-height:14px;}
-					.thumb-file{position:relative; display:inline-block; text-align:center; width:190px;}
-					.thumb-file input{z-index:2; position:absolute; top:0; left:0; width:100%; height:100%; opacity:0;}
-					.thumb-file .thumb{position:relative; display:block; width:100%; padding-top:100%; background:#eeeeee;}
-					.thumb-file .thumb img{position:absolute; top:50%; left:50%; display:none; width:100%; transform:translate(-50% ,-50%);}
-					.thumb-file .txt{position:absolute; top:50%; left:50%; display:block; width:100%; font-size:14px; color:#333; line-height:20px; transform:translate(-50% , -50%);}
-					.thumb-file .txt:before{content:""; display:block; width:44px; height:44px; margin:0 auto 6px; background:url('../../frontend/src/assets/images/svg/icon-upload-img.svg') no-repeat center;}
-					.thumb-file.file-upload .thumb img{display:block;}
-					.thumb-file.file-upload .txt{position:relative; top:auto; left:auto; display:inline-block; width:auto; margin-top:15px; border-bottom: 1px solid #333; transform:translate(0 , 0); line-height:18px; font-size:12px; font-weight:bold;}
-					.thumb-file.file-upload .txt:before{display:none;}
-				</style>
-
 				<ul class="form-list-thumb">
 					<li class="form-row thumb-row">
 						<span class="thumb-file file-upload">
@@ -209,11 +167,6 @@
 					</button>
 				</div>
 				<hr class="hr-black">
-				<style>
-					.file-setting{position:relative; margin:20px 20px 0; padding:0 40px; border:1px solid #ccc; }
-					.btn-form-del{position:absolute; top:10px; right:10px; display:block; width:30px; height:30px; background:url("../../frontend/src/assets/images/svg/icon-form-close.svg") no-repeat center;}
-					.btn-form-del span{display:block; overflow:hidden; text-indent:-99999px;}
-				</style>
 
 				<div class="file-setting">
 					<ul class="form-list">
@@ -264,16 +217,6 @@
 								<span class="label-title">업로드 된 파일</span>
 							</div>
 							<div class="form-column">
-								<style>
-									.upload-file-box{display:flex; width:100%;}
-									.upload-file-list{flex: 1 1 auto; max-height:130px; padding:10px 15px; border:1px solid #ddd; background:#f7f7f7; overflow:auto;}
-									.upload-file-list li label{display:flex; align-items:center; padding:5px 0; font-size:14px; color:#000; }
-									.upload-file-list li label .checkbox{margin-right:10px;}
-									.upload-file-box .btn-box{flex:0 0 54px; margin-left:10px;}
-									.upload-file-box .btn-box [class^=btn-]{min-width:54px; padding:0; margin:0;}
-									.upload-file-box .btn-box [class^=btn-]+[class^=btn-]{margin-top:5px;}
-
-								</style>
 								<div class="upload-file-box">
 									<ul class="upload-file-list">
 										<li>

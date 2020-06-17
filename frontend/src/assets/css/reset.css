@@ -239,15 +239,15 @@ textarea[readonly] {
 }
 input::placeholder,
 input::-webkit-input-placeholder {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: normal;
     color: #bbb !important;
 }
 textarea::placeholder,
 textarea::-webkit-input-placeholder {
-    font-size: 14px;
-    font-weight: normal;
-    color: #bbb !important;
+    font-size: 12px;
+    font-weight: 300;
+    color: #888 !important;
 }
 /* input search cancel button */
 input::-webkit-search-cancel-button {
