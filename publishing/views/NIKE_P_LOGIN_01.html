@@ -26,7 +26,10 @@
                             <h2 class="title">
                                 NIKE KOREA<span>는<br /> </span>PARTNER<span>와 함께합니다.</span>
                             </h2>
-                            <div class="input-group"><label for="id"></label><input type="text" id="id" value="digitalplaform@nike.com" placeholder="ID" /> <label for="pw"></label><input type="password" id="pw" value="111111111111" placeholder="PW" maxlength="12" /></div>
+                            <div class="input-group">
+                                <label for="id"><input type="text" id="id" value="digitalplaform@nike.com" placeholder="ID" /></label>
+                                <label for="pw"><input type="password" id="pw" value="111111111111" placeholder="PW" maxlength="12" /></label>
+                            </div>
                             <button type="button" class="btn-login">
                                 LOGIN
                             </button>
@@ -44,14 +47,22 @@
                             </h2>
                             <p>인증메일이 발송되었습니다.<br />메일함을 확인하여 인증코드를 입력해주세요.</p>
                             <div class="input-group">
-                                <label for="word1"></label><input type="text" maxlength="1" id="word1" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word2"></label
-                            ><input type="text" maxlength="1" id="word2" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word3"></label
-                            ><input type="text" maxlength="1" id="word3" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word4"></label
-                            ><input type="text" maxlength="1" id="word4" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word5"></label
-                            ><input type="text" maxlength="1" id="word5" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word6"></label
-                            ><input type="text" maxlength="1" id="word6" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word7"></label
-                            ><input type="text" maxlength="1" id="word7" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word8"></label
-                            ><input type="text" maxlength="1" id="word8" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
+                                <label for="word1"></label>
+                                <input type="text" maxlength="1" id="word1" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
+                                <label for="word2"></label>
+                                <input type="text" maxlength="1" id="word2" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
+                                <label for="word3"></label>
+                                <input type="text" maxlength="1" id="word3" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
+                                <label for="word4"></label>
+                                <input type="text" maxlength="1" id="word4" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
+                                <label for="word5"></label>
+                                <input type="text" maxlength="1" id="word5" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
+                                <label for="word6"></label>
+                                <input type="text" maxlength="1" id="word6" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
+                                <label for="word7"></label>
+                                <input type="text" maxlength="1" id="word7" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
+                                <label for="word8"></label>
+                                <input type="text" maxlength="1" id="word8" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
                             </div>
                             <button type="button" class="btn-login">
                                 인증하기
@@ -177,7 +188,8 @@
         letter-spacing: 0;
     }
 
-    .input-group input ~ input {
+    .input-group label ~ label {
+        display:block;
         margin-top: 8px;
     }
 
