@@ -8,6 +8,14 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Code Entity
+ *
+ * @author [오지훈]
+ * @Description Code(공통 코드) Entity 작성
+ * @history [오지훈] [2020.05.22] [최초 작성]
+ * @since 2020.05.22
+ */
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
