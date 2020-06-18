@@ -1,15 +1,34 @@
 <template>
     <div id="wrap">
-        <appHeader />
+        <header class="sticky-container" sticky-container>
+            <div sticky-offset="{top:0, bottom:0}" sticky-side="both" sticky-z-index="20" v-sticky>
+                <appHeader />
+            </div>
+        </header>
         <section id="container">
             <div class="contents">
                 <transition mode="out-in" name="component-fade">
                     <router-view></router-view>
                 </transition>
             </div>
-            <transition mode="out-in" name="aside-change" v-on:before-enter="AsideBeforeEnter" v-on:enter="AsideEnter" v-on:after-enter="AsideAfterEnter" v-on:leave="AsideLeave" appear v-on:before-appear="AsideBeforeAppear" v-on:appear="AsideAppear">
-                <component :is="AppAside" v-bind:shouldStick="shouldStick" />
-            </transition>
+            <aside class="sticky-container" sticky-container>
+                <div sticky-offset="{top:0, bottom:0}" sticky-side="both" sticky-z-index="20" v-sticky>
+                    <transition
+                        mode="out-in"
+                        name="aside-change"
+                        v-on:before-enter="AsideBeforeEnter"
+                        v-on:enter="AsideEnter"
+                        v-on:after-enter="AsideAfterEnter"
+                        v-on:leave="AsideLeave"
+                        appear
+                        v-on:before-appear="AsideBeforeAppear"
+                        v-on:appear="AsideAppear"
+                    >
+                        <component :is="AppAside" />
+                    </transition>
+                </div>
+                <div class="bg"></div>
+            </aside>
         </section>
         <footer>
             footer
@@ -17,19 +36,21 @@
     </div>
 </template>
 <script>
+import Sticky from 'vue-sticky-directive';
 import appHeader from '@/components/app-header';
 
 export default {
     name: 'LayoutDefault',
     data() {
-        return {
-            shouldStick: true,
-        };
+        return {};
     },
     computed: {
         AppAside() {
             return `Aside${this.$route.meta.aside || 'Default'}`;
         },
+    },
+    directives: {
+        Sticky,
     },
     components: {
         appHeader,
@@ -38,39 +59,6 @@ export default {
         AsideOrder: () => import('@/components/app-aside/AsideOrder.vue'),
     },
     methods: {
-        //header
-        // HeaderBeforeAppear: function (el) {
-        //     console.log(el);
-        //     this.HeaderInit(el);
-        // },
-        // HeaderAppear: function (el, done) {
-        //     this.HeaderAnimation(el, '0%', done);
-        // },
-        // HeaderBeforeEnter: function (el) {
-        //     this.HeaderInit(el);
-        // },
-        // HeaderEnter: function (el, done) {
-        //     this.HeaderAnimation(el, '0%', done);
-        // },
-        // HeaderLeave: function (el, done) {
-        //     this.HeaderAnimation(el, '100%', done);
-        // },
-        // HeaderAnimation: function (el, status, done) {
-        //     const logo = document.querySelector('header h1');
-        //     this.$anime({
-        //         targets: logo,
-        //         translateX: status,
-        //         duration: 300,
-        //         easing: 'easeInOutQuart',
-        //         complete: function (anim) {
-        //             done();
-        //         },
-        //     });
-        // },
-        // HeaderInit: function (el) {
-        //     el.style.transform = 'translateX(100%)';
-        // },
-
         //aside
         AsideBeforeAppear: function (el) {
             this.AsideInit(el);
@@ -84,27 +72,39 @@ export default {
         AsideEnter: function (el, done) {
             this.AsideAnimation(el, '0%', done);
         },
-        AsideAfterEnter: function (el) {
+        AsideAfterEnter: function () {
             this.shouldStick = true;
         },
         AsideLeave: function (el, done) {
+            const scrollElement = window.document.scrollingElement || window.document.body || window.document.documentElement;
+            this.$anime({
+                targets: scrollElement,
+                scrollTop: 0,
+                duration: 300,
+                easing: 'easeInOutQuad',
+            });
             this.AsideAnimation(el, '100%', done);
         },
         AsideAnimation: function (el, status, done) {
-            const target = el.querySelector('.test');
+            const elements = [document.querySelector('aside .bg'), el];
             this.$anime({
-                targets: target,
+                targets: elements,
                 translateX: status,
                 duration: 300,
                 easing: 'easeInOutQuart',
-                complete: function (anim) {
+                complete: function () {
                     done();
+                },
+                update: function (anime) {
+                    console.log(anime.progress);
                 },
             });
         },
         AsideInit: function (el) {
-            const target = el.querySelector('.test');
-            target.style.transform = 'translateX(100%)';
+            const elements = [document.querySelector('aside .bg'), el];
+            for (let i = 0; i < elements.length; i++) {
+                elements[i].style.transform = 'translateX(100%)';
+            }
         },
     },
 };

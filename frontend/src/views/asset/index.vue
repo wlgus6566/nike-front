@@ -4,14 +4,84 @@
         <button v-on:click="add" type="button">Add</button>
         <button v-on:click="remove" type="button">Remove</button>
         <transition-group name="list-complete" class="list-complete" tag="ul">
-            <li
-                v-for="item in items"
-                v-bind:key="item"
-                class="list-complete-item"
-            >
+            <li v-for="item in items" v-bind:key="item" class="list-complete-item">
                 {{ item }}
             </li>
         </transition-group>
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
+        123123<br />
     </div>
 </template>
 <script>

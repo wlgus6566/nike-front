@@ -1,23 +1,17 @@
 <template>
-    <aside class="sticky-container" sticky-container>
-        <div class="inner" sticky-offset="{top:0, bottom:0}" sticky-side="both" sticky-z-index="20" v-sticky="shouldStick">
-            <div class="test">
-                <div class="aside-wrap">
-                    <UserInfo></UserInfo>
-                    <TabComponent v-bind:tabMenus="tabMenus"></TabComponent>
-                </div>
-            </div>
+    <div class="inner">
+        <div class="aside-wrap">
+            <UserInfo></UserInfo>
+            <TabComponent v-bind:tabMenus="tabMenus"></TabComponent>
         </div>
-    </aside>
+    </div>
 </template>
 <script>
-import Sticky from 'vue-sticky-directive';
 import UserInfo from './UserInfo.vue';
 import TabComponent from '@/components/tab-components/';
 
 export default {
     name: 'AsideDefault',
-    props: ['shouldStick'],
     watch: {},
     data: function () {
         return {
@@ -31,9 +25,6 @@ export default {
                 ],
             },
         };
-    },
-    directives: {
-        Sticky,
     },
     components: {
         UserInfo,

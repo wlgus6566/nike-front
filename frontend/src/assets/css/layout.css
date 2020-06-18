@@ -51,12 +51,30 @@ header.depth {
 aside {
     position: relative;
     flex: 0 0 300px;
+}
+aside .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
     background: #f7f7f7;
 }
 aside .inner {
     width: 300px;
     box-sizing: border-box;
     padding: 80px 30px 130px;
+}
+aside .aside-wrap {
+    position: relative;
+}
+aside .inner:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 footer {
     flex: 0 0 100%;
