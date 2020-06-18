@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+    <g fill="none" fill-rule="evenodd">
+        <path fill="#FAFAFA" d="M0 0H100V100H0z"/>
+        <g transform="translate(30 30)">
+            <circle cx="29.25" cy="15.25" r="1" stroke="#000" stroke-width="1.053"/>
+            <text fill="#000" font-family="Helvetica" font-size="8">
+                <tspan x="13.826" y="22">360</tspan>
+            </text>
+            <path stroke="#CCC" d="M7.932 18C3.122 19.11 0 20.9 0 22.921c0 2.12 3.435 3.986 8.649 5.079m2.988.464c2.498.345 5.263.536 8.17.536C30.96 29 40 26.185 40 22.713c0-1.389-1.446-2.673-3.895-3.713"/>
+            <path stroke="#CCC" d="M25.166 10.184C23.684 4.104 20.868 0 17.638 0 12.868 0 9 8.954 9 20s3.867 20 8.638 20c3.05 0 5.73-3.66 7.267-9.185m.469-1.746c.222-.975.41-1.998.56-3.06l.155-1.314"/>
+            <path stroke="#CCC" d="M26.317 7.185L26.317 10.343 23.159 10.343" transform="rotate(26 24.738 8.764)"/>
+            <path stroke="#CCC" d="M39.458 18.355L39.458 21.513 36.3 21.513" transform="scale(-1 1) rotate(-75 0 69.298)"/>
+        </g>
+    </g>
+</svg>

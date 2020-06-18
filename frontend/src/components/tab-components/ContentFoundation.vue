@@ -1,9 +1,11 @@
 <template>
     <div>
-        login
+        ContentFoundation
     </div>
 </template>
 <script>
-export default {};
+export default {
+    name: 'ContentFoundation.vue',
+};
 </script>
 <style scoped></style>

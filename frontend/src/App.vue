@@ -1,13 +1,11 @@
 <template>
     <div id="app">
-        <transition mode="out-in" name="layout-change">
-            <component :is="layout" />
+        <transition name="layout-change" mode="out-in">
+            <component :is="Applayout" />
         </transition>
     </div>
 </template>
 <script>
-import * as layouts from './views/layouts';
-
 export default {
     name: 'App',
     data() {
@@ -15,32 +13,22 @@ export default {
             navActive: true,
         };
     },
+    watch: {
+        $route() {},
+    },
     computed: {
-        layout() {
-            return `${this.$route.meta.layout || 'default'}-layout`;
+        Applayout() {
+            return `Layout${this.$route.meta.layout || 'Default'}`;
         },
     },
     components: {
-        ...layouts,
+        LayoutDefault: () => import('@/views/layouts/LayoutDefault.vue'),
+        LayoutClean: () => import('@/views/layouts/LayoutClean.vue'),
     },
-    mounted() {
-        //console.log(this.layout)
-    },
-    methods: {},
 };
 </script>
 <style>
 @import url('assets/css/fonts.css');
 @import url('assets/css/layout.css');
 @import url('assets/css/reset.css');
-
-.layout-change-enter-active,
-.layout-change-leave-active {
-    transition: opacity 0.3s ease;
-}
-.layout-change-enter,
-	.layout-change-leave-to
-		/* .layout-change-leave-active below version 2.1.8 */ {
-    opacity: 0;
-}
 </style>

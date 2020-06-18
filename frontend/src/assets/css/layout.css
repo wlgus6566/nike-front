@@ -2,22 +2,23 @@
 
 :root {
     font-size: 14px;
-    --safeTop: env(safe-area-inset-top);
-    --safeBtm: env(safe-area-inset-bottom);
 }
 html,
 body {
     box-sizing: border-box;
-    min-height: 100%;
+    height: 100%;
 }
 body {
     padding: var(--safeTop) 0 var(--safeBtm);
 }
-
+#app {
+    height: 100%;
+}
 #wrap {
     display: flex;
     flex-wrap: wrap;
     min-width: 1440px;
+    height: 100%;
 }
 header {
     position: relative;
@@ -40,8 +41,9 @@ header h1 a img {
 header.depth {
 }
 #container {
+    overflow: hidden;
     display: flex;
-    flex: 1 1 auto;
+    flex: 1 1 calc(100% - 200px);
     box-sizing: border-box;
     min-height: calc(100vh - 144px);
 }
@@ -52,12 +54,30 @@ header.depth {
 aside {
     position: relative;
     flex: 0 0 300px;
+}
+aside .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
     background: #f7f7f7;
 }
 aside .inner {
     width: 300px;
     box-sizing: border-box;
     padding: 80px 30px 130px;
+}
+aside .aside-wrap {
+    position: relative;
+}
+aside .inner:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 footer {
     flex: 0 0 100%;
@@ -74,4 +94,28 @@ nav a {
     font-size: 16px;
     line-height: 40px;
     letter-spacing: 0.05em;
+}
+
+/*.aside-ani-enter-active {*/
+/*    transition: all 0.3s ease-in-out;*/
+/*}*/
+/*.aside-ani-leave-active {*/
+/*    transition: all 0.3s ease-in-out;*/
+/*}*/
+/*.aside-ani-enter,*/
+/*.aside-ani-leave-to {*/
+/*    opacity: 0;*/
+/*    transform: translateX(100%);*/
+/*}*/
+
+.component-fade-enter-active {
+    transition: all 0.3s ease-in-out;
+}
+.component-fade-leave-active {
+    transition: all 0.3s ease-in-out;
+}
+.component-fade-enter,
+.component-fade-leave-to {
+    opacity: 0;
+    transform: translateY(10px);
 }

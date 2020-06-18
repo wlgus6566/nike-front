@@ -1,9 +1,11 @@
 <template>
-    <div></div>
+    <div>
+        ContentTooKlit
+    </div>
 </template>
 <script>
 export default {
-    name: 'order-aside',
-}
+    name: 'ContentTooKlit',
+};
 </script>
 <style scoped></style>
