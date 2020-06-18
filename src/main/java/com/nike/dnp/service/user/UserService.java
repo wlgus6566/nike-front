@@ -7,6 +7,7 @@ import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.user.UserSaveDTO;
 import com.nike.dnp.dto.user.UserSearchDTO;
 import com.nike.dnp.dto.user.UserUpdateDTO;
+import com.nike.dnp.dto.user.UserUpdateStatusDTO;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.entity.user.UserAuth;
@@ -96,6 +97,17 @@ public class UserService implements UserDetailsService {
     }
 
     /**
+     * 아이디 유무 조회
+     *
+     * @param userId the user id
+     * @return the int
+     * @author [오지훈]
+     */
+    public int countByUserId(final String userId) {
+        return userRepository.findByUserId(userId).isPresent() ? 1 : 0;
+    }
+
+    /**
      * 등록
      *
      * @param userSaveDTO the user save dto
@@ -115,7 +127,7 @@ public class UserService implements UserDetailsService {
                 .registerSeq(authUserDTO.getUserSeq())
                 .build());
 
-        if (user.getUserSeq() > 0) {
+        if (user.getUserSeq() > 0 && auth.isPresent()) {
             userAuthRepository.save(UserAuth.builder()
                     .userSeq(user.getUserSeq())
                     .authSeq(auth.get().getAuthSeq())
@@ -135,7 +147,7 @@ public class UserService implements UserDetailsService {
      * @author [오지훈]
      */
     @Transactional
-    public User update(
+    public Optional<User> update(
             final Long userSeq
             , final UserUpdateDTO userUpdateDTO
             , final AuthUserDTO authUserDTO
@@ -150,11 +162,29 @@ public class UserService implements UserDetailsService {
                     .userSeq(userSeq)
                     .authSeq(auth.get().getAuthSeq())
                     .build());
-        } else {
-            user = Optional.of(new User());
         }
 
-        return user.get();
+        return user;
+    }
+
+    /**
+     * 상태값 변경
+     *
+     * @param userSeq             the user seq
+     * @param userUpdateStatusDTO the user update status dto
+     * @param authUserDTO         the auth user dto
+     * @return the optional
+     * @author [오지훈]
+     */
+    @Transactional
+    public Optional<User> updateStatus(
+            final Long userSeq
+            , final UserUpdateStatusDTO userUpdateStatusDTO
+            , final AuthUserDTO authUserDTO
+    ) {
+        Optional<User> user = userRepository.findById(userSeq);
+        user.ifPresent(value -> value.updateStatus(userUpdateStatusDTO.getUserStatusCode(), authUserDTO.getUserSeq()));
+        return user;
     }
 
     /**
