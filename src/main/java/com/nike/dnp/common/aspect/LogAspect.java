@@ -17,7 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 /**
- * The type Log aspect.
+ * LogAspect
+ *
+ * @author [오지훈]
+ * @Description LogAspect 작성
+ * @history [오지훈] [2020.05.21] [최초 작성]
+ * @since 2020.05.21
  */
 @Slf4j
 @Aspect
@@ -27,6 +32,7 @@ public class LogAspect {
 
     /**
      * UserActionLogService
+     * @author [오지훈]
      */
     private final UserActionLogService actionLogService;
 
@@ -36,6 +42,7 @@ public class LogAspect {
      *
      * @param joinPoint the join point
      * @return the object
+     * @author [오지훈]
      */
     //@Around("execution(public * com.nike.dnp.controller..*Controller.*(..)) && args(requestDTO,..)")
     @Around("execution(public * com.nike.dnp.controller..*Controller.*(..))")

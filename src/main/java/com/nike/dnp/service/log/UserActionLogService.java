@@ -24,13 +24,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserActionLogService {
 
     /**
-     * UserActionLog(유저_활동_로그) Repository
+     * UserActionLogRepository
      * @author [오지훈]
      */
     private final UserActionLogRepository logRepository;
 
     /**
-     * UserActionLog(유저_활동_로그) 등록
+     * 유저 활동 로그 등록
      *
      * @param saveDTO the save dto
      * @return user action log

@@ -18,12 +18,13 @@ import org.springframework.stereotype.Repository;
 public interface UserRepositoryCustom {
 
     /**
-     * Find alls page.
+     * 조회(페이징)
      *
      * @param userSearchDTO the user search dto
      * @param pageRequest   the page request
      * @return the page
+     * @author [오지훈]
      */
-    Page<User> findAlls(final UserSearchDTO userSearchDTO, final PageRequest pageRequest);
+    Page<User> findPages(final UserSearchDTO userSearchDTO, final PageRequest pageRequest);
 
 }

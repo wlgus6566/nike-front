@@ -31,12 +31,11 @@ import java.util.List;
 
 /**
  * Security Config
- * 
- * @since 2020.05.21
+ *
  * @author [오지훈]
  * @Description Security Config 작성
  * @history [오지훈] [2020.05.21] [최초 작성]
- * 
+ * @since 2020.05.21
  */
 @Slf4j
 @Configuration
@@ -45,22 +44,27 @@ import java.util.List;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	/**
-	 *
+	 * UserRepository
+	 * @author [오지훈]
 	 */
 	private final UserRepository userRepository;
 
 	/**
-	 *
+	 * ResponseService
+	 * @author [오지훈]
 	 */
 	private final ResponseService responseService;
 
 	/**
-	 *
+	 * UserLoginLogService
+	 * @author [윤태호]
 	 */
 	private final UserLoginLogService loginLogService;
 
 	/**
+	 * SecurityFilterMataService
 	 * 필터 정보 서비스
+	 * @author [윤태호]
 	 */
 	private final SecurityFilterMataService filterMataService;
 
@@ -69,6 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 *
 	 * @param authUrl the auth url
 	 * @return the string
+	 * @author [윤태호]
 	 */
 	@Bean(name = "authUrl")
 	@Value("${security.auth.url:}")
@@ -81,6 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 *
 	 * @param authIp the auth ip
 	 * @return the string
+	 * @author [윤태호]
 	 */
 	@Bean(name = "authIp")
 	@Value("${security.auth.ip:}")
@@ -93,15 +99,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * 암호화 모듈
 	 *
 	 * @return the password encoder
+	 * @author [윤태호]
 	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
+	/**
+	 * 예외처리 목록 등록
+	 * @param web
+	 * @throws Exception
+	 * @author [윤태호]
+	 */
 	@Override
 	public void configure(final WebSecurity web) throws Exception {
-		// 예외처리 목록 등록
 		final String[] staticPatterns = {
 				"/resources/**", "/static/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/css/**", "/font/**", "/js/**", "/images/**", // Static 요소
@@ -112,6 +124,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	}
 
+	/**
+	 * configure
+	 * @param http
+	 * @throws Exception
+	 * @author [윤태호]
+	 */
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 
@@ -130,9 +148,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	/**
-	 * 억세스 manager
+	 * Access Manager
 	 *
 	 * @return the affirmative based
+	 * @author [윤태호]
 	 */
 	@Bean
 	public AffirmativeBased accessDecisionManager(){
@@ -145,6 +164,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 *
 	 * @return the authentication filter
 	 * @throws Exception the exception
+	 * @author [윤태호]
 	 */
 	@Bean
 	public AuthenticationFilter authenticationFilter() {
@@ -165,6 +185,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * 승인 성공 후 핸들러
 	 *
 	 * @return the authentication success handler
+	 * @author [윤태호]
 	 */
 	@Bean
 	public AuthenticationSuccessHandler authenticationSuccessHandler() {
@@ -175,6 +196,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * 승인 실패 후 핸들러
 	 *
 	 * @return the authentication failure handler
+	 * @author [윤태호]
 	 */
 	@Bean
 	public AuthenticationFailureHandler authenticationFailureHandler() {
@@ -185,6 +207,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * 권한 실패 핸들러
 	 *
 	 * @return the AccessDenied handler
+	 * @author [윤태호]
 	 */
 	@Bean
 	public AccessDeniedHandler accessDeniedHandler() {

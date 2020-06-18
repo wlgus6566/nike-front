@@ -22,6 +22,7 @@ public class UserPredicateHelper {
      *
      * @param userSearchDTO the user search dto
      * @return the predicate
+     * @author [오지훈]
      */
     public static Predicate search(final UserSearchDTO userSearchDTO) {
         final BooleanBuilder builder = new BooleanBuilder();

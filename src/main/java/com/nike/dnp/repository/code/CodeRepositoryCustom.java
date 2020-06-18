@@ -18,12 +18,12 @@ import org.springframework.stereotype.Repository;
 public interface CodeRepositoryCustom {
 
     /**
-     * Find alls page.
+     * 조회(페이징)
      *
      * @param codeSearchDTO the code search dto
      * @param pageRequest   the page request
      * @return the page
      */
-    Page<Code> findAlls(final CodeSearchDTO codeSearchDTO, final PageRequest pageRequest);
+    Page<Code> findPages(final CodeSearchDTO codeSearchDTO, final PageRequest pageRequest);
 
 }

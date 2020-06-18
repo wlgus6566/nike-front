@@ -24,13 +24,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class ErrorLogService {
 
     /**
-     * ErrorLog(오류 로그) Repository
+     * ErrorLogRepository
      * @author [오지훈]
      */
     private final ErrorLogRepository logRepository;
 
     /**
-     * ErrorLog(오류 로그) 등록
+     * 오류 로그 등록
      *
      * @param saveDTO the save dto
      * @return error log

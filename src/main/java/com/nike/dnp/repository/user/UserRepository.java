@@ -22,6 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
      *
      * @param userId 유저 ID
      * @return the optional
+     * @author [오지훈]
      */
     Optional<User> findByUserId(String userId);
 

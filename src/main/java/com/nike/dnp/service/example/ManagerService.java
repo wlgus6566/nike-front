@@ -86,7 +86,7 @@ public class ManagerService {
      */
     public Manager findById(final Long managerSeq) {
         return managerRepository.findById(managerSeq)
-                .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.ManageError.MANE01.toString(), ErrorEnumCode.ManageError.MANE01.getMessage()));
+                .orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.UserError.USER01.toString(), ErrorEnumCode.UserError.USER01.getMessage()));
     }
 
     /**

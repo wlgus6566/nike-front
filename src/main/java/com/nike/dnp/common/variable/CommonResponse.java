@@ -14,24 +14,44 @@ public enum CommonResponse {
     FAIL("ERR", "에러발생");
 
     /**
-     *
+     * 응답 코드
+     * @author [오지훈]
      */
     String code;
 
     /**
-     *
+     * 응답 메시지
+     * @author [오지훈]
      */
     String msg;
 
+    /**
+     * 생성자 주입
+     * @param code
+     * @param msg
+     * @author [오지훈]
+     */
     CommonResponse(final String code, final String msg) {
         this.code = code;
         this.msg = msg;
     }
 
+    /**
+     * Gets code.
+     *
+     * @return the code
+     * @author [오지훈]
+     */
     public String getCode() {
         return code;
     }
 
+    /**
+     * Gets msg.
+     *
+     * @return the msg
+     * @author [오지훈]
+     */
     public String getMsg() {
         return msg;
     }

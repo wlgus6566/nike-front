@@ -25,20 +25,21 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
 
     /**
      * Instantiates a new User repository.
+     * @author [오지훈]
      */
     public UserRepositoryImpl() {
         super(User.class);
     }
 
     /**
-     * Find alls page.
+     * 조회(페이징)
      *
      * @param userSearchDTO the user search dto
      * @param pageRequest   the page request
      * @return the page
      */
     @Override
-    public Page<User> findAlls(UserSearchDTO userSearchDTO, PageRequest pageRequest) {
+    public Page<User> findPages(UserSearchDTO userSearchDTO, PageRequest pageRequest) {
         final QUser qUser = QUser.user;
         final JPQLQuery<User> query = from(qUser)
                 .where(UserPredicateHelper.search(userSearchDTO))

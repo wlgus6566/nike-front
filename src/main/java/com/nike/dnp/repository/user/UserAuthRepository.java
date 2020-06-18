@@ -19,6 +19,7 @@ public interface UserAuthRepository extends JpaRepository<UserAuth, Long> {
      * 유저 권한 삭제
      *
      * @param userSeq the user seq
+     * @author [오지훈]
      */
     void deleteByUserSeq(Long userSeq);
 

@@ -28,6 +28,7 @@ public class CodeSearchDTO extends SearchDTO {
     /**
      * Method to String
      * @return String
+     * @author [오지훈]
      */
     @Override
     public String toString() {

@@ -9,11 +9,10 @@ import lombok.experimental.UtilityClass;
 /**
  * CodePredicateHelper
  *
- * @since 2020.05.22
  * @author [오지훈]
  * @Description Code(공통코드) Predicate Helper 작성
  * @history [오지훈] [2020.05.22] [최초 작성]
- *
+ * @since 2020.05.22
  */
 @UtilityClass
 public class CodePredicateHelper {
@@ -23,6 +22,7 @@ public class CodePredicateHelper {
      *
      * @param codeSearchDTO the code search dto
      * @return the predicate
+     * @author [오지훈]
      */
     public static Predicate search(final CodeSearchDTO codeSearchDTO) {
         final BooleanBuilder builder = new BooleanBuilder();

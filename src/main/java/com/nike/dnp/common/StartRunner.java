@@ -1,33 +1,34 @@
 package com.nike.dnp.common;
 
-import com.nike.dnp.service.RedisService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 /**
- * The type Start runner.
+ * Runner
+ *
+ * @author [오지훈]
+ * @Description Runner 작성
+ * @history [오지훈] [2020.05.21] [최초 작성]
+ * @since 2020.05.21
  */
+@Slf4j
 @Component
 public class StartRunner implements ApplicationRunner {
 
-    /**
-     *
-     */
-    private final transient RedisService redisService;
 
     /**
      * Instantiates a new Start runner.
-     *
-     * @param redisService the redis service
+     * @author [오지훈]
      */
-    public StartRunner(final RedisService redisService) {
-        this.redisService = redisService;
+    public StartRunner() {
+        super();
     }
 
     @Override
-    //@VisibleForTesting
     public void run(final ApplicationArguments args) {
+        log.info("Application Runner!!");
     }
 
 }

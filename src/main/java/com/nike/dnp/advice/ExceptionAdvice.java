@@ -13,19 +13,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * Global Exception Handler
  *
- * @since 2020.06.03
  * @author [이소정]
  * @Description Global Exception Handler 작성
  * @history [이소정] [2020.06.03] [최초 작성]
- *
+ * @since 2020.06.03
  */
-
 @Slf4j
 @ControllerAdvice
 public class ExceptionAdvice {
 
     /**
      * ResponseService
+     * @author [이소정]
      */
     private final transient ResponseService responseService;
 
@@ -33,6 +32,7 @@ public class ExceptionAdvice {
      * Instantiates a new Exception advice.
      *
      * @param responseService the response service
+     * @author [이소정]
      */
     public ExceptionAdvice(final ResponseService responseService) {
         this.responseService = responseService;
@@ -43,6 +43,7 @@ public class ExceptionAdvice {
      *
      * @param exception the exception
      * @return 상태값 : 200, 코드, 메세지
+     * @author [이소정]
      */
     @ExceptionHandler(CodeMessageHandleException.class)
     @ResponseBody
@@ -58,6 +59,7 @@ public class ExceptionAdvice {
      *
      * @param exception the e
      * @return the common result
+     * @author [이소정]
      */
     @ExceptionHandler(Exception.class)
     @ResponseBody

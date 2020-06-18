@@ -19,25 +19,19 @@ import java.util.Optional;
 public interface CodeRepository extends JpaRepository<Code, Long>, CodeRepositoryCustom {
 
     /**
-     * 하위 코드 목록
-     *
-     * @param upperCode 상위 코드
-     * @return the list
-     */
-    //List<Code> findAllByUpperCodeAndUseYnOrderByCodeOrderAsc(String upperCode, String useYn);
-
-    /**
      * 상위 코드 목록
      *
      * @return the list
+     * @author [오지훈]
      */
     List<Code> findAllByUpperCodeIsNullOrderByCodeOrderAsc();
 
     /**
-     * Find by code code.
+     * 상세 조회
      *
      * @param code the code
      * @return the code
+     * @author [오지훈]
      */
     Optional<Code> findByCode(String code);
 

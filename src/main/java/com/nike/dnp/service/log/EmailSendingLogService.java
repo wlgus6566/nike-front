@@ -24,13 +24,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class EmailSendingLogService {
 
     /**
-     * EmailSendingLog(메일_발송_로그) Repository
+     * EmailSendingLogRepository
      * @author [오지훈]
      */
     private final EmailSendingLogRepository logRepository;
 
     /**
-     * EmailSendingLog(메일_발송_로그) 등록
+     * 메일 발송 로그 등록
      *
      * @param saveDTO the save dto
      * @return email sending log

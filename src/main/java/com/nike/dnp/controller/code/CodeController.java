@@ -25,10 +25,10 @@ import java.util.Optional;
 /**
  * CodeController
  *
- * @since 2020.05.27
  * @author [오지훈]
  * @Description Code(공통 코드) Controller 작성
  * @history [오지훈] [2020.05.27] [최초 작성]
+ * @since 2020.05.27
  */
 @Slf4j
 @RestController
@@ -61,6 +61,7 @@ public class CodeController {
      * @param codeSearchDTO the code search dto
      * @param authUserDTO   the auth user dto
      * @return the all codes
+     * @author [오지훈]
      */
     @ApiOperation(
         value = "코드 목록 조회"
@@ -86,7 +87,7 @@ public class CodeController {
             final CodeSearchDTO codeSearchDTO
             , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
-        return responseService.getSingleResult(codeService.findAlls(codeSearchDTO));
+        return responseService.getSingleResult(codeService.findPages(codeSearchDTO));
     }
 
     /**
@@ -95,6 +96,7 @@ public class CodeController {
      * @param codeUpperDTO the code upper dto
      * @param authUserDTO  the auth user dto
      * @return the conf codes
+     * @author [오지훈]
      */
     @ApiOperation(
         value = "하위 코드 목록 조회"
@@ -109,7 +111,6 @@ public class CodeController {
             final CodeUpperDTO codeUpperDTO
             , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
-        //codeService.findByUpperCode(codeUpperDTO.getUpperCode())
         return responseService.getSingleResult(codeService.subCodes(codeUpperDTO.getUpperCode()));
     }
 
@@ -119,6 +120,7 @@ public class CodeController {
      * @param codeSaveDTO the code save dto
      * @param authUserDTO the auth user dto
      * @return the response entity
+     * @author [오지훈]
      */
     @ApiOperation(
         value = "코드 등록"
@@ -134,27 +136,18 @@ public class CodeController {
             final @RequestBody CodeSaveDTO codeSaveDTO
             , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
-        Code code = codeService.save(
-                codeSaveDTO.getCode()
-                , codeSaveDTO.getUpperCode()
-                , codeSaveDTO.getCodeName()
-                , codeSaveDTO.getCodeDescription()
-                , codeSaveDTO.getCodeOrder()
-                , codeSaveDTO.getUseYn()
-                , authUserDTO.getUserSeq()
-                , codeSaveDTO.getUpperYn()
-        );
-        codeService.redisSaveUpperCode();
+        Code code = codeService.save(codeSaveDTO, authUserDTO);
         return responseService.getSingleResult(code);
     }
 
     /**
      * 코드 수정
      *
-     * @param codeCd        the code cd
+     * @param code          the code
      * @param codeUpdateDTO the code update dto
      * @param authUserDTO   the auth user dto
      * @return the response entity
+     * @author [오지훈]
      */
     @ApiOperation(
             value = "코드 수정"
@@ -164,25 +157,25 @@ public class CodeController {
             + "## Response ## \n"
             + "[하위 Model 참조]\n\n\n\n"
     )
-    @PutMapping(value = "/{codeCd}", name = "코드 수정"
+    @PutMapping(value = "/{code}", name = "코드 수정"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Code>> updateCode(
-            final @PathVariable String codeCd
+            final @PathVariable String code
             , final @RequestBody CodeUpdateDTO codeUpdateDTO
             , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
-        Optional<Code> code = codeService.update(codeCd, codeUpdateDTO, authUserDTO);
-        codeService.redisSaveUpperCode();
-        return responseService.getSingleResult(code);
+        Optional<Code> codeEntity = codeService.update(code, codeUpdateDTO, authUserDTO);
+        return responseService.getSingleResult(codeEntity);
     }
 
     /**
      * 코드 삭제
      *
-     * @param codeCd      the code cd
+     * @param code        the code
      * @param authUserDTO the auth user dto
      * @return the response entity
+     * @author [오지훈]
      */
     @ApiOperation(
             value = "코드 삭제"
@@ -191,16 +184,13 @@ public class CodeController {
             + "## Response ## \n"
             + "[하위 Model 참조]\n\n\n\n"
     )
-    @DeleteMapping(value = "/{codeCd}", name = "코드 삭제"
+    @DeleteMapping(value = "/{code}", name = "코드 삭제"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Code>> deleteCode(
-            final @PathVariable String codeCd
+            final @PathVariable String code
             , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
-        Optional<Code> code = codeService.findCode(codeCd);
-        code.get().delete("N", authUserDTO.getUserSeq());
-        codeService.redisSaveUpperCode();
-        return responseService.getSingleResult(code);
+        return responseService.getSingleResult(codeService.delete(code, authUserDTO));
     }
 }

@@ -1,6 +1,7 @@
 package com.nike.dnp.service.code;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
+import com.nike.dnp.dto.code.CodeSaveDTO;
 import com.nike.dnp.dto.code.CodeSearchDTO;
 import com.nike.dnp.dto.code.CodeUpdateDTO;
 import com.nike.dnp.entity.code.Code;
@@ -39,8 +40,8 @@ public class CodeService {
     private final RedisService redisService;
 
     /**
-     * @author [오지훈]
      * CodeRepository
+     * @author [오지훈]
      */
     private final CodeRepository codeRepository;
 
@@ -49,9 +50,10 @@ public class CodeService {
      *
      * @param codeSearchDTO the code search dto
      * @return the list
+     * @author [오지훈]
      */
-    public Page<Code> findAlls(final CodeSearchDTO codeSearchDTO) {
-        return codeRepository.findAlls(
+    public Page<Code> findPages(final CodeSearchDTO codeSearchDTO) {
+        return codeRepository.findPages(
                 codeSearchDTO,
                 PageRequest.of(codeSearchDTO.getPage()
                         , codeSearchDTO.getSize()
@@ -63,8 +65,9 @@ public class CodeService {
      *
      * @param upperCode 상위 코드
      * @return the list
+     * @author [오지훈]
      */
-    public List<Code> findByUpperCode(final String upperCode) {
+    public List<Code> findCodesByUpperCode(final String upperCode) {
         final Optional<Code> topCode = codeRepository.findByCode(upperCode);
         return topCode.get().getSubCodes();
     }
@@ -74,8 +77,9 @@ public class CodeService {
      *
      * @param code the code
      * @return code
+     * @author [오지훈]
      */
-    public Optional<Code> findCode(final String code) {
+    public Optional<Code> findByCode(final String code) {
         return codeRepository.findByCode(code);
     }
 
@@ -85,6 +89,7 @@ public class CodeService {
      * @param code        the code
      * @param authUserDTO the auth user dto
      * @return the optional
+     * @author [오지훈]
      */
     @Transactional
     public Optional<Code> delete(
@@ -93,50 +98,35 @@ public class CodeService {
     ) {
         final Optional<Code> codeEntity = codeRepository.findByCode(code);
         codeEntity.ifPresent(value -> value.delete("N", authUserDTO.getUserSeq()));
+        this.redisSaveUpperCode();
         return codeEntity;
     }
 
     /**
      * 등록
      *
-     * @param code            the code
-     * @param upperCode       the upper code
-     * @param codeName        the code name
-     * @param codeDescription the code description
-     * @param codeOrder       the code order
-     * @param useYn           the use yn
-     * @param registerSeq     the register seq
-     * @param upperYn         the upper yn
+     * @param codeSaveDTO the code save dto
+     * @param authUserDTO the auth user dto
      * @return the code
+     * @author [오지훈]
      */
     @Transactional
     public Code save(
-            final String code
-            , final String upperCode
-            , final String codeName
-            , final String codeDescription
-            , final Long codeOrder
-            , final String useYn
-            , final Long registerSeq
-            , final String upperYn
+            final CodeSaveDTO codeSaveDTO
+            , final AuthUserDTO authUserDTO
     ) {
         final Code codeEntity = new Code();
-        codeEntity.setCode(code);
-        if(upperYn.equals("N")) {
-            codeEntity.setUpperCode(upperCode);
+        codeEntity.setCode(codeSaveDTO.getCode());
+        if(codeSaveDTO.getUpperYn().equals("N")) {
+            codeEntity.setUpperCode(codeSaveDTO.getUpperCode());
         }
-        //final Optional<Code> upperCodeEntity = codeRepository.findByCode(upperCode);
-        //upperCodeEntity.ifPresent(codeEntity::setUpperCode);
-        //upperCodeEntity.ifPresent(codeEntity::setTopCode);
-        /*if (upperCodeEntity.isPresent()) {
-            codeEntity.setParent(upperCodeEntity.get());
-        }*/
-        codeEntity.setCodeName(codeName);
-        codeEntity.setCodeDescription(codeDescription);
-        codeEntity.setCodeOrder(codeOrder);
-        codeEntity.setUseYn(useYn);
-        codeEntity.setRegisterSeq(registerSeq);
-        codeEntity.setUpdaterSeq(registerSeq);
+        codeEntity.setCodeName(codeSaveDTO.getCodeName());
+        codeEntity.setCodeDescription(codeSaveDTO.getCodeDescription());
+        codeEntity.setCodeOrder(codeSaveDTO.getCodeOrder());
+        codeEntity.setUseYn(codeSaveDTO.getUseYn());
+        codeEntity.setRegisterSeq(authUserDTO.getUserSeq());
+        codeEntity.setUpdaterSeq(authUserDTO.getUserSeq());
+        this.redisSaveUpperCode();
         return codeRepository.save(codeEntity);
     }
 
@@ -147,6 +137,7 @@ public class CodeService {
      * @param codeUpdateDTO the code update dto
      * @param authUserDTO   the auth user dto
      * @return the optional
+     * @author [오지훈]
      */
     @Transactional
     public Optional<Code> update(
@@ -171,18 +162,19 @@ public class CodeService {
                     , codeUpdateDTO.getUpperCode()
             ));
         }
+        this.redisSaveUpperCode();
         return codeEntity;
     }
 
     /**
      * Redis code 갱신
+     * @author [오지훈]
      */
     public void redisSaveUpperCode() {
         log.info("findAllByUpperCodeIsNullOrderByCodeOrderAsc");
         List<Code> codes = codeRepository.findAllByUpperCodeIsNullOrderByCodeOrderAsc();
 
         HashMap<String, List<Code>> codeMap = new HashMap<>();
-
         for (Code code : codes) {
             if (!code.getCode().isEmpty()) {
                 codeMap.put(code.getCode(), code.getSubCodes());
@@ -198,6 +190,7 @@ public class CodeService {
      *
      * @param upperCode the upper code
      * @return the list
+     * @author [오지훈]
      */
     public List<Code> subCodes(String upperCode) {
         return ((HashMap<String, List<Code>>) redisService.get("CODE_ARRAY")).get(upperCode);

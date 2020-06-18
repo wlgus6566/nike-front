@@ -26,20 +26,22 @@ public class CodeRepositoryImpl extends QuerydslRepositorySupport implements Cod
     /**
      * 생성자 주입
      * Instantiates a new Manager repository.
+     * @author [오지훈]
      */
     public CodeRepositoryImpl() {
         super(Code.class);
     }
 
     /**
-     * Find alls page.
+     * 조회(페이징)
      *
      * @param codeSearchDTO the code search dto
      * @param pageRequest   the page request
      * @return the page
+     * @author [오지훈]
      */
     @Override
-    public Page<Code> findAlls(CodeSearchDTO codeSearchDTO, PageRequest pageRequest) {
+    public Page<Code> findPages(CodeSearchDTO codeSearchDTO, PageRequest pageRequest) {
         final QCode qCode = QCode.code1;
         final JPQLQuery<Code> query = from(qCode)
                 .where(CodePredicateHelper.search(codeSearchDTO))
