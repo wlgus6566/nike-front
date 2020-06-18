@@ -5,8 +5,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-
 /**
  * The type Start runner.
  */
@@ -30,8 +28,6 @@ public class StartRunner implements ApplicationRunner {
     @Override
     //@VisibleForTesting
     public void run(final ApplicationArguments args) {
-        redisService.set("test", "12312312313", 10);
-        redisService.set("test1", new HashMap<String, Object>(), 10);
     }
 
 }

@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +45,7 @@ public class CodeService {
     private final CodeRepository codeRepository;
 
     /**
-     * 전체조회(paging)
+     * 전체 조회(paging)
      *
      * @param codeSearchDTO the code search dto
      * @return the list
@@ -58,13 +59,24 @@ public class CodeService {
     }
 
     /**
-     * 상세조회
+     * 하위 코드 목록 조회
+     *
+     * @param upperCode 상위 코드
+     * @return the list
+     */
+    public List<Code> findByUpperCode(final String upperCode) {
+        final Optional<Code> topCode = codeRepository.findByCode(upperCode);
+        return topCode.get().getSubCodes();
+    }
+
+    /**
+     * 상세 조회
      *
      * @param code the code
      * @return code
      */
     public Optional<Code> findCode(final String code) {
-        return codeRepository.findById(code);
+        return codeRepository.findByCode(code);
     }
 
     /**
@@ -80,9 +92,6 @@ public class CodeService {
             , final AuthUserDTO authUserDTO
     ) {
         final Optional<Code> codeEntity = codeRepository.findById(code);
-        /*if(codeEntity.isPresent()) {
-            codeEntity.get().delete("N", authUserDTO.getUserSeq());
-        }*/
         codeEntity.ifPresent(value -> value.delete("N", authUserDTO.getUserSeq()));
         return codeEntity;
     }
@@ -97,6 +106,7 @@ public class CodeService {
      * @param codeOrder       the code order
      * @param useYn           the use yn
      * @param registerSeq     the register seq
+     * @param upperYn         the upper yn
      * @return the code
      */
     @Transactional
@@ -108,12 +118,19 @@ public class CodeService {
             , final Long codeOrder
             , final String useYn
             , final Long registerSeq
+            , final String upperYn
     ) {
-        //final Optional<Code> upperCodeEntity = codeRepository.findById();
-        //upperCodeEntity.ifPresent(codeEntity::setUpperCode);
         final Code codeEntity = new Code();
         codeEntity.setCode(code);
-        codeEntity.setUpperCode(upperCode);
+        if(upperYn.equals("N")) {
+            codeEntity.setUpperCode(upperCode);
+        }
+        //final Optional<Code> upperCodeEntity = codeRepository.findByCode(upperCode);
+        //upperCodeEntity.ifPresent(codeEntity::setUpperCode);
+        //upperCodeEntity.ifPresent(codeEntity::setTopCode);
+        /*if (upperCodeEntity.isPresent()) {
+            codeEntity.setParent(upperCodeEntity.get());
+        }*/
         codeEntity.setCodeName(codeName);
         codeEntity.setCodeDescription(codeDescription);
         codeEntity.setCodeOrder(codeOrder);
@@ -137,38 +154,53 @@ public class CodeService {
             , final CodeUpdateDTO codeUpdateDTO
             , final AuthUserDTO authUserDTO
     ) {
-        final Optional<Code> codeEntity = codeRepository.findById(code);
-        /*if (codeEntity.isPresent()) {
-            codeEntity.get().update(
-                    codeUpdateDTO.getUpperCode()
-                    , codeUpdateDTO.getCodeName()
+        final Optional<Code> codeEntity = codeRepository.findByCode(code);
+        if (codeEntity.get().getUpperCode().isEmpty()) {
+            codeEntity.ifPresent(value -> value.update(
+                    codeUpdateDTO.getCodeName()
                     , codeUpdateDTO.getCodeDescription()
                     , codeUpdateDTO.getCodeOrder()
-                    , codeUpdateDTO.getUseYn()
                     , authUserDTO.getUserSeq()
-            );
-        }*/
-        codeEntity.ifPresent(value -> value.update(
-                codeUpdateDTO.getUpperCode()
-                , codeUpdateDTO.getCodeName()
-                , codeUpdateDTO.getCodeDescription()
-                , codeUpdateDTO.getCodeOrder()
-                , codeUpdateDTO.getUseYn()
-                , authUserDTO.getUserSeq()
-        ));
-
+            ));
+        } else {
+            codeEntity.ifPresent(value -> value.update(
+                    codeUpdateDTO.getCodeName()
+                    , codeUpdateDTO.getCodeDescription()
+                    , codeUpdateDTO.getCodeOrder()
+                    , authUserDTO.getUserSeq()
+                    , codeUpdateDTO.getUpperCode()
+            ));
+        }
         return codeEntity;
     }
 
     /**
      * Redis code 갱신
+     */
+    public void redisSaveUpperCode() {
+        log.info("findAllByUpperCodeIsNullOrderByCodeOrderAsc");
+        List<Code> codes = codeRepository.findAllByUpperCodeIsNullOrderByCodeOrderAsc();
+
+        HashMap<String, List<Code>> codeMap = new HashMap<>();
+
+        for (Code code : codes) {
+            if (!code.getCode().isEmpty()) {
+                codeMap.put(code.getCode(), code.getSubCodes());
+            }
+        }
+
+        redisService.delete("CODE_ARRAY");
+        redisService.set("CODE_ARRAY", codeMap, 60);
+    }
+
+    /**
+     * 하위 코드 목록(redis)
      *
      * @param upperCode the upper code
+     * @return the list
      */
-    public void redisSaveUpperCode(String upperCode) {
-        List<Code> codes = codeRepository.findAllByUpperCodeOrderByCodeOrderAsc(upperCode);
-        redisService.delete(upperCode);
-        redisService.set(upperCode, codes, 60);
+    public List<Code> subCodes(String upperCode) {
+        return ((HashMap<String, List<Code>>) redisService.get("CODE_ARRAY")).get(upperCode);
     }
 
 }

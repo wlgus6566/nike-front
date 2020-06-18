@@ -19,13 +19,6 @@ import lombok.*;
 public class CodeUpdateDTO {
 
     /**
-     * 코드
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "code", value = "코드")
-    private String code;
-
-    /**
      * 상위 코드
      * @author [오지훈]
      */
@@ -54,10 +47,10 @@ public class CodeUpdateDTO {
     private Long codeOrder;
 
     /**
-     * 사용 여부
+     * 상위 코드 여부
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "useYn", value = "사용 여부")
-    private String useYn;
+    @ApiModelProperty(name = "upperYn", value = "상위 코드 여부", required = true, example = "Y")
+    private String upperYn;
 
 }

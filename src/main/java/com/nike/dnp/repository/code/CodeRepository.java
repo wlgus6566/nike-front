@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * CodeRepository
@@ -18,11 +19,26 @@ import java.util.List;
 public interface CodeRepository extends JpaRepository<Code, String>, CodeRepositoryCustom {
 
     /**
-     * Find all by upper code list.
+     * 하위 코드 목록
      *
-     * @param upperCode the upper code
+     * @param upperCode 상위 코드
      * @return the list
      */
-    List<Code> findAllByUpperCodeOrderByCodeOrderAsc(String upperCode);
+    //List<Code> findAllByUpperCodeAndUseYnOrderByCodeOrderAsc(String upperCode, String useYn);
+
+    /**
+     * 상위 코드 목록
+     *
+     * @return the list
+     */
+    List<Code> findAllByUpperCodeIsNullOrderByCodeOrderAsc();
+
+    /**
+     * Find by code code.
+     *
+     * @param code the code
+     * @return the code
+     */
+    Optional<Code> findByCode(String code);
 
 }

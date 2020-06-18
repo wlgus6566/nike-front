@@ -5,14 +5,24 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
+/**
+ * Code Entity
+ *
+ * @author [오지훈]
+ * @Description Code(공통 코드) Entity 작성
+ * @history [오지훈] [2020.05.22] [최초 작성]
+ * @since 2020.05.22
+ */
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_CODE")
-public class Code extends BaseTimeEntity {
+public class Code extends BaseTimeEntity implements Serializable {
 
     /**
      * 코드 시퀀스
@@ -39,19 +49,6 @@ public class Code extends BaseTimeEntity {
     @Column(name = "UPPER_CODE")
     @ApiModelProperty(name = "upperCode", value = "상위 코드")
     private String upperCode;
-
-    /**
-     *
-     */
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UPPER_CODE")
-    private Code upperCode;*/
-
-    /**
-     *
-     *
-    //@OneToMany(mappedBy = "upperCode", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //private List<Code> subCodes;
 
     /**
      * 코드 명
@@ -86,28 +83,55 @@ public class Code extends BaseTimeEntity {
     private String useYn;
 
     /**
-     * Update.
+     * 하위 코드 목록
+     * @author [오지훈]
+     */
+    @OneToMany
+    @JoinColumn(name = "UPPER_CODE",
+            referencedColumnName = "CODE",
+            insertable = false, updatable = false)
+    private List<Code> subCodes;
+
+    /**
+     * 하위 Update.
      *
      * @param upperCode       the upper code
      * @param codeName        the code name
      * @param codeDescription the code description
      * @param codeOrder       the code order
-     * @param useYn           the use yn
      * @param updaterSeq      the updater seq
      */
     public void update(
-            String upperCode
-            , String codeName
+            String codeName
             , String codeDescription
             , Long codeOrder
-            , String useYn
             , Long updaterSeq
+            , String upperCode
     ) {
         this.upperCode = upperCode;
         this.codeName = codeName;
         this.codeDescription = codeDescription;
         this.codeOrder = codeOrder;
-        this.useYn = useYn;
+        setUpdaterSeq(updaterSeq);
+    }
+
+    /**
+     * 상위 Update.
+     *
+     * @param codeName        the code name
+     * @param codeDescription the code description
+     * @param codeOrder       the code order
+     * @param updaterSeq      the updater seq
+     */
+    public void update(
+            String codeName
+            , String codeDescription
+            , Long codeOrder
+            , Long updaterSeq
+    ) {
+        this.codeName = codeName;
+        this.codeDescription = codeDescription;
+        this.codeOrder = codeOrder;
         setUpdaterSeq(updaterSeq);
     }
 
