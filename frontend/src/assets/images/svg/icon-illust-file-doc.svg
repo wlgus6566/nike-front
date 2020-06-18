@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+    <defs>
+        <filter id="prefix__a" width="100%" height="100%" x="0%" y="0%" filterUnits="objectBoundingBox">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <path fill="#FAFAFA" d="M0 0H100V100H0z"/>
+        <g transform="translate(33 30)">
+            <path fill="#FFF" stroke="#CCC" d="M3.5.644V39.5h31V8.953L25.926.5 3.5.644z"/>
+            <path stroke="#CCC" d="M34 9h-7.111C26.398 9 26 8.602 26 8.111V1"/>
+            <rect width="26" height="12" y="23" fill="#000" rx=".5"/>
+            <text fill="#FFF" font-family="Helvetica" font-size="8" letter-spacing=".5">
+                <tspan x="4.361" y="32">DOC</tspan>
+            </text>
+            <path fill="#CCC" d="M13.655 17.344c-.447-.018-.813-.14-1.099-.367-.054-.044-.184-.174-.228-.229-.116-.146-.195-.288-.247-.445-.162-.485-.079-1.12.238-1.818.27-.598.69-1.19 1.42-2.011.107-.12.427-.474.429-.474l-.039.067c-.19.318-.352.692-.44 1.017-.142.52-.125.966.05 1.312.12.239.328.445.56.56.409.2 1.006.216 1.735.048.05-.012 2.538-.672 5.528-1.468L27 12.091s-6.947 2.974-10.554 4.516c-.572.244-.724.306-.993.4-.686.241-1.301.356-1.798.337" filter="url(#prefix__a)"/>
+        </g>
+    </g>
+</svg>
