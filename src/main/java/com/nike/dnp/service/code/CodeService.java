@@ -91,7 +91,7 @@ public class CodeService {
             final String code
             , final AuthUserDTO authUserDTO
     ) {
-        final Optional<Code> codeEntity = codeRepository.findById(code);
+        final Optional<Code> codeEntity = codeRepository.findByCode(code);
         codeEntity.ifPresent(value -> value.delete("N", authUserDTO.getUserSeq()));
         return codeEntity;
     }

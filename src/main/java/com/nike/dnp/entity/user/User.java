@@ -3,6 +3,7 @@ package com.nike.dnp.entity.user;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_USER")
+@DynamicUpdate
 public class User extends BaseTimeEntity implements Serializable {
 
     /**
@@ -47,7 +49,7 @@ public class User extends BaseTimeEntity implements Serializable {
      * @author [오지훈]
      */
     @Column(name = "PASSWORD")
-    @ApiModelProperty(name = "password", value = "비밀번호", required = true, hidden = true)
+    @ApiModelProperty(name = "password", value = "비밀번호", hidden = true)
     private String password;
 
     /**
@@ -63,7 +65,7 @@ public class User extends BaseTimeEntity implements Serializable {
      * @author [오지훈]
      */
     @Column(name = "LOGIN_IP")
-    @ApiModelProperty(name = "loginIp", value = "유저 IP")
+    @ApiModelProperty(name = "loginIp", value = "유저 IP", hidden = true)
     private String loginIp;
 
     /**
@@ -71,7 +73,7 @@ public class User extends BaseTimeEntity implements Serializable {
      * @author [오지훈]
      */
     @Column(name = "LOGIN_DT")
-    @ApiModelProperty(name = "loginDt", value = "로그인 일시")
+    @ApiModelProperty(name = "loginDt", value = "로그인 일시", hidden = true)
     private LocalDateTime loginDt;
 
     /**
@@ -79,7 +81,7 @@ public class User extends BaseTimeEntity implements Serializable {
      * @author [오지훈]
      */
     @Column(name = "USER_STATUS_CODE")
-    @ApiModelProperty(name = "userStatusCode", value = "유저 상태 코드")
+    @ApiModelProperty(name = "userStatusCode", value = "유저 상태 코드", hidden = true)
     private String userStatusCode;
 
     /**
@@ -87,7 +89,7 @@ public class User extends BaseTimeEntity implements Serializable {
      * @author [오지훈]
      */
     @Column(name = "TERMS_AGREE_YN")
-    @ApiModelProperty(name = "termsAgreeYn", value = "약관 동의 여부")
+    @ApiModelProperty(name = "termsAgreeYn", value = "약관 동의 여부", required = true)
     private String termsAgreeYn;
 
     /**
@@ -95,7 +97,7 @@ public class User extends BaseTimeEntity implements Serializable {
      * @author [오지훈]
      */
     @Column(name = "LOGIN_BROWSER_HEADER")
-    @ApiModelProperty(name = "loginBrowserHeader", value = "브라우저 헤더")
+    @ApiModelProperty(name = "loginBrowserHeader", value = "브라우저 헤더", hidden = true)
     private String loginBrowserHeader;
 
     /**
@@ -103,8 +105,43 @@ public class User extends BaseTimeEntity implements Serializable {
      * @author [오지훈]
      */
     @Column(name = "PASSWORD_LAST_UPDATE_DT")
-    @ApiModelProperty(name = "passwordLastUpdateDt", value = "비밀번호 최종 수정 일시")
+    @ApiModelProperty(name = "passwordLastUpdateDt", value = "비밀번호 최종 수정 일시", hidden = true)
     private LocalDateTime passwordLastUpdateDt;
+
+    /**
+     * 인증 코드
+     * @author [오지훈]
+     */
+    @Column(name = "CERT_CODE")
+    @ApiModelProperty(name = "certCode", value = "인증 코드", hidden = true)
+    private String certCode;
+
+    /**
+     * 쿼리 실행 전 기본값 설정
+     */
+    @PrePersist
+    public void prePersist() {
+        this.termsAgreeYn = this.termsAgreeYn == null ? "N" : this.termsAgreeYn;
+    }
+
+    /**
+     * 등록
+     *
+     * @param userId      the user id
+     * @param nickname    the nickname
+     * @param registerSeq the register seq
+     */
+    @Builder
+    public User(
+            String userId
+            , String nickname
+            , Long registerSeq
+    ) {
+        this.userId = userId;
+        this.nickname = nickname;
+        this.setRegisterSeq(registerSeq);
+        this.setUpdaterSeq(registerSeq);
+    }
 
     /**
      * 닉네임/권한 변경
@@ -131,6 +168,7 @@ public class User extends BaseTimeEntity implements Serializable {
             , Long userSeq
     ) {
         this.password = password;
+        this.passwordLastUpdateDt = LocalDateTime.now();
         setUpdaterSeq(userSeq);
     }
 

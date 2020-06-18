@@ -54,7 +54,7 @@ public class MenuRole extends BaseTimeEntity implements Serializable {
      * @author [오지훈]
      */
     @ManyToOne
-    @JoinColumn(name = "MENU_SEQ")
+    @JoinColumn(name = "MENU_SEQ", insertable = false, updatable = false)
     private Menu menu;
 
 }

@@ -16,7 +16,7 @@ import java.util.Optional;
  * @since 2020.05.22
  */
 @Repository
-public interface CodeRepository extends JpaRepository<Code, String>, CodeRepositoryCustom {
+public interface CodeRepository extends JpaRepository<Code, Long>, CodeRepositoryCustom {
 
     /**
      * 하위 코드 목록

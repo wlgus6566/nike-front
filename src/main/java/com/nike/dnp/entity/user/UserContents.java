@@ -40,7 +40,7 @@ public class UserContents extends BaseTimeEntity implements Serializable {
      * @author [오지훈]
      */
     @ManyToOne
-    @JoinColumn(name = "AUTH_SEQ")
+    @JoinColumn(name = "AUTH_SEQ", insertable = false, updatable = false)
     private Auth auth;
 
     /**
@@ -48,7 +48,7 @@ public class UserContents extends BaseTimeEntity implements Serializable {
      * @author [오지훈]
      */
     @ManyToOne
-    @JoinColumn(name = "CONTENTS_SEQ")
+    @JoinColumn(name = "CONTENTS_SEQ", insertable = false, updatable = false)
     private Contents contents;
 
 }

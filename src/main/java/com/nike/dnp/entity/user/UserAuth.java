@@ -35,11 +35,27 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
     private Long userAuthSeq;
 
     /**
+     * 유저 시퀀스
+     * @author [오지훈]
+     */
+    @Column(name = "USER_SEQ")
+    @ApiModelProperty(name = "userSeq", value = "유저 시퀀스", hidden = true)
+    private Long userSeq;
+
+    /**
+     * 권한 시퀀스
+     * @author [오지훈]
+     */
+    @Column(name = "AUTH_SEQ")
+    @ApiModelProperty(name = "authSeq", value = "권한 시퀀스", hidden = true)
+    private Long authSeq;
+
+    /**
      * 유저
      * @author [오지훈]
      */
     @ManyToOne
-    @JoinColumn(name = "USER_SEQ")
+    @JoinColumn(name = "USER_SEQ", insertable = false, updatable = false)
     private User user;
 
     /**
@@ -47,7 +63,25 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
      * @author [오지훈]
      */
     @ManyToOne
-    @JoinColumn(name = "AUTH_SEQ")
+    @JoinColumn(name = "AUTH_SEQ", insertable = false, updatable = false)
     private Auth auth;
 
+    /**
+     * 등록
+     *
+     * @param userSeq     the user seq
+     * @param authSeq     the auth seq
+     * @param registerSeq the register seq
+     */
+    @Builder
+    public UserAuth(
+            Long userSeq
+            , Long authSeq
+            , Long registerSeq
+    ) {
+        this.userSeq = userSeq;
+        this.authSeq = authSeq;
+        this.setRegisterSeq(registerSeq);
+        this.setUpdaterSeq(registerSeq);
+    }
 }

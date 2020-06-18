@@ -2,7 +2,7 @@ package com.nike.dnp.config;
 
 import com.nike.dnp.config.auth.*;
 import com.nike.dnp.config.jwt.JwtAuthorizationFilter;
-import com.nike.dnp.repository.example.ManagerRepository;
+import com.nike.dnp.repository.user.UserRepository;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.example.SecurityFilterMataService;
 import com.nike.dnp.service.log.UserLoginLogService;
@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	/**
 	 *
 	 */
-	private final ManagerRepository managerRepository;
+	private final UserRepository userRepository;
 
 	/**
 	 *
@@ -120,10 +120,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						.antMatchers(HttpMethod.POST,"/login").permitAll()
 						.anyRequest().authenticated();
 
-
-
 		http.addFilter(authenticationFilter()) // 인증 필터
-			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.managerRepository)) //jwt 토큰 인증 필터
+			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository)) //jwt 토큰 인증 필터
 			.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
 			.and()
 			.csrf().disable() // csrf 사용 안함

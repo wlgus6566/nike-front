@@ -89,9 +89,9 @@ public class ErrorEnumCode {
     /**
      * The enum Manage error.
      */
-    public enum ManageError {
+    public enum UserError {
 
-        MANE01("해당 회원의 상세정보가 존재하지 않습니다.");
+        USER01("해당 회원의 상세정보가 존재하지 않습니다.");
 
         /**
          *
@@ -102,7 +102,7 @@ public class ErrorEnumCode {
          *
          * @param value
          */
-        ManageError(final String value) {
+        UserError(final String value) {
             this.value = value;
         }
 

@@ -39,7 +39,7 @@ public class AuthMenuRole extends BaseTimeEntity implements Serializable {
      * @author [오지훈]
      */
     @ManyToOne
-    @JoinColumn(name = "AUTH_SEQ")
+    @JoinColumn(name = "AUTH_SEQ", insertable = false, updatable = false)
     private Auth auth;
 
     /**
@@ -47,7 +47,7 @@ public class AuthMenuRole extends BaseTimeEntity implements Serializable {
      * @author [오지훈]
      */
     @ManyToOne
-    @JoinColumn(name = "MENU_ROLE_SEQ")
+    @JoinColumn(name = "MENU_ROLE_SEQ", insertable = false, updatable = false)
     private MenuRole menuRole;
 
 }
