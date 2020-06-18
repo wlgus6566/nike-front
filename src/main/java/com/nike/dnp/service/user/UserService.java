@@ -76,7 +76,7 @@ public class UserService implements UserDetailsService {
      * @author [오지훈]
      */
     public Page<User> findPages(final UserSearchDTO userSearchDTO) {
-        return userRepository.findAlls(
+        return userRepository.findPages(
                 userSearchDTO,
                 PageRequest.of(userSearchDTO.getPage()
                         , userSearchDTO.getSize()
@@ -150,6 +150,8 @@ public class UserService implements UserDetailsService {
                     .userSeq(userSeq)
                     .authSeq(auth.get().getAuthSeq())
                     .build());
+        } else {
+            user = Optional.of(new User());
         }
 
         return user.get();
@@ -169,7 +171,7 @@ public class UserService implements UserDetailsService {
     /**
      * 로그인 검증
      *
-     * @param userId
+     * @param userId 유저 ID
      * @return the authUserDTO
      * @author [오지훈]
      */
