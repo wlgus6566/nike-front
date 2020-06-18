@@ -42,20 +42,20 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
     /**
-     * @author [오지훈]
      * UserRepository
+     * @author [오지훈]
      */
     private final UserRepository userRepository;
 
     /**
-     * @author [오지훈]
      * UserRepository
+     * @author [오지훈]
      */
     private final AuthRepository authRepository;
 
     /**
-     * @author [오지훈]
      * UserAuthRepository
+     * @author [오지훈]
      */
     private final UserAuthRepository userAuthRepository;
 
@@ -73,6 +73,7 @@ public class UserService implements UserDetailsService {
      *
      * @param userSearchDTO the user search dto
      * @return the list
+     * @author [오지훈]
      */
     public Page<User> findPages(final UserSearchDTO userSearchDTO) {
         return userRepository.findAlls(
@@ -87,6 +88,7 @@ public class UserService implements UserDetailsService {
      *
      * @param userSeq the user seq
      * @return the optional
+     * @author [오지훈]
      */
     public User findById(final Long userSeq) {
         return userRepository.findById(userSeq)
@@ -99,6 +101,7 @@ public class UserService implements UserDetailsService {
      * @param userSaveDTO the user save dto
      * @param authUserDTO the auth user dto
      * @return the user
+     * @author [오지훈]
      */
     @Transactional
     public User save(
@@ -129,6 +132,7 @@ public class UserService implements UserDetailsService {
      * @param userUpdateDTO the user update dto
      * @param authUserDTO   the auth user dto
      * @return user user
+     * @author [오지훈]
      */
     @Transactional
     public User update(
@@ -155,6 +159,7 @@ public class UserService implements UserDetailsService {
      * 최종 로그인일자 업데이트
      *
      * @param user the user
+     * @author [오지훈]
      */
     @Transactional
     public void updateLoginDt(User user) {
@@ -166,6 +171,7 @@ public class UserService implements UserDetailsService {
      *
      * @param userId
      * @return the authUserDTO
+     * @author [오지훈]
      */
     @Override
     public UserDetails loadUserByUsername(String userId) {

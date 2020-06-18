@@ -9,24 +9,24 @@ import org.springframework.stereotype.Service;
 /**
  * ResponseService
  *
- * @since 2020.05.22
  * @author [오지훈]
  * @Description 공통 response 서비스 작성
  * @history [오지훈] [2020.05.22] [최초 작성]
- *
+ * @since 2020.05.22
  */
-
 @Service
 @RequiredArgsConstructor
 public class ResponseService {
 
     /**
-     *
+     * CommonResponse FAIL
+     * @author [오지훈]
      */
     private static final CommonResponse FAIL = CommonResponse.FAIL;
 
     /**
-     *
+     * CommonResponse SUCCESS
+     * @author [오지훈]
      */
     private static final CommonResponse SUCCESS = CommonResponse.SUCCESS;
 
@@ -34,8 +34,10 @@ public class ResponseService {
      * Gets single result.
      * 단일건 결과를 처리하는 메소드
      *
+     * @param <T>  the type parameter
      * @param data the data
      * @return the single result
+     * @author [오지훈]
      */
     public <T> SingleResult<T> getSingleResult(final T data) {
         final SingleResult<T> result = new SingleResult<>();
@@ -49,6 +51,7 @@ public class ResponseService {
      * 성공 결과만 처리하는 메소드
      *
      * @return the success result
+     * @author [오지훈]
      */
     public CommonResult getSuccessResult() {
         final CommonResult result = new CommonResult();
@@ -61,6 +64,7 @@ public class ResponseService {
      * 실패 결과만 처리하는 메소드
      *
      * @return the fail result
+     * @author [오지훈]
      */
     public CommonResult getFailResult() {
         final CommonResult result = new CommonResult();
@@ -77,6 +81,7 @@ public class ResponseService {
      * @param code the code
      * @param msg  the msg
      * @return the fail result
+     * @author [오지훈]
      */
     public CommonResult getFailResult(final String code, final String msg) {
         final CommonResult result = new CommonResult();
@@ -91,6 +96,7 @@ public class ResponseService {
      *
      * @param msg the msg
      * @return the fail result
+     * @author [오지훈]
      */
     public CommonResult getFailResult(final String msg) {
         return getFailResult(FAIL.getCode(),msg);
@@ -98,6 +104,8 @@ public class ResponseService {
 
     /**
      * 결과 모델에 api 요청 성공 데이터를 세팅해주는 메소드
+     *
+     * @author [오지훈]
      */
     private static void setSuccessResult(final CommonResult result) {
         result.setSuccess(true);
