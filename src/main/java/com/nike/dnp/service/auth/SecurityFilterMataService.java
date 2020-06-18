@@ -1,4 +1,4 @@
-package com.nike.dnp.service.example;
+package com.nike.dnp.service.auth;
 
 import com.nike.dnp.entity.example.SecurityIpFilterMata;
 import com.nike.dnp.entity.example.SecurityUrlFilterMata;

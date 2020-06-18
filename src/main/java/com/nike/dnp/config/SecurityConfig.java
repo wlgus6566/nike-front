@@ -4,7 +4,7 @@ import com.nike.dnp.config.auth.*;
 import com.nike.dnp.config.jwt.JwtAuthorizationFilter;
 import com.nike.dnp.repository.example.ManagerRepository;
 import com.nike.dnp.service.ResponseService;
-import com.nike.dnp.service.example.SecurityFilterMataService;
+import com.nike.dnp.service.auth.SecurityFilterMataService;
 import com.nike.dnp.service.log.UserLoginLogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
