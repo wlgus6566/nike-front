@@ -20,11 +20,13 @@ public class RedisService {
 
     /**
      * RedisTemplate
+     * @author [오지훈]
      */
     private final transient RedisTemplate redisTemplate;
 
     /**
      * ValueOperations
+     * @author [오지훈]
      */
     private final transient ValueOperations valueOperations;
 
@@ -32,10 +34,9 @@ public class RedisService {
      * Instantiates a new Redis service.
      *
      * @param redisTemplate the redis template
+     * @author [오지훈]
      */
-    public RedisService(
-            final RedisTemplate redisTemplate
-    ) {
+    public RedisService(final RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
         this.valueOperations = redisTemplate.opsForValue();
     }
@@ -46,6 +47,7 @@ public class RedisService {
      * @param key     - 키명
      * @param object  the object
      * @param timeout - 유지시간(분단위) - 0일 경우 무제한
+     * @author [오지훈]
      */
     public void set(final String key, final Object object, final long timeout) {
         valueOperations.set(key, object);
@@ -59,6 +61,7 @@ public class RedisService {
      *
      * @param key 키
      * @return Object object
+     * @author [오지훈]
      */
     public Object get(final String key) {
         return valueOperations.get(key);
@@ -68,6 +71,7 @@ public class RedisService {
      * redis key delete
      *
      * @param key 키
+     * @author [오지훈]
      */
     public void delete(final String key) {
         redisTemplate.delete(key);
@@ -78,6 +82,7 @@ public class RedisService {
      *
      * @param pattern 패턴
      * @return string[] set
+     * @author [오지훈]
      */
     public Set<String> keys(final String pattern) {
         return redisTemplate.keys(pattern);

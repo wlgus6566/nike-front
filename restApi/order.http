@@ -1,0 +1,23 @@
+## 오더_상품조회
+GET http://{{host}}/api/order/product/{{category1code}}?keyword=test
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Content-Type: application/json
+
+
+### 오더_상품등록
+POST http://{{host}}/api/order/product/{{category1code}}?category2code=2&category3code=3&agencySeq=1&goodsName=goodsName&goodsDescription=디스크립션&size=xl&minimumOrderQuantity=1000&exposureYn=Y&useYn=Y
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Accept: application/json
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="originalImg";filename="D:/test/1.jpg"
+
+< D:/test/1.jpg
+
+--WebAppBoundary--
+Content-Disposition: form-data; name="thumbnailImg";filename="D:/test/2.jpg"
+
+
+< D:/test/2.jpg
+

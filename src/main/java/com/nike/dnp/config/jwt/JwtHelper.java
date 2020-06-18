@@ -3,7 +3,7 @@ package com.nike.dnp.config.jwt;
 import lombok.experimental.UtilityClass;
 
 /**
- * The type Jwt properties.
+ * JWT 기본 프로퍼티 정보
  */
 @UtilityClass
 public class JwtHelper {

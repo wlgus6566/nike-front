@@ -1,6 +1,6 @@
 package com.nike.dnp.config.auth;
 
-import com.nike.dnp.common.viriable.ErrorEnumCode;
+import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * The type Simple authentication failure handler.
+ * 로그인 실패  핸들러
  */
 @Slf4j
 @RequiredArgsConstructor

@@ -81,22 +81,6 @@ public class Manager extends BaseTimeEntity {
     private LocalDateTime loginDt;
 
     /**
-     * 최초작성자
-     * @author [오지훈]
-     */
-    @Column(name = "REGISTER_SEQ")
-    @ApiModelProperty(value = "최초작성자", hidden = true, name = "registerSeq")
-    private Long registerSeq;
-
-    /**
-     * 최종수정자
-     * @author [오지훈]
-     */
-    @Column(name = "UPDATER_SEQ")
-    @ApiModelProperty(value = "최종수정자", hidden = true, name = "updaterSeq")
-    private Long updaterSeq;
-
-    /**
      * @author [오지훈]
      */
     @ManyToOne
@@ -111,7 +95,6 @@ public class Manager extends BaseTimeEntity {
      * @param password    the password
      * @param managerName the manager name
      * @param managerAuth the manager auth
-     * @param registerSeq the register seq
      */
     @Builder
     public Manager(
@@ -119,15 +102,12 @@ public class Manager extends BaseTimeEntity {
             , final String password
             , final String managerName
             , final ManagerAuth managerAuth
-            , final Long registerSeq
     ) {
         super();
         this.managerId = managerId;
         this.password = password;
         this.managerName = managerName;
         this.managerAuth = managerAuth;
-        this.registerSeq = registerSeq;
-        this.updaterSeq = registerSeq;
     }
 
     /**
@@ -136,18 +116,15 @@ public class Manager extends BaseTimeEntity {
      * @param managerName the manager name
      * @param password    the password
      * @param managerAuth the manager auth
-     * @param updaterSeq  the updater seq
      */
     public void update(
             final String managerName
             , final String password
             , final ManagerAuth managerAuth
-            , final Long updaterSeq
     ) {
         this.managerName = managerName;
         this.password = password;
         this.managerAuth = managerAuth;
-        this.updaterSeq = updaterSeq;
     }
 
     /**

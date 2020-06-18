@@ -9,10 +9,18 @@ spring:
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties:
-      hibernate.formal_sql: true
-      hibernate.use_sql_comments: true
+      hibernate:
+        show-sql: true
+        format_sql: true
+        use_sql_comments: true
     generate-ddl: false
     hibernate:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+#시큐리티 url/ ip 체크 flag
+security:
+  auth:
+    url: false
+    ip : false

@@ -15,14 +15,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * Swagger Config
- * 
- * @since 2020.05.21
+ *
  * @author [오지훈]
- * @Description Swagger 작성
+ * @Description Swagger Config 작성
  * @history [오지훈] [2020.05.21] [최초 작성]
- * 
+ * @since 2020.05.21
  */
-
 @Configuration
 @EnableSwagger2
 @Controller
@@ -30,7 +28,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig implements WebMvcConfigurer {
 
 	/**
+	 * Api docket.
+	 *
 	 * @return Swagger 설정값
+	 * @author [오지훈]
 	 */
 	@Bean
 	public Docket api() {
@@ -42,6 +43,10 @@ public class SwaggerConfig implements WebMvcConfigurer {
 				.build().apiInfo(apiInfo()).useDefaultResponseMessages(false);
 	}
 
+	/**
+	 * Swagger Info 작성
+	 * @author [오지훈]
+	 */
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder().title("이 문서는 NIKE D&P Rest Api Project API 문서 입니다.")
 				.description("Created by Emotion").license("Apache License Version 2.0")

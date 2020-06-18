@@ -13,6 +13,7 @@ import lombok.*;
  */
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class UserLoginLogSaveDTO {
@@ -30,20 +31,5 @@ public class UserLoginLogSaveDTO {
      */
     @ApiModelProperty(name = "loginIp", value = "IP", required = true)
     private String loginIp;
-
-    /**
-     * 최초 작성자
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "registerSeq", value = "최초 작성자 시퀀스", hidden = true)
-    private Long registerSeq;
-
-    /**
-     * 최종 수정자
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "updaterSeq", value = "최종 수정자 시퀀스", hidden = true)
-    private Long updaterSeq;
-
 
 }

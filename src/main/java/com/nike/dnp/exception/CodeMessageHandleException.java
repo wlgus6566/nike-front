@@ -2,6 +2,8 @@ package com.nike.dnp.exception;
 
 import lombok.Getter;
 
+import java.io.Serializable;
+
 /**
  * Status 500 Exception, code, message
  *
@@ -11,15 +13,11 @@ import lombok.Getter;
  * @since 2020.06.03
  */
 @Getter
-public class CodeMessageHandleException extends RuntimeException {
+public class CodeMessageHandleException extends RuntimeException implements Serializable {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 100L;
-
-    /**
-     *
+     * 응답 코드
+     * @author [이소정]
      */
     private String code;
 
@@ -28,6 +26,7 @@ public class CodeMessageHandleException extends RuntimeException {
      *
      * @param code the code
      * @param msg  the msg
+     * @author [이소정]
      */
     public CodeMessageHandleException(final String code, final String msg) {
         super(msg);

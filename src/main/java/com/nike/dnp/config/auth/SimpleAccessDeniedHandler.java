@@ -1,6 +1,6 @@
 package com.nike.dnp.config.auth;
 
-import com.nike.dnp.common.viriable.ErrorEnumCode;
+import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * The type Simple access denied handler.
+ * 접속 실패 핸들러
  */
 @RequiredArgsConstructor
 public class SimpleAccessDeniedHandler implements AccessDeniedHandler {
@@ -22,7 +22,6 @@ public class SimpleAccessDeniedHandler implements AccessDeniedHandler {
 	 * The Response service.
 	 */
 	private final ResponseService responseService;
-
 
 	@Override
 	public void handle(final HttpServletRequest request,

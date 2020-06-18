@@ -1,5 +1,6 @@
-package com.nike.dnp.dto.example.manager;
+package com.nike.dnp.repository.example;
 
+import com.nike.dnp.dto.example.manager.ManagerSearchDTO;
 import com.nike.dnp.entity.example.QManager;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -16,10 +17,10 @@ import lombok.experimental.UtilityClass;
  */
 
 @UtilityClass
-public class ManagerHelper {
+public class ManagerPredicateHelper {
 
     /**
-     * Search predicate.
+     * 검색 조건
      *
      * @param managerSearchDTO the manager search dto
      * @return the predicate

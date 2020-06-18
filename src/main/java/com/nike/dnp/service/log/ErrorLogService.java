@@ -1,5 +1,6 @@
 package com.nike.dnp.service.log;
 
+import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.ErrorLogSaveDTO;
 import com.nike.dnp.entity.log.ErrorLog;
 import com.nike.dnp.repository.log.ErrorLogRepository;
@@ -23,25 +24,28 @@ import org.springframework.transaction.annotation.Transactional;
 public class ErrorLogService {
 
     /**
-     * ErrorLog(오류 로그) Repository
+     * ErrorLogRepository
      * @author [오지훈]
      */
     private final ErrorLogRepository logRepository;
 
     /**
-     * ErrorLog(오류 로그) 등록
+     * 오류 로그 등록
      *
      * @param saveDTO the save dto
      * @return error log
      * @author [오지훈]
      */
     @Transactional
-    public ErrorLog save(final ErrorLogSaveDTO saveDTO) {
+    public ErrorLog save(
+            final ErrorLogSaveDTO saveDTO
+            , final AuthUserDTO authUserDTO
+    ) {
         final ErrorLog saveLog = new ErrorLog();
         saveLog.setUrl(saveDTO.getUrl());
         saveLog.setErrorContents(saveDTO.getErrorContents());
-        saveLog.setRegisterSeq(saveDTO.getRegisterSeq());
-        saveLog.setUpdaterSeq(saveDTO.getRegisterSeq());
+        saveLog.setRegisterSeq(authUserDTO.getUserSeq()); //TODO[ojh] DTO field명 수정예정
+        saveLog.setUpdaterSeq(authUserDTO.getUserSeq()); //TODO[ojh] DTO field명 수정예정
         return logRepository.save(saveLog);
     }
 

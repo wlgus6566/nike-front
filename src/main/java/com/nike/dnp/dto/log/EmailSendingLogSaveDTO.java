@@ -13,6 +13,7 @@ import lombok.*;
  */
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class EmailSendingLogSaveDTO {
@@ -37,12 +38,5 @@ public class EmailSendingLogSaveDTO {
      */
     @ApiModelProperty(name = "contents", value = "내용", required = true)
     private String contents;
-
-    /**
-     * 최초 작성자
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "registerSeq", value = "최초 작성자 시퀀스", hidden = true)
-    private Long registerSeq;
 
 }

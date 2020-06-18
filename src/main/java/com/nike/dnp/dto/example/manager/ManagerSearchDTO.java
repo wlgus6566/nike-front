@@ -1,6 +1,6 @@
 package com.nike.dnp.dto.example.manager;
 
-import com.nike.dnp.dto.example.SearchDTO;
+import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -26,5 +26,17 @@ public class ManagerSearchDTO extends SearchDTO {
      */
     @ApiModelProperty(value = "검색어", name = "keyword")
     private String keyword = "";
+
+    /**
+     * Method to String
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return "ManagerSearchDTO{"
+                + "keyword=" + keyword
+                + ", size=" + getSize()
+                + ", page=" + getPage() + '}';
+    }
 
 }

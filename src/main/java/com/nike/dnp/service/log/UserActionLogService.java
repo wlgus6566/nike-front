@@ -1,5 +1,6 @@
 package com.nike.dnp.service.log;
 
+import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.UserActionLogSaveDTO;
 import com.nike.dnp.entity.log.UserActionLog;
 import com.nike.dnp.repository.log.UserActionLogRepository;
@@ -23,26 +24,31 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserActionLogService {
 
     /**
-     * UserActionLog(유저_활동_로그) Repository
+     * UserActionLogRepository
      * @author [오지훈]
      */
     private final UserActionLogRepository logRepository;
 
     /**
-     * UserActionLog(유저_활동_로그) 등록
+     * 유저 활동 로그 등록
      *
      * @param saveDTO the save dto
      * @return user action log
      * @author [오지훈]
      */
     @Transactional
-    public UserActionLog save(final UserActionLogSaveDTO saveDTO) {
+    public UserActionLog save(
+            final UserActionLogSaveDTO saveDTO
+            , final AuthUserDTO authUserDTO
+    ) {
         final UserActionLog saveLog = new UserActionLog();
         saveLog.setUserSeq(saveDTO.getUserSeq());
         saveLog.setUrl(saveDTO.getUrl());
+        saveLog.setMethodTypeName(saveDTO.getMethodTypeName());
+        saveLog.setMethodSignature(saveDTO.getMethodSignature());
         saveLog.setParameter(saveDTO.getParameter());
-        saveLog.setRegisterSeq(saveDTO.getUserSeq());
-        saveLog.setUpdaterSeq(saveDTO.getUserSeq());
+        saveLog.setRegisterSeq(authUserDTO.getUserSeq());
+        saveLog.setUpdaterSeq(authUserDTO.getUserSeq());
         return logRepository.save(saveLog);
     }
 

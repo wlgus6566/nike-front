@@ -2,7 +2,6 @@ package com.nike.dnp.repository.log;
 
 import com.nike.dnp.entity.log.UserActionLog;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,6 +13,5 @@ import org.springframework.stereotype.Repository;
  * @since 2020.05.22
  */
 @Repository
-public interface UserActionLogRepository extends JpaRepository<UserActionLog, Long>, QuerydslPredicateExecutor<UserActionLog> {
-
+public interface UserActionLogRepository extends JpaRepository<UserActionLog, Long> {
 }

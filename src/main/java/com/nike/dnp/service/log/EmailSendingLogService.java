@@ -1,5 +1,6 @@
 package com.nike.dnp.service.log;
 
+import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.EmailSendingLogSaveDTO;
 import com.nike.dnp.entity.log.EmailSendingLog;
 import com.nike.dnp.repository.log.EmailSendingLogRepository;
@@ -23,26 +24,29 @@ import org.springframework.transaction.annotation.Transactional;
 public class EmailSendingLogService {
 
     /**
-     * EmailSendingLog(메일_발송_로그) Repository
+     * EmailSendingLogRepository
      * @author [오지훈]
      */
     private final EmailSendingLogRepository logRepository;
 
     /**
-     * EmailSendingLog(메일_발송_로그) 등록
+     * 메일 발송 로그 등록
      *
      * @param saveDTO the save dto
      * @return email sending log
      * @author [오지훈]
      */
     @Transactional
-    public EmailSendingLog save(final EmailSendingLogSaveDTO saveDTO) {
+    public EmailSendingLog save(
+            final EmailSendingLogSaveDTO saveDTO
+            , final AuthUserDTO authUserDTO
+    ) {
         final EmailSendingLog saveLog = new EmailSendingLog();
         saveLog.setUserSeq(saveDTO.getUserSeq());
         saveLog.setTitle(saveDTO.getTitle());
         saveLog.setContents(saveDTO.getContents());
-        saveLog.setRegisterSeq(saveDTO.getRegisterSeq());
-        saveLog.setUpdaterSeq(saveDTO.getRegisterSeq());
+        saveLog.setRegisterSeq(authUserDTO.getUserSeq()); //TODO[ojh] DTO field명 수정예정
+        saveLog.setUpdaterSeq(authUserDTO.getUserSeq()); //TODO[ojh] DTO field명 수정예정
         return logRepository.save(saveLog);
     }
 

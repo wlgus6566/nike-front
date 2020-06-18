@@ -59,20 +59,4 @@ public class UserLoginLog extends BaseTimeEntity {
     @ApiModelProperty(name = "loginIp", value = "IP", required = true)
     private String loginIp;
 
-    /**
-     * 최초 작성자
-     * @author [오지훈]
-     */
-    @Column(name = "REGISTER_SEQ")
-    @ApiModelProperty(name = "registerSeq", value = "최초 작성자 시퀀스", hidden = true, required = true)
-    private Long registerSeq;
-
-    /**
-     * 최종 수정자
-     * @author [오지훈]
-     */
-    @Column(name = "UPDATER_SEQ")
-    @ApiModelProperty(name = "updaterSeq", value = "최종 수정자 시퀀스", hidden = true, required = true)
-    private Long updaterSeq;
-
 }

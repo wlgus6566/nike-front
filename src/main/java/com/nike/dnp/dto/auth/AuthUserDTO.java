@@ -1,7 +1,7 @@
-package com.nike.dnp.dto.example.auth;
+package com.nike.dnp.dto.auth;
 
 
-import com.nike.dnp.entity.example.Manager;
+import com.nike.dnp.entity.user.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -36,17 +36,17 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	/**
 	 * @author [윤태호]
 	 */
-	private long managerSeq;
+	private long userSeq;
 
 	/**
 	 * @author [윤태호]
 	 */
-	private String managerName;
+	private String userId;
 
 	/**
 	 * @author [윤태호]
 	 */
-	private String managerId;
+	private String nickname;
 
 	/**
 	 * @author [윤태호]
@@ -56,12 +56,13 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	/**
 	 * Instantiates a new Auth user dto.
 	 *
-	 * @param manager the manager
+	 * @param user the user
 	 */
-	public AuthUserDTO(final Manager manager) {
-		this.managerSeq = manager.getManagerSeq();
-		this.managerName = manager.getManagerId();
-		this.password = manager.getPassword();
+	public AuthUserDTO(final User user) {
+		this.userSeq = user.getUserSeq();
+		this.userId = user.getUserId();
+		this.nickname = user.getNickname();
+		this.password = user.getPassword();
 	}
 
 	@Override
@@ -71,10 +72,10 @@ public class AuthUserDTO implements UserDetails, Serializable {
 
 	@Override
 	public String getUsername() {
-		return managerName;
+		return userId;
 	}
 
-	public long getManagerSeq() {return managerSeq;}
+	public long getUserSeq() {return userSeq;}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -113,16 +114,16 @@ public class AuthUserDTO implements UserDetails, Serializable {
 		}
 
 		final AuthUserDTO that = (AuthUserDTO) object;
-		return Objects.equals(managerName, that.managerName);
+		return Objects.equals(userId, that.userId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(managerName);
+		return Objects.hash(userId);
 	}
 
 	@Override
 	public String toString() {
-		return "AuthUserDTO{" + "managerSeq=" + managerSeq + ", managerName='" + managerName + '\'' + ", managerId='" + managerId + '\'' + ", password='" + password + '\'' + '}';
+		return "AuthUserDTO{" + "userSeq=" + userSeq + ", nickname='" + nickname + '\'' + ", userId='" + userId + '\'' + ", password='" + password + '\'' + '}';
 	}
 }

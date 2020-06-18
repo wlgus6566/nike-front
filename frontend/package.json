@@ -18,6 +18,7 @@
         "vue-meta": "^2.3.4",
         "vue-router": "^3.2.0",
         "vue-sticky-directive": "0.0.10",
+        "vuejs-paginate": "^2.1.0",
         "vuex": "^3.4.0"
     },
     "devDependencies": {

@@ -1,7 +1,7 @@
 package com.nike.dnp.config.auth;
 
 /**
- * The interface Password encryptor.
+ * 암호화 모듈
  */
 public interface PasswordEncryptor {
 	/**
