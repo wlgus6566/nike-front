@@ -42,12 +42,15 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
 
         final List<Contents> contents = queryFactory.selectFrom(qContents)
                 .where(eqFolderName(keyword)
-                        , eqTopMenuSeq(contentsSearchDTO.getTopMenuSeq())
-                        , eqMenuSeq(contentsSearchDTO.getMenuSeq()))
+                        , eqTopMenuSeq(contentsSearchDTO.getTopMenuCode())
+                        , eqMenuSeq(contentsSearchDTO.getMenuCode()))
                 .fetch();
 
         return new PageImpl<>(contents, pageRequest, contents.size());
     }
+
+
+
 
 
     /**
@@ -60,21 +63,21 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
     }
 
     /**
-     * 최고 메뉴 시퀀스 eq
-     * @param topMenuSeq
+     * 최고 메뉴 공통코드 eq
+     * @param topMenuCode
      * @return
      */
-    private BooleanExpression eqTopMenuSeq(final Long topMenuSeq) {
-        return null == topMenuSeq || 0 == topMenuSeq ? null : QContents.contents.topMenuSeq.eq(topMenuSeq);
+    private BooleanExpression eqTopMenuSeq(final String topMenuCode) {
+        return topMenuCode.isEmpty() ? null : QContents.contents.topMenuCode.eq(topMenuCode);
     }
 
     /**
-     * 메뉴 시퀀스 eq
-     * @param menuSeq
+     * 메뉴 공통코드 eq
+     * @param menuCode
      * @return
      */
-    private BooleanExpression eqMenuSeq(final Long menuSeq) {
-        return null == menuSeq || 0 == menuSeq ? null : QContents.contents.menuSeq.eq(menuSeq);
+    private BooleanExpression eqMenuSeq(final String menuCode) {
+        return menuCode.isEmpty() ? null : QContents.contents.menuCode.eq(menuCode);
     }
 
 }

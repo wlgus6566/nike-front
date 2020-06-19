@@ -36,20 +36,20 @@ public class ContentsSearchDTO extends SearchDTO {
     private String orderType;
 
     /**
-     * 최고 메뉴 시퀀스
+     * 최고 메뉴 공통코드
      * @author [이소정]
      */
-    @Column(name = "TOP_MENU_SEQ")
-    @ApiModelProperty(name = "topMenuSeq", value = "최고 메뉴 시퀀스")
-    private Long topMenuSeq;
+    @Column(name = "TOP_MENU_CODE")
+    @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 공통코드")
+    private String topMenuCode;
 
     /**
-     * 메뉴 시퀀스
+     * 메뉴 공통코드
      * @author [이소정]
      */
-    @Column(name = "MENU_SEQ")
-    @ApiModelProperty(name = "menuSeq", value = "메뉴 시퀀스")
-    private Long menuSeq;
+    @Column(name = "MENU_CODE")
+    @ApiModelProperty(name = "menuCode", value = "메뉴 공통코드")
+    private String menuCode;
 
     /**
      * Method to String

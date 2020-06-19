@@ -82,8 +82,8 @@ public class AssetController {
             final ContentsSearchDTO contentsSearchDTO
             , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
-        // Foundation 메뉴seq 넣어줌.
-        contentsSearchDTO.setTopMenuSeq((long) 1);
+        // Asset 메뉴 코드 넣어줌.
+        contentsSearchDTO.setTopMenuCode("ASSET");
         return responseService.getSingleResult(contentsService.findAllPaging(contentsSearchDTO));
     }
 
