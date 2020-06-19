@@ -12,9 +12,8 @@ import java.util.List;
  * Menu Entity
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 19. 오후 4:52:14
  * @Description Menu(메뉴) Entity 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -26,6 +25,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
 
     /**
      * 메뉴 시퀀스
+     *
      * @author [오지훈]
      */
     @Id
@@ -35,7 +35,17 @@ public class Menu extends BaseTimeEntity implements Serializable {
     private Long menuSeq;
 
     /**
+     * 메뉴 코드
+     *
+     * @author [오지훈]
+     */
+    @Column(name = "MENU_CODE")
+    @ApiModelProperty(name = "menuCode", value = "메뉴 코드", required = true)
+    private String menuCode;
+
+    /**
      * 상위 메뉴 시퀀스
+     *
      * @author [오지훈]
      */
     @Column(name = "UPPER_MENU_SEQ")
@@ -44,6 +54,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
 
     /**
      * 메뉴명
+     *
      * @author [오지훈]
      */
     @Column(name = "MENU_NAME")
@@ -51,23 +62,17 @@ public class Menu extends BaseTimeEntity implements Serializable {
     private String menuName;
 
     /**
-     * 역할 타입
+     * 메뉴 경로 URL
+     *
      * @author [오지훈]
      */
-    @Column(name = "MENU_PATH")
-    @ApiModelProperty(name = "roleType", value = "역할 타입", required = true)
-    private String roleType;
-
-    /**
-     * 메뉴 여부
-     * @author [오지훈]
-     */
-    @Column(name = "MENU_YN")
-    @ApiModelProperty(name = "menuYn", value = "메뉴 여부", required = true)
-    private String menuYn;
+    @Column(name = "MENU_PATH_URL")
+    @ApiModelProperty(name = "menuPathUrl", value = "메뉴 경로 URL", required = true)
+    private String menuPathUrl;
 
     /**
      * 생성 권한 여부
+     *
      * @author [오지훈]
      */
     @Column(name = "CREATION_AUTH_YN")
@@ -76,6 +81,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
 
     /**
      * 삭제 권한 여부
+     *
      * @author [오지훈]
      */
     @Column(name = "DELETE_AUTH_YN")
@@ -84,6 +90,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
 
     /**
      * 다운로드 권한 여부
+     *
      * @author [오지훈]
      */
     @Column(name = "DOWNLOAD_AUTH_YN")
@@ -92,6 +99,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
 
     /**
      * 엑셀 권한 여부
+     *
      * @author [오지훈]
      */
     @Column(name = "EXCEL_AUTH_YN")
@@ -100,6 +108,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
 
     /**
      * 메뉴 순서
+     *
      * @author [오지훈]
      */
     @Column(name = "MENU_ORDER")
@@ -108,6 +117,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
 
     /**
      * 사용 여부
+     *
      * @author [오지훈]
      */
     @Column(name = "USE_YN")
@@ -116,6 +126,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
 
     /**
      * 하위 메뉴 목록
+     *
      * @author [오지훈]
      */
     @OneToMany
