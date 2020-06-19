@@ -13,17 +13,7 @@
             </div>
             <aside class="sticky-container" sticky-container>
                 <div class="sticky-content" sticky-offset="{top:0, bottom:0}" sticky-side="both" sticky-z-index="20" v-sticky>
-                    <transition
-                        name="aside-change"
-                        mode="out-in"
-                        v-on:before-enter="AsideBeforeEnter"
-                        v-on:enter="AsideEnter"
-                        v-on:after-enter="AsideAfterEnter"
-                        v-on:leave="AsideLeave"
-                        appear
-                        v-on:before-appear="AsideBeforeAppear"
-                        v-on:appear="AsideAppear"
-                    >
+                    <transition name="aside-change" mode="out-in" appear v-on:appear="AsideAppear" v-on:enter="AsideEnter" v-on:leave="AsideLeave">
                         <component :is="AppAside" />
                     </transition>
                 </div>
@@ -59,21 +49,24 @@ export default {
         AsideOrder: () => import('@/components/app-aside/AsideOrder.vue'),
     },
     mounted() {
-        //this.AsideInit();
+        const el = [document.querySelector('header .inner')];
+        this.LayoutInit(el, '-100%');
+        this.LayoutAnimation(el, '0%');
     },
     methods: {
-        //aside
-        AsideBeforeAppear: function (el) {},
+        // Aside
         AsideAppear: function (el, done) {
-            this.AsideInit(el);
-            this.AsideAnimation(el, '0%', done);
+            const elements = [document.querySelector('aside .aside-bg'), el];
+            this.LayoutInit(elements, '100%');
+            this.LayoutAnimation(elements, '0%', done);
         },
-        AsideBeforeEnter: function (el) {},
+
         AsideEnter: function (el, done) {
-            this.AsideInit(el);
-            this.AsideAnimation(el, '0%', done);
+            const elements = [document.querySelector('aside .aside-bg'), el];
+            this.LayoutInit(elements, '100%');
+            this.LayoutAnimation(elements, '0%', done);
         },
-        AsideAfterEnter: function () {},
+
         AsideLeave: function (el, done) {
             const scrollElement = window.document.scrollingElement || window.document.body || window.document.documentElement;
             this.$anime({
@@ -82,25 +75,28 @@ export default {
                 duration: 300,
                 easing: 'easeInOutQuad',
             });
-            this.AsideAnimation(el, '100%', done);
-        },
-        AsideAnimation: function (el, status, done) {
             const elements = [document.querySelector('aside .aside-bg'), el];
+            this.LayoutAnimation(elements, '100%', done);
+        },
+        LayoutAnimation: function (el, status, done) {
+            console.log(el);
             this.$anime({
-                targets: elements,
+                targets: el,
                 translateX: status,
                 duration: 300,
                 easing: 'easeInOutQuart',
                 complete: function () {
-                    done();
+                    if (done) {
+                        done();
+                    }
                 },
                 update: function () {},
             });
         },
-        AsideInit: function (el) {
-            const elements = [document.querySelector('aside .aside-bg'), el];
-            for (let i = 0; i < elements.length; i++) {
-                elements[i].style.transform = 'translateX(100%)';
+        LayoutInit: function (el, status) {
+            console.log(el);
+            for (let i = 0; i < el.length; i++) {
+                el[i].style.transform = `translateX(${status})`;
             }
         },
     },

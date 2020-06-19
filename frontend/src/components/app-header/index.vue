@@ -52,19 +52,10 @@ export default {
     },
     computed: {
         NavStatus() {
-            console.log(this.$route.path);
             return this.$route.path === '/';
         },
     },
-    mounted() {
-        console.log(this.$el);
-        this.$anime({
-            targets: scrollElement,
-            scrollTop: 0,
-            duration: 300,
-            easing: 'easeInOutQuad',
-        });
-    },
+    mounted() {},
     methods: {},
 };
 </script>
