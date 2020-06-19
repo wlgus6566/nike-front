@@ -7,11 +7,8 @@ import org.springframework.stereotype.Repository;
 /**
  * Contents Repository
  *
- * @since 2020.06.11
  * @author [이소정]
  * @Description Contents Repository 작성
- * @history [이소정] [2020.06.11] [최초 작성]
- *
  */
 @Repository
 public interface ContentsRepository extends JpaRepository<Contents, Long>, ContentsRepositoryCustom {
@@ -20,7 +17,10 @@ public interface ContentsRepository extends JpaRepository<Contents, Long>, Conte
      * Find by contents seq contents.
      *
      * @param contentsSeq the contents seq
-     * @return contents
+     * @return contents contents
+     * @author [이소정]
+     * @CreatedOn 2020. 6. 19. 오후 5:57:43
+     * @Description
      */
     Contents findByContentsSeq(String contentsSeq);
 

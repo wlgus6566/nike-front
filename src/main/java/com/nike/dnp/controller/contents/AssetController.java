@@ -21,13 +21,10 @@ import springfox.documentation.annotations.ApiIgnore;
 /**
  * 콘텐츠 > Asset Controller
  *
- * @since 2020.06.11
  * @author [이소정]
+ * @CreatedOn 2020. 6. 19. 오후 5:56:03
  * @Description 콘텐츠 > Asset 컨트롤러 작성
- * @history [이소정] [2020.06.11] [최초 작성]
- *
- */
-
+  */
 @Slf4j
 @RestController
 @Api(description = "콘텐츠", tags = "2_CONTENTS")
@@ -37,16 +34,22 @@ public class AssetController {
 
     /**
      * 응답 서비스
+     *
+     * @author [이소정]
      */
     private final ResponseService responseService;
 
     /**
      * 콘텐츠 서비스
+     *
+     * @author [이소정]
      */
     private final ContentsService contentsService;
 
     /**
+     * The constant REQUEST_CHARACTER
      *
+     * @author [이소정]
      */
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
@@ -56,6 +59,9 @@ public class AssetController {
      * @param contentsSearchDTO the contents search dto
      * @param authUserDTO       the auth user dto
      * @return all managers
+     * @author [이소정]
+     * @CreatedOn 2020. 6. 19. 오후 5:56:03
+     * @Description
      */
     @ApiOperation(
         value = "콘텐츠 > Asset 목록 조회"
@@ -64,7 +70,7 @@ public class AssetController {
         + "size|사이즈|false|Integer\n"
         + "keyword|검색어|false|String\n"
         + "orderType|정렬 타입|false|String|최신순:LATEST/시작일 순:START_DATE\n"
-        + "menuSeq|2Depth 메뉴 시퀀스|false|String\n"
+        + "menuCode|2Depth 메뉴 코드|false|String\n"
         + "[하위 Parameters 참조]\n\n\n\n"
         + "## Public/Paging Response ## \n"
         + "필드명||필드설명|데이터 타입(길이)\n" + "-|-|-|-\n"

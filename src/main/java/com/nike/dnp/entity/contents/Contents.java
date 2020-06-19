@@ -10,9 +10,8 @@ import javax.persistence.*;
  * Contents Entity
  *
  * @author [이소정]
+ * @CreatedOn 2020. 6. 19. 오후 5:57:35
  * @Description Contents Entity 작성
- * @history [이소정] [2020.06.11] [최초 작성]
- * @since 2020.06.11
  */
 @Getter
 @Setter
@@ -24,6 +23,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 컨텐츠 시퀀스
+     *
      * @author [이소정]
      */
     @Id
@@ -34,6 +34,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 최고 메뉴 공통코드
+     *
      * @author [이소정]
      */
     @Column(name = "TOP_MENU_CODE")
@@ -42,6 +43,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 메뉴 공통코드
+     *
      * @author [이소정]
      */
     @Column(name = "MENU_CODE")
@@ -50,6 +52,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 이미지 파일명
+     *
      * @author [이소정]
      */
     @Column(name = "IMAGE_FILE_NAME")
@@ -58,6 +61,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 이미지 파일 사이즈
+     *
      * @author [이소정]
      */
     @Column(name = "IMAGE_FILE_SIZE")
@@ -66,6 +70,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 이미지 파일 물리명
+     *
      * @author [이소정]
      */
     @Column(name = "IMAGE_FILE_PHYSICAL_NAME")
@@ -74,6 +79,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 폴더명
+     *
      * @author [이소정]
      */
     @Column(name = "FOLDER_NAME")
@@ -82,6 +88,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 폴더 내용
+     *
      * @author [이소정]
      */
     @Column(name = "FOLDER_CONTENTS")
@@ -90,6 +97,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 캠페인 기간 구분 공통코드
+     *
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_PERIOD_SECTION_CODE")
@@ -98,6 +106,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 캠페인 시작 일시
+     *
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_BEGIN_DT")
@@ -106,6 +115,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 캠페인 종료 일시
+     *
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_END_DT")
@@ -114,6 +124,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 메모
+     *
      * @author [이소정]
      */
     @Column(name = "MEMO")
@@ -122,6 +133,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 조회수
+     *
      * @author [이소정]
      */
     @Column(name = "READ_COUNT")
@@ -130,6 +142,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 노출 여부
+     *
      * @author [이소정]
      */
     @Column(name = "EXPOSURE_YN")
@@ -138,6 +151,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 사용 여부
+     *
      * @author [이소정]
      */
     @Column(name = "USE_YN")
