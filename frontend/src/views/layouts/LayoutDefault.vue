@@ -7,7 +7,15 @@
         </header>
         <section id="container">
             <div class="contents">
-                <transition mode="out-in" name="page-change">
+                <transition
+                    name="page-change"
+                    v-bind:css="false"
+                    mode="out-in"
+                    appear
+                    v-on:appear="PageAppear"
+                    v-on:enter="PageEnter"
+                    v-on:leave="PageLeave"
+                >
                     <router-view></router-view>
                 </transition>
             </div>
@@ -54,6 +62,22 @@ export default {
         this.LayoutAnimation(el, '0%');
     },
     methods: {
+        PageAppear: function (el) {
+            console.log(this.$route.path);
+        },
+
+        PageEnter: function (el, done) {
+            console.log(this.$route.path);
+            //const elt = document.querySelector(`[href=${this.$route.path}]`);
+            //console.log(elt);
+            done();
+        },
+
+        PageLeave: function (el, done) {
+            console.log(this.$route.path);
+            done();
+        },
+
         // Aside
         AsideAppear: function (el, done) {
             const elements = [document.querySelector('aside .aside-bg'), el];
@@ -79,7 +103,6 @@ export default {
             this.LayoutAnimation(elements, '100%', done);
         },
         LayoutAnimation: function (el, status, done) {
-            console.log(el);
             this.$anime({
                 targets: el,
                 translateX: status,
@@ -94,7 +117,6 @@ export default {
             });
         },
         LayoutInit: function (el, status) {
-            console.log(el);
             for (let i = 0; i < el.length; i++) {
                 el[i].style.transform = `translateX(${status})`;
             }
