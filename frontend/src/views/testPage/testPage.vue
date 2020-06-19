@@ -1,29 +1,8 @@
 <template>
-    <div>
-        <input type="radio" value="ContentMypage" id="a" v-model="view" />
-        <label for="a">A</label>
-        <input type="radio" value="ContentOrder" id="b" v-model="view" />
-        <label for="b">B</label>
-
-        <transition name="component-fade" mode="out-in">
-            <component v-bind:is="view"></component>
-        </transition>
-        <span>선택: {{ view }}</span>
-    </div>
+    <div></div>
 </template>
 <script>
-export default {
-    name: 'testP',
-    data() {
-        return {
-            view: 'ContentMypage',
-        };
-    },
-    components: {
-        ContentMypage: () => import('@/components/tab-components/ContentMypage.vue'),
-        ContentOrder: () => import('@/components/tab-components/ContentOrder.vue'),
-    },
-};
+export default {};
 </script>
 <style scoped>
 .component-fade-enter-active,
