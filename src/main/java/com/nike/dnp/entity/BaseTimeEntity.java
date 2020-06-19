@@ -15,9 +15,8 @@ import java.time.LocalDateTime;
  * BaseTimeEntity Entity
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 19. 오후 4:52:28
  * @Description BaseTimeEntity Entity 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Data
 @MappedSuperclass
@@ -26,6 +25,7 @@ public class BaseTimeEntity {
 
     /**
      * 최초 작성자
+     *
      * @author [오지훈]
      */
     @Column(name = "REGISTER_SEQ")
@@ -34,6 +34,7 @@ public class BaseTimeEntity {
 
     /**
      * 최종 수정자
+     *
      * @author [오지훈]
      */
     @Column(name = "UPDATER_SEQ")
@@ -42,6 +43,7 @@ public class BaseTimeEntity {
 
     /**
      * 최초 작성일
+     *
      * @author [오지훈]
      */
     @Column(name = "REGISTRATION_DT")
@@ -51,6 +53,7 @@ public class BaseTimeEntity {
 
     /**
      * 최종 수정일
+     *
      * @author [오지훈]
      */
     @Column(name = "UPDATE_DT")
