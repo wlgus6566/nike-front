@@ -9,11 +9,10 @@ import org.springframework.stereotype.Repository;
 /**
  * Contents Repository Custom
  *
- * @since 2020.06.11
  * @author [이소정]
  * @Description Contents Repository Custom 작성
  * @history [이소정] [2020.06.11] [최초 작성]
- *
+ * @since 2020.06.11
  */
 @Repository
 public interface ContentsRepositoryCustom {
@@ -24,6 +23,9 @@ public interface ContentsRepositoryCustom {
      * @param contentsSearchDTO the contents search dto
      * @param pageRequest       the page request
      * @return the page
+     * @author [이소정]
+     * @CreatedOn 2020. 6. 19. 오후 5:57:50
+     * @Description
      */
     Page<Contents> findAlls(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest);
 

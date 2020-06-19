@@ -1,5 +1,6 @@
 package com.nike.dnp.common;
 
+import com.nike.dnp.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -29,6 +30,10 @@ public class StartRunner implements ApplicationRunner {
     @Override
     public void run(final ApplicationArguments args) {
         log.info("Application Runner!!");
+        System.out.println("===================================");
+        System.out.println(RandomUtil.randomCertCode1(10));
+        System.out.println(RandomUtil.randomCertCode2(10));
+        System.out.println("===================================");
     }
 
 }

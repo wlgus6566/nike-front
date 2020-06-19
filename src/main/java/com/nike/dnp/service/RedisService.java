@@ -11,21 +11,22 @@ import java.util.concurrent.TimeUnit;
  * RedisUtil
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 19. 오후 4:47:26
  * @Description RedisUtil 작성
- * @history [오지훈] [2020.05.21] [최초 작성]
- * @since 2020.05.21
  */
 @Service
 public class RedisService {
 
     /**
      * RedisTemplate
+     *
      * @author [오지훈]
      */
     private final transient RedisTemplate redisTemplate;
 
     /**
      * ValueOperations
+     *
      * @author [오지훈]
      */
     private final transient ValueOperations valueOperations;
@@ -35,6 +36,8 @@ public class RedisService {
      *
      * @param redisTemplate the redis template
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 19. 오후 4:47:26
+     * @Description
      */
     public RedisService(final RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -48,6 +51,8 @@ public class RedisService {
      * @param object  the object
      * @param timeout - 유지시간(분단위) - 0일 경우 무제한
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 19. 오후 4:47:26
+     * @Description
      */
     public void set(final String key, final Object object, final long timeout) {
         valueOperations.set(key, object);
@@ -62,6 +67,8 @@ public class RedisService {
      * @param key 키
      * @return Object object
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 19. 오후 4:47:26
+     * @Description
      */
     public Object get(final String key) {
         return valueOperations.get(key);
@@ -72,6 +79,8 @@ public class RedisService {
      *
      * @param key 키
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 19. 오후 4:47:26
+     * @Description
      */
     public void delete(final String key) {
         redisTemplate.delete(key);
@@ -83,6 +92,8 @@ public class RedisService {
      * @param pattern 패턴
      * @return string[] set
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 19. 오후 4:47:26
+     * @Description
      */
     public Set<String> keys(final String pattern) {
         return redisTemplate.keys(pattern);

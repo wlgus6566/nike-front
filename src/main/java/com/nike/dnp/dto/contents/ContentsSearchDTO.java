@@ -10,11 +10,9 @@ import javax.persistence.Column;
  * Contents Search DTO
  *
  * @author [이소정]
+ * @CreatedOn 2020. 6. 19. 오후 5:57:26
  * @Description Contents Search DTO 작성
- * @history [이소정] [2020.06.11] [최초 작성]
- * @since 2020.06.11
  */
-
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -23,6 +21,7 @@ public class ContentsSearchDTO extends SearchDTO {
 
     /**
      * 검색어
+     *
      * @author [이소정]
      */
     @ApiModelProperty(value = "검색어", name = "keyword")
@@ -30,30 +29,37 @@ public class ContentsSearchDTO extends SearchDTO {
 
     /**
      * 정렬 타입
+     *
      * @author [이소정]
      */
     @ApiModelProperty(value = "정렬 타입", name = "keyword", example = "LATEST/START_DATE")
     private String orderType;
 
     /**
-     * 최고 메뉴 시퀀스
+     * 최고 메뉴 공통코드
+     *
      * @author [이소정]
      */
-    @Column(name = "TOP_MENU_SEQ")
-    @ApiModelProperty(name = "topMenuSeq", value = "최고 메뉴 시퀀스")
-    private Long topMenuSeq;
+    @Column(name = "TOP_MENU_CODE")
+    @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 공통코드", hidden = true)
+    private String topMenuCode;
 
     /**
-     * 메뉴 시퀀스
+     * 메뉴 공통코드
+     *
      * @author [이소정]
      */
-    @Column(name = "MENU_SEQ")
-    @ApiModelProperty(name = "menuSeq", value = "메뉴 시퀀스")
-    private Long menuSeq;
+    @Column(name = "MENU_CODE")
+    @ApiModelProperty(name = "menuCode", value = "메뉴 공통코드")
+    private String menuCode;
 
     /**
      * Method to String
-     * @return String
+     *
+     * @return String string
+     * @author [이소정]
+     * @CreatedOn 2020. 6. 19. 오후 5:57:26
+     * @Description
      */
     @Override
     public String toString() {
