@@ -1449,6 +1449,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
+    margin-top: 20px;
 }
 .main-update-list li:nth-child(1) {
     flex: 1 0 50%;
@@ -1505,6 +1506,9 @@
     overflow: hidden;
     padding: 0 110px 0 20px;
 }
+.contents {
+    background: red;
+}
 .main-notice-list li a .title {
     display: block;
     height: 50px;
@@ -1514,6 +1518,7 @@
     text-overflow: ellipsis;
     word-wrap: normal;
     overflow: hidden;
+    white-space: nowrap;
 }
 .main-notice-list li a .date {
     position: absolute;
