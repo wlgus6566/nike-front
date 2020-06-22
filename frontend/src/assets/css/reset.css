@@ -239,13 +239,13 @@ textarea[readonly] {
 }
 input::placeholder,
 input::-webkit-input-placeholder {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: normal;
     color: #bbb !important;
 }
 textarea::placeholder,
 textarea::-webkit-input-placeholder {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 300;
     color: #888 !important;
 }

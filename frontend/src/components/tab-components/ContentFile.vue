@@ -12,49 +12,49 @@
 				</li>-->
                 <li>
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    <button type="button" class="btn-del">
+                    <button type="button" class="btn-sel">
                         <span>삭제</span>
                     </button>
                 </li>
 
                 <li>
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    <button type="button" class="btn-del">
+                    <button type="button" class="btn-sel">
                         <span>삭제</span>
                     </button>
                 </li>
                 <li>
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    <button type="button" class="btn-del">
+                    <button type="button" class="btn-sel">
                         <span>삭제</span>
                     </button>
                 </li>
                 <li>
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    <button type="button" class="btn-del">
+                    <button type="button" class="btn-sel">
                         <span>삭제</span>
                     </button>
                 </li>
                 <li>
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    <button type="button" class="btn-del">
+                    <button type="button" class="btn-sel">
                         <span>삭제</span>
                     </button>
                 </li>
                 <li>
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    <button type="button" class="btn-del">
+                    <button type="button" class="btn-sel">
                         <span>삭제</span>
                     </button>
                 </li>
                 <li>
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    <button type="button" class="btn-del">
+                    <button type="button" class="btn-sel">
                         <span>삭제</span>
                     </button>
                 </li>
             </ul>
-            <button type="button" class="btn-down">
+            <button type="button" class="btn-sown">
                 <span class="gage" style="width: 50%;"></span>
                 <span class="txt" style="display: none;">DOWNLOAD</span>
                 <span class="txt">DOWNLOAD...</span>
@@ -101,7 +101,7 @@ export default {
     top: 0;
     left: 0;
 }
-.file-list li .btn-del {
+.file-list li .btn-sel {
     position: absolute;
     top: 0;
     right: 0;
@@ -111,7 +111,7 @@ export default {
     border-radius: 0;
     background: url(../../assets/images/svg/icon-close-white-small.svg) no-repeat center;
 }
-.file-list li .btn-del span {
+.file-list li .btn-sel span {
     display: block;
     text-indent: -9999999px;
     overflow: hidden;
@@ -119,7 +119,7 @@ export default {
 .file-list li img {
     vertical-align: top;
 }
-.btn-down {
+.btn-sown {
     position: relative;
     display: flex;
     width: 100%;
@@ -131,7 +131,7 @@ export default {
     color: #fff;
     background: #ccc;
 }
-.btn-down .gage {
+.btn-sown .gage {
     position: absolute;
     top: 0;
     left: 0;
@@ -140,12 +140,12 @@ export default {
     height: 100%;
     background: #fa5400;
 }
-.btn-down .txt {
+.btn-sown .txt {
     position: relative;
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 0.58px;
 }
-.btn-down:disabled .gage {
+.btn-sown:disabled .gage {
     width: 0;
 }
 .flag-box .flag {
