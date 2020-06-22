@@ -1,7 +1,7 @@
 <template>
     <div id="wrap">
         <section id="container">
-            <transition name="component-fade" mode="out-in">
+            <transition mode="out-in" name="page-change">
                 <router-view></router-view>
             </transition>
         </section>

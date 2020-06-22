@@ -35,8 +35,7 @@
                     <router-link exact to="/management">MANAGEMENT</router-link>
                 </li>
             </ul>
-
-            <div class="bg">
+            <div class="header-bg">
                 <i></i>
             </div>
         </nav>
@@ -52,7 +51,6 @@ export default {
     },
     computed: {
         NavStatus() {
-            console.log(this.$route.path);
             return this.$route.path === '/';
         },
     },

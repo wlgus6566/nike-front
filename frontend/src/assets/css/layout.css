@@ -49,13 +49,18 @@ header.depth {
 }
 .contents {
     flex: 1 1 auto;
+    max-width: calc(100% - 300px);
     padding: 80px 60px 130px;
 }
 aside {
     position: relative;
     flex: 0 0 300px;
 }
-aside .bg {
+aside .sticky-content {
+    z-index: 2;
+    position: relative;
+}
+aside .aside-bg {
     position: absolute;
     top: 0;
     left: 0;
@@ -108,14 +113,14 @@ nav a {
 /*    transform: translateX(100%);*/
 /*}*/
 
-.component-fade-enter-active {
+.page-change-enter-active {
     transition: all 0.3s ease-in-out;
 }
-.component-fade-leave-active {
+.page-change-leave-active {
     transition: all 0.3s ease-in-out;
 }
-.component-fade-enter,
-.component-fade-leave-to {
+.page-change-enter,
+.page-change-leave-to {
     opacity: 0;
     transform: translateY(10px);
 }

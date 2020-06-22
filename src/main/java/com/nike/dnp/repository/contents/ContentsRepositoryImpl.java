@@ -17,23 +17,36 @@ import java.util.List;
 /**
  * Contents Repository Impl
  *
- * @since 2020.06.11
  * @author [이소정]
+ * @CreatedOn 2020. 6. 19. 오후 5:54:32
  * @Description Contents RepositoryImpl 작성
- * @history [이소정] [2020.06.11] [최초 작성]
- *
  */
 @Repository
 public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements ContentsRepositoryCustom {
 
+
     /**
      * 생성자 주입
-     * Instantiates a new Manager repository.
+     * Instantiates a new Contents repository.
+     *
+     * @author [이소정]
+     * @CreatedOn 2020. 6. 19. 오후 6:15:29
+     * @Description
      */
     public ContentsRepositoryImpl() {
-        super(Manager.class);
+        super(Contents.class);
     }
 
+    /**
+     * Find alls page.
+     *
+     * @param contentsSearchDTO the contents search dto
+     * @param pageRequest       the page request
+     * @return the page
+     * @author [이소정]
+     * @CreatedOn 2020. 6. 19. 오후 5:54:39
+     * @Description
+     */
     @Override
     public Page<Contents> findAlls(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest) {
         final QContents qContents = QContents.contents;
@@ -42,8 +55,8 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
 
         final List<Contents> contents = queryFactory.selectFrom(qContents)
                 .where(eqFolderName(keyword)
-                        , eqTopMenuSeq(contentsSearchDTO.getTopMenuSeq())
-                        , eqMenuSeq(contentsSearchDTO.getMenuSeq()))
+                        , eqTopMenuCode(contentsSearchDTO.getTopMenuCode())
+                        , eqMenuCode(contentsSearchDTO.getMenuCode()))
                 .fetch();
 
         return new PageImpl<>(contents, pageRequest, contents.size());
@@ -52,29 +65,41 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
 
     /**
      * 폴더명 eq
-     * @param keyword
-     * @return
+     *
+     * @param keyword the keyword
+     * @return boolean expression
+     * @author [이소정]
+     * @CreatedOn 2020. 6. 19. 오후 5:55:19
+     * @Description
      */
     private BooleanExpression eqFolderName(final String keyword) {
         return keyword.isEmpty() ? null : QContents.contents.folderName.contains(keyword);
     }
 
     /**
-     * 최고 메뉴 시퀀스 eq
-     * @param topMenuSeq
-     * @return
+     * 최고 메뉴 공통코드 eq
+     *
+     * @param topMenuCode the top menu code
+     * @return boolean expression
+     * @author [이소정]
+     * @CreatedOn 2020. 6. 19. 오후 5:55:19
+     * @Description
      */
-    private BooleanExpression eqTopMenuSeq(final Long topMenuSeq) {
-        return null == topMenuSeq || 0 == topMenuSeq ? null : QContents.contents.topMenuSeq.eq(topMenuSeq);
+    private BooleanExpression eqTopMenuCode(final String topMenuCode) {
+        return topMenuCode.isEmpty() ? null : QContents.contents.topMenuCode.eq(topMenuCode);
     }
 
     /**
-     * 메뉴 시퀀스 eq
-     * @param menuSeq
-     * @return
+     * 메뉴 공통코드 eq
+     *
+     * @param menuCode the menu code
+     * @return boolean expression
+     * @author [이소정]
+     * @CreatedOn 2020. 6. 19. 오후 5:55:19
+     * @Description
      */
-    private BooleanExpression eqMenuSeq(final Long menuSeq) {
-        return null == menuSeq || 0 == menuSeq ? null : QContents.contents.menuSeq.eq(menuSeq);
+    private BooleanExpression eqMenuCode(final String menuCode) {
+        return menuCode.isEmpty() ? null : QContents.contents.menuCode.eq(menuCode);
     }
 
 }
