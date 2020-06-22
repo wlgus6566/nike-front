@@ -1167,7 +1167,8 @@
     color: #fff;
 }
 
-.login-form .email-certification .title {
+.login-form .email-certification .title,
+.login-form .login-popup .title {
     margin-bottom: 0;
     font-weight: 700;
     font-size: 30px;
@@ -1176,7 +1177,7 @@
     letter-spacing: -2px;
 }
 
-.login-form .email-certification .title + p {
+.login-form .desc {
     margin: 9px 0 40px;
     font-weight: 400;
     font-size: 14px;
@@ -1185,6 +1186,9 @@
     color: #fff;
 }
 
+.login-form .login-popup .desc {
+    margin-bottom: 30px;
+}
 .login-form .title span {
     font-weight: 200;
     font-size: 24px;
@@ -1238,14 +1242,17 @@
 }
 
 .input-group input::-webkit-input-placeholder {
+    font-size: 16px;
+    font-family: 'Bebas Neue', sans-serif;
     color: #fff;
     opacity: 0.5;
-    font-family: 'Bebas Neue', sans-serif;
 }
 
 .input-group input:-ms-input-placeholder {
-    color: #888;
+    font-size: 16px;
     font-family: 'Bebas Neue', sans-serif;
+    color: #888;
+    opacity: 0.5;
 }
 
 .btn-login {
@@ -1261,12 +1268,29 @@
     color: #fff;
 }
 
-.email-certification .btn-login {
+.login-form .email-certification .btn-login {
     font-size: 16px;
     font-family: inherit;
     letter-spacing: -0.57px;
 }
 
+.login-form .login-popup .btn-login {
+    margin-top: 35px;
+    font-size: 16px;
+    font-family: inherit;
+    letter-spacing: -0.57px;
+}
+
+.close-pop {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 30px;
+    height: 30px;
+    font-size: 0;
+    background: url('../images/icon-close-mideum@2x.png') no-repeat center center;
+    background-size: 30px auto;
+}
 .pw-find {
     display: block;
     position: absolute;

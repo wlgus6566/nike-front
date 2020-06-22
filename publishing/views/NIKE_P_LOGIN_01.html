@@ -20,12 +20,12 @@
                         <img src="../../frontend/src/assets/images/logo_login.png" alt="" />
                     </a>
                 </h1>
-                <div class="login-form">
-                    <form action="" method="">
-                        <fieldset>
+                <!--<div class="login-form">
+                   <form action="" method="">
+                     <fieldset>
                             <legend>NIKE ND&P SERVICE</legend>
                             <h2 class="title">
-                                NIKE KOREA<span>는<br /> </span>PARTNER<span>와 함께합니다.</span>
+                                NIKE ND&P<br>DIGITAL PLATFORM
                             </h2>
                             <div class="input-group">
                                 <label for="id"><input type="text" id="id" value="digitalplaform@nike.com" placeholder="ID" /></label>
@@ -34,10 +34,10 @@
                             <button type="button" class="btn-login">
                                 LOGIN
                             </button>
-                            <a href="javascript:void(0)" class="pw-find">비밀번호를 찾으시겠습니까?</a>
+                            <a href="javascript:void(0)" class="pw-find">비밀번호 찾기</a>
                         </fieldset>
                     </form>
-                </div>
+                </div>-->
                 <!-- 로그인 : 이메일 인증 -->
                 <!--<div class="login-form">
                     <form class="email-certification" action="" method="">
@@ -46,7 +46,7 @@
                             <h2 class="title">
                                 이메일 인증
                             </h2>
-                            <p>인증메일이 발송되었습니다.<br />메일함을 확인하여 인증코드를 입력해주세요.</p>
+                            <p class="desc">인증메일이 발송되었습니다.<br />메일함을 확인하여 인증코드를 입력해주세요.</p>
                             <div class="input-group">
                                 <label for="word1"></label>
                                 <input type="text" maxlength="1" id="word1" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
@@ -72,6 +72,26 @@
                     </form>
                 </div>-->
                 <!-- //로그인 : 이메일 인증 -->
+                <!-- 로그인 : 비밀번호 찾기(P) -->
+                <div class="login-form">
+                    <form class="login-popup" action="" method="">
+                        <fieldset>
+                            <legend>NIKE ND&P SERVICE</legend>
+                            <h2 class="title">
+                                비밀번호 찾기
+                            </h2>
+                            <p class="desc">비밀번호 설정을 위한 ID(E-MAIL)을 입력해주세요.<br>입력하신 이메일로 비밀번호 설정을 위한 URL이 전송됩니다.</p>
+                            <div class="input-group">
+                                <label for="id2"><input type="text" id="id2" value="" placeholder="ID" /></label>
+                            </div>
+                            <button type="button" class="btn-login">
+                                이메일 발송
+                            </button>
+                            <a href="#" class="close-pop">팝업 닫기</a>
+                        </fieldset>
+                    </form>
+                </div>
+                <!-- //로그인 : 비밀번호 찾기(P) -->
             </section>
         </div>
     </div>
