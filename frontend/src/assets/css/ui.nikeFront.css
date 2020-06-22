@@ -71,21 +71,23 @@
     height: 30px;
 }
 [class^='btn-'][class*='-lg'] {
-    min-width: 200px;
+    min-width: 280px;
 }
 [class^='btn-r'][class*='-sm'] {
     color: #555;
 }
-[class^='btn-'][class*='-black'] {
+[class^='btn-d'][class*='-black'],
+[class^='btn-r'][class*='-black'] {
     background: #000;
     color: #fff;
 }
-[class^='btn-'][class*='-gray'] {
+[class^='btn-d'][class*='-gray'],
+[class^='btn-r'][class*='-gray'] {
     border-color: #555;
     background: #555;
     color: #fff;
 }
-[class^='btn-'][class*='-wgray'] {
+[class^='btn-d'][class*='-wgray'] [class^='btn-r'][class*='-wgray'] {
     border-color: #ccc;
     background: #fff;
     color: #888;
@@ -131,6 +133,43 @@
     height: 40px;
     border-radius: 0;
     border: 1px solid #fa5400;
+}
+[class^='btn-txt'] {
+    display: inline-block;
+    border-radius: 0;
+    border-bottom: 1px solid;
+    line-height: 18px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.btn-txt-black {
+    border-color: #333;
+    color: #333;
+}
+.btn-txt-gray {
+    border-color: #888;
+    color: #888;
+}
+.btn-box-txt {
+    display: inline-flex;
+}
+.btn-box-txt [class^='btn-txt'] {
+    position: relative;
+    padding: 0 5px;
+    margin: 0;
+    border: none;
+    font-weight: normal;
+}
+.btn-box-txt [class^='btn-txt'] + [class^='btn-txt']:before {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    content: '';
+    display: block;
+    width: 1px;
+    height: 10px;
+    margin-top: -5px;
+    background: #ddd;
 }
 /* hr */
 [class^='hr-'] {
@@ -1446,6 +1485,7 @@
     line-height: 60px;
     letter-spacing: 0.5px;
     font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
+    word-break: keep-all;
 }
 
 .main-banner .info-box .desc {
@@ -1470,13 +1510,11 @@
     letter-spacing: 0.5px;
 }
 .main-update-list {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    overflow: hidden;
     margin-top: 20px;
 }
 .main-update-list li:nth-child(1) {
-    flex: 1 0 50%;
+    width: calc(50% - 10px);
 }
 .main-update-list li:nth-child(1),
 .main-update-list li:nth-child(6) {
@@ -1486,7 +1524,8 @@
     margin-top: 0;
 }
 .main-update-list li {
-    flex: 0 1 20%;
+    float: left;
+    width: calc((100% - 60px) / 4);
     margin: 20px 0 0 20px;
 }
 .main-update-list li a {
@@ -1529,9 +1568,6 @@
     display: block;
     overflow: hidden;
     padding: 0 110px 0 20px;
-}
-.contents {
-    background: red;
 }
 .main-notice-list li a .title {
     display: block;
