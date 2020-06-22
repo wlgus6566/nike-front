@@ -10,9 +10,7 @@
                 <form action="" method="">
                     <fieldset>
                         <legend>NIKE ND&P SERVICE</legend>
-                        <h2 class="title">
-                            NIKE KOREA<span>는<br /> </span>PARTNER<span>와 함께합니다.</span>
-                        </h2>
+                        <h2 class="title">NIKE ND&P<br />DIGITAL PLATFORM</h2>
                         <div class="input-group">
                             <label for="id"></label><input type="text" id="id" value="digitalplaform@nike.com" placeholder="ID" />
                             <label for="pw"></label><input type="password" id="pw" value="111111111111" placeholder="PW" maxlength="12" />
