@@ -28,10 +28,42 @@
 		</header>
 		<section id="container">
 			<div class="contents">
-				<input type="text" placeholder="텍스트를 입력해 주세요">
+				<!-- todo// input 삭제 작업필요 -->
+				<h2>disabled</h2>
+				<input type="text" placeholder="텍스트를 입력해 주세요" disabled>
+				<br><br>
+
+				<h2>기본</h2>
 				<span class="input-box">
 					<input type="text" placeholder="텍스트를 입력해 주세요">
 					<button type="button" class="del"><span>삭제</span></button>
+					<span class="state">오류 메세지 텍스트</span>
+				</span>
+				<br><br>
+
+				<h2>focus</h2>
+				<span class="input-box focus">
+					<input type="text" placeholder="텍스트를 입력해 주세요" value="남남">
+					<button type="button" class="del"><span>삭제</span></button>
+					<span class="state">오류 메세지 텍스트</span>
+				</span>
+				<br>
+				<br>
+
+				<h2>입력완료</h2>
+				<span class="input-box">
+					<input type="text" placeholder="텍스트를 입력해 주세요" value="남남">
+					<button type="button" class="del"><span>삭제</span></button>
+					<span class="state">오류 메세지 텍스트</span>
+				</span>
+				<br>
+				<br>
+
+				<h2>error</h2>
+				<span class="input-box error">
+					<input type="text" placeholder="텍스트를 입력해 주세요">
+					<button type="button" class="del"><span>삭제</span></button>
+					<span class="state">오류 메세지 텍스트</span>
 				</span>
 			</div>
 			<aside>
