@@ -1,4 +1,4 @@
-package com.nike.dnp.dto.example.manager;
+package com.nike.dnp.dto.auth;
 
 import lombok.*;
 

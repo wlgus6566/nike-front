@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -50,6 +51,7 @@ public class User extends BaseTimeEntity implements Serializable {
      */
     @Column(name = "PASSWORD")
     @ApiModelProperty(name = "password", value = "비밀번호", hidden = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     /**

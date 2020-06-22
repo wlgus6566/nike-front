@@ -1,7 +1,7 @@
 package com.nike.dnp.config.auth;
 
-import com.nike.dnp.entity.example.SecurityIpFilterMata;
-import com.nike.dnp.entity.example.SecurityUrlFilterMata;
+import com.nike.dnp.entity.auth.SecurityIpFilterMata;
+import com.nike.dnp.entity.auth.SecurityUrlFilterMata;
 import com.nike.dnp.service.auth.SecurityFilterMataService;
 import com.nike.dnp.util.BeanUtil;
 import lombok.RequiredArgsConstructor;

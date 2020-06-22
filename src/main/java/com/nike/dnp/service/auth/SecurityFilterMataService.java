@@ -1,12 +1,9 @@
 package com.nike.dnp.service.auth;
 
-import com.nike.dnp.entity.example.SecurityIpFilterMata;
-import com.nike.dnp.entity.example.SecurityUrlFilterMata;
-import com.nike.dnp.repository.example.ManagerRepository;
-import com.nike.dnp.repository.example.SecurityIpFilterMataRepositiory;
-import com.nike.dnp.repository.example.SecurityUrlFilterMataRepositiory;
-import com.nike.dnp.service.ResponseService;
-import com.nike.dnp.service.log.UserLoginLogService;
+import com.nike.dnp.entity.auth.SecurityIpFilterMata;
+import com.nike.dnp.entity.auth.SecurityUrlFilterMata;
+import com.nike.dnp.repository.auth.SecurityIpFilterMataRepositiory;
+import com.nike.dnp.repository.auth.SecurityUrlFilterMataRepositiory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,22 +19,6 @@ import java.util.List;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class SecurityFilterMataService {
-
-	/**
-	 *
-	 */
-	private final ManagerRepository managerRepository;
-
-	/**
-	 *
-	 */
-	private final ResponseService responseService;
-
-	/**
-	 *
-	 */
-	private final UserLoginLogService loginLogService;
-
 
 	/**
 	 *

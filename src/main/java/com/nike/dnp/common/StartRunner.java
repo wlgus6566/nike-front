@@ -1,6 +1,5 @@
 package com.nike.dnp.common;
 
-import com.nike.dnp.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -10,9 +9,8 @@ import org.springframework.stereotype.Component;
  * Runner
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 22. 오후 5:05:10
  * @Description Runner 작성
- * @history [오지훈] [2020.05.21] [최초 작성]
- * @since 2020.05.21
  */
 @Slf4j
 @Component
@@ -21,19 +19,26 @@ public class StartRunner implements ApplicationRunner {
 
     /**
      * Instantiates a new Start runner.
+     *
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 22. 오후 5:05:10
+     * @Description
      */
     public StartRunner() {
         super();
     }
 
+    /**
+     * Run.
+     *
+     * @param args the args
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 22. 오후 5:05:10
+     * @Description
+     */
     @Override
     public void run(final ApplicationArguments args) {
         log.info("Application Runner!!");
-        System.out.println("===================================");
-        System.out.println(RandomUtil.randomCertCode1(10));
-        System.out.println(RandomUtil.randomCertCode2(10));
-        System.out.println("===================================");
     }
 
 }

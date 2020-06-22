@@ -1,6 +1,6 @@
-package com.nike.dnp.repository.example;
+package com.nike.dnp.repository.auth;
 
-import com.nike.dnp.entity.example.SecurityUrlFilterMata;
+import com.nike.dnp.entity.auth.SecurityUrlFilterMata;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

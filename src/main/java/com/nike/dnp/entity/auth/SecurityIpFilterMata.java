@@ -1,4 +1,4 @@
-package com.nike.dnp.entity.example;
+package com.nike.dnp.entity.auth;
 
 import com.nike.dnp.dto.BasicDTO;
 import lombok.*;
@@ -22,10 +22,11 @@ import java.io.Serializable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
-@Table(name="TB_SECURITY_URL_FILTER_MATA")
-public class SecurityUrlFilterMata extends BasicDTO implements Serializable {
+@Table(name="TB_SECURITY_IP_FILTER_MATA")
+public class SecurityIpFilterMata extends BasicDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	/**
 	 *
 	 */
@@ -37,28 +38,12 @@ public class SecurityUrlFilterMata extends BasicDTO implements Serializable {
 	/**
 	 *
 	 */
-	@Column(name="ANT_PATTERN")
-	private String antPattern;
+	@Column(name="IP")
+	private String ip;
 
 	/**
 	 *
 	 */
-	@Column(name = "EXPRESSION")
-	private String expression;
-
-	/**
-	 *
-	 */
-	@Column(name = "HTTP_METHOD")
-	private String httpMethod;
-
-	/**
-	 *
-	 */
-	@Column(name = "SORT")
-	private Integer sort;
-
-
-
-
+	@Column(name = "sort")
+	private String sort;
 }

@@ -26,14 +26,4 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
      */
     Optional<User> findByUserId(String userId);
 
-    /**
-     * 상세 조회
-     * TODO[ojh] 로그인 시 어떻게 DB 조회 하는지 확인 필요
-     * @param userId   the user id
-     * @param password the password
-     * @return optional
-     * @author [오지훈]
-     */
-    Optional<User> findByUserIdAndPassword(String userId, String password);
-
 }
