@@ -1831,6 +1831,7 @@
     overflow: auto;
 }
 .login-box {
+    position: relative;
     width: 370px;
     height: 390px;
     margin-bottom: 150px;
@@ -1920,4 +1921,19 @@
 }
 .pw-box input {
     margin: 32px 0 15px;
+}
+.login-box .btn-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: url(../images/svg/icon-close-mideum.svg) no-repeat;
+}
+.login-box .btn-close span {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    text-indent: -9999px;
 }
