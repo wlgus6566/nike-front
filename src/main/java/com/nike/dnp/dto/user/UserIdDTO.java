@@ -23,7 +23,7 @@ public class UserIdDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "유저 ID", name = "userId")
+    @ApiModelProperty(value = "유저 ID", name = "userId", required = true)
     private String userId;
 
 

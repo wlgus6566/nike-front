@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.code;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -22,6 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_CODE")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Code extends BaseTimeEntity implements Serializable {
 
     /**

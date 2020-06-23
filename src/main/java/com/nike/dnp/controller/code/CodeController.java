@@ -26,9 +26,8 @@ import java.util.Optional;
  * CodeController
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 22. 오후 5:22:30
  * @Description Code(공통 코드) Controller 작성
- * @history [오지훈] [2020.05.27] [최초 작성]
- * @since 2020.05.27
  */
 @Slf4j
 @RestController
@@ -39,18 +38,21 @@ public class CodeController {
 
     /**
      * ResponseService
+     *
      * @author [오지훈]
      */
     private final ResponseService responseService;
 
     /**
      * CodeService
+     *
      * @author [오지훈]
      */
     private final CodeService codeService;
 
     /**
      * REQUEST_CHARACTER
+     *
      * @author [오지훈]
      */
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n필드명|설명|필수여부|데이터 타입(길이)\n" + "-|-|-|-\n";
@@ -62,6 +64,8 @@ public class CodeController {
      * @param authUserDTO   the auth user dto
      * @return the all codes
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 22. 오후 5:22:31
+     * @Description
      */
     @ApiOperation(
         value = "코드 목록 조회"
@@ -97,6 +101,8 @@ public class CodeController {
      * @param authUserDTO  the auth user dto
      * @return the conf codes
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 22. 오후 5:22:31
+     * @Description
      */
     @ApiOperation(
         value = "하위 코드 목록 조회"
@@ -121,6 +127,8 @@ public class CodeController {
      * @param authUserDTO the auth user dto
      * @return the response entity
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 22. 오후 5:22:31
+     * @Description
      */
     @ApiOperation(
         value = "코드 등록"
@@ -148,6 +156,8 @@ public class CodeController {
      * @param authUserDTO   the auth user dto
      * @return the response entity
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 22. 오후 5:22:31
+     * @Description
      */
     @ApiOperation(
             value = "코드 수정"
@@ -176,6 +186,8 @@ public class CodeController {
      * @param authUserDTO the auth user dto
      * @return the response entity
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 22. 오후 5:22:31
+     * @Description
      */
     @ApiOperation(
             value = "코드 삭제"

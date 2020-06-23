@@ -4,10 +4,7 @@ import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.nike.dnp.common.variable.ErrorEnumCode.LoginError;
 import com.nike.dnp.common.variable.ErrorEnumCode.UserError;
 import com.nike.dnp.dto.auth.AuthUserDTO;
-import com.nike.dnp.dto.user.UserSaveDTO;
-import com.nike.dnp.dto.user.UserSearchDTO;
-import com.nike.dnp.dto.user.UserUpdateDTO;
-import com.nike.dnp.dto.user.UserUpdateStatusDTO;
+import com.nike.dnp.dto.user.*;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.entity.user.UserAuth;
@@ -135,25 +132,57 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * 인증코드 검증
+     * 인증코드 검증 및 비밀번호 변경
      *
-     * @param encodeCertCode the encode cert code
+     * @param userCertDTO the user cert dto
      * @return the boolean
-     * @throws Exception the exception
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 4:18:42
      * @Description
      */
-    public Boolean checkByCertCode(final String encodeCertCode) throws Exception {
+    public Boolean check(final UserCertDTO userCertDTO) {
         log.info("UserService.findByCertCode");
-        final String decodeCertCode = CryptoUtil.urlDecode(CryptoUtil.decryptAES256(encodeCertCode, "Nike DnP"));
-        final String certCode = (String) redisService.get("cert:" + decodeCertCode.split("\\|")[0]);
-
-        boolean result = false;
-        if (!certCode.isEmpty() && decodeCertCode.split("\\|")[1].equals(certCode)) {
-            result = true;
+        String decodeCertCode = "";
+        try {
+            decodeCertCode = CryptoUtil.urlDecode(CryptoUtil.decryptAES256(userCertDTO.getCertCode(), "Nike DnP"));
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
-        return result;
+        final String userId = decodeCertCode.split("\\|")[0];
+        final String certCode = (String) redisService.get("cert:" + userId);
+
+        //TODO[ojh] 비밀번호가 다를때
+        if (!userCertDTO.getNewPassword().equals(userCertDTO.getConfirmPassword())) {
+            throw new CodeMessageHandleException("", "");
+        }
+        //TODO[ojh] 정규식이 다를때
+        if (!userCertDTO.getNewPassword().equals(userCertDTO.getConfirmPassword())) {
+            throw new CodeMessageHandleException("", "");
+        }
+
+        //TODO[ojh] 공통사전에 있을때
+        if (!userCertDTO.getNewPassword().equals(userCertDTO.getConfirmPassword())) {
+            throw new CodeMessageHandleException("", "");
+        }
+
+        //TODO[ojh] 아이디와 같을때
+        if (!userCertDTO.getNewPassword().equals(userId)) {
+            throw new CodeMessageHandleException("", "");
+        }
+
+        //TODO[ojh] 기존 비밀번호와 같을때
+        if (!userCertDTO.getNewPassword().equals(userId)) {
+            throw new CodeMessageHandleException("", "");
+        }
+
+        //TODO[ojh] 기존 비밀번호와 같을때
+        if (decodeCertCode.split("\\|")[1].equals(certCode)) {
+
+        }
+
+        //this.updatePassword();
+
+        return true;
     }
 
     /**

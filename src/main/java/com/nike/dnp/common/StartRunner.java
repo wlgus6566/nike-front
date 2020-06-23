@@ -1,5 +1,6 @@
 package com.nike.dnp.common;
 
+import com.nike.dnp.util.PatternUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -39,6 +40,32 @@ public class StartRunner implements ApplicationRunner {
     @Override
     public void run(final ApplicationArguments args) {
         log.info("Application Runner!!");
+
+        String id = "nikednp";
+        String oldPassword = "qwe123QWE!@#";
+        String[] password = {
+                "12qQ%("
+                ,"12345678"
+                , "abcdefg"
+                , "1234qwer"
+                , "1q2w3e4r"
+                , "!@#$qwer%T"
+                , "qwe123QWE!@#"
+                , "test91!!"
+                , "test91!!mm"
+                , "1n2i3k4e!!!"
+                , "nike!!!123"
+                , "nike!!!1234"
+                , "nike!!!1111"
+                , "nike!!!hhhh"
+        };
+
+        System.out.println("=========================================================");
+        for (String tmp : password) {
+            System.out.println(PatternUtil.pwdRegularExpressionChk(tmp, oldPassword, id));
+        }
+
+
     }
 
 }
