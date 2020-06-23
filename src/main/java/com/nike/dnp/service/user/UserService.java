@@ -304,6 +304,48 @@ public class UserService implements UserDetailsService {
     }
 
     /**
+     * Delete one optional.
+     *
+     * @param userSeq     the user seq
+     * @param authUserDTO the auth user dto
+     * @return the optional
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오후 5:47:29
+     * @Description 유저 단건 삭제
+     */
+    @Transactional
+    public Optional<User> deleteOne(
+            final Long userSeq
+            , final AuthUserDTO authUserDTO
+    ) {
+        log.info("UserService.deleteOne");
+        final Optional<User> user = userRepository.findById(userSeq);
+        user.ifPresent(value -> value.delete(userSeq, authUserDTO.getUserSeq()));
+        return user;
+    }
+
+    /**
+     * Delete array list.
+     *
+     * @param userDeleteDTO the user delete dto
+     * @param authUserDTO   the auth user dto
+     * @return the list
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오후 6:15:52
+     * @Description
+     */
+    @Transactional
+    public List<User> deleteArray(
+            final UserDeleteDTO userDeleteDTO
+            , final AuthUserDTO authUserDTO
+    ) {
+        log.info("UserService.deleteArray");
+        List<User> users = userRepository.findAllByUserSeqIn(userDeleteDTO.getUserSeqArray());
+        //TODO[ojh] 배열삭제 작업 중
+        return users;
+    }
+
+    /**
      * 최종 로그인 일자 업데이트
      *
      * @param user the user

@@ -4,6 +4,7 @@ import com.nike.dnp.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -25,5 +26,16 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
      * @author [오지훈]
      */
     Optional<User> findByUserId(String userId);
+
+    /**
+     * Find all by user seq in list.
+     *
+     * @param userSeqArray the user seq array
+     * @return the list
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오후 6:15:21
+     * @Description 목록 조회(배열)
+     */
+    List<User> findAllByUserSeqIn(Long[] userSeqArray);
 
 }

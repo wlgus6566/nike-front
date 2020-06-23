@@ -31,7 +31,7 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@Api(description = "코드 정보", tags = "3_CODE")
+@Api(description = "코드 정보", tags = "99_CODE")
 @RequestMapping(value = "/api/code", name = "코드")
 @RequiredArgsConstructor
 public class CodeController {
@@ -144,8 +144,7 @@ public class CodeController {
             final @RequestBody CodeSaveDTO codeSaveDTO
             , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
-        Code code = codeService.save(codeSaveDTO, authUserDTO);
-        return responseService.getSingleResult(code);
+        return responseService.getSingleResult(codeService.save(codeSaveDTO, authUserDTO));
     }
 
     /**
