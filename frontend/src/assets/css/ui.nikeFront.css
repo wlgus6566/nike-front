@@ -22,6 +22,9 @@
     line-height: 27px;
     font-weight: bold;
 }
+.form-title + [class^=hr-]{
+    margin-top:10px;
+}
 .page-title + .form-title {
     margin-top: 20px;
 }
@@ -1569,10 +1572,10 @@
 }
 .main-banner .info-box .title {
     display: block;
-    font-size: 50px;
+    font-size: 40px;
     line-height: 60px;
-    letter-spacing: 0.5px;
-    font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
+    letter-spacing: -2px;
+
     word-break: keep-all;
 }
 

@@ -158,12 +158,9 @@ export default {
     font-weight: bold;
     color: #000;
 }
-.alram-list {
-    max-height: 311px;
-    overflow: auto;
-}
-.alram-list .alram-item {
-    padding-left: 29px;
+.alram-item:first-child {
+    margin-top: 10px;
+    padding-top: 0;
 }
 .alram-item {
     padding: 12px 20px 12px 20px;
@@ -197,14 +194,23 @@ export default {
 .alram-item + .alram-item {
     border-top: 1px solid #eee;
 }
+.alram-list {
+    max-height: 311px;
+    margin-top: 10px;
+    overflow: auto;
+}
+.alram-list .alram-item {
+    margin-top: 0;
+    padding-left: 29px;
+}
 .alram-box .btn-close {
     position: absolute;
-    top: 4px;
-    right: 4px;
+    top: 10px;
+    right: 10px;
     width: 30px;
     height: 30px;
     border-radius: 0;
-    background: red;
+    background-image: url('../../assets/images/svg/icon-close-small.svg') !important;
 }
 .alram-box.active {
     display: block;
