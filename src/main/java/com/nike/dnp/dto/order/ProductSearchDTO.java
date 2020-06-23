@@ -33,7 +33,7 @@ public class ProductSearchDTO extends SearchDTO {
 	 * 카테고리 2
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(value="카테고리 2 코드",name="category2code")
+	@ApiModelProperty(value = "카테고리 2 코드",name = "category2code")
 	private String category2code;
 
 	/**
@@ -42,5 +42,18 @@ public class ProductSearchDTO extends SearchDTO {
 	 */
 	@ApiModelProperty(value = "카테고리 3 코드", name = "category2code")
 	private String category3code;
+
+	/**
+	 * 에이전시 시퀀스
+	 */
+	@ApiModelProperty(value = "에이젼시 시퀀스",name = "agencySeq")
+	private Long agencySeq;
+
+	/**
+	 * 노출 여부
+	 */
+	@ApiModelProperty(value = "노출 여부", name = "exposureYn")
+	private String exposureYn;
+
 
 }

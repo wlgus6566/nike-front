@@ -1,8 +1,12 @@
 package com.nike.dnp.entity.order;
 
+import com.nike.dnp.dto.order.ProductUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 
@@ -19,6 +23,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
+@DynamicUpdate
 @Table(name = "TB_PRODUCT")
 public class Product extends BaseTimeEntity {
 
@@ -141,8 +146,17 @@ public class Product extends BaseTimeEntity {
 	 * @author [윤태호]
 	 */
 	@Column(name = "SIZE")
-	@ApiModelProperty(name = "size", value = "사이즈")
+	@ApiModelProperty(name = "size", value = "사이즈",hidden = true)
 	private String size;
+
+	/**
+	 * 단가
+	 *
+	 * @author [윤태호]
+	 */
+	@Column(name = "UNIT_PRICE")
+	@ApiModelProperty(name = "unitPrice", value = "단가")
+	private String unitPrice;
 
 	/**
 	 * 최소 주문 수량
@@ -169,4 +183,56 @@ public class Product extends BaseTimeEntity {
 	private String useYn;
 
 
+	/**
+	 * 수정
+	 *
+	 * @param productUpdateDTO the product update dto
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 6. 23. 오후 5:52:24
+	 * @Description
+	 */
+
+	public void update(ProductUpdateDTO productUpdateDTO) {
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getCategory2code())){
+			this.category2Code = productUpdateDTO.getCategory2code();
+		}
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getCategory3code())){
+			this.category3Code = productUpdateDTO.getCategory3code();
+		}
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getAgencySeq()) && productUpdateDTO.getAgencySeq() > 0){
+			this.agencySeq = productUpdateDTO.getAgencySeq();
+		}
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getGoodsName())){
+			this.goodsName = productUpdateDTO.getGoodsName();
+		}
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getExposureYn())){
+			this.exposureYn = productUpdateDTO.getExposureYn();
+		}
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getGoodsDescription())){
+			this.goodsDescription = productUpdateDTO.getGoodsDescription();
+		}
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getUnitPrice())){
+			this.unitPrice = unitPrice;
+		}
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getMinimumQuantity())){
+			this.minimumOrderQuantity = productUpdateDTO.getMinimumQuantity();
+		}
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getOriginalImg())){
+			this.imageFileName = StringUtils.getFilename(productUpdateDTO.getOriginalImg().getOriginalFilename());
+			this.imageFileSize = String.valueOf(productUpdateDTO.getOriginalImg().getSize());
+			this.imageFilePhysicalName  = productUpdateDTO.getOriginalImg().getOriginalFilename();
+		}
+
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getThumbnailImg())){
+			this.thumbnailFileName = StringUtils.getFilename(productUpdateDTO.getThumbnailImg().getOriginalFilename());
+			this.thumbnailFileSize = String.valueOf(productUpdateDTO.getThumbnailImg().getSize());
+			this.thumbnailFilePhysicalName = productUpdateDTO.getThumbnailImg().getOriginalFilename();
+		}
+
+		setUpdaterSeq(productUpdateDTO.getUpdaterSeq());
+
+
+
+
+	}
 }

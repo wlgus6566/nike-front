@@ -19,8 +19,16 @@ import org.springframework.web.multipart.MultipartFile;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class ProductSaveDTO extends BasicDTO {
+public class ProductUpdateDTO extends BasicDTO {
 
+
+	/**
+	 * 상품시퀀스
+	 *
+	 * @author [윤태호]
+	 */
+	@ApiModelProperty(name="goodsSeq",value = "상품시퀀스",required = true)
+	private Long goodsSeq;
 
 	/**
 	 * 카테고리 1 코드
@@ -33,7 +41,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 * 상태
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name="exposureYn",value="상태")
+	@ApiModelProperty(name="exposureYn",value="상태", required = true)
 	private String exposureYn;
 
 	/**

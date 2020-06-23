@@ -1,17 +1,28 @@
 package com.nike.dnp.service.order;
 
 import com.nike.dnp.dto.order.ProductSaveDTO;
+import com.nike.dnp.dto.order.ProductSearchDTO;
+import com.nike.dnp.dto.order.ProductUpdateDTO;
 import com.nike.dnp.entity.order.Product;
 import com.nike.dnp.repository.order.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
-import java.util.List;
+import java.util.Optional;
+
 
 /**
- * The type Product service.
+ * The Class Product service.
+ *
+ * @author [윤태호]
+ * @CreatedOn 2020. 6. 23. 오후 3:24:39
+ * @Description
  */
 @Slf4j
 @Service
@@ -20,23 +31,36 @@ import java.util.List;
 public class ProductService {
 
 	/**
+	 * The Product repository
 	 *
+	 * @author [윤태호]
 	 */
 	public final ProductRepository productRepository;
 
-
 	/**
-	 * 전체 검색(paging)
- 	 * @return
+	 * Find all pages page.
+	 *
+	 * @param productSearchDTO the product search dto
+	 * @return the page
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 6. 23. 오후 3:24:30
+	 * @Description
 	 */
-	public List<Product> findAll() {
-		return productRepository.findAll();
+	public Page<Product> findAllPages(ProductSearchDTO productSearchDTO) {
+		return productRepository.findAllPages(
+				productSearchDTO,
+				PageRequest.of(productSearchDTO.getPage(), productSearchDTO.getSize(), Sort.by("goodsSeq").descending()
+				));
 	}
 
 	/**
 	 * 제품 등록
-	 * @param productSaveDTO
-	 * @return
+	 *
+	 * @param productSaveDTO the product save dto
+	 * @return product
+	 * @author [윤태호]`
+	 * @CreatedOn 2020. 6. 23. 오후 3:24:48
+	 * @Description
 	 */
 	public Product save(final ProductSaveDTO productSaveDTO) {
 		final Product product = new Product();
@@ -48,13 +72,11 @@ public class ProductService {
 		product.setGoodsName(productSaveDTO.getGoodsName());
 		product.setGoodsDescription(productSaveDTO.getGoodsDescription());
 		product.setSize(productSaveDTO.getSize());
+		product.setUnitPrice(productSaveDTO.getUnitPrice());
 		product.setMinimumOrderQuantity(productSaveDTO.getMinimumQuantity());
 
-		String originalFileName = productSaveDTO.getOriginalImg().getOriginalFilename();
-		originalFileName =  productSaveDTO.getOriginalImg().getName()+originalFileName.substring(originalFileName.lastIndexOf('.'));
-
-		String thumbnailFileName = productSaveDTO.getThumbnailImg().getOriginalFilename();
-		thumbnailFileName = productSaveDTO.getThumbnailImg().getName() + thumbnailFileName.substring(thumbnailFileName.lastIndexOf('.'));
+		String originalFileName = StringUtils.getFilename(productSaveDTO.getOriginalImg().getOriginalFilename());
+		String thumbnailFileName = StringUtils.getFilename(productSaveDTO.getThumbnailImg().getOriginalFilename());
 
 		product.setImageFileName(originalFileName);
 		product.setImageFilePhysicalName(productSaveDTO.getOriginalImg().getOriginalFilename());
@@ -70,5 +92,12 @@ public class ProductService {
 
 		return productRepository.save(product);
 
+	}
+
+	@Transactional
+	public Product update(ProductUpdateDTO productUpdateDTO) {
+		Optional<Product> product = productRepository.findById(productUpdateDTO.getGoodsSeq());
+		product.ifPresent(value ->  value.update(productUpdateDTO));
+		return product.get();
 	}
 }
