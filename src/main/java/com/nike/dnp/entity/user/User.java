@@ -118,6 +118,10 @@ public class User extends BaseTimeEntity implements Serializable {
     @ApiModelProperty(name = "certCode", value = "인증 코드", hidden = true)
     private String certCode;
 
+    @OneToOne
+    @JoinColumn(name = "USER_SEQ", insertable = false, updatable = false)
+    private UserAuth userAuth;
+
     /**
      * 쿼리 실행 전 기본값 설정
      */

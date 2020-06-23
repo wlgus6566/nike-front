@@ -1,10 +1,13 @@
 package com.nike.dnp.common;
 
-import com.nike.dnp.util.PatternUtil;
+import com.querydsl.core.types.ConstantImpl;
+import com.querydsl.core.types.dsl.Expressions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 /**
  * Runner
@@ -41,7 +44,7 @@ public class StartRunner implements ApplicationRunner {
     public void run(final ApplicationArguments args) {
         log.info("Application Runner!!");
 
-        String id = "nikednp";
+        /*String id = "nikednp";
         String oldPassword = "qwe123QWE!@#";
         String[] password = {
                 "12qQ%("
@@ -59,11 +62,15 @@ public class StartRunner implements ApplicationRunner {
                 , "nike!!!1111"
                 , "nike!!!hhhh"
         };
-
-        System.out.println("=========================================================");
         for (String tmp : password) {
             System.out.println(PatternUtil.pwdRegularExpressionChk(tmp, oldPassword, id));
         }
+        */
+
+        System.out.println(Expressions.dateTemplate(LocalDateTime.class, "{0}", "2020-06-23 00:00:00"));
+        System.out.println(Expressions.dateTemplate(LocalDateTime.class, "{0}", "2020-06-23 23:59:59"));
+        System.out.println(Expressions.dateTemplate(LocalDateTime.class, "DATE_FORMAT({0},{1})", "2020.06.30", ConstantImpl.create("%Y-%m-%d %H:%M:%s")));
+        System.out.println("=========================================================");
 
 
     }

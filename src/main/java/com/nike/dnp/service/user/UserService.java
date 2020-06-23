@@ -98,7 +98,7 @@ public class UserService implements UserDetailsService {
                 userSearchDTO,
                 PageRequest.of(userSearchDTO.getPage()
                         , userSearchDTO.getSize()
-                        , Sort.by("managerId").descending()));
+                        , Sort.by("userSeq").descending()));
     }
 
     /**

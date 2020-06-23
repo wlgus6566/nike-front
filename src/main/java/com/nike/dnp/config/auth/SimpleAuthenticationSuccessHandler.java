@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.nike.dnp.config.jwt.JwtHelper;
 import com.nike.dnp.dto.auth.AuthUserDTO;
+import com.nike.dnp.dto.log.UserLoginLogSaveDTO;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.log.UserLoginLogService;
 import com.nike.dnp.util.JsonUtil;
@@ -51,6 +52,8 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		JsonUtil.write(response.getWriter(), responseService.getSuccessResult());
 
 		//TODO[ojh] 로그인 로그 구현
-		//loginLogService.save();
+		UserLoginLogSaveDTO saveDTO = new UserLoginLogSaveDTO();
+		saveDTO.setUserSeq(authUserDTO.getUserSeq());
+		loginLogService.save(saveDTO);
 	}
 }
