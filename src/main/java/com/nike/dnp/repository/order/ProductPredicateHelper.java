@@ -47,7 +47,7 @@ public class ProductPredicateHelper {
 	 * @CreatedOn 2020. 6. 23. 오후 5:05:02
 	 * @Description
 	 */
-	public static Predicate eqCate2gory(String category2code) {
+	public static Predicate eqCate2gory(final String category2code) {
 		final BooleanBuilder builder = new BooleanBuilder();
 		if(!StringUtils.isEmpty(category2code)){
 			builder.and(QProduct.product.category2Code.eq(category2code));
@@ -64,7 +64,7 @@ public class ProductPredicateHelper {
 	 * @CreatedOn 2020. 6. 23. 오후 5:05:02
 	 * @Description
 	 */
-	public static Predicate eqCate3gory(String category3code) {
+	public static Predicate eqCate3gory(final String category3code) {
 		final BooleanBuilder builder = new BooleanBuilder();
 		if(!StringUtils.isEmpty(category3code)){
 			builder.and(QProduct.product.category2Code.eq(category3code));
@@ -73,7 +73,7 @@ public class ProductPredicateHelper {
 	}
 
 	/**
-	 * 상품이름 like 검색
+	 * 상품 이름 like 검색
 	 *
 	 * @param keyword the keyword
 	 * @return the predicate
@@ -81,7 +81,7 @@ public class ProductPredicateHelper {
 	 * @CreatedOn 2020. 6. 23. 오후 5:05:02
 	 * @Description
 	 */
-	public static Predicate likeGoodName(String keyword) {
+	public static Predicate likeGoodName(final String keyword) {
 		final BooleanBuilder builder = new BooleanBuilder();
 		if(!StringUtils.isEmpty(keyword)){
 			builder.and(QProduct.product.goodsName.contains(keyword));
@@ -99,7 +99,7 @@ public class ProductPredicateHelper {
 	 * @CreatedOn 2020. 6. 23. 오후 5:07:20
 	 * @Description
 	 */
-	public static Predicate eqAgentSeq(Long agencySeq) {
+	public static Predicate eqAgentSeq(final Long agencySeq) {
 		final BooleanBuilder builder = new BooleanBuilder();
 		if(!ObjectUtils.isEmpty(agencySeq)){
 			builder.and(QProduct.product.agencySeq.eq(agencySeq));
@@ -116,7 +116,7 @@ public class ProductPredicateHelper {
 	 * @CreatedOn 2020. 6. 23. 오후 5:25:34
 	 * @Description
 	 */
-	public static Predicate eqExposureYn(String exposureYn) {
+	public static Predicate eqExposureYn(final String exposureYn) {
 		final BooleanBuilder builder = new BooleanBuilder();
 		if(!StringUtils.isEmpty(exposureYn)){
 			builder.and(QProduct.product.exposureYn.eq(exposureYn));

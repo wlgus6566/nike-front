@@ -52,8 +52,8 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 	 * @Description
 	 */
 	@Override
-	public Page<Product> findPagesProduct(ProductSearchDTO productSearchDTO,
-										  PageRequest pageRequest) {
+	public Page<Product> findPagesProduct(final ProductSearchDTO productSearchDTO,
+										  final PageRequest pageRequest) {
 		final QProduct qProduct = QProduct.product;
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 		final JPAQuery<Product> query = queryFactory.selectFrom(qProduct)
@@ -64,8 +64,7 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 						ProductPredicateHelper.eqAgentSeq(productSearchDTO.getAgencySeq()),
 						ProductPredicateHelper.eqExposureYn(productSearchDTO.getExposureYn())
 						,qProduct.useYn.eq("Y"));
-		List<Product> productList = getQuerydsl().applyPagination(pageRequest,query).fetch();
+		final List<Product> productList = getQuerydsl().applyPagination(pageRequest,query).fetch();
 		return new PageImpl<>(productList,pageRequest,query.fetchCount());
 	}
-
 }

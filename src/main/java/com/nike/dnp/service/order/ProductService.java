@@ -47,7 +47,7 @@ public class ProductService {
 	 * @CreatedOn 2020. 6. 23. 오후 3:24:30
 	 * @Description
 	 */
-	public Page<Product> findPagesProduct(ProductSearchDTO productSearchDTO) {
+	public Page<Product> findPagesProduct(final ProductSearchDTO productSearchDTO) {
 		return productRepository.findPagesProduct(
 				productSearchDTO,
 				PageRequest.of(productSearchDTO.getPage(), productSearchDTO.getSize(), Sort.by("goodsSeq").descending()
@@ -65,7 +65,7 @@ public class ProductService {
 	 * @Description
 	 */
 	@Transactional
-	public Product findByGoodsSeqAndCategory1Code(Long goodsSeq,String category1Code) {
+	public Product findByGoodsSeqAndCategory1Code(final Long goodsSeq,final String category1Code) {
 		return productRepository.findByGoodsSeqAndCategory1Code(goodsSeq, category1Code);
 	}
 
@@ -92,14 +92,14 @@ public class ProductService {
 		product.setMinimumOrderQuantity(productSaveDTO.getMinimumQuantity());
 
 		if(!ObjectUtils.isEmpty(productSaveDTO.getOriginalImg())){
-			String originalFileName = StringUtils.getFilename(productSaveDTO.getOriginalImg().getOriginalFilename());
+			final String originalFileName = StringUtils.getFilename(productSaveDTO.getOriginalImg().getOriginalFilename());
 			product.setImageFileName(originalFileName);
 			product.setImageFilePhysicalName(productSaveDTO.getOriginalImg().getOriginalFilename());
 			product.setImageFileSize(String.valueOf(productSaveDTO.getOriginalImg().getSize()));
 		}
 
 		if(!ObjectUtils.isEmpty(productSaveDTO.getThumbnailImg())){
-			String thumbnailFileName = StringUtils.getFilename(productSaveDTO.getThumbnailImg().getOriginalFilename());
+			final String thumbnailFileName = StringUtils.getFilename(productSaveDTO.getThumbnailImg().getOriginalFilename());
 			product.setThumbnailFileName(thumbnailFileName);
 			product.setThumbnailFilePhysicalName(productSaveDTO.getThumbnailImg().getOriginalFilename());
 			product.setThumbnailFileSize(String.valueOf(productSaveDTO.getThumbnailImg().getSize()));
@@ -113,13 +113,36 @@ public class ProductService {
 
 	}
 
+	/**
+	 * 상품 수정
+	 *
+	 * @param productUpdateDTO the product update dto
+	 * @return the product
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 6. 24. 오후 4:42:09
+	 * @Description
+	 */
 	@Transactional
-	public Product update(ProductUpdateDTO productUpdateDTO) {
-		Optional<Product> product = productRepository.findById(productUpdateDTO.getGoodsSeq());
+	public Product update(final ProductUpdateDTO productUpdateDTO) {
+		final Optional<Product> product = productRepository.findById(productUpdateDTO.getGoodsSeq());
 		product.ifPresent(value ->  value.update(productUpdateDTO));
 		return product.get();
 	}
 
 
-
+	/**
+	 * 상품 삭제
+	 *
+	 * @param productUpdateDTO the product update dto
+	 * @return the product
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 6. 24. 오후 5:23:04
+	 * @Description
+	 */
+	@Transactional
+	public Product delete(final ProductUpdateDTO productUpdateDTO) {
+		final Optional<Product> product = productRepository.findById(productUpdateDTO.getGoodsSeq());
+		product.ifPresent(value -> value.delete(productUpdateDTO));
+		return product.get();
+	}
 }

@@ -82,7 +82,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "size", value = "단가", required = true)
-	private String unitPrice;
+	private Long unitPrice;
 
 
 	/**
@@ -91,7 +91,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "minimumOrderQuantity", value = "최소 주문 수량", required = true)
-	private int minimumQuantity;
+	private Long minimumQuantity;
 
 	/**
 	 * 사이즈
