@@ -6,7 +6,6 @@
     </div>
 </template>
 <script>
-    asdasdasd
     import ListSorting from '../../components/asset-list/ListSorting.vue'
     import Item from '../../components/asset-list/Item.vue'
     export default {
