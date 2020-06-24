@@ -13,9 +13,8 @@ import java.util.List;
  * Code Entity
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:09:56
  * @Description Code(공통 코드) Entity 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -28,6 +27,7 @@ public class Code extends BaseTimeEntity implements Serializable {
 
     /**
      * 코드 시퀀스
+     *
      * @author [오지훈]
      */
     @Id
@@ -38,6 +38,7 @@ public class Code extends BaseTimeEntity implements Serializable {
 
     /**
      * 코드
+     *
      * @author [오지훈]
      */
     @Column(name = "CODE")
@@ -46,6 +47,7 @@ public class Code extends BaseTimeEntity implements Serializable {
 
     /**
      * 상위 코드
+     *
      * @author [오지훈]
      */
     @Column(name = "UPPER_CODE")
@@ -54,6 +56,7 @@ public class Code extends BaseTimeEntity implements Serializable {
 
     /**
      * 코드 명
+     *
      * @author [오지훈]
      */
     @Column(name = "CODE_NAME")
@@ -62,6 +65,7 @@ public class Code extends BaseTimeEntity implements Serializable {
 
     /**
      * 코드 설명
+     *
      * @author [오지훈]
      */
     @Column(name = "CODE_DESCRIPTION")
@@ -70,6 +74,7 @@ public class Code extends BaseTimeEntity implements Serializable {
 
     /**
      * 코드 순서
+     *
      * @author [오지훈]
      */
     @Column(name = "CODE_ORDER")
@@ -78,6 +83,7 @@ public class Code extends BaseTimeEntity implements Serializable {
 
     /**
      * 사용 여부
+     *
      * @author [오지훈]
      */
     @Column(name = "USE_YN")
@@ -86,6 +92,7 @@ public class Code extends BaseTimeEntity implements Serializable {
 
     /**
      * 하위 코드 목록
+     *
      * @author [오지훈]
      */
     @OneToMany
@@ -95,13 +102,16 @@ public class Code extends BaseTimeEntity implements Serializable {
     private List<Code> subCodes;
 
     /**
-     * 하위 Update.
+     * Update.
      *
-     * @param upperCode       the upper code
      * @param codeName        the code name
      * @param codeDescription the code description
      * @param codeOrder       the code order
      * @param updaterSeq      the updater seq
+     * @param upperCode       the upper code
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 6:09:56
+     * @Description 하위 Update.
      */
     public void update(
             String codeName
@@ -118,12 +128,15 @@ public class Code extends BaseTimeEntity implements Serializable {
     }
 
     /**
-     * 상위 Update.
+     * Update.
      *
      * @param codeName        the code name
      * @param codeDescription the code description
      * @param codeOrder       the code order
      * @param updaterSeq      the updater seq
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 6:09:56
+     * @Description 상위 Update.
      */
     public void update(
             String codeName
@@ -142,6 +155,9 @@ public class Code extends BaseTimeEntity implements Serializable {
      *
      * @param useYn      the use yn
      * @param updaterSeq the updater seq
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 6:09:56
+     * @Description
      */
     public void delete(
             String useYn

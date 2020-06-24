@@ -7,9 +7,8 @@ import lombok.*;
  * CodeSaveDTO
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:08:43
  * @Description Code(공통코드) Save DTO 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -20,6 +19,7 @@ public class CodeSaveDTO {
 
     /**
      * 코드
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "code", value = "코드", required = true)
@@ -27,6 +27,7 @@ public class CodeSaveDTO {
 
     /**
      * 상위 코드
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "upperCode", value = "상위 코드")
@@ -34,6 +35,7 @@ public class CodeSaveDTO {
 
     /**
      * 코드 명
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "codeName", value = "코드 명", required = true)
@@ -41,6 +43,7 @@ public class CodeSaveDTO {
 
     /**
      * 코드 설명
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "codeDescription", value = "코드 설명")
@@ -48,6 +51,7 @@ public class CodeSaveDTO {
 
     /**
      * 코드 순서
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "codeOrder", value = "코드 순서", required = true)
@@ -55,6 +59,7 @@ public class CodeSaveDTO {
 
     /**
      * 사용 여부
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "useYn", value = "사용 여부", required = true)
@@ -62,6 +67,7 @@ public class CodeSaveDTO {
 
     /**
      * 상위 코드 여부
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "upperYn", value = "상위 코드 여부", required = true, example = "Y")

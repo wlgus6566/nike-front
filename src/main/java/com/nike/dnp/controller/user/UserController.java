@@ -31,7 +31,7 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@Api(description = "유저 정보", tags = "1_USER")
+@Api(description = "유저", tags = "1_USER")
 @RequestMapping(value = "/api/user", name = "사용자")
 @RequiredArgsConstructor
 public class UserController {

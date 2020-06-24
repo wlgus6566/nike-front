@@ -2,7 +2,7 @@ package com.nike.dnp.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.nike.dnp.common.variable.UserEnumCode;
+import com.nike.dnp.common.variable.UserStatusEnumCode;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -144,14 +144,14 @@ public class User extends BaseTimeEntity implements Serializable {
     }
 
     /**
-     * 등록
+     * Instantiates a new User.
      *
      * @param userId      the user id
      * @param nickname    the nickname
      * @param registerSeq the register seq
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
-     * @Description
+     * @Description 등록
      */
     @Builder
     public User(
@@ -166,13 +166,13 @@ public class User extends BaseTimeEntity implements Serializable {
     }
 
     /**
-     * 닉네임/권한 변경
+     * Update.
      *
      * @param nickname the nickname
      * @param userSeq  the user seq
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
-     * @Description
+     * @Description 닉네임 /권한 변경
      */
     public void update(
             String nickname
@@ -183,13 +183,13 @@ public class User extends BaseTimeEntity implements Serializable {
     }
 
     /**
-     * 비밀번호 변경
+     * Update password.
      *
      * @param password the password
      * @param userSeq  the user seq
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
-     * @Description
+     * @Description 비밀번호 변경
      */
     public void updatePassword(
             String password
@@ -201,13 +201,13 @@ public class User extends BaseTimeEntity implements Serializable {
     }
 
     /**
-     * 상태값 변경
+     * Update status.
      *
      * @param userStatusCode the user status code
      * @param userSeq        the user seq
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
-     * @Description
+     * @Description 상태값 변경
      */
     public void updateStatus(
             String userStatusCode
@@ -230,16 +230,16 @@ public class User extends BaseTimeEntity implements Serializable {
         this.userId = String.valueOf(userSeq);
         this.password = String.valueOf(userSeq);
         this.nickname = String.valueOf(userSeq);
-        this.userStatusCode = UserEnumCode.OUT.toString();
+        this.userStatusCode = UserStatusEnumCode.OUT.toString();
         this.setUpdaterSeq(updaterSeq);
     }
 
     /**
-     * 최종 로그인 일시 변경
+     * Update login dt.
      *
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
-     * @Description
+     * @Description 최종 로그인 일시 변경
      */
     public void updateLoginDt() {
         this.loginDt = LocalDateTime.now();

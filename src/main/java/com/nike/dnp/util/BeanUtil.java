@@ -8,40 +8,56 @@ import org.springframework.stereotype.Component;
 /**
  * BeanUtil
  *
- * @since 2020.05.21
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:01:19
  * @Description BeanUtil 작성
- * @history [오지훈] [2020.05.21] [최초 작성]
- *
  */
-
 @Component
 @RequiredArgsConstructor
 public class BeanUtil implements ApplicationContextAware {
 
     /**
+     * The constant context
+     *
      * @author [오지훈]
      */
     private static ApplicationContext context;
 
+    /**
+     * Sets application context.
+     *
+     * @param context the context
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 6:01:19
+     * @Description
+     */
     @Override
     public void setApplicationContext(final ApplicationContext context) {
         this.context = context;
     }
 
     /**
-     * class타입으로 bean을 가져온다.
-     * @param clazz
-     * @return
+     * Gets bean.
+     *
+     * @param <T>   the type parameter
+     * @param clazz the clazz
+     * @return bean bean
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 6:01:19
+     * @Description class타입으로 bean을 가져온다.
      */
     public static <T> T getBean(final Class<T> clazz) {
         return context.getBean(clazz);
     }
 
     /**
-     * 이름으로 bean을 가져온다.
-     * @param beanName
-     * @return
+     * Gets bean.
+     *
+     * @param beanName the bean name
+     * @return bean bean
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 6:01:19
+     * @Description 이름으로 bean을 가져온다.
      */
     public static Object getBean(final String beanName) {
         return context.getBean(beanName);

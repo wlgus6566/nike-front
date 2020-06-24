@@ -17,11 +17,11 @@ import java.util.Objects;
 /**
  * AuthUserDTO
  *
- * @since 2020.05.22
  * @author [윤태호]
+ * @CreatedOn 2020. 6. 24. 오후 6:07:49
  * @Description
  * @history [윤태호] [2020.05.22] [최초 작성]
- *
+ * @since 2020.05.22
  */
 @Setter
 @Getter
@@ -29,26 +29,36 @@ import java.util.Objects;
 public class AuthUserDTO implements UserDetails, Serializable {
 
 	/**
+	 * The constant serialVersionUID
+	 *
 	 * @author [윤태호]
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * The User seq
+	 *
 	 * @author [윤태호]
 	 */
 	private long userSeq;
 
 	/**
+	 * The User id
+	 *
 	 * @author [윤태호]
 	 */
 	private String userId;
 
 	/**
+	 * The Nickname
+	 *
 	 * @author [윤태호]
 	 */
 	private String nickname;
 
 	/**
+	 * The Password
+	 *
 	 * @author [윤태호]
 	 */
 	private String password;
@@ -57,6 +67,9 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 * Instantiates a new Auth user dto.
 	 *
 	 * @param user the user
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
+	 * @Description
 	 */
 	public AuthUserDTO(final User user) {
 		this.userSeq = user.getUserSeq();
@@ -65,44 +78,117 @@ public class AuthUserDTO implements UserDetails, Serializable {
 		this.password = user.getPassword();
 	}
 
+	/**
+	 * Gets password.
+	 *
+	 * @return the password
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
+	 * @Description
+	 */
 	@Override
 	public String getPassword() {
 		return password;
 	}
 
+	/**
+	 * Gets username.
+	 *
+	 * @return the username
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
+	 * @Description
+	 */
 	@Override
 	public String getUsername() {
 		return userId;
 	}
 
+	/**
+	 * Gets user seq.
+	 *
+	 * @return the user seq
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
+	 * @Description
+	 */
 	public long getUserSeq() {return userSeq;}
 
+	/**
+	 * Gets authorities.
+	 *
+	 * @return the authorities
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
+	 * @Description
+	 */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// 유저 권한 정보 조회
 		return Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN"));
 	}
 
+	/**
+	 * Is account non expired boolean.
+	 *
+	 * @return the boolean
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
+	 * @Description
+	 */
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
+	/**
+	 * Is account non locked boolean.
+	 *
+	 * @return the boolean
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
+	 * @Description
+	 */
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 
+	/**
+	 * Is credentials non expired boolean.
+	 *
+	 * @return the boolean
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
+	 * @Description
+	 */
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
+	/**
+	 * Is enabled boolean.
+	 *
+	 * @return the boolean
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
+	 * @Description
+	 */
 	@Override
 	public boolean isEnabled() {
 		return true;
 	}
 
+	/**
+	 * Equals boolean.
+	 *
+	 * @param object the object
+	 * @return the boolean
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
+	 * @Description
+	 */
 	@Override
 	public boolean equals(final Object object) {
 		if(this == object) {
@@ -117,11 +203,27 @@ public class AuthUserDTO implements UserDetails, Serializable {
 		return Objects.equals(userId, that.userId);
 	}
 
+	/**
+	 * Hash code int.
+	 *
+	 * @return the int
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
+	 * @Description
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(userId);
 	}
 
+	/**
+	 * To string string.
+	 *
+	 * @return the string
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
+	 * @Description
+	 */
 	@Override
 	public String toString() {
 		return "AuthUserDTO{" + "userSeq=" + userSeq + ", nickname='" + nickname + '\'' + ", userId='" + userId + '\'' + ", password='" + password + '\'' + '}';

@@ -20,9 +20,8 @@ import java.util.Arrays;
  * LogAspect
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:05:00
  * @Description LogAspect 작성
- * @history [오지훈] [2020.05.21] [최초 작성]
- * @since 2020.05.21
  */
 @Slf4j
 @Aspect
@@ -32,17 +31,20 @@ public class LogAspect {
 
     /**
      * UserActionLogService
+     *
      * @author [오지훈]
      */
     private final UserActionLogService actionLogService;
 
     /**
      * On around action log object.
-     * 유저 활동 로그 등록
      *
      * @param joinPoint the join point
      * @return the object
+     * @throws Throwable the throwable
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 6:05:00
+     * @Description 유저 활동 로그 등록
      */
     //@Around("execution(public * com.nike.dnp.controller..*Controller.*(..)) && args(requestDTO,..)")
     @Around("execution(public * com.nike.dnp.controller..*Controller.*(..))")

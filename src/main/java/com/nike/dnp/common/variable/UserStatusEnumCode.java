@@ -5,9 +5,9 @@ package com.nike.dnp.common.variable;
  *
  * @author [오지훈]
  * @CreatedOn 2020. 6. 23. 오후 5:22:14
- * @Description
+ * @Description 회원 상태 코드 enum 작성
  */
-public enum UserEnumCode {
+public enum UserStatusEnumCode {
 
     /**
      * Normal user enum code
@@ -36,24 +36,24 @@ public enum UserEnumCode {
     private final String value;
 
     /**
-     * 생성자
+     * Instantiates a new User status enum code.
      *
      * @param value - 코드값
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:39:17
-     * @Description
+     * @Description 생성자
      */
-    UserEnumCode(final String value) {
+    UserStatusEnumCode(final String value) {
         this.value = value;
     }
 
     /**
-     * 코드값
+     * Gets message.
      *
      * @return value - 코드값
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:39:17
-     * @Description
+     * @Description 코드값
      */
     public String getMessage() {
         return value;

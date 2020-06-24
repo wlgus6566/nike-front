@@ -10,26 +10,41 @@ package com.nike.dnp.common.variable;
  */
 public enum CommonResponse {
 
+    /**
+     * Success common response
+     *
+     * @author [오지훈]
+     */
     SUCCESS("SUC", "성공"),
+    /**
+     * Fail common response
+     *
+     * @author [오지훈]
+     */
     FAIL("ERR", "에러발생");
 
     /**
      * 응답 코드
+     *
      * @author [오지훈]
      */
     String code;
 
     /**
      * 응답 메시지
+     *
      * @author [오지훈]
      */
     String msg;
 
     /**
-     * 생성자 주입
-     * @param code
-     * @param msg
+     * Instantiates a new Common response.
+     *
+     * @param code the code
+     * @param msg  the msg
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 6:05:59
+     * @Description 생성자 주입
      */
     CommonResponse(final String code, final String msg) {
         this.code = code;
@@ -41,6 +56,8 @@ public enum CommonResponse {
      *
      * @return the code
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 6:05:59
+     * @Description
      */
     public String getCode() {
         return code;
@@ -51,6 +68,8 @@ public enum CommonResponse {
      *
      * @return the msg
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 6:05:59
+     * @Description
      */
     public String getMsg() {
         return msg;

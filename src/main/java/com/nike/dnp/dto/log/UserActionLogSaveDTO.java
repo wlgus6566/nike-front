@@ -9,9 +9,8 @@ import javax.persistence.Column;
  * UserActionLogSaveDTO
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:09:08
  * @Description UserActionLog(유저_활동_로그) Save DTO 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -22,6 +21,7 @@ public class UserActionLogSaveDTO {
 
     /**
      * 사용자 시퀀스
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "userSeq", value = "사용자 시퀀스", required = true)
@@ -29,6 +29,7 @@ public class UserActionLogSaveDTO {
 
     /**
      * URL
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "url", value = "URL", required = true)
@@ -36,6 +37,7 @@ public class UserActionLogSaveDTO {
 
     /**
      * 메소드 타입
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "methodTypeName", value = "메소드 타입", required = true)
@@ -43,6 +45,7 @@ public class UserActionLogSaveDTO {
 
     /**
      * 호출 메소드 명
+     *
      * @author [오지훈]
      */
     @Column(name = "METHOD_SIGNATURE")
@@ -50,6 +53,7 @@ public class UserActionLogSaveDTO {
 
     /**
      * Parameter
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "parameter", value = "Parameter", required = true)

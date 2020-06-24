@@ -1,8 +1,13 @@
 package com.nike.dnp.entity.auth;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nike.dnp.dto.auth.AuthSaveDTO;
+import com.nike.dnp.dto.auth.AuthUpdateDTO;
+import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,9 +17,8 @@ import java.util.List;
  * Auth Entity
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 3:41:36
  * @Description Auth(권한) Entity 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -22,10 +26,13 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_AUTH")
+@DynamicUpdate
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Auth extends BaseTimeEntity implements Serializable {
 
     /**
      * 권한 시퀀스
+     *
      * @author [오지훈]
      */
     @Id
@@ -36,6 +43,7 @@ public class Auth extends BaseTimeEntity implements Serializable {
 
     /**
      * 상위 권한 시퀀스
+     *
      * @author [오지훈]
      */
     @Column(name = "UPPER_AUTH_SEQ")
@@ -44,6 +52,7 @@ public class Auth extends BaseTimeEntity implements Serializable {
 
     /**
      * 권한명
+     *
      * @author [오지훈]
      */
     @Column(name = "AUTH_NAME")
@@ -52,6 +61,7 @@ public class Auth extends BaseTimeEntity implements Serializable {
 
     /**
      * 역할 타입
+     *
      * @author [오지훈]
      */
     @Column(name = "ROLE_TYPE")
@@ -60,6 +70,7 @@ public class Auth extends BaseTimeEntity implements Serializable {
 
     /**
      * 사용 여부
+     *
      * @author [오지훈]
      */
     @Column(name = "USE_YN")
@@ -68,6 +79,7 @@ public class Auth extends BaseTimeEntity implements Serializable {
 
     /**
      * 하위 권한 목록
+     *
      * @author [오지훈]
      */
     @OneToMany
@@ -77,26 +89,55 @@ public class Auth extends BaseTimeEntity implements Serializable {
     private List<Auth> subAuths;
 
     /**
-     * 정보 변경
+     * Instantiates a new Auth.
      *
-     * @param upperAuthSeq the upper auth seq
-     * @param authName     the auth name
-     * @param roleType     the role type
-     * @param useYn        the use yn
-     * @param updaterSeq   the updater seq
+     * @param authSaveDTO the auth save dto
+     * @param authUserDTO the auth user dto
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 4:35:39
+     * @Description 그룹(권한) 생성
+     */
+    @Builder
+    public Auth(
+            final AuthSaveDTO authSaveDTO
+            , final AuthUserDTO authUserDTO
+    ) {
+        this.upperAuthSeq = authSaveDTO.getUpperAuthSeq();
+        this.authName = authSaveDTO.getAuthName();
+        this.roleType = "ROLE_" + authSaveDTO.getAuthName();
+        this.useYn = "Y";
+        this.setRegisterSeq(authUserDTO.getUserSeq());
+        this.setUpdaterSeq(authUserDTO.getUserSeq());
+    }
+
+    /**
+     * Update.
+     *
+     * @param authUpdateDTO the auth update dto
+     * @param authUserDTO   the auth user dto
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 3:41:36
+     * @Description 그룹(권한) 정보 수정
      */
     public void update(
-            Long upperAuthSeq
-            , String authName
-            , String roleType
-            , String useYn
-            , Long updaterSeq
+            final AuthUpdateDTO authUpdateDTO
+            , final AuthUserDTO authUserDTO
     ) {
-        this.upperAuthSeq = upperAuthSeq;
-        this.authName = authName;
-        this.roleType = roleType;
-        this.useYn = useYn;
-        setUpdaterSeq(updaterSeq);
+        this.authName = authUpdateDTO.getAuthName();
+        this.setUpdaterSeq(authUserDTO.getUserSeq());
+    }
+
+    /**
+     * Delete.
+     *
+     * @param updaterSeq the updater seq
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 4:35:37
+     * @Description 그룹(권한) 삭제
+     */
+    public void delete(final Long updaterSeq) {
+        this.useYn = "N";
+        this.setUpdaterSeq(updaterSeq);
     }
 
 }

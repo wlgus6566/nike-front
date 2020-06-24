@@ -10,9 +10,8 @@ import javax.persistence.*;
  * UserActionLog Entity
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:10:30
  * @Description UserActionLog(유저_활동_로그) Entity 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -24,6 +23,7 @@ public class UserActionLog extends BaseTimeEntity {
 
     /**
      * 로그 시퀀스
+     *
      * @author [오지훈]
      */
     @Id
@@ -34,6 +34,7 @@ public class UserActionLog extends BaseTimeEntity {
 
     /**
      * 사용자 시퀀스
+     *
      * @author [오지훈]
      */
     @Column(name = "USER_SEQ")
@@ -42,6 +43,7 @@ public class UserActionLog extends BaseTimeEntity {
 
     /**
      * URL
+     *
      * @author [오지훈]
      */
     @Column(name = "URL")
@@ -50,6 +52,7 @@ public class UserActionLog extends BaseTimeEntity {
 
     /**
      * 메소드 타입
+     *
      * @author [오지훈]
      */
     @Column(name = "METHOD_TYPE_NAME")
@@ -58,6 +61,7 @@ public class UserActionLog extends BaseTimeEntity {
 
     /**
      * 호출 메소드 명
+     *
      * @author [오지훈]
      */
     @Column(name = "METHOD_SIGNATURE")
@@ -66,6 +70,7 @@ public class UserActionLog extends BaseTimeEntity {
 
     /**
      * Parameter
+     *
      * @author [오지훈]
      */
     @Column(name = "PARAMETER")

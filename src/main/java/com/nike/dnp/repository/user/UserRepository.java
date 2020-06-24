@@ -11,19 +11,20 @@ import java.util.Optional;
  * UserRepository
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 5:53:42
  * @Description User(유저) Repository Interface 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, UserRepositoryCustom {
 
     /**
-     * 상세 조회
+     * Find by user id optional.
      *
      * @param userId 유저 ID
      * @return the optional
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 5:53:42
+     * @Description 상세 조회
      */
     Optional<User> findByUserId(String userId);
 

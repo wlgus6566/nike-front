@@ -1,4 +1,4 @@
-package com.nike.dnp.controller.auth;
+package com.nike.dnp.controller.menu;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.user.UserSearchDTO;
@@ -28,8 +28,8 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @Slf4j
 @RestController
-@Api(description = "권한/메뉴 정보", tags = "3_AUTH/MENU")
-@RequestMapping(value = "/api/menu", name = "권한/메뉴")
+@Api(description = "메뉴", tags = "3_MENU")
+@RequestMapping(value = "/api/menu", name = "메뉴")
 @RequiredArgsConstructor
 public class MenuController {
 

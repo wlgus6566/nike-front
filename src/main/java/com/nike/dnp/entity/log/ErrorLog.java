@@ -10,9 +10,8 @@ import javax.persistence.*;
  * ErrorLog Entity
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:10:25
  * @Description ErrorLog(오류 로그) Entity 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -24,6 +23,7 @@ public class ErrorLog extends BaseTimeEntity {
 
     /**
      * 로그 시퀀스
+     *
      * @author [오지훈]
      */
     @Id
@@ -34,6 +34,7 @@ public class ErrorLog extends BaseTimeEntity {
 
     /**
      * URL
+     *
      * @author [오지훈]
      */
     @Column(name = "URL")
@@ -42,6 +43,7 @@ public class ErrorLog extends BaseTimeEntity {
 
     /**
      * 오류 내용
+     *
      * @author [오지훈]
      */
     @Column(name = "ERROR_CONTENTS")

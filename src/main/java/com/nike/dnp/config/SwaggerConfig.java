@@ -17,6 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * Swagger Config
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:08:28
  * @Description Swagger Config 작성
  * @history [오지훈] [2020.05.21] [최초 작성]
  * @since 2020.05.21
@@ -32,6 +33,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	 *
 	 * @return Swagger 설정값
 	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:08:28
+	 * @Description
 	 */
 	@Bean
 	public Docket api() {
@@ -44,8 +47,12 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	}
 
 	/**
-	 * Swagger Info 작성
+	 * Api info api info.
+	 *
+	 * @return the api info
 	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:08:28
+	 * @Description Swagger Info 작성
 	 */
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder().title("이 문서는 NIKE D&P Rest Api Project API 문서 입니다.")
