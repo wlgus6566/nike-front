@@ -19,8 +19,16 @@ import org.springframework.web.multipart.MultipartFile;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class ProductSaveDTO extends BasicDTO {
+public class ProductUpdateDTO extends BasicDTO {
 
+
+	/**
+	 * 상품시퀀스
+	 *
+	 * @author [윤태호]
+	 */
+	@ApiModelProperty(name="goodsSeq",value = "상품 시퀀스",required = true)
+	private Long goodsSeq;
 
 	/**
 	 * 카테고리 1 코드
@@ -33,7 +41,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 * 상태
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name="exposureYn",value="상태",required = true)
+	@ApiModelProperty(name="exposureYn",value="상태", required = true)
 	private String exposureYn;
 
 	/**
@@ -41,7 +49,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name="category2code",value="카테고리 2 코드",required = true)
+	@ApiModelProperty(name="category2code",value="구분 2 단계", required = true)
 	private String category2code;
 
 	/**
@@ -49,16 +57,16 @@ public class ProductSaveDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "category3code", value = "카테고리 3 코드", required = true)
+	@ApiModelProperty(name = "category3code", value = "구분 3 단계", required = true)
 	private String category3code;
 
 	/**
-	 * 에이전시 시퀀스
+	 * 에이젼시 시퀀스
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "agencySeq", value = "에이전시 시퀀스", required = true)
-	private long agencySeq;
+	@ApiModelProperty(name = "agencySeq", value = "에이젼시 시퀀스", required = true)
+	private Long agencySeq;
 
 	/**
 	 * 상품 명
@@ -77,15 +85,6 @@ public class ProductSaveDTO extends BasicDTO {
 	private String goodsDescription;
 
 	/**
-	 * 단가
-	 *
-	 * @author [윤태호]
-	 */
-	@ApiModelProperty(name = "size", value = "단가", required = true)
-	private Long unitPrice;
-
-
-	/**
 	 * 최소 주문 수량
 	 *
 	 * @author [윤태호]
@@ -99,6 +98,15 @@ public class ProductSaveDTO extends BasicDTO {
 	 */
 	@ApiModelProperty(name = "size", value = "사이즈",hidden = true)
 	private String size;
+
+
+	/**
+	 * 단가
+	 *
+	 * @author [윤태호]
+	 */
+	@ApiModelProperty(name = "size", value = "단가", required = true)
+	private Long unitPrice;
 
 	/**
 	 * 원본 이미지
