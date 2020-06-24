@@ -229,6 +229,10 @@ public class Product extends BaseTimeEntity {
 			this.thumbnailFilePhysicalName = productUpdateDTO.getThumbnailImg().getOriginalFilename();
 		}
 
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getUseYn())){
+			this.useYn = productUpdateDTO.getUseYn();
+		}
+
 		setUpdaterSeq(productUpdateDTO.getUpdaterSeq());
 
 

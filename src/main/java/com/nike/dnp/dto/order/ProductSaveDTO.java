@@ -33,7 +33,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 * 상태
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name="exposureYn",value="상태")
+	@ApiModelProperty(name="exposureYn",value="상태",required = true)
 	private String exposureYn;
 
 	/**
@@ -41,7 +41,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name="category2code",value="구분 2 단계",required = true)
+	@ApiModelProperty(name="category2code",value="카테고리 2 코드",required = true)
 	private String category2code;
 
 	/**
@@ -49,7 +49,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "category3code", value = "구분 3 단계", required = true)
+	@ApiModelProperty(name = "category3code", value = "카테고리 3 코드", required = true)
 	private String category3code;
 
 	/**
@@ -77,6 +77,15 @@ public class ProductSaveDTO extends BasicDTO {
 	private String goodsDescription;
 
 	/**
+	 * 단가
+	 *
+	 * @author [윤태호]
+	 */
+	@ApiModelProperty(name = "size", value = "단가", required = true)
+	private String unitPrice;
+
+
+	/**
 	 * 최소 주문 수량
 	 *
 	 * @author [윤태호]
@@ -91,21 +100,12 @@ public class ProductSaveDTO extends BasicDTO {
 	@ApiModelProperty(name = "size", value = "사이즈",hidden = true)
 	private String size;
 
-
-	/**
-	 * 단가
-	 *
-	 * @author [윤태호]
-	 */
-	@ApiModelProperty(name = "size", value = "단가")
-	private String unitPrice;
-
 	/**
 	 * 원본 이미지
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "originalImg", value = "원본 이미지")
+	@ApiModelProperty(hidden = true)
 	private MultipartFile originalImg;
 
 	/**
@@ -113,7 +113,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "thumbnailImg", value = "썹네일 이미지")
+	@ApiModelProperty(hidden = true)
 	private MultipartFile thumbnailImg;
 
 

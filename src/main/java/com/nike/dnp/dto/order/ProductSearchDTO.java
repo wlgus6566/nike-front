@@ -55,5 +55,4 @@ public class ProductSearchDTO extends SearchDTO {
 	@ApiModelProperty(value = "노출 여부", name = "exposureYn")
 	private String exposureYn;
 
-
 }

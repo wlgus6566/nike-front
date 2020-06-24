@@ -41,7 +41,7 @@ public class ProductUpdateDTO extends BasicDTO {
 	 * 상태
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name="exposureYn",value="상태", required = true)
+	@ApiModelProperty(name="exposureYn",value="상태")
 	private String exposureYn;
 
 	/**
@@ -49,7 +49,7 @@ public class ProductUpdateDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name="category2code",value="구분 2 단계",required = true)
+	@ApiModelProperty(name="category2code",value="구분 2 단계")
 	private String category2code;
 
 	/**
@@ -57,7 +57,7 @@ public class ProductUpdateDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "category3code", value = "구분 3 단계", required = true)
+	@ApiModelProperty(name = "category3code", value = "구분 3 단계")
 	private String category3code;
 
 	/**
@@ -65,7 +65,7 @@ public class ProductUpdateDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "agencySeq", value = "에이전시 시퀀스", required = true)
+	@ApiModelProperty(name = "agencySeq", value = "에이전시 시퀀스")
 	private long agencySeq;
 
 	/**
@@ -73,7 +73,7 @@ public class ProductUpdateDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "goodsName", value = "상품 명", required = true)
+	@ApiModelProperty(name = "goodsName", value = "상품 명")
 	private String goodsName;
 
 	/**
@@ -81,7 +81,7 @@ public class ProductUpdateDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "goodsDescription", value = "추가설명", required = true)
+	@ApiModelProperty(name = "goodsDescription", value = "추가설명")
 	private String goodsDescription;
 
 	/**
@@ -89,7 +89,7 @@ public class ProductUpdateDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "minimumOrderQuantity", value = "최소 주문 수량", required = true)
+	@ApiModelProperty(name = "minimumOrderQuantity", value = "최소 주문 수량")
 	private int minimumQuantity;
 
 	/**
@@ -113,7 +113,7 @@ public class ProductUpdateDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "originalImg", value = "원본 이미지")
+	@ApiModelProperty(hidden = true)
 	private MultipartFile originalImg;
 
 	/**
@@ -121,7 +121,7 @@ public class ProductUpdateDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "thumbnailImg", value = "썹네일 이미지")
+	@ApiModelProperty(hidden = true)
 	private MultipartFile thumbnailImg;
 
 

@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.Optional;
@@ -46,11 +47,26 @@ public class ProductService {
 	 * @CreatedOn 2020. 6. 23. 오후 3:24:30
 	 * @Description
 	 */
-	public Page<Product> findAllPages(ProductSearchDTO productSearchDTO) {
-		return productRepository.findAllPages(
+	public Page<Product> findPagesProduct(ProductSearchDTO productSearchDTO) {
+		return productRepository.findPagesProduct(
 				productSearchDTO,
 				PageRequest.of(productSearchDTO.getPage(), productSearchDTO.getSize(), Sort.by("goodsSeq").descending()
 				));
+	}
+
+	/**
+	 * 상품 상세 조회
+	 *
+	 * @param goodsSeq      the goods seq
+	 * @param category1Code the category 1 code
+	 * @return the optional
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 6. 24. 오전 11:39:06
+	 * @Description
+	 */
+	@Transactional
+	public Product findByGoodsSeqAndCategory1Code(Long goodsSeq,String category1Code) {
+		return productRepository.findByGoodsSeqAndCategory1Code(goodsSeq, category1Code);
 	}
 
 	/**
@@ -75,16 +91,19 @@ public class ProductService {
 		product.setUnitPrice(productSaveDTO.getUnitPrice());
 		product.setMinimumOrderQuantity(productSaveDTO.getMinimumQuantity());
 
-		String originalFileName = StringUtils.getFilename(productSaveDTO.getOriginalImg().getOriginalFilename());
-		String thumbnailFileName = StringUtils.getFilename(productSaveDTO.getThumbnailImg().getOriginalFilename());
+		if(!ObjectUtils.isEmpty(productSaveDTO.getOriginalImg())){
+			String originalFileName = StringUtils.getFilename(productSaveDTO.getOriginalImg().getOriginalFilename());
+			product.setImageFileName(originalFileName);
+			product.setImageFilePhysicalName(productSaveDTO.getOriginalImg().getOriginalFilename());
+			product.setImageFileSize(String.valueOf(productSaveDTO.getOriginalImg().getSize()));
+		}
 
-		product.setImageFileName(originalFileName);
-		product.setImageFilePhysicalName(productSaveDTO.getOriginalImg().getOriginalFilename());
-		product.setImageFileSize(String.valueOf(productSaveDTO.getOriginalImg().getSize()));
-
-		product.setThumbnailFileName(thumbnailFileName);
-		product.setThumbnailFilePhysicalName(productSaveDTO.getThumbnailImg().getOriginalFilename());
-		product.setThumbnailFileSize(String.valueOf(productSaveDTO.getThumbnailImg().getSize()));
+		if(!ObjectUtils.isEmpty(productSaveDTO.getThumbnailImg())){
+			String thumbnailFileName = StringUtils.getFilename(productSaveDTO.getThumbnailImg().getOriginalFilename());
+			product.setThumbnailFileName(thumbnailFileName);
+			product.setThumbnailFilePhysicalName(productSaveDTO.getThumbnailImg().getOriginalFilename());
+			product.setThumbnailFileSize(String.valueOf(productSaveDTO.getThumbnailImg().getSize()));
+		}
 
 		product.setRegisterSeq(productSaveDTO.getRegisterSeq());
 		product.setUpdaterSeq(productSaveDTO.getRegisterSeq());
@@ -100,4 +119,7 @@ public class ProductService {
 		product.ifPresent(value ->  value.update(productUpdateDTO));
 		return product.get();
 	}
+
+
+
 }

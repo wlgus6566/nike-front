@@ -24,6 +24,8 @@ public interface ProductRepositoryCustom {
 	 * @param pageRequest      the page request
 	 * @return the page
 	 */
-	Page<Product> findAllPages(ProductSearchDTO productSearchDTO,
-						PageRequest pageRequest);
+	Page<Product> findPagesProduct(ProductSearchDTO productSearchDTO,
+								   PageRequest pageRequest);
+
+
 }
