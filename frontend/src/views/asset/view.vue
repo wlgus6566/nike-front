@@ -4,7 +4,7 @@
 		<folder></folder>
 		<SortingList></SortingList>
 		<allCheck></allCheck>
-		<fileItem></fileItem>
+		<fileItem v-bind:fileItems="fileItems"></fileItem>
 	</div>
 </template>
 <script>
@@ -17,6 +17,41 @@
 		name: "view",
 		data(){
 			return {
+				fileItems : [
+					{
+						title : "타이틀",
+						img:"@/assets/images/img-asset-none@2x.png",
+						added :{
+							exist:true,
+							state:false,
+						},
+						link :false,
+						acd : false,
+						down : 0,
+					},
+					{
+						title : "타이틀2",
+						img:"@/assets/images/img-asset-none@2x.png",
+						added :{
+							exist:true,
+							state:true,
+						},
+						link :false,
+						acd : false,
+						down : 0,
+					},
+					{
+						title : "타이틀3",
+						img:"@/assets/images/img-asset-none@2x.png",
+						added :{
+							exist:false,
+							state:false,
+						},
+						link :true,
+						acd : false,
+						down : 0,
+					},
+				]
 			}
 		},
 		components : {

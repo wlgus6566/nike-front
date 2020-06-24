@@ -199,6 +199,9 @@ export default {
     margin-top: 10px;
     overflow: auto;
 }
+.alram-list .alram-item:first-child:before{
+    top:5px;
+}
 .alram-list .alram-item {
     margin-top: 0;
     padding-left: 29px;
