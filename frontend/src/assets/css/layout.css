@@ -49,7 +49,7 @@ header.depth {
 }
 .contents {
     flex: 1 1 auto;
-    max-width: calc(100% - 300px);
+    max-width: calc(100% - 420px);
     padding: 80px 60px 130px;
 }
 aside {
