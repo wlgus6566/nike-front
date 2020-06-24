@@ -1,33 +1,36 @@
 <template>
     <div id="wrap">
-        <header class="sticky-container" sticky-container>
-            <div sticky-offset="{top:0, bottom:0}" sticky-side="both" sticky-z-index="20" v-sticky>
-                <appHeader />
-            </div>
-        </header>
-        <section id="container">
-            <div class="contents">
-                <transition
-                    name="page-change"
-                    v-bind:css="false"
-                    mode="out-in"
-                    appear
-                    v-on:appear="PageAppear"
-                    v-on:enter="PageEnter"
-                    v-on:leave="PageLeave"
-                >
-                    <router-view></router-view>
-                </transition>
-            </div>
-            <aside class="sticky-container" sticky-container>
+        <div class="test">
+            <header class="sticky-container" sticky-container v-on:mouseleave="mouseEvent(true)">
                 <div class="sticky-content" sticky-offset="{top:0, bottom:0}" sticky-side="both" sticky-z-index="20" v-sticky>
-                    <transition name="aside-change" mode="out-in" appear v-on:appear="AsideAppear" v-on:enter="AsideEnter" v-on:leave="AsideLeave">
-                        <component :is="AppAside" />
+                    <appHeader />
+                </div>
+                <i class="icon-ellipsis"></i>
+                <div class="header-bg" v-on:mouseenter="mouseEvent(false)"></div>
+            </header>
+            <section id="container">
+                <div class="contents">
+                    <transition name="page-change" mode="out-in" appear v-on:appear="pageAppear" v-on:enter="pageEnter" v-on:leave="pageLeave">
+                        <router-view></router-view>
                     </transition>
                 </div>
-                <div class="aside-bg"></div>
-            </aside>
-        </section>
+                <aside class="sticky-container" sticky-container>
+                    <div class="sticky-content" sticky-offset="{top:0, bottom:0}" sticky-side="both" sticky-z-index="20" v-sticky>
+                        <transition
+                            name="aside-change"
+                            mode="out-in"
+                            appear
+                            v-on:appear="asideAppear"
+                            v-on:enter="asideEnter"
+                            v-on:leave="asideLeave"
+                        >
+                            <component :is="AppAside" />
+                        </transition>
+                    </div>
+                    <div class="aside-bg"></div>
+                </aside>
+            </section>
+        </div>
         <footer>
             footer
         </footer>
@@ -35,16 +38,24 @@
 </template>
 <script>
 import Sticky from 'vue-sticky-directive';
+import { gsap, Cubic, ScrollToPlugin, TimelineLite } from 'gsap/all';
+gsap.registerPlugin(Cubic, ScrollToPlugin, TimelineLite);
+
 import appHeader from '@/components/app-header';
 
 export default {
     name: 'LayoutDefault',
     data() {
-        return {};
+        return {
+            tw: new TimelineLite({ paused: true }),
+        };
     },
     computed: {
         AppAside() {
             return `Aside${this.$route.meta.aside || 'Default'}`;
+        },
+        path() {
+            return this.$route.path;
         },
     },
     directives: {
@@ -57,69 +68,161 @@ export default {
         AsideOrder: () => import('@/components/app-aside/AsideOrder.vue'),
     },
     mounted() {
-        const el = [document.querySelector('header .inner')];
-        this.LayoutInit(el, '-100%');
-        this.LayoutAnimation(el, '0%');
+        const target = [document.querySelector('header .inner')];
+        this.layoutAnimation(target, '-100%', '0%');
+
+        const header = document.querySelector('header');
+        const logo = header.querySelector('h1');
+        const bg = header.querySelector('.header-bg');
+        const nav = header.querySelector('nav');
+        const navLi = header.querySelectorAll('nav > ul > li');
+        this.tw
+            .to(
+                logo,
+                0.5,
+                {
+                    translateX: '-23px',
+                    translateY: '-30px',
+                    scale: 0.25,
+                    ease: Cubic.easeInOut,
+                },
+                0
+            )
+            .to(
+                bg,
+                0.5,
+                {
+                    opacity: '1',
+                    scaleX: 0.2,
+                    ease: Cubic.easeInOut,
+                },
+                0
+            )
+            .to(
+                nav,
+                0.3,
+                {
+                    opacity: '0',
+                    translateX: '-30px',
+                    ease: Cubic.easeInOut,
+                },
+                0
+            )
+            .set(
+                nav,
+                {
+                    opacity: '1',
+                    translateX: '30px',
+                },
+                0.3
+            )
+            .set(
+                navLi,
+                {
+                    display: function (i, t) {
+                        if (!t.classList.contains('router-link-active')) {
+                            return 'none';
+                        }
+                    },
+                },
+                0.3
+            )
+            .set(
+                nav.querySelector('.router-link-active > a'),
+                {
+                    opacity: '0',
+                    translateX: '30px',
+                },
+                0.3
+            )
+            .set(
+                nav.querySelector('.router-link-active > ul'),
+                {
+                    opacity: '0',
+                    translateX: '30px',
+                    display: 'block',
+                },
+                0.3
+            )
+            .to(
+                nav.querySelector('.router-link-active > a'),
+                0.3,
+                {
+                    opacity: '1',
+                    translateX: '0',
+                    ease: Cubic.easeInOut,
+                },
+                0.3
+            )
+            .to(
+                nav.querySelector('.router-link-active > ul'),
+                0.3,
+                {
+                    opacity: '1',
+                    translateX: '0',
+                    ease: Cubic.easeInOut,
+                },
+                0.4
+            );
     },
     methods: {
-        PageAppear: function (el) {
-            console.log(this.$route.path);
-        },
+        pageAppear(el, done) {
+            console.log(this.tw);
 
-        PageEnter: function (el, done) {
-            console.log(this.$route.path);
-            //const elt = document.querySelector(`[href=${this.$route.path}]`);
-            //console.log(elt);
-            done();
+            //this.tw.play(true);
+            this.toggleHeader(this.$route.path !== '/');
         },
-
-        PageLeave: function (el, done) {
-            console.log(this.$route.path);
-            done();
+        pageEnter(el, done) {
+            this.toggleHeader(this.$route.path !== '/');
         },
-
-        // Aside
-        AsideAppear: function (el, done) {
-            const elements = [document.querySelector('aside .aside-bg'), el];
-            this.LayoutInit(elements, '100%');
-            this.LayoutAnimation(elements, '0%', done);
+        pageLeave() {
+            this.toggleHeader(this.$route.path !== '/');
         },
-
-        AsideEnter: function (el, done) {
-            const elements = [document.querySelector('aside .aside-bg'), el];
-            this.LayoutInit(elements, '100%');
-            this.LayoutAnimation(elements, '0%', done);
-        },
-
-        AsideLeave: function (el, done) {
-            const scrollElement = window.document.scrollingElement || window.document.body || window.document.documentElement;
-            this.$anime({
-                targets: scrollElement,
-                scrollTop: 0,
-                duration: 300,
-                easing: 'easeInOutQuad',
-            });
-            const elements = [document.querySelector('aside .aside-bg'), el];
-            this.LayoutAnimation(elements, '100%', done);
-        },
-        LayoutAnimation: function (el, status, done) {
-            this.$anime({
-                targets: el,
-                translateX: status,
-                duration: 300,
-                easing: 'easeInOutQuart',
-                complete: function () {
-                    if (done) {
-                        done();
-                    }
-                },
-                update: function () {},
-            });
-        },
-        LayoutInit: function (el, status) {
-            for (let i = 0; i < el.length; i++) {
-                el[i].style.transform = `translateX(${status})`;
+        toggleHeader(status, done, Appear) {
+            if (status) {
+                this.tw.play();
+            } else {
+                this.tw.reverse();
             }
+        },
+        mouseEvent(status) {
+            if (this.$route.path !== '/') {
+                this.toggleHeader(status);
+            }
+        },
+        // Aside
+        asideAppear(el, done) {
+            const elements = [document.querySelector('aside .aside-bg'), el];
+            this.layoutAnimation(elements, '100%', '0%', done);
+        },
+        asideEnter(el, done) {
+            const elements = [document.querySelector('aside .aside-bg'), el];
+            this.layoutAnimation(elements, '100%', '0%', done);
+        },
+        asideLeave(el, done) {
+            gsap.to(window, 0.3, {
+                scrollTo: { y: 0 },
+                ease: Cubic.easeInOut,
+            });
+            const elements = [document.querySelector('aside .aside-bg'), el];
+            this.layoutAnimation(elements, '0%', '100%', done);
+        },
+        layoutAnimation(el, fromVal, toVal, done) {
+            gsap.fromTo(
+                el,
+                0.3,
+                {
+                    translateX: fromVal,
+                    ease: Cubic.easeInOut,
+                },
+                {
+                    translateX: toVal,
+                    ease: Cubic.easeInOut,
+                    onComplete: () => {
+                        done();
+                    },
+                }
+            );
         },
     },
 };

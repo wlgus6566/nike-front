@@ -15,6 +15,20 @@
                 </router-link>
                 <router-link exact tag="li" to="/asset">
                     <a>ASSET</a>
+                    <ul>
+                        <li>
+                            <a href="#">123123</a>
+                        </li>
+                        <li>
+                            <a href="#">123123</a>
+                        </li>
+                        <li>
+                            <a href="#">123123</a>
+                        </li>
+                        <li>
+                            <a href="#">123123</a>
+                        </li>
+                    </ul>
                 </router-link>
                 <router-link exact tag="li" to="/toolkit">
                     <a>TOOLKIT</a>
@@ -35,9 +49,6 @@
                     <router-link exact to="/management">MANAGEMENT</router-link>
                 </li>
             </ul>
-            <div class="header-bg">
-                <i></i>
-            </div>
         </nav>
     </div>
 </template>

@@ -15,10 +15,17 @@ body {
     height: 100%;
 }
 #wrap {
+    min-width: 1440px;
+    background: linear-gradient(90deg, #fff 50%, #f7f7f7 50%);
+}
+#wrap > .test {
     display: flex;
     flex-wrap: wrap;
     min-width: 1440px;
-    height: 100%;
+    max-width: 1920px;
+    min-height: 100%;
+    margin: 0 auto;
+    background: #fff;
 }
 header {
     position: relative;
@@ -27,9 +34,11 @@ header {
 header .inner {
     width: 200px;
     box-sizing: border-box;
-    padding: 80px 30px 130px;
+    padding: 80px 30px 130px 0;
+    margin-left: 30px;
 }
 header h1 {
+    position: relative;
 }
 header h1 a {
     display: block;
@@ -38,7 +47,77 @@ header h1 a {
 header h1 a img {
     vertical-align: top;
 }
-header.depth {
+
+header nav {
+    position: relative;
+}
+
+header nav.active > ul > li {
+    display: none;
+}
+header nav.active > ul > li.router-link-active {
+    display: block;
+}
+
+/*header.depth-type {*/
+/*}*/
+/*header.depth-type h1 {*/
+/*    transform: translate(-23px, -30px) scale(0.25);*/
+/*}*/
+/*header.depth-type .header-bg {*/
+/*    transform: scaleX(0.2);*/
+/*    opacity: 1;*/
+/*}*/
+/*header.depth-type nav {*/
+/*    transform: translateX(30px);*/
+/*}*/
+/*header.depth-type nav > ul > li {*/
+/*    display: none;*/
+/*}*/
+/*header.depth-type nav > ul > li.router-link-active {*/
+/*    display: block;*/
+/*}*/
+/*header.depth-type nav > ul > li.router-link-active ul {*/
+/*    display: block;*/
+/*}*/
+header .icon-ellipsis {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 10px;
+    width: 10px;
+    background: red;
+}
+
+/*nav.active {*/
+/*    transform: translateX(30px) !important;*/
+/*    opacity: 1 !important;*/
+/*}*/
+/*nav.active > ul > li {*/
+/*    display: none;*/
+/*}*/
+/*nav.active > ul > li.router-link-active {*/
+/*    display: block;*/
+/*}*/
+/*nav.active > ul > li.router-link-active > a {*/
+/*    transform: translateX(30px);*/
+/*    opacity: 0;*/
+/*}*/
+/*nav.active > ul > li.router-link-active > ul {*/
+/*    transform: translateX(30px);*/
+/*    display: block;*/
+/*    opacity: 0;*/
+/*}*/
+header .header-bg {
+    transform-origin: 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    background: #f7f7f7;
 }
 #container {
     overflow: hidden;
@@ -76,6 +155,7 @@ aside .inner {
 aside .aside-wrap {
     position: relative;
 }
+
 aside .inner:before {
     content: '';
     position: absolute;
@@ -85,7 +165,6 @@ aside .inner:before {
     height: 100%;
 }
 footer {
-    flex: 0 0 100%;
     height: 144px;
     background: #000;
 }
