@@ -1,81 +1,37 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link href="../../frontend/src/assets/css/reset.css" rel="stylesheet">
-    <link href="../../frontend/src/assets/css/fonts.css" rel="stylesheet">
-    <link href="../../frontend/src/assets/css/layout.css" rel="stylesheet">
-    <link href="../../frontend/src/assets/css/ui.nikeFront.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<link href="../../frontend/src/assets/css/reset.css" rel="stylesheet">
+	<link href="../../frontend/src/assets/css/fonts.css" rel="stylesheet">
+	<link href="../../frontend/src/assets/css/layout.css" rel="stylesheet">
+	<link href="../../frontend/src/assets/css/ui.nikeFront.css" rel="stylesheet">
 </head>
 <body>
 <div id="app">
-    <div id="wrap">
-        <div id="login">
-            <section>
-                <h1 class="logo">
-                    <a href="javascript:void(0)">
-                        <img src="../../frontend/src/assets/images/logo_login.png" alt="" />
-                    </a>
-                </h1>
-                <div class="login-form">
-                    <form action="" method="">
-                        <fieldset>
-                            <legend>NIKE ND&P SERVICE</legend>
-                            <h2 class="title">
-                                NIKE KOREA<span>는<br /> </span>PARTNER<span>와 함께합니다.</span>
-                            </h2>
-                            <div class="input-group">
-                                <label for="id"><input type="text" id="id" value="digitalplaform@nike.com" placeholder="ID" /></label>
-                                <label for="pw"><input type="password" id="pw" value="111111111111" placeholder="PW" maxlength="12" /></label>
-                            </div>
-                            <button type="button" class="btn-login">
-                                LOGIN
-                            </button>
-                            <a href="javascript:void(0)" class="pw-find">비밀번호를 찾으시겠습니까?</a>
-                        </fieldset>
-                    </form>
-                </div>
-                <!-- 로그인 : 이메일 인증 -->
-                <!--<div class="login-form">
-                    <form class="email-certification" action="" method="">
-                        <fieldset>
-                            <legend>NIKE ND&P SERVICE</legend>
-                            <h2 class="title">
-                                이메일 인증
-                            </h2>
-                            <p>인증메일이 발송되었습니다.<br />메일함을 확인하여 인증코드를 입력해주세요.</p>
-                            <div class="input-group">
-                                <label for="word1"></label>
-                                <input type="text" maxlength="1" id="word1" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
-                                <label for="word2"></label>
-                                <input type="text" maxlength="1" id="word2" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
-                                <label for="word3"></label>
-                                <input type="text" maxlength="1" id="word3" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
-                                <label for="word4"></label>
-                                <input type="text" maxlength="1" id="word4" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
-                                <label for="word5"></label>
-                                <input type="text" maxlength="1" id="word5" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
-                                <label for="word6"></label>
-                                <input type="text" maxlength="1" id="word6" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
-                                <label for="word7"></label>
-                                <input type="text" maxlength="1" id="word7" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
-                                <label for="word8"></label>
-                                <input type="text" maxlength="1" id="word8" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
-                            </div>
-                            <button type="button" class="btn-login">
-                                인증하기
-                            </button>
-                        </fieldset>
-                    </form>
-                </div>-->
-                <!-- //로그인 : 이메일 인증 -->
-            </section>
-        </div>
-    </div>
+	<div id="wrap">
+		<section class="login">
+			<div class="login-box">
+				<strong class="title">
+					NIKE ND&P<br>
+					DIGITAL PLATFORM
+				</strong>
+				<div class="form-box">
+					<div class="input-box">
+						<input type="text" placeholder="ID(E-MAIL)">
+						<input type="password" placeholder="PW">
+					</div>
+					<button type="button" class="btn-s-lg-orage"><span>로그인</span></button>
+				</div>
+				<div class="bnt-box">
+					<a href="#" class="txt-btn"><span>비밀번호 찾기</span></a>
+				</div>
+			</div>
+		</section>
+	</div>
 </div>
 </body>
 </html>
-

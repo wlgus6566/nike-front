@@ -31,4 +31,5 @@ export default {
 @import url('assets/css/fonts.css');
 @import url('assets/css/layout.css');
 @import url('assets/css/reset.css');
+@import url('assets/css/ui.nikeFront.css');
 </style>
