@@ -37,6 +37,16 @@ const router = new VueRouter({
             meta: { layout: 'Default' },
         },
         {
+            path: '/asset/upload',
+            component: () => import('@/views/asset/upload'),
+            meta: { layout: 'Default' },
+        },
+        {
+            path: '/asset/SP',
+            component: () => import('@/views/asset/SPList'),
+            meta: { layout: 'Default' },
+        },
+        {
             path: '*',
             component: { template: '<div>Not Found</div>' },
             meta: { layout: 'Clean' },
