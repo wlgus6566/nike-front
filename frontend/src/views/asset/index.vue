@@ -2,14 +2,14 @@
     <div>
         <h2 class="page-title">SP</h2>
         <ListSorting v-bind:listTypes="listTypes"></ListSorting>
-        <Item v-bind:listTypes="listTypes"></Item>
+        <Item v-bind:listTypes="listTypes" v-bind:items= "items"></Item>
     </div>
 </template>
 <script>
     import ListSorting from '../../components/asset-list/ListSorting.vue'
     import Item from '../../components/asset-list/Item.vue'
     export default {
-        name: "SPList.vue",
+        name: "index",
         data(){
             return {
                 listTypes: [
@@ -23,7 +23,18 @@
                     },
                 ],
                 items :[
-
+                    {
+                        title : "타이틀",
+                        img:"@/assets/images/img-asset-none@2x.png\"",
+                        desc : "설명",
+                        date : "2020.00.00 ~ 2020.00.00"
+                    },
+                    {
+                        title : "타이틀2",
+                        img:"@/assets/images/img-asset-none@2x.png\"",
+                        desc : "설명2",
+                        date : "2020.00.00 ~ 2020.00.00"
+                    }
                 ],
             }
         },

@@ -1,14 +1,14 @@
 <template>
 	<ul v-bind:class="[ {'asset-item-list': listTypes[0].active }, {'asset-item-list-row': listTypes[1].active } ]">
-		<li class="asset-item">
+		<li class="asset-item" v-for="(item ,index) in items" :key="index">
 			<a href="#">
 				<div class="thumbnail">
-					<img  src="@/assets/images/img-asset-none@2x.png" alt="">
+					<img  src="item.img" alt="">
 				</div>
 				<div class="info-box">
-					<strong class="title">타이틀입니다</strong>
-					<p class="txt">설명입니다</p>
-					<p class="date">2020.00.00 ~ 2020.00.00</p>
+					<strong class="title">{{item.title}}</strong>
+					<p class="txt">{{item.desc}}</p>
+					<p class="date">{{item.date}}</p>
 				</div>
 				<div class="view-area">
 					<span class="view">10,000</span>
@@ -20,7 +20,7 @@
 <script>
 	export default {
 		name: "Item.vue",
-		props:["listTypes"],
+		props:["listTypes" , "items"],
 	}
 </script>
 <style scoped></style>

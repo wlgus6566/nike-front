@@ -42,8 +42,8 @@ const router = new VueRouter({
             meta: { layout: 'Default' },
         },
         {
-            path: '/asset/SP',
-            component: () => import('@/views/asset/SPList'),
+            path: '/asset/view',
+            component: () => import('@/views/asset/view'),
             meta: { layout: 'Default' },
         },
         {

@@ -9,7 +9,7 @@
 	import CampaignSettings from '../../components/upload/CampaignSettings.vue'
 	import FileSettings from '../../components/upload/FileSettings.vue'
 	export default {
-		name: "upload.vue",
+		name: "upload",
 		components : {
 			CampaignSettings,
 			FileSettings
