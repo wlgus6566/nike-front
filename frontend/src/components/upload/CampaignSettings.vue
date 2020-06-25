@@ -124,7 +124,7 @@
 			</li>
 			<li class="form-row">
 				<div class="form-column">
-					<label class="label-title">권환설정</label>
+					<label class="label-title">권한 설정</label>
 				</div>
 				<div class="form-column">
 					<button type="button" class="btn-form-gray min100"><span>권한설정</span></button>

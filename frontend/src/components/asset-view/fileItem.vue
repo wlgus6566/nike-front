@@ -30,7 +30,7 @@
 					</div>
 					<div class="down-info">
 						<span class="key">다운로드 횟수</span>
-						<span class="val"><strong>100,300</strong> 회</span>
+						<span class="val"><strong>{{fileItem.down}}</strong> 회</span>
 					</div>
 				</div>
 			</li>

@@ -3,17 +3,17 @@
 		<ul class="form-list">
 			<li class="form-row">
 				<div class="form-column">
-					<span class="label-title required">파일구분</span>
+					<span class="label-title required">파일 구분</span>
 				</div>
 				<div class="form-column">
-					<label class="check-label">
+					<label class="check-label minw120">
 						<span class="radio">
 							<input type="radio" name="file" checked>
 							<span></span>
 						</span>
 						<span>ASSET</span>
 					</label>
-					<label class="check-label">
+					<label class="check-label minw120">
 						<span class="radio">
 							<input type="radio" name="file">
 							<span></span>
@@ -27,14 +27,14 @@
 					<span class="label-title required">파일 종류</span>
 				</div>
 				<div class="form-column">
-					<label class="check-label">
+					<label class="check-label minw120">
 						<span class="radio">
 							<input type="radio" name="kind" checked>
 							<span></span>
 						</span>
 						<span>파일</span>
 					</label>
-					<label class="check-label">
+					<label class="check-label minw120">
 						<span class="radio">
 							<input type="radio" name="kind">
 							<span></span>

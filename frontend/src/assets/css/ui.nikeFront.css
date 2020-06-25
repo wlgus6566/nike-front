@@ -819,6 +819,9 @@
 .form-column .check-label {
     min-width: 100px;
 }
+.form-column .check-label.minw120 {
+    min-width: 120px;
+}
 .form-column input[type='text'] {
     width: 100%;
 }
