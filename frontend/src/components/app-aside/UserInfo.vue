@@ -17,7 +17,7 @@
                         <span>닫기</span>
                     </button>
                 </div>
-                <div class="alram-box" style="display: block;">
+                <div class="alram-box">
                     <strong class="title">NEW</strong>
                     <ul class="alram-list">
                         <li class="alram-item active">
