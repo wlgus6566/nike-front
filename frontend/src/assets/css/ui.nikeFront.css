@@ -1963,11 +1963,44 @@
     display: block;
     width: 30px;
     height: 30px;
-    background: url(../images/svg/icon-close-mideum.svg) no-repeat;
+    background: url('../images/svg/icon-close-mideum.svg') no-repeat;
 }
 .login-box .btn-close span {
     position: relative;
     display: block;
     overflow: hidden;
     text-indent: -9999px;
+}
+
+.completion-box{
+    display:flex;
+    height:100%;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+}
+.completion-box [class^=icon-]{
+    display:block;
+    width:150px;
+    height:54px;
+    background:no-repeat center;
+}
+.completion-box .icon-nike{
+    background-image:url("../images/logo-nike.svg");
+}
+.completion-box .title{
+    display:block;
+    margin-top:40px;
+    line-height:41px;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.completion-box .desc{
+    display:block;
+    margin-top:10px;
+    line-height:20px;
+    font-size:14px;
+    text-align:center;
+    color:#555;
 }
