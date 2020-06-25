@@ -13,6 +13,10 @@ import java.util.List;
 
 /**
  * The type Security filter mata service.
+ *
+ * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:12:05
+ * @Description
  */
 @Slf4j
 @Service
@@ -21,12 +25,16 @@ import java.util.List;
 public class SecurityFilterMataService {
 
 	/**
+	 * The Url filter repo
 	 *
+	 * @author [오지훈]
 	 */
 	private final SecurityUrlFilterMataRepositiory urlFilterRepo;
 
 	/**
+	 * The Ip filter repo
 	 *
+	 * @author [오지훈]
 	 */
 	private final SecurityIpFilterMataRepositiory ipFilterRepo;
 
@@ -35,6 +43,9 @@ public class SecurityFilterMataService {
 	 * Url find all list.
 	 *
 	 * @return the list
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:12:05
+	 * @Description
 	 */
 	public List<SecurityUrlFilterMata> urlFindAll(){
 		return urlFilterRepo.findAll();
@@ -45,6 +56,9 @@ public class SecurityFilterMataService {
 	 * Ip find all list.
 	 *
 	 * @return the list
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 6. 24. 오후 6:12:05
+	 * @Description
 	 */
 	public List<SecurityIpFilterMata> ipFindAll() {
 		return ipFilterRepo.findAll();

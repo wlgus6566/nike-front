@@ -7,9 +7,8 @@ import lombok.*;
  * UserLoginLogSaveDTO
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:09:11
  * @Description UserLoginLog(유저_로그인_로그) Save DTO 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -20,6 +19,7 @@ public class UserLoginLogSaveDTO {
 
     /**
      * 사용자 시퀀스
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "userSeq", value = "사용자 시퀀스", required = true)
@@ -27,6 +27,7 @@ public class UserLoginLogSaveDTO {
 
     /**
      * IP
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "loginIp", value = "IP", required = true)

@@ -8,9 +8,8 @@ import org.springframework.stereotype.Repository;
  * EmailSendingLogRepository
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 5:50:45
  * @Description EmailSendingLog(메일_발송_로그) Repository 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Repository
 public interface EmailSendingLogRepository extends JpaRepository<EmailSendingLog, Long> {

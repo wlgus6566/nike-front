@@ -1,6 +1,8 @@
 package com.nike.dnp.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.nike.dnp.common.variable.UserStatusEnumCode;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -14,9 +16,8 @@ import java.time.LocalDateTime;
  * User Entity
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 23. 오후 5:26:57
  * @Description User(유저) Entity 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -25,10 +26,12 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "TB_USER")
 @DynamicUpdate
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User extends BaseTimeEntity implements Serializable {
 
     /**
      * 유저 시퀀스
+     *
      * @author [오지훈]
      */
     @Id
@@ -39,6 +42,7 @@ public class User extends BaseTimeEntity implements Serializable {
 
     /**
      * 유저 ID
+     *
      * @author [오지훈]
      */
     @Column(name = "USER_ID")
@@ -47,6 +51,7 @@ public class User extends BaseTimeEntity implements Serializable {
 
     /**
      * 비밀번호
+     *
      * @author [오지훈]
      */
     @Column(name = "PASSWORD")
@@ -56,6 +61,7 @@ public class User extends BaseTimeEntity implements Serializable {
 
     /**
      * 닉네임
+     *
      * @author [오지훈]
      */
     @Column(name = "NICKNAME")
@@ -64,6 +70,7 @@ public class User extends BaseTimeEntity implements Serializable {
 
     /**
      * 유저 IP
+     *
      * @author [오지훈]
      */
     @Column(name = "LOGIN_IP")
@@ -72,6 +79,7 @@ public class User extends BaseTimeEntity implements Serializable {
 
     /**
      * 로그인 일시
+     *
      * @author [오지훈]
      */
     @Column(name = "LOGIN_DT")
@@ -80,6 +88,7 @@ public class User extends BaseTimeEntity implements Serializable {
 
     /**
      * 유저 상태 코드
+     *
      * @author [오지훈]
      */
     @Column(name = "USER_STATUS_CODE")
@@ -88,6 +97,7 @@ public class User extends BaseTimeEntity implements Serializable {
 
     /**
      * 약관 동의 여부
+     *
      * @author [오지훈]
      */
     @Column(name = "TERMS_AGREE_YN")
@@ -96,6 +106,7 @@ public class User extends BaseTimeEntity implements Serializable {
 
     /**
      * 브라우저 헤더
+     *
      * @author [오지훈]
      */
     @Column(name = "LOGIN_BROWSER_HEADER")
@@ -104,6 +115,7 @@ public class User extends BaseTimeEntity implements Serializable {
 
     /**
      * 비밀번호 최종 수정 일시
+     *
      * @author [오지훈]
      */
     @Column(name = "PASSWORD_LAST_UPDATE_DT")
@@ -111,19 +123,20 @@ public class User extends BaseTimeEntity implements Serializable {
     private LocalDateTime passwordLastUpdateDt;
 
     /**
-     * 인증 코드
+     * The User auth
+     *
      * @author [오지훈]
      */
-    @Column(name = "CERT_CODE")
-    @ApiModelProperty(name = "certCode", value = "인증 코드", hidden = true)
-    private String certCode;
-
     @OneToOne
     @JoinColumn(name = "USER_SEQ", insertable = false, updatable = false)
     private UserAuth userAuth;
 
     /**
      * 쿼리 실행 전 기본값 설정
+     *
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오후 5:26:57
+     * @Description
      */
     @PrePersist
     public void prePersist() {
@@ -131,11 +144,14 @@ public class User extends BaseTimeEntity implements Serializable {
     }
 
     /**
-     * 등록
+     * Instantiates a new User.
      *
      * @param userId      the user id
      * @param nickname    the nickname
      * @param registerSeq the register seq
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오후 5:26:57
+     * @Description 등록
      */
     @Builder
     public User(
@@ -150,10 +166,13 @@ public class User extends BaseTimeEntity implements Serializable {
     }
 
     /**
-     * 닉네임/권한 변경
+     * Update.
      *
      * @param nickname the nickname
      * @param userSeq  the user seq
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오후 5:26:57
+     * @Description 닉네임 /권한 변경
      */
     public void update(
             String nickname
@@ -164,10 +183,13 @@ public class User extends BaseTimeEntity implements Serializable {
     }
 
     /**
-     * 비밀번호 변경
+     * Update password.
      *
      * @param password the password
      * @param userSeq  the user seq
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오후 5:26:57
+     * @Description 비밀번호 변경
      */
     public void updatePassword(
             String password
@@ -179,10 +201,13 @@ public class User extends BaseTimeEntity implements Serializable {
     }
 
     /**
-     * 상태값 변경
+     * Update status.
      *
      * @param userStatusCode the user status code
      * @param userSeq        the user seq
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오후 5:26:57
+     * @Description 상태값 변경
      */
     public void updateStatus(
             String userStatusCode
@@ -193,7 +218,28 @@ public class User extends BaseTimeEntity implements Serializable {
     }
 
     /**
-     * 최종 로그인 일시 변경
+     * Delete user.
+     *
+     * @param userSeq    the user seq
+     * @param updaterSeq the updater seq
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오후 5:41:15
+     * @Description 삭제
+     */
+    public void delete(Long userSeq, Long updaterSeq) {
+        this.userId = String.valueOf(userSeq);
+        this.password = String.valueOf(userSeq);
+        this.nickname = String.valueOf(userSeq);
+        this.userStatusCode = UserStatusEnumCode.OUT.toString();
+        this.setUpdaterSeq(updaterSeq);
+    }
+
+    /**
+     * Update login dt.
+     *
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오후 5:26:57
+     * @Description 최종 로그인 일시 변경
      */
     public void updateLoginDt() {
         this.loginDt = LocalDateTime.now();

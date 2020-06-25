@@ -10,21 +10,22 @@ import lombok.experimental.UtilityClass;
  * CodePredicateHelper
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 5:51:00
  * @Description Code(공통코드) Predicate Helper 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @UtilityClass
 public class CodePredicateHelper {
 
     /**
-     * 검색 조건
+     * Compare keyword predicate.
      *
      * @param codeSearchDTO the code search dto
      * @return the predicate
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 5:51:00
+     * @Description 검색 조건
      */
-    public static Predicate search(final CodeSearchDTO codeSearchDTO) {
+    public static Predicate compareKeyword(final CodeSearchDTO codeSearchDTO) {
         final BooleanBuilder builder = new BooleanBuilder();
         final String keyword = codeSearchDTO.getKeyword();
 

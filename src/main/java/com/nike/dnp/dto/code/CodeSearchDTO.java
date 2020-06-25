@@ -8,9 +8,8 @@ import lombok.*;
  * CodeSearchDTO
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:08:47
  * @Description Code(공통코드) Search DTO 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -20,6 +19,7 @@ public class CodeSearchDTO extends SearchDTO {
 
     /**
      * 검색어
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "keyword", value = "검색어")
@@ -27,8 +27,11 @@ public class CodeSearchDTO extends SearchDTO {
 
     /**
      * Method to String
-     * @return String
+     *
+     * @return String string
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 6:08:48
+     * @Description
      */
     @Override
     public String toString() {

@@ -71,26 +71,13 @@ public class UserService implements UserDetailsService {
     private final UserAuthRepository userAuthRepository;
 
     /**
-     * 전체 조회
-     *
-     * @return the list
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:43
-     * @Description
-     */
-    public List<User> findAll() {
-        log.info("UserService.findAll");
-        return userRepository.findAll();
-    }
-
-    /**
-     * 페이징 조회(paging)
+     * Find pages page.
      *
      * @param userSearchDTO the user search dto
      * @return the list
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 2:40:43
-     * @Description
+     * @Description 페이징 조회(paging)
      */
     public Page<User> findPages(final UserSearchDTO userSearchDTO) {
         log.info("UserService.findPages");
@@ -102,13 +89,13 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * 상세 조회
+     * Find by id user.
      *
      * @param userSeq 유저 시퀀스
      * @return the optional
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 2:40:43
-     * @Description
+     * @Description 상세 조회
      */
     public User findById(final Long userSeq) {
         log.info("UserService.findById");
@@ -117,13 +104,13 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * 상세 조회
+     * Find by user id user.
      *
      * @param userId 유저 ID
      * @return the user
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 2:40:43
-     * @Description
+     * @Description 상세 조회
      */
     public User findByUserId(final String userId) {
         log.info("UserService.findByUserId");
@@ -132,13 +119,13 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * 인증코드 검증 및 비밀번호 변경
+     * Check boolean.
      *
      * @param userCertDTO the user cert dto
      * @return the boolean
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 4:18:42
-     * @Description
+     * @Description 인증코드 검증 및 비밀번호 변경
      */
     public Boolean check(final UserCertDTO userCertDTO) {
         log.info("UserService.findByCertCode");
@@ -186,12 +173,12 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * 비밀번호 설정 알림메일 발송
+     * Send email.
      *
      * @param userId the user id
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 3:27:51
-     * @Description
+     * @Description 비밀번호 설정 알림메일 발송
      */
     public void sendEmail(final String userId) {
         log.info("UserService.sendEmailByPassword");
@@ -215,14 +202,14 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * 등록
+     * Save user.
      *
      * @param userSaveDTO the user save dto
      * @param authUserDTO the auth user dto
      * @return the user
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 2:40:44
-     * @Description
+     * @Description 등록
      */
     @Transactional
     public User save(
@@ -248,7 +235,7 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * 닉네임/권한 수정
+     * Update optional.
      *
      * @param userSeq       the user seq
      * @param userUpdateDTO the user update dto
@@ -256,7 +243,7 @@ public class UserService implements UserDetailsService {
      * @return user user
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 2:40:44
-     * @Description
+     * @Description 닉네임 /권한 수정
      */
     @Transactional
     public Optional<User> update(
@@ -281,7 +268,7 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * 상태값 변경
+     * Update status optional.
      *
      * @param userSeq             the user seq
      * @param userUpdateStatusDTO the user update status dto
@@ -289,7 +276,7 @@ public class UserService implements UserDetailsService {
      * @return the optional
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 2:40:44
-     * @Description
+     * @Description 상태값 변경
      */
     @Transactional
     public Optional<User> updateStatus(
@@ -304,12 +291,56 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * 최종 로그인 일자 업데이트
+     * Delete one optional.
+     *
+     * @param userSeq     the user seq
+     * @param authUserDTO the auth user dto
+     * @return the optional
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오후 5:47:29
+     * @Description 유저 단건 삭제
+     */
+    @Transactional
+    public Optional<User> deleteOne(
+            final Long userSeq
+            , final AuthUserDTO authUserDTO
+    ) {
+        log.info("UserService.deleteOne");
+        final Optional<User> user = userRepository.findById(userSeq);
+        user.ifPresent(value -> value.delete(userSeq, authUserDTO.getUserSeq()));
+        return user;
+    }
+
+    /**
+     * Delete array list.
+     *
+     * @param userDeleteDTO the user delete dto
+     * @param authUserDTO   the auth user dto
+     * @return the list
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오후 6:15:52
+     * @Description 유저 배열 삭제
+     */
+    @Transactional
+    public List<User> deleteArray(
+            final UserDeleteDTO userDeleteDTO
+            , final AuthUserDTO authUserDTO
+    ) {
+        log.info("UserService.deleteArray");
+        List<User> users = userRepository.findAllByUserSeqIn(userDeleteDTO.getUserSeqArray());
+
+        //TODO[ojh] 배열삭제 작업 중
+
+        return users;
+    }
+
+    /**
+     * Update login dt.
      *
      * @param user the user
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 2:40:44
-     * @Description
+     * @Description 최종 로그인 일자 업데이트
      */
     @Transactional
     public void updateLoginDt(User user) {
@@ -318,13 +349,13 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * 로그인 검증
+     * Load user by username user details.
      *
      * @param userId 유저 ID
      * @return the authUserDTO
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 2:40:44
-     * @Description
+     * @Description 로그인 검증
      */
     @Override
     public UserDetails loadUserByUsername(String userId) {

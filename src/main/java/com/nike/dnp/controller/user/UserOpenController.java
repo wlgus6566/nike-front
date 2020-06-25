@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@Api(description = "유저 정보", tags = "1_USER")
-@RequestMapping(value = "/api/open/user", name = "사용자")
+@Api(description = "유저(권한ALL)", tags = "1-1_USER")
+@RequestMapping(value = "/api/open/user", name = "유저")
 @RequiredArgsConstructor
 public class UserOpenController {
 

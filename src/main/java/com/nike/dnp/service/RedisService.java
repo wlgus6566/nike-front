@@ -37,7 +37,7 @@ public class RedisService {
      * @param redisTemplate the redis template
      * @author [오지훈]
      * @CreatedOn 2020. 6. 19. 오후 4:47:26
-     * @Description
+     * @Description 생성자 주입
      */
     public RedisService(final RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -52,7 +52,7 @@ public class RedisService {
      * @param timeout - 유지시간(분단위) - 0일 경우 무제한
      * @author [오지훈]
      * @CreatedOn 2020. 6. 19. 오후 4:47:26
-     * @Description
+     * @Description redis key 등록
      */
     public void set(final String key, final Object object, final long timeout) {
         valueOperations.set(key, object);
@@ -68,7 +68,7 @@ public class RedisService {
      * @return Object object
      * @author [오지훈]
      * @CreatedOn 2020. 6. 19. 오후 4:47:26
-     * @Description
+     * @Description redis key 조회
      */
     public Object get(final String key) {
         return valueOperations.get(key);
@@ -80,7 +80,7 @@ public class RedisService {
      * @param key 키
      * @author [오지훈]
      * @CreatedOn 2020. 6. 19. 오후 4:47:26
-     * @Description
+     * @Description redis key 삭제
      */
     public void delete(final String key) {
         redisTemplate.delete(key);
@@ -93,7 +93,7 @@ public class RedisService {
      * @return string[] set
      * @author [오지훈]
      * @CreatedOn 2020. 6. 19. 오후 4:47:26
-     * @Description
+     * @Description redis key 배열 조회
      */
     public Set<String> keys(final String pattern) {
         return redisTemplate.keys(pattern);

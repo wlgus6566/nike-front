@@ -8,18 +8,19 @@ import org.springframework.stereotype.Repository;
  * UserAuthRepository
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 3:17:57
  * @Description UserAuth(유저 권한) Repository Interface 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Repository
 public interface UserAuthRepository extends JpaRepository<UserAuth, Long> {
 
     /**
-     * 유저 권한 삭제
+     * Delete by user seq.
      *
      * @param userSeq the user seq
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 3:17:57
+     * @Description 유저 권한 삭제
      */
     void deleteByUserSeq(Long userSeq);
 

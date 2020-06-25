@@ -1,8 +1,12 @@
 package com.nike.dnp.entity.order;
 
+import com.nike.dnp.dto.order.ProductUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 
@@ -19,6 +23,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
+@DynamicUpdate
 @Table(name = "TB_PRODUCT")
 public class Product extends BaseTimeEntity {
 
@@ -65,7 +70,7 @@ public class Product extends BaseTimeEntity {
 	 */
 	@Column(name = "AGENCY_SEQ")
 	@ApiModelProperty(name = "agencySeq", value = "에이젼시 시퀀스",required = true)
-	private long agencySeq;
+	private Long agencySeq;
 
 	/**
 	 *
@@ -141,8 +146,17 @@ public class Product extends BaseTimeEntity {
 	 * @author [윤태호]
 	 */
 	@Column(name = "SIZE")
-	@ApiModelProperty(name = "size", value = "사이즈")
+	@ApiModelProperty(name = "size", value = "사이즈",hidden = true)
 	private String size;
+
+	/**
+	 * 단가
+	 *
+	 * @author [윤태호]
+	 */
+	@Column(name = "UNIT_PRICE")
+	@ApiModelProperty(name = "unitPrice", value = "단가")
+	private Long unitPrice;
 
 	/**
 	 * 최소 주문 수량
@@ -150,7 +164,7 @@ public class Product extends BaseTimeEntity {
 	 */
 	@Column(name = "MINIMUM_ORDER_QUANTITY")
 	@ApiModelProperty(name = "minimumOrderQuantity", value = "최소 주문 수량", required = true)
-	private long minimumOrderQuantity;
+	private Long minimumOrderQuantity;
 
 	/**
 	 * 노출 여부
@@ -169,4 +183,46 @@ public class Product extends BaseTimeEntity {
 	private String useYn;
 
 
+	/**
+	 * 수정
+	 *
+	 * @param productUpdateDTO the product update dto
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 6. 23. 오후 5:52:24
+	 * @Description
+	 */
+	public void update(final ProductUpdateDTO productUpdateDTO) {
+		this.exposureYn = productUpdateDTO.getExposureYn();
+		this.category2Code = productUpdateDTO.getCategory2code();
+		this.category3Code = productUpdateDTO.getCategory3code();
+		this.agencySeq = productUpdateDTO.getAgencySeq();
+		this.goodsName = productUpdateDTO.getGoodsName();
+		this.goodsDescription = productUpdateDTO.getGoodsDescription();
+		this.unitPrice = productUpdateDTO.getUnitPrice();
+		this.minimumOrderQuantity = productUpdateDTO.getMinimumQuantity();
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getOriginalImg())){
+			this.imageFileName = StringUtils.getFilename(productUpdateDTO.getOriginalImg().getOriginalFilename());
+			this.imageFileSize = String.valueOf(productUpdateDTO.getOriginalImg().getSize());
+			this.imageFilePhysicalName = productUpdateDTO.getOriginalImg().getOriginalFilename();
+		}
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getThumbnailImg())){
+			this.thumbnailFileName = StringUtils.getFilename(productUpdateDTO.getThumbnailImg().getOriginalFilename());
+			this.thumbnailFileSize = String.valueOf(productUpdateDTO.getThumbnailImg().getSize());
+			this.thumbnailFilePhysicalName = productUpdateDTO.getThumbnailImg().getOriginalFilename();
+		}
+		setUpdaterSeq(productUpdateDTO.getUpdaterSeq());
+	}
+
+	/**
+	 * 제품 삭제
+	 *
+	 * @param productUpdateDTO the product update dto
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 6. 24. 오후 5:32:08
+	 * @Description
+	 */
+	public void delete(final ProductUpdateDTO productUpdateDTO) {
+		setUseYn(productUpdateDTO.getUseYn());
+		setUpdaterSeq(productUpdateDTO.getUpdaterSeq());
+	}
 }

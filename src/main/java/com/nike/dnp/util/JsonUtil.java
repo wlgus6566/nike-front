@@ -10,25 +10,27 @@ import java.io.Writer;
 /**
  * JsonUtil
  *
- * @since 2020.05.21
  * @author [윤태호]
+ * @CreatedOn 2020. 6. 24. 오후 6:03:44
  * @Description JsonUtil 작성
  * @history [윤태호] [2020.05.21] [최초 작성]
- *
+ * @since 2020.05.21
  */
-
 @Slf4j
 @UtilityClass
 public class JsonUtil {
 
 	/**
-	 * value  > json 형태로 writer
+	 * Write.
 	 *
 	 * @param writer the writer
 	 * @param value  the value
 	 * @throws IOException the io exception
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 6. 24. 오후 6:03:44
+	 * @Description value > json 형태로 writer
 	 */
-	public static void write(final Writer writer, final Object value) throws IOException {
+	public void write(final Writer writer, final Object value) throws IOException {
 		new ObjectMapper().writeValue(writer, value);
 	}
 

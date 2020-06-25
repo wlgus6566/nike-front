@@ -7,9 +7,8 @@ import lombok.*;
  * ErrorLogSaveDTO
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:09:03
  * @Description ErrorLog(오류 로그) Save DTO 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -20,6 +19,7 @@ public class EmailSendingLogSaveDTO {
 
     /**
      * 사용자 시퀀스
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "userSeq", value = "사용자 시퀀스", required = true)
@@ -27,6 +27,7 @@ public class EmailSendingLogSaveDTO {
 
     /**
      * 제목
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "title", value = "제목", required = true)
@@ -34,6 +35,7 @@ public class EmailSendingLogSaveDTO {
 
     /**
      * 내용
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "contents", value = "내용", required = true)

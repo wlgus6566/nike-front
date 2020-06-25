@@ -12,9 +12,8 @@ import java.io.Serializable;
  * UserAuth Entity
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:11:14
  * @Description UserAuth(유저 권한) Entity 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -26,6 +25,7 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
 
     /**
      * 유저 권한 시퀀스
+     *
      * @author [오지훈]
      */
     @Id
@@ -36,6 +36,7 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
 
     /**
      * 유저 시퀀스
+     *
      * @author [오지훈]
      */
     @Column(name = "USER_SEQ")
@@ -44,6 +45,7 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
 
     /**
      * 권한 시퀀스
+     *
      * @author [오지훈]
      */
     @Column(name = "AUTH_SEQ")
@@ -51,15 +53,8 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
     private Long authSeq;
 
     /**
-     * 유저
-     * @author [오지훈]
-     */
-    /*@ManyToOne
-    @JoinColumn(name = "USER_SEQ", insertable = false, updatable = false)
-    private User user;*/
-
-    /**
      * 권한
+     *
      * @author [오지훈]
      */
     @ManyToOne
@@ -67,11 +62,14 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
     private Auth auth;
 
     /**
-     * 등록
+     * Instantiates a new User auth.
      *
      * @param userSeq     the user seq
      * @param authSeq     the auth seq
      * @param registerSeq the register seq
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 6:11:14
+     * @Description 등록
      */
     @Builder
     public UserAuth(

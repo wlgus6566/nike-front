@@ -59,15 +59,15 @@ public class PatternUtil {
     Matcher match;
 
     /**
-     * 비밀번호 정규식 체크
+     * Pwd regular expression chk string.
      *
      * @param newPwd the new pwd
      * @param oldPwd the old pwd
      * @param userId the user id
-     * @return string
+     * @return string string
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오전 9:43:19
-     * @Description
+     * @Description 비밀번호 정규식 체크
      */
     public String pwdRegularExpressionChk(String newPwd, String oldPwd, String userId) {
         boolean chk = false;
@@ -127,15 +127,14 @@ public class PatternUtil {
         return "정상";
     }
 
-
     /**
-     * 같은 문자, 숫자 4자리 체크
+     * Same pwd boolean.
      *
      * @param pwd the pwd
-     * @return boolean
+     * @return boolean boolean
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오전 9:43:19
-     * @Description
+     * @Description 같은 문자, 숫자 4자리 체크
      */
     public boolean samePwd(String pwd) {
         return Pattern.compile(pattern5).matcher(pwd).find();
@@ -143,13 +142,13 @@ public class PatternUtil {
 
 
     /**
-     * 연속 문자, 숫자 4자리 체크
+     * Continuous pwd boolean.
      *
      * @param pwd the pwd
-     * @return boolean
+     * @return boolean boolean
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오전 9:43:19
-     * @Description
+     * @Description 연속 문자, 숫자 4자리 체크
      */
     public boolean continuousPwd(String pwd) {
         int o = 0;
@@ -170,14 +169,14 @@ public class PatternUtil {
 
 
     /**
-     * 아이디와 동일 문자 4자리 체크
+     * Same id boolean.
      *
      * @param pwd the pwd
      * @param id  the id
-     * @return boolean
+     * @return boolean boolean
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오전 9:43:19
-     * @Description
+     * @Description 아이디와 동일 문자 4자리 체크
      */
     public boolean sameId(String pwd, String id) {
         for(int i=0; i<pwd.length()-3; i++) {

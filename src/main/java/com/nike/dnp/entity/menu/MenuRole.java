@@ -11,9 +11,8 @@ import java.io.Serializable;
  * MenuRole Entity
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:10:44
  * @Description MenuRole(메뉴 역할) Entity 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -25,6 +24,7 @@ public class MenuRole extends BaseTimeEntity implements Serializable {
 
     /**
      * 메뉴 역할 시퀀스
+     *
      * @author [오지훈]
      */
     @Id
@@ -35,6 +35,7 @@ public class MenuRole extends BaseTimeEntity implements Serializable {
 
     /**
      * 메뉴 시퀀스
+     *
      * @author [오지훈]
      */
     @Column(name = "MENU_SEQ")
@@ -43,6 +44,7 @@ public class MenuRole extends BaseTimeEntity implements Serializable {
 
     /**
      * 메뉴 기능 명
+     *
      * @author [오지훈]
      */
     @Column(name = "MENU_SKILL_NAME")
@@ -51,6 +53,7 @@ public class MenuRole extends BaseTimeEntity implements Serializable {
 
     /**
      * 메뉴
+     *
      * @author [오지훈]
      */
     @ManyToOne
