@@ -46,9 +46,7 @@ import appHeader from '@/components/app-header';
 export default {
     name: 'LayoutDefault',
     data() {
-        return {
-            tw: new TimelineLite({ paused: true }),
-        };
+        return {};
     },
     computed: {
         AppAside() {
@@ -56,6 +54,100 @@ export default {
         },
         path() {
             return this.$route.path;
+        },
+        tw() {
+            const header = document.querySelector('header');
+            const logo = header.querySelector('h1');
+            const bg = header.querySelector('.header-bg');
+            const nav = header.querySelector('nav');
+            return new TimelineLite({ paused: true })
+                .to(
+                    logo,
+                    0.5,
+                    {
+                        translateX: '-23px',
+                        translateY: '-30px',
+                        scale: 0.25,
+                        ease: Cubic.easeInOut,
+                    },
+                    0
+                )
+                .to(
+                    bg,
+                    0.5,
+                    {
+                        opacity: '1',
+                        scaleX: 0.2,
+                        ease: Cubic.easeInOut,
+                    },
+                    0
+                )
+                .to(
+                    nav,
+                    0.3,
+                    {
+                        opacity: '0',
+                        translateX: '-30px',
+                        ease: Cubic.easeInOut,
+                    },
+                    0
+                )
+                .set(
+                    nav,
+                    {
+                        opacity: '1',
+                        translateX: '30px',
+                    },
+                    0.3
+                )
+                .set(
+                    header.querySelectorAll('nav > ul > li'),
+                    {
+                        display: function (i, t) {
+                            if (!t.classList.contains('router-link-active')) {
+                                return 'none';
+                            }
+                        },
+                    },
+                    0.3
+                )
+                .set(
+                    nav.querySelector('.router-link-active > a'),
+                    {
+                        opacity: '0',
+                        translateX: '30px',
+                    },
+                    0.3
+                )
+                .set(
+                    nav.querySelector('.router-link-active > ul'),
+                    {
+                        opacity: '0',
+                        translateX: '30px',
+                        display: 'block',
+                    },
+                    0.3
+                )
+                .to(
+                    nav.querySelector('.router-link-active > a'),
+                    0.3,
+                    {
+                        opacity: '1',
+                        translateX: '0',
+                        ease: Cubic.easeInOut,
+                    },
+                    0.3
+                )
+                .to(
+                    nav.querySelector('.router-link-active > ul'),
+                    0.3,
+                    {
+                        opacity: '1',
+                        translateX: '0',
+                        ease: Cubic.easeInOut,
+                    },
+                    0.4
+                );
         },
     },
     directives: {
@@ -70,126 +162,31 @@ export default {
     mounted() {
         const target = [document.querySelector('header .inner')];
         this.layoutAnimation(target, '-100%', '0%');
-
-        const header = document.querySelector('header');
-        const logo = header.querySelector('h1');
-        const bg = header.querySelector('.header-bg');
-        const nav = header.querySelector('nav');
-        const navLi = header.querySelectorAll('nav > ul > li');
-        this.tw
-            .to(
-                logo,
-                0.5,
-                {
-                    translateX: '-23px',
-                    translateY: '-30px',
-                    scale: 0.25,
-                    ease: Cubic.easeInOut,
-                },
-                0
-            )
-            .to(
-                bg,
-                0.5,
-                {
-                    opacity: '1',
-                    scaleX: 0.2,
-                    ease: Cubic.easeInOut,
-                },
-                0
-            )
-            .to(
-                nav,
-                0.3,
-                {
-                    opacity: '0',
-                    translateX: '-30px',
-                    ease: Cubic.easeInOut,
-                },
-                0
-            )
-            .set(
-                nav,
-                {
-                    opacity: '1',
-                    translateX: '30px',
-                },
-                0.3
-            )
-            .set(
-                navLi,
-                {
-                    display: function (i, t) {
-                        if (!t.classList.contains('router-link-active')) {
-                            return 'none';
-                        }
-                    },
-                },
-                0.3
-            )
-            .set(
-                nav.querySelector('.router-link-active > a'),
-                {
-                    opacity: '0',
-                    translateX: '30px',
-                },
-                0.3
-            )
-            .set(
-                nav.querySelector('.router-link-active > ul'),
-                {
-                    opacity: '0',
-                    translateX: '30px',
-                    display: 'block',
-                },
-                0.3
-            )
-            .to(
-                nav.querySelector('.router-link-active > a'),
-                0.3,
-                {
-                    opacity: '1',
-                    translateX: '0',
-                    ease: Cubic.easeInOut,
-                },
-                0.3
-            )
-            .to(
-                nav.querySelector('.router-link-active > ul'),
-                0.3,
-                {
-                    opacity: '1',
-                    translateX: '0',
-                    ease: Cubic.easeInOut,
-                },
-                0.4
-            );
     },
     methods: {
-        pageAppear(el, done) {
-            console.log(this.tw);
-
-            //this.tw.play(true);
+        pageAppear() {
             this.toggleHeader(this.$route.path !== '/');
         },
-        pageEnter(el, done) {
+        pageEnter() {
             this.toggleHeader(this.$route.path !== '/');
         },
         pageLeave() {
             this.toggleHeader(this.$route.path !== '/');
         },
-        toggleHeader(status, done, Appear) {
+        toggleHeader(status) {
             if (status) {
                 this.tw.play();
             } else {
                 this.tw.reverse();
             }
         },
+
         mouseEvent(status) {
             if (this.$route.path !== '/') {
                 this.toggleHeader(status);
             }
         },
+
         // Aside
         asideAppear(el, done) {
             const elements = [document.querySelector('aside .aside-bg'), el];
@@ -219,7 +216,9 @@ export default {
                     translateX: toVal,
                     ease: Cubic.easeInOut,
                     onComplete: () => {
-                        done();
+                        if (done) {
+                            done();
+                        }
                     },
                 }
             );
