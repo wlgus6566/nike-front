@@ -228,7 +228,9 @@ input[disabled],
 select[disabled],
 textarea[disabled] {
     cursor: default;
-    background-color: #f2f2f2 !important;
+    border-color: #ccc !important;
+    background: #eee;
+    color: #888 !important;
 }
 input[readonly],
 select[readonly],
@@ -239,13 +241,13 @@ textarea[readonly] {
 }
 input::placeholder,
 input::-webkit-input-placeholder {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: normal;
     color: #bbb !important;
 }
 textarea::placeholder,
 textarea::-webkit-input-placeholder {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 300;
     color: #888 !important;
 }

@@ -6,43 +6,140 @@
                     <img src="@/assets/images/logo_login.png" alt="" />
                 </a>
             </h1>
-            <div class="login-form">
-                <form action="" method="" v-if="certification === 'success'">
+            <div class="login-form" v-if="certification === 'success'" v-show="is_show2">
+                <form action="" method="">
                     <fieldset>
                         <legend>NIKE ND&P SERVICE</legend>
-                        <h2 class="title">
-                            NIKE KOREA<span>는<br /> </span>PARTNER<span>와 함께합니다.</span>
-                        </h2>
-                        <div class="input-group"><label for="id"></label><input type="text" id="id" value="digitalplaform@nike.com" placeholder="ID" /> <label for="pw"></label><input type="password" id="pw" value="111111111111" placeholder="PW" maxlength="12" /></div>
-                        <button type="button" class="btn-login" @click="changeLogin">
-                            LOGIN
+                        <h2 class="title">NIKE ND&P<br />DIGITAL PLATFORM</h2>
+                        <div class="input-group">
+                            <label for="id"></label><input type="text" id="id" value="digitalplaform@nike.com" placeholder="ID" />
+                            <label for="pw"></label><input type="password" id="pw" value="111111111111" placeholder="PW" maxlength="12" />
+                        </div>
+                        <button type="button" class="btn-d-black-lg btn-login" @click="changeLogin">
+                            <span>LOGIN</span>
                         </button>
-                        <a href="javascript:void(0)" class="pw-find">비밀번호를 찾으시겠습니까?</a>
+                        <a href="javascript:void(0)" class="pw-find" @click="openPop">비밀번호 찾기</a>
                     </fieldset>
                 </form>
-                <form class="email-certification" action="" method="" v-else>
+            </div>
+            <div class="login-form" v-else>
+                <form class="email-certification" action="" method="">
                     <fieldset>
                         <legend>NIKE ND&P SERVICE</legend>
                         <h2 class="title">
                             이메일 인증
                         </h2>
-                        <p>인증메일이 발송되었습니다.<br />메일함을 확인하여 인증코드를 입력해주세요.</p>
+                        <p class="desc">인증메일이 발송되었습니다.<br />메일함을 확인하여 인증코드를 입력해주세요.</p>
                         <div class="input-group">
-                            <label for="word1"></label><input type="text" maxlength="1" id="word1" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word2"></label
-                            ><input type="text" maxlength="1" id="word2" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word3"></label
-                            ><input type="text" maxlength="1" id="word3" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word4"></label
-                            ><input type="text" maxlength="1" id="word4" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word5"></label
-                            ><input type="text" maxlength="1" id="word5" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word6"></label
-                            ><input type="text" maxlength="1" id="word6" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word7"></label
-                            ><input type="text" maxlength="1" id="word7" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" /> <label for="word8"></label
-                            ><input type="text" maxlength="1" id="word8" value="" placeholder="" v-on:keypress="$event.target.nextElementSibling.focus()" v-on:keyup="changeBorderColor()" />
+                            <label for="word1"></label
+                            ><input
+                                type="text"
+                                maxlength="1"
+                                id="word1"
+                                value=""
+                                placeholder=""
+                                v-on:keypress="$event.target.nextElementSibling.focus()"
+                                v-on:keyup="changeBorderColor()"
+                            />
+                            <label for="word2"></label
+                            ><input
+                                type="text"
+                                maxlength="1"
+                                id="word2"
+                                value=""
+                                placeholder=""
+                                v-on:keypress="$event.target.nextElementSibling.focus()"
+                                v-on:keyup="changeBorderColor()"
+                            />
+                            <label for="word3"></label
+                            ><input
+                                type="text"
+                                maxlength="1"
+                                id="word3"
+                                value=""
+                                placeholder=""
+                                v-on:keypress="$event.target.nextElementSibling.focus()"
+                                v-on:keyup="changeBorderColor()"
+                            />
+                            <label for="word4"></label
+                            ><input
+                                type="text"
+                                maxlength="1"
+                                id="word4"
+                                value=""
+                                placeholder=""
+                                v-on:keypress="$event.target.nextElementSibling.focus()"
+                                v-on:keyup="changeBorderColor()"
+                            />
+                            <label for="word5"></label
+                            ><input
+                                type="text"
+                                maxlength="1"
+                                id="word5"
+                                value=""
+                                placeholder=""
+                                v-on:keypress="$event.target.nextElementSibling.focus()"
+                                v-on:keyup="changeBorderColor()"
+                            />
+                            <label for="word6"></label
+                            ><input
+                                type="text"
+                                maxlength="1"
+                                id="word6"
+                                value=""
+                                placeholder=""
+                                v-on:keypress="$event.target.nextElementSibling.focus()"
+                                v-on:keyup="changeBorderColor()"
+                            />
+                            <label for="word7"></label
+                            ><input
+                                type="text"
+                                maxlength="1"
+                                id="word7"
+                                value=""
+                                placeholder=""
+                                v-on:keypress="$event.target.nextElementSibling.focus()"
+                                v-on:keyup="changeBorderColor()"
+                            />
+                            <label for="word8"></label
+                            ><input
+                                type="text"
+                                maxlength="1"
+                                id="word8"
+                                value=""
+                                placeholder=""
+                                v-on:keypress="$event.target.nextElementSibling.focus()"
+                                v-on:keyup="changeBorderColor()"
+                            />
                         </div>
-                        <button type="button" class="btn-login">
-                            인증하기
+                        <button type="button" class="btn-d-black-lg btn-login">
+                            <span>인증하기</span>
                         </button>
                     </fieldset>
                 </form>
             </div>
+            <!-- 로그인 : 비밀번호 찾기(P) -->
+            <div class="login-form" v-show="is_show">
+                <form class="login-popup" action="" method="">
+                    <fieldset>
+                        <legend>NIKE ND&P SERVICE</legend>
+                        <h2 class="title">
+                            비밀번호 찾기
+                        </h2>
+                        <p class="desc">
+                            비밀번호 설정을 위한 ID(E-MAIL)을 입력해주세요.<br />입력하신 이메일로 비밀번호 설정을 위한 URL이 전송됩니다.
+                        </p>
+                        <div class="input-group">
+                            <label for="id2"><input type="text" id="id2" value="" placeholder="ID" /></label>
+                        </div>
+                        <button type="button" class="btn-d-black-lg btn-login">
+                            <span>이메일 발송</span>
+                        </button>
+                        <a href="#" class="close-pop">팝업 닫기</a>
+                    </fieldset>
+                </form>
+            </div>
+            <!-- //로그인 : 비밀번호 찾기(P) -->
         </section>
     </div>
 </template>
@@ -53,6 +150,8 @@ export default {
     data: function () {
         return {
             certification: 'success',
+            is_show: false,
+            is_show2: true,
             //on: '#ffffff',
         };
     },
@@ -66,6 +165,10 @@ export default {
         },
         changeBorderColor: function () {
             console.log('input에 .on 추가 되면서 border-bottom color 변경 되여야 함');
+        },
+        openPop: function () {
+            this.is_show = !this.is_show;
+            this.is_show2 = !this.is_show2;
         },
     },
 };
@@ -138,13 +241,14 @@ section .text strong {
     margin-bottom: 26px;
     font-weight: 400;
     font-size: 40px;
-    font-family: 'Bebas Neue';
+    font-family: 'Bebas Neue', sans-serif;
     line-height: 1.1;
     letter-spacing: -0.5px;
     color: #fff;
 }
 
-.login-form .email-certification .title {
+.login-form .email-certification .title,
+.login-form .login-popup .title {
     margin-bottom: 0;
     font-weight: 700;
     font-size: 30px;
@@ -153,7 +257,7 @@ section .text strong {
     letter-spacing: -2px;
 }
 
-.login-form .email-certification .title + p {
+.login-form .desc {
     margin: 9px 0 40px;
     font-weight: 400;
     font-size: 14px;
@@ -162,6 +266,9 @@ section .text strong {
     color: #fff;
 }
 
+.login-form .login-popup .desc {
+    margin-bottom: 30px;
+}
 .login-form .title span {
     font-weight: 200;
     font-size: 24px;
@@ -184,7 +291,8 @@ section .text strong {
     letter-spacing: 0;
 }
 
-.input-group input ~ input {
+.input-group label ~ label {
+    display: block;
     margin-top: 8px;
 }
 
@@ -215,35 +323,57 @@ section .text strong {
 }
 
 .input-group input::-webkit-input-placeholder {
+    font-size: 16px;
+    font-family: 'Bebas Neue', sans-serif;
     color: #fff;
     opacity: 0.5;
-    font-family: 'Bebas Neue';
 }
 
 .input-group input:-ms-input-placeholder {
+    font-size: 16px;
+    font-family: 'Bebas Neue', sans-serif;
     color: #888;
-    font-family: 'Bebas Neue';
+    opacity: 0.5;
 }
 
-.btn-login {
+.login-form .btn-login {
     width: 100%;
     height: 45px;
     margin-top: 20px;
     border-radius: 0;
+    font-weight: normal;
     font-size: 20px;
-    font-family: 'Bebas Neue';
+    font-family: 'Bebas Neue', sans-serif;
     background-color: #fa5400;
     line-height: 45px;
     letter-spacing: 0.5px;
     color: #fff;
+    border: 0;
 }
 
-.email-certification .btn-login {
+.login-form .email-certification .btn-login {
     font-size: 16px;
     font-family: inherit;
     letter-spacing: -0.57px;
 }
 
+.login-form .login-popup .btn-login {
+    margin-top: 35px;
+    font-size: 16px;
+    font-family: inherit;
+    letter-spacing: -0.57px;
+}
+
+.close-pop {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 30px;
+    height: 30px;
+    font-size: 0;
+    background: url('../../assets/images/icon-close-mideum@2x.png') no-repeat center center;
+    background-size: 30px auto;
+}
 .pw-find {
     display: block;
     position: absolute;

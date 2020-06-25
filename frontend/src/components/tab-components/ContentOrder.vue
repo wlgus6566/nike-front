@@ -8,7 +8,7 @@
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-down">
+                        <button type="button" class="btn-sown">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
@@ -17,7 +17,7 @@
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
+                <button type="button" class="btn-sel"><span>삭제</span></button>
             </li>
             <li class="order-item">
                 <div class="thumbnail">
@@ -26,7 +26,7 @@
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-down">
+                        <button type="button" class="btn-sown">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
@@ -35,7 +35,7 @@
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
+                <button type="button" class="btn-sel"><span>삭제</span></button>
             </li>
             <li class="order-item">
                 <div class="thumbnail">
@@ -44,7 +44,7 @@
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-down">
+                        <button type="button" class="btn-sown">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
@@ -53,7 +53,7 @@
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
+                <button type="button" class="btn-sel"><span>삭제</span></button>
             </li>
             <li class="order-item">
                 <div class="thumbnail">
@@ -62,7 +62,7 @@
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-down">
+                        <button type="button" class="btn-sown">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
@@ -71,7 +71,7 @@
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
+                <button type="button" class="btn-sel"><span>삭제</span></button>
             </li>
             <li class="order-item">
                 <div class="thumbnail">
@@ -80,7 +80,7 @@
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-down">
+                        <button type="button" class="btn-sown">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
@@ -89,7 +89,7 @@
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
+                <button type="button" class="btn-sel"><span>삭제</span></button>
             </li>
             <li class="order-item">
                 <div class="thumbnail">
@@ -98,7 +98,7 @@
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-down">
+                        <button type="button" class="btn-sown">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
@@ -107,7 +107,7 @@
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
+                <button type="button" class="btn-sel"><span>삭제</span></button>
             </li>
             <li class="order-item">
                 <div class="thumbnail">
@@ -116,7 +116,7 @@
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-down">
+                        <button type="button" class="btn-sown">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
@@ -125,7 +125,7 @@
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
+                <button type="button" class="btn-sel"><span>삭제</span></button>
             </li>
             <li class="order-item">
                 <div class="thumbnail">
@@ -134,7 +134,7 @@
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-down">
+                        <button type="button" class="btn-sown">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
@@ -143,7 +143,7 @@
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
+                <button type="button" class="btn-sel"><span>삭제</span></button>
             </li>
             <li class="order-item">
                 <div class="thumbnail">
@@ -152,7 +152,7 @@
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-down">
+                        <button type="button" class="btn-sown">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
@@ -161,7 +161,7 @@
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-del"><span>삭제</span></button>
+                <button type="button" class="btn-sel"><span>삭제</span></button>
             </li>
         </ul>
         <button type="button" class="btn-order">
@@ -203,7 +203,7 @@ export default {
 .order-item .thumbnail img {
     vertical-align: top;
 }
-.order-item .btn-del {
+.order-item .btn-sel {
     position: absolute;
     top: 4px;
     right: -4px;
@@ -212,7 +212,7 @@ export default {
     height: 30px;
     background: url(../../assets/images/svg/icon-close-small.svg) no-repeat center;
 }
-.order-item .btn-del span {
+.order-item .btn-sel span {
     display: block;
     overflow: hidden;
     text-indent: -99999px;

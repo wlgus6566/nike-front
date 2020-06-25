@@ -8,9 +8,55 @@
                 </button>
                 <div class="alram-box">
                     <strong class="title">NEW</strong>
-                    <p class="txt">
-                        에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
-                    </p>
+                    <div class="alram-item">
+                        <p class="txt">
+                            에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close">
+                        <span>닫기</span>
+                    </button>
+                </div>
+                <div class="alram-box" style="display: block;">
+                    <strong class="title">NEW</strong>
+                    <ul class="alram-list">
+                        <li class="alram-item active">
+                            <p class="txt">
+                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
+                            </p>
+                            <span class="date">Now</span>
+                        </li>
+                        <li class="alram-item active">
+                            <p class="txt">
+                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
+                            </p>
+                            <span class="date">Now</span>
+                        </li>
+                        <li class="alram-item active">
+                            <p class="txt">
+                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
+                            </p>
+                            <span class="date">Now</span>
+                        </li>
+                        <li class="alram-item active">
+                            <p class="txt">
+                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
+                            </p>
+                            <span class="date">Now</span>
+                        </li>
+                        <li class="alram-item active">
+                            <p class="txt">
+                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
+                            </p>
+                            <span class="date">Now</span>
+                        </li>
+                        <li class="alram-item active">
+                            <p class="txt">
+                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
+                            </p>
+                            <span class="date">Now</span>
+                        </li>
+                    </ul>
                     <button type="button" class="btn-close">
                         <span>닫기</span>
                     </button>
@@ -99,32 +145,72 @@ export default {
     display: none;
     box-sizing: border-box;
     width: 100%;
-    padding: 12px 52px 14px 19px;
+    padding: 12px 0 0;
     border-radius: 2px;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
     background: #fff;
 }
 .alram-box .title {
     display: block;
-    font-size: 12px;
-    line-height: 12px;
+    padding: 0 20px;
+    font-size: 11px;
+    line-height: 17px;
     font-weight: bold;
     color: #000;
 }
-.alram-box .txt {
-    margin-top: 2px;
+.alram-item:first-child {
+    margin-top: 10px;
+    padding-top: 0;
+}
+.alram-item {
+    padding: 12px 20px 12px 20px;
+}
+.alram-item .date {
+    display: block;
+    margin-top: 4px;
+    font-size: 10px;
+    line-height: 15px;
+    color: #888;
+}
+.alram-item .txt {
     font-size: 11px;
     line-height: 17px;
     color: #333;
 }
+.alram-item.active {
+    position: relative;
+}
+.alram-item.active:before {
+    position: absolute;
+    top: 17px;
+    left: 20px;
+    content: '';
+    display: block;
+    width: 4px;
+    height: 4px;
+    border-radius: 100%;
+    background: #f36910;
+}
+.alram-item + .alram-item {
+    border-top: 1px solid #eee;
+}
+.alram-list {
+    max-height: 311px;
+    margin-top: 10px;
+    overflow: auto;
+}
+.alram-list .alram-item {
+    margin-top: 0;
+    padding-left: 29px;
+}
 .alram-box .btn-close {
     position: absolute;
-    top: 4px;
-    right: 4px;
+    top: 10px;
+    right: 10px;
     width: 30px;
     height: 30px;
     border-radius: 0;
-    background: red;
+    background-image: url('../../assets/images/svg/icon-close-small.svg') !important;
 }
 .alram-box.active {
     display: block;
