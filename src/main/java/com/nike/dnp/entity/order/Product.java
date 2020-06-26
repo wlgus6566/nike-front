@@ -2,6 +2,7 @@ package com.nike.dnp.entity.order;
 
 import com.nike.dnp.dto.order.ProductUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.entity.agency.Agency;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -35,16 +36,6 @@ public class Product extends BaseTimeEntity {
 	@Column(name = "GOODS_SEQ")
 	@ApiModelProperty(name="goodsSeq", value="상품 시퀀스")
 	private long goodsSeq;
-
-
-	/**
-	 * 카테고리 1 코드
-	 * @author [윤태호]
-	 */
-	@Column(name = "CATEGORY1_CODE")
-	@ApiModelProperty(name="category1Code",value = "카테고리1 공통코드", required = true)
-	private String category1Code;
-
 
 	/**
 	 * 카테고리 2 코드
@@ -181,6 +172,10 @@ public class Product extends BaseTimeEntity {
 	private String useYn;
 
 
+	@ManyToOne
+	@JoinColumn(name="AGENCY_SEQ",insertable = false,updatable = false)
+	private Agency agency;
+
 	/**
 	 * 수정
 	 *
@@ -205,6 +200,7 @@ public class Product extends BaseTimeEntity {
 		this.thumbnailFileSize = String.valueOf(productUpdateDTO.getThumbnailFileSize());
 		this.thumbnailFilePhysicalName = productUpdateDTO.getThumbnailFilePhysicalName();
 		setUpdaterSeq(productUpdateDTO.getUpdaterSeq());
+		setUseYn(productUpdateDTO.getUseYn());
 	}
 
 	/**
@@ -219,4 +215,6 @@ public class Product extends BaseTimeEntity {
 		setUseYn(productUpdateDTO.getUseYn());
 		setUpdaterSeq(productUpdateDTO.getUpdaterSeq());
 	}
+
+
 }

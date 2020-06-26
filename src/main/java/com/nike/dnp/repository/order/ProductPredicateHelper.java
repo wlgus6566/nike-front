@@ -21,22 +21,6 @@ import org.springframework.util.StringUtils;
 public class ProductPredicateHelper {
 
 
-	/**
-	 * 카테고리2 코드 조회
-	 *
-	 * @param category1code the category 1 code
-	 * @return the predicate
-	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 23. 오후 5:05:02
-	 * @Description
-	 */
-	public static Predicate eqCate1gory(final String category1code) {
-		final BooleanBuilder builder = new BooleanBuilder();
-		if(!StringUtils.isEmpty(category1code)){
-			builder.and(QProduct.product.category1Code.eq(category1code));
-		}
-		return builder;
-	}
 
 	/**
 	 * 카테고리2 코드 조회

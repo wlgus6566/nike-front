@@ -17,14 +17,13 @@ public interface ProductRepository extends JpaRepository<Product,Long>,ProductRe
 
 
 	/**
-	 * GoodsSeq , category1Code 조회
+	 * GoodsSeq
 	 *
 	 * @param goodsSeq      goodsSeq
-	 * @param category1Code category1Code
 	 * @return the product
 	 * @author [윤태호]
 	 * @CreatedOn 2020. 6. 24. 오후 4:41:35
 	 * @Description
 	 */
-	Product findByGoodsSeqAndCategory1Code(Long goodsSeq,String category1Code);
+	Product findByGoodsSeq(Long goodsSeq);
 }
