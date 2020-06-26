@@ -57,7 +57,7 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 		final QProduct qProduct = QProduct.product;
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 		final JPAQuery<Product> query = queryFactory.selectFrom(qProduct)
-				.where(ProductPredicateHelper.eqCate1gory(productSearchDTO.getCategory1code()),
+				.where(
 						ProductPredicateHelper.eqCate2gory(productSearchDTO.getCategory2code()),
 						ProductPredicateHelper.eqCate3gory(productSearchDTO.getCategory3code()),
 						ProductPredicateHelper.likeGoodName(productSearchDTO.getKeyword()),

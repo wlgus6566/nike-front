@@ -56,17 +56,15 @@ public class ProductService {
 	/**
 	 * 상품 상세 조회
 	 *
-	 * @param goodsSeq      the goods seq
-	 * @param category1Code the category 1 code
+	 * @param goodsSeq the goods seq
 	 * @return the optional
 	 * @author [윤태호]
 	 * @CreatedOn 2020. 6. 24. 오전 11:39:06
 	 * @Description
 	 */
 	@Transactional
-	public Product findByGoodsSeqAndCategory1Code(final Long goodsSeq,final String category1Code) {
-		return productRepository.findByGoodsSeqAndCategory1Code(goodsSeq, category1Code);
-	}
+	public Product findByGoodsSeq(final Long goodsSeq) {
+		return productRepository.findByGoodsSeq(goodsSeq );	}
 
 	/**
 	 * 제품 등록
@@ -79,7 +77,6 @@ public class ProductService {
 	 */
 	public Product save(final ProductSaveDTO productSaveDTO) {
 		final Product product = new Product();
-		product.setCategory1Code(productSaveDTO.getCategory1code());
 		product.setCategory2Code(productSaveDTO.getCategory2code());
 		product.setCategory3Code(productSaveDTO.getCategory3code());
 		product.setAgencySeq(productSaveDTO.getAgencySeq());
@@ -138,6 +135,7 @@ public class ProductService {
 		return product;
 	}
 
+
 	/**
 	 * 다수 상품 조회
 	 *
@@ -147,7 +145,26 @@ public class ProductService {
 	 * @CreatedOn 2020. 6. 25. 오후 2:37:34
 	 * @Description
 	 */
+	@Transactional
 	public List<Product> findBySearchId(final List<Long> goodsSeqList) {
 		return productRepository.findAllById(goodsSeqList);
+	}
+
+	/**
+	 * 다수 상품 삭제
+	 *
+	 * @param productList      the product list
+	 * @param productUpdateDTO the product update dto
+	 * @return the optional
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 6. 26. 오후 3:14:32
+	 * @Description
+	 */
+	@Transactional
+	public boolean deleteArray(final List<Product> productList,
+										 final ProductUpdateDTO productUpdateDTO) {
+
+		productList.forEach(product -> product.delete(productUpdateDTO));
+		return true;
 	}
 }

@@ -23,13 +23,6 @@ public class ProductSearchDTO extends SearchDTO {
 	private String keyword = "";
 
 	/**
-	 * 카테고리 1
-	 * @author [윤태호]
-	 */
-	@ApiParam(value = "카테고리 1 코드",hidden = true)
-	private String category1code;
-
-	/**
 	 * 카테고리 2
 	 * @author [윤태호]
 	 */
