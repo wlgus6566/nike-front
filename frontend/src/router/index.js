@@ -22,6 +22,11 @@ const router = new VueRouter({
             meta: { layout: 'Default', aside: 'Order' },
         },
         {
+            path: '/toolkit',
+            component: () => import('@/views/toolkit'),
+            meta: { layout: 'Default', aside: 'Order' },
+        },
+        {
             path: '/login',
             component: () => import('@/views/login'),
             meta: { layout: 'Clean', aside: 'Order' },

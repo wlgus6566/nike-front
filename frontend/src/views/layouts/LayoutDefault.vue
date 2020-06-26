@@ -46,7 +46,9 @@ import appHeader from '@/components/app-header';
 export default {
     name: 'LayoutDefault',
     data() {
-        return {};
+        return {
+            tw: new TimelineLite({ paused: true }),
+        };
     },
     computed: {
         AppAside() {
@@ -55,12 +57,40 @@ export default {
         path() {
             return this.$route.path;
         },
-        tw() {
+    },
+    directives: {
+        Sticky,
+    },
+    watch: {
+        $route(path) {
+            console.log(path.path);
+            if (path.path !== '/') {
+                this.headerAni();
+            }
+            this.toggleHeader(this.$route.path !== '/');
+        },
+    },
+    components: {
+        appHeader,
+        AsideDefault: () => import('@/components/app-aside/AsideDefault.vue'),
+        AsideFile: () => import('@/components/app-aside/AsideDefault.vue'),
+        AsideOrder: () => import('@/components/app-aside/AsideOrder.vue'),
+    },
+    mounted() {
+        this.headerAni();
+        this.toggleHeader(this.$route.path !== '/');
+        const target = [document.querySelector('header .inner')];
+        this.layoutAnimation(target, '-100%', '0%');
+    },
+
+    methods: {
+        headerAni() {
             const header = document.querySelector('header');
             const logo = header.querySelector('h1');
             const bg = header.querySelector('.header-bg');
             const nav = header.querySelector('nav');
-            return new TimelineLite({ paused: true })
+            this.tw.clear();
+            this.tw
                 .to(
                     logo,
                     0.5,
@@ -114,7 +144,10 @@ export default {
                 .set(
                     nav.querySelector('.router-link-active > a'),
                     {
-                        opacity: '0',
+                        opacity: function (t, tt) {
+                            console.log(tt);
+                            return '0';
+                        },
                         translateX: '30px',
                     },
                     0.3
@@ -149,30 +182,9 @@ export default {
                     0.4
                 );
         },
-    },
-    directives: {
-        Sticky,
-    },
-    components: {
-        appHeader,
-        AsideDefault: () => import('@/components/app-aside/AsideDefault.vue'),
-        AsideFile: () => import('@/components/app-aside/AsideDefault.vue'),
-        AsideOrder: () => import('@/components/app-aside/AsideOrder.vue'),
-    },
-    mounted() {
-        const target = [document.querySelector('header .inner')];
-        this.layoutAnimation(target, '-100%', '0%');
-    },
-    methods: {
-        pageAppear() {
-            this.toggleHeader(this.$route.path !== '/');
-        },
-        pageEnter() {
-            this.toggleHeader(this.$route.path !== '/');
-        },
-        pageLeave() {
-            this.toggleHeader(this.$route.path !== '/');
-        },
+        pageAppear() {},
+        pageEnter() {},
+        pageLeave() {},
         toggleHeader(status) {
             if (status) {
                 this.tw.play();

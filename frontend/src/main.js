@@ -4,10 +4,13 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import axios from './axios';
+import CKEditor from 'ckeditor4-vue';
 
 Vue.prototype.$axios = axios;
 
 Vue.config.productionTip = false;
+
+Vue.use(CKEditor);
 
 /**
  * Thousands Separators 천단위 ',' 숫자 표시 [이소정]
