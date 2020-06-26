@@ -5,8 +5,6 @@ import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 
@@ -200,16 +198,12 @@ public class Product extends BaseTimeEntity {
 		this.goodsDescription = productUpdateDTO.getGoodsDescription();
 		this.unitPrice = productUpdateDTO.getUnitPrice();
 		this.minimumOrderQuantity = productUpdateDTO.getMinimumQuantity();
-		if(!ObjectUtils.isEmpty(productUpdateDTO.getOriginalImg())){
-			this.imageFileName = StringUtils.getFilename(productUpdateDTO.getOriginalImg().getOriginalFilename());
-			this.imageFileSize = String.valueOf(productUpdateDTO.getOriginalImg().getSize());
-			this.imageFilePhysicalName = productUpdateDTO.getOriginalImg().getOriginalFilename();
-		}
-		if(!ObjectUtils.isEmpty(productUpdateDTO.getThumbnailImg())){
-			this.thumbnailFileName = StringUtils.getFilename(productUpdateDTO.getThumbnailImg().getOriginalFilename());
-			this.thumbnailFileSize = String.valueOf(productUpdateDTO.getThumbnailImg().getSize());
-			this.thumbnailFilePhysicalName = productUpdateDTO.getThumbnailImg().getOriginalFilename();
-		}
+		this.imageFileName = productUpdateDTO.getImageFileName();
+		this.imageFileSize = String.valueOf(productUpdateDTO.getImageFileSize());
+		this.imageFilePhysicalName = productUpdateDTO.getImageFilePhysicalName();
+		this.thumbnailFileName = productUpdateDTO.getThumbnailFileName();
+		this.thumbnailFileSize = String.valueOf(productUpdateDTO.getThumbnailFileSize());
+		this.thumbnailFilePhysicalName = productUpdateDTO.getThumbnailFilePhysicalName();
 		setUpdaterSeq(productUpdateDTO.getUpdaterSeq());
 	}
 
