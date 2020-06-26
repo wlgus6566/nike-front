@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.agency;
 
+import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -18,7 +19,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_AGENCY")
-public class Agency {
+public class Agency extends BaseTimeEntity {
 
     /**
      * The Agency seq
