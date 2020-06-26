@@ -17,8 +17,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * ProductController
@@ -53,6 +55,11 @@ public class ProductController {
 	private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
 
+	/**
+	 * The constant BASIC_CHARACTER
+	 *
+	 * @author [윤태호]
+	 */
 	private static final String BASIC_CHARACTER = "## Request ## \n" + "[하위 Parameters 참조] \n" + "## Request ## \n" + "[하위 Model 참조]\n\n";
 
 	/**
@@ -79,7 +86,7 @@ public class ProductController {
 	)
 	@GetMapping(value="/{category1code}", produces = {MediaType.APPLICATION_JSON_VALUE},name="상품 목록 조회")
 	public SingleResult<Page<Product>> findPagesProduct(
-			final @PathVariable String category1code,
+			final @ApiParam(name = "category1code", value = "카테고리 1 코드", defaultValue = "1") @PathVariable String category1code,
 			final ProductSearchDTO productSearchDTO){
 
 		return responseService.getSingleResult(productService.findPagesProduct(productSearchDTO));
@@ -99,10 +106,27 @@ public class ProductController {
 			+ "category1code|카테고리 1 코드|true|String\n"
 			+ "goodsSeq|상품시퀀스|true|Integer\n" )
 	@GetMapping(value="/{category1code}/{goodsSeq}",produces= {MediaType.APPLICATION_JSON_VALUE},name="상품상세조회")
-	public SingleResult<Product> findProduct(final @PathVariable String category1code,
-											 final @PathVariable Long goodsSeq){
+	public SingleResult<Product> findProduct(
+			final @ApiParam(name = "category1code", value = "카테고리 1 코드", defaultValue = "1") @PathVariable String category1code,
+			final @ApiParam(name = "goodsSeq", value = "상품 시퀀스", defaultValue = "31") @PathVariable Long goodsSeq){
 
 		return responseService.getSingleResult(productService.findByGoodsSeqAndCategory1Code(goodsSeq,category1code));
+	}
+
+
+	/**
+	 * 다수 상품 상세 조회
+	 *
+	 * @param goodsSeqList the goods seq list
+	 * @return the single result
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 6. 24. 오후 12:14:05
+	 * @Description
+	 */
+	@ApiOperation(value = "다수 상품 상세 조회", notes = REQUEST_CHARACTER + "category1code|카테고리 1 코드|true|String\n" + "goodsSeq|상품시퀀스|true|Integer\n")
+	@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "상품상세조회")
+	public SingleResult<List<Product>> findbySearchProduct(final @ApiParam(name = "goodsSeqList",value = "상품 시퀀스", defaultValue = "29,30,31") @RequestParam List<Long> goodsSeqList) {
+		return responseService.getSingleResult(productService.findBySearchId(goodsSeqList));
 	}
 
 	/**
@@ -116,16 +140,16 @@ public class ProductController {
 	@ApiOperation(
 			value="상품 등록",
 			notes = BASIC_CHARACTER)
-	@PostMapping(value="/{category1code}",name="상품 등록",produces = {MediaType.APPLICATION_JSON_VALUE},consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+	@PostMapping(value="/{category1code}",name="상품 등록",produces = {MediaType.APPLICATION_JSON_VALUE},consumes = {MediaType.APPLICATION_JSON_VALUE})
 	public SingleResult<Product> saveProduct(
-			final @PathVariable String category1code
-			, final @ModelAttribute ProductSaveDTO productSaveDTO
-			, final @ApiParam(value = "원본 이미지",name = "originalImg") MultipartFile originalImg
-			, final @ApiParam(value = "썸네일 이미지",name = "thumbnailImg")  MultipartFile thumbnailImg
+			final @ApiParam(name="category1code",value="카테고리 1 코드", defaultValue = "1") @PathVariable String category1code
+			, final @ApiParam(name="productSaveDTO",value="상품 등록 JSON") @RequestBody ProductSaveDTO productSaveDTO
 			, final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO){
 
-		productSaveDTO.setRegisterSeq(Long.parseLong("1"));
+
+		productSaveDTO.setRegisterSeq(authUserDTO.getUserSeq());
 		productSaveDTO.setUseYn("Y");
+		productSaveDTO.setCategory1code(category1code);
 		return responseService.getSingleResult(productService.save(productSaveDTO));
 	}
 
@@ -141,14 +165,13 @@ public class ProductController {
 	 * @Description
 	 */
 	@ApiOperation(value = "상품 수정", notes = BASIC_CHARACTER)
-	@PutMapping(value = "/{category1code}", name = "상품 수정", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-	public SingleResult<Product> updateProduct(final @PathVariable String category1code
-											 	, final @ModelAttribute ProductUpdateDTO productUpdateDTO
-												, final @ApiParam(value = "원본 이미지",name="originalImg") MultipartFile originalImg
-												, final @ApiParam(value = "썸네일 이미지", name = "thumbnailImg") MultipartFile thumbnailImg
+	@PutMapping(value = "/{category1code}", name = "상품 수정", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+	public SingleResult<Optional<Product>> updateProduct(final @ApiParam(name = "category1code", value = "카테고리 1 코드", defaultValue ="1" ) @PathVariable String category1code
+											 	, final @ApiParam(name = "productSaveDTO", value = "상품 수정 JSON") @RequestBody ProductUpdateDTO productUpdateDTO
 											 	, final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO) {
 
-		productUpdateDTO.setUpdaterSeq(Long.parseLong("1"));
+		productUpdateDTO.setUpdaterSeq(authUserDTO.getUserSeq());
+		productUpdateDTO.setCategory1code(category1code);
 		return responseService.getSingleResult(productService.update(productUpdateDTO));
 	}
 
@@ -165,14 +188,14 @@ public class ProductController {
 	 */
 	@ApiOperation(value = "상품 삭제", notes = BASIC_CHARACTER)
 	@DeleteMapping(value = "/{category1code}/{goodsSeq}", name = "상품 삭제")
-	public SingleResult<Product> delProduct(final @PathVariable(name = "category1code") String category1code,
-											final @PathVariable(name = "goodsSeq") Long goodsSeq,
+	public SingleResult<Optional<Product>> delProduct(final @ApiParam(name = "category1code", value = "카테고리 1 코드", defaultValue = "1") @PathVariable String category1code,
+											final @ApiParam(name = "goodsSeq", value = "상품 시퀀스", defaultValue = "28") @PathVariable Long goodsSeq,
 											final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO) {
 		final ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO();
 		productUpdateDTO.setCategory1code(category1code);
 		productUpdateDTO.setGoodsSeq(goodsSeq);
 		productUpdateDTO.setUseYn("N");
-		productUpdateDTO.setUpdaterSeq(Long.parseLong("2"));
+		productUpdateDTO.setUpdaterSeq(authUserDTO.getUserSeq());
 		return responseService.getSingleResult(productService.delete(productUpdateDTO));
 	}
 

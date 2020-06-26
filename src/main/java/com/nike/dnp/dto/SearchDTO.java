@@ -1,6 +1,6 @@
 package com.nike.dnp.dto;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.*;
 
 /**
@@ -23,7 +23,7 @@ public class SearchDTO {
      * @author [오지훈]
      * @defaultValue 0
      */
-    @ApiModelProperty(value = "페이지", name = "page")
+    @ApiParam(value = "페이지", name = "page",defaultValue = "0")
     private Integer page = 0;
 
     /**
@@ -32,7 +32,7 @@ public class SearchDTO {
      * @author [오지훈]
      * @defaultValue 20
      */
-    @ApiModelProperty(value = "사이즈", name = "size")
+    @ApiParam(value = "사이즈", name = "size" , defaultValue = "20")
     private int size = 20;
 
 }

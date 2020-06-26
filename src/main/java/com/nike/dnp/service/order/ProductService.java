@@ -12,9 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -90,20 +89,13 @@ public class ProductService {
 		product.setSize(productSaveDTO.getSize());
 		product.setUnitPrice(productSaveDTO.getUnitPrice());
 		product.setMinimumOrderQuantity(productSaveDTO.getMinimumQuantity());
+		product.setImageFileName(productSaveDTO.getImageFileName());
+		product.setImageFileSize(String.valueOf(productSaveDTO.getImageFileSize()));
+		product.setImageFilePhysicalName(productSaveDTO.getImageFilePhysicalName());
 
-		if(!ObjectUtils.isEmpty(productSaveDTO.getOriginalImg())){
-			final String originalFileName = StringUtils.getFilename(productSaveDTO.getOriginalImg().getOriginalFilename());
-			product.setImageFileName(originalFileName);
-			product.setImageFilePhysicalName(productSaveDTO.getOriginalImg().getOriginalFilename());
-			product.setImageFileSize(String.valueOf(productSaveDTO.getOriginalImg().getSize()));
-		}
-
-		if(!ObjectUtils.isEmpty(productSaveDTO.getThumbnailImg())){
-			final String thumbnailFileName = StringUtils.getFilename(productSaveDTO.getThumbnailImg().getOriginalFilename());
-			product.setThumbnailFileName(thumbnailFileName);
-			product.setThumbnailFilePhysicalName(productSaveDTO.getThumbnailImg().getOriginalFilename());
-			product.setThumbnailFileSize(String.valueOf(productSaveDTO.getThumbnailImg().getSize()));
-		}
+		product.setThumbnailFileName(productSaveDTO.getThumbnailFileName());
+		product.setThumbnailFileSize(String.valueOf(productSaveDTO.getThumbnailFileSize()));
+		product.setThumbnailFilePhysicalName(productSaveDTO.getThumbnailFilePhysicalName());
 
 		product.setRegisterSeq(productSaveDTO.getRegisterSeq());
 		product.setUpdaterSeq(productSaveDTO.getRegisterSeq());
@@ -123,10 +115,10 @@ public class ProductService {
 	 * @Description
 	 */
 	@Transactional
-	public Product update(final ProductUpdateDTO productUpdateDTO) {
+	public Optional<Product> update(final ProductUpdateDTO productUpdateDTO) {
 		final Optional<Product> product = productRepository.findById(productUpdateDTO.getGoodsSeq());
 		product.ifPresent(value ->  value.update(productUpdateDTO));
-		return product.get();
+		return product;
 	}
 
 
@@ -140,9 +132,22 @@ public class ProductService {
 	 * @Description
 	 */
 	@Transactional
-	public Product delete(final ProductUpdateDTO productUpdateDTO) {
+	public Optional<Product> delete(final ProductUpdateDTO productUpdateDTO) {
 		final Optional<Product> product = productRepository.findById(productUpdateDTO.getGoodsSeq());
 		product.ifPresent(value -> value.delete(productUpdateDTO));
-		return product.get();
+		return product;
+	}
+
+	/**
+	 * 다수 상품 조회
+	 *
+	 * @param goodsSeqList the goods seq list
+	 * @return the list
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 6. 25. 오후 2:37:34
+	 * @Description
+	 */
+	public List<Product> findBySearchId(final List<Long> goodsSeqList) {
+		return productRepository.findAllById(goodsSeqList);
 	}
 }
