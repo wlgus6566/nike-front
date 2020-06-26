@@ -1,5 +1,7 @@
 package com.nike.dnp.entity.user;
 
+import com.nike.dnp.dto.auth.AuthUserDTO;
+import com.nike.dnp.dto.user.UserUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.entity.auth.Auth;
 import io.swagger.annotations.ApiModelProperty;
@@ -53,7 +55,16 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
     private Long authSeq;
 
     /**
-     * 권한
+     * 유저 맵핑
+     *
+     * @author [오지훈]
+     */
+    @ManyToOne
+    @JoinColumn(name = "USER_SEQ", insertable = false, updatable = false)
+    private User user;
+
+    /**
+     * 권한 맵핑
      *
      * @author [오지훈]
      */
@@ -61,25 +72,12 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
     @JoinColumn(name = "AUTH_SEQ", insertable = false, updatable = false)
     private Auth auth;
 
-    /**
-     * Instantiates a new User auth.
-     *
-     * @param userSeq     the user seq
-     * @param authSeq     the auth seq
-     * @param registerSeq the register seq
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:11:14
-     * @Description 등록
-     */
-    @Builder
-    public UserAuth(
-            Long userSeq
-            , Long authSeq
-            , Long registerSeq
+    public void authUpdate(
+            final UserUpdateDTO userUpdateDTO
+            , final AuthUserDTO authUserDTO
     ) {
-        this.userSeq = userSeq;
-        this.authSeq = authSeq;
-        this.setRegisterSeq(registerSeq);
-        this.setUpdaterSeq(registerSeq);
+        this.authSeq = userUpdateDTO.getAuthSeq();
+        this.setUpdaterSeq(authUserDTO.getUserSeq());
     }
+
 }

@@ -3,13 +3,15 @@ package com.nike.dnp.entity.user;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nike.dnp.common.variable.UserStatusEnumCode;
+import com.nike.dnp.dto.auth.AuthUserDTO;
+import com.nike.dnp.dto.user.UserSaveDTO;
+import com.nike.dnp.dto.user.UserUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -27,7 +29,7 @@ import java.time.LocalDateTime;
 @Table(name = "TB_USER")
 @DynamicUpdate
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class User extends BaseTimeEntity implements Serializable {
+public class User extends BaseTimeEntity {
 
     /**
      * 유저 시퀀스
@@ -122,14 +124,8 @@ public class User extends BaseTimeEntity implements Serializable {
     @ApiModelProperty(name = "passwordLastUpdateDt", value = "비밀번호 최종 수정 일시", hidden = true)
     private LocalDateTime passwordLastUpdateDt;
 
-    /**
-     * The User auth
-     *
-     * @author [오지훈]
-     */
-    @OneToOne
-    @JoinColumn(name = "USER_SEQ", insertable = false, updatable = false)
-    private UserAuth userAuth;
+    /*@OneToMany(mappedBy = "user")
+    private List<UserAuth> userAuth = new ArrayList<>();*/
 
     /**
      * 쿼리 실행 전 기본값 설정
@@ -143,43 +139,44 @@ public class User extends BaseTimeEntity implements Serializable {
         this.termsAgreeYn = this.termsAgreeYn == null ? "N" : this.termsAgreeYn;
     }
 
+
     /**
-     * Instantiates a new User.
+     * Save user.
      *
-     * @param userId      the user id
-     * @param nickname    the nickname
-     * @param registerSeq the register seq
+     * @param userSaveDTO the user save dto
+     * @param authUserDTO the auth user dto
+     * @return the user
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 5:26:57
-     * @Description 등록
+     * @CreatedOn 2020. 6. 25. 오후 5:59:50
+     * @Description
      */
-    @Builder
-    public User(
-            String userId
-            , String nickname
-            , Long registerSeq
-    ) {
-        this.userId = userId;
-        this.nickname = nickname;
-        this.setRegisterSeq(registerSeq);
-        this.setUpdaterSeq(registerSeq);
+    public User save(
+            final UserSaveDTO userSaveDTO
+            , final AuthUserDTO authUserDTO
+            ) {
+        User saveUser = new User();
+        saveUser.setUserId(userSaveDTO.getUserId());
+        saveUser.setNickname(userSaveDTO.getNickname());
+        saveUser.setRegisterSeq(authUserDTO.getUserSeq());
+        saveUser.setUpdaterSeq(authUserDTO.getUserSeq());
+        return saveUser;
     }
 
     /**
      * Update.
      *
-     * @param nickname the nickname
-     * @param userSeq  the user seq
+     * @param userUpdateDTO the user update dto
+     * @param authUserDTO   the auth user dto
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
      * @Description 닉네임 /권한 변경
      */
     public void update(
-            String nickname
-            , Long userSeq
+            final UserUpdateDTO userUpdateDTO
+            , final AuthUserDTO authUserDTO
     ) {
-        this.nickname = nickname;
-        setUpdaterSeq(userSeq);
+        this.nickname = userUpdateDTO.getNickname();
+        setUpdaterSeq(authUserDTO.getUserSeq());
     }
 
     /**

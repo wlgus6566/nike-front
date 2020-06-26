@@ -79,9 +79,9 @@ public class UserService implements UserDetailsService {
      * @CreatedOn 2020. 6. 22. 오후 2:40:43
      * @Description 페이징 조회(paging)
      */
-    public Page<User> findPages(final UserSearchDTO userSearchDTO) {
+    public Page<UserAuth> findPages(final UserSearchDTO userSearchDTO) {
         log.info("UserService.findPages");
-        return userRepository.findPages(
+        return userAuthRepository.findPages(
                 userSearchDTO,
                 PageRequest.of(userSearchDTO.getPage()
                         , userSearchDTO.getSize()
@@ -97,10 +97,26 @@ public class UserService implements UserDetailsService {
      * @CreatedOn 2020. 6. 22. 오후 2:40:43
      * @Description 상세 조회
      */
-    public User findById(final Long userSeq) {
-        log.info("UserService.findById");
-        return userRepository.findById(userSeq)
+    public UserAuth findByUserAuth(final Long userSeq) {
+        log.info("UserService.findByUserAuth");
+        User user = new User();
+        user.setUserSeq(userSeq);
+        return userAuthRepository.findByUser(user)
                 .orElseThrow(() -> new CodeMessageHandleException(UserError.USER01.toString(), UserError.USER01.getMessage()));
+    }
+
+    /**
+     * Find by id optional.
+     *
+     * @param userSeq the user seq
+     * @return the optional
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 25. 오후 6:32:35
+     * @Description 상세 조회
+     */
+    public Optional<User> findById(final Long userSeq) {
+        log.info("UserService.findById");
+        return Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(() -> new CodeMessageHandleException(UserError.USER01.toString(), UserError.USER01.getMessage())));
     }
 
     /**
@@ -212,26 +228,33 @@ public class UserService implements UserDetailsService {
      * @Description 등록
      */
     @Transactional
-    public User save(
+    public UserAuth save(
             final UserSaveDTO userSaveDTO
             , final AuthUserDTO authUserDTO
     ) {
         log.info("UserService.save");
+        //User saveUser = new User().save(userSaveDTO, authUserDTO);
+        User saveUser = new User();
+        saveUser.setUserId(userSaveDTO.getUserId());
+        saveUser.setNickname(userSaveDTO.getNickname());
+        saveUser.setRegisterSeq(authUserDTO.getUserSeq());
+        saveUser.setUpdaterSeq(authUserDTO.getUserSeq());
+        final User user = userRepository.save(saveUser);
         final Optional<Auth> auth = authRepository.findById(userSaveDTO.getAuthSeq());
-        final User user = userRepository.save(User.builder()
-                .nickname(userSaveDTO.getNickname())
-                .userId(userSaveDTO.getUserId())
-                .registerSeq(authUserDTO.getUserSeq())
-                .build());
 
-        if (user.getUserSeq() > 0 && auth.isPresent()) {
+        UserAuth saveUserAuth = new UserAuth();
+        saveUserAuth.setUser(user);
+        saveUserAuth.setAuth(auth.get());
+        final UserAuth userAuth = userAuthRepository.save(saveUserAuth);
+
+        /*if (user.getUserSeq() > 0 && auth.isPresent()) {
             userAuthRepository.save(UserAuth.builder()
                     .userSeq(user.getUserSeq())
                     .authSeq(auth.get().getAuthSeq())
                     .build());
-        }
+        }*/
 
-        return user;
+        return userAuth;
     }
 
     /**
@@ -246,25 +269,19 @@ public class UserService implements UserDetailsService {
      * @Description 닉네임 /권한 수정
      */
     @Transactional
-    public Optional<User> update(
+    public Optional<UserAuth> update(
             final Long userSeq
             , final UserUpdateDTO userUpdateDTO
             , final AuthUserDTO authUserDTO
     ) {
         log.info("UserService.update");
-        final Optional<Auth> auth = authRepository.findById(userUpdateDTO.getAuthSeq());
-        final Optional<User> user = userRepository.findById(userSeq);
-        if (user.isPresent() && auth.isPresent()) {
-            user.get().update(userUpdateDTO.getNickname(), authUserDTO.getUserSeq());
-            userAuthRepository.deleteByUserSeq(userSeq);
-            userAuthRepository.save(
-                    UserAuth.builder()
-                            .userSeq(userSeq)
-                            .authSeq(auth.get().getAuthSeq())
-                            .build());
-        }
+        final Optional<User> user = this.findById(userSeq);
+        user.ifPresent(value -> value.update(userUpdateDTO, authUserDTO));
 
-        return user;
+        final Optional<UserAuth> userAuth = userAuthRepository.findByUser(user.get());
+        userAuth.ifPresent(value -> value.authUpdate(userUpdateDTO, authUserDTO));
+
+        return userAuth;
     }
 
     /**

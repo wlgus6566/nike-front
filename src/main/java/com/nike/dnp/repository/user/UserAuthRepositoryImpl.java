@@ -5,6 +5,7 @@ import com.nike.dnp.entity.auth.QAuth;
 import com.nike.dnp.entity.user.QUser;
 import com.nike.dnp.entity.user.QUserAuth;
 import com.nike.dnp.entity.user.User;
+import com.nike.dnp.entity.user.UserAuth;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,7 @@ import java.util.Objects;
  * @Description User(유저) Repository interface 작성
  */
 @Repository
-public class UserRepositoryImpl extends QuerydslRepositorySupport implements UserRepositoryCustom {
+public class UserAuthRepositoryImpl extends QuerydslRepositorySupport implements UserAuthRepositoryCustom {
 
     /**
      * Instantiates a new User repository.
@@ -33,7 +34,7 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
      * @CreatedOn 2020. 6. 22. 오전 11:47:54
      * @Description
      */
-    public UserRepositoryImpl() {
+    public UserAuthRepositoryImpl() {
         super(User.class);
     }
 
@@ -48,22 +49,21 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
      * @Description 조회(페이징)
      */
     @Override
-    public Page<User> findPages(final UserSearchDTO userSearchDTO, final PageRequest pageRequest) {
+    public Page<UserAuth> findPages(final UserSearchDTO userSearchDTO, final PageRequest pageRequest) {
         final QUser qUser = QUser.user;
         final QUserAuth qUserAuth = QUserAuth.userAuth;
         final QAuth qAuth = QAuth.auth;
 
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-        final JPAQuery<User> jpaUsers = queryFactory
-                .selectFrom(qUser)
-                //.innerJoin(qUserAuth).on(qUser.userSeq.eq(qUserAuth.userSeq))
-                //.innerJoin(qAuth).on(qUserAuth.authSeq.eq(qAuth.authSeq))
-                /*.where(UserPredicateHelper.compareKeyword(userSearchDTO)
+        final JPAQuery<UserAuth> jpaQuery = queryFactory
+                .selectFrom(qUserAuth)
+                .from(qUserAuth)
+                .where(UserPredicateHelper.compareKeyword(userSearchDTO)
                     , UserPredicateHelper.compareDate(userSearchDTO)
                     , UserPredicateHelper.compareAuth(userSearchDTO)
-                )*/;
-        final List<User> users = Objects.requireNonNull(getQuerydsl()).applyPagination(pageRequest, jpaUsers).fetch();
-        return new PageImpl<>(users, pageRequest, jpaUsers.fetchCount());
+                );
+        final List<UserAuth> userAuths = Objects.requireNonNull(getQuerydsl()).applyPagination(pageRequest, jpaQuery).fetch();
+        return new PageImpl<>(userAuths, pageRequest, jpaQuery.fetchCount());
     }
 
 }

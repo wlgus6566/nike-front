@@ -1,8 +1,11 @@
 package com.nike.dnp.repository.user;
 
+import com.nike.dnp.entity.user.User;
 import com.nike.dnp.entity.user.UserAuth;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 /**
  * UserAuthRepository
@@ -12,7 +15,9 @@ import org.springframework.stereotype.Repository;
  * @Description UserAuth(유저 권한) Repository Interface 작성
  */
 @Repository
-public interface UserAuthRepository extends JpaRepository<UserAuth, Long> {
+public interface UserAuthRepository extends JpaRepository<UserAuth, Long>, UserAuthRepositoryCustom {
+
+    Optional<UserAuth> findByUser(User user);
 
     /**
      * Delete by user seq.
@@ -22,6 +27,8 @@ public interface UserAuthRepository extends JpaRepository<UserAuth, Long> {
      * @CreatedOn 2020. 6. 24. 오후 3:17:57
      * @Description 유저 권한 삭제
      */
-    void deleteByUserSeq(Long userSeq);
+    //void deleteByUserSeq(Long userSeq);
+
+
 
 }

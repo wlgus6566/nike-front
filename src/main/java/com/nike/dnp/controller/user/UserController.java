@@ -6,6 +6,7 @@ import com.nike.dnp.dto.user.UserSaveDTO;
 import com.nike.dnp.dto.user.UserSearchDTO;
 import com.nike.dnp.dto.user.UserUpdateDTO;
 import com.nike.dnp.entity.user.User;
+import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.user.UserService;
@@ -84,7 +85,7 @@ public class UserController {
     )
     @GetMapping(name = "유저 목록 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Page<User>> findPages(
+    public SingleResult<Page<UserAuth>> findPages(
             final UserSearchDTO userSearchDTO
             , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
@@ -111,12 +112,12 @@ public class UserController {
     )
     @GetMapping(name = "유저 상세 조회", value = "/{userSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<User> findUser(
+    public SingleResult<UserAuth> findUser(
             @PathVariable Long userSeq
             , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
         log.info("UserController.findUser");
-        return responseService.getSingleResult(userService.findById(userSeq));
+        return responseService.getSingleResult(userService.findByUserAuth(userSeq));
     }
 
     /**
@@ -139,7 +140,7 @@ public class UserController {
     @PostMapping(name = "유저 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<User> save(
+    public SingleResult<UserAuth> save(
             final @RequestBody UserSaveDTO codeSaveDTO
             , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
@@ -168,7 +169,7 @@ public class UserController {
     @PutMapping(name = "유저 상세 수정", value = "/{userSeq}"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<User>> update(
+    public SingleResult<Optional<UserAuth>> update(
             @PathVariable Long userSeq
             , final @RequestBody UserUpdateDTO userUpdateDTO
             , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO

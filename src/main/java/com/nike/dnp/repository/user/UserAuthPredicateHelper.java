@@ -2,7 +2,6 @@ package com.nike.dnp.repository.user;
 
 import com.nike.dnp.dto.user.UserSearchDTO;
 import com.nike.dnp.entity.user.QUser;
-import com.nike.dnp.entity.user.QUserAuth;
 import com.nike.dnp.util.DateUtil;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -21,7 +20,7 @@ import java.time.LocalDateTime;
  * @Description User(유저) 검색 조건
  */
 @UtilityClass
-public class UserPredicateHelper {
+public class UserAuthPredicateHelper {
 
     /**
      * Compare keyword predicate.
@@ -87,9 +86,9 @@ public class UserPredicateHelper {
         final BooleanBuilder builder = new BooleanBuilder();
         final Long authSeq = userSearchDTO.getAuthSeq();
 
-        if (authSeq > 0) {
-            builder.and(QUserAuth.userAuth.auth.authSeq.eq(authSeq));
-        }
+        /*if (authSeq > 0) {
+            builder.and(QUserAuth.userAuth.authSeq.eq(authSeq));
+        }*/
 
         return builder;
     }
