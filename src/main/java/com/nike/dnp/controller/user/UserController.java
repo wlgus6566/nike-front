@@ -85,12 +85,19 @@ public class UserController {
     )
     @GetMapping(name = "유저 목록 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Page<UserAuth>> findPages(
+    public SingleResult<Page<User>> findPages(
             final UserSearchDTO userSearchDTO
             , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
         log.info("UserController.findPages");
-        return responseService.getSingleResult(userService.findPages(userSearchDTO));
+        SingleResult<Page<User>> result = responseService.getSingleResult(userService.findPages(userSearchDTO));
+
+        //result.getData().forEach(value -> );
+        /*for (User user : result.getData()) {
+            user.getUserAuth().stream().map(userAuth -> userAuth.getAuth().getAuthName()).forEach(System.out::println);
+        }*/
+
+        return result;
     }
 
     /**

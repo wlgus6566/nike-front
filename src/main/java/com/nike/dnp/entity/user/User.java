@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nike.dnp.common.variable.UserStatusEnumCode;
@@ -13,6 +14,8 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User Entity
@@ -124,8 +127,10 @@ public class User extends BaseTimeEntity {
     @ApiModelProperty(name = "passwordLastUpdateDt", value = "비밀번호 최종 수정 일시", hidden = true)
     private LocalDateTime passwordLastUpdateDt;
 
-    /*@OneToMany(mappedBy = "user")
-    private List<UserAuth> userAuth = new ArrayList<>();*/
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    //@OneToMany(mappedBy = "user")
+    @JsonBackReference
+    private List<UserAuth> userAuth = new ArrayList<>();
 
     /**
      * 쿼리 실행 전 기본값 설정

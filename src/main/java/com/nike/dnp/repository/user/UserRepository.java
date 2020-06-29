@@ -2,7 +2,6 @@ package com.nike.dnp.repository.user;
 
 import com.nike.dnp.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +13,6 @@ import java.util.Optional;
  * @CreatedOn 2020. 6. 24. 오후 5:53:42
  * @Description User(유저) Repository Interface 작성
  */
-@Repository
 public interface UserRepository extends JpaRepository<User, Long>, UserRepositoryCustom {
 
     /**

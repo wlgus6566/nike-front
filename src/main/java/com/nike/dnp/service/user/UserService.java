@@ -79,9 +79,18 @@ public class UserService implements UserDetailsService {
      * @CreatedOn 2020. 6. 22. 오후 2:40:43
      * @Description 페이징 조회(paging)
      */
-    public Page<UserAuth> findPages(final UserSearchDTO userSearchDTO) {
+    /*public Page<UserAuth> findPages(final UserSearchDTO userSearchDTO) {
         log.info("UserService.findPages");
         return userAuthRepository.findPages(
+                userSearchDTO,
+                PageRequest.of(userSearchDTO.getPage()
+                        , userSearchDTO.getSize()
+                        , Sort.by("userSeq").descending()));
+    }*/
+
+    public Page<User> findPages(final UserSearchDTO userSearchDTO) {
+        log.info("UserService.findPages");
+        return userRepository.findPages(
                 userSearchDTO,
                 PageRequest.of(userSearchDTO.getPage()
                         , userSearchDTO.getSize()

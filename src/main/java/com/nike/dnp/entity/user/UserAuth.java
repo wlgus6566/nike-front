@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.user.UserUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
@@ -61,6 +62,7 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
      */
     @ManyToOne
     @JoinColumn(name = "USER_SEQ", insertable = false, updatable = false)
+    @JsonManagedReference
     private User user;
 
     /**
