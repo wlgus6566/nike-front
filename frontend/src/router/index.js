@@ -7,9 +7,16 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/test',
-            component: () => import('@/views/testPage/testPage.vue'),
+            path: '/pub',
+            component: () => import('@/pub/mainPage.vue'),
             meta: { layout: 'Clean' },
+            children: [
+                {
+                    path: '/pub/main',
+                    component: () => import('@/pub/mainPage.vue'),
+                    meta: { layout: 'Clean' },
+                },
+            ],
         },
         {
             path: '/',
