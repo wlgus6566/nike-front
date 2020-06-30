@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @Description
      */
     private BooleanExpression eqFolderName(final String keyword) {
-        return keyword.isEmpty() ? null : QContents.contents.folderName.contains(keyword);
+        return StringUtils.isEmpty(keyword) ? null : QContents.contents.folderName.contains(keyword);
     }
 
     /**
@@ -85,7 +86,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @Description
      */
     private BooleanExpression eqTopMenuCode(final String topMenuCode) {
-        return topMenuCode.isEmpty() ? null : QContents.contents.topMenuCode.eq(topMenuCode);
+        return StringUtils.isEmpty(topMenuCode) ? null : QContents.contents.topMenuCode.eq(topMenuCode);
     }
 
     /**
@@ -98,7 +99,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @Description
      */
     private BooleanExpression eqMenuCode(final String menuCode) {
-        return menuCode.isEmpty() ? null : QContents.contents.menuCode.eq(menuCode);
+        return StringUtils.isEmpty(menuCode) ? null : QContents.contents.menuCode.eq(menuCode);
     }
 
 }

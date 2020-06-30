@@ -40,7 +40,7 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 *
 	 * @author [윤태호]
 	 */
-	private long userSeq;
+	private Long userSeq;
 
 	/**
 	 * The User id

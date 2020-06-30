@@ -54,6 +54,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		//TODO[ojh] 로그인 로그 구현
 		UserLoginLogSaveDTO saveDTO = new UserLoginLogSaveDTO();
 		saveDTO.setUserSeq(authUserDTO.getUserSeq());
+		saveDTO.setLoginIp("");
 		loginLogService.save(saveDTO);
 	}
 }
