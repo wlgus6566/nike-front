@@ -1,36 +1,28 @@
 <template>
     <div id="wrap">
-        <div class="test">
-            <header class="sticky-container" sticky-container v-on:mouseleave="mouseEvent(true)">
+        <header class="sticky-container" sticky-container v-on:mouseleave="mouseEvent(true)">
+            <div class="sticky-content" sticky-offset="{top:0, bottom:0}" sticky-side="both" sticky-z-index="20" v-sticky>
+                <appHeader />
+            </div>
+            <i class="icon-ellipsis"></i>
+            <div class="header-bg" v-on:mouseenter="mouseEvent(false)"></div>
+        </header>
+        <section id="container">
+            <div class="contents">
+                <transition name="page-change" mode="out-in" appear v-on:appear="pageAppear" v-on:enter="pageEnter" v-on:leave="pageLeave">
+                    <router-view></router-view>
+                </transition>
+            </div>
+            <aside class="sticky-container" sticky-container>
                 <div class="sticky-content" sticky-offset="{top:0, bottom:0}" sticky-side="both" sticky-z-index="20" v-sticky>
-                    <appHeader />
-                </div>
-                <i class="icon-ellipsis"></i>
-                <div class="header-bg" v-on:mouseenter="mouseEvent(false)"></div>
-            </header>
-            <section id="container">
-                <div class="contents">
-                    <transition name="page-change" mode="out-in" appear v-on:appear="pageAppear" v-on:enter="pageEnter" v-on:leave="pageLeave">
-                        <router-view></router-view>
+                    <transition name="aside-change" mode="out-in" appear v-on:appear="asideAppear" v-on:enter="asideEnter" v-on:leave="asideLeave">
+                        <component :is="AppAside" />
                     </transition>
                 </div>
-                <aside class="sticky-container" sticky-container>
-                    <div class="sticky-content" sticky-offset="{top:0, bottom:0}" sticky-side="both" sticky-z-index="20" v-sticky>
-                        <transition
-                            name="aside-change"
-                            mode="out-in"
-                            appear
-                            v-on:appear="asideAppear"
-                            v-on:enter="asideEnter"
-                            v-on:leave="asideLeave"
-                        >
-                            <component :is="AppAside" />
-                        </transition>
-                    </div>
-                    <div class="aside-bg"></div>
-                </aside>
-            </section>
-        </div>
+                <div class="aside-bg"></div>
+            </aside>
+        </section>
+
         <footer>
             footer
         </footer>
