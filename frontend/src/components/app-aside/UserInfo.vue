@@ -17,7 +17,7 @@
                         <span>닫기</span>
                     </button>
                 </div>
-                <div class="alram-box" style="display: block;">
+                <div class="alram-box">
                     <strong class="title">NEW</strong>
                     <ul class="alram-list">
                         <li class="alram-item active">
@@ -198,6 +198,9 @@ export default {
     max-height: 311px;
     margin-top: 10px;
     overflow: auto;
+}
+.alram-list .alram-item:first-child:before{
+    top:5px;
 }
 .alram-list .alram-item {
     margin-top: 0;

@@ -15,22 +15,16 @@ body {
     height: 100%;
 }
 #wrap {
-    min-width: 1440px;
-    background: linear-gradient(90deg, #fff 50%, #f7f7f7 50%);
-}
-#wrap > .test {
     display: flex;
     flex-wrap: wrap;
     min-width: 1440px;
-    max-width: 1920px;
-    min-height: 100%;
-    margin: 0 auto;
-    background: #fff;
+    height: 100%;
 }
 header {
-    overflow: hidden;
     position: relative;
-    flex: 0 0 200px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 200px;
 }
 header .inner {
     width: 200px;
@@ -110,18 +104,25 @@ header .header-bg {
 #container {
     overflow: hidden;
     display: flex;
-    flex: 1 1 calc(100% - 200px);
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: calc(100% - 200px);
     box-sizing: border-box;
     min-height: calc(100vh - 144px);
 }
 .contents {
-    flex: 1 1 auto;
-    max-width: calc(100% - 420px);
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    max-width: calc(100% - 300px);
     padding: 80px 60px 130px;
+    box-sizing: border-box;
 }
 aside {
     position: relative;
-    flex: 0 0 300px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 300px;
 }
 aside .sticky-content {
     z-index: 2;
@@ -153,6 +154,9 @@ aside .inner:before {
     height: 100%;
 }
 footer {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 100%;
     height: 144px;
     background: #000;
 }

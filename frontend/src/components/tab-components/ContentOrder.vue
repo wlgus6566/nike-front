@@ -1,167 +1,167 @@
 <template>
     <div class="aside-order">
-        <ul class="order-list">
-            <li class="order-item">
+        <ul class="cart-item-list">
+            <li class="cart-item">
                 <div class="thumbnail">
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
                 </div>
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-sown">
+                        <button type="button" class="quantity-down">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
-                        <button type="button" class="btn-up">
+                        <button type="button" class="quantity-up">
                             <span>증가</span>
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-sel"><span>삭제</span></button>
+                <button type="button" class="del"><span>삭제</span></button>
             </li>
-            <li class="order-item">
+            <li class="cart-item">
                 <div class="thumbnail">
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
                 </div>
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-sown">
+                        <button type="button" class="quantity-down">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
-                        <button type="button" class="btn-up">
+                        <button type="button" class="quantity-up">
                             <span>증가</span>
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-sel"><span>삭제</span></button>
+                <button type="button" class="del"><span>삭제</span></button>
             </li>
-            <li class="order-item">
+            <li class="cart-item">
                 <div class="thumbnail">
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
                 </div>
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-sown">
+                        <button type="button" class="quantity-down">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
-                        <button type="button" class="btn-up">
+                        <button type="button" class="quantity-up">
                             <span>증가</span>
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-sel"><span>삭제</span></button>
+                <button type="button" class="del"><span>삭제</span></button>
             </li>
-            <li class="order-item">
+            <li class="cart-item">
                 <div class="thumbnail">
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
                 </div>
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-sown">
+                        <button type="button" class="quantity-down">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
-                        <button type="button" class="btn-up">
+                        <button type="button" class="quantity-up">
                             <span>증가</span>
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-sel"><span>삭제</span></button>
+                <button type="button" class="del"><span>삭제</span></button>
             </li>
-            <li class="order-item">
+            <li class="cart-item">
                 <div class="thumbnail">
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
                 </div>
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-sown">
+                        <button type="button" class="quantity-down">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
-                        <button type="button" class="btn-up">
+                        <button type="button" class="quantity-up">
                             <span>증가</span>
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-sel"><span>삭제</span></button>
+                <button type="button" class="del"><span>삭제</span></button>
             </li>
-            <li class="order-item">
+            <li class="cart-item">
                 <div class="thumbnail">
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
                 </div>
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-sown">
+                        <button type="button" class="quantity-down">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
-                        <button type="button" class="btn-up">
+                        <button type="button" class="quantity-up">
                             <span>증가</span>
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-sel"><span>삭제</span></button>
+                <button type="button" class="del"><span>삭제</span></button>
             </li>
-            <li class="order-item">
+            <li class="cart-item">
                 <div class="thumbnail">
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
                 </div>
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-sown">
+                        <button type="button" class="quantity-down">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
-                        <button type="button" class="btn-up">
+                        <button type="button" class="quantity-up">
                             <span>증가</span>
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-sel"><span>삭제</span></button>
+                <button type="button" class="del"><span>삭제</span></button>
             </li>
-            <li class="order-item">
+            <li class="cart-item">
                 <div class="thumbnail">
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
                 </div>
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-sown">
+                        <button type="button" class="quantity-down">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
-                        <button type="button" class="btn-up">
+                        <button type="button" class="quantity-up">
                             <span>증가</span>
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-sel"><span>삭제</span></button>
+                <button type="button" class="del"><span>삭제</span></button>
             </li>
-            <li class="order-item">
+            <li class="cart-item">
                 <div class="thumbnail">
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
                 </div>
                 <div class="info-box">
                     <p class="title">듀브레</p>
                     <div class="quantity">
-                        <button type="button" class="btn-sown">
+                        <button type="button" class="quantity-down">
                             <span>감소</span>
                         </button>
                         <span class="num">100</span>
-                        <button type="button" class="btn-up">
+                        <button type="button" class="quantity-up">
                             <span>증가</span>
                         </button>
                     </div>
                 </div>
-                <button type="button" class="btn-sel"><span>삭제</span></button>
+                <button type="button" class="del"><span>삭제</span></button>
             </li>
         </ul>
         <button type="button" class="btn-order">
@@ -178,32 +178,32 @@ export default {
 .aside-order {
     margin-top: 15px;
 }
-.order-list {
+.cart-item-list {
     box-sizing: border-box;
     height: 360px;
     padding: 8px 18px;
     background: #eee;
     overflow: auto;
 }
-.order-item {
+.cart-item {
     position: relative;
     box-sizing: border-box;
     display: flex;
     padding: 10px 0;
     align-items: center;
 }
-.order-item + .order-item {
+.cart-item + .cart-item {
     border-top: 1px solid #e5e5e5;
 }
-.order-item .thumbnail {
+.cart-item .thumbnail {
     width: 50px;
     height: 50px;
     margin-right: 10px;
 }
-.order-item .thumbnail img {
+.cart-item .thumbnail img {
     vertical-align: top;
 }
-.order-item .btn-sel {
+.cart-item .del {
     position: absolute;
     top: 4px;
     right: -4px;
@@ -212,7 +212,7 @@ export default {
     height: 30px;
     background: url(../../assets/images/svg/icon-close-small.svg) no-repeat center;
 }
-.order-item .btn-sel span {
+.cart-item .del span {
     display: block;
     overflow: hidden;
     text-indent: -99999px;
@@ -235,16 +235,16 @@ export default {
     font-size: 12px;
     font-weight: bold;
 }
-.quantity [class*='btn-'] {
+.quantity [class*='quantity-'] {
     display: block;
     width: 20px;
     height: 20px;
     background: url('../../assets/images/svg/icon-spinner-minus.svg') no-repeat center;
 }
-.quantity .btn-up {
+.quantity .quantity-up {
     background-image: url('../../assets/images/svg/icon-spinner-plus.svg');
 }
-.quantity [class^='btn-'] span {
+.quantity [class^='quantity-'] span {
     display: block;
     overflow: hidden;
     text-indent: -9999px;
