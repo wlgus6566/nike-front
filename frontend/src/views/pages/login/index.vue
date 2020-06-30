@@ -181,7 +181,7 @@ export default {
     width: 100%;
     height: 100%;
     font-family: 'Noto Sans KR', sans-serif;
-    background-image: url('../../assets/images/bg_login.jpg');
+    background-image: url('../../../assets/images/bg_login.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 3000px auto;
@@ -371,7 +371,7 @@ section .text strong {
     width: 30px;
     height: 30px;
     font-size: 0;
-    background: url('../../assets/images/icon-close-mideum@2x.png') no-repeat center center;
+    background: url('../../../assets/images/icon-close-mideum@2x.png') no-repeat center center;
     background-size: 30px auto;
 }
 .pw-find {

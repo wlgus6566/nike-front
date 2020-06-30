@@ -28,6 +28,7 @@ body {
     background: #fff;
 }
 header {
+    overflow: hidden;
     position: relative;
     flex: 0 0 200px;
 }
@@ -39,6 +40,7 @@ header .inner {
 }
 header h1 {
     position: relative;
+    transform-origin: 0 0;
 }
 header h1 a {
     display: block;
@@ -50,36 +52,22 @@ header h1 a img {
 
 header nav {
     position: relative;
+    margin-top: 30px;
 }
-
-header nav.active > ul > li {
-    display: none;
+nav .nav-link {
+    display: inline-block;
+    font-size: 16px;
+    line-height: 40px;
+    letter-spacing: 0.05em;
+    color: #000;
+    border-radius: 0;
+    font-family: 'Bebas Neue', sans-serif;
 }
-header nav.active > ul > li.router-link-active {
+nav .active ul {
     display: block;
 }
-
-/*header.depth-type {*/
-/*}*/
-/*header.depth-type h1 {*/
-/*    transform: translate(-23px, -30px) scale(0.25);*/
-/*}*/
-/*header.depth-type .header-bg {*/
-/*    transform: scaleX(0.2);*/
-/*    opacity: 1;*/
-/*}*/
-/*header.depth-type nav {*/
-/*    transform: translateX(30px);*/
-/*}*/
-/*header.depth-type nav > ul > li {*/
-/*    display: none;*/
-/*}*/
-/*header.depth-type nav > ul > li.router-link-active {*/
-/*    display: block;*/
-/*}*/
-/*header.depth-type nav > ul > li.router-link-active ul {*/
-/*    display: block;*/
-/*}*/
+nav .depth1 > ul {
+}
 header .icon-ellipsis {
     z-index: 2;
     position: absolute;
@@ -167,17 +155,6 @@ aside .inner:before {
 footer {
     height: 144px;
     background: #000;
-}
-
-nav {
-    margin-top: 30px;
-    font-family: 'Bebas Neue', sans-serif;
-}
-nav a {
-    display: inline-block;
-    font-size: 16px;
-    line-height: 40px;
-    letter-spacing: 0.05em;
 }
 
 /*.aside-ani-enter-active {*/

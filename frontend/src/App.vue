@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <transition name="layout-change" mode="out-in">
-            <component :is="Applayout" />
+            <component :is="AppLayout" />
         </transition>
     </div>
 </template>
@@ -9,15 +9,10 @@
 export default {
     name: 'App',
     data() {
-        return {
-            navActive: true,
-        };
-    },
-    watch: {
-        $route() {},
+        return {};
     },
     computed: {
-        Applayout() {
+        AppLayout() {
             return `Layout${this.$route.meta.layout || 'Default'}`;
         },
     },

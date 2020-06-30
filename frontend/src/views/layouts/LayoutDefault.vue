@@ -48,26 +48,22 @@ export default {
     data() {
         return {
             tw: new TimelineLite({ paused: true }),
+            newRoutePath: '',
+            oldRoutePath: '',
         };
     },
     computed: {
         AppAside() {
             return `Aside${this.$route.meta.aside || 'Default'}`;
         },
-        path() {
-            return this.$route.path;
-        },
     },
     directives: {
         Sticky,
     },
     watch: {
-        $route(path) {
-            console.log(path.path);
-            if (path.path !== '/') {
-                this.headerAni();
-            }
-            this.toggleHeader(this.$route.path !== '/');
+        $route(newRoute, oldRoute) {
+            this.newRoutePath = newRoute.path;
+            this.oldRoutePath = oldRoute.path;
         },
     },
     components: {
@@ -78,7 +74,8 @@ export default {
     },
     mounted() {
         this.headerAni();
-        this.toggleHeader(this.$route.path !== '/');
+        console.log(this.tw);
+        this.toggleHeader(this.$route.path !== '/', this.tw_dur);
         const target = [document.querySelector('header .inner')];
         this.layoutAnimation(target, '-100%', '0%');
     },
@@ -89,6 +86,9 @@ export default {
             const logo = header.querySelector('h1');
             const bg = header.querySelector('.header-bg');
             const nav = header.querySelector('nav');
+            const anchor = header.querySelector('nav > ul > li > .router-link-active');
+            const ul = anchor.nextSibling;
+
             this.tw.clear();
             this.tw
                 .to(
@@ -133,27 +133,27 @@ export default {
                 .set(
                     header.querySelectorAll('nav > ul > li'),
                     {
-                        display: function (i, t) {
-                            if (!t.classList.contains('router-link-active')) {
-                                return 'none';
-                            }
-                        },
+                        display: 'none',
                     },
                     0.3
                 )
+                .set(anchor.parentNode, {
+                    display: 'block',
+                })
                 .set(
-                    nav.querySelector('.router-link-active > a'),
+                    anchor,
                     {
-                        opacity: function (t, tt) {
-                            console.log(tt);
-                            return '0';
-                        },
+                        opacity: '0',
+                        position: 'absolute',
+                        top: '-70px',
+                        left: '0',
+                        fontSize: '22px',
                         translateX: '30px',
                     },
                     0.3
                 )
                 .set(
-                    nav.querySelector('.router-link-active > ul'),
+                    ul,
                     {
                         opacity: '0',
                         translateX: '30px',
@@ -162,7 +162,7 @@ export default {
                     0.3
                 )
                 .to(
-                    nav.querySelector('.router-link-active > a'),
+                    anchor,
                     0.3,
                     {
                         opacity: '1',
@@ -172,7 +172,7 @@ export default {
                     0.3
                 )
                 .to(
-                    nav.querySelector('.router-link-active > ul'),
+                    ul,
                     0.3,
                     {
                         opacity: '1',
@@ -184,10 +184,17 @@ export default {
         },
         pageAppear() {},
         pageEnter() {},
-        pageLeave() {},
-        toggleHeader(status) {
+        pageLeave() {
+            if (this.newRoutePath.split('/')[1] !== this.oldRoutePath.split('/')[1]) {
+                if (this.newRoutePath !== '/') {
+                    this.headerAni();
+                }
+                this.toggleHeader(this.$route.path !== '/');
+            }
+        },
+        toggleHeader(status, duration) {
             if (status) {
-                this.tw.play();
+                this.tw.play(duration);
             } else {
                 this.tw.reverse();
             }
