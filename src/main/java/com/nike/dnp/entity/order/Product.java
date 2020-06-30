@@ -35,7 +35,7 @@ public class Product extends BaseTimeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "GOODS_SEQ")
 	@ApiModelProperty(name="goodsSeq", value="상품 시퀀스")
-	private long goodsSeq;
+	private Long goodsSeq;
 
 	/**
 	 * 카테고리 2 코드

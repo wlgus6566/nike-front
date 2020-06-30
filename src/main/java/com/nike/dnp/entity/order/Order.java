@@ -31,7 +31,7 @@ public class Order extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ORDER_SEQ")
     @ApiModelProperty(name = "orderSeq",value = "주문 시퀀스")
-    private long orderSeq;
+    private Long orderSeq;
 
     /**
      * The Order description
@@ -49,7 +49,7 @@ public class Order extends BaseTimeEntity {
      */
     @Column(name = "TOTAL_AMOUNT")
     @ApiModelProperty(name = "totalAmount", value = "총 금액")
-    private long totalAmount;
+    private Long totalAmount;
 
 
 }

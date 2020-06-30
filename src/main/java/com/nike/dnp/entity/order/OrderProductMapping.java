@@ -1,14 +1,12 @@
 package com.nike.dnp.entity.order;
 
 import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.entity.agency.Agency;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * The Class Order product mapping.
@@ -35,7 +33,7 @@ public class OrderProductMapping extends BaseTimeEntity {
     @Id
     @Column(name = "ORDER_GOODS_SEQ")
     @ApiModelProperty(name="orderGoodsSeq" , value="주문 상품 시퀀스")
-    private long orderGoodsSeq;
+    private Long orderGoodsSeq;
 
 
     /**
@@ -45,7 +43,7 @@ public class OrderProductMapping extends BaseTimeEntity {
      */
     @Column(name = "ORDER_SEQ")
     @ApiModelProperty(name = "orderSeq", value = "주문 상품 시퀀스")
-    private long orderSeq;
+    private Long orderSeq;
 
 
     /**
@@ -55,7 +53,7 @@ public class OrderProductMapping extends BaseTimeEntity {
      */
     @Column(name = "AGENCY_SEQ")
     @ApiModelProperty(name = "agencySeq", value = "주문 상품 시퀀스")
-    private long agencySeq;
+    private Long agencySeq;
 
 
     /**
@@ -65,7 +63,7 @@ public class OrderProductMapping extends BaseTimeEntity {
      */
     @Column(name = "GOODS_SEQ")
     @ApiModelProperty(name = "goodsSeq", value = "주문 상품 시퀀스")
-    private long goodsSeq;
+    private Long goodsSeq;
 
 
     /**
@@ -75,7 +73,37 @@ public class OrderProductMapping extends BaseTimeEntity {
      */
     @Column(name = "ORDER_QUANTITY")
     @ApiModelProperty(name = "orderQuantity", value = "주문 상품 시퀀스")
-    private long orderQuantity;
+    private Long orderQuantity;
+
+
+    /**
+     * The Product
+     *
+     * @author [윤태호]
+     */
+    @ManyToOne
+    @JoinColumn(name="GOODS_SEQ",insertable = false,updatable = false)
+    private Product product;
+
+
+    /**
+     * The Order
+     *
+     * @author [윤태호]
+     */
+    @ManyToOne
+    @JoinColumn(name = "ORDER_SEQ", insertable = false, updatable = false)
+    private Order order;
+
+
+    /**
+     * The Agency
+     *
+     * @author [윤태호]
+     */
+    @ManyToOne
+    @JoinColumn(name = "AGENCY_SEQ", insertable = false, updatable = false)
+    private Agency agency;
 
 
 

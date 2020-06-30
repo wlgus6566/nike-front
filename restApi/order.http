@@ -1,16 +1,16 @@
 ### 오더_상품_목록 조회
-GET http://{{host}}/api/order/product/{{category1code}}?exposureYn=Y
+GET http://{{host}}/api/order/product/list?exposureYn=Y
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
 Content-Type: application/json
 
 ### 오더_상품_상세 조회
-GET http://{{host}}/api/order/product/{{category1code}}/{{goodsSeq}}
+GET http://{{host}}/api/order/product/{{goodsSeq}}
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
 Content-Type: application/json
 
 
 ### 오더_상품등록
-POST http://{{host}}/api/order/product/{{category1code}}
+POST http://{{host}}/api/order/product/
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
 Content-Type: application/json
 
@@ -33,8 +33,7 @@ Content-Type: application/json
 }
 
 ### 오더_상품수정
- #PUT http://{{host}}/api/order/product/{{category1code}}?category2code=3&category3code=2&agencySeq=1&goodsName=상품이름만 수정&goodsDescription=상품설명수정&size=xl&unitPrice=10000&minimumOrderQuantity=10000&exposureYn=Y&useYn=Y&goodsSeq=4
-PUT http://{{host}}/api/order/product/{{category1code}}
+PUT http://{{host}}/api/order/product
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
 Content-Type: application/json
 
@@ -60,7 +59,7 @@ Content-Type: application/json
 
 
 ### 오더_상품 삭제
-DELETE http://{{host}}/api/order/product/{{category1code}}/{{goodsSeq}}
+DELETE http://{{host}}/api/order/product/{{goodsSeq}}
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
 Accept: application/json
 
@@ -73,8 +72,17 @@ Accept: application/json
 
 
 ### 상품 리스트 조회
-GET http://localhost:8080/api/order/product?goodsSeq=1,2,3
+GET http://localhost:8080/api/order/product?goodsSeqList=1,2,3
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
-Content-Type: multipart/form-data; boundary=WebAppBoundary
+Accept: application/json
 
-###
+
+### 오더_상품수정
+POST http://{{host}}/api/order/save
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Content-Type: application/json
+
+{
+  "goodsSeqList": "31,30,31"
+}
+

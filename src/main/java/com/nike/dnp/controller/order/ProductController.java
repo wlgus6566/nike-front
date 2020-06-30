@@ -122,8 +122,6 @@ public class ProductController {
 	public SingleResult<Product> saveProduct(final @ApiParam(name = "productSaveDTO", value = "상품 등록 JSON") @RequestBody ProductSaveDTO productSaveDTO,
 											 final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO) {
 
-		productSaveDTO.setRegisterSeq(authUserDTO.getUserSeq());
-		productSaveDTO.setUseYn("Y");
 		return responseService.getSingleResult(productService.save(productSaveDTO));
 	}
 
@@ -142,7 +140,7 @@ public class ProductController {
 	public SingleResult<Optional<Product>> updateProduct(final @ApiParam(name = "productUpdateDTO", value = "상품 수정 JSON") @RequestBody ProductUpdateDTO productUpdateDTO,
 														 final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO) {
 
-		productUpdateDTO.setUpdaterSeq(authUserDTO.getUserSeq());
+
 		return responseService.getSingleResult(productService.update(productUpdateDTO));
 	}
 
@@ -163,7 +161,6 @@ public class ProductController {
 		final ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO();
 		productUpdateDTO.setGoodsSeq(goodsSeq);
 		productUpdateDTO.setUseYn("N");
-		productUpdateDTO.setUpdaterSeq(authUserDTO.getUserSeq());
 		return responseService.getSingleResult(productService.delete(productUpdateDTO));
 	}
 

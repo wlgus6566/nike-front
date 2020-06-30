@@ -23,14 +23,6 @@ public class ProductSaveDTO extends BasicDTO {
 
 
 	/**
-	 * 카테고리 1 코드
-	 *
-	 * @author [윤태호]
-	 */
-	@ApiModelProperty(hidden = true)
-	private String category1code;
-
-	/**
 	 * 상태
 	 *
 	 * @author [윤태호]
