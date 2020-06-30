@@ -27,6 +27,7 @@ export default {
     components: {
         LayoutDefault: () => import('@/views/layouts/LayoutDefault.vue'),
         LayoutClean: () => import('@/views/layouts/LayoutClean.vue'),
+        LayoutPub: () => import('@/views/layouts/LayoutPub.vue'),
     },
 };
 </script>
