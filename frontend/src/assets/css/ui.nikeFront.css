@@ -2143,7 +2143,7 @@
     display: block;
     width: 30px;
     height: 30px;
-    background: url('../images/svg/icon-delete-on.svg') no-repeat center;
+    background: url('../../images/svg/icon-delete-on.svg') no-repeat center;
 }
 .feedback-item .del span {
     position: relative;
