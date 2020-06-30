@@ -1,15 +1,16 @@
 package com.nike.dnp.entity.user;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nike.dnp.common.variable.UserStatusEnumCode;
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.user.UserSaveDTO;
 import com.nike.dnp.dto.user.UserUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ import java.util.List;
  * @CreatedOn 2020. 6. 23. 오후 5:26:57
  * @Description User(유저) Entity 작성
  */
+@Slf4j
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -88,6 +90,7 @@ public class User extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "LOGIN_DT")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
     @ApiModelProperty(name = "loginDt", value = "로그인 일시", hidden = true)
     private LocalDateTime loginDt;
 
@@ -124,12 +127,17 @@ public class User extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "PASSWORD_LAST_UPDATE_DT")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
     @ApiModelProperty(name = "passwordLastUpdateDt", value = "비밀번호 최종 수정 일시", hidden = true)
     private LocalDateTime passwordLastUpdateDt;
 
+    /**
+     * 유저권한 맵핑
+     *
+     * @author [오지훈]
+     */
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    //@OneToMany(mappedBy = "user")
-    @JsonBackReference
+    @JsonManagedReference
     private List<UserAuth> userAuth = new ArrayList<>();
 
     /**
@@ -144,26 +152,20 @@ public class User extends BaseTimeEntity {
         this.termsAgreeYn = this.termsAgreeYn == null ? "N" : this.termsAgreeYn;
     }
 
-
     /**
      * Save user.
      *
      * @param userSaveDTO the user save dto
-     * @param authUserDTO the auth user dto
      * @return the user
      * @author [오지훈]
      * @CreatedOn 2020. 6. 25. 오후 5:59:50
      * @Description
      */
-    public User save(
-            final UserSaveDTO userSaveDTO
-            , final AuthUserDTO authUserDTO
-            ) {
+    public User save(final UserSaveDTO userSaveDTO) {
+        log.info("User.save");
         User saveUser = new User();
         saveUser.setUserId(userSaveDTO.getUserId());
         saveUser.setNickname(userSaveDTO.getNickname());
-        saveUser.setRegisterSeq(authUserDTO.getUserSeq());
-        saveUser.setUpdaterSeq(authUserDTO.getUserSeq());
         return saveUser;
     }
 
@@ -171,69 +173,56 @@ public class User extends BaseTimeEntity {
      * Update.
      *
      * @param userUpdateDTO the user update dto
-     * @param authUserDTO   the auth user dto
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
      * @Description 닉네임 /권한 변경
      */
-    public void update(
-            final UserUpdateDTO userUpdateDTO
-            , final AuthUserDTO authUserDTO
-    ) {
+    public void update(final UserUpdateDTO userUpdateDTO) {
+        log.info("User.update");
         this.nickname = userUpdateDTO.getNickname();
-        setUpdaterSeq(authUserDTO.getUserSeq());
     }
 
     /**
      * Update password.
      *
      * @param password the password
-     * @param userSeq  the user seq
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
      * @Description 비밀번호 변경
      */
-    public void updatePassword(
-            String password
-            , Long userSeq
-    ) {
+    public void updatePassword(String password) {
+        log.info("User.updatePassword");
         this.password = password;
         this.passwordLastUpdateDt = LocalDateTime.now();
-        setUpdaterSeq(userSeq);
     }
 
     /**
      * Update status.
      *
      * @param userStatusCode the user status code
-     * @param userSeq        the user seq
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
      * @Description 상태값 변경
      */
-    public void updateStatus(
-            String userStatusCode
-            , Long userSeq
-    ) {
+    public void updateStatus(String userStatusCode) {
+        log.info("User.updateStatus");
         this.userStatusCode = userStatusCode;
-        setUpdaterSeq(userSeq);
     }
 
     /**
      * Delete user.
      *
-     * @param userSeq    the user seq
-     * @param updaterSeq the updater seq
+     * @param userSeq the user seq
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:41:15
      * @Description 삭제
      */
-    public void delete(Long userSeq, Long updaterSeq) {
+    public void delete(Long userSeq) {
+        log.info("User.delete");
         this.userId = String.valueOf(userSeq);
         this.password = String.valueOf(userSeq);
         this.nickname = String.valueOf(userSeq);
         this.userStatusCode = UserStatusEnumCode.OUT.toString();
-        this.setUpdaterSeq(updaterSeq);
     }
 
     /**
@@ -244,6 +233,7 @@ public class User extends BaseTimeEntity {
      * @Description 최종 로그인 일시 변경
      */
     public void updateLoginDt() {
+        log.info("User.updateLoginDt");
         this.loginDt = LocalDateTime.now();
     }
 

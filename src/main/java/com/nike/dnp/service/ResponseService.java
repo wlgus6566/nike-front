@@ -49,6 +49,28 @@ public class ResponseService {
     }
 
     /**
+     * Gets single result.
+     *
+     * @param <T>  the type parameter
+     * @param data the data
+     * @param msg  the msg
+     * @return the single result
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 30. 오후 4:59:21
+     * @Description 메시지 포함
+     */
+    public <T> SingleResult<T> getSingleResult(final T data
+            , final String code, final String msg, final Boolean isMsg) {
+        final SingleResult<T> result = new SingleResult<>();
+        result.setData(data);
+        result.setExistMsg(isMsg);
+        result.setCode(code);
+        result.setMsg(msg);
+        setSuccessResult(result);
+        return result;
+    }
+
+    /**
      * Gets success result.
      *
      * @return the success result
@@ -63,6 +85,20 @@ public class ResponseService {
     }
 
     /**
+     * Sets success result.
+     *
+     * @param result the result
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 6:00:51
+     * @Description 결과 모델에 api 요청 성공 데이터를 세팅해주는 메소드
+     */
+    private static void setSuccessResult(final CommonResult result) {
+        result.setSuccess(true);
+        if(result.getCode().isEmpty()) result.setCode(SUCCESS.getCode());
+        if(result.getMsg().isEmpty()) result.setMsg(SUCCESS.getMsg());
+    }
+
+    /**
      * Gets fail result.
      *
      * @return the fail result
@@ -73,6 +109,7 @@ public class ResponseService {
     public CommonResult getFailResult() {
         final CommonResult result = new CommonResult();
         result.setSuccess(false);
+        result.setExistMsg(true);
         result.setCode(FAIL.getCode());
         result.setMsg(FAIL.getMsg());
         return result;
@@ -91,6 +128,7 @@ public class ResponseService {
     public CommonResult getFailResult(final String code, final String msg) {
         final CommonResult result = new CommonResult();
         result.setSuccess(false);
+        result.setExistMsg(true);
         result.setCode(code);
         result.setMsg(msg);
         return result;
@@ -106,21 +144,7 @@ public class ResponseService {
      * @Description
      */
     public CommonResult getFailResult(final String msg) {
-        return getFailResult(FAIL.getCode(),msg);
-    }
-
-    /**
-     * Sets success result.
-     *
-     * @param result the result
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:00:51
-     * @Description 결과 모델에 api 요청 성공 데이터를 세팅해주는 메소드
-     */
-    private static void setSuccessResult(final CommonResult result) {
-        result.setSuccess(true);
-        result.setCode(SUCCESS.getCode());
-        result.setMsg(SUCCESS.getMsg());
+        return getFailResult(FAIL.getCode(), msg);
     }
 
 }

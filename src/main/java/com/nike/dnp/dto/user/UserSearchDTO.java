@@ -26,6 +26,14 @@ public class UserSearchDTO extends SearchDTO {
     private String keyword = "";
 
     /**
+     * The Sort
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(value = "검색어", name = "keyword")
+    private String sort = "userSeq";
+
+    /**
      * The Auth seq
      *
      * @author [오지훈]
@@ -59,13 +67,14 @@ public class UserSearchDTO extends SearchDTO {
      */
     @Override
     public String toString() {
-        return "UserSearchDTO{"
-                + "keyword=" + keyword
-                + "authSeq=" + authSeq
-                + "beginDt=" + beginDt
-                + "endDt=" + endDt
-                + ", size=" + getSize()
-                + ", page=" + getPage() + '}';
+        return "UserSearchDTO{" +
+                "keyword='" + keyword + '\'' +
+                ", sort='" + sort + '\'' +
+                ", authSeq=" + authSeq +
+                ", beginDt='" + beginDt + '\'' +
+                ", endDt='" + endDt + '\'' +
+                ", size='" + getSize() + '\'' +
+                ", page='" + getPage() + '\'' +
+                '}';
     }
-
 }

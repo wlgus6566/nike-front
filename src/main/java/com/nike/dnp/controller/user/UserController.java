@@ -1,6 +1,5 @@
 package com.nike.dnp.controller.user;
 
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.user.UserDeleteDTO;
 import com.nike.dnp.dto.user.UserSaveDTO;
 import com.nike.dnp.dto.user.UserSearchDTO;
@@ -16,9 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,7 +59,6 @@ public class UserController {
      * Find pages single result.
      *
      * @param userSearchDTO the user search dto
-     * @param authUserDTO   the auth user dto
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 3:37:10
@@ -85,26 +81,15 @@ public class UserController {
     )
     @GetMapping(name = "유저 목록 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Page<User>> findPages(
-            final UserSearchDTO userSearchDTO
-            , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
-    ) {
+    public SingleResult<Page<User>> findPages(final UserSearchDTO userSearchDTO) {
         log.info("UserController.findPages");
-        SingleResult<Page<User>> result = responseService.getSingleResult(userService.findPages(userSearchDTO));
-
-        //result.getData().forEach(value -> );
-        /*for (User user : result.getData()) {
-            user.getUserAuth().stream().map(userAuth -> userAuth.getAuth().getAuthName()).forEach(System.out::println);
-        }*/
-
-        return result;
+        return responseService.getSingleResult(userService.findPages(userSearchDTO));
     }
 
     /**
      * Find user single result.
      *
-     * @param userSeq     the user seq
-     * @param authUserDTO the auth user dto
+     * @param userSeq the user seq
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:19:29
@@ -119,19 +104,15 @@ public class UserController {
     )
     @GetMapping(name = "유저 상세 조회", value = "/{userSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<UserAuth> findUser(
-            @PathVariable Long userSeq
-            , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
-    ) {
+    public SingleResult<Optional<User>> findUser(@PathVariable Long userSeq) {
         log.info("UserController.findUser");
-        return responseService.getSingleResult(userService.findByUserAuth(userSeq));
+        return responseService.getSingleResult(userService.findById(userSeq));
     }
 
     /**
      * Save single result.
      *
      * @param codeSaveDTO the code save dto
-     * @param authUserDTO the auth user dto
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:33:44
@@ -147,12 +128,9 @@ public class UserController {
     @PostMapping(name = "유저 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<UserAuth> save(
-            final @RequestBody UserSaveDTO codeSaveDTO
-            , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
-    ) {
+    public SingleResult<UserAuth> save(final @RequestBody UserSaveDTO codeSaveDTO) {
         log.info("UserController.save");
-        return responseService.getSingleResult(userService.save(codeSaveDTO, authUserDTO));
+        return responseService.getSingleResult(userService.save(codeSaveDTO));
     }
 
     /**
@@ -160,7 +138,6 @@ public class UserController {
      *
      * @param userSeq       the user seq
      * @param userUpdateDTO the user update dto
-     * @param authUserDTO   the auth user dto
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:31:41
@@ -179,17 +156,15 @@ public class UserController {
     public SingleResult<Optional<UserAuth>> update(
             @PathVariable Long userSeq
             , final @RequestBody UserUpdateDTO userUpdateDTO
-            , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
         log.info("UserController.update");
-        return responseService.getSingleResult(userService.update(userSeq, userUpdateDTO, authUserDTO));
+        return responseService.getSingleResult(userService.update(userSeq, userUpdateDTO));
     }
 
     /**
      * Delete single result.
      *
-     * @param userSeq     the user seq
-     * @param authUserDTO the auth user dto
+     * @param userSeq the user seq
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:47:53
@@ -204,19 +179,15 @@ public class UserController {
     )
     @DeleteMapping(name = "유저 단건 삭제", value = "/{userSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<User>> deleteOne(
-            @PathVariable Long userSeq
-            , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
-    ) {
+    public SingleResult<Optional<User>> deleteOne(@PathVariable Long userSeq) {
         log.info("UserController.deleteOne");
-        return responseService.getSingleResult(userService.deleteOne(userSeq, authUserDTO));
+        return responseService.getSingleResult(userService.deleteOne(userSeq));
     }
 
     /**
      * Delete array single result.
      *
      * @param userDeleteDTO the user delete dto
-     * @param authUserDTO   the auth user dto
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 6:01:16
@@ -232,11 +203,9 @@ public class UserController {
     @DeleteMapping(name = "유저 배열 삭제"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<User>> deleteArray(
-            final @RequestBody UserDeleteDTO userDeleteDTO
-            , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
-    ) {
+    public SingleResult<List<User>> deleteArray(final @RequestBody UserDeleteDTO userDeleteDTO) {
         log.info("UserController.deleteArray");
-        return responseService.getSingleResult(userService.deleteArray(userDeleteDTO, authUserDTO));
+        return responseService.getSingleResult(userService.deleteArray(userDeleteDTO),
+                "SUC", "삭제 완료", true);
     }
 }

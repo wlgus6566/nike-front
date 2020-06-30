@@ -50,8 +50,6 @@ public class UserActionLogService {
         saveLog.setMethodTypeName(saveDTO.getMethodTypeName());
         saveLog.setMethodSignature(saveDTO.getMethodSignature());
         saveLog.setParameter(saveDTO.getParameter());
-        saveLog.setRegisterSeq(authUserDTO.getUserSeq());
-        saveLog.setUpdaterSeq(authUserDTO.getUserSeq());
         return logRepository.save(saveLog);
     }
 

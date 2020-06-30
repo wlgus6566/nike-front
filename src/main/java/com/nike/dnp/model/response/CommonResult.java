@@ -21,8 +21,16 @@ public class CommonResult {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "응답 성공 여부 : true/false", name = "success")
+    @ApiModelProperty(value = "응답 성공 여부 : true/false", name = "isOK")
     private boolean success;
+
+    /**
+     * 메시지 리턴 여부
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(value = "메시지 리턴 여부 : true/false", name = "isMsg", required = true)
+    private boolean existMsg = false;
 
     /**
      * 응답 코드
@@ -30,15 +38,15 @@ public class CommonResult {
      * @author [오지훈]
      */
     @ApiModelProperty(value = "S0 : 정상 / 그 외 오류 (기본 E0, 각 서비스에 맞는 오류)", name = "code")
-    private String code;
+    private String code = "";
 
     /**
      * 응답 메시지
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "응답 메시지", name = "msg")
-    private String msg;
+    @ApiModelProperty(value = "응답 메시지", name = "msg", example = "성공")
+    private String msg = "";
 
 }
 

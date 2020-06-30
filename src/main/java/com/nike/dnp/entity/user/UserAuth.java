@@ -1,12 +1,12 @@
 package com.nike.dnp.entity.user;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.nike.dnp.dto.auth.AuthUserDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.dto.user.UserUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.entity.auth.Auth;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,6 +18,7 @@ import java.io.Serializable;
  * @CreatedOn 2020. 6. 24. 오후 6:11:14
  * @Description UserAuth(유저 권한) Entity 작성
  */
+@Slf4j
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -62,7 +63,7 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
      */
     @ManyToOne
     @JoinColumn(name = "USER_SEQ", insertable = false, updatable = false)
-    @JsonManagedReference
+    @JsonBackReference
     private User user;
 
     /**
@@ -72,14 +73,38 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
      */
     @ManyToOne
     @JoinColumn(name = "AUTH_SEQ", insertable = false, updatable = false)
+    //@JsonBackReference 단방향 시 사용 안함
     private Auth auth;
 
-    public void authUpdate(
-            final UserUpdateDTO userUpdateDTO
-            , final AuthUserDTO authUserDTO
-    ) {
+    /**
+     * Save user auth.
+     *
+     * @param user the user
+     * @param auth the auth
+     * @return the user auth
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 30. 오후 4:38:13
+     * @Description 유저권한 저장
+     */
+    public UserAuth save(final User user, final Auth auth) {
+        log.info("UserAuth.save");
+        UserAuth userAuth = new UserAuth();
+        userAuth.setUser(user);
+        userAuth.setAuth(auth);
+        return userAuth;
+    }
+
+    /**
+     * Auth update.
+     *
+     * @param userUpdateDTO the user update dto
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 30. 오후 4:38:14
+     * @Description 유저권한 업데이트
+     */
+    public void update(final UserUpdateDTO userUpdateDTO) {
+        log.info("UserAuth.authUpdate");
         this.authSeq = userUpdateDTO.getAuthSeq();
-        this.setUpdaterSeq(authUserDTO.getUserSeq());
     }
 
 }

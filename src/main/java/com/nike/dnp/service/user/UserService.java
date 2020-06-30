@@ -1,7 +1,6 @@
 package com.nike.dnp.service.user;
 
-import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
-import com.nike.dnp.common.variable.ErrorEnumCode.LoginError;
+import com.nike.dnp.common.variable.ErrorEnumCode.DataError;
 import com.nike.dnp.common.variable.ErrorEnumCode.UserError;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.user.*;
@@ -43,7 +42,7 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
     /**
-     * The Redis service
+     * RedisService
      *
      * @author [오지훈]
      */
@@ -79,15 +78,6 @@ public class UserService implements UserDetailsService {
      * @CreatedOn 2020. 6. 22. 오후 2:40:43
      * @Description 페이징 조회(paging)
      */
-    /*public Page<UserAuth> findPages(final UserSearchDTO userSearchDTO) {
-        log.info("UserService.findPages");
-        return userAuthRepository.findPages(
-                userSearchDTO,
-                PageRequest.of(userSearchDTO.getPage()
-                        , userSearchDTO.getSize()
-                        , Sort.by("userSeq").descending()));
-    }*/
-
     public Page<User> findPages(final UserSearchDTO userSearchDTO) {
         log.info("UserService.findPages");
         return userRepository.findPages(
@@ -95,23 +85,6 @@ public class UserService implements UserDetailsService {
                 PageRequest.of(userSearchDTO.getPage()
                         , userSearchDTO.getSize()
                         , Sort.by("userSeq").descending()));
-    }
-
-    /**
-     * Find by id user.
-     *
-     * @param userSeq 유저 시퀀스
-     * @return the optional
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:43
-     * @Description 상세 조회
-     */
-    public UserAuth findByUserAuth(final Long userSeq) {
-        log.info("UserService.findByUserAuth");
-        User user = new User();
-        user.setUserSeq(userSeq);
-        return userAuthRepository.findByUser(user)
-                .orElseThrow(() -> new CodeMessageHandleException(UserError.USER01.toString(), UserError.USER01.getMessage()));
     }
 
     /**
@@ -125,7 +98,8 @@ public class UserService implements UserDetailsService {
      */
     public Optional<User> findById(final Long userSeq) {
         log.info("UserService.findById");
-        return Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(() -> new CodeMessageHandleException(UserError.USER01.toString(), UserError.USER01.getMessage())));
+        return Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
+                () -> new CodeMessageHandleException(UserError.USER01.toString(), UserError.USER01.getMessage())));
     }
 
     /**
@@ -139,8 +113,154 @@ public class UserService implements UserDetailsService {
      */
     public User findByUserId(final String userId) {
         log.info("UserService.findByUserId");
-        return userRepository.findByUserId(userId)
-                .orElseThrow(() -> new CodeMessageHandleException(UserError.USER01.toString(), UserError.USER01.getMessage()));
+        return userRepository.findByUserId(userId).orElseThrow(
+                () -> new CodeMessageHandleException(UserError.USER01.toString(), UserError.USER01.getMessage()));
+    }
+
+    /**
+     * Find by user optional.
+     *
+     * @param user the user
+     * @return the optional
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 30. 오후 4:46:46
+     * @Description 유저 권한 조회
+     */
+    public Optional<UserAuth> findByUser(final User user) {
+        return Optional.ofNullable(userAuthRepository.findByUser(user).orElseThrow(
+                () -> new CodeMessageHandleException(DataError.NOT_FOUND.toString(), DataError.NOT_FOUND.getMessage())));
+    }
+
+    /**
+     * Save user.
+     *
+     * @param userSaveDTO the user save dto
+     * @return the user
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 22. 오후 2:40:44
+     * @Description 등록
+     */
+    @Transactional
+    public UserAuth save(final UserSaveDTO userSaveDTO) {
+        log.info("UserService.save");
+        final User user = userRepository.save(new User().save(userSaveDTO));
+        final Auth auth = authRepository.findById(userSaveDTO.getAuthSeq()).orElseThrow(
+                () -> new CodeMessageHandleException(DataError.NOT_FOUND.toString(), DataError.NOT_FOUND.getMessage()));
+        return userAuthRepository.save(new UserAuth().save(user, auth));
+    }
+
+    /**
+     * Update optional.
+     *
+     * @param userSeq       the user seq
+     * @param userUpdateDTO the user update dto
+     * @return user user
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 22. 오후 2:40:44
+     * @Description 닉네임 /권한 수정
+     */
+    @Transactional
+    public Optional<UserAuth> update(
+            final Long userSeq
+            , final UserUpdateDTO userUpdateDTO
+    ) {
+        log.info("UserService.update");
+        final Optional<User> user = this.findById(userSeq);
+        user.ifPresent(value -> value.update(userUpdateDTO));
+
+        final Optional<UserAuth> userAuth = this.findByUser(user.get());
+        userAuth.ifPresent(value -> value.update(userUpdateDTO));
+
+        return userAuth;
+    }
+
+    /**
+     * Update status optional.
+     *
+     * @param userSeq             the user seq
+     * @param userUpdateStatusDTO the user update status dto
+     * @return the optional
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 22. 오후 2:40:44
+     * @Description 상태값 변경
+     */
+    @Transactional
+    public Optional<User> updateStatus(
+            final Long userSeq
+            , final UserUpdateStatusDTO userUpdateStatusDTO
+    ) {
+        log.info("UserService.updateStatus");
+        final Optional<User> user = this.findById(userSeq);
+        user.ifPresent(value -> value.updateStatus(userUpdateStatusDTO.getUserStatusCode()));
+        return user;
+    }
+
+    /**
+     * Delete one optional.
+     *
+     * @param userSeq the user seq
+     * @return the optional
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오후 5:47:29
+     * @Description 유저 단건 삭제
+     */
+    @Transactional
+    public Optional<User> deleteOne( final Long userSeq) {
+        log.info("UserService.deleteOne");
+        final Optional<User> user = this.findById(userSeq);
+        user.ifPresent(value -> value.delete(userSeq));
+        return user;
+    }
+
+    /**
+     * Delete array list.
+     *
+     * @param userDeleteDTO the user delete dto
+     * @return the list
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오후 6:15:52
+     * @Description 유저 배열 삭제
+     */
+    @Transactional
+    public List<User> deleteArray(final UserDeleteDTO userDeleteDTO) {
+        log.info("UserService.deleteArray");
+        List<User> users = userRepository.findAllByUserSeqIn(userDeleteDTO.getUserSeqArray());
+
+        //TODO[ojh] 배열삭제 작업 중
+        for (User user : users) {
+            user.delete(user.getUserSeq());
+        }
+
+        return users;
+    }
+
+    /**
+     * Update login dt.
+     *
+     * @param user the user
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 22. 오후 2:40:44
+     * @Description 최종 로그인 일자 업데이트
+     */
+    @Transactional
+    public void updateLoginDt(User user) {
+        log.info("UserService.updateLoginDt");
+        user.updateLoginDt();
+    }
+
+    /**
+     * Load user by username user details.
+     *
+     * @param userId 유저 ID
+     * @return the authUserDTO
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 22. 오후 2:40:44
+     * @Description 로그인 검증
+     */
+    @Override
+    public UserDetails loadUserByUsername(String userId) {
+        log.info("UserService.loadUserByUsername");
+        return new AuthUserDTO(this.findByUserId(userId));
     }
 
     /**
@@ -210,10 +330,10 @@ public class UserService implements UserDetailsService {
 
         try {
             //TODO[ojh] 인증코드 생성
-            String certCode = RandomUtil.randomCertCode2(10);
+            final String certCode = RandomUtil.randomCertCode2(10);
 
             //TODO[ojh] ID+인증코드 암호화
-            String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(userId + "|" + certCode, "Nike DnP"));
+            final String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(userId + "|" + certCode, "Nike DnP"));
             log.info("encodeCertCode > " + encodeCertCode);
 
             //TODO[ojh] REDIS 값 셋팅
@@ -224,170 +344,5 @@ public class UserService implements UserDetailsService {
         } catch (Exception exception) {
             log.error("Exception", exception);
         }
-    }
-
-    /**
-     * Save user.
-     *
-     * @param userSaveDTO the user save dto
-     * @param authUserDTO the auth user dto
-     * @return the user
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:44
-     * @Description 등록
-     */
-    @Transactional
-    public UserAuth save(
-            final UserSaveDTO userSaveDTO
-            , final AuthUserDTO authUserDTO
-    ) {
-        log.info("UserService.save");
-        //User saveUser = new User().save(userSaveDTO, authUserDTO);
-        User saveUser = new User();
-        saveUser.setUserId(userSaveDTO.getUserId());
-        saveUser.setNickname(userSaveDTO.getNickname());
-        saveUser.setRegisterSeq(authUserDTO.getUserSeq());
-        saveUser.setUpdaterSeq(authUserDTO.getUserSeq());
-        final User user = userRepository.save(saveUser);
-        final Optional<Auth> auth = authRepository.findById(userSaveDTO.getAuthSeq());
-
-        UserAuth saveUserAuth = new UserAuth();
-        saveUserAuth.setUser(user);
-        saveUserAuth.setAuth(auth.get());
-        final UserAuth userAuth = userAuthRepository.save(saveUserAuth);
-
-        /*if (user.getUserSeq() > 0 && auth.isPresent()) {
-            userAuthRepository.save(UserAuth.builder()
-                    .userSeq(user.getUserSeq())
-                    .authSeq(auth.get().getAuthSeq())
-                    .build());
-        }*/
-
-        return userAuth;
-    }
-
-    /**
-     * Update optional.
-     *
-     * @param userSeq       the user seq
-     * @param userUpdateDTO the user update dto
-     * @param authUserDTO   the auth user dto
-     * @return user user
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:44
-     * @Description 닉네임 /권한 수정
-     */
-    @Transactional
-    public Optional<UserAuth> update(
-            final Long userSeq
-            , final UserUpdateDTO userUpdateDTO
-            , final AuthUserDTO authUserDTO
-    ) {
-        log.info("UserService.update");
-        final Optional<User> user = this.findById(userSeq);
-        user.ifPresent(value -> value.update(userUpdateDTO, authUserDTO));
-
-        final Optional<UserAuth> userAuth = userAuthRepository.findByUser(user.get());
-        userAuth.ifPresent(value -> value.authUpdate(userUpdateDTO, authUserDTO));
-
-        return userAuth;
-    }
-
-    /**
-     * Update status optional.
-     *
-     * @param userSeq             the user seq
-     * @param userUpdateStatusDTO the user update status dto
-     * @param authUserDTO         the auth user dto
-     * @return the optional
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:44
-     * @Description 상태값 변경
-     */
-    @Transactional
-    public Optional<User> updateStatus(
-            final Long userSeq
-            , final UserUpdateStatusDTO userUpdateStatusDTO
-            , final AuthUserDTO authUserDTO
-    ) {
-        log.info("UserService.updateStatus");
-        final Optional<User> user = userRepository.findById(userSeq);
-        user.ifPresent(value -> value.updateStatus(userUpdateStatusDTO.getUserStatusCode(), authUserDTO.getUserSeq()));
-        return user;
-    }
-
-    /**
-     * Delete one optional.
-     *
-     * @param userSeq     the user seq
-     * @param authUserDTO the auth user dto
-     * @return the optional
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 5:47:29
-     * @Description 유저 단건 삭제
-     */
-    @Transactional
-    public Optional<User> deleteOne(
-            final Long userSeq
-            , final AuthUserDTO authUserDTO
-    ) {
-        log.info("UserService.deleteOne");
-        final Optional<User> user = userRepository.findById(userSeq);
-        user.ifPresent(value -> value.delete(userSeq, authUserDTO.getUserSeq()));
-        return user;
-    }
-
-    /**
-     * Delete array list.
-     *
-     * @param userDeleteDTO the user delete dto
-     * @param authUserDTO   the auth user dto
-     * @return the list
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 6:15:52
-     * @Description 유저 배열 삭제
-     */
-    @Transactional
-    public List<User> deleteArray(
-            final UserDeleteDTO userDeleteDTO
-            , final AuthUserDTO authUserDTO
-    ) {
-        log.info("UserService.deleteArray");
-        List<User> users = userRepository.findAllByUserSeqIn(userDeleteDTO.getUserSeqArray());
-
-        //TODO[ojh] 배열삭제 작업 중
-
-        return users;
-    }
-
-    /**
-     * Update login dt.
-     *
-     * @param user the user
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:44
-     * @Description 최종 로그인 일자 업데이트
-     */
-    @Transactional
-    public void updateLoginDt(User user) {
-        log.info("UserService.updateLoginDt");
-        user.updateLoginDt();
-    }
-
-    /**
-     * Load user by username user details.
-     *
-     * @param userId 유저 ID
-     * @return the authUserDTO
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:44
-     * @Description 로그인 검증
-     */
-    @Override
-    public UserDetails loadUserByUsername(String userId) {
-        log.info("UserService.loadUserByUsername");
-        final User user = userRepository.findByUserId(userId)
-                .orElseThrow(() -> new UserNotFoundException(LoginError.LOGE01.toString()));
-        return new AuthUserDTO(user);
     }
 }

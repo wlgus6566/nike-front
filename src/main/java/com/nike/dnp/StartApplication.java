@@ -18,7 +18,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  */
 @Slf4j
 @EnableCaching
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "userAuditAware")
 @SpringBootApplication
 @RequiredArgsConstructor
 public class StartApplication extends SpringBootServletInitializer {

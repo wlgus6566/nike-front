@@ -30,12 +30,20 @@ public class ErrorEnumCode {
          * @author [오지훈]
          */
         COME01("로그인이 필요합니다."),
+
         /**
          * Come 02 common error
          *
          * @author [오지훈]
          */
-        COME02("권한이 없습니다.");
+        COME02("권한이 없습니다."),
+
+        /**
+         * Come 03 common error
+         *
+         * @author [오지훈]
+         */
+        COME03("데이터가 존재하지 않습니다.");
 
         /**
          * 에러 메시지
