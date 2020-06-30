@@ -6,6 +6,7 @@ import com.nike.dnp.dto.user.UserSearchDTO;
 import com.nike.dnp.dto.user.UserUpdateDTO;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.entity.user.UserAuth;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.user.UserService;
@@ -15,8 +16,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -128,8 +134,25 @@ public class UserController {
     @PostMapping(name = "유저 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<UserAuth> save(final @RequestBody UserSaveDTO codeSaveDTO) {
+    public SingleResult<UserAuth> save(
+            final @Valid @RequestBody UserSaveDTO codeSaveDTO
+            , final @ApiIgnore BindingResult result
+            ) {
         log.info("UserController.save");
+
+        if (result.hasErrors()) {
+            //return responseService.getFailResult("fail", result.getAllErrors().get(0).getDefaultMessage());
+
+            String[] errors = new String[result.getAllErrors().size()];
+
+            int i = 0;
+            for (ObjectError objectError : result.getAllErrors()) {
+                errors[i] = objectError.getDefaultMessage();
+                i++;
+            }
+
+            throw new CodeMessageHandleException("failfail", Arrays.toString(errors));
+        }
         return responseService.getSingleResult(userService.save(codeSaveDTO));
     }
 
