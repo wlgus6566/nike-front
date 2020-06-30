@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Contents Entity
@@ -23,18 +24,16 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 컨텐츠 시퀀스
-     *
      * @author [이소정]
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "CONTENTS_SEQ")
     @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스")
     private Long contentsSeq;
 
     /**
      * 최고 메뉴 공통코드
-     *
      * @author [이소정]
      */
     @Column(name = "TOP_MENU_CODE")
@@ -43,7 +42,6 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 메뉴 공통코드
-     *
      * @author [이소정]
      */
     @Column(name = "MENU_CODE")
@@ -52,7 +50,6 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 이미지 파일명
-     *
      * @author [이소정]
      */
     @Column(name = "IMAGE_FILE_NAME")
@@ -61,7 +58,6 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 이미지 파일 사이즈
-     *
      * @author [이소정]
      */
     @Column(name = "IMAGE_FILE_SIZE")
@@ -70,7 +66,6 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 이미지 파일 물리명
-     *
      * @author [이소정]
      */
     @Column(name = "IMAGE_FILE_PHYSICAL_NAME")
@@ -79,7 +74,6 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 폴더명
-     *
      * @author [이소정]
      */
     @Column(name = "FOLDER_NAME")
@@ -88,7 +82,6 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 폴더 내용
-     *
      * @author [이소정]
      */
     @Column(name = "FOLDER_CONTENTS")
@@ -97,7 +90,6 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 캠페인 기간 구분 공통코드
-     *
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_PERIOD_SECTION_CODE")
@@ -106,7 +98,6 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 캠페인 시작 일시
-     *
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_BEGIN_DT")
@@ -115,7 +106,6 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 캠페인 종료 일시
-     *
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_END_DT")
@@ -124,7 +114,6 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 메모
-     *
      * @author [이소정]
      */
     @Column(name = "MEMO")
@@ -133,7 +122,6 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 조회수
-     *
      * @author [이소정]
      */
     @Column(name = "READ_COUNT")
@@ -142,7 +130,6 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 노출 여부
-     *
      * @author [이소정]
      */
     @Column(name = "EXPOSURE_YN")
@@ -151,12 +138,19 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 사용 여부
-     *
      * @author [이소정]
      */
     @Column(name = "USE_YN")
     @ApiModelProperty(name = "useYn", value = "사용 여부", required = true, example = "Y/N")
     private String useYn;
+
+    /**
+     * The Contents files
+     * @author [이소정]
+     */
+    @OneToMany(mappedBy = "contents")
+    @ApiModelProperty(name = "contentsFiles", value = "콘텐츠 파일 목록", required = true)
+    private List<ContentsFile> contentsFiles;
 
 //    /**
 //     * Update.
@@ -174,6 +168,5 @@ public class Contents extends BaseTimeEntity {
 //        this.password = password;
 //        this.managerAuth = managerAuth;
 //    }
-
 
 }

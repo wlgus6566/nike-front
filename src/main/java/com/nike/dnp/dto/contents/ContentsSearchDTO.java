@@ -3,6 +3,7 @@ package com.nike.dnp.dto.contents;
 import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.persistence.Column;
 
@@ -15,6 +16,7 @@ import javax.persistence.Column;
  */
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class ContentsSearchDTO extends SearchDTO {
@@ -36,21 +38,21 @@ public class ContentsSearchDTO extends SearchDTO {
     private String orderType;
 
     /**
-     * 최고 메뉴 공통코드
+     * 최고 메뉴 코드
      *
      * @author [이소정]
      */
     @Column(name = "TOP_MENU_CODE")
-    @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 공통코드", hidden = true)
+    @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 코드", hidden = true)
     private String topMenuCode;
 
     /**
-     * 메뉴 공통코드
+     * 2depth 메뉴 코드
      *
      * @author [이소정]
      */
     @Column(name = "MENU_CODE")
-    @ApiModelProperty(name = "menuCode", value = "메뉴 공통코드")
+    @ApiModelProperty(name = "menuCode", value = "2depth 메뉴 코드")
     private String menuCode;
 
     /**

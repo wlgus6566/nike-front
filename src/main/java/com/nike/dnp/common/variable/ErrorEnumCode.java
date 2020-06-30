@@ -161,6 +161,30 @@ public class ErrorEnumCode {
 
     }
 
+
+    /**
+     * The enum Contents error.
+     */
+    public enum ContentsError {
+        CONE01("파일타이틀이 존재하지 않습니다."),
+        CONE02("파일URL이 존재하지 않습니다."),
+        CONE03("파일이 존재하지 않습니다.");
+
+        /**
+         * 에러 메시지
+         * @author [이소정]
+         */
+        private final String value;
+
+        ContentsError(final String value) {
+            this.value = value;
+        }
+
+        public String getMessage() {
+            return value;
+        }
+    }
+
     /**
      * The enum Manage error.
      *
