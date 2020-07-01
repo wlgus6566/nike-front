@@ -1,5 +1,7 @@
 package com.nike.dnp.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -49,7 +51,18 @@ public class PasswordHistory extends BaseTimeEntity implements Serializable {
      */
     @Column(name = "PASSWORD")
     @ApiModelProperty(name = "password", value = "비밀번호", hidden = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    /**
+     * 유저 맵핑
+     *
+     * @author [오지훈]
+     */
+    @ManyToOne
+    @JoinColumn(name = "USER_SEQ", insertable = false, updatable = false)
+    @JsonBackReference
+    private User user;
 
     /**
      * Instantiates a new Password history.

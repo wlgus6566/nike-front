@@ -85,7 +85,7 @@ public class ServiceEnumCode {
     /**
      * The enum Email type.
      */
-    public enum EmailType {
+    public enum EmailTypeEnumCode {
         USER_CREATE("[NIKE/TEST] NIKE D&P PLATFORM 계정 생성 안내"),
         PASSWORD_SETTING(""),
         PASSWORD_GUIDE(""),
@@ -103,7 +103,7 @@ public class ServiceEnumCode {
          */
         private final String value;
 
-        EmailType(final String value) {
+        EmailTypeEnumCode(final String value) {
             this.value = value;
         }
 

@@ -30,6 +30,6 @@ public class SimpleAccessDeniedHandler implements AccessDeniedHandler {
 		response.setContentType("application/json;charset=utf-8");
 		response.setStatus(HttpStatus.FORBIDDEN.value());
 
-		JsonUtil.write(response.getWriter(), responseService.getFailResult(ErrorEnumCode.AuthErrorEnum.NO_AUTH.toString(), ErrorEnumCode.AuthErrorEnum.NO_AUTH.getMessage()));
+		JsonUtil.write(response.getWriter(), responseService.getFailResult(ErrorEnumCode.AuthError.NO_AUTH.toString(), ErrorEnumCode.AuthError.NO_AUTH.getMessage()));
 	}
 }

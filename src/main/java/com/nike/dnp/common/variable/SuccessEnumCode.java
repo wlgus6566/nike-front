@@ -16,12 +16,11 @@ public class SuccessEnumCode {
     /**
      * The enum Login success enum.
      */
-    public enum LoginSuccessEnum {
-
+    public enum LoginSuccess {
         CHECK_EMAIL("E-MAIL을 다시 확인 후 입력해 주세요"),
-        SEND_EMAIL_CODE("해당 계정의 E-MAIL로 인증코드가 발송되었습니다. 이메일 확인 후 인증코드를 입력해 주세요"),
+        SEND_EMAIL_CERT_CODE("해당 계정의 E-MAIL로 인증코드가 발송되었습니다. 이메일 확인 후 인증코드를 입력해 주세요"),
         SEND_EMAIL("E-MAIL이 발송되었습니다. E-MAIL을 확인주세요"),
-        CHANGE_PW("설정한 비밀번호로 로그인 해 주세요.");
+        CHANGE_PASSWORD("설정한 비밀번호로 로그인 해 주세요.");
 
         /**
          * The Value
@@ -29,7 +28,7 @@ public class SuccessEnumCode {
          */
         private final String value;
 
-        LoginSuccessEnum(final String value) {
+        LoginSuccess(final String value) {
             this.value = value;
         }
 
@@ -87,7 +86,7 @@ public class SuccessEnumCode {
     /**
      * The enum Order success enum.
      */
-    public enum OrderSuccessEnum {
+    public enum OrderSuccess {
         ADDED_WISHLIST("위시리스트에 추가 되었습니다. 위시리스트는 마이페이지에서 확인가능합니다"),
         ADDED_CART("CART에 담겼습니다"),
         SEND_ORDER_MAIL("주문메일이 발송 되었습니다.");
@@ -98,7 +97,7 @@ public class SuccessEnumCode {
          */
         private final String value;
 
-        OrderSuccessEnum(final String value) {
+        OrderSuccess(final String value) {
             this.value = value;
         }
 
@@ -118,7 +117,7 @@ public class SuccessEnumCode {
     /**
      * The enum Report success enum.
      */
-    public enum ReportSuccessEnum {
+    public enum ReportSuccess {
         SAVED_REPORT("등록 되었습니다.");
 
         /**
@@ -127,7 +126,7 @@ public class SuccessEnumCode {
          */
         private final String value;
 
-        ReportSuccessEnum(final String value) {
+        ReportSuccess(final String value) {
             this.value = value;
         }
 
