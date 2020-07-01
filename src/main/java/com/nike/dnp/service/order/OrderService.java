@@ -3,7 +3,6 @@ package com.nike.dnp.service.order;
 import com.nike.dnp.dto.order.OrderProductSaveDTO;
 import com.nike.dnp.entity.order.Order;
 import com.nike.dnp.entity.order.OrderProductMapping;
-import com.nike.dnp.repository.order.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,9 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OrderService {
 
-	final OrderRepository orderRepository;
+	/*public final OrderRepository orderRepository;
 
-	final OrderProductMapping orderProductMapping;
+	public final OrderProductMapping orderProductMapping;*/
 
 
 	public OrderProductMapping saveOrder(final OrderProductSaveDTO orderProductSaveDTO) {

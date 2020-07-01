@@ -13,6 +13,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -36,6 +39,9 @@ import java.util.Optional;
 @RequestMapping(value = "/api/order/product", name = "상품관리")
 @AllArgsConstructor
 public class ProductController {
+
+	@Autowired
+	MessageSource messageSource;
 
 	/**
 	 * ProductService
@@ -72,6 +78,8 @@ public class ProductController {
 	@ApiOperation(value = "상품 목록 조회", notes = REQUEST_CHARACTER + "category2code|카테고리 2 코드|false|String\n" + "category3code|카테고리 3 코드|false|String\n" + "agentSeq|에이전트 시퀀스|false|Integer\n" + "exposureYn|노출여부|false|String\n" + "keyword|키워드|false|String\n" + "page|페이지|false|Integer\n" + "size|사이즈|false|Integer\n")
 	@GetMapping(value = "/list", produces = {MediaType.APPLICATION_JSON_VALUE}, name = "상품 목록 조회")
 	public SingleResult<Page<Product>> findPagesProduct(final ProductSearchDTO productSearchDTO) {
+
+		log.debug("messageSource.getMessage(test,null, Locale.getDefault()) {}", messageSource.getMessage("test", new String[]{"111"} , Locale.getDefault())); ;
 		return responseService.getSingleResult(productService.findPagesProduct(productSearchDTO));
 	}
 
