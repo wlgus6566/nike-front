@@ -6,6 +6,7 @@ import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -50,7 +51,7 @@ public class Contents extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "MENU_CODE")
-    @ApiModelProperty(name = "menuCode", value = "메뉴 공통코드")
+    @ApiModelProperty(name = "menuCode", value = "메뉴 공통코드", required = true, example = "A_SP")
     private String menuCode;
 
     /**
@@ -131,14 +132,14 @@ public class Contents extends BaseTimeEntity {
      */
     @Column(name = "READ_COUNT")
     @ApiModelProperty(name = "readCount", value = "조회수")
-    private String readCount;
+    private Long readCount;
 
     /**
      * 노출 여부
      * @author [이소정]
      */
     @Column(name = "EXPOSURE_YN")
-    @ApiModelProperty(name = "exposureYn", value = "노출 여부", required = true, example = "Y/N")
+    @ApiModelProperty(name = "exposureYn", value = "노출 여부", example = "Y")
     private String exposureYn;
 
     /**
@@ -146,7 +147,7 @@ public class Contents extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "USE_YN")
-    @ApiModelProperty(name = "useYn", value = "사용 여부", required = true, example = "Y/N")
+    @ApiModelProperty(name = "useYn", value = "사용 여부", example = "Y/N")
     private String useYn;
 
     /**
@@ -199,24 +200,12 @@ public class Contents extends BaseTimeEntity {
         saveContents.setImageFileSize(contentsSaveDTO.getImageFileSize());
         saveContents.setImageFilePhysicalName(contentsSaveDTO.getImageFilePhysicalName());
         saveContents.setFolderName(contentsSaveDTO.getFolderName());
+        saveContents.setFolderContents(contentsSaveDTO.getFolderContents());
         saveContents.setCampaignPeriodSectionCode(contentsSaveDTO.getCampaignPeriodSectionCode());
-    }
 
-//    /**
-//     * Update.
-//     *
-//     * @param managerName the manager name
-//     * @param password    the password
-//     * @param managerAuth the manager auth
-//     */
-//    public void update(
-//            final String managerName
-//            , final String password
-//            , final ManagerAuth managerAuth
-//    ) {
-//        this.managerName = managerName;
-//        this.password = password;
-//        this.managerAuth = managerAuth;
-//    }
+        saveContents.setExposureYn("Y");
+        saveContents.setUseYn("Y");
+        saveContents.setReadCount(0l);
+    }
 
 }

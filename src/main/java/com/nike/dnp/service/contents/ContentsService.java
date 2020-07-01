@@ -21,6 +21,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -79,59 +81,21 @@ public class ContentsService {
      * @Description
      */
     @Transactional
-    public Contents save(
-            final ContentsSaveDTO contentsSaveDTO) {
-        log.info("UserService.save");
+    public Contents save(final ContentsSaveDTO contentsSaveDTO) {
+        log.info("contentsService.save");
         final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
+        List<ContentsFile> savedContentsFileList = new ArrayList<>();
 
-        // contents파일 추가
-//        if (!contentsSaveDTO.getContentsFileList().isEmpty()) {
-//            for (ContentsFileSaveDTO contentsFileSaveDTO : contentsSaveDTO.getContentsFileList()) {
-//                contentsFileRepository.save(new ContentsFile().save(contentsFileSaveDTO));
-//
-//
-//                contentsFileEntity.setContentsSeq(savedContents.getContentsSeq());
-//                contentsFileEntity.setFileSectionCode(contentsFileSaveDTO.getFileSectionCode());
-//                contentsFileEntity.setFileKindCode(contentsFileSaveDTO.getFileKindCode());
-//
-//                String fileKindCode = contentsFileSaveDTO.getFileKindCode();
-//
-//                if (ServiceEnumCode.ContentsFileKindCode.FILE.equals(fileKindCode)) {
-//                    this.checkStringValidation(contentsFileSaveDTO.getFileName(), ErrorEnumCode.ContentsError.CONE01.toString(), ErrorEnumCode.ContentsError.CONE01.getMessage());
-//
-//                    contentsFileEntity.setFileName(contentsFileSaveDTO.getFileName());
-//                    contentsFileEntity.setFileSize(contentsFileSaveDTO.getFileSize());
-//                    contentsFileEntity.setFilePhysicalName(contentsFileSaveDTO.getFilePhysicalName());
-//                } else {
-//                    this.checkStringValidation(contentsFileSaveDTO.getTitle(), ErrorEnumCode.ContentsError.CONE02.toString(), ErrorEnumCode.ContentsError.CONE02.getMessage());
-//                    this.checkStringValidation(contentsFileSaveDTO.getUrl(), ErrorEnumCode.ContentsError.CONE03.toString(), ErrorEnumCode.ContentsError.CONE03.getMessage());
-//
-//                    contentsFileEntity.setTitle(contentsFileSaveDTO.getTitle());
-//                    contentsFileEntity.setUrl(contentsFileSaveDTO.getUrl());
-//                }
-//            }
-//        }
-
-        return savedContents;
-    }
-
-
-    /**
-     * Check string validation boolean.
-     *
-     * @param value        the value
-     * @param errorCode    the error code
-     * @param errorMessage the error message
-     * @return the boolean
-     * @author [이소정]
-     * @CreatedOn 2020. 6. 26. 오후 5:30:51
-     * @Description
-     */
-    public Boolean checkStringValidation(String value, String errorCode, String errorMessage) {
-        if (value.isEmpty() || value.trim().isEmpty()) {
-            throw new CodeMessageHandleException(errorCode, errorMessage);
+//        contentsFile 추가
+        if (!contentsSaveDTO.getContentsFileList().isEmpty()) {
+            for (ContentsFileSaveDTO contentsFileSaveDTO : contentsSaveDTO.getContentsFileList()) {
+                ContentsFile savedContentsFile = contentsFileRepository.save(new ContentsFile().save(savedContents, contentsFileSaveDTO));
+                savedContentsFileList.add(savedContentsFile);
+            }
         }
-        return true;
+
+        savedContents.setContentsFiles(savedContentsFileList);
+        return savedContents;
     }
 
 }

@@ -92,7 +92,6 @@ public class AssetController {
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "콘텐츠 > Asset 목록 조회")
     public SingleResult<Page<Contents>> getAllContents(
             final ContentsSearchDTO contentsSearchDTO
-            , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
         System.out.println("==========================");
         System.out.println(messageSource.getMessage("greeting", null, Locale.getDefault()));
@@ -117,7 +116,8 @@ public class AssetController {
             , notes = REQUEST_CHARACTER
     )
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "콘텐츠 > Asset 등록")
-    public SingleResult<Contents> saveContents(@RequestBody final ContentsSaveDTO contentsSaveDTO
+    public SingleResult<Contents> saveContents(
+            @RequestBody final ContentsSaveDTO contentsSaveDTO
     ) {
         contentsSaveDTO.setTopMenuCode("ASSET");
         Contents contents = contentsService.save(contentsSaveDTO);

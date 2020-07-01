@@ -1,10 +1,12 @@
 package com.nike.dnp.entity.contents;
 
+import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.entity.menu.MenuRole;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +54,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "FILE_SECTION_CODE")
-    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드", required = true, example = "")
+    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드", required = true)
     private String fileSectionCode;
 
     /**
@@ -60,7 +62,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "FILE_KIND_CODE")
-    @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드", required = true, example = "")
+    @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드", required = true)
     private String fileKindCode;
 
     /**
@@ -109,7 +111,7 @@ public class ContentsFile extends BaseTimeEntity {
      */
     @Column(name = "DOWNLOAD_COUNT")
     @ApiModelProperty(name = "downloadCount", value = "다운로드 수")
-    private int downloadCount;
+    private long downloadCount;
 
 
     /**
@@ -118,35 +120,63 @@ public class ContentsFile extends BaseTimeEntity {
      */
     @ManyToOne
     @JoinColumn(name = "CONTENTS_SEQ", insertable = false, updatable = false)
+    @ApiModelProperty(name = "contents", value = "The Contents", hidden = true)
     private Contents contents;
 
+    /**
+     * Save contents file.
+     *
+     * @param savedContents       the saved contents
+     * @param contentsFileSaveDTO the contents file save dto
+     * @return the contents file
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 1. 오전 11:24:43
+     * @Description
+     */
     @Transactional
-    public ContentsFile save(ContentsFileSaveDTO contentsFileSaveDTO) {
+    public ContentsFile save(Contents savedContents, ContentsFileSaveDTO contentsFileSaveDTO) {
         log.info("ContentsFile.save");
         ContentsFile contentsFile = new ContentsFile();
 
+        contentsFile.setDownloadCount(0l);
+        contentsFile.setContentsSeq(savedContents.getContentsSeq());
+        contentsFile.setFileSectionCode(contentsFileSaveDTO.getFileSectionCode());
+        contentsFile.setFileKindCode(contentsFileSaveDTO.getFileKindCode());
+        String fileKindCode = contentsFileSaveDTO.getFileKindCode();
 
-        // TODO[lsj] 파일 저장
+        if (ServiceEnumCode.ContentsFileKindCode.FILE.equals(fileKindCode)) {
+            this.checkStringValidation(contentsFileSaveDTO.getFileName(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
+
+            contentsFile.setFileName(contentsFileSaveDTO.getFileName());
+            contentsFile.setFileSize(contentsFileSaveDTO.getFileSize());
+            contentsFile.setFilePhysicalName(contentsFileSaveDTO.getFilePhysicalName());
+        } else {
+            this.checkStringValidation(contentsFileSaveDTO.getTitle(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.getMessage());
+            this.checkStringValidation(contentsFileSaveDTO.getUrl(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
+
+            contentsFile.setTitle(contentsFileSaveDTO.getTitle());
+            contentsFile.setUrl(contentsFileSaveDTO.getUrl());
+        }
+
         return contentsFile;
     }
 
-
-//    /**
-//     * Update.
-//     *
-//     * @param managerName the manager name
-//     * @param password    the password
-//     * @param managerAuth the manager auth
-//     */
-//    public void update(
-//            final String managerName
-//            , final String password
-//            , final ManagerAuth managerAuth
-//    ) {
-//        this.managerName = managerName;
-//        this.password = password;
-//        this.managerAuth = managerAuth;
-//    }
-
+    /**
+     * Check string validation boolean.
+     *
+     * @param value        the value
+     * @param errorCode    the error code
+     * @param errorMessage the error message
+     * @return the boolean
+     * @author [이소정]
+     * @CreatedOn 2020. 6. 26. 오후 5:30:51
+     * @Description
+     */
+    public Boolean checkStringValidation(String value, String errorCode, String errorMessage) {
+        if (value.isEmpty() || value.trim().isEmpty()) {
+            throw new CodeMessageHandleException(errorCode, errorMessage);
+        }
+        return true;
+    }
 
 }

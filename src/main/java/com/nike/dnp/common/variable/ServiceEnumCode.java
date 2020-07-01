@@ -35,62 +35,30 @@ public class ServiceEnumCode {
          *
          * @author [오지훈]
          */
-        ,
-        /**
-         * Start date search enum code
-         *
-         * @author [오지훈]
-         */
-        START_DATE //시작일순
+        ,START_DATE //시작일순
     }
 
     /**
      * 콘텐츠 > 캠페인기간 enumCode
      */
     public enum ContentsCampaignPeriodCode {
-        /**
-         * Select contents campaign period code
-         *
-         * @author [오지훈]
-         */
         SELECT  //날짜선택
-        ,
-        /**
-         * Every contents campaign period code
-         *
-         * @author [오지훈]
-         */
-        EVERY  //365
+        , EVERY  //365
     }
 
     /**
      * 콘텐츠 > 파일 > 파일구분
      */
     public enum ContentsFileSectionCode {
-        /**
-         * Asset contents file section code
-         *
-         * @author [오지훈]
-         */
         ASSET
-        ,
-        /**
-         * Guide contents file section code
-         *
-         * @author [오지훈]
-         */
-        GUIDE
+        , GUIDE
+        , VIDEO
     }
 
     /**
      * 콘텐츠 > 파일 > 파일종류
      */
     public enum ContentsFileKindCode {
-        /**
-         * File contents file kind code
-         *
-         * @author [오지훈]
-         */
         FILE  // 파일
         ,
         /**
