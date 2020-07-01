@@ -21,51 +21,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class SuccessEnumCode {
 
-    /**
-     * The enum Common error.
-     *
-     * @author [이소정]
-     */
-    public enum CommonSuccess {
-        /**
-         * Come 01 success error
-         *
-         * @author [이소정]
-         */
-        COMS01("등록 성공"),
-        /**
-         * Come 02 success error
-         *
-         * @author [이소정]
-         */
-        COMS02("수정 성공");
-
-        /**
-         * 에러 메시지
-         *
-         * @author [이소정]
-         */
-        private final String value;
-
-        /**
-         * 생성자
-         *
-         * @author [이소정]
-         */
-        CommonSuccess(final String value) {
-            this.value = value;
-        }
-
-        /**
-         * 성공 메시지 조회
-         *
-         * @author [이소정]
-         */
-        public String getMessage() {
-            return value;
-        }
-    }
-
     public enum AuthSuccessEnum {
 
     }
