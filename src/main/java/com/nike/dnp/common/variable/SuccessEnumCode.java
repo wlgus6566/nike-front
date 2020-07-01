@@ -25,7 +25,7 @@ public class SuccessEnumCode {
 
     }
 
-    public enum UserSuccessEnum {
+    public enum UserSuccess {
         NOT_DUPLICATE("사용 가능한 ID입니다.");
 
         /**
@@ -43,7 +43,7 @@ public class SuccessEnumCode {
          * @CreatedOn 2020. 6. 23. 오후 5:39:17
          * @Description 생성자
          */
-        UserSuccessEnum(final String value) {
+        UserSuccess(final String value) {
             this.value = value;
         }
 

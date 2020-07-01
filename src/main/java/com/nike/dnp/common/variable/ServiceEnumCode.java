@@ -181,21 +181,21 @@ public class ServiceEnumCode {
          *
          * @author [오지훈]
          */
-        PASSWORD_SETTING("NIKE_EMAIL_PASSWORD_SETTING.html"),
+        PASSWORD_SETTING(""),
 
         /**
          * 비밀번호 변경 안내 메일
          *
          * @author [오지훈]
          */
-        PASSWORD_GUIDE("NIKE_EMAIL_PASSWORD_GUIDE.html"),
+        PASSWORD_GUIDE(""),
 
         /**
          * 인증코드 전송 메일
          *
          * @author [오지훈]
          */
-        CERT_CODE_SEND("NIKE_EMAIL_CERT_CODE_SEND.html"),
+        CERT_CODE_SEND(""),
 
         /**
          * 휴면회원 사전 알림 메일

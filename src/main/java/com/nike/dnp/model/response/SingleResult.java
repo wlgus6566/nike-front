@@ -23,4 +23,16 @@ public class SingleResult<T> extends CommonResult {
      */
     private T data;
 
+    public SingleResult(
+            final String code
+            ,final String msg
+            ,final Boolean success
+            ,final Boolean existMsg
+    ) {
+        this.setCode(code);
+        this.setMsg(msg);
+        this.setSuccess(success);
+        this.setExistMsg(existMsg);
+    }
+
 }

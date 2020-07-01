@@ -4,7 +4,7 @@ import com.nike.dnp.common.mail.MailService;
 import com.nike.dnp.common.variable.ErrorEnumCode.DataError;
 import com.nike.dnp.common.variable.ErrorEnumCode.UserError;
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.common.variable.SuccessEnumCode.UserSuccessEnum;
+import com.nike.dnp.common.variable.SuccessEnumCode.UserSuccess;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.user.*;
@@ -18,6 +18,7 @@ import com.nike.dnp.repository.user.UserAuthRepository;
 import com.nike.dnp.repository.user.UserRepository;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.util.CryptoUtil;
+import com.nike.dnp.util.EmailPatternUtil;
 import com.nike.dnp.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -288,22 +289,36 @@ public class UserService implements UserDetailsService {
         return new AuthUserDTO(this.findByUserId(userId));
     }
 
+    /**
+     * Check id single result.
+     *
+     * @param userIdDTO the user id dto
+     * @return the single result
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 1. 오후 2:52:56
+     * @Description ID 중복 체크
+     */
     public SingleResult<Integer> checkId(final UserIdDTO userIdDTO) {
         final SingleResult<Integer> result = new SingleResult<>();
         final String userId = userIdDTO.getUserId();
-        String code = "";
-        String msg = "";
+        String code = UserError.NOT_VALID_EMAIL.toString();
+        String msg = UserError.NOT_VALID_EMAIL.getMessage();
+        result.setData(0);
 
-        final int count = this.countByUserId(userId);
-        code = count > 0 ? "" : UserSuccessEnum.NOT_DUPLICATE.toString();
-        msg = count > 0 ? "" : UserSuccessEnum.NOT_DUPLICATE.getMessage();
+        if (EmailPatternUtil.isEmail(userId)) {
+            final int count = this.countByUserId(userId);
+            code = count > 0 ? UserError.USE_ID.toString() : UserSuccess.NOT_DUPLICATE.toString();
+            msg = count > 0 ? UserError.USE_ID.getMessage() : UserSuccess.NOT_DUPLICATE.getMessage();
+            result.setData(count);
+        }
 
-        result.setData(count);
-        result.setCode(code);
+        return new SingleResult<>(code, msg, true, true);
+
+        /*result.setCode(code);
         result.setMsg(msg);
         result.setSuccess(true);
         result.setExistMsg(true);
-        return result;
+        return result;*/
     }
 
     /**

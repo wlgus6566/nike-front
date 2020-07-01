@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  * @Description 패스워드 정규식
  */
 @UtilityClass
-public class PatternUtil {
+public class PasswordPatternUtil {
 
     /**
      * 영문, 숫자, 특수문자

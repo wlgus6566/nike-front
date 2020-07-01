@@ -241,9 +241,9 @@ public class UserController {
             + "## Response ## \n"
             + "[하위 Model 참조]\n\n\n\n"
     )
-    @GetMapping(name = "ID 중복 체크"
+    @GetMapping(name = "ID 중복 체크", value = "/duplicate"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Integer> checkId(final @RequestBody UserIdDTO userIdDTO) {
+    public SingleResult<Integer> checkId(final UserIdDTO userIdDTO) {
         log.info("UserController.checkId");
         return userService.checkId(userIdDTO);
     }
