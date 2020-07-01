@@ -169,10 +169,17 @@ public class UserService implements UserDetailsService {
     @Transactional
     public UserAuth save(final UserSaveDTO userSaveDTO) {
         log.info("UserService.save");
+        this.checkId(userSaveDTO.getUserId());
+
         final User user = userRepository.save(new User().save(userSaveDTO));
         final Auth auth = authRepository.findById(userSaveDTO.getAuthSeq()).orElseThrow(
                 () -> new CodeMessageHandleException(DataError.NOT_FOUND.toString(), DataError.NOT_FOUND.getMessage()));
-        return userAuthRepository.save(new UserAuth().save(user, auth));
+
+        final UserAuth userAuth = userAuthRepository.save(new UserAuth().save(user, auth));
+        if (userAuth.getUserAuthSeq() > 0) {
+            this.sendCreateUserEmail(user);
+        }
+        return userAuth;
     }
 
     /**
@@ -298,27 +305,20 @@ public class UserService implements UserDetailsService {
      * @CreatedOn 2020. 7. 1. 오후 2:52:56
      * @Description ID 중복 체크
      */
-    public SingleResult<Integer> checkId(final UserIdDTO userIdDTO) {
+    public SingleResult<Integer> checkId(final String userId) {
         final SingleResult<Integer> result = new SingleResult<>();
-        final String userId = userIdDTO.getUserId();
+        //final String userId = userIdDTO.getUserId();
         String code = UserError.NOT_VALID_EMAIL.toString();
         String msg = UserError.NOT_VALID_EMAIL.getMessage();
         result.setData(0);
 
-        if (EmailPatternUtil.isEmail(userId)) {
+        if (EmailPatternUtil.isValidEmail(userId)) {
             final int count = this.countByUserId(userId);
             code = count > 0 ? UserError.USE_ID.toString() : UserSuccess.NOT_DUPLICATE.toString();
             msg = count > 0 ? UserError.USE_ID.getMessage() : UserSuccess.NOT_DUPLICATE.getMessage();
             result.setData(count);
         }
-
         return new SingleResult<>(code, msg, true, true);
-
-        /*result.setCode(code);
-        result.setMsg(msg);
-        result.setSuccess(true);
-        result.setExistMsg(true);
-        return result;*/
     }
 
     /**

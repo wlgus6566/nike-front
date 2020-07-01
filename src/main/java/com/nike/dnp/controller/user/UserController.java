@@ -1,5 +1,6 @@
 package com.nike.dnp.controller.user;
 
+import com.nike.dnp.common.variable.SuccessEnumCode;
 import com.nike.dnp.dto.user.*;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.entity.user.UserAuth;
@@ -12,9 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -130,7 +129,7 @@ public class UserController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<UserAuth> save(
             final @Valid @RequestBody UserSaveDTO codeSaveDTO
-            , final @ApiIgnore BindingResult result
+            //, final @ApiIgnore BindingResult result
             ) {
         log.info("UserController.save");
         /*if (result.hasErrors()) {
@@ -146,7 +145,12 @@ public class UserController {
 
             throw new CodeMessageHandleException("failfail", Arrays.toString(errors));
         }*/
-        return responseService.getSingleResult(userService.save(codeSaveDTO));
+        SingleResult<Integer> result = userService.checkId(codeSaveDTO.getUserId());
+        if(result.getCode().equals(SuccessEnumCode.UserSuccess.NOT_DUPLICATE.toString())) {
+            return responseService.getSingleResult(userService.save(codeSaveDTO));
+        } else {
+            return new SingleResult<>(result.getCode(), result.getMsg(), true, true);
+        }
     }
 
     /**
@@ -245,6 +249,6 @@ public class UserController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Integer> checkId(final UserIdDTO userIdDTO) {
         log.info("UserController.checkId");
-        return userService.checkId(userIdDTO);
+        return userService.checkId(userIdDTO.getUserId());
     }
 }

@@ -68,7 +68,7 @@ public class UserOpenController {
     @GetMapping(value = "/send/cert", name = "인증코드 생성 및 이메일 발송")
     public SingleResult<Boolean> sendCert(final UserIdDTO userIdDTO) {
         log.info("UserController.sendCert");
-        userService.sendCreateUserEmail(userService.findByUserId(userIdDTO.getUserId()));
+        //userService.sendCreateUserEmail(userService.findByUserId(userIdDTO.getUserId()));
         return responseService.getSingleResult(true);
     }
 
