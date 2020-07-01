@@ -50,58 +50,19 @@ public class ErrorEnumCode {
      * @author [이소정]
      */
     public enum LoginErrorEnum {
-
-        /**
-         * Loge 01 login error
-         *
-         * @author [오지훈]
-         */
-        LOGE01("가입여부를 확인해주세요.\n등록된 정보가 없습니다."),
-        /**
-         * Loge 02 login error
-         *
-         * @author [오지훈]
-         */
-        LOGE02("이메일을 정확히 입력해주세요."),
-        /**
-         * Loge 03 login error
-         *
-         * @author [오지훈]
-         */
-        LOGE03("비밀번호를 입력해주세요."),
-        /**
-         * Loge 04 login error
-         *
-         * @author [오지훈]
-         */
-        LOGE04("이미 사용중인 이메일 입니다."),
-        /**
-         * Loge 05 login error
-         *
-         * @author [오지훈]
-         */
-        LOGE05("사용할 수 없는 단어입니다."),
-        /**
-         * Loge 06 login error
-         *
-         * @author [오지훈]
-         */
-        LOGE06("새 비밀번호를 입력해주세요."),
-        /**
-         * Loge 07 login error
-         *
-         * @author [오지훈]
-         */
-        LOGE07("비밀번호가 틀렸습니다."),
-
+        NOT_JOIN("가입여부를 확인해주세요.\n등록된 정보가 없습니다."),
+        CHECK_EMAIL("이메일을 정확히 입력해주세요."),
+        NULL_PW("비밀번호를 입력해주세요."),
+        DUPLICATE_EMAIL("이미 사용중인 이메일 입니다."),
+        WRONG_PASSWORD("비밀번호가 틀렸습니다."),
         CHECK_ID_PW("아이디 또는 비밀번호를 확인 후 다시 입력해 주세요"),
         PW_OVERTIME("비밀번호를 변경하신지 90일이 지났습니다. 비밀번호를 변경해 주세요"),
         EXPIRED_AUTH_CODE("인증코드 유효기간이 만료되었습니다. 다시 인증해 주세요"),
         EXPIRED_PERIOD("유효기간이 만료된 url 입니다"),
-        FAIL_PW_RULE("(8~16자/대소문자/숫자/특수문자 포함)의 비밀번호를 입력해 주세요"),
+        INVALID_PW("(8~16자/대소문자/숫자/특수문자 포함)의 비밀번호를 입력해 주세요"),
         DUPLICATE_ID_PW("비밀번호는 ID와 중복됩니다. 다시 입력해 주세요."),
         USED_PW("전에 사용하지 않은 비밀번호로 변경해 주세요"),
-        MISPATCH_PW("입력하신 비밀번호가 일치하지 않습니다.");
+        NOT_MATCH_PW("입력하신 비밀번호가 일치하지 않습니다.");
 
         /**
          * 에러 메시지

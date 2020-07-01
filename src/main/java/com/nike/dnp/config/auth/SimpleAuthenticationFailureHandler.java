@@ -45,7 +45,7 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 		}
 		// 비밀번호 틀림
 		if(exception instanceof BadCredentialsException){
-			JsonUtil.write(response.getWriter(), responseService.getFailResult(LoginErrorEnum.LOGE07.toString(), LoginErrorEnum.LOGE07.getMessage()));
+			JsonUtil.write(response.getWriter(), responseService.getFailResult(LoginErrorEnum.WRONG_PASSWORD.toString(), LoginErrorEnum.WRONG_PASSWORD.getMessage()));
 
 		// 아이디 비번 입력 안함
 		}else if(exception instanceof InsufficientAuthenticationException){
@@ -53,7 +53,7 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 
 		// 계정 정보 없음
 		}else if(exception instanceof InternalAuthenticationServiceException){
-			JsonUtil.write(response.getWriter(), responseService.getFailResult(LoginErrorEnum.LOGE01.toString(), LoginErrorEnum.LOGE01.getMessage()));
+			JsonUtil.write(response.getWriter(), responseService.getFailResult(LoginErrorEnum.NOT_JOIN.toString(), LoginErrorEnum.NOT_JOIN.getMessage()));
 
 		// 기타
 		}else{
