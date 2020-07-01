@@ -1,13 +1,18 @@
 package com.nike.dnp.service.user;
 
+import com.nike.dnp.common.mail.MailService;
 import com.nike.dnp.common.variable.ErrorEnumCode.DataError;
 import com.nike.dnp.common.variable.ErrorEnumCode.UserError;
+import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.SuccessEnumCode.UserSuccessEnum;
 import com.nike.dnp.dto.auth.AuthUserDTO;
+import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.user.*;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.repository.auth.AuthRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
 import com.nike.dnp.repository.user.UserRepository;
@@ -47,6 +52,13 @@ public class UserService implements UserDetailsService {
      * @author [오지훈]
      */
     private final RedisService redisService;
+
+    /**
+     * MailService
+     *
+     * @author [오지훈]
+     */
+    private final MailService mailService;
 
     /**
      * UserRepository
@@ -99,7 +111,7 @@ public class UserService implements UserDetailsService {
     public Optional<User> findById(final Long userSeq) {
         log.info("UserService.findById");
         return Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
-                () -> new CodeMessageHandleException(UserError.USER01.toString(), UserError.USER01.getMessage())));
+                () -> new CodeMessageHandleException(UserError.NOT_FOUND.toString(), UserError.NOT_FOUND.getMessage())));
     }
 
     /**
@@ -114,7 +126,7 @@ public class UserService implements UserDetailsService {
     public User findByUserId(final String userId) {
         log.info("UserService.findByUserId");
         return userRepository.findByUserId(userId).orElseThrow(
-                () -> new CodeMessageHandleException(UserError.USER01.toString(), UserError.USER01.getMessage()));
+                () -> new CodeMessageHandleException(UserError.NOT_FOUND.toString(), UserError.NOT_FOUND.getMessage()));
     }
 
     /**
@@ -129,6 +141,19 @@ public class UserService implements UserDetailsService {
     public Optional<UserAuth> findByUser(final User user) {
         return Optional.ofNullable(userAuthRepository.findByUser(user).orElseThrow(
                 () -> new CodeMessageHandleException(DataError.NOT_FOUND.toString(), DataError.NOT_FOUND.getMessage())));
+    }
+
+    /**
+     * Count by user id int.
+     *
+     * @param userId the user id
+     * @return the int
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 1. 오후 2:15:45
+     * @Description 유저 아이디 카운트
+     */
+    public int countByUserId(final String userId) {
+        return userRepository.countByUserId(userId);
     }
 
     /**
@@ -263,6 +288,24 @@ public class UserService implements UserDetailsService {
         return new AuthUserDTO(this.findByUserId(userId));
     }
 
+    public SingleResult<Integer> checkId(final UserIdDTO userIdDTO) {
+        final SingleResult<Integer> result = new SingleResult<>();
+        final String userId = userIdDTO.getUserId();
+        String code = "";
+        String msg = "";
+
+        final int count = this.countByUserId(userId);
+        code = count > 0 ? "" : UserSuccessEnum.NOT_DUPLICATE.toString();
+        msg = count > 0 ? "" : UserSuccessEnum.NOT_DUPLICATE.getMessage();
+
+        result.setData(count);
+        result.setCode(code);
+        result.setMsg(msg);
+        result.setSuccess(true);
+        result.setExistMsg(true);
+        return result;
+    }
+
     /**
      * Check boolean.
      *
@@ -272,8 +315,8 @@ public class UserService implements UserDetailsService {
      * @CreatedOn 2020. 6. 22. 오후 4:18:42
      * @Description 인증코드 검증 및 비밀번호 변경
      */
-    public Boolean check(final UserCertDTO userCertDTO) {
-        log.info("UserService.findByCertCode");
+    public Boolean checkCertCode(final UserCertDTO userCertDTO) {
+        log.info("UserService.checkCertCode");
         String decodeCertCode = "";
         try {
             decodeCertCode = CryptoUtil.urlDecode(CryptoUtil.decryptAES256(userCertDTO.getCertCode(), "Nike DnP"));
@@ -320,26 +363,37 @@ public class UserService implements UserDetailsService {
     /**
      * Send email.
      *
-     * @param userId the user id
+     * @param user the user
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 3:27:51
-     * @Description 비밀번호 설정 알림메일 발송
+     * @Description [계정 생성 안내] 알림메일 발송
      */
-    public void sendEmail(final String userId) {
-        log.info("UserService.sendEmailByPassword");
+    public void sendCreateUserEmail(final User user) {
+        log.info("UserService.sendCreateUserEmail");
 
         try {
             //TODO[ojh] 인증코드 생성
             final String certCode = RandomUtil.randomCertCode2(10);
 
             //TODO[ojh] ID+인증코드 암호화
-            final String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(userId + "|" + certCode, "Nike DnP"));
+            final String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(user.getUserId() + "|" + certCode, "Nike DnP"));
             log.info("encodeCertCode > " + encodeCertCode);
 
             //TODO[ojh] REDIS 값 셋팅
-            redisService.set("cert:"+userId, certCode, 60);
+            redisService.set("cert:"+user.getUserId(), certCode, 60);
 
-            //TODO[ojh] 패스워드 변경 이메일 발송
+            //TODO[ojh] 대체값 변경
+            SendDTO sendDTO = new SendDTO();
+            sendDTO.setNickname(user.getNickname());
+            sendDTO.setEmail(user.getUserId());
+            sendDTO.setPasswordUrl("http://nikednp.co.kr?certCode="+encodeCertCode);
+
+            //TODO[ojh] [계정 생성 안내] 이메일 발송
+            mailService.sendMail(
+                    ServiceEnumCode.EmailType.USER_CREATE.toString()
+                    ,ServiceEnumCode.EmailType.USER_CREATE.getMessage()
+                    ,sendDTO
+            );
 
         } catch (Exception exception) {
             log.error("Exception", exception);

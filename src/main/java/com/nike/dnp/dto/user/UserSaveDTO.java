@@ -23,7 +23,7 @@ public class UserSaveDTO {
      *
      * @author [오지훈]
      */
-    @NotNull(message = "아이디를 입력해주세요.")
+    @NotNull(message = "아이디를(을) 입력해 주세요.")
     @ApiModelProperty(name = "userId", value = "유저 ID", required = true)
     private String userId;
 
@@ -32,7 +32,7 @@ public class UserSaveDTO {
      *
      * @author [오지훈]
      */
-    @NotNull(message = "닉네임을 입력해주세요.")
+    @NotNull(message = "닉네임을(를) 입력해 주세요.")
     @ApiModelProperty(name = "nickname", value = "닉네임", required = true)
     private String nickname;
 

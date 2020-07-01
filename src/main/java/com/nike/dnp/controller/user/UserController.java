@@ -1,12 +1,8 @@
 package com.nike.dnp.controller.user;
 
-import com.nike.dnp.dto.user.UserDeleteDTO;
-import com.nike.dnp.dto.user.UserSaveDTO;
-import com.nike.dnp.dto.user.UserSearchDTO;
-import com.nike.dnp.dto.user.UserUpdateDTO;
+import com.nike.dnp.dto.user.*;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.entity.user.UserAuth;
-import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.user.UserService;
@@ -17,12 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -139,8 +133,7 @@ public class UserController {
             , final @ApiIgnore BindingResult result
             ) {
         log.info("UserController.save");
-
-        if (result.hasErrors()) {
+        /*if (result.hasErrors()) {
             //return responseService.getFailResult("fail", result.getAllErrors().get(0).getDefaultMessage());
 
             String[] errors = new String[result.getAllErrors().size()];
@@ -152,7 +145,7 @@ public class UserController {
             }
 
             throw new CodeMessageHandleException("failfail", Arrays.toString(errors));
-        }
+        }*/
         return responseService.getSingleResult(userService.save(codeSaveDTO));
     }
 
@@ -230,5 +223,28 @@ public class UserController {
         log.info("UserController.deleteArray");
         return responseService.getSingleResult(userService.deleteArray(userDeleteDTO),
                 "SUC", "삭제 완료", true);
+    }
+
+    /**
+     * Check id single result.
+     *
+     * @param userIdDTO the user id dto
+     * @return the single result
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 1. 오후 2:13:24
+     * @Description ID 중복 체크
+     */
+    @ApiOperation(
+            value = "ID 중복 체크" + "\n"
+            , notes = "## Reqeust ##\n"
+            + "[하위 Parameters 참조]\n\n\n\n"
+            + "## Response ## \n"
+            + "[하위 Model 참조]\n\n\n\n"
+    )
+    @GetMapping(name = "ID 중복 체크"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<Integer> checkId(final @RequestBody UserIdDTO userIdDTO) {
+        log.info("UserController.checkId");
+        return userService.checkId(userIdDTO);
     }
 }

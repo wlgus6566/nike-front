@@ -37,4 +37,14 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
      */
     List<User> findAllByUserSeqIn(Long[] userSeqArray);
 
+    /**
+     * Count by user id int.
+     *
+     * @param userId the user id
+     * @return the int
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 1. 오후 2:14:56
+     * @Description 유저 아이디 존재 유무
+     */
+    int countByUserId(String userId);
 }

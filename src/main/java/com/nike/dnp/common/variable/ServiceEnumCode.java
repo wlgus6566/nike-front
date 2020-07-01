@@ -35,31 +35,232 @@ public class ServiceEnumCode {
          *
          * @author [오지훈]
          */
-        ,START_DATE //시작일순
+        ,
+        /**
+         * Start date search enum code
+         *
+         * @author [오지훈]
+         */
+        START_DATE //시작일순
     }
 
     /**
      * 콘텐츠 > 캠페인기간 enumCode
      */
     public enum ContentsCampaignPeriodCode {
+        /**
+         * Select contents campaign period code
+         *
+         * @author [오지훈]
+         */
         SELECT  //날짜선택
-        , EVERY  //365
+        ,
+        /**
+         * Every contents campaign period code
+         *
+         * @author [오지훈]
+         */
+        EVERY  //365
     }
 
     /**
      * 콘텐츠 > 파일 > 파일구분
      */
     public enum ContentsFileSectionCode {
+        /**
+         * Asset contents file section code
+         *
+         * @author [오지훈]
+         */
         ASSET
-        , GUIDE
+        ,
+        /**
+         * Guide contents file section code
+         *
+         * @author [오지훈]
+         */
+        GUIDE
     }
 
     /**
      * 콘텐츠 > 파일 > 파일종류
      */
     public enum ContentsFileKindCode {
+        /**
+         * File contents file kind code
+         *
+         * @author [오지훈]
+         */
         FILE  // 파일
-        , VIDEO  // 동영상(URL)
-        , VR  // VR
+        ,
+        /**
+         * Video contents file kind code
+         *
+         * @author [오지훈]
+         */
+        VIDEO  // 동영상(URL)
+        ,
+        /**
+         * Vr contents file kind code
+         *
+         * @author [오지훈]
+         */
+        VR  // VR
+    }
+
+    /**
+     * The enum User status enum code.
+     */
+    public enum UserStatusEnumCode {
+
+        /**
+         * Normal user enum code
+         *
+         * @author [오지훈]
+         */
+        NORMAL("정상"),
+        /**
+         * Dormant user enum code
+         *
+         * @author [오지훈]
+         */
+        DORMANT("휴면"),
+        /**
+         * Out user enum code
+         *
+         * @author [오지훈]
+         */
+        OUT("탈퇴");
+
+        /**
+         * 코드값
+         *
+         * @author [오지훈]
+         */
+        private final String value;
+
+        /**
+         * Instantiates a new User status enum code.
+         *
+         * @param value - 코드값
+         * @author [오지훈]
+         * @CreatedOn 2020. 6. 23. 오후 5:39:17
+         * @Description 생성자
+         */
+        UserStatusEnumCode(final String value) {
+            this.value = value;
+        }
+
+        /**
+         * Gets message.
+         *
+         * @return value - 코드값
+         * @author [오지훈]
+         * @CreatedOn 2020. 6. 23. 오후 5:39:17
+         * @Description 코드값
+         */
+        public String getMessage() {
+            return value;
+        }
+
+    }
+
+    /**
+     * The enum Email type.
+     */
+    public enum EmailType {
+        /**
+         * 계정 생성 알림 메일
+         *
+         * @author [오지훈]
+         */
+        USER_CREATE("[NIKE/TEST] NIKE D&P PLATFORM 계정 생성 안내"),
+
+        /**
+         * 비밀번호 설정 알림 메일
+         *
+         * @author [오지훈]
+         */
+        PASSWORD_SETTING("NIKE_EMAIL_PASSWORD_SETTING.html"),
+
+        /**
+         * 비밀번호 변경 안내 메일
+         *
+         * @author [오지훈]
+         */
+        PASSWORD_GUIDE("NIKE_EMAIL_PASSWORD_GUIDE.html"),
+
+        /**
+         * 인증코드 전송 메일
+         *
+         * @author [오지훈]
+         */
+        CERT_CODE_SEND("NIKE_EMAIL_CERT_CODE_SEND.html"),
+
+        /**
+         * 휴면회원 사전 알림 메일
+         *
+         * @author [오지훈]
+         */
+        DORMANT_PREV(""),
+
+        /**
+         * 휴면회원 변경 알림 메일
+         *
+         * @author [오지훈]
+         */
+        DORMANT_CHANGE(""),
+
+        /**
+         * 휴면상태 활성화 완료 메일
+         *
+         * @author [오지훈]
+         */
+        DORMANT_ACTIVE(""),
+
+        /**
+         * 컨텐츠 업데이트 알림 메일
+         *
+         * @author [오지훈]
+         */
+        CONTENTS_UPDATE(""),
+
+        /**
+         * 주문서 메일
+         *
+         * @author [오지훈]
+         */
+        ORDER("[NIKE/TEST] NIKE D&P PLATFORM 주문서");
+
+        /**
+         * 코드값
+         *
+         * @author [오지훈]
+         */
+        private final String value;
+
+        /**
+         * Instantiates a new User status enum code.
+         *
+         * @param value - 코드값
+         * @author [오지훈]
+         * @CreatedOn 2020. 6. 23. 오후 5:39:17
+         * @Description 생성자
+         */
+        EmailType(final String value) {
+            this.value = value;
+        }
+
+        /**
+         * Gets message.
+         *
+         * @return value - 코드값
+         * @author [오지훈]
+         * @CreatedOn 2020. 6. 23. 오후 5:39:17
+         * @Description 코드값
+         */
+        public String getMessage() {
+            return value;
+        }
     }
 }

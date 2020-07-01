@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.nike.dnp.common.variable.UserStatusEnumCode;
+import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.user.UserSaveDTO;
 import com.nike.dnp.dto.user.UserUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
@@ -222,7 +222,7 @@ public class User extends BaseTimeEntity {
         this.userId = String.valueOf(userSeq);
         this.password = String.valueOf(userSeq);
         this.nickname = String.valueOf(userSeq);
-        this.userStatusCode = UserStatusEnumCode.OUT.toString();
+        this.userStatusCode = ServiceEnumCode.UserStatusEnumCode.OUT.toString();
     }
 
     /**

@@ -2,7 +2,6 @@ package com.nike.dnp.controller.user;
 
 import com.nike.dnp.dto.user.UserCertDTO;
 import com.nike.dnp.dto.user.UserIdDTO;
-import com.nike.dnp.entity.user.User;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.user.UserService;
@@ -50,7 +49,6 @@ public class UserOpenController {
      */
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n필드명|설명|필수여부|데이터 타입(길이)\n" + "-|-|-|-\n";
 
-
     /**
      * 인증코드 생성 및 이메일 발송
      *
@@ -69,9 +67,8 @@ public class UserOpenController {
     )
     @GetMapping(value = "/send/cert", name = "인증코드 생성 및 이메일 발송")
     public SingleResult<Boolean> sendCert(final UserIdDTO userIdDTO) {
-        log.info("UserController.sendCertCode");
-        User user = userService.findByUserId(userIdDTO.getUserId());
-        userService.sendEmail(user.getUserId());
+        log.info("UserController.sendCert");
+        userService.sendCreateUserEmail(userService.findByUserId(userIdDTO.getUserId()));
         return responseService.getSingleResult(true);
     }
 
@@ -88,7 +85,7 @@ public class UserOpenController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Boolean> changePassword(final UserCertDTO userCertDTO) {
         log.info("UserController.changePassword");
-        return responseService.getSingleResult(userService.check(userCertDTO));
+        return responseService.getSingleResult(userService.checkCertCode(userCertDTO));
     }
 
 

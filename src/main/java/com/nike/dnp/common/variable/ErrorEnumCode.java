@@ -191,7 +191,10 @@ public class ErrorEnumCode {
          *
          * @author [오지훈]
          */
-        USER01("해당 회원의 상세정보가 존재하지 않습니다.");
+        NOT_FOUND("해당 회원의 상세정보가 존재하지 않습니다.")
+        ,USE_ID("이미 사용중인 ID입니다.")
+        ,NOT_VALID_EMAIL("올바른 Email 주소를 입력해 주세요.")
+        ;
 
         /**
          * 에러 메시지

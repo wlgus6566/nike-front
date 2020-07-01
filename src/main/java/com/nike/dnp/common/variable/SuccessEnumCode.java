@@ -24,4 +24,40 @@ public class SuccessEnumCode {
     public enum AuthSuccessEnum {
 
     }
+
+    public enum UserSuccessEnum {
+        NOT_DUPLICATE("사용 가능한 ID입니다.");
+
+        /**
+         * 코드값
+         *
+         * @author [오지훈]
+         */
+        private final String value;
+
+        /**
+         * Instantiates a new User status enum code.
+         *
+         * @param value - 코드값
+         * @author [오지훈]
+         * @CreatedOn 2020. 6. 23. 오후 5:39:17
+         * @Description 생성자
+         */
+        UserSuccessEnum(final String value) {
+            this.value = value;
+        }
+
+        /**
+         * Gets message.
+         *
+         * @return value - 코드값
+         * @author [오지훈]
+         * @CreatedOn 2020. 6. 23. 오후 5:39:17
+         * @Description 코드값
+         */
+        public String getMessage() {
+            return value;
+        }
+    }
+
 }
