@@ -26,14 +26,19 @@ header {
     flex-shrink: 0;
     flex-basis: 200px;
 }
-header .inner {
+header .header-inner {
+    position: relative;
+}
+header nav {
     width: 200px;
     box-sizing: border-box;
-    padding: 80px 30px 130px 0;
-    margin-left: 30px;
+    padding: 146px 30px 130px 30px;
 }
 header h1 {
-    position: relative;
+    z-index: 1;
+    position: absolute;
+    top: 80px;
+    left: 30px;
     transform-origin: 0 0;
 }
 header h1 a {
@@ -44,9 +49,8 @@ header h1 a img {
     vertical-align: top;
 }
 
-header nav {
+header nav > ul {
     position: relative;
-    margin-top: 30px;
 }
 nav .nav-link {
     display: inline-block;
@@ -60,7 +64,15 @@ nav .nav-link {
 nav .active ul {
     display: block;
 }
+nav ul ul ul {
+}
 nav .depth1 > ul {
+}
+nav .depth1 > ul > li > .nav-link {
+    color: #ccc;
+}
+nav .depth1 > ul > li > .nav-link.router-link-active {
+    color: #000;
 }
 header .icon-ellipsis {
     z-index: 2;
@@ -70,6 +82,10 @@ header .icon-ellipsis {
     height: 10px;
     width: 10px;
     background: red;
+}
+
+header .sticky-content {
+    /*background: rgba(0, 0, 0, 0.5);*/
 }
 
 /*nav.active {*/
@@ -92,14 +108,14 @@ header .icon-ellipsis {
 /*    opacity: 0;*/
 /*}*/
 header .header-bg {
+    z-index: 21;
     transform-origin: 0 0;
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
-    width: 100%;
+    width: 40px;
     opacity: 0;
-    background: #f7f7f7;
 }
 #container {
     overflow: hidden;
