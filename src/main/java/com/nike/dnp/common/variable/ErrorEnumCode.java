@@ -55,10 +55,7 @@ public class ErrorEnumCode {
         /**
          * 생성자
          *
-         * @param value - 에러 메시지
          * @author [이소정]
-         * @CreatedOn 2020. 6. 24. 오후 5:25:57
-         * @Description
          */
         CommonError(final String value) {
             this.value = value;
@@ -67,10 +64,7 @@ public class ErrorEnumCode {
         /**
          * 에러 메시지 조회
          *
-         * @return value - 에러 메시지
          * @author [이소정]
-         * @CreatedOn 2020. 6. 24. 오후 5:25:57
-         * @Description
          */
         public String getMessage() {
             return value;
@@ -83,7 +77,7 @@ public class ErrorEnumCode {
      *
      * @author [이소정]
      */
-    public enum LoginError {
+    public enum LoginErrorEnum {
 
         /**
          * Loge 01 login error
@@ -143,7 +137,7 @@ public class ErrorEnumCode {
          * @CreatedOn 2020. 6. 24. 오후 5:25:57
          * @Description
          */
-        LoginError(final String value) {
+        LoginErrorEnum(final String value) {
             this.value = value;
         }
 

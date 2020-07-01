@@ -11,11 +11,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.Locale;
 
 /**
  * 콘텐츠 > Asset Controller
@@ -44,6 +48,9 @@ public class AssetController {
      * @author [이소정]
      */
     private final ContentsService contentsService;
+
+    @Autowired
+    MessageSource messageSource;
 
     /**
      * The constant REQUEST_CHARACTER
@@ -87,6 +94,9 @@ public class AssetController {
             final ContentsSearchDTO contentsSearchDTO
             , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
+        System.out.println("==========================");
+        System.out.println(messageSource.getMessage("greeting", null, Locale.getDefault()));
+
         // Asset 메뉴 코드 넣어줌.
         contentsSearchDTO.setTopMenuCode("ASSET");
         return responseService.getSingleResult(contentsService.findAllPaging(contentsSearchDTO));
@@ -97,7 +107,6 @@ public class AssetController {
      * Save contents single result.
      *
      * @param contentsSaveDTO the contents save dto
-     * @param authUserDTO     the auth user dto
      * @return the single result
      * @author [이소정]
      * @CreatedOn 2020. 6. 24. 오후 3:45:44
@@ -109,10 +118,9 @@ public class AssetController {
     )
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "콘텐츠 > Asset 등록")
     public SingleResult<Contents> saveContents(@RequestBody final ContentsSaveDTO contentsSaveDTO
-            , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
         contentsSaveDTO.setTopMenuCode("ASSET");
-        Contents contents = contentsService.save(contentsSaveDTO, authUserDTO);
+        Contents contents = contentsService.save(contentsSaveDTO);
         return responseService.getSingleResult(contents);
     }
 

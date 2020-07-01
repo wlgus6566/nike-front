@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @since 2020.06.11
  */
 @Component
-public class EnumCode {
+public class ServiceEnumCode {
 
     /**
      * 정렬 순서

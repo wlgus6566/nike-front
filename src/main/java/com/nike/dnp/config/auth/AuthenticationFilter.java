@@ -42,10 +42,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 			final String password = obtainPassword(request);
 			if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
 				if("".equals(username)){
-					throw new InsufficientAuthenticationException(ErrorEnumCode.LoginError.LOGE02.toString());
+					throw new InsufficientAuthenticationException(ErrorEnumCode.LoginErrorEnum.LOGE02.toString());
 				}
 				if(StringUtils.isEmpty(password)){
-					throw new InsufficientAuthenticationException(ErrorEnumCode.LoginError.LOGE03.toString());
+					throw new InsufficientAuthenticationException(ErrorEnumCode.LoginErrorEnum.LOGE03.toString());
 				}
 			}
 			token = new UsernamePasswordAuthenticationToken(username, password);

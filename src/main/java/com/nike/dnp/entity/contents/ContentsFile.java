@@ -1,9 +1,14 @@
 package com.nike.dnp.entity.contents;
 
+import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
+import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.entity.menu.MenuRole;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
@@ -14,14 +19,13 @@ import javax.persistence.*;
  * @CreatedOn 2020. 6. 24. 오후 3:56:22
  * @Description
  */
+@Slf4j
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_CONTENTS_FILE")
-//@Embeddable // 연관관계 있는거 자동으로 삭제 해줌
-//사요하는 곳에서 @Embeddable  private ContentsFile contentFile; 로 사용하면 됨
 public class ContentsFile extends BaseTimeEntity {
 
     /**
@@ -32,6 +36,7 @@ public class ContentsFile extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CONTENTS_FILE_SEQ")
     @ApiModelProperty(name = "contentsFileSeq", value = "컨텐츠 파일 시퀀스")
+
     private Long contentsFileSeq;
 
     /**
@@ -114,6 +119,17 @@ public class ContentsFile extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "CONTENTS_SEQ", insertable = false, updatable = false)
     private Contents contents;
+
+    @Transactional
+    public ContentsFile save(ContentsFileSaveDTO contentsFileSaveDTO) {
+        log.info("ContentsFile.save");
+        ContentsFile contentsFile = new ContentsFile();
+
+
+        // TODO[lsj] 파일 저장
+        return contentsFile;
+    }
+
 
 //    /**
 //     * Update.

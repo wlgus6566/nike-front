@@ -1,8 +1,12 @@
 package com.nike.dnp.entity.contents;
 
+import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,6 +18,7 @@ import java.util.List;
  * @CreatedOn 2020. 6. 19. 오후 5:57:35
  * @Description Contents Entity 작성
  */
+@Slf4j
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -27,7 +32,7 @@ public class Contents extends BaseTimeEntity {
      * @author [이소정]
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CONTENTS_SEQ")
     @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스")
     private Long contentsSeq;
@@ -151,6 +156,51 @@ public class Contents extends BaseTimeEntity {
     @OneToMany(mappedBy = "contents")
     @ApiModelProperty(name = "contentsFiles", value = "콘텐츠 파일 목록", required = true)
     private List<ContentsFile> contentsFiles;
+
+    /**
+     * Save contents.
+     *
+     * @param contentsSaveDTO the contents save dto
+     * @return the contents
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 1. 오전 9:59:51
+     * @Description 등록
+     */
+    @Transactional
+    public Contents save(ContentsSaveDTO contentsSaveDTO) {
+        log.info("Contents.save");
+        Contents saveContents = new Contents();
+        saveContentsBasic(contentsSaveDTO, saveContents);
+        // 캠페인기간 > 날짜선택 인 경우
+        if (ServiceEnumCode.ContentsCampaignPeriodCode.EVERY.toString().equals(contentsSaveDTO.getCampaignPeriodSectionCode())) {
+            saveContents.setCampaignBeginDt(contentsSaveDTO.getCampaignBeginDt());
+            saveContents.setCampaignEndDt(contentsSaveDTO.getCampaignEndDt());
+        }
+        saveContents.setMemo(contentsSaveDTO.getMemo());
+        // TODO[lsj] 권한설정 추가 하기
+
+        return saveContents;
+    }
+
+    /**
+     * Save contents basic.
+     *
+     * @param contentsSaveDTO the contents save dto
+     * @param saveContents    the save contents
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 1. 오전 9:59:37
+     * @Description 기본적인 부분 등록
+     */
+    public static void saveContentsBasic(ContentsSaveDTO contentsSaveDTO, Contents saveContents) {
+        log.info("Contents.saveContentsBasic");
+        saveContents.setTopMenuCode(contentsSaveDTO.getTopMenuCode());
+        saveContents.setMenuCode(contentsSaveDTO.getMenuCode());
+        saveContents.setImageFileName(contentsSaveDTO.getImageFileName());
+        saveContents.setImageFileSize(contentsSaveDTO.getImageFileSize());
+        saveContents.setImageFilePhysicalName(contentsSaveDTO.getImageFilePhysicalName());
+        saveContents.setFolderName(contentsSaveDTO.getFolderName());
+        saveContents.setCampaignPeriodSectionCode(contentsSaveDTO.getCampaignPeriodSectionCode());
+    }
 
 //    /**
 //     * Update.
