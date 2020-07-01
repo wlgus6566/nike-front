@@ -14,36 +14,6 @@ import org.springframework.stereotype.Component;
 public class SuccessEnumCode {
 
     /**
-     * The enum Auth success enum.
-     */
-    public enum AuthSuccessEnum {
-
-        NO_AUTH("접근 권한이 없습니다.");
-
-        /**
-         * The Value
-         * @author [이소정]
-         */
-        private final String value;
-
-        AuthSuccessEnum(final String value) {
-            this.value = value;
-        }
-
-        /**
-         * Gets message.
-         *
-         * @return the message
-         * @author [이소정]
-         * @CreatedOn 2020. 7. 1. 오후 2:46:38
-         * @Description
-         */
-        public String getMessage() {
-            return value;
-        }
-    }
-
-    /**
      * The enum Login success enum.
      */
     public enum LoginSuccessEnum {
