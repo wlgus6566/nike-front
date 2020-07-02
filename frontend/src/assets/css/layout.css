@@ -57,23 +57,48 @@ nav .nav-link {
     font-size: 16px;
     line-height: 40px;
     letter-spacing: 0.05em;
-    color: #000;
+    color: #888;
     border-radius: 0;
     font-family: 'Bebas Neue', sans-serif;
+}
+nav .nav-link[disabled] {
+    pointer-events: none;
 }
 nav .active ul {
     display: block;
 }
-nav ul ul ul {
-}
+
 nav .depth1 > ul {
 }
-nav .depth1 > ul > li > .nav-link {
-    color: #ccc;
-}
-nav .depth1 > ul > li > .nav-link.router-link-active {
+nav .depth1 > .nav-link {
     color: #000;
 }
+nav .nav-link.router-link-active {
+    color: #000 !important;
+}
+nav .depth2 > .nav-link {
+    color: #888;
+}
+nav .depth2 > .nav-link .noto-sans {
+    font-family: 'NotoSansKR', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: -0.05em;
+}
+nav .depth2 > ul {
+    padding: 0 0 20px 10px;
+}
+nav .depth3 > .nav-link {
+    font-family: 'NotoSansKR', sans-serif;
+    font-size: 12px;
+    line-height: 30px;
+    font-weight: 400;
+    letter-spacing: -0.05em;
+}
+nav .depth3 > .nav-link.router-link-active {
+    font-weight: 700;
+}
+
 header .icon-ellipsis {
     z-index: 2;
     position: absolute;
@@ -81,33 +106,9 @@ header .icon-ellipsis {
     left: 0;
     height: 10px;
     width: 10px;
-    background: red;
 }
-
-header .sticky-content {
-    /*background: rgba(0, 0, 0, 0.5);*/
-}
-
-/*nav.active {*/
-/*    transform: translateX(30px) !important;*/
-/*    opacity: 1 !important;*/
-/*}*/
-/*nav.active > ul > li {*/
-/*    display: none;*/
-/*}*/
-/*nav.active > ul > li.router-link-active {*/
-/*    display: block;*/
-/*}*/
-/*nav.active > ul > li.router-link-active > a {*/
-/*    transform: translateX(30px);*/
-/*    opacity: 0;*/
-/*}*/
-/*nav.active > ul > li.router-link-active > ul {*/
-/*    transform: translateX(30px);*/
-/*    display: block;*/
-/*    opacity: 0;*/
-/*}*/
 header .header-bg {
+    display: none;
     z-index: 21;
     transform-origin: 0 0;
     position: absolute;
@@ -117,6 +118,10 @@ header .header-bg {
     width: 40px;
     opacity: 0;
 }
+header .sticky-content {
+    /*background: rgba(0, 0, 0, 0.5);*/
+}
+
 #container {
     overflow: hidden;
     display: flex;

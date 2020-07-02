@@ -1,38 +1,43 @@
 <template>
-    <li :class="{ active: isOpen }">
-        <button type="button" v-if="isFolder && !item.titleKo" @click="toggle" class="nav-link">
-            {{ item.title }}
-        </button>
-        <router-link v-else :to="item.to" :exact="item.exact" :class="[{ hasDepth: isFolder }, 'nav-link']">
-            {{ item.title }}
-        </router-link>
-
+    <li :class="[{ active: isOpen }, `depth${this.depth}`]">
+        <!--<button type="button" v-if="isFolder && !item.titleKo" @click="toggle" class="nav-link" v-html="item.title" />-->
+        <router-link
+            @click.native.prevent="toggle"
+            :to="item.to"
+            :exact="item.exact"
+            :event="clickable ? '' : 'click'"
+            :class="[{ hasDepth: isFolder }, 'nav-link']"
+            v-html="item.title"
+        />
         <ul v-show="isOpen" v-if="isFolder">
-            <navItem v-for="(child, index) in item.children" :key="index" :item="child" />
+            <navItem v-for="(child, index) in item.children" :key="index" :item="child" :depth="depth + 1" />
         </ul>
     </li>
 </template>
 <script>
 export default {
     name: 'navItem',
-    props: ['item'],
+    props: ['item', 'depth'],
     data: function () {
         return {
             isOpen: false,
         };
     },
     computed: {
+        clickable: function () {
+            return this.isFolder && this.depth !== 1;
+        },
         isFolder: function () {
             return this.item.children && this.item.children.length;
         },
     },
     methods: {
         toggle: function () {
-            if (this.isFolder) {
+            if (this.clickable) {
                 this.isOpen = !this.isOpen;
             }
         },
     },
 };
 </script>
-<style scoped></style>
+<style></style>

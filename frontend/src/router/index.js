@@ -4,6 +4,8 @@ import VueRouter from 'vue-router';
 // Routes
 import AssetRoutes from './asset';
 import ToolkitRoutes from './toolkit';
+import FoundationRoutes from './foundation';
+import OrderRoutes from './order';
 
 // Import methods
 import { pages } from '@/util/global-methods';
@@ -19,11 +21,13 @@ const router = new VueRouter({
         },
         {
             path: '/',
-            component: pages('MainPage.vue'),
+            component: pages('main-page'),
             meta: { layout: 'Default', aside: 'Default' },
         },
         ...AssetRoutes,
         ...ToolkitRoutes,
+        ...FoundationRoutes,
+        ...OrderRoutes,
     ],
 });
 

@@ -1,9 +1,9 @@
 <template>
-    <router-view />
+    <div>complete</div>
 </template>
 <script>
 export default {
-    name: 'asset',
+    name: 'complete',
 };
 </script>
 <style scoped></style>

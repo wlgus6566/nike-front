@@ -1,5 +1,5 @@
-import AsideDefault from './AsideDefault.vue';
-import AsideFile from './AsideFile.vue';
-import AsideOrder from './AsideOrder.vue';
+import AsideDefault from './default.vue';
+import AsideFile from './file.vue';
+import AsideOrder from './order.vue';
 
 export { AsideDefault, AsideFile, AsideOrder };

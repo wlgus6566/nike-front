@@ -7,13 +7,12 @@
         </h1>
         <nav>
             <ul>
-                <navItem class="depth1" v-for="(item, index) in lnb" :key="index" :item="item" />
+                <navItem v-for="(item, index) in lnb" :key="index" :item="item" :depth="1" />
             </ul>
         </nav>
     </div>
 </template>
 <script>
-//import Sticky from 'vue-sticky-directive';
 import navItem from './nav-item';
 
 export default {
@@ -29,46 +28,19 @@ export default {
                 },
                 {
                     title: 'ASSET',
-                    titleKo: '메인',
+                    titleKo: '캠페인 그래픽',
                     to: '/asset',
                     exact: false,
                     children: [
                         {
                             title: 'ALL',
-                            to: '/asset',
+                            to: '/asset/all',
                             exact: false,
                         },
                         {
                             title: 'SP',
                             to: '/asset/sp',
                             exact: false,
-                            children: [
-                                {
-                                    title: '2ALL',
-                                    to: '/asset/sp/test1',
-                                    exact: false,
-                                },
-                                {
-                                    title: '2SP',
-                                    to: '/asset/sp/test2',
-                                    exact: false,
-                                },
-                                {
-                                    title: '2SU',
-                                    to: '/asset/sp/test3',
-                                    exact: false,
-                                },
-                                {
-                                    title: '2FA',
-                                    to: '/asset/sp/test4',
-                                    exact: false,
-                                },
-                                {
-                                    title: '2HO',
-                                    to: '/asset/sp/test5',
-                                    exact: false,
-                                },
-                            ],
                         },
                         {
                             title: 'SU',
@@ -91,19 +63,27 @@ export default {
                     title: 'TOOLKIT',
                     titleKo: '메인',
                     to: '/toolkit',
-                    exact: true,
+                    exact: false,
                     children: [
                         {
-                            title: 'TOOLKIT1-1',
-                            to: '/toolkit/all',
+                            title: 'VMS',
+                            to: '/toolkit/vms',
                             exact: false,
-                            children: [
-                                {
-                                    title: 'TOOLKIT1-1-1',
-                                    to: '/toolkit/test',
-                                    exact: false,
-                                },
-                            ],
+                        },
+                        {
+                            title: 'EKIN',
+                            to: '/toolkit/ekin',
+                            exact: false,
+                        },
+                        {
+                            title: 'SOCIAL',
+                            to: '/toolkit/social',
+                            exact: false,
+                        },
+                        {
+                            title: 'RB',
+                            to: '/toolkit/rb',
+                            exact: false,
                         },
                     ],
                 },
@@ -114,28 +94,166 @@ export default {
                     exact: false,
                     children: [
                         {
-                            title: 'MAIN',
-                            to: '/foundation',
+                            title: 'VMS',
+                            to: '/foundation/vms',
+                            exact: false,
+                        },
+                        {
+                            title: 'EKIN',
+                            to: '/foundation/ekin',
+                            exact: false,
+                        },
+                        {
+                            title: 'DIGITAL',
+                            to: '/foundation/digital',
+                            exact: false,
+                        },
+                        {
+                            title: 'RB',
+                            to: '/foundation/rb',
                             exact: false,
                         },
                     ],
                 },
                 {
                     title: 'ORDER',
-                    titleKo: '메인',
+                    titleKo: `<span class="noto-sans">부자재 주문</span>`,
                     to: '/order',
                     exact: false,
                     children: [
                         {
-                            title: 'MAIN',
-                            to: '/order',
+                            title: `<span class="noto-sans">상품 관리</span>`,
+                            to: '/order/management',
                             exact: false,
+                        },
+                        {
+                            title: `<span class="noto-sans">부자재</span>`,
+                            to: '/order/subsidiary',
+                            exact: false,
+                            children: [
+                                {
+                                    title: `운영 비품`,
+                                    to: '/order/subsidiary/operating',
+                                    exact: false,
+                                },
+                                {
+                                    title: `스태프 비품`,
+                                    to: '/order/subsidiary/staff',
+                                    exact: false,
+                                },
+                                {
+                                    title: `운영 사이니지`,
+                                    to: '/order/subsidiary/operating-signage',
+                                    exact: false,
+                                },
+                                {
+                                    title: `세일 사이니지`,
+                                    to: '/order/subsidiary/sale-signage',
+                                    exact: false,
+                                },
+                                {
+                                    title: `오픈 패키지`,
+                                    to: '/order/subsidiary/open-package',
+                                    exact: false,
+                                },
+                            ],
+                        },
+                        {
+                            title: 'Niki By You',
+                            to: '/order/niki-by-you',
+                            exact: false,
+                            children: [
+                                {
+                                    title: `신발 커스텀 (단품)`,
+                                    to: '/order/niki-by-you/shoes',
+                                    exact: false,
+                                },
+                                {
+                                    title: `신발 커스텀 (패키지)`,
+                                    to: '/order/niki-by-you/shoes-package',
+                                    exact: false,
+                                },
+                                {
+                                    title: `의류 커스텀 (단품)`,
+                                    to: '/order/niki-by-you/apparel',
+                                    exact: false,
+                                },
+                                {
+                                    title: `의류 커스텀 (패키지)`,
+                                    to: '/order/niki-by-you/apparel-package',
+                                    exact: false,
+                                },
+                                {
+                                    title: 'OTHERS',
+                                    to: '/order/niki-by-you/others',
+                                    exact: false,
+                                },
+                            ],
+                        },
+                        {
+                            title: 'CUSTOM23',
+                            to: '/order/custom23',
+                            exact: false,
+                            children: [
+                                {
+                                    title: '신발 커스텀 (단품)',
+                                    to: '/order/custom23/shoes',
+                                    exact: false,
+                                },
+                                {
+                                    title: '신발 커스텀 (패키지)',
+                                    to: '/order/custom23/shoes-package',
+                                    exact: false,
+                                },
+                                {
+                                    title: '의류 커스텀 (단품)',
+                                    to: '/order/custom23/apparel',
+                                    exact: false,
+                                },
+                                {
+                                    title: '의류 커스텀 (패키지)',
+                                    to: '/order/custom23/apparel-package',
+                                    exact: false,
+                                },
+                                {
+                                    title: 'OTHERS',
+                                    to: '/order/custom23/others',
+                                    exact: false,
+                                },
+                            ],
+                        },
+                        {
+                            title: 'MNQ',
+                            to: '/order/mnq',
+                            exact: false,
+                            children: [
+                                {
+                                    title: '남성',
+                                    to: '/order/mnq/male',
+                                    exact: false,
+                                },
+                                {
+                                    title: '여성',
+                                    to: '/order/mnq/female',
+                                    exact: false,
+                                },
+                                {
+                                    title: '유아동',
+                                    to: '/order/mnq/child',
+                                    exact: false,
+                                },
+                                {
+                                    title: '수리/보수',
+                                    to: '/order/mnq/repair',
+                                    exact: false,
+                                },
+                            ],
                         },
                     ],
                 },
                 {
                     title: 'REPORT',
-                    titleKo: '메인',
+                    titleKo: '시공보고서',
                     to: '/report',
                     exact: false,
                     children: [
@@ -148,7 +266,7 @@ export default {
                 },
                 {
                     title: 'INFORMATION',
-                    titleKo: '메인',
+                    titleKo: '에이전시 정보',
                     to: '/information',
                     exact: false,
                     children: [
@@ -161,14 +279,137 @@ export default {
                 },
                 {
                     title: 'MANAGEMENT',
-                    titleKo: '메인',
+                    titleKo: '플랫폼 관리',
                     to: '/management',
                     exact: false,
                     children: [
                         {
-                            title: 'MAIN',
-                            to: '/management',
+                            title: '상품 관리',
+                            to: '/order/management',
                             exact: false,
+                        },
+                        {
+                            title: '부자재',
+                            to: '/order/subsidiary',
+                            exact: false,
+                            children: [
+                                {
+                                    title: '운영 비품',
+                                    to: '/order/subsidiary/operating',
+                                    exact: false,
+                                },
+                                {
+                                    title: '스태프 비품',
+                                    to: '/order/subsidiary/staff',
+                                    exact: false,
+                                },
+                                {
+                                    title: '운영 사이니지',
+                                    to: '/order/subsidiary/operating-signage',
+                                    exact: false,
+                                },
+                                {
+                                    title: '세일 사이니지',
+                                    to: '/order/subsidiary/sale-signage',
+                                    exact: false,
+                                },
+                                {
+                                    title: '오픈 패키지',
+                                    to: '/order/subsidiary/open-package',
+                                    exact: false,
+                                },
+                            ],
+                        },
+                        {
+                            title: 'Niki By You',
+                            to: '/order/niki-by-you',
+                            exact: false,
+                            children: [
+                                {
+                                    title: '신발 커스텀 (단품)',
+                                    to: '/order/niki-by-you/shoes',
+                                    exact: false,
+                                },
+                                {
+                                    title: '신발 커스텀 (패키지)',
+                                    to: '/order/niki-by-you/shoes-package',
+                                    exact: false,
+                                },
+                                {
+                                    title: '의류 커스텀 (단품)',
+                                    to: '/order/niki-by-you/apparel',
+                                    exact: false,
+                                },
+                                {
+                                    title: '의류 커스텀 (패키지)',
+                                    to: '/order/niki-by-you/apparel-package',
+                                    exact: false,
+                                },
+                                {
+                                    title: 'OTHERS',
+                                    to: '/order/niki-by-you/others',
+                                    exact: false,
+                                },
+                            ],
+                        },
+                        {
+                            title: 'CUSTOM23',
+                            to: '/order/custom23',
+                            exact: false,
+                            children: [
+                                {
+                                    title: '신발 커스텀 (단품)',
+                                    to: '/order/custom23/shoes',
+                                    exact: false,
+                                },
+                                {
+                                    title: '신발 커스텀 (패키지)',
+                                    to: '/order/custom23/shoes-package',
+                                    exact: false,
+                                },
+                                {
+                                    title: '의류 커스텀 (단품)',
+                                    to: '/order/custom23/apparel',
+                                    exact: false,
+                                },
+                                {
+                                    title: '의류 커스텀 (패키지)',
+                                    to: '/order/custom23/apparel-package',
+                                    exact: false,
+                                },
+                                {
+                                    title: 'OTHERS',
+                                    to: '/order/custom23/others',
+                                    exact: false,
+                                },
+                            ],
+                        },
+                        {
+                            title: 'MNQ',
+                            to: '/order/mnq',
+                            exact: false,
+                            children: [
+                                {
+                                    title: '남성',
+                                    to: '/order/mnq/male',
+                                    exact: false,
+                                },
+                                {
+                                    title: '여성',
+                                    to: '/order/mnq/female',
+                                    exact: false,
+                                },
+                                {
+                                    title: '유아동',
+                                    to: '/order/mnq/child',
+                                    exact: false,
+                                },
+                                {
+                                    title: '수리/보수',
+                                    to: '/order/mnq/repair',
+                                    exact: false,
+                                },
+                            ],
                         },
                     ],
                 },
@@ -187,4 +428,14 @@ export default {
     methods: {},
 };
 </script>
-<style scoped></style>
+<style scoped>
+nav .depth2 > .nav-link {
+    background: red;
+}
+nav .depth2 > .nav-link .noto-sans {
+    font-family: 'NotoSansKR', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: -0.05em;
+}
+</style>

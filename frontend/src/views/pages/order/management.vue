@@ -1,9 +1,9 @@
 <template>
-    <router-view />
+    <div>management</div>
 </template>
 <script>
 export default {
-    name: 'asset',
+    name: 'management',
 };
 </script>
 <style scoped></style>

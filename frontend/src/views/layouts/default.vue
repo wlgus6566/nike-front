@@ -60,14 +60,14 @@ export default {
     },
     components: {
         appHeader,
-        AsideDefault: () => import('@/components/app-aside/AsideDefault.vue'),
-        AsideFile: () => import('@/components/app-aside/AsideDefault.vue'),
-        AsideOrder: () => import('@/components/app-aside/AsideOrder.vue'),
+        AsideDefault: () => import('@/components/app-aside/default.vue'),
+        AsideFile: () => import('@/components/app-aside/default.vue'),
+        AsideOrder: () => import('@/components/app-aside/order.vue'),
     },
     mounted() {
         this.headerAni();
         console.log(this.tw);
-        this.toggleHeader(this.$route.path !== '/', this.tw_dur);
+        this.toggleHeader(this.$route.path !== '/', this.tw._dur);
         const target = [document.querySelector('header .inner')];
         this.layoutAnimation(target, '-100%', '0%');
     },
@@ -83,6 +83,9 @@ export default {
 
             this.tw.clear();
             this.tw
+                .set(header, {
+                    backgroundImage: 'linear-gradient(to right, rgba(255,255,255,1) 100%, rgba(0,0,0,0) 100%)',
+                })
                 .to(
                     logo,
                     0.5,
@@ -95,14 +98,20 @@ export default {
                     0
                 )
                 .to(
-                    bg,
+                    header,
                     0.5,
                     {
-                        opacity: '1',
-                        scaleX: 0.2,
+                        backgroundImage: 'linear-gradient(to right, rgba(247,247,247,1) 20%, rgba(0,0,0,0) 20%)',
                         ease: Cubic.easeInOut,
                     },
                     0
+                )
+                .set(
+                    bg,
+                    {
+                        display: 'block',
+                    },
+                    0.3
                 )
                 .to(
                     nav,
@@ -117,8 +126,10 @@ export default {
                 .set(
                     nav,
                     {
+                        width: '160px',
+                        padding: '146px 20px 130px 20px',
                         opacity: '1',
-                        translateX: '30px',
+                        translateX: '40px',
                     },
                     0.3
                 )

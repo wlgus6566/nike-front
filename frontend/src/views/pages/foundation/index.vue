@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-    name: 'asset',
+    name: 'foundation',
 };
 </script>
 <style scoped></style>

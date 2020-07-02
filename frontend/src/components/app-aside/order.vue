@@ -9,8 +9,8 @@
     </div>
 </template>
 <script>
-import UserInfo from './UserInfo.vue';
-import TabComponent from '@/components/tab-components/index.vue';
+import UserInfo from './user.vue';
+import TabComponent from '@/components/tab-comp/index.vue';
 
 export default {
     name: 'AsideOrder',

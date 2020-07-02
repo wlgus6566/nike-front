@@ -1,9 +1,9 @@
 <template>
-    <router-view />
+    <div>{{ $route.meta.title }}</div>
 </template>
 <script>
 export default {
-    name: 'asset',
+    name: 'list',
 };
 </script>
 <style scoped></style>

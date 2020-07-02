@@ -1,7 +1,12 @@
 <template>
     <div>
         <ul v-bind:class="tabMenus.tabClass">
-            <li v-bind:class="{ active: tabMenu.component === tabContent }" v-for="(tabMenu, index) in tabMenus.tabList" v-bind:key="index" v-on:click="tabClick(index)">
+            <li
+                v-bind:class="{ active: tabMenu.component === tabContent }"
+                v-for="(tabMenu, index) in tabMenus.tabList"
+                v-bind:key="index"
+                v-on:click="tabClick(index)"
+            >
                 <a href="#"
                     ><span>{{ tabMenu.title }}</span></a
                 >
@@ -23,12 +28,12 @@ export default {
         // console.log(this.tabMenus);
     },
     components: {
-        ContentMypage: () => import('@/components/tab-components/ContentMypage.vue'),
-        ContentOrder: () => import('@/components/tab-components/ContentOrder.vue'),
-        ContentFile: () => import('@/components/tab-components/ContentFile.vue'),
-        ContentAsset: () => import('@/components/tab-components/ContentAsset.vue'),
-        ContentTooKlit: () => import('@/components/tab-components/ContentTooKlit.vue'),
-        ContentFoundation: () => import('@/components/tab-components/ContentFoundation.vue'),
+        ContentMypage: () => import('@/components/tab-comp/content-mypage.vue'),
+        ContentOrder: () => import('@/components/tab-comp/content-order.vue'),
+        ContentFile: () => import('@/components/tab-comp/content-file.vue'),
+        ContentAsset: () => import('@/components/tab-comp/content-asset.vue'),
+        ContentTooKlit: () => import('@/components/tab-comp/content-tookit.vue'),
+        ContentFoundation: () => import('@/components/tab-comp/content-foundation.vue'),
     },
     methods: {
         tabClick(index) {

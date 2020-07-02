@@ -10,7 +10,7 @@ import Vue from 'vue';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import App from './App.vue';
-
+import { layouts } from '@/util/global-methods';
 Vue.use(ElementUI);
 
 export default {
@@ -25,9 +25,9 @@ export default {
         },
     },
     components: {
-        LayoutDefault: () => import('@/views/layouts/LayoutDefault.vue'),
-        LayoutClean: () => import('@/views/layouts/LayoutClean.vue'),
-        LayoutPub: () => import('@/views/layouts/LayoutPub.vue'),
+        LayoutDefault: layouts('default'),
+        LayoutClean: layouts('clean'),
+        LayoutPub: layouts('pub'),
     },
 };
 </script>

@@ -2,34 +2,33 @@ import { pages } from '@/util/global-methods';
 
 const routes = [
     {
-        path: '/toolkit',
-        component: pages('toolkit'),
-        meta: { layout: 'Default', aside: 'Order', title: '' },
-        redirect: '/toolkit/vms',
+        path: '/foundation',
+        component: pages('foundation'),
+        redirect: '/foundation/vms',
         children: [
             {
                 path: 'upload',
-                component: pages('toolkit/upload'),
+                component: pages('foundation/upload'),
                 meta: { layout: 'Default', aside: 'Order', title: 'UPLOAD' },
             },
             {
                 path: 'vms',
-                component: pages('toolkit/list'),
+                component: pages('foundation/list'),
                 meta: { layout: 'Default', aside: 'Order', title: 'VMS' },
             },
             {
                 path: 'ekin',
-                component: pages('toolkit/list'),
+                component: pages('foundation/list'),
                 meta: { layout: 'Default', aside: 'Order', title: 'EKIN' },
             },
             {
-                path: 'social',
-                component: pages('toolkit/list'),
-                meta: { layout: 'Default', aside: 'Order', title: 'SOCIAL' },
+                path: 'Digital',
+                component: pages('foundation/list'),
+                meta: { layout: 'Default', aside: 'Order', title: 'DIGITAL' },
             },
             {
                 path: 'rb',
-                component: pages('toolkit/list'),
+                component: pages('foundation/list'),
                 meta: { layout: 'Default', aside: 'Order', title: 'RB' },
             },
         ],
