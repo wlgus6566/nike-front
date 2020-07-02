@@ -47,17 +47,19 @@ public class ErrorEnumCode {
     public enum LoginError {
         NOT_JOIN("가입여부를 확인해주세요.\n등록된 정보가 없습니다."),
         CHECK_EMAIL("이메일을 정확히 입력해주세요."),
-        NULL_PASSWORD("비밀번호를 입력해주세요."),
         DUPLICATE_EMAIL("이미 사용중인 이메일 입니다."),
+        NULL_PASSWORD("비밀번호를 입력해주세요."),
         WRONG_PASSWORD("비밀번호가 틀렸습니다."),
         CHECK_ID_PASSWORD("아이디 또는 비밀번호를 확인 후 다시 입력해 주세요"),
-        PASSWORD_OVERTIME("비밀번호를 변경하신지 90일이 지났습니다. 비밀번호를 변경해 주세요"),
-        EXPIRED_CERT_CODE("인증코드 유효기간이 만료되었습니다. 다시 인증해 주세요"),
+        OVERTIME_PASSWORD("비밀번호를 변경하신지 90일이 지났습니다. 비밀번호를 변경해 주세요"),
         EXPIRED_PERIOD("유효기간이 만료된 url 입니다"),
         INVALID_PASSWORD("(8~16자/대소문자/숫자/특수문자 포함)의 비밀번호를 입력해 주세요"),
         DUPLICATE_ID_PASSWORD("비밀번호는 ID와 중복됩니다. 다시 입력해 주세요."),
         USED_PASSWORD("전에 사용하지 않은 비밀번호로 변경해 주세요"),
-        NOT_MATCH_PASSWORD("입력하신 비밀번호가 일치하지 않습니다.");
+        NOT_MATCH_PASSWORD("입력하신 비밀번호가 일치하지 않습니다."),
+        EXPIRED_CERT_CODE("인증코드 유효기간이 만료되었습니다. 다시 인증해 주세요"),
+        NOT_MATCH_CERT_CODE("인증코드를 확인해 주세요.(인증코드는 대소문자를 구별합니다.)"),
+        IS_SLANG("비밀번호에 금칙어가 포함되어 있습니다. 다시 입력해 주세요."); //TODO[ojh] 2020-07-02 : 메시지 변경 예정
 
         /**
          * 에러 메시지
@@ -95,15 +97,10 @@ public class ErrorEnumCode {
     @RequiredArgsConstructor
     @Getter
     public enum UserError {
-
-        /**
-         * User 01 user error
-         *
-         * @author [오지훈]
-         */
         NOT_FOUND("해당 회원의 상세정보가 존재하지 않습니다.")
         ,USE_ID("이미 사용중인 ID입니다.")
         ,NOT_VALID_EMAIL("올바른 Email 주소를 입력해 주세요.")
+        ,RETRY_CONFIRM_EMAIL("E-MAIL을 다시 확인 후 입력해 주세요.")
         ;
 
         /**

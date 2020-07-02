@@ -132,6 +132,15 @@ public class User extends BaseTimeEntity {
     private LocalDateTime passwordLastUpdateDt;
 
     /**
+     * 비밀번호 변경 여부
+     *
+     * @author [오지훈]
+     */
+    @Column(name = "PASSWORD_CHANGE_YN")
+    @ApiModelProperty(name = "passwordChangeYn", value = "비밀번호 변경 여부", required = true)
+    private String passwordChangeYn;
+
+    /**
      * 유저권한 맵핑
      *
      * @author [오지훈]
@@ -159,6 +168,7 @@ public class User extends BaseTimeEntity {
     @PrePersist
     public void prePersist() {
         this.termsAgreeYn = this.termsAgreeYn == null ? "N" : this.termsAgreeYn;
+        this.passwordChangeYn = this.passwordChangeYn == null ? "N" : this.passwordChangeYn;
         this.userStatusCode = ServiceEnumCode.UserStatusEnumCode.NORMAL.toString();
     }
 
@@ -204,6 +214,7 @@ public class User extends BaseTimeEntity {
         log.info("User.updatePassword");
         this.password = password;
         this.passwordLastUpdateDt = LocalDateTime.now();
+        this.passwordChangeYn = "Y";
     }
 
     /**
@@ -240,11 +251,24 @@ public class User extends BaseTimeEntity {
      *
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
-     * @Description 최종 로그인 일시 변경
+     * @Description 최종 로그인 일시 변경 / 브라우저 헤더 업데이트
      */
-    public void updateLoginDt() {
+    public void updateLoginDt(String loginBrowserHeader) {
         log.info("User.updateLoginDt");
         this.loginDt = LocalDateTime.now();
+        this.loginBrowserHeader = loginBrowserHeader;
+    }
+
+    /**
+     * Update agreement.
+     *
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 2. 오후 5:03:18
+     * @Description 약관동의
+     */
+    public void updateAgreement() {
+        log.info("User.updateAgreement");
+        this.termsAgreeYn = "Y";
     }
 
 }

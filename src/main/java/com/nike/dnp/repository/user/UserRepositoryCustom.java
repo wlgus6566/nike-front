@@ -26,4 +26,14 @@ public interface UserRepositoryCustom {
      */
     Page<User> findPages(final UserSearchDTO userSearchDTO, final PageRequest pageRequest);
 
+    /**
+     * Count by pasword change period int.
+     *
+     * @param userSeq the user seq
+     * @return the int
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 2. 오후 12:18:05
+     * @Description 90일 지난 패스워드 체크
+     */
+    long countByPaswordChangePeriod(final Long userSeq);
 }

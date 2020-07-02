@@ -3,6 +3,8 @@ package com.nike.dnp.model.response;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.HashMap;
+
 /**
  * CommonResult
  *
@@ -29,7 +31,7 @@ public class CommonResult {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "메시지 리턴 여부 : true/false", name = "isMsg", required = true)
+    @ApiModelProperty(value = "메시지 리턴 여부 : true/false", name = "existMsg", required = true)
     private boolean existMsg = false;
 
     /**
@@ -47,6 +49,14 @@ public class CommonResult {
      */
     @ApiModelProperty(value = "응답 메시지", name = "msg", example = "성공")
     private String msg = "";
+
+    /**
+     * 응답 데이터
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(value = "추가 응답 데이터", name = "payload", example = "{'':''}")
+    private HashMap<String, Object> payload;
 
 }
 

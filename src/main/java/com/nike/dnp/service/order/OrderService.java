@@ -2,7 +2,7 @@ package com.nike.dnp.service.order;
 
 import com.nike.dnp.dto.order.OrderProductSaveDTO;
 import com.nike.dnp.entity.order.Order;
-import com.nike.dnp.entity.order.OrderProductMapping;
+import com.nike.dnp.repository.order.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,23 +21,29 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OrderService {
 
-	/*public final OrderRepository orderRepository;
 
-	public final OrderProductMapping orderProductMapping;*/
+	/**
+	 * The Order repository
+	 *
+	 * @author [윤태호]
+	 */
+	private final OrderRepository orderRepository;
 
 
-	public OrderProductMapping saveOrder(final OrderProductSaveDTO orderProductSaveDTO) {
+	/**
+	 * Save order order.
+	 *
+	 * @param orderProductSaveDTO the order product save dto
+	 * @return the order
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 1. 오후 2:47:41
+	 * @Description
+	 */
+	@Transactional
+	public Order saveOrder(final OrderProductSaveDTO orderProductSaveDTO) {
 		Order order = new Order();
 		order.setOrderDescription(orderProductSaveDTO.getOrderDescription());
 		order.setTotalAmount(orderProductSaveDTO.getTotalAmount());
-
-		OrderProductMapping orderProductMapping = new OrderProductMapping();
-
-
-
-
-		return new OrderProductMapping();
-
-
+		return orderRepository.save(order);
 	}
 }

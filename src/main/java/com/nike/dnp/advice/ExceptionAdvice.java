@@ -1,14 +1,21 @@
 package com.nike.dnp.advice;
 
+import com.nike.dnp.dto.log.ErrorLogSaveDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.service.ResponseService;
+import com.nike.dnp.service.log.ErrorLogService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Global Exception Handler
@@ -20,23 +27,21 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @Slf4j
 @ControllerAdvice
+@RequiredArgsConstructor
 public class ExceptionAdvice {
 
     /**
      * ResponseService
      * @author [이소정]
      */
-    private final transient ResponseService responseService;
+    private final ResponseService responseService;
 
     /**
-     * Instantiates a new Exception advice.
+     * ErrorLogService
      *
-     * @param responseService the response service
-     * @author [이소정]
+     * @author [오지훈]
      */
-    public ExceptionAdvice(final ResponseService responseService) {
-        this.responseService = responseService;
-    }
+    private final ErrorLogService errorLogService;
 
     /**
      * status 200 Exception
@@ -49,8 +54,16 @@ public class ExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     protected CommonResult codeMessageHandleException(final CodeMessageHandleException exception) {
+        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         log.debug("==================ERROR===================");
         log.debug("Exception Status200Exception", exception);
+        log.debug("========================= ErrorLog Start =========================");
+        final ErrorLogSaveDTO errorLog = new ErrorLogSaveDTO();
+        errorLog.setUrl(request.getRequestURI());
+        errorLog.setErrorContents(exception.getMessage());
+        errorLogService.save(errorLog);
+        log.debug("========================= End End =========================");
+
         return responseService.getFailResult(exception.getCode(), exception.getMessage());
     }
 
@@ -65,8 +78,16 @@ public class ExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public CommonResult globalHandelException(final Exception exception) {
+        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         log.debug("==================Global ERROR===================");
         log.debug("Exception", exception);
+        log.debug("========================= ErrorLog Start =========================");
+        final ErrorLogSaveDTO errorLog = new ErrorLogSaveDTO();
+        errorLog.setUrl(request.getRequestURI());
+        errorLog.setErrorContents(exception.getMessage());
+        errorLogService.save(errorLog);
+        log.debug("========================= ErrorLog End =========================");
+
         return responseService.getFailResult();
     }
 

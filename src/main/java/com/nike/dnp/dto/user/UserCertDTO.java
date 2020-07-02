@@ -9,7 +9,7 @@ import lombok.*;
  *
  * @author [오지훈]
  * @CreatedOn 2020. 6. 22. 오후 12:14:01
- * @Description User(유저) 인증코드로 검색 DTO 작성
+ * @Description User(유저) 패스워드 설정 DTO 작성
  */
 @Getter
 @Setter
@@ -25,6 +25,14 @@ public class UserCertDTO {
      */
     @ApiModelProperty(value = "인증 코드", name = "certCode", required = true)
     private String certCode;
+
+    /**
+     * 기존 비밀번호
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(value = "기존 비밀번호", name = "password")
+    private String password;
 
     /**
      * 새로운 비밀번호

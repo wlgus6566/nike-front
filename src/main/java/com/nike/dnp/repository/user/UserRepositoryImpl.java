@@ -1,9 +1,7 @@
 package com.nike.dnp.repository.user;
 
 import com.nike.dnp.dto.user.UserSearchDTO;
-import com.nike.dnp.entity.auth.QAuth;
 import com.nike.dnp.entity.user.QUser;
-import com.nike.dnp.entity.user.QUserAuth;
 import com.nike.dnp.entity.user.User;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -52,10 +50,6 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
     @Override
     public Page<User> findPages(final UserSearchDTO userSearchDTO, final PageRequest pageRequest) {
         log.info("UserRepositoryImpl.findPages");
-        final QUser qUser = QUser.user;
-        final QUserAuth qUserAuth = QUserAuth.userAuth;
-        final QAuth qAuth = QAuth.auth;
-
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
         final JPAQuery<User> jpaUsers = queryFactory
                 /*.select(
@@ -76,17 +70,36 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
                 //)
                 //.selectFrom(qUser)
                 //.select(Projections.bean(User.class, qUser.userId, qUser.userAuth))
-                .select(qUser)
-                .from(qUser)
                 //.select(qUser).from(qUser)
                 //.innerJoin(qUserAuth).on(qUser.userSeq.eq(qUserAuth.userSeq))
                 //.innerJoin(qAuth).on(qUserAuth.authSeq.eq(qAuth.authSeq))
+                .selectFrom(QUser.user)
                 .where(UserPredicateHelper.compareKeyword(userSearchDTO)
                     , UserPredicateHelper.compareDate(userSearchDTO)
                     , UserPredicateHelper.compareAuth(userSearchDTO)
                 );
         final List<User> users = Objects.requireNonNull(getQuerydsl()).applyPagination(pageRequest, jpaUsers).fetch();
         return new PageImpl<>(users, pageRequest, jpaUsers.fetchCount());
+    }
+
+    /**
+     * Count by pasword change period int.
+     *
+     * @param userSeq the user seq
+     * @return the int
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 2. 오후 12:18:05
+     * @Description 90일 지난 패스워드 체크
+     */
+    @Override
+    public long countByPaswordChangePeriod(Long userSeq) {
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        final long jpaQuery = queryFactory
+                .selectFrom(QUser.user)
+                .where(QUser.user.userSeq.eq(userSeq)
+                        ,UserPredicateHelper.comparePasswordChangePeriod())
+                .fetchCount();
+        return jpaQuery;
     }
 
 }

@@ -49,9 +49,8 @@ public class LogAspect {
     //@Around("execution(public * com.nike.dnp.controller..*Controller.*(..)) && args(requestDTO,..)")
     @Around("execution(public * com.nike.dnp.controller..*Controller.*(..))")
     public Object onAroundActionLog(final ProceedingJoinPoint joinPoint) throws Throwable {
-        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-
         log.debug("========================= ActionLog Start =========================");
+        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         final UserActionLogSaveDTO actionLog = new UserActionLogSaveDTO();
         for (final Object obj : joinPoint.getArgs()) {
             if (!ObjectUtils.isEmpty(obj) && obj instanceof AuthUserDTO) {
@@ -60,7 +59,7 @@ public class LogAspect {
                 actionLog.setParameter(Arrays.toString(joinPoint.getArgs()));
                 actionLog.setMethodTypeName(request.getMethod());
                 actionLog.setMethodSignature(joinPoint.getSignature().getName());
-                actionLogService.save(actionLog, (AuthUserDTO) obj);
+                actionLogService.save(actionLog);
             }
         }
         log.debug("========================= ActionLog End =========================");

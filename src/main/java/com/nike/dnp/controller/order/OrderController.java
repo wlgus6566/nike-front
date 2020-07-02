@@ -1,15 +1,21 @@
 package com.nike.dnp.controller.order;
 
 
+import com.nike.dnp.dto.order.OrderProductMappingSaveDTO;
 import com.nike.dnp.dto.order.OrderProductSaveDTO;
-import com.nike.dnp.entity.order.OrderProductMapping;
+import com.nike.dnp.entity.order.Order;
+import com.nike.dnp.entity.order.Product;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
+import com.nike.dnp.service.order.OrderProductMappingService;
 import com.nike.dnp.service.order.OrderService;
+import com.nike.dnp.service.order.ProductService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,28 +35,80 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class OrderController {
 
-	final OrderService orderService;
+	/**
+	 * The Order service
+	 *
+	 * @author [윤태호]
+	 */
+	private final OrderService orderService;
 
-	final ResponseService responseService;
+	/**
+	 * The Response service
+	 *
+	 * @author [윤태호]
+	 */
+	private final ResponseService responseService;
 
+	/**
+	 * The Product service
+	 *
+	 * @author [윤태호]
+	 */
+	private final ProductService productService;
+
+
+	/**
+	 * The Order product mapping service
+	 *
+	 * @author [윤태호]
+	 */
+	private final OrderProductMappingService orderProductMappingService;
+
+	/**
+	 * The constant REQUEST_CHARACTER
+	 *
+	 * @author [윤태호]
+	 */
+	private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
+
+	/**
+	 * The constant BASIC_CHARACTER
+	 *
+	 * @author [윤태호]
+	 */
+	private static final String BASIC_CHARACTER = "## Request ## \n" + "[하위 Parameters 참조] \n" + "## Request ## \n" + "[하위 Model 참조]\n\n";
+
+	/**
+	 * Save order single result.
+	 *
+	 * @param orderProductSaveDTO the order product save dto
+	 * @return the single result
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 1. 오후 2:48:06
+	 * @Description
+	 */
+	@ApiOperation(value = "주문 등록", notes = BASIC_CHARACTER)
 	@PostMapping(value="/save",produces = {MediaType.APPLICATION_JSON_VALUE},consumes = MediaType.APPLICATION_JSON_VALUE)
-	public SingleResult<OrderProductMapping> saveOrder(
+	@Transactional
+	public SingleResult<Order> saveOrder(
 			final @RequestBody OrderProductSaveDTO orderProductSaveDTO){
-		log.debug("goodsList.toString() {}", orderProductSaveDTO.toString());
 
-		// tb_order 에 값을 넣고...
-		OrderProductMapping  orderProductMapping= orderService.saveOrder(orderProductSaveDTO);
+		Order order = orderService.saveOrder(orderProductSaveDTO);
 
-		// agency seq 가 필요함..
+		for(int i = 0; i < orderProductSaveDTO.getGoodsSeqList().size(); i++){
+			Product product = productService.findByGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
+			OrderProductMappingSaveDTO orderProductMappingSaveDTO = new OrderProductMappingSaveDTO();
+			orderProductMappingSaveDTO.setGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
+			orderProductMappingSaveDTO.setOrderQuantity(orderProductSaveDTO.getOrderQuantityList().get(i));
+			orderProductMappingSaveDTO.setOrderSeq(order.getOrderSeq());
+			orderProductMappingSaveDTO.setAgencySeq(product.getAgencySeq());
 
-		// tb_order_product_mapper 에 값을 넣고..
+			orderProductMappingService.saveOrderProductMapping(orderProductMappingSaveDTO);
+		}
+		orderProductMappingService.orderSheetSend(order);
 
-
-
-
-		return responseService.getSingleResult(orderProductMapping);
+		return responseService.getSingleResult(order);
 	}
-
 
 }
 

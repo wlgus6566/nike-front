@@ -1,6 +1,5 @@
 package com.nike.dnp.service.log;
 
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.ErrorLogSaveDTO;
 import com.nike.dnp.entity.log.ErrorLog;
 import com.nike.dnp.repository.log.ErrorLogRepository;
@@ -32,23 +31,17 @@ public class ErrorLogService {
     /**
      * Save error log.
      *
-     * @param saveDTO     the save dto
-     * @param authUserDTO the auth user dto
+     * @param saveDTO the save dto
      * @return error log
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 5:58:41
      * @Description 오류 로그 등록
      */
     @Transactional
-    public ErrorLog save(
-            final ErrorLogSaveDTO saveDTO
-            , final AuthUserDTO authUserDTO
-    ) {
+    public ErrorLog save(final ErrorLogSaveDTO saveDTO) {
         final ErrorLog saveLog = new ErrorLog();
         saveLog.setUrl(saveDTO.getUrl());
         saveLog.setErrorContents(saveDTO.getErrorContents());
-        saveLog.setRegisterSeq(authUserDTO.getUserSeq()); //TODO[ojh] DTO field명 수정예정
-        saveLog.setUpdaterSeq(authUserDTO.getUserSeq()); //TODO[ojh] DTO field명 수정예정
         return logRepository.save(saveLog);
     }
 

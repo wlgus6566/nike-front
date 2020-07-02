@@ -1,6 +1,5 @@
 package com.nike.dnp.service.log;
 
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.UserActionLogSaveDTO;
 import com.nike.dnp.entity.log.UserActionLog;
 import com.nike.dnp.repository.log.UserActionLogRepository;
@@ -32,18 +31,14 @@ public class UserActionLogService {
     /**
      * Save user action log.
      *
-     * @param saveDTO     the save dto
-     * @param authUserDTO the auth user dto
+     * @param saveDTO the save dto
      * @return user action log
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 5:58:49
      * @Description 유저 활동 로그 등록
      */
     @Transactional
-    public UserActionLog save(
-            final UserActionLogSaveDTO saveDTO
-            , final AuthUserDTO authUserDTO
-    ) {
+    public UserActionLog save(final UserActionLogSaveDTO saveDTO) {
         final UserActionLog saveLog = new UserActionLog();
         saveLog.setUserSeq(saveDTO.getUserSeq());
         saveLog.setUrl(saveDTO.getUrl());

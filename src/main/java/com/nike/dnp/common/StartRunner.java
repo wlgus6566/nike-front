@@ -127,7 +127,7 @@ public class StartRunner implements ApplicationRunner {
         sendDTO1.setEmail("lion226@naver.com");
         sendDTO1.setOrderDt("2020.06.29 12:12:12");
         sendDTO1.setAgencyName("이모션");
-        sendDTO1.setOrderComment("여ㅛ기로 이렇게 보내주세용");
+        sendDTO1.setOrderComment("여기로 이렇게 보내주세용");
         List<OrderProductDTO> productList = new ArrayList<>();
         OrderProductDTO orderProductDTO = new OrderProductDTO();
         orderProductDTO.setProductName("조던 255");
@@ -155,12 +155,11 @@ public class StartRunner implements ApplicationRunner {
         }
         sendDTO1.setOrderArea(sb.toString());
         mailService.sendMail(
-                ServiceEnumCode.EmailType.ORDER.toString()
-                ,ServiceEnumCode.EmailType.ORDER.getMessage()
+                ServiceEnumCode.EmailTypeEnumCode.ORDER.toString()
+                ,ServiceEnumCode.EmailTypeEnumCode.ORDER.getMessage()
                 ,sendDTO1
         );
         */
-
     }
 
 }

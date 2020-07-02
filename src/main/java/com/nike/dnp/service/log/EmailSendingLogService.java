@@ -1,6 +1,5 @@
 package com.nike.dnp.service.log;
 
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.EmailSendingLogSaveDTO;
 import com.nike.dnp.entity.log.EmailSendingLog;
 import com.nike.dnp.repository.log.EmailSendingLogRepository;
@@ -32,24 +31,18 @@ public class EmailSendingLogService {
     /**
      * Save email sending log.
      *
-     * @param saveDTO     the save dto
-     * @param authUserDTO the auth user dto
+     * @param saveDTO the save dto
      * @return email sending log
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 5:58:31
      * @Description 메일 발송 로그 등록
      */
     @Transactional
-    public EmailSendingLog save(
-            final EmailSendingLogSaveDTO saveDTO
-            , final AuthUserDTO authUserDTO
-    ) {
+    public EmailSendingLog save(final EmailSendingLogSaveDTO saveDTO) {
         final EmailSendingLog saveLog = new EmailSendingLog();
         saveLog.setUserSeq(saveDTO.getUserSeq());
         saveLog.setTitle(saveDTO.getTitle());
         saveLog.setContents(saveDTO.getContents());
-        saveLog.setRegisterSeq(authUserDTO.getUserSeq()); //TODO[ojh] DTO field명 수정예정
-        saveLog.setUpdaterSeq(authUserDTO.getUserSeq()); //TODO[ojh] DTO field명 수정예정
         return logRepository.save(saveLog);
     }
 
