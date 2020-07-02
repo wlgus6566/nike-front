@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 // Routes
 import AssetRoutes from './asset';
 import ToolkitRoutes from './toolkit';
+import PubRoutes from './pub';
 
 // Import methods
 import { pages } from '@/util/global-methods';
@@ -24,6 +25,7 @@ const router = new VueRouter({
         },
         ...AssetRoutes,
         ...ToolkitRoutes,
+        ...PubRoutes,
     ],
 });
 

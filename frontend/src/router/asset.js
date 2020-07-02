@@ -4,7 +4,7 @@ const routes = [
     {
         path: '/asset',
         name: 'asset',
-        component: pages('asset/list'),
+        component: pages('asset/'),
         meta: { layout: 'Default', aside: 'Order', title: 'ALL' },
         children: [
             {
