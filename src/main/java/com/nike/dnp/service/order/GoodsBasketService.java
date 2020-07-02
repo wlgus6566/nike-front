@@ -44,12 +44,9 @@ public class GoodsBasketService {
 	public GoodsBasket saveBasket(final GoodsBasketSaveDTO goodsBasketSaveDTO) {
 		Optional<GoodsBasket> goodsBasket = goodsBasketRepository.findByGoodsSeqAndUserSeq(goodsBasketSaveDTO.getGoodsSeq(), SecurityUtil.currentUser().getUserSeq());
 
-		GoodsBasket saveGoodsBasket = new GoodsBasket();
-		goodsBasket.ifPresent(goodsBasket1 -> saveGoodsBasket.setGoodsBasketSeq(goodsBasket1.getGoodsBasketSeq()));
-
+		GoodsBasket saveGoodsBasket = goodsBasket.orElse(new GoodsBasket());
 		saveGoodsBasket.setGoodsSeq(goodsBasketSaveDTO.getGoodsSeq());
 		saveGoodsBasket.setOrderQuantity(goodsBasketSaveDTO.getOrderQuantity());
-
 		return goodsBasketRepository.save(saveGoodsBasket);
 
 	}
