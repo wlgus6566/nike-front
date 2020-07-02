@@ -22,13 +22,13 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 /**
  * ProductController
  *
  * @author [윤태호]
+ * @CreatedOn 2020. 7. 1. 오후 3:34:40
  * @Description 주문 상품관련 컨트롤러
  * @history [윤태호] [2020.06.17] [최초 작성]
  * @since 2020.06.17
@@ -54,7 +54,9 @@ public class ProductController {
 	private final ResponseService responseService;
 
 	/**
+	 * The constant REQUEST_CHARACTER
 	 *
+	 * @author [윤태호]
 	 */
 	private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
@@ -78,8 +80,6 @@ public class ProductController {
 	@ApiOperation(value = "상품 목록 조회", notes = REQUEST_CHARACTER + "category2code|카테고리 2 코드|false|String\n" + "category3code|카테고리 3 코드|false|String\n" + "agentSeq|에이전트 시퀀스|false|Integer\n" + "exposureYn|노출여부|false|String\n" + "keyword|키워드|false|String\n" + "page|페이지|false|Integer\n" + "size|사이즈|false|Integer\n")
 	@GetMapping(value = "/list", produces = {MediaType.APPLICATION_JSON_VALUE}, name = "상품 목록 조회")
 	public SingleResult<Page<Product>> findPagesProduct(final ProductSearchDTO productSearchDTO) {
-
-		log.debug("messageSource.getMessage(test,null, Locale.getDefault()) {}", messageSource.getMessage("test", new String[]{"111"} , Locale.getDefault())); ;
 		return responseService.getSingleResult(productService.findPagesProduct(productSearchDTO));
 	}
 
