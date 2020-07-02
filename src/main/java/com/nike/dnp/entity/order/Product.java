@@ -1,8 +1,11 @@
 package com.nike.dnp.entity.order;
 
+import com.nike.dnp.dto.order.ProductUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.entity.agency.Agency;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
@@ -19,6 +22,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
+@DynamicUpdate
 @Table(name = "TB_PRODUCT")
 public class Product extends BaseTimeEntity {
 
@@ -31,17 +35,7 @@ public class Product extends BaseTimeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "GOODS_SEQ")
 	@ApiModelProperty(name="goodsSeq", value="상품 시퀀스")
-	private long goodsSeq;
-
-
-	/**
-	 * 카테고리 1 코드
-	 * @author [윤태호]
-	 */
-	@Column(name = "CATEGORY1_CODE")
-	@ApiModelProperty(name="category1Code",value = "카테고리1 공통코드", required = true)
-	private String category1Code;
-
+	private Long goodsSeq;
 
 	/**
 	 * 카테고리 2 코드
@@ -65,7 +59,7 @@ public class Product extends BaseTimeEntity {
 	 */
 	@Column(name = "AGENCY_SEQ")
 	@ApiModelProperty(name = "agencySeq", value = "에이젼시 시퀀스",required = true)
-	private long agencySeq;
+	private Long agencySeq;
 
 	/**
 	 *
@@ -141,8 +135,17 @@ public class Product extends BaseTimeEntity {
 	 * @author [윤태호]
 	 */
 	@Column(name = "SIZE")
-	@ApiModelProperty(name = "size", value = "사이즈")
+	@ApiModelProperty(name = "size", value = "사이즈",hidden = true)
 	private String size;
+
+	/**
+	 * 단가
+	 *
+	 * @author [윤태호]
+	 */
+	@Column(name = "UNIT_PRICE")
+	@ApiModelProperty(name = "unitPrice", value = "단가")
+	private Long unitPrice;
 
 	/**
 	 * 최소 주문 수량
@@ -150,7 +153,7 @@ public class Product extends BaseTimeEntity {
 	 */
 	@Column(name = "MINIMUM_ORDER_QUANTITY")
 	@ApiModelProperty(name = "minimumOrderQuantity", value = "최소 주문 수량", required = true)
-	private long minimumOrderQuantity;
+	private Long minimumOrderQuantity;
 
 	/**
 	 * 노출 여부
@@ -167,6 +170,51 @@ public class Product extends BaseTimeEntity {
 	@Column(name = "USE_YN")
 	@ApiModelProperty(name = "useYn", value = "사용 여부", required = true)
 	private String useYn;
+
+
+	@ManyToOne
+	@JoinColumn(name="AGENCY_SEQ",insertable = false,updatable = false)
+	private Agency agency;
+
+	/**
+	 * 수정
+	 *
+	 * @param productUpdateDTO the product update dto
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 6. 23. 오후 5:52:24
+	 * @Description
+	 */
+	public void update(final ProductUpdateDTO productUpdateDTO) {
+		this.exposureYn = productUpdateDTO.getExposureYn();
+		this.category2Code = productUpdateDTO.getCategory2code();
+		this.category3Code = productUpdateDTO.getCategory3code();
+		this.agencySeq = productUpdateDTO.getAgencySeq();
+		this.goodsName = productUpdateDTO.getGoodsName();
+		this.goodsDescription = productUpdateDTO.getGoodsDescription();
+		this.unitPrice = productUpdateDTO.getUnitPrice();
+		this.minimumOrderQuantity = productUpdateDTO.getMinimumQuantity();
+		this.imageFileName = productUpdateDTO.getImageFileName();
+		this.imageFileSize = String.valueOf(productUpdateDTO.getImageFileSize());
+		this.imageFilePhysicalName = productUpdateDTO.getImageFilePhysicalName();
+		this.thumbnailFileName = productUpdateDTO.getThumbnailFileName();
+		this.thumbnailFileSize = String.valueOf(productUpdateDTO.getThumbnailFileSize());
+		this.thumbnailFilePhysicalName = productUpdateDTO.getThumbnailFilePhysicalName();
+		setUpdaterSeq(productUpdateDTO.getUpdaterSeq());
+		setUseYn(productUpdateDTO.getUseYn());
+	}
+
+	/**
+	 * 제품 삭제
+	 *
+	 * @param productUpdateDTO the product update dto
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 6. 24. 오후 5:32:08
+	 * @Description
+	 */
+	public void delete(final ProductUpdateDTO productUpdateDTO) {
+		setUseYn(productUpdateDTO.getUseYn());
+		setUpdaterSeq(productUpdateDTO.getUpdaterSeq());
+	}
 
 
 }

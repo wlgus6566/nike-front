@@ -16,4 +16,14 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepository extends JpaRepository<Product,Long>,ProductRepositoryCustom {
 
 
+	/**
+	 * GoodsSeq
+	 *
+	 * @param goodsSeq      goodsSeq
+	 * @return the product
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 6. 24. 오후 4:41:35
+	 * @Description
+	 */
+	Product findByGoodsSeq(Long goodsSeq);
 }

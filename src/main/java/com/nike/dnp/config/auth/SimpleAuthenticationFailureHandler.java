@@ -1,6 +1,6 @@
 package com.nike.dnp.config.auth;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.ErrorEnumCode.LoginError;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
@@ -37,21 +37,25 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 		response.setStatus(HttpStatus.BAD_REQUEST.value());
 		String errorMessage = "";
 		String errorCode = "";
-		for(final ErrorEnumCode.LoginError message : ErrorEnumCode.LoginError.values()){
+		for(final LoginError message : LoginError.values()){
 			if(message.toString().equals(exception.getMessage())){
 				errorMessage = message.getMessage();
 				errorCode = exception.getMessage();
 			}
 		}
+		// 비밀번호 틀림
 		if(exception instanceof BadCredentialsException){
-			// 비밀번호 틀림
-			JsonUtil.write(response.getWriter(), responseService.getFailResult(ErrorEnumCode.LoginError.LOGE07.toString(), ErrorEnumCode.LoginError.LOGE07.getMessage()));
+			JsonUtil.write(response.getWriter(), responseService.getFailResult(LoginError.WRONG_PASSWORD.toString(), LoginError.WRONG_PASSWORD.getMessage()));
+
+		// 아이디 비번 입력 안함
 		}else if(exception instanceof InsufficientAuthenticationException){
-			// 아이디 비번 입력 안함
 			JsonUtil.write(response.getWriter(), responseService.getFailResult(errorCode, errorMessage));
+
+		// 계정 정보 없음
 		}else if(exception instanceof InternalAuthenticationServiceException){
-			// 계정 정보 없음..
-			JsonUtil.write(response.getWriter(), responseService.getFailResult(ErrorEnumCode.LoginError.LOGE01.toString(), ErrorEnumCode.LoginError.LOGE01.getMessage()));
+			JsonUtil.write(response.getWriter(), responseService.getFailResult(LoginError.NOT_JOIN.toString(), LoginError.NOT_JOIN.getMessage()));
+
+		// 기타
 		}else{
 			JsonUtil.write(response.getWriter(), responseService.getFailResult("인증 실패 하였습니다."));
 		}

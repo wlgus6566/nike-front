@@ -12,9 +12,8 @@ import java.time.LocalDateTime;
  * UserLoginLog Entity
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:10:27
  * @Description UserLoginLog(유저_로그인_로그) Entity 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -26,6 +25,7 @@ public class UserLoginLog extends BaseTimeEntity {
 
     /**
      * 로그 시퀀스
+     *
      * @author [오지훈]
      */
     @Id
@@ -36,6 +36,7 @@ public class UserLoginLog extends BaseTimeEntity {
 
     /**
      * 사용자 시퀀스
+     *
      * @author [오지훈]
      */
     @Column(name = "USER_SEQ")
@@ -44,6 +45,7 @@ public class UserLoginLog extends BaseTimeEntity {
 
     /**
      * 로그인 일시
+     *
      * @author [오지훈]
      */
     @Column(name = "LOGIN_DT")
@@ -53,6 +55,7 @@ public class UserLoginLog extends BaseTimeEntity {
 
     /**
      * IP
+     *
      * @author [오지훈]
      */
     @Column(name = "LOGIN_IP")

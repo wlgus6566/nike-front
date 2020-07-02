@@ -9,9 +9,8 @@ import java.util.List;
  *
  * @param <T> the type parameter
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:11:39
  * @Description ListResult 작성
- * @history [오지훈] [2020.05.21] [최초 작성]
- * @since 2020.05.21
  */
 @Getter
 @Setter
@@ -21,6 +20,7 @@ public class ListResult<T> extends CommonResult {
 
     /**
      * List<T>
+     *
      * @author [오지훈]
      */
     private List<T> list;

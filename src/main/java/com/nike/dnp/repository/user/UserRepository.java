@@ -2,38 +2,50 @@ package com.nike.dnp.repository.user;
 
 import com.nike.dnp.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
  * UserRepository
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 5:53:42
  * @Description User(유저) Repository Interface 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
-@Repository
 public interface UserRepository extends JpaRepository<User, Long>, UserRepositoryCustom {
 
     /**
-     * 상세 조회
+     * Find by user id optional.
      *
      * @param userId 유저 ID
      * @return the optional
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 24. 오후 5:53:42
+     * @Description 상세 조회
      */
     Optional<User> findByUserId(String userId);
 
     /**
-     * 상세 조회
-     * TODO[ojh] 로그인 시 어떻게 DB 조회 하는지 확인 필요
-     * @param userId   the user id
-     * @param password the password
-     * @return optional
+     * Find all by user seq in list.
+     *
+     * @param userSeqArray the user seq array
+     * @return the list
      * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오후 6:15:21
+     * @Description 목록 조회(배열)
      */
-    Optional<User> findByUserIdAndPassword(String userId, String password);
+    List<User> findAllByUserSeqIn(Long[] userSeqArray);
+
+    /**
+     * Count by user id int.
+     *
+     * @param userId the user id
+     * @return the int
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 1. 오후 2:14:56
+     * @Description 유저 아이디 존재 유무
+     */
+    int countByUserId(String userId);
 
 }

@@ -45,28 +45,6 @@
     ~~~
     
 ### 사용방법
-1. ErrorEnumCode.class에 서비스 별로 에러코드, 메세지에 대한 enum값 정의
-
-    > 에러 코드 생성 규칙 : 서비스명앞3자리 + E + 숫자
-    ~~~ java
-        public enum loginError {
-    
-            LOGE01("가입여부를 확인해주세요.\n등록된 정보가 없습니다."),
-            LOGE02("이메일을 정확히 입력해주세요."),
-            LOGE03("비밀번호를 입력해주세요."),
-            LOGE04("회원을 조회할 수 없습니다."),
-            LOGE05("이미 사용중인 이메일 입니다.");
-    
-            loginError(String value) {
-                this.value = value;
-            }
-            private final String value;
-            public String getMessage() {
-                return value;
-            }
-    
-        }
-    ~~~
 
 1. 메세지를 반환해야 하는 부분에 custom exception인 CodeMessageHandelException 사용
 

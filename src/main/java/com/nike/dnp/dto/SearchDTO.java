@@ -1,15 +1,14 @@
 package com.nike.dnp.dto;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.*;
 
 /**
  * SearchDTO
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:09:42
  * @Description 공통 Search DTO 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -19,17 +18,21 @@ import lombok.*;
 public class SearchDTO {
 
     /**
-     * @defaultValue 0
+     * The Page
+     *
      * @author [오지훈]
+     * @defaultValue 0
      */
-    @ApiModelProperty(value = "페이지", name = "page")
+    @ApiParam(value = "페이지", name = "page",defaultValue = "0")
     private Integer page = 0;
 
     /**
-     * @defaultValue 20
+     * The Size
+     *
      * @author [오지훈]
+     * @defaultValue 20
      */
-    @ApiModelProperty(value = "사이즈", name = "size")
+    @ApiParam(value = "사이즈", name = "size" , defaultValue = "20")
     private int size = 20;
 
 }

@@ -10,17 +10,30 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties:
       hibernate:
-        show-sql: true
+        #show-sql: true
+        SQL: debug
         format_sql: true
         use_sql_comments: true
+        type:
+          descriptor:
+            sql: info
     generate-ddl: false
     hibernate:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
-#시큐리티 url/ ip 체크 flag
+## 시큐리티 url/ ip 체크 flag
 security:
   auth:
     url: false
     ip : false
+
+## email 계정
+nike:
+  email:
+    auth:
+      id: "cokeplay.emotion@emotion.co.kr"
+      pw: "5Rzz*w#,Kc%9W7s"
+    send:
+      from: "cokeplay.emotion@emotion.co.kr"

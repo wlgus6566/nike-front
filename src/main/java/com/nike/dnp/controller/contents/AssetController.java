@@ -1,6 +1,7 @@
 package com.nike.dnp.controller.contents;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
+import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.model.response.SingleResult;
@@ -10,13 +11,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.Locale;
 
 /**
  * 콘텐츠 > Asset Controller
@@ -27,7 +30,7 @@ import springfox.documentation.annotations.ApiIgnore;
   */
 @Slf4j
 @RestController
-@Api(description = "콘텐츠", tags = "2_CONTENTS")
+@Api(description = "콘텐츠", tags = "10_CONTENTS")
 @RequestMapping(value = "/api/contents/asset", name = "콘텐츠 > Asset")
 @RequiredArgsConstructor
 public class AssetController {
@@ -45,6 +48,9 @@ public class AssetController {
      * @author [이소정]
      */
     private final ContentsService contentsService;
+
+    @Autowired
+    MessageSource messageSource;
 
     /**
      * The constant REQUEST_CHARACTER
@@ -86,12 +92,36 @@ public class AssetController {
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "콘텐츠 > Asset 목록 조회")
     public SingleResult<Page<Contents>> getAllContents(
             final ContentsSearchDTO contentsSearchDTO
-            , final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
+        System.out.println("==========================");
+        System.out.println(messageSource.getMessage("greeting", null, Locale.getDefault()));
+
         // Asset 메뉴 코드 넣어줌.
         contentsSearchDTO.setTopMenuCode("ASSET");
         return responseService.getSingleResult(contentsService.findAllPaging(contentsSearchDTO));
     }
 
+
+    /**
+     * Save contents single result.
+     *
+     * @param contentsSaveDTO the contents save dto
+     * @return the single result
+     * @author [이소정]
+     * @CreatedOn 2020. 6. 24. 오후 3:45:44
+     * @Description
+     */
+    @ApiOperation(
+            value = "콘텐츠 > Asset 등록"
+            , notes = REQUEST_CHARACTER
+    )
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "콘텐츠 > Asset 등록")
+    public SingleResult<Contents> saveContents(
+            @RequestBody final ContentsSaveDTO contentsSaveDTO
+    ) {
+        contentsSaveDTO.setTopMenuCode("ASSET");
+        Contents contents = contentsService.save(contentsSaveDTO);
+        return responseService.getSingleResult(contents);
+    }
 
 }

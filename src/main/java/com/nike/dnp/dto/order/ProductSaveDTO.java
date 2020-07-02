@@ -4,12 +4,12 @@ package com.nike.dnp.dto.order;
 import com.nike.dnp.dto.BasicDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * productSaveDTO
  *
  * @author [윤태호]
+ * @CreatedOn 2020. 6. 25. 오전 11:12:53
  * @Description Product Save DTO 작성
  * @history [오지훈] [2020.06.17] [최초 작성]
  * @since 2020.06.17
@@ -23,17 +23,11 @@ public class ProductSaveDTO extends BasicDTO {
 
 
 	/**
-	 * 카테고리 1 코드
-	 * @author [윤태호]
-	 */
-	@ApiModelProperty(hidden = true)
-	private String category1code;
-
-	/**
 	 * 상태
+	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name="exposureYn",value="상태")
+	@ApiModelProperty(name="exposureYn",value="상태",required = true,example = "Y")
 	private String exposureYn;
 
 	/**
@@ -41,7 +35,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name="category2code",value="구분 2 단계",required = true)
+	@ApiModelProperty(name="category2code",value="카테고리 2 코드",required = true,example = "2")
 	private String category2code;
 
 	/**
@@ -49,7 +43,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "category3code", value = "구분 3 단계", required = true)
+	@ApiModelProperty(name = "category3code", value = "카테고리 3 코드", required = true,example = "2")
 	private String category3code;
 
 	/**
@@ -57,7 +51,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "agencySeq", value = "에이전시 시퀀스", required = true)
+	@ApiModelProperty(name = "agencySeq", value = "에이전시 시퀀스", required = true,example = "1")
 	private long agencySeq;
 
 	/**
@@ -65,7 +59,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "goodsName", value = "상품 명", required = true)
+	@ApiModelProperty(name = "goodsName", value = "상품 명", required = true,example = "상품명입니다.")
 	private String goodsName;
 
 	/**
@@ -73,39 +67,82 @@ public class ProductSaveDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "goodsDescription", value = "추가설명", required = true)
+	@ApiModelProperty(name = "goodsDescription", value = "추가설명", required = true,example = "추가설명 입니다.")
 	private String goodsDescription;
+
+	/**
+	 * 단가
+	 *
+	 * @author [윤태호]
+	 */
+	@ApiModelProperty(name = "size", value = "단가", required = true,example = "1000")
+	private Long unitPrice;
+
 
 	/**
 	 * 최소 주문 수량
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "minimumOrderQuantity", value = "최소 주문 수량", required = true)
-	private int minimumQuantity;
+	@ApiModelProperty(name = "minimumOrderQuantity", value = "최소 주문 수량", required = true, example = "10")
+	private Long minimumQuantity;
 
 	/**
 	 * 사이즈
+	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "size", value = "사이즈")
+	@ApiModelProperty(name = "size", value = "사이즈",hidden = true)
 	private String size;
 
+
 	/**
-	 * 원본 이미지
+	 * 이미지 파일 이름
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "originalImg", value = "원본 이미지")
-	private MultipartFile originalImg;
+	@ApiModelProperty(name = "imageFileName", value = "이미지 파일 명", example = "test.jpg")
+	private String imageFileName;
 
 	/**
-	 * 썸네일 이미지
+	 * 이미지 파일 사이즈
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "thumbnailImg", value = "썹네일 이미지")
-	private MultipartFile thumbnailImg;
+	@ApiModelProperty(name = "imageFileSize", value = "이미지 파일 사이즈", example = "10000")
+	private Long imageFileSize;
 
+	/**
+	 * 이미지 파일 물리명
+	 *
+	 * @author [윤태호]
+	 */
+	@ApiModelProperty(name = "imageFilePhysicalName", value = "이미지 파일 물리 명", example = "product/test.jpg")
+	private String imageFilePhysicalName;
+
+
+	/**
+	 * 썸네일 파일명
+	 *
+	 * @author [윤태호]
+	 */
+	@ApiModelProperty(name = "thumbnailFileName", value = "썸네일 파일 명", example = "thumbnail_test.jpg")
+	private String thumbnailFileName;
+
+	/**
+	 * 썸네일 파일 사이즈
+	 *
+	 * @author [윤태호]
+	 */
+	@ApiModelProperty(name = "thumbnailFileSize", value = "썸네일 파일 사이즈", example = "1000")
+	private String thumbnailFileSize;
+
+	/**
+	 * 썸네일 파일 물리명
+	 *
+	 * @author [윤태호]
+	 */
+	@ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "product/thumbnail_test.jpg")
+	private String thumbnailFilePhysicalName;
 
 }

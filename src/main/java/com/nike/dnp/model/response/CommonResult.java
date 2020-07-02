@@ -3,13 +3,14 @@ package com.nike.dnp.model.response;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.HashMap;
+
 /**
  * CommonResult
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:11:42
  * @Description CommonResult 작성
- * @history [오지훈] [2020.05.21] [최초 작성]
- * @since 2020.05.21
  */
 @Getter
 @Setter
@@ -19,24 +20,43 @@ public class CommonResult {
 
     /**
      * 응답 성공 여부
+     *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "응답 성공 여부 : true/false", name = "success")
+    @ApiModelProperty(value = "응답 성공 여부 : true/false", name = "isOK")
     private boolean success;
 
     /**
+     * 메시지 리턴 여부
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(value = "메시지 리턴 여부 : true/false", name = "existMsg", required = true)
+    private boolean existMsg = false;
+
+    /**
      * 응답 코드
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(value = "S0 : 정상 / 그 외 오류 (기본 E0, 각 서비스에 맞는 오류)", name = "code")
-    private String code;
+    private String code = "";
 
     /**
      * 응답 메시지
+     *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "응답 메시지", name = "msg")
-    private String msg;
+    @ApiModelProperty(value = "응답 메시지", name = "msg", example = "성공")
+    private String msg = "";
+
+    /**
+     * 응답 데이터
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(value = "추가 응답 데이터", name = "payload", example = "{'':''}")
+    private HashMap<String, Object> payload;
 
 }
 

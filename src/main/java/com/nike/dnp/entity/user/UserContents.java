@@ -13,9 +13,8 @@ import java.io.Serializable;
  * UserContents Entity
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:11:29
  * @Description UserContents(컨텐츠 권한) Entity 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -27,6 +26,7 @@ public class UserContents extends BaseTimeEntity implements Serializable {
 
     /**
      * 컨텐츠 권한 시퀀스
+     *
      * @author [오지훈]
      */
     @Id
@@ -37,6 +37,7 @@ public class UserContents extends BaseTimeEntity implements Serializable {
 
     /**
      * 권한
+     *
      * @author [오지훈]
      */
     @ManyToOne
@@ -45,6 +46,7 @@ public class UserContents extends BaseTimeEntity implements Serializable {
 
     /**
      * 컨텐츠
+     *
      * @author [오지훈]
      */
     @ManyToOne

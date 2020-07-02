@@ -3,13 +3,14 @@ package com.nike.dnp.dto.user;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * UserUpdateDTO
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 6. 24. 오후 6:09:23
  * @Description User(유저) Update DTO 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Getter
 @Setter
@@ -19,20 +20,25 @@ public class UserSaveDTO {
 
     /**
      * 유저 ID
+     *
      * @author [오지훈]
      */
+    @NotNull(message = "아이디를(을) 입력해 주세요.")
     @ApiModelProperty(name = "userId", value = "유저 ID", required = true)
     private String userId;
 
     /**
      * 닉네임
+     *
      * @author [오지훈]
      */
+    @NotNull(message = "닉네임을(를) 입력해 주세요.")
     @ApiModelProperty(name = "nickname", value = "닉네임", required = true)
     private String nickname;
 
     /**
      * 권한 시퀀스
+     *
      * @author [오지훈]
      */
     @ApiModelProperty(name = "authSeq", value = "권한 시퀀스", required = true)
