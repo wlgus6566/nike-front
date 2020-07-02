@@ -6,6 +6,8 @@ import com.nike.dnp.model.response.SingleResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+
 /**
  * ResponseService
  *
@@ -60,10 +62,10 @@ public class ResponseService {
      * @Description 메시지 포함
      */
     public <T> SingleResult<T> getSingleResult(final T data
-            , final String code, final String msg, final Boolean isMsg) {
+            , final String code, final String msg, final Boolean existMsg) {
         final SingleResult<T> result = new SingleResult<>();
         result.setData(data);
-        result.setExistMsg(isMsg);
+        result.setExistMsg(existMsg);
         result.setCode(code);
         result.setMsg(msg);
         setSuccessResult(result);
@@ -131,6 +133,16 @@ public class ResponseService {
         result.setExistMsg(true);
         result.setCode(code);
         result.setMsg(msg);
+        return result;
+    }
+
+    public CommonResult getFailResult(final String code, final String msg, final HashMap<String, Object> payload) {
+        final CommonResult result = new CommonResult();
+        result.setSuccess(false);
+        result.setExistMsg(true);
+        result.setCode(code);
+        result.setMsg(msg);
+        result.setPayload(payload);
         return result;
     }
 

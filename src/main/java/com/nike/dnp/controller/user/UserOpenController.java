@@ -1,6 +1,11 @@
 package com.nike.dnp.controller.user;
 
+import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.SuccessEnumCode;
 import com.nike.dnp.dto.user.UserCertDTO;
+import com.nike.dnp.dto.user.UserIdDTO;
+import com.nike.dnp.entity.user.User;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.user.UserService;
@@ -9,10 +14,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * The Class User controller.
@@ -48,20 +51,38 @@ public class UserOpenController {
      */
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n필드명|설명|필수여부|데이터 타입(길이)\n" + "-|-|-|-\n";
 
-    /*@ApiOperation(
-            value = "인증코드 생성 및 이메일 발송"
+    /**
+     * Send cert single result.
+     *
+     * @param userIdDTO the user id dto
+     * @return the single result
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 2. 오전 11:30:10
+     * @Description 인증코드 생성 및 이메일 발송
+     */
+    @ApiOperation(
+            value = "ID 확인, 인증코드 생성 및 이메일 발송"
             , notes = "## Reqeust ##\n"
             + "[하위 Parameters 참조]\n\n\n\n"
             + "## Response ## \n"
             + "[하위 Model 참조]\n\n\n\n"
     )
-    @GetMapping(value = "/send/cert", name = "인증코드 생성 및 이메일 발송")
-    public SingleResult<Boolean> sendCert(final UserIdDTO userIdDTO) {
+    @GetMapping(value = "/send/cert", name = "ID 확인, 인증코드 생성 및 비밀번호 설정 이메일 발송")
+    public SingleResult<String> sendCert(final UserIdDTO userIdDTO) {
         log.info("UserController.sendCert");
-        //userService.sendCreateUserEmail(userService.findByUserId(userIdDTO.getUserId()));
-        return responseService.getSingleResult(true);
-    }*/
-
+        User user = userService.findByUserIdReturnOptional(userIdDTO.getUserId()).orElseThrow(
+                () -> new CodeMessageHandleException(
+                        ErrorEnumCode.UserError.RETRY_CONFIRM_EMAIL.toString()
+                        ,ErrorEnumCode.UserError.RETRY_CONFIRM_EMAIL.getMessage()
+                )
+        );
+        return responseService.getSingleResult(
+                userService.sendCreateUserEmail(user)
+                , SuccessEnumCode.LoginSuccess.SEND_EMAIL.toString()
+                , SuccessEnumCode.LoginSuccess.SEND_EMAIL.getMessage()
+                , true
+        );
+    }
 
     /**
      * Change password single result.
@@ -70,6 +91,35 @@ public class UserOpenController {
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 4:41:44
+     * @Description 인증코드 검증 및 비밀번호 설정
+     */
+    @ApiOperation(
+            value = "인증코드 검증 및 비밀번호 설정"
+            , notes = "## Reqeust ##\n"
+            + "[하위 Parameters 참조]\n\n\n\n"
+            + "## Response ## \n"
+            + "[하위 Model 참조]\n\n\n\n"
+    )
+    @PutMapping(value = "/set/password", name = "인증코드 검증 및 비밀번호 설정"
+            , consumes = {MediaType.APPLICATION_JSON_VALUE}
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<Boolean> setPassword(final @RequestBody UserCertDTO userCertDTO) {
+        log.info("UserOpenController.setPassword");
+        return responseService.getSingleResult(
+                userService.checkCertCode(userCertDTO)
+                , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.toString()
+                , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.getMessage()
+                , true
+        );
+    }
+
+    /**
+     * Change password single result.
+     *
+     * @param userCertDTO the user cert dto
+     * @return the single result
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 2. 오후 4:08:39
      * @Description 인증코드 검증 및 비밀번호 변경
      */
     @ApiOperation(
@@ -83,20 +133,21 @@ public class UserOpenController {
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Boolean> changePassword(final @RequestBody UserCertDTO userCertDTO) {
-        log.info("UserController.changePassword");
-        System.out.println("======================================================");
-        System.out.println(userCertDTO.getCertCode());
-        System.out.println(userCertDTO.getNewPassword());
-        System.out.println(userCertDTO.getConfirmPassword());
-        System.out.println("======================================================");
+        log.info("UserOpenController.changePassword");
 
-        //TODO[ojh] 메시지 변경
+        if (ObjectUtils.isEmpty(userCertDTO.getPassword())) {
+            throw new CodeMessageHandleException(
+                    ErrorEnumCode.LoginError.NULL_PASSWORD.toString()
+                    , ErrorEnumCode.LoginError.NULL_PASSWORD.getMessage()
+            );
+        }
+
         return responseService.getSingleResult(
-                userService.checkCertCode(userCertDTO),
-                "CHANGE_PASSWORD", "설정한 비밀번호로 로그인 해 주세요.", true
+                userService.checkCertCode(userCertDTO)
+                , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.toString()
+                , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.getMessage()
+                , true
         );
     }
-
-
 
 }

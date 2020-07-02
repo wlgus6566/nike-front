@@ -57,7 +57,8 @@ public class ErrorEnumCode {
         INVALID_PASSWORD("(8~16자/대소문자/숫자/특수문자 포함)의 비밀번호를 입력해 주세요"),
         DUPLICATE_ID_PASSWORD("비밀번호는 ID와 중복됩니다. 다시 입력해 주세요."),
         USED_PASSWORD("전에 사용하지 않은 비밀번호로 변경해 주세요"),
-        NOT_MATCH_PASSWORD("입력하신 비밀번호가 일치하지 않습니다.");
+        NOT_MATCH_PASSWORD("입력하신 비밀번호가 일치하지 않습니다."),
+        IS_SLANG("금칙어에요오오오오오오오"); //TODO[ojh] 2020-07-02 : 메시지 변경 예정
 
         /**
          * 에러 메시지
@@ -95,15 +96,10 @@ public class ErrorEnumCode {
     @RequiredArgsConstructor
     @Getter
     public enum UserError {
-
-        /**
-         * User 01 user error
-         *
-         * @author [오지훈]
-         */
         NOT_FOUND("해당 회원의 상세정보가 존재하지 않습니다.")
         ,USE_ID("이미 사용중인 ID입니다.")
         ,NOT_VALID_EMAIL("올바른 Email 주소를 입력해 주세요.")
+        ,RETRY_CONFIRM_EMAIL("E-MAIL을 다시 확인 후 입력해 주세요.")
         ;
 
         /**

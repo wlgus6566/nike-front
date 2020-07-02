@@ -3,6 +3,7 @@ package com.nike.dnp.config;
 import com.nike.dnp.config.auth.*;
 import com.nike.dnp.config.jwt.JwtAuthorizationFilter;
 import com.nike.dnp.repository.user.UserRepository;
+import com.nike.dnp.service.RedisService;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.auth.SecurityFilterMataService;
 import com.nike.dnp.service.log.UserLoginLogService;
@@ -67,6 +68,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * @author [윤태호]
 	 */
 	private final SecurityFilterMataService filterMataService;
+
+	/**
+	 * The Redis service
+	 *
+	 * @author [오지훈]
+	 */
+	private final RedisService redisService;
 
 	/**
 	 * Auth url string.
@@ -189,7 +197,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public AuthenticationSuccessHandler authenticationSuccessHandler() {
-		return new SimpleAuthenticationSuccessHandler(responseService, loginLogService);
+		return new SimpleAuthenticationSuccessHandler(
+				responseService
+				, loginLogService
+				, redisService
+				, userRepository);
 	}
 
 	/**

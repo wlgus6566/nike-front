@@ -2,7 +2,7 @@ package com.nike.dnp.repository.user;
 
 import com.nike.dnp.dto.user.UserSearchDTO;
 import com.nike.dnp.entity.user.QUser;
-import com.nike.dnp.util.DateUtil;
+import com.nike.dnp.util.CustomExpression;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.DateTemplate;
@@ -59,15 +59,15 @@ public class UserAuthPredicateHelper {
         final String endDt = StringUtils.defaultString(userSearchDTO.getEndDt());
 
         if (!beginDt.isEmpty() && !endDt.isEmpty()) {
-            final DateTemplate<LocalDateTime> beginDtExpression = DateUtil.formatDate(beginDt+" 00:00:00", "%Y-%m-%d %H:%M:%s");
-            final DateTemplate<LocalDateTime> endDtExpression = DateUtil.formatDate(endDt+" 23:59:59", "%Y-%m-%d %H:%M:%s");
+            final DateTemplate<LocalDateTime> beginDtExpression = CustomExpression.formatDate(beginDt+" 00:00:00", "%Y-%m-%d %H:%M:%s");
+            final DateTemplate<LocalDateTime> endDtExpression = CustomExpression.formatDate(endDt+" 23:59:59", "%Y-%m-%d %H:%M:%s");
             builder.and(QUser.user.loginDt.between(beginDtExpression, endDtExpression));
 
         } else if (!beginDt.isEmpty()) {
-            builder.and(QUser.user.loginDt.after(DateUtil.formatDate(beginDt+" 00:00:00", "%Y-%m-%d %H:%M:%s")));
+            builder.and(QUser.user.loginDt.after(CustomExpression.formatDate(beginDt+" 00:00:00", "%Y-%m-%d %H:%M:%s")));
 
         } else if (!endDt.isEmpty()) {
-            builder.and(QUser.user.loginDt.before(DateUtil.formatDate(endDt + " 23:59:59", "%Y-%m-%d %H:%M:%s")));
+            builder.and(QUser.user.loginDt.before(CustomExpression.formatDate(endDt + " 23:59:59", "%Y-%m-%d %H:%M:%s")));
 
         }
         return builder;

@@ -47,4 +47,5 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
      * @Description 유저 아이디 존재 유무
      */
     int countByUserId(String userId);
+
 }
