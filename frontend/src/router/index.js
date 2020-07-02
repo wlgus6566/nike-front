@@ -6,6 +6,10 @@ import AssetRoutes from './asset';
 import ToolkitRoutes from './toolkit';
 import FoundationRoutes from './foundation';
 import OrderRoutes from './order';
+import ReportRoutes from './report';
+import InformationRoutes from './information';
+import ManagementRoutes from './management';
+
 import PubRoutes from './pub';
 
 // Import methods
@@ -29,6 +33,10 @@ const router = new VueRouter({
         ...ToolkitRoutes,
         ...FoundationRoutes,
         ...OrderRoutes,
+        ...ReportRoutes,
+        ...ManagementRoutes,
+        ...InformationRoutes,
+
         ...PubRoutes,
     ],
 });
