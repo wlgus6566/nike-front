@@ -211,16 +211,12 @@ public class UserService implements UserDetailsService {
     public UserAuth save(final UserSaveDTO userSaveDTO) {
         log.info("UserService.save");
         this.checkId(userSaveDTO.getUserId());
-
         final User user = userRepository.save(new User().save(userSaveDTO));
         final Auth auth = authRepository.findById(userSaveDTO.getAuthSeq()).orElseThrow(
                 () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.DataError.NOT_FOUND.getMessage()));
-        /*
-        final UserAuth userAuth = userAuthRepository.save(new UserAuth().save(user, auth));
-        if (userAuth.getUserAuthSeq() > 0) {
-            this.sendCreateUserEmail(user);
-        }
-        */
+
+        //TODO[ojh] 2020-07-02 : [계정생성안내] 메일 발송
+
         return userAuthRepository.save(new UserAuth().save(user, auth));
     }
 
@@ -360,6 +356,7 @@ public class UserService implements UserDetailsService {
         log.info("UserService.checkCertCode");
         final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(userCertDTO.getCertCode()), "Nike DnP");
         final String userId = decodeCertCode.split("\\|")[0];
+        final String certKey = decodeCertCode.split("\\|")[1];
         final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));
         final String newPassword = userCertDTO.getNewPassword();
         final String confirmPassword = ObjectUtils.isEmpty(userCertDTO.getConfirmPassword()) ? "" : userCertDTO.getConfirmPassword();
@@ -382,6 +379,13 @@ public class UserService implements UserDetailsService {
             throw new CodeMessageHandleException(
                     ErrorEnumCode.LoginError.EXPIRED_PERIOD.toString()
                     , ErrorEnumCode.LoginError.EXPIRED_PERIOD.getMessage());
+        }
+
+        //인증코드가 맞는지
+        if(certKey.equals(certCode)) {
+            throw new CodeMessageHandleException(
+                    ErrorEnumCode.LoginError.NOT_MATCH_CERT_CODE.toString()
+                    , ErrorEnumCode.LoginError.NOT_MATCH_CERT_CODE.getMessage());
         }
 
         //비밀번호 미입력 시

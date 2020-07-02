@@ -271,4 +271,16 @@ public class User extends BaseTimeEntity {
         this.termsAgreeYn = "Y";
     }
 
+    /**
+     * Update password change.
+     *
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 2. 오후 6:03:14
+     * @Description 업데이트 변경 여부 수정
+     */
+    public void updatePasswordChange() {
+        log.info("User.updatePasswordChange");
+        this.passwordChangeYn = "N";
+    }
+
 }

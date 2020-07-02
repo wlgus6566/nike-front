@@ -3,6 +3,7 @@ package com.nike.dnp.config.auth;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.common.variable.SuccessEnumCode;
 import com.nike.dnp.config.jwt.JwtHelper;
 import com.nike.dnp.dto.auth.AuthUserDTO;
@@ -61,6 +62,8 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		final String termsAgreeYn = StringUtils.defaultString(request.getParameter("termsAgreeYn"), "N");
 		boolean isValid = true;
 
+		System.out.println("=======================exception Start==========================");
+		//TODO[ojh] 2020-07-02 : 유저 존재여부 확인
 		if(!user.isPresent()) {
 			JsonUtil.write(response.getWriter()
 					, responseService.getFailResult(
@@ -70,12 +73,32 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 			isValid = false;
 		}
 
-		System.out.println("=======================exception Start==========================");
+		//TODO[ojh] 2020-07-02 : 휴면회원 확인
+		if (isValid && ServiceEnumCode.UserStatusEnumCode.DORMANT.toString().equals(user.get().getUserStatusCode())) {
+			final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(certCode), "Nike DnP").split("\\|")[1];
+
+			if (certCode.isEmpty()) {
+				JsonUtil.write(response.getWriter()
+						, responseService.getFailResult(
+								ErrorEnumCode.LoginError.IS_DORMANT.toString()
+								, ErrorEnumCode.LoginError.IS_DORMANT.getMessage()
+						));
+				isValid = false;
+				//TODO[ojh] 2020-07-02 : [인증코드] 메일 발송
+			} else {
+				if (certCode.equals(decodeCertCode)) {
+					user.get().updateStatus(ServiceEnumCode.UserStatusEnumCode.NORMAL.toString());
+					//TODO[ojh] 2020-07-02 : [휴면계정 해제 안내] 메일 발송
+				}
+			}
+		}
+
 		//TODO[ojh] 2020-07-02 : PW 90일 체크
-		if (userRepository.countByPaswordChangePeriod(authUserDTO.getUserSeq()) > 0) {
+		if (isValid && userRepository.countByPaswordChangePeriod(authUserDTO.getUserSeq()) > 0) {
 			final String randomCode = RandomUtil.randomCertCode2(10);
 			final String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(authUserDTO.getUserId() + "|" + randomCode, "Nike DnP"));
 			redisService.set("cert:"+authUserDTO.getUserId(), randomCode, 60);
+
 			HashMap<String, Object> payload = new HashMap<>();
 			payload.put("certCode", encodeCertCode);
 			JsonUtil.write(response.getWriter()
@@ -88,8 +111,14 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		}
 
 		//TODO[ojh] 2020-07-02 : 비밀번호가 변경되었을 경우
-		if (user.get().getPasswordChangeYn().equals("Y")) {
+		if (isValid && user.get().getPasswordChangeYn().equals("Y")) {
 			if (certCode.isEmpty()) {
+				final String randomCode = RandomUtil.randomCertCode2(10);
+				final String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(authUserDTO.getUserId() + "|" + randomCode, "Nike DnP"));
+				redisService.set("cert:"+authUserDTO.getUserId(), randomCode, 60);
+
+				//TODO[ojh] 2020-07-02 : [인증코드] 메일 발송
+
 				JsonUtil.write(response.getWriter()
 						, responseService.getFailResult(
 								SuccessEnumCode.LoginSuccess.SEND_EMAIL_CERT_CODE.toString()
@@ -97,7 +126,9 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 						));
 				isValid = false;
 			} else  {
-				String redisCertCode = (String) redisService.get("cert"+authUserDTO.getUserId());
+				final String redisCertCode = (String) redisService.get("cert:"+authUserDTO.getUserId());
+				final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(certCode), "Nike DnP");
+
 				if(ObjectUtils.isEmpty(redisCertCode)) {
 					JsonUtil.write(response.getWriter()
 							, responseService.getFailResult(
@@ -105,7 +136,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 									, ErrorEnumCode.LoginError.EXPIRED_CERT_CODE.getMessage()
 							));
 					isValid = false;
-				} else if(!certCode.equals(redisCertCode)) {
+				} else if(!redisCertCode.equals(decodeCertCode.split("\\|")[1])) {
 					JsonUtil.write(response.getWriter()
 							, responseService.getFailResult(
 									ErrorEnumCode.LoginError.NOT_MATCH_CERT_CODE.toString()
@@ -117,7 +148,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		}
 
 		//TODO[ojh] 2020-07-02 : 최초접속여부/약관동의여부
-		if ("N".equals(termsAgreeYn) && user.get().getTermsAgreeYn().equals("N")) {
+		if (isValid && "N".equals(termsAgreeYn) && user.get().getTermsAgreeYn().equals("N")) {
 			JsonUtil.write(response.getWriter()
 					, responseService.getFailResult(
 							SuccessEnumCode.LoginSuccess.TERMS_AGREEMENT.toString()
@@ -154,6 +185,9 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 			if ("Y".equals(termsAgreeYn) && user.get().getTermsAgreeYn().equals("N")) {
 				user.ifPresent(User::updateAgreement);
 			}
+
+			// 비밀번호 변경 여부 수정
+			user.ifPresent(User::updatePasswordChange);
 			System.out.println("======================================================4");
 
 			// 로그인 로그 등록
@@ -161,6 +195,9 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 			saveDTO.setUserSeq(authUserDTO.getUserSeq());
 			saveDTO.setLoginIp(request.getRemoteAddr()); //TODO[ojh] IP 어떻게 받는지..
 			loginLogService.save(saveDTO);
+
+			// redis 인증코드 삭제
+			redisService.delete("cert:"+authUserDTO.getUserId());
 			System.out.println("======================================================last");
 		}
 	}
