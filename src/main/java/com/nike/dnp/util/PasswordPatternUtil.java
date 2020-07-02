@@ -107,12 +107,22 @@ public class PasswordPatternUtil {
      * @return boolean boolean
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오전 9:43:19
-     * @Description 아이디와 동일 문자 4자리 체크
+     * @Description 아이디와 동일체크
      */
     public boolean sameId(final String pwd, final String id) {
         return pwd.equals(id);
     }
 
+    /**
+     * Same length id boolean.
+     *
+     * @param pwd the pwd
+     * @param id  the id
+     * @return the boolean
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 2. 오전 11:04:47
+     * @Description 아이디와 동일 문자 4자리 체크
+     */
     public boolean sameLengthId(final String pwd, final String id) {
         for(int i=0; i<pwd.length()-3; i++) {
             if(id.contains(pwd.substring(i, i+4))) {

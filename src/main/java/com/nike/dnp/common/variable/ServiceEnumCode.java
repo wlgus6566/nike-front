@@ -1,5 +1,7 @@
 package com.nike.dnp.common.variable;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -51,6 +53,8 @@ public class ServiceEnumCode {
     /**
      * The enum User status enum code.
      */
+    @RequiredArgsConstructor
+    @Getter
     public enum UserStatusEnumCode {
 
         NORMAL("정상"),
@@ -62,29 +66,14 @@ public class ServiceEnumCode {
          *
          * @author [오지훈]
          */
-        private final String value;
-
-        UserStatusEnumCode(final String value) {
-            this.value = value;
-        }
-
-        /**
-         * Gets message.
-         *
-         * @return value - 코드값
-         * @author [오지훈]
-         * @CreatedOn 2020. 6. 23. 오후 5:39:17
-         * @Description 코드값
-         */
-        public String getMessage() {
-            return value;
-        }
-
+        private final String message;
     }
 
     /**
      * The enum Email type.
      */
+    @RequiredArgsConstructor
+    @Getter
     public enum EmailTypeEnumCode {
         USER_CREATE("[NIKE/TEST] NIKE D&P PLATFORM 계정 생성 안내"),
         PASSWORD_SETTING(""),
@@ -101,22 +90,6 @@ public class ServiceEnumCode {
          *
          * @author [오지훈]
          */
-        private final String value;
-
-        EmailTypeEnumCode(final String value) {
-            this.value = value;
-        }
-
-        /**
-         * Gets message.
-         *
-         * @return value - 코드값
-         * @author [오지훈]
-         * @CreatedOn 2020. 6. 23. 오후 5:39:17
-         * @Description 코드값
-         */
-        public String getMessage() {
-            return value;
-        }
+        private final String message;
     }
 }

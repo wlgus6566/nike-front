@@ -1,5 +1,7 @@
 package com.nike.dnp.common.variable;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,11 +14,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class ErrorEnumCode {
 
+    @RequiredArgsConstructor
+    @Getter
+    public enum ExceptionError {
+        ERROR
+    }
+
     /**
      * The enum Auth success enum.
      */
+    @RequiredArgsConstructor
+    @Getter
     public enum AuthError {
-
         NO_AUTH("접근 권한이 없습니다."),
         FAIL_DELETE("해당 권한 그룹에 속한 계정이 있어 삭제가 불가능합니다. 권한 변경 후 삭제해 주세요");
 
@@ -24,23 +33,7 @@ public class ErrorEnumCode {
          * The Value
          * @author [이소정]
          */
-        private final String value;
-
-        AuthError(final String value) {
-            this.value = value;
-        }
-
-        /**
-         * Gets message.
-         *
-         * @return the message
-         * @author [이소정]
-         * @CreatedOn 2020. 7. 1. 오후 2:46:38
-         * @Description
-         */
-        public String getMessage() {
-            return value;
-        }
+        private final String message;
     }
 
 
@@ -49,6 +42,8 @@ public class ErrorEnumCode {
      *
      * @author [이소정]
      */
+    @RequiredArgsConstructor
+    @Getter
     public enum LoginError {
         NOT_JOIN("가입여부를 확인해주세요.\n등록된 정보가 없습니다."),
         CHECK_EMAIL("이메일을 정확히 입력해주세요."),
@@ -69,29 +64,14 @@ public class ErrorEnumCode {
          *
          * @author [이소정]
          */
-        private final String value;
-
-        LoginError(final String value) {
-            this.value = value;
-        }
-
-        /**
-         * 에러 메시지 조회
-         *
-         * @return value - 에러 메시지
-         * @author [이소정]
-         * @CreatedOn 2020. 6. 24. 오후 5:25:57
-         * @Description
-         */
-        public String getMessage() {
-            return value;
-        }
-
+        private final String message;
     }
 
     /**
      * The enum Contents error.
      */
+    @RequiredArgsConstructor
+    @Getter
     public enum ContentsError {
         NOT_EXIST_FILE_NAME("파일명이 존재하지 않습니다."),
         NOT_EXIST_FILE_TITLE("파일타이틀이 존재하지 않습니다."),
@@ -104,23 +84,7 @@ public class ErrorEnumCode {
          * 에러 메시지
          * @author [이소정]
          */
-        private final String value;
-
-        ContentsError(final String value) {
-            this.value = value;
-        }
-
-        /**
-         * Gets message.
-         *
-         * @return the message
-         * @author [이소정]
-         * @CreatedOn 2020. 7. 1. 오후 2:50:14
-         * @Description
-         */
-        public String getMessage() {
-            return value;
-        }
+        private final String message;
     }
 
     /**
@@ -128,6 +92,8 @@ public class ErrorEnumCode {
      *
      * @author [이소정]
      */
+    @RequiredArgsConstructor
+    @Getter
     public enum UserError {
 
         /**
@@ -145,29 +111,14 @@ public class ErrorEnumCode {
          *
          * @author [이소정]
          */
-        private final String value;
-
-        UserError(final String value) {
-            this.value = value;
-        }
-
-        /**
-         * 에러 메시지 조회
-         *
-         * @return the message
-         * @author [이소정]
-         * @CreatedOn 2020. 6. 24. 오후 5:25:57
-         * @Description
-         */
-        public String getMessage() {
-            return value;
-        }
-
+        private final String message;
     }
 
     /**
      * The enum Manager error enum.
      */
+    @RequiredArgsConstructor
+    @Getter
     public enum ManagerError {
         NO_SELECT_ACCOUNT("하나 이상의 계정을 선택해 주세요"),
         START_DATE_BIGGER("시작날짜가 종료일자보다 큽니다");
@@ -176,28 +127,14 @@ public class ErrorEnumCode {
          * The Value
          * @author [이소정]
          */
-        private final String value;
-
-        ManagerError(final String value) {
-            this.value = value;
-        }
-
-        /**
-         * Gets message.
-         *
-         * @return the message
-         * @author [이소정]
-         * @CreatedOn 2020. 7. 1. 오후 5:00:12
-         * @Description
-         */
-        public String getMessage() {
-            return value;
-        }
+        private final String message;
     }
 
     /**
      * The enum Data error.
      */
+    @RequiredArgsConstructor
+    @Getter
     public enum DataError {
 
         /**
@@ -212,37 +149,14 @@ public class ErrorEnumCode {
          *
          * @author [오지훈]
          */
-        private final String value;
-
-        /**
-         * 생성자
-         *
-         * @param value the value
-         * @author [오지훈]
-         * @CreatedOn 2020. 6. 24. 오후 5:25:58
-         * @Description
-         */
-        DataError(final String value) {
-            this.value = value;
-        }
-
-        /**
-         * 메시지 조회
-         *
-         * @return the message
-         * @author [오지훈]
-         * @CreatedOn 2020. 6. 24. 오후 5:25:58
-         * @Description
-         */
-        public String getMessage() {
-            return value;
-        }
-
+        private final String message;
     }
 
     /**
      * The enum Order error enum.
      */
+    @RequiredArgsConstructor
+    @Getter
     public enum OrderError {
         NO_PRODUCT_SELECT("하나 이상의 상품을 선택해 주세요."),
         ONLY_NUMBER("숫자만 입력 가능합니다"),
@@ -252,29 +166,14 @@ public class ErrorEnumCode {
          * The Value
          * @author [이소정]
          */
-        private final String value;
-
-        OrderError(final String value) {
-            this.value = value;
-        }
-
-        /**
-         * Gets message.
-         *
-         * @return the message
-         * @author [이소정]
-         * @CreatedOn 2020. 7. 1. 오후 4:59:56
-         * @Description
-         */
-        public String getMessage() {
-            return value;
-        }
-
+        private final String message;
     }
 
     /**
      * The enum Report error enum.
      */
+    @RequiredArgsConstructor
+    @Getter
     public enum ReportError {
         MAXIMUM_NUMBER_EXCEEDED("이미지는 최대 10개까지 등록 가능합니다. 다시 등록해 주세요."),
         DUPLICATE_FILE("이미 담긴 파일 입니다.");
@@ -283,28 +182,14 @@ public class ErrorEnumCode {
          * The Value
          * @author [이소정]
          */
-        private final String value;
-
-        ReportError(final String value) {
-            this.value = value;
-        }
-
-        /**
-         * Gets message.
-         *
-         * @return the message
-         * @author [이소정]
-         * @CreatedOn 2020. 7. 1. 오후 4:59:50
-         * @Description
-         */
-        public String getMessage() {
-            return value;
-        }
+        private final String message;
     }
 
     /**
      * The enum Mypage error enum.
      */
+    @RequiredArgsConstructor
+    @Getter
     public enum MypageError {
         START_DATE_BIGGER("시작날짜가 종료일자보다 큽니다"),
         NOT_CHANGE_PERIOD("비밀번호 변경 가능한 기간이 아닙니다"),
@@ -314,23 +199,7 @@ public class ErrorEnumCode {
          * The Value
          * @author [이소정]
          */
-        private final String value;
-
-        MypageError(final String value) {
-            this.value = value;
-        }
-
-        /**
-         * Gets message.
-         *
-         * @return the message
-         * @author [이소정]
-         * @CreatedOn 2020. 7. 1. 오후 4:59:44
-         * @Description
-         */
-        public String getMessage() {
-            return value;
-        }
+        private final String message;
     }
 
 }
