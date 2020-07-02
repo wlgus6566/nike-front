@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.contents;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
@@ -116,7 +117,8 @@ public class ContentsFile extends BaseTimeEntity {
      * The Contents
      * @author [이소정]
      */
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CONTENTS_SEQ", insertable = false, updatable = false)
     @ApiModelProperty(name = "contents", value = "The Contents", hidden = true)
     private Contents contents;

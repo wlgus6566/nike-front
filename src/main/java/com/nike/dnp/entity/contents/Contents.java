@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.contents;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
@@ -153,6 +154,7 @@ public class Contents extends BaseTimeEntity {
      * The Contents files
      * @author [이소정]
      */
+    @JsonManagedReference
     @OneToMany(mappedBy = "contents")
     @ApiModelProperty(name = "contentsFiles", value = "콘텐츠 파일 목록", required = true)
     private List<ContentsFile> contentsFiles;
