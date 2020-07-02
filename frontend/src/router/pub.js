@@ -145,6 +145,17 @@ const routes = [
                 component: () => import('@/pub/NIKE_P_MANAGE_01.vue'),
                 meta: { layout: 'Pub' },
             },
+            //UTIL - MYPAGE
+            {
+                path: 'NIKE_P_MY_04_004',
+                component: () => import('@/pub/NIKE_P_MY_04_004.vue'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_01_001',
+                component: () => import('@/pub/NIKE_P_MY_01_001.vue'),
+                meta: { layout: 'Pub' },
+            },
             //이메일 발송
             {
                 path: 'NIKE_P_LOGIN_01e',

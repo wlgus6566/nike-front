@@ -559,6 +559,31 @@
     font-size: 12px;
     color: #555;
 }
+.asset-item .info-box .location {
+    display: flex;
+    margin-top: 10px;
+}
+.asset-item .info-box .location li {
+    position: relative;
+    font-size: 10px;
+    color: #555;
+    line-height: 11px;
+}
+.asset-item .info-box .location li + li {
+    margin-left: 2px;
+    padding-left: 14px;
+}
+.asset-item .info-box .location li + li:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    background: url('../images/svg/icon-mypage-route.svg') no-repeat center;
+}
 .asset-item .date {
     margin-top: 8px;
     display: inline-flex;
@@ -602,24 +627,24 @@
     display: flex;
     flex-wrap: wrap;
 }
-[class^='asset-item-list'] li {
+[class^='asset-item-list'] > li {
     width: calc((100% - (20px * 3)) / 4);
     margin-left: 20px;
 }
-[class^='asset-item-list'] li:nth-child(4n + 1) {
+[class^='asset-item-list'] > li:nth-child(4n + 1) {
     margin-left: 0;
 }
-[class^='asset-item-list'] li:nth-child(n + 5) {
+[class^='asset-item-list'] > li:nth-child(n + 5) {
     margin-top: 30px;
 }
-.asset-item-list-row li {
+.asset-item-list-row > li {
     width: 100%;
     margin: 0 !important;
 }
-.asset-item-list-row li + li {
+.asset-item-list-row > li + li {
     border-top: 1px solid #eee;
 }
-.asset-item-list-row li a {
+.asset-item-list-row > li a {
     display: flex;
     align-items: center;
     padding: 20px 0;
@@ -2273,4 +2298,44 @@
     top: 50%;
     right: 50px;
     transform: translateY(-50%);
+}
+
+.new-list {
+    display: flex;
+    margin-top: 20px;
+}
+.new-list li {
+    flex-basis: 50%;
+}
+.new-list li + li {
+    margin-left: 20px;
+}
+.new-list li a {
+    display: block;
+}
+.new-list li .thumbnail {
+    position: relative;
+    display: block;
+    padding-top: 50%;
+}
+.new-list li .thumbnail img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+.new-list li .info-box .title {
+    display: block;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #000;
+    line-height: 20px;
+}
+.new-list li .info-box .date {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #888;
+    line-height: 14px;
 }

@@ -70,6 +70,23 @@
                                         <span class="com">
                                             {{ item.comment }}
                                         </span>
+                                        <ul v-if="item.depth">
+                                            <li v-for="(item, index) in item.depth" :key="index">
+                                                <span>{{ item.title }}</span>
+                                                <span class="name">
+                                                    {{ item.name }}
+                                                </span>
+                                                <span class="filename">
+                                                    <router-link :to="item.link" target="_blank">{{ item.filename }}</router-link>
+                                                </span>
+                                                <span class="name">
+                                                    {{ item.com }}
+                                                </span>
+                                                <span class="com">
+                                                    {{ item.comment }}
+                                                </span>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
                             </li>
@@ -761,9 +778,9 @@ export default {
                                     depth: [
                                         {
                                             title: '내가 업로드한 폴더',
-                                            name: '',
-                                            filename: '',
-                                            link: '',
+                                            name: '지은유',
+                                            filename: 'NIKE_P_MY_01_001.vue',
+                                            link: 'NIKE_P_MY_01_001',
                                             com: '',
                                             comment: '',
                                             depth: false,
@@ -899,9 +916,9 @@ export default {
                                             depth: [
                                                 {
                                                     title: '목록',
-                                                    name: '',
-                                                    filename: '',
-                                                    link: '',
+                                                    name: '지은유',
+                                                    filename: 'NIKE_P_MY_04_004.vue',
+                                                    link: 'NIKE_P_MY_04_004',
                                                     com: '',
                                                     comment: '',
                                                     depth: false,
@@ -1099,6 +1116,10 @@ h1 + .list li span {
 .list ul > li > ul > li > ul > li span:nth-child(1) {
     margin-left: 389px;
     width: 271px;
+}
+.list ul > li > ul > li > ul > li > ul > li span:nth-child(1) {
+    margin-left: 510px;
+    width: 150px;
 }
 .list ul li span:nth-child(1) {
     position: relative;
