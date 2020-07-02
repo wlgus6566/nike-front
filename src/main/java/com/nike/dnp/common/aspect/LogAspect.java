@@ -1,9 +1,7 @@
 package com.nike.dnp.common.aspect;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.UserActionLogSaveDTO;
-import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.service.log.UserActionLogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,31 +48,22 @@ public class LogAspect {
      */
     //@Around("execution(public * com.nike.dnp.controller..*Controller.*(..)) && args(requestDTO,..)")
     @Around("execution(public * com.nike.dnp.controller..*Controller.*(..))")
-    public Object onAroundActionLog(final ProceedingJoinPoint joinPoint) {
+    public Object onAroundActionLog(final ProceedingJoinPoint joinPoint) throws Throwable {
+        log.debug("========================= ActionLog Start =========================");
         final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-
-        try {
-            log.debug("========================= ActionLog Start =========================");
-            final UserActionLogSaveDTO actionLog = new UserActionLogSaveDTO();
-            for (final Object obj : joinPoint.getArgs()) {
-                if (!ObjectUtils.isEmpty(obj) && obj instanceof AuthUserDTO) {
-                    actionLog.setUserSeq(((AuthUserDTO) obj).getUserSeq());
-                    actionLog.setUrl(request.getRequestURI());
-                    actionLog.setParameter(Arrays.toString(joinPoint.getArgs()));
-                    actionLog.setMethodTypeName(request.getMethod());
-                    actionLog.setMethodSignature(joinPoint.getSignature().getName());
-                    actionLogService.save(actionLog);
-                }
+        final UserActionLogSaveDTO actionLog = new UserActionLogSaveDTO();
+        for (final Object obj : joinPoint.getArgs()) {
+            if (!ObjectUtils.isEmpty(obj) && obj instanceof AuthUserDTO) {
+                actionLog.setUserSeq(((AuthUserDTO) obj).getUserSeq());
+                actionLog.setUrl(request.getRequestURI());
+                actionLog.setParameter(Arrays.toString(joinPoint.getArgs()));
+                actionLog.setMethodTypeName(request.getMethod());
+                actionLog.setMethodSignature(joinPoint.getSignature().getName());
+                actionLogService.save(actionLog);
             }
-            log.debug("========================= ActionLog End =========================");
-            return joinPoint.proceed();
-
-        } catch (Throwable throwable) {
-            throw new CodeMessageHandleException(
-                    ErrorEnumCode.ExceptionError.ERROR.toString()
-                    , throwable
-            );
         }
+        log.debug("========================= ActionLog End =========================");
+        return joinPoint.proceed();
     }
 
 }

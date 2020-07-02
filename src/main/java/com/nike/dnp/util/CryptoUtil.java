@@ -67,7 +67,7 @@ public class CryptoUtil {
 
             return Base64.getEncoder().encodeToString(buffer);
         } catch (Exception exception) {
-            throw new CodeMessageHandleException(ErrorEnumCode.ExceptionError.ERROR.toString(), exception);
+            throw new CodeMessageHandleException(ErrorEnumCode.ExceptionError.ERROR.toString(), "서버오류");
         }
     }
 
@@ -104,7 +104,7 @@ public class CryptoUtil {
 
             return new String(cipher.doFinal(encryoptedTextBytes));
         } catch (Exception exception) {
-            throw new CodeMessageHandleException(ErrorEnumCode.ExceptionError.ERROR.toString(), exception);
+            throw new CodeMessageHandleException(ErrorEnumCode.ExceptionError.ERROR.toString(), "서버오류");
         }
     }
 
@@ -121,7 +121,7 @@ public class CryptoUtil {
         try {
             return URLEncoder.encode(value, "UTF-8");
         } catch (UnsupportedEncodingException exception) {
-            throw new CodeMessageHandleException(ErrorEnumCode.ExceptionError.ERROR.toString(), exception);
+            throw new CodeMessageHandleException(ErrorEnumCode.ExceptionError.ERROR.toString(), "서버오류");
         }
     }
 
@@ -138,7 +138,7 @@ public class CryptoUtil {
         try {
             return URLDecoder.decode(value, "UTF-8");
         } catch (UnsupportedEncodingException exception) {
-            throw new CodeMessageHandleException(ErrorEnumCode.ExceptionError.ERROR.toString(), exception);
+            throw new CodeMessageHandleException(ErrorEnumCode.ExceptionError.ERROR.toString(), "서버오류");
         }
     }
 }
