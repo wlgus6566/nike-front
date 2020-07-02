@@ -43,6 +43,8 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		response.setStatus(HttpStatus.OK.value());
 		final AuthUserDTO authUserDTO = (AuthUserDTO) authentication.getPrincipal();
 
+		System.out.println("======================================================exception");
+
 		// jwt 토큰 생성
 		final String token = JWT.create().withSubject(authUserDTO.getUsername())
 				.withExpiresAt(new Date(System.currentTimeMillis() + JwtHelper.EXPIRATION_TIME))

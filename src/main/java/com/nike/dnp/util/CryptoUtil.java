@@ -1,5 +1,7 @@
 package com.nike.dnp.util;
 
+import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,39 +37,38 @@ public class CryptoUtil {
      * @param msg the msg
      * @param key the key
      * @return the string
-     * @throws Exception the exception
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 4:08:32
      * @Description AES256 암호화
      */
-    public String encryptAES256(String msg, String key) throws Exception {
-        SecureRandom random = new SecureRandom();
-        byte[] bytes = new byte[20];
-        random.nextBytes(bytes);
-        //byte[] saltBytes = bytes;
+    public String encryptAES256(String msg, String key) {
+        try {
+            SecureRandom random = new SecureRandom();
+            byte[] bytes = new byte[20];
+            random.nextBytes(bytes);
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 
-        // Password-Based Key Derivation function 2
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            // 70000번 해시하여 256 bit 길이의 키를 만든다.
+            PBEKeySpec spec = new PBEKeySpec(key.toCharArray(), bytes, 70000, 256);
+            SecretKey secretKey = factory.generateSecret(spec);
+            SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
 
-        // 70000번 해시하여 256 bit 길이의 키를 만든다.
-        PBEKeySpec spec = new PBEKeySpec(key.toCharArray(), bytes, 70000, 256);
-        SecretKey secretKey = factory.generateSecret(spec);
-        SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, secret);
+            AlgorithmParameters params = cipher.getParameters();
 
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, secret);
-        AlgorithmParameters params = cipher.getParameters();
+            byte[] ivBytes = params.getParameterSpec(IvParameterSpec.class).getIV();
+            byte[] encryptedTextBytes = cipher.doFinal(msg.getBytes(StandardCharsets.UTF_8));
+            byte[] buffer = new byte[bytes.length + ivBytes.length + encryptedTextBytes.length];
 
-        byte[] ivBytes = params.getParameterSpec(IvParameterSpec.class).getIV();
-        byte[] encryptedTextBytes = cipher.doFinal(msg.getBytes(StandardCharsets.UTF_8));
-        byte[] buffer = new byte[bytes.length + ivBytes.length + encryptedTextBytes.length];
+            System.arraycopy(bytes, 0, buffer, 0, bytes.length);
+            System.arraycopy(ivBytes, 0, buffer, bytes.length, ivBytes.length);
+            System.arraycopy(encryptedTextBytes, 0, buffer, bytes.length + ivBytes.length, encryptedTextBytes.length);
 
-        System.arraycopy(bytes, 0, buffer, 0, bytes.length);
-        System.arraycopy(ivBytes, 0, buffer, bytes.length, ivBytes.length);
-        System.arraycopy(encryptedTextBytes, 0, buffer, bytes.length + ivBytes.length, encryptedTextBytes.length);
-
-        return Base64.getEncoder().encodeToString(buffer);
-
+            return Base64.getEncoder().encodeToString(buffer);
+        } catch (Exception exception) {
+            throw new CodeMessageHandleException(ErrorEnumCode.ExceptionError.ERROR.toString(), exception);
+        }
     }
 
     /**
@@ -76,32 +77,35 @@ public class CryptoUtil {
      * @param msg the msg
      * @param key the key
      * @return the string
-     * @throws Exception the exception
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 4:08:32
      * @Description AES256 복호화
      */
-    public String decryptAES256(String msg, String key) throws Exception {
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        ByteBuffer buffer = ByteBuffer.wrap(Base64.getDecoder().decode(msg));
+    public String decryptAES256(String msg, String key) {
+        try {
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            ByteBuffer buffer = ByteBuffer.wrap(Base64.getDecoder().decode(msg));
 
-        byte[] bytes = new byte[20];
-        buffer.get(bytes, 0, bytes.length);
+            byte[] bytes = new byte[20];
+            buffer.get(bytes, 0, bytes.length);
 
-        byte[] ivBytes = new byte[cipher.getBlockSize()];
-        buffer.get(ivBytes, 0, ivBytes.length);
+            byte[] ivBytes = new byte[cipher.getBlockSize()];
+            buffer.get(ivBytes, 0, ivBytes.length);
 
-        byte[] encryoptedTextBytes = new byte[buffer.capacity() - bytes.length - ivBytes.length];
-        buffer.get(encryoptedTextBytes);
+            byte[] encryoptedTextBytes = new byte[buffer.capacity() - bytes.length - ivBytes.length];
+            buffer.get(encryoptedTextBytes);
 
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        PBEKeySpec spec = new PBEKeySpec(key.toCharArray(), bytes, 70000, 256);
-        SecretKey secretKey = factory.generateSecret(spec);
-        SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            PBEKeySpec spec = new PBEKeySpec(key.toCharArray(), bytes, 70000, 256);
+            SecretKey secretKey = factory.generateSecret(spec);
+            SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
 
-        cipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(ivBytes));
+            cipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(ivBytes));
 
-        return new String(cipher.doFinal(encryoptedTextBytes));
+            return new String(cipher.doFinal(encryoptedTextBytes));
+        } catch (Exception exception) {
+            throw new CodeMessageHandleException(ErrorEnumCode.ExceptionError.ERROR.toString(), exception);
+        }
     }
 
     /**
@@ -109,13 +113,16 @@ public class CryptoUtil {
      *
      * @param value the value
      * @return the string
-     * @throws UnsupportedEncodingException the unsupported encoding exception
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 4:08:32
      * @Description Url 암호화
      */
-    public String urlEncode(String value) throws UnsupportedEncodingException {
-        return URLEncoder.encode(value, "UTF-8");
+    public String urlEncode(String value)  {
+        try {
+            return URLEncoder.encode(value, "UTF-8");
+        } catch (UnsupportedEncodingException exception) {
+            throw new CodeMessageHandleException(ErrorEnumCode.ExceptionError.ERROR.toString(), exception);
+        }
     }
 
     /**
@@ -123,12 +130,15 @@ public class CryptoUtil {
      *
      * @param value the value
      * @return the string
-     * @throws UnsupportedEncodingException the unsupported encoding exception
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 4:08:32
      * @Description Url 복호화
      */
-    public String urlDecode(String value) throws UnsupportedEncodingException {
-        return URLDecoder.decode(value, "UTF-8");
+    public String urlDecode(String value) {
+        try {
+            return URLDecoder.decode(value, "UTF-8");
+        } catch (UnsupportedEncodingException exception) {
+            throw new CodeMessageHandleException(ErrorEnumCode.ExceptionError.ERROR.toString(), exception);
+        }
     }
 }

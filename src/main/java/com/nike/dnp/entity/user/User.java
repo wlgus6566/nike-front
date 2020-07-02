@@ -141,6 +141,15 @@ public class User extends BaseTimeEntity {
     private List<UserAuth> userAuth = new ArrayList<>();
 
     /**
+     * 패스워드 기록 맵핑
+     *
+     * @author [오지훈]
+     */
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<PasswordHistory> histories = new ArrayList<>();
+
+    /**
      * 쿼리 실행 전 기본값 설정
      *
      * @author [오지훈]
@@ -150,6 +159,7 @@ public class User extends BaseTimeEntity {
     @PrePersist
     public void prePersist() {
         this.termsAgreeYn = this.termsAgreeYn == null ? "N" : this.termsAgreeYn;
+        this.userStatusCode = ServiceEnumCode.UserStatusEnumCode.NORMAL.toString();
     }
 
     /**

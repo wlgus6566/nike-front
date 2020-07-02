@@ -1,7 +1,6 @@
 package com.nike.dnp.controller.user;
 
 import com.nike.dnp.dto.user.UserCertDTO;
-import com.nike.dnp.dto.user.UserIdDTO;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.user.UserService;
@@ -10,8 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,16 +48,7 @@ public class UserOpenController {
      */
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n필드명|설명|필수여부|데이터 타입(길이)\n" + "-|-|-|-\n";
 
-    /**
-     * 인증코드 생성 및 이메일 발송
-     *
-     * @param userIdDTO the user id dto
-     * @return the single result
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 4:41:44
-     * @Description
-     */
-    @ApiOperation(
+    /*@ApiOperation(
             value = "인증코드 생성 및 이메일 발송"
             , notes = "## Reqeust ##\n"
             + "[하위 Parameters 참조]\n\n\n\n"
@@ -70,9 +60,18 @@ public class UserOpenController {
         log.info("UserController.sendCert");
         //userService.sendCreateUserEmail(userService.findByUserId(userIdDTO.getUserId()));
         return responseService.getSingleResult(true);
-    }
+    }*/
 
 
+    /**
+     * Change password single result.
+     *
+     * @param userCertDTO the user cert dto
+     * @return the single result
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 22. 오후 4:41:44
+     * @Description 인증코드 검증 및 비밀번호 변경
+     */
     @ApiOperation(
             value = "인증코드 검증 및 비밀번호 변경"
             , notes = "## Reqeust ##\n"
@@ -83,9 +82,19 @@ public class UserOpenController {
     @PutMapping(value = "/change/password", name = "인증코드 검증 및 비밀번호 변경"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Boolean> changePassword(final UserCertDTO userCertDTO) {
+    public SingleResult<Boolean> changePassword(final @RequestBody UserCertDTO userCertDTO) {
         log.info("UserController.changePassword");
-        return responseService.getSingleResult(userService.checkCertCode(userCertDTO));
+        System.out.println("======================================================");
+        System.out.println(userCertDTO.getCertCode());
+        System.out.println(userCertDTO.getNewPassword());
+        System.out.println(userCertDTO.getConfirmPassword());
+        System.out.println("======================================================");
+
+        //TODO[ojh] 메시지 변경
+        return responseService.getSingleResult(
+                userService.checkCertCode(userCertDTO),
+                "CHANGE_PASSWORD", "설정한 비밀번호로 로그인 해 주세요.", true
+        );
     }
 
 

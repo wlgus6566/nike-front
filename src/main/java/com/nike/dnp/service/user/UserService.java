@@ -1,34 +1,39 @@
 package com.nike.dnp.service.user;
 
 import com.nike.dnp.common.mail.MailService;
-import com.nike.dnp.common.variable.ErrorEnumCode.DataError;
-import com.nike.dnp.common.variable.ErrorEnumCode.UserError;
+import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.common.variable.SuccessEnumCode.UserSuccess;
+import com.nike.dnp.common.variable.SuccessEnumCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.user.*;
 import com.nike.dnp.entity.auth.Auth;
+import com.nike.dnp.entity.user.PasswordHistory;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.repository.auth.AuthRepository;
+import com.nike.dnp.repository.user.PasswordHistoryRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
 import com.nike.dnp.repository.user.UserRepository;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.util.CryptoUtil;
 import com.nike.dnp.util.EmailPatternUtil;
+import com.nike.dnp.util.PasswordPatternUtil;
 import com.nike.dnp.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -83,6 +88,20 @@ public class UserService implements UserDetailsService {
     private final UserAuthRepository userAuthRepository;
 
     /**
+     * PasswordHistoryRepository
+     *
+     * @author [오지훈]
+     */
+    private final PasswordHistoryRepository passwordHistoryRepository;
+
+    /**
+     * PasswordEncoder
+     *
+     * @author [오지훈]
+     */
+    private final PasswordEncoder passwordEncoder;
+
+    /**
      * Find pages page.
      *
      * @param userSearchDTO the user search dto
@@ -112,7 +131,7 @@ public class UserService implements UserDetailsService {
     public Optional<User> findById(final Long userSeq) {
         log.info("UserService.findById");
         return Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
-                () -> new CodeMessageHandleException(UserError.NOT_FOUND.toString(), UserError.NOT_FOUND.getMessage())));
+                () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.UserError.NOT_FOUND.getMessage())));
     }
 
     /**
@@ -127,7 +146,7 @@ public class UserService implements UserDetailsService {
     public User findByUserId(final String userId) {
         log.info("UserService.findByUserId");
         return userRepository.findByUserId(userId).orElseThrow(
-                () -> new CodeMessageHandleException(UserError.NOT_FOUND.toString(), UserError.NOT_FOUND.getMessage()));
+                () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.UserError.NOT_FOUND.getMessage()));
     }
 
     /**
@@ -141,7 +160,7 @@ public class UserService implements UserDetailsService {
      */
     public Optional<UserAuth> findByUser(final User user) {
         return Optional.ofNullable(userAuthRepository.findByUser(user).orElseThrow(
-                () -> new CodeMessageHandleException(DataError.NOT_FOUND.toString(), DataError.NOT_FOUND.getMessage())));
+                () -> new CodeMessageHandleException(ErrorEnumCode.DataError.NOT_FOUND.toString(), ErrorEnumCode.DataError.NOT_FOUND.getMessage())));
     }
 
     /**
@@ -173,13 +192,14 @@ public class UserService implements UserDetailsService {
 
         final User user = userRepository.save(new User().save(userSaveDTO));
         final Auth auth = authRepository.findById(userSaveDTO.getAuthSeq()).orElseThrow(
-                () -> new CodeMessageHandleException(DataError.NOT_FOUND.toString(), DataError.NOT_FOUND.getMessage()));
-
+                () -> new CodeMessageHandleException(ErrorEnumCode.DataError.NOT_FOUND.toString(), ErrorEnumCode.DataError.NOT_FOUND.getMessage()));
+        /*
         final UserAuth userAuth = userAuthRepository.save(new UserAuth().save(user, auth));
         if (userAuth.getUserAuthSeq() > 0) {
             this.sendCreateUserEmail(user);
         }
-        return userAuth;
+        */
+        return userAuthRepository.save(new UserAuth().save(user, auth));
     }
 
     /**
@@ -257,13 +277,11 @@ public class UserService implements UserDetailsService {
     @Transactional
     public List<User> deleteArray(final UserDeleteDTO userDeleteDTO) {
         log.info("UserService.deleteArray");
-        List<User> users = userRepository.findAllByUserSeqIn(userDeleteDTO.getUserSeqArray());
+        final List<User> users = userRepository.findAllByUserSeqIn(userDeleteDTO.getUserSeqArray());
 
-        //TODO[ojh] 배열삭제 작업 중
-        for (User user : users) {
+        for (final User user : users) {
             user.delete(user.getUserSeq());
         }
-
         return users;
     }
 
@@ -276,7 +294,7 @@ public class UserService implements UserDetailsService {
      * @Description 최종 로그인 일자 업데이트
      */
     @Transactional
-    public void updateLoginDt(User user) {
+    public void updateLoginDt(final User user) {
         log.info("UserService.updateLoginDt");
         user.updateLoginDt();
     }
@@ -291,7 +309,7 @@ public class UserService implements UserDetailsService {
      * @Description 로그인 검증
      */
     @Override
-    public UserDetails loadUserByUsername(String userId) {
+    public UserDetails loadUserByUsername(final String userId) {
         log.info("UserService.loadUserByUsername");
         return new AuthUserDTO(this.findByUserId(userId));
     }
@@ -299,7 +317,7 @@ public class UserService implements UserDetailsService {
     /**
      * Check id single result.
      *
-     * @param userIdDTO the user id dto
+     * @param userId the user id
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 7. 1. 오후 2:52:56
@@ -307,15 +325,14 @@ public class UserService implements UserDetailsService {
      */
     public SingleResult<Integer> checkId(final String userId) {
         final SingleResult<Integer> result = new SingleResult<>();
-        //final String userId = userIdDTO.getUserId();
-        String code = UserError.NOT_VALID_EMAIL.toString();
-        String msg = UserError.NOT_VALID_EMAIL.getMessage();
+        String code = ErrorEnumCode.UserError.NOT_VALID_EMAIL.toString();
+        String msg = ErrorEnumCode.UserError.NOT_VALID_EMAIL.getMessage();
         result.setData(0);
 
         if (EmailPatternUtil.isValidEmail(userId)) {
             final int count = this.countByUserId(userId);
-            code = count > 0 ? UserError.USE_ID.toString() : UserSuccess.NOT_DUPLICATE.toString();
-            msg = count > 0 ? UserError.USE_ID.getMessage() : UserSuccess.NOT_DUPLICATE.getMessage();
+            code = count > 0 ? ErrorEnumCode.UserError.USE_ID.toString() : SuccessEnumCode.UserSuccess.NOT_DUPLICATE.toString();
+            msg = count > 0 ? ErrorEnumCode.UserError.USE_ID.getMessage() : SuccessEnumCode.UserSuccess.NOT_DUPLICATE.getMessage();
             result.setData(count);
         }
         return new SingleResult<>(code, msg, true, true);
@@ -330,48 +347,70 @@ public class UserService implements UserDetailsService {
      * @CreatedOn 2020. 6. 22. 오후 4:18:42
      * @Description 인증코드 검증 및 비밀번호 변경
      */
+    @Transactional
     public Boolean checkCertCode(final UserCertDTO userCertDTO) {
         log.info("UserService.checkCertCode");
-        String decodeCertCode = "";
-        try {
-            decodeCertCode = CryptoUtil.urlDecode(CryptoUtil.decryptAES256(userCertDTO.getCertCode(), "Nike DnP"));
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+        final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(userCertDTO.getCertCode()), "Nike DnP");
         final String userId = decodeCertCode.split("\\|")[0];
-        final String certCode = (String) redisService.get("cert:" + userId);
+        final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));
+        final String newPassword = userCertDTO.getNewPassword();
+        final String confirmPassword = ObjectUtils.isEmpty(userCertDTO.getConfirmPassword()) ? "" : userCertDTO.getConfirmPassword();
+        final String certPassword = ObjectUtils.isEmpty(newPassword) ? "" : passwordEncoder.encode(newPassword);
 
-        //TODO[ojh] 비밀번호가 다를때
-        if (!userCertDTO.getNewPassword().equals(userCertDTO.getConfirmPassword())) {
-            throw new CodeMessageHandleException("", "");
-        }
-        //TODO[ojh] 정규식이 다를때
-        if (!userCertDTO.getNewPassword().equals(userCertDTO.getConfirmPassword())) {
-            throw new CodeMessageHandleException("", "");
-        }
-
-        //TODO[ojh] 공통사전에 있을때
-        if (!userCertDTO.getNewPassword().equals(userCertDTO.getConfirmPassword())) {
-            throw new CodeMessageHandleException("", "");
+        //TODO[ojh] 2020-07-01 : 인증코드가 존재하는지 확인
+        if(certCode.isEmpty()) {
+            throw new CodeMessageHandleException(
+                    ErrorEnumCode.LoginError.EXPIRED_PERIOD.toString()
+                    , ErrorEnumCode.LoginError.EXPIRED_PERIOD.getMessage());
         }
 
-        //TODO[ojh] 아이디와 같을때
-        if (!userCertDTO.getNewPassword().equals(userId)) {
-            throw new CodeMessageHandleException("", "");
+        //TODO[ojh] 2020-07-01 : 유저가 존재하는지 확인
+        final User user = this.findByUserId(userId);
+
+        //TODO[ojh] 2020-07-01 : 비밀번호 미입력 시
+        if (ObjectUtils.isEmpty(newPassword)) {
+            throw new CodeMessageHandleException(
+                    ErrorEnumCode.LoginError.NULL_PASSWORD.toString()
+                    , ErrorEnumCode.LoginError.NULL_PASSWORD.getMessage());
         }
 
-        //TODO[ojh] 기존 비밀번호와 같을때
-        if (!userCertDTO.getNewPassword().equals(userId)) {
-            throw new CodeMessageHandleException("", "");
+        //TODO[ojh] 2020-07-01 : 입력한 새로운 비밀번호와 확인 비밀번호 비교
+        if (!newPassword.equals(confirmPassword)) {
+            throw new CodeMessageHandleException(
+                    ErrorEnumCode.LoginError.NOT_MATCH_PASSWORD.toString()
+                    , ErrorEnumCode.LoginError.NOT_MATCH_PASSWORD.getMessage());
         }
 
-        //TODO[ojh] 기존 비밀번호와 같을때
-        if (decodeCertCode.split("\\|")[1].equals(certCode)) {
-
+        //TODO[ojh] 2020-07-01 : 아이디와 비밀번호 비교
+        if (PasswordPatternUtil.sameId(newPassword, userId)) {
+            throw new CodeMessageHandleException(
+                    ErrorEnumCode.LoginError.DUPLICATE_ID_PASSWORD.toString()
+                    , ErrorEnumCode.LoginError.DUPLICATE_ID_PASSWORD.getMessage());
         }
 
-        //this.updatePassword();
+        //TODO[ojh] 2020-07-01 : 비밀번호 정규식 체크
+        if (PasswordPatternUtil.invalidPassword(newPassword)) {
+            throw new CodeMessageHandleException(
+                    ErrorEnumCode.LoginError.INVALID_PASSWORD.toString()
+                    , ErrorEnumCode.LoginError.INVALID_PASSWORD.getMessage());
+        }
 
+        //TODO[ojh] 2020-07-01 : 사용되었던 비밀번호 비교 (최근 6개)
+        final List<PasswordHistory> histories = passwordHistoryRepository.findTop6ByUserSeqOrderByRegistrationDtDesc(user.getUserSeq());
+        for (final PasswordHistory history : histories) {
+            if (passwordEncoder.matches(newPassword, history.getPassword())) {
+                throw new CodeMessageHandleException(
+                        ErrorEnumCode.LoginError.USED_PASSWORD.toString()
+                        , ErrorEnumCode.LoginError.USED_PASSWORD.getMessage());
+            }
+        }
+
+        //TODO[ojh] 2020-07-01 : 공통사전 비교
+
+
+        //TODO[ojh] 2020-07-01 : 비밀번호 업데이트
+        user.updatePassword(certPassword);
+        passwordHistoryRepository.save(PasswordHistory.builder().userSeq(user.getUserSeq()).password(certPassword).build());
         return true;
     }
 
@@ -398,20 +437,20 @@ public class UserService implements UserDetailsService {
             redisService.set("cert:"+user.getUserId(), certCode, 60);
 
             //TODO[ojh] 대체값 변경
-            SendDTO sendDTO = new SendDTO();
+            final SendDTO sendDTO = new SendDTO();
             sendDTO.setNickname(user.getNickname());
             sendDTO.setEmail(user.getUserId());
             sendDTO.setPasswordUrl("http://nikednp.co.kr?certCode="+encodeCertCode);
 
             //TODO[ojh] [계정 생성 안내] 이메일 발송
             mailService.sendMail(
-                    ServiceEnumCode.EmailType.USER_CREATE.toString()
-                    ,ServiceEnumCode.EmailType.USER_CREATE.getMessage()
+                    ServiceEnumCode.EmailTypeEnumCode.USER_CREATE.toString()
+                    , ServiceEnumCode.EmailTypeEnumCode.USER_CREATE.getMessage()
                     ,sendDTO
             );
 
         } catch (Exception exception) {
-            log.error("Exception", exception);
+            log.error("exception", exception);
         }
     }
 }

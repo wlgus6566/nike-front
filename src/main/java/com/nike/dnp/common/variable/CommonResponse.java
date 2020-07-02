@@ -1,5 +1,7 @@
 package com.nike.dnp.common.variable;
 
+import lombok.Getter;
+
 /**
  * CommonResponse
  *
@@ -8,6 +10,7 @@ package com.nike.dnp.common.variable;
  * @history [오지훈] [2020.05.22] [최초 작성]
  * @since 2020.05.22
  */
+@Getter
 public enum CommonResponse {
 
     /**
@@ -50,29 +53,4 @@ public enum CommonResponse {
         this.code = code;
         this.msg = msg;
     }
-
-    /**
-     * Gets code.
-     *
-     * @return the code
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:05:59
-     * @Description
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * Gets msg.
-     *
-     * @return the msg
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:05:59
-     * @Description
-     */
-    public String getMsg() {
-        return msg;
-    }
-
 }
