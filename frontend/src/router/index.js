@@ -6,6 +6,7 @@ import AssetRoutes from './asset';
 import ToolkitRoutes from './toolkit';
 import FoundationRoutes from './foundation';
 import OrderRoutes from './order';
+import PubRoutes from './pub';
 
 // Import methods
 import { pages } from '@/util/global-methods';
@@ -28,6 +29,7 @@ const router = new VueRouter({
         ...ToolkitRoutes,
         ...FoundationRoutes,
         ...OrderRoutes,
+        ...PubRoutes,
     ],
 });
 
