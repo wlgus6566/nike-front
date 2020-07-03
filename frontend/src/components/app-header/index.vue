@@ -7,7 +7,7 @@
         </h1>
         <nav>
             <ul>
-                <navItem v-for="(item, index) in lnb" :key="index" :item="item" :depth="1" />
+                <navItem v-for="(item, index) in lnb" :key="index" :test="index" :item="item" :depth="1" />
             </ul>
         </nav>
     </div>
@@ -19,6 +19,7 @@ export default {
     name: 'appHeader',
     data() {
         return {
+            openDepth: [0, 0, 0],
             lnb: [
                 {
                     title: 'HOME',
@@ -117,7 +118,7 @@ export default {
                 },
                 {
                     title: 'ORDER',
-                    titleKo: `<span class="noto-sans">부자재 주문</span>`,
+                    titleKo: `부자재 주문`,
                     to: '/order',
                     exact: false,
                     children: [

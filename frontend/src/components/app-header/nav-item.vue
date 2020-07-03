@@ -1,6 +1,5 @@
 <template>
     <li :class="[{ active: isOpen }, `depth${this.depth}`]">
-        <!--<button type="button" v-if="isFolder && !item.titleKo" @click="toggle" class="nav-link" v-html="item.title" />-->
         <router-link
             @click.native.prevent="toggle"
             :to="item.to"
@@ -10,14 +9,14 @@
             v-html="item.title"
         />
         <ul v-show="isOpen" v-if="isFolder">
-            <navItem v-for="(child, index) in item.children" :key="index" :item="child" :depth="depth + 1" />
+            <navItem v-for="(child, index) in item.children" :key="index" :test="index" :item="child" :depth="depth + 1" />
         </ul>
     </li>
 </template>
 <script>
 export default {
     name: 'navItem',
-    props: ['item', 'depth'],
+    props: ['item', 'depth', 'test'],
     data: function () {
         return {
             isOpen: false,
@@ -37,6 +36,9 @@ export default {
                 this.isOpen = !this.isOpen;
             }
         },
+    },
+    created() {
+        console.log(this.test);
     },
 };
 </script>

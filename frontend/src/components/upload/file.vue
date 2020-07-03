@@ -150,7 +150,7 @@
 </template>
 <script>
 export default {
-    name: 'File.vue',
+    name: 'file',
 };
 </script>
 <style scoped></style>

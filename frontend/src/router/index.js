@@ -9,6 +9,7 @@ import OrderRoutes from './order';
 import ReportRoutes from './report';
 import InformationRoutes from './information';
 import ManagementRoutes from './management';
+import testRoutes from './test';
 
 import PubRoutes from './pub';
 
@@ -38,6 +39,8 @@ const router = new VueRouter({
         ...InformationRoutes,
 
         ...PubRoutes,
+
+        ...testRoutes,
     ],
 });
 
