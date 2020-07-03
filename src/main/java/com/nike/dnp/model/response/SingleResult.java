@@ -1,6 +1,6 @@
 package com.nike.dnp.model.response;
 
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 /**
@@ -22,7 +22,7 @@ public class SingleResult<T> extends CommonResult {
      *
      * @author [오지훈]
      */
-    @ApiParam()
+    @ApiModelProperty(value = "응답 데이터", name = "data")
     private T data;
 
     public SingleResult(
