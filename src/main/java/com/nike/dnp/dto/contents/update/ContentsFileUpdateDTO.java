@@ -1,19 +1,36 @@
-package com.nike.dnp.dto.contents;
+package com.nike.dnp.dto.contents.update;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 
 /**
- * The type Contents file save dto.
+ * The Class Contents file update dto.
+ *
+ * @author [이소정]
+ * @CreatedOn 2020. 7. 3. 오후 3:39:34
+ * @Description
  */
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class ContentsFileSaveDTO {
+public class ContentsFileUpdateDTO {
+
+    /**
+     * 컨텐츠 파일 시퀀스
+     * @author [이소정]
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CONTENTS_FILE_SEQ")
+    @ApiModelProperty(name = "contentsFileSeq", value = "컨텐츠 파일 시퀀스")
+    private Long contentsFileSeq;
 
     /**
      * 파일 구분 공통코드
@@ -52,7 +69,7 @@ public class ContentsFileSaveDTO {
      * @author [이소정]
      */
     @Column(name = "FILE_NAME")
-    @ApiModelProperty(name = "fileName", value = "파일 명")
+    @ApiModelProperty(name = "fileName", value = "파일 명", example = "graphic_file_name.jpg")
     private String fileName;
 
     /**
@@ -60,7 +77,7 @@ public class ContentsFileSaveDTO {
      * @author [이소정]
      */
     @Column(name = "FILE_SIZE")
-    @ApiModelProperty(name = "fileSize", value = "파일 사이즈")
+    @ApiModelProperty(name = "fileSize", value = "파일 사이즈", example = "600")
     private Long fileSize;
 
     /**
@@ -68,7 +85,7 @@ public class ContentsFileSaveDTO {
      * @author [이소정]
      */
     @Column(name = "FILE_PHYSICAL_NAME")
-    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명")
+    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명", example = "/cdn/file/path")
     private String filePhysicalName;
 
 }

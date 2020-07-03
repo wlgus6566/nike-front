@@ -2,6 +2,7 @@ package com.nike.dnp.dto.contents;
 
 import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.*;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -26,7 +27,7 @@ public class ContentsSearchDTO extends SearchDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(value = "검색어", name = "keyword")
+    @ApiParam(value = "검색어", name = "keyword" , defaultValue = "NIKE")
     private String keyword = "";
 
     /**
@@ -34,7 +35,7 @@ public class ContentsSearchDTO extends SearchDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(value = "정렬 타입", name = "keyword", example = "LATEST")
+    @ApiParam(value = "정렬 타입", name = "orderType" , defaultValue = "LATEST")
     private String orderType;
 
     /**
@@ -52,7 +53,7 @@ public class ContentsSearchDTO extends SearchDTO {
      * @author [이소정]
      */
     @Column(name = "MENU_CODE")
-    @ApiModelProperty(name = "menuCode", value = "2depth 메뉴 코드")
+    @ApiParam(value = "2depth 메뉴 코드", name = "menuCode")
     private String menuCode = "";
 
     /**

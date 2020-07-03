@@ -1,14 +1,14 @@
 package com.nike.dnp.controller.contents;
 
-import com.nike.dnp.dto.contents.ContentsAssetSaveDTO;
+import com.nike.dnp.dto.contents.save.ContentsAssetSaveDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
+import com.nike.dnp.dto.contents.update.ContentsAssetUpdateDTO;
+import com.nike.dnp.dto.contents.update.ContentsUpdateDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.contents.ContentsService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  *  Asset Controller
@@ -108,8 +110,10 @@ public class AssetController {
             , notes = REQUEST_CHARACTER
     )
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Asset 등록")
+    @ApiImplicitParam(name = "Authorization", value = "토큰(불필요)", required = false, dataType = "String",
+            paramType = "header", defaultValue = "")
     public SingleResult<Contents> saveContents(
-            final @RequestBody ContentsAssetSaveDTO contentsAssetSaveDTO
+            @RequestBody final ContentsAssetSaveDTO contentsAssetSaveDTO
     ) {
         contentsAssetSaveDTO.setMenuCode(contentsAssetSaveDTO.getUploadCode());
         contentsAssetSaveDTO.setTopMenuCode("ASSET");
@@ -124,8 +128,25 @@ public class AssetController {
     @GetMapping(name = " Toolkit 상세조회", value = "/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Contents> findContents(
-            final @ApiParam(name = "contentsSeq", value = "콘텐츠 시퀀스", defaultValue = "4") @PathVariable Long contentsSeq) {
+            @ApiParam(name = "contentsSeq", value = "콘텐츠 시퀀스", defaultValue = "4") @PathVariable final Long contentsSeq) {
         return responseService.getSingleResult(contentsService.findByContentsSeq(contentsSeq));
+    }
+
+    /**
+     * Update contents single result.
+     *
+     * @param contentsAssetUpdateDTO the contents asset update dto
+     * @return the single result
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 3. 오후 2:45:11
+     * @Description
+     */
+    @ApiOperation(value = "Asset 수정", notes = REQUEST_CHARACTER)
+    @PutMapping(name = "Asset 수정", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<Optional<Contents>> updateContents(@ApiParam(name="contentsUpdateDTO", value = "ASSET 수정 Json") @RequestBody final ContentsAssetUpdateDTO contentsAssetUpdateDTO) {
+
+        contentsAssetUpdateDTO.setMenuCode(contentsAssetUpdateDTO.getUploadCode());
+        return responseService.getSingleResult(contentsService.update(contentsAssetUpdateDTO));
     }
 
 }

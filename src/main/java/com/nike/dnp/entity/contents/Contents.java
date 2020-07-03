@@ -2,7 +2,8 @@ package com.nike.dnp.entity.contents;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.dto.contents.ContentsSaveDTO;
+import com.nike.dnp.dto.contents.save.ContentsSaveDTO;
+import com.nike.dnp.dto.contents.update.ContentsUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -209,4 +210,36 @@ public class Contents extends BaseTimeEntity {
         saveContents.setReadCount(0l);
     }
 
+
+    /**
+     * Update.
+     *
+     * @param contentsUpdateDTO the contents update dto
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 3. 오후 4:01:36
+     * @Description
+     */
+    public void update(final ContentsUpdateDTO contentsUpdateDTO) {
+        log.info("Contents.update");
+        this.menuCode = contentsUpdateDTO.getMenuCode();
+        this.imageFileName = contentsUpdateDTO.getImageFileName();
+        this.imageFileSize = contentsUpdateDTO.getImageFileSize();
+        this.imageFilePhysicalName = contentsUpdateDTO.getImageFilePhysicalName();
+        this.folderName = contentsUpdateDTO.getFolderName();
+        this.folderContents = contentsUpdateDTO.getFolderContents();
+        this.campaignPeriodSectionCode = contentsUpdateDTO.getCampaignPeriodSectionCode();
+    }
+
+    /**
+     * Update read count.
+     *
+     * @param readCount the read count
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 3. 오후 5:22:59
+     * @Description
+     */
+    public void updateReadCount(final Long readCount) {
+        log.info("Contents.updateReadCount");
+        this.readCount = readCount + 1;
+    }
 }

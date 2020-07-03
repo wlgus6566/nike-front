@@ -3,7 +3,8 @@ package com.nike.dnp.entity.contents;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
+import com.nike.dnp.dto.contents.save.ContentsFileSaveDTO;
+import com.nike.dnp.dto.contents.update.ContentsFileUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import io.swagger.annotations.ApiModelProperty;
@@ -37,7 +38,6 @@ public class ContentsFile extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CONTENTS_FILE_SEQ")
     @ApiModelProperty(name = "contentsFileSeq", value = "컨텐츠 파일 시퀀스")
-
     private Long contentsFileSeq;
 
     /**
@@ -159,6 +159,48 @@ public class ContentsFile extends BaseTimeEntity {
         }
 
         return contentsFile;
+    }
+
+    /**
+     * Update.
+     *
+     * @param contentsFileUpdateDTO the contents file update dto
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 3. 오후 5:27:06
+     * @Description
+     */
+    public void update(final ContentsFileUpdateDTO contentsFileUpdateDTO) {
+        log.info("ContentsFile.update");
+        this.fileSectionCode = contentsFileUpdateDTO.getFileSectionCode();
+        this.fileKindCode = contentsFileUpdateDTO.getFileKindCode();
+        String fileKindCode = contentsFileUpdateDTO.getFileKindCode();
+
+        if (ServiceEnumCode.ContentsFileKindCode.FILE.equals(fileKindCode)) {
+            this.checkStringValidation(contentsFileUpdateDTO.getFileName(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
+
+            this.fileName = contentsFileUpdateDTO.getFileName();
+            this.fileSize = contentsFileUpdateDTO.getFileSize();
+            this.filePhysicalName = contentsFileUpdateDTO.getFilePhysicalName();
+        } else {
+            this.checkStringValidation(contentsFileUpdateDTO.getTitle(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.getMessage());
+            this.checkStringValidation(contentsFileUpdateDTO.getUrl(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
+
+            this.title = contentsFileUpdateDTO.getTitle();
+            this.url = contentsFileUpdateDTO.getUrl();
+        }
+    }
+
+    /**
+     * Update download count.
+     *
+     * @param downloadCount the download count
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 3. 오후 5:28:11
+     * @Description
+     */
+    public void updateDownloadCount(final Long downloadCount) {
+        log.info("ContentsFile.updateDownloadCount");
+        this.downloadCount = downloadCount + 1;
     }
 
     /**

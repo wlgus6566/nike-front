@@ -1,30 +1,39 @@
-package com.nike.dnp.dto.contents;
+package com.nike.dnp.dto.contents.update;
 
+import com.nike.dnp.dto.contents.save.ContentsFileSaveDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.List;
 
 
-/**
- * The Class Contents save dto.
- *
- * @author [이소정]
- * @CreatedOn 2020. 6. 24. 오후 3:25:23
- * @Description
- */
+
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class ContentsSaveDTO {
+public class ContentsUpdateDTO {
+
+    /**
+     * 컨텐츠 시퀀스
+     * @author [이소정]
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CONTENTS_SEQ")
+    @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스", required = true)
+    private Long contentsSeq;
 
     /**
      * 최고 메뉴 공통코드
      * @author [이소정]
      */
-    @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 공통코드", hidden = true)
+    @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 공통코드")
     private String topMenuCode;
 
     /**

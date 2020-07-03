@@ -1,11 +1,13 @@
 package com.nike.dnp.service.contents;
 
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
-import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
+import com.nike.dnp.dto.contents.save.ContentsFileSaveDTO;
+import com.nike.dnp.dto.contents.save.ContentsSaveDTO;
+import com.nike.dnp.dto.contents.update.ContentsUpdateDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Contents Service
@@ -105,6 +108,36 @@ public class ContentsService {
      */
     public Contents findByContentsSeq(final Long contentsSeq) {
         return contentsRepository.findByContentsSeq(contentsSeq);
+    }
+
+    /**
+     * Update contents.
+     *
+     * @param contentsUpdateDTO the contents update dto
+     * @return the contents
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 3. 오후 4:01:24
+     * @Description
+     */
+    @Transactional
+    public Optional<Contents> update(final ContentsUpdateDTO contentsUpdateDTO) {
+        log.info("contentsService.update");
+        final Optional<Contents> contents = contentsRepository.findById(contentsUpdateDTO.getContentsSeq());
+        contents.ifPresent(value -> value.update(contentsUpdateDTO));
+
+        List<ContentsFile> updatedContentsFileList = new ArrayList<>();
+
+        // 기존에 있는 파일 목록과 DTO받은 파일 목록 비교해서
+        // case1.기본목록O, 새로운목록X : useYn = 'N' update
+        // case2.기존목록X, 새로운목록O : save
+        // case3.기존목록O, 새로운목록O : update
+
+        if (!contentsUpdateDTO.getContentsFileList().isEmpty()) {
+
+        }
+
+        return contents;
+
     }
 
 }

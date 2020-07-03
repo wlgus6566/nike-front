@@ -1,14 +1,15 @@
-package com.nike.dnp.dto.contents;
+package com.nike.dnp.dto.contents.update;
 
+import com.nike.dnp.dto.contents.save.ContentsSaveDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 
 /**
- * The Class Contents save dto.
+ * The Class Contents toolkit update dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 6. 24. 오후 3:25:23
+ * @CreatedOn 2020. 7. 3. 오후 2:51:29
  * @Description
  */
 @Getter
@@ -16,7 +17,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class ContentsToolkitSaveDTO extends ContentsSaveDTO {
+public class ContentsToolkitUpdateDTO extends ContentsUpdateDTO {
 
     /**
      * 업로드위치(2depth 메뉴 코드)

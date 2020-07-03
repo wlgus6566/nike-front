@@ -1,5 +1,6 @@
-package com.nike.dnp.dto.contents;
+package com.nike.dnp.dto.contents.save;
 
+import com.nike.dnp.dto.contents.save.ContentsSaveDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -16,12 +17,12 @@ import lombok.*;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class ContentsAssetSaveDTO extends ContentsSaveDTO {
+public class ContentsToolkitSaveDTO extends ContentsSaveDTO {
 
     /**
      * 업로드위치(2depth 메뉴 코드)
      * @author [이소정]
      */
-    @ApiModelProperty(name = "uploadCode", value = "업로드위치(2depth 메뉴 코드)", required = true, example = "A_SP")
+    @ApiModelProperty(name = "uploadCode", value = "업로드위치(2depth 메뉴 코드)", required = true, example = "T_VMS")
     private String uploadCode;
 }
