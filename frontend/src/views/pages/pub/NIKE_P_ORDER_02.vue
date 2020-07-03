@@ -17,7 +17,7 @@
         </header>
         <section id="container">
             <div class="contents">
-                <h2 class="page-title">NIKE BY YOU</h2>
+                <h2 class="page-title"><span class="ko">세일 사이니지</span></h2>
                 <div class="sorting-area">
                     <div class="search-input">
                         <input type="text" placeholder="검색어를 입력해주세요." />
@@ -26,151 +26,174 @@
                 </div>
                 <ul class="order-item-list">
                     <li class="order-item">
-                        <div>
-                            <button type="button">
-                                <div class="thumbnail">
-                                    <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                                </div>
-                                <div class="info-box">
-                                    <strong class="title">타이틀입니다</strong>
-                                    <p class="txt">설명입니다</p>
+                        <a href="#">
+                            <span class="thumbnail">
+                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                            </span>
+                            <span class="info-box">
+                                <strong class="title">타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다 </strong>
+                                <p class="txt">설명입니다</p>
+                                <span class="desc-txt-box">
+                                    <p class="desc">15,000원</p>
                                     <p class="desc">최소수문수량 <em>100</em>개</p>
-                                </div>
-                            </button>
-                            <div class="btn-box">
-                                <button type="button" class="btn-more"><span>크게보기</span></button>
-                            </div>
-                            <div class="check-wrap">
-                                <span class="checkbox">
-                                    <input type="checkbox" />
-                                    <span></span>
+                                    <p class="desc">에이젼시명</p>
                                 </span>
-                            </div>
+                            </span>
+                        </a>
+                        <div class="cart-box">
+                            <button type="button" class="cart active"><span>카드담기</span></button>
                         </div>
                     </li>
                     <li class="order-item">
-                        <div>
-                            <button type="button">
-                                <div class="thumbnail">
-                                    <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                                </div>
-                                <div class="info-box">
-                                    <strong class="title"
-                                        >두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다</strong
-                                    >
-                                    <p class="txt">설명입니다</p>
+                        <a href="#">
+                            <span class="thumbnail">
+                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                            </span>
+                            <span class="info-box">
+                                <strong class="title">타이틀입니다</strong>
+                                <p class="txt">설명입니다</p>
+                                <span class="desc-txt-box">
+                                    <p class="desc">15,000원</p>
                                     <p class="desc">최소수문수량 <em>100</em>개</p>
-                                </div>
-                            </button>
-                            <div class="btn-box">
-                                <button type="button" class="btn-more"><span>크게보기</span></button>
-                            </div>
-                            <div class="check-wrap">
-                                <span class="checkbox">
-                                    <input type="checkbox" />
-                                    <span></span>
+                                    <p class="desc">에이젼시명</p>
                                 </span>
-                            </div>
+                            </span>
+                        </a>
+                        <div class="cart-box">
+                            <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
                     <li class="order-item">
-                        <div>
-                            <button type="button">
-                                <div class="thumbnail">
-                                    <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                                </div>
-                                <div class="info-box">
-                                    <strong class="title"
-                                        >두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다</strong
-                                    >
-                                    <p class="txt">설명입니다</p>
+                        <a href="#">
+                            <span class="thumbnail">
+                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                            </span>
+                            <span class="info-box">
+                                <strong class="title">타이틀입니다</strong>
+                                <p class="txt">설명입니다</p>
+                                <span class="desc-txt-box">
+                                    <p class="desc">15,000원</p>
                                     <p class="desc">최소수문수량 <em>100</em>개</p>
-                                </div>
-                            </button>
-                            <div class="btn-box">
-                                <button type="button" class="btn-more"><span>크게보기</span></button>
-                            </div>
-                            <div class="check-wrap">
-                                <span class="checkbox">
-                                    <input type="checkbox" />
-                                    <span></span>
+                                    <p class="desc">에이젼시명</p>
                                 </span>
-                            </div>
+                            </span>
+                        </a>
+                        <div class="cart-box">
+                            <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
                     <li class="order-item">
-                        <div>
-                            <button type="button">
-                                <div class="thumbnail">
-                                    <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                                </div>
-                                <div class="info-box">
-                                    <strong class="title"
-                                        >두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다</strong
-                                    >
-                                    <p class="txt">설명입니다</p>
+                        <a href="#">
+                            <span class="thumbnail">
+                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                            </span>
+                            <span class="info-box">
+                                <strong class="title">타이틀입니다</strong>
+                                <p class="txt">설명입니다</p>
+                                <span class="desc-txt-box">
+                                    <p class="desc">15,000원</p>
                                     <p class="desc">최소수문수량 <em>100</em>개</p>
-                                </div>
-                            </button>
-                            <div class="btn-box">
-                                <button type="button" class="btn-more"><span>크게보기</span></button>
-                            </div>
-                            <div class="check-wrap">
-                                <span class="checkbox">
-                                    <input type="checkbox" />
-                                    <span></span>
+                                    <p class="desc">에이젼시명</p>
                                 </span>
-                            </div>
+                            </span>
+                        </a>
+                        <div class="cart-box">
+                            <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
                     <li class="order-item">
-                        <div>
-                            <button type="button">
-                                <div class="thumbnail">
-                                    <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                                </div>
-                                <div class="info-box">
-                                    <strong class="title"
-                                        >두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다</strong
-                                    >
-                                    <p class="txt">설명입니다</p>
+                        <a href="#">
+                            <span class="thumbnail">
+                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                            </span>
+                            <span class="info-box">
+                                <strong class="title">타이틀입니다</strong>
+                                <p class="txt">설명입니다</p>
+                                <span class="desc-txt-box">
+                                    <p class="desc">15,000원</p>
                                     <p class="desc">최소수문수량 <em>100</em>개</p>
-                                </div>
-                            </button>
-                            <div class="btn-box">
-                                <button type="button" class="btn-more"><span>크게보기</span></button>
-                            </div>
-                            <div class="check-wrap">
-                                <span class="checkbox">
-                                    <input type="checkbox" />
-                                    <span></span>
+                                    <p class="desc">에이젼시명</p>
                                 </span>
-                            </div>
+                            </span>
+                        </a>
+                        <div class="cart-box">
+                            <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
                     <li class="order-item">
-                        <div>
-                            <button type="button">
-                                <div class="thumbnail">
-                                    <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                                </div>
-                                <div class="info-box">
-                                    <strong class="title"
-                                        >두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다 두줄처리 타이틀 입니다</strong
-                                    >
-                                    <p class="txt">설명입니다</p>
+                        <a href="#">
+                            <span class="thumbnail">
+                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                            </span>
+                            <span class="info-box">
+                                <strong class="title">타이틀입니다</strong>
+                                <p class="txt">설명입니다</p>
+                                <span class="desc-txt-box">
+                                    <p class="desc">15,000원</p>
                                     <p class="desc">최소수문수량 <em>100</em>개</p>
-                                </div>
-                            </button>
-                            <div class="btn-box">
-                                <button type="button" class="btn-more"><span>크게보기</span></button>
-                            </div>
-                            <div class="check-wrap">
-                                <span class="checkbox">
-                                    <input type="checkbox" />
-                                    <span></span>
+                                    <p class="desc">에이젼시명</p>
                                 </span>
-                            </div>
+                            </span>
+                        </a>
+                        <div class="cart-box">
+                            <button type="button" class="cart"><span>카드담기</span></button>
+                        </div>
+                    </li>
+                    <li class="order-item">
+                        <a href="#">
+                            <span class="thumbnail">
+                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                            </span>
+                            <span class="info-box">
+                                <strong class="title">타이틀입니다</strong>
+                                <p class="txt">설명입니다</p>
+                                <span class="desc-txt-box">
+                                    <p class="desc">15,000원</p>
+                                    <p class="desc">최소수문수량 <em>100</em>개</p>
+                                    <p class="desc">에이젼시명</p>
+                                </span>
+                            </span>
+                        </a>
+                        <div class="cart-box">
+                            <button type="button" class="cart"><span>카드담기</span></button>
+                        </div>
+                    </li>
+                    <li class="order-item">
+                        <a href="#">
+                            <span class="thumbnail">
+                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                            </span>
+                            <span class="info-box">
+                                <strong class="title">타이틀입니다</strong>
+                                <p class="txt">설명입니다</p>
+                                <span class="desc-txt-box">
+                                    <p class="desc">15,000원</p>
+                                    <p class="desc">최소수문수량 <em>100</em>개</p>
+                                    <p class="desc">에이젼시명</p>
+                                </span>
+                            </span>
+                        </a>
+                        <div class="cart-box">
+                            <button type="button" class="cart"><span>카드담기</span></button>
+                        </div>
+                    </li>
+                    <li class="order-item">
+                        <a href="#">
+                            <span class="thumbnail">
+                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                            </span>
+                            <span class="info-box">
+                                <strong class="title">타이틀입니다</strong>
+                                <p class="txt">설명입니다</p>
+                                <span class="desc-txt-box">
+                                    <p class="desc">15,000원</p>
+                                    <p class="desc">최소수문수량 <em>100</em>개</p>
+                                    <p class="desc">에이젼시명</p>
+                                </span>
+                            </span>
+                        </a>
+                        <div class="cart-box">
+                            <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
                 </ul>

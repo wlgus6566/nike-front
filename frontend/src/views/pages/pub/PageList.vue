@@ -7,6 +7,7 @@
                 <span class="name">작업자</span>
                 <span class="filename">파일명</span>
                 <span class="name">완료일</span>
+                <span class="name">검수</span>
                 <span class="com">비고</span>
             </li>
         </ul>
@@ -21,6 +22,9 @@
                 </span>
                 <span class="name">
                     {{ item.com }}
+                </span>
+                <span>
+                    {{ item.abc }}
                 </span>
                 <span class="com">
                     {{ item.comment }}
@@ -37,6 +41,9 @@
                         <span class="name">
                             {{ item.com }}
                         </span>
+                        <span>
+                            {{ item.abc }}
+                        </span>
                         <span class="com">
                             {{ item.comment }}
                         </span>
@@ -51,6 +58,9 @@
                                 </span>
                                 <span class="name">
                                     {{ item.com }}
+                                </span>
+                                <span>
+                                    {{ item.abc }}
                                 </span>
                                 <span class="com">
                                     {{ item.comment }}
@@ -67,6 +77,9 @@
                                         <span class="name">
                                             {{ item.com }}
                                         </span>
+                                        <span>
+                                            {{ item.abc }}
+                                        </span>
                                         <span class="com">
                                             {{ item.comment }}
                                         </span>
@@ -81,6 +94,9 @@
                                                 </span>
                                                 <span class="name">
                                                     {{ item.com }}
+                                                </span>
+                                                <span>
+                                                    {{ item.abc }}
                                                 </span>
                                                 <span class="com">
                                                     {{ item.comment }}
@@ -109,6 +125,7 @@ export default {
                     filename: 'mainPage.vue',
                     link: 'main',
                     com: '',
+                    abc: '',
                     comment: ' ',
                     depth: false,
                 },
@@ -118,6 +135,7 @@ export default {
                     filename: '',
                     link: '',
                     com: '',
+                    abc: '',
                     comment: '',
                     depth: [
                         {
@@ -126,6 +144,7 @@ export default {
                             filename: 'button.vue',
                             link: 'button',
                             com: ' ',
+                            abc: '',
                             comment: ' ',
                             depth: false,
                         },
@@ -135,6 +154,7 @@ export default {
                             filename: 'input.vue',
                             link: 'input',
                             com: ' ',
+                            abc: '',
                             comment: '디자인 수정 반영 예정',
                             depth: false,
                         },
@@ -146,6 +166,7 @@ export default {
                     filename: '',
                     link: '',
                     com: '',
+                    abc: '',
                     comment: '',
                     depth: [
                         {
@@ -153,7 +174,8 @@ export default {
                             name: '지은유',
                             filename: 'NIKE_P_LOGIN_01.vue',
                             link: 'NIKE_P_LOGIN_01',
-                            com: ' ',
+                            com: '2020.07.02',
+                            abc: '',
                             comment: '배경 추가 반영 필요',
                             depth: false,
                         },
@@ -162,8 +184,9 @@ export default {
                             name: '지은유',
                             filename: 'NIKE_P_LOGIN_02.vue',
                             link: 'NIKE_P_LOGIN_02',
-                            com: ' ',
-                            comment: '배경 추가 반영 필요',
+                            com: '2020.07.02',
+                            abc: '',
+                            comment: '배경 추가 반영 필요 , input 디자인 반영',
                             depth: false,
                         },
                         {
@@ -171,7 +194,8 @@ export default {
                             name: '지은유',
                             filename: 'NIKE_P_LOGIN_03.vue',
                             link: 'NIKE_P_LOGIN_03',
-                            com: ' ',
+                            com: '2020.07.02',
+                            abc: '',
                             comment: '배경 추가 반영 필요',
                             depth: false,
                         },
@@ -181,6 +205,7 @@ export default {
                             filename: '	NIKE_P_LOGIN_05.vue',
                             link: '	NIKE_P_LOGIN_05',
                             com: ' ',
+                            abc: '',
                             comment: ' ',
                             depth: false,
                         },
@@ -190,6 +215,7 @@ export default {
                             filename: '	NIKE_P_LOGIN_04.vue',
                             link: '	NIKE_P_LOGIN_04',
                             com: ' ',
+                            abc: '',
                             comment: ' ',
                             depth: false,
                         },
@@ -199,6 +225,7 @@ export default {
                             filename: '	NIKE_P_LOGIN_06.vue',
                             link: '	NIKE_P_LOGIN_06',
                             com: ' ',
+                            abc: '',
                             comment: ' ',
                             depth: false,
                         },
@@ -210,6 +237,7 @@ export default {
                     filename: '',
                     link: '',
                     com: '',
+                    abc: '',
                     comment: '',
                     depth: [
                         {
@@ -218,6 +246,7 @@ export default {
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
@@ -225,8 +254,9 @@ export default {
                                     name: '지은유',
                                     filename: 'NIKE_P_ASSET_01.vue',
                                     link: 'NIKE_P_ASSET_01',
-                                    com: '',
-                                    comment: ' ',
+                                    com: '2020.07.02',
+                                    abc: '',
+                                    comment: '기간제외 검수 가능',
                                     depth: false,
                                 },
                                 {
@@ -234,7 +264,8 @@ export default {
                                     name: '지은유',
                                     filename: 'ASSET_SP_LIST.vue',
                                     link: 'ASSET_SP_LIST',
-                                    com: '',
+                                    com: '2020.07.02',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
@@ -243,7 +274,8 @@ export default {
                                     name: '지은유',
                                     filename: 'ASSET_SP_DETAIL.vue',
                                     link: 'ASSET_SP_DETAIL',
-                                    com: '',
+                                    com: '2020.07.02',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
@@ -255,6 +287,7 @@ export default {
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
@@ -262,8 +295,9 @@ export default {
                                     name: '지은유',
                                     filename: 'NIKE_P_TOOLKIT_01.vue',
                                     link: 'NIKE_P_TOOLKIT_01',
-                                    com: ' ',
-                                    comment: ' ',
+                                    com: '2020.07.02',
+                                    abc: '',
+                                    comment: '기간제외 검수 가능',
                                     depth: false,
                                 },
                                 {
@@ -271,7 +305,8 @@ export default {
                                     name: '지은유',
                                     filename: 'NIKE_P_TOOLKIT_02.vue',
                                     link: 'NIKE_P_TOOLKIT_02',
-                                    com: ' ',
+                                    com: '2020.07.02',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
@@ -280,7 +315,8 @@ export default {
                                     name: '지은유',
                                     filename: 'NIKE_P_TOOLKIT_03.vue',
                                     link: 'NIKE_P_TOOLKIT_03',
-                                    com: ' ',
+                                    com: '2020.07.02',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
@@ -292,6 +328,7 @@ export default {
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
@@ -299,8 +336,9 @@ export default {
                                     name: '지은유',
                                     filename: 'NIKE_P_FD_01.vue',
                                     link: 'NIKE_P_FD_01',
-                                    com: ' ',
-                                    comment: ' ',
+                                    com: '2020.07.02',
+                                    abc: '',
+                                    comment: '기간제외 검수 가능',
                                     depth: false,
                                 },
                                 {
@@ -308,7 +346,8 @@ export default {
                                     name: '지은유',
                                     filename: 'NIKE_P_FD_02.vue',
                                     link: 'NIKE_P_FD_02',
-                                    com: ' ',
+                                    com: '2020.07.02',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
@@ -317,7 +356,8 @@ export default {
                                     name: '지은유',
                                     filename: 'NIKE_P_FD_03.vue',
                                     link: 'NIKE_P_FD_03',
-                                    com: ' ',
+                                    com: '2020.07.02',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
@@ -329,235 +369,281 @@ export default {
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
                                     title: '상품관리',
                                     name: '지은유',
-                                    filename: '	NIKE_P_ORDER_01.vue',
-                                    link: '	NIKE_P_ORDER_01',
+                                    filename: '	NIKE_P_ORDER_06.vue',
+                                    link: '	NIKE_P_ORDER_06',
                                     com: ' ',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
                                 {
-                                    title: '부자재',
-                                    name: '',
-                                    filename: '',
-                                    link: '',
-                                    com: '',
-                                    comment: '',
-                                    depth: [
-                                        {
-                                            title: '운영 비품',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '스태프 비품',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '운영 사이니지',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '세일 사이니지',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '오픈 패키지',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                    ],
-                                },
-                                {
-                                    title: 'NIKE BY YOU',
-                                    name: '',
-                                    filename: '',
-                                    link: '',
-                                    com: '',
-                                    comment: '',
-                                    depth: [
-                                        {
-                                            title: '상품리스트',
-                                            name: '지은유',
-                                            filename: 'NIKE_P_ORDER_02.vue',
-                                            link: 'NIKE_P_ORDER_02',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                    ],
-                                },
-                                {
-                                    title: '신발 커스텀 (단품)',
-                                    name: ' ',
-                                    filename: ' ',
-                                    link: ' ',
-                                    com: ' ',
+                                    title: '상품등록',
+                                    name: '지은유',
+                                    filename: '	NIKE_P_ORDER_01.vue',
+                                    link: '	NIKE_P_ORDER_01',
+                                    com: '2020.07.03',
+                                    abc: '',
                                     comment: ' ',
-                                    depth: [
-                                        {
-                                            title: '신발 커스텀 (패키지)',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '의류 커스텀 (단품)',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '의류 커스텀 (패키지)',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: 'OTHERS',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                    ],
+                                    depth: false,
                                 },
                                 {
-                                    title: 'CUSTOM23',
-                                    name: '',
-                                    filename: '',
-                                    link: '',
-                                    com: '',
-                                    comment: '',
-                                    depth: [
-                                        {
-                                            title: '신발 커스텀 (단품)',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '신발 커스텀 (패키지)',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '의류 커스텀 (단품)',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '의류 커스텀 (패키지)',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: 'OTHERS',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                    ],
+                                    title: '상품목록',
+                                    name: '지은유',
+                                    filename: 'NIKE_P_ORDER_02.vue',
+                                    link: 'NIKE_P_ORDER_02',
+                                    com: '2020.07.03',
+                                    abc: '',
+                                    comment: ' ',
+                                    depth: false,
                                 },
-                                {
-                                    title: 'MNQ',
-                                    name: '',
-                                    filename: '',
-                                    link: '',
-                                    com: '',
-                                    comment: '',
-                                    depth: [
-                                        {
-                                            title: '남성',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '여성',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '유아동',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                    ],
-                                },
+                                // {
+                                //     title: '부자재',
+                                //     name: '',
+                                //     filename: '',
+                                //     link: '',
+                                //     com: '',
+                                //     abc: '',
+                                //     comment: '',
+                                //     depth: [
+                                //         {
+                                //             title: '운영 비품',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //         {
+                                //             title: '스태프 비품',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //         {
+                                //             title: '운영 사이니지',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //         {
+                                //             title: '세일 사이니지',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //         {
+                                //             title: '오픈 패키지',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //     ],
+                                // },
+                                // {
+                                //     title: 'NIKE BY YOU',
+                                //     name: '',
+                                //     filename: '',
+                                //     link: '',
+                                //     com: '',
+                                //     abc: '',
+                                //     comment: '',
+                                //     depth: [
+                                //         {
+                                //             title: '상품리스트',
+                                //             name: '지은유',
+                                //             filename: 'NIKE_P_ORDER_02.vue',
+                                //             link: 'NIKE_P_ORDER_02',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //     ],
+                                // },
+                                // {
+                                //     title: '신발 커스텀 (단품)',
+                                //     name: ' ',
+                                //     filename: ' ',
+                                //     link: ' ',
+                                //     com: ' ',
+                                //     abc: '',
+                                //     comment: ' ',
+                                //     depth: [
+                                //         {
+                                //             title: '신발 커스텀 (패키지)',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //         {
+                                //             title: '의류 커스텀 (단품)',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //         {
+                                //             title: '의류 커스텀 (패키지)',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //         {
+                                //             title: 'OTHERS',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //     ],
+                                // },
+                                // {
+                                //     title: 'CUSTOM23',
+                                //     name: '',
+                                //     filename: '',
+                                //     link: '',
+                                //     com: '',
+                                //     abc: '',
+                                //     comment: '',
+                                //     depth: [
+                                //         {
+                                //             title: '신발 커스텀 (단품)',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //         {
+                                //             title: '신발 커스텀 (패키지)',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //         {
+                                //             title: '의류 커스텀 (단품)',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //         {
+                                //             title: '의류 커스텀 (패키지)',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //         {
+                                //             title: 'OTHERS',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //     ],
+                                // },
+                                // {
+                                //     title: 'MNQ',
+                                //     name: '',
+                                //     filename: '',
+                                //     link: '',
+                                //     com: '',
+                                //     abc: '',
+                                //     comment: '',
+                                //     depth: [
+                                //         {
+                                //             title: '남성',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //         {
+                                //             title: '여성',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //         {
+                                //             title: '유아동',
+                                //             name: ' ',
+                                //             filename: ' ',
+                                //             link: ' ',
+                                //             com: ' ',
+                                //             abc: '',
+                                //             comment: ' ',
+                                //             depth: false,
+                                //         },
+                                //     ],
+                                // },
                                 {
                                     title: '주문 완료',
                                     name: '지은유',
                                     filename: 'NIKE_P_ORDER_07.vue',
                                     link: 'NIKE_P_ORDER_07',
-                                    com: ' ',
+                                    com: '2020.06.30',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
@@ -569,6 +655,7 @@ export default {
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
@@ -577,6 +664,7 @@ export default {
                                     filename: '	NIKE_P_REPORT_01.vue',
                                     link: '	NIKE_P_REPORT_01',
                                     com: ' ',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
@@ -586,6 +674,7 @@ export default {
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
@@ -594,6 +683,7 @@ export default {
                                             filename: 'NIKE_P_REPORT_02.vue',
                                             link: 'NIKE_P_REPORT_02',
                                             com: ' ',
+                                            abc: '',
                                             comment: ' ',
                                             depth: false,
                                         },
@@ -603,6 +693,7 @@ export default {
                                             filename: 'NIKE_P_REPORT_03.vue',
                                             link: 'NIKE_P_REPORT_03',
                                             com: ' ',
+                                            abc: '',
                                             comment: ' ',
                                             depth: false,
                                         },
@@ -616,6 +707,7 @@ export default {
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
@@ -624,6 +716,7 @@ export default {
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
@@ -632,6 +725,7 @@ export default {
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -641,6 +735,7 @@ export default {
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -652,6 +747,7 @@ export default {
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
@@ -660,6 +756,7 @@ export default {
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -669,6 +766,7 @@ export default {
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -682,6 +780,7 @@ export default {
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
@@ -690,6 +789,7 @@ export default {
                                     filename: 'NIKE_P_MANAGE_01.vue',
                                     link: 'NIKE_P_MANAGE_01',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: false,
                                 },
@@ -699,6 +799,7 @@ export default {
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
@@ -707,6 +808,7 @@ export default {
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -716,6 +818,7 @@ export default {
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -727,6 +830,7 @@ export default {
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: false,
                                 },
@@ -740,6 +844,7 @@ export default {
                     filename: '',
                     link: '',
                     com: '',
+                    abc: '',
                     comment: '',
                     depth: [
                         {
@@ -748,6 +853,7 @@ export default {
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: false,
                         },
@@ -757,6 +863,7 @@ export default {
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: false,
                         },
@@ -766,6 +873,7 @@ export default {
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
@@ -774,6 +882,7 @@ export default {
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
@@ -781,7 +890,8 @@ export default {
                                             name: '지은유',
                                             filename: 'NIKE_P_MY_01_001.vue',
                                             link: 'NIKE_P_MY_01_001',
-                                            com: '',
+                                            com: '2020.07.03',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -791,6 +901,7 @@ export default {
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -802,6 +913,7 @@ export default {
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
@@ -810,6 +922,7 @@ export default {
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -819,6 +932,7 @@ export default {
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -830,6 +944,7 @@ export default {
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
@@ -838,6 +953,7 @@ export default {
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -847,6 +963,7 @@ export default {
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -856,6 +973,7 @@ export default {
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -867,6 +985,7 @@ export default {
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
@@ -875,32 +994,36 @@ export default {
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: [
                                                 {
                                                     title: '목록',
-                                                    name: '',
-                                                    filename: '',
-                                                    link: '',
-                                                    com: '',
+                                                    name: '지은유',
+                                                    filename: 'NIKE_P_MY_04_001.vue',
+                                                    link: 'NIKE_P_MY_04_001',
+                                                    com: '2020.07.03',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
                                                 {
                                                     title: '상세',
-                                                    name: '',
-                                                    filename: '',
-                                                    link: '',
-                                                    com: '',
+                                                    name: '지은유',
+                                                    filename: 'NIKE_P_MY_04_002.vue',
+                                                    link: 'NIKE_P_MY_04_002',
+                                                    com: '2020.07.03',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
                                                 {
                                                     title: '등록/수정',
-                                                    name: '',
-                                                    filename: '',
-                                                    link: '',
-                                                    com: '',
+                                                    name: '지은유',
+                                                    filename: 'NIKE_P_MY_04_003.vue',
+                                                    link: 'NIKE_P_MY_04_003',
+                                                    com: '2020.07.03',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
@@ -912,6 +1035,7 @@ export default {
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: [
                                                 {
@@ -919,25 +1043,28 @@ export default {
                                                     name: '지은유',
                                                     filename: 'NIKE_P_MY_04_004.vue',
                                                     link: 'NIKE_P_MY_04_004',
-                                                    com: '',
+                                                    com: '2020.07.03',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
                                                 {
                                                     title: '상세',
-                                                    name: '',
-                                                    filename: '',
-                                                    link: '',
-                                                    com: '',
+                                                    name: '지은유',
+                                                    filename: 'NIKE_P_MY_04_005.vue',
+                                                    link: 'NIKE_P_MY_04_005',
+                                                    com: '2020.07.03',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
                                                 {
                                                     title: '등록/수정',
-                                                    name: '',
-                                                    filename: '',
-                                                    link: '',
-                                                    com: '',
+                                                    name: '지은유',
+                                                    filename: 'NIKE_P_MY_04_006.vue',
+                                                    link: 'NIKE_P_MY_04_006',
+                                                    com: '2020.07.03',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
@@ -949,6 +1076,7 @@ export default {
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: [
                                                 {
@@ -957,6 +1085,7 @@ export default {
                                                     filename: '',
                                                     link: '',
                                                     com: '',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
@@ -966,6 +1095,7 @@ export default {
                                                     filename: '',
                                                     link: '',
                                                     com: '',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
@@ -975,6 +1105,7 @@ export default {
                                                     filename: '',
                                                     link: '',
                                                     com: '',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
@@ -992,6 +1123,7 @@ export default {
                     filename: '',
                     link: '',
                     com: '',
+                    abc: '',
                     comment: '',
                     depth: [
                         {
@@ -1000,6 +1132,7 @@ export default {
                             filename: 'NIKE_P_LOGIN_01e.vue',
                             link: 'NIKE_P_LOGIN_01e',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: false,
                         },
@@ -1009,6 +1142,7 @@ export default {
                             filename: 'NIKE_P_LOGIN_03e.vue',
                             link: 'NIKE_P_LOGIN_03e',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: false,
                         },
@@ -1018,6 +1152,7 @@ export default {
                             filename: 'NIKE_P_ASSET_02_001e.vue',
                             link: 'NIKE_P_ASSET_02_001e',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: false,
                         },
@@ -1027,6 +1162,7 @@ export default {
                             filename: 'NIKE_P_MANAGE_02_001e.vue',
                             link: 'NIKE_P_MANAGE_02_001e',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: false,
                         },
@@ -1036,6 +1172,7 @@ export default {
                             filename: 'NIKE_P_ORDER_01e.vue',
                             link: 'NIKE_P_ORDER_01e',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: false,
                         },
@@ -1104,6 +1241,9 @@ div {
     flex-basis: 100px;
 }
 .list li span:nth-child(5) {
+    flex-basis: 100px;
+}
+.list li span:nth-child(6) {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: auto;
