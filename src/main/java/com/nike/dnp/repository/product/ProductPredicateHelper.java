@@ -1,4 +1,4 @@
-package com.nike.dnp.repository.order;
+package com.nike.dnp.repository.product;
 
 
 import com.nike.dnp.entity.order.QProduct;

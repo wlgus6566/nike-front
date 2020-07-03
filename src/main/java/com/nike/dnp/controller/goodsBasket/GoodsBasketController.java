@@ -1,20 +1,20 @@
-package com.nike.dnp.controller.order;
+package com.nike.dnp.controller.goodsBasket;
 
-import com.nike.dnp.dto.order.GoodsBasketSaveDTO;
-import com.nike.dnp.entity.order.GoodsBasket;
+import com.nike.dnp.dto.goodsBasket.GoodsBasketSaveDTO;
+import com.nike.dnp.entity.goodsBasket.GoodsBasket;
+import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.order.GoodsBasketService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * The Class Basket controller.
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @Api(description = "장바구니", tags = "22_BASKET")
-@RequestMapping(value = "/api/order/basket", name = "장바구니")
+@RequestMapping(value = "/api/goodsBasket", name = "장바구니")
 @AllArgsConstructor
 public class GoodsBasketController {
 
@@ -71,17 +71,42 @@ public class GoodsBasketController {
 	 */
 	@ApiOperation(value = "장바구니 등록", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/save", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@Transactional
 	public SingleResult<GoodsBasket> saveBasket(final @RequestBody GoodsBasketSaveDTO goodsBasketSaveDTO) {
-
 		GoodsBasket goodsBasket = goodsBasketService.saveBasket(goodsBasketSaveDTO);
-
 		return responseService.getSingleResult(goodsBasket);
 	}
 
-	/*public SingleResult<T> findByGoodsBasket(@){
-		goodsBasketService.findByAll()
-	}*/
+
+	/**
+	 * Find all single result.
+	 *
+	 * @return the single result
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 2. 오후 6:20:53
+	 * @Description
+	 */
+	@ApiOperation(value = "장바구니 조회", notes = BASIC_CHARACTER)
+	@GetMapping(value = "/list", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public SingleResult<List<GoodsBasket>> findAll(){
+		return responseService.getSingleResult(goodsBasketService.findByAll());
+	}
+
+
+	/**
+	 * Delete basket common result.
+	 *
+	 * @param goodsBasketSeq the goods basket seq
+	 * @return the common result
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 3. 오후 12:09:20
+	 * @Description
+	 */
+	@ApiOperation(value = "장바구니 삭제", notes = BASIC_CHARACTER)
+	@DeleteMapping(value = "/{goodsBasketSeq}")
+	public CommonResult deleteBasket(final @ApiParam(name = "goodsBasketSeq", value = "장바구니 시퀀스", defaultValue = "6") @PathVariable Long goodsBasketSeq) {
+		goodsBasketService.deleteBasket(goodsBasketSeq);
+		return responseService.getSuccessResult();
+	}
 
 
 }

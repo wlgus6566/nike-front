@@ -1,7 +1,7 @@
-package com.nike.dnp.entity.order;
+package com.nike.dnp.entity.goodsBasket;
 
 import com.nike.dnp.entity.BaseTimeEntity;
-import com.nike.dnp.entity.user.User;
+import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.util.SecurityUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -69,17 +69,6 @@ public class GoodsBasket extends BaseTimeEntity {
     @Column(name = "ORDER_QUANTITY")
     @ApiModelProperty(name = "orderQuantity", value = "주문 수량")
     private Long orderQuantity;
-
-
-    /**
-     * 유저 정보
-     *
-     * @author [윤태호]
-     */
-    @ManyToOne
-    @JoinColumn(name="USER_SEQ",insertable = false,updatable = false)
-    private User user;
-
 
     /**
      * 상품 정보

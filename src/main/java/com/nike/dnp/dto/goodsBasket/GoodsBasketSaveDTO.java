@@ -1,4 +1,4 @@
-package com.nike.dnp.dto.order;
+package com.nike.dnp.dto.goodsBasket;
 
 import com.nike.dnp.dto.BasicDTO;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,6 +1,6 @@
-package com.nike.dnp.repository.order;
+package com.nike.dnp.repository.product;
 
-import com.nike.dnp.entity.order.Product;
+import com.nike.dnp.entity.product.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

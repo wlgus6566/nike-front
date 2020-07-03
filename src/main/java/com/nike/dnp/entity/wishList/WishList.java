@@ -1,7 +1,7 @@
-package com.nike.dnp.entity.order;
+package com.nike.dnp.entity.wishList;
 
 import com.nike.dnp.entity.BaseTimeEntity;
-import com.nike.dnp.entity.user.User;
+import com.nike.dnp.entity.product.Product;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -52,18 +52,7 @@ public class WishList extends BaseTimeEntity {
     private Long goodsSeq;
 
     /**
-     * 유저 정보
-     *
-     * @author [윤태호]
-     */
-    @ManyToOne
-    @JoinColumn(name = "USER_SEQ", insertable = false, updatable = false)
-    private User user;
-
-
-    /**
      * 상품 정보
-     *
      * @author [윤태호]
      */
     @ManyToOne

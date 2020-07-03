@@ -1,6 +1,7 @@
 package com.nike.dnp.entity.order;
 
 import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.entity.product.Product;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
