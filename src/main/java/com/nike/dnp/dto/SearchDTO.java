@@ -23,7 +23,7 @@ public class SearchDTO {
      * @author [오지훈]
      * @defaultValue 0
      */
-    @ApiParam(value = "페이지", name = "page",defaultValue = "0")
+    @ApiParam(value = "페이지", name = "page", defaultValue = "0")
     private Integer page = 0;
 
     /**
@@ -32,7 +32,7 @@ public class SearchDTO {
      * @author [오지훈]
      * @defaultValue 20
      */
-    @ApiParam(value = "사이즈", name = "size" , defaultValue = "20")
+    @ApiParam(value = "사이즈", name = "size", defaultValue = "20")
     private int size = 20;
 
 }

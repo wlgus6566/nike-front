@@ -7,6 +7,7 @@ import com.nike.dnp.service.RedisService;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.auth.SecurityFilterMataService;
 import com.nike.dnp.service.log.UserLoginLogService;
+import com.nike.dnp.service.user.UserMailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -75,6 +76,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * @author [오지훈]
 	 */
 	private final RedisService redisService;
+
+	/**
+	 * The User mail service
+	 *
+	 * @author [오지훈]
+	 */
+	private final UserMailService userMailService;
 
 	/**
 	 * Auth url string.
@@ -201,7 +209,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				responseService
 				, loginLogService
 				, redisService
-				, userRepository);
+				, userRepository
+				, userMailService
+		);
 	}
 
 	/**

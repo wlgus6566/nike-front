@@ -1,7 +1,7 @@
 package com.nike.dnp.dto.user;
 
 import com.nike.dnp.dto.SearchDTO;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.*;
 
 /**
@@ -22,7 +22,7 @@ public class UserSearchDTO extends SearchDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "검색어", name = "keyword")
+    @ApiParam(value = "검색어", name = "keyword", defaultValue = "NIKE")
     private String keyword = "";
 
     /**
@@ -30,7 +30,7 @@ public class UserSearchDTO extends SearchDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "검색어", name = "keyword")
+    @ApiParam(value = "정렬", name = "sort", defaultValue = "userSeq")
     private String sort = "userSeq";
 
     /**
@@ -38,7 +38,7 @@ public class UserSearchDTO extends SearchDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "권한 시퀀스", name = "authSeq")
+    @ApiParam(value = "권한 시퀀스", name = "authSeq", defaultValue = "1")
     private Long authSeq = 0L;
 
     /**
@@ -46,7 +46,7 @@ public class UserSearchDTO extends SearchDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "시작일", name = "beginDt")
+    @ApiParam(value = "시작일", name = "beginDt", defaultValue = "2020-06-01")
     private String beginDt;
 
     /**
@@ -54,7 +54,7 @@ public class UserSearchDTO extends SearchDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "종료일", name = "endDt")
+    @ApiParam(value = "종료일", name = "endDt", defaultValue = "2020-12-31")
     private String endDt;
 
     /**

@@ -31,7 +31,7 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@Api(description = "코드 정보", tags = "99_CODE")
+@Api(description = "코드 정보", tags = "CODE")
 @RequestMapping(value = "/api/code", name = "코드")
 @RequiredArgsConstructor
 public class CodeController {

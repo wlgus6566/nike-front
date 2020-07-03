@@ -29,7 +29,7 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@Api(description = "그룹(권한)", tags = "2_AUTH")
+@Api(description = "그룹(권한)", tags = "AUTH")
 @RequestMapping(value = "/api/auth", name = "그룹(권한)")
 @RequiredArgsConstructor
 public class AuthController {

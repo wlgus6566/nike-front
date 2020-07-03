@@ -23,8 +23,7 @@ public class UserDeleteDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "유저 시퀀스 배열", name = "userSeqArray", required = true)
+    @ApiModelProperty(value = "유저 시퀀스 배열", name = "userSeqArray", required = true, allowableValues = "4,5")
     private Long[] userSeqArray;
-
 
 }
