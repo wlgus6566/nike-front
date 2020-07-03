@@ -1,4 +1,4 @@
-import { pages } from '@/util/global-methods';
+import { pages } from '@/utils/global-methods';
 
 const routes = [
     {
@@ -13,22 +13,22 @@ const routes = [
             },
             {
                 path: 'vms',
-                component: pages('foundation/list'),
+                component: pages('common/folder-list'),
                 meta: { layout: 'Default', aside: 'Order', title: 'VMS' },
             },
             {
                 path: 'ekin',
-                component: pages('foundation/list'),
+                component: pages('common/folder-list'),
                 meta: { layout: 'Default', aside: 'Order', title: 'EKIN' },
             },
             {
                 path: 'Digital',
-                component: pages('foundation/list'),
+                component: pages('common/folder-list'),
                 meta: { layout: 'Default', aside: 'Order', title: 'DIGITAL' },
             },
             {
                 path: 'rb',
-                component: pages('foundation/list'),
+                component: pages('common/folder-list'),
                 meta: { layout: 'Default', aside: 'Order', title: 'RB' },
             },
         ],

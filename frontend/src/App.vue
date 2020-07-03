@@ -10,7 +10,7 @@ import Vue from 'vue';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import App from './App.vue';
-import { layouts } from '@/util/global-methods';
+import { layouts } from '@/utils/global-methods';
 Vue.use(ElementUI);
 
 export default {

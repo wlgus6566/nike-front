@@ -1,4 +1,4 @@
-import { pages } from '@/util/global-methods';
+import { pages } from '@/utils/global-methods';
 
 const routes = [
     {

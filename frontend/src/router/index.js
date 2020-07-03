@@ -10,11 +10,13 @@ import ReportRoutes from './report';
 import InformationRoutes from './information';
 import ManagementRoutes from './management';
 import testRoutes from './test';
-
 import PubRoutes from './pub';
 
 // Import methods
-import { pages } from '@/util/global-methods';
+import store from '@/store';
+import { pages } from '@/utils/global-methods';
+import { getUserFromCookie } from '@/utils/cookies.js';
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({
@@ -24,11 +26,21 @@ const router = new VueRouter({
             path: '/login',
             component: pages('login'),
             meta: { layout: 'Clean' },
+            beforeEnter(to, from, next) {
+                store.getters['isLoggedIn'] ? next('/main') : next();
+            },
         },
         {
             path: '/',
             component: pages('main-page'),
             meta: { layout: 'Default', aside: 'Default' },
+            beforeEnter(to, from, next) {
+                if (store.getters['isLoggedIn'] || getUserFromCookie()) {
+                    next();
+                } else {
+                    next('/login');
+                }
+            },
         },
         ...AssetRoutes,
         ...ToolkitRoutes,
@@ -45,3 +57,12 @@ const router = new VueRouter({
 });
 
 export default router;
+
+function beforeEnter(to, from, next) {
+    if (store.getters['isLoggedIn'] || getUserFromCookie()) {
+        next();
+    } else {
+        alert('sign in please');
+        next('/login');
+    }
+}

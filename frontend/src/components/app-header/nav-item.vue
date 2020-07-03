@@ -38,7 +38,7 @@ export default {
         },
     },
     created() {
-        console.log(this.test);
+        //console.log(this.test);
     },
 };
 </script>
