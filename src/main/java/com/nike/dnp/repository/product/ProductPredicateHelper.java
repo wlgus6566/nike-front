@@ -1,7 +1,7 @@
-package com.nike.dnp.repository.order;
+package com.nike.dnp.repository.product;
 
 
-import com.nike.dnp.entity.order.QProduct;
+import com.nike.dnp.entity.product.QProduct;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import lombok.experimental.UtilityClass;

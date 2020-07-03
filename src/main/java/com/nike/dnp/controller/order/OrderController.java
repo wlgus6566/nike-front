@@ -4,7 +4,7 @@ package com.nike.dnp.controller.order;
 import com.nike.dnp.dto.order.OrderProductMappingSaveDTO;
 import com.nike.dnp.dto.order.OrderProductSaveDTO;
 import com.nike.dnp.entity.order.Order;
-import com.nike.dnp.entity.order.Product;
+import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.order.OrderProductMappingService;

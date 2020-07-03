@@ -1,4 +1,4 @@
-package com.nike.dnp.dto.order;
+package com.nike.dnp.dto.product;
 
 import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiParam;

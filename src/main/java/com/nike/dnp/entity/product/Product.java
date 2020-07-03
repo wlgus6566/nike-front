@@ -1,11 +1,12 @@
-package com.nike.dnp.entity.order;
+package com.nike.dnp.entity.product;
 
-import com.nike.dnp.dto.order.ProductUpdateDTO;
+import com.nike.dnp.dto.product.ProductUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.entity.agency.Agency;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 
@@ -176,6 +177,12 @@ public class Product extends BaseTimeEntity {
 	@JoinColumn(name="AGENCY_SEQ",insertable = false,updatable = false)
 	private Agency agency;
 
+
+	@PrePersist
+	public void prePersist() {
+		this.useYn = this.useYn == null ? "Y" : this.useYn;
+	}
+
 	/**
 	 * 수정
 	 *
@@ -199,8 +206,12 @@ public class Product extends BaseTimeEntity {
 		this.thumbnailFileName = productUpdateDTO.getThumbnailFileName();
 		this.thumbnailFileSize = String.valueOf(productUpdateDTO.getThumbnailFileSize());
 		this.thumbnailFilePhysicalName = productUpdateDTO.getThumbnailFilePhysicalName();
-		setUpdaterSeq(productUpdateDTO.getUpdaterSeq());
-		setUseYn(productUpdateDTO.getUseYn());
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getUpdaterSeq())){
+			setUpdaterSeq(productUpdateDTO.getUpdaterSeq());
+		}
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getUseYn())){
+			setUseYn(productUpdateDTO.getUseYn());
+		}
 	}
 
 	/**

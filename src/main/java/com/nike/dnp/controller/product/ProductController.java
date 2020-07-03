@@ -1,10 +1,10 @@
-package com.nike.dnp.controller.order;
+package com.nike.dnp.controller.product;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
-import com.nike.dnp.dto.order.ProductSaveDTO;
-import com.nike.dnp.dto.order.ProductSearchDTO;
-import com.nike.dnp.dto.order.ProductUpdateDTO;
-import com.nike.dnp.entity.order.Product;
+import com.nike.dnp.dto.product.ProductSaveDTO;
+import com.nike.dnp.dto.product.ProductSearchDTO;
+import com.nike.dnp.dto.product.ProductUpdateDTO;
+import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.order.ProductService;
@@ -36,7 +36,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @Api(description = "상품 관리", tags = "20_ORDER_PRODUCT")
-@RequestMapping(value = "/api/order/product", name = "상품관리")
+@RequestMapping(value = "/api/product", name = "상품관리")
 @AllArgsConstructor
 public class ProductController {
 

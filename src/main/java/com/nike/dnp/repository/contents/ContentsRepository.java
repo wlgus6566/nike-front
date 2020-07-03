@@ -22,6 +22,6 @@ public interface ContentsRepository extends JpaRepository<Contents, Long>, Conte
      * @CreatedOn 2020. 6. 19. 오후 5:57:43
      * @Description
      */
-    Contents findByContentsSeq(String contentsSeq);
+    Contents findByContentsSeq(Long contentsSeq);
 
 }

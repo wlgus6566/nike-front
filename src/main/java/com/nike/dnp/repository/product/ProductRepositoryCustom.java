@@ -1,7 +1,7 @@
-package com.nike.dnp.repository.order;
+package com.nike.dnp.repository.product;
 
-import com.nike.dnp.dto.order.ProductSearchDTO;
-import com.nike.dnp.entity.order.Product;
+import com.nike.dnp.dto.product.ProductSearchDTO;
+import com.nike.dnp.entity.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
