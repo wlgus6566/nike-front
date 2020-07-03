@@ -9,6 +9,7 @@ import OrderRoutes from './order';
 import ReportRoutes from './report';
 import InformationRoutes from './information';
 import ManagementRoutes from './management';
+import ErrorRoutes from './error';
 import testRoutes from './test';
 import PubRoutes from './pub';
 
@@ -25,9 +26,11 @@ const router = new VueRouter({
         {
             path: '/login',
             component: pages('login'),
-            meta: { layout: 'Clean' },
+            meta: {
+                layout: 'Clean',
+            },
             beforeEnter(to, from, next) {
-                store.getters['isLoggedIn'] ? next('/main') : next();
+                store.getters['isLoggedIn'] ? next('/') : next();
             },
         },
         {
@@ -38,7 +41,8 @@ const router = new VueRouter({
                 if (store.getters['isLoggedIn'] || getUserFromCookie()) {
                     next();
                 } else {
-                    next('/login');
+                    next();
+                    //next('/login');
                 }
             },
         },
@@ -49,6 +53,7 @@ const router = new VueRouter({
         ...ReportRoutes,
         ...ManagementRoutes,
         ...InformationRoutes,
+        ...ErrorRoutes,
 
         ...PubRoutes,
 
@@ -58,11 +63,11 @@ const router = new VueRouter({
 
 export default router;
 
-function beforeEnter(to, from, next) {
+/*function beforeEnter(to, from, next) {
     if (store.getters['isLoggedIn'] || getUserFromCookie()) {
         next();
     } else {
         alert('sign in please');
         next('/login');
     }
-}
+}*/

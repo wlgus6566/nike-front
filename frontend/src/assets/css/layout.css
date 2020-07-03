@@ -129,7 +129,7 @@ header .sticky-content {
     flex-shrink: 1;
     flex-basis: calc(100% - 200px);
     box-sizing: border-box;
-    min-height: calc(100vh - 144px);
+    min-height: calc(100vh);
 }
 .contents {
     flex-grow: 1;
