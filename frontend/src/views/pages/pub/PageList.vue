@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 style="font-size: 40px;">퍼블리싱 리스트</h1>
-        <ul class="list">
+        <ul class="list list-top">
             <li>
                 <span></span>
                 <span class="name">작업자</span>
@@ -1055,7 +1055,10 @@ div {
     border: solid #ddd;
     border-width: 1px 0 1px 1px;
 }
-h1 + .list li span {
+.list-top li {
+    text-align: center;
+}
+.list-top li span {
     background: #eee;
 }
 .list li {
