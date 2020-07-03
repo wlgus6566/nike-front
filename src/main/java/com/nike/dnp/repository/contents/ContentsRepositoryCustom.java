@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 public interface ContentsRepositoryCustom {
 
     /**
-     * Find alls page.
+     * Find page contents page.
      *
      * @param contentsSearchDTO the contents search dto
      * @param pageRequest       the page request
@@ -27,6 +27,6 @@ public interface ContentsRepositoryCustom {
      * @CreatedOn 2020. 6. 19. 오후 5:57:50
      * @Description
      */
-    Page<Contents> findAlls(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest);
+    Page<Contents> findPageContents(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest);
 
 }

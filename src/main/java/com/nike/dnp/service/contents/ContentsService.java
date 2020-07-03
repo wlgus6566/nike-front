@@ -1,14 +1,11 @@
 package com.nike.dnp.service.contents;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
-import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Contents Service
@@ -63,7 +59,7 @@ public class ContentsService {
      */
     public Page<Contents> findAllPaging(final ContentsSearchDTO contentsSearchDTO) {
         // QueryDsl 기능 이용
-        return contentsRepository.findAlls(
+        return contentsRepository.findPageContents(
                 contentsSearchDTO,
                 PageRequest.of(contentsSearchDTO.getPage()
                         , contentsSearchDTO.getSize()
@@ -96,6 +92,19 @@ public class ContentsService {
 
         savedContents.setContentsFiles(savedContentsFileList);
         return savedContents;
+    }
+
+    /**
+     * Find by contents seq contents.
+     *
+     * @param contentsSeq the contents seq
+     * @return the contents
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 2. 오후 2:25:43
+     * @Description
+     */
+    public Contents findByContentsSeq(final Long contentsSeq) {
+        return contentsRepository.findByContentsSeq(contentsSeq);
     }
 
 }

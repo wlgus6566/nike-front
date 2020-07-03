@@ -34,7 +34,7 @@ public class ContentsSearchDTO extends SearchDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(value = "정렬 타입", name = "keyword", example = "LATEST/START_DATE")
+    @ApiModelProperty(value = "정렬 타입", name = "keyword", example = "LATEST")
     private String orderType;
 
     /**
@@ -44,7 +44,7 @@ public class ContentsSearchDTO extends SearchDTO {
      */
     @Column(name = "TOP_MENU_CODE")
     @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 코드", hidden = true)
-    private String topMenuCode;
+    private String topMenuCode = "";
 
     /**
      * 2depth 메뉴 코드
@@ -53,7 +53,7 @@ public class ContentsSearchDTO extends SearchDTO {
      */
     @Column(name = "MENU_CODE")
     @ApiModelProperty(name = "menuCode", value = "2depth 메뉴 코드")
-    private String menuCode;
+    private String menuCode = "";
 
     /**
      * Method to String

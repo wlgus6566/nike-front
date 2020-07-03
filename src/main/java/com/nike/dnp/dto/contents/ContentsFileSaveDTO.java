@@ -2,12 +2,8 @@ package com.nike.dnp.dto.contents;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 
 /**
@@ -15,7 +11,6 @@ import javax.persistence.Id;
  */
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class ContentsFileSaveDTO {
@@ -25,7 +20,7 @@ public class ContentsFileSaveDTO {
      * @author [이소정]
      */
     @Column(name = "FILE_SECTION_CODE")
-    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드", required = true, example = "ASSET")
+    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드", required = true, example = "GUIDE")
     private String fileSectionCode;
 
     /**
