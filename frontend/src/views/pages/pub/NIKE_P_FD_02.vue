@@ -18,7 +18,6 @@
         <section id="container">
             <div class="contents">
                 <h2 class="page-title">VMS</h2>
-
                 <div class="upload-summury">
                     <strong class="title">파일올리기</strong>
                     <p class="desc">
@@ -27,17 +26,25 @@
                     </p>
                     <button type="button" class="btn-s-black"><span class="bebas">UPLOAD</span></button>
                 </div>
+
                 <div class="sorting-area">
                     <div class="filter-list">
-                        <button type="button" class="type-list"><span>컬럼타입</span></button>
-                        <button type="button" class="type-list active"><span>로우타입</span></button>
+                        <button
+                            type="button"
+                            class="type-list"
+                            v-bind:class="{ active: listType.active === true }"
+                            v-for="(listType, index) in listTypes"
+                            :key="index"
+                            v-on:click="update(index)"
+                        >
+                            <span>{{ listType.title }}</span>
+                        </button>
                     </div>
                     <!-- todo select 스크립트 작업 필요  -->
                     <div class="filter-select">
-                        <select>
-                            <option value="최신순">최신순</option>
-                            <option value="시작일순">시작일순</option>
-                        </select>
+                        <el-select v-model="value" placeholder="Select">
+                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+                        </el-select>
                     </div>
                     <div class="search-input">
                         <input type="text" placeholder="검색어를 입력해주세요." />
@@ -45,121 +52,16 @@
                     </div>
                 </div>
 
-                <ul class="asset-item-list-row">
-                    <li class="asset-item">
+                <ul v-bind:class="[{ 'asset-item-list': listTypes[0].active }, { 'asset-item-list-row': listTypes[1].active }]">
+                    <li class="asset-item" v-for="(item, index) in items" :key="index">
                         <a href="#">
                             <div class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                                <img src="item.img" alt="" />
                             </div>
                             <div class="info-box">
-                                <strong class="title">타이틀입니다</strong>
-                                <p class="txt">설명입니다</p>
-                                <p class="date">2020.00.00 ~ 2020.00.00</p>
-                            </div>
-                            <div class="view-area">
-                                <span class="view">10,000</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="asset-item">
-                        <a href="#">
-                            <div class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                            </div>
-                            <div class="info-box">
-                                <strong class="title">타이틀입니다</strong>
-                                <p class="txt">설명입니다</p>
-                                <p class="date">2020.00.00 ~ 2020.00.00</p>
-                            </div>
-                            <div class="view-area">
-                                <span class="view">10,000,000</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="asset-item">
-                        <a href="#">
-                            <div class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                            </div>
-                            <div class="info-box">
-                                <strong class="title">타이틀입니다</strong>
-                                <p class="txt">설명입니다</p>
-                                <p class="date">2020.00.00 ~ 2020.00.00</p>
-                            </div>
-                            <div class="view-area">
-                                <span class="view">10,000</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="asset-item">
-                        <a href="#">
-                            <div class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                            </div>
-                            <div class="info-box">
-                                <strong class="title">타이틀입니다</strong>
-                                <p class="txt">설명입니다</p>
-                                <p class="date">2020.00.00 ~ 2020.00.00</p>
-                            </div>
-                            <div class="view-area">
-                                <span class="view">10,000</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="asset-item">
-                        <a href="#">
-                            <div class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                            </div>
-                            <div class="info-box">
-                                <strong class="title">타이틀입니다</strong>
-                                <p class="txt">설명입니다</p>
-                                <p class="date">2020.00.00 ~ 2020.00.00</p>
-                            </div>
-                            <div class="view-area">
-                                <span class="view">10,000</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="asset-item">
-                        <a href="#">
-                            <div class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                            </div>
-                            <div class="info-box">
-                                <strong class="title">타이틀입니다</strong>
-                                <p class="txt">설명입니다</p>
-                                <p class="date">2020.00.00 ~ 2020.00.00</p>
-                            </div>
-                            <div class="view-area">
-                                <span class="view">10,000</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="asset-item">
-                        <a href="#">
-                            <div class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                            </div>
-                            <div class="info-box">
-                                <strong class="title">타이틀입니다</strong>
-                                <p class="txt">설명입니다</p>
-                                <p class="date">2020.00.00 ~ 2020.00.00</p>
-                            </div>
-                            <div class="view-area">
-                                <span class="view">10,000</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="asset-item">
-                        <a href="#">
-                            <div class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                            </div>
-                            <div class="info-box">
-                                <strong class="title">타이틀 입니다 타이으트르르 입니다 두줄표시</strong>
-                                <p class="txt">설명입니다 설명입니다 설명</p>
-                                <p class="date">2020.00.00 ~ 2020.00.00</p>
+                                <strong class="title">{{ item.title }}</strong>
+                                <p class="txt">{{ item.desc }}</p>
+                                <p class="date">{{ item.date }}</p>
                             </div>
                             <div class="view-area">
                                 <span class="view">10,000</span>
@@ -179,7 +81,56 @@
 </template>
 <script>
 export default {
-    name: 'NIKE_P_FD_02',
+    name: 'ASSET_SP_LIST',
+    data() {
+        return {
+            listTypes: [
+                {
+                    title: '컬럼타입',
+                    active: true,
+                },
+                {
+                    title: '로우타입',
+                    active: false,
+                },
+            ],
+            options: [
+                {
+                    value: '최신순',
+                    label: '최신순',
+                },
+                {
+                    value: '시작일 순',
+                    label: '시작일 순',
+                },
+            ],
+            value: '최신순',
+            items: [
+                {
+                    title: '타이틀',
+                    img: '@/assets/images/img-asset-none@2x.png"',
+                    desc: '설명',
+                    date: '2020.00.00 ~ 2020.00.00',
+                },
+                {
+                    title: '타이틀2',
+                    img: '@/assets/images/img-asset-none@2x.png"',
+                    desc: '설명2',
+                    date: '2020.00.00 ~ 2020.00.00',
+                },
+            ],
+        };
+    },
+    methods: {
+        update(index) {
+            if (this.listTypes[index].active == false) {
+                this.listTypes.forEach((element) => (element.active = false));
+                this.listTypes[index].active = true;
+            }
+            // 자식 컴포넌트에서 부모 컴포넌트로 보내는 것이 $emit()
+            //this.$emit("child",this.user)
+        },
+    },
 };
 </script>
 <style scoped></style>

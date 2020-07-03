@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+    <g fill="none" fill-rule="evenodd" stroke="#000" stroke-width="1.2">
+        <path d="M15 2.6L.6 3 1 15.4l14.4-.4L15 2.6z" transform="translate(2 2)"/>
+        <path d="M12.4 2.699v1.4h-.6.6v-1.4z" transform="translate(2 2)"/>
+    </g>
+</svg>

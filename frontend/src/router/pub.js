@@ -109,6 +109,11 @@ const routes = [
             },
             //gnb - ORDER: 부자재 주문
             {
+                path: 'NIKE_P_ORDER_06',
+                component: pages('pub/NIKE_P_ORDER_06'),
+                meta: { layout: 'Pub' },
+            },
+            {
                 path: 'NIKE_P_ORDER_01',
                 component: pages('pub/NIKE_P_ORDER_01'),
                 meta: { layout: 'Pub' },
@@ -147,8 +152,33 @@ const routes = [
             },
             //UTIL - MYPAGE
             {
+                path: 'NIKE_P_MY_04_001',
+                component: pages('pub/NIKE_P_MY_04_001'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_04_002',
+                component: pages('pub/NIKE_P_MY_04_002'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_04_003',
+                component: pages('pub/NIKE_P_MY_04_003'),
+                meta: { layout: 'Pub' },
+            },
+            {
                 path: 'NIKE_P_MY_04_004',
                 component: pages('pub/NIKE_P_MY_04_004'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_04_005',
+                component: pages('pub/NIKE_P_MY_04_005'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_04_006',
+                component: pages('pub/NIKE_P_MY_04_006'),
                 meta: { layout: 'Pub' },
             },
             {
