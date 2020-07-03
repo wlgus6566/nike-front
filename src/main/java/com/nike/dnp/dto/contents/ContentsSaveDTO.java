@@ -1,10 +1,8 @@
 package com.nike.dnp.dto.contents;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Column;
 import java.util.List;
 
 
@@ -30,17 +28,16 @@ public class ContentsSaveDTO {
     private String topMenuCode;
 
     /**
-     * 메뉴 공통코드
-     * @author [이소정]
+     * 2depth 메뉴 코드
      */
-    @ApiModelProperty(name = "menuCode", value = "메뉴 공통코드", required = true, example = "A_SP")
+    @ApiModelProperty(name = "menuCode", value = "2depth 메뉴 코드", hidden = true)
     private String menuCode;
 
     /**
      * 이미지 파일명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "imageFileName", value = "이미지 파일명", required = true, example = "asset_main_img.jpg")
+    @ApiModelProperty(name = "imageFileName", value = "이미지 파일명", required = true, example = "main_img.jpg")
     private String imageFileName;
 
     /**
@@ -105,6 +102,5 @@ public class ContentsSaveDTO {
      */
     @ApiModelProperty(name = "contentsFileList", value = "콘텐츠 파일 리스트")
     private List<ContentsFileSaveDTO> contentsFileList;
-
 
 }

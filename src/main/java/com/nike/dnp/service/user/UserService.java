@@ -182,7 +182,7 @@ public class UserService implements UserDetailsService {
      */
     public Optional<UserAuth> findByUser(final User user) {
         return Optional.ofNullable(userAuthRepository.findByUser(user).orElseThrow(
-                () -> new CodeMessageHandleException(ErrorEnumCode.DataError.NOT_FOUND.toString(), ErrorEnumCode.DataError.NOT_FOUND.getMessage())));
+                () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.DataError.NOT_FOUND.getMessage())));
     }
 
     /**
@@ -214,7 +214,7 @@ public class UserService implements UserDetailsService {
 
         final User user = userRepository.save(new User().save(userSaveDTO));
         final Auth auth = authRepository.findById(userSaveDTO.getAuthSeq()).orElseThrow(
-                () -> new CodeMessageHandleException(ErrorEnumCode.DataError.NOT_FOUND.toString(), ErrorEnumCode.DataError.NOT_FOUND.getMessage()));
+                () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.DataError.NOT_FOUND.getMessage()));
         /*
         final UserAuth userAuth = userAuthRepository.save(new UserAuth().save(user, auth));
         if (userAuth.getUserAuthSeq() > 0) {
@@ -308,20 +308,6 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * Update login dt.
-     *
-     * @param user the user
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:44
-     * @Description 최종 로그인 일자 업데이트
-     */
-    @Transactional
-    public void updateLoginDt(final User user) {
-        log.info("UserService.updateLoginDt");
-        user.updateLoginDt();
-    }
-
-    /**
      * Load user by username user details.
      *
      * @param userId 유저 ID
@@ -379,15 +365,24 @@ public class UserService implements UserDetailsService {
         final String confirmPassword = ObjectUtils.isEmpty(userCertDTO.getConfirmPassword()) ? "" : userCertDTO.getConfirmPassword();
         final String certPassword = ObjectUtils.isEmpty(newPassword) ? "" : passwordEncoder.encode(newPassword);
 
+        //유저가 존재하는지 확인
+        final User user = this.findByUserId(userId);
+
+        //기존비밀번호확인
+        if (!ObjectUtils.isEmpty(userCertDTO.getPassword())) {
+            if (!passwordEncoder.matches(userCertDTO.getPassword(), user.getPassword())) {
+                throw new CodeMessageHandleException(
+                        ErrorEnumCode.LoginError.WRONG_PASSWORD.toString()
+                        , ErrorEnumCode.LoginError.WRONG_PASSWORD.getMessage());
+            }
+        }
+
         //인증코드가 존재하는지 확인
         if(certCode.isEmpty()) {
             throw new CodeMessageHandleException(
                     ErrorEnumCode.LoginError.EXPIRED_PERIOD.toString()
                     , ErrorEnumCode.LoginError.EXPIRED_PERIOD.getMessage());
         }
-
-        //유저가 존재하는지 확인
-        final User user = this.findByUserId(userId);
 
         //비밀번호 미입력 시
         if (ObjectUtils.isEmpty(newPassword)) {
@@ -437,6 +432,9 @@ public class UserService implements UserDetailsService {
         //비밀번호 업데이트
         user.updatePassword(certPassword);
         passwordHistoryRepository.save(PasswordHistory.builder().userSeq(user.getUserSeq()).password(certPassword).build());
+
+        //인증코드 삭제
+        redisService.delete("cert:" + userId);
         return true;
     }
 
@@ -457,6 +455,7 @@ public class UserService implements UserDetailsService {
 
         //ID+인증코드 암호화
         final String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(user.getUserId() + "|" + certCode, "Nike DnP"));
+        log.info("certCode > " + certCode);
         log.info("encodeCertCode > " + encodeCertCode);
 
         //REDIS 값 셋팅

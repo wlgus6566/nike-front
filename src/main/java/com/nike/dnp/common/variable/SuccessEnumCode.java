@@ -24,7 +24,8 @@ public class SuccessEnumCode {
         CHECK_EMAIL("E-MAIL을 다시 확인 후 입력해 주세요"),
         SEND_EMAIL_CERT_CODE("해당 계정의 E-MAIL로 인증코드가 발송되었습니다. 이메일 확인 후 인증코드를 입력해 주세요"),
         SEND_EMAIL("E-MAIL이 발송되었습니다. E-MAIL을 확인주세요"),
-        CHANGE_PASSWORD("설정한 비밀번호로 로그인 해 주세요.");
+        CHANGE_PASSWORD("설정한 비밀번호로 로그인 해 주세요."),
+        TERMS_AGREEMENT("약관동의를 진행해 주세요.");
 
         /**
          * The Value
