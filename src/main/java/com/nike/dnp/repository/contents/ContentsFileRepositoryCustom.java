@@ -1,9 +1,5 @@
 package com.nike.dnp.repository.contents;
 
-import com.nike.dnp.dto.contents.ContentsSearchDTO;
-import com.nike.dnp.entity.contents.Contents;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 /**

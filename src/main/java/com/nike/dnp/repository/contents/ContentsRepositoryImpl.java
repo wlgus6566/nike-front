@@ -4,6 +4,7 @@ import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.QContents;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -48,58 +49,20 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @Description
      */
     @Override
-    public Page<Contents> findAlls(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest) {
+    public Page<Contents> findPageContents(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest) {
         final QContents qContents = QContents.contents;
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-        final String keyword = contentsSearchDTO.getKeyword();
+        final JPAQuery<Contents> query = queryFactory.selectFrom(qContents)
+                .where(
+                        ContentsPredicateHelper.compareKeyword(contentsSearchDTO)
+                        , ContentsPredicateHelper.eqMenuCode(contentsSearchDTO)
+                        , ContentsPredicateHelper.eqExposureYn("Y")
+                        , qContents.useYn.eq("Y")
+                );
 
-        final List<Contents> contents = queryFactory.selectFrom(qContents)
-                .where(eqFolderName(keyword)
-                        , eqTopMenuCode(contentsSearchDTO.getTopMenuCode())
-                        , eqMenuCode(contentsSearchDTO.getMenuCode()))
-                .fetch();
+        final List<Contents> contentsList = getQuerydsl().applyPagination(pageRequest, query).fetch();
+        return new PageImpl<>(contentsList, pageRequest, query.fetchCount());
 
-        return new PageImpl<>(contents, pageRequest, contents.size());
+
     }
-
-
-    /**
-     * 폴더명 eq
-     *
-     * @param keyword the keyword
-     * @return boolean expression
-     * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:55:19
-     * @Description
-     */
-    private BooleanExpression eqFolderName(final String keyword) {
-        return StringUtils.isEmpty(keyword) ? null : QContents.contents.folderName.contains(keyword);
-    }
-
-    /**
-     * 최고 메뉴 공통코드 eq
-     *
-     * @param topMenuCode the top menu code
-     * @return boolean expression
-     * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:55:19
-     * @Description
-     */
-    private BooleanExpression eqTopMenuCode(final String topMenuCode) {
-        return StringUtils.isEmpty(topMenuCode) ? null : QContents.contents.topMenuCode.eq(topMenuCode);
-    }
-
-    /**
-     * 메뉴 공통코드 eq
-     *
-     * @param menuCode the menu code
-     * @return boolean expression
-     * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:55:19
-     * @Description
-     */
-    private BooleanExpression eqMenuCode(final String menuCode) {
-        return StringUtils.isEmpty(menuCode) ? null : QContents.contents.menuCode.eq(menuCode);
-    }
-
 }
