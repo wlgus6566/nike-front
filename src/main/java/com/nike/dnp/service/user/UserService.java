@@ -1,11 +1,8 @@
 package com.nike.dnp.service.user;
 
-import com.nike.dnp.common.mail.MailService;
 import com.nike.dnp.common.variable.ErrorEnumCode;
-import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.common.variable.SuccessEnumCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
-import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.user.*;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.user.PasswordHistory;
@@ -22,7 +19,6 @@ import com.nike.dnp.service.RedisService;
 import com.nike.dnp.util.CryptoUtil;
 import com.nike.dnp.util.EmailPatternUtil;
 import com.nike.dnp.util.PasswordPatternUtil;
-import com.nike.dnp.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -59,13 +55,6 @@ public class UserService implements UserDetailsService {
      * @author [오지훈]
      */
     private final RedisService redisService;
-
-    /**
-     * MailService
-     *
-     * @author [오지훈]
-     */
-    private final MailService mailService;
 
     /**
      * UserRepository
@@ -124,7 +113,7 @@ public class UserService implements UserDetailsService {
                 userSearchDTO,
                 PageRequest.of(userSearchDTO.getPage()
                         , userSearchDTO.getSize()
-                        , Sort.by("userSeq").descending()));
+                        , Sort.by(userSearchDTO.getSort()).descending()));
     }
 
     /**
@@ -195,6 +184,7 @@ public class UserService implements UserDetailsService {
      * @Description 유저 아이디 카운트
      */
     public int countByUserId(final String userId) {
+        log.info("UserService.countByUserId");
         return userRepository.countByUserId(userId);
     }
 
@@ -440,45 +430,5 @@ public class UserService implements UserDetailsService {
         //인증코드 삭제
         redisService.delete("cert:" + userId);
         return true;
-    }
-
-    /**
-     * Send email.
-     *
-     * @param user the user
-     * @return the string
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 3:27:51
-     * @Description [계정 생성 안내] 알림메일 발송
-     */
-    public String sendCreateUserEmail(final User user) {
-        log.info("UserService.sendCreateUserEmail");
-
-        //인증코드 생성
-        final String certCode = RandomUtil.randomCertCode2(10);
-
-        //ID+인증코드 암호화
-        final String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(user.getUserId() + "|" + certCode, "Nike DnP"));
-        log.info("certCode > " + certCode);
-        log.info("encodeCertCode > " + encodeCertCode);
-
-        //REDIS 값 셋팅
-        redisService.set("cert:"+user.getUserId(), certCode, 60);
-
-        //대체값 변경
-        final SendDTO sendDTO = new SendDTO();
-        sendDTO.setNickname(user.getNickname());
-        sendDTO.setEmail(user.getUserId());
-
-        //TODO[ojh] 2020-07-02 : 링크변경예정
-        sendDTO.setPasswordUrl("http://nikednp.co.kr?certCode="+encodeCertCode);
-
-        //[계정 생성 안내] 이메일 발송
-        mailService.sendMail(
-                ServiceEnumCode.EmailTypeEnumCode.USER_CREATE.toString()
-                , ServiceEnumCode.EmailTypeEnumCode.USER_CREATE.getMessage()
-                , sendDTO
-        );
-        return user.getUserId();
     }
 }

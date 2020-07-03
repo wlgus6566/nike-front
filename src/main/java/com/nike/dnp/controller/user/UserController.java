@@ -9,6 +9,7 @@ import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.user.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -103,7 +104,8 @@ public class UserController {
     )
     @GetMapping(name = "유저 상세 조회", value = "/{userSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<User>> findUser(@PathVariable Long userSeq) {
+    public SingleResult<Optional<User>> findUser(
+            @ApiParam(value = "유저 시퀀스", required = true, defaultValue = "1") @PathVariable final Long userSeq) {
         log.info("UserController.findUser");
         return responseService.getSingleResult(userService.findById(userSeq));
     }
@@ -111,7 +113,7 @@ public class UserController {
     /**
      * Save single result.
      *
-     * @param codeSaveDTO the code save dto
+     * @param userSaveDTO the user save dto
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:33:44
@@ -128,7 +130,7 @@ public class UserController {
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<UserAuth> save(
-            final @Valid @RequestBody UserSaveDTO codeSaveDTO
+            @ApiParam(value = "유저 저장 DTO") @Valid @RequestBody final UserSaveDTO userSaveDTO
             //, final @ApiIgnore BindingResult result
             ) {
         log.info("UserController.save");
@@ -145,9 +147,9 @@ public class UserController {
 
             throw new CodeMessageHandleException("failfail", Arrays.toString(errors));
         }*/
-        SingleResult<Integer> result = userService.checkId(codeSaveDTO.getUserId());
+        SingleResult<Integer> result = userService.checkId(userSaveDTO.getUserId());
         if(result.getCode().equals(SuccessEnumCode.UserSuccess.NOT_DUPLICATE.toString())) {
-            return responseService.getSingleResult(userService.save(codeSaveDTO));
+            return responseService.getSingleResult(userService.save(userSaveDTO));
         } else {
             return new SingleResult<>(result.getCode(), result.getMsg(), true, true);
         }
@@ -174,8 +176,8 @@ public class UserController {
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<UserAuth>> update(
-            @PathVariable Long userSeq
-            , final @RequestBody UserUpdateDTO userUpdateDTO
+            @ApiParam(value = "유저 시퀀스", required = true, defaultValue = "1") @PathVariable final Long userSeq
+            ,@ApiParam(value = "유저 수정 DTO") @RequestBody final UserUpdateDTO userUpdateDTO
     ) {
         log.info("UserController.update");
         return responseService.getSingleResult(userService.update(userSeq, userUpdateDTO));
@@ -199,7 +201,8 @@ public class UserController {
     )
     @DeleteMapping(name = "유저 단건 삭제", value = "/{userSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<User>> deleteOne(@PathVariable Long userSeq) {
+    public SingleResult<Optional<User>> deleteOne(
+            @ApiParam(value = "유저 시퀀스", required = true, defaultValue = "1") @PathVariable final Long userSeq) {
         log.info("UserController.deleteOne");
         return responseService.getSingleResult(userService.deleteOne(userSeq));
     }
@@ -223,7 +226,8 @@ public class UserController {
     @DeleteMapping(name = "유저 배열 삭제"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<User>> deleteArray(final @RequestBody UserDeleteDTO userDeleteDTO) {
+    public SingleResult<List<User>> deleteArray(
+            @ApiParam(value = "유저 삭제 DTO") @RequestBody final UserDeleteDTO userDeleteDTO) {
         log.info("UserController.deleteArray");
         return responseService.getSingleResult(userService.deleteArray(userDeleteDTO),
                 "SUC", "삭제 완료", true);

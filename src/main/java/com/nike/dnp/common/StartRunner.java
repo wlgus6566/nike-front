@@ -48,7 +48,6 @@ public class StartRunner implements ApplicationRunner {
     @Override
     public void run(final ApplicationArguments args) {
         log.info("Application Runner!!");
-
         /*String id = "nikednp";
         String oldPassword = "qwe123QWE!@#";
         String[] password = {

@@ -53,7 +53,7 @@ public class User extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "USER_ID")
-    @ApiModelProperty(name = "userId", value = "유저 ID", required = true)
+    @ApiModelProperty(name = "userId", value = "유저 ID", required = true, example = "test@nike.co.kr")
     private String userId;
 
     /**
@@ -72,7 +72,7 @@ public class User extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "NICKNAME")
-    @ApiModelProperty(name = "nickname", value = "닉네임", required = true)
+    @ApiModelProperty(name = "nickname", value = "닉네임", required = true, example = "Nike이모션점")
     private String nickname;
 
     /**
@@ -109,7 +109,7 @@ public class User extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "TERMS_AGREE_YN")
-    @ApiModelProperty(name = "termsAgreeYn", value = "약관 동의 여부", required = true)
+    @ApiModelProperty(name = "termsAgreeYn", value = "약관 동의 여부", required = true, example = "Y")
     private String termsAgreeYn;
 
     /**
@@ -137,7 +137,7 @@ public class User extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "PASSWORD_CHANGE_YN")
-    @ApiModelProperty(name = "passwordChangeYn", value = "비밀번호 변경 여부", required = true)
+    @ApiModelProperty(name = "passwordChangeYn", value = "비밀번호 변경 여부", required = true, example = "N")
     private String passwordChangeYn;
 
     /**
@@ -145,7 +145,7 @@ public class User extends BaseTimeEntity {
      *
      * @author [오지훈]
      */
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<UserAuth> userAuth = new ArrayList<>();
 

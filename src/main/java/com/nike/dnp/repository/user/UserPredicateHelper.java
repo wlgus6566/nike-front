@@ -1,8 +1,8 @@
 package com.nike.dnp.repository.user;
 
 import com.nike.dnp.dto.user.UserSearchDTO;
-import com.nike.dnp.entity.auth.QAuth;
 import com.nike.dnp.entity.user.QUser;
+import com.nike.dnp.entity.user.QUserAuth;
 import com.nike.dnp.util.CustomExpression;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -92,7 +92,7 @@ public class UserPredicateHelper {
         final BooleanBuilder builder = new BooleanBuilder();
         final Long authSeq = userSearchDTO.getAuthSeq();
         if (authSeq > 0) {
-            builder.and(QAuth.auth.authSeq.eq(authSeq));
+            builder.and(QUserAuth.userAuth.auth.authSeq.eq(authSeq));
         }
         return builder;
     }

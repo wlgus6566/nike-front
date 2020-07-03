@@ -24,7 +24,7 @@ public class UserSaveDTO {
      * @author [오지훈]
      */
     @NotNull(message = "아이디를(을) 입력해 주세요.")
-    @ApiModelProperty(name = "userId", value = "유저 ID", required = true)
+    @ApiModelProperty(name = "userId", value = "유저 ID", required = true, example = "test@nike.co.kr")
     private String userId;
 
     /**
@@ -33,7 +33,7 @@ public class UserSaveDTO {
      * @author [오지훈]
      */
     @NotNull(message = "닉네임을(를) 입력해 주세요.")
-    @ApiModelProperty(name = "nickname", value = "닉네임", required = true)
+    @ApiModelProperty(name = "nickname", value = "닉네임", required = true, example = "NIKE학동점")
     private String nickname;
 
     /**
@@ -41,7 +41,7 @@ public class UserSaveDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "authSeq", value = "권한 시퀀스", required = true)
+    @ApiModelProperty(name = "authSeq", value = "권한 시퀀스", required = true, example = "1")
     private Long authSeq;
 
 }

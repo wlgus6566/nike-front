@@ -1,7 +1,9 @@
 package com.nike.dnp.repository.user;
 
 import com.nike.dnp.dto.user.UserSearchDTO;
+import com.nike.dnp.entity.auth.QAuth;
 import com.nike.dnp.entity.user.QUser;
+import com.nike.dnp.entity.user.QUserAuth;
 import com.nike.dnp.entity.user.User;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -71,9 +73,9 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
                 //.selectFrom(qUser)
                 //.select(Projections.bean(User.class, qUser.userId, qUser.userAuth))
                 //.select(qUser).from(qUser)
-                //.innerJoin(qUserAuth).on(qUser.userSeq.eq(qUserAuth.userSeq))
-                //.innerJoin(qAuth).on(qUserAuth.authSeq.eq(qAuth.authSeq))
                 .selectFrom(QUser.user)
+                .innerJoin(QUserAuth.userAuth).on(QUser.user.userSeq.eq(QUserAuth.userAuth.userSeq))
+                .innerJoin(QAuth.auth).on(QUserAuth.userAuth.authSeq.eq(QAuth.auth.authSeq))
                 .where(UserPredicateHelper.compareKeyword(userSearchDTO)
                     , UserPredicateHelper.compareDate(userSearchDTO)
                     , UserPredicateHelper.compareAuth(userSearchDTO)
