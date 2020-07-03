@@ -1,10 +1,10 @@
 package com.nike.dnp.service.order;
 
-import com.nike.dnp.dto.order.ProductSaveDTO;
-import com.nike.dnp.dto.order.ProductSearchDTO;
-import com.nike.dnp.dto.order.ProductUpdateDTO;
-import com.nike.dnp.entity.order.Product;
-import com.nike.dnp.repository.order.ProductRepository;
+import com.nike.dnp.dto.product.ProductSaveDTO;
+import com.nike.dnp.dto.product.ProductSearchDTO;
+import com.nike.dnp.dto.product.ProductUpdateDTO;
+import com.nike.dnp.entity.product.Product;
+import com.nike.dnp.repository.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
