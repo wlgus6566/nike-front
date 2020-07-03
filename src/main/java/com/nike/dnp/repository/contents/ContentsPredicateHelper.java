@@ -2,15 +2,10 @@ package com.nike.dnp.repository.contents;
 
 
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
-import com.nike.dnp.dto.user.UserSearchDTO;
-import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.QContents;
-import com.nike.dnp.entity.order.QProduct;
-import com.nike.dnp.entity.user.QUser;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import lombok.experimental.UtilityClass;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**

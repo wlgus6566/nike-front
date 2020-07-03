@@ -2,8 +2,8 @@ package com.nike.dnp.repository.product;
 
 
 import com.nike.dnp.dto.product.ProductSearchDTO;
-import com.nike.dnp.entity.order.QProduct;
 import com.nike.dnp.entity.product.Product;
+import com.nike.dnp.entity.product.QProduct;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;

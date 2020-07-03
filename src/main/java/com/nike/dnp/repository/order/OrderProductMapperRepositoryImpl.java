@@ -4,7 +4,7 @@ import com.nike.dnp.entity.agency.QAgency;
 import com.nike.dnp.entity.order.OrderProductMapping;
 import com.nike.dnp.entity.order.QOrder;
 import com.nike.dnp.entity.order.QOrderProductMapping;
-import com.nike.dnp.entity.order.QProduct;
+import com.nike.dnp.entity.product.QProduct;
 import com.nike.dnp.util.TupleUtil;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
