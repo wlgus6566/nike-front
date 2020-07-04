@@ -103,7 +103,7 @@ export default {
             const logo = header.querySelector('h1');
             const bg = header.querySelector('.header-bg');
             const nav = header.querySelector('nav');
-            const anchor = header.querySelector('nav > ul > li > .router-link-active');
+            const anchor = nav.querySelector('.depth1 > .router-link-active');
             const ul = anchor.nextSibling;
 
             this.tw.clear();
@@ -161,7 +161,7 @@ export default {
                     0.3
                 )
                 .set(
-                    header.querySelectorAll('nav > ul > li'),
+                    nav.querySelectorAll('.depth1'),
                     {
                         display: 'none',
                     },

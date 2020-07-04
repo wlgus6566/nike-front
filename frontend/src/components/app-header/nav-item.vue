@@ -1,5 +1,5 @@
 <template>
-    <li :class="[{ active: isOpen }, `depth${this.depth}`]">
+    <li :class="[{ active: activeIndex === navIdx }, `depth${this.depth}`]">
         <router-link
             @click.native.prevent="toggle(navIdx)"
             :to="item.to"
@@ -8,13 +8,15 @@
             :class="[{ hasDepth: isFolder }, 'nav-link']"
             v-html="item.title"
         />
-        <ul v-show="isOpen" v-if="isFolder">
+        <ul v-show="activeIndex === navIdx" v-if="isFolder">
             <navItem
+                @update="update"
                 v-for="(child, index) in item.children"
                 :key="index"
                 :navIdx="index"
                 :item="child"
                 :depth="depth + 1"
+                :activeIndex="myIndex"
             />
         </ul>
     </li>
@@ -25,12 +27,12 @@ export default {
     props: ['item', 'depth', 'navIdx', 'activeIndex'],
     data: function () {
         return {
-            isOpen: false,
+            myIndex: null,
         };
     },
     computed: {
         clickable: function () {
-            return this.isFolder && this.depth !== 1;
+            return this.isFolder && this.depth === 2;
         },
         isFolder: function () {
             return this.item.children && this.item.children.length;
@@ -38,17 +40,16 @@ export default {
     },
     methods: {
         toggle: function (index) {
-            console.log(index);
             if (this.clickable) {
-                this.isOpen = !this.isOpen;
+                this.$emit('update', index);
             }
         },
-        toggleItem(index) {
-            this.isOpen = this.isOpen === index ? null : index;
+        update(index) {
+            this.myIndex = this.myIndex === index ? null : index;
         },
     },
     created() {
-        console.log(this.depth, this.navIdx);
+        //console.log(this.depth, this.navIdx);
     },
 };
 </script>

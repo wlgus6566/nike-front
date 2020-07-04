@@ -1,14 +1,16 @@
 <template>
-    <ul>
-        <navItem
-            v-for="(item, index) in lnb"
-            :key="index"
-            :navIdx="index"
-            :item="item"
-            :depth="1"
-            :activeIndex="activeIndex"
-        />
-    </ul>
+    <div>
+        <ul>
+            <navItem
+                v-for="(item, index) in lnb"
+                :key="index"
+                :navIdx="index"
+                :item="item"
+                :depth="1"
+                :activeIndex="activeIndex"
+            />
+        </ul>
+    </div>
 </template>
 <script>
 import navItem from './nav-item';
@@ -16,7 +18,6 @@ export default {
     name: 'nav-wrap',
     data() {
         return {
-            activeIndex: null,
             lnb: [
                 {
                     title: 'HOME',
@@ -309,6 +310,7 @@ export default {
                     ],
                 },
             ],
+            activeIndex: null,
         };
     },
     components: { navItem },

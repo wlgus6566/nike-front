@@ -80,7 +80,7 @@ nav .depth2 > .nav-link {
     color: #888;
 }
 nav .depth2 > .nav-link .noto-sans {
-    font-family: 'NotoSansKR', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
     font-size: 14px;
     font-weight: bold;
     letter-spacing: -0.05em;
@@ -89,7 +89,7 @@ nav .depth2 > ul {
     padding: 0 0 20px 10px;
 }
 nav .depth3 > .nav-link {
-    font-family: 'NotoSansKR', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
     font-size: 12px;
     line-height: 30px;
     font-weight: 400;
