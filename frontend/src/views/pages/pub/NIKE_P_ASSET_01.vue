@@ -155,7 +155,9 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                     <textarea cols="100" rows="2" style="height: 80px;">
 나이키 다이렉트 캠페인 자료와 동영상, 스타일가이드, 기타 그래픽자료가 업데이트 되었습니다. SP20 나이키 다이렉트 NSW 캠페인 시공 에셋 자료가 업데이트 되었습니다.</textarea
                                     >
-                                    <span class="count"><strong>100</strong> / <em>150</em>byte</span>
+                                    <span class="count"
+                                        ><strong>100</strong> / <em>150</em>byte</span
+                                    >
                                 </span>
                             </div>
                         </li>
@@ -164,7 +166,9 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                 <label class="label-title">권한 설정</label>
                             </div>
                             <div class="form-column">
-                                <button type="button" class="btn-form-gray min100"><span>권한설정</span></button>
+                                <button type="button" class="btn-form-gray min100">
+                                    <span>권한설정</span>
+                                </button>
                             </div>
                         </li>
                     </ul>
@@ -246,7 +250,7 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                                             <span></span>
                                                         </span>
                                                         <span class="txt"
-                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpgP20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpg<</span
+                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpgP20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpg</span
                                                         >
                                                     </label>
                                                 </li>
@@ -256,7 +260,9 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                                             <input type="checkbox" />
                                                             <span></span>
                                                         </span>
-                                                        <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                                                        <span class="txt"
+                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                                        >
                                                     </label>
                                                 </li>
                                                 <li>
@@ -265,7 +271,9 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                                             <input type="checkbox" />
                                                             <span></span>
                                                         </span>
-                                                        <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                                                        <span class="txt"
+                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                                        >
                                                     </label>
                                                 </li>
                                                 <li>
@@ -274,7 +282,9 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                                             <input type="checkbox" />
                                                             <span></span>
                                                         </span>
-                                                        <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                                                        <span class="txt"
+                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                                        >
                                                     </label>
                                                 </li>
                                                 <li>
@@ -283,7 +293,9 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                                             <input type="checkbox" />
                                                             <span></span>
                                                         </span>
-                                                        <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                                                        <span class="txt"
+                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                                        >
                                                     </label>
                                                 </li>
                                             </ul>
@@ -293,7 +305,9 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                                 <span class="btn-form-gray"><span>찾기</span></span>
                                                 <input type="file" />
                                             </div>
-                                            <button type="button" class="btn-form"><span>삭제</span></button>
+                                            <button type="button" class="btn-form">
+                                                <span>삭제</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -310,7 +324,9 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                                 <span class="btn-form-gray"><span>찾기</span></span>
                                                 <input type="file" />
                                             </div>
-                                            <button type="button" class="btn-form"><span>삭제</span></button>
+                                            <button type="button" class="btn-form">
+                                                <span>삭제</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -374,7 +390,10 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                     <label class="label-title">파일 타이틀</label>
                                 </div>
                                 <div class="form-column">
-                                    <input type="text" value="P20_Nsw_Nike_Gallery_graphic_1_700x1000" />
+                                    <input
+                                        type="text"
+                                        value="P20_Nsw_Nike_Gallery_graphic_1_700x1000"
+                                    />
                                 </div>
                             </li>
                             <li class="form-row">

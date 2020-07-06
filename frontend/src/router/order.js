@@ -49,8 +49,18 @@ const routes = [
                         meta: { layout: 'Default', aside: 'Order', title: '세일 사이니지' },
                     },
                     {
+                        path: 'sale-signage/:id',
+                        component: pages('order/view'),
+                        meta: { layout: 'Default', aside: 'Order', title: '오픈 패키지' },
+                    },
+                    {
                         path: 'open-package',
                         component: pages('order/list'),
+                        meta: { layout: 'Default', aside: 'Order', title: '오픈 패키지' },
+                    },
+                    {
+                        path: 'open-package/:id',
+                        component: pages('order/view'),
                         meta: { layout: 'Default', aside: 'Order', title: '오픈 패키지' },
                     },
                 ],

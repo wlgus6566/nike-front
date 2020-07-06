@@ -157,7 +157,9 @@
                             <label class="label-title">권한 설정</label>
                         </div>
                         <div class="form-column">
-                            <button type="button" class="btn-form-gray min100"><span>권한설정</span></button>
+                            <button type="button" class="btn-form-gray min100">
+                                <span>권한설정</span>
+                            </button>
                         </div>
                     </li>
                 </ul>
@@ -238,7 +240,7 @@
                                                             <span></span>
                                                         </span>
                                                         <span class="txt"
-                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpgP20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpg<</span
+                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpgP20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpg</span
                                                         >
                                                     </label>
                                                 </li>
@@ -248,7 +250,9 @@
                                                             <input type="checkbox" />
                                                             <span></span>
                                                         </span>
-                                                        <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                                                        <span class="txt"
+                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                                        >
                                                     </label>
                                                 </li>
                                                 <li>
@@ -257,7 +261,9 @@
                                                             <input type="checkbox" />
                                                             <span></span>
                                                         </span>
-                                                        <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                                                        <span class="txt"
+                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                                        >
                                                     </label>
                                                 </li>
                                                 <li>
@@ -266,7 +272,9 @@
                                                             <input type="checkbox" />
                                                             <span></span>
                                                         </span>
-                                                        <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                                                        <span class="txt"
+                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                                        >
                                                     </label>
                                                 </li>
                                                 <li>
@@ -275,7 +283,9 @@
                                                             <input type="checkbox" />
                                                             <span></span>
                                                         </span>
-                                                        <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                                                        <span class="txt"
+                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                                        >
                                                     </label>
                                                 </li>
                                             </ul>
@@ -285,7 +295,9 @@
                                                 <span class="btn-form-gray"><span>찾기</span></span>
                                                 <input type="file" />
                                             </div>
-                                            <button type="button" class="btn-form"><span>삭제</span></button>
+                                            <button type="button" class="btn-form">
+                                                <span>삭제</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -302,7 +314,9 @@
                                                 <span class="btn-form-gray"><span>찾기</span></span>
                                                 <input type="file" />
                                             </div>
-                                            <button type="button" class="btn-form"><span>삭제</span></button>
+                                            <button type="button" class="btn-form">
+                                                <span>삭제</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -366,7 +380,10 @@
                                     <label class="label-title">파일 타이틀</label>
                                 </div>
                                 <div class="form-column">
-                                    <input type="text" value="P20_Nsw_Nike_Gallery_graphic_1_700x1000" />
+                                    <input
+                                        type="text"
+                                        value="P20_Nsw_Nike_Gallery_graphic_1_700x1000"
+                                    />
                                 </div>
                             </li>
                             <li class="form-row">

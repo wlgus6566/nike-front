@@ -1,7 +1,7 @@
 <template>
     <li :class="[{ active: activeIndex === navIdx }, `depth${this.depth}`]">
         <router-link
-            @click.native.prevent="toggle(navIdx)"
+            @click.native.prevent="toggle()"
             :to="item.to"
             :exact="item.exact"
             :event="clickable ? '' : 'click'"
@@ -25,6 +25,11 @@
 export default {
     name: 'navItem',
     props: ['item', 'depth', 'navIdx', 'activeIndex'],
+    watch: {
+        $route(newRoute) {
+            this.init(newRoute.matched);
+        },
+    },
     data: function () {
         return {
             myIndex: null,
@@ -39,17 +44,26 @@ export default {
         },
     },
     methods: {
-        toggle: function (index) {
-            if (this.clickable) {
-                this.$emit('update', index);
+        init(routeArray) {
+            const linkPath = this.$el.querySelector(':scope > .nav-link').getAttribute('href');
+            for (let item in routeArray) {
+                const path = routeArray[item].path;
+                if (path === linkPath) {
+                    this.$emit('update', this.navIdx, true);
+                }
             }
         },
-        update(index) {
-            this.myIndex = this.myIndex === index ? null : index;
+        toggle() {
+            if (this.clickable) {
+                this.$emit('update', this.navIdx);
+            }
+        },
+        update(index, initState) {
+            this.myIndex = !!initState ? index : this.myIndex === index ? null : index;
         },
     },
-    created() {
-        //console.log(this.depth, this.navIdx);
+    mounted() {
+        this.init(this.$route.matched);
     },
 };
 </script>
