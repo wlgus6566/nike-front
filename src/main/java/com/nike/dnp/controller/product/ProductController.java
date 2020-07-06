@@ -7,14 +7,12 @@ import com.nike.dnp.dto.product.ProductUpdateDTO;
 import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
-import com.nike.dnp.service.order.ProductService;
+import com.nike.dnp.service.product.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -35,13 +33,10 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@Api(description = "상품 관리", tags = "20_ORDER_PRODUCT")
+@Api(description = "상품 관리", tags = "20_PRODUCT")
 @RequestMapping(value = "/api/product", name = "상품관리")
 @AllArgsConstructor
 public class ProductController {
-
-	@Autowired
-	MessageSource messageSource;
 
 	/**
 	 * ProductService
@@ -77,8 +72,15 @@ public class ProductController {
 	 * @CreatedOn 2020. 6. 24. 오후 12:15:13
 	 * @Description
 	 */
-	@ApiOperation(value = "상품 목록 조회", notes = REQUEST_CHARACTER + "category2code|카테고리 2 코드|false|String\n" + "category3code|카테고리 3 코드|false|String\n" + "agentSeq|에이전트 시퀀스|false|Integer\n" + "exposureYn|노출여부|false|String\n" + "keyword|키워드|false|String\n" + "page|페이지|false|Integer\n" + "size|사이즈|false|Integer\n")
-	@GetMapping(value = "/list", produces = {MediaType.APPLICATION_JSON_VALUE}, name = "상품 목록 조회")
+	@ApiOperation(value = "상품 목록 조회", notes = REQUEST_CHARACTER
+			+ "category2code|카테고리 2 코드|false|String\n"
+			+ "category3code|카테고리 3 코드|false|String\n"
+			+ "agentSeq|에이전트 시퀀스|false|Integer\n"
+			+ "exposureYn|노출여부|false|String\n"
+			+ "keyword|키워드|false|String\n"
+			+ "page|페이지|false|Integer\n"
+			+ "size|사이즈|false|Integer\n")
+	@GetMapping(value = "/list", name = "상품 목록 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public SingleResult<Page<Product>> findPagesProduct(final ProductSearchDTO productSearchDTO) {
 		return responseService.getSingleResult(productService.findPagesProduct(productSearchDTO));
 	}
@@ -93,9 +95,8 @@ public class ProductController {
 	 * @Description
 	 */
 	@ApiOperation(value = "상품 상세 조회", notes = REQUEST_CHARACTER + "goodsSeq|상품시퀀스|true|Integer\n")
-	@GetMapping(value = "/{goodsSeq}", produces = {MediaType.APPLICATION_JSON_VALUE}, name = "상품상세조회")
-	public SingleResult<Product> findProduct(final @ApiParam(name = "goodsSeq", value = "상품 시퀀스", defaultValue = "31") @PathVariable Long goodsSeq) {
-
+	@GetMapping(value = "/{goodsSeq}", name = "상품상세조회", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public SingleResult<Product> findProduct(@ApiParam(name = "goodsSeq", value = "상품 시퀀스", defaultValue = "31") @PathVariable final Long goodsSeq) {
 		return responseService.getSingleResult(productService.findByGoodsSeq(goodsSeq));
 	}
 
@@ -110,8 +111,8 @@ public class ProductController {
 	 * @Description
 	 */
 	@ApiOperation(value = "다수 상품 상세 조회", notes = REQUEST_CHARACTER + "goodsSeq|상품시퀀스|true|Integer\n")
-	@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "상품상세조회")
-	public SingleResult<List<Product>> findbySearchProduct(final @ApiParam(name = "goodsSeqList", value = "상품 시퀀스", defaultValue = "29,30,31") @RequestParam List<Long> goodsSeqList) {
+	@GetMapping(name = "상품상세조회", produces = MediaType.APPLICATION_JSON_VALUE)
+	public SingleResult<List<Product>> findbySearchProduct(@ApiParam(name = "goodsSeqList", value = "상품 시퀀스", defaultValue = "29,30,31") @RequestParam final List<Long> goodsSeqList) {
 		return responseService.getSingleResult(productService.findBySearchId(goodsSeqList));
 	}
 
@@ -126,9 +127,8 @@ public class ProductController {
 	 * @Description
 	 */
 	@ApiOperation(value = "상품 등록", notes = BASIC_CHARACTER)
-	@PostMapping(name = "상품 등록", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-	public SingleResult<Product> saveProduct(final @ApiParam(name = "productSaveDTO", value = "상품 등록 JSON") @RequestBody ProductSaveDTO productSaveDTO,
-											 final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO) {
+	@PostMapping(name = "상품 등록", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public SingleResult<Product> saveProduct(@ApiParam(name = "productSaveDTO", value = "상품 등록 JSON") @RequestBody final ProductSaveDTO productSaveDTO) {
 
 		return responseService.getSingleResult(productService.save(productSaveDTO));
 	}
@@ -137,16 +137,14 @@ public class ProductController {
 	 * 상품 수정
 	 *
 	 * @param productUpdateDTO the product update dto
-	 * @param authUserDTO      the auth user dto
 	 * @return the single result
 	 * @author [윤태호]
 	 * @CreatedOn 2020. 6. 23. 오후 5:28:44
 	 * @Description
 	 */
 	@ApiOperation(value = "상품 수정", notes = BASIC_CHARACTER)
-	@PutMapping(name = "상품 수정", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-	public SingleResult<Optional<Product>> updateProduct(final @ApiParam(name = "productUpdateDTO", value = "상품 수정 JSON") @RequestBody ProductUpdateDTO productUpdateDTO,
-														 final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO) {
+	@PutMapping(name = "상품 수정", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public SingleResult<Optional<Product>> updateProduct(@ApiParam(name = "productUpdateDTO", value = "상품 수정 JSON") @RequestBody final ProductUpdateDTO productUpdateDTO) {
 
 
 		return responseService.getSingleResult(productService.update(productUpdateDTO));
@@ -155,17 +153,15 @@ public class ProductController {
 	/**
 	 * 상품 삭제
 	 *
-	 * @param goodsSeq    the goods seq
-	 * @param authUserDTO the auth user dto
+	 * @param goodsSeq the goods seq
 	 * @return the single result
 	 * @author [윤태호]
 	 * @CreatedOn 2020. 6. 23. 오후 5:28:44
 	 * @Description
 	 */
 	@ApiOperation(value = "상품 삭제", notes = BASIC_CHARACTER)
-	@DeleteMapping(value = "/{goodsSeq}", name = "상품 삭제")
-	public SingleResult<Optional<Product>> delProduct(final @ApiParam(name = "goodsSeq", value = "상품 시퀀스", defaultValue = "28") @PathVariable Long goodsSeq,
-													  final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO) {
+	@DeleteMapping(value = "/{goodsSeq}", name = "상품 삭제", produces = MediaType.APPLICATION_JSON_VALUE)
+	public SingleResult<Optional<Product>> delProduct(@ApiParam(name = "goodsSeq", value = "상품 시퀀스", defaultValue = "28") @PathVariable final Long goodsSeq) {
 		final ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO();
 		productUpdateDTO.setGoodsSeq(goodsSeq);
 		productUpdateDTO.setUseYn("N");
@@ -184,12 +180,11 @@ public class ProductController {
 	 * @Description
 	 */
 	@ApiOperation(value = "상품 삭제", notes = BASIC_CHARACTER)
-	@DeleteMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "상품 삭제")
-	public SingleResult<Boolean> deleteProduct(final @ApiParam(name = "goodsSeqList", value = "상품 시퀀스", defaultValue = "29,30,31") @RequestParam List<Long> goodsSeqList,
-											   final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO) {
+	@DeleteMapping(name = "상품 삭제", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+	public SingleResult<Boolean> deleteProduct(@ApiParam(name = "goodsSeqList", value = "상품 시퀀스", defaultValue = "29,30,31") @RequestParam final List<Long> goodsSeqList,
+											   @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO) {
 
 		List<Product> productList = productService.findBySearchId(goodsSeqList);
-
 
 		final ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO();
 		productUpdateDTO.setUseYn("N");
@@ -197,6 +192,4 @@ public class ProductController {
 		boolean check = productService.deleteArray(productList, productUpdateDTO);
 		return responseService.getSingleResult(check);
 	}
-
-
 }

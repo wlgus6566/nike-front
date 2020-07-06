@@ -1,11 +1,12 @@
 package com.nike.dnp.controller.goodsBasket;
 
 import com.nike.dnp.dto.goodsBasket.GoodsBasketSaveDTO;
+import com.nike.dnp.dto.goodsBasket.GoodsBasketSaveListDTO;
 import com.nike.dnp.entity.goodsBasket.GoodsBasket;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
-import com.nike.dnp.service.order.GoodsBasketService;
+import com.nike.dnp.service.goodsBasket.GoodsBasketService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -69,11 +70,26 @@ public class GoodsBasketController {
 	 * @CreatedOn 2020. 7. 2. 오후 4:31:14
 	 * @Description
 	 */
-	@ApiOperation(value = "장바구니 등록", notes = BASIC_CHARACTER)
-	@PostMapping(value = "/save", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public SingleResult<GoodsBasket> saveBasket(final @RequestBody GoodsBasketSaveDTO goodsBasketSaveDTO) {
+	@ApiOperation(value = "장바구니 등록 및 수정", notes = BASIC_CHARACTER)
+	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public SingleResult<GoodsBasket> saveBasket(@RequestBody final GoodsBasketSaveDTO goodsBasketSaveDTO) {
 		GoodsBasket goodsBasket = goodsBasketService.saveBasket(goodsBasketSaveDTO);
 		return responseService.getSingleResult(goodsBasket);
+	}
+
+	/**
+	 * Save basket list single result.
+	 *
+	 * @param goodsBasketSaveListDTO the goods basket save list dto
+	 * @return the single result
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 6. 오전 11:38:25
+	 * @Description
+	 */
+	@ApiOperation(value = "장바구니 다건 등록 및 수정", notes = BASIC_CHARACTER)
+	@PostMapping(value = "/saveList", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public SingleResult<List<GoodsBasket>> saveBasketList(@RequestBody final GoodsBasketSaveListDTO goodsBasketSaveListDTO) {
+		return responseService.getSingleResult(goodsBasketService.saveBasketList(goodsBasketSaveListDTO));
 	}
 
 
@@ -86,7 +102,7 @@ public class GoodsBasketController {
 	 * @Description
 	 */
 	@ApiOperation(value = "장바구니 조회", notes = BASIC_CHARACTER)
-	@GetMapping(value = "/list", produces = {MediaType.APPLICATION_JSON_VALUE})
+	@GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<List<GoodsBasket>> findAll(){
 		return responseService.getSingleResult(goodsBasketService.findByAll());
 	}
@@ -102,11 +118,9 @@ public class GoodsBasketController {
 	 * @Description
 	 */
 	@ApiOperation(value = "장바구니 삭제", notes = BASIC_CHARACTER)
-	@DeleteMapping(value = "/{goodsBasketSeq}")
+	@DeleteMapping(value = "/{goodsBasketSeq}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public CommonResult deleteBasket(final @ApiParam(name = "goodsBasketSeq", value = "장바구니 시퀀스", defaultValue = "6") @PathVariable Long goodsBasketSeq) {
 		goodsBasketService.deleteBasket(goodsBasketSeq);
 		return responseService.getSuccessResult();
 	}
-
-
 }
