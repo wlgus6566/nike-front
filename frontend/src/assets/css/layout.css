@@ -53,13 +53,30 @@ header nav > ul {
     position: relative;
 }
 nav .nav-link {
-    display: inline-block;
+    position: relative;
+    display: block;
+    padding-top: 3px;
     font-size: 16px;
-    line-height: 40px;
+    line-height: 37px;
     letter-spacing: 0.05em;
     color: #888;
     border-radius: 0;
     font-family: 'Bebas Neue', sans-serif;
+}
+nav .nav-link.hasDepth:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    height: 20px;
+    width: 20px;
+    margin-top: -10px;
+    background: url('../images/svg/icon-lnb-arr.svg') no-repeat;
+    transform: rotate(180deg);
+    transition: transform 200ms ease-in-out 0s;
+}
+nav .nav-link.hasDepth.active:after {
+    transform: rotate(0);
 }
 nav .nav-link[disabled] {
     pointer-events: none;
@@ -68,7 +85,8 @@ nav .active ul {
     display: block;
 }
 
-nav .depth1 > ul {
+nav li {
+    position: relative;
 }
 nav .depth1 > .nav-link {
     color: #000;
@@ -80,12 +98,15 @@ nav .depth2 > .nav-link {
     color: #888;
 }
 nav .depth2 > .nav-link .noto-sans {
+    line-height: 30px;
+    display: inline-block;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 14px;
     font-weight: bold;
     letter-spacing: -0.05em;
 }
 nav .depth2 > ul {
+    overflow: hidden;
     padding: 0 0 20px 10px;
 }
 nav .depth3 > .nav-link {

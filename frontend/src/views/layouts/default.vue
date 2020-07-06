@@ -56,8 +56,7 @@
 </template>
 <script>
 import Sticky from 'vue-sticky-directive';
-import { gsap, Cubic, ScrollToPlugin, TimelineLite } from 'gsap/all';
-gsap.registerPlugin(Cubic, ScrollToPlugin, TimelineLite);
+import { gsap, Cubic, TimelineLite } from 'gsap/all';
 
 import appHeader from '@/components/app-header';
 

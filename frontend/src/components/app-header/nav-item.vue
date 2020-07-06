@@ -1,27 +1,31 @@
 <template>
-    <li :class="[{ active: activeIndex === navIdx }, `depth${this.depth}`]">
+    <li :class="[`depth${this.depth}`]">
         <router-link
             @click.native.prevent="toggle()"
             :to="item.to"
             :exact="item.exact"
             :event="clickable ? '' : 'click'"
-            :class="[{ hasDepth: isFolder }, 'nav-link']"
+            :class="[{ active: activeIndex === navIdx }, { hasDepth: clickable }, 'nav-link']"
             v-html="item.title"
         />
-        <ul v-show="activeIndex === navIdx" v-if="isFolder">
-            <navItem
-                @update="update"
-                v-for="(child, index) in item.children"
-                :key="index"
-                :navIdx="index"
-                :item="child"
-                :depth="depth + 1"
-                :activeIndex="myIndex"
-            />
-        </ul>
+        <transition @enter="enter" @leave="leave" :css="false">
+            <ul v-show="activeIndex === navIdx" v-if="isFolder">
+                <navItem
+                    @update="update"
+                    v-for="(child, index) in item.children"
+                    :key="index"
+                    :navIdx="index"
+                    :item="child"
+                    :depth="depth + 1"
+                    :activeIndex="myIndex"
+                />
+            </ul>
+        </transition>
     </li>
 </template>
 <script>
+import { gsap, Cubic } from 'gsap/all';
+
 export default {
     name: 'navItem',
     props: ['item', 'depth', 'navIdx', 'activeIndex'],
@@ -44,6 +48,26 @@ export default {
         },
     },
     methods: {
+        enter(el, done) {
+            gsap.set(el, {
+                paddingBottom: '20',
+                height: 'auto',
+            });
+            gsap.from(el, 0.3, {
+                paddingBottom: 0,
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: done,
+            });
+        },
+        leave(el, done) {
+            gsap.to(el, 0.3, {
+                paddingBottom: 0,
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: done,
+            });
+        },
         init(routeArray) {
             const linkPath = this.$el.querySelector(':scope > .nav-link').getAttribute('href');
             for (let item in routeArray) {
