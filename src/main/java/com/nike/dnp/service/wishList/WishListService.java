@@ -1,6 +1,7 @@
 package com.nike.dnp.service.wishList;
 
 import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.dto.wishList.WishListDeleteDTO;
 import com.nike.dnp.dto.wishList.WishListSearchDTO;
 import com.nike.dnp.entity.wishList.WishList;
 import com.nike.dnp.exception.CodeMessageHandleException;
@@ -15,6 +16,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -86,5 +91,33 @@ public class WishListService {
 		Optional<WishList> userWishList = wishListRepository.findByWishListSeqAndUserSeq(wishListSeq, SecurityUtil.currentUser().getUserSeq());
 		WishList wishList = userWishList.orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.WishListError.NOT_FOUND_WISHLIST.name(), ErrorEnumCode.WishListError.NOT_FOUND_WISHLIST.getMessage()));
 		wishListRepository.delete(wishList);
+	}
+
+	/**
+	 * Delete list.
+	 *
+	 * @param wishListDeleteDTO the wish list delete dto
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 6. 오후 3:46:26
+	 * @Description
+	 */
+	@Transactional
+	public void deleteList(final WishListDeleteDTO wishListDeleteDTO) {
+		List<WishList> wishListList = wishListRepository.findAllById(wishListDeleteDTO.getWishListSeqList());
+		wishListList.forEach(wishList -> {
+			if(wishList.getUserSeq().equals(SecurityUtil.currentUser().getUserSeq())){
+				wishListRepository.delete(wishList);
+			}
+		});
+	}
+
+	@Transactional
+	public void deleteScheduler() {
+		// 7일 이후 데이터 검색
+		List<WishList> byRegistrationDtAfter =
+				wishListRepository.findByRegistrationDtBefore(LocalDateTime.of(LocalDate.now().plusDays(-7), LocalTime.of(0,0,0)));
+
+		wishListRepository.deleteAll(byRegistrationDtAfter);
+
 	}
 }

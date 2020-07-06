@@ -8,6 +8,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * StartApplication
@@ -21,6 +22,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing(auditorAwareRef = "userAuditAware")
 @SpringBootApplication
 @RequiredArgsConstructor
+@EnableScheduling
 public class StartApplication extends SpringBootServletInitializer {
 
 	/**

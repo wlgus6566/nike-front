@@ -1,6 +1,7 @@
 package com.nike.dnp.controller.whisList;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
+import com.nike.dnp.dto.wishList.WishListDeleteDTO;
 import com.nike.dnp.dto.wishList.WishListResultDTO;
 import com.nike.dnp.dto.wishList.WishListSearchDTO;
 import com.nike.dnp.entity.wishList.WishList;
@@ -113,5 +114,25 @@ public class WishListController {
 		wishListService.delete(wishListSeq);
 		return responseService.getSuccessResult();
 	}
+
+
+	/**
+	 * Delete wish list list common result.
+	 *
+	 * @param wishListDeleteDTO the wish list delete dto
+	 * @return the common result
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 6. 오후 3:46:42
+	 * @Description
+	 */
+	@ApiOperation(value = "위시리스트 다건 삭제", notes = BASIC_CHARACTER)
+	@DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+	public CommonResult deleteWishListList(@RequestBody final WishListDeleteDTO wishListDeleteDTO) {
+		wishListService.deleteList(wishListDeleteDTO);
+		return responseService.getSuccessResult();
+	}
+
+
+
 }
 
