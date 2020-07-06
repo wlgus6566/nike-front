@@ -71,7 +71,7 @@ public class GoodsBasketController {
 	 * @Description
 	 */
 	@ApiOperation(value = "장바구니 등록", notes = BASIC_CHARACTER)
-	@PostMapping(value = "/save", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<GoodsBasket> saveBasket(@RequestBody final GoodsBasketSaveDTO goodsBasketSaveDTO) {
 		GoodsBasket goodsBasket = goodsBasketService.saveBasket(goodsBasketSaveDTO);
 		return responseService.getSingleResult(goodsBasket);
@@ -86,8 +86,8 @@ public class GoodsBasketController {
 	 * @CreatedOn 2020. 7. 6. 오전 11:38:25
 	 * @Description
 	 */
-	@ApiOperation(value = "장바구니 다수 등록", notes = BASIC_CHARACTER)
-	@PostMapping(value = "/saveList", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "장바구니 다건 등록", notes = BASIC_CHARACTER)
+	@PostMapping(value = "/saveList", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<List<GoodsBasket>> saveBasketList(@RequestBody final GoodsBasketSaveListDTO goodsBasketSaveListDTO) {
 		return responseService.getSingleResult(goodsBasketService.saveBasketList(goodsBasketSaveListDTO));
 	}
@@ -102,7 +102,7 @@ public class GoodsBasketController {
 	 * @Description
 	 */
 	@ApiOperation(value = "장바구니 조회", notes = BASIC_CHARACTER)
-	@GetMapping(value = "/list", produces = {MediaType.APPLICATION_JSON_VALUE})
+	@GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<List<GoodsBasket>> findAll(){
 		return responseService.getSingleResult(goodsBasketService.findByAll());
 	}
@@ -123,6 +123,4 @@ public class GoodsBasketController {
 		goodsBasketService.deleteBasket(goodsBasketSeq);
 		return responseService.getSuccessResult();
 	}
-
-
 }

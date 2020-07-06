@@ -112,7 +112,6 @@ public class WishListController {
 	public CommonResult deleteWishList(@ApiParam(name = "wishListSeq", value = "위시리스트 시퀀스", defaultValue = "20") @PathVariable final Long wishListSeq) {
 		wishListService.delete(wishListSeq);
 		return responseService.getSuccessResult();
-
 	}
 }
 
