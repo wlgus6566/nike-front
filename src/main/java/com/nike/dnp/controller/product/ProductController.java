@@ -72,7 +72,14 @@ public class ProductController {
 	 * @CreatedOn 2020. 6. 24. 오후 12:15:13
 	 * @Description
 	 */
-	@ApiOperation(value = "상품 목록 조회", notes = REQUEST_CHARACTER + "category2code|카테고리 2 코드|false|String\n" + "category3code|카테고리 3 코드|false|String\n" + "agentSeq|에이전트 시퀀스|false|Integer\n" + "exposureYn|노출여부|false|String\n" + "keyword|키워드|false|String\n" + "page|페이지|false|Integer\n" + "size|사이즈|false|Integer\n")
+	@ApiOperation(value = "상품 목록 조회", notes = REQUEST_CHARACTER
+			+ "category2code|카테고리 2 코드|false|String\n"
+			+ "category3code|카테고리 3 코드|false|String\n"
+			+ "agentSeq|에이전트 시퀀스|false|Integer\n"
+			+ "exposureYn|노출여부|false|String\n"
+			+ "keyword|키워드|false|String\n"
+			+ "page|페이지|false|Integer\n"
+			+ "size|사이즈|false|Integer\n")
 	@GetMapping(value = "/list", name = "상품 목록 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public SingleResult<Page<Product>> findPagesProduct(final ProductSearchDTO productSearchDTO) {
 		return responseService.getSingleResult(productService.findPagesProduct(productSearchDTO));
@@ -173,7 +180,7 @@ public class ProductController {
 	 * @Description
 	 */
 	@ApiOperation(value = "상품 삭제", notes = BASIC_CHARACTER)
-	@DeleteMapping(name = "상품 삭제", produces = {MediaType.APPLICATION_JSON_VALUE})
+	@DeleteMapping(name = "상품 삭제", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<Boolean> deleteProduct(@ApiParam(name = "goodsSeqList", value = "상품 시퀀스", defaultValue = "29,30,31") @RequestParam final List<Long> goodsSeqList,
 											   @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO) {
 
