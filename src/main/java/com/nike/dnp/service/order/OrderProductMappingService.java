@@ -47,7 +47,8 @@ public class OrderProductMappingService {
 	 */
 	private final MailService mailService;
 
-	/**
+
+		/**
 	 * Save order product mapping order product mapping.
 	 *
 	 * @param orderProductMappingSaveDTO the order product mapping save dto
@@ -56,6 +57,7 @@ public class OrderProductMappingService {
 	 * @CreatedOn 2020. 7. 2. 오후 3:07:14
 	 * @Description
 	 */
+	@Transactional
 	public OrderProductMapping saveOrderProductMapping(final OrderProductMappingSaveDTO orderProductMappingSaveDTO) {
 		OrderProductMapping orderProductMapping = new OrderProductMapping();
 		orderProductMapping.setGoodsSeq(orderProductMappingSaveDTO.getGoodsSeq());

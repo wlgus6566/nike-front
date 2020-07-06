@@ -199,4 +199,34 @@ public class ErrorEnumCode {
         private final String message;
     }
 
+    /**
+     * The enum Wish list error.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum WishListError {
+        DUPLICATE_GOODS("이미 담긴 상품 입니다."),
+        NOT_FOUND_WISHLIST("해당 상품은 위시리스트에 없습니다.");
+
+        /**
+         * The Value
+         *
+         * @author [윤태호]
+         */
+        private final String message;
+    }
+
+    @RequiredArgsConstructor
+    @Getter
+    public enum BasketError {
+        NOT_FOUND_BASKET("해당 상품은 장바구니에 없습니다.");
+
+        /**
+         * The Value
+         *
+         * @author [윤태호]
+         */
+        private final String message;
+    }
+
 }

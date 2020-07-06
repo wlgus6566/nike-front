@@ -2,8 +2,10 @@ package com.nike.dnp.entity.wishList;
 
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.entity.product.Product;
+import com.nike.dnp.util.SecurityUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 
@@ -60,5 +62,11 @@ public class WishList extends BaseTimeEntity {
     private Product product;
 
 
+    @PrePersist
+    private void prePersist(){
+        if(ObjectUtils.isEmpty(this.userSeq)){
+            this.userSeq = SecurityUtil.currentUser().getUserSeq();
+        }
+    }
 
 }

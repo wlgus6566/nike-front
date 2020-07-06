@@ -1,0 +1,31 @@
+### 장바구니 다수 저장
+POST http://{{host}}/api/goodsBasket/saveList
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+{"goodsSeqList" : [10,11,15],
+  "orderQuantityList": [50,30,40]
+}
+
+
+### 장바구니 다수 저장
+POST http://{{host}}/api/goodsBasket/list
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+{
+  "goodsSeqList": [
+    10,
+    11,
+    15
+  ],
+  "orderQuantityList": [
+    50,
+    30,
+    40
+  ]
+}

@@ -9,7 +9,7 @@ import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.order.OrderProductMappingService;
 import com.nike.dnp.service.order.OrderService;
-import com.nike.dnp.service.order.ProductService;
+import com.nike.dnp.service.product.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -91,7 +91,7 @@ public class OrderController {
 	@PostMapping(value="/save",produces = {MediaType.APPLICATION_JSON_VALUE},consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Transactional
 	public SingleResult<Order> saveOrder(
-			final @RequestBody OrderProductSaveDTO orderProductSaveDTO){
+			@RequestBody final OrderProductSaveDTO orderProductSaveDTO){
 
 		Order order = orderService.saveOrder(orderProductSaveDTO);
 

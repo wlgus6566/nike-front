@@ -1,4 +1,4 @@
-package com.nike.dnp.service.order;
+package com.nike.dnp.service.product;
 
 import com.nike.dnp.dto.product.ProductSaveDTO;
 import com.nike.dnp.dto.product.ProductSearchDTO;
@@ -62,7 +62,6 @@ public class ProductService {
 	 * @CreatedOn 2020. 6. 24. 오전 11:39:06
 	 * @Description
 	 */
-	@Transactional
 	public Product findByGoodsSeq(final Long goodsSeq) {
 		return productRepository.findByGoodsSeq(goodsSeq );	}
 
@@ -75,6 +74,7 @@ public class ProductService {
 	 * @CreatedOn 2020. 6. 23. 오후 3:24:48
 	 * @Description
 	 */
+	@Transactional
 	public Product save(final ProductSaveDTO productSaveDTO) {
 		final Product product = new Product();
 		product.setCategory2Code(productSaveDTO.getCategory2code());
