@@ -110,8 +110,6 @@ public class AssetController {
             , notes = REQUEST_CHARACTER
     )
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Asset 등록")
-    @ApiImplicitParam(name = "Authorization", value = "토큰(불필요)", required = false, dataType = "String",
-            paramType = "header", defaultValue = "")
     public SingleResult<Contents> saveContents(
             @RequestBody final ContentsAssetSaveDTO contentsAssetSaveDTO
     ) {
@@ -144,7 +142,7 @@ public class AssetController {
     @ApiOperation(value = "Asset 수정", notes = REQUEST_CHARACTER)
     @PutMapping(name = "Asset 수정", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Contents>> updateContents(@ApiParam(name="contentsUpdateDTO", value = "ASSET 수정 Json") @RequestBody final ContentsAssetUpdateDTO contentsAssetUpdateDTO) {
-
+        contentsAssetUpdateDTO.setTopMenuCode("ASSET");
         contentsAssetUpdateDTO.setMenuCode(contentsAssetUpdateDTO.getUploadCode());
         return responseService.getSingleResult(contentsService.update(contentsAssetUpdateDTO));
     }

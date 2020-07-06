@@ -26,7 +26,7 @@ public class ContentsUpdateDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CONTENTS_SEQ")
-    @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스", required = true)
+    @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스", required = true, example = "10")
     private Long contentsSeq;
 
     /**
@@ -110,6 +110,6 @@ public class ContentsUpdateDTO {
      * @author [이소정]
      */
     @ApiModelProperty(name = "contentsFileList", value = "콘텐츠 파일 리스트")
-    private List<ContentsFileSaveDTO> contentsFileList;
+    private List<ContentsFileUpdateDTO> contentsFileList;
 
 }

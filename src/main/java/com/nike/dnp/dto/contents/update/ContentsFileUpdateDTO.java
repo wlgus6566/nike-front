@@ -29,8 +29,17 @@ public class ContentsFileUpdateDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CONTENTS_FILE_SEQ")
-    @ApiModelProperty(name = "contentsFileSeq", value = "컨텐츠 파일 시퀀스")
+    @ApiModelProperty(name = "contentsFileSeq", value = "컨텐츠 파일 시퀀스", required = true, example = "7")
     private Long contentsFileSeq;
+
+
+    /**
+     * 컨텐츠 시퀀스
+     * @author [이소정]
+     */
+    @Column(name = "CONTENTS_SEQ")
+    @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스", example = "10")
+    private Long contentsSeq;
 
     /**
      * 파일 구분 공통코드
