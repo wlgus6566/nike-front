@@ -1,57 +1,68 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+// Routes
+import AssetRoutes from './asset';
+import ToolkitRoutes from './toolkit';
+import FoundationRoutes from './foundation';
+import OrderRoutes from './order';
+import ReportRoutes from './report';
+import InformationRoutes from './information';
+import ManagementRoutes from './management';
+import testRoutes from './test';
+import PubRoutes from './pub';
+
+// Import methods
+import store from '@/store';
+import { pages } from '@/utils/global-methods';
+import { getUserFromCookie } from '@/utils/cookies.js';
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/test',
-            component: () => import('@/views/testPage/testPage.vue'),
+            path: '/login',
+            component: pages('login'),
             meta: { layout: 'Clean' },
+            beforeEnter(to, from, next) {
+                store.getters['isLoggedIn'] ? next('/main') : next();
+            },
         },
         {
             path: '/',
-            component: () => import('@/views/main.vue'),
+            component: pages('main-page'),
             meta: { layout: 'Default', aside: 'Default' },
+            beforeEnter(to, from, next) {
+                if (store.getters['isLoggedIn'] || getUserFromCookie()) {
+                    next();
+                } else {
+                    next('/login');
+                }
+            },
         },
-        {
-            path: '/asset',
-            component: () => import('@/views/asset'),
-            meta: { layout: 'Default', aside: 'Order' },
-        },
-        {
-            path: '/login',
-            component: () => import('@/views/login'),
-            meta: { layout: 'Clean', aside: 'Order' },
-        },
-        {
-            path: '/sampleBoard/list',
-            component: () => import('@/views/sampleBoard/sampleBoardList'),
-            meta: { layout: 'Default' },
-        },
-        {
-            path: '/sampleBoard/:key',
-            component: () => import('@/views/sampleBoard/sampleBoardDetail'),
-            meta: { layout: 'Default' },
-        },
-        {
-            path: '/asset/upload',
-            component: () => import('@/views/asset/upload'),
-            meta: { layout: 'Default' },
-        },
-        {
-            path: '/asset/view',
-            component: () => import('@/views/asset/view'),
-            meta: { layout: 'Default' },
-        },
-        {
-            path: '*',
-            component: { template: '<div>Not Found</div>' },
-            meta: { layout: 'Clean' },
-        },
+        ...AssetRoutes,
+        ...ToolkitRoutes,
+        ...FoundationRoutes,
+        ...OrderRoutes,
+        ...ReportRoutes,
+        ...ManagementRoutes,
+        ...InformationRoutes,
+
+        ...PubRoutes,
+
+        ...testRoutes,
     ],
 });
 
 export default router;
+
+function beforeEnter(to, from, next) {
+    if (store.getters['isLoggedIn'] || getUserFromCookie()) {
+        next();
+    } else {
+        alert('sign in please');
+        next('/login');
+    }
+}

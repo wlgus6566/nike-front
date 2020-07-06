@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@Api(description = "메뉴", tags = "3_MENU")
+@Api(description = "메뉴", tags = "MENU")
 @RequestMapping(value = "/api/menu", name = "메뉴")
 @RequiredArgsConstructor
 public class MenuController {

@@ -21,7 +21,7 @@ public class UserUpdateDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "nickname", value = "닉네임", required = true)
+    @ApiModelProperty(name = "nickname", value = "닉네임", required = true, example = "NIKE학동점")
     private String nickname;
 
     /**
@@ -29,7 +29,7 @@ public class UserUpdateDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "authSeq", value = "권한 시퀀스", required = true)
+    @ApiModelProperty(name = "authSeq", value = "권한 시퀀스", required = true, example = "1")
     private Long authSeq;
 
 }

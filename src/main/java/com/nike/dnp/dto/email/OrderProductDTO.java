@@ -2,6 +2,13 @@ package com.nike.dnp.dto.email;
 
 import lombok.*;
 
+/**
+ * The Class Order product dto.
+ *
+ * @author [오지훈]
+ * @CreatedOn 2020. 7. 3. 오후 5:15:49
+ * @Description
+ */
 @Getter
 @Setter
 @ToString
@@ -9,8 +16,25 @@ import lombok.*;
 @AllArgsConstructor
 public class OrderProductDTO {
 
+    /**
+     * The Product name
+     *
+     * @author [오지훈]
+     */
     private String productName = "";
+
+    /**
+     * The Product desc
+     *
+     * @author [오지훈]
+     */
     private String productDesc = "";
+
+    /**
+     * The Amount
+     *
+     * @author [오지훈]
+     */
     private int amount;
 
 }

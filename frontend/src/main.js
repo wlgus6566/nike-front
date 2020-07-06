@@ -1,13 +1,16 @@
+import '@babel/polyfill';
+
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import axios from './axios';
-import anime from 'animejs/lib/anime.es.js';
+import CKEditor from 'ckeditor4-vue';
 
 Vue.prototype.$axios = axios;
-Vue.prototype.$anime = anime;
 
 Vue.config.productionTip = false;
+
+Vue.use(CKEditor);
 
 /**
  * Thousands Separators 천단위 ',' 숫자 표시 [이소정]

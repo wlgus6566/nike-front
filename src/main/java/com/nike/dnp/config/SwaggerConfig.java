@@ -44,13 +44,13 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.apis(RequestHandlerSelectors.any()) // 현재 RequestMapping으로
-				// 할당된 모든 URL 리스트를 추출
-				.paths(PathSelectors.ant("/api/**")) // 그중 /api/** 인 URL들만 필터링
-				.build().apiInfo(apiInfo()).useDefaultResponseMessages(false)
+				.apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.ant("/api/**"))
+				.build()
 				.globalOperationParameters(Arrays.asList(
 						new ParameterBuilder().name("Authorization").defaultValue("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjQ2NzY4NTl9.i_TH7DbQsw_DwBrjFBAFUw-3ME0nTUmAeaQg32q_MRT3hYaLxZVmJ2_LEyr94rDj0a1tzT-ZCBHYx70qCP88Zw")
-								.modelRef(new ModelRef("string")).parameterType("header").required(true).modelRef(new ModelRef("String")).build()));
+								.modelRef(new ModelRef("string")).parameterType("header").required(true).modelRef(new ModelRef("String")).build()))
+				.apiInfo(apiInfo()).useDefaultResponseMessages(false);
 	}
 
 	/**

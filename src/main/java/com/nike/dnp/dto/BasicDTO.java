@@ -21,7 +21,7 @@ public class BasicDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "사용 여부", hidden = true,example = "Y")
+    @ApiModelProperty(name = "사용 여부", hidden = true)
     private String useYn;
 
     /**

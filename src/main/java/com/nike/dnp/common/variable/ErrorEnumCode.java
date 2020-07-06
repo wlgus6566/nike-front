@@ -59,7 +59,9 @@ public class ErrorEnumCode {
         NOT_MATCH_PASSWORD("입력하신 비밀번호가 일치하지 않습니다."),
         EXPIRED_CERT_CODE("인증코드 유효기간이 만료되었습니다. 다시 인증해 주세요"),
         NOT_MATCH_CERT_CODE("인증코드를 확인해 주세요.(인증코드는 대소문자를 구별합니다.)"),
-        IS_SLANG("비밀번호에 금칙어가 포함되어 있습니다. 다시 입력해 주세요."); //TODO[ojh] 2020-07-02 : 메시지 변경 예정
+        IS_SLANG("비밀번호에 금칙어가 포함되어 있습니다. 다시 입력해 주세요."), //TODO[ojh] 2020-07-02 : 메시지 변경 예정
+        IS_DORMANT("휴면회원 입니다.")
+        ;
 
         /**
          * 에러 메시지
