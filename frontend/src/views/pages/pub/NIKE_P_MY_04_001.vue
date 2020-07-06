@@ -89,8 +89,14 @@
                 </div>
 
                 <div class="btn-tbl-box">
-                    <button type="button" class="btn-form"><span data-v-1756ba49="">삭제</span></button>
-                    <button type="button" class="btn-form-gray"><span data-v-1756ba49="">등록</span></button>
+                    <button type="button" class="btn-form">
+                        <span data-v-1756ba49="">삭제</span>
+                    </button>
+                    <div class="right">
+                        <button type="button" class="btn-form-gray">
+                            <span data-v-1756ba49="">등록</span>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="pagination">

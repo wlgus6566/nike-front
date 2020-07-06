@@ -25,6 +25,10 @@
 .agr {
     text-align: right !important;
 }
+/* font */
+.fc-orage {
+    color: #fa5400 !important;
+}
 .page-title {
     display: block;
     font-size: 40px;
@@ -94,8 +98,10 @@
 }
 .btn-tbl-box {
     display: flex;
-    justify-content: space-between;
     margin-top: 15px;
+}
+.btn-tbl-box .right {
+    margin-left: auto;
 }
 [class^='btn-'] span {
     position: relative;
@@ -161,6 +167,11 @@
     border-color: #555;
     background: #555;
     color: #fff;
+}
+[class^='btn-'][class*='-lightgray'] {
+    border-color: #ccc;
+    background: #fff;
+    color: #888;
 }
 [class^='btn-s']:hover {
     opacity: 0.7 !important;
@@ -1815,15 +1826,44 @@
 .main-update-list li a {
     display: block;
     position: relative;
+}
+.main-update-list li .thumbnail {
+    position: relative;
+    display: block;
     padding-top: 100%;
     overflow: hidden;
     background: #f7f7f7;
 }
-.main-update-list li a img {
+.main-update-list li img {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+.main-update-list li .info-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.main-update-list li .info-box .label {
+    display: block;
+    text-align: center;
+    font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
+    font-size: 24px;
+    line-height: 29px;
+    letter-spacing: 0.6px;
+    color: #fff;
+}
+.main-update-list li .info-box .desc {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
+    color: #fff;
+    word-break: keep-all;
 }
 .board-box {
     overflow: hidden;
@@ -2513,4 +2553,105 @@
 .detail-view .detail-cont .img img {
     vertical-align: top;
     max-width: 100%;
+}
+.faq-tab {
+    display: flex;
+    margin-top: 20px;
+}
+.faq-tab li {
+    flex-grow: 1;
+    flex-basis: calc(100% - (6 * 4px) / 7);
+}
+.faq-tab li + li {
+    margin-left: 4px;
+}
+.faq-tab li a {
+    display: flex;
+    padding: 12px 10px;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 100%;
+    border: 2px solid #f7f7f7;
+    background: #f7f7f7;
+    text-align: center;
+    line-height: 14px;
+    font-size: 12px;
+    color: #888;
+}
+.faq-tab li.active a {
+    border-color: #000;
+    color: #000;
+    background: #fff;
+}
+
+.faq-list {
+    margin-top: 40px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #ccc;
+}
+.faq-list li + li {
+    border-top: 1px solid #eee;
+}
+.faq-list .sbj {
+    display: flex;
+    box-sizing: border-box;
+    min-height: 50px;
+    padding: 11px 0;
+    align-items: center;
+}
+.faq-list .sbj .label {
+    display: block;
+    flex-grow: 0;
+    flex-basis: 160px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    line-height: 14px;
+    font-size: 12px;
+    color: #555;
+    text-align: center;
+    word-break: keep-all;
+}
+.faq-list .sbj .title {
+    display: block;
+    padding: 0 20px;
+    flex-grow: 1;
+    line-height: 18px;
+    font-size: 12px;
+    color: #555;
+}
+.faq-list .sbj .arrow {
+    margin: 0 20px 0 auto;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: url('../images/svg/icon-filter-arrow-down.svg') no-repeat center;
+}
+.faq-list .cont {
+    display: none;
+    padding: 30px 0 30px 160px;
+    background: #f7f7f7;
+    font-size: 12px;
+    line-height: 18px;
+    color: #000;
+}
+.faq-list .cont .btn-area {
+    justify-content: flex-start;
+    margin-top: 30px;
+}
+
+.faq-list .cont .btn-area [class^='btn-'] {
+    min-width: 50px;
+    font-size: 10px;
+}
+.faq-list .active .sbj .label,
+.faq-list .active .sbj .title {
+    color: #000;
+    font-weight: bold;
+}
+.faq-list .active .sbj .arrow {
+    transform: rotate(-180deg);
+}
+.faq-list .active .cont {
+    display: block;
 }

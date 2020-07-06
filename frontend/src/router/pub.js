@@ -182,6 +182,16 @@ const routes = [
                 meta: { layout: 'Pub' },
             },
             {
+                path: 'NIKE_P_MY_04_007',
+                component: pages('pub/NIKE_P_MY_04_007'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_04_009',
+                component: pages('pub/NIKE_P_MY_04_009'),
+                meta: { layout: 'Pub' },
+            },
+            {
                 path: 'NIKE_P_MY_01_001',
                 component: pages('pub/NIKE_P_MY_01_001'),
                 meta: { layout: 'Pub' },

@@ -24,8 +24,9 @@
                     <div class="info-box">
                         <strong class="title">EXPLORE THE BEST OF AIR MAX 우리의 힘을 믿어.</strong>
                         <p class="desc">
-                            고무 힐 탭로고,머드가드 그리고 올드스쿨 카세트 스타일의 에어유닛으로 미래지향적인 실루엣을 가진에어맥스 2090이 3월26일
-                            런칭으로 새로운 그래픽자료가 업데이트 되었습니다
+                            고무 힐 탭로고,머드가드 그리고 올드스쿨 카세트 스타일의 에어유닛으로
+                            미래지향적인 실루엣을 가진에어맥스 2090이 3월26일 런칭으로 새로운
+                            그래픽자료가 업데이트 되었습니다
                         </p>
                         <button type="button" class="btn-s-black"><span>VIEW</span></button>
                     </div>
@@ -34,47 +35,119 @@
                 <ul class="main-update-list">
                     <li>
                         <a href="#">
-                            <img src="http://placehold.it/410X410" alt="" />
+                            <span class="thumbnail"
+                                ><img src="http://placehold.it/410X410" alt=""
+                            /></span>
+                            <span class="info-box">
+                                <span class="label">
+                                    ASSET
+                                </span>
+                                <span class="desc">SP20 나이키 다이렉트</span>
+                            </span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <img src="http://placehold.it/410X410" alt="" />
+                            <span class="thumbnail"
+                                ><img src="http://placehold.it/410X410" alt=""
+                            /></span>
+                            <span class="info-box">
+                                <span class="label">
+                                    ASSET
+                                </span>
+                                <span class="desc">NSW 캠페인 시공</span>
+                            </span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <img src="http://placehold.it/410X410" alt="" />
+                            <span class="thumbnail"
+                                ><img src="http://placehold.it/410X410" alt=""
+                            /></span>
+                            <span class="info-box">
+                                <span class="label">
+                                    ASSET
+                                </span>
+                                <span class="desc">SP20 나이키 다이렉트 NSW 캠페인 시공</span>
+                            </span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <img src="http://placehold.it/410X410" alt="" />
+                            <span class="thumbnail"
+                                ><img src="http://placehold.it/410X410" alt=""
+                            /></span>
+                            <span class="info-box">
+                                <span class="label">
+                                    ASSET
+                                </span>
+                                <span class="desc">SP20 나이키 다이렉트 NSW 캠페인 시공</span>
+                            </span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <img src="http://placehold.it/410X410" alt="" />
+                            <span class="thumbnail"
+                                ><img src="http://placehold.it/410X410" alt=""
+                            /></span>
+                            <span class="info-box">
+                                <span class="label">
+                                    ASSET
+                                </span>
+                                <span class="desc">SP20 나이키 다이렉트 NSW 캠페인 시공</span>
+                            </span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <img src="http://placehold.it/410X410" alt="" />
+                            <span class="thumbnail"
+                                ><img src="http://placehold.it/410X410" alt=""
+                            /></span>
+                            <span class="info-box">
+                                <span class="label">
+                                    ASSET
+                                </span>
+                                <span class="desc">SP20 나이키 다이렉트 NSW 캠페인 시공</span>
+                            </span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <img src="http://placehold.it/410X410" alt="" />
+                            <span class="thumbnail"
+                                ><img src="http://placehold.it/410X410" alt=""
+                            /></span>
+                            <span class="info-box">
+                                <span class="label">
+                                    ASSET
+                                </span>
+                                <span class="desc">SP20 나이키 다이렉트 NSW 캠페인 시공</span>
+                            </span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <img src="http://placehold.it/410X410" alt="" />
+                            <span class="thumbnail"
+                                ><img src="http://placehold.it/410X410" alt=""
+                            /></span>
+                            <span class="info-box">
+                                <span class="label">
+                                    ASSET
+                                </span>
+                                <span class="desc">SP20 나이키 다이렉트 NSW 캠페인 시공</span>
+                            </span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <img src="http://placehold.it/410X410" alt="" />
+                            <span class="thumbnail"
+                                ><img src="http://placehold.it/410X410" alt=""
+                            /></span>
+                            <span class="info-box">
+                                <span class="label">
+                                    ASSET
+                                </span>
+                                <span class="desc">SP20 나이키 다이렉트 NSW 캠페인 시공</span>
+                            </span>
                         </a>
                     </li>
                 </ul>
@@ -86,8 +159,10 @@
                             <li class="noti">
                                 <a href="#">
                                     <span class="title"
-                                        >FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP
-                                        US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그</span
+                                        >FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU
+                                        CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20
+                                        NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T
+                                        STOP US 그</span
                                     >
                                     <span class="date">2020.06.21</span>
                                 </a>
@@ -95,8 +170,10 @@
                             <li class="noti">
                                 <a href="#">
                                     <span class="title"
-                                        >FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP
-                                        US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그</span
+                                        >FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU
+                                        CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20
+                                        NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T
+                                        STOP US 그</span
                                     >
                                     <span class="date">2020.06.21</span>
                                 </a>
@@ -104,8 +181,10 @@
                             <li>
                                 <a href="#">
                                     <span class="title"
-                                        >FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP
-                                        US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그</span
+                                        >FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU
+                                        CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20
+                                        NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T
+                                        STOP US 그</span
                                     >
                                     <span class="date">2020.06.21</span>
                                 </a>
@@ -113,8 +192,10 @@
                             <li>
                                 <a href="#">
                                     <span class="title"
-                                        >FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP
-                                        US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그</span
+                                        >FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU
+                                        CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20
+                                        NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T
+                                        STOP US 그</span
                                     >
                                     <span class="date">2020.06.21</span>
                                 </a>
@@ -122,8 +203,10 @@
                             <li>
                                 <a href="#">
                                     <span class="title"
-                                        >FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP
-                                        US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그</span
+                                        >FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU
+                                        CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20
+                                        NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T
+                                        STOP US 그</span
                                     >
                                     <span class="date">2020.06.21</span>
                                 </a>
@@ -131,8 +214,10 @@
                             <li>
                                 <a href="#">
                                     <span class="title"
-                                        >FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP
-                                        US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그</span
+                                        >FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU
+                                        CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T STOP US 그 FA20
+                                        NIKE DIRECT YOU CAN’T STOP US 그 FA20 NIKE DIRECT YOU CAN’T
+                                        STOP US 그</span
                                     >
                                     <span class="date">2020.06.21</span>
                                 </a>
@@ -156,10 +241,14 @@
                                 <img src="http://placehold.it/410X410" alt="" />
                             </span>
                             <span class="info-box">
-                                <strong class="title">조던 서울조던 서울조던 서울조던 서울조던 서울조던 서울조던 서울 dfsfdsfdfsfdsdf</strong>
+                                <strong class="title"
+                                    >조던 서울조던 서울조던 서울조던 서울조던 서울조던 서울조던 서울
+                                    dfsfdsfdfsfdsdf</strong
+                                >
                                 <p class="desc">
-                                    코리아 팀 스니커즈 컬렉션 코리아 팀 스니커즈 컬렉션코리아 팀 스니커즈 컬렉션코리아 팀 스니커즈 컬렉션코리아 팀
-                                    스니커즈 컬렉션
+                                    코리아 팀 스니커즈 컬렉션 코리아 팀 스니커즈 컬렉션코리아 팀
+                                    스니커즈 컬렉션코리아 팀 스니커즈 컬렉션코리아 팀 스니커즈
+                                    컬렉션
                                 </p>
                                 <span class="date">2020. 06. 17.</span>
                             </span>

@@ -22,17 +22,35 @@
                     <!-- todo select 스크립트 작업 필요  -->
                     <div class="filter-select">
                         <el-select v-model="value1" placeholder="Select">
-                            <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+                            <el-option
+                                v-for="item in options1"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                            >
+                            </el-option>
                         </el-select>
                     </div>
                     <div class="filter-select">
                         <el-select v-model="value2" placeholder="Select">
-                            <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+                            <el-option
+                                v-for="item in options2"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                            >
+                            </el-option>
                         </el-select>
                     </div>
                     <div class="filter-select">
                         <el-select v-model="value3" placeholder="Select">
-                            <el-option v-for="item in options3" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+                            <el-option
+                                v-for="item in options3"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                            >
+                            </el-option>
                         </el-select>
                     </div>
                     <div class="search-input">
@@ -126,8 +144,14 @@
                 </div>
 
                 <div class="btn-tbl-box">
-                    <button type="button" class="btn-form"><span data-v-1756ba49="">삭제</span></button>
-                    <button type="button" class="btn-form-gray"><span data-v-1756ba49="">등록</span></button>
+                    <button type="button" class="btn-form">
+                        <span data-v-1756ba49="">삭제</span>
+                    </button>
+                    <div class="right">
+                        <button type="button" class="btn-form-gray">
+                            <span data-v-1756ba49="">등록</span>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="pagination">
