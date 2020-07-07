@@ -60,7 +60,5 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
 
         final List<Contents> contentsList = getQuerydsl().applyPagination(pageRequest, query).fetch();
         return new PageImpl<>(contentsList, pageRequest, query.fetchCount());
-
-
     }
 }
