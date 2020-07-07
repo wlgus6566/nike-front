@@ -76,7 +76,8 @@ public class ProductController {
 	@ApiOperation(value = "상품 목록 조회", notes = REQUEST_CHARACTER
 			+ "category2code|카테고리 2 코드|false|String\n"
 			+ "category3code|카테고리 3 코드|false|String\n"
-			+ "agentSeq|에이전트 시퀀스|false|Integer\n"
+			+ "agentSeq|에이전트 "
+			+ "시퀀스|false|Integer\n"
 			+ "exposureYn|노출여부|false|String\n"
 			+ "keyword|키워드|false|String\n"
 			+ "page|페이지|false|Integer\n"
@@ -181,7 +182,7 @@ public class ProductController {
 	 * @Description
 	 */
 	@ApiOperation(value = "상품 삭제", notes = BASIC_CHARACTER)
-	@DeleteMapping(name = "상품 삭제", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(name = "상품 삭제", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<Boolean> deleteProduct(@ApiParam(name = "goodsSeqList", value = "상품 시퀀스", defaultValue = "29,30,31") @RequestParam final List<Long> goodsSeqList,
 											   @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO) {
 
@@ -190,7 +191,9 @@ public class ProductController {
 		final ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO();
 		productUpdateDTO.setUseYn("N");
 		productUpdateDTO.setUpdaterSeq(authUserDTO.getUserSeq());
-		boolean check = productService.deleteArray(productList, productUpdateDTO);
+		boolean check = productService.deleteArray(
+				productList,
+				productUpdateDTO);
 		return responseService.getSingleResult(check);
 	}
 }

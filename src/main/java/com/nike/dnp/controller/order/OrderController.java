@@ -89,10 +89,9 @@ public class OrderController {
 	 * @Description
 	 */
 	@ApiOperation(value = "주문 등록", notes = BASIC_CHARACTER)
-	@PostMapping(value="/save",produces = {MediaType.APPLICATION_JSON_VALUE},consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/save", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Transactional
-	public SingleResult<Order> saveOrder(
-			@RequestBody final OrderProductSaveDTO orderProductSaveDTO){
+	public SingleResult<Order> saveOrder(@RequestBody final OrderProductSaveDTO orderProductSaveDTO) {
 
 		Order order = orderService.saveOrder(orderProductSaveDTO);
 
@@ -120,12 +119,9 @@ public class OrderController {
 	 * @CreatedOn 2020. 7. 7. 오전 11:25:09
 	 * @Description
 	 */
-	@ApiOperation(value="주문내역" ,notes = REQUEST_CHARACTER
-			+ "beginDt|시작일|false|String\n"
-			+ "endDt|종료일|false|String\n")
-	@GetMapping(value="/list",produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "주문내역", notes = REQUEST_CHARACTER + "beginDt|시작일|false|String\n" + "endDt|종료일|false|String\n")
+	@GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<Page<OrderProductMapping>> list(final OrderSearchDTO orderSearchDTO) {
-
 		return responseService.getSingleResult(orderProductMappingService.findPageOrder(orderSearchDTO));
 	}
 
@@ -139,16 +135,11 @@ public class OrderController {
 	 * @CreatedOn 2020. 7. 7. 오후 2:43:50
 	 * @Description
 	 */
-	@ApiOperation(value="주문 상세 내역", notes = BASIC_CHARACTER)
-	@GetMapping(value="/{orderGoodsSeq}")
-	public SingleResult<OrderProductMapping> view(@ApiParam(name = "orderGoodsSeq"
-			, value = "주문 상품 시퀀스", defaultValue = "13") @PathVariable final Long orderGoodsSeq){
-
-
+	@ApiOperation(value = "주문 상세 내역", notes = BASIC_CHARACTER)
+	@GetMapping(value = "/{orderGoodsSeq}")
+	public SingleResult<OrderProductMapping> view(@ApiParam(name = "orderGoodsSeq", value = "주문 상품 시퀀스", defaultValue = "13") @PathVariable final Long orderGoodsSeq) {
 		return responseService.getSingleResult(orderProductMappingService.findById(orderGoodsSeq));
 	}
-
-
 
 
 }
