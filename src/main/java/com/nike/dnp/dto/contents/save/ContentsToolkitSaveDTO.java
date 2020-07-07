@@ -1,6 +1,5 @@
 package com.nike.dnp.dto.contents.save;
 
-import com.nike.dnp.dto.contents.save.ContentsSaveDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 

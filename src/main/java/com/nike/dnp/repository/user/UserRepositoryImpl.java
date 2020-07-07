@@ -75,7 +75,7 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
                 .where(UserPredicateHelper.compareKeyword(userSearchDTO)
                     , UserPredicateHelper.compareDate(userSearchDTO)
                     , UserPredicateHelper.compareAuth(userSearchDTO)
-                    , qUser.userStatusCode.ne(ServiceEnumCode.UserStatusEnumCode.OUT.toString())
+                    , qUser.userStatusCode.ne(ServiceEnumCode.UserStatusEnumCode.DELETE.toString())
                 );
         final List<UserReturnDTO> users = Objects.requireNonNull(getQuerydsl()).applyPagination(pageRequest, jpaQuery).fetch();
         return new PageImpl<>(users, pageRequest, jpaQuery.fetchCount());

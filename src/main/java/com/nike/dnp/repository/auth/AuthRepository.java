@@ -10,9 +10,8 @@ import java.util.List;
  * AuthRepository
  *
  * @author [오지훈]
+ * @CreatedOn 2020. 7. 7. 오후 5:02:48
  * @Description Auth(권한) Repository Interface 작성
- * @history [오지훈] [2020.05.22] [최초 작성]
- * @since 2020.05.22
  */
 @Repository
 public interface AuthRepository extends JpaRepository<Auth, Long> {

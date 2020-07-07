@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.menu;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -21,6 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_MENU")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Menu extends BaseTimeEntity implements Serializable {
 
     /**
