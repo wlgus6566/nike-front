@@ -1,14 +1,15 @@
 package com.nike.dnp.controller.contents;
 
-import com.nike.dnp.dto.contents.save.ContentsAssetSaveDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
+import com.nike.dnp.dto.contents.save.ContentsAssetSaveDTO;
 import com.nike.dnp.dto.contents.update.ContentsAssetUpdateDTO;
-import com.nike.dnp.dto.contents.update.ContentsUpdateDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.contents.ContentsService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
