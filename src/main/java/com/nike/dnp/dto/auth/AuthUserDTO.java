@@ -226,6 +226,9 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "AuthUserDTO{" + "userSeq=" + userSeq + ", nickname='" + nickname + '\'' + ", userId='" + userId + '\'' + ", password='" + password + '\'' + '}';
+		return "AuthUserDTO{"
+				+ "userSeq=" + userSeq
+				+ ", nickname='" + nickname + '\''
+				+ ", userId='" + userId + '\'' + '}';
 	}
 }

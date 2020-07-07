@@ -2,22 +2,17 @@ package com.nike.dnp.service.code;
 
 import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.nike.dnp.common.variable.ErrorEnumCode;
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.code.CodeSaveDTO;
-import com.nike.dnp.dto.code.CodeSearchDTO;
 import com.nike.dnp.dto.code.CodeUpdateDTO;
 import com.nike.dnp.entity.code.Code;
 import com.nike.dnp.repository.code.CodeRepository;
 import com.nike.dnp.service.RedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,23 +44,6 @@ public class CodeService {
     private final CodeRepository codeRepository;
 
     /**
-     * Find pages page.
-     *
-     * @param codeSearchDTO the code search dto
-     * @return the list
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:55:50
-     * @Description 전체 조회(paging)
-     */
-    public Page<Code> findPages(final CodeSearchDTO codeSearchDTO) {
-        return codeRepository.findPages(
-                codeSearchDTO,
-                PageRequest.of(codeSearchDTO.getPage()
-                        , codeSearchDTO.getSize()
-                        , Sort.by("code").descending()));
-    }
-
-    /**
      * Find codes by upper code list.
      *
      * @param upperCode 상위 코드
@@ -74,42 +52,25 @@ public class CodeService {
      * @CreatedOn 2020. 6. 24. 오후 5:55:50
      * @Description 하위 코드 목록 조회
      */
+    @Cacheable(value = "cache:codes", cacheManager = "cacheManager")
     public List<Code> findCodesByUpperCode(final String upperCode) {
-        final Optional<Code> topCode = codeRepository.findByCode(upperCode);
-        return topCode.get().getSubCodes();
-    }
-
-    /**
-     * Find by code optional.
-     *
-     * @param code the code
-     * @return code optional
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:55:50
-     * @Description 상세 조회
-     */
-    public Optional<Code> findByCode(final String code) {
-        return codeRepository.findByCode(code);
+        return codeRepository.findByUpperCode(upperCode);
     }
 
     /**
      * Delete optional.
      *
-     * @param code        the code
-     * @param authUserDTO the auth user dto
+     * @param code the code
      * @return the optional
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 5:55:50
      * @Description 삭제
      */
     @Transactional
-    public Optional<Code> delete(
-            final String code
-            , final AuthUserDTO authUserDTO
-    ) {
+    public Optional<Code> delete(final String code) {
         final Optional<Code> codeEntity = codeRepository.findByCode(code);
-        codeEntity.ifPresent(value -> value.delete("N", authUserDTO.getUserSeq()));
-        this.redisSaveUpperCode();
+        codeEntity.ifPresent(value -> value.delete("N"));
+        codeEntity.ifPresent(value -> this.redisSaveUpperCode(value.getUpperCode()));
         return codeEntity;
     }
 
@@ -117,17 +78,13 @@ public class CodeService {
      * Save code.
      *
      * @param codeSaveDTO the code save dto
-     * @param authUserDTO the auth user dto
      * @return the code
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 5:55:50
      * @Description 등록
      */
     @Transactional
-    public Code save(
-            final CodeSaveDTO codeSaveDTO
-            , final AuthUserDTO authUserDTO
-    ) {
+    public Code save(final CodeSaveDTO codeSaveDTO) {
         final Code codeEntity = new Code();
         codeEntity.setCode(codeSaveDTO.getCode());
         if(codeSaveDTO.getUpperYn().equals("N")) {
@@ -137,10 +94,9 @@ public class CodeService {
         codeEntity.setCodeDescription(codeSaveDTO.getCodeDescription());
         codeEntity.setCodeOrder(codeSaveDTO.getCodeOrder());
         codeEntity.setUseYn(codeSaveDTO.getUseYn());
-        codeEntity.setRegisterSeq(authUserDTO.getUserSeq());
-        codeEntity.setUpdaterSeq(authUserDTO.getUserSeq());
-        this.redisSaveUpperCode();
-        return codeRepository.save(codeEntity);
+        final Code returnCode = codeRepository.save(codeEntity);
+        this.redisSaveUpperCode(returnCode.getUpperCode());
+        return returnCode;
     }
 
     /**
@@ -148,7 +104,6 @@ public class CodeService {
      *
      * @param code          the code
      * @param codeUpdateDTO the code update dto
-     * @param authUserDTO   the auth user dto
      * @return the optional
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 5:55:50
@@ -158,7 +113,6 @@ public class CodeService {
     public Optional<Code> update(
             final String code
             , final CodeUpdateDTO codeUpdateDTO
-            , final AuthUserDTO authUserDTO
     ) {
         final Optional<Code> codeEntity = Optional.ofNullable(codeRepository.findByCode(code).orElseThrow(
                 () -> new UserNotFoundException(ErrorEnumCode.DataError.NOT_FOUND.toString())
@@ -170,18 +124,16 @@ public class CodeService {
                         codeUpdateDTO.getCodeName()
                         , codeUpdateDTO.getCodeDescription()
                         , codeUpdateDTO.getCodeOrder()
-                        , authUserDTO.getUserSeq()
                 ));
             } else {
                 codeEntity.ifPresent(value -> value.update(
                         codeUpdateDTO.getCodeName()
                         , codeUpdateDTO.getCodeDescription()
                         , codeUpdateDTO.getCodeOrder()
-                        , authUserDTO.getUserSeq()
                         , codeUpdateDTO.getUpperCode()
                 ));
             }
-            this.redisSaveUpperCode();
+            this.redisSaveUpperCode(codeEntity.get().getUpperCode());
         }
 
         return codeEntity;
@@ -194,32 +146,9 @@ public class CodeService {
      * @CreatedOn 2020. 6. 24. 오후 5:55:50
      * @Description Redis code 갱신
      */
-    public void redisSaveUpperCode() {
-        log.info("findAllByUpperCodeIsNullOrderByCodeOrderAsc");
-        List<Code> codes = codeRepository.findAllByUpperCodeIsNullOrderByCodeOrderAsc();
-
-        HashMap<String, List<Code>> codeMap = new HashMap<>();
-        for (Code code : codes) {
-            if (!code.getCode().isEmpty()) {
-                codeMap.put(code.getCode(), code.getSubCodes());
-            }
-        }
-
-        redisService.delete("CODE_ARRAY");
-        redisService.set("CODE_ARRAY", codeMap, 60);
-    }
-
-    /**
-     * Sub codes list.
-     *
-     * @param upperCode the upper code
-     * @return the list
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:55:50
-     * @Description 하위 코드 목록(redis)
-     */
-    public List<Code> subCodes(String upperCode) {
-        return ((HashMap<String, List<Code>>) redisService.get("CODE_ARRAY")).get(upperCode);
+    public void redisSaveUpperCode(String upperCode) {
+        log.info("CodeService.redisSaveUpperCode");
+        redisService.set("cache:codes::"+upperCode, codeRepository.findByUpperCode(upperCode), 60);
     }
 
 }

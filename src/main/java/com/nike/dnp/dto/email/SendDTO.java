@@ -89,7 +89,7 @@ public class SendDTO {
      * @author [오지훈]
      */
     //TODO[ojh] 2020-07-02 : 변경예정
-    private String loginUrl = "http://nikednp.co.kr/login";
+    private String loginUrl = "";
 
     /**
      * The Password url
@@ -97,7 +97,7 @@ public class SendDTO {
      * @author [오지훈]
      */
     //TODO[ojh] 2020-07-02 : 변경예정
-    private String passwordUrl = "http://nikednp.co.kr/password";
+    private String passwordUrl = "";
 
     /**
      * The Contents url
@@ -105,7 +105,7 @@ public class SendDTO {
      * @author [오지훈]
      */
     //TODO[ojh] 2020-07-02 : 변경예정
-    private String contentsUrl = "http://nikednp.co.kr/contents/1";
+    private String contentsUrl = "";
 
     /**
      * The Product list

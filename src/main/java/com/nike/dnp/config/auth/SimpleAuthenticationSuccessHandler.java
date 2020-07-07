@@ -105,7 +105,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		final String termsAgreeYn = StringUtils.defaultString(request.getParameter("termsAgreeYn"), "N");
 		boolean isValid = true;
 
-		//TODO[ojh] 2020-07-02 : 유저 존재여부 확인
+		// 유저 존재여부 확인
 		if(!user.isPresent()) {
 			JsonUtil.write(response.getWriter()
 					, responseService.getFailResult(
@@ -115,7 +115,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 			isValid = false;
 		}
 
-		//TODO[ojh] 2020-07-02 : 휴면회원 확인
+		//TODO[ojh] 2020-07-02 : 휴면회원 확인 (추후 로직 추가예정)
 		if (isValid && ServiceEnumCode.UserStatusEnumCode.DORMANT.toString().equals(user.get().getUserStatusCode())) {
 			if (certCode.isEmpty()) {
 				//TODO[ojh] 2020-07-02 : [인증코드] 메일 발송
@@ -137,7 +137,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 			}
 		}
 
-		//TODO[ojh] 2020-07-02 : PW 90일 체크
+		// PW 90일 체크
 		if (isValid && userRepository.countByPaswordChangePeriod(authUserDTO.getUserSeq()) > 0) {
 			final String randomCode = RandomUtil.randomCertCode2(10);
 			final String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(authUserDTO.getUserId() + "|" + randomCode, "Nike DnP"));
@@ -154,10 +154,10 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 			isValid = false;
 		}
 
-		//TODO[ojh] 2020-07-02 : 비밀번호가 변경되었을 경우
+		// 비밀번호가 변경되었을 경우
 		if (isValid && user.get().getPasswordChangeYn().equals("Y")) {
 			if (certCode.isEmpty()) {
-				//TODO[ojh] 2020-07-02 : [인증코드] 메일 발송
+				// [인증코드] 메일 발송
 				userMailService.createCertCode(authUserDTO.getUserId());
 
 				JsonUtil.write(response.getWriter()
@@ -188,7 +188,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 			}
 		}
 
-		//TODO[ojh] 2020-07-02 : 최초접속여부/약관동의여부
+		// 최초접속여부/약관동의여부
 		if (isValid && ServiceEnumCode.yesOrNoEnumCode.N.toString().equals(termsAgreeYn)
 				&& ServiceEnumCode.yesOrNoEnumCode.N.toString().equals(user.get().getTermsAgreeYn())) {
 			JsonUtil.write(response.getWriter()

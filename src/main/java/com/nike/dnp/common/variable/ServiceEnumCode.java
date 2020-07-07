@@ -100,4 +100,18 @@ public class ServiceEnumCode {
          */
         private final String message;
     }
+
+    @RequiredArgsConstructor
+    @Getter
+    public enum ReturnTypeEnumCode {
+        DELETE("삭제되었습니다.")
+        ,CANCEL("취소되었습니다.")
+        ;
+        /**
+         * 코드값
+         *
+         * @author [오지훈]
+         */
+        private final String message;
+    }
 }
