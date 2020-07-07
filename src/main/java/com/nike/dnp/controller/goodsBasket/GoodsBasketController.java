@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@Api(description = "장바구니", tags = "22_BASKET")
+@Api(description = "장바구니", tags = "BASKET")
 @RequestMapping(value = "/api/goodsBasket", name = "장바구니")
 @AllArgsConstructor
 public class GoodsBasketController {

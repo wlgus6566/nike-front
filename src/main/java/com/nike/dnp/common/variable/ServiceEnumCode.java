@@ -67,7 +67,7 @@ public class ServiceEnumCode {
 
         NORMAL("정상"),
         DORMANT("휴면"),
-        OUT("탈퇴");
+        DELETE("탈퇴");
 
         /**
          * 코드값
@@ -101,11 +101,86 @@ public class ServiceEnumCode {
         private final String message;
     }
 
+    /**
+     * The enum Return type enum code.
+     */
     @RequiredArgsConstructor
     @Getter
     public enum ReturnTypeEnumCode {
-        DELETE("삭제되었습니다.")
+        CREATE("등록되었습니다.")
+        ,UPDATE("수정되었습니다.")
+        ,DELETE("삭제되었습니다.")
         ,CANCEL("취소되었습니다.")
+        ;
+        /**
+         * 코드값
+         *
+         * @author [오지훈]
+         */
+        private final String message;
+    }
+
+
+
+    @RequiredArgsConstructor
+    @Getter
+    public enum ProductCategory2EnumCode {
+        SUBSIDIARY("부자재"),
+        NIKE_BY_YOU("NIKE BY YOU"),
+        CUSTOM23("CUSTOM23"),
+        MNQ("MNQ");
+
+        /**
+         * 코드값
+         *
+         * @author [윤태호]
+         */
+        private final String message;
+    }
+
+    @RequiredArgsConstructor
+    @Getter
+    public enum ProductCategory3EnumCode {
+        SUBSIDIARY21("운영 비품"),
+        SUBSIDIARY22("스태프 비품"),
+        SUBSIDIARY23("운영 사이니지"),
+        SUBSIDIARY24("세일 사이니지"),
+        SUBSIDIARY25("오픈 패키지"),
+        SUBSIDIARY26("나이키 골프"),
+        NIKE_BY_YOU27("신발 커스텀 (단품)"),
+        NIKE_BY_YOU28("신발 커스텀 (패키지)"),
+        NIKE_BY_YOU29("의류 커스텀 (단품)"),
+        NIKE_BY_YOU30("의류 커스텀 (패키지)"),
+        NIKE_BY_YOU31("OTHERS"),
+        CUSTOM2332("신발 커스텀 (단품)"),
+        CUSTOM2333("신발 커스텀 (패키지)"),
+        CUSTOM2334("의류 커스텀 (단품)"),
+        CUSTOM2335("의류 커스텀 (패키지)"),
+        CUSTOM2336("OTHERS"),
+        MNQ37("남성"),
+        MNQ38("여성"),
+        MNQ39("유아동"),
+        MNQ40("수리/보수");
+
+        /**
+         * 코드값
+         *
+         * @author [윤태호]
+         */
+        private final String message;
+    }
+
+
+    @RequiredArgsConstructor
+    @Getter
+    public enum MenuSkillEnumCode {
+        LIST("목록")
+        ,CERATE("등록/수정")
+        ,DELETE("삭제")
+
+        ,VIEW("상세보기")
+        ,DOWNLOAD("다운로드/주문")
+        ,REPORT("시공보고서")
         ;
         /**
          * 코드값

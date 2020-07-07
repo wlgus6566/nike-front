@@ -4,8 +4,6 @@ import com.nike.dnp.entity.contents.Contents;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 /**
  * Contents Repository
  *

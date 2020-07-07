@@ -17,7 +17,13 @@ public class ErrorEnumCode {
     @RequiredArgsConstructor
     @Getter
     public enum ExceptionError {
-        ERROR
+        ERROR("서버에서 오류가 발생하였습니다.");
+
+        /**
+         * The Value
+         * @author [오지훈]
+         */
+        private final String message;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.nike.dnp.service.product;
 
+import com.nike.dnp.dto.product.ProductResultDTO;
 import com.nike.dnp.dto.product.ProductSaveDTO;
 import com.nike.dnp.dto.product.ProductSearchDTO;
 import com.nike.dnp.dto.product.ProductUpdateDTO;
@@ -46,7 +47,7 @@ public class ProductService {
 	 * @CreatedOn 2020. 6. 23. 오후 3:24:30
 	 * @Description
 	 */
-	public Page<Product> findPagesProduct(final ProductSearchDTO productSearchDTO) {
+	public Page<ProductResultDTO> findPagesProduct(final ProductSearchDTO productSearchDTO) {
 		return productRepository.findPagesProduct(
 				productSearchDTO,
 				PageRequest.of(productSearchDTO.getPage(), productSearchDTO.getSize(), Sort.by("goodsSeq").descending()

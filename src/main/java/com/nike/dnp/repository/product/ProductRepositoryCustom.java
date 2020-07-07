@@ -1,7 +1,7 @@
 package com.nike.dnp.repository.product;
 
+import com.nike.dnp.dto.product.ProductResultDTO;
 import com.nike.dnp.dto.product.ProductSearchDTO;
-import com.nike.dnp.entity.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
@@ -24,8 +24,8 @@ public interface ProductRepositoryCustom {
 	 * @param pageRequest      the page request
 	 * @return the page
 	 */
-	Page<Product> findPagesProduct(ProductSearchDTO productSearchDTO,
-								   PageRequest pageRequest);
+	Page<ProductResultDTO> findPagesProduct(ProductSearchDTO productSearchDTO,
+											PageRequest pageRequest);
 
 
 }

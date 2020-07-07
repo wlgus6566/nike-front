@@ -36,7 +36,9 @@ public class JsonUtil {
 		try {
 			new ObjectMapper().writeValue(writer, value);
 		} catch (IOException exception) {
-			throw new CodeMessageHandleException(ErrorEnumCode.ExceptionError.ERROR.toString(), "서버오류");
+			throw new CodeMessageHandleException(
+					ErrorEnumCode.ExceptionError.ERROR.toString()
+					, ErrorEnumCode.ExceptionError.ERROR.getMessage());
 		}
 	}
 

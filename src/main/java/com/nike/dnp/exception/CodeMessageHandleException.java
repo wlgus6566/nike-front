@@ -34,32 +34,4 @@ public class CodeMessageHandleException extends RuntimeException implements Seri
         super(msg);
         this.code = code;
     }
-
-    /**
-     * Instantiates a new Code message handle exception.
-     *
-     * @param code      the code
-     * @param exception the exception
-     * @author [오지훈]
-     * @CreatedOn 2020. 7. 2. 오전 11:05:44
-     * @Description
-     */
-    /*public CodeMessageHandleException(final String code, final Exception exception) {
-        super(exception);
-        this.code = code;
-    }*/
-
-    /**
-     * Instantiates a new Code message handle exception.
-     *
-     * @param code      the code
-     * @param throwable the throwable
-     * @author [오지훈]
-     * @CreatedOn 2020. 7. 2. 오후 12:03:43
-     * @Description
-     */
-    /*public CodeMessageHandleException(final String code, final Throwable throwable) {
-        super(throwable);
-        this.code = code;
-    }*/
 }
