@@ -1,9 +1,11 @@
 package com.nike.dnp.controller.contents;
 
+import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.save.ContentsAssetSaveDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.dto.contents.update.ContentsAssetUpdateDTO;
 import com.nike.dnp.dto.contents.update.ContentsUpdateDTO;
+import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -15,17 +17,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Optional;
 
 /**
- *  Asset Controller
+ * Asset Controller
  *
  * @author [이소정]
  * @CreatedOn 2020. 6. 19. 오후 5:56:03
- * @Description  Asset 컨트롤러 작성
-  */
+ * @Description Asset 컨트롤러 작성
+ */
 @Slf4j
 @RestController
 @Api(description = "콘텐츠", tags = "10_CONTENTS")
@@ -123,7 +127,7 @@ public class AssetController {
             value = "Asset 상세조회"
             , notes = REQUEST_CHARACTER
     )
-    @GetMapping(name = " Toolkit 상세조회", value = "/{contentsSeq}"
+    @GetMapping(name = " Asset 상세조회", value = "/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Contents> findContents(
             @ApiParam(name = "contentsSeq", value = "콘텐츠 시퀀스", defaultValue = "4") @PathVariable final Long contentsSeq) {
@@ -145,6 +149,25 @@ public class AssetController {
         contentsAssetUpdateDTO.setTopMenuCode("ASSET");
         contentsAssetUpdateDTO.setMenuCode(contentsAssetUpdateDTO.getUploadCode());
         return responseService.getSingleResult(contentsService.update(contentsAssetUpdateDTO));
+    }
+
+
+    /**
+     * Delete contents single result.
+     *
+     * @param contentsSeq the contents seq
+     * @return the single result
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 7. 오후 2:06:55
+     * @Description
+     */
+    @ApiOperation(value="Asset 삭제", notes = REQUEST_CHARACTER)
+    @DeleteMapping(name = "Asset 삭제", value = "/{contentsSeq}"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<Optional<Contents>> deleteContents(
+            @ApiParam(name = "contentsSeq", value = "콘텐츠 시퀀스", defaultValue = "4") @PathVariable final Long contentsSeq) {
+        log.info("AssetController.delete");
+        return responseService.getSingleResult(contentsService.delete(contentsSeq));
     }
 
 }
