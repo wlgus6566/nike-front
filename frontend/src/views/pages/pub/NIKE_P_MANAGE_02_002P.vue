@@ -20,6 +20,7 @@
             <hr style="margin: 100px 0;" />
             <hr style="margin: 100px 0;" />
         </div>
+
         <accountManagement :visible.sync="visible.accountManagement" />
     </div>
 </template>
@@ -30,7 +31,7 @@ export default {
     data() {
         return {
             visible: {
-                accountManagement: false,
+                accountManagement: true,
             },
         };
     },
