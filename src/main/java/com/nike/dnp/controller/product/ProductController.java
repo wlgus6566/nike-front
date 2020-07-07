@@ -1,6 +1,7 @@
 package com.nike.dnp.controller.product;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
+import com.nike.dnp.dto.product.ProductResultDTO;
 import com.nike.dnp.dto.product.ProductSaveDTO;
 import com.nike.dnp.dto.product.ProductSearchDTO;
 import com.nike.dnp.dto.product.ProductUpdateDTO;
@@ -81,7 +82,7 @@ public class ProductController {
 			+ "page|페이지|false|Integer\n"
 			+ "size|사이즈|false|Integer\n")
 	@GetMapping(value = "/list", name = "상품 목록 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public SingleResult<Page<Product>> findPagesProduct(final ProductSearchDTO productSearchDTO) {
+	public SingleResult<Page<ProductResultDTO>> findPagesProduct(final ProductSearchDTO productSearchDTO) {
 		return responseService.getSingleResult(productService.findPagesProduct(productSearchDTO));
 	}
 

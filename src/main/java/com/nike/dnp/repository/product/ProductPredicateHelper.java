@@ -51,7 +51,7 @@ public class ProductPredicateHelper {
 	public static Predicate eqCate3gory(final String category3code) {
 		final BooleanBuilder builder = new BooleanBuilder();
 		if(!StringUtils.isEmpty(category3code)){
-			builder.and(QProduct.product.category2Code.eq(category3code));
+			builder.and(QProduct.product.category3Code.eq(category3code));
 		}
 		return builder;
 	}

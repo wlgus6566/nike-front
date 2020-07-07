@@ -19,27 +19,27 @@ public class ProductSearchDTO extends SearchDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiParam(value = "검색어", name = "keyword", defaultValue = "옷")
+	@ApiParam(value = "검색어", name = "keyword", defaultValue = "")
 	private String keyword = "";
 
 	/**
 	 * 카테고리 2
 	 * @author [윤태호]
 	 */
-	@ApiParam(value = "카테고리 2 코드",name = "category2code", defaultValue = "2")
+	@ApiParam(value = "카테고리 2 코드",name = "category2code", defaultValue = "")
 	private String category2code;
 
 	/**
 	 * 카테고리 3
 	 * @author [윤태호]
 	 */
-	@ApiParam(value = "카테고리 3 코드", name = "category2code", defaultValue = "3")
+	@ApiParam(value = "카테고리 3 코드", name = "category2code", defaultValue = "")
 	private String category3code;
 
 	/**
 	 * 에이전시 시퀀스
 	 */
-	@ApiParam(value = "에이젼시 시퀀스",name = "agencySeq", defaultValue = "1")
+	@ApiParam(value = "에이젼시 시퀀스",name = "agencySeq", defaultValue = "")
 	private Long agencySeq;
 
 	/**
