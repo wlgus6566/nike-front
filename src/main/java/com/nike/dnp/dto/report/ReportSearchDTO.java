@@ -20,14 +20,6 @@ public class ReportSearchDTO extends SearchDTO {
     private String keyword = "";
 
     /**
-     * 정렬 타입
-     *
-     * @author [이소정]
-     */
-    @ApiParam(value = "정렬 타입", name = "orderType" , defaultValue = "LATEST")
-    private String orderType = "";
-
-    /**
      * 보고서 구분 코드
      *
      * @author [이소정]
@@ -43,21 +35,20 @@ public class ReportSearchDTO extends SearchDTO {
     @ApiParam(name = "groupSeq", value = "그룹 시퀀스")
     private Long groupSeq;
 
-//    /**
-//     * Method to String
-//     *
-//     * @return String string
-//     * @author [이소정]
-//     * @CreatedOn 2020. 6. 19. 오후 5:57:26
-//     * @Description
-//     */
-//    @Override
-//    public String toString() {
-//        return "ContentsSearchDTO{"
-//                + "keyword=" + keyword
-//                + ", orderType=" + orderType
-//                + ", size=" + getSize()
-//                + ", page=" + getPage() + '}';
-//    }
+    /**
+     * Method to String
+     *
+     * @return String string
+     * @author [이소정]
+     * @CreatedOn 2020. 6. 19. 오후 5:57:26
+     * @Description
+     */
+    @Override
+    public String toString() {
+        return "ReportSearchDTO{"
+                + "keyword=" + keyword
+                + ", size=" + getSize()
+                + ", page=" + getPage() + '}';
+    }
 
 }
