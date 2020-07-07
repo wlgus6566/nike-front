@@ -33,7 +33,7 @@ import java.util.List;
 @Entity
 @Table(name = "TB_USER")
 @DynamicUpdate
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class User extends BaseTimeEntity {
 
     /**
@@ -145,9 +145,9 @@ public class User extends BaseTimeEntity {
      *
      * @author [오지훈]
      */
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<UserAuth> userAuth = new ArrayList<>();
+    private List<UserAuth> userAuths = new ArrayList<>();
 
     /**
      * 패스워드 기록 맵핑
@@ -156,7 +156,18 @@ public class User extends BaseTimeEntity {
      */
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonManagedReference
+    @OrderBy("registrationDt DESC")
     private List<PasswordHistory> histories = new ArrayList<>();
+
+    /**
+     * 로그인 기록 맵핑
+     *
+     * @author [오지훈]
+     */
+    /*@OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_SEQ")
+    @OrderBy("loginDt DESC")
+    private List<UserLoginLog> loginLogs = new ArrayList<>();*/
 
     /**
      * 쿼리 실행 전 기본값 설정

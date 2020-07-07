@@ -4,6 +4,7 @@ import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.SuccessEnumCode;
 import com.nike.dnp.dto.user.UserCertDTO;
 import com.nike.dnp.dto.user.UserIdDTO;
+import com.nike.dnp.dto.user.UserReturnDTO;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
@@ -112,11 +113,11 @@ public class UserOpenController {
     @PutMapping(value = "/set/password", name = "인증코드 검증 및 비밀번호 설정"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Boolean> setPassword(
+    public SingleResult<UserReturnDTO> setPassword(
             @ApiParam("유저 인증코드 DTO") @RequestBody final UserCertDTO userCertDTO) {
         log.info("UserOpenController.setPassword");
         return responseService.getSingleResult(
-                userService.checkCertCode(userCertDTO)
+                userService.confirmPassword(userCertDTO)
                 , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.toString()
                 , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.getMessage()
                 , true
@@ -142,7 +143,7 @@ public class UserOpenController {
     @PutMapping(value = "/change/password", name = "인증코드 검증 및 비밀번호 변경"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Boolean> changePassword(
+    public SingleResult<UserReturnDTO> changePassword(
             @ApiParam("유저 인증코드 DTO") @RequestBody final UserCertDTO userCertDTO) {
         log.info("UserOpenController.changePassword");
 
@@ -152,9 +153,8 @@ public class UserOpenController {
                     , ErrorEnumCode.LoginError.NULL_PASSWORD.getMessage()
             );
         }
-
         return responseService.getSingleResult(
-                userService.checkCertCode(userCertDTO)
+                userService.confirmPassword(userCertDTO)
                 , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.toString()
                 , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.getMessage()
                 , true

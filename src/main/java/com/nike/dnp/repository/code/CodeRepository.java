@@ -23,7 +23,7 @@ public interface CodeRepository extends JpaRepository<Code, Long>, CodeRepositor
      * @return the list
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 5:51:09
-     * @Description 상위 코드 목록
+     * @Description 최상위 코드 목록 조회
      */
     List<Code> findAllByUpperCodeIsNullOrderByCodeOrderAsc();
 
@@ -37,5 +37,16 @@ public interface CodeRepository extends JpaRepository<Code, Long>, CodeRepositor
      * @Description 상세 조회
      */
     Optional<Code> findByCode(String code);
+
+    /**
+     * Find by upper code list.
+     *
+     * @param upperCode the upper code
+     * @return the list
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 7. 오전 11:50:44
+     * @Description 상위코드로 하위코드 목록 조회
+     */
+    List<Code> findByUpperCode(String upperCode);
 
 }

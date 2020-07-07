@@ -1,7 +1,7 @@
 package com.nike.dnp.repository.user;
 
+import com.nike.dnp.dto.user.UserReturnDTO;
 import com.nike.dnp.dto.user.UserSearchDTO;
-import com.nike.dnp.entity.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -24,7 +24,7 @@ public interface UserRepositoryCustom {
      * @CreatedOn 2020. 6. 22. 오후 3:20:59
      * @Description 조회(페이징)
      */
-    Page<User> findPages(final UserSearchDTO userSearchDTO, final PageRequest pageRequest);
+    Page<UserReturnDTO> findPages(final UserSearchDTO userSearchDTO, final PageRequest pageRequest);
 
     /**
      * Count by pasword change period int.
@@ -36,4 +36,5 @@ public interface UserRepositoryCustom {
      * @Description 90일 지난 패스워드 체크
      */
     long countByPaswordChangePeriod(final Long userSeq);
+
 }
