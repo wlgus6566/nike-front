@@ -1,5 +1,6 @@
 package com.nike.dnp.repository.order;
 
+import com.nike.dnp.dto.order.OrderSearchDTO;
 import com.nike.dnp.entity.agency.QAgency;
 import com.nike.dnp.entity.order.OrderProductMapping;
 import com.nike.dnp.entity.order.QOrder;
@@ -7,8 +8,12 @@ import com.nike.dnp.entity.order.QOrderProductMapping;
 import com.nike.dnp.entity.product.QProduct;
 import com.nike.dnp.util.TupleUtil;
 import com.querydsl.core.Tuple;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
@@ -82,5 +87,30 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 				agency.agencySeq,
 				agency.email,
 				order.orderDescription) ;
+	}
+
+	/**
+	 * Find pages order page.
+	 *
+	 * @param orderSearchDTO the order search dto
+	 * @param pageRequest    the page request
+	 * @return the page
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 7. 오후 12:14:28
+	 * @Description
+	 */
+	@Override
+	public Page<OrderProductMapping> findPagesOrder(final OrderSearchDTO orderSearchDTO,
+													final PageRequest pageRequest) {
+		final QOrderProductMapping qOrderProductMapping = QOrderProductMapping.orderProductMapping;
+		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+
+		final JPAQuery<OrderProductMapping> query = queryFactory.selectFrom(qOrderProductMapping)
+				.where(OrderProductMappingPredicateHelper.afterStartDt(orderSearchDTO.getBeginDt()),
+						OrderProductMappingPredicateHelper.beforeEndDt(orderSearchDTO.getEndDt()),
+						qOrderProductMapping.registerSeq.eq(orderSearchDTO.getUserSeq()));
+
+		final List<OrderProductMapping> orderList = getQuerydsl().applyPagination(pageRequest, query).fetch();
+		return new PageImpl<>(orderList, pageRequest, query.fetchCount());
 	}
 }

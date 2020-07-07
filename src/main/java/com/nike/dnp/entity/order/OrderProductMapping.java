@@ -72,6 +72,17 @@ public class OrderProductMapping extends BaseTimeEntity {
      */
     @ManyToOne
     @JoinColumn(name="GOODS_SEQ",insertable = false,updatable = false)
+    @ApiModelProperty(name = "product", value = "제품 정보")
     private Product product;
+
+    /**
+     * The Order
+     *
+     * @author [윤태호]
+     */
+    @ManyToOne
+    @JoinColumn(name="ORDER_SEQ",insertable = false,updatable = false)
+    @ApiModelProperty(name = "product", value = "주문 정보")
+    private Order order;
 
 }

@@ -33,7 +33,7 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@Api(description = "상품 관리", tags = "20_PRODUCT")
+@Api(description = "상품 관리", tags = "PRODUCT")
 @RequestMapping(value = "/api/product", name = "상품관리")
 @AllArgsConstructor
 public class ProductController {
