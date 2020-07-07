@@ -2,6 +2,7 @@ package com.nike.dnp.service.order;
 
 import com.nike.dnp.dto.order.OrderProductSaveDTO;
 import com.nike.dnp.entity.order.Order;
+import com.nike.dnp.repository.order.OrderProductMapperRepository;
 import com.nike.dnp.repository.order.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,8 @@ public class OrderService {
 	 */
 	private final OrderRepository orderRepository;
 
+
+	private final OrderProductMapperRepository orderProductMapperRepository;
 
 	/**
 	 * Save order order.

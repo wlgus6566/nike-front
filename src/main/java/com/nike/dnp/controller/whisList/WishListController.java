@@ -30,7 +30,7 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @Slf4j
 @RestController
-@Api(description = "위시리스트", tags = "23_wishList")
+@Api(description = "위시리스트", tags = "wishList")
 @RequestMapping(value = "/api/wishlist", name = "위시리스트")
 @AllArgsConstructor
 public class WishListController {

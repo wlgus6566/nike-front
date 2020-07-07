@@ -5,12 +5,16 @@ import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.email.OrderProductDTO;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.order.OrderProductMappingSaveDTO;
+import com.nike.dnp.dto.order.OrderSearchDTO;
 import com.nike.dnp.entity.order.Order;
 import com.nike.dnp.entity.order.OrderProductMapping;
 import com.nike.dnp.repository.order.OrderProductMapperRepository;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -48,7 +52,7 @@ public class OrderProductMappingService {
 	private final MailService mailService;
 
 
-		/**
+	/**
 	 * Save order product mapping order product mapping.
 	 *
 	 * @param orderProductMappingSaveDTO the order product mapping save dto
@@ -129,6 +133,36 @@ public class OrderProductMappingService {
 			}
 			sendDTO.setOrderArea(sb.toString());
 			mailService.sendMail(ServiceEnumCode.EmailTypeEnumCode.ORDER.toString(), ServiceEnumCode.EmailTypeEnumCode.ORDER.getMessage(), sendDTO);
+
 		}
+	}
+
+	/**
+	 * Find page order page.
+	 *
+	 * @param orderSearchDTO the order search dto
+	 * @return the page
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 7. 오후 2:44:07
+	 * @Description
+	 */
+	public Page<OrderProductMapping> findPageOrder(final OrderSearchDTO orderSearchDTO) {
+		orderSearchDTO.setUserSeq(SecurityUtil.currentUser().getUserSeq());
+
+		return orderProductMapperRepository.findPagesOrder(orderSearchDTO, PageRequest.of(orderSearchDTO.getPage(), orderSearchDTO.getSize(), Sort.by("registrationDt").descending()));
+
+	}
+
+	/**
+	 * Find by id order product mapping.
+	 *
+	 * @param orderGoodsSeq the order goods seq
+	 * @return the order product mapping
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 7. 오후 2:44:07
+	 * @Description
+	 */
+	public OrderProductMapping findById(final Long orderGoodsSeq) {
+		return orderProductMapperRepository.findById(orderGoodsSeq).orElse(new OrderProductMapping());
 	}
 }

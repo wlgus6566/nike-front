@@ -1,0 +1,83 @@
+### 오더_상품_목록 조회
+GET http://{{host}}/api/product/list?exposureYn=Y
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Content-Type: application/json
+
+### 오더_상품_상세 조회
+GET http://{{host}}/api/product/{{goodsSeq}}
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Content-Type: application/json
+
+
+### 오더_상품등록
+POST http://{{host}}/api/product/
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Content-Type: application/json
+
+{
+"category2code":"2",
+"category3code":"3",
+"agencySeq":"1",
+"goodsName":"goodsName",
+"goodsDescription":"디스크립션",
+"unitPrice":"10000",
+"minimumQuantity":"1000",
+"exposureYn":"Y",
+"useYn":"Y",
+"imageFileName": "test.jpg",
+"imageFileSize": "200",
+"imageFilePhysicalName": "/product/test.jpg",
+"thumbnailFileName": "thumbnailtest.jpg",
+"thumbnailFileSize": "100",
+"thumbnailFilePhysicalName": "thumbnailtest.jpg"
+}
+
+### 오더_상품수정
+PUT http://{{host}}/api/product
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Content-Type: application/json
+
+{
+  "goodsSeq" : 31,
+  "category2code": "2",
+  "category3code": "3",
+  "agencySeq": "1",
+  "goodsName": "상품이름 수정합니다.",
+  "goodsDescription": "디스크립션",
+  "unitPrice": "10000",
+  "minimumQuantity": "1000",
+  "exposureYn": "Y",
+  "useYn": "Y",
+  "imageFileName": "update.jpg",
+  "imageFileSize": "200",
+  "imageFilePhysicalName": "/product/update.jpg",
+  "thumbnailFileName": "thumbnailudpate.jpg",
+  "thumbnailFileSize": "100",
+  "thumbnailFilePhysicalName": "thumbnailupdate.jpg"
+}
+
+
+
+### 오더_상품 삭제
+DELETE http://{{host}}/api/product/{{goodsSeq}}
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Accept: application/json
+
+
+
+### 오더_상품 삭제
+GET http://{{host}}/api/product/
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Accept: application/json
+
+
+### 상품 리스트 조회
+GET http://localhost:8080/api/product?goodsSeqList=1,2,3
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Accept: application/json
+
+
+
+
+
+

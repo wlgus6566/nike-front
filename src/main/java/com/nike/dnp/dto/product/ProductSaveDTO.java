@@ -35,7 +35,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name="category2code",value="카테고리 2 코드",required = true,example = "2")
+	@ApiModelProperty(name="category2code",value="카테고리 2 코드",required = true,example = "NIKE_BY_YOU")
 	private String category2code;
 
 	/**
@@ -43,7 +43,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "category3code", value = "카테고리 3 코드", required = true,example = "2")
+	@ApiModelProperty(name = "category3code", value = "카테고리 3 코드", required = true,example = "NIKE_BY_YOU27")
 	private String category3code;
 
 	/**
