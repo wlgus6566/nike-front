@@ -144,10 +144,31 @@ const routes = [
                 component: pages('pub/NIKE_P_REPORT_03'),
                 meta: { layout: 'Pub' },
             },
+            //gnb - INFORMATION
+            {
+                path: 'NIKE_P_INFO_01_001',
+                component: pages('pub/NIKE_P_INFO_01_001'),
+                meta: { layout: 'Pub' },
+            },
             //gnb - MANAGEMENT
             {
                 path: 'NIKE_P_MANAGE_01',
                 component: pages('pub/NIKE_P_MANAGE_01'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_INFO_01_001',
+                component: pages('pub/NIKE_P_INFO_01_001'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MANAGE_02_001',
+                component: pages('pub/NIKE_P_MANAGE_02_001'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MANAGE_03',
+                component: pages('pub/NIKE_P_MANAGE_03'),
                 meta: { layout: 'Pub' },
             },
             //UTIL - MYPAGE
@@ -194,6 +215,31 @@ const routes = [
             {
                 path: 'NIKE_P_MY_01_001',
                 component: pages('pub/NIKE_P_MY_01_001'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_01_002',
+                component: pages('pub/NIKE_P_MY_01_002'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_02_001',
+                component: pages('pub/NIKE_P_MY_02_001'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_02_002',
+                component: pages('pub/NIKE_P_MY_02_002'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_03_001',
+                component: pages('pub/NIKE_P_MY_03_001'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_03_002',
+                component: pages('pub/NIKE_P_MY_03_002'),
                 meta: { layout: 'Pub' },
             },
             //이메일 발송

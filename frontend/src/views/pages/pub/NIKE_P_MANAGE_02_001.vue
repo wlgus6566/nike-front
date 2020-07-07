@@ -21,14 +21,20 @@
                 <div class="sorting-area">
                     <!-- todo select 스크립트 작업 필요  -->
                     <div class="filter-select">
-                        <el-select v-model="value1" placeholder="Select" style="width: 100px;">
-                            <el-option
-                                v-for="item in options1"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value"
+                        <el-select v-model="value" placeholder="Select">
+                            <el-option-group
+                                v-for="group in options"
+                                :key="group.label"
+                                :label="group.label"
                             >
-                            </el-option>
+                                <el-option
+                                    v-for="item in group.options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                >
+                                </el-option>
+                            </el-option-group>
                         </el-select>
                     </div>
                     <div class="filter-select">
@@ -61,14 +67,12 @@
                 <div class="tbl-list">
                     <table>
                         <colgroup>
-                            <col style="width: 7.317%;" />
-                            <col style="width: 20.731%;" />
+                            <col style="width: 60px;" />
                             <col style="width: auto;" />
-                            <col style="width: 8.536%;" />
-                            <col style="width: 9.756%;" />
-                            <col style="width: 12.195%;" />
-                            <col style="width: 9.756%;" />
-                            <col style="width: 6.707%;" />
+                            <col style="width: auto;" />
+                            <col style="width: 150px;" />
+                            <col style="width: 100px;" />
+                            <col style="width: 160px;" />
                         </colgroup>
                         <thead>
                             <tr>
@@ -78,13 +82,11 @@
                                         <span></span>
                                     </span>
                                 </th>
-                                <th>구분</th>
-                                <th>상품명</th>
-                                <th>최소<br />주문수량</th>
-                                <th>AGENCY</th>
-                                <th>최종수정자</th>
-                                <th>최종수정일</th>
-                                <th>노출</th>
+                                <th>계정명</th>
+                                <th>ID (E-MAIL)</th>
+                                <th>권한그룹</th>
+                                <th>상태</th>
+                                <th>최종로그인</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -95,15 +97,13 @@
                                         <span></span>
                                     </span>
                                 </td>
-                                <td>부자재 > 운영 비품</td>
                                 <td>
                                     <a href="#" class="under-link"><span>포스터 600X800</span></a>
                                 </td>
-                                <td>10,000</td>
-                                <td>HISWILL</td>
-                                <td>NIKE0001</td>
+                                <td>Da****y6jae@naver.com</td>
+                                <td>NIKE DIRECT</td>
+                                <td><span>정상</span></td>
                                 <td>2020.05.30</td>
-                                <td>Y</td>
                             </tr>
                             <tr>
                                 <td>
@@ -112,32 +112,13 @@
                                         <span></span>
                                     </span>
                                 </td>
-                                <td>부자재 > 운영 비품</td>
                                 <td>
                                     <a href="#" class="under-link"><span>포스터 600X800</span></a>
                                 </td>
-                                <td>10,000</td>
-                                <td>HISWILL</td>
-                                <td>NIKE0001</td>
+                                <td>Da****y6jae@naver.com</td>
+                                <td>NIKE DIRECT</td>
+                                <td><span class="fc-lightgray">휴먼</span></td>
                                 <td>2020.05.30</td>
-                                <td>Y</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="checkbox">
-                                        <input type="checkbox" />
-                                        <span></span>
-                                    </span>
-                                </td>
-                                <td>부자재 > 운영 비품</td>
-                                <td>
-                                    <a href="#" class="under-link"><span>포스터 600X800</span></a>
-                                </td>
-                                <td>10,000</td>
-                                <td>HISWILL</td>
-                                <td>NIKE0001</td>
-                                <td>2020.05.30</td>
-                                <td>Y</td>
                             </tr>
                         </tbody>
                     </table>
@@ -200,28 +181,46 @@
 </template>
 <script>
 export default {
-    name: 'NIKE_P_ORDER_06',
+    name: 'NIKE_P_MANAGE_02_001',
     data() {
         return {
-            options1: [
+            options: [
                 {
-                    value: '부자재',
-                    label: '부자재',
+                    label: '그룹1',
+                    options: [
+                        {
+                            value: '그룹1-1',
+                            label: 'Shanghai',
+                        },
+                        {
+                            value: 'Beijing',
+                            label: 'Beijing',
+                        },
+                    ],
                 },
                 {
-                    value: 'NIKE BY YOU',
-                    label: 'NIKE BY YOU',
-                },
-                {
-                    value: 'CUSTOM23(JORDAN ONLY)',
-                    label: 'CUSTOM23(JORDAN ONLY)',
-                },
-                {
-                    value: 'MNQ',
-                    label: 'MNQ',
+                    label: 'City name',
+                    options: [
+                        {
+                            value: 'Chengdu',
+                            label: 'Chengdu',
+                        },
+                        {
+                            value: 'Shenzhen',
+                            label: 'Shenzhen',
+                        },
+                        {
+                            value: 'Guangzhou',
+                            label: 'Guangzhou',
+                        },
+                        {
+                            value: 'Dalian',
+                            label: 'Dalian',
+                        },
+                    ],
                 },
             ],
-            value1: '대분류',
+            value: '전체 권한그룹',
             options2: [
                 {
                     value: '최신순',
