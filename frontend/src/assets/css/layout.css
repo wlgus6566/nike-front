@@ -62,6 +62,7 @@ nav .nav-link {
     color: #888;
     border-radius: 0;
     font-family: 'Bebas Neue', sans-serif;
+    transition: color 200ms ease-in-out 0s;
 }
 nav .nav-link.hasDepth:after {
     content: '';
@@ -72,8 +73,10 @@ nav .nav-link.hasDepth:after {
     width: 20px;
     margin-top: -10px;
     background: url('../images/svg/icon-lnb-arr.svg') no-repeat;
+    opacity: 0.3;
     transform: rotate(180deg);
-    transition: transform 200ms ease-in-out 0s;
+    transition: 200ms ease-in-out 0s;
+    transition-property: transform, opacity;
 }
 nav .nav-link.hasDepth.active:after {
     transform: rotate(0);
@@ -94,12 +97,16 @@ nav .depth1 > .nav-link {
 nav .nav-link.router-link-active {
     color: #000 !important;
 }
+nav .nav-link.router-link-active:after {
+    opacity: 1;
+}
 nav .depth2 > .nav-link {
     color: #888;
 }
 nav .depth2 > .nav-link .noto-sans {
     line-height: 30px;
     display: inline-block;
+    vertical-align: 0.1em;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 14px;
     font-weight: bold;

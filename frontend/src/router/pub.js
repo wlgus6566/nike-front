@@ -1,4 +1,4 @@
-import {pages} from '@/utils/global-methods';
+import { pages } from '@/utils/global-methods';
 
 const routes = [
     {
@@ -164,6 +164,11 @@ const routes = [
             {
                 path: 'NIKE_P_MANAGE_02_001',
                 component: pages('pub/NIKE_P_MANAGE_02_001'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MANAGE_02_002P',
+                component: pages('pub/NIKE_P_MANAGE_02_002P'),
                 meta: { layout: 'Pub' },
             },
             {

@@ -6,7 +6,7 @@
 </template>
 <script>
 export default {
-    name: 'view',
+    name: 'order-view',
 };
 </script>
 <style scoped></style>

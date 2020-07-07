@@ -1,5 +1,5 @@
 <template>
-    <transition name="modal" appear>
+    <transition name="modal">
         <div class="modal-wrap modal-overlay" @click.self="this.closeModal" v-if="modal">
             <section class="modal">
                 <div class="modal-header">
@@ -21,7 +21,7 @@ export default {
     name: 'modal-comp',
     data() {
         return {
-            modal: false,
+            modal: true,
         };
     },
     methods: {

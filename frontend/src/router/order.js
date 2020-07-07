@@ -30,37 +30,37 @@ const routes = [
                 children: [
                     {
                         path: 'operating',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '운영 비품' },
                     },
                     {
                         path: 'staff',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '스태프 비품' },
                     },
                     {
                         path: 'operating-signage',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '운영 사이니지' },
                     },
                     {
                         path: 'sale-signage',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '세일 사이니지' },
                     },
                     {
                         path: 'sale-signage/:id',
-                        component: pages('order/view'),
+                        component: pages('order/order-view'),
                         meta: { layout: 'Default', aside: 'Order', title: '오픈 패키지' },
                     },
                     {
                         path: 'open-package',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '오픈 패키지' },
                     },
                     {
                         path: 'open-package/:id',
-                        component: pages('order/view'),
+                        component: pages('order/order-view'),
                         meta: { layout: 'Default', aside: 'Order', title: '오픈 패키지' },
                     },
                 ],
@@ -73,27 +73,27 @@ const routes = [
                 children: [
                     {
                         path: 'shoes',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '신발 커스텀 (단품)' },
                     },
                     {
                         path: 'shoes-package',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '신발 커스텀 (패키지)' },
                     },
                     {
                         path: 'apparel',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '의류 커스텀 (단품)' },
                     },
                     {
                         path: 'apparel-package',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '의류 커스텀 (패키지)' },
                     },
                     {
                         path: 'others',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: 'OTHERS' },
                     },
                 ],
@@ -106,27 +106,27 @@ const routes = [
                 children: [
                     {
                         path: 'shoes',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '신발 커스텀 (단품)' },
                     },
                     {
                         path: 'shoes-package',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '신발 커스텀 (패키지)' },
                     },
                     {
                         path: 'apparel',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '의류 커스텀 (단품)' },
                     },
                     {
                         path: 'apparel-package',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '의류 커스텀 (패키지)' },
                     },
                     {
                         path: 'others',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: 'OTHERS' },
                     },
                 ],
@@ -139,22 +139,22 @@ const routes = [
                 children: [
                     {
                         path: 'male',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '남성' },
                     },
                     {
                         path: 'female',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '여성' },
                     },
                     {
                         path: 'child',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '유아동' },
                     },
                     {
                         path: 'repair',
-                        component: pages('order/list'),
+                        component: pages('order/order-list'),
                         meta: { layout: 'Default', aside: 'Order', title: '수리/보수' },
                     },
                 ],

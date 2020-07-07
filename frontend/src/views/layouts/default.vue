@@ -245,10 +245,6 @@ export default {
             this.layoutAnimation(elements, '100%', '0%', done);
         },
         asideLeave(el, done) {
-            gsap.to(window, 0.3, {
-                scrollTo: { y: 0 },
-                ease: Cubic.easeInOut,
-            });
             const elements = [document.querySelector('aside .aside-bg'), el];
             this.layoutAnimation(elements, '0%', '100%', done);
         },

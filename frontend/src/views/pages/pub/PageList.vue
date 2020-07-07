@@ -663,6 +663,17 @@ export default {
                                             comment: '',
                                             depth: false,
                                         },
+                                        {
+                                            title: '계정 관리',
+                                            depthTitle: false,
+                                            name: '지은유',
+                                            filename: 'NIKE_P_MANAGE_02_002P.vue',
+                                            link: 'NIKE_P_MANAGE_02_002P',
+                                            com: '',
+                                            abc: '',
+                                            comment: '',
+                                            depth: false,
+                                        },
                                     ],
                                 },
                                 {
