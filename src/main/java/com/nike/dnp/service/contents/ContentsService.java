@@ -1,6 +1,8 @@
 package com.nike.dnp.service.contents;
 
+import autovalue.shaded.com.google$.common.base.$Optional;
 import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.dto.contents.save.ContentsFileSaveDTO;
 import com.nike.dnp.dto.contents.save.ContentsSaveDTO;
@@ -158,11 +160,39 @@ public class ContentsService {
         }
         if (!beforeFileList.isEmpty()) {
             for (ContentsFile contentsFile : beforeFileList) {
-                contentsFile.setUseYn("N");
-                contentsFileRepository.save(contentsFile);
+                contentsFile.updateUseYn("N");
             }
         }
         return contents;
     }
+
+
+    /**
+     * Delete optional.
+     *
+     * @param contentsSeq the contents seq
+     * @return the optional
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 7. 오전 10:59:29
+     * @Description
+     */
+    @Transactional
+    public Optional<Contents> delete(final Long contentsSeq) {
+        log.info("contentsService.delete");
+
+        Optional<Contents> contents = contentsRepository.findById(contentsSeq);
+        contents.ifPresent(value -> value.delete());
+
+        List<ContentsFile> contentsFileList = contents.get().getContentsFiles();
+        if (!contentsFileList.isEmpty()) {
+            for (ContentsFile contentsFile : contentsFileList) {
+                contentsFile.updateUseYn("N");
+            }
+        }
+
+        return contents;
+    }
+
+
 
 }

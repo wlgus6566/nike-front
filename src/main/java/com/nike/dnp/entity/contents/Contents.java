@@ -242,4 +242,16 @@ public class Contents extends BaseTimeEntity {
         log.info("Contents.updateReadCount");
         this.readCount = readCount + 1;
     }
+
+
+    /**
+     * Delete.
+     *
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 7. 오후 2:06:34
+     * @Description
+     */
+    public void delete() {
+        this.useYn = "N";
+    }
 }

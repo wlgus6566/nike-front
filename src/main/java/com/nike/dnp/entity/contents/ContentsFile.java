@@ -151,25 +151,7 @@ public class ContentsFile extends BaseTimeEntity {
         contentsFile.setDownloadCount(0l);
         contentsFile.setUseYn("Y");
         contentsFile.setContentsSeq(savedContents.getContentsSeq());
-        contentsFile.setFileSectionCode(contentsFileSaveDTO.getFileSectionCode());
-        contentsFile.setFileKindCode(contentsFileSaveDTO.getFileKindCode());
-        String fileKindCode = contentsFileSaveDTO.getFileKindCode();
-
-        if (ServiceEnumCode.ContentsFileKindCode.FILE.equals(fileKindCode)) {
-            this.checkStringValidation(contentsFileSaveDTO.getFileName(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
-
-            contentsFile.setFileName(contentsFileSaveDTO.getFileName());
-            contentsFile.setFileSize(contentsFileSaveDTO.getFileSize());
-            contentsFile.setFilePhysicalName(contentsFileSaveDTO.getFilePhysicalName());
-        } else {
-            this.checkStringValidation(contentsFileSaveDTO.getTitle(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.getMessage());
-            this.checkStringValidation(contentsFileSaveDTO.getUrl(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
-
-            contentsFile.setTitle(contentsFileSaveDTO.getTitle());
-            contentsFile.setUrl(contentsFileSaveDTO.getUrl());
-        }
-
-        return contentsFile;
+        return applyContentsFile(contentsFile, contentsFileSaveDTO.getFileSectionCode(), contentsFileSaveDTO.getFileKindCode(), contentsFileSaveDTO.getFileName(), contentsFileSaveDTO.getFileSize(), contentsFileSaveDTO.getFilePhysicalName(), contentsFileSaveDTO.getTitle(), contentsFileSaveDTO.getUrl());
     }
 
     /**
@@ -190,22 +172,41 @@ public class ContentsFile extends BaseTimeEntity {
         contentsFile.setDownloadCount(0l);
         contentsFile.setUseYn("Y");
         contentsFile.setContentsSeq(contentsSeq);
-        contentsFile.setFileSectionCode(contentsFileUpdateDTO.getFileSectionCode());
-        contentsFile.setFileKindCode(contentsFileUpdateDTO.getFileKindCode());
-        String fileKindCode = contentsFileUpdateDTO.getFileKindCode();
+        return applyContentsFile(contentsFile, contentsFileUpdateDTO.getFileSectionCode(), contentsFileUpdateDTO.getFileKindCode(), contentsFileUpdateDTO.getFileName(), contentsFileUpdateDTO.getFileSize(), contentsFileUpdateDTO.getFilePhysicalName(), contentsFileUpdateDTO.getTitle(), contentsFileUpdateDTO.getUrl());
+    }
+
+    /**
+     * Apply contents file contents file.
+     *
+     * @param contentsFile     the contents file
+     * @param fileSectionCode  the file section code
+     * @param fileKindCode     the file kind code
+     * @param fileName         the file name
+     * @param fileSize         the file size
+     * @param filePhysicalName the file physical name
+     * @param title            the title
+     * @param url              the url
+     * @return the contents file
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 7. 오전 10:41:43
+     * @Description
+     */
+    private ContentsFile applyContentsFile(ContentsFile contentsFile, String fileSectionCode, String fileKindCode, String fileName, Long fileSize, String filePhysicalName, String title, String url) {
+        contentsFile.setFileSectionCode(fileSectionCode);
+        contentsFile.setFileKindCode(fileKindCode);
 
         if (ServiceEnumCode.ContentsFileKindCode.FILE.equals(fileKindCode)) {
-            this.checkStringValidation(contentsFileUpdateDTO.getFileName(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
+            this.checkStringValidation(fileName, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
 
-            contentsFile.setFileName(contentsFileUpdateDTO.getFileName());
-            contentsFile.setFileSize(contentsFileUpdateDTO.getFileSize());
-            contentsFile.setFilePhysicalName(contentsFileUpdateDTO.getFilePhysicalName());
+            contentsFile.setFileName(fileName);
+            contentsFile.setFileSize(fileSize);
+            contentsFile.setFilePhysicalName(filePhysicalName);
         } else {
-            this.checkStringValidation(contentsFileUpdateDTO.getTitle(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.getMessage());
-            this.checkStringValidation(contentsFileUpdateDTO.getUrl(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
+            this.checkStringValidation(title, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.getMessage());
+            this.checkStringValidation(url, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
 
-            contentsFile.setTitle(contentsFileUpdateDTO.getTitle());
-            contentsFile.setUrl(contentsFileUpdateDTO.getUrl());
+            contentsFile.setTitle(title);
+            contentsFile.setUrl(url);
         }
 
         return contentsFile;
