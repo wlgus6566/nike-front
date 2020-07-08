@@ -1,5 +1,6 @@
 package com.nike.dnp.model.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -16,6 +17,7 @@ import java.util.HashMap;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CommonResult {
 
     /**

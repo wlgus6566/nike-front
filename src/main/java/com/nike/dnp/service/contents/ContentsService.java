@@ -95,7 +95,7 @@ public class ContentsService {
             }
         }
 
-        savedContents.setContentsFiles(savedContentsFileList);
+        savedContents.setContentsFileList(savedContentsFileList);
         return savedContents;
     }
 
@@ -183,7 +183,7 @@ public class ContentsService {
         Optional<Contents> contents = contentsRepository.findById(contentsSeq);
         contents.ifPresent(value -> value.delete());
 
-        List<ContentsFile> contentsFileList = contents.get().getContentsFiles();
+        List<ContentsFile> contentsFileList = contents.get().getContentsFileList();
         if (!contentsFileList.isEmpty()) {
             for (ContentsFile contentsFile : contentsFileList) {
                 contentsFile.updateUseYn("N");

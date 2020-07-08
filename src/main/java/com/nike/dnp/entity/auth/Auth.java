@@ -3,7 +3,6 @@ package com.nike.dnp.entity.auth;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.dto.auth.AuthSaveDTO;
 import com.nike.dnp.dto.auth.AuthUpdateDTO;
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -27,7 +26,7 @@ import java.util.List;
 @Entity
 @Table(name = "TB_AUTH")
 @DynamicUpdate
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Auth extends BaseTimeEntity implements Serializable {
 
     /**
@@ -92,52 +91,39 @@ public class Auth extends BaseTimeEntity implements Serializable {
      * Instantiates a new Auth.
      *
      * @param authSaveDTO the auth save dto
-     * @param authUserDTO the auth user dto
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 4:35:39
      * @Description 그룹(권한) 생성
      */
     @Builder
-    public Auth(
-            final AuthSaveDTO authSaveDTO
-            , final AuthUserDTO authUserDTO
-    ) {
+    public Auth(final AuthSaveDTO authSaveDTO) {
         this.upperAuthSeq = authSaveDTO.getUpperAuthSeq();
         this.authName = authSaveDTO.getAuthName();
         this.roleType = "ROLE_" + authSaveDTO.getAuthName();
         this.useYn = "Y";
-        this.setRegisterSeq(authUserDTO.getUserSeq());
-        this.setUpdaterSeq(authUserDTO.getUserSeq());
     }
 
     /**
      * Update.
      *
      * @param authUpdateDTO the auth update dto
-     * @param authUserDTO   the auth user dto
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 3:41:36
      * @Description 그룹(권한) 정보 수정
      */
-    public void update(
-            final AuthUpdateDTO authUpdateDTO
-            , final AuthUserDTO authUserDTO
-    ) {
+    public void update(final AuthUpdateDTO authUpdateDTO) {
         this.authName = authUpdateDTO.getAuthName();
-        this.setUpdaterSeq(authUserDTO.getUserSeq());
     }
 
     /**
      * Delete.
      *
-     * @param updaterSeq the updater seq
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 4:35:37
      * @Description 그룹(권한) 삭제
      */
-    public void delete(final Long updaterSeq) {
+    public void delete() {
         this.useYn = "N";
-        this.setUpdaterSeq(updaterSeq);
     }
 
 }

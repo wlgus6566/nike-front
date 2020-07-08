@@ -4,7 +4,6 @@ import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.persistence.Column;
 

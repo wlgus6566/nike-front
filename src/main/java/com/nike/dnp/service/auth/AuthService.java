@@ -1,15 +1,19 @@
 package com.nike.dnp.service.auth;
 
-import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.ErrorEnumCode.DataError;
 import com.nike.dnp.dto.auth.AuthSaveDTO;
 import com.nike.dnp.dto.auth.AuthUpdateDTO;
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.entity.auth.Auth;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.auth.AuthRepository;
 import com.nike.dnp.service.RedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,15 +53,34 @@ public class AuthService {
      *
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:43
+     * @CreatedOn 2020. 7. 7. 오후 3:37:06
      * @Description 그룹(권한) 목록 조회
      */
     public List<Auth> findAll() {
         log.info("AuthService.findAll");
-
-        //TODO[ojh] redis 조회 기능 작성 예정
-
         return authRepository.findAllByUseYn("Y");
+    }
+
+    /**
+     * Find all json array.
+     *
+     * @return the json array
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 22. 오후 2:40:43
+     * @Description 그룹(권한) 목록 조회(캐시)
+     */
+    @Cacheable(value = "cache:auths", cacheManager = "cacheManager")
+    public JSONArray findAllByCache() {
+        log.info("AuthService.findAllByCache");
+        ObjectMapper ob = new ObjectMapper();
+        try {
+            return ob.readValue(ob.writeValueAsString(this.findAll()), JSONArray.class);
+        } catch (JsonProcessingException e) {
+            throw new CodeMessageHandleException(
+                    ErrorEnumCode.ExceptionError.ERROR.toString()
+                    , ErrorEnumCode.ExceptionError.ERROR.getMessage()
+            );
+        }
     }
 
     /**
@@ -71,37 +94,27 @@ public class AuthService {
      */
     public Optional<Auth> findById(final Long authSeq) {
         log.info("AuthService.findById");
-
-        //TODO[ojh] redis 조회 기능 작성 예정
-
         return Optional.ofNullable(authRepository.findById(authSeq).orElseThrow(
-                () -> new UserNotFoundException(DataError.NOT_FOUND.toString())));
+                () -> new CodeMessageHandleException(
+                        DataError.NOT_FOUND.toString()
+                        , DataError.NOT_FOUND.getMessage()
+                )));
     }
 
     /**
      * Save auth.
      *
      * @param authSaveDTO the auth save dto
-     * @param authUserDTO the auth user dto
      * @return the auth
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 5:36:07
      * @Description 그룹(권한) 등록
      */
-    public Auth save(
-            final AuthSaveDTO authSaveDTO
-            ,final AuthUserDTO authUserDTO
-    ) {
+    @Transactional
+    public Auth save(final AuthSaveDTO authSaveDTO) {
         log.info("AuthService.save");
-
-        //TODO[ojh] redis 저장 기능 작성 예정
-
-        Auth auth = authRepository.save(
-                Auth.builder()
-                        .authSaveDTO(authSaveDTO)
-                        .authUserDTO(authUserDTO)
-                        .build()
-        );
+        Auth auth = authRepository.save(Auth.builder().authSaveDTO(authSaveDTO).build());
+        this.initAuthCache();
         return auth;
     }
 
@@ -110,49 +123,60 @@ public class AuthService {
      *
      * @param authSeq       the auth seq
      * @param authUpdateDTO the auth update dto
-     * @param authUserDTO   the auth user dto
      * @return the optional
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 5:27:08
      * @Description 그룹(권한) 수정
      */
+    @Transactional
     public Optional<Auth> update(
             final Long authSeq
             ,final AuthUpdateDTO authUpdateDTO
-            ,final AuthUserDTO authUserDTO
     ) {
         log.info("AuthService.update");
-
-        //TODO[ojh] redis 수정 기능 작성 예정
-
-        Optional<Auth> auth = Optional.ofNullable(authRepository.findById(authSeq).orElseThrow(
-                () -> new UserNotFoundException(DataError.NOT_FOUND.toString())));
-        auth.ifPresent(value -> value.update(authUpdateDTO, authUserDTO));
+        Optional<Auth> auth = this.findById(authSeq);
+        auth.ifPresent(value -> value.update(authUpdateDTO));
+        this.initAuthCache();
         return auth;
     }
 
     /**
      * Delete optional.
      *
-     * @param authSeq     the auth seq
-     * @param authUserDTO the auth user dto
+     * @param authSeq the auth seq
      * @return the optional
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 5:37:29
      * @Description 그룹(권한) 삭제
      */
-    public Optional<Auth> delete(
-            final Long authSeq
-            ,final AuthUserDTO authUserDTO
-    ) {
+    @Transactional
+    public Optional<Auth> delete(final Long authSeq) {
         log.info("AuthService.delete");
-
-        //TODO[ojh] redis 삭제 기능 작성 예정
-
-        Optional<Auth> auth = Optional.ofNullable(authRepository.findById(authSeq).orElseThrow(
-                () -> new UserNotFoundException(DataError.NOT_FOUND.toString())));
-        auth.ifPresent(value -> value.delete(authUserDTO.getUserSeq()));
+        Optional<Auth> auth = this.findById(authSeq);
+        auth.ifPresent(Auth::delete);
+        this.initAuthCache();
         return auth;
+    }
+
+    /**
+     * Init auth cache.
+     *
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 7. 오후 4:31:05
+     * @Description 캐시 초기화
+     */
+    public void initAuthCache() {
+        log.info("AuthService.initAuthCache");
+        redisService.delete("cache:auths::SimpleKey []");
+        ObjectMapper ob = new ObjectMapper();
+        try {
+            redisService.set("cache:auths::SimpleKey []", ob.readValue(ob.writeValueAsString(this.findAll()), JSONArray.class), 60 * 24 * 30);
+        } catch (JsonProcessingException e) {
+            throw new CodeMessageHandleException(
+                    ErrorEnumCode.ExceptionError.ERROR.toString()
+                    , ErrorEnumCode.ExceptionError.ERROR.getMessage()
+            );
+        }
     }
 
 }

@@ -157,8 +157,8 @@ public class Contents extends BaseTimeEntity {
      */
     @JsonManagedReference
     @OneToMany(mappedBy = "contents")
-    @ApiModelProperty(name = "contentsFiles", value = "콘텐츠 파일 목록", required = true)
-    private List<ContentsFile> contentsFiles;
+    @ApiModelProperty(name = "contentsFileList", value = "콘텐츠 파일 목록", required = true)
+    private List<ContentsFile> contentsFileList;
 
     /**
      * Save contents.
@@ -191,7 +191,7 @@ public class Contents extends BaseTimeEntity {
      * @param contentsSaveDTO the contents save dto
      * @param saveContents    the save contents
      * @author [이소정]
-     * @CreatedOn 2020. 7. 1. 오전 9:59:37
+     * @CreatedOn 2020. 7. 1. \오전 9:59:37
      * @Description 기본적인 부분 등록
      */
     public static void saveContentsBasic(ContentsSaveDTO contentsSaveDTO, Contents saveContents) {

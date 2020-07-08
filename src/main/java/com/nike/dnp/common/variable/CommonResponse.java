@@ -24,7 +24,7 @@ public enum CommonResponse {
      *
      * @author [오지훈]
      */
-    FAIL("ERR", "에러발생");
+    FAIL("ERR", "서버에서 에러가 발생하였습니다.");
 
     /**
      * 응답 코드

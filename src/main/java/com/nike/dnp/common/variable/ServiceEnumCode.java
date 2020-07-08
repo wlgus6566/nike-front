@@ -67,7 +67,7 @@ public class ServiceEnumCode {
 
         NORMAL("정상"),
         DORMANT("휴면"),
-        OUT("탈퇴");
+        DELETE("탈퇴");
 
         /**
          * 코드값
@@ -101,10 +101,15 @@ public class ServiceEnumCode {
         private final String message;
     }
 
+    /**
+     * The enum Return type enum code.
+     */
     @RequiredArgsConstructor
     @Getter
     public enum ReturnTypeEnumCode {
-        DELETE("삭제되었습니다.")
+        CREATE("등록되었습니다.")
+        ,UPDATE("수정되었습니다.")
+        ,DELETE("삭제되었습니다.")
         ,CANCEL("취소되었습니다.")
         ;
         /**
@@ -165,4 +170,23 @@ public class ServiceEnumCode {
         private final String message;
     }
 
+
+    @RequiredArgsConstructor
+    @Getter
+    public enum MenuSkillEnumCode {
+        LIST("목록")
+        ,CERATE("등록/수정")
+        ,DELETE("삭제")
+
+        ,VIEW("상세보기")
+        ,DOWNLOAD("다운로드/주문")
+        ,REPORT("시공보고서")
+        ;
+        /**
+         * 코드값
+         *
+         * @author [오지훈]
+         */
+        private final String message;
+    }
 }
