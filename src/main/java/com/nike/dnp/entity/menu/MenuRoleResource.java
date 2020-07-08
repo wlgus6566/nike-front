@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.menu;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -58,6 +59,7 @@ public class MenuRoleResource extends BaseTimeEntity implements Serializable {
      */
     @ManyToOne
     @JoinColumn(name = "MENU_ROLE_SEQ", insertable = false, updatable = false)
+    @JsonBackReference
     private MenuRole menuRole;
 
 }

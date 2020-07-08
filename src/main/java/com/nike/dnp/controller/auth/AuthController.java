@@ -143,9 +143,10 @@ public class AuthController {
         log.info("AuthController.save");
 
         //TODO[ojh] 메뉴별 권한 설정 추가 예정
+        Auth auth = authService.save(authSaveDTO);
 
         return responseService.getSingleResult(
-                authService.save(authSaveDTO)
+                auth
                 , ServiceEnumCode.ReturnTypeEnumCode.CREATE.toString()
                 , ServiceEnumCode.ReturnTypeEnumCode.CREATE.getMessage()
                 , true

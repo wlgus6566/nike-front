@@ -15,8 +15,9 @@ import java.util.List;
  * @Description 메뉴 Repository 작성
  */
 @Repository
-public interface MenuRepository extends JpaRepository<Menu, Long> {
+public interface MenuRepository extends JpaRepository<Menu, Long>, MenuRepositoryCustom {
 
+    List<Menu> findByUseYnAndMenuSeq(final String useYn, final Long menuSeq);
     List<Menu> findByUseYn(final String useYn);
 
 }

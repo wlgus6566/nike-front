@@ -1,7 +1,6 @@
 package com.nike.dnp.controller.report;
 
 import com.nike.dnp.dto.report.ReportSearchDTO;
-import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;

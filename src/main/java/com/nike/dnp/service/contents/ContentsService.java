@@ -1,8 +1,6 @@
 package com.nike.dnp.service.contents;
 
-import autovalue.shaded.com.google$.common.base.$Optional;
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.dto.contents.save.ContentsFileSaveDTO;
 import com.nike.dnp.dto.contents.save.ContentsSaveDTO;

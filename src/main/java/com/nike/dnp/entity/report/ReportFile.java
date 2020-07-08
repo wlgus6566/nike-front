@@ -2,7 +2,6 @@ package com.nike.dnp.entity.report;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.entity.BaseTimeEntity;
-import com.nike.dnp.entity.contents.Contents;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
