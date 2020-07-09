@@ -87,6 +87,22 @@ public class ProductController {
 		return responseService.getSingleResult(productService.findPagesProduct(productSearchDTO));
 	}
 
+
+	@ApiOperation(value = "상품 목록 조회(유저용)", notes = REQUEST_CHARACTER + "keyword|키워드|false|String\n" + "page|페이지|false|Integer\n" + "size|사이즈|false|Integer\n")
+	@GetMapping(value = "{category2code}/list", name = "상품 목록 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public SingleResult<Page<ProductResultDTO>> findPagesProductCategory2(@PathVariable @ApiParam(name="category2Code",value="카테고리 2 코드",allowableValues = "SUBSIDIARY,NIKE_BY_YOU,CUSTOM23,MNQ") final String category2code,
+																		  final ProductUserSearchDTO productUserSearchDTO) {
+
+		ProductSearchDTO productSearchDTO = new ProductSearchDTO();
+		productSearchDTO.setPage(productUserSearchDTO.getPage());
+		productSearchDTO.setSize(productUserSearchDTO.getSize());
+		productSearchDTO.setCategory2code(category2code);
+		productSearchDTO.setExposureYn("Y");
+		productSearchDTO.setKeyword(productUserSearchDTO.getKeyword());
+
+		return responseService.getSingleResult(productService.findPagesProduct(productSearchDTO));
+	}
+
 	/**
 	 * 상품 상세 조회
 	 *
