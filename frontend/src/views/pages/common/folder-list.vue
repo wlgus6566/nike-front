@@ -2,13 +2,14 @@
     <div>
         <h2 class="page-title">{{ this.$route.meta.title }}</h2>
         <ListSorting v-bind:listTypes="listTypes"></ListSorting>
-        <Item v-bind:listTypes="listTypes" v-bind:items="postItems"></Item>
+        <Item v-bind:listTypes="listTypes" v-bind:items="folderItems"></Item>
     </div>
 </template>
 <script>
 import ListSorting from '@/components/asset-list/list-sorting.vue';
 import Item from '@/components/asset-list/Item.vue';
-import { fetchPosts, deletePostById } from '@/api/contents.js';
+import { fetchContents, deleteContentsById } from '@/api/contents.js';
+import bus from '@/utils/bus.js';
 
 export default {
     name: 'folder-list',
@@ -25,7 +26,7 @@ export default {
                     active: false,
                 },
             ],
-            postItems: [
+            folderItems: [
                 {
                     title: '타이틀',
                     img: '@/assets/images/img-asset-none@2x.png"',
@@ -49,25 +50,10 @@ export default {
         async fetchData() {
             try {
                 const {
-                    data: { posts: postItems },
-                } = await fetchPosts();
-                console.log(postItems);
-                this.postItems = postItems;
+                    data: { posts: folderItems },
+                } = await fetchContents();
+                this.folderItems = folderItems;
                 return;
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        editPost(id) {
-            this.$router.push(`/post/${id}`);
-        },
-        async removePost(id) {
-            try {
-                if (confirm('Delete it?')) {
-                    const response = await deletePostById(id);
-                    await this.fetchData();
-                    bus.$emit('show:toast', `${response.data.title} was deleted`);
-                }
             } catch (error) {
                 console.log(error);
             }

@@ -4,13 +4,7 @@
         <hr class="hr-black" />
         <ul class="form-list-thumb">
             <li class="form-row thumb-row">
-                <span class="thumb-file file-upload">
-                    <input type="file" />
-                    <span class="thumb">
-                        <img src="@/assets/images/@test1.jpg" alt="업로드이미지" />
-                    </span>
-                    <span class="txt">썸네일 이미지 재등록</span>
-                </span>
+                <thumbnail />
             </li>
             <li class="form-row">
                 <div class="form-column">
@@ -133,7 +127,9 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                     <label class="label-title">권한 설정</label>
                 </div>
                 <div class="form-column">
-                    <button type="button" class="btn-form-gray min100"><span>권한설정</span></button>
+                    <button type="button" class="btn-form-gray min100">
+                        <span>권한설정</span>
+                    </button>
                 </div>
             </li>
         </ul>
@@ -141,8 +137,11 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
     </div>
 </template>
 <script>
+import thumbnail from '@/components/thumbnail';
+
 export default {
     name: 'CampaignSettings',
+    components: { thumbnail },
 };
 </script>
 <style scoped></style>
