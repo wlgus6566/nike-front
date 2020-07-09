@@ -3,6 +3,7 @@ package com.nike.dnp.dto.menu;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.entity.menu.Menu;
+import com.nike.dnp.entity.menu.MenuRole;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -148,6 +149,8 @@ public class MenuReturnDTO {
      * @author [오지훈]
      */
     private List<Menu> subMenus;
+
+    private List<MenuRole> menuRoles;
 
     /**
      * 스킬 코드 목록 셋팅

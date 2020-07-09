@@ -2,14 +2,18 @@ package com.nike.dnp.repository.menu;
 
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.menu.MenuReturnDTO;
+import com.nike.dnp.entity.auth.QAuth;
+import com.nike.dnp.entity.auth.QAuthMenuRole;
 import com.nike.dnp.entity.menu.Menu;
 import com.nike.dnp.entity.menu.QMenu;
+import com.nike.dnp.entity.menu.QMenuRole;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * CodeRepositoryImpl
@@ -74,64 +78,26 @@ public class MenuRepositoryImpl extends QuerydslRepositorySupport implements Men
      * @Description 메뉴 목록(권한)
      */
     @Override
-    public List<Menu> getMenus(final Long authSeq) {
-        //TODO[ojh] 2020-07-08 : 뭐리 작성 예정
-        return null;
-    }
-
-/*
-    @Override
-    public List<Menu> getMenus() {
+    public  List<Menu> getMenus(final Long authSeq) {
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-        final QMenu qMenu = QMenu.menu;
-        final QMenuRole qMenuRole = QMenuRole.menuRole;
+        final QAuthMenuRole qAuthMenuRole = new QAuthMenuRole("authMenuRole");
+        final QMenuRole qMenuRole = new QMenuRole("menuRole");
+        final QMenu qMenu = new QMenu("menu");
+        final QMenu qUpperMenu = new QMenu("upperMenu");
+        final QAuth qAuth = new QAuth("auth");
 
-        final JPAQuery<Menu> jpaQuery = queryFactory
-                .selectFrom(qMenu)
-                .innerJoin(qMenuRole).on(qMenu.menuSeq.eq(qMenuRole.menuSeq))
-                .fetchAll();
-
-        return jpaQuery.fetch();
-    }
-
-    @Override
-    public List<MenuReturnDTO> getMenus1() {
-        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-        final QMenu qMenu = QMenu.menu;
-        final QMenuRole qMenuRole = QMenuRole.menuRole;
-
-        final JPAQuery<MenuReturnDTO> jpaQuery = queryFactory
-                .select(Projections.bean(MenuReturnDTO.class, qMenu.menuName
-                , ExpressionUtils.as(
-                                JPAExpressions.select(qMenu.menuName)
-                                        .from(qMenu)
-                                        .where(qMenu.menuSeq.eq(qMenu.upperMenuSeq)),
-                                "menuName")
-                        ))
+        return queryFactory
+                .select(qMenu)
                 .from(qMenu)
-                .innerJoin(qMenuRole).on(qMenu.menuSeq.eq(qMenuRole.menuSeq))
-                .fetchAll();
-
-        return jpaQuery.fetch();
+                //.innerJoin(qUpperMenu).on(qMenu.upperMenuSeq.eq(qUpperMenu.menuSeq)).fetchJoin()
+                .innerJoin(qMenuRole).on(qMenu.menuSeq.eq(qMenuRole.menuSeq)).fetchJoin()
+                .innerJoin(qAuthMenuRole).on(
+                        qMenuRole.menuRoleSeq.eq(qAuthMenuRole.menuRoleSeq)
+                        , qAuthMenuRole.authSeq.eq(authSeq)
+                ).fetchJoin()
+                //.innerJoin(qAuth).on(qAuthMenuRole.authSeq.eq(qAuth.authSeq)).fetchJoin()
+                .where(qMenu.useYn.eq(ServiceEnumCode.yesOrNoEnumCode.Y.toString()))
+                .fetch().stream().distinct().collect(Collectors.toList());
     }
 
-    @Override
-    public List<Menu> getMenus(final Long authSeq) {
-        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-        final QMenu qMenu = QMenu.menu;
-        final QMenuRole qMenuRole = QMenuRole.menuRole;
-        final QAuthMenuRole qAuthMenuRole = QAuthMenuRole.authMenuRole;
-        final QAuth qAuth = QAuth.auth;
-
-        final JPAQuery<Menu> jpaQuery = queryFactory
-                .selectFrom(qMenu)
-                .innerJoin(qMenuRole).on(qMenu.menuSeq.eq(qMenuRole.menuSeq))
-                .leftJoin(qAuthMenuRole).on(qMenuRole.menuRoleSeq.eq(qAuthMenuRole.menuRole.menuRoleSeq))
-                .innerJoin(qAuth).on(qAuthMenuRole.auth.authSeq.eq(qAuth.authSeq))
-                .where(qAuth.authSeq.eq(authSeq))
-                .fetchAll();
-
-        return jpaQuery.fetch();
-    }
-    */
 }

@@ -41,7 +41,7 @@ public class TupleUtil {
 	 * @CreatedOn 2020. 7. 2. 오전 11:06:10
 	 * @Description
 	 */
-	public static List<HashMap<String,Object>> listTupleToListHashMap(final List<Tuple> tupleList,
+	public List<HashMap<String,Object>> listTupleToListHashMap(final List<Tuple> tupleList,
 																	  final String dateFormat,
 																	  final Expression<?>... exprs) {
 		Iterator<Tuple> iterator = tupleList.iterator();
@@ -64,7 +64,7 @@ public class TupleUtil {
 	 * @CreatedOn 2020. 7. 2. 오전 11:06:13
 	 * @Description
 	 */
-	public static List<HashMap<String, Object>> listTupleToListHashMap(final List<Tuple> tupleList,
+	public List<HashMap<String, Object>> listTupleToListHashMap(final List<Tuple> tupleList,
 																	   final Expression<?>... exprs) {
 		return listTupleToListHashMap(tupleList, null, exprs);
 	}
@@ -85,7 +85,7 @@ public class TupleUtil {
 	 * @CreatedOn 2020. 7. 2. 오전 11:20:41
 	 * @Description
 	 */
-	public static HashMap<String, Object> tupleToHashMap(final Tuple tuple,
+	public HashMap<String, Object> tupleToHashMap(final Tuple tuple,
 														 final String dateFormat,
 														 final Expression<?>... exprs) {
 		HashMap<String, Object> result = new HashMap<>();
@@ -116,7 +116,7 @@ public class TupleUtil {
 	 * @CreatedOn 2020. 7. 2. 오전 11:20:41
 	 * @Description
 	 */
-	public static HashMap<String, Object> tupleToHashMap(final Tuple tuple,
+	public HashMap<String, Object> tupleToHashMap(final Tuple tuple,
 														 final Expression<?>... exprs) {
 		return tupleToHashMap(tuple,null,exprs);
 	}

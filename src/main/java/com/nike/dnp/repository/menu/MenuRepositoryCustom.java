@@ -37,4 +37,6 @@ public interface MenuRepositoryCustom {
      */
     List<Menu> getMenus(final Long authSeq);
 
+
+
 }

@@ -71,11 +71,20 @@ public class MenuController {
     )
     @GetMapping(name = "메뉴 목록 조회(전체)"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<MenuReturnDTO>> findAll() {
-        log.info("MenuController.findAll");
+    public SingleResult<List<MenuReturnDTO>> findAllMenus() {
+        log.info("MenuController.findAllMenus");
         return responseService.getSingleResult(menuService.getMenus());
     }
 
+    /**
+     * Find auth menus single result.
+     *
+     * @param authSeq the auth seq
+     * @return the single result
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 9. 오후 5:31:48
+     * @Description 메뉴 관리 목록 조회(권한)
+     */
     @ApiOperation(
             value = "메뉴 관리 목록 조회(권한)"
             , notes = BASIC_OPERATION
@@ -89,40 +98,5 @@ public class MenuController {
         log.info("MenuController.findAuthMenus");
         return responseService.getSingleResult(menuService.getMenus(authSeq));
     }
-
-    /*@ApiOperation(
-            value = "메뉴 관리 목록 조회"
-            , notes = BASIC_OPERATION
-    )
-    @GetMapping(name = "메뉴 목록 조회"
-            , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<Menu>> findAll() {
-        log.info("MenuController.findAll");
-        return responseService.getSingleResult(menuService.findAll());
-    }*/
-
-    /*
-    @ApiOperation(
-            value = "메뉴 관리 목록 조회"
-            , notes = BASIC_OPERATION
-    )
-    @GetMapping(name = "메뉴 목록 조회"
-            , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<Menu>> getMenus() {
-        log.info("MenuController.getMenus");
-        return responseService.getSingleResult(menuService.getMenus());
-    }
-
-    @ApiOperation(
-            value = "메뉴 관리 목록 조회"
-            , notes = BASIC_OPERATION
-    )
-    @GetMapping(name = "메뉴 목록 조회", value = "{authSeq}"
-            , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<Menu>> getMenus(@PathVariable final Long authSeq) {
-        log.info("MenuController.getMenus");
-        return responseService.getSingleResult(menuService.getMenus(authSeq));
-    }
-    */
 
 }

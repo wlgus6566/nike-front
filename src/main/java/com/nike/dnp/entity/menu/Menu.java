@@ -165,7 +165,15 @@ public class Menu extends BaseTimeEntity implements Serializable {
     @JoinColumn(name = "UPPER_MENU_SEQ",
             referencedColumnName = "MENU_SEQ",
             insertable = false, updatable = false)
+    //@JsonBackReference
     private List<Menu> subMenus;
+
+    /*@ManyToOne
+    @JoinColumn(name = "UPPER_MENU_SEQ",
+            referencedColumnName = "MENU_SEQ",
+            insertable = false, updatable = false)
+    @JsonManagedReference
+    private Menu upperMenu;*/
 
     /**
      * The Menu roles
@@ -175,6 +183,9 @@ public class Menu extends BaseTimeEntity implements Serializable {
     @OneToMany(mappedBy = "menu")
     @JsonManagedReference
     private List<MenuRole> menuRoles;
+
+    /*@Transient
+    private String upperMenuName;*/
 
     /**
      * Gets skill codes.
@@ -196,4 +207,16 @@ public class Menu extends BaseTimeEntity implements Serializable {
 
         return map;
     }
+
+    /*public String getUpperMenuName() {
+        System.out.println("======================================================");
+        System.out.println("asdasdkjhasdkjahsdk");
+        System.out.println("======================================================");
+        *//*for (Menu menu : subMenus) {
+            if (menu == this) {
+                return menu.menuName;
+            }
+        }*//*
+        return this.upperMenu.menuName;
+    }*/
 }
