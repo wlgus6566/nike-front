@@ -8,7 +8,7 @@
                 <span>파일 추가하기</span>
             </button>
         </div>
-        <file></file>
+        <FileItem />
         <component v-for="item in buttons" :is="item"></component>
         <div class="btn-area-file">
             <button class="btn-file-full" v-on:click="add">
@@ -24,18 +24,18 @@
 </template>
 <script>
 export default {
-    name: 'FileSettings.vue',
+    name: 'FileSettings',
     data() {
         return {
             buttons: [],
         };
     },
     components: {
-        file: () => import('@/components/upload/file.vue'),
+        FileItem: () => import('@/components/file-settings/file-item.vue'),
     },
     methods: {
         add() {
-            this.buttons.push('file');
+            this.buttons.push('FileItem');
         },
     },
 };

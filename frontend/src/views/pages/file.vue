@@ -69,7 +69,7 @@
     </div>
 </template>
 <script>
-import FileUpload from '@/components/file-upload';
+import FileUpload from '@/components/file-settings/file-upload';
 export default {
     name: 'file',
     components: { FileUpload },

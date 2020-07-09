@@ -137,7 +137,7 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
     </div>
 </template>
 <script>
-import thumbnail from '@/components/thumbnail';
+import thumbnail from '@/components/thumbnail/index';
 
 export default {
     name: 'CampaignSettings',

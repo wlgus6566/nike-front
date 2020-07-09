@@ -49,74 +49,7 @@
                     <span class="label-title">업로드 된 파일</span>
                 </div>
                 <div class="form-column">
-                    <div class="upload-file-box">
-                        <div class="upload-file-list actice">
-                            <ul>
-                                <li>
-                                    <label>
-                                        <span class="checkbox">
-                                            <input type="checkbox" />
-                                            <span></span>
-                                        </span>
-                                        <span class="txt"
-                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpgP20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpg</span
-                                        >
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <span class="checkbox">
-                                            <input type="checkbox" />
-                                            <span></span>
-                                        </span>
-                                        <span class="txt"
-                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                        >
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <span class="checkbox">
-                                            <input type="checkbox" />
-                                            <span></span>
-                                        </span>
-                                        <span class="txt"
-                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                        >
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <span class="checkbox">
-                                            <input type="checkbox" />
-                                            <span></span>
-                                        </span>
-                                        <span class="txt"
-                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                        >
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <span class="checkbox">
-                                            <input type="checkbox" />
-                                            <span></span>
-                                        </span>
-                                        <span class="txt"
-                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                        >
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="btn-box">
-                            <div class="fine-file">
-                                <span class="btn-form-gray"><span>찾기</span></span>
-                                <input type="file" />
-                            </div>
-                            <button type="button" class="btn-form"><span>삭제</span></button>
-                        </div>
-                    </div>
+                    <FileUpload />
                 </div>
             </li>
             <li class="form-row">
@@ -157,8 +90,10 @@
     </div>
 </template>
 <script>
+import FileUpload from './file-upload';
 export default {
-    name: 'file',
+    name: 'file-item',
+    components: { FileUpload },
 };
 </script>
 <style scoped></style>
