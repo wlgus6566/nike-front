@@ -1,44 +1,93 @@
 <template>
-    <li :class="[{ active: isOpen }, `depth${this.depth}`]">
+    <li :class="[`depth${this.depth}`]">
         <router-link
-            @click.native.prevent="toggle"
+            @click.native.prevent="toggle()"
             :to="item.to"
             :exact="item.exact"
             :event="clickable ? '' : 'click'"
-            :class="[{ hasDepth: isFolder }, 'nav-link']"
+            :class="[{ active: activeIndex === navIdx }, { hasDepth: clickable }, 'nav-link']"
             v-html="item.title"
         />
-        <ul v-show="isOpen" v-if="isFolder">
-            <navItem v-for="(child, index) in item.children" :key="index" :test="index" :item="child" :depth="depth + 1" />
-        </ul>
+        <transition @enter="enter" @leave="leave" :css="false">
+            <ul v-show="activeIndex === navIdx" v-if="isFolder">
+                <navItem
+                    @update="update"
+                    v-for="(child, index) in item.children"
+                    :key="index"
+                    :navIdx="index"
+                    :item="child"
+                    :depth="depth + 1"
+                    :activeIndex="myIndex"
+                />
+            </ul>
+        </transition>
     </li>
 </template>
 <script>
+import { gsap, Cubic } from 'gsap/all';
+
 export default {
     name: 'navItem',
-    props: ['item', 'depth', 'test'],
+    props: ['item', 'depth', 'navIdx', 'activeIndex'],
+    watch: {
+        $route(newRoute) {
+            this.init(newRoute.matched);
+        },
+    },
     data: function () {
         return {
-            isOpen: false,
+            myIndex: null,
         };
     },
     computed: {
         clickable: function () {
-            return this.isFolder && this.depth !== 1;
+            return this.isFolder && this.depth === 2;
         },
         isFolder: function () {
             return this.item.children && this.item.children.length;
         },
     },
     methods: {
-        toggle: function () {
-            if (this.clickable) {
-                this.isOpen = !this.isOpen;
+        enter(el, done) {
+            gsap.set(el, {
+                paddingBottom: '20',
+                height: 'auto',
+            });
+            gsap.from(el, 0.3, {
+                paddingBottom: 0,
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: done,
+            });
+        },
+        leave(el, done) {
+            gsap.to(el, 0.3, {
+                paddingBottom: 0,
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: done,
+            });
+        },
+        init(routeArray) {
+            const linkPath = this.$el.querySelector(':scope > .nav-link').getAttribute('href');
+            for (let item in routeArray) {
+                const path = routeArray[item].path;
+                if (path === linkPath) {
+                    this.$emit('update', this.navIdx, true);
+                }
             }
         },
+        toggle() {
+            if (this.clickable) {
+                this.$emit('update', this.navIdx);
+            }
+        },
+        update(index, initState) {
+            this.myIndex = !!initState ? index : this.myIndex === index ? null : index;
+        },
     },
-    created() {
-        //console.log(this.test);
+    mounted() {
+        this.init(this.$route.matched);
     },
 };
 </script>

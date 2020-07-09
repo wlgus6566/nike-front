@@ -1,8 +1,8 @@
 <template>
     <div>
-        <button type="button">modal open</button>
-
-        <MyModal>
+        <button type="button" @click="showModal = !showModal">modal open</button>
+        <!--v-if="showModal" -->
+        <modalComp @close="showModal = false">
             <!-- <template slot="header">
                 modal header
             </template>-->
@@ -12,7 +12,7 @@
             <!--<template slot="footer">
                 modal footer
             </template>-->
-        </MyModal>
+        </modalComp>
 
         <div>
             main<br />
@@ -145,12 +145,14 @@
     </div>
 </template>
 <script>
-import MyModal from '@/components/modal-comp/index';
+import modalComp from '@/components/modal-comp/index';
 export default {
     name: 'MainPage',
-    components: { MyModal },
+    components: { modalComp },
     data() {
-        return {};
+        return {
+            showModal: false,
+        };
     },
     methods: {},
 };

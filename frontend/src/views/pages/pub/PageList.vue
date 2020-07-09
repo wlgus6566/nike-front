@@ -7,11 +7,17 @@
                 <span class="name">작업자</span>
                 <span class="filename">파일명</span>
                 <span class="name">완료일</span>
+                <span class="name">검수</span>
                 <span class="com">비고</span>
             </li>
         </ul>
         <ul class="list">
-            <li v-for="(item, index) in pageLists" :key="index" :depth="1">
+            <li
+                v-for="(item, index) in pageLists"
+                :key="index"
+                :depth="1"
+                :class="{ depth: item.depthTitle }"
+            >
                 <span>{{ item.title }}</span>
                 <span class="name">
                     {{ item.name }}
@@ -22,65 +28,104 @@
                 <span class="name">
                     {{ item.com }}
                 </span>
+                <span>
+                    {{ item.abc }}
+                </span>
                 <span class="com">
                     {{ item.comment }}
                 </span>
                 <ul v-if="item.depth">
-                    <li v-for="(item, index) in item.depth" :key="index">
+                    <li
+                        v-for="(item, index) in item.depth"
+                        :key="index"
+                        :class="{ depth: item.depthTitle }"
+                    >
                         <span>{{ item.title }}</span>
                         <span class="name">
                             {{ item.name }}
                         </span>
                         <span class="filename">
-                            <router-link :to="item.link" target="_blank">{{ item.filename }}</router-link>
+                            <router-link :to="item.link" target="_blank">{{
+                                item.filename
+                            }}</router-link>
                         </span>
                         <span class="name">
                             {{ item.com }}
+                        </span>
+                        <span>
+                            {{ item.abc }}
                         </span>
                         <span class="com">
                             {{ item.comment }}
                         </span>
                         <ul v-if="item.depth">
-                            <li v-for="(item, index) in item.depth" :key="index">
+                            <li
+                                v-for="(item, index) in item.depth"
+                                :key="index"
+                                :class="{ depth: item.depthTitle }"
+                            >
                                 <span>{{ item.title }}</span>
                                 <span class="name">
                                     {{ item.name }}
                                 </span>
                                 <span class="filename">
-                                    <router-link :to="item.link" target="_blank">{{ item.filename }}</router-link>
+                                    <router-link :to="item.link" target="_blank">{{
+                                        item.filename
+                                    }}</router-link>
                                 </span>
                                 <span class="name">
                                     {{ item.com }}
+                                </span>
+                                <span>
+                                    {{ item.abc }}
                                 </span>
                                 <span class="com">
                                     {{ item.comment }}
                                 </span>
                                 <ul v-if="item.depth">
-                                    <li v-for="(item, index) in item.depth" :key="index">
+                                    <li
+                                        v-for="(item, index) in item.depth"
+                                        :key="index"
+                                        :class="{ depth: item.depthTitle }"
+                                    >
                                         <span>{{ item.title }}</span>
                                         <span class="name">
                                             {{ item.name }}
                                         </span>
                                         <span class="filename">
-                                            <router-link :to="item.link" target="_blank">{{ item.filename }}</router-link>
+                                            <router-link :to="item.link" target="_blank">{{
+                                                item.filename
+                                            }}</router-link>
                                         </span>
                                         <span class="name">
                                             {{ item.com }}
+                                        </span>
+                                        <span>
+                                            {{ item.abc }}
                                         </span>
                                         <span class="com">
                                             {{ item.comment }}
                                         </span>
                                         <ul v-if="item.depth">
-                                            <li v-for="(item, index) in item.depth" :key="index">
+                                            <li
+                                                v-for="(item, index) in item.depth"
+                                                :key="index"
+                                                :class="{ depth: item.depthTitle }"
+                                            >
                                                 <span>{{ item.title }}</span>
                                                 <span class="name">
                                                     {{ item.name }}
                                                 </span>
                                                 <span class="filename">
-                                                    <router-link :to="item.link" target="_blank">{{ item.filename }}</router-link>
+                                                    <router-link :to="item.link" target="_blank">{{
+                                                        item.filename
+                                                    }}</router-link>
                                                 </span>
                                                 <span class="name">
                                                     {{ item.com }}
+                                                </span>
+                                                <span>
+                                                    {{ item.abc }}
                                                 </span>
                                                 <span class="com">
                                                     {{ item.comment }}
@@ -105,100 +150,165 @@ export default {
             pageLists: [
                 {
                     title: 'HOME',
+                    depthTitle: false,
                     name: '지은유',
                     filename: 'mainPage.vue',
                     link: 'main',
-                    com: '',
-                    comment: ' ',
+                    com: '2020.07.06',
+                    abc: '',
+                    comment: '캘린더 VUE 작업 필요',
                     depth: false,
                 },
                 {
                     title: 'GUDE',
+                    depthTitle: true,
                     name: '지은유',
                     filename: '',
                     link: '',
                     com: '',
+                    abc: '',
                     comment: '',
                     depth: [
                         {
                             title: 'BUTTON',
+                            depthTitle: false,
                             name: '지은유',
                             filename: 'button.vue',
                             link: 'button',
                             com: ' ',
+                            abc: '',
                             comment: ' ',
                             depth: false,
                         },
                         {
                             title: 'INPUT',
+                            depthTitle: false,
                             name: '지은유',
                             filename: 'input.vue',
                             link: 'input',
                             com: ' ',
+                            abc: '',
                             comment: '디자인 수정 반영 예정',
                             depth: false,
+                        },
+                        {
+                            title: 'nodata-업로드한 폴더',
+                            depthTitle: false,
+                            name: '지은유',
+                            filename: 'nodata01.vue',
+                            link: 'nodata01',
+                            com: '2020.07.08',
+                            abc: '',
+                            comment: '',
+                            depth: false,
+                        },
+                        {
+                            title: 'nodata-최근 본 폴더',
+                            depthTitle: false,
+                            name: '지은유',
+                            filename: 'nodata02.vue',
+                            link: 'nodata02',
+                            com: '2020.07.08',
+                            abc: '',
+                            comment: '',
+                            depth: false,
+                        },
+                        {
+                            title: 'nodata-주문 내역',
+                            depthTitle: false,
+                            name: '지은유',
+                            filename: 'nodata03.vue',
+                            link: 'nodata03',
+                            com: '2020.07.08',
+                            abc: '',
+                            comment: '',
+                            depth: false,
+                        },
+                        {
+                            title: 'nodata-위시리스트',
+                            depthTitle: false,
+                            name: '지은유',
+                            filename: 'nodata04.vue',
+                            link: 'nodata04',
+                            com: '2020.07.08',
+                            abc: '',
+                            comment: '',
                         },
                     ],
                 },
                 {
                     title: 'LOGIN',
+                    depthTitle: true,
                     name: '지은유',
                     filename: '',
                     link: '',
                     com: '',
+                    abc: '',
                     comment: '',
                     depth: [
                         {
                             title: '로그인',
+                            depthTitle: false,
                             name: '지은유',
                             filename: 'NIKE_P_LOGIN_01.vue',
                             link: 'NIKE_P_LOGIN_01',
-                            com: ' ',
+                            com: '2020.07.02',
+                            abc: '',
                             comment: '배경 추가 반영 필요',
                             depth: false,
                         },
                         {
                             title: '이메일 인증',
+                            depthTitle: false,
                             name: '지은유',
                             filename: 'NIKE_P_LOGIN_02.vue',
                             link: 'NIKE_P_LOGIN_02',
-                            com: ' ',
-                            comment: '배경 추가 반영 필요',
+                            com: '2020.07.02',
+                            abc: '',
+                            comment: '배경 추가 반영 필요 , input 디자인 반영',
                             depth: false,
                         },
                         {
                             title: '비밀번호 찾기',
+                            depthTitle: false,
                             name: '지은유',
                             filename: 'NIKE_P_LOGIN_03.vue',
                             link: 'NIKE_P_LOGIN_03',
-                            com: ' ',
+                            com: '2020.07.02',
+                            abc: '',
                             comment: '배경 추가 반영 필요',
                             depth: false,
                         },
                         {
                             title: '비밀번호 설정',
+                            depthTitle: false,
                             name: '한슬기',
                             filename: '	NIKE_P_LOGIN_05.vue',
                             link: '	NIKE_P_LOGIN_05',
-                            com: ' ',
+                            com: '2020.06.24',
+                            abc: '',
                             comment: ' ',
                             depth: false,
                         },
                         {
                             title: '약관동의',
+                            depthTitle: false,
                             name: '한슬기',
                             filename: '	NIKE_P_LOGIN_04.vue',
                             link: '	NIKE_P_LOGIN_04',
-                            com: ' ',
+                            com: '2020.06.24',
+                            abc: '',
                             comment: ' ',
                             depth: false,
                         },
                         {
                             title: '비밀번호 변경',
+                            depthTitle: false,
                             name: '한슬기',
                             filename: '	NIKE_P_LOGIN_06.vue',
                             link: '	NIKE_P_LOGIN_06',
-                            com: ' ',
+                            com: '2020.06.24',
+                            abc: '',
                             comment: ' ',
                             depth: false,
                         },
@@ -206,44 +316,54 @@ export default {
                 },
                 {
                     title: 'GNB',
+                    depthTitle: true,
                     name: '',
                     filename: '',
                     link: '',
                     com: '',
+                    abc: '',
                     comment: '',
                     depth: [
                         {
                             title: 'ASSET',
+                            depthTitle: true,
                             name: '',
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
                                     title: 'UPLOAD',
+                                    depthTitle: false,
                                     name: '지은유',
                                     filename: 'NIKE_P_ASSET_01.vue',
                                     link: 'NIKE_P_ASSET_01',
-                                    com: '',
-                                    comment: ' ',
+                                    com: '2020.07.02',
+                                    abc: '',
+                                    comment: '기간제외 검수 가능',
                                     depth: false,
                                 },
                                 {
                                     title: '목록',
+                                    depthTitle: false,
                                     name: '지은유',
                                     filename: 'ASSET_SP_LIST.vue',
                                     link: 'ASSET_SP_LIST',
-                                    com: '',
+                                    com: '2020.07.02',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
                                 {
                                     title: '상세',
+                                    depthTitle: false,
                                     name: '지은유',
                                     filename: 'ASSET_SP_DETAIL.vue',
                                     link: 'ASSET_SP_DETAIL',
-                                    com: '',
+                                    com: '2020.07.02',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
@@ -251,36 +371,44 @@ export default {
                         },
                         {
                             title: 'TOOLKIT',
+                            depthTitle: true,
                             name: '',
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
                                     title: 'UPLOAD',
+                                    depthTitle: false,
                                     name: '지은유',
                                     filename: 'NIKE_P_TOOLKIT_01.vue',
                                     link: 'NIKE_P_TOOLKIT_01',
-                                    com: ' ',
-                                    comment: ' ',
+                                    com: '2020.07.02',
+                                    abc: '',
+                                    comment: '기간제외 검수 가능',
                                     depth: false,
                                 },
                                 {
                                     title: '목록',
+                                    depthTitle: false,
                                     name: '지은유',
                                     filename: 'NIKE_P_TOOLKIT_02.vue',
                                     link: 'NIKE_P_TOOLKIT_02',
-                                    com: ' ',
+                                    com: '2020.07.02',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
                                 {
                                     title: '상세',
+                                    depthTitle: false,
                                     name: '지은유',
                                     filename: 'NIKE_P_TOOLKIT_03.vue',
                                     link: 'NIKE_P_TOOLKIT_03',
-                                    com: ' ',
+                                    com: '2020.07.02',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
@@ -288,36 +416,44 @@ export default {
                         },
                         {
                             title: 'FOUNDATION',
+                            depthTitle: true,
                             name: '',
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
                                     title: 'UPLOAD',
+                                    depthTitle: false,
                                     name: '지은유',
                                     filename: 'NIKE_P_FD_01.vue',
                                     link: 'NIKE_P_FD_01',
-                                    com: ' ',
-                                    comment: ' ',
+                                    com: '2020.07.02',
+                                    abc: '',
+                                    comment: '기간제외 검수 가능',
                                     depth: false,
                                 },
                                 {
                                     title: '목록',
+                                    depthTitle: false,
                                     name: '지은유',
                                     filename: 'NIKE_P_FD_02.vue',
                                     link: 'NIKE_P_FD_02',
-                                    com: ' ',
+                                    com: '2020.07.02',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
                                 {
                                     title: '상세',
+                                    depthTitle: false,
                                     name: '지은유',
                                     filename: 'NIKE_P_FD_03.vue',
                                     link: 'NIKE_P_FD_03',
-                                    com: ' ',
+                                    com: '2020.07.02',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
@@ -325,239 +461,56 @@ export default {
                         },
                         {
                             title: 'ORDER: 부자재 주문',
+                            depthTitle: true,
                             name: '',
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
                                     title: '상품관리',
+                                    depthTitle: false,
+                                    name: '지은유',
+                                    filename: '	NIKE_P_ORDER_06.vue',
+                                    link: '	NIKE_P_ORDER_06',
+                                    com: '2020.07.03',
+                                    abc: '',
+                                    comment: ' ',
+                                    depth: false,
+                                },
+
+                                {
+                                    title: '상품등록',
+                                    depthTitle: false,
                                     name: '지은유',
                                     filename: '	NIKE_P_ORDER_01.vue',
                                     link: '	NIKE_P_ORDER_01',
-                                    com: ' ',
+                                    com: '2020.07.03',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
                                 {
-                                    title: '부자재',
-                                    name: '',
-                                    filename: '',
-                                    link: '',
-                                    com: '',
-                                    comment: '',
-                                    depth: [
-                                        {
-                                            title: '운영 비품',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '스태프 비품',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '운영 사이니지',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '세일 사이니지',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '오픈 패키지',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                    ],
-                                },
-                                {
-                                    title: 'NIKE BY YOU',
-                                    name: '',
-                                    filename: '',
-                                    link: '',
-                                    com: '',
-                                    comment: '',
-                                    depth: [
-                                        {
-                                            title: '상품리스트',
-                                            name: '지은유',
-                                            filename: 'NIKE_P_ORDER_02.vue',
-                                            link: 'NIKE_P_ORDER_02',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                    ],
-                                },
-                                {
-                                    title: '신발 커스텀 (단품)',
-                                    name: ' ',
-                                    filename: ' ',
-                                    link: ' ',
-                                    com: ' ',
+                                    title: '상품목록',
+                                    depthTitle: false,
+                                    name: '지은유',
+                                    filename: 'NIKE_P_ORDER_02.vue',
+                                    link: 'NIKE_P_ORDER_02',
+                                    com: '2020.07.03',
+                                    abc: '',
                                     comment: ' ',
-                                    depth: [
-                                        {
-                                            title: '신발 커스텀 (패키지)',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '의류 커스텀 (단품)',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '의류 커스텀 (패키지)',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: 'OTHERS',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                    ],
-                                },
-                                {
-                                    title: 'CUSTOM23',
-                                    name: '',
-                                    filename: '',
-                                    link: '',
-                                    com: '',
-                                    comment: '',
-                                    depth: [
-                                        {
-                                            title: '신발 커스텀 (단품)',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '신발 커스텀 (패키지)',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '의류 커스텀 (단품)',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '의류 커스텀 (패키지)',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: 'OTHERS',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                    ],
-                                },
-                                {
-                                    title: 'MNQ',
-                                    name: '',
-                                    filename: '',
-                                    link: '',
-                                    com: '',
-                                    comment: '',
-                                    depth: [
-                                        {
-                                            title: '남성',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '여성',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '유아동',
-                                            name: ' ',
-                                            filename: ' ',
-                                            link: ' ',
-                                            com: ' ',
-                                            comment: ' ',
-                                            depth: false,
-                                        },
-                                    ],
+                                    depth: false,
                                 },
                                 {
                                     title: '주문 완료',
+                                    depthTitle: false,
                                     name: '지은유',
                                     filename: 'NIKE_P_ORDER_07.vue',
                                     link: 'NIKE_P_ORDER_07',
-                                    com: ' ',
+                                    com: '2020.06.30',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
@@ -565,44 +518,54 @@ export default {
                         },
                         {
                             title: 'REPORT 시공보고서',
+                            depthTitle: true,
                             name: '',
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
                                     title: 'REPORT UPLOAD',
+                                    depthTitle: false,
                                     name: '지은유',
                                     filename: '	NIKE_P_REPORT_01.vue',
                                     link: '	NIKE_P_REPORT_01',
-                                    com: ' ',
+                                    com: '2020.07.02',
+                                    abc: '',
                                     comment: ' ',
                                     depth: false,
                                 },
                                 {
                                     title: 'REPORT 관리',
+                                    depthTitle: true,
                                     name: '',
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
                                             title: '목록',
+                                            depthTitle: false,
                                             name: '지은유',
                                             filename: 'NIKE_P_REPORT_02.vue',
                                             link: 'NIKE_P_REPORT_02',
-                                            com: ' ',
+                                            com: '2020.07.02',
+                                            abc: '',
                                             comment: ' ',
                                             depth: false,
                                         },
                                         {
                                             title: '상세',
+                                            depthTitle: false,
                                             name: '지은유',
                                             filename: 'NIKE_P_REPORT_03.vue',
                                             link: 'NIKE_P_REPORT_03',
-                                            com: ' ',
+                                            com: '2020.07.02',
+                                            abc: '',
                                             comment: ' ',
                                             depth: false,
                                         },
@@ -612,35 +575,43 @@ export default {
                         },
                         {
                             title: 'INFORMATION',
+                            depthTitle: true,
                             name: '',
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
                                     title: 'AGENCY CONTACT',
+                                    depthTitle: true,
                                     name: '',
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
-                                            title: '업로드',
+                                            title: '업로드 팝업',
+                                            depthTitle: false,
                                             name: '',
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
                                         {
                                             title: '\t목록',
-                                            name: '',
-                                            filename: '',
-                                            link: '',
-                                            com: '',
+                                            depthTitle: false,
+                                            name: '지은유',
+                                            filename: 'NIKE_P_INFO_01_001.vue',
+                                            link: 'NIKE_P_INFO_01_001',
+                                            com: '2020.07.06',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -648,28 +619,34 @@ export default {
                                 },
                                 {
                                     title: 'LAUNCHING CALENDAR',
+                                    depthTitle: true,
                                     name: '',
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
-                                            title: '업로드',
+                                            title: '업로드 팝업',
+                                            depthTitle: false,
                                             name: '',
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
                                         {
                                             title: '\t목록',
-                                            name: '',
-                                            filename: '',
+                                            depthTitle: false,
+                                            name: '---------------------',
+                                            filename: '---------------------',
                                             link: '',
-                                            com: '',
-                                            comment: '',
+                                            com: '---------------------',
+                                            abc: '---------------------',
+                                            comment: '프론트엔드에서 작업 예정',
                                             depth: false,
                                         },
                                     ],
@@ -678,44 +655,65 @@ export default {
                         },
                         {
                             title: 'MANAGEMENT',
+                            depthTitle: true,
                             name: '',
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
                                     title: '메인 비쥬얼 관리',
+                                    depthTitle: false,
                                     name: '지은유',
                                     filename: 'NIKE_P_MANAGE_01.vue',
                                     link: 'NIKE_P_MANAGE_01',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: false,
                                 },
                                 {
                                     title: '계정관리',
+                                    depthTitle: true,
                                     name: '',
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
-                                            title: '업로드',
+                                            title: '업로드 팝업',
+                                            depthTitle: false,
                                             name: '',
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
                                         {
                                             title: '목록',
-                                            name: '',
-                                            filename: '',
-                                            link: '',
+                                            depthTitle: false,
+                                            name: '지은유',
+                                            filename: 'NIKE_P_MANAGE_02_001.vue',
+                                            link: 'NIKE_P_MANAGE_02_001',
                                             com: '',
+                                            abc: '',
+                                            comment: '',
+                                            depth: false,
+                                        },
+                                        {
+                                            title: '계정 관리',
+                                            depthTitle: false,
+                                            name: '염주성',
+                                            filename: 'NIKE_P_MANAGE_02_002P.vue',
+                                            link: 'NIKE_P_MANAGE_02_002P',
+                                            com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -723,10 +721,12 @@ export default {
                                 },
                                 {
                                     title: '권한 그룹관리',
-                                    name: '',
-                                    filename: '',
-                                    link: '',
+                                    depthTitle: false,
+                                    name: '지은유',
+                                    filename: 'NIKE_P_MANAGE_03.vue',
+                                    link: 'NIKE_P_MANAGE_03',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: false,
                                 },
@@ -736,61 +736,53 @@ export default {
                 },
                 {
                     title: 'UTIL',
+                    depthTitle: true,
                     name: '',
                     filename: '',
                     link: '',
                     com: '',
+                    abc: '',
                     comment: '',
                     depth: [
                         {
-                            title: '알림',
-                            name: '',
-                            filename: '',
-                            link: '',
-                            com: '',
-                            comment: '',
-                            depth: false,
-                        },
-                        {
-                            title: 'HISTORY',
-                            name: '',
-                            filename: '',
-                            link: '',
-                            com: '',
-                            comment: '',
-                            depth: false,
-                        },
-                        {
                             title: 'MY PAGE',
+                            depthTitle: true,
                             name: '',
                             filename: '',
                             link: '',
                             com: '',
+                            abc: '',
                             comment: '',
                             depth: [
                                 {
                                     title: 'HISTORY',
+                                    depthTitle: true,
                                     name: '',
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
                                             title: '내가 업로드한 폴더',
+                                            depthTitle: false,
                                             name: '지은유',
                                             filename: 'NIKE_P_MY_01_001.vue',
                                             link: 'NIKE_P_MY_01_001',
-                                            com: '',
+                                            com: '2020.07.03',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
                                         {
                                             title: '최근 본 폴더',
-                                            name: '',
-                                            filename: '',
-                                            link: '',
-                                            com: '',
+                                            depthTitle: false,
+                                            name: '지은유',
+                                            filename: 'NIKE_P_MY_01_002.vue',
+                                            link: 'NIKE_P_MY_01_002',
+                                            com: '2020.07.07',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -798,27 +790,45 @@ export default {
                                 },
                                 {
                                     title: 'ORDER',
+                                    depthTitle: true,
                                     name: '',
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
                                             title: '\t주문내역확인',
-                                            name: '',
-                                            filename: '',
-                                            link: '',
-                                            com: '',
+                                            depthTitle: false,
+                                            name: '지은유',
+                                            filename: 'NIKE_P_MY_02_001.vue',
+                                            link: 'NIKE_P_MY_02_001',
+                                            com: '2020.07.07',
+                                            abc: '',
                                             comment: '',
-                                            depth: false,
+                                            depth: [
+                                                {
+                                                    title: '상세 팝업',
+                                                    depthTitle: false,
+                                                    name: '',
+                                                    filename: '',
+                                                    link: '',
+                                                    com: '',
+                                                    abc: '',
+                                                    comment: '',
+                                                    depth: false,
+                                                },
+                                            ],
                                         },
                                         {
                                             title: '위시리스트',
-                                            name: '',
-                                            filename: '',
-                                            link: '',
-                                            com: '',
+                                            depthTitle: false,
+                                            name: '지은유',
+                                            filename: 'NIKE_P_MY_02_002.vue',
+                                            link: 'NIKE_P_MY_02_002',
+                                            com: '2020.07.07',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -826,36 +836,33 @@ export default {
                                 },
                                 {
                                     title: 'MY INFO',
+                                    depthTitle: true,
                                     name: '',
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
-                                            title: '회원정보 관리',
-                                            name: '',
-                                            filename: '',
-                                            link: '',
-                                            com: '',
+                                            title: '회원정보 조회',
+                                            depthTitle: false,
+                                            name: '지은유',
+                                            filename: 'NIKE_P_MY_03_001.vue',
+                                            link: 'NIKE_P_MY_03_001',
+                                            com: '2020.07.07',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
                                         {
                                             title: '비밀번호 변경',
-                                            name: '',
-                                            filename: '',
-                                            link: '',
-                                            com: '',
-                                            comment: '',
-                                            depth: false,
-                                        },
-                                        {
-                                            title: '로그아웃',
-                                            name: '',
-                                            filename: '',
-                                            link: '',
-                                            com: '',
+                                            depthTitle: false,
+                                            name: '한슬기',
+                                            filename: 'NIKE_P_MY_03_002.vue',
+                                            link: 'NIKE_P_MY_03_002',
+                                            com: '2020.07.07',
+                                            abc: '',
                                             comment: '',
                                             depth: false,
                                         },
@@ -863,44 +870,54 @@ export default {
                                 },
                                 {
                                     title: 'CUSTOMER CENTER',
+                                    depthTitle: true,
                                     name: '',
                                     filename: '',
                                     link: '',
                                     com: '',
+                                    abc: '',
                                     comment: '',
                                     depth: [
                                         {
                                             title: '공지사항',
+                                            depthTitle: true,
                                             name: '',
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: [
                                                 {
                                                     title: '목록',
-                                                    name: '',
-                                                    filename: '',
-                                                    link: '',
-                                                    com: '',
+                                                    depthTitle: false,
+                                                    name: '지은유',
+                                                    filename: 'NIKE_P_MY_04_001.vue',
+                                                    link: 'NIKE_P_MY_04_001',
+                                                    com: '2020.07.03',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
                                                 {
                                                     title: '상세',
-                                                    name: '',
-                                                    filename: '',
-                                                    link: '',
-                                                    com: '',
+                                                    depthTitle: false,
+                                                    name: '지은유',
+                                                    filename: 'NIKE_P_MY_04_002.vue',
+                                                    link: 'NIKE_P_MY_04_002',
+                                                    com: '2020.07.03',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
                                                 {
                                                     title: '등록/수정',
-                                                    name: '',
-                                                    filename: '',
-                                                    link: '',
-                                                    com: '',
+                                                    depthTitle: false,
+                                                    name: '지은유',
+                                                    filename: 'NIKE_P_MY_04_003.vue',
+                                                    link: 'NIKE_P_MY_04_003',
+                                                    com: '2020.07.03',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
@@ -908,36 +925,44 @@ export default {
                                         },
                                         {
                                             title: 'NEWS',
+                                            depthTitle: true,
                                             name: '',
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: [
                                                 {
                                                     title: '목록',
+                                                    depthTitle: false,
                                                     name: '지은유',
                                                     filename: 'NIKE_P_MY_04_004.vue',
                                                     link: 'NIKE_P_MY_04_004',
-                                                    com: '',
+                                                    com: '2020.07.03',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
                                                 {
                                                     title: '상세',
-                                                    name: '',
-                                                    filename: '',
-                                                    link: '',
-                                                    com: '',
+                                                    depthTitle: false,
+                                                    name: '지은유',
+                                                    filename: 'NIKE_P_MY_04_005.vue',
+                                                    link: 'NIKE_P_MY_04_005',
+                                                    com: '2020.07.03',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
                                                 {
                                                     title: '등록/수정',
-                                                    name: '',
-                                                    filename: '',
-                                                    link: '',
-                                                    com: '',
+                                                    depthTitle: false,
+                                                    name: '지은유',
+                                                    filename: 'NIKE_P_MY_04_006.vue',
+                                                    link: 'NIKE_P_MY_04_006',
+                                                    com: '2020.07.03',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
@@ -945,36 +970,33 @@ export default {
                                         },
                                         {
                                             title: '자주 묻는 질문',
+                                            depthTitle: true,
                                             name: '',
                                             filename: '',
                                             link: '',
                                             com: '',
+                                            abc: '',
                                             comment: '',
                                             depth: [
                                                 {
                                                     title: '목록',
-                                                    name: '',
-                                                    filename: '',
-                                                    link: '',
-                                                    com: '',
-                                                    comment: '',
-                                                    depth: false,
-                                                },
-                                                {
-                                                    title: '상세',
-                                                    name: '',
-                                                    filename: '',
-                                                    link: '',
-                                                    com: '',
+                                                    depthTitle: false,
+                                                    name: '지은유',
+                                                    filename: 'NIKE_P_MY_04_007.vue',
+                                                    link: 'NIKE_P_MY_04_007',
+                                                    com: '2020.07.06',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
                                                 {
                                                     title: '등록/수정',
-                                                    name: '',
-                                                    filename: '',
-                                                    link: '',
-                                                    com: '',
+                                                    depthTitle: false,
+                                                    nname: '지은유',
+                                                    filename: 'NIKE_P_MY_04_009.vue',
+                                                    link: 'NIKE_P_MY_04_009',
+                                                    com: '2020.07.06',
+                                                    abc: '',
                                                     comment: '',
                                                     depth: false,
                                                 },
@@ -987,55 +1009,101 @@ export default {
                     ],
                 },
                 {
-                    title: '이메일 발송',
+                    title: 'ECT',
+                    depthTitle: true,
                     name: '',
                     filename: '',
                     link: '',
                     com: '',
+                    abc: '',
+                    comment: '',
+                    depth: [
+                        {
+                            title: '페이지 오류',
+                            depthTitle: false,
+                            name: '지은유',
+                            filename: 'NIKE_P_ERROR_01.vue',
+                            link: 'NIKE_P_ERROR_01',
+                            com: '2020.07.07',
+                            abc: '',
+                            comment: '',
+                            depth: false,
+                        },
+                        {
+                            title: '시스템 점검중',
+                            depthTitle: false,
+                            name: '지은유',
+                            filename: 'NIKE_P_ERROR_02.vue',
+                            link: 'NIKE_P_ERROR_02',
+                            com: '2020.07.07',
+                            abc: '',
+                            comment: '',
+                            depth: false,
+                        },
+                    ],
+                },
+                {
+                    title: '이메일 발송',
+                    depthTitle: true,
+                    name: '',
+                    filename: '',
+                    link: '',
+                    com: '',
+                    abc: '',
                     comment: '',
                     depth: [
                         {
                             title: '이메일 인증 안내',
+                            depthTitle: false,
                             name: '한슬기',
                             filename: 'NIKE_P_LOGIN_01e.vue',
                             link: 'NIKE_P_LOGIN_01e',
-                            com: '',
+                            com: '2020.06.24',
+                            abc: '',
                             comment: '',
                             depth: false,
                         },
                         {
                             title: '비밀번호 설정 안내',
+                            depthTitle: false,
                             name: '한슬기',
                             filename: 'NIKE_P_LOGIN_03e.vue',
                             link: 'NIKE_P_LOGIN_03e',
-                            com: '',
+                            com: '2020.06.24',
+                            abc: '',
                             comment: '',
                             depth: false,
                         },
                         {
                             title: '컨텐츠 업데이트 알림',
+                            depthTitle: false,
                             name: '한슬기',
                             filename: 'NIKE_P_ASSET_02_001e.vue',
                             link: 'NIKE_P_ASSET_02_001e',
-                            com: '',
+                            com: '2020.06.24',
+                            abc: '',
                             comment: '',
                             depth: false,
                         },
                         {
                             title: '계정 생성 안내',
+                            depthTitle: false,
                             name: '한슬기',
                             filename: 'NIKE_P_MANAGE_02_001e.vue',
                             link: 'NIKE_P_MANAGE_02_001e',
-                            com: '',
+                            com: '2020.06.24',
+                            abc: '',
                             comment: '',
                             depth: false,
                         },
                         {
                             title: '주문서',
+                            depthTitle: false,
                             name: '한슬기',
                             filename: 'NIKE_P_ORDER_01e.vue',
                             link: 'NIKE_P_ORDER_01e',
-                            com: '',
+                            com: '2020.06.24',
+                            abc: '',
                             comment: '',
                             depth: false,
                         },
@@ -1104,6 +1172,9 @@ div {
     flex-basis: 100px;
 }
 .list li span:nth-child(5) {
+    flex-basis: 100px;
+}
+.list li span:nth-child(6) {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: auto;
@@ -1117,12 +1188,12 @@ div {
     width: 400px;
 }
 .list ul > li > ul > li > ul > li span:nth-child(1) {
-    margin-left: 389px;
-    width: 271px;
+    margin-left: 449px;
+    width: 211px;
 }
 .list ul > li > ul > li > ul > li > ul > li span:nth-child(1) {
-    margin-left: 510px;
-    width: 150px;
+    margin-left: 559px;
+    width: 101px;
 }
 .list ul li span:nth-child(1) {
     position: relative;
@@ -1139,5 +1210,8 @@ div {
 }
 .list a {
     color: #00a1e0;
+}
+.depth > ul {
+    margin-top: -41px;
 }
 </style>

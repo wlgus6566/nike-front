@@ -19,11 +19,14 @@
         "lodash": "^4.17.15",
         "swiper": "^5.4.1",
         "vue": "^2.6.11",
+        "vue-cropperjs": "^4.1.0",
+        "vue-custom-scrollbar": "^1.2.0",
         "vue-meta": "^2.3.4",
         "vue-router": "^3.2.0",
         "vue-sticky-directive": "0.0.10",
         "vuejs-paginate": "^2.1.0",
-        "vuex": "^3.4.0"
+        "vuex": "^3.4.0",
+        "webfonts-generator": "^0.4.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.10.3",

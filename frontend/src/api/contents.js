@@ -1,24 +1,24 @@
 import { contents } from './index';
 
 // posts
-function createNewPost(data) {
+function createContents(data) {
     return contents.post('/', data);
 }
 
-function fetchPosts() {
+function fetchContents() {
     return contents.get('/');
 }
 
-function fetchPostById(id) {
+function fetchContentsById(id) {
     return contents.get(id);
 }
 
-function editPostById(id, data) {
+function editContentsById(id, data) {
     return contents.put(id, data);
 }
 
-function deletePostById(id) {
+function deleteContentsById(id) {
     return contents.delete(id);
 }
 
-export { createNewPost, fetchPosts, fetchPostById, editPostById, deletePostById };
+export { createContents, fetchContents, fetchContentsById, editContentsById, deleteContentsById };

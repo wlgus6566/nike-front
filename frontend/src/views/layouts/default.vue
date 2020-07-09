@@ -1,7 +1,13 @@
 <template>
     <div id="wrap">
         <header class="sticky-container" sticky-container v-on:mouseleave="mouseEvent(true)">
-            <div class="sticky-content" sticky-offset="{top:0, bottom:0}" sticky-side="both" sticky-z-index="20" v-sticky>
+            <div
+                class="sticky-content"
+                sticky-offset="{top:0, bottom:0}"
+                sticky-side="both"
+                sticky-z-index="20"
+                v-sticky
+            >
                 <appHeader />
             </div>
             <i class="icon-ellipsis"></i>
@@ -9,13 +15,33 @@
         </header>
         <section id="container">
             <div class="contents">
-                <transition name="page-change" mode="out-in" appear v-on:appear="pageAppear" v-on:enter="pageEnter" v-on:leave="pageLeave">
+                <transition
+                    name="page-change"
+                    mode="out-in"
+                    appear
+                    v-on:appear="pageAppear"
+                    v-on:enter="pageEnter"
+                    v-on:leave="pageLeave"
+                >
                     <router-view></router-view>
                 </transition>
             </div>
             <aside class="sticky-container" sticky-container>
-                <div class="sticky-content" sticky-offset="{top:0, bottom:0}" sticky-side="both" sticky-z-index="20" v-sticky>
-                    <transition name="aside-change" mode="out-in" appear v-on:appear="asideAppear" v-on:enter="asideEnter" v-on:leave="asideLeave">
+                <div
+                    class="sticky-content"
+                    sticky-offset="{top:0, bottom:0}"
+                    sticky-side="both"
+                    sticky-z-index="20"
+                    v-sticky
+                >
+                    <transition
+                        name="aside-change"
+                        mode="out-in"
+                        appear
+                        v-on:appear="asideAppear"
+                        v-on:enter="asideEnter"
+                        v-on:leave="asideLeave"
+                    >
                         <component :is="AppAside" />
                     </transition>
                 </div>
@@ -30,8 +56,7 @@
 </template>
 <script>
 import Sticky from 'vue-sticky-directive';
-import { gsap, Cubic, ScrollToPlugin, TimelineLite } from 'gsap/all';
-gsap.registerPlugin(Cubic, ScrollToPlugin, TimelineLite);
+import { gsap, Cubic, TimelineLite } from 'gsap/all';
 
 import appHeader from '@/components/app-header';
 
@@ -66,7 +91,6 @@ export default {
     },
     mounted() {
         this.headerAni();
-        console.log(this.tw);
         this.toggleHeader(this.$route.path !== '/', this.tw._dur);
         const target = [document.querySelector('header .inner')];
         this.layoutAnimation(target, '-100%', '0%');
@@ -78,13 +102,14 @@ export default {
             const logo = header.querySelector('h1');
             const bg = header.querySelector('.header-bg');
             const nav = header.querySelector('nav');
-            const anchor = header.querySelector('nav > ul > li > .router-link-active');
+            const anchor = nav.querySelector('.depth1 > .router-link-active');
             const ul = anchor.nextSibling;
 
             this.tw.clear();
             this.tw
                 .set(header, {
-                    backgroundImage: 'linear-gradient(to right, rgba(255,255,255,1) 100%, rgba(0,0,0,0) 100%)',
+                    backgroundImage:
+                        'linear-gradient(to right, rgba(255,255,255,1) 100%, rgba(0,0,0,0) 100%)',
                 })
                 .to(
                     logo,
@@ -101,7 +126,8 @@ export default {
                     header,
                     0.5,
                     {
-                        backgroundImage: 'linear-gradient(to right, rgba(247,247,247,1) 20%, rgba(0,0,0,0) 20%)',
+                        backgroundImage:
+                            'linear-gradient(to right, rgba(247,247,247,1) 20%, rgba(0,0,0,0) 20%)',
                         ease: Cubic.easeInOut,
                     },
                     0
@@ -134,7 +160,7 @@ export default {
                     0.3
                 )
                 .set(
-                    header.querySelectorAll('nav > ul > li'),
+                    nav.querySelectorAll('.depth1'),
                     {
                         display: 'none',
                     },
@@ -219,10 +245,6 @@ export default {
             this.layoutAnimation(elements, '100%', '0%', done);
         },
         asideLeave(el, done) {
-            gsap.to(window, 0.3, {
-                scrollTo: { y: 0 },
-                ease: Cubic.easeInOut,
-            });
             const elements = [document.querySelector('aside .aside-bg'), el];
             this.layoutAnimation(elements, '0%', '100%', done);
         },

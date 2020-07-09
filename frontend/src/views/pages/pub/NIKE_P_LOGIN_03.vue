@@ -6,15 +6,14 @@
                     비밀번호 찾기
                 </strong>
                 <p class="desc">
-                    비밀번호 설정을 위한 ID(E-MAIL)을 입력해주세요. <br />
-                    입력하신 이메일로 비밀번호 설정을 위한 URL이<br />
-                    전송됩니다.
+                    비밀번호 설정 메일 발송을 위한 ID(E-MAIL)을 입력해 주세요.<br />
+                    입력하신 E-MAIL로 비밀번호 설정을 위한 URL이 전송 됩니다.
                 </p>
                 <div class="form-box">
                     <div class="pw-box">
                         <input type="text" placeholder="ID(E-MAIL)" />
                     </div>
-                    <button type="button" class="btn-s-lg-orage"><span>이메일 발송</span></button>
+                    <button type="button" class="btn-s-lg-orage"><span>E-MAIL 발송</span></button>
                 </div>
                 <button type="button" class="btn-close"><span>닫기</span></button>
             </div>
