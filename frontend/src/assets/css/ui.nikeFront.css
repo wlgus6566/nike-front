@@ -137,6 +137,7 @@
     border-radius: 0;
     font-size: 12px;
     font-weight: bold;
+    background: #fff;
     color: #000;
 }
 [class^='btn-o-'] {
@@ -2182,22 +2183,34 @@
 }
 
 .login {
+    position: relative;
     display: flex;
     width: 100%;
     min-height: 600px;
     height: 100%;
     justify-content: center;
-    align-items: flex-end;
     overflow: auto;
+    background: url('../images/img-login-main-bg@2x.jpg') no-repeat 0 / cover;
+}
+.login:before {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    content: '';
+    display: block;
+    width: 800px;
+    height: 700px;
+    background: url('../images/svg/img-login-swoosh.svg') no-repeat center;
+    transform: translateX(-50%);
 }
 .login-box {
     position: relative;
     width: 370px;
     height: 390px;
-    margin-bottom: 150px;
+    margin-top: 460px;
     padding: 50px 45px 45px;
     box-sizing: border-box;
-    background: #2f2f2f;
+    background: #000;
     box-shadow: -20px 20px 8px 0 rgba(0, 0, 0, 0.5);
 }
 .login-box .title {
@@ -2250,9 +2263,25 @@
 .form-box input + input {
     margin-top: 8px;
 }
-.form-box .btn-s-lg-orage {
+.login-btn-wrap {
+    position: absolute;
+    width: 280px;
+    top: 270px;
+    left: 45px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.login-btn-wrap.half [class^='btn-s'] {
+    flex-basis: calc((100% - 10px) / 2);
+}
+.login-btn-wrap.half [class^='btn-s'] + [class^='btn-s'] {
+    margin-left: 10px;
+}
+.login-btn-wrap.half .btn-s {
+    border-color: #fff;
+}
+.login-btn-wrap .btn-s-lg-orage {
     width: 100%;
-    margin-top: 20px;
 }
 .login-box .bnt-box {
     margin-top: 12px;

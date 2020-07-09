@@ -254,7 +254,7 @@ export default {
                             link: 'NIKE_P_LOGIN_01',
                             com: '2020.07.02',
                             abc: '',
-                            comment: '배경 추가 반영 필요',
+                            comment: '',
                             depth: false,
                         },
                         {
@@ -265,7 +265,7 @@ export default {
                             link: 'NIKE_P_LOGIN_02',
                             com: '2020.07.02',
                             abc: '',
-                            comment: '배경 추가 반영 필요 , input 디자인 반영',
+                            comment: 'input 디자인 반영',
                             depth: false,
                         },
                         {
@@ -276,7 +276,18 @@ export default {
                             link: 'NIKE_P_LOGIN_03',
                             com: '2020.07.02',
                             abc: '',
-                            comment: '배경 추가 반영 필요',
+                            comment: '',
+                            depth: false,
+                        },
+                        {
+                            title: '휴면 해제 안내',
+                            depthTitle: false,
+                            name: '지은유',
+                            filename: 'NIKE_P_LOGIN_07.vue',
+                            link: 'ㅖ',
+                            com: '2020.07.09',
+                            abc: '',
+                            comment: '',
                             depth: false,
                         },
                         {

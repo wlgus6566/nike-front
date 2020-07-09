@@ -13,6 +13,8 @@
                     <div class="pw-box">
                         <input type="text" placeholder="ID(E-MAIL)" />
                     </div>
+                </div>
+                <div class="login-btn-wrap">
                     <button type="button" class="btn-s-lg-orage"><span>E-MAIL 발송</span></button>
                 </div>
                 <button type="button" class="btn-close"><span>닫기</span></button>
