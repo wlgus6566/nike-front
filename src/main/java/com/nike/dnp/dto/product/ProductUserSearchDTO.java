@@ -1,8 +1,10 @@
+package com.nike.dnp.dto.product;
+
 import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
 
-0package com.nike.dnp.dto.product;
+
 
 
 /**
