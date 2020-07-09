@@ -100,7 +100,8 @@ public class OrderProductMappingService {
 			for(HashMap<String, Object> map : emailList){
 				Long agencySeq = Long.parseLong(String.valueOf(map.get("agencySeq")));
 				if(tempAgencySeq.equals(agencySeq)){
-					sendDTO.setNickname(SecurityUtil.currentUser().getNickname());
+					sendDTO.setNickname(SecurityUtil.currentUser()
+													.getNickname());
 					sendDTO.setEmail(String.valueOf(map.get("email")));
 					sendDTO.setAgencyName(String.valueOf(map.get("agencyName")));
 					sendDTO.setOrderDt(String.valueOf(map.get("registrationDt")));
@@ -132,7 +133,10 @@ public class OrderProductMappingService {
 				sb.append("</tr>");
 			}
 			sendDTO.setOrderArea(sb.toString());
-			mailService.sendMail(ServiceEnumCode.EmailTypeEnumCode.ORDER.toString(), ServiceEnumCode.EmailTypeEnumCode.ORDER.getMessage(), sendDTO);
+			mailService.sendMail(
+					ServiceEnumCode.EmailTypeEnumCode.ORDER.toString(),
+					ServiceEnumCode.EmailTypeEnumCode.ORDER.getMessage(),
+					sendDTO);
 
 		}
 	}
@@ -147,9 +151,15 @@ public class OrderProductMappingService {
 	 * @Description
 	 */
 	public Page<OrderProductMapping> findPageOrder(final OrderSearchDTO orderSearchDTO) {
-		orderSearchDTO.setUserSeq(SecurityUtil.currentUser().getUserSeq());
+		orderSearchDTO.setUserSeq(SecurityUtil.currentUser()
+											  .getUserSeq());
 
-		return orderProductMapperRepository.findPagesOrder(orderSearchDTO, PageRequest.of(orderSearchDTO.getPage(), orderSearchDTO.getSize(), Sort.by("registrationDt").descending()));
+		return orderProductMapperRepository.findPagesOrder(
+				orderSearchDTO,
+				PageRequest.of(
+						orderSearchDTO.getPage(),
+						orderSearchDTO.getSize(),
+						Sort.by("registrationDt").descending()));
 
 	}
 

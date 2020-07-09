@@ -57,32 +57,32 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 	 */
 	@Override
 	public Page<ProductResultDTO> findPagesProduct(final ProductSearchDTO productSearchDTO,
-										  final PageRequest pageRequest) {
+												   final PageRequest pageRequest) {
 		final QProduct qProduct = QProduct.product;
 		final QAgency qAgency = QAgency.agency;
 		final QUser qUser = QUser.user;
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 
-		final JPAQuery<ProductResultDTO> jpaQuery =
-				queryFactory.select(Projections.bean(ProductResultDTO.class
-						, qProduct.category2Code
-						,qProduct.category3Code
-						,qProduct.goodsName
-						,qProduct.thumbnailFileName
-						,qProduct.thumbnailFilePhysicalName
-						,qProduct.thumbnailFileSize
-						,qProduct.imageFileName
-						,qProduct.imageFilePhysicalName
-						,qProduct.imageFileSize
-						,qProduct.goodsDescription
-						,qProduct.exposureYn
-						,qProduct.updateDt
-						,qProduct.minimumOrderQuantity
-						,qProduct.unitPrice
-						,qProduct.goodsSeq
-						,qAgency.agencyName
-						,qUser.nickname)
-				).from(qProduct)
+		final JPAQuery<ProductResultDTO> jpaQuery = queryFactory.select(Projections.bean(
+				ProductResultDTO.class,
+				qProduct.category2Code,
+				qProduct.category3Code,
+				qProduct.goodsName,
+				qProduct.thumbnailFileName,
+				qProduct.thumbnailFilePhysicalName,
+				qProduct.thumbnailFileSize,
+				qProduct.imageFileName,
+				qProduct.imageFilePhysicalName,
+				qProduct.imageFileSize,
+				qProduct.goodsDescription,
+				qProduct.exposureYn,
+				qProduct.updateDt,
+				qProduct.minimumOrderQuantity,
+				qProduct.unitPrice,
+				qProduct.goodsSeq,
+				qAgency.agencyName,
+				qUser.nickname))
+				.from(qProduct)
 				.innerJoin(qAgency).on(qProduct.agencySeq.eq(qAgency.agencySeq))
 				.innerJoin(qUser).on(qProduct.registerSeq.eq(qUser.userSeq))
 				.where(
@@ -93,15 +93,14 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 						ProductPredicateHelper.eqExposureYn(productSearchDTO.getExposureYn()),
 						qProduct.useYn.eq("Y"));
 
-		/*final JPAQuery<Product> query = queryFactory.selectFrom(qProduct)
-				.where(
-						ProductPredicateHelper.eqCate2gory(productSearchDTO.getCategory2code()),
-						ProductPredicateHelper.eqCate3gory(productSearchDTO.getCategory3code()),
-						ProductPredicateHelper.likeGoodName(productSearchDTO.getKeyword()),
-						ProductPredicateHelper.eqAgentSeq(productSearchDTO.getAgencySeq()),
-						ProductPredicateHelper.eqExposureYn(productSearchDTO.getExposureYn())
-						,qProduct.useYn.eq("Y"));*/
-		final List<ProductResultDTO> productList = getQuerydsl().applyPagination(pageRequest,jpaQuery).fetch();
-		return new PageImpl<>(productList,pageRequest,jpaQuery.fetchCount());
+
+		final List<ProductResultDTO> productList = getQuerydsl().applyPagination(
+				pageRequest,
+				jpaQuery)
+				.fetch();
+		return new PageImpl<>(
+				productList,
+				pageRequest,
+				jpaQuery.fetchCount());
 	}
 }

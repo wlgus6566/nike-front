@@ -119,6 +119,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
+		/*SecureRandom secureRandom = new SecureRandom();
+		secureRandom.setSeed(100100);
+		return new BCryptPasswordEncoder(10,secureRandom);*/
 		return new BCryptPasswordEncoder();
 	}
 
@@ -134,6 +137,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/resources/**", "/static/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/css/**", "/font/**", "/js/**", "/images/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**" // Swagger 관련
+				,"/api/download", // 임시
 
 		};
 		web.ignoring().antMatchers(staticPatterns);
@@ -160,7 +164,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.csrf().disable() // csrf 사용 안함
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
-
 	}
 
 	/**

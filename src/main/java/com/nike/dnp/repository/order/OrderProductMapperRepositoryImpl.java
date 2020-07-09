@@ -29,7 +29,7 @@ import java.util.List;
  */
 @Slf4j
 @Repository
-public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport implements OrderProductMapperRepositoryCustom{
+public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport implements OrderProductMapperRepositoryCustom {
 	/**
 	 * Creates a new {@link QuerydslRepositorySupport} instance for the given domain type.
 	 *
@@ -59,25 +59,25 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 
-		List<Tuple> tupleList =
-				queryFactory
-						.select(orderProductMapping.orderSeq
-								, orderProductMapping.registrationDt
-								, orderProductMapping.orderQuantity
-								, product.goodsName
-								, product.goodsDescription
-								, agency.agencyName
-								, agency.agencySeq
-								, agency.email
-								, order.orderDescription)
-						.from(orderProductMapping)
-						.innerJoin(order).on(orderProductMapping.orderSeq.eq(order.orderSeq))
-						.innerJoin(product).on(orderProductMapping.goodsSeq.eq(product.goodsSeq))
-						.innerJoin(agency).on(product.agencySeq.eq(agency.agencySeq))
-						.where(orderProductMapping.orderSeq.eq(orderSeq))
-						.orderBy(orderProductMapping.orderSeq.desc()).fetch();
+		List<Tuple> tupleList = queryFactory.select(orderProductMapping.orderSeq,
+													orderProductMapping.registrationDt,
+													orderProductMapping.orderQuantity,
+													product.goodsName,
+													product.goodsDescription,
+													agency.agencyName,
+													agency.agencySeq,
+													agency.email,
+													order.orderDescription)
+											.from(orderProductMapping)
+											.innerJoin(order).on(orderProductMapping.orderSeq.eq(order.orderSeq))
+											.innerJoin(product).on(orderProductMapping.goodsSeq.eq(product.goodsSeq))
+											.innerJoin(agency).on(product.agencySeq.eq(agency.agencySeq))
+											.where(orderProductMapping.orderSeq.eq(orderSeq))
+											.orderBy(orderProductMapping.orderSeq.desc())
+											.fetch();
 
-		return TupleUtil.listTupleToListHashMap(tupleList,
+		return TupleUtil.listTupleToListHashMap(
+				tupleList,
 				orderProductMapping.orderSeq,
 				orderProductMapping.registrationDt,
 				orderProductMapping.orderQuantity,
@@ -86,7 +86,7 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 				agency.agencyName,
 				agency.agencySeq,
 				agency.email,
-				order.orderDescription) ;
+				order.orderDescription);
 	}
 
 	/**
@@ -106,11 +106,12 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 
 		final JPAQuery<OrderProductMapping> query = queryFactory.selectFrom(qOrderProductMapping)
-				.where(OrderProductMappingPredicateHelper.afterStartDt(orderSearchDTO.getBeginDt()),
-						OrderProductMappingPredicateHelper.beforeEndDt(orderSearchDTO.getEndDt()),
-						qOrderProductMapping.registerSeq.eq(orderSearchDTO.getUserSeq()));
+																.where(
+																		OrderProductMappingPredicateHelper.afterStartDt(orderSearchDTO.getBeginDt()),
+																		OrderProductMappingPredicateHelper.beforeEndDt(orderSearchDTO.getEndDt()),
+																		qOrderProductMapping.registerSeq.eq(orderSearchDTO.getUserSeq()));
 
-		final List<OrderProductMapping> orderList = getQuerydsl().applyPagination(pageRequest, query).fetch();
-		return new PageImpl<>(orderList, pageRequest, query.fetchCount());
+		final List<OrderProductMapping> orderList = getQuerydsl().applyPagination(pageRequest,query).fetch();
+		return new PageImpl<>(orderList,pageRequest,query.fetchCount());
 	}
 }
