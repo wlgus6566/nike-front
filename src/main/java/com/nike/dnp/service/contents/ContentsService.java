@@ -57,10 +57,13 @@ public class ContentsService {
     private MessageSource messageSource;
 
     /**
-     * 전체조회(paging)
+     * Find all paging page.
      *
      * @param contentsSearchDTO the contents search dto
-     * @return the list
+     * @return the page
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 9. 오후 6:25:20
+     * @Description
      */
     public Page<Contents> findAllPaging(final ContentsSearchDTO contentsSearchDTO) {
         // QueryDsl 기능 이용
@@ -81,7 +84,6 @@ public class ContentsService {
      * @CreatedOn 2020. 6. 24. 오후 3:22:15
      * @Description
      */
-    @Transactional
     public Contents save(final ContentsSaveDTO contentsSaveDTO) {
         log.info("contentsService.save");
         final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
@@ -121,7 +123,6 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 3. 오후 4:01:24
      * @Description
      */
-    @Transactional
     public Optional<Contents> update(final ContentsUpdateDTO contentsUpdateDTO) {
         log.info("contentsService.update");
         // contents Update
@@ -176,7 +177,6 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 7. 오전 10:59:29
      * @Description
      */
-    @Transactional
     public Optional<Contents> delete(final Long contentsSeq) {
         log.info("contentsService.delete");
 

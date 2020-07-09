@@ -220,6 +220,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 3. 오후 5:27:06
      * @Description
      */
+    @Transactional
     public void update(final ContentsFileUpdateDTO contentsFileUpdateDTO) {
         log.info("ContentsFile.update");
         this.fileSectionCode = contentsFileUpdateDTO.getFileSectionCode();
@@ -254,6 +255,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 3. 오후 5:28:11
      * @Description
      */
+    @Transactional
     public void updateDownloadCount(final Long downloadCount) {
         log.info("ContentsFile.updateDownloadCount");
         this.downloadCount = downloadCount + 1;
@@ -267,6 +269,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 6. 오후 12:02:25
      * @Description
      */
+    @Transactional
     public void updateUseYn(final String useYn) {
         this.useYn = useYn;
     }
@@ -282,6 +285,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @CreatedOn 2020. 6. 26. 오후 5:30:51
      * @Description
      */
+    @Transactional
     public Boolean checkStringValidation(String value, String errorCode, String errorMessage) {
         if (value.isEmpty() || value.trim().isEmpty()) {
             throw new CodeMessageHandleException(errorCode, errorMessage);

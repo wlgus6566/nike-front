@@ -219,6 +219,7 @@ public class Contents extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 3. 오후 4:01:36
      * @Description
      */
+    @Transactional
     public void update(final ContentsUpdateDTO contentsUpdateDTO) {
         log.info("Contents.update");
         this.menuCode = contentsUpdateDTO.getMenuCode();
@@ -238,6 +239,7 @@ public class Contents extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 3. 오후 5:22:59
      * @Description
      */
+    @Transactional
     public void updateReadCount(final Long readCount) {
         log.info("Contents.updateReadCount");
         this.readCount = readCount + 1;
@@ -251,6 +253,7 @@ public class Contents extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 7. 오후 2:06:34
      * @Description
      */
+    @Transactional
     public void delete() {
         this.useYn = "N";
     }

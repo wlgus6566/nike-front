@@ -17,4 +17,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Long>, ReportRepositoryCustom {
 
+    /**
+     * Find by report seq report.
+     *
+     * @param reportSeq the report seq
+     * @return the report
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 8. 오후 5:50:58
+     * @Description
+     */
+    Report findByReportSeq(Long reportSeq);
+
 }

@@ -14,18 +14,7 @@ import java.util.List;
  * @Description
  */
 @Repository
-public interface ContentsFileRepository extends JpaRepository<ContentsFile, Long>, ContentsFileRepositoryCustom {
-
-    /**
-     * Find by contents seq contents.
-     *
-     * @param contentsSeq the contents seq
-     * @return contents contents
-     * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:57:43
-     * @Description
-     */
-    List<ContentsFile> findByContentsSeq(String contentsSeq);
+public interface ContentsFileRepository extends JpaRepository<ContentsFile, Long> {
 
     /**
      * Find by contents seq and use yn optional.

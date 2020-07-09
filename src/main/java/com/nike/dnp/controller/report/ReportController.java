@@ -1,6 +1,9 @@
 package com.nike.dnp.controller.report;
 
+import com.google.firebase.database.core.Repo;
+import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
+import com.nike.dnp.dto.report.ReportUpdateDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.model.response.SingleResult;
@@ -8,15 +11,16 @@ import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.report.ReportService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 /**
@@ -80,60 +84,77 @@ public class ReportController {
     public SingleResult<Page<Report>> getAllReports(
             final ReportSearchDTO reportSearchDTO
     ) {
+        log.info("ReportController.getAllReports");
         return responseService.getSingleResult(reportService.findAllPaging(reportSearchDTO));
     }
-//
-//
-//    /**
-//     * Save contents single result.
-//     *
-//     * @param contentsAssetSaveDTO the contents asset save dto
-//     * @return the single result
-//     * @author [이소정]
-//     * @CreatedOn 2020. 6. 24. 오후 3:45:44
-//     * @Description
-//     */
-//    @ApiOperation(
-//            value = "Asset 등록"
-//            , notes = REQUEST_CHARACTER
-//    )
-//    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Asset 등록")
-//    public SingleResult<Contents> saveContents(
-//            @RequestBody final ContentsAssetSaveDTO contentsAssetSaveDTO
-//    ) {
-//        contentsAssetSaveDTO.setMenuCode(contentsAssetSaveDTO.getUploadCode());
-//        contentsAssetSaveDTO.setTopMenuCode("ASSET");
-//        Contents contents = contentsService.save(contentsAssetSaveDTO);
-//        return responseService.getSingleResult(contents);
-//    }
-//
-//    @ApiOperation(
-//            value = "Asset 상세조회"
-//            , notes = REQUEST_CHARACTER
-//    )
-//    @GetMapping(name = " Toolkit 상세조회", value = "/{contentsSeq}"
-//            , produces = {MediaType.APPLICATION_JSON_VALUE})
-//    public SingleResult<Contents> findContents(
-//            @ApiParam(name = "contentsSeq", value = "콘텐츠 시퀀스", defaultValue = "4") @PathVariable final Long contentsSeq) {
-//        return responseService.getSingleResult(contentsService.findByContentsSeq(contentsSeq));
-//    }
-//
-//    /**
-//     * Update contents single result.
-//     *
-//     * @param contentsAssetUpdateDTO the contents asset update dto
-//     * @return the single result
-//     * @author [이소정]
-//     * @CreatedOn 2020. 7. 3. 오후 2:45:11
-//     * @Description
-//     */
-//    @ApiOperation(value = "Asset 수정", notes = REQUEST_CHARACTER)
-//    @PutMapping(name = "Asset 수정", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-//    public SingleResult<Optional<Contents>> updateContents(@ApiParam(name="contentsUpdateDTO", value = "ASSET 수정 Json") @RequestBody final ContentsAssetUpdateDTO contentsAssetUpdateDTO) {
-//        contentsAssetUpdateDTO.setTopMenuCode("ASSET");
-//        contentsAssetUpdateDTO.setMenuCode(contentsAssetUpdateDTO.getUploadCode());
-//        return responseService.getSingleResult(contentsService.update(contentsAssetUpdateDTO));
-//    }
+
+
+    /**
+     * Save report single result.
+     *
+     * @param reportSaveDTO the report save dto
+     * @return the single result
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 8. 오후 5:48:17
+     * @Description
+     */
+    @ApiOperation(
+            value = "보고서 등록"
+            , notes = REQUEST_CHARACTER
+    )
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 등록")
+    public SingleResult<Report> saveReport(
+            @RequestBody final ReportSaveDTO reportSaveDTO
+    ) {
+        log.info("ReportController.saveReport");
+        Report report = reportService.save(reportSaveDTO);
+        return responseService.getSingleResult(report);
+    }
+
+    @ApiOperation(
+            value = "보고서 상세조회"
+            , notes = REQUEST_CHARACTER
+    )
+    @GetMapping(name = " 보고서 상세조회", value = "/{reportSeq}"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<Report> findReport(
+            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "4") @PathVariable final Long reportSeq) {
+        log.info("ReportController.findReport");
+        return responseService.getSingleResult(reportService.findByReportSeq(reportSeq));
+    }
+
+    /**
+     * Update report single result.
+     *
+     * @param reportUpdateDTO the report update dto
+     * @return the single result
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 9. 오후 6:18:36
+     * @Description
+     */
+    @ApiOperation(value = "보고서 수정", notes = REQUEST_CHARACTER)
+    @PutMapping(name = "보고서 수정", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<Optional<Report>> updateReport(@ApiParam(name="reportUpdateDTO", value = "보고서 수정 Json") @RequestBody final ReportUpdateDTO reportUpdateDTO) {
+        return responseService.getSingleResult(reportService.update(reportUpdateDTO));
+    }
+
+    /**
+     * Delete report single result.
+     *
+     * @param reportSeq the report seq
+     * @return the single result
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 9. 오후 6:18:40
+     * @Description
+     */
+    @ApiOperation(value="보고서 삭제", notes = REQUEST_CHARACTER)
+    @DeleteMapping(name = "보고서 삭제", value = "/{reportSeq}"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<Optional<Report>> deleteReport(
+            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "4") @PathVariable final Long reportSeq) {
+        log.info("ReportController.deleteReport");
+        return responseService.getSingleResult(reportService.delete(reportSeq));
+    }
 
 }
 
