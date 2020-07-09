@@ -8,9 +8,9 @@
     </div>
 </template>
 <script>
-	import calendarManagement from '@/views/pages/information/calendar-management';
+    import calendarManagement from '@/views/pages/information/calendar-management';
 
-	export default {
+    export default {
     name: 'NIKE_P_MANAGE_02_002P',
     data() {
         return {
