@@ -24,7 +24,9 @@
                         자료는 NIKE.INC.와 NIKE KOREA LLC.의 자산입니다.<br />
                         보안 규정을 준수하시기 바랍니다.
                     </p>
-                    <button type="button" class="btn-s-black"><span class="bebas">UPLOAD</span></button>
+                    <button type="button" class="btn-s-black">
+                        <span class="bebas">UPLOAD</span>
+                    </button>
                 </div>
 
                 <div class="sorting-area">
@@ -43,7 +45,13 @@
                     <!-- todo select 스크립트 작업 필요  -->
                     <div class="filter-select">
                         <el-select v-model="value" placeholder="Select">
-                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+                            <el-option
+                                v-for="item in options"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                            >
+                            </el-option>
                         </el-select>
                     </div>
                     <div class="search-input">
@@ -52,7 +60,31 @@
                     </div>
                 </div>
 
-                <ul v-bind:class="[{ 'asset-item-list': listTypes[0].active }, { 'asset-item-list-row': listTypes[1].active }]">
+                <div class="no-data">
+                    <i class="icon-file"></i>
+                    <p class="desc">업로드한 폴더가 없습니다.</p>
+                </div>
+
+                <div class="no-data">
+                    <i class="icon-search"></i>
+                    <p class="desc">최근 본 폴더가 없습니다.</p>
+                </div>
+
+                <div class="no-data">
+                    <i class="icon-order"></i>
+                    <p class="desc">주문 내역이 없습니다.</p>
+                </div>
+
+                <div class="no-data">
+                    <i class="icon-order"></i>
+                    <p class="desc">위시리스트에 추가 된 항목이 없습니다.</p>
+                </div>
+                <ul
+                    v-bind:class="[
+                        { 'asset-item-list': listTypes[0].active },
+                        { 'asset-item-list-row': listTypes[1].active },
+                    ]"
+                >
                     <li class="asset-item" v-for="(item, index) in items" :key="index">
                         <a href="#">
                             <div class="thumbnail">

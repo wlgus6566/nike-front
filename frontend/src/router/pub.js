@@ -1,4 +1,4 @@
-import { pages } from '@/utils/global-methods';
+import {pages} from '@/utils/global-methods';
 
 const routes = [
     {
@@ -20,6 +20,26 @@ const routes = [
             {
                 path: 'input',
                 component: pages('pub/input'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'nodata01',
+                component: pages('pub/nodata01'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'nodata02',
+                component: pages('pub/nodata02'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'nodata03',
+                component: pages('pub/nodata03'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'nodata04',
+                component: pages('pub/nodata04'),
                 meta: { layout: 'Pub' },
             },
             //main
@@ -251,6 +271,17 @@ const routes = [
             {
                 path: 'NIKE_P_LOGIN_01e',
                 component: pages('pub/NIKE_P_LOGIN_01e'),
+                meta: { layout: 'Pub' },
+            },
+            //ECT
+            {
+                path: 'NIKE_P_ERROR_01',
+                component: pages('pub/NIKE_P_ERROR_01'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_ERROR_02',
+                component: pages('pub/NIKE_P_ERROR_02'),
                 meta: { layout: 'Pub' },
             },
             // {
