@@ -139,8 +139,18 @@ const routes = [
                 meta: { layout: 'Pub' },
             },
             {
+                path: 'NIKE_P_ORDER_01P',
+                component: pages('pub/NIKE_P_ORDER_01P'),
+                meta: { layout: 'Pub' },
+            },
+            {
                 path: 'NIKE_P_ORDER_02',
                 component: pages('pub/NIKE_P_ORDER_02'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_ORDER_02P',
+                component: pages('pub/NIKE_P_ORDER_02P'),
                 meta: { layout: 'Pub' },
             },
             {
@@ -170,15 +180,20 @@ const routes = [
                 component: pages('pub/NIKE_P_INFO_01_001'),
                 meta: { layout: 'Pub' },
             },
+            {
+                path: 'NIKE_P_INFO_01_001P',
+                component: pages('pub/NIKE_P_INFO_01_001P'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_INFO_02_001P',
+                component: pages('pub/NIKE_P_INFO_02_001P'),
+                meta: { layout: 'Pub' },
+            },
             //gnb - MANAGEMENT
             {
                 path: 'NIKE_P_MANAGE_01',
                 component: pages('pub/NIKE_P_MANAGE_01'),
-                meta: { layout: 'Pub' },
-            },
-            {
-                path: 'NIKE_P_INFO_01_001',
-                component: pages('pub/NIKE_P_INFO_01_001'),
                 meta: { layout: 'Pub' },
             },
             {

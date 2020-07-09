@@ -1,0 +1,148 @@
+<template>
+    <el-dialog
+        title=""
+        class="modal-wrap"
+        :visible="visible"
+        :append-to-body="true"
+        @close="$emit('update:visible', false)"
+    >
+        <el-scrollbar view-class="view-box" :native="false">
+            <div class="el-dialog__inner">
+                <div>
+                    <h3 class="form-title mt0">ORDER</h3>
+                    <hr class="hr-black mt10" />
+                    <ul class="form-list-colunm">
+                        <li class="form-row">
+                            <div class="form-column">
+                                <span class="label-title">주문자</span>
+                            </div>
+                            <div class="form-column">
+                                <span class="form-val">홍대 SNKRS</span>
+                            </div>
+                        </li>
+                        <li class="form-row">
+                            <div class="form-column">
+                                <span class="label-title">주문일시</span>
+                            </div>
+                            <div class="form-column">
+                                <span class="form-val">2020.01.01 00:00</span>
+                            </div>
+                        </li>
+                        <li class="form-row">
+                            <div class="form-column">
+                                <span class="label-title">총 예상 금액</span>
+                            </div>
+                            <div class="form-column">
+                                <span class="form-val">99,000,000 원</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <hr class="hr-gray" />
+                    <p class="form-desc">
+                        * VAT 및 운송비,기타,운용비는 제외된 금액입니다. (실제 세금계산서의 금액은
+                        다를 수 있습니다.)
+                    </p>
+                    <ul class="sheet-list">
+                        <li class="sheet-item">
+                            <span class="thumbnail">
+                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                            </span>
+                            <span class="info-box">
+                                <strong class="title"
+                                    >타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다
+                                </strong>
+                                <p class="txt">설명입니다</p>
+                                <span class="desc-txt-box">
+                                    <p class="desc">에이젼시명</p>
+                                </span>
+                            </span>
+                            <span class="quantity-txt"><em>1,000</em> 개</span>
+                        </li>
+                        <li class="sheet-item">
+                            <span class="thumbnail">
+                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                            </span>
+                            <span class="info-box">
+                                <strong class="title"
+                                    >타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다
+                                </strong>
+                                <p class="txt">설명입니다</p>
+                                <span class="desc-txt-box">
+                                    <p class="desc">에이젼시명</p>
+                                </span>
+                            </span>
+                            <span class="quantity-txt"><em>1,000</em> 개</span>
+                        </li>
+                        <li class="sheet-item">
+                            <span class="thumbnail">
+                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                            </span>
+                            <span class="info-box">
+                                <strong class="title"
+                                    >타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다
+                                </strong>
+                                <p class="txt">설명입니다</p>
+                                <span class="desc-txt-box">
+                                    <p class="desc">에이젼시명</p>
+                                </span>
+                            </span>
+                            <span class="quantity-txt"><em>1,000</em> 개</span>
+                        </li>
+                    </ul>
+                    <h3 class="sub-title">COMMENT</h3>
+                    <div class="mt10">
+                        <span class="textarea">
+                            <textarea cols="100" rows="2" style="height: 80px;"></textarea>
+                        </span>
+                    </div>
+                    <p class="form-desc-red">
+                        * 업무상 필요한 정보 외의 개인 연락처 정보를 기재하지 않도록 주의하시기
+                        바랍니다.
+                    </p>
+                    <div class="btn-area">
+                        <button type="button" class="btn-s-black"><span>주문서 발송</span></button>
+                    </div>
+                </div>
+            </div>
+        </el-scrollbar>
+
+        <!--        <div slot="footer" class="dialog-footer">-->
+        <!--            <el-button @click="$emit('update:visible', false)" type="info" round>-->
+        <!--                확인-->
+        <!--            </el-button>-->
+        <!--        </div>-->
+    </el-dialog>
+</template>
+
+<script>
+export default {
+    props: {
+        visible: Boolean,
+        receipt: Object,
+    },
+
+    methods: {
+        removeBodyClass(className) {
+            const body = document.body;
+            body.classList.remove(className);
+        },
+        print() {
+            this.removeBodyClass('print-detail');
+            window.print();
+        },
+    },
+};
+</script>
+<style>
+.modal-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-wrap .el-dialog {
+    margin: 0 !important;
+}
+.modal-wrap .el-scrollbar__wrap {
+    max-height: 80vh;
+}
+</style>
