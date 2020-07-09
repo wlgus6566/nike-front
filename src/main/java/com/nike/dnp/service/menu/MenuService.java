@@ -1,5 +1,6 @@
 package com.nike.dnp.service.menu;
 
+import com.nike.dnp.dto.menu.MenuReturnDTO;
 import com.nike.dnp.entity.menu.Menu;
 import com.nike.dnp.repository.menu.MenuRepository;
 import com.nike.dnp.service.RedisService;
@@ -33,15 +34,31 @@ public class MenuService {
     private final MenuRepository menuRepository;
 
     /**
-     * Find all list.
+     * Gets menus.
      *
-     * @return the list
+     * @return the menus
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 7. 오후 3:37:06
-     * @Description 그룹(권한) 목록 조회
+     * @CreatedOn 2020. 7. 8. 오후 6:18:35
+     * @Description 메뉴 목록(전체)
      */
-    public List<Menu> findAll() {
-        log.info("AuthService.findAll");
-        return menuRepository.findByUseYn("Y");
+    public List<MenuReturnDTO> getMenus() {
+        log.info("AuthService.getMenus.all");
+        return menuRepository.getMenus();
     }
+
+    /**
+     * Gets menus.
+     *
+     * @param authSeq the auth seq
+     * @return the menus
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 8. 오후 6:18:34
+     * @Description 메뉴 목록(권한)
+     */
+    public List<Menu> getMenus(final Long authSeq) {
+        log.info("AuthService.getMenus.auth");
+        return menuRepository.getMenus(authSeq);
+    }
+
+
 }

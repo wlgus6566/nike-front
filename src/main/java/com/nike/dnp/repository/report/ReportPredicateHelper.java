@@ -1,8 +1,6 @@
 package com.nike.dnp.repository.report;
 
-import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
-import com.nike.dnp.entity.contents.QContents;
 import com.nike.dnp.entity.report.QReport;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;

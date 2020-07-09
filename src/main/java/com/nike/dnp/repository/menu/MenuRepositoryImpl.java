@@ -1,0 +1,137 @@
+package com.nike.dnp.repository.menu;
+
+import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.dto.menu.MenuReturnDTO;
+import com.nike.dnp.entity.menu.Menu;
+import com.nike.dnp.entity.menu.QMenu;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+ * CodeRepositoryImpl
+ *
+ * @author [오지훈]
+ * @CreatedOn 2020. 6. 23. 오전 11:51:57
+ * @Description Code(공통 코드) Repository interface 작성
+ */
+@Repository
+public class MenuRepositoryImpl extends QuerydslRepositorySupport implements MenuRepositoryCustom {
+
+    /**
+     * Instantiates a new Manager repository.
+     *
+     * @author [오지훈]
+     * @CreatedOn 2020. 6. 23. 오전 11:51:57
+     * @Description 생성자 주입
+     */
+    public MenuRepositoryImpl() {
+        super(Menu.class);
+    }
+
+    /**
+     * Gets menus.
+     *
+     * @return the menus
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 8. 오후 6:16:36
+     * @Description 메뉴 목록(전체)
+     */
+    @Override
+    public List<MenuReturnDTO> getMenus() {
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        final QMenu qMenu = new QMenu("menu");
+        final QMenu qUpperMenu = new QMenu("upperMenu");
+        return queryFactory
+                .select(Projections.bean(MenuReturnDTO.class
+                        , qMenu.menuName
+                        , qMenu.menuSeq
+                        , qUpperMenu.menuSeq.as("upperMenuSeq")
+                        , qUpperMenu.menuName.as("upperMenuName")
+                        , qMenu.listAuthYn
+                        , qMenu.creationAuthYn
+                        , qMenu.deleteAuthYn
+                        , qMenu.detailAuthYn
+                        , qMenu.downloadAuthYn
+                        , qMenu.reportAuthYn
+                        ))
+                .from(qMenu)
+                .innerJoin(qUpperMenu).on(qMenu.upperMenuSeq.eq(qUpperMenu.menuSeq))
+                .where(qMenu.useYn.eq(ServiceEnumCode.yesOrNoEnumCode.Y.toString()))
+                .fetch();
+    }
+
+    /**
+     * Gets menus.
+     *
+     * @param authSeq the auth seq
+     * @return the menus
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 8. 오후 6:19:23
+     * @Description 메뉴 목록(권한)
+     */
+    @Override
+    public List<Menu> getMenus(final Long authSeq) {
+        //TODO[ojh] 2020-07-08 : 뭐리 작성 예정
+        return null;
+    }
+
+/*
+    @Override
+    public List<Menu> getMenus() {
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        final QMenu qMenu = QMenu.menu;
+        final QMenuRole qMenuRole = QMenuRole.menuRole;
+
+        final JPAQuery<Menu> jpaQuery = queryFactory
+                .selectFrom(qMenu)
+                .innerJoin(qMenuRole).on(qMenu.menuSeq.eq(qMenuRole.menuSeq))
+                .fetchAll();
+
+        return jpaQuery.fetch();
+    }
+
+    @Override
+    public List<MenuReturnDTO> getMenus1() {
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        final QMenu qMenu = QMenu.menu;
+        final QMenuRole qMenuRole = QMenuRole.menuRole;
+
+        final JPAQuery<MenuReturnDTO> jpaQuery = queryFactory
+                .select(Projections.bean(MenuReturnDTO.class, qMenu.menuName
+                , ExpressionUtils.as(
+                                JPAExpressions.select(qMenu.menuName)
+                                        .from(qMenu)
+                                        .where(qMenu.menuSeq.eq(qMenu.upperMenuSeq)),
+                                "menuName")
+                        ))
+                .from(qMenu)
+                .innerJoin(qMenuRole).on(qMenu.menuSeq.eq(qMenuRole.menuSeq))
+                .fetchAll();
+
+        return jpaQuery.fetch();
+    }
+
+    @Override
+    public List<Menu> getMenus(final Long authSeq) {
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        final QMenu qMenu = QMenu.menu;
+        final QMenuRole qMenuRole = QMenuRole.menuRole;
+        final QAuthMenuRole qAuthMenuRole = QAuthMenuRole.authMenuRole;
+        final QAuth qAuth = QAuth.auth;
+
+        final JPAQuery<Menu> jpaQuery = queryFactory
+                .selectFrom(qMenu)
+                .innerJoin(qMenuRole).on(qMenu.menuSeq.eq(qMenuRole.menuSeq))
+                .leftJoin(qAuthMenuRole).on(qMenuRole.menuRoleSeq.eq(qAuthMenuRole.menuRole.menuRoleSeq))
+                .innerJoin(qAuth).on(qAuthMenuRole.auth.authSeq.eq(qAuth.authSeq))
+                .where(qAuth.authSeq.eq(authSeq))
+                .fetchAll();
+
+        return jpaQuery.fetch();
+    }
+    */
+}

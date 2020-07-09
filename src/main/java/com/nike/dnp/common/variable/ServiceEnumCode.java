@@ -174,13 +174,12 @@ public class ServiceEnumCode {
     @RequiredArgsConstructor
     @Getter
     public enum MenuSkillEnumCode {
-        LIST("목록")
-        ,CERATE("등록/수정")
-        ,DELETE("삭제")
-
-        ,VIEW("상세보기")
-        ,DOWNLOAD("다운로드/주문")
-        ,REPORT("시공보고서")
+        LIST("목록", "listAuthYn", 0)
+        ,CERATE("등록/수정", "creationAuthYn", 1)
+        ,DELETE("삭제", "deleteAuthYn", 2)
+        ,VIEW("상세보기", "detailAuthYn", 3)
+        ,DOWNLOAD("다운로드/주문", "downloadAuthYn", 4)
+        ,REPORT("시공보고서", "reportAuthYn", 5)
         ;
         /**
          * 코드값
@@ -188,5 +187,7 @@ public class ServiceEnumCode {
          * @author [오지훈]
          */
         private final String message;
+        private final String field;
+        private final int sort;
     }
 }
