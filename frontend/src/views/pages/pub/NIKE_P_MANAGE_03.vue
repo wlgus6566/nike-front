@@ -19,7 +19,7 @@
             <div class="contents">
                 <h2 class="page-title"><span class="ko">권한 그룹관리</span></h2>
                 <div>
-                    <div class="aside">
+                    <div>
                         <strong>
                             <i class="icon-all-folder"></i>
                             <span>전체 권한 그룹</span>

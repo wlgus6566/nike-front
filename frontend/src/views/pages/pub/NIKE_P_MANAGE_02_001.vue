@@ -77,10 +77,7 @@
                         <thead>
                             <tr>
                                 <th>
-                                    <span class="checkbox">
-                                        <input type="checkbox" />
-                                        <span></span>
-                                    </span>
+                                    <el-checkbox v-model="checked" />
                                 </th>
                                 <th>계정명</th>
                                 <th>ID (E-MAIL)</th>
@@ -92,10 +89,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <span class="checkbox">
-                                        <input type="checkbox" />
-                                        <span></span>
-                                    </span>
+                                    <el-checkbox v-model="checked" />
                                 </td>
                                 <td>
                                     <a href="#" class="under-link"><span>포스터 600X800</span></a>
@@ -107,10 +101,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <span class="checkbox">
-                                        <input type="checkbox" />
-                                        <span></span>
-                                    </span>
+                                    <el-checkbox v-model="checked" />
                                 </td>
                                 <td>
                                     <a href="#" class="under-link"><span>포스터 600X800</span></a>
@@ -126,11 +117,11 @@
 
                 <div class="btn-tbl-box">
                     <button type="button" class="btn-form">
-                        <span data-v-1756ba49="">삭제</span>
+                        <span>삭제</span>
                     </button>
                     <div class="right">
                         <button type="button" class="btn-form-gray">
-                            <span data-v-1756ba49="">등록</span>
+                            <span>등록</span>
                         </button>
                     </div>
                 </div>

@@ -1,8 +1,9 @@
 <template>
     <el-dialog
-        title="Title"
+        title=""
         class="modal-wrap"
         :visible="visible"
+        width="600px"
         :append-to-body="true"
         @close="$emit('update:visible', false)"
     >
@@ -64,9 +65,9 @@
         </el-scrollbar>
 
         <div slot="footer" class="dialog-footer">
-            <el-button @click="$emit('update:visible', false)" type="info" round>
+            <button type="button" class="btn-s-black" @click="$emit('update:visible', false)">
                 확인
-            </el-button>
+            </button>
         </div>
     </el-dialog>
 </template>

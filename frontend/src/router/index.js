@@ -29,22 +29,22 @@ const router = new VueRouter({
             meta: {
                 layout: 'Clean',
             },
-            beforeEnter(to, from, next) {
+            /*beforeEnter(to, from, next) {
                 store.getters['isLoggedIn'] ? next('/') : next();
-            },
+            },*/
         },
         {
             path: '/',
             component: pages('main-page'),
             meta: { layout: 'Default', aside: 'Default' },
-            beforeEnter(to, from, next) {
+            /*beforeEnter(to, from, next) {
                 if (store.getters['isLoggedIn'] || getUserFromCookie()) {
                     next();
                 } else {
                     next();
                     //next('/login');
                 }
-            },
+            },*/
         },
         ...AssetRoutes,
         ...ToolkitRoutes,
