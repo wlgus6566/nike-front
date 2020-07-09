@@ -1,10 +1,7 @@
 package com.nike.dnp.controller.product;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
-import com.nike.dnp.dto.product.ProductResultDTO;
-import com.nike.dnp.dto.product.ProductSaveDTO;
-import com.nike.dnp.dto.product.ProductSearchDTO;
-import com.nike.dnp.dto.product.ProductUpdateDTO;
+import com.nike.dnp.dto.product.*;
 import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
