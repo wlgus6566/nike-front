@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.menu;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -43,6 +44,15 @@ public class MenuRole extends BaseTimeEntity implements Serializable {
     private Long menuSeq;
 
     /**
+     * 메뉴 기능 코드
+     *
+     * @author [오지훈]
+     */
+    @Column(name = "MENU_SKILL_CODE")
+    @ApiModelProperty(name = "menuSkillCode", value = "메뉴 기능 코드")
+    private String menuSkillCode;
+
+    /**
      * 메뉴 기능 명
      *
      * @author [오지훈]
@@ -52,12 +62,31 @@ public class MenuRole extends BaseTimeEntity implements Serializable {
     private String menuSkillName;
 
     /**
-     * 메뉴
+     * 메뉴 맵핑
      *
      * @author [오지훈]
      */
     @ManyToOne
     @JoinColumn(name = "MENU_SEQ", insertable = false, updatable = false)
+    @JsonBackReference
     private Menu menu;
+
+    /**
+     * 메뉴 역할 리소스 맵핑
+     *
+     * @author [오지훈]
+     */
+    /*@OneToMany(mappedBy = "menuRole")
+    @JsonManagedReference
+    private List<MenuRoleResource> menuRoleResources;*/
+
+    /**
+     * 권한 메뉴 역할 맵핑
+     *
+     * @author [오지훈]
+     */
+    /*@OneToMany(mappedBy = "menuRole")
+    @JsonManagedReference
+    private List<AuthMenuRole> authMenuRoles;*/
 
 }

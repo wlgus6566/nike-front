@@ -17,7 +17,7 @@
         </header>
         <section id="container">
             <div class="contents">
-                <h2 class="page-title">SP</h2>
+                <h2 class="page-title">ALL</h2>
                 <div class="upload-summury">
                     <strong class="title">파일올리기</strong>
                     <p class="desc">

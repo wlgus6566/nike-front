@@ -4,8 +4,6 @@ import com.nike.dnp.entity.menu.Menu;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 
 /**
  * The Interface Menu repository.
@@ -15,8 +13,5 @@ import java.util.List;
  * @Description 메뉴 Repository 작성
  */
 @Repository
-public interface MenuRepository extends JpaRepository<Menu, Long> {
-
-    List<Menu> findByUseYn(final String useYn);
-
+public interface MenuRepository extends JpaRepository<Menu, Long>, MenuRepositoryCustom {
 }

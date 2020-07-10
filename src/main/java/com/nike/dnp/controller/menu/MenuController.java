@@ -1,15 +1,18 @@
 package com.nike.dnp.controller.menu;
 
+import com.nike.dnp.dto.menu.MenuReturnDTO;
 import com.nike.dnp.entity.menu.Menu;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.menu.MenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,15 +57,46 @@ public class MenuController {
             + "## Response ## \n"
             + "[하위 Model 참조]\n\n\n\n";
 
+    /**
+     * Find all single result.
+     *
+     * @return the basic menus
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 8. 오후 6:14:49
+     * @Description 메뉴 관리 목록 조회(전체)
+     */
     @ApiOperation(
-            value = "메뉴 관리 목록 조회"
+            value = "메뉴 관리 목록 조회(전체)"
             , notes = BASIC_OPERATION
     )
-    @GetMapping(name = "메뉴 목록 조회"
+    @GetMapping(name = "메뉴 목록 조회(전체)"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<Menu>> findAll() {
-        log.info("MenuController.findAll");
-        return responseService.getSingleResult(menuService.findAll());
+    public SingleResult<List<MenuReturnDTO>> findAllMenus() {
+        log.info("MenuController.findAllMenus");
+        return responseService.getSingleResult(menuService.getMenus());
+    }
+
+    /**
+     * Find auth menus single result.
+     *
+     * @param authSeq the auth seq
+     * @return the single result
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 9. 오후 5:31:48
+     * @Description 메뉴 관리 목록 조회(권한)
+     */
+    @ApiOperation(
+            value = "메뉴 관리 목록 조회(권한)"
+            , notes = BASIC_OPERATION
+    )
+    @GetMapping(name = "메뉴 목록 조회(권한)", value = "{authSeq}"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<List<Menu>> findAuthMenus(
+            @ApiParam(value = "권한 시퀀스", required = true)
+            @PathVariable final Long authSeq
+    ) {
+        log.info("MenuController.findAuthMenus");
+        return responseService.getSingleResult(menuService.getMenus(authSeq));
     }
 
 }

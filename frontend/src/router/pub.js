@@ -22,6 +22,26 @@ const routes = [
                 component: pages('pub/input'),
                 meta: { layout: 'Pub' },
             },
+            {
+                path: 'nodata01',
+                component: pages('pub/nodata01'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'nodata02',
+                component: pages('pub/nodata02'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'nodata03',
+                component: pages('pub/nodata03'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'nodata04',
+                component: pages('pub/nodata04'),
+                meta: { layout: 'Pub' },
+            },
             //main
             {
                 path: 'main',
@@ -109,6 +129,11 @@ const routes = [
             },
             //gnb - ORDER: 부자재 주문
             {
+                path: 'NIKE_P_ORDER_06',
+                component: pages('pub/NIKE_P_ORDER_06'),
+                meta: { layout: 'Pub' },
+            },
+            {
                 path: 'NIKE_P_ORDER_01',
                 component: pages('pub/NIKE_P_ORDER_01'),
                 meta: { layout: 'Pub' },
@@ -139,16 +164,77 @@ const routes = [
                 component: pages('pub/NIKE_P_REPORT_03'),
                 meta: { layout: 'Pub' },
             },
+            //gnb - INFORMATION
+            {
+                path: 'NIKE_P_INFO_01_001',
+                component: pages('pub/NIKE_P_INFO_01_001'),
+                meta: { layout: 'Pub' },
+            },
             //gnb - MANAGEMENT
             {
                 path: 'NIKE_P_MANAGE_01',
                 component: pages('pub/NIKE_P_MANAGE_01'),
                 meta: { layout: 'Pub' },
             },
+            {
+                path: 'NIKE_P_INFO_01_001',
+                component: pages('pub/NIKE_P_INFO_01_001'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MANAGE_02_001',
+                component: pages('pub/NIKE_P_MANAGE_02_001'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MANAGE_02_002P',
+                component: pages('pub/NIKE_P_MANAGE_02_002P'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MANAGE_03',
+                component: pages('pub/NIKE_P_MANAGE_03'),
+                meta: { layout: 'Pub' },
+            },
             //UTIL - MYPAGE
+            {
+                path: 'NIKE_P_MY_04_001',
+                component: pages('pub/NIKE_P_MY_04_001'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_04_002',
+                component: pages('pub/NIKE_P_MY_04_002'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_04_003',
+                component: pages('pub/NIKE_P_MY_04_003'),
+                meta: { layout: 'Pub' },
+            },
             {
                 path: 'NIKE_P_MY_04_004',
                 component: pages('pub/NIKE_P_MY_04_004'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_04_005',
+                component: pages('pub/NIKE_P_MY_04_005'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_04_006',
+                component: pages('pub/NIKE_P_MY_04_006'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_04_007',
+                component: pages('pub/NIKE_P_MY_04_007'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_04_009',
+                component: pages('pub/NIKE_P_MY_04_009'),
                 meta: { layout: 'Pub' },
             },
             {
@@ -156,10 +242,46 @@ const routes = [
                 component: pages('pub/NIKE_P_MY_01_001'),
                 meta: { layout: 'Pub' },
             },
+            {
+                path: 'NIKE_P_MY_01_002',
+                component: pages('pub/NIKE_P_MY_01_002'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_02_001',
+                component: pages('pub/NIKE_P_MY_02_001'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_02_002',
+                component: pages('pub/NIKE_P_MY_02_002'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_03_001',
+                component: pages('pub/NIKE_P_MY_03_001'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_MY_03_002',
+                component: pages('pub/NIKE_P_MY_03_002'),
+                meta: { layout: 'Pub' },
+            },
             //이메일 발송
             {
                 path: 'NIKE_P_LOGIN_01e',
                 component: pages('pub/NIKE_P_LOGIN_01e'),
+                meta: { layout: 'Pub' },
+            },
+            //ECT
+            {
+                path: 'NIKE_P_ERROR_01',
+                component: pages('pub/NIKE_P_ERROR_01'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'NIKE_P_ERROR_02',
+                component: pages('pub/NIKE_P_ERROR_02'),
                 meta: { layout: 'Pub' },
             },
             // {

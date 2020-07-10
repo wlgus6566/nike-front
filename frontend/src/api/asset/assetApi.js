@@ -32,4 +32,7 @@ export default {
         //사용자 삭제
         return axios.delete('/api/manage/user/' + key);
     },
+    get(url,config){
+        return axios.get(url,config);
+    }
 };

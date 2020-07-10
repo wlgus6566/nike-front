@@ -17,7 +17,7 @@ import java.util.HashMap;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+//@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CommonResult {
 
     /**
@@ -58,6 +58,7 @@ public class CommonResult {
      * @author [오지훈]
      */
     @ApiModelProperty(value = "추가 응답 데이터", name = "payload", allowableValues = "{}")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private HashMap<String, Object> payload;
 
 }

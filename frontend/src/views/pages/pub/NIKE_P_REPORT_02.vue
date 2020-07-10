@@ -22,31 +22,39 @@
                 <div class="file-upload-area"></div>
                 <div class="sorting-area">
                     <div class="filter-list">
-                        <button type="button" class="type-list active"><span>컬럼타입</span></button>
+                        <button type="button" class="type-list active">
+                            <span>컬럼타입</span>
+                        </button>
                         <button type="button" class="type-list"><span>로우타입</span></button>
                     </div>
                     <!-- todo select 스크립트 작업 필요  -->
                     <div class="filter-select">
-                        <select>
-                            <option value="ALL">ALL</option>
-                            <option value="SP">SP</option>
-                            <option value="SU">SU</option>
-                            <option value="FA">FA</option>
-                            <option value="HO">HO</option>
-                        </select>
+                        <el-select v-model="value2" placeholder="Select">
+                            <el-option
+                                v-for="item in options2"
+                                :key="item.value2"
+                                :label="item.label"
+                                :value="item.value2"
+                            >
+                            </el-option>
+                        </el-select>
                     </div>
                     <div class="filter-select">
-                        <select>
-                            <optgroup label="ND">
-                                <option value="대연">대연</option>
-                                <option value="윈윈">윈윈</option>
-                                <option value="은광">은광</option>
-                            </optgroup>
-                            <optgroup label="MULTI">
-                                <option value="ABC">ABC</option>
-                                <option value="JD">JD</option>
-                            </optgroup>
-                        </select>
+                        <el-select v-model="value" placeholder="Select">
+                            <el-option-group
+                                v-for="group in options"
+                                :key="group.label"
+                                :label="group.label"
+                            >
+                                <el-option
+                                    v-for="item in group.options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                >
+                                </el-option>
+                            </el-option-group>
+                        </el-select>
                     </div>
                     <div class="search-input">
                         <input type="text" placeholder="검색어를 입력해주세요." />
@@ -166,7 +174,9 @@
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
                             </div>
                             <div class="info-box">
-                                <strong class="title">타이틀 입니다 타이으트르르 입니다 두줄표시</strong>
+                                <strong class="title"
+                                    >타이틀 입니다 타이으트르르 입니다 두줄표시</strong
+                                >
                                 <p class="txt">설명입니다 설명입니다 설명</p>
                                 <p class="date">2020.00.00 ~ 2020.00.00</p>
                             </div>
@@ -189,6 +199,66 @@
 <script>
 export default {
     name: 'NIKE_P_REPORT_02',
+    data() {
+        return {
+            options2: [
+                {
+                    value: 'ALL',
+                    label: 'ALL',
+                },
+                {
+                    value: 'SP',
+                    label: 'SP',
+                },
+                {
+                    value: 'SU',
+                    label: 'SU',
+                },
+                {
+                    value: 'FA',
+                    label: 'FA',
+                },
+                {
+                    value: 'HO',
+                    label: 'HO',
+                },
+            ],
+            value2: 'ALL',
+            options: [
+                {
+                    label: 'ND',
+                    options: [
+                        {
+                            value: '대연',
+                            label: '대연',
+                        },
+                        {
+                            value: '윈윈',
+                            label: '윈윈',
+                        },
+                        {
+                            value: '은광',
+                            label: '은광',
+                        },
+                    ],
+                },
+                {
+                    label: 'MULTI',
+                    options: [
+                        {
+                            value: 'ABC',
+                            label: 'ABC',
+                        },
+                        {
+                            value: 'JD',
+                            label: 'JD',
+                        },
+                    ],
+                },
+            ],
+            value: '대연',
+        };
+    },
 };
 </script>
 <style scoped></style>

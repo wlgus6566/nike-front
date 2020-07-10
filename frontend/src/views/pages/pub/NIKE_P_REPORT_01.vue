@@ -95,7 +95,7 @@
                                                         <span></span>
                                                     </span>
                                                     <span class="txt"
-                                                        >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpgP20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpg<</span
+                                                        >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpgP20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpg</span
                                                     >
                                                 </label>
                                             </li>
@@ -105,7 +105,9 @@
                                                         <input type="checkbox" />
                                                         <span></span>
                                                     </span>
-                                                    <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                                                    <span class="txt"
+                                                        >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                                    >
                                                 </label>
                                             </li>
                                             <li>
@@ -114,7 +116,9 @@
                                                         <input type="checkbox" />
                                                         <span></span>
                                                     </span>
-                                                    <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                                                    <span class="txt"
+                                                        >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                                    >
                                                 </label>
                                             </li>
                                             <li>
@@ -123,7 +127,9 @@
                                                         <input type="checkbox" />
                                                         <span></span>
                                                     </span>
-                                                    <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                                                    <span class="txt"
+                                                        >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                                    >
                                                 </label>
                                             </li>
                                             <li>
@@ -132,7 +138,9 @@
                                                         <input type="checkbox" />
                                                         <span></span>
                                                     </span>
-                                                    <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                                                    <span class="txt"
+                                                        >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                                    >
                                                 </label>
                                             </li>
                                         </ul>
@@ -142,7 +150,9 @@
                                             <span class="btn-form-gray"><span>찾기</span></span>
                                             <input type="file" />
                                         </div>
-                                        <button type="button" class="btn-form"><span>삭제</span></button>
+                                        <button type="button" class="btn-form">
+                                            <span>삭제</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>

@@ -1,10 +1,7 @@
 package com.nike.dnp.controller.product;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
-import com.nike.dnp.dto.product.ProductResultDTO;
-import com.nike.dnp.dto.product.ProductSaveDTO;
-import com.nike.dnp.dto.product.ProductSearchDTO;
-import com.nike.dnp.dto.product.ProductUpdateDTO;
+import com.nike.dnp.dto.product.*;
 import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -76,13 +73,30 @@ public class ProductController {
 	@ApiOperation(value = "상품 목록 조회", notes = REQUEST_CHARACTER
 			+ "category2code|카테고리 2 코드|false|String\n"
 			+ "category3code|카테고리 3 코드|false|String\n"
-			+ "agentSeq|에이전트 시퀀스|false|Integer\n"
+			+ "agentSeq|에이전트 "
+			+ "시퀀스|false|Integer\n"
 			+ "exposureYn|노출여부|false|String\n"
 			+ "keyword|키워드|false|String\n"
 			+ "page|페이지|false|Integer\n"
 			+ "size|사이즈|false|Integer\n")
 	@GetMapping(value = "/list", name = "상품 목록 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public SingleResult<Page<ProductResultDTO>> findPagesProduct(final ProductSearchDTO productSearchDTO) {
+		return responseService.getSingleResult(productService.findPagesProduct(productSearchDTO));
+	}
+
+
+	@ApiOperation(value = "상품 목록 조회(유저용)", notes = REQUEST_CHARACTER + "keyword|키워드|false|String\n" + "page|페이지|false|Integer\n" + "size|사이즈|false|Integer\n")
+	@GetMapping(value = "{category2code}/list", name = "상품 목록 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public SingleResult<Page<ProductResultDTO>> findPagesProductCategory2(@PathVariable @ApiParam(name="category2Code",value="카테고리 2 코드",allowableValues = "SUBSIDIARY,NIKE_BY_YOU,CUSTOM23,MNQ") final String category2code,
+																		  final ProductUserSearchDTO productUserSearchDTO) {
+
+		ProductSearchDTO productSearchDTO = new ProductSearchDTO();
+		productSearchDTO.setPage(productUserSearchDTO.getPage());
+		productSearchDTO.setSize(productUserSearchDTO.getSize());
+		productSearchDTO.setCategory2code(category2code);
+		productSearchDTO.setExposureYn("Y");
+		productSearchDTO.setKeyword(productUserSearchDTO.getKeyword());
+
 		return responseService.getSingleResult(productService.findPagesProduct(productSearchDTO));
 	}
 
@@ -181,7 +195,7 @@ public class ProductController {
 	 * @Description
 	 */
 	@ApiOperation(value = "상품 삭제", notes = BASIC_CHARACTER)
-	@DeleteMapping(name = "상품 삭제", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(name = "상품 삭제", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<Boolean> deleteProduct(@ApiParam(name = "goodsSeqList", value = "상품 시퀀스", defaultValue = "29,30,31") @RequestParam final List<Long> goodsSeqList,
 											   @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO) {
 
@@ -190,7 +204,9 @@ public class ProductController {
 		final ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO();
 		productUpdateDTO.setUseYn("N");
 		productUpdateDTO.setUpdaterSeq(authUserDTO.getUserSeq());
-		boolean check = productService.deleteArray(productList, productUpdateDTO);
+		boolean check = productService.deleteArray(
+				productList,
+				productUpdateDTO);
 		return responseService.getSingleResult(check);
 	}
 }

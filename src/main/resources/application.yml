@@ -22,6 +22,10 @@ spring:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  servlet:
+    multipart:
+      max-file-size: 1GB
+
 
 ## 시큐리티 url/ ip 체크 flag
 security:
