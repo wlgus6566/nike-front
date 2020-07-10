@@ -190,4 +190,21 @@ public class ServiceEnumCode {
         private final String field;
         private final int sort;
     }
+
+
+    @RequiredArgsConstructor
+    @Getter
+    public enum FileFolderEnumCode {
+        PRODUCT("product"),
+        TEMP("temp");
+
+        /**
+         * 코드값
+         *
+         * @author [윤태호]
+         */
+
+        private final String folder;
+
+    }
 }
