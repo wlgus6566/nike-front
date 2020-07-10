@@ -1,6 +1,6 @@
 package com.nike.dnp.controller.contents;
 
-import com.nike.dnp.dto.file.FileUploadDTO;
+import com.nike.dnp.dto.file.ImageThumbnailFileDTO;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.service.ResponseService;
 import lombok.RequiredArgsConstructor;
@@ -60,15 +60,15 @@ public class FileController {
 
 
 	@PostMapping(value = "/api/upload",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public CommonResult upload(@RequestBody FileUploadDTO fileUploadDTO) throws IOException {
+	public CommonResult upload(@RequestBody ImageThumbnailFileDTO imageThumbnailFileDTO) throws IOException {
 		//log.debug("fileStr {}", fileUploadDTO.getCropImg());
 		BufferedImage image = null;
-		String base64Str = fileUploadDTO.getCropImg().split(",")[1];
-		String info = fileUploadDTO.getCropImg().split(",")[0];
-		fileUploadDTO.getCropImg().split(",")[0].substring(fileUploadDTO.getCropImg().indexOf("/") + 1, fileUploadDTO.getCropImg().indexOf(";"));
+		String base64Str = imageThumbnailFileDTO.getCropImg().split(",")[1];
+		String info = imageThumbnailFileDTO.getCropImg().split(",")[0];
+		imageThumbnailFileDTO.getCropImg().split(",")[0].substring(imageThumbnailFileDTO.getCropImg().indexOf("/") + 1, imageThumbnailFileDTO.getCropImg().indexOf(";"));
 		byte[] imageByte;
 		try{
-			imageByte = DatatypeConverter.parseBase64Binary(fileUploadDTO.getCropImg().split(",")[1]);
+			imageByte = DatatypeConverter.parseBase64Binary(imageThumbnailFileDTO.getCropImg().split(",")[1]);
 			ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
 			image = ImageIO.read(bis);
 			bis.close();

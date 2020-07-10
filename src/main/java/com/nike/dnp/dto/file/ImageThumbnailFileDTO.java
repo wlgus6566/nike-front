@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class FileUploadDTO {
+public class ImageThumbnailFileDTO {
 
 	/**
 	 * 파일명

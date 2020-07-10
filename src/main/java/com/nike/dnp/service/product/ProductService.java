@@ -1,7 +1,7 @@
 package com.nike.dnp.service.product;
 
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.dto.file.FileUploadDTO;
+import com.nike.dnp.dto.file.ImageThumbnailFileDTO;
 import com.nike.dnp.dto.product.ProductResultDTO;
 import com.nike.dnp.dto.product.ProductSaveDTO;
 import com.nike.dnp.dto.product.ProductSearchDTO;
@@ -95,11 +95,11 @@ public class ProductService {
 
 		if(!ObjectUtils.isEmpty(productSaveDTO.getImageBase64()) &&
 			productSaveDTO.getImageBase64().contains("base64")){
-			FileUploadDTO fileUploadDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.PRODUCT.getFolder(),productSaveDTO.getImageBase64());
+			ImageThumbnailFileDTO imageThumbnailFileDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.PRODUCT.getFolder(), productSaveDTO.getImageBase64());
 
 			product.setImageFileName(productSaveDTO.getImageFileName());
-			product.setImageFileSize(String.valueOf(fileUploadDTO.getFileSize()));
-			product.setImageFilePhysicalName(fileUploadDTO.getFilePhysicalName());
+			product.setImageFileSize(String.valueOf(imageThumbnailFileDTO.getFileSize()));
+			product.setImageFilePhysicalName(imageThumbnailFileDTO.getFilePhysicalName());
 		}
 		product.setRegisterSeq(productSaveDTO.getRegisterSeq());
 		product.setUpdaterSeq(productSaveDTO.getRegisterSeq());
@@ -130,10 +130,10 @@ public class ProductService {
 		product.setMinimumOrderQuantity(productUpdateDTO.getMinimumOrderQuantity());
 		product.setUnitPrice(productUpdateDTO.getUnitPrice());
 		if(!ObjectUtils.isEmpty(productUpdateDTO.getImageBase64()) && productUpdateDTO.getImageBase64().contains("base64")){
-			FileUploadDTO fileUploadDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.PRODUCT.getFolder(), productUpdateDTO.getImageBase64());
+			ImageThumbnailFileDTO imageThumbnailFileDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.PRODUCT.getFolder(), productUpdateDTO.getImageBase64());
 			product.setImageFileName(productUpdateDTO.getImageFileName());
-			product.setImageFileSize(String.valueOf(fileUploadDTO.getFileSize()));
-			product.setImageFilePhysicalName(fileUploadDTO.getFilePhysicalName());
+			product.setImageFileSize(String.valueOf(imageThumbnailFileDTO.getFileSize()));
+			product.setImageFilePhysicalName(imageThumbnailFileDTO.getFilePhysicalName());
 		}
 		return productRepository.save(product);
 	}

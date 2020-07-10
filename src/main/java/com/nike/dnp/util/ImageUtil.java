@@ -1,7 +1,7 @@
 package com.nike.dnp.util;
 
 import com.nike.dnp.common.variable.ErrorEnumCode;
-import com.nike.dnp.dto.file.FileUploadDTO;
+import com.nike.dnp.dto.file.ImageThumbnailFileDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,7 +58,7 @@ public class ImageUtil {
 	 * @CreatedOn 2020. 7. 10. 오후 2:41:58
 	 * @Description
 	 */
-	public static FileUploadDTO fileSaveForBase64(final String folder,final String base64Str) {
+	public static ImageThumbnailFileDTO fileSaveForBase64(final String folder, final String base64Str) {
 
 		BufferedImage image = null;
 		String base64 = base64Str.split(",")[1];
@@ -98,14 +98,14 @@ public class ImageUtil {
 			throw new CodeMessageHandleException(ErrorEnumCode.ContentsError.FILE_READ_ERROR.name(), ErrorEnumCode.ContentsError.FILE_READ_ERROR.getMessage());
 		}
 
-		FileUploadDTO fileUploadDTO = new FileUploadDTO();
-		fileUploadDTO.setFileName(newFile.getName());
-		fileUploadDTO.setFilePhysicalName(StringUtils.remove(newFile.getPath(), root));
-		fileUploadDTO.setFileSize(newFile.length());
+		ImageThumbnailFileDTO imageThumbnailFileDTO = new ImageThumbnailFileDTO();
+		imageThumbnailFileDTO.setFileName(newFile.getName());
+		imageThumbnailFileDTO.setFilePhysicalName(StringUtils.remove(newFile.getPath(), root));
+		imageThumbnailFileDTO.setFileSize(newFile.length());
 
 		// TODO [YTH] 이미지 파일 s3 로 업로드 필요함
 
-		return fileUploadDTO;
+		return imageThumbnailFileDTO;
 
 	}
 
