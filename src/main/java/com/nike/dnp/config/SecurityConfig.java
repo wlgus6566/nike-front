@@ -178,6 +178,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new AffirmativeBased(decisionVoters);
 	}
 
+	/*
+	// filter Meta Service 미사용
+	@Bean
+	public AccessDecisionManager accessDecisionManager() {
+		List<AccessDecisionVoter<? extends Object>> decisionVoters = Arrays.asList(new AuthenticatedVoter(), new RoleVoter(), new WebExpressionVoter());
+		return new UnanimousBased(decisionVoters);
+
+	}
+
+	*/
+
 	/**
 	 * 인증 필터
 	 *

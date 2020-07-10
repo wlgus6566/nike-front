@@ -15,8 +15,8 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3N
 Content-Type: application/json
 
 {
-"category2code":"2",
-"category3code":"3",
+"category2Code":"2",
+"category3Code":"3",
 "agencySeq":"1",
 "goodsName":"goodsName",
 "goodsDescription":"디스크립션",
@@ -39,8 +39,8 @@ Content-Type: application/json
 
 {
   "goodsSeq" : 31,
-  "category2code": "2",
-  "category3code": "3",
+  "category2Code": "2",
+  "category3Code": "3",
   "agencySeq": "1",
   "goodsName": "상품이름 수정합니다.",
   "goodsDescription": "디스크립션",

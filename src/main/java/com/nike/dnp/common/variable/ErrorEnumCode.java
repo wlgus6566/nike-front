@@ -88,7 +88,10 @@ public class ErrorEnumCode {
         NOT_EXIST_FILE_URL("파일URL이 존재하지 않습니다."),
         NOT_SELECT_DATE("시작/끝날짜를 둘 다 지정해주시기 바랍니다."),
         START_DATE_BIGGER("시작날짜가 종료일자보다 큽니다."),
-        NOT_EXIST_FILE("파일이 존재하지 않습니다.");
+        NOT_EXIST_FILE("파일이 존재하지 않습니다."),
+        NOT_IMAGE_FILE("이미지 파일이 아닙니다."),
+        FILE_READ_ERROR("파일 읽기 중 오류 발생"),
+        FILE_WRITE_ERROR("파일 쓰기 중 오류 발생");
 
         /**
          * 에러 메시지

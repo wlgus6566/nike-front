@@ -1,11 +1,14 @@
 package com.nike.dnp.service.product;
 
+import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.dto.file.FileUploadDTO;
 import com.nike.dnp.dto.product.ProductResultDTO;
 import com.nike.dnp.dto.product.ProductSaveDTO;
 import com.nike.dnp.dto.product.ProductSearchDTO;
 import com.nike.dnp.dto.product.ProductUpdateDTO;
 import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.repository.product.ProductRepository;
+import com.nike.dnp.util.ImageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -13,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -77,30 +81,30 @@ public class ProductService {
 	 */
 	@Transactional
 	public Product save(final ProductSaveDTO productSaveDTO) {
+
 		final Product product = new Product();
-		product.setCategory2Code(productSaveDTO.getCategory2code());
-		product.setCategory3Code(productSaveDTO.getCategory3code());
+		product.setCategory2Code(productSaveDTO.getCategory2Code());
+		product.setCategory3Code(productSaveDTO.getCategory3Code());
 		product.setAgencySeq(productSaveDTO.getAgencySeq());
 		product.setExposureYn(productSaveDTO.getExposureYn());
 		product.setGoodsName(productSaveDTO.getGoodsName());
 		product.setGoodsDescription(productSaveDTO.getGoodsDescription());
 		product.setSize(productSaveDTO.getSize());
 		product.setUnitPrice(productSaveDTO.getUnitPrice());
-		product.setMinimumOrderQuantity(productSaveDTO.getMinimumQuantity());
-		product.setImageFileName(productSaveDTO.getImageFileName());
-		product.setImageFileSize(String.valueOf(productSaveDTO.getImageFileSize()));
-		product.setImageFilePhysicalName(productSaveDTO.getImageFilePhysicalName());
+		product.setMinimumOrderQuantity(productSaveDTO.getMinimumOrderQuantity());
 
-		product.setThumbnailFileName(productSaveDTO.getThumbnailFileName());
-		product.setThumbnailFileSize(String.valueOf(productSaveDTO.getThumbnailFileSize()));
-		product.setThumbnailFilePhysicalName(productSaveDTO.getThumbnailFilePhysicalName());
+		if(!ObjectUtils.isEmpty(productSaveDTO.getImageBase64()) &&
+			productSaveDTO.getImageBase64().contains("base64")){
+			FileUploadDTO fileUploadDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.PRODUCT.getFolder(),productSaveDTO.getImageBase64());
 
+			product.setImageFileName(productSaveDTO.getImageFileName());
+			product.setImageFileSize(String.valueOf(fileUploadDTO.getFileSize()));
+			product.setImageFilePhysicalName(fileUploadDTO.getFilePhysicalName());
+		}
 		product.setRegisterSeq(productSaveDTO.getRegisterSeq());
 		product.setUpdaterSeq(productSaveDTO.getRegisterSeq());
 		product.setUseYn(productSaveDTO.getUseYn());
-
 		return productRepository.save(product);
-
 	}
 
 	/**
@@ -113,10 +117,25 @@ public class ProductService {
 	 * @Description
 	 */
 	@Transactional
-	public Optional<Product> update(final ProductUpdateDTO productUpdateDTO) {
-		final Optional<Product> product = productRepository.findById(productUpdateDTO.getGoodsSeq());
-		product.ifPresent(value ->  value.update(productUpdateDTO));
-		return product;
+	public Product update(final ProductUpdateDTO productUpdateDTO) {
+		final Optional<Product> optionalProduct = productRepository.findById(productUpdateDTO.getGoodsSeq());
+
+		Product product = optionalProduct.orElse(new Product());
+		product.setExposureYn(productUpdateDTO.getExposureYn());
+		product.setCategory2Code(productUpdateDTO.getCategory2Code());
+		product.setCategory3Code(productUpdateDTO.getCategory3Code());
+		product.setAgencySeq(productUpdateDTO.getAgencySeq());
+		product.setGoodsName(productUpdateDTO.getGoodsName());
+		product.setGoodsDescription(productUpdateDTO.getGoodsDescription());
+		product.setMinimumOrderQuantity(productUpdateDTO.getMinimumOrderQuantity());
+		product.setUnitPrice(productUpdateDTO.getUnitPrice());
+		if(!ObjectUtils.isEmpty(productUpdateDTO.getImageBase64()) && productUpdateDTO.getImageBase64().contains("base64")){
+			FileUploadDTO fileUploadDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.PRODUCT.getFolder(), productUpdateDTO.getImageBase64());
+			product.setImageFileName(productUpdateDTO.getImageFileName());
+			product.setImageFileSize(String.valueOf(fileUploadDTO.getFileSize()));
+			product.setImageFilePhysicalName(fileUploadDTO.getFilePhysicalName());
+		}
+		return productRepository.save(product);
 	}
 
 

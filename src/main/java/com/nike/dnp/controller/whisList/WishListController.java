@@ -131,8 +131,5 @@ public class WishListController {
 		wishListService.deleteList(wishListDeleteDTO);
 		return responseService.getSuccessResult();
 	}
-
-
-
 }
 
