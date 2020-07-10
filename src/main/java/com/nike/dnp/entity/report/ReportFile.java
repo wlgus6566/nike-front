@@ -98,6 +98,7 @@ public class ReportFile extends BaseTimeEntity {
     /**
      * Save report file.
      *
+     * @param reportSeq         the report seq
      * @param reportFileSaveDTO the report file save dto
      * @return the report file
      * @author [이소정]
@@ -105,13 +106,8 @@ public class ReportFile extends BaseTimeEntity {
      * @Description
      */
     @Transactional
-    public ReportFile save(final ReportFileSaveDTO reportFileSaveDTO) {
-        final ReportFile savedReportFile = new ReportFile();
-        savedReportFile.setFileName(reportFileSaveDTO.getFileName());
-        savedReportFile.setFileSize(reportFileSaveDTO.getFileSize());
-        savedReportFile.setFilePhysicalName(reportFileSaveDTO.getFilePhysicalName());
-        savedReportFile.setDownloadCount(0l);
-        return savedReportFile;
+    public ReportFile save(final Long reportSeq, final ReportFileSaveDTO reportFileSaveDTO) {
+        return newReportFile(reportSeq, reportFileSaveDTO.getFileName(), reportFileSaveDTO.getFileSize(), reportFileSaveDTO.getFilePhysicalName());
     }
 
     /**
@@ -124,14 +120,31 @@ public class ReportFile extends BaseTimeEntity {
      * @Description
      */
     @Transactional
-    public ReportFile newReportFile(final Long reportSeq, final ReportFileUpdateDTO reportFileUpdateDTO) {
-        final ReportFile savedReportFile = new ReportFile();
-        savedReportFile.setReportSeq(reportSeq);
-        savedReportFile.setFileName(reportFileUpdateDTO.getFileName());
-        savedReportFile.setFileSize(reportFileUpdateDTO.getFileSize());
-        savedReportFile.setFilePhysicalName(reportFileUpdateDTO.getFilePhysicalName());
-        savedReportFile.setDownloadCount(0l);
-        return savedReportFile;
+    public ReportFile updateNewFile(final Long reportSeq, final ReportFileUpdateDTO reportFileUpdateDTO) {
+        return newReportFile(reportSeq, reportFileUpdateDTO.getFileName(), reportFileUpdateDTO.getFileSize(), reportFileUpdateDTO.getFilePhysicalName());
+    }
+
+    /**
+     * New report file report file.
+     *
+     * @param reportSeq        the report seq
+     * @param fileName         the file name
+     * @param fileSize         the file size
+     * @param filePhysicalName the file physical name
+     * @return the report file
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 10. 오후 5:39:30
+     * @Description
+     */
+    private ReportFile newReportFile(Long reportSeq, String fileName, String fileSize, String filePhysicalName) {
+        final ReportFile saveReportFile = new ReportFile();
+        saveReportFile.setReportSeq(reportSeq);
+        saveReportFile.setFileName(fileName);
+        saveReportFile.setFileSize(fileSize);
+        saveReportFile.setFilePhysicalName(filePhysicalName);
+        saveReportFile.setDownloadCount(0l);
+        saveReportFile.setUseYn("Y");
+        return saveReportFile;
     }
 
     /**

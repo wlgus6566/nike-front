@@ -1,10 +1,8 @@
 package com.nike.dnp.controller.report;
 
-import com.google.firebase.database.core.Repo;
 import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.dto.report.ReportUpdateDTO;
-import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -14,8 +12,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +28,7 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@Api(description = "리포트", tags = "11_REPORT")
+@Api(description = "리포트", tags = "REPORT")
 @RequestMapping(value = "/api/report", name = "Report")
 @RequiredArgsConstructor
 public class ReportController {
@@ -49,9 +45,6 @@ public class ReportController {
      * @author [이소정]
      */
     private final ReportService reportService;
-
-    @Autowired
-    MessageSource messageSource;
 
     /**
      * The constant REQUEST_CHARACTER
@@ -118,7 +111,7 @@ public class ReportController {
     @GetMapping(name = " 보고서 상세조회", value = "/{reportSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Report> findReport(
-            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "4") @PathVariable final Long reportSeq) {
+            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq) {
         log.info("ReportController.findReport");
         return responseService.getSingleResult(reportService.findByReportSeq(reportSeq));
     }
@@ -151,7 +144,7 @@ public class ReportController {
     @DeleteMapping(name = "보고서 삭제", value = "/{reportSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Report>> deleteReport(
-            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "4") @PathVariable final Long reportSeq) {
+            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq) {
         log.info("ReportController.deleteReport");
         return responseService.getSingleResult(reportService.delete(reportSeq));
     }

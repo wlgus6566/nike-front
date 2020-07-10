@@ -49,7 +49,7 @@ public class ReportPredicateHelper {
         final BooleanBuilder builder = new BooleanBuilder();
         final String sectionCode = reportSearchDTO.getSectionCode();
 
-       if (!StringUtils.isEmpty(sectionCode) || !"ALL".equals(sectionCode)) {
+       if (!StringUtils.isEmpty(sectionCode) && !"ALL".equals(sectionCode)) {
            builder.and(QReport.report.reportSectionCode.eq(sectionCode));
        }
        return builder;

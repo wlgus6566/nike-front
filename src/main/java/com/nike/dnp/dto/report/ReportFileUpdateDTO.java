@@ -33,7 +33,7 @@ public class ReportFileUpdateDTO {
      * 보고서 시퀀스
      * @author [이소정]
      */
-    @ApiModelProperty(name = "reportSeq", value = "보고서 시퀀스", example = "1")
+    @ApiModelProperty(name = "reportSeq", value = "보고서 시퀀스", example = "2")
     private Long reportSeq;
 
     /**

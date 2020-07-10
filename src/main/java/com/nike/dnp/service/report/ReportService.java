@@ -79,7 +79,7 @@ public class ReportService {
 
         if (!reportSaveDTO.getReportFileSaveDTOList().isEmpty()) {
             for (ReportFileSaveDTO reportFileSaveDTO : reportSaveDTO.getReportFileSaveDTOList()) {
-                ReportFile savedReportFile = reportFileRepository.save(new ReportFile().save(reportFileSaveDTO));
+                ReportFile savedReportFile = reportFileRepository.save(new ReportFile().save(savedReport.getReportSeq(), reportFileSaveDTO));
                 reportFileList.add(savedReportFile);
             }
         }
@@ -133,7 +133,7 @@ public class ReportService {
         if (!newFileList.isEmpty()) {
             for (ReportFileUpdateDTO reportFileUpdateDTO : newFileList) {
                 Long contentsFileSeq = reportFileUpdateDTO.getReportFileSeq();
-                ReportFile saveReportFile = new ReportFile().newReportFile(report.get().getReportSeq(), reportFileUpdateDTO);
+                ReportFile saveReportFile = new ReportFile().updateNewFile(report.get().getReportSeq(), reportFileUpdateDTO);
                 if (null != contentsFileSeq) {
                     Optional<ReportFile> reportFile = reportFileRepository.findById(reportFileUpdateDTO.getReportFileSeq());
                     reportFile.ifPresent(value -> value.update(reportFileUpdateDTO));
