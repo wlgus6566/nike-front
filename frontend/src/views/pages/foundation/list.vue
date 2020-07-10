@@ -7,7 +7,7 @@
 </template>
 <script>
 import ListSorting from '@/components/asset-list/list-sorting.vue';
-import Item from '@/components/asset-list/Item.vue';
+import Item from '@/components/asset-list/asset-item.vue';
 export default {
     name: 'index',
     mounted() {},
