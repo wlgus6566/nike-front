@@ -79,6 +79,11 @@ const routes = [
                 component: pages('pub/NIKE_P_LOGIN_06'),
                 meta: { layout: 'Pub' },
             },
+            {
+                path: 'NIKE_P_LOGIN_07',
+                component: pages('pub/NIKE_P_LOGIN_07'),
+                meta: { layout: 'Pub' },
+            },
             //gnb - ASSET
             {
                 path: 'NIKE_P_ASSET_01',
