@@ -52,13 +52,15 @@ public class MenuService {
      * @param authSeq the auth seq
      * @return the menus
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 8. 오후 6:18:34
+     * @CreatedOn 2020. 7. 9. 오후 5:31:36
      * @Description 메뉴 목록(권한)
      */
     public List<Menu> getMenus(final Long authSeq) {
         log.info("AuthService.getMenus.auth");
+
+        //TODO[ojh] 2020-07-09 : redis 설정 추가 예정
+
         return menuRepository.getMenus(authSeq);
     }
-
 
 }
