@@ -1,12 +1,14 @@
 package com.nike.dnp.dto.file;
 
+import io.swagger.annotations.ApiParam;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
-public class fileUploadDTO {
+public class FileUploadDTO {
 
-	private MultipartFile file;
+	@ApiParam(hidden = true)
+	private MultipartFile uploadFile;
 }

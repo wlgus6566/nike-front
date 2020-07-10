@@ -1,7 +1,7 @@
 package com.nike.dnp.util;
 
 import com.nike.dnp.common.variable.ErrorEnumCode;
-import com.nike.dnp.dto.file.ImageThumbnailFileDTO;
+import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,14 +58,14 @@ public class ImageUtil {
 	 * @CreatedOn 2020. 7. 10. 오후 2:41:58
 	 * @Description
 	 */
-	public static ImageThumbnailFileDTO fileSaveForBase64(final String folder, final String base64Str) {
+	public static FileResultDTO fileSaveForBase64(final String folder, final String base64Str) {
 
 		BufferedImage image = null;
 		String base64 = base64Str.split(",")[1];
 		String info = base64Str.split(",")[0];
 
 		if(!info.contains("image")){
-			throw new CodeMessageHandleException(ErrorEnumCode.ContentsError.NOT_IMAGE_FILE.name(),ErrorEnumCode.ContentsError.NOT_IMAGE_FILE.getMessage());
+			throw new CodeMessageHandleException(ErrorEnumCode.FileError.NOT_IMAGE_FILE.name(),ErrorEnumCode.FileError.NOT_IMAGE_FILE.getMessage());
 		}
 		String type = info.substring(info.indexOf("/") + 1, info.indexOf(";"));
 		byte[] imageByte;
@@ -75,7 +75,7 @@ public class ImageUtil {
 			image = ImageIO.read(bis);
 			bis.close();
 		}catch(IOException e){
-			throw new CodeMessageHandleException(ErrorEnumCode.ContentsError.FILE_WRITE_ERROR.name(), ErrorEnumCode.ContentsError.FILE_WRITE_ERROR.getMessage());
+			throw new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_WRITE_ERROR.name(), ErrorEnumCode.FileError.FILE_WRITE_ERROR.getMessage());
 		}
 
 		String extension = "";
@@ -95,17 +95,17 @@ public class ImageUtil {
 		try{
 			ImageIO.write(image, type, newFile);
 		}catch(IOException e){
-			throw new CodeMessageHandleException(ErrorEnumCode.ContentsError.FILE_READ_ERROR.name(), ErrorEnumCode.ContentsError.FILE_READ_ERROR.getMessage());
+			throw new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_READ_ERROR.name(), ErrorEnumCode.FileError.FILE_READ_ERROR.getMessage());
 		}
 
-		ImageThumbnailFileDTO imageThumbnailFileDTO = new ImageThumbnailFileDTO();
-		imageThumbnailFileDTO.setFileName(newFile.getName());
-		imageThumbnailFileDTO.setFilePhysicalName(StringUtils.remove(newFile.getPath(), root));
-		imageThumbnailFileDTO.setFileSize(newFile.length());
+		FileResultDTO fileResultDTO = new FileResultDTO();
+		fileResultDTO.setFileName(newFile.getName());
+		fileResultDTO.setFilePhysicalName(StringUtils.remove(newFile.getPath(), root));
+		fileResultDTO.setFileSize(newFile.length());
 
 		// TODO [YTH] 이미지 파일 s3 로 업로드 필요함
 
-		return imageThumbnailFileDTO;
+		return fileResultDTO;
 
 	}
 

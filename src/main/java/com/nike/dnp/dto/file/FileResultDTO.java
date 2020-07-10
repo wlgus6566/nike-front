@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class ImageThumbnailFileDTO {
+public class FileResultDTO {
 
 	/**
 	 * 파일명
@@ -35,6 +35,15 @@ public class ImageThumbnailFileDTO {
 	 */
 	private Long fileSize;
 
-	// 임시
-	private String cropImg;
+	/**
+	 * 파일 컨텐츠 타입
+	 *
+	 * @author [윤태호]
+	 */
+	private String fileContentType;
+
+	@Override
+	public String toString() {
+		return "FileResultDTO{" + "fileName='" + fileName + '\'' + ", filePhysicalName='" + filePhysicalName + '\'' + ", fileSize=" + fileSize + ", fileContentType='" + fileContentType + '\'' + '}';
+	}
 }

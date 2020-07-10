@@ -1,8 +1,14 @@
-package com.nike.dnp.controller.contents;
+package com.nike.dnp.controller.common;
 
-import com.nike.dnp.dto.file.ImageThumbnailFileDTO;
+import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.dto.file.FileResultDTO;
+import com.nike.dnp.dto.file.FileUploadDTO;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.service.ResponseService;
+import com.nike.dnp.util.FileUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
@@ -13,15 +19,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.imageio.ImageIO;
-import javax.xml.bind.DatatypeConverter;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,13 +32,15 @@ import java.nio.file.Paths;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@ApiIgnore
+@Api(description = "파일", tags = "FILE")
 public class FileController {
 
 	final ResponseService responseService;
 
+	private static final String BASIC_CHARACTER = "## Request ## \n" + "[하위 Parameters 참조] \n" + "## Request ## \n" + "[하위 Model 참조]\n\n";
 
 	@GetMapping("/api/download")
+	@ApiIgnore
 	public ResponseEntity<Resource> download() throws IOException {
 //		Path path = Paths.get("d:/test/1.jpg");
 //		Path path = Paths.get("d:/test/Jinny.zip");
@@ -58,25 +61,24 @@ public class FileController {
 
 	}
 
+	@ApiOperation(value = "파일 업로드", notes = BASIC_CHARACTER)
+	@PostMapping(value = "/api/upload",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public CommonResult upload(FileUploadDTO fileUploadDTO,
+							 	@ApiParam(name = "uploadFile", value = "파일업로드") MultipartFile uploadFile)  {
 
-	@PostMapping(value = "/api/upload",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public CommonResult upload(@RequestBody ImageThumbnailFileDTO imageThumbnailFileDTO) throws IOException {
-		//log.debug("fileStr {}", fileUploadDTO.getCropImg());
-		BufferedImage image = null;
-		String base64Str = imageThumbnailFileDTO.getCropImg().split(",")[1];
-		String info = imageThumbnailFileDTO.getCropImg().split(",")[0];
-		imageThumbnailFileDTO.getCropImg().split(",")[0].substring(imageThumbnailFileDTO.getCropImg().indexOf("/") + 1, imageThumbnailFileDTO.getCropImg().indexOf(";"));
-		byte[] imageByte;
-		try{
-			imageByte = DatatypeConverter.parseBase64Binary(imageThumbnailFileDTO.getCropImg().split(",")[1]);
-			ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
-			image = ImageIO.read(bis);
-			bis.close();
-		}catch(Exception e){
-			e.printStackTrace();
+
+
+		FileResultDTO fileResultDTO =  FileUtil.fileSave(fileUploadDTO.getUploadFile(), ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder());
+		log.debug("fileResultDTO.toString() {}", fileResultDTO.toString());
+		// was 저장
+		if(fileResultDTO.getFileContentType().toLowerCase().contains("image")){
+			log.debug("이것은 이미지 !! {}", "이것은 이미지!!");
+			// 이미지 라면 리사이즈 한번
 		}
-				ImageIO.write(image, "png", new File("d:/test/test.png"));
+		// s3 저장
+
 		return responseService.getSuccessResult();
 
 	}
+
 }

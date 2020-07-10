@@ -195,7 +195,9 @@ public class ServiceEnumCode {
     @RequiredArgsConstructor
     @Getter
     public enum FileFolderEnumCode {
-        PRODUCT("product");
+        PRODUCT("product"),
+        TEMP("temp");
+
         /**
          * 코드값
          *
