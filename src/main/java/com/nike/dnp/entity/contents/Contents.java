@@ -2,8 +2,8 @@ package com.nike.dnp.entity.contents;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.dto.contents.save.ContentsSaveDTO;
-import com.nike.dnp.dto.contents.update.ContentsUpdateDTO;
+import com.nike.dnp.dto.contents.ContentsSaveDTO;
+import com.nike.dnp.dto.contents.ContentsUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -52,7 +52,7 @@ public class Contents extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "MENU_CODE")
-    @ApiModelProperty(name = "menuCode", value = "메뉴 공통코드", required = true, example = "A_SP")
+    @ApiModelProperty(name = "menuCode", value = "메뉴 공통코드", required = true, example = "SP")
     private String menuCode;
 
     /**

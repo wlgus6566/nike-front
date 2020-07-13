@@ -1,19 +1,13 @@
 package com.nike.dnp.service.contents;
 
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.dto.contents.ContentsSearchDTO;
-import com.nike.dnp.dto.contents.save.ContentsFileSaveDTO;
-import com.nike.dnp.dto.contents.save.ContentsSaveDTO;
-import com.nike.dnp.dto.contents.update.ContentsFileUpdateDTO;
-import com.nike.dnp.dto.contents.update.ContentsUpdateDTO;
+import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -51,19 +45,17 @@ public class ContentsService {
      */
     private final ContentsFileRepository contentsFileRepository;
 
-    @Autowired
-    private MessageSource messageSource;
-
     /**
      * Find all paging page.
      *
      * @param contentsSearchDTO the contents search dto
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 9. 오후 6:25:20
+     * @CreatedOn 2020. 7. 13. 오후 3:23:01
      * @Description
      */
-    public Page<Contents> findAllPaging(final ContentsSearchDTO contentsSearchDTO) {
+    public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO) {
+
         // QueryDsl 기능 이용
         return contentsRepository.findPageContents(
                 contentsSearchDTO,
@@ -109,7 +101,9 @@ public class ContentsService {
      * @Description
      */
     public Contents findByContentsSeq(final Long contentsSeq) {
-        return contentsRepository.findByContentsSeq(contentsSeq);
+        Contents findContetns = contentsRepository.findByContentsSeq(contentsSeq);
+        findContetns.updateReadCount(findContetns.getReadCount());
+        return findContetns;
     }
 
     /**

@@ -52,7 +52,7 @@ public class ContentsSearchDTO extends SearchDTO {
      * @author [이소정]
      */
     @Column(name = "MENU_CODE")
-    @ApiParam(value = "2depth 메뉴 코드", name = "menuCode")
+    @ApiParam(value = "2depth 메뉴 코드", name = "menuCode", hidden = true)
     private String menuCode = "";
 
     /**
