@@ -514,11 +514,14 @@
 .filter-select .el-input--suffix .el-input__inner {
     width: 100%;
     min-width: 50px;
-    padding: 0 20px;
+    padding: 0 25px 0 0;
     border-color: transparent;
     font-size: 12px;
     font-weight: bold;
     color: #000;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .filter-select .el-input--suffix .el-input__inner::placeholder,
 .filter-select .el-input--suffix .el-input__inner::-webkit-input-placeholder {
@@ -539,6 +542,10 @@
 .filter-list + .filter-select {
     position: relative;
     margin-left: 15px;
+    padding-left: 20px;
+}
+.filter-select + .filter-select {
+    margin-left: 20px;
 }
 .filter-list + .filter-select:before {
     z-index: 2;

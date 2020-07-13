@@ -13,8 +13,8 @@
             </button>
         </div>
 
-        <SelectBox :listSortSelect="listSortSelect" />
-        <SelectBox :listSortSelect="listSortSelect2" />
+        <filterSelect :listSortSelect="listSortSelect" />
+        <filterSelect :listSortSelect="listSortSelect" />
 
         <div class="search-input">
             <input type="text" placeholder="검색어를 입력해주세요." />
@@ -23,18 +23,17 @@
     </div>
 </template>
 <script>
-import SelectBox from '@/components/select-box';
+import filterSelect from '@/components/filter-select';
 export default {
     name: 'ListSorting',
-    components: { SelectBox },
+    components: { filterSelect },
     data() {
         return {
             listSortSelect: {
                 listSortOptions: [
                     {
                         value: 'new',
-                        label:
-                            '최신 순 최 신 순 최 신 순최신순최신순최신순최신순최신순최신순최신순',
+                        label: '최신순',
                     },
                     {
                         value: 'startDate',
@@ -42,19 +41,6 @@ export default {
                     },
                 ],
                 value: 'new',
-            },
-            listSortSelect2: {
-                listSortOptions: [
-                    {
-                        value: 'new',
-                        label: '최신순최신순최신순최신순최신순최신순최신순최신순최신순최신순',
-                    },
-                    {
-                        value: 'startDate',
-                        label: '시작일순',
-                    },
-                ],
-                value: 'startDate',
             },
         };
     },
