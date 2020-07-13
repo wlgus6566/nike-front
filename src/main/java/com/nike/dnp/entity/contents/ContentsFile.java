@@ -3,13 +3,14 @@ package com.nike.dnp.entity.contents;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.dto.contents.save.ContentsFileSaveDTO;
-import com.nike.dnp.dto.contents.update.ContentsFileUpdateDTO;
+import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
+import com.nike.dnp.dto.contents.ContentsFileUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
+@DynamicUpdate
 @Entity
 @Table(name = "TB_CONTENTS_FILE")
 public class ContentsFile extends BaseTimeEntity {
@@ -220,6 +222,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 3. 오후 5:27:06
      * @Description
      */
+    @Transactional
     public void update(final ContentsFileUpdateDTO contentsFileUpdateDTO) {
         log.info("ContentsFile.update");
         this.fileSectionCode = contentsFileUpdateDTO.getFileSectionCode();
@@ -254,6 +257,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 3. 오후 5:28:11
      * @Description
      */
+    @Transactional
     public void updateDownloadCount(final Long downloadCount) {
         log.info("ContentsFile.updateDownloadCount");
         this.downloadCount = downloadCount + 1;
@@ -267,6 +271,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 6. 오후 12:02:25
      * @Description
      */
+    @Transactional
     public void updateUseYn(final String useYn) {
         this.useYn = useYn;
     }
@@ -282,6 +287,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @CreatedOn 2020. 6. 26. 오후 5:30:51
      * @Description
      */
+    @Transactional
     public Boolean checkStringValidation(String value, String errorCode, String errorMessage) {
         if (value.isEmpty() || value.trim().isEmpty()) {
             throw new CodeMessageHandleException(errorCode, errorMessage);

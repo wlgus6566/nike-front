@@ -1,8 +1,11 @@
 package com.nike.dnp.repository.contents;
 
+import com.nike.dnp.common.ObjectMapperUtils;
+import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.QContents;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
@@ -47,7 +50,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @Description
      */
     @Override
-    public Page<Contents> findPageContents(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest) {
+    public Page<ContentsResultDTO> findPageContents(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest) {
         final QContents qContents = QContents.contents;
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
         final JPAQuery<Contents> query = queryFactory.selectFrom(qContents)
@@ -58,7 +61,8 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                         , qContents.useYn.eq("Y")
                 );
 
-        final List<Contents> contentsList = getQuerydsl().applyPagination(pageRequest, query).fetch();
+        final List<ContentsResultDTO> contentsList = ObjectMapperUtils.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsResultDTO.class);
         return new PageImpl<>(contentsList, pageRequest, query.fetchCount());
+
     }
 }

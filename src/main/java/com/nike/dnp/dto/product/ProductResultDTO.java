@@ -66,32 +66,6 @@ public class ProductResultDTO {
 	@ApiModelProperty(name = "imageFilePhysicalName", value = "이미지 파일 물리 파일명")
 	private String imageFilePhysicalName;
 
-	/**
-	 * 썸네일 파일명
-	 *
-	 * @author [윤태호]
-	 */
-	@ApiModelProperty(name = "thumbnailFileName", value = "썸네일 파일명")
-	private String thumbnailFileName;
-
-
-	/**
-	 * 썸네일 파일 사이즈
-	 *
-	 * @author [윤태호]
-	 */
-	@ApiModelProperty(name = "thumbnailFileSize", value = "썸네일 파일 사이즈")
-	private String thumbnailFileSize;
-
-
-	/**
-	 * 썸네일 파일 물리 파일명
-	 *
-	 * @author [윤태호]
-	 */
-	@ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 파일명")
-	private String thumbnailFilePhysicalName;
-
 
 	/**
 	 * 상품명

@@ -1,19 +1,45 @@
-package com.nike.dnp.dto.contents.save;
+package com.nike.dnp.dto.contents;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 
 /**
- * The type Contents file save dto.
+ * The Class Contents file update dto.
+ *
+ * @author [이소정]
+ * @CreatedOn 2020. 7. 3. 오후 3:39:34
+ * @Description
  */
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class ContentsFileSaveDTO {
+public class ContentsFileUpdateDTO {
+
+    /**
+     * 컨텐츠 파일 시퀀스
+     * @author [이소정]
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CONTENTS_FILE_SEQ")
+    @ApiModelProperty(name = "contentsFileSeq", value = "컨텐츠 파일 시퀀스", required = true, example = "7")
+    private Long contentsFileSeq;
+
+
+    /**
+     * 컨텐츠 시퀀스
+     * @author [이소정]
+     */
+    @Column(name = "CONTENTS_SEQ")
+    @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스", example = "10")
+    private Long contentsSeq;
 
     /**
      * 파일 구분 공통코드

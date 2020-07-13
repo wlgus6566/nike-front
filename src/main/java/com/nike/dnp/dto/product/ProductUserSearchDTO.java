@@ -28,8 +28,8 @@ public class ProductUserSearchDTO extends SearchDTO {
 	 * 카테고리 2
 	 * @author [윤태호]
 	 */
-	@ApiParam(value = "카테고리 2 코드",name = "category2code", defaultValue = "",hidden = true)
-	private String category2code;
+	@ApiParam(value = "카테고리 2 코드",name = "category2Code", defaultValue = "",hidden = true)
+	private String category2Code;
 
 	/**
 	 * 노출 여부

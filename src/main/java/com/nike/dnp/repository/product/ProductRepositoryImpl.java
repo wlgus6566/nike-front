@@ -68,9 +68,6 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 				qProduct.category2Code,
 				qProduct.category3Code,
 				qProduct.goodsName,
-				qProduct.thumbnailFileName,
-				qProduct.thumbnailFilePhysicalName,
-				qProduct.thumbnailFileSize,
 				qProduct.imageFileName,
 				qProduct.imageFilePhysicalName,
 				qProduct.imageFileSize,
@@ -86,8 +83,8 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 				.innerJoin(qAgency).on(qProduct.agencySeq.eq(qAgency.agencySeq))
 				.innerJoin(qUser).on(qProduct.registerSeq.eq(qUser.userSeq))
 				.where(
-						ProductPredicateHelper.eqCate2gory(productSearchDTO.getCategory2code()),
-						ProductPredicateHelper.eqCate3gory(productSearchDTO.getCategory3code()),
+						ProductPredicateHelper.eqCate2gory(productSearchDTO.getCategory2Code()),
+						ProductPredicateHelper.eqCate3gory(productSearchDTO.getCategory3Code()),
 						ProductPredicateHelper.likeGoodName(productSearchDTO.getKeyword()),
 						ProductPredicateHelper.eqAgentSeq(productSearchDTO.getAgencySeq()),
 						ProductPredicateHelper.eqExposureYn(productSearchDTO.getExposureYn()),

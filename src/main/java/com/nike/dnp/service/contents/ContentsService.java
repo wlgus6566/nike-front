@@ -1,19 +1,13 @@
 package com.nike.dnp.service.contents;
 
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.dto.contents.ContentsSearchDTO;
-import com.nike.dnp.dto.contents.save.ContentsFileSaveDTO;
-import com.nike.dnp.dto.contents.save.ContentsSaveDTO;
-import com.nike.dnp.dto.contents.update.ContentsFileUpdateDTO;
-import com.nike.dnp.dto.contents.update.ContentsUpdateDTO;
+import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -51,16 +45,17 @@ public class ContentsService {
      */
     private final ContentsFileRepository contentsFileRepository;
 
-    @Autowired
-    private MessageSource messageSource;
-
     /**
-     * 전체조회(paging)
+     * Find all paging page.
      *
      * @param contentsSearchDTO the contents search dto
-     * @return the list
+     * @return the page
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 13. 오후 3:23:01
+     * @Description
      */
-    public Page<Contents> findAllPaging(final ContentsSearchDTO contentsSearchDTO) {
+    public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO) {
+
         // QueryDsl 기능 이용
         return contentsRepository.findPageContents(
                 contentsSearchDTO,
@@ -79,7 +74,6 @@ public class ContentsService {
      * @CreatedOn 2020. 6. 24. 오후 3:22:15
      * @Description
      */
-    @Transactional
     public Contents save(final ContentsSaveDTO contentsSaveDTO) {
         log.info("contentsService.save");
         final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
@@ -107,7 +101,9 @@ public class ContentsService {
      * @Description
      */
     public Contents findByContentsSeq(final Long contentsSeq) {
-        return contentsRepository.findByContentsSeq(contentsSeq);
+        Contents findContetns = contentsRepository.findByContentsSeq(contentsSeq);
+        findContetns.updateReadCount(findContetns.getReadCount());
+        return findContetns;
     }
 
     /**
@@ -119,7 +115,6 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 3. 오후 4:01:24
      * @Description
      */
-    @Transactional
     public Optional<Contents> update(final ContentsUpdateDTO contentsUpdateDTO) {
         log.info("contentsService.update");
         // contents Update
@@ -174,7 +169,6 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 7. 오전 10:59:29
      * @Description
      */
-    @Transactional
     public Optional<Contents> delete(final Long contentsSeq) {
         log.info("contentsService.delete");
 

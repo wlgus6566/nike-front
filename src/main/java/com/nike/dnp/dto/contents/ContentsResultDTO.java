@@ -1,16 +1,13 @@
-package com.nike.dnp.dto.contents.save;
+package com.nike.dnp.dto.contents;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import java.util.List;
-
-
 /**
- * The Class Contents save dto.
+ * The Class Contents list dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 6. 24. 오후 3:25:23
+ * @CreatedOn 2020. 7. 13. 오후 2:52:03
  * @Description
  */
 @Getter
@@ -18,47 +15,47 @@ import java.util.List;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class ContentsSaveDTO {
+public class ContentsResultDTO {
 
     /**
      * 최고 메뉴 공통코드
      * @author [이소정]
      */
-    @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 공통코드", hidden = true)
+    @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 공통코드")
     private String topMenuCode;
 
     /**
      * 2depth 메뉴 코드
      */
-    @ApiModelProperty(name = "menuCode", value = "2depth 메뉴 코드", hidden = true)
+    @ApiModelProperty(name = "menuCode", value = "2depth 메뉴 코드")
     private String menuCode;
 
     /**
      * 이미지 파일명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "imageFileName", value = "이미지 파일명", required = true, example = "main_img.jpg")
+    @ApiModelProperty(name = "imageFileName", value = "이미지 파일명", example = "main_img.jpg")
     private String imageFileName;
 
     /**
      * 이미지 파일 사이즈
      * @author [이소정]
      */
-    @ApiModelProperty(name = "imageFileSize", value = "이미지 파일 사이즈", required = true, example = "500")
+    @ApiModelProperty(name = "imageFileSize", value = "이미지 파일 사이즈",  example = "500")
     private String imageFileSize;
 
     /**
      * 이미지 파일 물리명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "imageFilePhysicalName", value = "이미지 파일 물리명", required = true, example = "8080/cdn/contnets/")
+    @ApiModelProperty(name = "imageFilePhysicalName", value = "이미지 파일 물리명", example = "8080/cdn/contnets/")
     private String imageFilePhysicalName;
 
     /**
      * 폴더명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "folderName", value = "폴더명", required = true, example = "SP20 NSW NIKE DIRECT AM90")
+    @ApiModelProperty(name = "folderName", value = "폴더명", example = "SP20 NSW NIKE DIRECT AM90")
     private String folderName;
 
     /**
@@ -90,17 +87,11 @@ public class ContentsSaveDTO {
     private String campaignEndDt;
 
     /**
-     * 메모
+     * 조회수
      * @author [이소정]
      */
-    @ApiModelProperty(name = "memo", value = "메모", example = "메모 입력\n메모 입력\n메모 입력\n")
-    private String memo;
+    @ApiModelProperty(name = "readCount", value = "조회수")
+    private Long readCount;
 
-    /**
-     * 콘텐트 파일 리스트
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "contentsFileList", value = "콘텐츠 파일 리스트")
-    private List<ContentsFileSaveDTO> contentsFileList;
 
 }
