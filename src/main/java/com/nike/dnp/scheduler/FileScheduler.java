@@ -21,7 +21,7 @@ public class FileScheduler {
 	//@Scheduled(cron = "*/10 * * * * *")
 	public void fileDeleteScheduler() {
 		log.debug("===== temp 파일 삭제 ==== ");
-		FileUtil.delete();
+		FileUtil.deleteTemp();
 	}
 
 }

@@ -42,8 +42,29 @@ public class FileResultDTO {
 	 */
 	private String fileContentType;
 
-	@Override
-	public String toString() {
-		return "FileResultDTO{" + "fileName='" + fileName + '\'' + ", filePhysicalName='" + filePhysicalName + '\'' + ", fileSize=" + fileSize + ", fileContentType='" + fileContentType + '\'' + '}';
-	}
+	/**
+	 * 파일 확장자
+	 */
+	private String fileExtension;
+
+	/**
+	 * 썸네일 파일 이름
+	 */
+	private String thumbnailFileName;
+
+
+	/**
+	 * 썸네일 파일 물리 경로
+	 */
+	private String thumbnailPhysicalName;
+
+
+	/**
+	 * 썸네일 파일 사이즈
+	 */
+	private Long thumbnailSize;
+
+
+
+
 }

@@ -1,9 +1,10 @@
 package com.nike.dnp.controller.common;
 
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.file.FileUploadDTO;
-import com.nike.dnp.model.response.CommonResult;
+import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.util.FileUtil;
 import io.swagger.annotations.Api;
@@ -63,22 +64,24 @@ public class FileController {
 
 	@ApiOperation(value = "파일 업로드", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/api/upload",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public CommonResult upload(FileUploadDTO fileUploadDTO,
-							 	@ApiParam(name = "uploadFile", value = "파일업로드") MultipartFile uploadFile)  {
+	public SingleResult<FileResultDTO> upload(FileUploadDTO fileUploadDTO,
+							   @ApiParam(name = "uploadFile", value = "파일업로드") MultipartFile uploadFile) {
 
-
-
-		FileResultDTO fileResultDTO =  FileUtil.fileSave(fileUploadDTO.getUploadFile(), ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder());
-		log.debug("fileResultDTO.toString() {}", fileResultDTO.toString());
-		// was 저장
-		if(fileResultDTO.getFileContentType().toLowerCase().contains("image")){
-			log.debug("이것은 이미지 !! {}", "이것은 이미지!!");
-			// 이미지 라면 리사이즈 한번
+		FileResultDTO fileResultDTO = null;
+		try{
+			fileResultDTO = FileUtil.fileTempSaveAndImageResize(fileUploadDTO.getUploadFile(),240);
+		}catch(InterruptedException e){
+			// 리사이즈 문제
+			throw new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_COPY_ERROR.name(), ErrorEnumCode.FileError.FILE_COPY_ERROR.getMessage());
+		}catch(IOException e){
+			// 저장 문제
+			throw new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_COPY_ERROR.name(), ErrorEnumCode.FileError.FILE_COPY_ERROR.getMessage());
 		}
-		// s3 저장
+		// TODO [YTH] s3 파일 업로드
 
-		return responseService.getSuccessResult();
+		return responseService.getSingleResult(fileResultDTO);
 
 	}
+
 
 }
