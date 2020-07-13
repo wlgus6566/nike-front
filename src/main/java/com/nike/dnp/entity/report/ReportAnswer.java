@@ -60,15 +60,15 @@ public class ReportAnswer extends BaseTimeEntity {
     @ApiModelProperty(name = "useYn", value = "사용 여부")
     private String useYn;
 
-    /**
-     * The Report
-     * @author [이소정]
-     */
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "REPORT_SEQ", insertable = false, updatable = false)
-    @ApiModelProperty(name = "report", value = "The Report", hidden = true)
-    private Report report;
+//    /**
+//     * The Report
+//     * @author [이소정]
+//     */
+//    @JsonBackReference
+//    @ManyToOne
+//    @JoinColumn(name = "REPORT_SEQ", insertable = false, updatable = false)
+//    @ApiModelProperty(name = "report", value = "The Report", hidden = true)
+//    private Report report;
 
     /**
      * Save report answer.

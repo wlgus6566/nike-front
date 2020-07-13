@@ -67,7 +67,7 @@ public class ReportAnswerController {
      * @Description
      */
     @ApiOperation(
-            value = "Report 댓글 목록 조회"
+            value = "보고서 댓글 목록 조회"
             , notes = REQUEST_CHARACTER
             + "reportSeq|사이즈|false|Integer\n"
             + "[하위 Parameters 참조]\n\n\n\n"
@@ -82,7 +82,7 @@ public class ReportAnswerController {
             + "number||현재페이지|Integer\n"
             + "size||노출갯수|Integer\n\n\n\n"
     )
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Report 댓글 목록 조회")
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 댓글 목록 조회")
     public SingleResult<List<ReportAnswer>> getAllReportAnswer(
             final Long reportSeq
     ) {
