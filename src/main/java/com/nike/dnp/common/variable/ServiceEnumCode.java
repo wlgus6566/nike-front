@@ -175,7 +175,7 @@ public class ServiceEnumCode {
     @Getter
     public enum MenuSkillEnumCode {
         LIST("목록", "listAuthYn", 0)
-        ,CERATE("등록/수정", "creationAuthYn", 1)
+        ,CREATE("등록/수정", "creationAuthYn", 1)
         ,DELETE("삭제", "deleteAuthYn", 2)
         ,VIEW("상세보기", "detailAuthYn", 3)
         ,DOWNLOAD("다운로드/주문", "downloadAuthYn", 4)

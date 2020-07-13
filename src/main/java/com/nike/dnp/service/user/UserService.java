@@ -168,7 +168,7 @@ public class UserService implements UserDetailsService {
             userReturnDTO.setNickname(getUser.getNickname());
             userReturnDTO.setUserId(getUser.getUserId());
             userReturnDTO.setUserStatusCode(getUser.getUserStatusCode());
-            userReturnDTO.setAuthName(getUser.getUserAuths().get(0).getAuth().getAuthName());
+            userReturnDTO.setAuthName(getUser.getUserAuth().getAuth().getAuthName());
         }
 
         return userReturnDTO;
@@ -186,7 +186,7 @@ public class UserService implements UserDetailsService {
             userReturnDTO.setNickname(getUser.getNickname());
             userReturnDTO.setUserId(getUser.getUserId());
             userReturnDTO.setUserStatusCode(getUser.getUserStatusCode());
-            userReturnDTO.setAuthName(getUser.getUserAuths().get(0).getAuth().getAuthName());
+            userReturnDTO.setAuthName(getUser.getUserAuth().getAuth().getAuthName());
             userReturnDTO.setLoginLogs(userLoginLogRepository.findTop5ByUserSeqOrderByRegistrationDtDesc(userSeq));
         }
 

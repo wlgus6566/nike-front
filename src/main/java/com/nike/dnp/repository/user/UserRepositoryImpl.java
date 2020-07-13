@@ -74,6 +74,7 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
                 .innerJoin(qAuth).on(qUserAuth.authSeq.eq(qAuth.authSeq))
                 .where(UserPredicateHelper.compareKeyword(userSearchDTO)
                     , UserPredicateHelper.compareDate(userSearchDTO)
+                    , UserPredicateHelper.compareStatus(userSearchDTO)
                     , UserPredicateHelper.compareAuth(userSearchDTO)
                     , qUser.userStatusCode.ne(ServiceEnumCode.UserStatusEnumCode.DELETE.toString())
                 );
