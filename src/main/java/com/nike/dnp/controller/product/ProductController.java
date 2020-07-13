@@ -195,7 +195,7 @@ public class ProductController {
 	 * @Description
 	 */
 	@ApiOperation(value = "상품 삭제", notes = BASIC_CHARACTER)
-	@DeleteMapping(name = "상품 삭제", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(name = "상품 삭제", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<Boolean> deleteProduct(@ApiParam(name = "goodsSeqList", value = "상품 시퀀스", defaultValue = "29,30,31") @RequestParam final List<Long> goodsSeqList,
 											   @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO) {
 

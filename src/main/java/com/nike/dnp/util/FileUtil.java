@@ -105,11 +105,13 @@ public class FileUtil {
 	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
 	 * @Description
 	 */
-	public static FileResultDTO fileSave(MultipartFile uploadFile, String folder, boolean resize, String resizeExt, int resizeWidth) throws IOException, InterruptedException {
+	public static FileResultDTO fileSave(final MultipartFile uploadFile,
+										 final String folder,
+										 final boolean resize,
+										 String resizeExt,
+										 int resizeWidth) throws IOException, InterruptedException {
 
-		if(StringUtils.isEmpty(resizeExt)){
-			resizeExt = "jpg";
-		}
+
 		String extension = StringUtils.getFilenameExtension(uploadFile.getOriginalFilename());
 		File toFile = makeNewFile(folder, extension);
 		uploadFile.transferTo(toFile);
@@ -120,6 +122,10 @@ public class FileUtil {
 		fileResultDTO.setFileContentType(uploadFile.getContentType());
 
 		if(resize && (uploadFile.getContentType().toUpperCase().contains("IMAGE") || extension.toUpperCase().contains("PSD") || extension.toUpperCase().contains("AI"))){
+
+			if(StringUtils.isEmpty(resizeExt)){
+				resizeExt = "jpg";
+			}
 			if(resizeWidth == 0){
 				resizeWidth = 120;
 			}
@@ -160,7 +166,8 @@ public class FileUtil {
 	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
 	 * @Description
 	 */
-	public static FileResultDTO fileTempSaveAndImageResize(MultipartFile uploadFile, int resize) throws IOException, InterruptedException {
+	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile,
+														   final int resize) throws IOException, InterruptedException {
 		return fileSave(uploadFile, ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder(), true, null, resize);
 	}
 
@@ -177,7 +184,9 @@ public class FileUtil {
 	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
 	 * @Description
 	 */
-	public static FileResultDTO fileTempSaveAndImageResize(MultipartFile uploadFile, String resizeExt, int resize) throws IOException, InterruptedException {
+	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile,
+														   final String resizeExt,
+														   final int resize) throws IOException, InterruptedException {
 		return fileSave(uploadFile, ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder(), true, resizeExt, resize);
 	}
 
@@ -192,7 +201,7 @@ public class FileUtil {
 	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
 	 * @Description
 	 */
-	public static FileResultDTO fileTempSaveAndImageResize(MultipartFile uploadFile) throws IOException, InterruptedException {
+	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile) throws IOException, InterruptedException {
 		return fileSave(uploadFile, ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder(), true, null, 0);
 	}
 
@@ -208,7 +217,8 @@ public class FileUtil {
 	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
 	 * @Description
 	 */
-	public static FileResultDTO fileSave(MultipartFile uploadFile,String folder) throws IOException, InterruptedException {
+	public static FileResultDTO fileSave(final MultipartFile uploadFile,
+										 final String folder) throws IOException, InterruptedException {
 		return fileSave(uploadFile, folder, false, null, 0);
 	}
 
@@ -223,7 +233,7 @@ public class FileUtil {
 	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
 	 * @Description
 	 */
-	public static FileResultDTO fileTempSave(MultipartFile uploadFile) throws IOException, InterruptedException {
+	public static FileResultDTO fileTempSave(final MultipartFile uploadFile) throws IOException, InterruptedException {
 		return fileSave(uploadFile, ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder());
 	}
 
