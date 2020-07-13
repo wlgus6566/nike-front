@@ -82,10 +82,10 @@ public class ContentsController {
         + "number||현재페이지|Integer\n"
         + "size||노출갯수|Integer\n\n\n\n"
     )
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Contents 목록 조회", value = {"/{topMenuCode}", "/{topMenuCode}/{menuCode}"})
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Contents 목록 조회", value = "/{topMenuCode}/{menuCode}")
     public SingleResult<Page<ContentsResultDTO>> getAllContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
-            @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "SP") @PathVariable(required = false) final String menuCode,
+            @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "ALL", required = true) @PathVariable final String menuCode,
             final ContentsSearchDTO contentsSearchDTO
     ) {
         contentsSearchDTO.setTopMenuCode(topMenuCode);

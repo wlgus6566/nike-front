@@ -54,7 +54,7 @@ public class ContentsPredicateHelper {
 
 		builder.and(QContents.contents.topMenuCode.eq(topMenuCode));
 
-		if (!StringUtils.isEmpty(menuCode)) {
+		if (!StringUtils.isEmpty(menuCode) && !"ALL".equals(menuCode)) {
 			builder.and(QContents.contents.menuCode.eq(menuCode));
 		}
 		return builder;
