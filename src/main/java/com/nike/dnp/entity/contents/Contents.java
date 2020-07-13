@@ -52,7 +52,7 @@ public class Contents extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "MENU_CODE")
-    @ApiModelProperty(name = "menuCode", value = "메뉴 공통코드", required = true, example = "A_SP")
+    @ApiModelProperty(name = "menuCode", value = "메뉴 공통코드", required = true, example = "SP")
     private String menuCode;
 
     /**

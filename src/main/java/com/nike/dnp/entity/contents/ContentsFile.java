@@ -10,6 +10,7 @@ import com.nike.dnp.exception.CodeMessageHandleException;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
+@DynamicUpdate
 @Entity
 @Table(name = "TB_CONTENTS_FILE")
 public class ContentsFile extends BaseTimeEntity {
