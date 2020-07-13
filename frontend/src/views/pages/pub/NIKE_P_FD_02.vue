@@ -81,11 +81,11 @@
                 </div>
                 <ul
                     v-bind:class="[
-                        { 'asset-item-list': listTypes[0].active },
-                        { 'asset-item-list-row': listTypes[1].active },
+                        { 'folder-list': listTypes[0].active },
+                        { 'folder-list-row': listTypes[1].active },
                     ]"
                 >
-                    <li class="asset-item" v-for="(item, index) in items" :key="index">
+                    <li class="folder-list-item" v-for="(item, index) in items" :key="index">
                         <a href="#">
                             <div class="thumbnail">
                                 <img src="item.img" alt="" />

@@ -18,12 +18,11 @@
         <el-dialog
             title="Tips"
             :visible.sync="dialogVisible"
-            width="30%"
+            width="800px"
             :before-close="handleClose"
         >
             <div>
-                <div class="preview" />
-                <vue-cropper ref="cropper" :aspect-ratio="1 / 1" :src="imgSrc" preview=".preview" />
+                <vue-cropper ref="cropper" :aspect-ratio="1 / 1" :viewMode="2" :src="imgSrc" />
             </div>
             <a href="#" role="button" @click.prevent="cropImage">
                 Crop
@@ -33,10 +32,10 @@
 </template>
 
 <script>
-import VueCropper from 'vue-cropperjs';
-import 'cropperjs/dist/cropper.css';
+	import VueCropper from 'vue-cropperjs';
+	import 'cropperjs/dist/cropper.css';
 
-export default {
+	export default {
     name: 'index',
     data() {
         return {
@@ -62,7 +61,7 @@ export default {
         },
         cropImage() {
             // get image data for post processing, e.g. upload or setting image src
-            this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
+            this.cropImg = this.$refs.cropper.getCroppedCanvas({}).toDataURL();
             this.dialogVisible = false;
         },
         flipX() {
@@ -80,10 +79,10 @@ export default {
             dom.setAttribute('data-scale', scale);
         },
         getCropBoxData() {
-            this.data = JSON.stringify(this.$refs.cropper.getCropBoxData(), null, 4);
+            this.data = JSON.stringify(this.$refs.cropper.getCropBoxData({}), null, 4);
         },
         getData() {
-            this.data = JSON.stringify(this.$refs.cropper.getData(), null, 4);
+            this.data = JSON.stringify(this.$refs.cropper.getData({}), null, 4);
         },
         move(offsetX, offsetY) {
             this.$refs.cropper.move(offsetX, offsetY);
@@ -128,10 +127,20 @@ export default {
         zoom(percent) {
             this.$refs.cropper.relativeZoom(percent);
         },
+        minContainerHeight() {
+            this.$refs.cropper.minContainerHeight({
+                height: 20000,
+            });
+        },
+        minCanvasWidth() {
+            this.$refs.cropper.minCanvasWidth({
+                width: 5000,
+            });
+        },
     },
 };
 </script>
-<style scoped>
+<style>
 .preview-area {
     width: 307px;
 }

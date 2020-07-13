@@ -23,6 +23,16 @@ const routes = [
                 meta: { layout: 'Pub' },
             },
             {
+                path: 'radio',
+                component: pages('pub/radio'),
+                meta: { layout: 'Pub' },
+            },
+            {
+                path: 'checkbox',
+                component: pages('pub/checkbox'),
+                meta: { layout: 'Pub' },
+            },
+            {
                 path: 'nodata01',
                 component: pages('pub/nodata01'),
                 meta: { layout: 'Pub' },

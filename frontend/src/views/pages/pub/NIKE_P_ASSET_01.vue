@@ -36,20 +36,8 @@
                                 <span class="label-title required">상태</span>
                             </div>
                             <div class="form-column">
-                                <label class="check-label">
-                                    <span class="radio">
-                                        <input type="radio" name="campaign" checked />
-                                        <span></span>
-                                    </span>
-                                    <span>노출</span>
-                                </label>
-                                <label class="check-label">
-                                    <span class="radio">
-                                        <input type="radio" name="campaign" />
-                                        <span></span>
-                                    </span>
-                                    <span>미노출</span>
-                                </label>
+                                <el-radio v-model="radio" label="1">노출</el-radio>
+                                <el-radio v-model="radio" label="2">미노출</el-radio>
                             </div>
                         </li>
                         <li class="form-row">
@@ -57,34 +45,10 @@
                                 <span class="label-title required">업로드 위치</span>
                             </div>
                             <div class="form-column">
-                                <label class="check-label">
-                                    <span class="radio">
-                                        <input type="radio" name="upload" checked />
-                                        <span></span>
-                                    </span>
-                                    <span>SP</span>
-                                </label>
-                                <label class="check-label">
-                                    <span class="radio">
-                                        <input type="radio" name="upload" />
-                                        <span></span>
-                                    </span>
-                                    <span>SU</span>
-                                </label>
-                                <label class="check-label">
-                                    <span class="radio">
-                                        <input type="radio" name="upload" />
-                                        <span></span>
-                                    </span>
-                                    <span>FA</span>
-                                </label>
-                                <label class="check-label">
-                                    <span class="radio">
-                                        <input type="radio" name="upload" />
-                                        <span></span>
-                                    </span>
-                                    <span>HO</span>
-                                </label>
+                                <el-radio v-model="radio2" label="1">SP</el-radio>
+                                <el-radio v-model="radio2" label="2">SU</el-radio>
+                                <el-radio v-model="radio2" label="3">FA</el-radio>
+                                <el-radio v-model="radio2" label="4">HO</el-radio>
                             </div>
                         </li>
                         <li class="form-row">
@@ -117,20 +81,8 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                             </div>
                             <div class="form-column">
                                 <div>
-                                    <label class="check-label">
-                                        <span class="radio">
-                                            <input type="radio" name="upload" checked />
-                                            <span></span>
-                                        </span>
-                                        <span>기간선택</span>
-                                    </label>
-                                    <label class="check-label">
-                                        <span class="radio">
-                                            <input type="radio" name="upload" checked />
-                                            <span></span>
-                                        </span>
-                                        <span>365</span>
-                                    </label>
+                                    <el-radio v-model="radio3" label="1">기간선택</el-radio>
+                                    <el-radio v-model="radio3" label="2">365</el-radio>
                                 </div>
                                 <!-- todo 추가 스크립트 작업 필요  -->
                                 <div class="data-picker">
@@ -190,20 +142,12 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                     <span class="label-title required">파일 구분</span>
                                 </div>
                                 <div class="form-column">
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="file" checked />
-                                            <span></span>
-                                        </span>
-                                        <span>ASSET</span>
-                                    </label>
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="file" />
-                                            <span></span>
-                                        </span>
-                                        <span>GUIDE</span>
-                                    </label>
+                                    <el-radio v-model="radio6" label="1" class="type2" disabled
+                                        >ASSET</el-radio
+                                    >
+                                    <el-radio v-model="radio6" label="2" class="type2"
+                                        >GUIDE</el-radio
+                                    >
                                 </div>
                             </li>
                             <li class="form-row">
@@ -211,27 +155,13 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                     <span class="label-title required">파일 종류</span>
                                 </div>
                                 <div class="form-column">
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="kind" checked />
-                                            <span></span>
-                                        </span>
-                                        <span>파일</span>
-                                    </label>
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="kind" />
-                                            <span></span>
-                                        </span>
-                                        <span>동영상(URL)</span>
-                                    </label>
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="kind" />
-                                            <span></span>
-                                        </span>
-                                        <span>VR</span>
-                                    </label>
+                                    <el-radio v-model="radio7" label="1" class="type2"
+                                        >파일</el-radio
+                                    >
+                                    <el-radio v-model="radio7" label="2" class="type2"
+                                        >동영상(URL)</el-radio
+                                    >
+                                    <el-radio v-model="radio7" label="3" class="type2">VR</el-radio>
                                 </div>
                             </li>
                             <!-- todo 추가 스크립트 작업 필요  -->
@@ -341,20 +271,12 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                     <span class="label-title required">파일 구분</span>
                                 </div>
                                 <div class="form-column">
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="file2" checked />
-                                            <span></span>
-                                        </span>
-                                        <span>ASSET</span>
-                                    </label>
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="file2" />
-                                            <span></span>
-                                        </span>
-                                        <span>GUIDE</span>
-                                    </label>
+                                    <el-radio v-model="radio4" label="1" class="type2"
+                                        >ASSET</el-radio
+                                    >
+                                    <el-radio v-model="radio4" label="2" class="type2"
+                                        >GUIDE</el-radio
+                                    >
                                 </div>
                             </li>
                             <li class="form-row">
@@ -362,27 +284,13 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                     <span class="label-title required">파일 종류</span>
                                 </div>
                                 <div class="form-column">
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="kind2" />
-                                            <span></span>
-                                        </span>
-                                        <span>파일</span>
-                                    </label>
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="kind2" checked />
-                                            <span></span>
-                                        </span>
-                                        <span>동영상(URL)</span>
-                                    </label>
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="kind2" />
-                                            <span></span>
-                                        </span>
-                                        <span>VR</span>
-                                    </label>
+                                    <el-radio v-model="radio5" label="1" class="type2"
+                                        >파일</el-radio
+                                    >
+                                    <el-radio v-model="radio5" label="2" class="type2"
+                                        >동영상(URL)</el-radio
+                                    >
+                                    <el-radio v-model="radio5" label="3" class="type2">VR</el-radio>
                                 </div>
                             </li>
                             <li class="form-row">
@@ -468,6 +376,13 @@ export default {
             },
             value1: '',
             value2: '',
+            radio: '1',
+            radio2: '1',
+            radio3: '1',
+            radio4: '1',
+            radio5: '1',
+            radio6: '2',
+            radio7: '1',
         };
     },
     components: {

@@ -62,8 +62,8 @@
                     </div>
                 </div>
 
-                <ul class="asset-item-list-row">
-                    <li class="asset-item">
+                <ul class="folder-list-row">
+                    <li class="folder-list-item">
                         <a href="#">
                             <div class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -78,7 +78,7 @@
                             </div>
                         </a>
                     </li>
-                    <li class="asset-item">
+                    <li class="folder-list-item">
                         <a href="#">
                             <div class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -93,7 +93,7 @@
                             </div>
                         </a>
                     </li>
-                    <li class="asset-item">
+                    <li class="folder-list-item">
                         <a href="#">
                             <div class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -108,7 +108,7 @@
                             </div>
                         </a>
                     </li>
-                    <li class="asset-item">
+                    <li class="folder-list-item">
                         <a href="#">
                             <div class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -123,7 +123,7 @@
                             </div>
                         </a>
                     </li>
-                    <li class="asset-item">
+                    <li class="folder-list-item">
                         <a href="#">
                             <div class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -138,7 +138,7 @@
                             </div>
                         </a>
                     </li>
-                    <li class="asset-item">
+                    <li class="folder-list-item">
                         <a href="#">
                             <div class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -153,7 +153,7 @@
                             </div>
                         </a>
                     </li>
-                    <li class="asset-item">
+                    <li class="folder-list-item">
                         <a href="#">
                             <div class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -168,7 +168,7 @@
                             </div>
                         </a>
                     </li>
-                    <li class="asset-item">
+                    <li class="folder-list-item">
                         <a href="#">
                             <div class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />

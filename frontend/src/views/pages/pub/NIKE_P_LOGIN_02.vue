@@ -26,6 +26,10 @@
                     <button type="button" class="btn-s-lg-orage"><span>인증하기</span></button>
                 </div>
             </div>
+            <p class="f-desc">
+                사용자는 NIKE D&P Plarform에 로그인함으로써,<br />
+                개인정보 취급방침 및 이용약관에 동의합니다.
+            </p>
         </section>
     </div>
 </template>

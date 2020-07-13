@@ -35,8 +35,8 @@
                         <button type="button"><span>REPORT</span></button>
                     </li>
                 </ul>
-                <ul class="asset-item-list-row">
-                    <li class="asset-item">
+                <ul class="folder-list-row">
+                    <li class="folder-list-item">
                         <a href="#">
                             <div class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
