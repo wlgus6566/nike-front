@@ -109,7 +109,9 @@ public class ContentsService {
      * @Description
      */
     public Contents findByContentsSeq(final Long contentsSeq) {
-        return contentsRepository.findByContentsSeq(contentsSeq);
+        Contents findContetns = contentsRepository.findByContentsSeq(contentsSeq);
+        findContetns.updateReadCount(findContetns.getReadCount());
+        return findContetns;
     }
 
     /**
