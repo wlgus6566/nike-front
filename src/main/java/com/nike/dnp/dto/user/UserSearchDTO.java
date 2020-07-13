@@ -22,8 +22,16 @@ public class UserSearchDTO extends SearchDTO {
      *
      * @author [오지훈]
      */
-    @ApiParam(value = "검색어", name = "keyword", defaultValue = "NIKE")
+    @ApiParam(value = "검색어", name = "keyword")
     private String keyword = "";
+
+    /**
+     * The Status
+     *
+     * @author [오지훈]
+     */
+    @ApiParam(value = "유저 상태", name = "status")
+    private String status = "";
 
     /**
      * The Sort
@@ -38,7 +46,7 @@ public class UserSearchDTO extends SearchDTO {
      *
      * @author [오지훈]
      */
-    @ApiParam(value = "권한 시퀀스", name = "authSeq", defaultValue = "1")
+    @ApiParam(value = "권한 시퀀스", name = "authSeq")
     private Long authSeq = 0L;
 
     /**

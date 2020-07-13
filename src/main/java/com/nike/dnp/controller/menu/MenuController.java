@@ -1,22 +1,28 @@
 package com.nike.dnp.controller.menu;
 
+import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.menu.MenuReturnDTO;
+import com.nike.dnp.dto.menu.MenuRoleResourceReturnDTO;
+import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.menu.Menu;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
+import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.menu.MenuService;
+import com.nike.dnp.service.user.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -46,6 +52,8 @@ public class MenuController {
      * @author [오지훈]
      */
     private final MenuService menuService;
+    private final AuthService authService;
+    private final UserService userService;
 
     /**
      * The Basic operation
@@ -71,32 +79,37 @@ public class MenuController {
     )
     @GetMapping(name = "메뉴 목록 조회(전체)"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<MenuReturnDTO>> findAllMenus() {
+    public SingleResult<List<Menu>> findAllMenus() {
         log.info("MenuController.findAllMenus");
-        return responseService.getSingleResult(menuService.getMenus());
+        return responseService.getSingleResult(menuService.findAll());
     }
 
-    /**
-     * Find auth menus single result.
-     *
-     * @param authSeq the auth seq
-     * @return the single result
-     * @author [오지훈]
-     * @CreatedOn 2020. 7. 9. 오후 5:31:48
-     * @Description 메뉴 관리 목록 조회(권한)
-     */
     @ApiOperation(
-            value = "메뉴 관리 목록 조회(권한)"
+            value = "메뉴 관리 목록 조회(테스트1)"
             , notes = BASIC_OPERATION
     )
-    @GetMapping(name = "메뉴 목록 조회(권한)", value = "{authSeq}"
+    @GetMapping(name = "메뉴 목록 조회(테스트1)", value = "/list1"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<Menu>> findAuthMenus(
-            @ApiParam(value = "권한 시퀀스", required = true)
-            @PathVariable final Long authSeq
+    public SingleResult<List<MenuRoleResourceReturnDTO>> getRedisResources(
+            final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
-        log.info("MenuController.findAuthMenus");
-        return responseService.getSingleResult(menuService.getMenus(authSeq));
+        log.info("MenuController.getRedisResources");
+        Optional<Auth> auth = authService.findById(userService.findById(authUserDTO.getUserSeq()).get().getUserAuth().getAuthSeq());
+        return responseService.getSingleResult(authService.getAuthsResourcesByRoleType(auth.get().getRoleType()));
+    }
+
+    @ApiOperation(
+            value = "메뉴 관리 목록 조회(테스트2)"
+            , notes = BASIC_OPERATION
+    )
+    @GetMapping(name = "메뉴 목록 조회(테스트2)", value = "/list2"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<List<MenuReturnDTO>> getRedisMenus(
+            final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
+    ) {
+        log.info("MenuController.getRedisMenus");
+        Optional<Auth> auth = authService.findById(userService.findById(authUserDTO.getUserSeq()).get().getUserAuth().getAuthSeq());
+        return responseService.getSingleResult(authService.getAuthsMenusByRoleType(auth.get().getRoleType()));
     }
 
 }

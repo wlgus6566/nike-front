@@ -61,7 +61,7 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
      *
      * @author [오지훈]
      */
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "USER_SEQ", insertable = false, updatable = false)
     @JsonBackReference
     private User user;

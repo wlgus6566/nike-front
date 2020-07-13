@@ -145,9 +145,9 @@ public class User extends BaseTimeEntity {
      *
      * @author [오지훈]
      */
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<UserAuth> userAuths = new ArrayList<>();
+    private UserAuth userAuth;
 
     /**
      * 패스워드 기록 맵핑
@@ -158,16 +158,6 @@ public class User extends BaseTimeEntity {
     @JsonManagedReference
     @OrderBy("registrationDt DESC")
     private List<PasswordHistory> histories = new ArrayList<>();
-
-    /**
-     * 로그인 기록 맵핑
-     *
-     * @author [오지훈]
-     */
-    /*@OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_SEQ")
-    @OrderBy("loginDt DESC")
-    private List<UserLoginLog> loginLogs = new ArrayList<>();*/
 
     /**
      * 쿼리 실행 전 기본값 설정

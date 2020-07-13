@@ -2,7 +2,6 @@ package com.nike.dnp.entity.auth;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.entity.BaseTimeEntity;
-import com.nike.dnp.entity.menu.MenuRole;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -63,14 +62,26 @@ public class AuthMenuRole extends BaseTimeEntity implements Serializable {
     @JsonBackReference
     private Auth auth;
 
-    /**
-     * 메뉴 역할
-     *
-     * @author [오지훈]
-     */
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "MENU_ROLE_SEQ", insertable = false, updatable = false)
     //@JsonBackReference
-    private MenuRole menuRole;
+    private MenuRole menuRole;*/
 
+    /**
+     * Instantiates a new Auth menu role.
+     *
+     * @param authSeq     the auth seq
+     * @param menuRoleSeq the menu role seq
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 13. 오후 3:33:32
+     * @Description 등록
+     */
+    @Builder
+    public AuthMenuRole (
+            final Long authSeq
+            , final Long menuRoleSeq
+    ) {
+        this.authSeq = authSeq;
+        this.menuRoleSeq = menuRoleSeq;
+    }
 }

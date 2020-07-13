@@ -180,12 +180,9 @@ public class Menu extends BaseTimeEntity implements Serializable {
      *
      * @author [오지훈]
      */
-    @OneToMany(mappedBy = "menu")
+    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<MenuRole> menuRoles;
-
-    /*@Transient
-    private String upperMenuName;*/
 
     /**
      * Gets skill codes.
@@ -198,25 +195,19 @@ public class Menu extends BaseTimeEntity implements Serializable {
     public HashMap<Integer, Object> getSkillCodes() {
         HashMap<Integer, Object> map = new HashMap<>();
         for (ServiceEnumCode.MenuSkillEnumCode enumCode : ServiceEnumCode.MenuSkillEnumCode.values()) {
-            HashMap<String, String> sub = new HashMap<>();
+            HashMap<String, Object> sub = new HashMap<>();
+            sub.put("menuSeq", this.menuSeq);
             sub.put("code", enumCode.toString());
             sub.put("field", enumCode.getField());
             sub.put("message", enumCode.getMessage());
+            sub.put("menuRoleSeq", 0);
+            for (MenuRole menuRole : this.menuRoles) {
+                if (menuRole.getMenuSkillCode().equals(enumCode.toString())) {
+                    sub.put("menuRoleSeq", menuRole.getMenuRoleSeq());
+                }
+            }
             map.put(enumCode.getSort(), sub);
         }
-
         return map;
     }
-
-    /*public String getUpperMenuName() {
-        System.out.println("======================================================");
-        System.out.println("asdasdkjhasdkjahsdk");
-        System.out.println("======================================================");
-        *//*for (Menu menu : subMenus) {
-            if (menu == this) {
-                return menu.menuName;
-            }
-        }*//*
-        return this.upperMenu.menuName;
-    }*/
 }
