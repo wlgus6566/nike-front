@@ -1,9 +1,6 @@
 package com.nike.dnp.service.report;
 
-import com.google.firebase.database.core.Repo;
-import com.nike.dnp.dto.contents.update.ContentsFileUpdateDTO;
 import com.nike.dnp.dto.report.*;
-import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.repository.report.ReportFileRepository;

@@ -2,10 +2,10 @@ package com.nike.dnp.service.contents;
 
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
-import com.nike.dnp.dto.contents.save.ContentsFileSaveDTO;
-import com.nike.dnp.dto.contents.save.ContentsSaveDTO;
-import com.nike.dnp.dto.contents.update.ContentsFileUpdateDTO;
-import com.nike.dnp.dto.contents.update.ContentsUpdateDTO;
+import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
+import com.nike.dnp.dto.contents.ContentsSaveDTO;
+import com.nike.dnp.dto.contents.ContentsFileUpdateDTO;
+import com.nike.dnp.dto.contents.ContentsUpdateDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
