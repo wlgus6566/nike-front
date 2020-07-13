@@ -1,13 +1,21 @@
 <template>
     <div>
         <h2 class="page-title">{{ this.$route.meta.title }}</h2>
-        <ListSorting v-bind:listTypes="listTypes"></ListSorting>
-        <assetItem v-bind:listTypes="listTypes" v-bind:items="folderItems"></assetItem>
+        <div class="sorting-area">
+            <ListSorting v-bind:listTypes="listTypes" />
+            <filterSelect :listSortSelect="listSortSelect" />
+            <div class="search-input">
+                <input type="text" placeholder="검색어를 입력해주세요." />
+                <button type="button"><span>검색</span></button>
+            </div>
+        </div>
+        <folderList v-bind:listTypes="listTypes" v-bind:items="folderItems" />
     </div>
 </template>
 <script>
-import ListSorting from '@/components/asset-list/list-sorting.vue';
-import assetItem from '@/components/asset-list/asset-item.vue';
+import filterSelect from '@/components/filter-select';
+import ListSorting from '@/components/folder-list/list-sorting.vue';
+import folderList from '@/components/folder-list/index.vue';
 import { fetchContents, deleteContentsById } from '@/api/contents.js';
 import bus from '@/utils/bus.js';
 
@@ -16,6 +24,19 @@ export default {
     mounted() {},
     data() {
         return {
+            listSortSelect: {
+                listSortOptions: [
+                    {
+                        value: 'new',
+                        label: '최신순',
+                    },
+                    {
+                        value: 'startDate',
+                        label: '시작일순',
+                    },
+                ],
+                value: 'new',
+            },
             listTypes: [
                 {
                     title: '컬럼타입',
@@ -28,7 +49,8 @@ export default {
             ],
             folderItems: [
                 {
-                    title: '타이틀',
+                    title:
+                        '타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 타이틀 ',
                     img: '@/assets/images/img-asset-none@2x.png"',
                     desc: '설명',
                     date: '2020.00.00 ~ 2020.00.00',
@@ -44,7 +66,8 @@ export default {
     },
     components: {
         ListSorting,
-        assetItem,
+        filterSelect,
+        folderList,
     },
     methods: {
         async fetchData() {

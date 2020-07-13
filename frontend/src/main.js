@@ -7,11 +7,14 @@ import router from './router';
 import axios from './axios';
 import CKEditor from 'ckeditor4-vue';
 
+import lineClamp from './utils/lineclamp';
+
 Vue.prototype.$axios = axios;
 
 Vue.config.productionTip = false;
 
 Vue.use(CKEditor);
+Vue.directive('lineClamp', lineClamp);
 
 /**
  * Thousands Separators 천단위 ',' 숫자 표시 [이소정]

@@ -62,4 +62,7 @@ export default {
     left: 0;
     white-space: nowrap;
 }
+.el-input__suffix {
+    right: 0;
+}
 </style>
