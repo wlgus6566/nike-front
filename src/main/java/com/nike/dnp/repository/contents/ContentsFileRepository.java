@@ -1,5 +1,7 @@
 package com.nike.dnp.repository.contents;
 
+import com.nike.dnp.dto.contents.ContentsFileResultDTO;
+import com.nike.dnp.dto.contents.ContentsFileSearchDTO;
 import com.nike.dnp.entity.contents.ContentsFile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,7 +16,18 @@ import java.util.List;
  * @Description
  */
 @Repository
-public interface ContentsFileRepository extends JpaRepository<ContentsFile, Long> {
+public interface ContentsFileRepository extends JpaRepository<ContentsFile, Long>, ContentsFileRepositoryCustom {
+
+    /**
+     * Find by contents seq and use yn optional.
+     *
+     * @param contentsFileSearchDTO the contents file search dto
+     * @return the optional
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 6. 오후 6:30:42
+     * @Description
+     */
+    List<ContentsFileResultDTO> findAllContentsFile(ContentsFileSearchDTO contentsFileSearchDTO);
 
     /**
      * Find by contents seq and use yn optional.
