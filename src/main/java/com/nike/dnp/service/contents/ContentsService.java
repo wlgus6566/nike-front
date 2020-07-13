@@ -56,16 +56,6 @@ public class ContentsService {
      */
     public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO) {
 
-        //        test[TODO lsj] entity to dto sample
-//        List<Contents> getContentsList = findAllContents.getContent();
-//        ModelMapper modelMapper = new ModelMapper();
-
-//        ContentsListDTO contentsListDTOList = ObjectMapperUtils.mapAll(getContentsList, ContentsListDTO.class);
-
-//        for (Contents contents : getContentsList) {
-//            ContentsListDTO contentsListDTO = modelMapper.map(contents, ContentsListDTO.class);
-//        }
-
         // QueryDsl 기능 이용
         return contentsRepository.findPageContents(
                 contentsSearchDTO,
