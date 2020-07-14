@@ -3,7 +3,6 @@ package com.nike.dnp.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.exception.CodeMessageHandleException;
-import lombok.AllArgsConstructor;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,7 +20,6 @@ import java.io.Writer;
  */
 @Slf4j
 @UtilityClass
-@AllArgsConstructor
 public class JsonUtil {
 
 	/**

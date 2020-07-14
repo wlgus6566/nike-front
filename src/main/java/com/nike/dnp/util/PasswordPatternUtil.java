@@ -1,6 +1,5 @@
 package com.nike.dnp.util;
 
-import lombok.AllArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 import java.util.regex.Pattern;
@@ -13,7 +12,6 @@ import java.util.regex.Pattern;
  * @Description 패스워드 정규식
  */
 @UtilityClass
-@AllArgsConstructor
 public class PasswordPatternUtil {
 
     /**
