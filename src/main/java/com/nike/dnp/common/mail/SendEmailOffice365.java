@@ -12,7 +12,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.util.Date;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 /**
  * The Class Send email office 365.
@@ -25,13 +24,6 @@ import java.util.logging.Logger;
 @Slf4j
 @AllArgsConstructor
 public class SendEmailOffice365 {
-
-    /**
-     * The constant LOGGER
-     *
-     * @author [오지훈]
-     */
-    private static final Logger LOGGER = Logger.getAnonymousLogger();
 
     /**
      * The constant SERVIDOR_SMTP
