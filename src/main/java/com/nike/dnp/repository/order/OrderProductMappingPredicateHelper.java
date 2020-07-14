@@ -29,7 +29,7 @@ public class OrderProductMappingPredicateHelper {
 	 * @CreatedOn 2020. 7. 7. 오후 12:13:36
 	 * @Description
 	 */
-	public static Predicate afterStartDt(final String beginDt) {
+	public Predicate afterStartDt(final String beginDt) {
 		final BooleanBuilder builder = new BooleanBuilder();
 		if(!ObjectUtils.isEmpty(beginDt)){
 			builder.and(QOrderProductMapping.orderProductMapping.registrationDt.after(
@@ -50,7 +50,7 @@ public class OrderProductMappingPredicateHelper {
 	 * @CreatedOn 2020. 7. 7. 오후 12:13:36
 	 * @Description
 	 */
-	public static Predicate beforeEndDt(final String endDt) {
+	public Predicate beforeEndDt(final String endDt) {
 		final BooleanBuilder builder = new BooleanBuilder();
 		if(!ObjectUtils.isEmpty(endDt)){
 			builder.and(QOrderProductMapping.orderProductMapping.registrationDt.before(

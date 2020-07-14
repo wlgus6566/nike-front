@@ -160,7 +160,7 @@ public class UserReturnDTO {
      * @Description 유저 권한명
      */
     public String getUserStatusCodeName() {
-        for (ServiceEnumCode.UserStatusEnumCode enumCode : ServiceEnumCode.UserStatusEnumCode.values()) {
+        for (final ServiceEnumCode.UserStatusEnumCode enumCode : ServiceEnumCode.UserStatusEnumCode.values()) {
             if (enumCode.toString().equals(this.userStatusCode)) {
                 return enumCode.getMessage();
             }

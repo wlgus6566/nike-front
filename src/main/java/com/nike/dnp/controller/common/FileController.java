@@ -47,9 +47,9 @@ public class FileController {
 //		Path path = Paths.get("d:/test/Jinny.zip");
 
 		// 테스트 용 로컬에 맞게 수정해야 함
-		Path path = Paths.get("d:/test/erwin73.zip");
+		final Path path = Paths.get("d:/test/erwin73.zip");
 
-		HttpHeaders headers = new HttpHeaders();
+		final HttpHeaders headers = new HttpHeaders();
 
 //		String contentType = Files.probeContentType(path);
 //		headers.add(HttpHeaders.CONTENT_TYPE,contentType); //이미지일경우 바로 뷰
@@ -57,14 +57,14 @@ public class FileController {
 		headers.add(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=" + path.getFileName().toString());
 		headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(path.toFile().length()));
 
-		Resource resource = new InputStreamResource(Files.newInputStream(path));
+		final Resource resource = new InputStreamResource(Files.newInputStream(path));
 		return new ResponseEntity<>(resource,headers,HttpStatus.OK);
 
 	}
 
 	@ApiOperation(value = "파일 업로드", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/api/upload",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public SingleResult<FileResultDTO> upload(FileUploadDTO fileUploadDTO,
+	public SingleResult<FileResultDTO> upload(final FileUploadDTO fileUploadDTO,
 							   @ApiParam(name = "uploadFile", value = "파일업로드") MultipartFile uploadFile) {
 
 		FileResultDTO fileResultDTO = null;

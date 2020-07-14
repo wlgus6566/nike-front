@@ -88,7 +88,7 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
      */
     public UserAuth save(final User user, final Auth auth) {
         log.info("UserAuth.save");
-        UserAuth userAuth = new UserAuth();
+        final UserAuth userAuth = new UserAuth();
         userAuth.setUser(user);
         userAuth.setAuth(auth);
         return userAuth;

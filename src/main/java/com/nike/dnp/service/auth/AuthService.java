@@ -115,13 +115,13 @@ public class AuthService {
     @Cacheable(value = "cache:auths", cacheManager = "cacheManager")
     public JSONArray findAllByCache() {
         log.info("AuthService.findAllByCache");
-        ObjectMapper ob = new ObjectMapper();
+        final ObjectMapper objectMapper = new ObjectMapper();
         try {
-            return ob.readValue(ob.writeValueAsString(this.findAll()), JSONArray.class);
-        } catch (JsonProcessingException e) {
+            return objectMapper.readValue(objectMapper.writeValueAsString(this.findAll()), JSONArray.class);
+        } catch (JsonProcessingException exception) {
             throw new CodeMessageHandleException(
                     ErrorEnumCode.ExceptionError.ERROR.toString()
-                    , ErrorEnumCode.ExceptionError.ERROR.getMessage()
+                    , exception.getMessage()
             );
         }
     }
@@ -153,9 +153,9 @@ public class AuthService {
     public List<MenuRoleResourceReturnDTO> getAuthsResourcesByRoleType(final String roleType) {
         log.info("AuthService.getAuthsResourcesByRoleType");
 
-        List<MenuRoleResourceReturnDTO> redisMenuReources = (List<MenuRoleResourceReturnDTO>) redisService.get("auths:"+roleType);
-        if (!ObjectUtils.isEmpty(redisMenuReources) && redisMenuReources.size() > 0) {
-            return  redisMenuReources;
+        final List<MenuRoleResourceReturnDTO> redisReources = (List<MenuRoleResourceReturnDTO>) redisService.get("auths:"+roleType);
+        if (!ObjectUtils.isEmpty(redisReources) && redisReources.size() > 0) {
+            return  redisReources;
         }
 
         return menuRoleResourceRepository.getResources(
@@ -187,12 +187,12 @@ public class AuthService {
     public List<MenuReturnDTO> getAuthsMenusByRoleType(final String roleType) {
         log.info("AuthService.getAuthsMenusByRoleType");
 
-        List<MenuReturnDTO> redisMenus = (List<MenuReturnDTO>) redisService.get("roles:menus:"+roleType);
+        final List<MenuReturnDTO> redisMenus = (List<MenuReturnDTO>) redisService.get("roles:menus:"+roleType);
         if (!ObjectUtils.isEmpty(redisMenus) && redisMenus.size() > 0) {
             return  redisMenus;
         }
 
-        Optional<Auth> auth = this.findByRoleType(roleType);
+        final Optional<Auth> auth = this.findByRoleType(roleType);
         List<MenuReturnDTO> menus = new ArrayList<>();
         if (auth.isPresent()) {
             menus = menuRepository.getMenus(auth.get().getAuthSeq());
@@ -246,7 +246,7 @@ public class AuthService {
     @Transactional
     public Auth save(final AuthSaveDTO authSaveDTO) {
         log.info("AuthService.save");
-        Auth auth = authRepository.save(Auth.builder().authSaveDTO(authSaveDTO).build());
+        final Auth auth = authRepository.save(Auth.builder().authSaveDTO(authSaveDTO).build());
         this.initAuthCache();
 
         if (authSaveDTO.getMenuRoleSeqArray().length > 0) {
@@ -278,7 +278,7 @@ public class AuthService {
             ,final AuthUpdateDTO authUpdateDTO
     ) {
         log.info("AuthService.update");
-        Optional<Auth> auth = this.findById(authSeq);
+        final Optional<Auth> auth = this.findById(authSeq);
         auth.ifPresent(value -> value.update(authUpdateDTO));
         this.initAuthCache();
 
@@ -339,7 +339,7 @@ public class AuthService {
     @Transactional
     public Optional<Auth> delete(final Long authSeq) {
         log.info("AuthService.delete");
-        Optional<Auth> auth = this.findById(authSeq);
+        final Optional<Auth> auth = this.findById(authSeq);
         auth.ifPresent(Auth::delete);
         this.initAuthCache();
 
@@ -362,9 +362,9 @@ public class AuthService {
     public void initAuthCache() {
         log.info("AuthService.initAuthCache");
         redisService.delete("cache:auths::SimpleKey []");
-        ObjectMapper ob = new ObjectMapper();
+        final ObjectMapper objectMapper = new ObjectMapper();
         try {
-            redisService.set("cache:auths::SimpleKey []", ob.readValue(ob.writeValueAsString(this.findAll()), JSONArray.class), 60 * 24 * 30);
+            redisService.set("cache:auths::SimpleKey []", objectMapper.readValue(objectMapper.writeValueAsString(this.findAll()), JSONArray.class), 60 * 24 * 30);
         } catch (JsonProcessingException e) {
             throw new CodeMessageHandleException(
                     ErrorEnumCode.ExceptionError.ERROR.toString()

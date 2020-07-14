@@ -46,11 +46,12 @@ public class CodeController {
     private final CodeService codeService;
 
     /**
-     * REQUEST_CHARACTER
+     * OPERATION_CHARACTER
      *
      * @author [오지훈]
      */
-    private static final String REQUEST_CHARACTER = "## Reqeust ## \n필드명|설명|필수여부|데이터 타입(길이)\n" + "-|-|-|-\n";
+    private static final String OPERATION_CHARACTER
+            = "## Request ##\n[하위 Parameters 참조]\n\n\n\n## Response ##\n[하위 Model 참조]\n\n\n\n";
 
     /**
      * 하위 코드 목록
@@ -63,10 +64,7 @@ public class CodeController {
      */
     @ApiOperation(
         value = "하위 코드 목록 조회"
-        , notes = REQUEST_CHARACTER + "\n"
-        + "[하위 Parameters 참조]\n\n\n\n"
-        + "## Response ## \n"
-        + "[하위 Model 참조]\n\n\n\n"
+        , notes = OPERATION_CHARACTER
     )
     @GetMapping(value = "/codes/{upperCode}", name = "하위 코드 목록 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -87,15 +85,12 @@ public class CodeController {
      */
     @ApiOperation(
         value = "코드 등록"
-        , notes = REQUEST_CHARACTER + "\n"
-        + "[하위 Parameters 참조]\n\n\n\n"
-        + "## Response ## \n"
-        + "[하위 Model 참조]\n\n\n\n"
+        , notes = OPERATION_CHARACTER
     )
     @PostMapping(name = "코드 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Code> saveCode(@ApiParam(value = "코드 저장 DTO") @RequestBody final CodeSaveDTO codeSaveDTO) {
+    public SingleResult<Code> saveCode(@ApiParam(value = "코드 저장 DTO", required = true) @RequestBody final CodeSaveDTO codeSaveDTO) {
         return responseService.getSingleResult(codeService.save(codeSaveDTO));
     }
 
@@ -111,11 +106,7 @@ public class CodeController {
      */
     @ApiOperation(
             value = "코드 수정"
-            , notes = REQUEST_CHARACTER + "\n"
-            + "codeCd|코드|true|String\n"
-            + "[하위 Parameters 참조]\n\n\n\n"
-            + "## Response ## \n"
-            + "[하위 Model 참조]\n\n\n\n"
+            , notes = OPERATION_CHARACTER
     )
     @PutMapping(value = "/{code}", name = "코드 수정"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
@@ -126,8 +117,7 @@ public class CodeController {
             , @ApiParam(value = "코드 수정 DTO", required = true)
             @RequestBody final CodeUpdateDTO codeUpdateDTO
     ) {
-        Optional<Code> codeEntity = codeService.update(code, codeUpdateDTO);
-        return responseService.getSingleResult(codeEntity);
+        return responseService.getSingleResult(codeService.update(code, codeUpdateDTO));
     }
 
     /**
@@ -141,10 +131,7 @@ public class CodeController {
      */
     @ApiOperation(
             value = "코드 삭제"
-            , notes = "## Reqeust ## \n"
-            + "codeCd|코드|true|String\n\n\n\n"
-            + "## Response ## \n"
-            + "[하위 Model 참조]\n\n\n\n"
+            , notes = OPERATION_CHARACTER
     )
     @DeleteMapping(value = "/{code}", name = "코드 삭제"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}

@@ -146,7 +146,7 @@ public class CodeService {
      * @CreatedOn 2020. 6. 24. 오후 5:55:50
      * @Description Redis code 갱신
      */
-    public void redisSaveUpperCode(String upperCode) {
+    public void redisSaveUpperCode(final String upperCode) {
         log.info("CodeService.redisSaveUpperCode");
         redisService.set("cache:codes::"+upperCode, codeRepository.findByUpperCode(upperCode), 60);
     }

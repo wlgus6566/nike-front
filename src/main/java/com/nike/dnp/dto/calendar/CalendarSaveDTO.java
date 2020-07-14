@@ -4,8 +4,6 @@ import com.nike.dnp.dto.BasicDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 /**
  * CalendarDTO
  *

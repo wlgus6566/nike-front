@@ -92,7 +92,7 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
      * @Description 90일 지난 패스워드 체크
      */
     @Override
-    public long countByPaswordChangePeriod(Long userSeq) {
+    public long countByPaswordChangePeriod(final Long userSeq) {
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
         return queryFactory
                 .selectFrom(QUser.user)

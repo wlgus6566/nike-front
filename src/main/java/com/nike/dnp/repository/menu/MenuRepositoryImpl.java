@@ -103,7 +103,7 @@ public class MenuRepositoryImpl extends QuerydslRepositorySupport implements Men
                         qMenuRole.menuRoleSeq.eq(qAuthMenuRole.menuRoleSeq)
                         , qAuthMenuRole.authSeq.eq(authSeq)
                 ).fetchJoin()
-                .where(qMenu.useYn.eq(ServiceEnumCode.yesOrNoEnumCode.Y.toString()))
+                .where(qMenu.useYn.eq(ServiceEnumCode.YesOrNoEnumCode.Y.toString()))
                 .groupBy(qMenu.menuSeq)
                 .fetch();
     }

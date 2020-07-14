@@ -1,14 +1,8 @@
 package com.nike.dnp.controller.calendar;
 
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.calendar.CalendarSaveDTO;
 import com.nike.dnp.dto.calendar.CalendarSearchDTO;
-import com.nike.dnp.dto.code.CodeSaveDTO;
-import com.nike.dnp.dto.code.CodeSearchDTO;
-import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.entity.calendar.Calendar;
-import com.nike.dnp.entity.code.Code;
-import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.calendar.CalendarService;
@@ -16,13 +10,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.Optional;

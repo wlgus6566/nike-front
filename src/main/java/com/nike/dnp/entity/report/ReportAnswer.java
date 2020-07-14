@@ -1,6 +1,5 @@
 package com.nike.dnp.entity.report;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.dto.report.ReportAnswerSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;

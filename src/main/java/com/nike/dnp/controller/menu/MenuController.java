@@ -52,7 +52,19 @@ public class MenuController {
      * @author [오지훈]
      */
     private final MenuService menuService;
+
+    /**
+     * The Auth service
+     *
+     * @author [오지훈]
+     */
     private final AuthService authService;
+
+    /**
+     * The User service
+     *
+     * @author [오지훈]
+     */
     private final UserService userService;
 
     /**
@@ -94,7 +106,7 @@ public class MenuController {
             final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
         log.info("MenuController.getRedisResources");
-        Optional<Auth> auth = authService.findById(userService.findById(authUserDTO.getUserSeq()).get().getUserAuth().getAuthSeq());
+        final Optional<Auth> auth = authService.findById(userService.findById(authUserDTO.getUserSeq()).get().getUserAuth().getAuthSeq());
         return responseService.getSingleResult(authService.getAuthsResourcesByRoleType(auth.get().getRoleType()));
     }
 
@@ -108,7 +120,7 @@ public class MenuController {
             final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
         log.info("MenuController.getRedisMenus");
-        Optional<Auth> auth = authService.findById(userService.findById(authUserDTO.getUserSeq()).get().getUserAuth().getAuthSeq());
+        final Optional<Auth> auth = authService.findById(userService.findById(authUserDTO.getUserSeq()).get().getUserAuth().getAuthSeq());
         return responseService.getSingleResult(authService.getAuthsMenusByRoleType(auth.get().getRoleType()));
     }
 

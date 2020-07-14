@@ -190,8 +190,8 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 		}
 
 		// 최초접속여부/약관동의여부
-		if (isValid && ServiceEnumCode.yesOrNoEnumCode.N.toString().equals(termsAgreeYn)
-				&& ServiceEnumCode.yesOrNoEnumCode.N.toString().equals(user.get().getTermsAgreeYn())) {
+		if (isValid && ServiceEnumCode.YesOrNoEnumCode.N.toString().equals(termsAgreeYn)
+				&& ServiceEnumCode.YesOrNoEnumCode.N.toString().equals(user.get().getTermsAgreeYn())) {
 			JsonUtil.write(response.getWriter()
 					, responseService.getFailResult(
 							SuccessEnumCode.LoginSuccess.TERMS_AGREEMENT.toString()
@@ -221,8 +221,8 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 			user.ifPresent(value -> value.updateLoginDt(header.toString()));
 
 			// 약관동의 업데이트
-			if (ServiceEnumCode.yesOrNoEnumCode.Y.toString().equals(termsAgreeYn)
-					&& ServiceEnumCode.yesOrNoEnumCode.N.toString().equals(user.get().getTermsAgreeYn())
+			if (ServiceEnumCode.YesOrNoEnumCode.Y.toString().equals(termsAgreeYn)
+					&& ServiceEnumCode.YesOrNoEnumCode.N.toString().equals(user.get().getTermsAgreeYn())
 			) {
 				user.ifPresent(User::updateAgreement);
 			}

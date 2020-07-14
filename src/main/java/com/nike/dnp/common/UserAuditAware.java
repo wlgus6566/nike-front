@@ -1,6 +1,7 @@
 package com.nike.dnp.common;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
@@ -18,17 +19,8 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
+@AllArgsConstructor
 public class UserAuditAware implements AuditorAware<Long> {
-
-    /*@Override
-    public Optional<AuthUserDTO> getCurrentAuditor() {
-        log.info("UserAuditAware.getCurrentAuditor");
-        return Optional.ofNullable(SecurityContextHolder.getContext())
-                .map(SecurityContext::getAuthentication)
-                .filter(Authentication::isAuthenticated)
-                .map(Authentication::getPrincipal)
-                .map(AuthUserDTO.class::cast);
-    }*/
 
     /**
      * Returns the current auditor of the application.
@@ -41,11 +33,13 @@ public class UserAuditAware implements AuditorAware<Long> {
     @Override
     public Optional<Long> getCurrentAuditor() {
         log.info("UserAuditAware.getCurrentAuditor");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (null == authentication || !authentication.isAuthenticated()) {
-            return null;
+        Optional<Long> result = Optional.empty();
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(null == authentication || !authentication.isAuthenticated())) {
+            final AuthUserDTO authUserDTO = (AuthUserDTO) authentication.getPrincipal();
+            result = Optional.of(authUserDTO.getUserSeq());
         }
-        AuthUserDTO authUserDTO = (AuthUserDTO) authentication.getPrincipal();
-        return Optional.of(authUserDTO.getUserSeq());
+        return result;
     }
+
 }

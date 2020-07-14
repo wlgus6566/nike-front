@@ -16,24 +16,6 @@ import java.util.regex.Pattern;
 public class EmailPatternUtil {
 
     /**
-     * Is email boolean.
-     *
-     * @param email the email
-     * @return the boolean
-     * @author [오지훈]
-     * @CreatedOn 2020. 7. 1. 오후 2:51:03
-     * @Description 정상 이메일 형식 여부
-     */
-    public static boolean isEmail(String email) {
-        if (email.isEmpty()) {
-            return false;
-        }
-        return Pattern.matches(
-                "[\\w\\~\\-\\.]+@[\\w\\~\\-]+(\\.[\\w\\~\\-]+)+",
-                email.trim());
-    }
-
-    /**
      * Is valid email boolean.
      *
      * @param email the email
@@ -42,11 +24,11 @@ public class EmailPatternUtil {
      * @CreatedOn 2020. 7. 1. 오후 4:15:28
      * @Description 정상 이메일 형식 여부
      */
-    public static boolean isValidEmail(String email) {
+    public boolean isValidEmail(final String email) {
         boolean isValid = false;
-        String regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
+        final String regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
+        final Pattern pattern = Pattern.compile(regex);
+        final Matcher matcher = pattern.matcher(email);
         if(matcher.matches()) {
             isValid = true;
         }
