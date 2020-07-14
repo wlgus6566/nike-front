@@ -59,7 +59,7 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 
 
-		final List<OrderProductResultDTO> resultList = queryFactory.select(
+		return queryFactory.select(
 				Projections.bean(OrderProductResultDTO.class, orderProductMapping.orderSeq,
 																			 orderProductMapping.registrationDt,
 																			 orderProductMapping.orderQuantity,
@@ -75,7 +75,6 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 											.innerJoin(agency).on(product.agencySeq.eq(agency.agencySeq))
 											.where(orderProductMapping.orderSeq.eq(orderSeq))
 											.orderBy(orderProductMapping.orderSeq.desc()).fetch();
-		return resultList;
 	}
 
 	/**

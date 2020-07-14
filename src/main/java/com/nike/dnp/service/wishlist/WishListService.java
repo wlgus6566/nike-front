@@ -1,4 +1,4 @@
-package com.nike.dnp.service.wishList;
+package com.nike.dnp.service.wishlist;
 
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.dto.wishlist.WishListDeleteDTO;
@@ -41,7 +41,7 @@ public class WishListService {
 	 *
 	 * @author [윤태호]
 	 */
-	final WishListRepository wishListRepository;
+	private final WishListRepository wishListRepository;
 
 
 	/**
@@ -55,13 +55,12 @@ public class WishListService {
 	 */
 	@Transactional
 	public WishList save(final Long goodsSeq) {
-		WishList wishList = new WishList();
+		final WishList wishList = new WishList();
 		wishList.setGoodsSeq(goodsSeq);
 		try{
-			WishList saveWishList = wishListRepository.save(wishList);
-			return saveWishList;
+			return wishListRepository.save(wishList);
 		} catch (DataIntegrityViolationException e){
-			throw new CodeMessageHandleException(ErrorEnumCode.WishListError.DUPLICATE_GOODS.name(), ErrorEnumCode.WishListError.DUPLICATE_GOODS.getMessage());
+			throw (CodeMessageHandleException)new CodeMessageHandleException(ErrorEnumCode.WishListError.DUPLICATE_GOODS.name(), ErrorEnumCode.WishListError.DUPLICATE_GOODS.getMessage());
 		}
 	}
 
@@ -88,8 +87,8 @@ public class WishListService {
 	 */
 	@Transactional
 	public void delete(final Long wishListSeq) {
-		Optional<WishList> userWishList = wishListRepository.findByWishListSeqAndUserSeq(wishListSeq, SecurityUtil.currentUser().getUserSeq());
-		WishList wishList = userWishList.orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.WishListError.NOT_FOUND_WISHLIST.name(), ErrorEnumCode.WishListError.NOT_FOUND_WISHLIST.getMessage()));
+		final Optional<WishList> userWishList = wishListRepository.findByWishListSeqAndUserSeq(wishListSeq, SecurityUtil.currentUser().getUserSeq());
+		final WishList wishList = userWishList.orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.WishListError.NOT_FOUND_WISHLIST.name(), ErrorEnumCode.WishListError.NOT_FOUND_WISHLIST.getMessage()));
 		wishListRepository.delete(wishList);
 	}
 
@@ -103,7 +102,7 @@ public class WishListService {
 	 */
 	@Transactional
 	public void deleteList(final WishListDeleteDTO wishListDeleteDTO) {
-		List<WishList> wishListList = wishListRepository.findAllById(wishListDeleteDTO.getWishListSeqList());
+		final List<WishList> wishListList = wishListRepository.findAllById(wishListDeleteDTO.getWishListSeqList());
 		wishListList.forEach(wishList -> {
 			if(wishList.getUserSeq().equals(SecurityUtil.currentUser().getUserSeq())){
 				wishListRepository.delete(wishList);
@@ -111,10 +110,17 @@ public class WishListService {
 		});
 	}
 
+	/**
+	 * Delete scheduler.
+	 *
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 14. 오후 3:22:10
+	 * @Description
+	 */
 	@Transactional
 	public void deleteScheduler() {
 		// 7일 이후 데이터 검색
-		List<WishList> byRegistrationDtAfter =
+		final List<WishList> byRegistrationDtAfter =
 				wishListRepository.findByRegistrationDtBefore(LocalDateTime.of(LocalDate.now().plusDays(-7), LocalTime.of(0,0,0)));
 
 		wishListRepository.deleteAll(byRegistrationDtAfter);

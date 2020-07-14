@@ -64,7 +64,7 @@ public class OrderProductMappingService {
 	 */
 	@Transactional
 	public OrderProductMapping saveOrderProductMapping(final OrderProductMappingSaveDTO orderProductMappingSaveDTO) {
-		OrderProductMapping orderProductMapping = new OrderProductMapping();
+		final OrderProductMapping orderProductMapping = new OrderProductMapping();
 		orderProductMapping.setGoodsSeq(orderProductMappingSaveDTO.getGoodsSeq());
 		orderProductMapping.setOrderSeq(orderProductMappingSaveDTO.getOrderSeq());
 		orderProductMapping.setOrderQuantity(orderProductMappingSaveDTO.getOrderQuantity());
@@ -82,12 +82,12 @@ public class OrderProductMappingService {
 	 * @Description
 	 */
 	public void orderSheetSend(final Order order) {
-		List<OrderProductResultDTO> emailList = orderProductMapperRepository.findSearchEmailValue(order.getOrderSeq());
+		final List<OrderProductResultDTO> emailList = orderProductMapperRepository.findSearchEmailValue(order.getOrderSeq());
 
-		List<Long> agencyList = new ArrayList<>();
+		final List<Long> agencyList = new ArrayList<>();
 		Long compareAgencySeq = null;
-		for(OrderProductResultDTO orderProductResultDTO : emailList){
-			Long agencySeq = Long.parseLong(String.valueOf(orderProductResultDTO.getAgencySeq()));
+		for(final OrderProductResultDTO orderProductResultDTO : emailList){
+			final Long agencySeq = Long.parseLong(String.valueOf(orderProductResultDTO.getAgencySeq()));
 			if(ObjectUtils.isEmpty(compareAgencySeq) || !compareAgencySeq.equals(agencySeq)){
 				agencyList.add(agencySeq);
 				compareAgencySeq = agencySeq;
@@ -95,12 +95,12 @@ public class OrderProductMappingService {
 		}
 
 
-		List<SendDTO> sendDTOList = new ArrayList<>();
-		for(Long tempAgencySeq : agencyList){
-			SendDTO sendDTO = new SendDTO();
-			List<OrderProductDTO> productList = new ArrayList<>();
-			for(OrderProductResultDTO orderProductResultDTO : emailList){
-				Long agencySeq = Long.parseLong(String.valueOf(orderProductResultDTO.getAgencySeq()));
+		final List<SendDTO> sendDTOList = new ArrayList<>();
+		for(final Long tempAgencySeq : agencyList){
+			final SendDTO sendDTO = new SendDTO();
+			final List<OrderProductDTO> productList = new ArrayList<>();
+			for(final OrderProductResultDTO orderProductResultDTO : emailList){
+				final Long agencySeq = Long.parseLong(String.valueOf(orderProductResultDTO.getAgencySeq()));
 				if(tempAgencySeq.equals(agencySeq)){
 					sendDTO.setNickname(SecurityUtil.currentUser()
 													.getNickname());
@@ -108,7 +108,7 @@ public class OrderProductMappingService {
 					sendDTO.setAgencyName(String.valueOf(orderProductResultDTO.getAgencyName()));
 					sendDTO.setOrderDt(String.valueOf(orderProductResultDTO.getRegistrationDt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"))));
 					sendDTO.setOrderComment(String.valueOf(orderProductResultDTO.getOrderDescription()));
-					OrderProductDTO orderProductDTO = new OrderProductDTO();
+					final OrderProductDTO orderProductDTO = new OrderProductDTO();
 					orderProductDTO.setAmount(Integer.parseInt(String.valueOf(orderProductResultDTO.getOrderQuantity())));
 					orderProductDTO.setProductName(String.valueOf(orderProductResultDTO.getGoodsName()));
 					orderProductDTO.setProductDesc(String.valueOf(orderProductResultDTO.getGoodsDescription()));
@@ -120,21 +120,19 @@ public class OrderProductMappingService {
 		}
 
 
-		for(SendDTO sendDTO : sendDTOList){
-			DecimalFormat format = new DecimalFormat("###,###");
-			StringBuilder sb = new StringBuilder();
-			for(OrderProductDTO dto : sendDTO.getProductList()){
-				sb.append("<tr style=\"border-top:1px solid #ddd\">");
-				sb.append("    <td style=\"padding:15px; border-right:1px solid #ddd;\">");
-				sb.append("        <p style=\"margin:0\">" + dto.getProductName() + "</p>");
-				sb.append("        <p style=\"margin:2px 0 0 0; font-size:12px; color:#888;\">" + dto.getProductDesc() + "</p>");
-				sb.append("    </td>");
-				sb.append("    <td align=\"center\">");
-				sb.append("        <p>" + format.format(dto.getAmount()) + "개</p>");
-				sb.append("    </td>");
-				sb.append("</tr>");
+		for(final SendDTO sendDTO : sendDTOList){
+			final DecimalFormat format = new DecimalFormat("###,###");
+			final StringBuilder builder = new StringBuilder();
+			for(final OrderProductDTO dto : sendDTO.getProductList()){
+				builder.append("<tr style=\"border-top:1px solid #ddd\"><td style=\"padding:15px; border-right:1px solid #ddd;\"><p style=\"margin:0\">");
+				builder.append(dto.getProductName());
+				builder.append("</p><p style=\"margin:2px 0 0 0; font-size:12px; color:#888;\">");
+				builder.append(dto.getProductDesc());
+				builder.append("</p></td><td align=\"center\"><p>");
+				builder.append(format.format(dto.getAmount()));
+				builder.append("개</p></td></tr>");
 			}
-			sendDTO.setOrderArea(sb.toString());
+			sendDTO.setOrderArea(builder.toString());
 			mailService.sendMail(
 					ServiceEnumCode.EmailTypeEnumCode.ORDER.toString(),
 					ServiceEnumCode.EmailTypeEnumCode.ORDER.getMessage(),

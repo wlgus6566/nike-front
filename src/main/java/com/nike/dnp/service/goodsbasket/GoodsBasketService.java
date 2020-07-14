@@ -1,4 +1,4 @@
-package com.nike.dnp.service.goodsBasket;
+package com.nike.dnp.service.goodsbasket;
 
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.dto.goodsbasket.GoodsBasketSaveDTO;
@@ -35,7 +35,7 @@ public class GoodsBasketService {
 	 *
 	 * @author [윤태호]
 	 */
-	final GoodsBasketRepository goodsBasketRepository;
+	private final GoodsBasketRepository goodsBasketRepository;
 
 	/**
 	 * Save basket.
@@ -48,8 +48,8 @@ public class GoodsBasketService {
 	 */
 	@Transactional
 	public GoodsBasket saveBasket(final GoodsBasketSaveDTO goodsBasketSaveDTO) {
-		Optional<GoodsBasket> goodsBasket = goodsBasketRepository.findByGoodsSeqAndUserSeq(goodsBasketSaveDTO.getGoodsSeq(), SecurityUtil.currentUser().getUserSeq());
-		GoodsBasket saveGoodsBasket = goodsBasket.orElse(new GoodsBasket());
+		final Optional<GoodsBasket> goodsBasket = goodsBasketRepository.findByGoodsSeqAndUserSeq(goodsBasketSaveDTO.getGoodsSeq(), SecurityUtil.currentUser().getUserSeq());
+		final GoodsBasket saveGoodsBasket = goodsBasket.orElse(new GoodsBasket());
 		saveGoodsBasket.setGoodsSeq(goodsBasketSaveDTO.getGoodsSeq());
 		saveGoodsBasket.setOrderQuantity(goodsBasketSaveDTO.getOrderQuantity());
 		return goodsBasketRepository.save(saveGoodsBasket);
@@ -79,8 +79,8 @@ public class GoodsBasketService {
 	@Transactional
 	public void deleteBasket(final Long goodsBasketSeq) {
 
-		Optional<GoodsBasket> optionalGoodsBasket = goodsBasketRepository.findById(goodsBasketSeq);
-		GoodsBasket goodsBasket = optionalGoodsBasket.orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.BasketError.NOT_FOUND_BASKET.name(),ErrorEnumCode.BasketError.NOT_FOUND_BASKET.getMessage()));
+		final Optional<GoodsBasket> optionalGoodsBasket = goodsBasketRepository.findById(goodsBasketSeq);
+		final GoodsBasket goodsBasket = optionalGoodsBasket.orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.BasketError.NOT_FOUND_BASKET.name(),ErrorEnumCode.BasketError.NOT_FOUND_BASKET.getMessage()));
 		goodsBasketRepository.delete(goodsBasket);
 	}
 
@@ -108,10 +108,10 @@ public class GoodsBasketService {
 	 */
 	@Transactional
 	public List<GoodsBasket> saveBasketList(final GoodsBasketSaveListDTO goodsBasketSaveListDTO) {
-		List<GoodsBasket> resultList = new ArrayList<>();
+		final List<GoodsBasket> resultList = new ArrayList<>();
 		for(int i = 0; i < goodsBasketSaveListDTO.getGoodsSeqList().size(); i++){
-			Optional<GoodsBasket> findGoodsBasket = goodsBasketRepository.findByGoodsSeqAndUserSeq(goodsBasketSaveListDTO.getGoodsSeqList().get(i), SecurityUtil.currentUser().getUserSeq());
-			GoodsBasket goodsBasket = findGoodsBasket.orElse(new GoodsBasket());
+			final Optional<GoodsBasket> findGoodsBasket = goodsBasketRepository.findByGoodsSeqAndUserSeq(goodsBasketSaveListDTO.getGoodsSeqList().get(i), SecurityUtil.currentUser().getUserSeq());
+			final GoodsBasket goodsBasket = findGoodsBasket.orElse(new GoodsBasket());
 			goodsBasket.setGoodsSeq(goodsBasketSaveListDTO.getGoodsSeqList().get(i));
 			goodsBasket.setOrderQuantity(goodsBasketSaveListDTO.getOrderQuantityList().get(i));
 			resultList.add(goodsBasketRepository.save(goodsBasket));

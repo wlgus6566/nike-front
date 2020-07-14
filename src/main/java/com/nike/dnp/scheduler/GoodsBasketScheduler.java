@@ -1,6 +1,6 @@
 package com.nike.dnp.scheduler;
 
-import com.nike.dnp.service.goodsBasket.GoodsBasketService;
+import com.nike.dnp.service.goodsbasket.GoodsBasketService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

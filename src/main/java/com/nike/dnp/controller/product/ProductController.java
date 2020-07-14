@@ -91,7 +91,7 @@ public class ProductController {
 	public SingleResult<Page<ProductResultDTO>> findPagesProductCategory2(@PathVariable @ApiParam(name="category2Code",value="카테고리 2 코드",allowableValues = "SUBSIDIARY,NIKE_BY_YOU,CUSTOM23,MNQ") final String category2Code,
 																		  final ProductUserSearchDTO productUserSearchDTO) {
 
-		ProductSearchDTO productSearchDTO = new ProductSearchDTO();
+		final ProductSearchDTO productSearchDTO = new ProductSearchDTO();
 		productSearchDTO.setPage(productUserSearchDTO.getPage());
 		productSearchDTO.setSize(productUserSearchDTO.getSize());
 		productSearchDTO.setCategory2Code(category2Code);
@@ -128,7 +128,7 @@ public class ProductController {
 	 */
 	@ApiOperation(value = "다수 상품 상세 조회", notes = REQUEST_CHARACTER + "goodsSeq|상품시퀀스|true|Integer\n")
 	@GetMapping(name = "상품상세조회", produces = MediaType.APPLICATION_JSON_VALUE)
-	public SingleResult<List<Product>> findbySearchProduct(@ApiParam(name = "goodsSeqList", value = "상품 시퀀스", defaultValue = "29,30,31") @RequestParam final List<Long> goodsSeqList) {
+	public SingleResult<List<Product>> findbySearchProduct(@ApiParam(name = "goodsSeqList", value = "상품 시퀀스[배열]", defaultValue = "29,30,31") @RequestParam final List<Long> goodsSeqList) {
 		return responseService.getSingleResult(productService.findBySearchId(goodsSeqList));
 	}
 
@@ -194,17 +194,17 @@ public class ProductController {
 	 * @CreatedOn 2020. 6. 26. 오후 3:08:11
 	 * @Description
 	 */
-	@ApiOperation(value = "상품 삭제", notes = BASIC_CHARACTER)
-	@DeleteMapping(name = "상품 삭제", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "상품 삭제[배열]", notes = BASIC_CHARACTER)
+	@DeleteMapping(name = "상품 삭제[배열]", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<Boolean> deleteProduct(@ApiParam(name = "goodsSeqList", value = "상품 시퀀스", defaultValue = "29,30,31") @RequestParam final List<Long> goodsSeqList,
 											   @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO) {
 
-		List<Product> productList = productService.findBySearchId(goodsSeqList);
+		final List<Product> productList = productService.findBySearchId(goodsSeqList);
 
 		final ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO();
 		productUpdateDTO.setUseYn("N");
 		productUpdateDTO.setUpdaterSeq(authUserDTO.getUserSeq());
-		boolean check = productService.deleteArray(
+		final boolean check = productService.deleteArray(
 				productList,
 				productUpdateDTO);
 		return responseService.getSingleResult(check);

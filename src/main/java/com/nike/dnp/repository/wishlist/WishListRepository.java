@@ -31,5 +31,14 @@ public interface WishListRepository extends JpaRepository<WishList, Long> ,WishL
 	Optional<WishList> findByWishListSeqAndUserSeq(Long wishListSeq,Long userSeq);
 
 
+	/**
+	 * Find by registration dt before list.
+	 *
+	 * @param searchDt the search dt
+	 * @return the list
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 14. 오후 3:38:11
+	 * @Description
+	 */
 	List<WishList> findByRegistrationDtBefore(LocalDateTime searchDt);
 }

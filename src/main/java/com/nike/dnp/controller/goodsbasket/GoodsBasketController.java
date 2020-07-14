@@ -6,7 +6,7 @@ import com.nike.dnp.entity.goodsbasket.GoodsBasket;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
-import com.nike.dnp.service.goodsBasket.GoodsBasketService;
+import com.nike.dnp.service.goodsbasket.GoodsBasketService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -73,7 +73,7 @@ public class GoodsBasketController {
 	@ApiOperation(value = "장바구니 등록 및 수정", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<GoodsBasket> saveBasket(@RequestBody final GoodsBasketSaveDTO goodsBasketSaveDTO) {
-		GoodsBasket goodsBasket = goodsBasketService.saveBasket(goodsBasketSaveDTO);
+		final GoodsBasket goodsBasket = goodsBasketService.saveBasket(goodsBasketSaveDTO);
 		return responseService.getSingleResult(goodsBasket);
 	}
 

@@ -8,7 +8,7 @@ import com.nike.dnp.entity.wishlist.WishList;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
-import com.nike.dnp.service.wishList.WishListService;
+import com.nike.dnp.service.wishlist.WishListService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

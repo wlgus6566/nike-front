@@ -95,7 +95,7 @@ public class ProductService {
 
 		if(!ObjectUtils.isEmpty(productSaveDTO.getImageBase64()) &&
 			productSaveDTO.getImageBase64().contains("base64")){
-			FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.PRODUCT.getFolder(), productSaveDTO.getImageBase64());
+			final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.PRODUCT.getFolder(), productSaveDTO.getImageBase64());
 
 			product.setImageFileName(productSaveDTO.getImageFileName());
 			product.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
@@ -120,7 +120,7 @@ public class ProductService {
 	public Product update(final ProductUpdateDTO productUpdateDTO) {
 		final Optional<Product> optionalProduct = productRepository.findById(productUpdateDTO.getGoodsSeq());
 
-		Product product = optionalProduct.orElse(new Product());
+		final Product product = optionalProduct.orElse(new Product());
 		product.setExposureYn(productUpdateDTO.getExposureYn());
 		product.setCategory2Code(productUpdateDTO.getCategory2Code());
 		product.setCategory3Code(productUpdateDTO.getCategory3Code());
@@ -130,7 +130,7 @@ public class ProductService {
 		product.setMinimumOrderQuantity(productUpdateDTO.getMinimumOrderQuantity());
 		product.setUnitPrice(productUpdateDTO.getUnitPrice());
 		if(!ObjectUtils.isEmpty(productUpdateDTO.getImageBase64()) && productUpdateDTO.getImageBase64().contains("base64")){
-			FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.PRODUCT.getFolder(), productUpdateDTO.getImageBase64());
+			final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.PRODUCT.getFolder(), productUpdateDTO.getImageBase64());
 			product.setImageFileName(productUpdateDTO.getImageFileName());
 			product.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
 			product.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
