@@ -1,26 +1,16 @@
 package com.nike.dnp.service.calendar;
 
-import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.nike.dnp.common.variable.ErrorEnumCode;
-import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.calendar.CalendarSaveDTO;
 import com.nike.dnp.dto.calendar.CalendarSearchDTO;
-import com.nike.dnp.dto.code.CodeUpdateDTO;
-import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.entity.calendar.Calendar;
-import com.nike.dnp.entity.code.Code;
-import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.calendar.CalendarRepository;
-import com.nike.dnp.util.ConvertUtil;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.nike.dnp.util.LocalDateUtil;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.formula.functions.T;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +19,6 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
