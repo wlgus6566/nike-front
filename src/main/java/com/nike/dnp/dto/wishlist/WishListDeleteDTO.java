@@ -1,4 +1,4 @@
-package com.nike.dnp.dto.wishList;
+package com.nike.dnp.dto.wishlist;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

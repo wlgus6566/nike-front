@@ -1,11 +1,11 @@
 package com.nike.dnp.repository.order;
 
+import com.nike.dnp.dto.order.OrderProductResultDTO;
 import com.nike.dnp.dto.order.OrderSearchDTO;
 import com.nike.dnp.entity.order.OrderProductMapping;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,7 +25,7 @@ public interface OrderProductMapperRepositoryCustom {
 	 * @CreatedOn 2020. 7. 7. 오후 12:07:04
 	 * @Description
 	 */
-	List<HashMap<String, Object>> findSearchEmailValue(final Long orderSeq);
+	List<OrderProductResultDTO> findSearchEmailValue(final Long orderSeq);
 
 	/**
 	 * Find pages order page.

@@ -43,7 +43,8 @@ import java.util.Optional;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class
+SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 	/**
 	 * The Response service

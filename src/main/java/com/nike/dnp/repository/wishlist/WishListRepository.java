@@ -1,6 +1,6 @@
-package com.nike.dnp.repository.wishList;
+package com.nike.dnp.repository.wishlist;
 
-import com.nike.dnp.entity.wishList.WishList;
+import com.nike.dnp.entity.wishlist.WishList;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;

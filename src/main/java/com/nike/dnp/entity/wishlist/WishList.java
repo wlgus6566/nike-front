@@ -1,21 +1,19 @@
-package com.nike.dnp.entity.goodsBasket;
+package com.nike.dnp.entity.wishlist;
 
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.util.SecurityUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 
 /**
- * GoodsBasket
+ * WishList
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 2. 오후 4:19:38
+ * @CreatedOn 2020. 7. 2. 오후 4:18:55
  * @Description
  */
 @Getter
@@ -23,23 +21,19 @@ import javax.persistence.*;
 @NoArgsConstructor(access=AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
-@DynamicUpdate
-@DynamicInsert
-@Table(name = "TB_GOODS_BASKET")
-public class GoodsBasket extends BaseTimeEntity {
-
+@Table(name = "TB_WISH_LIST")
+public class WishList extends BaseTimeEntity {
 
     /**
-     * 장바구니 시퀀스
+     * 위시 리스트 시퀀스
      *
      * @author [윤태호]
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "GOODS_BASKET_SEQ")
-    @ApiModelProperty(name = "goodsBasketSeq", value = "장바구니 시퀀스")
-    private Long goodsBasketSeq;
-
+    @Column(name = "WISH_LIST_SEQ")
+    @ApiModelProperty(name = "wishListSeq", value = "위시 리스트 시퀀스")
+    private Long wishListSeq;
 
     /**
      * 유저 시퀀스
@@ -50,7 +44,6 @@ public class GoodsBasket extends BaseTimeEntity {
     @ApiModelProperty(name = "userSeq", value = "유저 시퀀스")
     private Long userSeq;
 
-
     /**
      * 상품 시퀀스
      *
@@ -60,19 +53,8 @@ public class GoodsBasket extends BaseTimeEntity {
     @ApiModelProperty(name = "goodsSeq", value = "상품 시퀀스")
     private Long goodsSeq;
 
-
-    /**
-     * 주문 수량
-     *
-     * @author [윤태호]
-     */
-    @Column(name = "ORDER_QUANTITY")
-    @ApiModelProperty(name = "orderQuantity", value = "주문 수량")
-    private Long orderQuantity;
-
     /**
      * 상품 정보
-     *
      * @author [윤태호]
      */
     @ManyToOne
@@ -81,7 +63,7 @@ public class GoodsBasket extends BaseTimeEntity {
 
 
     @PrePersist
-    public void prePersist(){
+    private void prePersist(){
         if(ObjectUtils.isEmpty(this.userSeq)){
             this.userSeq = SecurityUtil.currentUser().getUserSeq();
         }

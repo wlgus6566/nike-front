@@ -5,6 +5,7 @@ import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.email.OrderProductDTO;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.order.OrderProductMappingSaveDTO;
+import com.nike.dnp.dto.order.OrderProductResultDTO;
 import com.nike.dnp.dto.order.OrderSearchDTO;
 import com.nike.dnp.entity.order.Order;
 import com.nike.dnp.entity.order.OrderProductMapping;
@@ -20,8 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.text.DecimalFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -81,35 +82,36 @@ public class OrderProductMappingService {
 	 * @Description
 	 */
 	public void orderSheetSend(final Order order) {
-		List<HashMap<String, Object>> emailList = orderProductMapperRepository.findSearchEmailValue(order.getOrderSeq());
+		List<OrderProductResultDTO> emailList = orderProductMapperRepository.findSearchEmailValue(order.getOrderSeq());
 
 		List<Long> agencyList = new ArrayList<>();
 		Long compareAgencySeq = null;
-		for(HashMap<String, Object> map : emailList){
-			Long agencySeq = Long.parseLong(String.valueOf(map.get("agencySeq")));
+		for(OrderProductResultDTO orderProductResultDTO : emailList){
+			Long agencySeq = Long.parseLong(String.valueOf(orderProductResultDTO.getAgencySeq()));
 			if(ObjectUtils.isEmpty(compareAgencySeq) || !compareAgencySeq.equals(agencySeq)){
 				agencyList.add(agencySeq);
 				compareAgencySeq = agencySeq;
 			}
 		}
 
+
 		List<SendDTO> sendDTOList = new ArrayList<>();
 		for(Long tempAgencySeq : agencyList){
 			SendDTO sendDTO = new SendDTO();
 			List<OrderProductDTO> productList = new ArrayList<>();
-			for(HashMap<String, Object> map : emailList){
-				Long agencySeq = Long.parseLong(String.valueOf(map.get("agencySeq")));
+			for(OrderProductResultDTO orderProductResultDTO : emailList){
+				Long agencySeq = Long.parseLong(String.valueOf(orderProductResultDTO.getAgencySeq()));
 				if(tempAgencySeq.equals(agencySeq)){
 					sendDTO.setNickname(SecurityUtil.currentUser()
 													.getNickname());
-					sendDTO.setEmail(String.valueOf(map.get("email")));
-					sendDTO.setAgencyName(String.valueOf(map.get("agencyName")));
-					sendDTO.setOrderDt(String.valueOf(map.get("registrationDt")));
-					sendDTO.setOrderComment(String.valueOf(map.get("orderDescription")));
+					sendDTO.setEmail(String.valueOf( orderProductResultDTO.getEmail()));
+					sendDTO.setAgencyName(String.valueOf(orderProductResultDTO.getAgencyName()));
+					sendDTO.setOrderDt(String.valueOf(orderProductResultDTO.getRegistrationDt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"))));
+					sendDTO.setOrderComment(String.valueOf(orderProductResultDTO.getOrderDescription()));
 					OrderProductDTO orderProductDTO = new OrderProductDTO();
-					orderProductDTO.setAmount(Integer.parseInt(String.valueOf(map.get("orderQuantity"))));
-					orderProductDTO.setProductName(String.valueOf(map.get("goodsName")));
-					orderProductDTO.setProductDesc(String.valueOf(map.get("goodsDescription")));
+					orderProductDTO.setAmount(Integer.parseInt(String.valueOf(orderProductResultDTO.getOrderQuantity())));
+					orderProductDTO.setProductName(String.valueOf(orderProductResultDTO.getGoodsName()));
+					orderProductDTO.setProductDesc(String.valueOf(orderProductResultDTO.getGoodsDescription()));
 					productList.add(orderProductDTO);
 				}
 			}
@@ -175,4 +177,7 @@ public class OrderProductMappingService {
 	public OrderProductMapping findById(final Long orderGoodsSeq) {
 		return orderProductMapperRepository.findById(orderGoodsSeq).orElse(new OrderProductMapping());
 	}
+
 }
+
+

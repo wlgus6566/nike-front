@@ -1,11 +1,11 @@
 package com.nike.dnp.service.wishList;
 
 import com.nike.dnp.common.variable.ErrorEnumCode;
-import com.nike.dnp.dto.wishList.WishListDeleteDTO;
-import com.nike.dnp.dto.wishList.WishListSearchDTO;
-import com.nike.dnp.entity.wishList.WishList;
+import com.nike.dnp.dto.wishlist.WishListDeleteDTO;
+import com.nike.dnp.dto.wishlist.WishListSearchDTO;
+import com.nike.dnp.entity.wishlist.WishList;
 import com.nike.dnp.exception.CodeMessageHandleException;
-import com.nike.dnp.repository.wishList.WishListRepository;
+import com.nike.dnp.repository.wishlist.WishListRepository;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

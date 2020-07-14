@@ -40,7 +40,7 @@ public class ImageUtil {
 	 * @Description
 	 */
 	@Value("${nike.file.root:}")
-	public void setRoot(String root) {
+	public void setRoot(final String root) {
 		this.root = root;
 	}
 
@@ -60,25 +60,25 @@ public class ImageUtil {
 	 */
 	public static FileResultDTO fileSaveForBase64(final String folder, final String base64Str) {
 
-		BufferedImage image = null;
-		String base64 = base64Str.split(",")[1];
-		String info = base64Str.split(",")[0];
 
+		final String info = base64Str.split(",")[0];
 		if(!info.contains("image")){
 			throw new CodeMessageHandleException(ErrorEnumCode.FileError.NOT_IMAGE_FILE.name(),ErrorEnumCode.FileError.NOT_IMAGE_FILE.getMessage());
 		}
-		String type = info.substring(info.indexOf("/") + 1, info.indexOf(";"));
-		byte[] imageByte;
-		imageByte = DatatypeConverter.parseBase64Binary(base64);
-		ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+
+		final String base64 = base64Str.split(",")[1];
+		final byte[] imageByte = DatatypeConverter.parseBase64Binary(base64);
+		final ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+		BufferedImage image = null;
 		try{
 			image = ImageIO.read(bis);
 			bis.close();
 		}catch(IOException e){
-			throw new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_WRITE_ERROR.name(), ErrorEnumCode.FileError.FILE_WRITE_ERROR.getMessage());
+			throw (CodeMessageHandleException)new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_WRITE_ERROR.name(),
+																			 ErrorEnumCode.FileError.FILE_WRITE_ERROR.getMessage());
 		}
-
 		String extension = "";
+		final String type = info.substring(info.indexOf('/') + 1, info.indexOf(';'));
 		switch(type){
 			case "gif":
 				extension = "gif";break;
@@ -91,14 +91,14 @@ public class ImageUtil {
 			case "jpg" :
 			default: extension= "jpg";break;
 		}
-		File newFile = FileUtil.makeNewFile(folder,extension);
+		final File newFile = FileUtil.makeNewFile(folder,extension);
 		try{
 			ImageIO.write(image, type, newFile);
 		}catch(IOException e){
-			throw new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_READ_ERROR.name(), ErrorEnumCode.FileError.FILE_READ_ERROR.getMessage());
+			throw (CodeMessageHandleException) new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_READ_ERROR.name(), ErrorEnumCode.FileError.FILE_READ_ERROR.getMessage());
 		}
 
-		FileResultDTO fileResultDTO = new FileResultDTO();
+		final FileResultDTO fileResultDTO = new FileResultDTO();
 		fileResultDTO.setFileName(newFile.getName());
 		fileResultDTO.setFilePhysicalName(StringUtils.remove(newFile.getPath(), root));
 		fileResultDTO.setFileSize(newFile.length());

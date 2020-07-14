@@ -1,10 +1,10 @@
-package com.nike.dnp.controller.whisList;
+package com.nike.dnp.controller.whislist;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
-import com.nike.dnp.dto.wishList.WishListDeleteDTO;
-import com.nike.dnp.dto.wishList.WishListResultDTO;
-import com.nike.dnp.dto.wishList.WishListSearchDTO;
-import com.nike.dnp.entity.wishList.WishList;
+import com.nike.dnp.dto.wishlist.WishListDeleteDTO;
+import com.nike.dnp.dto.wishlist.WishListResultDTO;
+import com.nike.dnp.dto.wishlist.WishListSearchDTO;
+import com.nike.dnp.entity.wishlist.WishList;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;

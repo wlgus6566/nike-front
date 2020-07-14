@@ -1,7 +1,7 @@
-package com.nike.dnp.repository.goodsBasket;
+package com.nike.dnp.repository.goodsbasket;
 
 
-import com.nike.dnp.entity.goodsBasket.GoodsBasket;
+import com.nike.dnp.entity.goodsbasket.GoodsBasket;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

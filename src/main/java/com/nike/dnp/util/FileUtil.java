@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
+import java.util.Locale;
 
 /**
  * FileUtil
@@ -78,10 +79,10 @@ public class FileUtil {
 	 * @Description
 	 */
 	public static File makeNewFile(final String folder,final String extension) {
-		String newFilepath = root + File.separator + folder;
-		String newFileName = LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE) + LocalDateTime.now().get(ChronoField.MICRO_OF_SECOND)
+		final String newFilepath = root + File.separator + folder;
+		final String newFileName = LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE) + LocalDateTime.now().get(ChronoField.MICRO_OF_SECOND)
 				+ RandomStringUtils.random(10, true, true) + "." + extension;
-		File result = new File(newFilepath+File.separator+ newFileName);
+		final File result = new File(newFilepath+File.separator+ newFileName);
 		if(result.isFile()){
 			return makeNewFile(folder,extension);
 		}else{
@@ -97,7 +98,7 @@ public class FileUtil {
 	 * @param folder      the folder
 	 * @param resize      the resize
 	 * @param resizeExt   the resize ext
-	 * @param resizeWidth the resize width
+	 * @param width the resize width
 	 * @return the file result dto
 	 * @throws IOException          the io exception
 	 * @throws InterruptedException the interrupted exception
@@ -108,44 +109,47 @@ public class FileUtil {
 	public static FileResultDTO fileSave(final MultipartFile uploadFile,
 										 final String folder,
 										 final boolean resize,
-										 String resizeExt,
-										 int resizeWidth) throws IOException, InterruptedException {
+										 final String resizeExt,
+										 final int width) throws IOException, InterruptedException {
 
 
-		String extension = StringUtils.getFilenameExtension(uploadFile.getOriginalFilename());
-		File toFile = makeNewFile(folder, extension);
+		final String extension = StringUtils.getFilenameExtension(uploadFile.getOriginalFilename());
+
+		final File toFile = makeNewFile(folder, extension);
 		uploadFile.transferTo(toFile);
-		FileResultDTO fileResultDTO = new FileResultDTO();
+		final FileResultDTO fileResultDTO = new FileResultDTO();
 		fileResultDTO.setFileName(uploadFile.getOriginalFilename());
 		fileResultDTO.setFilePhysicalName(toFile.getPath().replace(root, ""));
 		fileResultDTO.setFileSize(toFile.length());
 		fileResultDTO.setFileContentType(uploadFile.getContentType());
 
-		if(resize && (uploadFile.getContentType().toUpperCase().contains("IMAGE") || extension.toUpperCase().contains("PSD") || extension.toUpperCase().contains("AI"))){
-
+		if(resize && (uploadFile.getContentType().toUpperCase(Locale.getDefault()).contains("IMAGE") || extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(
+				Locale.getDefault()).contains("AI"))){
+			String resizeExtension = "";
+			int resizeWidth = 120;
 			if(StringUtils.isEmpty(resizeExt)){
-				resizeExt = "jpg";
-			}
-			if(resizeWidth == 0){
-				resizeWidth = 120;
-			}
-			String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail." + resizeExt;
-			String command = imageMagick + File.separator + "magick ";
-			if(extension.toUpperCase().contains("PSD") || extension.toUpperCase().contains("AI")){
-				command += toFile.getPath() + "[0]";
+				resizeExtension = "jpg";
 			}else{
-				command += toFile.getPath();
+				resizeExtension = resizeExt;
 			}
-			command += " -resize " + resizeWidth + " " + thumbnailPath;
+			if(width > 0){
+				resizeWidth = width;
+			}
+			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail." + resizeExtension;
+			final StringBuilder command = new StringBuilder(imageMagick);
+			command.append(File.separator).append("magick ").append(toFile.getPath());
+			if(extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(Locale.getDefault()).contains("AI")){
+				command.append("[0]");
+			}
+			command.append(" -resize ").append(resizeWidth).append(' ').append(thumbnailPath);
 
-			log.debug("command {}", command);
-			Runtime rt = Runtime.getRuntime();
-			Process proc = rt.exec(command);
-			int i = proc.waitFor();
-			File thumbnailFile = new File(thumbnailPath);
+			final Runtime runtime = Runtime.getRuntime();
+			final Process proc = runtime.exec(command.toString());
+			proc.waitFor();
+			final File thumbnailFile = new File(thumbnailPath);
 			if(thumbnailFile.isFile()){
 				String thumbnail = uploadFile.getOriginalFilename();
-				thumbnail = thumbnail.replace("." + StringUtils.getFilenameExtension(thumbnail), "") + "_thumbnail." + resizeExt;
+				thumbnail = thumbnail.replace("." + StringUtils.getFilenameExtension(thumbnail), "") + "_thumbnail." + resizeExtension;
 				fileResultDTO.setThumbnailFileName(thumbnail);
 				fileResultDTO.setThumbnailPhysicalName(thumbnailFile.getPath().replace(root, ""));
 				fileResultDTO.setThumbnailSize(thumbnailFile.length());
@@ -245,9 +249,9 @@ public class FileUtil {
 	 * @Description
 	 */
 	public static void deleteTemp() {
-		File tempFile = new File(root+File.separator+ ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder());
-		File[] files = tempFile.listFiles();
-		for(File file : files){
+		final File tempFile = new File(root+File.separator+ ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder());
+		final File[] files = tempFile.listFiles();
+		for(final File file : files){
 			if(file.isFile()){
 				file.delete();
 			}

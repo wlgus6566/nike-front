@@ -1,6 +1,6 @@
-package com.nike.dnp.repository.wishList;
+package com.nike.dnp.repository.wishlist;
 
-import com.nike.dnp.entity.wishList.QWishList;
+import com.nike.dnp.entity.wishlist.QWishList;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import lombok.experimental.UtilityClass;

@@ -1,8 +1,8 @@
-package com.nike.dnp.controller.goodsBasket;
+package com.nike.dnp.controller.goodsbasket;
 
-import com.nike.dnp.dto.goodsBasket.GoodsBasketSaveDTO;
-import com.nike.dnp.dto.goodsBasket.GoodsBasketSaveListDTO;
-import com.nike.dnp.entity.goodsBasket.GoodsBasket;
+import com.nike.dnp.dto.goodsbasket.GoodsBasketSaveDTO;
+import com.nike.dnp.dto.goodsbasket.GoodsBasketSaveListDTO;
+import com.nike.dnp.entity.goodsbasket.GoodsBasket;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
