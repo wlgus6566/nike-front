@@ -33,20 +33,8 @@
                             <span class="label-title required">툴킷 상태</span>
                         </div>
                         <div class="form-column">
-                            <label class="check-label">
-                                <span class="radio">
-                                    <input type="radio" name="campaign" checked />
-                                    <span></span>
-                                </span>
-                                <span>노출</span>
-                            </label>
-                            <label class="check-label">
-                                <span class="radio">
-                                    <input type="radio" name="campaign" />
-                                    <span></span>
-                                </span>
-                                <span>미노출</span>
-                            </label>
+                            <el-radio v-model="radio" label="1">노출</el-radio>
+                            <el-radio v-model="radio" label="2">미노출</el-radio>
                         </div>
                     </li>
                     <li class="form-row">
@@ -54,34 +42,10 @@
                             <span class="label-title required">업로드 위치</span>
                         </div>
                         <div class="form-column">
-                            <label class="check-label">
-                                <span class="radio">
-                                    <input type="radio" name="upload" checked />
-                                    <span></span>
-                                </span>
-                                <span>VMS</span>
-                            </label>
-                            <label class="check-label">
-                                <span class="radio">
-                                    <input type="radio" name="upload" />
-                                    <span></span>
-                                </span>
-                                <span>EKIN</span>
-                            </label>
-                            <label class="check-label">
-                                <span class="radio">
-                                    <input type="radio" name="upload" />
-                                    <span></span>
-                                </span>
-                                <span>SOCIAL</span>
-                            </label>
-                            <label class="check-label">
-                                <span class="radio">
-                                    <input type="radio" name="upload" />
-                                    <span></span>
-                                </span>
-                                <span>RB</span>
-                            </label>
+                            <el-radio v-model="radio2" label="1">VMS</el-radio>
+                            <el-radio v-model="radio2" label="2">EKIN</el-radio>
+                            <el-radio v-model="radio2" label="3">SOCIAL</el-radio>
+                            <el-radio v-model="radio2" label="4">PB</el-radio>
                         </div>
                     </li>
                     <li class="form-row">
@@ -424,6 +388,17 @@
 <script>
 export default {
     name: 'NIKE_P_TOOLKIT_01',
+    data() {
+        return {
+            radio: '1',
+            radio2: '1',
+            radio3: '1',
+            radio4: '1',
+            radio5: '1',
+            radio6: '2',
+            radio7: '1',
+        };
+    },
 };
 </script>
 <style scoped></style>

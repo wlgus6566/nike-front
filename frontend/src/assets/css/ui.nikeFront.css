@@ -420,8 +420,16 @@
 .el-radio__inner::after {
     display: none;
 }
+.el-radio__input {
+    width: 20px;
+    height: 20px;
+}
+.el-radio__original {
+    width: 20px;
+    height: 20px;
+}
 .el-radio__input + .el-radio__label {
-    padding-left: 7px;
+    padding-left: 5px;
     color: #888;
     font-size: 14px;
     line-height: 20px;
@@ -435,6 +443,54 @@
 }
 .el-radio__input.is-disabled .el-radio__inner {
     background: url('../images/svg/icon-radio-disabled.svg') no-repeat center;
+}
+
+.el-checkbox {
+    display: inline-block;
+    box-sizing: border-box;
+    min-width: 95px;
+    padding-right: 31px;
+    margin-right: 0;
+}
+
+.el-checkbox.type2 {
+    min-width: 100px;
+}
+.el-checkbox__inner {
+    border: none;
+    border-radius: 0;
+    width: 20px;
+    height: 20px;
+    background: url('../images/svg/icon-checkbox-off.svg') no-repeat center;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.el-checkbox__inner::after {
+    display: none;
+}
+.el-checkbox__input {
+    width: 20px;
+    height: 20px;
+}
+.el-checkbox__original {
+    width: 20px;
+    height: 20px;
+}
+.el-checkbox__input + .el-checkbox__label {
+    padding-left: 5px;
+    color: #888;
+    font-size: 14px;
+    line-height: 20px;
+}
+.el-checkbox__input.is-checked .el-checkbox__inner {
+    border: none;
+    background: url('../images/svg/icon-checkbox-on.svg') no-repeat center;
+}
+.el-checkbox__input.is-checked + .el-checkbox__label {
+    color: #000;
+}
+.el-checkbox__input.is-disabled .el-checkbox__inner {
+    background: url('../images/svg/icon-checkbox-disabled.svg') no-repeat center;
 }
 .check-label {
     display: inline-flex;
@@ -470,7 +526,31 @@
     color: #555;
     line-height: 14px;
 }
-
+.el-textarea textarea {
+    border-radius: 0;
+    height: 60px;
+    color: #000;
+}
+.el-textarea__inner {
+    resize: none;
+}
+.el-textarea__inner:hover,
+.el-textarea__inner:focus {
+    border-color: #000;
+}
+.el-textarea .el-input__count {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    display: block;
+    margin-top: 10px;
+    text-align: right;
+    font-size: 12px;
+    color: #555;
+}
+.el-textarea.type2 textarea {
+    height: 80px;
+}
 /* sorting-area */
 .sorting-area {
     display: flex;
