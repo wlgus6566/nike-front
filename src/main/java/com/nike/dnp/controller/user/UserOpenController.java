@@ -80,7 +80,7 @@ public class UserOpenController {
     @GetMapping(value = "/send/cert", name = "ID 확인, 인증코드 생성 및 비밀번호 설정 이메일 발송")
     public SingleResult<String> sendCert(final UserIdDTO userIdDTO) {
         log.info("UserController.sendCert");
-        User user = userService.findByUserIdReturnOptional(userIdDTO.getUserId()).orElseThrow(
+        final User user = userService.findByUserIdReturnOptional(userIdDTO.getUserId()).orElseThrow(
                 () -> new CodeMessageHandleException(
                         ErrorEnumCode.UserError.RETRY_CONFIRM_EMAIL.toString()
                         ,ErrorEnumCode.UserError.RETRY_CONFIRM_EMAIL.getMessage()

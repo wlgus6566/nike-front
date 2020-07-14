@@ -17,18 +17,15 @@ import java.util.Optional;
 @Repository
 public interface UserAuthRepository extends JpaRepository<UserAuth, Long>, UserAuthRepositoryCustom {
 
-    Optional<UserAuth> findByUser(User user);
-
     /**
-     * Delete by user seq.
+     * Find by user optional.
      *
-     * @param userSeq the user seq
+     * @param user the user
+     * @return the optional
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 3:17:57
-     * @Description 유저 권한 삭제
+     * @CreatedOn 2020. 7. 14. 오전 10:09:26
+     * @Description 상세 조회
      */
-    //void deleteByUserSeq(Long userSeq);
-
-
+    Optional<UserAuth> findByUser(User user);
 
 }

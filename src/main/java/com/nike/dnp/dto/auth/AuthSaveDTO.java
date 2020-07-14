@@ -39,6 +39,6 @@ public class AuthSaveDTO {
      * @author [오지훈]
      */
     @ApiModelProperty(name = "menuRoleSeqArray", value = "메뉴 역할 시퀀스 배열", required = true)
-    Long[] menuRoleSeqArray;
+    private Long[] menuRoleSeqArray;
 
 }

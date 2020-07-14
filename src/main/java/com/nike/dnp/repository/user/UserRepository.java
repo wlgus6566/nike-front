@@ -35,7 +35,7 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
      * @CreatedOn 2020. 6. 23. 오후 6:15:21
      * @Description 목록 조회(배열)
      */
-    List<User> findAllByUserSeqIn(Long[] userSeqArray);
+    List<User> findAllByUserSeqIn(Long... userSeqArray);
 
     /**
      * Count by user id int.

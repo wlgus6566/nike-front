@@ -6,6 +6,7 @@ import com.nike.dnp.entity.user.QUserAuth;
 import com.nike.dnp.util.CustomExpression;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import lombok.AllArgsConstructor;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang.StringUtils;
 
@@ -18,6 +19,7 @@ import org.apache.commons.lang.StringUtils;
  * @Description User(유저) 검색 조건
  */
 @UtilityClass
+@AllArgsConstructor
 public class UserPredicateHelper {
 
     /**

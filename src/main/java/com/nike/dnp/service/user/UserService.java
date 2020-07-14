@@ -158,12 +158,12 @@ public class UserService implements UserDetailsService {
      */
     public UserReturnDTO getUser(final Long userSeq) {
         log.info("UserService.getUser");
-        Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
+        final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
                 () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.UserError.NOT_FOUND.getMessage())));
 
-        UserReturnDTO userReturnDTO = new UserReturnDTO();
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
         if (user.isPresent()) {
-            User getUser = user.get();
+            final User getUser = user.get();
             userReturnDTO.setUserSeq(getUser.getUserSeq());
             userReturnDTO.setNickname(getUser.getNickname());
             userReturnDTO.setUserId(getUser.getUserId());
@@ -174,14 +174,23 @@ public class UserService implements UserDetailsService {
         return userReturnDTO;
     }
 
+    /**
+     * Gets my page.
+     *
+     * @param userSeq the user seq
+     * @return the my page
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 14. 오후 12:02:26
+     * @Description
+     */
     public UserReturnDTO getMyPage(final Long userSeq) {
         log.info("UserService.getMyPage");
-        Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
+        final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
                 () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.UserError.NOT_FOUND.getMessage())));
 
-        UserReturnDTO userReturnDTO = new UserReturnDTO();
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
         if (user.isPresent()) {
-            User getUser = user.get();
+            final User getUser = user.get();
             userReturnDTO.setUserSeq(getUser.getUserSeq());
             userReturnDTO.setNickname(getUser.getNickname());
             userReturnDTO.setUserId(getUser.getUserId());
@@ -266,12 +275,15 @@ public class UserService implements UserDetailsService {
         final User user = userRepository.save(new User().save(userSaveDTO));
         final Auth auth = authRepository.findById(userSaveDTO.getAuthSeq()).orElseThrow(
                 () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.DataError.NOT_FOUND.getMessage()));
-        final UserAuth userAuth = userAuthRepository.save(new UserAuth().save(user, auth));
+
+        if(user.getUserSeq() > 0) {
+            userAuthRepository.save(new UserAuth().save(user, auth));
+        }
 
         // [계정생성안내] 메일 발송
         userMailService.sendMailForCreateUser(user);
 
-        UserReturnDTO userReturnDTO = new UserReturnDTO();
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
         userReturnDTO.setUserSeq(user.getUserSeq());
         return userReturnDTO;
     }
@@ -298,7 +310,7 @@ public class UserService implements UserDetailsService {
         final Optional<UserAuth> userAuth = this.findByUser(user.get());
         userAuth.ifPresent(value -> value.update(userUpdateDTO));
 
-        UserReturnDTO userReturnDTO = new UserReturnDTO();
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
         userReturnDTO.setUserSeq(user.get().getUserSeq());
         userReturnDTO.setUserId(user.get().getUserId());
         userReturnDTO.setAuthName(userAuth.get().getAuth().getAuthName());
@@ -324,7 +336,7 @@ public class UserService implements UserDetailsService {
         final Optional<User> user = this.findById(userSeq);
         user.ifPresent(value -> value.updateStatus(userUpdateStatusDTO.getUserStatusCode()));
 
-        UserReturnDTO userReturnDTO = new UserReturnDTO();
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
         userReturnDTO.setUserSeq(user.get().getUserSeq());
         return userReturnDTO;
     }
@@ -344,7 +356,7 @@ public class UserService implements UserDetailsService {
         final Optional<User> user = this.findById(userSeq);
         user.ifPresent(value -> value.delete(userSeq));
 
-        UserReturnDTO userReturnDTO = new UserReturnDTO();
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
         userReturnDTO.setUserSeq(user.get().getUserSeq());
         return userReturnDTO;
     }
@@ -362,8 +374,7 @@ public class UserService implements UserDetailsService {
     public List<Long> deleteArray(final UserDeleteDTO userDeleteDTO) {
         log.info("UserService.deleteArray");
         final List<User> users = userRepository.findAllByUserSeqIn(userDeleteDTO.getUserSeqArray());
-
-        List<Long> list = new ArrayList<>();
+        final List<Long> list = new ArrayList<>();
         for (final User user : users) {
             user.delete(user.getUserSeq());
             list.add(user.getUserSeq());
@@ -448,7 +459,7 @@ public class UserService implements UserDetailsService {
         //인증코드 삭제
         redisService.delete("cert:" + userId);
 
-        UserReturnDTO userReturnDTO = new UserReturnDTO();
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
         userReturnDTO.setUserSeq(user.getUserSeq());
         return userReturnDTO;
     }
@@ -483,7 +494,7 @@ public class UserService implements UserDetailsService {
         user.updatePassword(certPassword);
         passwordHistoryRepository.save(PasswordHistory.builder().userSeq(user.getUserSeq()).password(certPassword).build());
 
-        UserReturnDTO userReturnDTO = new UserReturnDTO();
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
         userReturnDTO.setUserSeq(user.getUserSeq());
         return userReturnDTO;
     }
@@ -511,12 +522,10 @@ public class UserService implements UserDetailsService {
     ) {
         log.info("UserService.checkPassword");
         //기존비밀번호확인
-        if (!ObjectUtils.isEmpty(password)) {
-            if (!passwordEncoder.matches(password, userPassword)) {
-                throw new CodeMessageHandleException(
-                        ErrorEnumCode.LoginError.WRONG_PASSWORD.toString()
-                        , ErrorEnumCode.LoginError.WRONG_PASSWORD.getMessage());
-            }
+        if (!ObjectUtils.isEmpty(password) && !passwordEncoder.matches(password, userPassword)) {
+            throw new CodeMessageHandleException(
+                    ErrorEnumCode.LoginError.WRONG_PASSWORD.toString()
+                    , ErrorEnumCode.LoginError.WRONG_PASSWORD.getMessage());
         }
 
         //비밀번호 미입력 시

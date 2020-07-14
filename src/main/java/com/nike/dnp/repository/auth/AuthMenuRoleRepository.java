@@ -44,12 +44,21 @@ public interface AuthMenuRoleRepository extends JpaRepository<AuthMenuRole, Long
     @Query("delete from AuthMenuRole a where a.authSeq = :authSeq")
     void deleteAllByAuthSeq(@Param("authSeq") final Long authSeq);
 
+    /**
+     * Delete all by menu role seq array.
+     *
+     * @param authSeq          the auth seq
+     * @param menuRoleSeqArray the menu role seq array
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 14. 오전 10:03:50
+     * @Description 권한 메뉴 역할 목록 삭제
+     */
     @Transactional
     @Modifying
     @Query("delete from AuthMenuRole a where a.authSeq = :authSeq and a.menuRoleSeq in :menuRoleSeqArray")
     void deleteAllByMenuRoleSeqArray(
             @Param("authSeq") final Long authSeq
-            , @Param("menuRoleSeqArray") final Long[] menuRoleSeqArray
+            , @Param("menuRoleSeqArray") final Long... menuRoleSeqArray
     );
 
 }

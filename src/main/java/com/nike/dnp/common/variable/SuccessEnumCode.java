@@ -1,5 +1,6 @@
 package com.nike.dnp.common.variable;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
  * @Description
  */
 @Component
+@AllArgsConstructor
 public class SuccessEnumCode {
 
     /**

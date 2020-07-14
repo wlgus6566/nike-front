@@ -1,5 +1,6 @@
 package com.nike.dnp.common.variable;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,12 +14,13 @@ import org.springframework.stereotype.Component;
  * @Description
  */
 @Component
+@AllArgsConstructor
 public class ServiceEnumCode {
 
     /**
      * Y or N
      */
-    public enum yesOrNoEnumCode {
+    public enum YesOrNoEnumCode {
         Y,N
     }
 
@@ -120,8 +122,9 @@ public class ServiceEnumCode {
         private final String message;
     }
 
-
-
+    /**
+     * The enum Product category 2 enum code.
+     */
     @RequiredArgsConstructor
     @Getter
     public enum ProductCategory2EnumCode {
@@ -138,6 +141,9 @@ public class ServiceEnumCode {
         private final String message;
     }
 
+    /**
+     * The enum Product category 3 enum code.
+     */
     @RequiredArgsConstructor
     @Getter
     public enum ProductCategory3EnumCode {
@@ -170,7 +176,9 @@ public class ServiceEnumCode {
         private final String message;
     }
 
-
+    /**
+     * The enum Menu skill enum code.
+     */
     @RequiredArgsConstructor
     @Getter
     public enum MenuSkillEnumCode {
@@ -191,7 +199,9 @@ public class ServiceEnumCode {
         private final int sort;
     }
 
-
+    /**
+     * The enum File folder enum code.
+     */
     @RequiredArgsConstructor
     @Getter
     public enum FileFolderEnumCode {

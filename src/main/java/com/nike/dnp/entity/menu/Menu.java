@@ -9,7 +9,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,7 +82,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
      */
     @Column(name = "CREATION_AUTH_YN")
     @ApiModelProperty(name = "creationAuthYn", value = "생성 권한 여부", required = true)
-    private String creationAuthYn = ServiceEnumCode.yesOrNoEnumCode.N.toString();
+    private String creationAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
 
     /**
      * 삭제 권한 여부
@@ -91,7 +91,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
      */
     @Column(name = "DELETE_AUTH_YN")
     @ApiModelProperty(name = "deleteAuthYn", value = "삭제 권한 여부", required = true)
-    private String deleteAuthYn = ServiceEnumCode.yesOrNoEnumCode.N.toString();
+    private String deleteAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
 
     /**
      * 다운로드 권한 여부
@@ -100,7 +100,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
      */
     @Column(name = "DOWNLOAD_AUTH_YN")
     @ApiModelProperty(name = "downloadAuthYn", value = "다운로드 권한 여부", required = true)
-    private String downloadAuthYn = ServiceEnumCode.yesOrNoEnumCode.N.toString();
+    private String downloadAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
 
     /**
      * 목록 권한 여부
@@ -109,7 +109,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
      */
     @Column(name = "LIST_AUTH_YN")
     @ApiModelProperty(name = "listAuthYn", value = "목록 권한 여부", required = true)
-    private String listAuthYn = ServiceEnumCode.yesOrNoEnumCode.N.toString();
+    private String listAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
 
     /**
      * 상세 권한 여부
@@ -118,7 +118,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
      */
     @Column(name = "DETAIL_AUTH_YN")
     @ApiModelProperty(name = "detailAuthYn", value = "상세 권한 여부", required = true)
-    private String detailAuthYn = ServiceEnumCode.yesOrNoEnumCode.N.toString();
+    private String detailAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
 
     /**
      * 리포트 권한 여부
@@ -127,7 +127,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
      */
     @Column(name = "REPORT_AUTH_YN")
     @ApiModelProperty(name = "reportAuthYn", value = "리포트 권한 여부", required = true)
-    private String reportAuthYn = ServiceEnumCode.yesOrNoEnumCode.N.toString();
+    private String reportAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
 
     /**
      * 메뉴 순서
@@ -146,15 +146,6 @@ public class Menu extends BaseTimeEntity implements Serializable {
     @Column(name = "USE_YN")
     @ApiModelProperty(name = "useYn", value = "사용 여부", required = true)
     private String useYn;
-
-    /**
-     * The Skill codes
-     *
-     * @author [오지훈]
-     */
-    @Transient
-    @ApiModelProperty(name = "skillCodes", value = "스킬 코드")
-    private HashMap<Integer, Object> skillCodes;
 
     /**
      * 하위 메뉴 목록
@@ -185,6 +176,16 @@ public class Menu extends BaseTimeEntity implements Serializable {
     private List<MenuRole> menuRoles;
 
     /**
+     * The Skill codes
+     *
+     * @author [오지훈]
+     */
+    @Transient
+    @ApiModelProperty(name = "skillCodes", value = "스킬 코드")
+    //private HashMap<Integer, Object> skillCodes;
+    private List<SkillCode> skillCodes;
+
+    /**
      * Gets skill codes.
      *
      * @return the skill codes
@@ -192,22 +193,64 @@ public class Menu extends BaseTimeEntity implements Serializable {
      * @CreatedOn 2020. 7. 8. 오후 4:16:43
      * @Description
      */
-    public HashMap<Integer, Object> getSkillCodes() {
-        HashMap<Integer, Object> map = new HashMap<>();
-        for (ServiceEnumCode.MenuSkillEnumCode enumCode : ServiceEnumCode.MenuSkillEnumCode.values()) {
-            HashMap<String, Object> sub = new HashMap<>();
-            sub.put("menuSeq", this.menuSeq);
-            sub.put("code", enumCode.toString());
-            sub.put("field", enumCode.getField());
-            sub.put("message", enumCode.getMessage());
-            sub.put("menuRoleSeq", 0);
-            for (MenuRole menuRole : this.menuRoles) {
+    public List<SkillCode> getSkillCodes() {
+        final List<SkillCode> skillCodes = new ArrayList<>();
+        for (final ServiceEnumCode.MenuSkillEnumCode enumCode : ServiceEnumCode.MenuSkillEnumCode.values()) {
+            final SkillCode skillCode = new SkillCode();
+            skillCode.setMenuSeq(this.menuSeq);
+            skillCode.setCode(enumCode.toString());
+            skillCode.setField(enumCode.getField());
+            skillCode.setMessage(enumCode.getMessage());
+            for (final MenuRole menuRole : this.menuRoles) {
                 if (menuRole.getMenuSkillCode().equals(enumCode.toString())) {
-                    sub.put("menuRoleSeq", menuRole.getMenuRoleSeq());
+                    skillCode.setMenuRoleSeq(menuRole.getMenuRoleSeq());
                 }
             }
-            map.put(enumCode.getSort(), sub);
+            skillCodes.add(skillCode);
         }
-        return map;
+        return skillCodes;
+    }
+
+    /**
+     * The Class Skill code.
+     *
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 14. 오후 12:02:07
+     * @Description
+     */
+    @Getter
+    @Setter
+    public static class SkillCode {
+        /**
+         * The Menu seq
+         *
+         * @author [오지훈]
+         */
+        private Long menuSeq;
+        /**
+         * The Code
+         *
+         * @author [오지훈]
+         */
+        private String code;
+        /**
+         * The Field
+         *
+         * @author [오지훈]
+         */
+        private String field;
+        /**
+         * The Message
+         *
+         * @author [오지훈]
+         */
+        private String message;
+        /**
+         * The Menu role seq
+         *
+         * @author [오지훈]
+         */
+        private Long menuRoleSeq = 0L;
+
     }
 }
