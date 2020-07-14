@@ -5,6 +5,7 @@ import com.nike.dnp.config.jwt.JwtAuthorizationFilter;
 import com.nike.dnp.repository.user.UserRepository;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.service.ResponseService;
+import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.auth.SecurityFilterMataService;
 import com.nike.dnp.service.log.UserLoginLogService;
 import com.nike.dnp.service.user.UserMailService;
@@ -83,6 +84,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * @author [오지훈]
 	 */
 	private final UserMailService userMailService;
+
+	/**
+	 * The Auth service
+	 *
+	 * @author [윤태호]
+	 */
+	private final AuthService authService;
 
 	/**
 	 * Auth url string.
@@ -174,7 +182,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public AffirmativeBased accessDecisionManager(){
-		final List<AccessDecisionVoter<?>> decisionVoters = Arrays.asList(new RoleVoter(), new AuthAccessDecisionVoter(filterMataService));
+		final List<AccessDecisionVoter<?>> decisionVoters = Arrays.asList(new RoleVoter(), new AuthAccessDecisionVoter(filterMataService, authService));
 		return new AffirmativeBased(decisionVoters);
 	}
 

@@ -63,6 +63,8 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 */
 	private String password;
 
+	private String role;
+
 	/**
 	 * Instantiates a new Auth user dto.
 	 *
@@ -76,6 +78,7 @@ public class AuthUserDTO implements UserDetails, Serializable {
 		this.userId = user.getUserId();
 		this.nickname = user.getNickname();
 		this.password = user.getPassword();
+		this.role = user.getUserAuth().getAuth().getRoleType();
 	}
 
 	/**
@@ -114,6 +117,7 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 */
 	public long getUserSeq() {return userSeq;}
 
+
 	/**
 	 * Gets authorities.
 	 *
@@ -125,7 +129,7 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// 유저 권한 정보 조회
-		return Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		return Collections.singleton(new SimpleGrantedAuthority(role));
 	}
 
 	/**
