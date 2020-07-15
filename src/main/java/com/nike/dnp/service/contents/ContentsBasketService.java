@@ -79,7 +79,7 @@ public class ContentsBasketService {
     public Optional<ContentsBasket> delete(final Long contentsBasketSeq) {
         log.info("ContentsBasketService.delete");
         Optional<ContentsBasket> contentsBasket = contentsBasketRepository.findById(contentsBasketSeq);
-        contentsBasket.ifPresent(value -> value.updateUseYn("N"));
+//        contentsBasket.ifPresent(value -> value.updateUseYn("N"));
         return contentsBasket;
     }
 }

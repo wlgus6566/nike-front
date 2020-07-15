@@ -93,5 +93,26 @@ public class ContentsFileResultDTO {
     @ApiModelProperty(name = "readCount", value = "조회수")
     private Long readCount;
 
+    /**
+     * 썸네일 파일 물리 명
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "thumbnailFileName", value = "썸네일 명", example = "graphic_file_name_thumbnail.jpg")
+    private String thumbnailFileName;
+
+    /**
+     * 썸네일 파일 물리 명
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "thumbnailFileSize", value = "썸네일 파일 사이즈", example = "300")
+    private String thumbnailFileSize;
+
+    /**
+     * 썸네일 파일 물리 명
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "/cdn/file/path")
+    private String thumbnailFilePhysicalName;
+
 
 }

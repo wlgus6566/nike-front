@@ -82,8 +82,11 @@ public class FileController {
 
 		final List<FileResultDTO> resultList = new ArrayList<>();
 
+
 		fileUploadDTO.getUploadFileList().forEach(multipartFile -> {
-			final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO);
+			FileUploadDTO fileParam = new FileUploadDTO();
+			fileParam.setUploadFile(multipartFile);
+			final FileResultDTO fileResultDTO = fileUpload(fileParam);
 			// TODO [YTH] s3 파일 업로드
 			resultList.add(fileResultDTO);
 		});

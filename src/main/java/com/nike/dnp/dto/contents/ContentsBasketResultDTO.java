@@ -38,13 +38,6 @@ public class ContentsBasketResultDTO {
     private Long contentsFileSeq;
 
     /**
-     * 사용 여부
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "useYn", value = "사용 여부", example = "Y/N")
-    private String useYn;
-
-    /**
      * 이미지 파일명
      * @author [이소정]
      */

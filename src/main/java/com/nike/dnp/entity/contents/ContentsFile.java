@@ -123,6 +123,30 @@ public class ContentsFile extends BaseTimeEntity {
     private String useYn;
 
     /**
+     * 썸네일 파일 물리 명
+     * @author [이소정]
+     */
+    @Column(name = "THUMBNAIL_FILE_NAME")
+    @ApiModelProperty(name = "thumbnailFileName", value = "썸네일 명", example = "graphic_file_name_thumbnail.jpg")
+    private String thumbnailFileName;
+
+    /**
+     * 썸네일 파일 물리 명
+     * @author [이소정]
+     */
+    @Column(name = "THUMBNAIL_FILE_SIZE")
+    @ApiModelProperty(name = "thumbnailFileSize", value = "썸네일 파일 사이즈", example = "300")
+    private String thumbnailFileSize;
+
+    /**
+     * 썸네일 파일 물리 명
+     * @author [이소정]
+     */
+    @Column(name = "THUMBNAIL_FILE_PHYSICAL_NAME")
+    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "/cdn/file/path")
+    private String thumbnailFilePhysicalName;
+
+    /**
      * The Contents
      * @author [이소정]
      */
@@ -150,10 +174,24 @@ public class ContentsFile extends BaseTimeEntity {
         log.info("ContentsFile.save");
         ContentsFile contentsFile = new ContentsFile();
 
+        contentsFile.setThumbnailFileName(contentsFileSaveDTO.getThumbnailFileName());
+        contentsFile.setThumbnailFileSize(contentsFileSaveDTO.getThumbnailFileSize());
+        contentsFile.setThumbnailFilePhysicalName(contentsFileSaveDTO.getThumbnailFilePhysicalName());
+
         contentsFile.setDownloadCount(0l);
         contentsFile.setUseYn("Y");
         contentsFile.setContentsSeq(savedContents.getContentsSeq());
-        return applyContentsFile(contentsFile, contentsFileSaveDTO.getFileSectionCode(), contentsFileSaveDTO.getFileKindCode(), contentsFileSaveDTO.getFileName(), contentsFileSaveDTO.getFileSize(), contentsFileSaveDTO.getFilePhysicalName(), contentsFileSaveDTO.getTitle(), contentsFileSaveDTO.getUrl());
+        return applyContentsFile(contentsFile
+                , contentsFileSaveDTO.getFileSectionCode()
+                , contentsFileSaveDTO.getFileKindCode()
+                , contentsFileSaveDTO.getFileName()
+                , contentsFileSaveDTO.getFileSize()
+                , contentsFileSaveDTO.getFilePhysicalName()
+                , contentsFileSaveDTO.getTitle()
+                , contentsFileSaveDTO.getUrl()
+                , contentsFileSaveDTO.getThumbnailFileName()
+                , contentsFileSaveDTO.getThumbnailFileSize()
+                , contentsFileSaveDTO.getThumbnailFilePhysicalName());
     }
 
     /**
@@ -174,26 +212,49 @@ public class ContentsFile extends BaseTimeEntity {
         contentsFile.setDownloadCount(0l);
         contentsFile.setUseYn("Y");
         contentsFile.setContentsSeq(contentsSeq);
-        return applyContentsFile(contentsFile, contentsFileUpdateDTO.getFileSectionCode(), contentsFileUpdateDTO.getFileKindCode(), contentsFileUpdateDTO.getFileName(), contentsFileUpdateDTO.getFileSize(), contentsFileUpdateDTO.getFilePhysicalName(), contentsFileUpdateDTO.getTitle(), contentsFileUpdateDTO.getUrl());
+        return applyContentsFile(contentsFile
+                , contentsFileUpdateDTO.getFileSectionCode()
+                , contentsFileUpdateDTO.getFileKindCode()
+                , contentsFileUpdateDTO.getFileName()
+                , contentsFileUpdateDTO.getFileSize()
+                , contentsFileUpdateDTO.getFilePhysicalName()
+                , contentsFileUpdateDTO.getTitle()
+                , contentsFileUpdateDTO.getUrl()
+                , contentsFileUpdateDTO.getThumbnailFileName()
+                , contentsFileUpdateDTO.getThumbnailFileSize()
+                , contentsFileUpdateDTO.getThumbnailFilePhysicalName());
     }
 
     /**
      * Apply contents file contents file.
      *
-     * @param contentsFile     the contents file
-     * @param fileSectionCode  the file section code
-     * @param fileKindCode     the file kind code
-     * @param fileName         the file name
-     * @param fileSize         the file size
-     * @param filePhysicalName the file physical name
-     * @param title            the title
-     * @param url              the url
+     * @param contentsFile              the contents file
+     * @param fileSectionCode           the file section code
+     * @param fileKindCode              the file kind code
+     * @param fileName                  the file name
+     * @param fileSize                  the file size
+     * @param filePhysicalName          the file physical name
+     * @param title                     the title
+     * @param url                       the url
+     * @param thumbnailFileName         the thumbnail file name
+     * @param thumbnailFileSize         the thumbnail file size
+     * @param thumbnailFilePhysicalName the thumbnail file physical name
      * @return the contents file
      * @author [이소정]
      * @CreatedOn 2020. 7. 7. 오전 10:41:43
      * @Description
      */
-    private ContentsFile applyContentsFile(ContentsFile contentsFile, String fileSectionCode, String fileKindCode, String fileName, Long fileSize, String filePhysicalName, String title, String url) {
+    private ContentsFile applyContentsFile(ContentsFile contentsFile
+            , String fileSectionCode
+            , String fileKindCode
+            , String fileName
+            , Long fileSize
+            , String filePhysicalName
+            , String title, String url
+            , String thumbnailFileName
+            , String thumbnailFileSize
+            , String thumbnailFilePhysicalName
+    ) {
         contentsFile.setFileSectionCode(fileSectionCode);
         contentsFile.setFileKindCode(fileKindCode);
 
@@ -235,6 +296,10 @@ public class ContentsFile extends BaseTimeEntity {
             this.fileName = contentsFileUpdateDTO.getFileName();
             this.fileSize = contentsFileUpdateDTO.getFileSize();
             this.filePhysicalName = contentsFileUpdateDTO.getFilePhysicalName();
+            this.thumbnailFileName = contentsFileUpdateDTO.getThumbnailFileName();
+            this.thumbnailFileSize = contentsFileUpdateDTO.getThumbnailFileSize();
+            this.thumbnailFilePhysicalName = contentsFileUpdateDTO.getThumbnailFilePhysicalName();
+
             this.title = null;
             this.url = null;
         } else {
@@ -243,9 +308,13 @@ public class ContentsFile extends BaseTimeEntity {
 
             this.title = contentsFileUpdateDTO.getTitle();
             this.url = contentsFileUpdateDTO.getUrl();
+
             this.fileName = null;
             this.fileSize = 0l;
             this.filePhysicalName = null;
+            this.thumbnailFileName = null;
+            this.thumbnailFileSize = null;
+            this.thumbnailFilePhysicalName = null;
         }
     }
 
