@@ -63,7 +63,7 @@ public class Calendar  implements Serializable {
     /**
      * 최초 작성자
      *
-     * @author [오지훈]
+     * @author [김형욱]
      */
     @CreatedBy
     @Column(name = "REGISTER_SEQ")
@@ -73,7 +73,7 @@ public class Calendar  implements Serializable {
     /**
      * 최종 수정자
      *
-     * @author [오지훈]
+     * @author [김형욱]
      */
     @LastModifiedBy
     @Column(name = "UPDATER_SEQ")
@@ -83,7 +83,7 @@ public class Calendar  implements Serializable {
     /**
      * 최초 작성일
      *
-     * @author [오지훈]
+     * @author [김형욱]
      */
     @Column(name = "REGISTRATION_DT")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
@@ -96,7 +96,7 @@ public class Calendar  implements Serializable {
     /**
      * 최종 수정일
      *
-     * @author [오지훈]
+     * @author [김형욱]
      */
     @Column(name = "UPDATE_DT")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
