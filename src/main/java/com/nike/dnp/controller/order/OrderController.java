@@ -93,10 +93,10 @@ public class OrderController {
 	@Transactional
 	public SingleResult<Order> saveOrder(@RequestBody final OrderProductSaveDTO orderProductSaveDTO) {
 
-		Order order = orderService.saveOrder(orderProductSaveDTO);
+		final Order order = orderService.saveOrder(orderProductSaveDTO);
 
 		for(int i = 0; i < orderProductSaveDTO.getGoodsSeqList().size(); i++){
-			Product product = productService.findByGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
+			final Product product = productService.findByGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
 			OrderProductMappingSaveDTO orderProductMappingSaveDTO = new OrderProductMappingSaveDTO();
 			orderProductMappingSaveDTO.setGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
 			orderProductMappingSaveDTO.setOrderQuantity(orderProductSaveDTO.getOrderQuantityList().get(i));
@@ -136,7 +136,7 @@ public class OrderController {
 	 * @Description
 	 */
 	@ApiOperation(value = "주문 상세 내역", notes = BASIC_CHARACTER)
-	@GetMapping(value = "/{orderGoodsSeq}")
+	@GetMapping(value = "/{orderGoodsSeq}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<OrderProductMapping> view(@ApiParam(name = "orderGoodsSeq", value = "주문 상품 시퀀스", defaultValue = "13") @PathVariable final Long orderGoodsSeq) {
 		return responseService.getSingleResult(orderProductMappingService.findById(orderGoodsSeq));
 	}

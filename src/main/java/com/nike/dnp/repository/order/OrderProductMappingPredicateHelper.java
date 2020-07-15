@@ -3,6 +3,7 @@ package com.nike.dnp.repository.order;
 import com.nike.dnp.entity.order.QOrderProductMapping;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import lombok.experimental.UtilityClass;
 import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ import java.time.format.DateTimeFormatter;
  * @CreatedOn 2020. 7. 7. 오후 12:13:36
  * @Description
  */
+@UtilityClass
 public class OrderProductMappingPredicateHelper {
 	/**
 	 * After start dt predicate.

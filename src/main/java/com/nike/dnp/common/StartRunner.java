@@ -1,10 +1,6 @@
 package com.nike.dnp.common;
 
-import com.nike.dnp.common.mail.MailService;
-import com.nike.dnp.common.mail.SendEmailOffice365;
-import com.nike.dnp.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -31,15 +27,6 @@ public class StartRunner implements ApplicationRunner {
     public StartRunner() {
         super();
     }
-
-    @Autowired
-    private SendEmailOffice365 sendEmailOffice365;
-
-    @Autowired
-    private MailService mailService;
-
-    @Autowired
-    private RedisService redisService;
 
     /**
      * Run.

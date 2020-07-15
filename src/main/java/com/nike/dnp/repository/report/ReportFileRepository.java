@@ -1,7 +1,5 @@
 package com.nike.dnp.repository.report;
 
-import com.nike.dnp.entity.contents.ContentsFile;
-import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportFile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

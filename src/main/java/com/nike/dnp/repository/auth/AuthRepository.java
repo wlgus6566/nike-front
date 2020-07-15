@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * AuthRepository
@@ -26,5 +27,18 @@ public interface AuthRepository extends JpaRepository<Auth, Long> {
      * @Description (사용가능)권한 전체 목록
      */
     List<Auth> findAllByUseYn(String useYn);
+
+    List<Auth> findAllByUseYnAndUpperAuthSeqIsNull(String useYn);
+
+    /**
+     * Find by role type optional.
+     *
+     * @param roleType the role type
+     * @return the optional
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 13. 오전 11:11:37
+     * @Description 권한 조회(Role Type으로)
+     */
+    Optional<Auth> findByRoleType(String roleType);
 
 }

@@ -1,7 +1,7 @@
 package com.nike.dnp.scheduler;
 
 
-import com.nike.dnp.service.wishList.WishListService;
+import com.nike.dnp.service.wishlist.WishListService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

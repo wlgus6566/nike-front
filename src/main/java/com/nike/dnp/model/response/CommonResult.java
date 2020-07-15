@@ -34,7 +34,7 @@ public class CommonResult {
      * @author [오지훈]
      */
     @ApiModelProperty(value = "메시지 리턴 여부 : true/false", name = "existMsg", required = true, allowableValues = "false")
-    private boolean existMsg = false;
+    private boolean existMsg;
 
     /**
      * 응답 코드

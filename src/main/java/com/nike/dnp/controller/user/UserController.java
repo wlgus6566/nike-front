@@ -47,11 +47,12 @@ public class UserController {
     private final UserService userService;
 
     /**
-     * REQUEST_CHARACTER
+     * OPERATION_CHARACTER
      *
      * @author [오지훈]
      */
-    private static final String REQUEST_CHARACTER = "## Reqeust ## \n필드명|설명|필수여부|데이터 타입(길이)\n" + "-|-|-|-\n";
+    private static final String OPERATION_CHARACTER
+            = "## Request ##\n[하위 Parameters 참조]\n\n\n\n## Response ##\n[하위 Model 참조]\n\n\n\n";
 
     /**
      * Find pages single result.
@@ -95,10 +96,7 @@ public class UserController {
      */
     @ApiOperation(
             value = "유저 상세 조회"
-            , notes = REQUEST_CHARACTER
-            + "userSeq|사용자시퀀스|true|Long\n\n\n\n"
-            + "## Response ## \n"
-            + "[하위 Model 참조]\n\n\n\n"
+            , notes = OPERATION_CHARACTER
     )
     @GetMapping(name = "유저 상세 조회", value = "/{userSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -119,16 +117,13 @@ public class UserController {
      */
     @ApiOperation(
             value = "유저 등록"
-            , notes = REQUEST_CHARACTER + "\n"
-            + "[하위 Parameters 참조]\n\n\n\n"
-            + "## Response ## \n"
-            + "[하위 Model 참조]\n\n\n\n"
+            , notes = OPERATION_CHARACTER
     )
     @PostMapping(name = "유저 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<UserReturnDTO> save(
-            @ApiParam(value = "유저 저장 DTO") @Valid @RequestBody final UserSaveDTO userSaveDTO
+            @ApiParam(value = "유저 저장 DTO", required = true) @Valid @RequestBody final UserSaveDTO userSaveDTO
             //, final @ApiIgnore BindingResult result
             ) {
         log.info("UserController.save");
@@ -146,12 +141,13 @@ public class UserController {
             throw new CodeMessageHandleException("failfail", Arrays.toString(errors));
         }*/
 
-        SingleResult<Integer> result = userService.checkId(userSaveDTO.getUserId());
+        final SingleResult<Integer> result = userService.checkId(userSaveDTO.getUserId());
+        SingleResult<UserReturnDTO> returnz = new SingleResult<>(result.getCode(), result.getMsg(), true, true);
+
         if(result.getCode().equals(SuccessEnumCode.UserSuccess.NOT_DUPLICATE.toString())) {
-            return responseService.getSingleResult(userService.save(userSaveDTO));
-        } else {
-            return new SingleResult<>(result.getCode(), result.getMsg(), true, true);
+            returnz = responseService.getSingleResult(userService.save(userSaveDTO));
         }
+        return returnz;
     }
 
     /**
@@ -166,17 +162,14 @@ public class UserController {
      */
     @ApiOperation(
             value = "유저 상세 수정" + "\n"
-            , notes = REQUEST_CHARACTER
-            + "userSeq|사용자시퀀스|true|Long\n\n\n\n"
-            + "## Response ## \n"
-            + "[하위 Model 참조]\n\n\n\n"
+            , notes = OPERATION_CHARACTER
     )
     @PutMapping(name = "유저 상세 수정", value = "/{userSeq}"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<UserReturnDTO> update(
             @ApiParam(value = "유저 시퀀스", required = true) @PathVariable final Long userSeq
-            ,@ApiParam(value = "유저 수정 DTO") @RequestBody final UserUpdateDTO userUpdateDTO
+            ,@ApiParam(value = "유저 수정 DTO", required = true) @RequestBody final UserUpdateDTO userUpdateDTO
     ) {
         log.info("UserController.update");
         return responseService.getSingleResult(userService.update(userSeq, userUpdateDTO));
@@ -193,10 +186,7 @@ public class UserController {
      */
     @ApiOperation(
             value = "유저 단건 삭제" + "\n"
-            , notes = REQUEST_CHARACTER
-            + "userSeq|사용자시퀀스|true|Long\n\n\n\n"
-            + "## Response ## \n"
-            + "[하위 Model 참조]\n\n\n\n"
+            , notes = OPERATION_CHARACTER
     )
     @DeleteMapping(name = "유저 단건 삭제", value = "/{userSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -220,16 +210,14 @@ public class UserController {
      */
     @ApiOperation(
             value = "유저 배열 삭제" + "\n"
-            , notes = "## Reqeust ##\n"
-            + "[하위 Parameters 참조]\n\n\n\n"
-            + "## Response ## \n"
-            + "[하위 Model 참조]\n\n\n\n"
+            , notes = OPERATION_CHARACTER
     )
     @DeleteMapping(name = "유저 배열 삭제"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<List<Long>> deleteArray(
-            @ApiParam(value = "유저 삭제 DTO") @RequestBody final UserDeleteDTO userDeleteDTO) {
+            @ApiParam(value = "유저 삭제 DTO", required = true)
+            @RequestBody final UserDeleteDTO userDeleteDTO) {
         log.info("UserController.deleteArray");
         return responseService.getSingleResult(userService.deleteArray(userDeleteDTO)
                 , ServiceEnumCode.ReturnTypeEnumCode.DELETE.toString()
@@ -248,10 +236,7 @@ public class UserController {
      */
     @ApiOperation(
             value = "ID 중복 체크" + "\n"
-            , notes = "## Reqeust ##\n"
-            + "[하위 Parameters 참조]\n\n\n\n"
-            + "## Response ## \n"
-            + "[하위 Model 참조]\n\n\n\n"
+            , notes = OPERATION_CHARACTER
     )
     @GetMapping(name = "ID 중복 체크", value = "/duplicate"
             , produces = {MediaType.APPLICATION_JSON_VALUE})

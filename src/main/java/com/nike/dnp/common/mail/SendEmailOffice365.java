@@ -1,5 +1,6 @@
 package com.nike.dnp.common.mail;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -11,8 +12,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.util.Date;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * The Class Send email office 365.
@@ -23,14 +22,8 @@ import java.util.logging.Logger;
  */
 @Service
 @Slf4j
+@AllArgsConstructor
 public class SendEmailOffice365 {
-
-    /**
-     * The constant LOGGER
-     *
-     * @author [오지훈]
-     */
-    private static final Logger LOGGER = Logger.getAnonymousLogger();
 
     /**
      * The constant SERVIDOR_SMTP
@@ -52,8 +45,7 @@ public class SendEmailOffice365 {
      * @author [오지훈]
      */
     @Value("${nike.email.auth.id:}")
-    private String CONTA_PADRAO;
-    //private static final String CONTA_PADRAO = "cokeplay.emotion@emotion.co.kr";
+    private static transient String CONTA_PADRAO;
 
     /**
      * The constant SENHA_CONTA_PADRAO
@@ -61,31 +53,43 @@ public class SendEmailOffice365 {
      * @author [오지훈]
      */
     @Value("${nike.email.auth.pw:}")
-    private String SENHA_CONTA_PADRAO;
-    //private static final String SENHA_CONTA_PADRAO = "5Rzz*w#,Kc%9W7s";
+    private static transient String SENHA_CONTA_PADRAO;
 
+    /**
+     * The From email
+     *
+     * @author [오지훈]
+     */
     @Value("${nike.email.send.from:}")
-    private String fromEmail;
+    private static transient String FROM_EMAIL;
 
-    public void sendEmail(final String to, final String subject, final String file) {
-        this.sendEmail(fromEmail, to, subject, file);
+    /**
+     * Send email.
+     *
+     * @param toEmail the to email
+     * @param subject the subject
+     * @param file    the file
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 14. 오전 11:53:51
+     * @Description
+     */
+    public void sendEmail(final String toEmail, final String subject, final String file) {
+        this.sendEmail(FROM_EMAIL, toEmail, subject, file);
     }
 
     /**
      * Send email.
      *
      * @param from    the from
-     * @param to      the to
+     * @param toEmail the to
      * @param subject the subject
+     * @param file    the file
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오전 11:44:14
      * @Description 메일 발송
      */
-    public void sendEmail(final String from, final String to, final String subject, final String file) {
+    public void sendEmail(final String from, final String toEmail, final String subject, final String file) {
         log.info("SendEmailOffice365.sendEmail");
-        log.info("CONTA_PADRAO > " + CONTA_PADRAO);
-        log.info("SENHA_CONTA_PADRAO > " + SENHA_CONTA_PADRAO);
-        log.info("fromEmail > " + fromEmail);
         final Session session = Session.getInstance(this.getEmailProperties(), new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -96,22 +100,22 @@ public class SendEmailOffice365 {
         try {
             final Message message = new MimeMessage(session);
             message.setHeader("Content-Type", "text/html; charset=UTF-8");
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
             message.setFrom(new InternetAddress(from));
             message.setSubject(subject);
 
-            MimeBodyPart mimeMultipart = new MimeBodyPart();
+            final MimeBodyPart mimeMultipart = new MimeBodyPart();
             mimeMultipart.setContent(file, "text/html; charset=UTF-8");
-            Multipart mp = new MimeMultipart();
-            mp.addBodyPart(mimeMultipart);
+            final Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(mimeMultipart);
 
-            message.setContent(mp);
+            message.setContent(multipart);
             message.setSentDate(new Date());
             Transport.send(message);
             System.out.println("발송완료");
             System.out.println("======================================================");
-        } catch (final MessagingException ex) {
-            LOGGER.log(Level.WARNING, "Erro ao enviar mensagem: " + ex.getMessage(), ex);
+        } catch (final MessagingException exception) {
+            log.error("exception", exception);
         }
     }
 

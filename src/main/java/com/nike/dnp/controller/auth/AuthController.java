@@ -4,6 +4,7 @@ import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.auth.AuthSaveDTO;
 import com.nike.dnp.dto.auth.AuthUpdateDTO;
 import com.nike.dnp.entity.auth.Auth;
+import com.nike.dnp.entity.auth.AuthMenuRole;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.auth.AuthService;
@@ -97,6 +98,27 @@ public class AuthController {
     }
 
     /**
+     * Find auth menu role single result.
+     *
+     * @param authSeq the auth seq
+     * @return the single result
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 13. 오전 10:06:37
+     * @Description 그룹(그룹 및 메뉴권한) 체크 목록
+     */
+    @ApiOperation(
+            value = "그룹(그룹 및 메뉴권한) 체크 목록"
+            , notes = BASIC_OPERATION
+    )
+    @GetMapping(name = "그룹(그룹 및 메뉴권한) 체크 목록", value = "/role/{authSeq}"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<List<AuthMenuRole>> findAuthMenuRole(
+            @PathVariable final Long authSeq) {
+        log.info("AuthController.findAuthMenuRole");
+        return responseService.getSingleResult(authService.findAuthMenuRole(authSeq));
+    }
+
+    /**
      * Find auth single result.
      *
      * @param authSeq the auth seq
@@ -141,12 +163,8 @@ public class AuthController {
             @RequestBody final AuthSaveDTO authSaveDTO
     ) {
         log.info("AuthController.save");
-
-        //TODO[ojh] 메뉴별 권한 설정 추가 예정
-        Auth auth = authService.save(authSaveDTO);
-
         return responseService.getSingleResult(
-                auth
+                authService.save(authSaveDTO)
                 , ServiceEnumCode.ReturnTypeEnumCode.CREATE.toString()
                 , ServiceEnumCode.ReturnTypeEnumCode.CREATE.getMessage()
                 , true
@@ -178,9 +196,6 @@ public class AuthController {
             @RequestBody final AuthUpdateDTO authUpdateDTO
     ) {
         log.info("AuthController.update");
-
-        //TODO[ojh] 메뉴별 권한 설정 추가 예정
-
         return responseService.getSingleResult(
                 authService.update(authSeq, authUpdateDTO)
                 , ServiceEnumCode.ReturnTypeEnumCode.UPDATE.toString()

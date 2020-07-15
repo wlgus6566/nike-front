@@ -1,9 +1,7 @@
 package com.nike.dnp.service.menu;
 
-import com.nike.dnp.dto.menu.MenuReturnDTO;
 import com.nike.dnp.entity.menu.Menu;
 import com.nike.dnp.repository.menu.MenuRepository;
-import com.nike.dnp.service.RedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,19 +10,18 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 
-
+/**
+ * The Class Menu service.
+ *
+ * @author [오지훈]
+ * @CreatedOn 2020. 7. 13. 오후 1:50:23
+ * @Description Menu(메뉴) Service 작성
+ */
 @Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MenuService {
-
-    /**
-     * The Redis service
-     *
-     * @author [오지훈]
-     */
-    private final RedisService redisService;
 
     /**
      * MenuRepository
@@ -41,26 +38,9 @@ public class MenuService {
      * @CreatedOn 2020. 7. 8. 오후 6:18:35
      * @Description 메뉴 목록(전체)
      */
-    public List<MenuReturnDTO> getMenus() {
-        log.info("AuthService.getMenus.all");
-        return menuRepository.getMenus();
-    }
-
-    /**
-     * Gets menus.
-     *
-     * @param authSeq the auth seq
-     * @return the menus
-     * @author [오지훈]
-     * @CreatedOn 2020. 7. 9. 오후 5:31:36
-     * @Description 메뉴 목록(권한)
-     */
-    public List<Menu> getMenus(final Long authSeq) {
-        log.info("AuthService.getMenus.auth");
-
-        //TODO[ojh] 2020-07-09 : redis 설정 추가 예정
-
-        return menuRepository.getMenus(authSeq);
+    public List<Menu> findAll() {
+        log.info("AuthService.findAll");
+        return menuRepository.findAll();
     }
 
 }

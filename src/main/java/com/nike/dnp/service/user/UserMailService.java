@@ -57,7 +57,7 @@ public class UserMailService {
         sendDTO.setEmail(user.getUserId());
 
         //TODO[ojh] 2020-07-03 : 변경예정
-        sendDTO.setLoginUrl("loginUrl");
+        //sendDTO.setLoginUrl("loginUrl");
 
         mailService.sendMail(
                 ServiceEnumCode.EmailTypeEnumCode.USER_CREATE.toString()
@@ -246,7 +246,7 @@ public class UserMailService {
      * @Description 현재 년,월,일 가져오기
      */
     public String getCurrentDate() {
-        LocalDate currentDate = LocalDate.now();
+        final LocalDate currentDate = LocalDate.now();
         return currentDate.getYear() + "년 " + currentDate.getMonthValue() + "월 " + currentDate.getDayOfMonth() + "일";
     }
 }

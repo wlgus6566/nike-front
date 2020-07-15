@@ -145,9 +145,9 @@ public class User extends BaseTimeEntity {
      *
      * @author [오지훈]
      */
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<UserAuth> userAuths = new ArrayList<>();
+    private UserAuth userAuth;
 
     /**
      * 패스워드 기록 맵핑
@@ -158,16 +158,6 @@ public class User extends BaseTimeEntity {
     @JsonManagedReference
     @OrderBy("registrationDt DESC")
     private List<PasswordHistory> histories = new ArrayList<>();
-
-    /**
-     * 로그인 기록 맵핑
-     *
-     * @author [오지훈]
-     */
-    /*@OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_SEQ")
-    @OrderBy("loginDt DESC")
-    private List<UserLoginLog> loginLogs = new ArrayList<>();*/
 
     /**
      * 쿼리 실행 전 기본값 설정
@@ -194,7 +184,7 @@ public class User extends BaseTimeEntity {
      */
     public User save(final UserSaveDTO userSaveDTO) {
         log.info("User.save");
-        User saveUser = new User();
+        final User saveUser = new User();
         saveUser.setUserId(userSaveDTO.getUserId());
         saveUser.setNickname(userSaveDTO.getNickname());
         return saveUser;
@@ -221,7 +211,7 @@ public class User extends BaseTimeEntity {
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
      * @Description 비밀번호 변경
      */
-    public void updatePassword(String password) {
+    public void updatePassword(final String password) {
         log.info("User.updatePassword");
         this.password = password;
         this.passwordLastUpdateDt = LocalDateTime.now();
@@ -236,7 +226,7 @@ public class User extends BaseTimeEntity {
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
      * @Description 상태값 변경
      */
-    public void updateStatus(String userStatusCode) {
+    public void updateStatus(final String userStatusCode) {
         log.info("User.updateStatus");
         this.userStatusCode = userStatusCode;
     }
@@ -249,7 +239,7 @@ public class User extends BaseTimeEntity {
      * @CreatedOn 2020. 6. 23. 오후 5:41:15
      * @Description 삭제
      */
-    public void delete(Long userSeq) {
+    public void delete(final Long userSeq) {
         log.info("User.delete");
         this.userId = String.valueOf(userSeq);
         this.password = String.valueOf(userSeq);
@@ -264,7 +254,7 @@ public class User extends BaseTimeEntity {
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
      * @Description 최종 로그인 일시 변경 / 브라우저 헤더 업데이트
      */
-    public void updateLoginDt(String loginBrowserHeader) {
+    public void updateLoginDt(final String loginBrowserHeader) {
         log.info("User.updateLoginDt");
         this.loginDt = LocalDateTime.now();
         this.loginBrowserHeader = loginBrowserHeader;

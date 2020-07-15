@@ -25,12 +25,11 @@ public class RandomUtil {
 	 * @CreatedOn 2020. 6. 19. 오후 5:45:12
 	 * @Description 인증코드 생성 방법
 	 */
-	public static String randomCertCode1(int size) {
-		StringBuffer temp = new StringBuffer();
-		Random rnd = new Random();
+	public String randomCertCode1(final int size) {
+		final StringBuilder temp = new StringBuilder();
+		final Random rnd = new Random();
 		for (int i = 0; i < size; i++) {
-			int rIndex = rnd.nextInt(7);
-			switch (rIndex) {
+			switch (rnd.nextInt(7)) {
 				case 0:
 					// a-z
 					temp.append((char) (rnd.nextInt(26) + 97));
@@ -41,7 +40,7 @@ public class RandomUtil {
 					break;
 				case 2:
 					// 0-9
-					temp.append((rnd.nextInt(10)));
+					temp.append(rnd.nextInt(10));
 					break;
 				case 3:
 					// 특수문자1
@@ -59,6 +58,8 @@ public class RandomUtil {
 					// 특수문자4
 					temp.append((char) (rnd.nextInt(4) + 123));
 					break;
+				default:
+					break;
 			}
 		}
 
@@ -74,9 +75,9 @@ public class RandomUtil {
 	 * @CreatedOn 2020. 6. 19. 오후 5:45:12
 	 * @Description 인증코드 생성 방법
 	 */
-	public static String randomCertCode2(int size) {
-		StringBuffer temp = new StringBuffer();
-		Random rnd = new Random();
+	public String randomCertCode2(final int size) {
+		final StringBuilder temp = new StringBuilder();
+		final Random rnd = new Random();
 		for (int i = 0; i < size; i++) {
 			temp.append((char) (rnd.nextInt(93) + 33));
 		}

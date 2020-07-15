@@ -32,7 +32,7 @@ spring:
 ## 시큐리티 url/ ip 체크 flag
 security:
   auth:
-    url: false
+    url: true
     ip : false
 
 ## email 계정

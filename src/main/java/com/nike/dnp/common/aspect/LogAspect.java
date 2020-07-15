@@ -15,6 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * LogAspect
@@ -50,7 +51,7 @@ public class LogAspect {
     @Around("execution(public * com.nike.dnp.controller..*Controller.*(..))")
     public Object onAroundActionLog(final ProceedingJoinPoint joinPoint) throws Throwable {
         log.debug("========================= ActionLog Start =========================");
-        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        final HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         final UserActionLogSaveDTO actionLog = new UserActionLogSaveDTO();
         for (final Object obj : joinPoint.getArgs()) {
             if (!ObjectUtils.isEmpty(obj) && obj instanceof AuthUserDTO) {

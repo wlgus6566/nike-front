@@ -1,5 +1,6 @@
 package com.nike.dnp.common.variable;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,8 +13,12 @@ import org.springframework.stereotype.Component;
  * @Description
  */
 @Component
+@AllArgsConstructor
 public class ErrorEnumCode {
 
+    /**
+     * The enum Exception error.
+     */
     @RequiredArgsConstructor
     @Getter
     public enum ExceptionError {
@@ -223,6 +228,9 @@ public class ErrorEnumCode {
         private final String message;
     }
 
+    /**
+     * The enum Basket error.
+     */
     @RequiredArgsConstructor
     @Getter
     public enum BasketError {
@@ -236,6 +244,9 @@ public class ErrorEnumCode {
         private final String message;
     }
 
+    /**
+     * The enum File error.
+     */
     @RequiredArgsConstructor
     @Getter
     public enum FileError {

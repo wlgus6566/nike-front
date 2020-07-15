@@ -2,7 +2,6 @@ package com.nike.dnp.util;
 
 import lombok.experimental.UtilityClass;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -20,42 +19,35 @@ public class PasswordPatternUtil {
      *
      * @author [오지훈]
      */
-    public final String pattern1 = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*?,./\\\\<>|_-[+]=\\`~\\(\\)\\[\\]\\{\\}])[A-Za-z[0-9]!@#$%^&*?,./\\\\<>|_-[+]=\\`~\\(\\)\\[\\]\\{\\}]{8,16}$";
+    public transient String PATTERN = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*?,./\\\\<>|_-[+]=\\`~\\(\\)\\[\\]\\{\\}])[A-Za-z[0-9]!@#$%^&*?,./\\\\<>|_-[+]=\\`~\\(\\)\\[\\]\\{\\}]{8,16}$";
 
     /**
      * 영문, 숫자
      *
      * @author [오지훈]
      */
-    public final String pattern2 = "^[A-Za-z[0-9]]{8,16}$";
+    public transient String pattern2 = "^[A-Za-z[0-9]]{8,16}$";
 
     /**
      * 숫자, 특수문자
      *
      * @author [오지훈]
      */
-    public final String pattern3 = "^(?=.*[0-9])(?=.*[!@#$%^&*?,./\\\\<>|_-[+]='\\`\";:~\\(\\)\\[\\]\\{\\}])[[0-9]!@#$%^&*?,./\\\\<>|_-[+]='\";:\\`~\\(\\)\\[\\]\\{\\}]{8,16}$";
+    public transient String pattern3 = "^(?=.*[0-9])(?=.*[!@#$%^&*?,./\\\\<>|_-[+]='\\`\";:~\\(\\)\\[\\]\\{\\}])[[0-9]!@#$%^&*?,./\\\\<>|_-[+]='\";:\\`~\\(\\)\\[\\]\\{\\}]{8,16}$";
 
     /**
      * 문자, 특수문자
      *
      * @author [오지훈]
      */
-    public final String pattern4 = "^(?=.*[A-Za-z])(?=.*[!@#$%^&*?,./\\\\<>|_-[+]='\\`\";:~\\(\\)\\[\\]\\{\\}])[[A-Za-z]!@#$%^&*?,./\\\\<>|_-[+]='\";:\\`~\\(\\)\\[\\]\\{\\}]{8,16}$";
+    public transient String pattern4 = "^(?=.*[A-Za-z])(?=.*[!@#$%^&*?,./\\\\<>|_-[+]='\\`\";:~\\(\\)\\[\\]\\{\\}])[[A-Za-z]!@#$%^&*?,./\\\\<>|_-[+]='\";:\\`~\\(\\)\\[\\]\\{\\}]{8,16}$";
 
     /**
      * 같은 문자, 숫자
      *
      * @author [오지훈]
      */
-    public final String pattern5 = "(\\w)\\1";
-
-    /**
-     * The Match
-     *
-     * @author [오지훈]
-     */
-    Matcher match;
+    public transient String PATTERN_5 = "(\\w)\\1";
 
     /**
      * Invalid password boolean.
@@ -67,8 +59,8 @@ public class PasswordPatternUtil {
      * @Description 비밀번호 정규식 체크
      */
     public Boolean invalidPassword(final String newPwd) {
-        return !(Pattern.compile(pattern1).matcher(newPwd).find()
-                && !Pattern.compile(pattern5).matcher(newPwd).find()
+        return !(Pattern.compile(PATTERN).matcher(newPwd).find()
+                && !Pattern.compile(PATTERN_5).matcher(newPwd).find()
                 && !continuousPassword(newPwd));
     }
 
@@ -86,9 +78,9 @@ public class PasswordPatternUtil {
         int d = 0;
         int p = 0;
         int n = 0;
-        int limit = 4;
+        final int limit = 4;
         for(int i=0; i<pwd.length(); i++) {
-            char tempVal = pwd.charAt(i);
+            final char tempVal = pwd.charAt(i);
             if(i > 0 && (p = o - tempVal) > -2 && (n = p == d ? n + 1 :0) > limit -3) {
                 return true;
             }

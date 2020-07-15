@@ -33,14 +33,12 @@ public class AuthSaveDTO {
     @ApiModelProperty(name = "authName", value = "권한명", required = true)
     private String authName;
 
-    @ApiModelProperty(name = "menuSeq", value = "메뉴 시퀀스", required = true)
-    private Long menuSeq;
-
-    private String checkListYn;
-    private String checkCreationYn;
-    private String checkDeleteYn;
-    private String checkDetailYn;
-    private String checkDownloadYn;
-    private String checkReportYn;
+    /**
+     * 메뉴 역할 시퀀스 배열
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "menuRoleSeqArray", value = "메뉴 역할 시퀀스 배열", required = true)
+    private Long[] menuRoleSeqArray;
 
 }

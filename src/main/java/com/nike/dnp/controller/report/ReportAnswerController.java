@@ -1,21 +1,15 @@
 package com.nike.dnp.controller.report;
 
 import com.nike.dnp.dto.report.ReportAnswerSaveDTO;
-import com.nike.dnp.dto.report.ReportSaveDTO;
-import com.nike.dnp.dto.report.ReportSearchDTO;
-import com.nike.dnp.dto.report.ReportUpdateDTO;
-import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportAnswer;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.report.ReportAnswerService;
-import com.nike.dnp.service.report.ReportService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
