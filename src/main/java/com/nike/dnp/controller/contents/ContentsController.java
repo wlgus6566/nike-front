@@ -9,6 +9,7 @@ import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.contents.ContentsService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -64,11 +65,15 @@ public class ContentsController {
      * @Description
      */
     @ApiOperation(
-        value = "Contents 목록 조회"
+        value = "콘텐츠 목록 조회"
         , notes = REQUEST_CHARACTER
         + "page|페이지|false|Integer|0부터 시작\n"
         + "size|사이즈|false|Integer\n"
-        + "keyword|검색어|false|String\n"
+        + "keyword|검색어|false|Strin|ASSET/TOOLKIT/FOUNDATION\n"
+        + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
+        + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
+        + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
+        + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n"
         + "orderType|정렬 타입|false|String|최신순:LATEST/시작일 순:START_DATE\n"
         + "[하위 Parameters 참조]\n\n\n\n"
         + "## Public/Paging Response ## \n"
@@ -82,10 +87,10 @@ public class ContentsController {
         + "number||현재페이지|Integer\n"
         + "size||노출갯수|Integer\n\n\n\n"
     )
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Contents 목록 조회", value = {"/{topMenuCode}", "/{topMenuCode}/{menuCode}"})
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "콘텐츠 목록 조회", value = "/{topMenuCode}/{menuCode}")
     public SingleResult<Page<ContentsResultDTO>> getAllContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
-            @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "SP") @PathVariable(required = false) final String menuCode,
+            @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "ALL", required = true) @PathVariable final String menuCode,
             final ContentsSearchDTO contentsSearchDTO
     ) {
         contentsSearchDTO.setTopMenuCode(topMenuCode);
@@ -106,10 +111,14 @@ public class ContentsController {
      * @Description
      */
     @ApiOperation(
-            value = "Contents 등록"
+            value = "콘텐츠 등록"
             , notes = REQUEST_CHARACTER
+            + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
+            + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
+            + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
+            + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n"
     )
-    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Contents 등록", value = "/{topMenuCode}/{menuCode}")
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "콘텐츠 등록", value = "/{topMenuCode}/{menuCode}")
     public SingleResult<Contents> saveContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
@@ -133,10 +142,14 @@ public class ContentsController {
      * @Description
      */
     @ApiOperation(
-            value = "Contents 상세조회"
+            value = "콘텐츠 상세조회"
             , notes = REQUEST_CHARACTER
+            + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
+            + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
+            + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
+            + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n"
     )
-    @GetMapping(name = " Contents 상세조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
+    @GetMapping(name = " 콘텐츠 상세조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Contents> findContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
@@ -157,8 +170,12 @@ public class ContentsController {
      * @CreatedOn 2020. 7. 13. 오전 11:59:45
      * @Description
      */
-    @ApiOperation(value = "Contents 수정", notes = REQUEST_CHARACTER)
-    @PutMapping(name = "Contents 수정", value = "/{topMenuCode}/{menuCode}"
+    @ApiOperation(value = "콘텐츠 수정", notes = REQUEST_CHARACTER
+            + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
+            + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
+            + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
+            + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n")
+    @PutMapping(name = "콘텐츠 수정", value = "/{topMenuCode}/{menuCode}"
             , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Contents>> updateContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
@@ -180,16 +197,42 @@ public class ContentsController {
      * @CreatedOn 2020. 7. 7. 오후 2:06:55
      * @Description
      */
-    @ApiOperation(value="Contents 삭제", notes = REQUEST_CHARACTER)
-    @DeleteMapping(name = "Contents 삭제", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
+    @ApiOperation(value="콘텐츠 삭제", notes = REQUEST_CHARACTER
+            + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
+            + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
+            + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
+            + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n")
+    @DeleteMapping(name = "콘텐츠 삭제", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Contents>> deleteContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
             @ApiParam(name = "contentsSeq", value = "콘텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
-        log.info("AssetController.delete");
+        log.info("ContentsController.delete");
         return responseService.getSingleResult(contentsService.delete(contentsSeq));
     }
+
+    /**
+     * Download contents string.
+     *
+     * @param topMenuCode the top menu code
+     * @param menuCode    the menu code
+     * @return the string
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 15. 오후 6:30:45
+     * @Description
+     */
+//    @ApiModelProperty(value = "콘텐츠 다운로드", notes = REQUEST_CHARACTER)
+//    @PostMapping(name = "콘텐츠 다운로드", value = "download/{topMenuCode}/{menuCode}", produces = {MediaType.APPLICATION_JSON_VALUE})
+//    public String downloadContents(
+//            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
+//            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode
+//    ) {
+//        log.info("ContentsController.downloadContents");
+//        // TODO[lsj]
+//        return null;
+//    }
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.nike.dnp.common.variable;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,12 +14,13 @@ import org.springframework.stereotype.Component;
  * @Description
  */
 @Component
+@AllArgsConstructor
 public class ServiceEnumCode {
 
     /**
      * Y or N
      */
-    public enum yesOrNoEnumCode {
+    public enum YesOrNoEnumCode {
         Y,N
     }
 
@@ -29,7 +31,8 @@ public class ServiceEnumCode {
      */
     public enum SearchEnumCode {
         LATEST //최신순
-        ,START_DATE //시작일순
+        , START_DATE //시작일순
+        , FILE_NAME
     }
 
     /**
@@ -120,8 +123,9 @@ public class ServiceEnumCode {
         private final String message;
     }
 
-
-
+    /**
+     * The enum Product category 2 enum code.
+     */
     @RequiredArgsConstructor
     @Getter
     public enum ProductCategory2EnumCode {
@@ -138,6 +142,9 @@ public class ServiceEnumCode {
         private final String message;
     }
 
+    /**
+     * The enum Product category 3 enum code.
+     */
     @RequiredArgsConstructor
     @Getter
     public enum ProductCategory3EnumCode {
@@ -170,12 +177,14 @@ public class ServiceEnumCode {
         private final String message;
     }
 
-
+    /**
+     * The enum Menu skill enum code.
+     */
     @RequiredArgsConstructor
     @Getter
     public enum MenuSkillEnumCode {
         LIST("목록", "listAuthYn", 0)
-        ,CERATE("등록/수정", "creationAuthYn", 1)
+        ,CREATE("등록/수정", "creationAuthYn", 1)
         ,DELETE("삭제", "deleteAuthYn", 2)
         ,VIEW("상세보기", "detailAuthYn", 3)
         ,DOWNLOAD("다운로드/주문", "downloadAuthYn", 4)
@@ -191,11 +200,14 @@ public class ServiceEnumCode {
         private final int sort;
     }
 
-
+    /**
+     * The enum File folder enum code.
+     */
     @RequiredArgsConstructor
     @Getter
     public enum FileFolderEnumCode {
         PRODUCT("product"),
+        CONTENTS("contents"),
         TEMP("temp");
 
         /**

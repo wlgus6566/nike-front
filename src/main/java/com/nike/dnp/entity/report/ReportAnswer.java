@@ -1,6 +1,5 @@
 package com.nike.dnp.entity.report;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.dto.report.ReportAnswerSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
@@ -60,15 +59,15 @@ public class ReportAnswer extends BaseTimeEntity {
     @ApiModelProperty(name = "useYn", value = "사용 여부")
     private String useYn;
 
-    /**
-     * The Report
-     * @author [이소정]
-     */
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "REPORT_SEQ", insertable = false, updatable = false)
-    @ApiModelProperty(name = "report", value = "The Report", hidden = true)
-    private Report report;
+//    /**
+//     * The Report
+//     * @author [이소정]
+//     */
+//    @JsonBackReference
+//    @ManyToOne
+//    @JoinColumn(name = "REPORT_SEQ", insertable = false, updatable = false)
+//    @ApiModelProperty(name = "report", value = "The Report", hidden = true)
+//    private Report report;
 
     /**
      * Save report answer.

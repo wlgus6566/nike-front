@@ -123,7 +123,7 @@ public class SendDTO {
      * @Description
      */
     public String getProcessingDt() {
-        LocalDate currentDate = LocalDate.now();
+        final LocalDate currentDate = LocalDate.now();
         return currentDate.getYear() + "년 " + currentDate.getMonthValue() + "월 " + currentDate.getDayOfMonth() + "일";
     }
 }

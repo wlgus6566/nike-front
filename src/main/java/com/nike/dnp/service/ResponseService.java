@@ -96,8 +96,12 @@ public class ResponseService {
      */
     private static void setSuccessResult(final CommonResult result) {
         result.setSuccess(true);
-        if(result.getCode().isEmpty()) result.setCode(SUCCESS.getCode());
-        if(result.getMsg().isEmpty()) result.setMsg(SUCCESS.getMsg());
+        if(result.getCode().isEmpty()) {
+            result.setCode(SUCCESS.getCode());
+        }
+        if(result.getMsg().isEmpty()) {
+            result.setMsg(SUCCESS.getMsg());
+        }
     }
 
     /**

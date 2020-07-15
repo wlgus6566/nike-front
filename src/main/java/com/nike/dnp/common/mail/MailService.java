@@ -1,8 +1,8 @@
 package com.nike.dnp.common.mail;
 
 import com.nike.dnp.dto.email.SendDTO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -21,6 +21,7 @@ import java.lang.reflect.Field;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class MailService {
 
     /**
@@ -28,8 +29,7 @@ public class MailService {
      *
      * @author [오지훈]
      */
-    @Autowired
-    private SendEmailOffice365 sendEmailOffice365;
+    private final SendEmailOffice365 sendEmailOffice365;
 
     /**
      * Send mail.
@@ -41,7 +41,7 @@ public class MailService {
      * @CreatedOn 2020. 7. 1. 오후 2:31:56
      * @Description
      */
-    public void sendMail(String emailType, String subject, SendDTO sendDTO) {
+    public void sendMail(final String emailType, final String subject, final SendDTO sendDTO) {
         sendEmailOffice365.sendEmail(
                 sendDTO.getEmail()
                 , subject
@@ -61,16 +61,17 @@ public class MailService {
     public String getFile(final String emailType) {
         String result = "";
         try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(new ClassPathResource("templates/email/NIKE_DNP_"+emailType+".html").getInputStream()));
+            final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new ClassPathResource("templates/email/NIKE_DNP_"+emailType+".html").getInputStream()));
             String inputLine;
-            StringBuilder response = new StringBuilder();
-            while ((inputLine = in.readLine()) != null) {
+            final StringBuilder response = new StringBuilder();
+            while ((inputLine = bufferedReader.readLine()) != null) {
                 response.append(inputLine);
             }
             result = response.toString();
+            bufferedReader.close();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            log.error("exception", exception);
         }
 
         return result;
@@ -86,10 +87,10 @@ public class MailService {
      * @CreatedOn 2020. 7. 1. 오후 2:31:56
      * @Description template String 문자열의 대체변수에 데이터 대입
      */
-    public String convert(String file, SendDTO sendDTO) {
+    public String convert(final String file, final SendDTO sendDTO) {
         log.info("MailService.convert");
         String result = file;
-        for(Field field : sendDTO.getClass().getDeclaredFields()) {
+        for(final Field field : sendDTO.getClass().getDeclaredFields()) {
             try {
                 field.setAccessible(true);
                 if (!ObjectUtils.isEmpty(field.get(sendDTO))

@@ -5,7 +5,6 @@ import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.QContents;
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;

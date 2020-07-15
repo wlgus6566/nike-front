@@ -101,10 +101,10 @@ public class Code extends BaseTimeEntity implements Serializable {
      * @Description 하위 Update.
      */
     public void update(
-            String codeName
-            , String codeDescription
-            , Long codeOrder
-            , String upperCode
+            final String codeName
+            , final String codeDescription
+            , final Long codeOrder
+            , final String upperCode
     ) {
         this.upperCode = upperCode;
         this.codeName = codeName;
@@ -123,9 +123,9 @@ public class Code extends BaseTimeEntity implements Serializable {
      * @Description 상위 Update.
      */
     public void update(
-            String codeName
-            , String codeDescription
-            , Long codeOrder
+            final String codeName
+            , final String codeDescription
+            , final Long codeOrder
     ) {
         this.codeName = codeName;
         this.codeDescription = codeDescription;
@@ -140,7 +140,7 @@ public class Code extends BaseTimeEntity implements Serializable {
      * @CreatedOn 2020. 6. 24. 오후 6:09:56
      * @Description
      */
-    public void delete(String useYn) {
+    public void delete(final String useYn) {
         this.useYn = useYn;
     }
 }

@@ -5,6 +5,7 @@ import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.email.OrderProductDTO;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.order.OrderProductMappingSaveDTO;
+import com.nike.dnp.dto.order.OrderProductResultDTO;
 import com.nike.dnp.dto.order.OrderSearchDTO;
 import com.nike.dnp.entity.order.Order;
 import com.nike.dnp.entity.order.OrderProductMapping;
@@ -20,8 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.text.DecimalFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -63,7 +64,7 @@ public class OrderProductMappingService {
 	 */
 	@Transactional
 	public OrderProductMapping saveOrderProductMapping(final OrderProductMappingSaveDTO orderProductMappingSaveDTO) {
-		OrderProductMapping orderProductMapping = new OrderProductMapping();
+		final OrderProductMapping orderProductMapping = new OrderProductMapping();
 		orderProductMapping.setGoodsSeq(orderProductMappingSaveDTO.getGoodsSeq());
 		orderProductMapping.setOrderSeq(orderProductMappingSaveDTO.getOrderSeq());
 		orderProductMapping.setOrderQuantity(orderProductMappingSaveDTO.getOrderQuantity());
@@ -81,35 +82,36 @@ public class OrderProductMappingService {
 	 * @Description
 	 */
 	public void orderSheetSend(final Order order) {
-		List<HashMap<String, Object>> emailList = orderProductMapperRepository.findSearchEmailValue(order.getOrderSeq());
+		final List<OrderProductResultDTO> emailList = orderProductMapperRepository.findSearchEmailValue(order.getOrderSeq());
 
-		List<Long> agencyList = new ArrayList<>();
+		final List<Long> agencyList = new ArrayList<>();
 		Long compareAgencySeq = null;
-		for(HashMap<String, Object> map : emailList){
-			Long agencySeq = Long.parseLong(String.valueOf(map.get("agencySeq")));
+		for(final OrderProductResultDTO orderProductResultDTO : emailList){
+			final Long agencySeq = Long.parseLong(String.valueOf(orderProductResultDTO.getAgencySeq()));
 			if(ObjectUtils.isEmpty(compareAgencySeq) || !compareAgencySeq.equals(agencySeq)){
 				agencyList.add(agencySeq);
 				compareAgencySeq = agencySeq;
 			}
 		}
 
-		List<SendDTO> sendDTOList = new ArrayList<>();
-		for(Long tempAgencySeq : agencyList){
-			SendDTO sendDTO = new SendDTO();
-			List<OrderProductDTO> productList = new ArrayList<>();
-			for(HashMap<String, Object> map : emailList){
-				Long agencySeq = Long.parseLong(String.valueOf(map.get("agencySeq")));
+
+		final List<SendDTO> sendDTOList = new ArrayList<>();
+		for(final Long tempAgencySeq : agencyList){
+			final SendDTO sendDTO = new SendDTO();
+			final List<OrderProductDTO> productList = new ArrayList<>();
+			for(final OrderProductResultDTO orderProductResultDTO : emailList){
+				final Long agencySeq = Long.parseLong(String.valueOf(orderProductResultDTO.getAgencySeq()));
 				if(tempAgencySeq.equals(agencySeq)){
 					sendDTO.setNickname(SecurityUtil.currentUser()
 													.getNickname());
-					sendDTO.setEmail(String.valueOf(map.get("email")));
-					sendDTO.setAgencyName(String.valueOf(map.get("agencyName")));
-					sendDTO.setOrderDt(String.valueOf(map.get("registrationDt")));
-					sendDTO.setOrderComment(String.valueOf(map.get("orderDescription")));
-					OrderProductDTO orderProductDTO = new OrderProductDTO();
-					orderProductDTO.setAmount(Integer.parseInt(String.valueOf(map.get("orderQuantity"))));
-					orderProductDTO.setProductName(String.valueOf(map.get("goodsName")));
-					orderProductDTO.setProductDesc(String.valueOf(map.get("goodsDescription")));
+					sendDTO.setEmail(String.valueOf( orderProductResultDTO.getEmail()));
+					sendDTO.setAgencyName(String.valueOf(orderProductResultDTO.getAgencyName()));
+					sendDTO.setOrderDt(String.valueOf(orderProductResultDTO.getRegistrationDt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"))));
+					sendDTO.setOrderComment(String.valueOf(orderProductResultDTO.getOrderDescription()));
+					final OrderProductDTO orderProductDTO = new OrderProductDTO();
+					orderProductDTO.setAmount(Integer.parseInt(String.valueOf(orderProductResultDTO.getOrderQuantity())));
+					orderProductDTO.setProductName(String.valueOf(orderProductResultDTO.getGoodsName()));
+					orderProductDTO.setProductDesc(String.valueOf(orderProductResultDTO.getGoodsDescription()));
 					productList.add(orderProductDTO);
 				}
 			}
@@ -118,21 +120,19 @@ public class OrderProductMappingService {
 		}
 
 
-		for(SendDTO sendDTO : sendDTOList){
-			DecimalFormat format = new DecimalFormat("###,###");
-			StringBuilder sb = new StringBuilder();
-			for(OrderProductDTO dto : sendDTO.getProductList()){
-				sb.append("<tr style=\"border-top:1px solid #ddd\">");
-				sb.append("    <td style=\"padding:15px; border-right:1px solid #ddd;\">");
-				sb.append("        <p style=\"margin:0\">" + dto.getProductName() + "</p>");
-				sb.append("        <p style=\"margin:2px 0 0 0; font-size:12px; color:#888;\">" + dto.getProductDesc() + "</p>");
-				sb.append("    </td>");
-				sb.append("    <td align=\"center\">");
-				sb.append("        <p>" + format.format(dto.getAmount()) + "개</p>");
-				sb.append("    </td>");
-				sb.append("</tr>");
+		for(final SendDTO sendDTO : sendDTOList){
+			final DecimalFormat format = new DecimalFormat("###,###");
+			final StringBuilder builder = new StringBuilder();
+			for(final OrderProductDTO dto : sendDTO.getProductList()){
+				builder.append("<tr style=\"border-top:1px solid #ddd\"><td style=\"padding:15px; border-right:1px solid #ddd;\"><p style=\"margin:0\">");
+				builder.append(dto.getProductName());
+				builder.append("</p><p style=\"margin:2px 0 0 0; font-size:12px; color:#888;\">");
+				builder.append(dto.getProductDesc());
+				builder.append("</p></td><td align=\"center\"><p>");
+				builder.append(format.format(dto.getAmount()));
+				builder.append("개</p></td></tr>");
 			}
-			sendDTO.setOrderArea(sb.toString());
+			sendDTO.setOrderArea(builder.toString());
 			mailService.sendMail(
 					ServiceEnumCode.EmailTypeEnumCode.ORDER.toString(),
 					ServiceEnumCode.EmailTypeEnumCode.ORDER.getMessage(),
@@ -175,4 +175,7 @@ public class OrderProductMappingService {
 	public OrderProductMapping findById(final Long orderGoodsSeq) {
 		return orderProductMapperRepository.findById(orderGoodsSeq).orElse(new OrderProductMapping());
 	}
+
 }
+
+

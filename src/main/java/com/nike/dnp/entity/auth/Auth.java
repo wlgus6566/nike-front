@@ -99,7 +99,7 @@ public class Auth extends BaseTimeEntity implements Serializable {
     public Auth(final AuthSaveDTO authSaveDTO) {
         this.upperAuthSeq = authSaveDTO.getUpperAuthSeq();
         this.authName = authSaveDTO.getAuthName();
-        this.roleType = "ROLE_" + authSaveDTO.getAuthName();
+        this.roleType = "ROLE_" + authSaveDTO.getUpperAuthSeq() + "_" + System.currentTimeMillis();
         this.useYn = "Y";
     }
 

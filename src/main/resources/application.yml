@@ -24,13 +24,15 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   servlet:
     multipart:
-      max-file-size: 1GB
+      max-file-size: 1000MB
+      max-request-size: 1000MB
+
 
 
 ## 시큐리티 url/ ip 체크 flag
 security:
   auth:
-    url: false
+    url: true
     ip : false
 
 ## email 계정
@@ -43,4 +45,5 @@ nike:
       from: "cokeplay.emotion@emotion.co.kr"
   #임시 경로
   file:
-      root: "/home/file"
+    root: '/home/file'
+    imageMagick: '/imageTool'

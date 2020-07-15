@@ -14,7 +14,7 @@ import java.util.List;
  * @Description
  */
 @Repository
-public interface ContentsFileRepository extends JpaRepository<ContentsFile, Long> {
+public interface ContentsFileRepository extends JpaRepository<ContentsFile, Long>, ContentsFileRepositoryCustom {
 
     /**
      * Find by contents seq and use yn optional.

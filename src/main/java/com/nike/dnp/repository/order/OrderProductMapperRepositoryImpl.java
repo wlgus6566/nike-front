@@ -1,13 +1,13 @@
 package com.nike.dnp.repository.order;
 
+import com.nike.dnp.dto.order.OrderProductResultDTO;
 import com.nike.dnp.dto.order.OrderSearchDTO;
 import com.nike.dnp.entity.agency.QAgency;
 import com.nike.dnp.entity.order.OrderProductMapping;
 import com.nike.dnp.entity.order.QOrder;
 import com.nike.dnp.entity.order.QOrderProductMapping;
 import com.nike.dnp.entity.product.QProduct;
-import com.nike.dnp.util.TupleUtil;
-import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -51,42 +50,31 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 	 * @Description
 	 */
 	@Override
-	public List<HashMap<String, Object>> findSearchEmailValue(Long orderSeq) {
-		QOrderProductMapping orderProductMapping = QOrderProductMapping.orderProductMapping;
-		QProduct product = QProduct.product;
-		QOrder order = QOrder.order;
-		QAgency agency = QAgency.agency;
+	public List<OrderProductResultDTO> findSearchEmailValue(final Long orderSeq) {
+		final QOrderProductMapping orderProductMapping = QOrderProductMapping.orderProductMapping;
+		final QProduct product = QProduct.product;
+		final QOrder order = QOrder.order;
+		final QAgency agency = QAgency.agency;
 
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 
-		List<Tuple> tupleList = queryFactory.select(orderProductMapping.orderSeq,
-													orderProductMapping.registrationDt,
-													orderProductMapping.orderQuantity,
-													product.goodsName,
-													product.goodsDescription,
-													agency.agencyName,
-													agency.agencySeq,
-													agency.email,
-													order.orderDescription)
+
+		return queryFactory.select(
+				Projections.bean(OrderProductResultDTO.class, orderProductMapping.orderSeq,
+																			 orderProductMapping.registrationDt,
+																			 orderProductMapping.orderQuantity,
+																			 product.goodsName,
+																			 product.goodsDescription,
+																			 agency.agencyName,
+																			 agency.agencySeq,
+																			 agency.email,
+																			 order.orderDescription))
 											.from(orderProductMapping)
 											.innerJoin(order).on(orderProductMapping.orderSeq.eq(order.orderSeq))
 											.innerJoin(product).on(orderProductMapping.goodsSeq.eq(product.goodsSeq))
 											.innerJoin(agency).on(product.agencySeq.eq(agency.agencySeq))
 											.where(orderProductMapping.orderSeq.eq(orderSeq))
-											.orderBy(orderProductMapping.orderSeq.desc())
-											.fetch();
-
-		return TupleUtil.listTupleToListHashMap(
-				tupleList,
-				orderProductMapping.orderSeq,
-				orderProductMapping.registrationDt,
-				orderProductMapping.orderQuantity,
-				product.goodsName,
-				product.goodsDescription,
-				agency.agencyName,
-				agency.agencySeq,
-				agency.email,
-				order.orderDescription);
+											.orderBy(orderProductMapping.orderSeq.desc()).fetch();
 	}
 
 	/**

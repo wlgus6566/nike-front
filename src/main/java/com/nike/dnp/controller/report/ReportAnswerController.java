@@ -1,21 +1,15 @@
 package com.nike.dnp.controller.report;
 
 import com.nike.dnp.dto.report.ReportAnswerSaveDTO;
-import com.nike.dnp.dto.report.ReportSaveDTO;
-import com.nike.dnp.dto.report.ReportSearchDTO;
-import com.nike.dnp.dto.report.ReportUpdateDTO;
-import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportAnswer;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.report.ReportAnswerService;
-import com.nike.dnp.service.report.ReportService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,7 +61,7 @@ public class ReportAnswerController {
      * @Description
      */
     @ApiOperation(
-            value = "Report 댓글 목록 조회"
+            value = "보고서 댓글 목록 조회"
             , notes = REQUEST_CHARACTER
             + "reportSeq|사이즈|false|Integer\n"
             + "[하위 Parameters 참조]\n\n\n\n"
@@ -82,9 +76,9 @@ public class ReportAnswerController {
             + "number||현재페이지|Integer\n"
             + "size||노출갯수|Integer\n\n\n\n"
     )
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Report 댓글 목록 조회")
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 댓글 목록 조회", value = "/{reportSeq}")
     public SingleResult<List<ReportAnswer>> getAllReportAnswer(
-            final Long reportSeq
+            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2", required = true) @PathVariable final Long reportSeq
     ) {
         log.info("ReportAnswerController.getAllReportAnswer");
         return responseService.getSingleResult(reportAnswerService.findAll(reportSeq));

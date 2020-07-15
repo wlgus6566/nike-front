@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -86,15 +87,22 @@ public class ProductController {
 	}
 
 
-	@ApiOperation(value = "상품 목록 조회(유저용)", notes = REQUEST_CHARACTER + "keyword|키워드|false|String\n" + "page|페이지|false|Integer\n" + "size|사이즈|false|Integer\n")
+	@ApiOperation(value = "상품 목록 조회(유저용)", notes = REQUEST_CHARACTER
+			+ "keyword|키워드|false|String\n"
+			+ "page|페이지|false|Integer\n"
+			+ "size|사이즈|false|Integer\n"
+			+ "category3Code|카테고리 3 코드|false|String\n")
 	@GetMapping(value = "{category2Code}/list", name = "상품 목록 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public SingleResult<Page<ProductResultDTO>> findPagesProductCategory2(@PathVariable @ApiParam(name="category2Code",value="카테고리 2 코드",allowableValues = "SUBSIDIARY,NIKE_BY_YOU,CUSTOM23,MNQ") final String category2Code,
+	public SingleResult<Page<ProductResultDTO>> findPagesProductCategory2(@PathVariable @ApiParam(name="category2Code",value="카테고리 2 코드",allowableValues = "SUBSIDIARY,NIKE_BY_YOU,CUSTOM23,MNQ",required = true) final String category2Code,
 																		  final ProductUserSearchDTO productUserSearchDTO) {
 
-		ProductSearchDTO productSearchDTO = new ProductSearchDTO();
+		final ProductSearchDTO productSearchDTO = new ProductSearchDTO();
 		productSearchDTO.setPage(productUserSearchDTO.getPage());
 		productSearchDTO.setSize(productUserSearchDTO.getSize());
 		productSearchDTO.setCategory2Code(category2Code);
+		if(!ObjectUtils.isEmpty(productUserSearchDTO.getCategory3Code())){
+			productSearchDTO.setCategory3Code(productUserSearchDTO.getCategory3Code());
+		}
 		productSearchDTO.setExposureYn("Y");
 		productSearchDTO.setKeyword(productUserSearchDTO.getKeyword());
 
@@ -128,7 +136,7 @@ public class ProductController {
 	 */
 	@ApiOperation(value = "다수 상품 상세 조회", notes = REQUEST_CHARACTER + "goodsSeq|상품시퀀스|true|Integer\n")
 	@GetMapping(name = "상품상세조회", produces = MediaType.APPLICATION_JSON_VALUE)
-	public SingleResult<List<Product>> findbySearchProduct(@ApiParam(name = "goodsSeqList", value = "상품 시퀀스", defaultValue = "29,30,31") @RequestParam final List<Long> goodsSeqList) {
+	public SingleResult<List<Product>> findbySearchProduct(@ApiParam(name = "goodsSeqList", value = "상품 시퀀스[배열]", defaultValue = "29,30,31") @RequestParam final List<Long> goodsSeqList) {
 		return responseService.getSingleResult(productService.findBySearchId(goodsSeqList));
 	}
 
@@ -136,8 +144,8 @@ public class ProductController {
 	 * 상품 등록
 	 *
 	 * @param productSaveDTO the product save dto
-	 * @param authUserDTO    the auth user dto
 	 * @return the single result
+	 * @throws IOException the io exception
 	 * @author [윤태호]
 	 * @CreatedOn 2020. 6. 26. 오후 4:42:04
 	 * @Description
@@ -194,17 +202,17 @@ public class ProductController {
 	 * @CreatedOn 2020. 6. 26. 오후 3:08:11
 	 * @Description
 	 */
-	@ApiOperation(value = "상품 삭제", notes = BASIC_CHARACTER)
-	@DeleteMapping(name = "상품 삭제", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "상품 삭제[배열]", notes = BASIC_CHARACTER)
+	@DeleteMapping(name = "상품 삭제[배열]", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<Boolean> deleteProduct(@ApiParam(name = "goodsSeqList", value = "상품 시퀀스", defaultValue = "29,30,31") @RequestParam final List<Long> goodsSeqList,
 											   @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO) {
 
-		List<Product> productList = productService.findBySearchId(goodsSeqList);
+		final List<Product> productList = productService.findBySearchId(goodsSeqList);
 
 		final ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO();
 		productUpdateDTO.setUseYn("N");
 		productUpdateDTO.setUpdaterSeq(authUserDTO.getUserSeq());
-		boolean check = productService.deleteArray(
+		final boolean check = productService.deleteArray(
 				productList,
 				productUpdateDTO);
 		return responseService.getSingleResult(check);

@@ -43,6 +43,26 @@ public class UserPredicateHelper {
     }
 
     /**
+     * Compare status predicate.
+     *
+     * @param userSearchDTO the user search dto
+     * @return the predicate
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 13. 오후 5:03:47
+     * @Description 상태값 비교
+     */
+    public Predicate compareStatus(final UserSearchDTO userSearchDTO) {
+        final BooleanBuilder builder = new BooleanBuilder();
+        final String status = userSearchDTO.getStatus();
+
+        if (!status.isEmpty()) {
+            builder.and(QUser.user.userStatusCode.eq(status));
+        }
+
+        return builder;
+    }
+
+    /**
      * Compare date predicate.
      *
      * @param userSearchDTO the user search dto

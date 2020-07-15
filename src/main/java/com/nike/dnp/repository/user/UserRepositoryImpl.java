@@ -74,6 +74,7 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
                 .innerJoin(qAuth).on(qUserAuth.authSeq.eq(qAuth.authSeq))
                 .where(UserPredicateHelper.compareKeyword(userSearchDTO)
                     , UserPredicateHelper.compareDate(userSearchDTO)
+                    , UserPredicateHelper.compareStatus(userSearchDTO)
                     , UserPredicateHelper.compareAuth(userSearchDTO)
                     , qUser.userStatusCode.ne(ServiceEnumCode.UserStatusEnumCode.DELETE.toString())
                 );
@@ -91,7 +92,7 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
      * @Description 90일 지난 패스워드 체크
      */
     @Override
-    public long countByPaswordChangePeriod(Long userSeq) {
+    public long countByPaswordChangePeriod(final Long userSeq) {
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
         return queryFactory
                 .selectFrom(QUser.user)

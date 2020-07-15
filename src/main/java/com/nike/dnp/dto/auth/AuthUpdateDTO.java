@@ -25,4 +25,20 @@ public class AuthUpdateDTO {
     @ApiModelProperty(name = "authName", value = "권한명", required = true)
     private String authName;
 
+    /**
+     * 메뉴 역할 시퀀스 배열
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "menuRoleSeqArray", value = "메뉴 역할 시퀀스 배열")
+    private Long[] menuRoleSeqArray;
+
+    //TODO[ojh] 2020-07-13 : 이번엔 안하는걸로~
+    /*
+    @ApiModelProperty(name = "insertMenuRoleSeqArray", value = "등록 메뉴 역할 시퀀스 배열")
+    Long[] insertMenuRoleSeqArray;
+
+    @ApiModelProperty(name = "deleteMenuRoleSeqArray", value = "삭제 메뉴 역할 시퀀스 배열")
+    Long[] deleteMenuRoleSeqArray;
+    */
 }
