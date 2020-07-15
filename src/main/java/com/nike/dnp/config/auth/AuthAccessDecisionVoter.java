@@ -164,17 +164,15 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 			if(resourceUrl.toString().contains("{")){
 				resourceUrl= new StringBuilder(resourceUrl.toString().substring(0, resourceUrl.toString().indexOf("{")));
 				resourceUrl.append('*');
-				//resourceUrl = resourceUrl.substring(0,resourceUrl.indexOf("{"))+"*";
 			}
 			if(method.equalsIgnoreCase(HttpMethod.GET.name())){
 				resourceUrl.append('*');
-				//resourceUrl = resourceUrl + "*";
 			}
 			log.debug("resourceUrl {}", resourceUrl);
 			//url 매칭 되는것이 있는지 체크
 			if(antPathMatcher.match(resourceUrl.toString(),url)){
 				// http 메소드 확인
-				if(String.valueOf(resourceMethod).isEmpty() || resourceMethod.equalsIgnoreCase(method)){
+				if(String.valueOf(resourceMethod).isEmpty() || resourceMethod.contains(method)){
 					result = ACCESS_GRANTED;
 					break;
 
