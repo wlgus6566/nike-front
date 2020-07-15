@@ -11,10 +11,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * FileUtil
@@ -243,7 +245,7 @@ public class FileUtil {
 
 
 	/**
-	 * temp 폴더 파일 삭제 	 *
+	 * temp 폴더 파일 삭제 (등록후 24시간 지난 파일들만 삭제 처리)
 	 * @author [윤태호]
 	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
 	 * @Description
@@ -251,8 +253,12 @@ public class FileUtil {
 	public static void deleteTemp() {
 		final File tempFile = new File(root+File.separator+ ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder());
 		final File[] files = tempFile.listFiles();
+
 		for(final File file : files){
-			if(file.isFile()){
+			LocalDateTime updateDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), TimeZone.getDefault().toZoneId());
+			updateDate = updateDate.plusHours(24);
+			LocalDateTime today = LocalDateTime.now();
+			if(updateDate.isBefore(today) && file.isFile()){
 				file.delete();
 			}
 		}

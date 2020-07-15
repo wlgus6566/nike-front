@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -86,15 +87,22 @@ public class ProductController {
 	}
 
 
-	@ApiOperation(value = "상품 목록 조회(유저용)", notes = REQUEST_CHARACTER + "keyword|키워드|false|String\n" + "page|페이지|false|Integer\n" + "size|사이즈|false|Integer\n")
+	@ApiOperation(value = "상품 목록 조회(유저용)", notes = REQUEST_CHARACTER
+			+ "keyword|키워드|false|String\n"
+			+ "page|페이지|false|Integer\n"
+			+ "size|사이즈|false|Integer\n"
+			+ "category3Code|카테고리 3 코드|false|String\n")
 	@GetMapping(value = "{category2Code}/list", name = "상품 목록 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public SingleResult<Page<ProductResultDTO>> findPagesProductCategory2(@PathVariable @ApiParam(name="category2Code",value="카테고리 2 코드",allowableValues = "SUBSIDIARY,NIKE_BY_YOU,CUSTOM23,MNQ") final String category2Code,
+	public SingleResult<Page<ProductResultDTO>> findPagesProductCategory2(@PathVariable @ApiParam(name="category2Code",value="카테고리 2 코드",allowableValues = "SUBSIDIARY,NIKE_BY_YOU,CUSTOM23,MNQ",required = true) final String category2Code,
 																		  final ProductUserSearchDTO productUserSearchDTO) {
 
 		final ProductSearchDTO productSearchDTO = new ProductSearchDTO();
 		productSearchDTO.setPage(productUserSearchDTO.getPage());
 		productSearchDTO.setSize(productUserSearchDTO.getSize());
 		productSearchDTO.setCategory2Code(category2Code);
+		if(!ObjectUtils.isEmpty(productUserSearchDTO.getCategory3Code())){
+			productSearchDTO.setCategory3Code(productUserSearchDTO.getCategory3Code());
+		}
 		productSearchDTO.setExposureYn("Y");
 		productSearchDTO.setKeyword(productUserSearchDTO.getKeyword());
 
@@ -136,8 +144,8 @@ public class ProductController {
 	 * 상품 등록
 	 *
 	 * @param productSaveDTO the product save dto
-	 * @param authUserDTO    the auth user dto
 	 * @return the single result
+	 * @throws IOException the io exception
 	 * @author [윤태호]
 	 * @CreatedOn 2020. 6. 26. 오후 4:42:04
 	 * @Description

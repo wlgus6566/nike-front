@@ -31,6 +31,8 @@ public class ProductUserSearchDTO extends SearchDTO {
 	@ApiParam(value = "카테고리 2 코드",name = "category2Code", defaultValue = "",hidden = true)
 	private String category2Code;
 
+	@ApiParam(value = "카테고리 3 코드", name = "category3Code", allowableValues = "SUBSIDIARY21,SUBSIDIARY22,SUBSIDIARY23,SUBSIDIARY24,SUBSIDIARY25,SUBSIDIARY26",required = true)
+	private String category3Code;
 	/**
 	 * 노출 여부
 	 */
