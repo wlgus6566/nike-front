@@ -69,7 +69,11 @@ public class ContentsController {
         , notes = REQUEST_CHARACTER
         + "page|페이지|false|Integer|0부터 시작\n"
         + "size|사이즈|false|Integer\n"
-        + "keyword|검색어|false|String\n"
+        + "keyword|검색어|false|Strin|ASSET/TOOLKIT/FOUNDATION\n"
+        + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
+        + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
+        + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
+        + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n"
         + "orderType|정렬 타입|false|String|최신순:LATEST/시작일 순:START_DATE\n"
         + "[하위 Parameters 참조]\n\n\n\n"
         + "## Public/Paging Response ## \n"
@@ -109,6 +113,10 @@ public class ContentsController {
     @ApiOperation(
             value = "콘텐츠 등록"
             , notes = REQUEST_CHARACTER
+            + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
+            + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
+            + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
+            + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n"
     )
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "콘텐츠 등록", value = "/{topMenuCode}/{menuCode}")
     public SingleResult<Contents> saveContents(
@@ -136,6 +144,10 @@ public class ContentsController {
     @ApiOperation(
             value = "콘텐츠 상세조회"
             , notes = REQUEST_CHARACTER
+            + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
+            + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
+            + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
+            + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n"
     )
     @GetMapping(name = " 콘텐츠 상세조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -158,7 +170,11 @@ public class ContentsController {
      * @CreatedOn 2020. 7. 13. 오전 11:59:45
      * @Description
      */
-    @ApiOperation(value = "콘텐츠 수정", notes = REQUEST_CHARACTER)
+    @ApiOperation(value = "콘텐츠 수정", notes = REQUEST_CHARACTER
+            + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
+            + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
+            + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
+            + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n")
     @PutMapping(name = "콘텐츠 수정", value = "/{topMenuCode}/{menuCode}"
             , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Contents>> updateContents(
@@ -181,7 +197,11 @@ public class ContentsController {
      * @CreatedOn 2020. 7. 7. 오후 2:06:55
      * @Description
      */
-    @ApiOperation(value="콘텐츠 삭제", notes = REQUEST_CHARACTER)
+    @ApiOperation(value="콘텐츠 삭제", notes = REQUEST_CHARACTER
+            + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
+            + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
+            + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
+            + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n")
     @DeleteMapping(name = "콘텐츠 삭제", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Contents>> deleteContents(

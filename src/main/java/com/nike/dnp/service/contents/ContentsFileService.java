@@ -55,7 +55,7 @@ public class ContentsFileService {
                 contentsFileSearchDTO,
                 PageRequest.of(contentsFileSearchDTO.getPage()
                 , contentsFileSearchDTO.getSize()
-                , contentsFileSearchDTO.equals(ServiceEnumCode.SearchEnumCode.FILE_NAME.toString())
+                , contentsFileSearchDTO.getOrderType().equals(ServiceEnumCode.SearchEnumCode.FILE_NAME.toString())
                         ? Sort.by("registrationDt").descending() : Sort.by("fileName").ascending()));
     }
 //
