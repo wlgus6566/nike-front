@@ -67,7 +67,7 @@ public class ContentsFileController {
      * @Description
      */
     @ApiOperation(
-        value = "콘텐츠 목록 조회"
+        value = "콘텐츠 파일 목록 조회"
         , notes = REQUEST_CHARACTER
         + "page|페이지|false|Integer|0부터 시작\n"
         + "size|사이즈|false|Integer\n"
