@@ -56,7 +56,7 @@ public class ContentsFileRepositoryImpl extends QuerydslRepositorySupport implem
      * @Description
      */
     @Override
-    public List<ContentsFileResultDTO> findAllContentsFile(final ContentsFileSearchDTO contentsFileSearchDTO) {
+    public Page<ContentsFileResultDTO> findAllContentsFilePaging(final ContentsFileSearchDTO contentsFileSearchDTO, final PageRequest pageRequest) {
         final QContentsFile qContentsFile = QContentsFile.contentsFile;
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
         final JPAQuery<ContentsFile> query = queryFactory.selectFrom(qContentsFile)
@@ -66,8 +66,8 @@ public class ContentsFileRepositoryImpl extends QuerydslRepositorySupport implem
                         , qContentsFile.contentsSeq.eq(contentsFileSearchDTO.getContentsSeq())
                         , qContentsFile.useYn.eq("Y")
                 );
-        final List<ContentsFileResultDTO> contentsList = ObjectMapperUtils.mapAll(getQuerydsl().applySorting(Sort.by("fileName").ascending(), query).fetch(), ContentsFileResultDTO.class);
-        return contentsList;
+        final List<ContentsFileResultDTO> contentsFileResultDTOList = ObjectMapperUtils.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsFileResultDTO.class);
+        return new PageImpl<>(contentsFileResultDTOList, pageRequest, query.fetchCount());
     }
 }
 

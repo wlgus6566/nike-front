@@ -197,6 +197,7 @@ public class ServiceEnumCode {
     @Getter
     public enum FileFolderEnumCode {
         PRODUCT("product"),
+        CONTENTS("contents"),
         TEMP("temp");
 
         /**

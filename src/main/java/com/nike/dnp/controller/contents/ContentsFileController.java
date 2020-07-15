@@ -27,7 +27,7 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@Api(description = "콘텐츠", tags = "CONTENTS")
+@Api(description = "콘텐츠 파일", tags = "CONTENTS_FILE")
 @RequestMapping(value = "/api/contents/file", name = "콘텐츠 파일")
 @RequiredArgsConstructor
 public class ContentsFileController {
@@ -86,14 +86,14 @@ public class ContentsFileController {
         + "size||노출갯수|Integer\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Contents 목록 조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}")
-    public SingleResult<List<ContentsFileResultDTO>> getAllContentsFile(
+    public SingleResult<Page<ContentsFileResultDTO>> getAllContentsFile(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "SP", required = true) @PathVariable final String menuCode,
             @ApiParam(name = "contentsSeq", value = "콘텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq,
             final ContentsFileSearchDTO contentsFileSearchDTO
     ) {
         contentsFileSearchDTO.setContentsSeq(contentsSeq);
-        return responseService.getSingleResult(contentsFileService.findAllContentsFile(contentsFileSearchDTO));
+        return responseService.getSingleResult(contentsFileService.findAllContentsFilePaging(contentsFileSearchDTO));
     }
 //
 //    /**

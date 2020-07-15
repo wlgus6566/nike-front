@@ -2,6 +2,8 @@ package com.nike.dnp.repository.contents;
 
 import com.nike.dnp.dto.contents.ContentsFileResultDTO;
 import com.nike.dnp.dto.contents.ContentsFileSearchDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,15 +18,17 @@ import java.util.List;
 @Repository
 public interface ContentsFileRepositoryCustom {
 
+
     /**
-     * Find all contents file list.
+     * Find all contents file paging page.
      *
      * @param contentsFileSearchDTO the contents file search dto
-     * @return the list
+     * @param pageRequest           the page request
+     * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 13. 오후 5:57:15
+     * @CreatedOn 2020. 7. 14. 오후 3:18:37
      * @Description
      */
-    List<ContentsFileResultDTO> findAllContentsFile(final ContentsFileSearchDTO contentsFileSearchDTO);
+    Page<ContentsFileResultDTO> findAllContentsFilePaging(final ContentsFileSearchDTO contentsFileSearchDTO, final PageRequest pageRequest);
 
 }

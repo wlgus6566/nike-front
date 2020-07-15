@@ -9,6 +9,7 @@ import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.contents.ContentsService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -187,9 +188,21 @@ public class ContentsController {
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
             @ApiParam(name = "contentsSeq", value = "콘텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
-        log.info("AssetController.delete");
+        log.info("ContentsController.delete");
         return responseService.getSingleResult(contentsService.delete(contentsSeq));
     }
+
+    @ApiModelProperty(value = "Contents 다운로드", notes = REQUEST_CHARACTER)
+    @PostMapping(name = "Contents 다운로드", value = "download/{topMenuCode}/{menuCode}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public String downloadContents(
+            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
+            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode
+    ) {
+        log.info("ContentsController.downloadContents");
+        // TODO[lsj]
+        return null;
+    }
+
 
 
 }

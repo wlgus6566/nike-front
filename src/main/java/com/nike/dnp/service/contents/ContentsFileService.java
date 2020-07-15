@@ -48,10 +48,15 @@ public class ContentsFileService {
      * @CreatedOn 2020. 7. 13. 오후 6:01:00
      * @Description
      */
-    public List<ContentsFileResultDTO> findAllContentsFile(final ContentsFileSearchDTO contentsFileSearchDTO) {
+    public Page<ContentsFileResultDTO> findAllContentsFilePaging(final ContentsFileSearchDTO contentsFileSearchDTO) {
 
         // QueryDsl 기능 이용
-        return contentsFileRepository.findAllContentsFile(contentsFileSearchDTO);
+        return contentsFileRepository.findAllContentsFilePaging(
+                contentsFileSearchDTO,
+                PageRequest.of(contentsFileSearchDTO.getPage()
+                , contentsFileSearchDTO.getSize()
+                , contentsFileSearchDTO.equals(ServiceEnumCode.SearchEnumCode.FILE_NAME.toString())
+                        ? Sort.by("registrationDt").descending() : Sort.by("fileName").ascending()));
     }
 //
 //    /**

@@ -2,10 +2,12 @@ package com.nike.dnp.service.contents;
 
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.contents.*;
+import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
+import com.nike.dnp.util.ImageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +82,15 @@ public class ContentsService {
         final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
         List<ContentsFile> savedContentsFileList = new ArrayList<>();
 
+        // 썸네일 base64 -> file 정보로 변환
+        if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
+            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsSaveDTO.getImageBase64());
+
+            contentsSaveDTO.setFolderName(fileResultDTO.getFileName());
+            contentsSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
+            contentsSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
+        }
+
 //        contentsFile 추가
         if (!contentsSaveDTO.getContentsFileList().isEmpty()) {
             for (ContentsFileSaveDTO contentsFileSaveDTO : contentsSaveDTO.getContentsFileList()) {
@@ -119,6 +131,14 @@ public class ContentsService {
         log.info("contentsService.update");
         // contents Update
         final Optional<Contents> contents = contentsRepository.findById(contentsUpdateDTO.getContentsSeq());
+        // 썸네일 base64 -> file 정보로 변환
+        if (!ObjectUtils.isEmpty(contentsUpdateDTO.getImageBase64())) {
+            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsUpdateDTO.getImageBase64());
+
+            contentsUpdateDTO.setFolderName(fileResultDTO.getFileName());
+            contentsUpdateDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
+            contentsUpdateDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
+        }
         contents.ifPresent(value -> value.update(contentsUpdateDTO));
 
         // contents File
