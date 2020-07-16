@@ -155,7 +155,7 @@ public class AuthService {
 
         final List<MenuRoleResourceReturnDTO> redisReources = (List<MenuRoleResourceReturnDTO>) redisService.get("auths:"+roleType);
         if (!ObjectUtils.isEmpty(redisReources) && redisReources.size() > 0) {
-            return  redisReources;
+            return redisReources;
         }
 
         return menuRoleResourceRepository.getResources(
@@ -189,7 +189,7 @@ public class AuthService {
 
         final List<MenuReturnDTO> redisMenus = (List<MenuReturnDTO>) redisService.get("roles:menus:"+roleType);
         if (!ObjectUtils.isEmpty(redisMenus) && redisMenus.size() > 0) {
-            return  redisMenus;
+            return redisMenus;
         }
 
         final Optional<Auth> auth = this.findByRoleType(roleType);

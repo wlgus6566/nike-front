@@ -139,6 +139,15 @@ public class Menu extends BaseTimeEntity implements Serializable {
     private Long menuOrder;
 
     /**
+     * 메뉴 depth
+     *
+     * @author [오지훈]
+     */
+    @Column(name = "MENU_DEPTH")
+    @ApiModelProperty(name = "menuDepth", value = "메뉴 depth", required = true)
+    private Long menuDepth;
+
+    /**
      * 사용 여부
      *
      * @author [오지훈]

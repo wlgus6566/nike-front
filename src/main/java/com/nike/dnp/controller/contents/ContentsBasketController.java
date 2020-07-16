@@ -3,7 +3,6 @@ package com.nike.dnp.controller.contents;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.ContentsBasketResultDTO;
 import com.nike.dnp.dto.contents.ContentsBasketSaveDTO;
-import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsBasket;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;

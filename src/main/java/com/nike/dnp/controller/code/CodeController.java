@@ -69,8 +69,8 @@ public class CodeController {
     @GetMapping(value = "/codes/{upperCode}", name = "하위 코드 목록 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<List<Code>> getConfCodes(
-            @ApiParam(name = "upperCode", value = "상위 코드", required = true)
-            @PathVariable final String upperCode) {
+            @ApiParam(name = "upperCode", value = "상위 코드", required = true) @PathVariable final String upperCode
+    ) {
         return responseService.getSingleResult(codeService.findCodesByUpperCode(upperCode));
     }
 
@@ -90,7 +90,9 @@ public class CodeController {
     @PostMapping(name = "코드 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Code> saveCode(@ApiParam(value = "코드 저장 DTO", required = true) @RequestBody final CodeSaveDTO codeSaveDTO) {
+    public SingleResult<Code> saveCode(
+            @ApiParam(value = "코드 저장 DTO", required = true) @RequestBody final CodeSaveDTO codeSaveDTO
+    ) {
         return responseService.getSingleResult(codeService.save(codeSaveDTO));
     }
 
@@ -112,10 +114,8 @@ public class CodeController {
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Code>> updateCode(
-            @ApiParam(name = "code", value = "코드", required = true)
-            @PathVariable final String code
-            , @ApiParam(value = "코드 수정 DTO", required = true)
-            @RequestBody final CodeUpdateDTO codeUpdateDTO
+            @ApiParam(name = "code", value = "코드", required = true) @PathVariable final String code
+            , @ApiParam(value = "코드 수정 DTO", required = true) @RequestBody final CodeUpdateDTO codeUpdateDTO
     ) {
         return responseService.getSingleResult(codeService.update(code, codeUpdateDTO));
     }
@@ -137,8 +137,7 @@ public class CodeController {
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Code>> deleteCode(
-            @ApiParam(name = "code", value = "코드", required = true)
-            @PathVariable final String code
+            @ApiParam(name = "code", value = "코드", required = true) @PathVariable final String code
     ) {
         return responseService.getSingleResult(codeService.delete(code));
     }
