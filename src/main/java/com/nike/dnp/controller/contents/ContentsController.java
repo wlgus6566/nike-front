@@ -1,9 +1,6 @@
 package com.nike.dnp.controller.contents;
 
-import com.nike.dnp.dto.contents.ContentsResultDTO;
-import com.nike.dnp.dto.contents.ContentsSaveDTO;
-import com.nike.dnp.dto.contents.ContentsSearchDTO;
-import com.nike.dnp.dto.contents.ContentsUpdateDTO;
+import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -17,7 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -213,7 +213,7 @@ public class ContentsController {
     }
 
     /**
-     * Download contents string.
+     * 콘텐츠 다운로드
      *
      * @param topMenuCode the top menu code
      * @param menuCode    the menu code
@@ -222,16 +222,17 @@ public class ContentsController {
      * @CreatedOn 2020. 7. 15. 오후 6:30:45
      * @Description
      */
-//    @ApiModelProperty(value = "콘텐츠 다운로드", notes = REQUEST_CHARACTER)
-//    @PostMapping(name = "콘텐츠 다운로드", value = "download/{topMenuCode}/{menuCode}", produces = {MediaType.APPLICATION_JSON_VALUE})
-//    public String downloadContents(
-//            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
-//            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode
-//    ) {
-//        log.info("ContentsController.downloadContents");
-//        // TODO[lsj]
-//        return null;
-//    }
+    @ApiModelProperty(value = "콘텐츠 다운로드", notes = REQUEST_CHARACTER)
+    @PostMapping(name = "콘텐츠 다운로드", value = "/{topMenuCode}/{menuCode}/download/{contentsFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public String downloadContents(
+            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
+            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
+            @ApiParam(name="contentsFileSeq", value = "콘텐츠 파일 seq", defaultValue = "1", required = true) @PathVariable final Long contentsFileSeq
+            , @ApiIgnore HttpServletResponse response
+            ) {
+        responseService.getSingleResult(contentsService.downloadContentsFile(contentsFileSeq));
+        return null;
+    }
 
 
 

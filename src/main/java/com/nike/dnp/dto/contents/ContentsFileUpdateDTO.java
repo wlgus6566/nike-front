@@ -107,4 +107,11 @@ public class ContentsFileUpdateDTO {
     @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "/cdn/file/path")
     private String thumbnailFilePhysicalName;
 
+    /**
+     * 파일 순서
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileOrder", value = "파일 순서", example = "1")
+    private Long fileOrder;
+
 }
