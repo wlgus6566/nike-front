@@ -23,10 +23,12 @@ instance.interceptors.request.use(
 	function (config) {
 		// 요청 바로 직전
 		// axios 설정값에 대해 작성합니다.
-		let token = window.sessionStorage.getItem('token')
+		//let token = window.sessionStorage.getItem('token')
+		let token = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjQ2NzY4NTl9.i_TH7DbQsw_DwBrjFBAFUw-3ME0nTUmAeaQg32q_MRT3hYaLxZVmJ2_LEyr94rDj0a1tzT-ZCBHYx70qCP88Zw'
 		// 세션 스토리지에 토큰정보가 있을 때 토큰정보를 헤더에 담음
 		if (token !== null && token !== 'undefined') {
-			config.headers.Authorization = token
+			config.headers.Authorization = token;
+			config.headers.Accept = "application/json";
 		}
 		return config;
 	},
