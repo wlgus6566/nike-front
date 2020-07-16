@@ -1,18 +1,22 @@
 package com.nike.dnp.repository.order;
 
+import com.nike.dnp.dto.order.OrderProductResultDTO;
+import com.nike.dnp.dto.order.OrderSearchDTO;
 import com.nike.dnp.entity.agency.QAgency;
 import com.nike.dnp.entity.order.OrderProductMapping;
 import com.nike.dnp.entity.order.QOrder;
 import com.nike.dnp.entity.order.QOrderProductMapping;
 import com.nike.dnp.entity.product.QProduct;
-import com.nike.dnp.util.TupleUtil;
-import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -24,7 +28,7 @@ import java.util.List;
  */
 @Slf4j
 @Repository
-public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport implements OrderProductMapperRepositoryCustom{
+public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport implements OrderProductMapperRepositoryCustom {
 	/**
 	 * Creates a new {@link QuerydslRepositorySupport} instance for the given domain type.
 	 *
@@ -46,41 +50,56 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 	 * @Description
 	 */
 	@Override
-	public List<HashMap<String, Object>> findSearchEmailValue(Long orderSeq) {
-		QOrderProductMapping orderProductMapping = QOrderProductMapping.orderProductMapping;
-		QProduct product = QProduct.product;
-		QOrder order = QOrder.order;
-		QAgency agency = QAgency.agency;
+	public List<OrderProductResultDTO> findSearchEmailValue(final Long orderSeq) {
+		final QOrderProductMapping orderProductMapping = QOrderProductMapping.orderProductMapping;
+		final QProduct product = QProduct.product;
+		final QOrder order = QOrder.order;
+		final QAgency agency = QAgency.agency;
 
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 
-		List<Tuple> tupleList =
-				queryFactory
-						.select(orderProductMapping.orderSeq
-								, orderProductMapping.registrationDt
-								, orderProductMapping.orderQuantity
-								, product.goodsName
-								, product.goodsDescription
-								, agency.agencyName
-								, agency.agencySeq
-								, agency.email
-								, order.orderDescription)
-						.from(orderProductMapping)
-						.innerJoin(order).on(orderProductMapping.orderSeq.eq(order.orderSeq))
-						.innerJoin(product).on(orderProductMapping.goodsSeq.eq(product.goodsSeq))
-						.innerJoin(agency).on(product.agencySeq.eq(agency.agencySeq))
-						.where(orderProductMapping.orderSeq.eq(orderSeq))
-						.orderBy(orderProductMapping.orderSeq.desc()).fetch();
 
-		return TupleUtil.listTupleToListHashMap(tupleList,
-				orderProductMapping.orderSeq,
-				orderProductMapping.registrationDt,
-				orderProductMapping.orderQuantity,
-				product.goodsName,
-				product.goodsDescription,
-				agency.agencyName,
-				agency.agencySeq,
-				agency.email,
-				order.orderDescription) ;
+		return queryFactory.select(
+				Projections.bean(OrderProductResultDTO.class, orderProductMapping.orderSeq,
+																			 orderProductMapping.registrationDt,
+																			 orderProductMapping.orderQuantity,
+																			 product.goodsName,
+																			 product.goodsDescription,
+																			 agency.agencyName,
+																			 agency.agencySeq,
+																			 agency.email,
+																			 order.orderDescription))
+											.from(orderProductMapping)
+											.innerJoin(order).on(orderProductMapping.orderSeq.eq(order.orderSeq))
+											.innerJoin(product).on(orderProductMapping.goodsSeq.eq(product.goodsSeq))
+											.innerJoin(agency).on(product.agencySeq.eq(agency.agencySeq))
+											.where(orderProductMapping.orderSeq.eq(orderSeq))
+											.orderBy(orderProductMapping.orderSeq.desc()).fetch();
+	}
+
+	/**
+	 * Find pages order page.
+	 *
+	 * @param orderSearchDTO the order search dto
+	 * @param pageRequest    the page request
+	 * @return the page
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 7. 오후 12:14:28
+	 * @Description
+	 */
+	@Override
+	public Page<OrderProductMapping> findPagesOrder(final OrderSearchDTO orderSearchDTO,
+													final PageRequest pageRequest) {
+		final QOrderProductMapping qOrderProductMapping = QOrderProductMapping.orderProductMapping;
+		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+
+		final JPAQuery<OrderProductMapping> query = queryFactory.selectFrom(qOrderProductMapping)
+																.where(
+																		OrderProductMappingPredicateHelper.afterStartDt(orderSearchDTO.getBeginDt()),
+																		OrderProductMappingPredicateHelper.beforeEndDt(orderSearchDTO.getEndDt()),
+																		qOrderProductMapping.registerSeq.eq(orderSearchDTO.getUserSeq()));
+
+		final List<OrderProductMapping> orderList = getQuerydsl().applyPagination(pageRequest,query).fetch();
+		return new PageImpl<>(orderList,pageRequest,query.fetchCount());
 	}
 }

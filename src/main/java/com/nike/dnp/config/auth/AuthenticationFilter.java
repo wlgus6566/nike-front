@@ -1,37 +1,45 @@
 package com.nike.dnp.config.auth;
 
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * 인증 필터
+ *
+ * @author [오지훈]
+ * @CreatedOn 2020. 7. 7. 오후 2:11:02
+ * @Description
  */
 @Slf4j
 @RequiredArgsConstructor
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	/**
+	 * The Auth manager
 	 *
+	 * @author [오지훈]
 	 */
 	private final AuthenticationManager authManager;
 
-
 	/**
 	 * 로그인 아이디 /비번 파라미터로 받아 인증 절차전 값 체크 및 인증 요청
+	 *
+	 * @param request  the request
+	 * @param response the response
+	 * @return the authentication
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 7. 7. 오후 2:11:02
+	 * @Description
 	 */
-
 	@Override
 	public Authentication attemptAuthentication(final HttpServletRequest request,
 												final HttpServletResponse response) {
@@ -40,14 +48,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		try {
 			final String username = obtainUsername(request);
 			final String password = obtainPassword(request);
-			if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
-				if("".equals(username)){
-					throw new InsufficientAuthenticationException(ErrorEnumCode.LoginError.CHECK_EMAIL.toString());
-				}
-				if(StringUtils.isEmpty(password)){
-					throw new InsufficientAuthenticationException(ErrorEnumCode.LoginError.WRONG_PASSWORD.toString());
-				}
-			}
 			token = new UsernamePasswordAuthenticationToken(username, password);
 		} catch (AuthenticationException exception) {
 			log.error("AuthenticationException", exception);

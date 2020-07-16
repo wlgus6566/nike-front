@@ -25,16 +25,16 @@ public class ProductPredicateHelper {
 	/**
 	 * 카테고리2 코드 조회
 	 *
-	 * @param category2code the category 2 code
+	 * @param category2Code the category 2 code
 	 * @return the predicate
 	 * @author [윤태호]
 	 * @CreatedOn 2020. 6. 23. 오후 5:05:02
 	 * @Description
 	 */
-	public static Predicate eqCate2gory(final String category2code) {
+	public static Predicate eqCate2gory(final String category2Code) {
 		final BooleanBuilder builder = new BooleanBuilder();
-		if(!StringUtils.isEmpty(category2code)){
-			builder.and(QProduct.product.category2Code.eq(category2code));
+		if(!StringUtils.isEmpty(category2Code)){
+			builder.and(QProduct.product.category2Code.eq(category2Code));
 		}
 		return builder;
 	}
@@ -42,16 +42,16 @@ public class ProductPredicateHelper {
 	/**
 	 * 카테고리3 코드 조회
 	 *
-	 * @param category3code the category 3 code
+	 * @param category3Code the category 3 code
 	 * @return the predicate
 	 * @author [윤태호]
 	 * @CreatedOn 2020. 6. 23. 오후 5:05:02
 	 * @Description
 	 */
-	public static Predicate eqCate3gory(final String category3code) {
+	public static Predicate eqCate3gory(final String category3Code) {
 		final BooleanBuilder builder = new BooleanBuilder();
-		if(!StringUtils.isEmpty(category3code)){
-			builder.and(QProduct.product.category2Code.eq(category3code));
+		if(!StringUtils.isEmpty(category3Code)){
+			builder.and(QProduct.product.category3Code.eq(category3Code));
 		}
 		return builder;
 	}

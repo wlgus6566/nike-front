@@ -1,11 +1,8 @@
 package com.nike.dnp.service.user;
 
-import com.nike.dnp.common.mail.MailService;
 import com.nike.dnp.common.variable.ErrorEnumCode;
-import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.common.variable.SuccessEnumCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
-import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.user.*;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.user.PasswordHistory;
@@ -14,6 +11,7 @@ import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.repository.auth.AuthRepository;
+import com.nike.dnp.repository.log.UserLoginLogRepository;
 import com.nike.dnp.repository.slang.SlangRepository;
 import com.nike.dnp.repository.user.PasswordHistoryRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
@@ -22,7 +20,6 @@ import com.nike.dnp.service.RedisService;
 import com.nike.dnp.util.CryptoUtil;
 import com.nike.dnp.util.EmailPatternUtil;
 import com.nike.dnp.util.PasswordPatternUtil;
-import com.nike.dnp.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -36,6 +33,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,13 +57,6 @@ public class UserService implements UserDetailsService {
      * @author [오지훈]
      */
     private final RedisService redisService;
-
-    /**
-     * MailService
-     *
-     * @author [오지훈]
-     */
-    private final MailService mailService;
 
     /**
      * UserRepository
@@ -110,21 +101,35 @@ public class UserService implements UserDetailsService {
     private final SlangRepository slangRepository;
 
     /**
+     * The User mail service
+     *
+     * @author [오지훈]
+     */
+    private final UserMailService userMailService;
+
+    /**
+     * The User login log repository
+     *
+     * @author [오지훈]
+     */
+    private final UserLoginLogRepository userLoginLogRepository;
+
+    /**
      * Find pages page.
      *
      * @param userSearchDTO the user search dto
-     * @return the list
+     * @return the page
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 2:40:43
      * @Description 페이징 조회(paging)
      */
-    public Page<User> findPages(final UserSearchDTO userSearchDTO) {
+    public Page<UserReturnDTO> findPages(final UserSearchDTO userSearchDTO) {
         log.info("UserService.findPages");
         return userRepository.findPages(
                 userSearchDTO,
                 PageRequest.of(userSearchDTO.getPage()
                         , userSearchDTO.getSize()
-                        , Sort.by("userSeq").descending()));
+                        , Sort.by(userSearchDTO.getSort()).descending()));
     }
 
     /**
@@ -140,6 +145,61 @@ public class UserService implements UserDetailsService {
         log.info("UserService.findById");
         return Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
                 () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.UserError.NOT_FOUND.getMessage())));
+    }
+
+    /**
+     * Gets user.
+     *
+     * @param userSeq the user seq
+     * @return the user
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 6. 오후 2:38:47
+     * @Description 상세 부분 조회
+     */
+    public UserReturnDTO getUser(final Long userSeq) {
+        log.info("UserService.getUser");
+        final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
+                () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.UserError.NOT_FOUND.getMessage())));
+
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
+        if (user.isPresent()) {
+            final User getUser = user.get();
+            userReturnDTO.setUserSeq(getUser.getUserSeq());
+            userReturnDTO.setNickname(getUser.getNickname());
+            userReturnDTO.setUserId(getUser.getUserId());
+            userReturnDTO.setUserStatusCode(getUser.getUserStatusCode());
+            userReturnDTO.setAuthName(getUser.getUserAuth().getAuth().getAuthName());
+        }
+
+        return userReturnDTO;
+    }
+
+    /**
+     * Gets my page.
+     *
+     * @param userSeq the user seq
+     * @return the my page
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 14. 오후 12:02:26
+     * @Description
+     */
+    public UserReturnDTO getMyPage(final Long userSeq) {
+        log.info("UserService.getMyPage");
+        final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
+                () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.UserError.NOT_FOUND.getMessage())));
+
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
+        if (user.isPresent()) {
+            final User getUser = user.get();
+            userReturnDTO.setUserSeq(getUser.getUserSeq());
+            userReturnDTO.setNickname(getUser.getNickname());
+            userReturnDTO.setUserId(getUser.getUserId());
+            userReturnDTO.setUserStatusCode(getUser.getUserStatusCode());
+            userReturnDTO.setAuthName(getUser.getUserAuth().getAuth().getAuthName());
+            userReturnDTO.setLoginLogs(userLoginLogRepository.findTop5ByUserSeqOrderByRegistrationDtDesc(userSeq));
+        }
+
+        return userReturnDTO;
     }
 
     /**
@@ -195,6 +255,7 @@ public class UserService implements UserDetailsService {
      * @Description 유저 아이디 카운트
      */
     public int countByUserId(final String userId) {
+        log.info("UserService.countByUserId");
         return userRepository.countByUserId(userId);
     }
 
@@ -208,20 +269,23 @@ public class UserService implements UserDetailsService {
      * @Description 등록
      */
     @Transactional
-    public UserAuth save(final UserSaveDTO userSaveDTO) {
+    public UserReturnDTO save(final UserSaveDTO userSaveDTO) {
         log.info("UserService.save");
         this.checkId(userSaveDTO.getUserId());
-
         final User user = userRepository.save(new User().save(userSaveDTO));
         final Auth auth = authRepository.findById(userSaveDTO.getAuthSeq()).orElseThrow(
                 () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.DataError.NOT_FOUND.getMessage()));
-        /*
-        final UserAuth userAuth = userAuthRepository.save(new UserAuth().save(user, auth));
-        if (userAuth.getUserAuthSeq() > 0) {
-            this.sendCreateUserEmail(user);
+
+        if(user.getUserSeq() > 0) {
+            userAuthRepository.save(new UserAuth().save(user, auth));
         }
-        */
-        return userAuthRepository.save(new UserAuth().save(user, auth));
+
+        // [계정생성안내] 메일 발송
+        userMailService.sendMailForCreateUser(user);
+
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
+        userReturnDTO.setUserSeq(user.getUserSeq());
+        return userReturnDTO;
     }
 
     /**
@@ -235,7 +299,7 @@ public class UserService implements UserDetailsService {
      * @Description 닉네임 /권한 수정
      */
     @Transactional
-    public Optional<UserAuth> update(
+    public UserReturnDTO update(
             final Long userSeq
             , final UserUpdateDTO userUpdateDTO
     ) {
@@ -246,7 +310,11 @@ public class UserService implements UserDetailsService {
         final Optional<UserAuth> userAuth = this.findByUser(user.get());
         userAuth.ifPresent(value -> value.update(userUpdateDTO));
 
-        return userAuth;
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
+        userReturnDTO.setUserSeq(user.get().getUserSeq());
+        userReturnDTO.setUserId(user.get().getUserId());
+        userReturnDTO.setAuthName(userAuth.get().getAuth().getAuthName());
+        return userReturnDTO;
     }
 
     /**
@@ -260,14 +328,17 @@ public class UserService implements UserDetailsService {
      * @Description 상태값 변경
      */
     @Transactional
-    public Optional<User> updateStatus(
+    public UserReturnDTO updateStatus(
             final Long userSeq
             , final UserUpdateStatusDTO userUpdateStatusDTO
     ) {
         log.info("UserService.updateStatus");
         final Optional<User> user = this.findById(userSeq);
         user.ifPresent(value -> value.updateStatus(userUpdateStatusDTO.getUserStatusCode()));
-        return user;
+
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
+        userReturnDTO.setUserSeq(user.get().getUserSeq());
+        return userReturnDTO;
     }
 
     /**
@@ -280,11 +351,14 @@ public class UserService implements UserDetailsService {
      * @Description 유저 단건 삭제
      */
     @Transactional
-    public Optional<User> deleteOne( final Long userSeq) {
+    public UserReturnDTO deleteOne(final Long userSeq) {
         log.info("UserService.deleteOne");
         final Optional<User> user = this.findById(userSeq);
         user.ifPresent(value -> value.delete(userSeq));
-        return user;
+
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
+        userReturnDTO.setUserSeq(user.get().getUserSeq());
+        return userReturnDTO;
     }
 
     /**
@@ -297,14 +371,16 @@ public class UserService implements UserDetailsService {
      * @Description 유저 배열 삭제
      */
     @Transactional
-    public List<User> deleteArray(final UserDeleteDTO userDeleteDTO) {
+    public List<Long> deleteArray(final UserDeleteDTO userDeleteDTO) {
         log.info("UserService.deleteArray");
         final List<User> users = userRepository.findAllByUserSeqIn(userDeleteDTO.getUserSeqArray());
-
+        final List<Long> list = new ArrayList<>();
         for (final User user : users) {
             user.delete(user.getUserSeq());
+            list.add(user.getUserSeq());
         }
-        return users;
+
+        return list;
     }
 
     /**
@@ -356,32 +432,100 @@ public class UserService implements UserDetailsService {
      * @Description 인증코드 검증 및 비밀번호 변경
      */
     @Transactional
-    public Boolean checkCertCode(final UserCertDTO userCertDTO) {
-        log.info("UserService.checkCertCode");
+    public UserReturnDTO confirmPassword(final UserCertDTO userCertDTO) {
+        log.info("UserService.confirmPassword1");
         final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(userCertDTO.getCertCode()), "Nike DnP");
         final String userId = decodeCertCode.split("\\|")[0];
+        final String certKey = decodeCertCode.split("\\|")[1];
         final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));
+        final String password = userCertDTO.getPassword();
         final String newPassword = userCertDTO.getNewPassword();
         final String confirmPassword = ObjectUtils.isEmpty(userCertDTO.getConfirmPassword()) ? "" : userCertDTO.getConfirmPassword();
         final String certPassword = ObjectUtils.isEmpty(newPassword) ? "" : passwordEncoder.encode(newPassword);
-
-        //유저가 존재하는지 확인
         final User user = this.findByUserId(userId);
+        this.checkCertCode(certCode, certKey);
+        this.checkPassword(
+                user.getUserSeq()
+                , user.getUserId()
+                , user.getPassword()
+                , password
+                , newPassword
+                , confirmPassword);
 
+        //비밀번호 업데이트
+        user.updatePassword(certPassword);
+        passwordHistoryRepository.save(PasswordHistory.builder().userSeq(user.getUserSeq()).password(certPassword).build());
+
+        //인증코드 삭제
+        redisService.delete("cert:" + userId);
+
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
+        userReturnDTO.setUserSeq(user.getUserSeq());
+        return userReturnDTO;
+    }
+
+    /**
+     * Confirm password boolean.
+     *
+     * @param userId      the user id
+     * @param userCertDTO the user cert dto
+     * @return the boolean
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 6. 오후 3:32:25
+     * @Description
+     */
+    @Transactional
+    public UserReturnDTO confirmPassword(final String userId, final UserCertDTO userCertDTO) {
+        log.info("UserService.confirmPassword2");
+        final String password = userCertDTO.getPassword();
+        final String newPassword = userCertDTO.getNewPassword();
+        final String confirmPassword = ObjectUtils.isEmpty(userCertDTO.getConfirmPassword()) ? "" : userCertDTO.getConfirmPassword();
+        final String certPassword = ObjectUtils.isEmpty(newPassword) ? "" : passwordEncoder.encode(newPassword);
+        final User user = this.findByUserId(userId);
+        this.checkPassword(
+                user.getUserSeq()
+                , userId
+                , user.getPassword()
+                , password
+                , newPassword
+                , confirmPassword);
+
+        //비밀번호 업데이트
+        user.updatePassword(certPassword);
+        passwordHistoryRepository.save(PasswordHistory.builder().userSeq(user.getUserSeq()).password(certPassword).build());
+
+        final UserReturnDTO userReturnDTO = new UserReturnDTO();
+        userReturnDTO.setUserSeq(user.getUserSeq());
+        return userReturnDTO;
+    }
+
+    /**
+     * Check password.
+     *
+     * @param userSeq         the user seq
+     * @param userId          the user id
+     * @param userPassword    the user password
+     * @param password        the password
+     * @param newPassword     the new password
+     * @param confirmPassword the confirm password
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 6. 오후 3:32:17
+     * @Description
+     */
+    public void checkPassword(
+            final Long userSeq
+            , final String userId
+            , final String userPassword
+            , final String password
+            , final String newPassword
+            , final String confirmPassword
+    ) {
+        log.info("UserService.checkPassword");
         //기존비밀번호확인
-        if (!ObjectUtils.isEmpty(userCertDTO.getPassword())) {
-            if (!passwordEncoder.matches(userCertDTO.getPassword(), user.getPassword())) {
-                throw new CodeMessageHandleException(
-                        ErrorEnumCode.LoginError.WRONG_PASSWORD.toString()
-                        , ErrorEnumCode.LoginError.WRONG_PASSWORD.getMessage());
-            }
-        }
-
-        //인증코드가 존재하는지 확인
-        if(certCode.isEmpty()) {
+        if (!ObjectUtils.isEmpty(password) && !passwordEncoder.matches(password, userPassword)) {
             throw new CodeMessageHandleException(
-                    ErrorEnumCode.LoginError.EXPIRED_PERIOD.toString()
-                    , ErrorEnumCode.LoginError.EXPIRED_PERIOD.getMessage());
+                    ErrorEnumCode.LoginError.WRONG_PASSWORD.toString()
+                    , ErrorEnumCode.LoginError.WRONG_PASSWORD.getMessage());
         }
 
         //비밀번호 미입력 시
@@ -413,7 +557,7 @@ public class UserService implements UserDetailsService {
         }
 
         //사용되었던 비밀번호 비교 (최근 6개)
-        final List<PasswordHistory> histories = passwordHistoryRepository.findTop6ByUserSeqOrderByRegistrationDtDesc(user.getUserSeq());
+        final List<PasswordHistory> histories = passwordHistoryRepository.findTop6ByUserSeqOrderByRegistrationDtDesc(userSeq);
         for (final PasswordHistory history : histories) {
             if (passwordEncoder.matches(newPassword, history.getPassword())) {
                 throw new CodeMessageHandleException(
@@ -428,53 +572,31 @@ public class UserService implements UserDetailsService {
                     ErrorEnumCode.LoginError.IS_SLANG.toString()
                     , ErrorEnumCode.LoginError.IS_SLANG.getMessage());
         }
-
-        //비밀번호 업데이트
-        user.updatePassword(certPassword);
-        passwordHistoryRepository.save(PasswordHistory.builder().userSeq(user.getUserSeq()).password(certPassword).build());
-
-        //인증코드 삭제
-        redisService.delete("cert:" + userId);
-        return true;
     }
 
     /**
-     * Send email.
+     * Check cert code.
      *
-     * @param user the user
-     * @return the string
+     * @param certCode the cert code
+     * @param certKey  the cert key
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 3:27:51
-     * @Description [계정 생성 안내] 알림메일 발송
+     * @CreatedOn 2020. 7. 6. 오후 3:32:21
+     * @Description
      */
-    public String sendCreateUserEmail(final User user) {
-        log.info("UserService.sendCreateUserEmail");
+    public void checkCertCode (final String certCode, final String certKey) {
+        log.info("UserService.checkCertCode");
+        //인증코드가 존재하는지 확인
+        if(certCode.isEmpty()) {
+            throw new CodeMessageHandleException(
+                    ErrorEnumCode.LoginError.EXPIRED_PERIOD.toString()
+                    , ErrorEnumCode.LoginError.EXPIRED_PERIOD.getMessage());
+        }
 
-        //인증코드 생성
-        final String certCode = RandomUtil.randomCertCode2(10);
-
-        //ID+인증코드 암호화
-        final String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(user.getUserId() + "|" + certCode, "Nike DnP"));
-        log.info("certCode > " + certCode);
-        log.info("encodeCertCode > " + encodeCertCode);
-
-        //REDIS 값 셋팅
-        redisService.set("cert:"+user.getUserId(), certCode, 60);
-
-        //대체값 변경
-        final SendDTO sendDTO = new SendDTO();
-        sendDTO.setNickname(user.getNickname());
-        sendDTO.setEmail(user.getUserId());
-
-        //TODO[ojh] 2020-07-02 : 링크변경예정
-        sendDTO.setPasswordUrl("http://nikednp.co.kr?certCode="+encodeCertCode);
-
-        //[계정 생성 안내] 이메일 발송
-        mailService.sendMail(
-                ServiceEnumCode.EmailTypeEnumCode.USER_CREATE.toString()
-                , ServiceEnumCode.EmailTypeEnumCode.USER_CREATE.getMessage()
-                , sendDTO
-        );
-        return user.getUserId();
+        //인증코드가 맞는지
+        if(certKey.equals(certCode)) {
+            throw new CodeMessageHandleException(
+                    ErrorEnumCode.LoginError.NOT_MATCH_CERT_CODE.toString()
+                    , ErrorEnumCode.LoginError.NOT_MATCH_CERT_CODE.getMessage());
+        }
     }
 }

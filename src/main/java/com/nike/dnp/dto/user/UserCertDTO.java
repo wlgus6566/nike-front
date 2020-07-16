@@ -23,7 +23,8 @@ public class UserCertDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "인증 코드", name = "certCode", required = true)
+    @ApiModelProperty(value = "인증 코드", name = "certCode", required = true
+            , example = "y1v0LCq93KX05pR%2FWw3zF65hK%2FCOqYTZDdIXzM0BsC97m%2Fg1QcY1sCZAEvuTFgmcVg3a8J6xDFalUNjUfmmtu5sWZuI%3D")
     private String certCode;
 
     /**
@@ -31,7 +32,7 @@ public class UserCertDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "기존 비밀번호", name = "password")
+    @ApiModelProperty(value = "기존 비밀번호", name = "password", example = "Emotion1!")
     private String password;
 
     /**
@@ -39,7 +40,7 @@ public class UserCertDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "새로운 비밀번호", name = "newPassword", required = true)
+    @ApiModelProperty(value = "새로운 비밀번호", name = "newPassword", required = true, example = "Emotion1!@")
     private String newPassword;
 
     /**
@@ -47,7 +48,7 @@ public class UserCertDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "확인 비밀번호", name = "confirmPassword", required = true)
+    @ApiModelProperty(value = "확인 비밀번호", name = "confirmPassword", required = true, example = "Emotion1!@")
     private String confirmPassword;
 
 }

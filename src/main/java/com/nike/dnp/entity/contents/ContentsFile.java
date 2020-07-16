@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
+import com.nike.dnp.dto.contents.ContentsFileUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -25,6 +27,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
+@DynamicUpdate
 @Entity
 @Table(name = "TB_CONTENTS_FILE")
 public class ContentsFile extends BaseTimeEntity {
@@ -37,7 +40,6 @@ public class ContentsFile extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CONTENTS_FILE_SEQ")
     @ApiModelProperty(name = "contentsFileSeq", value = "컨텐츠 파일 시퀀스")
-
     private Long contentsFileSeq;
 
     /**
@@ -112,6 +114,37 @@ public class ContentsFile extends BaseTimeEntity {
     @ApiModelProperty(name = "downloadCount", value = "다운로드 수")
     private long downloadCount;
 
+    /**
+     * 사용여부
+     * @author [이소정]
+     */
+    @Column(name = "USE_YN")
+    @ApiModelProperty(name = "useYn", value = "사용 여부", required = true)
+    private String useYn;
+
+    /**
+     * 썸네일 파일 물리 명
+     * @author [이소정]
+     */
+    @Column(name = "THUMBNAIL_FILE_NAME")
+    @ApiModelProperty(name = "thumbnailFileName", value = "썸네일 명", example = "graphic_file_name_thumbnail.jpg")
+    private String thumbnailFileName;
+
+    /**
+     * 썸네일 파일 물리 명
+     * @author [이소정]
+     */
+    @Column(name = "THUMBNAIL_FILE_SIZE")
+    @ApiModelProperty(name = "thumbnailFileSize", value = "썸네일 파일 사이즈", example = "300")
+    private String thumbnailFileSize;
+
+    /**
+     * 썸네일 파일 물리 명
+     * @author [이소정]
+     */
+    @Column(name = "THUMBNAIL_FILE_PHYSICAL_NAME")
+    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "/cdn/file/path")
+    private String thumbnailFilePhysicalName;
 
     /**
      * The Contents
@@ -122,6 +155,9 @@ public class ContentsFile extends BaseTimeEntity {
     @JoinColumn(name = "CONTENTS_SEQ", insertable = false, updatable = false)
     @ApiModelProperty(name = "contents", value = "The Contents", hidden = true)
     private Contents contents;
+
+
+
 
     /**
      * Save contents file.
@@ -138,27 +174,175 @@ public class ContentsFile extends BaseTimeEntity {
         log.info("ContentsFile.save");
         ContentsFile contentsFile = new ContentsFile();
 
+        contentsFile.setThumbnailFileName(contentsFileSaveDTO.getThumbnailFileName());
+        contentsFile.setThumbnailFileSize(contentsFileSaveDTO.getThumbnailFileSize());
+        contentsFile.setThumbnailFilePhysicalName(contentsFileSaveDTO.getThumbnailFilePhysicalName());
+
         contentsFile.setDownloadCount(0l);
+        contentsFile.setUseYn("Y");
         contentsFile.setContentsSeq(savedContents.getContentsSeq());
-        contentsFile.setFileSectionCode(contentsFileSaveDTO.getFileSectionCode());
-        contentsFile.setFileKindCode(contentsFileSaveDTO.getFileKindCode());
-        String fileKindCode = contentsFileSaveDTO.getFileKindCode();
+        return applyContentsFile(contentsFile
+                , contentsFileSaveDTO.getFileSectionCode()
+                , contentsFileSaveDTO.getFileKindCode()
+                , contentsFileSaveDTO.getFileName()
+                , contentsFileSaveDTO.getFileSize()
+                , contentsFileSaveDTO.getFilePhysicalName()
+                , contentsFileSaveDTO.getTitle()
+                , contentsFileSaveDTO.getUrl()
+                , contentsFileSaveDTO.getThumbnailFileName()
+                , contentsFileSaveDTO.getThumbnailFileSize()
+                , contentsFileSaveDTO.getThumbnailFilePhysicalName());
+    }
+
+    /**
+     * New contents file contents file.
+     *
+     * @param contentsSeq           the contents seq
+     * @param contentsFileUpdateDTO the contents file update dto
+     * @return the contents file
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 6. 오후 5:52:49
+     * @Description
+     */
+    @Transactional
+    public ContentsFile newContentsFile(Long contentsSeq, ContentsFileUpdateDTO contentsFileUpdateDTO) {
+        log.info("ContentsFile.newContentsFile");
+        ContentsFile contentsFile = new ContentsFile();
+
+        contentsFile.setDownloadCount(0l);
+        contentsFile.setUseYn("Y");
+        contentsFile.setContentsSeq(contentsSeq);
+        return applyContentsFile(contentsFile
+                , contentsFileUpdateDTO.getFileSectionCode()
+                , contentsFileUpdateDTO.getFileKindCode()
+                , contentsFileUpdateDTO.getFileName()
+                , contentsFileUpdateDTO.getFileSize()
+                , contentsFileUpdateDTO.getFilePhysicalName()
+                , contentsFileUpdateDTO.getTitle()
+                , contentsFileUpdateDTO.getUrl()
+                , contentsFileUpdateDTO.getThumbnailFileName()
+                , contentsFileUpdateDTO.getThumbnailFileSize()
+                , contentsFileUpdateDTO.getThumbnailFilePhysicalName());
+    }
+
+    /**
+     * Apply contents file contents file.
+     *
+     * @param contentsFile              the contents file
+     * @param fileSectionCode           the file section code
+     * @param fileKindCode              the file kind code
+     * @param fileName                  the file name
+     * @param fileSize                  the file size
+     * @param filePhysicalName          the file physical name
+     * @param title                     the title
+     * @param url                       the url
+     * @param thumbnailFileName         the thumbnail file name
+     * @param thumbnailFileSize         the thumbnail file size
+     * @param thumbnailFilePhysicalName the thumbnail file physical name
+     * @return the contents file
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 7. 오전 10:41:43
+     * @Description
+     */
+    private ContentsFile applyContentsFile(ContentsFile contentsFile
+            , String fileSectionCode
+            , String fileKindCode
+            , String fileName
+            , Long fileSize
+            , String filePhysicalName
+            , String title, String url
+            , String thumbnailFileName
+            , String thumbnailFileSize
+            , String thumbnailFilePhysicalName
+    ) {
+        contentsFile.setFileSectionCode(fileSectionCode);
+        contentsFile.setFileKindCode(fileKindCode);
 
         if (ServiceEnumCode.ContentsFileKindCode.FILE.equals(fileKindCode)) {
-            this.checkStringValidation(contentsFileSaveDTO.getFileName(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
+            this.checkStringValidation(fileName, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
 
-            contentsFile.setFileName(contentsFileSaveDTO.getFileName());
-            contentsFile.setFileSize(contentsFileSaveDTO.getFileSize());
-            contentsFile.setFilePhysicalName(contentsFileSaveDTO.getFilePhysicalName());
+            contentsFile.setFileName(fileName);
+            contentsFile.setFileSize(fileSize);
+            contentsFile.setFilePhysicalName(filePhysicalName);
         } else {
-            this.checkStringValidation(contentsFileSaveDTO.getTitle(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.getMessage());
-            this.checkStringValidation(contentsFileSaveDTO.getUrl(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
+            this.checkStringValidation(title, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.getMessage());
+            this.checkStringValidation(url, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
 
-            contentsFile.setTitle(contentsFileSaveDTO.getTitle());
-            contentsFile.setUrl(contentsFileSaveDTO.getUrl());
+            contentsFile.setTitle(title);
+            contentsFile.setUrl(url);
         }
 
         return contentsFile;
+    }
+
+    /**
+     * Update.
+     *
+     * @param contentsFileUpdateDTO the contents file update dto
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 3. 오후 5:27:06
+     * @Description
+     */
+    @Transactional
+    public void update(final ContentsFileUpdateDTO contentsFileUpdateDTO) {
+        log.info("ContentsFile.update");
+        this.fileSectionCode = contentsFileUpdateDTO.getFileSectionCode();
+        this.fileKindCode = contentsFileUpdateDTO.getFileKindCode();
+        String fileKindCode = contentsFileUpdateDTO.getFileKindCode();
+
+        if (ServiceEnumCode.ContentsFileKindCode.FILE.equals(fileKindCode)) {
+            this.checkStringValidation(contentsFileUpdateDTO.getFileName(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
+
+            this.fileName = contentsFileUpdateDTO.getFileName();
+            this.fileSize = contentsFileUpdateDTO.getFileSize();
+            this.filePhysicalName = contentsFileUpdateDTO.getFilePhysicalName();
+            this.thumbnailFileName = contentsFileUpdateDTO.getThumbnailFileName();
+            this.thumbnailFileSize = contentsFileUpdateDTO.getThumbnailFileSize();
+            this.thumbnailFilePhysicalName = contentsFileUpdateDTO.getThumbnailFilePhysicalName();
+
+            this.title = null;
+            this.url = null;
+        } else {
+            this.checkStringValidation(contentsFileUpdateDTO.getTitle(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.getMessage());
+            this.checkStringValidation(contentsFileUpdateDTO.getUrl(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
+
+            this.title = contentsFileUpdateDTO.getTitle();
+            this.url = contentsFileUpdateDTO.getUrl();
+
+            this.fileName = null;
+            this.fileSize = 0l;
+            this.filePhysicalName = null;
+            this.thumbnailFileName = null;
+            this.thumbnailFileSize = null;
+            this.thumbnailFilePhysicalName = null;
+        }
+    }
+
+    /**
+     * Update download count.
+     *
+     * @param downloadCount the download count
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 3. 오후 5:28:11
+     * @Description
+     */
+    @Transactional
+    public void updateDownloadCount(final Long downloadCount) {
+        log.info("ContentsFile.updateDownloadCount");
+        this.downloadCount = downloadCount + 1;
+    }
+
+    /**
+     * Update use yn.
+     *
+     * @param useYn the use yn
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 6. 오후 12:02:25
+     * @Description
+     */
+    @Transactional
+    public void updateUseYn(final String useYn) {
+        this.useYn = useYn;
     }
 
     /**
@@ -172,6 +356,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @CreatedOn 2020. 6. 26. 오후 5:30:51
      * @Description
      */
+    @Transactional
     public Boolean checkStringValidation(String value, String errorCode, String errorMessage) {
         if (value.isEmpty() || value.trim().isEmpty()) {
             throw new CodeMessageHandleException(errorCode, errorMessage);

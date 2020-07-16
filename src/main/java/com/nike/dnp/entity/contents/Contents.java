@@ -3,6 +3,7 @@ package com.nike.dnp.entity.contents;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
+import com.nike.dnp.dto.contents.ContentsUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -51,7 +52,7 @@ public class Contents extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "MENU_CODE")
-    @ApiModelProperty(name = "menuCode", value = "메뉴 공통코드", required = true, example = "A_SP")
+    @ApiModelProperty(name = "menuCode", value = "메뉴 공통코드", required = true, example = "SP")
     private String menuCode;
 
     /**
@@ -156,8 +157,8 @@ public class Contents extends BaseTimeEntity {
      */
     @JsonManagedReference
     @OneToMany(mappedBy = "contents")
-    @ApiModelProperty(name = "contentsFiles", value = "콘텐츠 파일 목록", required = true)
-    private List<ContentsFile> contentsFiles;
+    @ApiModelProperty(name = "contentsFileList", value = "콘텐츠 파일 목록", required = true)
+    private List<ContentsFile> contentsFileList;
 
     /**
      * Save contents.
@@ -190,7 +191,7 @@ public class Contents extends BaseTimeEntity {
      * @param contentsSaveDTO the contents save dto
      * @param saveContents    the save contents
      * @author [이소정]
-     * @CreatedOn 2020. 7. 1. 오전 9:59:37
+     * @CreatedOn 2020. 7. 1. \오전 9:59:37
      * @Description 기본적인 부분 등록
      */
     public static void saveContentsBasic(ContentsSaveDTO contentsSaveDTO, Contents saveContents) {
@@ -209,4 +210,51 @@ public class Contents extends BaseTimeEntity {
         saveContents.setReadCount(0l);
     }
 
+
+    /**
+     * Update.
+     *
+     * @param contentsUpdateDTO the contents update dto
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 3. 오후 4:01:36
+     * @Description
+     */
+    @Transactional
+    public void update(final ContentsUpdateDTO contentsUpdateDTO) {
+        log.info("Contents.update");
+        this.menuCode = contentsUpdateDTO.getMenuCode();
+        this.imageFileName = contentsUpdateDTO.getImageFileName();
+        this.imageFileSize = contentsUpdateDTO.getImageFileSize();
+        this.imageFilePhysicalName = contentsUpdateDTO.getImageFilePhysicalName();
+        this.folderName = contentsUpdateDTO.getFolderName();
+        this.folderContents = contentsUpdateDTO.getFolderContents();
+        this.campaignPeriodSectionCode = contentsUpdateDTO.getCampaignPeriodSectionCode();
+    }
+
+    /**
+     * Update read count.
+     *
+     * @param readCount the read count
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 3. 오후 5:22:59
+     * @Description
+     */
+    @Transactional
+    public void updateReadCount(final Long readCount) {
+        log.info("Contents.updateReadCount");
+        this.readCount = readCount + 1;
+    }
+
+
+    /**
+     * Delete.
+     *
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 7. 오후 2:06:34
+     * @Description
+     */
+    @Transactional
+    public void delete() {
+        this.useYn = "N";
+    }
 }

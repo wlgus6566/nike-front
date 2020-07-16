@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.log;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -49,6 +50,7 @@ public class UserLoginLog extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "LOGIN_DT")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
     @ApiModelProperty(name = "loginDt", value = "로그인 일시", hidden = true, required = true)
     @CreationTimestamp
     private LocalDateTime loginDt;

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
  * Contents Repository
  *
  * @author [이소정]
+ * @CreatedOn 2020. 7. 6. 오후 6:28:17
  * @Description Contents Repository 작성
  */
 @Repository
@@ -23,5 +24,6 @@ public interface ContentsRepository extends JpaRepository<Contents, Long>, Conte
      * @Description
      */
     Contents findByContentsSeq(Long contentsSeq);
+
 
 }

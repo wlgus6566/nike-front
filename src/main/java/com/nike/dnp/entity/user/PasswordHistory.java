@@ -75,12 +75,10 @@ public class PasswordHistory extends BaseTimeEntity implements Serializable {
      */
     @Builder
     public PasswordHistory(
-            Long userSeq
-            , String password
+            final Long userSeq
+            , final String password
     ) {
         this.userSeq = userSeq;
         this.password = password;
-        this.setRegisterSeq(userSeq);
-        this.setUpdaterSeq(userSeq);
     }
 }

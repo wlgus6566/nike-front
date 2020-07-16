@@ -4,13 +4,16 @@ import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.SuccessEnumCode;
 import com.nike.dnp.dto.user.UserCertDTO;
 import com.nike.dnp.dto.user.UserIdDTO;
+import com.nike.dnp.dto.user.UserReturnDTO;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
+import com.nike.dnp.service.user.UserMailService;
 import com.nike.dnp.service.user.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -26,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@Api(description = "유저(권한ALL)", tags = "1-1_USER")
+@Api(description = "유저(권한없음)", tags = "OPEN_USER")
 @RequestMapping(value = "/api/open/user", name = "유저")
 @RequiredArgsConstructor
 public class UserOpenController {
@@ -43,6 +46,13 @@ public class UserOpenController {
      * @author [오지훈]
      */
     private final UserService userService;
+
+    /**
+     * The User mail service
+     *
+     * @author [오지훈]
+     */
+    private final UserMailService userMailService;
 
     /**
      * REQUEST_CHARACTER
@@ -70,14 +80,14 @@ public class UserOpenController {
     @GetMapping(value = "/send/cert", name = "ID 확인, 인증코드 생성 및 비밀번호 설정 이메일 발송")
     public SingleResult<String> sendCert(final UserIdDTO userIdDTO) {
         log.info("UserController.sendCert");
-        User user = userService.findByUserIdReturnOptional(userIdDTO.getUserId()).orElseThrow(
+        final User user = userService.findByUserIdReturnOptional(userIdDTO.getUserId()).orElseThrow(
                 () -> new CodeMessageHandleException(
                         ErrorEnumCode.UserError.RETRY_CONFIRM_EMAIL.toString()
                         ,ErrorEnumCode.UserError.RETRY_CONFIRM_EMAIL.getMessage()
                 )
         );
         return responseService.getSingleResult(
-                userService.sendCreateUserEmail(user)
+                userMailService.sendMailForCreateUser(user)
                 , SuccessEnumCode.LoginSuccess.SEND_EMAIL.toString()
                 , SuccessEnumCode.LoginSuccess.SEND_EMAIL.getMessage()
                 , true
@@ -103,10 +113,11 @@ public class UserOpenController {
     @PutMapping(value = "/set/password", name = "인증코드 검증 및 비밀번호 설정"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Boolean> setPassword(final @RequestBody UserCertDTO userCertDTO) {
+    public SingleResult<UserReturnDTO> setPassword(
+            @ApiParam("유저 인증코드 DTO") @RequestBody final UserCertDTO userCertDTO) {
         log.info("UserOpenController.setPassword");
         return responseService.getSingleResult(
-                userService.checkCertCode(userCertDTO)
+                userService.confirmPassword(userCertDTO)
                 , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.toString()
                 , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.getMessage()
                 , true
@@ -132,7 +143,8 @@ public class UserOpenController {
     @PutMapping(value = "/change/password", name = "인증코드 검증 및 비밀번호 변경"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Boolean> changePassword(final @RequestBody UserCertDTO userCertDTO) {
+    public SingleResult<UserReturnDTO> changePassword(
+            @ApiParam("유저 인증코드 DTO") @RequestBody final UserCertDTO userCertDTO) {
         log.info("UserOpenController.changePassword");
 
         if (ObjectUtils.isEmpty(userCertDTO.getPassword())) {
@@ -141,9 +153,8 @@ public class UserOpenController {
                     , ErrorEnumCode.LoginError.NULL_PASSWORD.getMessage()
             );
         }
-
         return responseService.getSingleResult(
-                userService.checkCertCode(userCertDTO)
+                userService.confirmPassword(userCertDTO)
                 , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.toString()
                 , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.getMessage()
                 , true

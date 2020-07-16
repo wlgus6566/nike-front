@@ -5,8 +5,10 @@ import com.nike.dnp.config.jwt.JwtAuthorizationFilter;
 import com.nike.dnp.repository.user.UserRepository;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.service.ResponseService;
+import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.auth.SecurityFilterMataService;
 import com.nike.dnp.service.log.UserLoginLogService;
+import com.nike.dnp.service.user.UserMailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -77,6 +79,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final RedisService redisService;
 
 	/**
+	 * The User mail service
+	 *
+	 * @author [오지훈]
+	 */
+	private final UserMailService userMailService;
+
+	/**
+	 * The Auth service
+	 *
+	 * @author [윤태호]
+	 */
+	private final AuthService authService;
+
+	/**
 	 * Auth url string.
 	 *
 	 * @param authUrl the auth url
@@ -111,6 +127,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
+		/*SecureRandom secureRandom = new SecureRandom();
+		secureRandom.setSeed(100100);
+		return new BCryptPasswordEncoder(10,secureRandom);*/
 		return new BCryptPasswordEncoder();
 	}
 
@@ -126,6 +145,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/resources/**", "/static/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/css/**", "/font/**", "/js/**", "/images/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**" // Swagger 관련
+				,"/api/download", // 임시
 
 		};
 		web.ignoring().antMatchers(staticPatterns);
@@ -152,7 +172,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.csrf().disable() // csrf 사용 안함
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
-
 	}
 
 	/**
@@ -163,9 +182,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public AffirmativeBased accessDecisionManager(){
-		final List<AccessDecisionVoter<?>> decisionVoters = Arrays.asList(new RoleVoter(), new AuthAccessDecisionVoter(filterMataService));
+		final List<AccessDecisionVoter<?>> decisionVoters = Arrays.asList(new RoleVoter(), new AuthAccessDecisionVoter(filterMataService, authService));
 		return new AffirmativeBased(decisionVoters);
 	}
+
+	/*
+	// filter Meta Service 미사용
+	@Bean
+	public AccessDecisionManager accessDecisionManager() {
+		List<AccessDecisionVoter<? extends Object>> decisionVoters = Arrays.asList(new AuthenticatedVoter(), new RoleVoter(), new WebExpressionVoter());
+		return new UnanimousBased(decisionVoters);
+
+	}
+
+	*/
 
 	/**
 	 * 인증 필터
@@ -201,7 +231,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				responseService
 				, loginLogService
 				, redisService
-				, userRepository);
+				, userRepository
+				, userMailService
+		);
 	}
 
 	/**

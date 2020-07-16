@@ -1,5 +1,6 @@
 package com.nike.dnp.model.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -16,6 +17,7 @@ import java.util.HashMap;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
+//@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CommonResult {
 
     /**
@@ -23,7 +25,7 @@ public class CommonResult {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "응답 성공 여부 : true/false", name = "isOK")
+    @ApiModelProperty(value = "응답 성공 여부 : true/false", name = "isOK", allowableValues = "true")
     private boolean success;
 
     /**
@@ -31,15 +33,15 @@ public class CommonResult {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "메시지 리턴 여부 : true/false", name = "existMsg", required = true)
-    private boolean existMsg = false;
+    @ApiModelProperty(value = "메시지 리턴 여부 : true/false", name = "existMsg", required = true, allowableValues = "false")
+    private boolean existMsg;
 
     /**
      * 응답 코드
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "S0 : 정상 / 그 외 오류 (기본 E0, 각 서비스에 맞는 오류)", name = "code")
+    @ApiModelProperty(value = "S0 : 정상 / 그 외 오류 (기본 E0, 각 서비스에 맞는 오류)", name = "code", example = "SUC")
     private String code = "";
 
     /**
@@ -55,7 +57,8 @@ public class CommonResult {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "추가 응답 데이터", name = "payload", example = "{'':''}")
+    @ApiModelProperty(value = "추가 응답 데이터", name = "payload", allowableValues = "{}")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private HashMap<String, Object> payload;
 
 }

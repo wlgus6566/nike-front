@@ -14,7 +14,7 @@ export default {
             method: 'get'
         })
         */
-        return axios.get('/api/manage/user', param);
+        return axios.get('/api/calendar?yyyyMm=2020.07');
     },
     post(param) {
         //사용자 등록
@@ -32,4 +32,7 @@ export default {
         //사용자 삭제
         return axios.delete('/api/manage/user/' + key);
     },
+    get(url,config){
+        return axios.get(url,config);
+    }
 };

@@ -7,8 +7,9 @@ module.exports = {
     transpileDependencies: [ansiRegex],
     devServer: {
         proxy: {
-            '^/api': {
+            '/api': {
                 target: 'http://10.80.1.212',
+                // target: 'http://localhost:8081',
                 changeOrigin: true,
                 ws: true,
                 pathReWrite: {

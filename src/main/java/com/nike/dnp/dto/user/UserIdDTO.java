@@ -1,6 +1,6 @@
 package com.nike.dnp.dto.user;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.*;
 
 
@@ -23,7 +23,8 @@ public class UserIdDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "유저 ID", name = "userId", required = true)
+    @ApiParam(value = "유저 ID", name = "userId", required = true, defaultValue = "test@nike.co.kr")
+    //@ApiModelProperty(value = "유저 ID", name = "userId", required = true, example = "test@nike.co.kr")
     private String userId;
 
 

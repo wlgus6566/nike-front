@@ -17,14 +17,17 @@ import java.util.List;
 public interface ContentsFileRepository extends JpaRepository<ContentsFile, Long>, ContentsFileRepositoryCustom {
 
     /**
-     * Find by contents seq contents.
+     * Find by contents seq and use yn optional.
      *
      * @param contentsSeq the contents seq
-     * @return contents contents
+     * @param useYn       the use yn
+     * @return the optional
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:57:43
+     * @CreatedOn 2020. 7. 6. 오후 6:30:42
      * @Description
      */
-    List<ContentsFile> findByContentsSeq(String contentsSeq);
+    List<ContentsFile> findByContentsSeqAndUseYn(Long contentsSeq, String useYn);
+
+
 
 }

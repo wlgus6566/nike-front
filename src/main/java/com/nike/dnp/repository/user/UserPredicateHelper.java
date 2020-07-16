@@ -1,8 +1,8 @@
 package com.nike.dnp.repository.user;
 
 import com.nike.dnp.dto.user.UserSearchDTO;
-import com.nike.dnp.entity.auth.QAuth;
 import com.nike.dnp.entity.user.QUser;
+import com.nike.dnp.entity.user.QUserAuth;
 import com.nike.dnp.util.CustomExpression;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -37,6 +37,26 @@ public class UserPredicateHelper {
             builder
                 .or(QUser.user.userId.contains(keyword))
                 .or(QUser.user.nickname.contains(keyword));
+        }
+
+        return builder;
+    }
+
+    /**
+     * Compare status predicate.
+     *
+     * @param userSearchDTO the user search dto
+     * @return the predicate
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 13. 오후 5:03:47
+     * @Description 상태값 비교
+     */
+    public Predicate compareStatus(final UserSearchDTO userSearchDTO) {
+        final BooleanBuilder builder = new BooleanBuilder();
+        final String status = userSearchDTO.getStatus();
+
+        if (!status.isEmpty()) {
+            builder.and(QUser.user.userStatusCode.eq(status));
         }
 
         return builder;
@@ -92,7 +112,7 @@ public class UserPredicateHelper {
         final BooleanBuilder builder = new BooleanBuilder();
         final Long authSeq = userSearchDTO.getAuthSeq();
         if (authSeq > 0) {
-            builder.and(QAuth.auth.authSeq.eq(authSeq));
+            builder.and(QUserAuth.userAuth.auth.authSeq.eq(authSeq));
         }
         return builder;
     }

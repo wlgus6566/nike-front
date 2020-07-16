@@ -29,7 +29,6 @@ public class OrderService {
 	 */
 	private final OrderRepository orderRepository;
 
-
 	/**
 	 * Save order order.
 	 *
@@ -41,7 +40,7 @@ public class OrderService {
 	 */
 	@Transactional
 	public Order saveOrder(final OrderProductSaveDTO orderProductSaveDTO) {
-		Order order = new Order();
+		final Order order = new Order();
 		order.setOrderDescription(orderProductSaveDTO.getOrderDescription());
 		order.setTotalAmount(orderProductSaveDTO.getTotalAmount());
 		return orderRepository.save(order);

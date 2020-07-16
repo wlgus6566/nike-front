@@ -49,15 +49,25 @@ public class MenuRoleResource extends BaseTimeEntity implements Serializable {
      */
     @Column(name = "RESOURCE_URL")
     @ApiModelProperty(name = "resourceUrl", value = "리소스 URL")
-    private String menuSeq;
+    private String resourceUrl;
+
+    /**
+     * 리소스 메소드
+     *
+     * @author [오지훈]
+     */
+    @Column(name = "RESOURCE_METHOD")
+    @ApiModelProperty(name = "resourceMethod", value = "리소스 메소드")
+    private String resourceMethod;
 
     /**
      * 메뉴 역할
      *
      * @author [오지훈]
      */
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "MENU_ROLE_SEQ", insertable = false, updatable = false)
-    private MenuRole menuRole;
+    //@JsonBackReference
+    private MenuRole menuRole;*/
 
 }

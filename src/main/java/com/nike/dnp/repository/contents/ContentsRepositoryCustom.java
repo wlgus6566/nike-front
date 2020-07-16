@@ -1,7 +1,7 @@
 package com.nike.dnp.repository.contents;
 
+import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
-import com.nike.dnp.entity.contents.Contents;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
@@ -24,9 +24,9 @@ public interface ContentsRepositoryCustom {
      * @param pageRequest       the page request
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:57:50
+     * @CreatedOn 2020. 7. 13. 오후 3:21:40
      * @Description
      */
-    Page<Contents> findPageContents(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest);
+    Page<ContentsResultDTO> findPageContents(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest);
 
 }

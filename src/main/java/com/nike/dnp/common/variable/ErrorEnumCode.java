@@ -1,5 +1,6 @@
 package com.nike.dnp.common.variable;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,12 +13,22 @@ import org.springframework.stereotype.Component;
  * @Description
  */
 @Component
+@AllArgsConstructor
 public class ErrorEnumCode {
 
+    /**
+     * The enum Exception error.
+     */
     @RequiredArgsConstructor
     @Getter
     public enum ExceptionError {
-        ERROR
+        ERROR("서버에서 오류가 발생하였습니다.");
+
+        /**
+         * The Value
+         * @author [오지훈]
+         */
+        private final String message;
     }
 
     /**
@@ -59,7 +70,9 @@ public class ErrorEnumCode {
         NOT_MATCH_PASSWORD("입력하신 비밀번호가 일치하지 않습니다."),
         EXPIRED_CERT_CODE("인증코드 유효기간이 만료되었습니다. 다시 인증해 주세요"),
         NOT_MATCH_CERT_CODE("인증코드를 확인해 주세요.(인증코드는 대소문자를 구별합니다.)"),
-        IS_SLANG("비밀번호에 금칙어가 포함되어 있습니다. 다시 입력해 주세요."); //TODO[ojh] 2020-07-02 : 메시지 변경 예정
+        IS_SLANG("간단한 패턴이나 공통 사전 단어를 포함한 비밀번호를 설정할 수 없습니다. 확인 후 다시 설정해 주세요."),
+        IS_DORMANT("휴면회원 입니다.")
+        ;
 
         /**
          * 에러 메시지
@@ -79,8 +92,7 @@ public class ErrorEnumCode {
         NOT_EXIST_FILE_TITLE("파일타이틀이 존재하지 않습니다."),
         NOT_EXIST_FILE_URL("파일URL이 존재하지 않습니다."),
         NOT_SELECT_DATE("시작/끝날짜를 둘 다 지정해주시기 바랍니다."),
-        START_DATE_BIGGER("시작날짜가 종료일자보다 큽니다."),
-        NOT_EXIST_FILE("파일이 존재하지 않습니다.");
+        START_DATE_BIGGER("시작날짜가 종료일자보다 큽니다.");
 
         /**
          * 에러 메시지
@@ -195,6 +207,59 @@ public class ErrorEnumCode {
         /**
          * The Value
          * @author [이소정]
+         */
+        private final String message;
+    }
+
+    /**
+     * The enum Wish list error.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum WishListError {
+        DUPLICATE_GOODS("이미 담긴 상품 입니다."),
+        NOT_FOUND_WISHLIST("해당 상품은 위시리스트에 없습니다.");
+
+        /**
+         * The Value
+         *
+         * @author [윤태호]
+         */
+        private final String message;
+    }
+
+    /**
+     * The enum Basket error.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum BasketError {
+        NOT_FOUND_BASKET("해당 상품은 장바구니에 없습니다.");
+
+        /**
+         * The Value
+         *
+         * @author [윤태호]
+         */
+        private final String message;
+    }
+
+    /**
+     * The enum File error.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum FileError {
+        NOT_EXIST_FILE("파일이 존재하지 않습니다."),
+        NOT_IMAGE_FILE("이미지 파일이 아닙니다."),
+        FILE_READ_ERROR("파일 읽기 중 오류 발생"),
+        FILE_WRITE_ERROR("파일 쓰기 중 오류 발생"),
+        FILE_COPY_ERROR("파일 저장 중 오류 발생");
+
+        /**
+         * The Value
+         *
+         * @author [윤태호]
          */
         private final String message;
     }

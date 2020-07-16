@@ -3,23 +3,24 @@ package com.nike.dnp.controller.order;
 
 import com.nike.dnp.dto.order.OrderProductMappingSaveDTO;
 import com.nike.dnp.dto.order.OrderProductSaveDTO;
+import com.nike.dnp.dto.order.OrderSearchDTO;
 import com.nike.dnp.entity.order.Order;
+import com.nike.dnp.entity.order.OrderProductMapping;
 import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.order.OrderProductMappingService;
 import com.nike.dnp.service.order.OrderService;
-import com.nike.dnp.service.order.ProductService;
+import com.nike.dnp.service.product.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Order Controller
@@ -30,8 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@Api(description = "주문", tags = "21_ORDER")
-@RequestMapping(value = "/api/order/", name = "상품관리")
+@Api(description = "주문", tags = "ORDER")
+@RequestMapping(value = "/api/order/", name = "주문")
 @AllArgsConstructor
 public class OrderController {
 
@@ -88,15 +89,14 @@ public class OrderController {
 	 * @Description
 	 */
 	@ApiOperation(value = "주문 등록", notes = BASIC_CHARACTER)
-	@PostMapping(value="/save",produces = {MediaType.APPLICATION_JSON_VALUE},consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/save", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Transactional
-	public SingleResult<Order> saveOrder(
-			final @RequestBody OrderProductSaveDTO orderProductSaveDTO){
+	public SingleResult<Order> saveOrder(@RequestBody final OrderProductSaveDTO orderProductSaveDTO) {
 
-		Order order = orderService.saveOrder(orderProductSaveDTO);
+		final Order order = orderService.saveOrder(orderProductSaveDTO);
 
 		for(int i = 0; i < orderProductSaveDTO.getGoodsSeqList().size(); i++){
-			Product product = productService.findByGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
+			final Product product = productService.findByGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
 			OrderProductMappingSaveDTO orderProductMappingSaveDTO = new OrderProductMappingSaveDTO();
 			orderProductMappingSaveDTO.setGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
 			orderProductMappingSaveDTO.setOrderQuantity(orderProductSaveDTO.getOrderQuantityList().get(i));
@@ -106,9 +106,41 @@ public class OrderController {
 			orderProductMappingService.saveOrderProductMapping(orderProductMappingSaveDTO);
 		}
 		orderProductMappingService.orderSheetSend(order);
-
 		return responseService.getSingleResult(order);
 	}
+
+
+	/**
+	 * List single result.
+	 *
+	 * @param orderSearchDTO the order search dto
+	 * @return the single result
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 7. 오전 11:25:09
+	 * @Description
+	 */
+	@ApiOperation(value = "주문내역", notes = REQUEST_CHARACTER + "beginDt|시작일|false|String\n" + "endDt|종료일|false|String\n")
+	@GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
+	public SingleResult<Page<OrderProductMapping>> list(final OrderSearchDTO orderSearchDTO) {
+		return responseService.getSingleResult(orderProductMappingService.findPageOrder(orderSearchDTO));
+	}
+
+
+	/**
+	 * View single result.
+	 *
+	 * @param orderGoodsSeq the order goods seq
+	 * @return the single result
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 7. 오후 2:43:50
+	 * @Description
+	 */
+	@ApiOperation(value = "주문 상세 내역", notes = BASIC_CHARACTER)
+	@GetMapping(value = "/{orderGoodsSeq}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public SingleResult<OrderProductMapping> view(@ApiParam(name = "orderGoodsSeq", value = "주문 상품 시퀀스", defaultValue = "13") @PathVariable final Long orderGoodsSeq) {
+		return responseService.getSingleResult(orderProductMappingService.findById(orderGoodsSeq));
+	}
+
 
 }
 

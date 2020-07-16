@@ -29,3 +29,9 @@ logging:
 server:
   domain: http://localhost
   port: 8080
+
+#임시경로
+nike:
+  file:
+    root: '/home/file'
+    imageMagick: '/imageTool'

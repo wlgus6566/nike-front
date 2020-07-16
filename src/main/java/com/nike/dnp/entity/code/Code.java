@@ -7,7 +7,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Code Entity
@@ -22,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_CODE")
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Code extends BaseTimeEntity implements Serializable {
 
     /**
@@ -91,40 +90,26 @@ public class Code extends BaseTimeEntity implements Serializable {
     private String useYn;
 
     /**
-     * 하위 코드 목록
-     *
-     * @author [오지훈]
-     */
-    @OneToMany
-    @JoinColumn(name = "UPPER_CODE",
-            referencedColumnName = "CODE",
-            insertable = false, updatable = false)
-    private List<Code> subCodes;
-
-    /**
      * Update.
      *
      * @param codeName        the code name
      * @param codeDescription the code description
      * @param codeOrder       the code order
-     * @param updaterSeq      the updater seq
      * @param upperCode       the upper code
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 6:09:56
      * @Description 하위 Update.
      */
     public void update(
-            String codeName
-            , String codeDescription
-            , Long codeOrder
-            , Long updaterSeq
-            , String upperCode
+            final String codeName
+            , final String codeDescription
+            , final Long codeOrder
+            , final String upperCode
     ) {
         this.upperCode = upperCode;
         this.codeName = codeName;
         this.codeDescription = codeDescription;
         this.codeOrder = codeOrder;
-        setUpdaterSeq(updaterSeq);
     }
 
     /**
@@ -133,37 +118,29 @@ public class Code extends BaseTimeEntity implements Serializable {
      * @param codeName        the code name
      * @param codeDescription the code description
      * @param codeOrder       the code order
-     * @param updaterSeq      the updater seq
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 6:09:56
      * @Description 상위 Update.
      */
     public void update(
-            String codeName
-            , String codeDescription
-            , Long codeOrder
-            , Long updaterSeq
+            final String codeName
+            , final String codeDescription
+            , final Long codeOrder
     ) {
         this.codeName = codeName;
         this.codeDescription = codeDescription;
         this.codeOrder = codeOrder;
-        setUpdaterSeq(updaterSeq);
     }
 
     /**
      * Delete.
      *
-     * @param useYn      the use yn
-     * @param updaterSeq the updater seq
+     * @param useYn the use yn
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 6:09:56
      * @Description
      */
-    public void delete(
-            String useYn
-            , Long updaterSeq
-    ) {
+    public void delete(final String useYn) {
         this.useYn = useYn;
-        setUpdaterSeq(updaterSeq);
     }
 }

@@ -1,0 +1,30 @@
+### 위시리스트조회
+GET http://{{host}}/api/wishlist/list?page=0
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Accept: application/json
+Cache-Control: no-cache
+
+
+### 위시리스트저장
+POST http://{{host}}/api/wishlist/save?goodsSeq=11
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Accept: application/json
+Cache-Control: no-cache
+
+
+### 위시리스트 삭제
+DELETE http://{{host}}/api/wishlist/delete/19
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Accept: application/json
+Cache-Control: no-cache
+
+### 위시리스트 다건 삭제
+DELETE http://{{host}}/api/wishlist/delete
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjMzOTk3NDR9.lFIO5YpBjTPRD0EMPXbe0przRpeTn9E12hlLJnQaOe-KSIOg0yF9LvDodsJs5O0pmkUES_tt2vNweyW0nh4uxA
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+{"wishListSeqList" :  [27,28,29]}
+
+

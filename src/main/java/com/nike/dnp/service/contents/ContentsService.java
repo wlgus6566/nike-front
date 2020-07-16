@@ -1,25 +1,25 @@
 package com.nike.dnp.service.contents;
 
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
-import com.nike.dnp.dto.contents.ContentsSaveDTO;
-import com.nike.dnp.dto.contents.ContentsSearchDTO;
+import com.nike.dnp.dto.contents.*;
+import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
+import com.nike.dnp.util.ImageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Contents Service
@@ -48,16 +48,17 @@ public class ContentsService {
      */
     private final ContentsFileRepository contentsFileRepository;
 
-    @Autowired
-    private MessageSource messageSource;
-
     /**
-     * 전체조회(paging)
+     * Find all paging page.
      *
      * @param contentsSearchDTO the contents search dto
-     * @return the list
+     * @return the page
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 13. 오후 3:23:01
+     * @Description
      */
-    public Page<Contents> findAllPaging(final ContentsSearchDTO contentsSearchDTO) {
+    public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO) {
+
         // QueryDsl 기능 이용
         return contentsRepository.findPageContents(
                 contentsSearchDTO,
@@ -76,11 +77,19 @@ public class ContentsService {
      * @CreatedOn 2020. 6. 24. 오후 3:22:15
      * @Description
      */
-    @Transactional
     public Contents save(final ContentsSaveDTO contentsSaveDTO) {
         log.info("contentsService.save");
         final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
         List<ContentsFile> savedContentsFileList = new ArrayList<>();
+
+        // 썸네일 base64 -> file 정보로 변환
+        if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
+            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsSaveDTO.getImageBase64());
+
+            contentsSaveDTO.setFolderName(fileResultDTO.getFileName());
+            contentsSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
+            contentsSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
+        }
 
 //        contentsFile 추가
         if (!contentsSaveDTO.getContentsFileList().isEmpty()) {
@@ -90,7 +99,7 @@ public class ContentsService {
             }
         }
 
-        savedContents.setContentsFiles(savedContentsFileList);
+        savedContents.setContentsFileList(savedContentsFileList);
         return savedContents;
     }
 
@@ -104,7 +113,98 @@ public class ContentsService {
      * @Description
      */
     public Contents findByContentsSeq(final Long contentsSeq) {
-        return contentsRepository.findByContentsSeq(contentsSeq);
+        Contents findContetns = contentsRepository.findByContentsSeq(contentsSeq);
+        findContetns.updateReadCount(findContetns.getReadCount());
+        return findContetns;
     }
+
+    /**
+     * Update contents.
+     *
+     * @param contentsUpdateDTO the contents update dto
+     * @return the contents
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 3. 오후 4:01:24
+     * @Description
+     */
+    public Optional<Contents> update(final ContentsUpdateDTO contentsUpdateDTO) {
+        log.info("contentsService.update");
+        // contents Update
+        final Optional<Contents> contents = contentsRepository.findById(contentsUpdateDTO.getContentsSeq());
+        // 썸네일 base64 -> file 정보로 변환
+        if (!ObjectUtils.isEmpty(contentsUpdateDTO.getImageBase64())) {
+            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsUpdateDTO.getImageBase64());
+
+            contentsUpdateDTO.setFolderName(fileResultDTO.getFileName());
+            contentsUpdateDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
+            contentsUpdateDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
+        }
+        contents.ifPresent(value -> value.update(contentsUpdateDTO));
+
+        // contents File
+        final List<ContentsFile> beforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contents.get().getContentsSeq(), "Y");
+        List<ContentsFileUpdateDTO> newFileList = contentsUpdateDTO.getContentsFileList();
+
+        // 기존에 있는 파일 목록과 DTO받은 파일 목록 비교해서
+        // case1.기본목록O, 새로운목록X : useYn = 'N' update
+        // case2.기존목록X, 새로운목록O : save
+        // case3.기존목록O, 새로운목록O : update
+        if (!beforeFileList.isEmpty() && !newFileList.isEmpty()) {
+            for (ContentsFile beforeFile : beforeFileList) {
+                for (ContentsFileUpdateDTO newFile : newFileList) {
+                    if (beforeFile.getContentsFileSeq() == newFile.getContentsFileSeq()) {
+                        beforeFileList.remove(beforeFile);
+                    }
+                }
+            }
+        }
+
+        if (!newFileList.isEmpty()) {
+            for (ContentsFileUpdateDTO contentsFileUpdateDTO : newFileList) {
+                Long contentsFileSeq = contentsFileUpdateDTO.getContentsFileSeq();
+                ContentsFile saveContentsFile = new ContentsFile().newContentsFile(contents.get().getContentsSeq(), contentsFileUpdateDTO);
+                if (null != contentsFileSeq) {
+                    Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileUpdateDTO.getContentsFileSeq());
+                    contentsFile.ifPresent(value -> value.update(contentsFileUpdateDTO));
+                } else {
+                    contentsFileRepository.save(saveContentsFile);
+                }
+            }
+        }
+        if (!beforeFileList.isEmpty()) {
+            for (ContentsFile contentsFile : beforeFileList) {
+                contentsFile.updateUseYn("N");
+            }
+        }
+        return contents;
+    }
+
+
+    /**
+     * Delete optional.
+     *
+     * @param contentsSeq the contents seq
+     * @return the optional
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 7. 오전 10:59:29
+     * @Description
+     */
+    public Optional<Contents> delete(final Long contentsSeq) {
+        log.info("contentsService.delete");
+
+        Optional<Contents> contents = contentsRepository.findById(contentsSeq);
+        contents.ifPresent(value -> value.delete());
+
+        List<ContentsFile> contentsFileList = contents.get().getContentsFileList();
+        if (!contentsFileList.isEmpty()) {
+            for (ContentsFile contentsFile : contentsFileList) {
+                contentsFile.updateUseYn("N");
+            }
+        }
+
+        return contents;
+    }
+
+
 
 }

@@ -1,9 +1,6 @@
 package com.nike.dnp.common;
 
-import com.nike.dnp.common.mail.MailService;
-import com.nike.dnp.common.mail.SendEmailOffice365;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -31,12 +28,6 @@ public class StartRunner implements ApplicationRunner {
         super();
     }
 
-    @Autowired
-    private SendEmailOffice365 sendEmailOffice365;
-
-    @Autowired
-    private MailService mailService;
-
     /**
      * Run.
      *
@@ -48,6 +39,10 @@ public class StartRunner implements ApplicationRunner {
     @Override
     public void run(final ApplicationArguments args) {
         log.info("Application Runner!!");
+        /*for (String key : redisService.keys("codes:*")) {
+            redisService.delete(key);
+        }*/
+
 
         /*String id = "nikednp";
         String oldPassword = "qwe123QWE!@#";

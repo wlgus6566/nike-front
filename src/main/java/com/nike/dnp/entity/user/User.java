@@ -33,7 +33,7 @@ import java.util.List;
 @Entity
 @Table(name = "TB_USER")
 @DynamicUpdate
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class User extends BaseTimeEntity {
 
     /**
@@ -53,7 +53,7 @@ public class User extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "USER_ID")
-    @ApiModelProperty(name = "userId", value = "유저 ID", required = true)
+    @ApiModelProperty(name = "userId", value = "유저 ID", required = true, example = "test@nike.co.kr")
     private String userId;
 
     /**
@@ -72,7 +72,7 @@ public class User extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "NICKNAME")
-    @ApiModelProperty(name = "nickname", value = "닉네임", required = true)
+    @ApiModelProperty(name = "nickname", value = "닉네임", required = true, example = "Nike이모션점")
     private String nickname;
 
     /**
@@ -109,7 +109,7 @@ public class User extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "TERMS_AGREE_YN")
-    @ApiModelProperty(name = "termsAgreeYn", value = "약관 동의 여부", required = true)
+    @ApiModelProperty(name = "termsAgreeYn", value = "약관 동의 여부", required = true, example = "Y")
     private String termsAgreeYn;
 
     /**
@@ -137,7 +137,7 @@ public class User extends BaseTimeEntity {
      * @author [오지훈]
      */
     @Column(name = "PASSWORD_CHANGE_YN")
-    @ApiModelProperty(name = "passwordChangeYn", value = "비밀번호 변경 여부", required = true)
+    @ApiModelProperty(name = "passwordChangeYn", value = "비밀번호 변경 여부", required = true, example = "N")
     private String passwordChangeYn;
 
     /**
@@ -145,9 +145,9 @@ public class User extends BaseTimeEntity {
      *
      * @author [오지훈]
      */
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<UserAuth> userAuth = new ArrayList<>();
+    private UserAuth userAuth;
 
     /**
      * 패스워드 기록 맵핑
@@ -156,6 +156,7 @@ public class User extends BaseTimeEntity {
      */
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonManagedReference
+    @OrderBy("registrationDt DESC")
     private List<PasswordHistory> histories = new ArrayList<>();
 
     /**
@@ -183,7 +184,7 @@ public class User extends BaseTimeEntity {
      */
     public User save(final UserSaveDTO userSaveDTO) {
         log.info("User.save");
-        User saveUser = new User();
+        final User saveUser = new User();
         saveUser.setUserId(userSaveDTO.getUserId());
         saveUser.setNickname(userSaveDTO.getNickname());
         return saveUser;
@@ -210,7 +211,7 @@ public class User extends BaseTimeEntity {
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
      * @Description 비밀번호 변경
      */
-    public void updatePassword(String password) {
+    public void updatePassword(final String password) {
         log.info("User.updatePassword");
         this.password = password;
         this.passwordLastUpdateDt = LocalDateTime.now();
@@ -225,7 +226,7 @@ public class User extends BaseTimeEntity {
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
      * @Description 상태값 변경
      */
-    public void updateStatus(String userStatusCode) {
+    public void updateStatus(final String userStatusCode) {
         log.info("User.updateStatus");
         this.userStatusCode = userStatusCode;
     }
@@ -238,12 +239,12 @@ public class User extends BaseTimeEntity {
      * @CreatedOn 2020. 6. 23. 오후 5:41:15
      * @Description 삭제
      */
-    public void delete(Long userSeq) {
+    public void delete(final Long userSeq) {
         log.info("User.delete");
         this.userId = String.valueOf(userSeq);
         this.password = String.valueOf(userSeq);
         this.nickname = String.valueOf(userSeq);
-        this.userStatusCode = ServiceEnumCode.UserStatusEnumCode.OUT.toString();
+        this.userStatusCode = ServiceEnumCode.UserStatusEnumCode.DELETE.toString();
     }
 
     /**
@@ -253,7 +254,7 @@ public class User extends BaseTimeEntity {
      * @CreatedOn 2020. 6. 23. 오후 5:26:57
      * @Description 최종 로그인 일시 변경 / 브라우저 헤더 업데이트
      */
-    public void updateLoginDt(String loginBrowserHeader) {
+    public void updateLoginDt(final String loginBrowserHeader) {
         log.info("User.updateLoginDt");
         this.loginDt = LocalDateTime.now();
         this.loginBrowserHeader = loginBrowserHeader;
@@ -269,6 +270,18 @@ public class User extends BaseTimeEntity {
     public void updateAgreement() {
         log.info("User.updateAgreement");
         this.termsAgreeYn = "Y";
+    }
+
+    /**
+     * Update password change.
+     *
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 2. 오후 6:03:14
+     * @Description 업데이트 변경 여부 수정
+     */
+    public void updatePasswordChange() {
+        log.info("User.updatePasswordChange");
+        this.passwordChangeYn = "N";
     }
 
 }
