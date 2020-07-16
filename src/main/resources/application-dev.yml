@@ -30,12 +30,8 @@ server:
   domain: http://localhost
   port: 8080
 
-security:
-  auth:
-    url: false
-
 #임시경로
 nike:
   file:
-    root: 'C:\sojeong\project\nike\doc\upload'
-    imageMagick: 'C:\Program Files\ImageMagick-7.0.10-Q16-HDRI'
+    root: '/home/file'
+    imageMagick: '/imageTool'
