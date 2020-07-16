@@ -1,8 +1,8 @@
 spring:
   profiles: dev
   datasource:
-    driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mysql://10.80.1.212:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://nike-test-db.c9c2dtiz524o.ap-northeast-2.rds.amazonaws.com:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
     username: nikemanager
     password: 'emotion!@'
   devtools:
@@ -29,6 +29,12 @@ logging:
 server:
   domain: http://localhost
   port: 8080
+
+## 시큐리티 url/ ip 체크 flag
+security:
+  auth:
+    url: false
+    ip : false
 
 #임시경로
 nike:
