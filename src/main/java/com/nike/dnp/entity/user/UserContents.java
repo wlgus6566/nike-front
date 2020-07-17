@@ -42,6 +42,7 @@ public class UserContents extends BaseTimeEntity implements Serializable {
      */
     @ManyToOne
     @JoinColumn(name = "AUTH_SEQ", insertable = false, updatable = false)
+    @ApiModelProperty(name = "auth", value = "권한")
     private Auth auth;
 
     /**
@@ -51,6 +52,7 @@ public class UserContents extends BaseTimeEntity implements Serializable {
      */
     @ManyToOne
     @JoinColumn(name = "CONTENTS_SEQ", insertable = false, updatable = false)
+    @ApiModelProperty(name = "contents", value = "컨텐츠")
     private Contents contents;
 
 }
