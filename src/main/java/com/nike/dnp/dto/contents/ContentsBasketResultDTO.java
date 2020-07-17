@@ -3,6 +3,11 @@ package com.nike.dnp.dto.contents;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 
 /**
  * The Class Contents basket result dto.
@@ -17,6 +22,14 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class ContentsBasketResultDTO {
+
+    /**
+     * 컨텐츠 장바구니 시퀀스
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "contentsBasketSeq", value ="컨텐츠 장바구니 시퀀스", example = "3")
+    private Long contentsBasketSeq;
 
     /**
      * 유저 시퀀스

@@ -104,6 +104,24 @@ public class ErrorEnumCode {
     }
 
     /**
+     * The enum Contents basket error.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum ContentsBasketError {
+        NOT_FOUND_BASKET("해당 장바구니가 존재하지 않습니다.");
+
+        /**
+         * 에러 메시지
+         * @author [이소정]
+         */
+        private final String message;
+    }
+
+
+
+
+    /**
      * The enum Manage error.
      *
      * @author [이소정]
