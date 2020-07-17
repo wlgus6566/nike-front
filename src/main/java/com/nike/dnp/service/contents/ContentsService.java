@@ -98,9 +98,6 @@ public class ContentsService {
      */
     public Contents save(final ContentsSaveDTO contentsSaveDTO) {
         log.info("contentsService.save");
-        final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
-        List<ContentsFile> savedContentsFileList = new ArrayList<>();
-
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
             FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsSaveDTO.getImageBase64());
@@ -109,6 +106,8 @@ public class ContentsService {
             contentsSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
             contentsSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
         }
+        final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
+        List<ContentsFile> savedContentsFileList = new ArrayList<>();
 
 //        contentsFile 추가
         if (!contentsSaveDTO.getContentsFileList().isEmpty()) {
