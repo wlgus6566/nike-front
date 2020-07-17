@@ -51,6 +51,14 @@ public class FileUtil {
 	 */
 	private static String imageMagick;
 
+	/**
+	 * The constant imageMagickCommand
+	 *
+	 * @author [김형욱]
+	 */
+	private static String imageMagickCommand;
+
+
 
 	/**
 	 * 파일 저장 경로
@@ -76,6 +84,19 @@ public class FileUtil {
 	@Value("${nike.file.imageMagick:}")
 	public void setImageMagick(final String imageMagick){
 		this.imageMagick = imageMagick;
+	}
+
+	/**
+	 * Set image magick command.
+	 *
+	 * @param imageMagickCommand the image magick command
+	 * @author [김형욱]
+	 * @CreatedOn 2020. 7. 17. 오전 11:55:43
+	 * @Description
+	 */
+	@Value("${nike.file.imageMagickCommand:}")
+	public void setImageMagickCommand(final String imageMagickCommand){
+		this.imageMagickCommand = imageMagickCommand;
 	}
 
 	/**
@@ -147,7 +168,7 @@ public class FileUtil {
 			}
 			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail." + resizeExtension;
 			final StringBuilder command = new StringBuilder(imageMagick);
-			command.append(File.separator).append("magick ").append(toFile.getPath());
+			command.append(File.separator).append(imageMagickCommand+" ").append(toFile.getPath());
 			if(extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(Locale.getDefault()).contains("AI")){
 				command.append("[0]");
 			}

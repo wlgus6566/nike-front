@@ -41,3 +41,4 @@ nike:
   file:
     root: '/home/emotion/file_temp'
     imageMagick: '/imageTool'
+    imageMagickCommand: 'convert'
