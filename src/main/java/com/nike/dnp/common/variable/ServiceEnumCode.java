@@ -37,7 +37,7 @@ public class ServiceEnumCode {
     }
 
     /**
-     * 콘텐츠 > 캠페인기간 enumCode
+     * 컨텐츠 > 캠페인기간 enumCode
      */
     public enum ContentsCampaignPeriodCode {
         SELECT  //날짜선택
@@ -45,7 +45,7 @@ public class ServiceEnumCode {
     }
 
     /**
-     * 콘텐츠 > 파일 > 파일구분
+     * 컨텐츠 > 파일 > 파일구분
      */
     public enum ContentsFileSectionCode {
         ASSET
@@ -54,7 +54,7 @@ public class ServiceEnumCode {
     }
 
     /**
-     * 콘텐츠 > 파일 > 파일종류
+     * 컨텐츠 > 파일 > 파일종류
      */
     public enum ContentsFileKindCode {
         FILE  // 파일

@@ -62,7 +62,7 @@ public class ContentsBasketResultDTO {
      * 파일 물리 명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명", example = "/cdn/file/path")
+    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명", example = "http://cdnUrl/file/contents/graphic_img.jpg")
     private String filePhysicalName;
 
 }

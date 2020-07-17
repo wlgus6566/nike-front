@@ -159,7 +159,7 @@ public class Contents extends BaseTimeEntity {
      */
     @JsonManagedReference
     @OneToMany(mappedBy = "contents")
-    @ApiModelProperty(name = "contentsFileList", value = "콘텐츠 파일 목록", required = true)
+    @ApiModelProperty(name = "contentsFileList", value = "컨텐츠 파일 목록", required = true)
     private List<ContentsFile> contentsFileList;
 
     /**
