@@ -69,6 +69,7 @@ public class ReportService {
      * @CreatedOn 2020. 7. 8. 오후 5:28:20
      * @Description
      */
+    @Transactional
     public Report save(final ReportSaveDTO reportSaveDTO) {
         log.info("ReportService.save");
         final Report savedReport = reportRepository.save(new Report().save(reportSaveDTO));
@@ -110,6 +111,7 @@ public class ReportService {
      * @CreatedOn 2020. 7. 9. 오후 6:49:17
      * @Description
      */
+    @Transactional
     public Optional<Report> update(final ReportUpdateDTO reportUpdateDTO) {
         log.info("reportService.update");
 
@@ -161,6 +163,7 @@ public class ReportService {
      * @CreatedOn 2020. 7. 9. 오후 5:49:18
      * @Description
      */
+    @Transactional
     public Optional<Report> delete(final Long reportSeq) {
         Optional<Report> report = reportRepository.findById(reportSeq);
         report.ifPresent(value -> value.updateUseYn("N"));

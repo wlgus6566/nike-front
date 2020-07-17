@@ -48,6 +48,7 @@ public class ReportAnswerService {
      * @CreatedOn 2020. 7. 10. 오전 11:29:37
      * @Description
      */
+    @Transactional
     public ReportAnswer save(final ReportAnswerSaveDTO reportAnswerSaveDTO) {
         log.info("ReportAnswerService.save");
         final ReportAnswer savedReportAnswer = reportAnswerRepository.save(new ReportAnswer().save(reportAnswerSaveDTO));
@@ -63,6 +64,7 @@ public class ReportAnswerService {
      * @CreatedOn 2020. 7. 10. 오전 11:29:34
      * @Description
      */
+    @Transactional
     public Optional<ReportAnswer> delete(final Long answerSeq) {
         log.info("ReportAnswerService.delete");
         Optional<ReportAnswer> reportAnswer = reportAnswerRepository.findById(answerSeq);
