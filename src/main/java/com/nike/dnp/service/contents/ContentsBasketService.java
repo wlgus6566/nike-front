@@ -56,6 +56,7 @@ public class ContentsBasketService {
      * @CreatedOn 2020. 7. 15. 오후 12:02:32
      * @Description
      */
+    @Transactional
     public List<ContentsBasket> save(final List<ContentsBasketSaveDTO> contentsBasketSaveDTOList, final AuthUserDTO authUserDTO) {
         log.info("contentsBasketService.save");
         List<ContentsBasket> savedBasketList = new ArrayList<>();
@@ -75,6 +76,7 @@ public class ContentsBasketService {
      * @CreatedOn 2020. 7. 15. 오후 2:38:45
      * @Description
      */
+    @Transactional
     public Optional<ContentsBasket> delete(final Long contentsBasketSeq) {
         log.info("ContentsBasketService.delete");
         Optional<ContentsBasket> contentsBasket = contentsBasketRepository.findById(contentsBasketSeq);

@@ -41,12 +41,6 @@ import java.util.Optional;
 public class ContentsService {
 
     /**
-     * active profiles 변수
-     */
-    @Value("${spring.profiles:}")
-    private String activeProfiles;
-
-    /**
      * The Contents repository
      *
      * @author [이소정]
@@ -89,6 +83,7 @@ public class ContentsService {
      * @CreatedOn 2020. 6. 24. 오후 3:22:15
      * @Description
      */
+    @Transactional
     public Contents save(final ContentsSaveDTO contentsSaveDTO) {
         log.info("contentsService.save");
         // 썸네일 base64 -> file 정보로 변환
@@ -144,6 +139,7 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 3. 오후 4:01:24
      * @Description
      */
+    @Transactional
     public Optional<Contents> update(final ContentsUpdateDTO contentsUpdateDTO) {
         log.info("contentsService.update");
         // contents Update
@@ -206,6 +202,7 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 7. 오전 10:59:29
      * @Description
      */
+    @Transactional
     public Optional<Contents> delete(final Long contentsSeq) {
         log.info("contentsService.delete");
 
@@ -231,6 +228,7 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 16. 오후 2:51:01
      * @Description
      */
+    @Transactional
     public ResponseEntity<Resource> downloadContentsFile(final Long contentsFileSeq) {
         Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
         if (contentsFile.isPresent()) {
