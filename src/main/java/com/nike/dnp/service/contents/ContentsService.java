@@ -102,7 +102,7 @@ public class ContentsService {
         if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
             FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsSaveDTO.getImageBase64());
 
-            contentsSaveDTO.setFolderName(fileResultDTO.getFileName());
+            contentsSaveDTO.setImageFileName(fileResultDTO.getFileName());
             contentsSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
             contentsSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
         }
