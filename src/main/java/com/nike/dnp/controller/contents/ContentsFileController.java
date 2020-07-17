@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@Api(description = "콘텐츠", tags = "CONTENTS")
-@RequestMapping(value = "/api/contents/file", name = "콘텐츠 파일")
+@Api(description = "컨텐츠", tags = "CONTENTS")
+@RequestMapping(value = "/api/contents/file", name = "컨텐츠 파일")
 @RequiredArgsConstructor
 public class ContentsFileController {
 
@@ -39,7 +39,7 @@ public class ContentsFileController {
     private final ResponseService responseService;
 
     /**
-     * 콘텐츠 파일 서비스
+     * 컨텐츠 파일 서비스
      *
      * @author [이소정]
      */
@@ -66,7 +66,7 @@ public class ContentsFileController {
      * @Description
      */
     @ApiOperation(
-        value = "콘텐츠 파일 목록 조회"
+        value = "컨텐츠 파일 목록 조회"
         , notes = REQUEST_CHARACTER
         + "page|페이지|false|Integer|0부터 시작\n"
         + "size|사이즈|false|Integer\n"
@@ -88,11 +88,11 @@ public class ContentsFileController {
         + "number||현재페이지|Integer\n"
         + "size||노출갯수|Integer\n\n\n\n"
     )
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "콘텐츠 파일 목록 조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}")
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 파일 목록 조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}")
     public SingleResult<Page<ContentsFileResultDTO>> getAllContentsFile(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @ApiParam(name = "contentsSeq", value = "콘텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq,
+            @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq,
             final ContentsFileSearchDTO contentsFileSearchDTO
     ) {
         contentsFileSearchDTO.setContentsSeq(contentsSeq);
@@ -119,7 +119,7 @@ public class ContentsFileController {
 //    public SingleResult<Contents> findContents(
 //            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
 //            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-//            @ApiParam(name = "contentsSeq", value = "콘텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
+//            @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
 //        return responseService.getSingleResult(contentsService.findByContentsSeq(contentsSeq));
 //    }
 //
@@ -164,7 +164,7 @@ public class ContentsFileController {
 //    public SingleResult<Optional<Contents>> deleteContents(
 //            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
 //            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-//            @ApiParam(name = "contentsSeq", value = "콘텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
+//            @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
 //        log.info("AssetController.delete");
 //        return responseService.getSingleResult(contentsService.delete(contentsSeq));
 //    }

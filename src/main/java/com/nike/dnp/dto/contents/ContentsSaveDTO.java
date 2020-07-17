@@ -223,7 +223,7 @@ public class ContentsSaveDTO {
      * 콘텐트 파일 리스트
      * @author [이소정]
      */
-    @ApiModelProperty(name = "contentsFileList", value = "콘텐츠 파일 리스트")
+    @ApiModelProperty(name = "contentsFileList", value = "컨텐츠 파일 리스트")
     private List<ContentsFileSaveDTO> contentsFileList;
 
 }
