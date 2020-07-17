@@ -1,11 +1,9 @@
 package com.nike.dnp.service.contents;
 
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.dto.contents.*;
-import com.nike.dnp.entity.contents.Contents;
-import com.nike.dnp.entity.contents.ContentsFile;
+import com.nike.dnp.dto.contents.ContentsFileResultDTO;
+import com.nike.dnp.dto.contents.ContentsFileSearchDTO;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
-import com.nike.dnp.repository.contents.ContentsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -13,10 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 
 /**

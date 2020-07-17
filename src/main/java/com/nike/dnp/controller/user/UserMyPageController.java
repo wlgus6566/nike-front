@@ -49,11 +49,12 @@ public class UserMyPageController {
     private final UserService userService;
 
     /**
-     * REQUEST_CHARACTER
+     * OPERATION_CHARACTER
      *
      * @author [오지훈]
      */
-    private static final String REQUEST_CHARACTER = "## Reqeust ## \n필드명|설명|필수여부|데이터 타입(길이)\n" + "-|-|-|-\n";
+    private static final String OPERATION_CHARACTER
+            = "## Request ##\n[하위 Parameters 참조]\n\n\n\n## Response ##\n[하위 Model 참조]\n\n\n\n";
 
     /**
      * Find user single result.
@@ -66,15 +67,13 @@ public class UserMyPageController {
      */
     @ApiOperation(
             value = "마이페이지 상세 조회"
-            , notes = REQUEST_CHARACTER
-            + "userSeq|사용자시퀀스|true|Long\n\n\n\n"
-            + "## Response ## \n"
-            + "[하위 Model 참조]\n\n\n\n"
+            , notes = OPERATION_CHARACTER
     )
     @GetMapping(name = "마이페이지 상세 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<UserReturnDTO> getUser(
-            final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO) {
+            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
+    ) {
         log.info("UserMyPageController.getUser");
         return responseService.getSingleResult(userService.getMyPage(authUserDTO.getUserSeq()));
     }
@@ -90,17 +89,15 @@ public class UserMyPageController {
      */
     @ApiOperation(
             value = "마이페이지 비밀번호 변경"
-            , notes = "## Reqeust ##\n"
-            + "[하위 Parameters 참조]\n\n\n\n"
-            + "## Response ## \n"
-            + "[하위 Model 참조]\n\n\n\n"
+            , notes = OPERATION_CHARACTER
     )
     @PutMapping(value = "/change/password", name = "마이페이지 비밀번호 변경"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<UserReturnDTO> changePassword(
-            final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
-            ,@ApiParam("유저 인증코드 DTO") @RequestBody final UserCertDTO userCertDTO) {
+            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
+            , @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody final UserCertDTO userCertDTO
+    ) {
         log.info("UserMyPageController.changePassword");
         userCertDTO.setCertCode("MYPAGE");
 

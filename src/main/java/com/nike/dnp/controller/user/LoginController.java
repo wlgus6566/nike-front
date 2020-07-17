@@ -21,7 +21,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * The Class User controller.
+ * The Class Login controller.
  *
  * @author [오지훈]
  * @CreatedOn 2020. 6. 22. 오후 4:41:44
@@ -29,10 +29,10 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@Api(description = "유저(권한없음)", tags = "OPEN_USER")
-@RequestMapping(value = "/api/open/user", name = "유저")
+@Api(description = "로그인 관련", tags = "LOGIN")
+@RequestMapping(value = "/api/open/login", name = "로그인 관련")
 @RequiredArgsConstructor
-public class UserOpenController {
+public class LoginController {
 
     /**
      * The Response service
@@ -55,11 +55,12 @@ public class UserOpenController {
     private final UserMailService userMailService;
 
     /**
-     * REQUEST_CHARACTER
+     * OPERATION_CHARACTER
      *
      * @author [오지훈]
      */
-    private static final String REQUEST_CHARACTER = "## Reqeust ## \n필드명|설명|필수여부|데이터 타입(길이)\n" + "-|-|-|-\n";
+    private static final String OPERATION_CHARACTER
+            = "## Request ##\n[하위 Parameters 참조]\n\n\n\n## Response ##\n[하위 Model 참조]\n\n\n\n";
 
     /**
      * Send cert single result.
@@ -72,10 +73,7 @@ public class UserOpenController {
      */
     @ApiOperation(
             value = "ID 확인, 인증코드 생성 및 이메일 발송"
-            , notes = "## Reqeust ##\n"
-            + "[하위 Parameters 참조]\n\n\n\n"
-            + "## Response ## \n"
-            + "[하위 Model 참조]\n\n\n\n"
+            , notes = OPERATION_CHARACTER
     )
     @GetMapping(value = "/send/cert", name = "ID 확인, 인증코드 생성 및 비밀번호 설정 이메일 발송")
     public SingleResult<String> sendCert(final UserIdDTO userIdDTO) {
@@ -105,10 +103,7 @@ public class UserOpenController {
      */
     @ApiOperation(
             value = "인증코드 검증 및 비밀번호 설정"
-            , notes = "## Reqeust ##\n"
-            + "[하위 Parameters 참조]\n\n\n\n"
-            + "## Response ## \n"
-            + "[하위 Model 참조]\n\n\n\n"
+            , notes = OPERATION_CHARACTER
     )
     @PutMapping(value = "/set/password", name = "인증코드 검증 및 비밀번호 설정"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
@@ -135,10 +130,7 @@ public class UserOpenController {
      */
     @ApiOperation(
             value = "인증코드 검증 및 비밀번호 변경"
-            , notes = "## Reqeust ##\n"
-            + "[하위 Parameters 참조]\n\n\n\n"
-            + "## Response ## \n"
-            + "[하위 Model 참조]\n\n\n\n"
+            , notes = OPERATION_CHARACTER
     )
     @PutMapping(value = "/change/password", name = "인증코드 검증 및 비밀번호 변경"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}

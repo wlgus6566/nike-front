@@ -127,11 +127,11 @@ public class ReportBasketController {
      * @CreatedOn 2020. 7. 9. 오후 6:18:36
      * @Description
      */
-    @ApiOperation(value = "보고서 수정", notes = REQUEST_CHARACTER)
-    @PutMapping(name = "보고서 수정", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<Report>> updateReport(@ApiParam(name="reportUpdateDTO", value = "보고서 수정 Json") @RequestBody final ReportUpdateDTO reportUpdateDTO) {
-        return responseService.getSingleResult(reportService.update(reportUpdateDTO));
-    }
+//    @ApiOperation(value = "보고서 수정", notes = REQUEST_CHARACTER)
+//    @PutMapping(name = "보고서 수정", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+//    public SingleResult<Optional<Report>> updateReport(@ApiParam(name="reportUpdateDTO", value = "보고서 수정 Json") @RequestBody final ReportUpdateDTO reportUpdateDTO) {
+//        return responseService.getSingleResult(reportService.update(reportUpdateDTO));
+//    }
 
 //    /**
 //     * Delete report single result.

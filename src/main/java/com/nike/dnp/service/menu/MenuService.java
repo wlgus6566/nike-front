@@ -43,4 +43,17 @@ public class MenuService {
         return menuRepository.findAll();
     }
 
+    /**
+     * Find menus list.
+     *
+     * @return the list
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 16. 오후 4:40:39
+     * @Description 메뉴 목록(1depth)
+     */
+    public List<Menu> findMenus() {
+        log.info("MenuService.findMenus");
+        return menuRepository.findAllByUseYnAndMenuDepth("Y", 1L);
+    }
+
 }

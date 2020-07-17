@@ -3,9 +3,6 @@ package com.nike.dnp.dto.contents;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Column;
-import java.util.List;
-
 
 /**
  * The Class Contents save dto.

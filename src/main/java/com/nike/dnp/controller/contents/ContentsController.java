@@ -6,7 +6,6 @@ import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.contents.ContentsService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -222,7 +221,7 @@ public class ContentsController {
      * @CreatedOn 2020. 7. 15. 오후 6:30:45
      * @Description
      */
-    @ApiModelProperty(value = "콘텐츠 다운로드", notes = REQUEST_CHARACTER)
+    @ApiOperation(value = "콘텐츠 다운로드", notes = REQUEST_CHARACTER)
     @PostMapping(name = "콘텐츠 다운로드", value = "/{topMenuCode}/{menuCode}/download/{contentsFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public String downloadContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,

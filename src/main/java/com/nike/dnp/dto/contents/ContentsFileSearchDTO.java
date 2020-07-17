@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
 
-import javax.persistence.Column;
-
 /**
  * The Class Contents file search dto.
  *

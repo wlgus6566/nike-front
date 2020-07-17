@@ -45,6 +45,7 @@
 				content: null,
 				searchParam:{userName:'', page:0},
 				ddd: 1591174782,
+				yyyyMm: '2020.07',
 				page:10,
 				pageInfo: {
 					page: 1,
@@ -60,7 +61,9 @@
 			getList: function() {
 				console.log('=======param start=====');
 				console.log(this.searchParam);
-				api.list(this.searchParam).then(response => {
+				let aaa = {};
+				aaa.yyyyMm = '2020.07';
+				api.list(aaa).then(response => {
 					console.log(response.data.data);
 					let info = response.data.data;
 					this.content = info.content;

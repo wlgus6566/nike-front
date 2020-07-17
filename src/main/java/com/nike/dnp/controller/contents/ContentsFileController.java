@@ -1,11 +1,10 @@
 package com.nike.dnp.controller.contents;
 
-import com.nike.dnp.dto.contents.*;
-import com.nike.dnp.entity.contents.Contents;
+import com.nike.dnp.dto.contents.ContentsFileResultDTO;
+import com.nike.dnp.dto.contents.ContentsFileSearchDTO;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.contents.ContentsFileService;
-import com.nike.dnp.service.contents.ContentsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -13,10 +12,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * The Class Contents file controller.
