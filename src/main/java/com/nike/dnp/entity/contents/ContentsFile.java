@@ -271,7 +271,7 @@ public class ContentsFile extends BaseTimeEntity {
         contentsFile.setFileKindCode(fileKindCode);
         contentsFile.setFileOrder(fileOrder);
 
-        if (ServiceEnumCode.ContentsFileKindCode.FILE.equals(fileKindCode)) {
+        if (ServiceEnumCode.ContentsFileKindCode.FILE.toString().equals(fileKindCode)) {
             this.checkStringValidation(fileName, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
 
             contentsFile.setFileName(fileName);
