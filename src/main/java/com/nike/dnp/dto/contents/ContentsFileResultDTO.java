@@ -1,14 +1,8 @@
 package com.nike.dnp.dto.contents;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  * The Class Contents list dto.
@@ -67,33 +61,35 @@ public class ContentsFileResultDTO {
     @ApiModelProperty(name = "url", value = "url")
     private String url;
 
-    /**
-     * 파일 명
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "fileName", value = "파일 명")
-    private String fileName;
-
-    /**
-     * 파일 사이즈
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "fileSize", value = "파일 사이즈")
-    private Long fileSize;
-
-    /**
-     * 파일 물리 명
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명")
-    private String filePhysicalName;
-
-    /**
-     * 다운로드 수
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "downloadCount", value = "다운로드 수")
-    private long downloadCount;
+//    상세페이지에서 필요 없어서 주석 by.2020.07.17 sojeong.lee
+//
+//    /**
+//     * 파일 명
+//     * @author [이소정]
+//     */
+//    @ApiModelProperty(name = "fileName", value = "파일 명")
+//    private String fileName;
+//
+//    /**
+//     * 파일 사이즈
+//     * @author [이소정]
+//     */
+//    @ApiModelProperty(name = "fileSize", value = "파일 사이즈")
+//    private Long fileSize;
+//
+//    /**
+//     * 파일 물리 명
+//     * @author [이소정]
+//     */
+//    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명")
+//    private String filePhysicalName;
+//
+//    /**
+//     * 다운로드 수
+//     * @author [이소정]
+//     */
+//    @ApiModelProperty(name = "downloadCount", value = "다운로드 수")
+//    private long downloadCount;
 
     /**
      * 파일 순서
@@ -101,13 +97,6 @@ public class ContentsFileResultDTO {
      */
     @ApiModelProperty(name = "fileOrder", value = "파일 순서", example = "1", required = true)
     private long fileOrder;
-
-    /**
-     * 사용여부
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "useYn", value = "사용 여부", required = true)
-    private String useYn;
 
     /**
      * 썸네일 파일 물리 명
