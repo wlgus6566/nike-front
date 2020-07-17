@@ -39,5 +39,6 @@ security:
 #임시경로
 nike:
   file:
-    root: '/home/file'
+    root: '/home/emotion/file_temp'
     imageMagick: '/imageTool'
+    imageMagickCommand: 'convert'
