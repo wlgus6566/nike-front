@@ -36,14 +36,14 @@ public class ContentsFileUpdateDTO {
      * 파일 구분 공통코드
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드", required = true, example = "GUIDE")
+    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드(ASSET/GUIDE/VIDEO)", required = true, example = "GUIDE")
     private String fileSectionCode;
 
     /**
      * 파일 종류 공통코드codeSaveDTO
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드", required = true, example = "VIDEO")
+    @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드(FILE/VIDEO/VR)", required = true, example = "VIDEO")
     private String fileKindCode;
 
     /**

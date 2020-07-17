@@ -92,7 +92,9 @@ public class ErrorEnumCode {
         NOT_EXIST_FILE_TITLE("파일타이틀이 존재하지 않습니다."),
         NOT_EXIST_FILE_URL("파일URL이 존재하지 않습니다."),
         NOT_SELECT_DATE("시작/끝날짜를 둘 다 지정해주시기 바랍니다."),
-        START_DATE_BIGGER("시작날짜가 종료일자보다 큽니다.");
+        START_DATE_BIGGER("시작날짜가 종료일자보다 큽니다."),
+        NOT_FOUND_CONTENTS("해당 콘텐츠가 존재하지 않습니다.");
+
 
         /**
          * 에러 메시지

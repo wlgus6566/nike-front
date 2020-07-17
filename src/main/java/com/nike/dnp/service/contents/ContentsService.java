@@ -1,10 +1,12 @@
 package com.nike.dnp.service.contents;
 
+import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
@@ -125,14 +127,20 @@ public class ContentsService {
      * Find by contents seq contents.
      *
      * @param contentsSeq the contents seq
+     * @param topMenuCode the top menu code
+     * @param menuCode    the menu code
      * @return the contents
      * @author [이소정]
      * @CreatedOn 2020. 7. 2. 오후 2:25:43
      * @Description
      */
-    public Contents findByContentsSeq(final Long contentsSeq) {
-        Contents findContetns = contentsRepository.findByContentsSeq(contentsSeq);
-        findContetns.updateReadCount(findContetns.getReadCount());
+    public Contents findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
+        Contents findContetns = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
+        if (null != findContetns) {
+            findContetns.updateReadCount(findContetns.getReadCount());
+        } else {
+            throw new CodeMessageHandleException(ErrorEnumCode.ContentsError.NOT_FOUND_CONTENTS.name(), ErrorEnumCode.ContentsError.NOT_FOUND_CONTENTS.getMessage());
+        }
         return findContetns;
     }
 

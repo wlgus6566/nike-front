@@ -154,7 +154,7 @@ public class ContentsController {
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
             @ApiParam(name = "contentsSeq", value = "콘텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
-        return responseService.getSingleResult(contentsService.findByContentsSeq(contentsSeq));
+        return responseService.getSingleResult(contentsService.findByContentsSeq(contentsSeq, topMenuCode, menuCode));
     }
 
 

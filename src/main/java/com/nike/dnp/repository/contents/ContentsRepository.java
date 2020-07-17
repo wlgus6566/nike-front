@@ -18,12 +18,14 @@ public interface ContentsRepository extends JpaRepository<Contents, Long>, Conte
      * Find by contents seq contents.
      *
      * @param contentsSeq the contents seq
+     * @param topMenuCode the top menu code
+     * @param menuCode    the menu code
      * @return contents contents
      * @author [이소정]
      * @CreatedOn 2020. 6. 19. 오후 5:57:43
      * @Description
      */
-    Contents findByContentsSeq(Long contentsSeq);
+    Contents findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(Long contentsSeq, String topMenuCode, String menuCode, String useYn);
 
 
 }
