@@ -2,7 +2,6 @@ package com.nike.dnp.util;
 
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.file.FileResultDTO;
-import com.nike.dnp.model.response.SingleResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;

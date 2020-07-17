@@ -66,7 +66,7 @@ public class CodeController {
         value = "하위 코드 목록 조회"
         , notes = OPERATION_CHARACTER
     )
-    @GetMapping(value = "/codes/{upperCode}", name = "하위 코드 목록 조회"
+    @GetMapping(value = "/{upperCode}", name = "하위 코드 목록 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<List<Code>> getConfCodes(
             @ApiParam(name = "upperCode", value = "상위 코드", required = true) @PathVariable final String upperCode

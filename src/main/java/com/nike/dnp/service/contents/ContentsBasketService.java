@@ -5,7 +5,6 @@ import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.ContentsBasketResultDTO;
 import com.nike.dnp.dto.contents.ContentsBasketSaveDTO;
 import com.nike.dnp.entity.contents.ContentsBasket;
-import com.nike.dnp.entity.wishlist.WishList;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.contents.ContentsBasketRepository;
 import lombok.RequiredArgsConstructor;

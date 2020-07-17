@@ -116,11 +116,20 @@ public class MenuController {
         return responseService.getSingleResult(authService.getAuthsResourcesByRoleType(authUserDTO.getRole()));
     }
 
+    /**
+     * Gets redis menus.
+     *
+     * @param authUserDTO the auth user dto
+     * @return the redis menus
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 16. 오후 5:16:45
+     * @Description GNB 메뉴 목록
+     */
     @ApiOperation(
-            value = "메뉴 관리 목록 조회(테스트2)"
+            value = "GNB 메뉴 목록"
             , notes = OPERATION_CHARACTER
     )
-    @GetMapping(name = "메뉴 목록 조회(테스트2)", value = "/list2"
+    @GetMapping(name = "GNB 메뉴", value = "/gnb"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<List<MenuReturnDTO>> getRedisMenus(
             final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
