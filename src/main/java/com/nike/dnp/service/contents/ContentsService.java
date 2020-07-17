@@ -235,6 +235,7 @@ public class ContentsService {
     public ResponseEntity<Resource> downloadContentsFile(final Long contentsFileSeq) {
         Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
         if (contentsFile.isPresent()) {
+            contentsFile.ifPresent(value -> value.updateDownloadCount(contentsFile.get().getDownloadCount()));
             return FileUtil.fileDownload(contentsFile.get().getFilePhysicalName());
         } else {
             return null;

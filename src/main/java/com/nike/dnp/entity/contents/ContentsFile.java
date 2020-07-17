@@ -55,7 +55,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "FILE_SECTION_CODE")
-    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드", required = true)
+    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드 (ASSET/GUIDE/VIDEO)", required = true)
     private String fileSectionCode;
 
     /**
@@ -63,7 +63,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "FILE_KIND_CODE")
-    @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드", required = true)
+    @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드(FILE/VIDEO/VR)", required = true)
     private String fileKindCode;
 
     /**
@@ -119,7 +119,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "FILE_ORDER")
-    @ApiModelProperty(name = "fileOrder", value = "파일 순서", example = "1")
+    @ApiModelProperty(name = "fileOrder", value = "파일 순서", example = "1", required = true)
     private long fileOrder;
 
     /**
