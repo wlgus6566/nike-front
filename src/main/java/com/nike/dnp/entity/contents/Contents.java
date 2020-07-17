@@ -175,9 +175,12 @@ public class Contents extends BaseTimeEntity {
         Contents saveContents = new Contents();
         saveContentsBasic(contentsSaveDTO, saveContents);
         // 캠페인기간 > 날짜선택 인 경우
-        if (ServiceEnumCode.ContentsCampaignPeriodCode.EVERY.toString().equals(contentsSaveDTO.getCampaignPeriodSectionCode())) {
+        if (ServiceEnumCode.ContentsCampaignPeriodCode.SELECT.toString().equals(contentsSaveDTO.getCampaignPeriodSectionCode())) {
             saveContents.setCampaignBeginDt(contentsSaveDTO.getCampaignBeginDt());
             saveContents.setCampaignEndDt(contentsSaveDTO.getCampaignEndDt());
+        } else {
+            saveContents.setCampaignBeginDt(null);
+            saveContents.setCampaignEndDt(null);
         }
         saveContents.setMemo(contentsSaveDTO.getMemo());
         // TODO[lsj] 권한설정 추가 하기
