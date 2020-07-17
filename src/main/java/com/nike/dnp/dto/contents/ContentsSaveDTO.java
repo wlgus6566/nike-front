@@ -1,8 +1,14 @@
 package com.nike.dnp.dto.contents;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -202,14 +208,14 @@ public class ContentsSaveDTO {
      * 캠페인 시작 일시
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020-06-01")
+    @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020.06.01")
     private String campaignBeginDt;
 
     /**
      * 캠페인 종료 일시
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020-09-01")
+    @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020.09.01")
     private String campaignEndDt;
 
     /**

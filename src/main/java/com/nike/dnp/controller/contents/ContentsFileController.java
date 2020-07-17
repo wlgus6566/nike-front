@@ -75,7 +75,7 @@ public class ContentsFileController {
         + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
         + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
         + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n"
-        + "orderType|정렬 타입|false|String|최신순:LATEST/파일명 순:FILE_NAME\n"
+        + "orderType|정렬 타입|false|String|기본 정렬:ORDER/파일명 순:FILE_NAME\n"
         + "[하위 Parameters 참조]\n\n\n\n"
         + "## Public/Paging Response ## \n"
         + "필드명||필드설명|데이터 타입(길이)\n" + "-|-|-|-\n"

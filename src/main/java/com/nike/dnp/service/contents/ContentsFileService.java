@@ -49,7 +49,7 @@ public class ContentsFileService {
                 contentsFileSearchDTO,
                 PageRequest.of(contentsFileSearchDTO.getPage()
                 , contentsFileSearchDTO.getSize()
-                , contentsFileSearchDTO.getOrderType().equals(ServiceEnumCode.SearchEnumCode.FILE_NAME.toString())
+                , contentsFileSearchDTO.getOrderType().equals(ServiceEnumCode.SearchEnumCode.ORDER.toString())
                         ? Sort.by("fileOrder").ascending() : Sort.by("fileName").ascending()));
     }
 //

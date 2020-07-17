@@ -32,6 +32,7 @@ public class ServiceEnumCode {
     public enum SearchEnumCode {
         LATEST //최신순
         , START_DATE //시작일순
+        , ORDER // 정렬번호 순
         , FILE_NAME // 파일명
     }
 

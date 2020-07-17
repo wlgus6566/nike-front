@@ -32,7 +32,7 @@ public class ContentsFileSearchDTO extends SearchDTO {
      *
      * @author [이소정]
      */
-    @ApiParam(value = "파일 구분 코드", name = "sectionCode" , defaultValue = "ALL")
+    @ApiParam(value = "파일 구분 코드(ALL/ASSET/GUIDE/VIDEO)", name = "sectionCode" , defaultValue = "ALL")
     private String sectionCode = "";
 
     /**
@@ -40,7 +40,7 @@ public class ContentsFileSearchDTO extends SearchDTO {
      *
      * @author [이소정]
      */
-    @ApiParam(value = "정렬 타입(최신순 LATEST/파일명 순FILE_NAME)", name = "orderType" , defaultValue = "FILE_NAME")
+    @ApiParam(value = "정렬 타입(기본정렬 ORDER/파일명 순 FILE_NAME)", name = "orderType" , defaultValue = "ORDER")
     private String orderType = "";
 
     /**

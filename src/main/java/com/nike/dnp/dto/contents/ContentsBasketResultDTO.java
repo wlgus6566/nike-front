@@ -1,5 +1,6 @@
 package com.nike.dnp.dto.contents;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -20,6 +21,7 @@ import javax.persistence.Id;
 @Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 public class ContentsBasketResultDTO {
 
