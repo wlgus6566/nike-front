@@ -12,6 +12,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en';
 import App from './App.vue';
 import { layouts } from '@/utils/global-methods';
+import { bus } from '@/utils/bus.js';
 Vue.use(ElementUI, { locale });
 
 export default {

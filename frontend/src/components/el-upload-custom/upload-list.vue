@@ -6,7 +6,7 @@
     >
         <li
             v-for="file in files"
-            :class="['el-upload-list__item', 'is-' + file.status, focusing ? 'focusing' : '']"
+            :class="['is-' + file.status, focusing ? 'focusing' : '']"
             :key="file.uid"
             tabindex="0"
             @keydown.delete="!disabled && $emit('remove', file)"
@@ -24,10 +24,13 @@
                     :src="file.url"
                     alt=""
                 />
-                <label class="el-upload-list__item-name" @click="handleClick(file)">
-                    <el-checkbox v-model="file.check" />
+                <el-checkbox
+                    class="el-upload-list__item-name"
+                    v-model="file.check"
+                    @click="handleClick(file)"
+                >
                     {{ file.name }}
-                </label>
+                </el-checkbox>
                 <!--<label class="el-upload-list__item-status-label">
                     <i
                         :class="{

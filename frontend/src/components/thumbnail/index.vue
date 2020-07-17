@@ -22,7 +22,18 @@
             :before-close="handleClose"
         >
             <div>
-                <vue-cropper ref="cropper" :aspect-ratio="1 / 1" :viewMode="2" :src="imgSrc" />
+                <vue-cropper
+                    ref="cropper"
+                    :aspect-ratio="1 / 1"
+                    :aspectRatio="1 / 1"
+                    :viewMode="1"
+                    :responsive="false"
+                    :guides="false"
+                    :center="false"
+                    :src="imgSrc"
+                    :minContainerWidth="700"
+                    :minContainerHeight="700"
+                />
             </div>
             <a href="#" role="button" @click.prevent="cropImage">
                 Crop
@@ -32,10 +43,10 @@
 </template>
 
 <script>
-	import VueCropper from 'vue-cropperjs';
-	import 'cropperjs/dist/cropper.css';
+import VueCropper from 'vue-cropperjs';
+import 'cropperjs/dist/cropper.css';
 
-	export default {
+export default {
     name: 'index',
     data() {
         return {
@@ -49,6 +60,7 @@
     methods: {
         inputReset() {
             console.log(this.$refs.input);
+            this.cropImg = null;
             this.$refs.input.value = null;
         },
         handleClose(done) {
@@ -61,7 +73,7 @@
         },
         cropImage() {
             // get image data for post processing, e.g. upload or setting image src
-            this.cropImg = this.$refs.cropper.getCroppedCanvas({}).toDataURL();
+            this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
             this.dialogVisible = false;
         },
         flipX() {
@@ -79,10 +91,10 @@
             dom.setAttribute('data-scale', scale);
         },
         getCropBoxData() {
-            this.data = JSON.stringify(this.$refs.cropper.getCropBoxData({}), null, 4);
+            this.data = JSON.stringify(this.$refs.cropper.getCropBoxData(), null, 4);
         },
         getData() {
-            this.data = JSON.stringify(this.$refs.cropper.getData({}), null, 4);
+            this.data = JSON.stringify(this.$refs.cropper.getData(), null, 4);
         },
         move(offsetX, offsetY) {
             this.$refs.cropper.move(offsetX, offsetY);
@@ -127,20 +139,10 @@
         zoom(percent) {
             this.$refs.cropper.relativeZoom(percent);
         },
-        minContainerHeight() {
-            this.$refs.cropper.minContainerHeight({
-                height: 20000,
-            });
-        },
-        minCanvasWidth() {
-            this.$refs.cropper.minCanvasWidth({
-                width: 5000,
-            });
-        },
     },
 };
 </script>
-<style>
+<style scoped>
 .preview-area {
     width: 307px;
 }

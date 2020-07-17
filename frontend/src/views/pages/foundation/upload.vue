@@ -2,7 +2,6 @@
     <div>
         <h2 class="page-title">UPLOAD</h2>
         <form action="">
-            <CampaignSettings></CampaignSettings>
             <FileSettings></FileSettings>
             <div class="btn-area">
                 <button type="button" class="btn-s-white"><span>취소</span></button>
@@ -12,12 +11,12 @@
     </div>
 </template>
 <script>
-import CampaignSettings from '@/components/campaign-settings/index.vue';
+//import CampaignSettings from '@/components/campaign-settings/index.vue';
 import FileSettings from '@/components/file-settings/index.vue';
 export default {
     name: 'upload',
     components: {
-        CampaignSettings,
+        //CampaignSettings,
         FileSettings,
     },
 };

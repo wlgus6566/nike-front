@@ -14,7 +14,7 @@ import SortingList from '@/components/asset-view/sorting-list.vue';
 import allCheck from '@/components/asset-view/all-check.vue';
 import fileItem from '@/components/asset-view/file-Item.vue';
 export default {
-    name: 'view',
+    name: 'folder-view',
     data() {
         return {};
     },

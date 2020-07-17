@@ -6,7 +6,7 @@
     </div>
 </template>
 <script>
-import ListSorting from '@/components/folder-list/list-sorting.vue';
+import ListSorting from '@/components/list-sorting/index.vue';
 import Item from '@/components/folder-list/index.vue';
 export default {
     name: 'index',

@@ -14,4 +14,4 @@ function createWithAuth(url, options) {
 }
 
 export const auth = create(process.env.VUE_APP_API_URL);
-export const contents = createWithAuth(`${process.env.VUE_APP_API_URL}api/contents/asset/`);
+export const contents = createWithAuth(`/api/contents/`);

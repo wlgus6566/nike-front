@@ -6,20 +6,12 @@
                     <span class="label-title required">파일 구분</span>
                 </div>
                 <div class="form-column">
-                    <label class="check-label type2">
-                        <span class="radio">
-                            <input type="radio" name="file" checked />
-                            <span></span>
-                        </span>
-                        <span>ASSET</span>
-                    </label>
-                    <label class="check-label type2">
-                        <span class="radio">
-                            <input type="radio" name="file" />
-                            <span></span>
-                        </span>
-                        <span>ASSET</span>
-                    </label>
+                    <el-radio v-model="file.fileSectionCode" label="ASSET">
+                        ASSET
+                    </el-radio>
+                    <el-radio v-model="file.fileSectionCode" label="GUIDE">
+                        GUIDE
+                    </el-radio>
                 </div>
             </li>
             <li class="form-row">
@@ -27,73 +19,70 @@
                     <span class="label-title required">파일 종류</span>
                 </div>
                 <div class="form-column">
-                    <label class="check-label type2">
-                        <span class="radio">
-                            <input type="radio" name="kind" checked />
-                            <span></span>
-                        </span>
-                        <span>파일</span>
-                    </label>
-                    <label class="check-label type2">
-                        <span class="radio">
-                            <input type="radio" name="kind" />
-                            <span></span>
-                        </span>
-                        <span>동영상(URL)</span>
-                    </label>
+                    <el-radio v-model="file.fileKindCode" label="FILE">
+                        파일
+                    </el-radio>
+                    <el-radio v-model="file.fileKindCode" label="VIDEO">
+                        동영상(URL)
+                    </el-radio>
+                    <el-radio v-model="file.fileKindCode" label="VR">
+                        VR
+                    </el-radio>
                 </div>
             </li>
             <!-- todo 추가 스크립트 작업 필요  -->
-            <li class="form-row">
+            <li class="form-row" v-if="file.fileKindCode === 'FILE'">
                 <div class="form-column">
                     <span class="label-title">업로드 된 파일</span>
                 </div>
                 <div class="form-column">
-                    <FileUpload />
+                    <button type="button" class="btn-form-gray" v-on:click="$emit('fileSelect')">
+                        찾기
+                    </button>
+                    <!--<UploadFile />-->
                 </div>
             </li>
-            <li class="form-row">
-                <div class="form-column">
-                    <span class="label-title">업로드 된 파일</span>
-                </div>
-                <div class="form-column">
-                    <div class="upload-file-box">
-                        <div class="upload-file-list"></div>
-                        <div class="btn-box">
-                            <div class="fine-file">
-                                <span class="btn-form-gray"><span>찾기</span></span>
-                                <input type="file" />
-                            </div>
-                            <button type="button" class="btn-form"><span>삭제</span></button>
-                        </div>
+            <template v-else>
+                <li class="form-row">
+                    <div class="form-column">
+                        <label class="label-title">파일 타이틀</label>
                     </div>
-                </div>
-            </li>
-            <li class="form-row">
-                <div class="form-column">
-                    <label class="label-title">파일 타이틀</label>
-                </div>
-                <div class="form-column">
-                    <input type="text" value="P20_Nsw_Nike_Gallery_graphic_1_700x1000" />
-                </div>
-            </li>
-            <li class="form-row">
-                <div class="form-column">
-                    <label class="label-title">URL</label>
-                </div>
-                <div class="form-column">
-                    <input type="text" value="vimeo.com/101912729" />
-                </div>
-            </li>
+                    <div class="form-column">
+                        <el-input v-model="file.title" />
+                    </div>
+                </li>
+                <li class="form-row">
+                    <div class="form-column">
+                        <label class="label-title">URL</label>
+                    </div>
+                    <div class="form-column">
+                        <el-input v-model="file.url" />
+                    </div>
+                </li>
+            </template>
         </ul>
-        <button class="btn-del"><span>삭제</span></button>
+        <button class="btn-del" v-on:click.prevent="$emit('fileDelete')"><span>삭제</span></button>
     </div>
 </template>
 <script>
-import FileUpload from './file-upload';
+import UploadFile from './upload-file';
 export default {
     name: 'file-item',
-    components: { FileUpload },
+    data() {
+        return {
+            fileKindCode: 'VIDEO',
+            fileName: 'graphic_file_name.jpg',
+            filePhysicalName: '/cdn/file/path',
+            fileSectionCode: 'GUIDE',
+            fileSize: 600,
+            title: 'Attract window graphic 1',
+            url: 'www.nike.co.kr',
+        };
+    },
+    props: {
+        file: Object,
+    },
+    components: { UploadFile },
 };
 </script>
 <style scoped></style>

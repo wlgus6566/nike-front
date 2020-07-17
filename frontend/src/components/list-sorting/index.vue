@@ -18,7 +18,7 @@ export default {
     props: ['listTypes'],
     methods: {
         update(index) {
-            if (this.listTypes[index].active == false) {
+            if (!this.listTypes[index].active) {
                 this.listTypes.forEach((element) => (element.active = false));
                 this.listTypes[index].active = true;
             }

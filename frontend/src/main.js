@@ -10,7 +10,6 @@ import CKEditor from 'ckeditor4-vue';
 import lineClamp from './utils/lineclamp';
 
 Vue.prototype.$axios = axios;
-
 Vue.config.productionTip = false;
 
 Vue.use(CKEditor);

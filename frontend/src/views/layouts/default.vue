@@ -23,7 +23,7 @@
                     v-on:enter="pageEnter"
                     v-on:leave="pageLeave"
                 >
-                    <router-view></router-view>
+                    <router-view />
                 </transition>
             </div>
             <aside class="sticky-container" sticky-container>

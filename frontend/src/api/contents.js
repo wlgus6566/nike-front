@@ -1,24 +1,20 @@
 import { contents } from './index';
 
-// posts
-function createContents(data) {
-    return contents.post('/', data);
+function getContents(topMenuCode, menuCode, params) {
+    return contents.get(`/${topMenuCode}/${menuCode}`, {
+        params: params,
+    });
 }
-
-function fetchContents() {
-    return contents.get('/');
+function getContentsView(topMenuCode, menuCode, contentsSeq) {
+    return contents.get(`/${topMenuCode}/${menuCode}/${contentsSeq}`);
 }
-
-function fetchContentsById(id) {
-    return contents.get(id);
+function postContents(topMenuCode, menuCode, data) {
+    return contents.post(`/${topMenuCode}/${menuCode}`, data);
 }
-
-function editContentsById(id, data) {
-    return contents.put(id, data);
+function putContents(topMenuCode, menuCode, data) {
+    return contents.post(`/${topMenuCode}/${menuCode}`, data);
 }
-
-function deleteContentsById(id) {
-    return contents.delete(id);
+function deleteContents(topMenuCode, menuCode, contentsSeq) {
+    return contents.delete(`/${topMenuCode}/${menuCode}/${contentsSeq}`);
 }
-
-export { createContents, fetchContents, fetchContentsById, editContentsById, deleteContentsById };
+export { getContents, getContentsView, postContents, putContents, deleteContents };
