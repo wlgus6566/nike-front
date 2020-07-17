@@ -5,18 +5,31 @@ import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
+import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
+import com.nike.dnp.util.FileUtil;
 import com.nike.dnp.util.ImageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +46,12 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ContentsService {
+
+    /**
+     * active profiles 변수
+     */
+    @Value("${spring.profiles:}")
+    private String activeProfiles;
 
     /**
      * The Contents repository
@@ -79,9 +98,6 @@ public class ContentsService {
      */
     public Contents save(final ContentsSaveDTO contentsSaveDTO) {
         log.info("contentsService.save");
-        final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
-        List<ContentsFile> savedContentsFileList = new ArrayList<>();
-
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
             FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsSaveDTO.getImageBase64());
@@ -90,6 +106,8 @@ public class ContentsService {
             contentsSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
             contentsSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
         }
+        final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
+        List<ContentsFile> savedContentsFileList = new ArrayList<>();
 
 //        contentsFile 추가
         if (!contentsSaveDTO.getContentsFileList().isEmpty()) {
@@ -203,6 +221,24 @@ public class ContentsService {
         }
 
         return contents;
+    }
+
+    /**
+     * Download contents file string.
+     *
+     * @param contentsFileSeq the contents file seq
+     * @return the string
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 16. 오후 2:51:01
+     * @Description
+     */
+    public ResponseEntity<Resource> downloadContentsFile(final Long contentsFileSeq) {
+        Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
+        if (contentsFile.isPresent()) {
+            return FileUtil.fileDownload(contentsFile.get().getFilePhysicalName());
+        } else {
+            return null;
+        }
     }
 
 

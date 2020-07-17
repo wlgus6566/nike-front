@@ -18,6 +18,13 @@ import lombok.*;
 public class ContentsResultDTO {
 
     /**
+     * 컨텐츠 시퀀스
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스")
+    private Long contentsSeq;
+
+    /**
      * 최고 메뉴 공통코드
      * @author [이소정]
      */
