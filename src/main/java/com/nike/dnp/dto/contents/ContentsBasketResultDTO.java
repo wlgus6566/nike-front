@@ -35,24 +35,24 @@ public class ContentsBasketResultDTO {
     private Long contentsFileSeq;
 
     /**
-     * 이미지 파일명
+     * 파일 명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "imageFileName", value = "이미지 파일명", example = "main_img.jpg")
-    private String imageFileName;
+    @ApiModelProperty(name = "fileName", value = "파일 명", example = "graphic_file_name.jpg")
+    private String fileName;
 
     /**
-     * 이미지 파일 사이즈
+     * 파일 사이즈
      * @author [이소정]
      */
-    @ApiModelProperty(name = "imageFileSize", value = "이미지 파일 사이즈",  example = "500")
-    private String imageFileSize;
+    @ApiModelProperty(name = "fileSize", value = "파일 사이즈", example = "600")
+    private Long fileSize;
 
     /**
-     * 이미지 파일 물리명
+     * 파일 물리 명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "imageFilePhysicalName", value = "이미지 파일 물리명", example = "8080/cdn/contnets/")
-    private String imageFilePhysicalName;
+    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명", example = "/cdn/file/path")
+    private String filePhysicalName;
 
 }

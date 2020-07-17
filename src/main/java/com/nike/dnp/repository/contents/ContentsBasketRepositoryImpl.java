@@ -56,6 +56,7 @@ public class ContentsBasketRepositoryImpl extends QuerydslRepositorySupport impl
                         , qContentsFile.fileName
                         , qContentsFile.fileSize
                         , qContentsFile.filePhysicalName
+                        , qContentsBasket.userSeq
                         , qContentsBasket.contentsFileSeq
                         , qContentsBasket.contentsBasketSeq) )
                 .from(qContentsBasket)
