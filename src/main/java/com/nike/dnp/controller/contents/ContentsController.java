@@ -1,6 +1,9 @@
 package com.nike.dnp.controller.contents;
 
-import com.nike.dnp.dto.contents.*;
+import com.nike.dnp.dto.contents.ContentsResultDTO;
+import com.nike.dnp.dto.contents.ContentsSaveDTO;
+import com.nike.dnp.dto.contents.ContentsSearchDTO;
+import com.nike.dnp.dto.contents.ContentsUpdateDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -16,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 import java.util.Optional;
 
 /**

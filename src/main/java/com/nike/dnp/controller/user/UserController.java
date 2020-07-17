@@ -64,7 +64,7 @@ public class UserController {
      * @Description 유저 목록 조회
      */
     @ApiOperation(
-            value = "유저 목록 조회"
+            value = "유저 목록 조회(USER-01)"
             , notes = "## Reqeust ##\n"
             + "[하위 Parameters 참조]\n\n\n\n"
             + "## Public/Paging Response ## \n"
@@ -97,7 +97,7 @@ public class UserController {
      * @Description 유저 상세 조회
      */
     @ApiOperation(
-            value = "유저 상세 조회"
+            value = "유저 상세 조회(USER-03)"
             , notes = OPERATION_CHARACTER
     )
     @GetMapping(name = "유저 상세 조회", value = "/{userSeq}"
@@ -119,7 +119,7 @@ public class UserController {
      * @Description 유저 등록
      */
     @ApiOperation(
-            value = "유저 등록"
+            value = "유저 등록(USER-02)"
             , notes = OPERATION_CHARACTER
     )
     @PostMapping(name = "유저 등록"
