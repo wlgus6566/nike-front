@@ -40,7 +40,7 @@ public class ContentsFileSearchDTO extends SearchDTO {
      *
      * @author [이소정]
      */
-    @ApiParam(value = "정렬 타입", name = "orderType" , defaultValue = "FILENAME")
+    @ApiParam(value = "정렬 타입(최신순 LATEST/파일명 순FILE_NAME)", name = "orderType" , defaultValue = "FILE_NAME")
     private String orderType = "";
 
     /**
