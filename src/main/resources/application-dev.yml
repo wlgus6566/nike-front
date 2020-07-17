@@ -40,5 +40,5 @@ security:
 nike:
   file:
     root: '/home/emotion/file_temp'
-    imageMagick: '/imageTool'
+    imageMagick: '/usr/bin'
     imageMagickCommand: 'convert'
