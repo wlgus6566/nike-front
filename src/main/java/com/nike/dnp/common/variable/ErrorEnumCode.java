@@ -92,7 +92,24 @@ public class ErrorEnumCode {
         NOT_EXIST_FILE_TITLE("파일타이틀이 존재하지 않습니다."),
         NOT_EXIST_FILE_URL("파일URL이 존재하지 않습니다."),
         NOT_SELECT_DATE("시작/끝날짜를 둘 다 지정해주시기 바랍니다."),
-        START_DATE_BIGGER("시작날짜가 종료일자보다 큽니다.");
+        START_DATE_BIGGER("시작날짜가 종료일자보다 큽니다."),
+        NOT_FOUND_CONTENTS("해당 컨텐츠가 존재하지 않습니다.");
+
+
+        /**
+         * 에러 메시지
+         * @author [이소정]
+         */
+        private final String message;
+    }
+
+    /**
+     * The enum Contents basket error.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum ContentsBasketError {
+        NOT_FOUND_BASKET("임시)해당 컨텐츠 파일이 장바구니에 존재하지 않습니다.");
 
         /**
          * 에러 메시지
@@ -112,8 +129,7 @@ public class ErrorEnumCode {
         NOT_FOUND("해당 회원의 상세정보가 존재하지 않습니다.")
         ,USE_ID("이미 사용중인 ID입니다.")
         ,NOT_VALID_EMAIL("올바른 Email 주소를 입력해 주세요.")
-        ,RETRY_CONFIRM_EMAIL("E-MAIL을 다시 확인 후 입력해 주세요.")
-        ;
+        ,RETRY_CONFIRM_EMAIL("E-MAIL을 다시 확인 후 입력해 주세요.");
 
         /**
          * 에러 메시지
@@ -189,6 +205,21 @@ public class ErrorEnumCode {
 
         /**
          * The Value
+         * @author [이소정]
+         */
+        private final String message;
+    }
+
+    /**
+     * The enum Report basket error.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum ReportBasketError {
+        NOT_FOUND_BASKET("임시)해당 보고서 파일이 장바구니에 존재하지 않습니다.");
+
+        /**
+         * The Message
          * @author [이소정]
          */
         private final String message;

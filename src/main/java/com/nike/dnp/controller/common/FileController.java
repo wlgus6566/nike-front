@@ -12,22 +12,15 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,26 +35,12 @@ public class FileController {
 
 	private static final String BASIC_CHARACTER = "## Request ## \n" + "[하위 Parameters 참조] \n" + "## Request ## \n" + "[하위 Model 참조]\n\n";
 
+	@ApiOperation(value = "파일 다운로드", notes = BASIC_CHARACTER)
 	@GetMapping("/api/download")
-	@ApiIgnore
-	public ResponseEntity<Resource> download() throws IOException {
-//		Path path = Paths.get("d:/test/1.jpg");
-//		Path path = Paths.get("d:/test/Jinny.zip");
+	public ResponseEntity<Resource> download() {
 
 		// 테스트 용 로컬에 맞게 수정해야 함
-		final Path path = Paths.get("d:/test/erwin73.zip");
-
-		final HttpHeaders headers = new HttpHeaders();
-
-//		String contentType = Files.probeContentType(path);
-//		headers.add(HttpHeaders.CONTENT_TYPE,contentType); //이미지일경우 바로 뷰
-
-		headers.add(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=" + path.getFileName().toString());
-		headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(path.toFile().length()));
-
-		final Resource resource = new InputStreamResource(Files.newInputStream(path));
-		return new ResponseEntity<>(resource,headers,HttpStatus.OK);
-
+		return FileUtil.fileDownload("c:/sojeong/project/nike/doc/power_250.PNG");
 	}
 
 	@ApiOperation(value = "파일 업로드", notes = BASIC_CHARACTER)

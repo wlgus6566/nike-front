@@ -55,7 +55,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "FILE_SECTION_CODE")
-    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드", required = true)
+    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드 (ASSET/GUIDE/VIDEO)", required = true)
     private String fileSectionCode;
 
     /**
@@ -63,7 +63,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "FILE_KIND_CODE")
-    @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드", required = true)
+    @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드(FILE/VIDEO/VR)", required = true)
     private String fileKindCode;
 
     /**
@@ -115,6 +115,14 @@ public class ContentsFile extends BaseTimeEntity {
     private long downloadCount;
 
     /**
+     * 파일 순서
+     * @author [이소정]
+     */
+    @Column(name = "FILE_ORDER")
+    @ApiModelProperty(name = "fileOrder", value = "파일 순서", example = "1", required = true)
+    private long fileOrder;
+
+    /**
      * 사용여부
      * @author [이소정]
      */
@@ -143,7 +151,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "THUMBNAIL_FILE_PHYSICAL_NAME")
-    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "/cdn/file/path")
+    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_thumbnail.jpg")
     private String thumbnailFilePhysicalName;
 
     /**
@@ -191,7 +199,8 @@ public class ContentsFile extends BaseTimeEntity {
                 , contentsFileSaveDTO.getUrl()
                 , contentsFileSaveDTO.getThumbnailFileName()
                 , contentsFileSaveDTO.getThumbnailFileSize()
-                , contentsFileSaveDTO.getThumbnailFilePhysicalName());
+                , contentsFileSaveDTO.getThumbnailFilePhysicalName()
+                , contentsFileSaveDTO.getFileOrder());
     }
 
     /**
@@ -222,7 +231,8 @@ public class ContentsFile extends BaseTimeEntity {
                 , contentsFileUpdateDTO.getUrl()
                 , contentsFileUpdateDTO.getThumbnailFileName()
                 , contentsFileUpdateDTO.getThumbnailFileSize()
-                , contentsFileUpdateDTO.getThumbnailFilePhysicalName());
+                , contentsFileUpdateDTO.getThumbnailFilePhysicalName()
+                , contentsFileUpdateDTO.getFileOrder());
     }
 
     /**
@@ -250,20 +260,28 @@ public class ContentsFile extends BaseTimeEntity {
             , String fileName
             , Long fileSize
             , String filePhysicalName
-            , String title, String url
+            , String title
+            , String url
             , String thumbnailFileName
             , String thumbnailFileSize
             , String thumbnailFilePhysicalName
+            , Long fileOrder
     ) {
         contentsFile.setFileSectionCode(fileSectionCode);
         contentsFile.setFileKindCode(fileKindCode);
+        contentsFile.setFileOrder(fileOrder);
 
-        if (ServiceEnumCode.ContentsFileKindCode.FILE.equals(fileKindCode)) {
+        if (ServiceEnumCode.ContentsFileKindCode.FILE.toString().equals(fileKindCode)) {
             this.checkStringValidation(fileName, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
 
             contentsFile.setFileName(fileName);
             contentsFile.setFileSize(fileSize);
             contentsFile.setFilePhysicalName(filePhysicalName);
+
+            contentsFile.setThumbnailFileName(thumbnailFileName);
+            contentsFile.setThumbnailFileSize(thumbnailFileSize);
+            contentsFile.setThumbnailFilePhysicalName(thumbnailFilePhysicalName);
+
         } else {
             this.checkStringValidation(title, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.getMessage());
             this.checkStringValidation(url, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
@@ -288,6 +306,7 @@ public class ContentsFile extends BaseTimeEntity {
         log.info("ContentsFile.update");
         this.fileSectionCode = contentsFileUpdateDTO.getFileSectionCode();
         this.fileKindCode = contentsFileUpdateDTO.getFileKindCode();
+        this.fileOrder = contentsFileUpdateDTO.getFileOrder();
         String fileKindCode = contentsFileUpdateDTO.getFileKindCode();
 
         if (ServiceEnumCode.ContentsFileKindCode.FILE.equals(fileKindCode)) {

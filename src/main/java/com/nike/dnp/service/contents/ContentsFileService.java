@@ -1,11 +1,9 @@
 package com.nike.dnp.service.contents;
 
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.dto.contents.*;
-import com.nike.dnp.entity.contents.Contents;
-import com.nike.dnp.entity.contents.ContentsFile;
+import com.nike.dnp.dto.contents.ContentsFileResultDTO;
+import com.nike.dnp.dto.contents.ContentsFileSearchDTO;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
-import com.nike.dnp.repository.contents.ContentsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -13,10 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 
 /**
@@ -28,7 +22,7 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class ContentsFileService {
 
@@ -55,8 +49,8 @@ public class ContentsFileService {
                 contentsFileSearchDTO,
                 PageRequest.of(contentsFileSearchDTO.getPage()
                 , contentsFileSearchDTO.getSize()
-                , contentsFileSearchDTO.getOrderType().equals(ServiceEnumCode.SearchEnumCode.FILE_NAME.toString())
-                        ? Sort.by("registrationDt").descending() : Sort.by("fileName").ascending()));
+                , contentsFileSearchDTO.getOrderType().equals(ServiceEnumCode.SearchEnumCode.ORDER.toString())
+                        ? Sort.by("fileOrder").ascending() : Sort.by("fileName").ascending()));
     }
 //
 //    /**

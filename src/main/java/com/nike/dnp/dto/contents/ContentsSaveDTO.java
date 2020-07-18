@@ -24,7 +24,7 @@ public class ContentsSaveDTO {
      * 최고 메뉴 공통코드
      * @author [이소정]
      */
-    @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 공통코드", hidden = true)
+    @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 공통코드 (ASSET/TOOLKIT/FOUNDATION)", hidden = true)
     private String topMenuCode;
 
     /**
@@ -195,21 +195,21 @@ public class ContentsSaveDTO {
      * 캠페인 기간 구분 공통코드
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드", required = true, example = "EVERY")
+    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드 (SELECT/EVERY)", required = true, example = "EVERY")
     private String campaignPeriodSectionCode;
 
     /**
      * 캠페인 시작 일시
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020-06-01")
+    @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020.06.01")
     private String campaignBeginDt;
 
     /**
      * 캠페인 종료 일시
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020-09-01")
+    @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020.09.01")
     private String campaignEndDt;
 
     /**
@@ -223,7 +223,7 @@ public class ContentsSaveDTO {
      * 콘텐트 파일 리스트
      * @author [이소정]
      */
-    @ApiModelProperty(name = "contentsFileList", value = "콘텐츠 파일 리스트")
+    @ApiModelProperty(name = "contentsFileList", value = "컨텐츠 파일 리스트")
     private List<ContentsFileSaveDTO> contentsFileList;
 
 }

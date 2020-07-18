@@ -50,14 +50,12 @@ public class AuthController {
     private final AuthService authService;
 
     /**
-     * The Basic operation
+     * OPERATION_CHARACTER
      *
      * @author [오지훈]
      */
-    private final String BASIC_OPERATION = "## Reqeust ##\n"
-            + "[하위 Parameters 참조]\n\n\n\n"
-            + "## Response ## \n"
-            + "[하위 Model 참조]\n\n\n\n";
+    private static final String OPERATION_CHARACTER
+            = "## Request ##\n[하위 Parameters 참조]\n\n\n\n## Response ##\n[하위 Model 참조]\n\n\n\n";
 
     /**
      * Find all single result.
@@ -69,7 +67,7 @@ public class AuthController {
      */
     @ApiOperation(
             value = "그룹(권한) 목록 조회(캐시)"
-            , notes = BASIC_OPERATION
+            , notes = OPERATION_CHARACTER
     )
     @GetMapping(name = "그룹(권한) 목록 조회(캐시)", value = "/list"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -88,7 +86,7 @@ public class AuthController {
      */
     @ApiOperation(
             value = "그룹(권한) 관리 목록 조회"
-            , notes = BASIC_OPERATION
+            , notes = OPERATION_CHARACTER
     )
     @GetMapping(name = "그룹(권한) 목록 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -108,12 +106,13 @@ public class AuthController {
      */
     @ApiOperation(
             value = "그룹(그룹 및 메뉴권한) 체크 목록"
-            , notes = BASIC_OPERATION
+            , notes = OPERATION_CHARACTER
     )
     @GetMapping(name = "그룹(그룹 및 메뉴권한) 체크 목록", value = "/role/{authSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<List<AuthMenuRole>> findAuthMenuRole(
-            @PathVariable final Long authSeq) {
+            @ApiParam(value = "권한(그룹) 시퀀스", required = true) @PathVariable final Long authSeq
+    ) {
         log.info("AuthController.findAuthMenuRole");
         return responseService.getSingleResult(authService.findAuthMenuRole(authSeq));
     }
@@ -129,14 +128,13 @@ public class AuthController {
      */
     @ApiOperation(
             value = "그룹(권한) 상세 조회"
-            , notes = BASIC_OPERATION
+            , notes = OPERATION_CHARACTER
     )
     @GetMapping(name = "그룹(권한) 상세 조회"
             , value = "/{authSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Auth>> findAuth(
-            @ApiParam(value = "권한(그룹) 시퀀스", required = true)
-            @PathVariable final Long authSeq
+            @ApiParam(value = "권한(그룹) 시퀀스", required = true) @PathVariable final Long authSeq
     ) {
         log.info("AuthController.findAuth");
         return responseService.getSingleResult(authService.findById(authSeq));
@@ -153,14 +151,13 @@ public class AuthController {
      */
     @ApiOperation(
             value = "그룹(권한) 정보 등록"
-            , notes = BASIC_OPERATION
+            , notes = OPERATION_CHARACTER
     )
     @PostMapping(name = "그룹(권한) 정보 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Auth> save(
-            @ApiParam(value = "권한(그룹) 등록 DTO", required = true)
-            @RequestBody final AuthSaveDTO authSaveDTO
+            @ApiParam(value = "권한(그룹) 등록 DTO", required = true) @RequestBody final AuthSaveDTO authSaveDTO
     ) {
         log.info("AuthController.save");
         return responseService.getSingleResult(
@@ -183,17 +180,15 @@ public class AuthController {
      */
     @ApiOperation(
             value = "그룹(권한) 정보 수정"
-            , notes = BASIC_OPERATION
+            , notes = OPERATION_CHARACTER
     )
     @PutMapping(name = "그룹(권한) 정보 수정"
             , value = "/{authSeq}"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Auth>> update(
-            @ApiParam(value = "권한(그룹) 시퀀스", required = true)
-            @PathVariable final Long authSeq
-            , @ApiParam(value = "권한(그룹) 수정 DTO", required = true)
-            @RequestBody final AuthUpdateDTO authUpdateDTO
+            @ApiParam(value = "권한(그룹) 시퀀스", required = true) @PathVariable final Long authSeq
+            , @ApiParam(value = "권한(그룹) 수정 DTO", required = true) @RequestBody final AuthUpdateDTO authUpdateDTO
     ) {
         log.info("AuthController.update");
         return responseService.getSingleResult(
@@ -215,14 +210,13 @@ public class AuthController {
      */
     @ApiOperation(
             value = "그룹(권한) 정보 삭제"
-            , notes = BASIC_OPERATION
+            , notes = OPERATION_CHARACTER
     )
     @DeleteMapping(name = "그룹(권한) 정보 삭제"
             , value = "/{authSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Auth>> delete(
-            @ApiParam(value = "권한(그룹) 시퀀스", required = true)
-            @PathVariable final Long authSeq
+            @ApiParam(value = "권한(그룹) 시퀀스", required = true) @PathVariable final Long authSeq
     ) {
         log.info("AuthController.delete");
         return responseService.getSingleResult(

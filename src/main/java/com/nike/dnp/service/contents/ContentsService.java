@@ -1,18 +1,23 @@
 package com.nike.dnp.service.contents;
 
+import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
+import com.nike.dnp.util.FileUtil;
 import com.nike.dnp.util.ImageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -30,7 +35,7 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class ContentsService {
 
@@ -77,19 +82,19 @@ public class ContentsService {
      * @CreatedOn 2020. 6. 24. 오후 3:22:15
      * @Description
      */
+    @Transactional
     public Contents save(final ContentsSaveDTO contentsSaveDTO) {
         log.info("contentsService.save");
-        final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
-        List<ContentsFile> savedContentsFileList = new ArrayList<>();
-
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
             FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsSaveDTO.getImageBase64());
 
-            contentsSaveDTO.setFolderName(fileResultDTO.getFileName());
+            contentsSaveDTO.setImageFileName(fileResultDTO.getFileName());
             contentsSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
             contentsSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
         }
+        final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
+        List<ContentsFile> savedContentsFileList = new ArrayList<>();
 
 //        contentsFile 추가
         if (!contentsSaveDTO.getContentsFileList().isEmpty()) {
@@ -107,14 +112,20 @@ public class ContentsService {
      * Find by contents seq contents.
      *
      * @param contentsSeq the contents seq
+     * @param topMenuCode the top menu code
+     * @param menuCode    the menu code
      * @return the contents
      * @author [이소정]
      * @CreatedOn 2020. 7. 2. 오후 2:25:43
      * @Description
      */
-    public Contents findByContentsSeq(final Long contentsSeq) {
-        Contents findContetns = contentsRepository.findByContentsSeq(contentsSeq);
-        findContetns.updateReadCount(findContetns.getReadCount());
+    public Contents findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
+        Contents findContetns = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
+        if (null != findContetns) {
+            findContetns.updateReadCount(findContetns.getReadCount());
+        } else {
+            throw new CodeMessageHandleException(ErrorEnumCode.ContentsError.NOT_FOUND_CONTENTS.name(), ErrorEnumCode.ContentsError.NOT_FOUND_CONTENTS.getMessage());
+        }
         return findContetns;
     }
 
@@ -127,6 +138,7 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 3. 오후 4:01:24
      * @Description
      */
+    @Transactional
     public Optional<Contents> update(final ContentsUpdateDTO contentsUpdateDTO) {
         log.info("contentsService.update");
         // contents Update
@@ -189,6 +201,7 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 7. 오전 10:59:29
      * @Description
      */
+    @Transactional
     public Optional<Contents> delete(final Long contentsSeq) {
         log.info("contentsService.delete");
 
@@ -203,6 +216,26 @@ public class ContentsService {
         }
 
         return contents;
+    }
+
+    /**
+     * Download contents file string.
+     *
+     * @param contentsFileSeq the contents file seq
+     * @return the string
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 16. 오후 2:51:01
+     * @Description
+     */
+    @Transactional
+    public ResponseEntity<Resource> downloadContentsFile(final Long contentsFileSeq) {
+        Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
+        if (contentsFile.isPresent()) {
+            contentsFile.ifPresent(value -> value.updateDownloadCount(contentsFile.get().getDownloadCount()));
+            return FileUtil.fileDownload(contentsFile.get().getFilePhysicalName());
+        } else {
+            return null;
+        }
     }
 
 

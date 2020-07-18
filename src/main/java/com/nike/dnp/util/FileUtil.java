@@ -5,12 +5,19 @@ import com.nike.dnp.dto.file.FileResultDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -43,6 +50,14 @@ public class FileUtil {
 	 */
 	private static String imageMagick;
 
+	/**
+	 * The constant imageMagickCommand
+	 *
+	 * @author [김형욱]
+	 */
+	private static String imageMagickCommand;
+
+
 
 	/**
 	 * 파일 저장 경로
@@ -68,6 +83,19 @@ public class FileUtil {
 	@Value("${nike.file.imageMagick:}")
 	public void setImageMagick(final String imageMagick){
 		this.imageMagick = imageMagick;
+	}
+
+	/**
+	 * Set image magick command.
+	 *
+	 * @param imageMagickCommand the image magick command
+	 * @author [김형욱]
+	 * @CreatedOn 2020. 7. 17. 오전 11:55:43
+	 * @Description
+	 */
+	@Value("${nike.file.imageMagickCommand:}")
+	public void setImageMagickCommand(final String imageMagickCommand){
+		this.imageMagickCommand = imageMagickCommand;
 	}
 
 	/**
@@ -139,7 +167,7 @@ public class FileUtil {
 			}
 			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail." + resizeExtension;
 			final StringBuilder command = new StringBuilder(imageMagick);
-			command.append(File.separator).append("magick ").append(toFile.getPath());
+			command.append(File.separator).append(imageMagickCommand+" ").append(toFile.getPath());
 			if(extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(Locale.getDefault()).contains("AI")){
 				command.append("[0]");
 			}
@@ -262,6 +290,31 @@ public class FileUtil {
 				file.delete();
 			}
 		}
+	}
+
+	/**
+	 * File download single result.
+	 *
+	 * @param filePath the file path
+	 * @return the single result
+	 * @author [이소정]
+	 * @CreatedOn 2020. 7. 16. 오후 6:15:26
+	 * @Description
+	 */
+	public static ResponseEntity<Resource> fileDownload(final String filePath) {
+		final Path path = Paths.get(filePath);
+
+		final HttpHeaders headers = new HttpHeaders();
+
+//		String contentType = Files.probeContentType(path);
+//		headers.add(HttpHeaders.CONTENT_TYPE,contentType); //이미지일경우 바로 뷰
+
+		headers.add(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=" + path.getFileName().toString());
+		headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(path.toFile().length()));
+
+//		final Resource resource = new InputStreamResource(Files.newInputStream(path));
+		final Resource resource = new FileSystemResource(new File(path.toUri()));
+		return new ResponseEntity<>(resource,headers, HttpStatus.OK);
 	}
 
 }

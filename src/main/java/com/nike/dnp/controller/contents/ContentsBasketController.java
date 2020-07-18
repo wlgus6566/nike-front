@@ -2,8 +2,6 @@ package com.nike.dnp.controller.contents;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.ContentsBasketResultDTO;
-import com.nike.dnp.dto.contents.ContentsBasketSaveDTO;
-import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsBasket;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -79,8 +77,8 @@ public class ContentsBasketController {
     /**
      * Save contents single result.
      *
-     * @param contentsBasketSaveDTOList the contents basket save dto list
-     * @param authUserDTO               the auth user dto
+     * @param contentsBasketSeqList the contents basket seq list
+     * @param authUserDTO           the auth user dto
      * @return the single result
      * @author [이소정]
      * @CreatedOn 2020. 7. 15. 오후 12:16:18
@@ -92,10 +90,10 @@ public class ContentsBasketController {
     )
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 장바구니 등록")
     public SingleResult<List<ContentsBasket>> saveContentsBasket(
-            @RequestBody final List<ContentsBasketSaveDTO> contentsBasketSaveDTOList,
+            @RequestBody final List<Long> contentsBasketSeqList,
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
     ) {
-        List<ContentsBasket> contentsBasketList = contentsBasketService.save(contentsBasketSaveDTOList, authUserDTO);
+        List<ContentsBasket> contentsBasketList = contentsBasketService.save(contentsBasketSeqList, authUserDTO);
         return responseService.getSingleResult(contentsBasketList);
     }
 
@@ -108,8 +106,7 @@ public class ContentsBasketController {
      * @CreatedOn 2020. 7. 15. 오후 2:41:27
      * @Description
      */
-    @ApiOperation(value="컨텐츠 장바구니," +
-            " 삭제", notes = REQUEST_CHARACTER)
+    @ApiOperation(value="컨텐츠 장바구니 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "컨텐츠 장바구니 삭제", value = "/{contentsBasketSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<ContentsBasket>> deleteContentsBasket(

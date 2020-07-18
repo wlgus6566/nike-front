@@ -38,6 +38,7 @@ public class ReportFile extends BaseTimeEntity {
     @ApiModelProperty(name = "reportSeq", value = "보고서 시퀀스")
     private Long reportSeq;
 
+//   사용하지 않는 코드로 주석 by.2020.07.17 sojeong.lee
 //    /**
 //     * The File kind code
 //     * @author [이소정]

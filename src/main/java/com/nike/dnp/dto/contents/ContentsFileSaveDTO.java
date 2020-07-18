@@ -3,8 +3,6 @@ package com.nike.dnp.dto.contents;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Column;
-
 
 /**
  * The type Contents file save dto.
@@ -19,14 +17,14 @@ public class ContentsFileSaveDTO {
      * 파일 구분 공통코드
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드", required = true, example = "GUIDE")
+    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드(ASSET/GUIDE/VIDEO)", required = true, example = "GUIDE")
     private String fileSectionCode;
 
     /**
      * 파일 종류 공통코드codeSaveDTO
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드", required = true, example = "VIDEO")
+    @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드(FILE/VIDEO/VR)", required = true, example = "FILE")
     private String fileKindCode;
 
     /**
@@ -61,7 +59,7 @@ public class ContentsFileSaveDTO {
      * 파일 물리 명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명", example = "/cdn/file/path")
+    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명", example = "http://cdnUrl/file/contents/graphic_img.jpg")
     private String filePhysicalName;
 
     /**
@@ -82,7 +80,14 @@ public class ContentsFileSaveDTO {
      * 썸네일 파일 물리 명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "/cdn/file/path")
+    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_thumbnail.jpg")
     private String thumbnailFilePhysicalName;
+
+    /**
+     * 파일 순서
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileOrder", value = "파일 순서", example = "1")
+    private Long fileOrder;
 
 }

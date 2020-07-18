@@ -1,5 +1,6 @@
 package com.nike.dnp.dto.contents;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -14,84 +15,88 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 public class ContentsFileResultDTO {
 
     /**
-     * 최고 메뉴 공통코드
+     * 컨텐츠 파일 시퀀스
      * @author [이소정]
      */
-    @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 공통코드")
-    private String topMenuCode;
+    @ApiModelProperty(name = "contentsFileSeq", value = "컨텐츠 파일 시퀀스")
+    private Long contentsFileSeq;
 
     /**
-     * 2depth 메뉴 코드
-     */
-    @ApiModelProperty(name = "menuCode", value = "2depth 메뉴 코드")
-    private String menuCode;
-
-    /**
-     * 이미지 파일명
+     * 컨텐츠 시퀀스
      * @author [이소정]
      */
-    @ApiModelProperty(name = "imageFileName", value = "이미지 파일명", example = "main_img.jpg")
-    private String imageFileName;
+    @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스")
+    private Long contentsSeq;
 
     /**
-     * 이미지 파일 사이즈
+     * 파일 구분 공통코드
      * @author [이소정]
      */
-    @ApiModelProperty(name = "imageFileSize", value = "이미지 파일 사이즈",  example = "500")
-    private String imageFileSize;
+    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드 (ASSET/GUIDE/VIDEO)", required = true)
+    private String fileSectionCode;
 
     /**
-     * 이미지 파일 물리명
+     * 파일 종류 공통코드
      * @author [이소정]
      */
-    @ApiModelProperty(name = "imageFilePhysicalName", value = "이미지 파일 물리명", example = "8080/cdn/contnets/")
-    private String imageFilePhysicalName;
+    @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드(FILE/VIDEO/VR)", required = true)
+    private String fileKindCode;
 
     /**
-     * 폴더명
+     * 타이틀
      * @author [이소정]
      */
-    @ApiModelProperty(name = "folderName", value = "폴더명", example = "SP20 NSW NIKE DIRECT AM90")
-    private String folderName;
+    @ApiModelProperty(name = "title", value = "타이틀")
+    private String title;
+
+    /**e
+     * url
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "url", value = "url")
+    private String url;
+
+//    상세페이지에서 필요 없어서 주석 by.2020.07.17 sojeong.lee
+//
+//    /**
+//     * 파일 명
+//     * @author [이소정]
+//     */
+//    @ApiModelProperty(name = "fileName", value = "파일 명")
+//    private String fileName;
+//
+//    /**
+//     * 파일 사이즈
+//     * @author [이소정]
+//     */
+//    @ApiModelProperty(name = "fileSize", value = "파일 사이즈")
+//    private Long fileSize;
+//
+//    /**
+//     * 파일 물리 명
+//     * @author [이소정]
+//     */
+//    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명")
+//    private String filePhysicalName;
+//
+//    /**
+//     * 다운로드 수
+//     * @author [이소정]
+//     */
+//    @ApiModelProperty(name = "downloadCount", value = "다운로드 수")
+//    private long downloadCount;
 
     /**
-     * 폴더 내용
+     * 파일 순서
      * @author [이소정]
      */
-    @ApiModelProperty(name = "folderContents", value = "폴더 내용", required = true, example = "SP20 나이키 다이렉트 NSW 캠페인 시공 에셋 자료")
-    private String folderContents;
-
-    /**
-     * 캠페인 기간 구분 공통코드
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드", required = true, example = "EVERY")
-    private String campaignPeriodSectionCode;
-
-    /**
-     * 캠페인 시작 일시
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020-06-01")
-    private String campaignBeginDt;
-
-    /**
-     * 캠페인 종료 일시
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020-09-01")
-    private String campaignEndDt;
-
-    /**
-     * 조회수
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "readCount", value = "조회수")
-    private Long readCount;
+    @ApiModelProperty(name = "fileOrder", value = "파일 순서", example = "1", required = true)
+    private long fileOrder;
 
     /**
      * 썸네일 파일 물리 명
@@ -111,8 +116,7 @@ public class ContentsFileResultDTO {
      * 썸네일 파일 물리 명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "/cdn/file/path")
+    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_thumbnail.jpg")
     private String thumbnailFilePhysicalName;
-
 
 }
