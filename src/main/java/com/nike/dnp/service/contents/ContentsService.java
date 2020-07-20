@@ -123,6 +123,7 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 2. 오후 2:25:43
      * @Description
      */
+    @Transactional
     public Contents findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
         Contents findContetns = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
         if (null != findContetns) {

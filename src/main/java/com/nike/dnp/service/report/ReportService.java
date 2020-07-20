@@ -96,6 +96,7 @@ public class ReportService {
      * @CreatedOn 2020. 7. 8. 오후 5:52:10
      * @Description
      */
+    @Transactional
     public Report findByReportSeq(final Long reportSeq) {
         Report findReport = reportRepository.findByReportSeq(reportSeq);
         findReport.updateReadCount(findReport.getReadCount());
