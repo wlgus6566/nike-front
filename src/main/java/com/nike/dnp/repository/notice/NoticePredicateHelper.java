@@ -49,8 +49,8 @@ public class NoticePredicateHelper {
         final BooleanBuilder builder = new BooleanBuilder();
 
         if (!StringUtils.isEmpty(keyword)) {
-            builder.and(QNoticeArticle.noticeArticle.contents.eq(keyword))
-                    .or(QNoticeArticle.noticeArticle.title.eq(keyword));
+            builder.and((QNoticeArticle.noticeArticle.contents.contains(keyword))
+                    .or(QNoticeArticle.noticeArticle.title.contains(keyword)));
         }
 
         return builder;

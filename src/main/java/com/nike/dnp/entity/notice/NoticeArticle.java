@@ -115,4 +115,15 @@ public class NoticeArticle extends BaseTimeEntity {
     @ApiModelProperty(name = "useYn", value ="사용 여부", example = "N")
     private String useYn;
 
+    /**
+     * Delete.
+     *
+     * @author [정주희]
+     * @CreatedOn 2020. 7. 20. 오후 10:13:14
+     * @Description 게시글 삭제
+     */
+    public void delete() {
+        this.useYn = "N";
+    }
+
 }

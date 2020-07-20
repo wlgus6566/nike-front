@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nike.dnp.dto.notice.NoticeArticeListDTO;
 import com.nike.dnp.dto.notice.NoticeSaveDTO;
 import com.nike.dnp.dto.notice.NoticeSearchDTO;
+import com.nike.dnp.dto.notice.NoticeUpdateDTO;
 import com.nike.dnp.entity.notice.NoticeArticle;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -16,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 /**
  * The Class Notice controller.
  *
@@ -25,8 +28,8 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@Api(description = "Customer Center", tags = "NOTICE")
-@RequestMapping(value = "/api/notice", name = "Customer Center")
+@Api(description = "Customer Center", tags = "Customer")
+@RequestMapping(value = "/api/customer", name = "Customer Center")
 @RequiredArgsConstructor
 public class NoticeController {
 
@@ -62,6 +65,17 @@ public class NoticeController {
         return responseService.getSingleResult(noticeService.findNoticePages(noticeSearchDTO));
     }
 
+    /**
+     * Save customer center single result.
+     *
+     * @param noticeSaveDTO the notice save dto
+     * @param sectionCode   the section code
+     * @param categoryCode  the category code
+     * @return the single result
+     * @author [정주희]
+     * @CreatedOn 2020. 7. 20. 오후 9:21:31
+     * @Description
+     */
     @PostMapping({"/{sectionCode}", "/{sectionCode}/{categoryCode}"})
     public SingleResult<NoticeArticle> saveCustomerCenter(@RequestBody NoticeSaveDTO noticeSaveDTO,
                                                           @PathVariable String sectionCode,
@@ -70,12 +84,40 @@ public class NoticeController {
         if (!StringUtils.isEmpty(categoryCode)) {
             noticeSaveDTO.setNoticeArticleCategoryCode(categoryCode.toUpperCase());
         }
-        
+
         return responseService.getSingleResult(noticeService.save(noticeSaveDTO));
     }
 
+    /**
+     * Check notice yn cnt single result.
+     *
+     * @return the single result
+     * @author [정주희]
+     * @CreatedOn 2020. 7. 20. 오후 9:26:05
+     * @Description 공지사항 등록/수정시 상단 고정된 게시글 개수 확인
+     */
     @GetMapping("/NOTICE/noticeYnCnt")
     public SingleResult<Long> checkNoticeYnCnt() {
         return responseService.getSingleResult(noticeService.checkNoticeYnCnt());
+    }
+
+    /**
+     * Delete customer center single result.
+     *
+     * @param sectionCode the section code
+     * @param noticeSeq   the notice seq
+     * @return the single result
+     * @author [정주희]
+     * @CreatedOn 2020. 7. 20. 오후 9:59:56
+     * @Description Customer Center 게시글 삭제
+     */
+    @DeleteMapping({"/{sectionCode}/{noticeSeq}"})
+    public SingleResult<Optional<NoticeArticle>> deleteCustomerCenter(@PathVariable String sectionCode,
+                                                                        @PathVariable Long noticeSeq){
+        NoticeUpdateDTO noticeUpdateDTO = new NoticeUpdateDTO();
+        noticeUpdateDTO.setNoticeArticleSectionCode(sectionCode);
+        noticeUpdateDTO.setNoticeArticleSeq(noticeSeq);
+        
+        return responseService.getSingleResult(noticeService.deleteCustomerCenter(noticeUpdateDTO));
     }
 }

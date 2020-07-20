@@ -1,31 +1,23 @@
 package com.nike.dnp.dto.notice;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nike.dnp.dto.BasicDTO;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
 
+
 /**
- * The Class Notice list dto.
+ * The Class Notice update dto.
  *
  * @author [정주희]
- * @CreatedOn 2020. 7. 13. 오후 7:11:50
- * @Description Customer Center 목록 반환 DTO
+ * @CreatedOn 2020. 7. 20. 오후 10:02:38
+ * @Description
  */
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class NoticeArticeListDTO {
-
-    /**
-     * The Notice article seq
-     *
-     * @author [정주희]
-     */
-    @ApiModelProperty(name = "noticeArticleSeq", value = "게시글 시퀀스")
-    private Long noticeArticleSeq;
+public class NoticeUpdateDTO extends BasicDTO {
 
     /**
      * The Notice article section code
@@ -35,8 +27,6 @@ public class NoticeArticeListDTO {
     @ApiParam(value = "게시물 구분 코드", name = "noticeArticleSectionCode", defaultValue = "", required = true)
     private String noticeArticleSectionCode;
 
-
-
     /**
      * The Notice article category code
      *
@@ -44,6 +34,15 @@ public class NoticeArticeListDTO {
      */
     @ApiParam(value = "게시물 카테고리 코드", name = "noticeArticleCategoryCode", defaultValue = "")
     private String noticeArticleCategoryCode;
+
+
+    /**
+     * The Notice article seq
+     *
+     * @author [정주희]
+     */
+    @ApiModelProperty(name = "noticeArticleSeq", value = "게시글 시퀀스")
+    private Long noticeArticleSeq;
 
     /**
      * The Notice yn
