@@ -97,7 +97,6 @@ public class UserController {
     @ApiOperation(
             value = "유저 상세 조회"
             , notes = OPERATION_CHARACTER
-            , tags = "asdasdasda"
     )
     @GetMapping(name = "유저 상세 조회", value = "/{userSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})

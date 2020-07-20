@@ -2,7 +2,6 @@ package com.nike.dnp.controller.menu;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.menu.MenuReturnDTO;
-import com.nike.dnp.dto.menu.MenuRoleResourceReturnDTO;
 import com.nike.dnp.entity.menu.Menu;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -103,7 +102,7 @@ public class MenuController {
         return responseService.getSingleResult(menuService.findMenus());
     }
 
-    @ApiOperation(
+    /*@ApiOperation(
             value = "메뉴 관리 목록 조회(테스트1)"
             , notes = OPERATION_CHARACTER
     )
@@ -114,7 +113,7 @@ public class MenuController {
     ) {
         log.info("MenuController.getRedisResources");
         return responseService.getSingleResult(authService.getAuthsResourcesByRoleType(authUserDTO.getRole()));
-    }
+    }*/
 
     /**
      * Gets redis menus.
