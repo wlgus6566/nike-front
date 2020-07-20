@@ -15,4 +15,6 @@ import org.springframework.data.domain.PageRequest;
 public interface NoticeRepositoryCustom {
 
     Page<NoticeArticeListDTO> findNoticePages(NoticeSearchDTO noticeSearchDTO, PageRequest pageRequest);
+
+    Long checkNoticeYnCnt();
 }

@@ -2,8 +2,9 @@ package com.nike.dnp.controller.notice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nike.dnp.dto.notice.NoticeArticeListDTO;
+import com.nike.dnp.dto.notice.NoticeSaveDTO;
 import com.nike.dnp.dto.notice.NoticeSearchDTO;
-import com.nike.dnp.dto.notice.NoticeSearchReqDTO;
+import com.nike.dnp.entity.notice.NoticeArticle;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.notice.NoticeService;
@@ -12,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -35,7 +37,6 @@ public class NoticeController {
      */
     private final NoticeService noticeService;
     private final ResponseService responseService;
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * Find all single result.
@@ -49,14 +50,32 @@ public class NoticeController {
     @ApiOperation(
             value = "Customer Center 목록 조회"
     )
-    @GetMapping("/{noticeArticleSectionCode}")
-    public SingleResult<Page<NoticeArticeListDTO>> findAll(@ModelAttribute NoticeSearchReqDTO noticeSearchDTO,
-                                                           @PathVariable String noticeArticleSectionCode ) {
+    @GetMapping({"/{sectionCode}", "/{sectionCode}/{categoryCode}"})
+    public SingleResult<Page<NoticeArticeListDTO>> findAll(@ModelAttribute NoticeSearchDTO noticeSearchDTO,
+                                                           @PathVariable String sectionCode,
+                                                           @PathVariable(required = false) String categoryCode) {
+        noticeSearchDTO.setNoticeArticleSectionCode(sectionCode.toUpperCase());
+        if (!StringUtils.isEmpty(categoryCode)) {
+            noticeSearchDTO.setNoticeArticleCategoryCode(categoryCode.toUpperCase());
+        }
 
-        final NoticeSearchDTO noticeSearchDTO1 = objectMapper.convertValue(noticeSearchDTO, NoticeSearchDTO.class);
-        noticeSearchDTO1.setNoticeArticleSectionCode(noticeArticleSectionCode);
-
-        return responseService.getSingleResult(noticeService.findNoticePages(noticeSearchDTO1));
+        return responseService.getSingleResult(noticeService.findNoticePages(noticeSearchDTO));
     }
 
+    @PostMapping({"/{sectionCode}", "/{sectionCode}/{categoryCode}"})
+    public SingleResult<NoticeArticle> saveCustomerCenter(@RequestBody NoticeSaveDTO noticeSaveDTO,
+                                                          @PathVariable String sectionCode,
+                                                          @PathVariable(required = false) String categoryCode) {
+        noticeSaveDTO.setNoticeArticleSectionCode(sectionCode.toUpperCase());
+        if (!StringUtils.isEmpty(categoryCode)) {
+            noticeSaveDTO.setNoticeArticleCategoryCode(categoryCode.toUpperCase());
+        }
+        
+        return responseService.getSingleResult(noticeService.save(noticeSaveDTO));
+    }
+
+    @GetMapping("/NOTICE/noticeYnCnt")
+    public SingleResult<Long> checkNoticeYnCnt() {
+        return responseService.getSingleResult(noticeService.checkNoticeYnCnt());
+    }
 }

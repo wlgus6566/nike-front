@@ -17,12 +17,12 @@ import org.apache.commons.lang.StringUtils;
 @AllArgsConstructor
 public class NoticeSearchDTO {
 
-    public void setNoticeArticleSectionCode(String noticeArticleSectionCode) {
+    /*public void setNoticeArticleSectionCode(String noticeArticleSectionCode) {
         if(StringUtils.isBlank(noticeArticleSectionCode))
             throw new RuntimeException();
 
          this.noticeArticleSectionCode = "CD" + noticeArticleSectionCode;
-    }
+    }*/
 
     /**
      * The Notice article section code

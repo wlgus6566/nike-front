@@ -46,17 +46,33 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
         QNoticeArticle qNoticeArticle = QNoticeArticle.noticeArticle;
         JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
         JPAQuery<NoticeArticle> query = queryFactory.selectFrom(qNoticeArticle)
-                .from(qNoticeArticle)
                 .where(
-                        qNoticeArticle.useYn.eq(Boolean.valueOf("Y")),
+                        qNoticeArticle.useYn.eq("Y"),
                         qNoticeArticle.noticeArticleSectionCode.eq(noticeSearchDTO.getNoticeArticleSectionCode()),
                         NoticePredicateHelper.eqCategoryCode(noticeSearchDTO.getNoticeArticleCategoryCode()),
                         NoticePredicateHelper.containsKeword(noticeSearchDTO.getKeyword())
                 );
 
-        List<NoticeArticeListDTO> noticeArticleList = ObjectMapperUtils.mapAll(getQuerydsl()
+        List<NoticeArticeListDTO> noticeArticleList = ObjectMapperUtils.mapAll(
+                getQuerydsl()
                 .applyPagination(pageRequest, query).fetch(),
-                NoticeArticeListDTO.class);
+                NoticeArticeListDTO.class
+        );
         return new PageImpl<>(noticeArticleList, pageRequest, query.fetchCount());
+    }
+
+    @Override
+    public Long checkNoticeYnCnt() {
+        log.info("NoticeRepositoryCustomImpl.checkNoticeYnCnt");
+
+        QNoticeArticle qNoticeArticle = QNoticeArticle.noticeArticle;
+        JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        JPAQuery<NoticeArticle> query = queryFactory.selectFrom(qNoticeArticle)
+                .where(
+                        qNoticeArticle.useYn.eq("Y"),
+                        qNoticeArticle.noticeArticleSectionCode.eq("NOTICE"),
+                        qNoticeArticle.noticeYn.eq("Y")
+                );
+        return query.fetchCount();
     }
 }
