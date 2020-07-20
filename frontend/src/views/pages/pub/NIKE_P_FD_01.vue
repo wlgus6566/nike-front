@@ -262,9 +262,9 @@
     </div>
 </template>
 <script>
-	import fileUpload from '@/components/file-settings/file-upload';
+    import fileUpload from '@/components/file-settings/file-upload';
 
-	export default {
+    export default {
     name: 'NIKE_P_FD_01',
     data() {
         return {

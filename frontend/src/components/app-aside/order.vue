@@ -9,10 +9,10 @@
     </div>
 </template>
 <script>
-	import UserInfo from './user.vue';
-	import TabComponent from '@/components/tab-comp/index.vue';
+    import UserInfo from './user.vue';
+    import TabComponent from '@/components/tab-comp/index.vue';
 
-	export default {
+    export default {
     name: 'AsideOrder',
     data: function () {
         return {

@@ -78,9 +78,9 @@
     </div>
 </template>
 <script>
-	import filterSelect from '@/components/filter-select';
+    import filterSelect from '@/components/filter-select';
 
-	export default {
+    export default {
     name: 'fileItem',
     data() {
         return {
