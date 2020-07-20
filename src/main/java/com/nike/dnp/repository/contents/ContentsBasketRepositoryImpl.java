@@ -1,6 +1,5 @@
 package com.nike.dnp.repository.contents;
 
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.ContentsBasketResultDTO;
 import com.nike.dnp.entity.contents.ContentsBasket;
 import com.nike.dnp.entity.contents.QContentsBasket;

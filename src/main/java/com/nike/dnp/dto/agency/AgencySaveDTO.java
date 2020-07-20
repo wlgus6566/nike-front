@@ -3,8 +3,6 @@ package com.nike.dnp.dto.agency;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Column;
-
 /**
  * The Class Agency save dto.
  *

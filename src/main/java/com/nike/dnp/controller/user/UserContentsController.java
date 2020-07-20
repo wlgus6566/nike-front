@@ -57,24 +57,27 @@ public class UserContentsController {
     private static final String OPERATION_CHARACTER
             = "## Request ##\n[하위 Parameters 참조]\n\n\n\n## Response ##\n[하위 Model 참조]\n\n\n\n";
 
+    /**
+     * List single result.
+     *
+     * @param userContentsSearchDTO the user contents search dto
+     * @return the single result
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 20. 오후 4:25:57
+     * @Description 유저 컨텐츠 그룹 권한 목록
+     */
     @ApiOperation(
-            value = "유저 컨텐츠 그룹권한 목록"
+            value = "유저 컨텐츠 권한 목록"
             , notes = OPERATION_CHARACTER
     )
-    @PostMapping(value = "/list", name = "유저 컨텐츠 그룹 권한 목록"
+    @PostMapping(name = "유저 컨텐츠 그룹 권한 목록"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<List<AuthReturnDTO>> list (
-            @ApiParam(value = "유저 컨텐츠 검색 DTO", required = true) @RequestBody final UserContentsSearchDTO userContentsSearchDTO
+            @ApiParam(value = "유저 컨텐츠 권한 검색 DTO", required = true) @RequestBody final UserContentsSearchDTO userContentsSearchDTO
     ) {
         log.info("UserContentsController.list");
-        return responseService.getSingleResult(
-                userContentsService.getAuthList(userContentsSearchDTO)
-                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.toString()
-                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.getMessage()
-                , true
-        );
+        return responseService.getSingleResult(userContentsService.getAuthList(userContentsSearchDTO));
     }
-
 
     /**
      * Save single result.
@@ -83,17 +86,17 @@ public class UserContentsController {
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 7. 20. 오후 2:38:11
-     * @Description 컨텐츠 권한 저장 및 수정
+     * @Description 유저 컨텐츠 권한 등록/수정
      */
     @ApiOperation(
             value = "유저 컨텐츠 권한 등록/수정"
             , notes = OPERATION_CHARACTER
     )
-    @PostMapping(value = "/save", name = "유저 컨텐츠 권한 등록/수정"
+    @PostMapping(name = "유저 컨텐츠 권한 등록/수정", value = "/save"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<List<UserContents>> save (
-            @ApiParam(value = "유저 컨텐츠 저장 DTO", required = true) @RequestBody final UserContentsSaveDTO userContentsSaveDTO
+            @ApiParam(value = "유저 컨텐츠 권한 저장 DTO", required = true) @RequestBody final UserContentsSaveDTO userContentsSaveDTO
     ) {
         log.info("UserContentsController.save");
         return responseService.getSingleResult(

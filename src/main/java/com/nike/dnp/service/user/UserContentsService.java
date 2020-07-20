@@ -69,8 +69,17 @@ public class UserContentsService {
         return contents;
     }
 
-    public List<AuthReturnDTO> getAuthList (final UserContentsSearchDTO userContentsSearchDTO) {
-        log.info("UserContentsService.getAuthList");
+    /**
+     * Gets auth list.
+     *
+     * @param userContentsSearchDTO the user contents search dto
+     * @return the auth list
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 20. 오후 4:06:35
+     * @Description
+     */
+    public List<AuthReturnDTO> getAuthList2 (final UserContentsSearchDTO userContentsSearchDTO) {
+        log.info("UserContentsService.getAuthList2");
         final String menuCode = userContentsSearchDTO.getMenuCode();
         final String skillCode = userContentsSearchDTO.getSkillCode();
 
@@ -98,6 +107,41 @@ public class UserContentsService {
         return authRepository.findByAuthSeqArray(authSeqArray);
     }
 
+    /**
+     * Gets auth list.
+     *
+     * @param userContentsSearchDTO the user contents search dto
+     * @return the auth list
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 20. 오후 4:25:19
+     * @Description 컨텐츠 권한 목록
+     */
+    public List<AuthReturnDTO> getAuthList (final UserContentsSearchDTO userContentsSearchDTO) {
+        log.info("UserContentsService.getAuthList");
+        return authRepository.findByConfig(
+                userContentsSearchDTO.getMenuCode()
+                , userContentsSearchDTO.getSkillCode()
+        );
+    }
 
+    /**
+     * Is auth boolean.
+     *
+     * @param authSeq               the auth seq
+     * @param userContentsSearchDTO the user contents search dto
+     * @return the boolean
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 20. 오후 4:25:14
+     * @Description 권한 존재 여부
+     */
+    public boolean isAuth(final Long authSeq, final UserContentsSearchDTO userContentsSearchDTO) {
+        log.info("UserContentsService.isAuth");
+        for (AuthReturnDTO authReturnDTO : this.getAuthList(userContentsSearchDTO)) {
+            if (authSeq.equals(authReturnDTO.getAuthSeq())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

@@ -1,14 +1,11 @@
 package com.nike.dnp.repository.report;
 
 import com.nike.dnp.dto.report.ReportBasketResultDTO;
-import com.nike.dnp.dto.report.ReportSearchDTO;
-import com.nike.dnp.entity.report.*;
+import com.nike.dnp.entity.report.QReportBasket;
+import com.nike.dnp.entity.report.QReportFile;
+import com.nike.dnp.entity.report.ReportBasket;
 import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
