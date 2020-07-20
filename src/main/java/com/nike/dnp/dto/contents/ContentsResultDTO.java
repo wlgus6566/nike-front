@@ -1,9 +1,11 @@
 package com.nike.dnp.dto.contents;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 /**
@@ -80,7 +82,7 @@ public class ContentsResultDTO {
      * 캠페인 기간 구분 공통코드
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드", required = true, example = "EVERY")
+    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드(날짜선택:SELECT/365:EVERY)", required = true, example = "EVERY")
     private String campaignPeriodSectionCode;
 
     /**
@@ -88,6 +90,7 @@ public class ContentsResultDTO {
      * @author [이소정]
      */
     @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020.06.01 00:00:00")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime campaignBeginDt;
 
     /**
@@ -95,6 +98,7 @@ public class ContentsResultDTO {
      * @author [이소정]
      */
     @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020.09.01 23:59:59")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime campaignEndDt;
 
     /**
@@ -103,6 +107,13 @@ public class ContentsResultDTO {
      */
     @ApiModelProperty(name = "readCount", value = "조회수")
     private Long readCount;
+
+    /**
+     * 노출 여부
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "exposureYn", value = "노출 여부", example = "Y")
+    private String exposureYn;
 
 
 }

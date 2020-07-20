@@ -98,7 +98,7 @@ public class ReportService {
      */
     public Report findByReportSeq(final Long reportSeq) {
         Report findReport = reportRepository.findByReportSeq(reportSeq);
-        findReport.updateReadCound(findReport.getReadCount());
+        findReport.updateReadCount(findReport.getReadCount());
         return findReport;
     }
 

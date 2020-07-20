@@ -1,5 +1,6 @@
 package com.nike.dnp.controller.contents;
 
+import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -92,11 +94,13 @@ public class ContentsController {
     public SingleResult<Page<ContentsResultDTO>> findAllContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "ALL", required = true) @PathVariable final String menuCode,
-            final ContentsSearchDTO contentsSearchDTO
+            final ContentsSearchDTO contentsSearchDTO,
+            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
+
     ) {
         contentsSearchDTO.setTopMenuCode(topMenuCode);
         contentsSearchDTO.setMenuCode(menuCode);
-        return responseService.getSingleResult(contentsService.findAllPaging(contentsSearchDTO));
+        return responseService.getSingleResult(contentsService.findAllPaging(contentsSearchDTO, authUserDTO));
     }
 
 

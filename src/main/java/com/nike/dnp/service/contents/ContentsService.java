@@ -2,6 +2,7 @@ package com.nike.dnp.service.contents;
 
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.entity.contents.Contents;
@@ -62,7 +63,10 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 13. 오후 3:23:01
      * @Description
      */
-    public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO) {
+    public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO, final AuthUserDTO authUserDTO) {
+
+        // 권한 검사 TODO[lsj]
+
 
         // QueryDsl 기능 이용
         return contentsRepository.findPageContents(
