@@ -7,7 +7,6 @@ import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.List;
@@ -121,7 +120,6 @@ public class Report extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 8. 오후 5:33:21
      * @Description
      */
-    @Transactional
     public Report save(final ReportSaveDTO reportSaveDTO) {
         log.info("Report.save");
         Report savedReport = new Report();
@@ -143,7 +141,6 @@ public class Report extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 9. 오후 6:30:48
      * @Description
      */
-    @Transactional
     public void update(final ReportUpdateDTO reportUpdateDTO) {
         log.info("Report.update");
         this.reportSectionCode = reportUpdateDTO.getReportSectionCode();
@@ -158,7 +155,6 @@ public class Report extends BaseTimeEntity {
      *
      * @param useYn the use yn
      */
-    @Transactional
     public void updateUseYn(final String useYn) {
         log.info("Report.updateUseYn");
         this.useYn = useYn;
@@ -172,9 +168,8 @@ public class Report extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 8. 오후 5:34:20
      * @Description
      */
-    @Transactional
-    public void updateReadCound(final Long readCount) {
-        log.info("Report.updateReadCound");
+    public void updateReadCount(final Long readCount) {
+        log.info("Report.updateReadCount");
         this.readCount = readCount + 1;
     }
 

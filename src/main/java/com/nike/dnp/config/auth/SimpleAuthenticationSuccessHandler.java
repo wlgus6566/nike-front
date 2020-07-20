@@ -14,6 +14,7 @@ import com.nike.dnp.service.RedisService;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.log.UserLoginLogService;
 import com.nike.dnp.service.user.UserMailService;
+import com.nike.dnp.util.BeanUtil;
 import com.nike.dnp.util.CryptoUtil;
 import com.nike.dnp.util.JsonUtil;
 import com.nike.dnp.util.RandomUtil;
@@ -29,6 +30,8 @@ import org.springframework.util.ObjectUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoField;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -201,14 +204,29 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 		}
 
 		if (isValid) {
+
+
+			StringBuffer redisKey = new StringBuffer("auths:");
+			redisKey.append(authUserDTO.getUsername());
+			redisKey.append(LocalDateTime.now().getLong(ChronoField.MILLI_OF_DAY));
+			Algorithm algorithm = Algorithm.HMAC512(JwtHelper.SECRET.getBytes());
 			// jwt 토큰 생성
-			final String token = JWT.create().withSubject(authUserDTO.getUsername())
-					.withExpiresAt(new Date(System.currentTimeMillis() + JwtHelper.EXPIRATION_TIME))
-					.sign(Algorithm.HMAC512(JwtHelper.SECRET));
+			HashMap<String, Object> head = new HashMap<>();
+			head.put("typ","JWT");
+			final String token = JWT.create()
+									.withSubject(authUserDTO.getUsername())
+									.withClaim("rds",redisKey.toString())
+									.withClaim("iat",new Date())
+									.withHeader(head)
+									.withExpiresAt(new Date(System.currentTimeMillis() + JwtHelper.EXPIRATION_TIME))
+					.sign(algorithm);
 
 			// header 에 토큰 입력
 			response.addHeader(JwtHelper.HEADER_STRING, JwtHelper.TOKEN_PREFIX +token);
 			JsonUtil.write(response.getWriter(), responseService.getSuccessResult());
+
+			// 레디스 토큰 저장
+			redisService.set(redisKey.toString(), token, Integer.parseInt(String.valueOf(BeanUtil.getBean("userSessionTime"))));
 
 			// 로그인일자 / header정보 업데이트
 			final HashMap<String, String> header = new HashMap<>();

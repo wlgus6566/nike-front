@@ -7,7 +7,6 @@ import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
@@ -106,7 +105,6 @@ public class ReportFile extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 8. 오후 5:47:08
      * @Description
      */
-    @Transactional
     public ReportFile save(final Long reportSeq, final ReportFileSaveDTO reportFileSaveDTO) {
         return newReportFile(reportSeq, reportFileSaveDTO.getFileName(), reportFileSaveDTO.getFileSize(), reportFileSaveDTO.getFilePhysicalName());
     }
@@ -120,7 +118,6 @@ public class ReportFile extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 9. 오후 6:47:01
      * @Description
      */
-    @Transactional
     public ReportFile updateNewFile(final Long reportSeq, final ReportFileUpdateDTO reportFileUpdateDTO) {
         return newReportFile(reportSeq, reportFileUpdateDTO.getFileName(), reportFileUpdateDTO.getFileSize(), reportFileUpdateDTO.getFilePhysicalName());
     }
@@ -156,7 +153,6 @@ public class ReportFile extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 9. 오후 6:50:26
      * @Description
      */
-    @Transactional
     public void update(final ReportFileUpdateDTO reportFileUpdateDTO) {
         this.fileName = reportFileUpdateDTO.getFileName();
         this.fileSize = reportFileUpdateDTO.getFileSize();
@@ -171,22 +167,21 @@ public class ReportFile extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 9. 오후 6:50:24
      * @Description
      */
-    @Transactional
     public void updateUseYn(final String useYn) {
         log.info("Report.updateUseYn");
         this.useYn = useYn;
     }
-
-    /**
-     * Update download count.
-     *
-     * @param downloadCount the download count
-     * @author [이소정]
-     * @CreatedOn 2020. 7. 8. 오후 5:47:39
-     * @Description
-     */
-    @Transactional
-    public void updateDownloadCount(final Long downloadCount) {
-        this.downloadCount = downloadCount + 1;
-    }
+//
+//    보고서파일은 다운로드수 조회 X by.sojeong.lee 2020.07.20
+//    /**
+//     * Update download count.
+//     *
+//     * @param downloadCount the download count
+//     * @author [이소정]
+//     * @CreatedOn 2020. 7. 8. 오후 5:47:39
+//     * @Description
+//     */
+//    public void updateDownloadCount(final Long downloadCount) {
+//        this.downloadCount = downloadCount + 1;
+//    }
 }

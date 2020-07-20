@@ -1,10 +1,6 @@
 package com.nike.dnp.repository.report;
 
 import com.nike.dnp.dto.report.ReportBasketResultDTO;
-import com.nike.dnp.dto.report.ReportSearchDTO;
-import com.nike.dnp.entity.report.Report;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

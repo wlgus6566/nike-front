@@ -5,7 +5,6 @@ import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
@@ -78,7 +77,6 @@ public class ReportAnswer extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 10. 오전 11:20:05
      * @Description
      */
-    @Transactional
     public ReportAnswer save(final ReportAnswerSaveDTO reportAnswerSaveDTO) {
         log.info("ReportAnswer.save");
         ReportAnswer saveReportAnswer = new ReportAnswer();
@@ -96,7 +94,6 @@ public class ReportAnswer extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 10. 오후 5:47:03
      * @Description
      */
-    @Transactional
     public void updateUseYn(final String useYn) {
         log.info("ReportAnswer.updateUseYn");
         this.useYn = useYn;

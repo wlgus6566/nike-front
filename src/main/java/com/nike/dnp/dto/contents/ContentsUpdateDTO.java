@@ -198,7 +198,7 @@ public class ContentsUpdateDTO {
      * 캠페인 기간 구분 공통코드
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드", required = true, example = "EVERY")
+    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드(날짜선택:SELECT/365:EVERY)", required = true, example = "EVERY")
     private String campaignPeriodSectionCode;
 
     /**
@@ -221,6 +221,13 @@ public class ContentsUpdateDTO {
      */
     @ApiModelProperty(name = "memo", value = "메모", example = "메모 입력\n메모 입력\n메모 입력\n")
     private String memo;
+
+    /**
+     * 노출 여부
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "exposureYn", value = "폴더 상태(노출 여부 Y/N)", example = "Y")
+    private String exposureYn;
 
     /**
      * 콘텐트 파일 리스트
