@@ -79,18 +79,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 		if(token != null){
 			try{
 				DecodedJWT verify = JWT.require(Algorithm.HMAC512(SECRET_KEY.getBytes())).build().verify(token.replace(JwtHelper.TOKEN_PREFIX, ""));
-				log.debug("verify.getToken() {}", verify.getToken());
-				log.debug("verify.getClaims().toString() {}", verify.getClaims().toString());
+
 				// 토큰 디코드
 				final String username = verify.getSubject();
 				final String redisKey = verify.getClaim("rds").asString();
-				// TODO [YTH] id년월일 레디스 값 비교  값이 있다면 레디스 시간 연장
-				System.out.println(redisKey);
 				String redisToken  = (String)redisService.get(redisKey);
-				log.debug("redisToken.toString() {}", redisToken.toString());
-
 				if(verify.getToken().equals(redisToken)){
-					// username(managerId)로 유저정보 조회
+
 					// 유저정보 시큐리티에 넣음
 					if(username != null){
 						final Optional<User> user = userRepository.findByUserId(username);
