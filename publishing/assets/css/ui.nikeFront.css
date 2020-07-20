@@ -134,15 +134,15 @@ ul[class^="folder-list"] {
 
 /* INFORMATION */
 .inner.bg {
-  background-color: #f7f7f7;
   margin: 0 -20px -50px;
   padding: 20px 20px 50px;
+  background-color: #f7f7f7;
 }
 .info-agency-list {
   position: relative;
   min-height: 224px;
-  background-color: #fff;
   padding: 16px 20px 98px;
+  background-color: #fff;
   box-sizing: border-box;
 }
 .info-agency-list + .info-agency-list {
@@ -172,8 +172,8 @@ ul[class^="folder-list"] {
 .info-agency-list .info-box .info-txt {
   display: block;
   padding-left: 25px;
-  line-height: 15px;
   background: no-repeat center left;
+  line-height: 15px;
   text-decoration: underline;
 }
 .info-agency-list .info-box .info-txt + .info-txt {
