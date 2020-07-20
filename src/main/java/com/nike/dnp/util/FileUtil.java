@@ -58,7 +58,6 @@ public class FileUtil {
 	private static String imageMagickCommand;
 
 
-
 	/**
 	 * 파일 저장 경로
 	 *
@@ -124,11 +123,10 @@ public class FileUtil {
 	/**
 	 * 파일 저장
 	 *
-	 * @param uploadFile  the upload file
-	 * @param folder      the folder
-	 * @param resize      the resize
-	 * @param resizeExt   the resize ext
-	 * @param width the resize width
+	 * @param uploadFile the upload file
+	 * @param folder     the folder
+	 * @param resize     the resize
+	 * @param resizeExt  the resize ext
 	 * @return the file result dto
 	 * @throws IOException          the io exception
 	 * @throws InterruptedException the interrupted exception
@@ -211,7 +209,6 @@ public class FileUtil {
 	 * 파일을 temp에 저장 및 이미지 리사이즈
 	 *
 	 * @param uploadFile the upload file
-	 * @param resize     리사이즈 가로 사이즈
 	 * @return the file result dto
 	 * @throws IOException          the io exception
 	 * @throws InterruptedException the interrupted exception
@@ -228,7 +225,6 @@ public class FileUtil {
 	 *
 	 * @param uploadFile the upload file
 	 * @param resizeExt  리사이즈 확장 명
-	 * @param resize     리사이즈 가로 사이즈
 	 * @return the file result dto
 	 * @throws IOException          the io exception
 	 * @throws InterruptedException the interrupted exception
@@ -276,6 +272,7 @@ public class FileUtil {
 
 	/**
 	 * temp 폴더 파일 삭제 (등록후 24시간 지난 파일들만 삭제 처리)
+	 *
 	 * @author [윤태호]
 	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
 	 * @Description
