@@ -120,13 +120,10 @@ public class ContentsService {
      * @Description
      */
     public Contents findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
-        Contents findContetns = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
-        if (null != findContetns) {
-            findContetns.updateReadCount(findContetns.getReadCount());
-        } else {
-            throw new CodeMessageHandleException(ErrorEnumCode.ContentsError.NOT_FOUND_CONTENTS.name(), ErrorEnumCode.ContentsError.NOT_FOUND_CONTENTS.getMessage());
-        }
-        return findContetns;
+        Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
+        final Contents findContents = contents.orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.ContentsError.NOT_FOUND.toString(), ErrorEnumCode.ContentsError.NOT_FOUND.getMessage()));
+        findContents.updateReadCount(findContents.getReadCount());
+        return findContents;
     }
 
     /**
@@ -142,7 +139,9 @@ public class ContentsService {
     public Optional<Contents> update(final ContentsUpdateDTO contentsUpdateDTO) {
         log.info("contentsService.update");
         // contents Update
-        final Optional<Contents> contents = contentsRepository.findById(contentsUpdateDTO.getContentsSeq());
+        final Optional<Contents> contents = Optional.ofNullable(contentsRepository.findById(contentsUpdateDTO.getContentsSeq()).orElseThrow(() ->
+                new CodeMessageHandleException(ErrorEnumCode.ContentsError.NOT_FOUND.toString(), ErrorEnumCode.ContentsError.NOT_FOUND.getMessage())));
+
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(contentsUpdateDTO.getImageBase64())) {
             FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsUpdateDTO.getImageBase64());
@@ -151,6 +150,7 @@ public class ContentsService {
             contentsUpdateDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
             contentsUpdateDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
         }
+
         contents.ifPresent(value -> value.update(contentsUpdateDTO));
 
         // contents File

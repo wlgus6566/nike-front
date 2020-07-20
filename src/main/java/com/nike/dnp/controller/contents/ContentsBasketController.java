@@ -68,10 +68,10 @@ public class ContentsBasketController {
             , notes = REQUEST_CHARACTER
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 장바구니 목록 조회")
-    public SingleResult<List<ContentsBasketResultDTO>> getAllContentsBasket(
+    public SingleResult<List<ContentsBasketResultDTO>> findAllContentsBasket(
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
             ) {
-        return responseService.getSingleResult(contentsBasketService.getAllContentsBasket(authUserDTO));
+        return responseService.getSingleResult(contentsBasketService.findAllContentsBasket(authUserDTO));
     }
 
     /**
