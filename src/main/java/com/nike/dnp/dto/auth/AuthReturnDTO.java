@@ -1,5 +1,6 @@
 package com.nike.dnp.dto.auth;
 
+import com.nike.dnp.common.variable.ServiceEnumCode;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -48,5 +49,21 @@ public class AuthReturnDTO {
      */
     @ApiModelProperty(name = "upperAuthName", value = "상위 권한 명", required = true)
     private String upperAuthName;
+
+    /**
+     * 상세_권한_여부
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "detailAuthYn", value = "상세_권한_여부", required = true, example = "N")
+    private String DETAIL_AUTH_YN = ServiceEnumCode.YesOrNoEnumCode.N.toString();
+
+    /**
+     * 메일_수신_여부
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "emailReceptionYn", value = "메일_수신_여부", required = true, example = "N")
+    private String EMAIL_RECEPTION_YN = ServiceEnumCode.YesOrNoEnumCode.N.toString();
 
 }

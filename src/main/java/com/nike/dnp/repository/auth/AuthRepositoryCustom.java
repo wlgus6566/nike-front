@@ -22,8 +22,20 @@ public interface AuthRepositoryCustom {
      * @return the list
      * @author [오지훈]
      * @CreatedOn 2020. 7. 20. 오후 2:50:03
-     * @Description
+     * @Description 권한 시퀀스 배열로 검색
      */
     List<AuthReturnDTO> findByAuthSeqArray(final Long... authSeqArray);
+
+    /**
+     * Find by config list.
+     *
+     * @param menuCode  the menu code
+     * @param skillCode the skill code
+     * @return the list
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 20. 오후 4:26:39
+     * @Description 조건 검색
+     */
+    List<AuthReturnDTO> findByConfig(final String menuCode, final String skillCode);
 
 }

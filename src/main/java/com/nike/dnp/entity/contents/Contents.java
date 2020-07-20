@@ -1,6 +1,5 @@
 package com.nike.dnp.entity.contents;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
@@ -10,7 +9,6 @@ import com.nike.dnp.util.LocalDateUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

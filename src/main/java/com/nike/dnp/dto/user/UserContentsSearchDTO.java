@@ -25,7 +25,7 @@ public class UserContentsSearchDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "menuCode", value = "메뉴 코드")
+    @ApiModelProperty(name = "menuCode", value = "메뉴 코드", example = "ASSET_SP")
     private String menuCode;
 
     /**
@@ -33,7 +33,7 @@ public class UserContentsSearchDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "skillCode", value = "스킬 코드")
+    @ApiModelProperty(name = "skillCode", value = "스킬 코드", example = "VIEW")
     private String skillCode;
 
 }

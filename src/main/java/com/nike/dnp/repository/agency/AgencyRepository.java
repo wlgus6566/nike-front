@@ -1,8 +1,6 @@
 package com.nike.dnp.repository.agency;
 
 import com.nike.dnp.entity.agency.Agency;
-import com.nike.dnp.entity.contents.ContentsBasket;
-import com.nike.dnp.repository.contents.ContentsBasketRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

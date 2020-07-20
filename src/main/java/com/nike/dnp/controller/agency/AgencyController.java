@@ -3,7 +3,6 @@ package com.nike.dnp.controller.agency;
 import com.nike.dnp.dto.agency.AgencySaveDTO;
 import com.nike.dnp.dto.agency.AgencyUpdateDTO;
 import com.nike.dnp.entity.agency.Agency;
-import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.agency.AgencyService;
@@ -14,9 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 

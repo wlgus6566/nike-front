@@ -64,7 +64,7 @@ public class UserContentsSaveDTO {
          *
          * @author [오지훈]
          */
-        @ApiModelProperty(name = "detailAuthYn", value = "상세_권한_여부")
+        @ApiModelProperty(name = "detailAuthYn", value = "상세_권한_여부", example = "N")
         private String detailAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
 
         /**
@@ -72,7 +72,7 @@ public class UserContentsSaveDTO {
          *
          * @author [오지훈]
          */
-        @ApiModelProperty(name = "emailReceptionYn", value = "메일_수신_여부")
+        @ApiModelProperty(name = "emailReceptionYn", value = "메일_수신_여부", example = "N")
         private String emailReceptionYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
 
     }
