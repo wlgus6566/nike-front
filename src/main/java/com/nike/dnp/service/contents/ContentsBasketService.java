@@ -3,10 +3,11 @@ package com.nike.dnp.service.contents;
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.ContentsBasketResultDTO;
-import com.nike.dnp.dto.contents.ContentsBasketSaveDTO;
 import com.nike.dnp.entity.contents.ContentsBasket;
+import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.contents.ContentsBasketRepository;
+import com.nike.dnp.repository.contents.ContentsFileRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,12 @@ public class ContentsBasketService {
     private final ContentsBasketRepository contentsBasketRepository;
 
     /**
+     * The Contents file repository
+     * @author [이소정]
+     */
+    private final ContentsFileRepository contentsFileRepository;
+
+    /**
      * Gets all contents basket.
      *
      * @param authUserDTO the auth user dto
@@ -45,26 +52,29 @@ public class ContentsBasketService {
      * @Description
      */
     public List<ContentsBasketResultDTO> getAllContentsBasket(final AuthUserDTO authUserDTO) {
-        return contentsBasketRepository.findAllWithContentsFile(authUserDTO, "Y");
+        return contentsBasketRepository.findAllWithContentsFile(authUserDTO.getUserSeq());
     }
 
     /**
      * Save list.
      *
-     * @param contentsBasketSaveDTOList the contents basket save dto list
-     * @param authUserDTO               the auth user dto
+     * @param contentsFileSeqList the contents file seq list
+     * @param authUserDTO         the auth user dto
      * @return the list
      * @author [이소정]
      * @CreatedOn 2020. 7. 15. 오후 12:02:32
      * @Description
      */
     @Transactional
-    public List<ContentsBasket> save(final List<ContentsBasketSaveDTO> contentsBasketSaveDTOList, final AuthUserDTO authUserDTO) {
+    public List<ContentsBasket> save(final List<Long> contentsFileSeqList, final AuthUserDTO authUserDTO) {
         log.info("contentsBasketService.save");
         List<ContentsBasket> savedBasketList = new ArrayList<>();
-        for (ContentsBasketSaveDTO contentsBasketSaveDTO : contentsBasketSaveDTOList) {
-            ContentsBasket contentsBasket = contentsBasketRepository.save(new ContentsBasket().save(contentsBasketSaveDTO, authUserDTO));
-            savedBasketList.add(contentsBasket);
+        for (Long contentsFileSeq : contentsFileSeqList) {
+            Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
+            if (contentsFile.isPresent()) {
+                ContentsBasket contentsBasket = contentsBasketRepository.save(new ContentsBasket().save(contentsFileSeq, authUserDTO));
+                savedBasketList.add(contentsBasket);
+            }
         }
         return savedBasketList;
     }
@@ -82,7 +92,8 @@ public class ContentsBasketService {
     public Optional<ContentsBasket> delete(final Long contentsBasketSeq) {
         log.info("ContentsBasketService.delete");
         Optional<ContentsBasket> contentsBasket = contentsBasketRepository.findById(contentsBasketSeq);
-        final ContentsBasket savedContentsBasket = contentsBasket.orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.ContentsBasketError.NOT_FOUND_BASKET.toString(), ErrorEnumCode.ContentsBasketError.NOT_FOUND_BASKET.getMessage()));
+        final ContentsBasket savedContentsBasket = contentsBasket.orElseThrow(() -> new CodeMessageHandleException(
+                ErrorEnumCode.ContentsBasketError.NOT_FOUND_BASKET.toString(), ErrorEnumCode.ContentsBasketError.NOT_FOUND_BASKET.getMessage()));
         contentsBasketRepository.delete(savedContentsBasket);
         return contentsBasket;
     }

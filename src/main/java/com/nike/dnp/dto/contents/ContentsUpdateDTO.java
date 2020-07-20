@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.List;
 
-
-
 @Getter
 @Setter
 @ToString
@@ -207,14 +205,14 @@ public class ContentsUpdateDTO {
      * 캠페인 시작 일시
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020-06-01")
+    @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020.06.01")
     private String campaignBeginDt;
 
     /**
      * 캠페인 종료 일시
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020-09-01")
+    @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020.09.01")
     private String campaignEndDt;
 
     /**
@@ -228,7 +226,7 @@ public class ContentsUpdateDTO {
      * 콘텐트 파일 리스트
      * @author [이소정]
      */
-    @ApiModelProperty(name = "contentsFileList", value = "콘텐츠 파일 리스트")
+    @ApiModelProperty(name = "contentsFileList", value = "컨텐츠 파일 리스트")
     private List<ContentsFileUpdateDTO> contentsFileList;
 
 }

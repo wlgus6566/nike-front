@@ -5,12 +5,14 @@ import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.dto.contents.ContentsUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.util.LocalDateUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -109,7 +111,7 @@ public class Contents extends BaseTimeEntity {
      */
     @Column(name = "CAMPAIGN_BEGIN_DT")
     @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시")
-    private String campaignBeginDt;
+    private LocalDateTime campaignBeginDt;
 
     /**
      * 캠페인 종료 일시
@@ -117,7 +119,7 @@ public class Contents extends BaseTimeEntity {
      */
     @Column(name = "CAMPAIGN_END_DT")
     @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시")
-    private String campaignEndDt;
+    private LocalDateTime campaignEndDt;
 
     /**
      * 메모
@@ -157,7 +159,7 @@ public class Contents extends BaseTimeEntity {
      */
     @JsonManagedReference
     @OneToMany(mappedBy = "contents")
-    @ApiModelProperty(name = "contentsFileList", value = "콘텐츠 파일 목록", required = true)
+    @ApiModelProperty(name = "contentsFileList", value = "컨텐츠 파일 목록", required = true)
     private List<ContentsFile> contentsFileList;
 
     /**
@@ -176,8 +178,8 @@ public class Contents extends BaseTimeEntity {
         saveContentsBasic(contentsSaveDTO, saveContents);
         // 캠페인기간 > 날짜선택 인 경우
         if (ServiceEnumCode.ContentsCampaignPeriodCode.SELECT.toString().equals(contentsSaveDTO.getCampaignPeriodSectionCode())) {
-            saveContents.setCampaignBeginDt(contentsSaveDTO.getCampaignBeginDt());
-            saveContents.setCampaignEndDt(contentsSaveDTO.getCampaignEndDt());
+            saveContents.setCampaignBeginDt(LocalDateUtil.strToLocalDateTime(contentsSaveDTO.getCampaignBeginDt()+" 00:00:00","yyyy.MM.dd HH:mm:ss"));
+            saveContents.setCampaignEndDt(LocalDateUtil.strToLocalDateTime(contentsSaveDTO.getCampaignEndDt()+" 23:59:59","yyyy.MM.dd HH:mm:ss"));
         } else {
             saveContents.setCampaignBeginDt(null);
             saveContents.setCampaignEndDt(null);

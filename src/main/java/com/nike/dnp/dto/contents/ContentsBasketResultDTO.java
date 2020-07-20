@@ -1,5 +1,6 @@
 package com.nike.dnp.dto.contents;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -15,6 +16,7 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 public class ContentsBasketResultDTO {
 
@@ -60,7 +62,7 @@ public class ContentsBasketResultDTO {
      * 파일 물리 명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명", example = "/cdn/file/path")
+    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명", example = "http://cdnUrl/file/contents/graphic_img.jpg")
     private String filePhysicalName;
 
 }

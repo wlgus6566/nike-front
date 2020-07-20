@@ -30,8 +30,8 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@Api(description = "콘텐츠", tags = "CONTENTS")
-@RequestMapping(value = "/api/contents", name = "콘텐츠")
+@Api(description = "컨텐츠", tags = "CONTENTS")
+@RequestMapping(value = "/api/contents", name = "컨텐츠")
 @RequiredArgsConstructor
 public class ContentsController {
 
@@ -43,7 +43,7 @@ public class ContentsController {
     private final ResponseService responseService;
 
     /**
-     * 콘텐츠 서비스
+     * 컨텐츠 서비스
      *
      * @author [이소정]
      */
@@ -57,7 +57,7 @@ public class ContentsController {
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
     /**
-     * 콘텐츠 전체목록 조회
+     * 컨텐츠 전체목록 조회
      *
      * @param contentsSearchDTO the contents search dto
      * @return all managers
@@ -66,7 +66,7 @@ public class ContentsController {
      * @Description
      */
     @ApiOperation(
-        value = "콘텐츠 목록 조회"
+        value = "컨텐츠 목록 조회"
         , notes = REQUEST_CHARACTER
         + "page|페이지|false|Integer|0부터 시작\n"
         + "size|사이즈|false|Integer\n"
@@ -88,7 +88,7 @@ public class ContentsController {
         + "number||현재페이지|Integer\n"
         + "size||노출갯수|Integer\n\n\n\n"
     )
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "콘텐츠 목록 조회", value = "/{topMenuCode}/{menuCode}")
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 목록 조회", value = "/{topMenuCode}/{menuCode}")
     public SingleResult<Page<ContentsResultDTO>> getAllContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "ALL", required = true) @PathVariable final String menuCode,
@@ -112,14 +112,14 @@ public class ContentsController {
      * @Description
      */
     @ApiOperation(
-            value = "콘텐츠 등록"
+            value = "컨텐츠 등록"
             , notes = REQUEST_CHARACTER
             + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
             + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
             + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
             + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n"
     )
-    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "콘텐츠 등록", value = "/{topMenuCode}/{menuCode}")
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 등록", value = "/{topMenuCode}/{menuCode}")
     public SingleResult<Contents> saveContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
@@ -143,19 +143,19 @@ public class ContentsController {
      * @Description
      */
     @ApiOperation(
-            value = "콘텐츠 상세조회"
+            value = "컨텐츠 상세조회"
             , notes = REQUEST_CHARACTER
             + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
             + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
             + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
             + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n"
     )
-    @GetMapping(name = " 콘텐츠 상세조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
+    @GetMapping(name = " 컨텐츠 상세조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Contents> findContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @ApiParam(name = "contentsSeq", value = "콘텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
+            @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
         return responseService.getSingleResult(contentsService.findByContentsSeq(contentsSeq, topMenuCode, menuCode));
     }
 
@@ -171,12 +171,12 @@ public class ContentsController {
      * @CreatedOn 2020. 7. 13. 오전 11:59:45
      * @Description
      */
-    @ApiOperation(value = "콘텐츠 수정", notes = REQUEST_CHARACTER
+    @ApiOperation(value = "컨텐츠 수정", notes = REQUEST_CHARACTER
             + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
             + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
             + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
             + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n")
-    @PutMapping(name = "콘텐츠 수정", value = "/{topMenuCode}/{menuCode}"
+    @PutMapping(name = "컨텐츠 수정", value = "/{topMenuCode}/{menuCode}"
             , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Contents>> updateContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
@@ -198,23 +198,23 @@ public class ContentsController {
      * @CreatedOn 2020. 7. 7. 오후 2:06:55
      * @Description
      */
-    @ApiOperation(value="콘텐츠 삭제", notes = REQUEST_CHARACTER
+    @ApiOperation(value="컨텐츠 삭제", notes = REQUEST_CHARACTER
             + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
             + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
             + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
             + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n")
-    @DeleteMapping(name = "콘텐츠 삭제", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
+    @DeleteMapping(name = "컨텐츠 삭제", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Contents>> deleteContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @ApiParam(name = "contentsSeq", value = "콘텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
+            @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
         log.info("ContentsController.delete");
         return responseService.getSingleResult(contentsService.delete(contentsSeq));
     }
 
     /**
-     * 콘텐츠 다운로드
+     * 컨텐츠 다운로드
      *
      * @param topMenuCode the top menu code
      * @param menuCode    the menu code
@@ -223,12 +223,12 @@ public class ContentsController {
      * @CreatedOn 2020. 7. 15. 오후 6:30:45
      * @Description
      */
-    @ApiOperation(value = "콘텐츠 다운로드", notes = REQUEST_CHARACTER)
-    @PostMapping(name = "콘텐츠 다운로드", value = "/{topMenuCode}/{menuCode}/download/{contentsFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiOperation(value = "컨텐츠 다운로드", notes = REQUEST_CHARACTER)
+    @PostMapping(name = "컨텐츠 다운로드", value = "/{topMenuCode}/{menuCode}/download/{contentsFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public String downloadContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @ApiParam(name="contentsFileSeq", value = "콘텐츠 파일 seq", defaultValue = "1", required = true) @PathVariable final Long contentsFileSeq
+            @ApiParam(name="contentsFileSeq", value = "컨텐츠 파일 seq", defaultValue = "1", required = true) @PathVariable final Long contentsFileSeq
             , @ApiIgnore HttpServletResponse response
             ) {
         responseService.getSingleResult(contentsService.downloadContentsFile(contentsFileSeq));

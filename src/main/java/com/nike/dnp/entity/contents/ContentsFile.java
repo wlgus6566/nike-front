@@ -151,7 +151,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "THUMBNAIL_FILE_PHYSICAL_NAME")
-    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "/cdn/file/path")
+    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_thumbnail.jpg")
     private String thumbnailFilePhysicalName;
 
     /**

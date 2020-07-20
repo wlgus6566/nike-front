@@ -1,7 +1,10 @@
 package com.nike.dnp.dto.contents;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 /**
  * The Class Contents list dto.
@@ -14,6 +17,7 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 public class ContentsResultDTO {
 
@@ -83,15 +87,15 @@ public class ContentsResultDTO {
      * 캠페인 시작 일시
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020-06-01")
-    private String campaignBeginDt;
+    @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020.06.01 00:00:00")
+    private LocalDateTime campaignBeginDt;
 
     /**
      * 캠페인 종료 일시
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020-09-01")
-    private String campaignEndDt;
+    @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020.09.01 23:59:59")
+    private LocalDateTime campaignEndDt;
 
     /**
      * 조회수
