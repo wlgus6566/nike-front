@@ -62,6 +62,7 @@ public class PasswordHistory extends BaseTimeEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "USER_SEQ", insertable = false, updatable = false)
     @JsonBackReference
+    @ApiModelProperty(name = "user", value = "유저")
     private User user;
 
     /**

@@ -64,6 +64,7 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
     @OneToOne
     @JoinColumn(name = "USER_SEQ", insertable = false, updatable = false)
     @JsonBackReference
+    @ApiModelProperty(name = "user", value = "유저")
     private User user;
 
     /**
@@ -74,6 +75,7 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "AUTH_SEQ", insertable = false, updatable = false)
     //@JsonBackReference 단방향 시 사용 안함
+    @ApiModelProperty(name = "auth", value = "권한")
     private Auth auth;
 
     /**

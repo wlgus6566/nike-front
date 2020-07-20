@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.contents;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
@@ -102,7 +103,7 @@ public class Contents extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_PERIOD_SECTION_CODE")
-    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드", required = true)
+    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드(날짜선택:SELECT/365:EVERY)", required = true)
     private String campaignPeriodSectionCode;
 
     /**
@@ -110,6 +111,7 @@ public class Contents extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_BEGIN_DT")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
     @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시")
     private LocalDateTime campaignBeginDt;
 
@@ -118,6 +120,7 @@ public class Contents extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_END_DT")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
     @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시")
     private LocalDateTime campaignEndDt;
 
@@ -171,7 +174,6 @@ public class Contents extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 1. 오전 9:59:51
      * @Description 등록
      */
-    @Transactional
     public Contents save(ContentsSaveDTO contentsSaveDTO) {
         log.info("Contents.save");
         Contents saveContents = new Contents();
@@ -185,7 +187,6 @@ public class Contents extends BaseTimeEntity {
             saveContents.setCampaignEndDt(null);
         }
         saveContents.setMemo(contentsSaveDTO.getMemo());
-        // TODO[lsj] 권한설정 추가 하기
 
         return saveContents;
     }
@@ -209,8 +210,8 @@ public class Contents extends BaseTimeEntity {
         saveContents.setFolderName(contentsSaveDTO.getFolderName());
         saveContents.setFolderContents(contentsSaveDTO.getFolderContents());
         saveContents.setCampaignPeriodSectionCode(contentsSaveDTO.getCampaignPeriodSectionCode());
+        saveContents.setExposureYn(contentsSaveDTO.getExposureYn());
 
-        saveContents.setExposureYn("Y");
         saveContents.setUseYn("Y");
         saveContents.setReadCount(0l);
     }
@@ -224,7 +225,6 @@ public class Contents extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 3. 오후 4:01:36
      * @Description
      */
-    @Transactional
     public void update(final ContentsUpdateDTO contentsUpdateDTO) {
         log.info("Contents.update");
         this.menuCode = contentsUpdateDTO.getMenuCode();
@@ -234,6 +234,7 @@ public class Contents extends BaseTimeEntity {
         this.folderName = contentsUpdateDTO.getFolderName();
         this.folderContents = contentsUpdateDTO.getFolderContents();
         this.campaignPeriodSectionCode = contentsUpdateDTO.getCampaignPeriodSectionCode();
+        this.exposureYn = contentsUpdateDTO.getExposureYn();
     }
 
     /**
@@ -244,7 +245,6 @@ public class Contents extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 3. 오후 5:22:59
      * @Description
      */
-    @Transactional
     public void updateReadCount(final Long readCount) {
         log.info("Contents.updateReadCount");
         this.readCount = readCount + 1;
@@ -258,7 +258,6 @@ public class Contents extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 7. 오후 2:06:34
      * @Description
      */
-    @Transactional
     public void delete() {
         this.useYn = "N";
     }

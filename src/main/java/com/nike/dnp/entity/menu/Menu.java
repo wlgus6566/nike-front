@@ -166,6 +166,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
             referencedColumnName = "MENU_SEQ",
             insertable = false, updatable = false)
     //@JsonBackReference
+    @ApiModelProperty(name = "subMenus", value = "하위 메뉴")
     private List<Menu> subMenus;
 
     /*@ManyToOne
@@ -182,6 +183,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
      */
     @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER)
     @JsonManagedReference
+    @ApiModelProperty(name = "menuRoles", value = "메뉴 역할")
     private List<MenuRole> menuRoles;
 
     /**

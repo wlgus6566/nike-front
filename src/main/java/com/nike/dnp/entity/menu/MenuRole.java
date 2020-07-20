@@ -69,6 +69,7 @@ public class MenuRole extends BaseTimeEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "MENU_SEQ", insertable = false, updatable = false)
     @JsonBackReference
+    @ApiModelProperty(name = "menu", value = "메뉴")
     private Menu menu;
 
     /**

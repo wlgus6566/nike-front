@@ -85,6 +85,7 @@ public class Auth extends BaseTimeEntity implements Serializable {
     @JoinColumn(name = "UPPER_AUTH_SEQ",
             referencedColumnName = "AUTH_SEQ",
             insertable = false, updatable = false)
+    @ApiModelProperty(name = "subAuths", value = "하위 권한")
     private List<Auth> subAuths;
 
     /**

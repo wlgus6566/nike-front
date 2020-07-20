@@ -1,9 +1,7 @@
 package com.nike.dnp.config;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
@@ -28,8 +26,6 @@ import java.util.Arrays;
  */
 @Configuration
 @EnableSwagger2
-@Controller
-@RequiredArgsConstructor
 public class SwaggerConfig implements WebMvcConfigurer {
 
 	/**

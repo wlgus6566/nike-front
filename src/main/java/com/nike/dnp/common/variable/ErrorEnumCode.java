@@ -95,7 +95,7 @@ public class ErrorEnumCode {
         NOT_EXIST_FILE_URL("파일URL이 존재하지 않습니다."),
         NOT_SELECT_DATE("시작/끝날짜를 둘 다 지정해주시기 바랍니다."),
         START_DATE_BIGGER("시작날짜가 종료일자보다 큽니다."),
-        NOT_FOUND_CONTENTS("해당 컨텐츠가 존재하지 않습니다.");
+        NOT_FOUND("해당 컨텐츠가 존재하지 않습니다.");
 
 
         /**
@@ -296,5 +296,22 @@ public class ErrorEnumCode {
          */
         private final String message;
     }
+
+    /**
+     * The enum Agency error.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum AgencyError {
+        NOT_FOUND("해당 에이전시가 존재하지 않습니다.");
+
+        /**
+         * The Message
+         *
+         * @author [이소정]
+         */
+        private final String message;
+    }
+
 
 }

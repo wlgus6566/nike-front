@@ -147,6 +147,7 @@ public class User extends BaseTimeEntity {
      */
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonManagedReference
+    @ApiModelProperty(name = "userAuth", value = "유저 권한")
     private UserAuth userAuth;
 
     /**
@@ -157,6 +158,7 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonManagedReference
     @OrderBy("registrationDt DESC")
+    @ApiModelProperty(name = "histories", value = "비밀번호 변경 이력")
     private List<PasswordHistory> histories = new ArrayList<>();
 
     /**
