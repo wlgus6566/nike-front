@@ -171,7 +171,6 @@ public class Contents extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 1. 오전 9:59:51
      * @Description 등록
      */
-    @Transactional
     public Contents save(ContentsSaveDTO contentsSaveDTO) {
         log.info("Contents.save");
         Contents saveContents = new Contents();
@@ -185,7 +184,6 @@ public class Contents extends BaseTimeEntity {
             saveContents.setCampaignEndDt(null);
         }
         saveContents.setMemo(contentsSaveDTO.getMemo());
-        // TODO[lsj] 권한설정 추가 하기
 
         return saveContents;
     }
@@ -209,8 +207,8 @@ public class Contents extends BaseTimeEntity {
         saveContents.setFolderName(contentsSaveDTO.getFolderName());
         saveContents.setFolderContents(contentsSaveDTO.getFolderContents());
         saveContents.setCampaignPeriodSectionCode(contentsSaveDTO.getCampaignPeriodSectionCode());
+        saveContents.setExposureYn(contentsSaveDTO.getExposureYn());
 
-        saveContents.setExposureYn("Y");
         saveContents.setUseYn("Y");
         saveContents.setReadCount(0l);
     }
@@ -224,7 +222,6 @@ public class Contents extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 3. 오후 4:01:36
      * @Description
      */
-    @Transactional
     public void update(final ContentsUpdateDTO contentsUpdateDTO) {
         log.info("Contents.update");
         this.menuCode = contentsUpdateDTO.getMenuCode();
@@ -234,6 +231,7 @@ public class Contents extends BaseTimeEntity {
         this.folderName = contentsUpdateDTO.getFolderName();
         this.folderContents = contentsUpdateDTO.getFolderContents();
         this.campaignPeriodSectionCode = contentsUpdateDTO.getCampaignPeriodSectionCode();
+        this.exposureYn = contentsUpdateDTO.getExposureYn();
     }
 
     /**
@@ -244,7 +242,6 @@ public class Contents extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 3. 오후 5:22:59
      * @Description
      */
-    @Transactional
     public void updateReadCount(final Long readCount) {
         log.info("Contents.updateReadCount");
         this.readCount = readCount + 1;
@@ -258,7 +255,6 @@ public class Contents extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 7. 오후 2:06:34
      * @Description
      */
-    @Transactional
     public void delete() {
         this.useYn = "N";
     }

@@ -226,4 +226,10 @@ public class ContentsSaveDTO {
     @ApiModelProperty(name = "contentsFileList", value = "컨텐츠 파일 리스트")
     private List<ContentsFileSaveDTO> contentsFileList;
 
+    /**
+     * 노출 여부
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "exposureYn", value = "노출 여부", example = "Y")
+    private String exposureYn;
 }

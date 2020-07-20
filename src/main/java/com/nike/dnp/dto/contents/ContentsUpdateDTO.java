@@ -223,6 +223,13 @@ public class ContentsUpdateDTO {
     private String memo;
 
     /**
+     * 노출 여부
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "exposureYn", value = "노출 여부", example = "Y")
+    private String exposureYn;
+
+    /**
      * 콘텐트 파일 리스트
      * @author [이소정]
      */
