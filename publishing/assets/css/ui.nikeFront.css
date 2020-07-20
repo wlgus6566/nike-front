@@ -149,16 +149,18 @@ ul[class^="folder-list"] {
 .info-agency-list .title {
   font-size: 16px;
   line-height: 19px;
+  letter-spacing: 0;
   color: #333;
 }
 .info-agency-list .text {
+  min-height: 60px;
   margin-top: 15px;
   padding-top: 15px;
   border-top: 1px solid #eee;
   line-height: 20px;
   letter-spacing: -0.5px;
   color: #333;
-  padding-bottom: 74px;
+  padding-bottom: 78px;
 }
 .info-agency-list .info-box {
   position: absolute;
