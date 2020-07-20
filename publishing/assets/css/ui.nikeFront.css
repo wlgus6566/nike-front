@@ -131,3 +131,62 @@ ul[class^="folder-list"] {
 .folder-list-row li .view-area .view:before {
   left: 5px;
 }
+
+/* INFORMATION */
+.inner.bg {
+  background-color: #f7f7f7;
+  margin: 0 -20px -50px;
+  padding: 20px 20px 50px;
+}
+.info-agency-list {
+  position: relative;
+  background-color: #fff;
+  padding: 16px 20px;
+}
+.info-agency-list + .info-agency-list {
+  margin-top: 20px;
+}
+.info-agency-list .title {
+  font-size: 16px;
+  line-height: 19px;
+  color: #333;
+}
+.info-agency-list .text {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  line-height: 20px;
+  letter-spacing: -0.5px;
+  color: #333;
+  padding-bottom: 74px;
+}
+.info-agency-list .info-box {
+  position: absolute;
+  bottom: 22px;
+  left: 20px;
+  margin-top: 33px;
+  font-size: 13px;
+  color: #555;
+}
+.info-agency-list .info-box p {
+  position: relative;
+  line-height: 15px;
+  text-decoration: underline;
+}
+.info-agency-list .info-box p + p {
+  margin-top: 8px;
+}
+.info-agency-list .info-box p:before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+.info-agency-list .info-box .number:before {
+  background: url(../images/svg/icon-phone.svg) no-repeat center;
+}
+.info-agency-list .info-box .email:before {
+  background: url(../images/svg/icon-mail.svg) no-repeat center;
+}
