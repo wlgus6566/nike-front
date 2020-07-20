@@ -157,7 +157,6 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 		final AntPathMatcher antPathMatcher = new AntPathMatcher();
 		int result = ACCESS_ABSTAIN;
 		for(final MenuRoleResourceReturnDTO menuRoleResourceReturnDTO : authsResourcesByRoleType){
-			//String resourceUrl = menuRoleResourceReturnDTO.getResourceUrl();
 
 			StringBuilder resourceUrl = new StringBuilder(menuRoleResourceReturnDTO.getResourceUrl());
 			final String resourceMethod = menuRoleResourceReturnDTO.getResourceMethod();
@@ -197,6 +196,12 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 			}
 		}
 		return result;
+	}
+
+
+	public static void main(String[] args) {
+		final AntPathMatcher antPathMatcher = new AntPathMatcher();
+		System.out.println(antPathMatcher.match("/api/user/*", "/api/user/view"));
 	}
 
 

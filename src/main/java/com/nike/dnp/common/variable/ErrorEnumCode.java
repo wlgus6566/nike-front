@@ -71,7 +71,9 @@ public class ErrorEnumCode {
         EXPIRED_CERT_CODE("인증코드 유효기간이 만료되었습니다. 다시 인증해 주세요"),
         NOT_MATCH_CERT_CODE("인증코드를 확인해 주세요.(인증코드는 대소문자를 구별합니다.)"),
         IS_SLANG("간단한 패턴이나 공통 사전 단어를 포함한 비밀번호를 설정할 수 없습니다. 확인 후 다시 설정해 주세요."),
-        IS_DORMANT("휴면회원 입니다.")
+        IS_DORMANT("휴면회원 입니다."),
+        NOT_SESSION("다시 로그인 하시기 바랍니다."),
+        WRONG_TOKEN("토큰 정보가 잘못 되었습니다.");
         ;
 
         /**
