@@ -22,6 +22,7 @@ spring:
         cache-null-values: false
         use-key-prefix: true
       type: redis
+    userSessionTime: 30
 
 logging:
   config: classpath:logback-dev.xml

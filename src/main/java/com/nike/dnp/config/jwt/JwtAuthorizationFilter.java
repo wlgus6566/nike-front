@@ -2,9 +2,16 @@ package com.nike.dnp.config.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.entity.user.User;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.user.UserRepository;
+import com.nike.dnp.service.RedisService;
+import com.nike.dnp.util.BeanUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +28,7 @@ import java.util.Optional;
 /**
  * jwt 필터
  */
+@Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
 	/**
@@ -33,6 +41,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	 */
 	private transient final UserRepository userRepository;
 
+	private final RedisService redisService;
+
 	/**
 	 * Instantiates a new Jwt authorization filter.
 	 *
@@ -41,9 +51,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	 */
 	public JwtAuthorizationFilter(
 			final AuthenticationManager authManager
-			, final UserRepository userRepository) {
+			, final UserRepository userRepository
+			, final RedisService redisService) {
 		super(authManager);
 		this.userRepository = userRepository;
+		this.redisService = redisService;
 	}
 
 	@Override
@@ -56,24 +68,45 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 			return;
 		}
 
-		final Authentication authentication = getUsernamePasswrodAuthentication(request);
+		final Authentication authentication = getUsernamePasswordAuthentication(request);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		chain.doFilter(request,response);
 	}
 
-	private Authentication getUsernamePasswrodAuthentication(final HttpServletRequest request) {
+	private Authentication getUsernamePasswordAuthentication(final HttpServletRequest request) {
 		final String token = request.getHeader(JwtHelper.HEADER_STRING);
 		Authentication authentication = null;
 		if(token != null){
-			// 토큰 디코드
-			final String username = JWT.require(Algorithm.HMAC512(SECRET_KEY.getBytes())).build().verify(token.replace(JwtHelper.TOKEN_PREFIX, "")).getSubject();
-			// username(managerId)로 유저정보 조회
-			// 유저정보 시큐리티에 넣음
-			if(username != null){
-				final Optional<User> user = userRepository.findByUserId(username);
-				final AuthUserDTO authUserDTO = new AuthUserDTO(user.get());
-				authentication = new UsernamePasswordAuthenticationToken(authUserDTO, null, authUserDTO.getAuthorities());
+			try{
+				DecodedJWT verify = JWT.require(Algorithm.HMAC512(SECRET_KEY.getBytes())).build().verify(token.replace(JwtHelper.TOKEN_PREFIX, ""));
+				log.debug("verify.getToken() {}", verify.getToken());
+				log.debug("verify.getClaims().toString() {}", verify.getClaims().toString());
+				// 토큰 디코드
+				final String username = verify.getSubject();
+				final String redisKey = verify.getClaim("rds").asString();
+				// TODO [YTH] id년월일 레디스 값 비교  값이 있다면 레디스 시간 연장
+				System.out.println(redisKey);
+				String redisToken  = (String)redisService.get(redisKey);
+				log.debug("redisToken.toString() {}", redisToken.toString());
+
+				if(verify.getToken().equals(redisToken)){
+					// username(managerId)로 유저정보 조회
+					// 유저정보 시큐리티에 넣음
+					if(username != null){
+						final Optional<User> user = userRepository.findByUserId(username);
+						final AuthUserDTO authUserDTO = new AuthUserDTO(user.get());
+						// 레디스 키 시간 초기화
+						redisService.set(redisKey, redisToken, Integer.parseInt(String.valueOf(BeanUtil.getBean("userSessionTime"))));
+						authentication = new UsernamePasswordAuthenticationToken(authUserDTO, null, authUserDTO.getAuthorities());
+					}
+				}else{
+					throw new CodeMessageHandleException(ErrorEnumCode.LoginError.NOT_SESSION.toString(), ErrorEnumCode.LoginError.NOT_SESSION.getMessage());
+				}
+			}catch(JWTDecodeException | IllegalArgumentException e){
+				throw new CodeMessageHandleException(ErrorEnumCode.LoginError.WRONG_TOKEN.toString(), ErrorEnumCode.LoginError.WRONG_TOKEN.getMessage());
 			}
+		}else{
+			throw new CodeMessageHandleException(ErrorEnumCode.LoginError.WRONG_TOKEN.toString(), ErrorEnumCode.LoginError.WRONG_TOKEN.getMessage());
 		}
 		return authentication;
 	}

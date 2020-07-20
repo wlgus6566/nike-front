@@ -48,7 +48,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
 				.paths(PathSelectors.ant("/api/**"))
 				.build()
 				.globalOperationParameters(Arrays.asList(
-						new ParameterBuilder().name("Authorization").defaultValue("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjQ2NzY4NTl9.i_TH7DbQsw_DwBrjFBAFUw-3ME0nTUmAeaQg32q_MRT3hYaLxZVmJ2_LEyr94rDj0a1tzT-ZCBHYx70qCP88Zw")
+						new ParameterBuilder().name("Authorization").defaultValue("Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9" +
+																						  ".eyJyZHMiOiJ5dGg0NDMyODMxMCIsInN1YiI6Inl0aCIsImV4cCI6MTYyNjc1MTEyOCwiaWF0IjoxNTk1MjE1MTI4fQ._2vocX0PWzGURe0FiPTqmPsPFE5tP5COYE6LXjR1ILUzTBK2WICCtFRq_BTycnW950c2LNlvhbRuV4dEmnKFnQ")
 								.modelRef(new ModelRef("string")).parameterType("header").required(true).modelRef(new ModelRef("String")).build()))
 				.apiInfo(apiInfo()).useDefaultResponseMessages(false);
 	}

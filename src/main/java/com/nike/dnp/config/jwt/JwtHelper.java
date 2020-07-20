@@ -16,9 +16,8 @@ public class JwtHelper {
 	/**
 	 *
 	 */
-	//public static final int EXPIRATION_TIME = 86400000; // 하루
-	public static final Long EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 365L;//365일
-//	public static final int EXPIRATION_TIME = 3000; //3초
+	public static final int EXPIRATION_TIME = 86400000; // 하루
+	//public static final Long EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 365L;//365일
 
 	/**
 	 *

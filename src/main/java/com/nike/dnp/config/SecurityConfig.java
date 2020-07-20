@@ -119,6 +119,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 
+	@Bean(name = "userSessionTime")
+	@Value("${spring.redis.userSessionTime:}")
+	public int userSessionTime(final int userSessionTime) {
+		return userSessionTime;
+	}
+
+
 	/**
 	 * 암호화 모듈
 	 *
@@ -167,7 +174,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						.anyRequest().authenticated();
 
 		http.addFilter(authenticationFilter()) // 인증 필터
-			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository)) //jwt 토큰 인증 필터
+			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository,this.redisService)) //jwt 토큰 인증 필터
 			.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
 			.and()
 			.csrf().disable() // csrf 사용 안함
