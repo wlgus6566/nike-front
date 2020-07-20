@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.contents;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
@@ -102,7 +103,7 @@ public class Contents extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_PERIOD_SECTION_CODE")
-    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드", required = true)
+    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드(날짜선택:SELECT/365:EVERY)", required = true)
     private String campaignPeriodSectionCode;
 
     /**
@@ -110,6 +111,7 @@ public class Contents extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_BEGIN_DT")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
     @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시")
     private LocalDateTime campaignBeginDt;
 
@@ -118,6 +120,7 @@ public class Contents extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_END_DT")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
     @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시")
     private LocalDateTime campaignEndDt;
 

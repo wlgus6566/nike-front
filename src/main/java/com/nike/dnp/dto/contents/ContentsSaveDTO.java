@@ -195,7 +195,7 @@ public class ContentsSaveDTO {
      * 캠페인 기간 구분 공통코드
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드 (SELECT/EVERY)", required = true, example = "EVERY")
+    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드(날짜선택:SELECT/365:EVERY)", required = true, example = "EVERY")
     private String campaignPeriodSectionCode;
 
     /**
@@ -230,6 +230,6 @@ public class ContentsSaveDTO {
      * 노출 여부
      * @author [이소정]
      */
-    @ApiModelProperty(name = "exposureYn", value = "노출 여부", example = "Y")
+    @ApiModelProperty(name = "exposureYn", value = "폴더 상태(노출 여부 Y/N)", example = "Y")
     private String exposureYn;
 }
