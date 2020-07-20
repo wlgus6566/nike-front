@@ -156,7 +156,7 @@ public class FileUtil {
 		if(resize && (uploadFile.getContentType().toUpperCase(Locale.getDefault()).contains("IMAGE") || extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(
 				Locale.getDefault()).contains("AI"))){
 			String resizeExtension = "";
-			int resizeWidth = 120;
+			int resizeWidth = 120; // 기본값
 			if(StringUtils.isEmpty(resizeExt)){
 				resizeExtension = "jpg";
 			}else{
@@ -165,6 +165,10 @@ public class FileUtil {
 			if(width > 0){
 				resizeWidth = width;
 			}
+			// TODO [YTH] 이미지 사이즈 긴값을 700으로 변환
+
+			// TODO [YTH] 이미지 사이즈 긴값을 x 으로 변환
+
 			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail." + resizeExtension;
 			final StringBuilder command = new StringBuilder(imageMagick);
 			command.append(File.separator).append(imageMagickCommand+" ").append(toFile.getPath());

@@ -32,6 +32,17 @@ public interface AuthMenuRoleRepository extends JpaRepository<AuthMenuRole, Long
     List<AuthMenuRole> findByAuthSeq(final Long authSeq);
 
     /**
+     * Find by menu role seq in list.
+     *
+     * @param menuRoleSeqArray the menu role seq array
+     * @return the list
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 20. 오후 2:43:44
+     * @Description
+     */
+    List<AuthMenuRole> findByMenuRoleSeqIn(final Long... menuRoleSeqArray);
+
+    /**
      * Delete all by auth seq.
      *
      * @param authSeq the auth seq

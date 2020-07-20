@@ -1,9 +1,7 @@
 package com.nike.dnp.config;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
@@ -28,8 +26,6 @@ import java.util.Arrays;
  */
 @Configuration
 @EnableSwagger2
-@Controller
-@RequiredArgsConstructor
 public class SwaggerConfig implements WebMvcConfigurer {
 
 	/**
@@ -48,7 +44,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
 				.paths(PathSelectors.ant("/api/**"))
 				.build()
 				.globalOperationParameters(Arrays.asList(
-						new ParameterBuilder().name("Authorization").defaultValue("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dGgiLCJleHAiOjE2MjQ2NzY4NTl9.i_TH7DbQsw_DwBrjFBAFUw-3ME0nTUmAeaQg32q_MRT3hYaLxZVmJ2_LEyr94rDj0a1tzT-ZCBHYx70qCP88Zw")
+						new ParameterBuilder().name("Authorization").defaultValue("Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9" +
+																						  ".eyJyZHMiOiJhdXRoczp5dGg1OTE0MzE0OCIsInN1YiI6Inl0aCIsImV4cCI6MTYyNjc2NTk0MywiaWF0IjoxNTk1MjI5OTQzfQ.wg_VqONs3LYXKKHclCwYSHn0jyEv6jM13TMUqKp0vLo_Mhxp0Gwj-PWWFxNhGzsXQKhryIpGV85hXHX7t-DjVA")
 								.modelRef(new ModelRef("string")).parameterType("header").required(true).modelRef(new ModelRef("String")).build()))
 				.apiInfo(apiInfo()).useDefaultResponseMessages(false);
 	}

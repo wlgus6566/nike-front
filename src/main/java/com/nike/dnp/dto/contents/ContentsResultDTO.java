@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 /**

@@ -51,7 +51,7 @@ public class ContentsBasketService {
      * @CreatedOn 2020. 7. 14. 오후 6:24:19
      * @Description
      */
-    public List<ContentsBasketResultDTO> getAllContentsBasket(final AuthUserDTO authUserDTO) {
+    public List<ContentsBasketResultDTO> findAllContentsBasket(final AuthUserDTO authUserDTO) {
         return contentsBasketRepository.findAllWithContentsFile(authUserDTO.getUserSeq());
     }
 

@@ -57,10 +57,10 @@ public class ReportBasketController {
         , notes = REQUEST_CHARACTER
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Report 장바구니 목록 조회")
-    public SingleResult<List<ReportBasketResultDTO>> getAllReportBasket(
+    public SingleResult<List<ReportBasketResultDTO>> findAllReportBasket(
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
     ) {
-        log.info("ReportBasketController.getAllReportBasket");
+        log.info("ReportBasketController.findAllReportBasket");
         return responseService.getSingleResult(reportBasketService.findAllReportBasket(authUserDTO));
     }
 

@@ -322,6 +322,7 @@ public class AuthService {
      * @CreatedOn 2020. 7. 13. 오후 3:34:40
      * @Description 권한 메뉴 역할 삭제
      */
+    @Transactional
     public void remove(final Long authSeq) {
         authMenuRoleRepository.deleteAllByAuthSeq(authSeq);
         authMenuRoleRepository.flush();

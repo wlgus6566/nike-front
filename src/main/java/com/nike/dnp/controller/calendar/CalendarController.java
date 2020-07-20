@@ -70,7 +70,7 @@ public class CalendarController {
             + "[하위 Model 참조]\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Calendar 조회")
-    public SingleResult<List<Calendar>> getAllContents(
+    public SingleResult<List<Calendar>> findAllContents(
             final CalendarSearchDTO calendarSearchDTO
     ) {
         // Asset 메뉴 코드 넣어줌.

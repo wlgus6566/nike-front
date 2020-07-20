@@ -60,6 +60,7 @@ public class AuthMenuRole extends BaseTimeEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "AUTH_SEQ", insertable = false, updatable = false)
     @JsonBackReference
+    @ApiModelProperty(name = "auth", value = "권한")
     private Auth auth;
 
     /*@ManyToOne

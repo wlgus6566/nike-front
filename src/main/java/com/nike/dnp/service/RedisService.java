@@ -35,6 +35,7 @@ public class RedisService {
      * Instantiates a new Redis service.
      *
      * @param redisTemplate the redis template
+     * @param loginUserSession
      * @author [오지훈]
      * @CreatedOn 2020. 6. 19. 오후 4:47:26
      * @Description 생성자 주입

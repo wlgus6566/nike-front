@@ -15,7 +15,7 @@ import java.util.Optional;
  * @Description Auth(권한) Repository Interface 작성
  */
 @Repository
-public interface AuthRepository extends JpaRepository<Auth, Long> {
+public interface AuthRepository extends JpaRepository<Auth, Long>, AuthRepositoryCustom {
 
     /**
      * Find all by use yn list.
@@ -28,6 +28,15 @@ public interface AuthRepository extends JpaRepository<Auth, Long> {
      */
     List<Auth> findAllByUseYn(String useYn);
 
+    /**
+     * Find all by use yn and upper auth seq is null list.
+     *
+     * @param useYn the use yn
+     * @return the list
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 20. 오후 2:47:13
+     * @Description
+     */
     List<Auth> findAllByUseYnAndUpperAuthSeqIsNull(String useYn);
 
     /**

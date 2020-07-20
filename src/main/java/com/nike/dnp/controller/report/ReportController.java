@@ -74,10 +74,10 @@ public class ReportController {
         + "size||노출갯수|Integer\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Report 목록 조회")
-    public SingleResult<Page<Report>> getAllReports(
+    public SingleResult<Page<Report>> findAllReports(
             final ReportSearchDTO reportSearchDTO
     ) {
-        log.info("ReportController.getAllReports");
+        log.info("ReportController.findAllReports");
         return responseService.getSingleResult(reportService.findAllPaging(reportSearchDTO));
     }
 

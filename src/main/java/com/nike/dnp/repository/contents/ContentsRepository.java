@@ -4,6 +4,8 @@ import com.nike.dnp.entity.contents.Contents;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * Contents Repository
  *
@@ -25,7 +27,7 @@ public interface ContentsRepository extends JpaRepository<Contents, Long>, Conte
      * @CreatedOn 2020. 6. 19. 오후 5:57:43
      * @Description
      */
-    Contents findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(Long contentsSeq, String topMenuCode, String menuCode, String useYn);
+    Optional<Contents> findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(Long contentsSeq, String topMenuCode, String menuCode, String useYn);
 
 
 }
