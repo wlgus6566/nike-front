@@ -89,7 +89,7 @@ public class ContentsFileController {
         + "size||노출갯수|Integer\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 파일 목록 조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}")
-    public SingleResult<Page<ContentsFileResultDTO>> getAllContentsFile(
+    public SingleResult<Page<ContentsFileResultDTO>> findAllContentsFile(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "SP", required = true) @PathVariable final String menuCode,
             @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq,

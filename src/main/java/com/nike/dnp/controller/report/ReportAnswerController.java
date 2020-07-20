@@ -77,10 +77,10 @@ public class ReportAnswerController {
             + "size||노출갯수|Integer\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 댓글 목록 조회", value = "/{reportSeq}")
-    public SingleResult<List<ReportAnswer>> getAllReportAnswer(
+    public SingleResult<List<ReportAnswer>> findAllReportAnswer(
             @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2", required = true) @PathVariable final Long reportSeq
     ) {
-        log.info("ReportAnswerController.getAllReportAnswer");
+        log.info("ReportAnswerController.findAllReportAnswer");
         return responseService.getSingleResult(reportAnswerService.findAll(reportSeq));
     }
 
