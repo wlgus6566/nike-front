@@ -68,7 +68,7 @@ public class AgencyService {
      * @CreatedOn 2020. 7. 20. 오후 12:26:58
      * @Description
      */
-    public Optional<Agency> findByAgencySeq(final long agencySeq) {
+    public Optional<Agency> findByAgencySeq(final Long agencySeq) {
         return Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencySeq, "Y").orElseThrow(() ->
                 new CodeMessageHandleException(ErrorEnumCode.AgencyError.NOT_FOUND.toString(), ErrorEnumCode.AgencyError.NOT_FOUND.getMessage())));
     }

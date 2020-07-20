@@ -111,7 +111,7 @@ public class AgencyController {
     @GetMapping(name = " 에이전시 상세조회", value = "/{agencySeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Agency>> findAgency(
-            @ApiParam(name = "contentsSeq", value = "에이전시 시퀀스", defaultValue = "1", required = true) @PathVariable final long agencySeq) {
+            @ApiParam(name = "agencySeq", value = "에이전시 시퀀스", defaultValue = "1", required = true) @PathVariable final Long agencySeq) {
         return  responseService.getSingleResult(agencyService.findByAgencySeq(agencySeq));
     }
 
