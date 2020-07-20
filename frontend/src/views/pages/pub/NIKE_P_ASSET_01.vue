@@ -107,7 +107,7 @@
                                 <label class="label-title">메모</label>
                             </div>
                             <div class="form-column">
-                                <!-- todo 추가 스크립트 작업 필요  -->
+                                <!-- todo count 제어  -->
                                 <el-input
                                     type="textarea"
                                     v-model="memoTextarea"
@@ -148,7 +148,7 @@
                                 </div>
                                 <div class="form-column">
                                     <el-radio
-                                        v-model="fileSortationRadiofileSortationRadio"
+                                        v-model="fileSortationRadio"
                                         label="ASSET"
                                         class="type2"
                                         >ASSET</el-radio
@@ -186,95 +186,7 @@
                                     <span class="label-title">업로드 된 파일</span>
                                 </div>
                                 <div class="form-column">
-                                    <div class="upload-file-box">
-                                        <div class="upload-file-list actice">
-                                            <ul>
-                                                <li>
-                                                    <label>
-                                                        <span class="checkbox">
-                                                            <input type="checkbox" />
-                                                            <span></span>
-                                                        </span>
-                                                        <span class="txt"
-                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpgP20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpg</span
-                                                        >
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label>
-                                                        <span class="checkbox">
-                                                            <input type="checkbox" />
-                                                            <span></span>
-                                                        </span>
-                                                        <span class="txt"
-                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                                        >
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label>
-                                                        <span class="checkbox">
-                                                            <input type="checkbox" />
-                                                            <span></span>
-                                                        </span>
-                                                        <span class="txt"
-                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                                        >
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label>
-                                                        <span class="checkbox">
-                                                            <input type="checkbox" />
-                                                            <span></span>
-                                                        </span>
-                                                        <span class="txt"
-                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                                        >
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label>
-                                                        <span class="checkbox">
-                                                            <input type="checkbox" />
-                                                            <span></span>
-                                                        </span>
-                                                        <span class="txt"
-                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                                        >
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="btn-box">
-                                            <div class="fine-file">
-                                                <span class="btn-form-gray"><span>찾기</span></span>
-                                                <input type="file" />
-                                            </div>
-                                            <button type="button" class="btn-form">
-                                                <span>삭제</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="form-row">
-                                <div class="form-column">
-                                    <span class="label-title">업로드 된 파일</span>
-                                </div>
-                                <div class="form-column">
-                                    <div class="upload-file-box">
-                                        <div class="upload-file-list"></div>
-                                        <div class="btn-box">
-                                            <div class="fine-file">
-                                                <span class="btn-form-gray"><span>찾기</span></span>
-                                                <input type="file" />
-                                            </div>
-                                            <button type="button" class="btn-form">
-                                                <span>삭제</span>
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <fileUpload />
                                 </div>
                             </li>
                         </ul>
@@ -325,9 +237,9 @@
                                     <label class="label-title">파일 타이틀</label>
                                 </div>
                                 <div class="form-column">
-                                    <input
-                                        type="text"
-                                        value="P20_Nsw_Nike_Gallery_graphic_1_700x1000"
+                                    <el-input
+                                        v-model="fileTileInput"
+                                        placeholder="파일 타이틀을 입력해 주세요."
                                     />
                                 </div>
                             </li>
@@ -336,7 +248,7 @@
                                     <label class="label-title">URL</label>
                                 </div>
                                 <div class="form-column">
-                                    <input type="text" value="vimeo.com/101912729" />
+                                    <el-input v-model="urlInput" placeholder="URL을 입력" />
                                 </div>
                             </li>
                         </ul>
@@ -365,11 +277,26 @@
     </div>
 </template>
 <script>
-export default {
+	import fileUpload from '@/components/file-settings/file-upload';
+
+	export default {
     name: 'NIKE_P_ASSET_01',
     data() {
         return {
             buttons: [],
+            stateRadio: '노출',
+            uploadRadio: 'SP',
+            campaignPeriodRadio: '기간선택',
+            CampaignNameTextarea: '',
+            CampaignDetailTextarea: '',
+            memoTextarea: '',
+            fileSortationRadio: 'ASSET',
+            fileTypeRadio: '파일',
+            fileSortationRadio2: 'ASSET',
+            fileTypeRadio2: '파일',
+            fileTileInput: '',
+            urlInput: '',
+            datapicker: '',
             pickerOptions: {
                 shortcuts: [
                     {
@@ -401,23 +328,13 @@ export default {
                     },
                 ],
             },
-            datapicker: '',
-            stateRadio: '노출',
-            uploadRadio: 'SP',
-            campaignPeriodRadio: '기간선택',
-            fileSortationRadio: 'ASSET',
-            fileTypeRadio: '파일',
-            fileSortationRadio2: 'ASSET',
-            fileTypeRadio2: '파일',
-            CampaignNameTextarea: '',
-            CampaignDetailTextarea: '',
-            memoTextarea: '',
         };
     },
     components: {
         'my-component': {
             template: '<div>파일추가</div>',
         },
+        fileUpload,
     },
     methods: {
         add() {

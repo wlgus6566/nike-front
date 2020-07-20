@@ -69,14 +69,15 @@
                     </li>
                 </ul>
                 <div class="all-box">
-                    <el-checkbox v-model="allCheck" v-on:change="allCheckFn(allCheck)">
-                        전체선택
-                    </el-checkbox>
+                    <el-checkbox
+                        :indeterminate="isIndeterminate"
+                        v-model="checkAll"
+                        @change="handleCheckAllChange"
+                        >전체선택</el-checkbox
+                    >
                     <p class="desc">
-                        <em>
-                            0
-                        </em>
-                        개의 파일이 선택됨
+                        <em>{{ checkLength }}</em
+                        >개의 파일이 선택됨
                     </p>
                     <!-- todo select 스크립트 작업 필요  -->
                     <div class="filter-select">
@@ -86,39 +87,41 @@
                     </div>
                 </div>
                 <!-- todo 추가 스크립트 작업 필요  -->
-                <ul class="file-item-list">
-                    <li class="file-item" v-for="(item, index) in items" :key="index">
-                        <div class="list">
-                            <el-checkbox v-model="item.state" v-on:change="checkFn">
-                                <span class="thumbnail">
+                <el-checkbox-group v-model="checkItem" @change="handleCheckedCitiesChange">
+                    <ul class="file-item-list">
+                        <li class="file-item" v-for="(item, index) in items" :key="index">
+                            <div class="list">
+                                <el-checkbox :label="item.title">
+                                    <span class="thumbnail">
+                                        <img :src="item.img" alt="" />
+                                    </span>
+                                    <span class="info-box">
+                                        <strong class="title">{{ item.title }}</strong>
+                                    </span>
+                                </el-checkbox>
+                                <div class="btn-box">
+                                    <button type="button" class="btn-s-sm-white">
+                                        <i class="icon-check"></i><span>ADDED</span>
+                                    </button>
+                                    <button type="button" class="btn-more active">
+                                        <span>더보기</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="detail active">
+                                <div class="thumbnail">
                                     <img :src="item.img" alt="" />
-                                </span>
-                                <span class="info-box">
-                                    <strong class="title">{{ item.title }}</strong>
-                                </span>
-                            </el-checkbox>
-                            <div class="btn-box">
-                                <button type="button" class="btn-s-sm-white">
-                                    <i class="icon-check"></i><span>ADDED</span>
-                                </button>
-                                <button type="button" class="btn-more active">
-                                    <span>더보기</span>
-                                </button>
+                                </div>
+                                <div class="down-info">
+                                    <span class="key">다운로드 횟수</span>
+                                    <span class="val"
+                                        ><strong>{{ item.down }}</strong> 회</span
+                                    >
+                                </div>
                             </div>
-                        </div>
-                        <div class="detail active">
-                            <div class="thumbnail">
-                                <img :src="item.img" alt="" />
-                            </div>
-                            <div class="down-info">
-                                <span class="key">다운로드 횟수</span>
-                                <span class="val"
-                                    ><strong>{{ item.down }}</strong> 회</span
-                                >
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
+                </el-checkbox-group>
             </div>
             <aside>
                 <div class="aside-wrap">
@@ -156,32 +159,54 @@ export default {
                     down: 100,
                 },
             ],
-            checkITem: [],
-            allCheck: false,
+            checkAll: false,
+            checkLength: 0,
+            checkItem: [],
+            isIndeterminate: true,
         };
     },
     created() {
-        this.checkFn();
-    },
-    computed: {},
-    methods: {
-        checkFn() {
-            this.items.forEach((item) => {
-                if (item.state) {
-                    this.checkITem.push(item.state);
-                    if (this.checkITem.length == this.items.length) {
-                        this.allCheck = true;
-                    } else {
-                        this.allCheck = false;
-                    }
+        const _this = this;
+        this.items.forEach((element) => check(element, _this));
+        function check(val, _this) {
+            if (val.state) {
+                _this.checkItem.push(val.title);
+                if (_this.checkItem.length == _this.cities) {
+                    _this.checkAllFn;
                 }
-            });
-        },
-        allCheckFn(val) {
-            if (val) {
-                this.checkITem = [1];
-            } else {
             }
+        }
+        this.lenthCheck;
+    },
+    computed: {
+        allCheck() {
+            const allCheck = [];
+            this.items.forEach((element) => allCheck.push(element.title));
+            return allCheck;
+        },
+        lenthCheck() {
+            return (this.checkLength = this.checkItem.length);
+        },
+        checkAllFn() {
+            return (this.checkAll = true);
+        },
+        cities() {
+            return this.items.length;
+        },
+    },
+    methods: {
+        handleCheckAllChange(val) {
+            this.checkItem = val ? this.allCheck : [];
+            this.isIndeterminate = false;
+            this.lenthCheck;
+        },
+        handleCheckedCitiesChange(value) {
+            console.log(value);
+            let checkedCount = value.length;
+            this.checkAll = checkedCount === this.cities;
+            this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities;
+            //체크된 갯수가 0보다 크고 체크된 갯수가 아이템의 갯수보다 작으면 false
+            this.lenthCheck;
         },
     },
 };

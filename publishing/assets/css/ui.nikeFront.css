@@ -1,0 +1,133 @@
+@charset "UTF-8";
+
+ul[class^="folder-list"] {
+  margin: 10px 0 0;
+}
+[class^="folder-list"] a {
+  display: block;
+}
+[class^="folder-list"] .thumbnail {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding-top: 100%;
+  overflow: hidden;
+  background: #f7f7f7;
+}
+[class^="folder-list"] .thumbnail img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-height: 100%;
+  transform: translate(-50%, -50%);
+}
+[class^="folder-list"] a .title {
+  display: block;
+  margin-top: 10px;
+  line-height: 20px;
+  font-size: 14px;
+  color: #000;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+}
+[class^="folder-list"] a .date {
+  display: block;
+  margin-top: 8px;
+  line-height: 14px;
+  font-size: 12px;
+  color: #888;
+}
+[class^="folder-list"] li .view-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 80px;
+  padding-top: 80px;
+}
+[class^="folder-list"] li .view-area .view {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 10px 0 32px;
+  height: 24px;
+  line-height: 24px;
+  background: rgba(0, 0, 0, 0.4);
+  font-size: 10px;
+  letter-spacing: 0;
+  color: #fff;
+}
+[class^="folder-list"] li .view-area .view:before {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  background: url(../images/svg/icon-view-small-w.svg) no-repeat center;
+}
+.folder-list {
+  display: flex;
+  margin-left: -20px;
+  margin-right: -20px;
+  flex-wrap: wrap;
+}
+.folder-list li {
+  position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: calc((100% - 10px) / 2);
+}
+.folder-list li:nth-child(2n) {
+  margin-left: 10px;
+}
+.folder-list li:nth-child(n + 3) {
+  margin-top: 30px;
+}
+.folder-list li .info-box {
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+.folder-list-row li {
+  border-bottom: 1px solid #eee;
+}
+.folder-list-row li a {
+  position: relative;
+  display: flex;
+  padding: 20px 0;
+}
+.folder-list-row li .thumbnail {
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: 80px;
+  width: 80px;
+  padding-top: 80px;
+}
+.folder-list-row li .info-box {
+  margin-left: 15px;
+}
+.folder-list-row li .info-box .title {
+  margin-top: 9px;
+}
+.folder-list-row li .view-area {
+  top: 20px;
+}
+.folder-list-row li .view-area .view {
+  height: 20px;
+  line-height: 20px;
+  padding-left: 25px;
+}
+.folder-list-row li .view-area .view:before {
+  left: 5px;
+}
