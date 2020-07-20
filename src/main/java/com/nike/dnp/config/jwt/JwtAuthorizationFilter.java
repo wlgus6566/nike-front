@@ -79,29 +79,38 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 		if(token != null){
 			try{
 				DecodedJWT verify = JWT.require(Algorithm.HMAC512(SECRET_KEY.getBytes())).build().verify(token.replace(JwtHelper.TOKEN_PREFIX, ""));
-
 				// 토큰 디코드
 				final String username = verify.getSubject();
 				final String redisKey = verify.getClaim("rds").asString();
 				String redisToken  = (String)redisService.get(redisKey);
-				if(verify.getToken().equals(redisToken)){
-
-					// 유저정보 시큐리티에 넣음
-					if(username != null){
-						final Optional<User> user = userRepository.findByUserId(username);
-						final AuthUserDTO authUserDTO = new AuthUserDTO(user.get());
-						// 레디스 키 시간 초기화
-						redisService.set(redisKey, redisToken, Integer.parseInt(String.valueOf(BeanUtil.getBean("userSessionTime"))));
-						authentication = new UsernamePasswordAuthenticationToken(authUserDTO, null, authUserDTO.getAuthorities());
-					}
+				log.debug("System.getProperty(spring.profiles.active) {}", System.getProperty("spring.profiles.active"));
+				if(String.valueOf(System.getProperty("spring.profiles.active")).equalsIgnoreCase("local")){
+					authentication = getAuthentication(authentication, username, redisKey, redisToken);
 				}else{
-					throw new CodeMessageHandleException(ErrorEnumCode.LoginError.NOT_SESSION.toString(), ErrorEnumCode.LoginError.NOT_SESSION.getMessage());
+					if(verify.getToken().equals(redisToken)){
+						// 유저정보 시큐리티에 넣음
+						authentication = getAuthentication(authentication, username, redisKey, redisToken);
+					}else{
+						throw new CodeMessageHandleException(ErrorEnumCode.LoginError.NOT_SESSION.toString(), ErrorEnumCode.LoginError.NOT_SESSION.getMessage());
+					}
+
 				}
 			}catch(JWTDecodeException | IllegalArgumentException e){
 				throw new CodeMessageHandleException(ErrorEnumCode.LoginError.WRONG_TOKEN.toString(), ErrorEnumCode.LoginError.WRONG_TOKEN.getMessage());
 			}
 		}else{
 			throw new CodeMessageHandleException(ErrorEnumCode.LoginError.WRONG_TOKEN.toString(), ErrorEnumCode.LoginError.WRONG_TOKEN.getMessage());
+		}
+		return authentication;
+	}
+
+	private Authentication getAuthentication(Authentication authentication, String username, String redisKey, String redisToken) {
+		if(username != null){
+			final Optional<User> user = userRepository.findByUserId(username);
+			final AuthUserDTO authUserDTO = new AuthUserDTO(user.get());
+			// 레디스 키 시간 초기화
+			redisService.set(redisKey, redisToken, Integer.parseInt(String.valueOf(BeanUtil.getBean("userSessionTime"))));
+			authentication = new UsernamePasswordAuthenticationToken(authUserDTO, null, authUserDTO.getAuthorities());
 		}
 		return authentication;
 	}

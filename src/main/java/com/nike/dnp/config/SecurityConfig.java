@@ -119,6 +119,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 
+	/**
+	 * User session time int.
+	 *
+	 * @param userSessionTime the user session time
+	 * @return the int
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 20. 오후 4:07:10
+	 * @Description
+	 */
 	@Bean(name = "userSessionTime")
 	@Value("${spring.redis.userSessionTime:}")
 	public int userSessionTime(final int userSessionTime) {
