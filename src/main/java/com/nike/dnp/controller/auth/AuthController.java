@@ -1,8 +1,10 @@
 package com.nike.dnp.controller.auth;
 
 import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.auth.AuthSaveDTO;
 import com.nike.dnp.dto.auth.AuthUpdateDTO;
+import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.auth.AuthMenuRole;
 import com.nike.dnp.model.response.SingleResult;
@@ -15,7 +17,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.Optional;
@@ -93,6 +97,30 @@ public class AuthController {
     public SingleResult<List<Auth>> findAll() {
         log.info("AuthController.findAll");
         return responseService.getSingleResult(authService.findAll());
+    }
+
+    //TODO[ojh] 2020-07-21 : 이소정 처리 후 삭제 예정
+    /**
+     * Find by auth depth single result.
+     *
+     * @param authUserDTO the auth user dto
+     * @return the single result
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 21. 오후 5:14:14
+     * @Description 그룹(권한) depth별 목록 조회
+     */
+    @ApiOperation(
+            value = "그룹(권한) depth별 목록 조회"
+            , notes = OPERATION_CHARACTER
+    )
+    @GetMapping(name = "그룹(권한) depth별 목록 조회", value = "/depth"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<List<AuthReturnDTO>> findByAuthDepth(
+            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
+    ) {
+        log.info("AuthController.findByAuthDepth");
+        return responseService.getSingleResult(
+                authService.findByAuthDepth(authUserDTO.getAuthSeq(), "REPORT_UPLOAD", "REPORT"));
     }
 
     /**
