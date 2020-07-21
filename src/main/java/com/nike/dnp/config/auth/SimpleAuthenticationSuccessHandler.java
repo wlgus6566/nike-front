@@ -206,9 +206,9 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 		if (isValid) {
 
 
-			StringBuffer redisKey = new StringBuffer("auths:");
-			redisKey.append(authUserDTO.getUsername());
-			redisKey.append(LocalDateTime.now().getLong(ChronoField.MILLI_OF_DAY));
+			StringBuilder redisKey = new StringBuilder("auths:");
+			redisKey.append(authUserDTO.getUsername())
+					.append(LocalDateTime.now().getLong(ChronoField.MILLI_OF_DAY));
 			Algorithm algorithm = Algorithm.HMAC512(JwtHelper.SECRET.getBytes());
 			// jwt 토큰 생성
 			HashMap<String, Object> head = new HashMap<>();

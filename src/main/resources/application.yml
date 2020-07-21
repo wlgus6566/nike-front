@@ -27,8 +27,6 @@ spring:
       max-file-size: 1000MB
       max-request-size: 1000MB
 
-
-
 ## 시큐리티 url/ ip 체크 flag
 security:
   auth:

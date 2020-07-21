@@ -3,6 +3,13 @@ package com.nike.dnp.dto.banner;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+/**
+ * The Class Banner update dto.
+ *
+ * @author [오지훈]
+ * @CreatedOn 2020. 7. 21. 오후 3:54:32
+ * @Description
+ */
 @Getter
 @Setter
 @ToString

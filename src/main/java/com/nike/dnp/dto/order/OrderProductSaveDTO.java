@@ -19,13 +19,14 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class OrderProductSaveDTO extends BasicDTO {
+
 	/**
 	 * 상품 리스트
 	 *
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name="goodsSeqList",value="상품 시퀀스", allowableValues="28,30,31")
-	List<Long> goodsSeqList;
+	private List<Long> goodsSeqList;
 
 	/**
 	 * 상품 수량
@@ -33,7 +34,7 @@ public class OrderProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "orderQuantityList", value = "상품 시퀀스별 수량", allowableValues = "10,20,30")
-	List<Long> orderQuantityList;
+	private List<Long> orderQuantityList;
 
 	/**
 	 * 총 금액
@@ -41,7 +42,7 @@ public class OrderProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name="totalAmount",value="총 금액",example = "100000")
-	Long totalAmount;
+	private Long totalAmount;
 
 	/**
 	 * 주문 설명
@@ -49,8 +50,16 @@ public class OrderProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name="orderDescription",value = "주문 코맨트",example = "코멘트")
-	String orderDescription;
+	private String orderDescription;
 
+	/**
+	 * To string string.
+	 *
+	 * @return the string
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 7. 21. 오후 4:02:23
+	 * @Description
+	 */
 	@Override
 	public String toString() {
 		return "OrderProductSaveDTO{" + "goodsSeqList=" + goodsSeqList + ", orderQuantityList=" + orderQuantityList + ", totalAmount=" + totalAmount + ", orderDescription='" + orderDescription + '\'' + '}';

@@ -63,8 +63,18 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 */
 	private String password;
 
+	/**
+	 * The Role
+	 *
+	 * @author [오지훈]
+	 */
 	private String role;
 
+	/**
+	 * The Auth seq
+	 *
+	 * @author [오지훈]
+	 */
 	private Long authSeq;
 
 	/**

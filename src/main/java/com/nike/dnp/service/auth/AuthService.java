@@ -366,10 +366,10 @@ public class AuthService {
         final ObjectMapper objectMapper = new ObjectMapper();
         try {
             redisService.set("cache:auths::SimpleKey []", objectMapper.readValue(objectMapper.writeValueAsString(this.findAll()), JSONArray.class), 60 * 24 * 30);
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException exception) {
             throw new CodeMessageHandleException(
                     ErrorEnumCode.ExceptionError.ERROR.toString()
-                    , ErrorEnumCode.ExceptionError.ERROR.getMessage()
+                    , exception.getMessage()
             );
         }
     }

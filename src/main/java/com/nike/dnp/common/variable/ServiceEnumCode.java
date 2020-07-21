@@ -197,7 +197,17 @@ public class ServiceEnumCode {
          * @author [오지훈]
          */
         private final String message;
+        /**
+         * The Field
+         *
+         * @author [오지훈]
+         */
         private final String field;
+        /**
+         * The Sort
+         *
+         * @author [오지훈]
+         */
         private final int sort;
     }
 
@@ -216,7 +226,6 @@ public class ServiceEnumCode {
          *
          * @author [윤태호]
          */
-
         private final String folder;
 
     }

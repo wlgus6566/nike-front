@@ -4,6 +4,13 @@ import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
 
+/**
+ * The Class Report search dto.
+ *
+ * @author [오지훈]
+ * @CreatedOn 2020. 7. 21. 오후 3:55:43
+ * @Description
+ */
 @Getter
 @Setter
 @ToString
