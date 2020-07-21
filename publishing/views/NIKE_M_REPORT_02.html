@@ -14,125 +14,116 @@
 <div id="app">
 	<div id="wrap" class="main">
 		<header class="page-header">
-			<button type="button" class="btn-back">뒤로가기</button>
+			<!--<button type="button" class="btn-back">뒤로가기</button>-->
 			<div class="inner">
-				<div class="btn-box">
-					<button type="button" class="btn-txt">삭제</button>
-					<button type="button" class="btn-txt">수정</button>
-				</div>
+				<h1 class="page-title">REPORT</h1>
+				<ul class="nav-tab">
+					<li class="active">
+						<button type="button"><span>업로드</span></button>
+					</li>
+					<li>
+						<button type="button"><span>관리</span></button>
+					</li>
+				</ul>
 			</div>
 		</header>
 		<section class="container">
 			<div class="contents">
-				<div class="folder-wrap">
-					<h2 class="folder-title">
-						NIKE DIRECT AM90 NIKE DIRECT AM90 나이키 다이렉트 NSW
-					</h2>
-					<div class="inner">
-						<p class="folder-desc">
-							나이키 다이렉트 캠페인 자료와 동영상, 스타일가이드, 기타 그래픽자료가
-							업데이트 되었습니다. SP20 나이키 다이렉트 NSW 캠페인 시공 에셋 자료가
-							업데이트 되었습니다.
-						</p>
-						<span class="folder-date">2020.01.01 - 2020.01.03</span>
-						<p class="folder-memo">[중요!!!] 2020.10.10까지 시공 완료  필요함!</p>
+				<div class="sorting-area">
+					<button type="button" class="type-list">
+						<span>컬럼타입</span>
+					</button>
+					<!-- todo select 스크립트 작업 필요  -->
+					<div class="filter-select">
+						<select>
+							<option value="최신순">최신순</option>
+						</select>
+					</div>
+					<div class="filter-select">
+						<select>
+							<option value="전체그룹">전체그룹</option>
+						</select>
+					</div>
+					<div class="search-input"> <!-- active 추가하면 검색 화면 보임 -->
+						<input type="text" placeholder="검색어를 입력해주세요." />
+						<button type="button" class="search"><span>검색</span></button>
+						<button type="button" class="btn-txt"><span>취소</span></button>
 					</div>
 				</div>
-
-				<div class="feedback-wrap">
-					<strong class="title">FEEDBACK</strong>
-					<ul class="feedback-list">
-						<li class="feedback-item">
-							<p class="txt">일산 라페스타점 점장님, 시공보고서 확인완료 했습니다.</p>
-							<div class="info">
-								<span class="name">NIKE MKT 01</span>
-								<span class="date">2020. 06. 04.</span>
+				<ul class="folder-list-row">
+					<li class="folder-list-item">
+						<a href="#">
+							<div class="thumbnail">
+								<img src="http://placehold.it/410X600" alt="" />
 							</div>
-							<button type="button" class="del"><span>삭제</span></button>
-						</li>
-						<li class="feedback-item">
-							<p class="txt">
-								일 산 라페스타점 점장님, 시공보고서 확인완료 했습니다.산 라페스타점
-								점장님, 시공보고서 확인완료 했습니다.산 라페스타점 점장님,
-								시공보고서 확인완료 했습니다.산 라페스타점 점장님, 시공보고서
-								확인완료 했습니다.산 라페스타점 점장님, 시공보고서 확인완료
-								했습니다.산 라페스타점 점장님, 시공보고서 확인완료 했습니다.산
-								라페스타점 점장님, 시공보고서 확인완료 했습니다.산 라페스타점
-								점장님, 시공보고서 확인완료 했습니다.
-							</p>
-							<div class="info">
-								<span class="name">NIKE MKT 01</span>
-								<span class="date">2020. 06. 04.</span>
+							<div class="info-box">
+								<strong class="title">타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다타이틀입니다</strong>
+								<p class="txt">FA20 RN NIKE DIRECT 시공 보고서 자료 </p>
+								<p class="date">2020.00.00</p>
 							</div>
-							<button type="button" class="del"><span>삭제</span></button>
-						</li>
-					</ul>
-					<!-- //todo el-ui 작업 -->
-					<div class="textarea">
-						<textarea></textarea>
-						<button type="button" class="btn-form-gray">댓글등록</button>
-					</div>
-				</div>
-
-				<ul class="sorting-list">
-					<li class="active">
-						<div><span>FILE</span></div>
-					</li>
-					<!-- 탭일시
-					<li>
-						<button type="button"><span>FILE</span></button>
-					</li>
-					 -->
-				</ul>
-				<ul class="file-item-list">
-					<li class="file-item">
-						<a href="#">
-							<span class="thumbnail">
-								<img src="../assets/images/svg/icon-illust-file-pdf.svg" alt="PDF" />
-							</span>
-							<span class="info-box">
-								<strong class="title">SP20 NSW NIKE DIRECT AM90  SP20 NSW 나이키 다이렉트0.PDF</strong>
-							</span>
+							<div class="view-area">
+								<span class="view">10,000</span>
+							</div>
 						</a>
 					</li>
-					<li class="file-item">
+					<li class="folder-list-item">
 						<a href="#">
-							<span class="thumbnail">
-								<img src="../assets/images/svg/icon-illust-file-mov.svg" alt="MOV" />
-							</span>
-							<span class="info-box">
-								<strong class="title">SP20 NSW NIKE DIRECT AM90  SP20 NSW 나이키 다이렉트0.PDF</strong>
-							</span>
+							<div class="thumbnail">
+								<img src="http://placehold.it/410X600" alt="" />
+							</div>
+							<div class="info-box">
+								<strong class="title">타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다타이틀입니다</strong>
+								<p class="txt">FA20 RN NIKE DIRECT 시공 보고서 자료 </p>
+								<p class="date">2020.00.00</p>
+							</div>
+							<div class="view-area">
+								<span class="view">10,000</span>
+							</div>
 						</a>
 					</li>
-					<li class="file-item">
+					<li class="folder-list-item">
 						<a href="#">
-							<span class="thumbnail">
-								<img src="../assets/images/svg/icon-illust-file-etc.svg" alt="ETC" />
-							</span>
-							<span class="info-box">
-								<strong class="title">SP20 NSW NIKE DIRECT AM90  SP20 NSW 나이키 다이렉트0.PDF</strong>
-							</span>
+							<div class="thumbnail">
+								<img src="http://placehold.it/410X600" alt="" />
+							</div>
+							<div class="info-box">
+								<strong class="title">타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다타이틀입니다</strong>
+								<p class="txt">FA20 RN NIKE DIRECT 시공 보고서 자료 </p>
+								<p class="date">2020.00.00</p>
+							</div>
+							<div class="view-area">
+								<span class="view">10,000</span>
+							</div>
 						</a>
 					</li>
-					<li class="file-item">
+					<li class="folder-list-item">
 						<a href="#">
-							<span class="thumbnail">
-								<img src="../assets/images/svg/icon-illust-file-ttf.svg" alt="TTF" />
-							</span>
-							<span class="info-box">
-								<strong class="title">SP20 NSW NIKE DIRECT AM90  SP20 NSW 나이키 다이렉트0.PDF</strong>
-							</span>
+							<div class="thumbnail">
+								<img src="http://placehold.it/410X600" alt="" />
+							</div>
+							<div class="info-box">
+								<strong class="title">타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다타이틀입니다</strong>
+								<p class="txt">FA20 RN NIKE DIRECT 시공 보고서 자료 </p>
+								<p class="date">2020.00.00</p>
+							</div>
+							<div class="view-area">
+								<span class="view">10,000</span>
+							</div>
 						</a>
 					</li>
-					<li class="file-item">
+					<li class="folder-list-item">
 						<a href="#">
-							<span class="thumbnail">
-								<img src="../assets/images/svg/icon-illust-file-url.svg" alt="URL" />
-							</span>
-							<span class="info-box">
-								<strong class="title">SP20 NSW NIKE DIRECT AM90  SP20 NSW 나이키 다이렉트0.PDF</strong>
-							</span>
+							<div class="thumbnail">
+								<img src="http://placehold.it/410X600" alt="" />
+							</div>
+							<div class="info-box">
+								<strong class="title">타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다타이틀입니다</strong>
+								<p class="txt">FA20 RN NIKE DIRECT 시공 보고서 자료 </p>
+								<p class="date">2020.00.00</p>
+							</div>
+							<div class="view-area">
+								<span class="view">10,000</span>
+							</div>
 						</a>
 					</li>
 				</ul>
