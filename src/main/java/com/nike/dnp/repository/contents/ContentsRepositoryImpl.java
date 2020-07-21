@@ -3,6 +3,7 @@ package com.nike.dnp.repository.contents;
 import com.nike.dnp.common.ObjectMapperUtils;
 import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
+import com.nike.dnp.dto.contents.ContentsUserEmailDTO;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.entity.auth.QAuth;
 import com.nike.dnp.entity.contents.Contents;
@@ -80,26 +81,28 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @return the list
      */
     @Override
-    public List<SendDTO> findAllContentsMailAuthUser(long contentsSeq) {
+    public List<ContentsUserEmailDTO> findAllContentsMailAuthUser(long contentsSeq) {
         final QUserContents qUserContents = QUserContents.userContents;
+        final QContents qContents = QContents.contents;
         final QUserAuth qUserAuth = QUserAuth.userAuth;
         final QUser qUser = QUser.user;
 
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 
-        List<SendDTO> sendDTOList = queryFactory.select(
+        List<ContentsUserEmailDTO> userEmailDTOList = queryFactory.select(
                 Projections.bean(
-                    SendDTO.class, qUser.userId
+                    ContentsUserEmailDTO.class
+                        , qUser.userId
+                        , qContents.imageFilePhysicalName
                 ))
                 .from(qUserContents)
                 .where(qUserContents.contentsSeq.eq(contentsSeq))
+                .innerJoin(qContents).on(qContents.contentsSeq.eq(contentsSeq))
                 .innerJoin(qUserAuth).on(qUserContents.authSeq.eq(qUserAuth.authSeq))
                 .innerJoin(qUser).on(qUserAuth.userSeq.eq(qUser.userSeq))
                 .fetch();
 
-        return sendDTOList;
+        return userEmailDTOList;
     }
-
-
 
 }

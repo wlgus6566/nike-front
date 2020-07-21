@@ -264,16 +264,20 @@ public class ContentsService {
                 -> new CodeMessageHandleException(ErrorEnumCode.ContentsError.NOT_FOUND.toString(), ErrorEnumCode.ContentsError.NOT_FOUND.getMessage())));
 
         // 수신자 목록 조회
-        List<SendDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsMailSendDTO.getContentsSeq());
+        List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsMailSendDTO.getContentsSeq());
 
         // 이메일 발송
         if (!emailAuthUserList.isEmpty()) {
-            for (SendDTO sendDTO : emailAuthUserList) {
+            for (ContentsUserEmailDTO userEmailDTO : emailAuthUserList) {
+                SendDTO sendDTO = new SendDTO();
+                sendDTO.setEmail(userEmailDTO.getUserId());
                 sendDTO.setContentsUrl(contentsMailSendDTO.getContentsUrl());
+                sendDTO.setContentsImg(userEmailDTO.getImageFilePhysicalName());
+
                 sendDTO.setContentsName(contents.get().getFolderName());
                 mailService.sendMail(
-                        ServiceEnumCode.EmailTypeEnumCode.CONTENTS.toString(),
-                        ServiceEnumCode.EmailTypeEnumCode.CONTENTS.getMessage(),
+                        ServiceEnumCode.EmailTypeEnumCode.CONTENTS_UPDATE.toString(),
+                        ServiceEnumCode.EmailTypeEnumCode.CONTENTS_UPDATE.getMessage(),
                         sendDTO
                 );
             }

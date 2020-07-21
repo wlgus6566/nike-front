@@ -74,7 +74,7 @@ public class ExceptionAdvice {
      * @return the common result
      * @author [이소정]
      */
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler({Exception.class})
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public CommonResult globalHandelException(final Exception exception) {

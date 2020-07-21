@@ -95,8 +95,7 @@ public class ServiceEnumCode {
         DORMANT_ACTIVE("[NIKE/TEST] NIKE D&P PLATFORM 휴면계정 처리 안내"),
         DORMANT_CHANGE("[NIKE/TEST] NIKE D&P PLATFORM 휴면계정 해제 안내"),
         CONTENTS_UPDATE("[NIKE/TEST] NIKE D&P PLATFORM 컨텐츠 업데이트 알림"),
-        ORDER("[NIKE/TEST] NIKE D&P PLATFORM 주문서"),
-        CONTENTS("[NIKE/TEST] NIKE D&P PLAYFORM 컨텐츠 업데이트 알림");
+        ORDER("[NIKE/TEST] NIKE D&P PLATFORM 주문서");
 
         /**
          * 코드값

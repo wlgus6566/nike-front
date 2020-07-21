@@ -2,6 +2,7 @@ package com.nike.dnp.repository.contents;
 
 import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
+import com.nike.dnp.dto.contents.ContentsUserEmailDTO;
 import com.nike.dnp.dto.email.SendDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,6 +40,6 @@ public interface ContentsRepositoryCustom {
      * @param contentsSeq the contents seq
      * @return the list
      */
-    List<SendDTO> findAllContentsMailAuthUser(final long contentsSeq);
+    List<ContentsUserEmailDTO> findAllContentsMailAuthUser(final long contentsSeq);
 
 }
