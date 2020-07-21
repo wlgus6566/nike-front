@@ -44,24 +44,60 @@ public class SendEmailOffice365 {
      *
      * @author [오지훈]
      */
-    @Value("${nike.email.auth.id:}")
-    private String CONTA_PADRAO;
+    public static String CONTA_PADRAO;
 
     /**
      * The constant SENHA_CONTA_PADRAO
      *
      * @author [오지훈]
      */
-    @Value("${nike.email.auth.pw:}")
-    private String SENHA_CONTA_PADRAO;
+    public static String SENHA_CONTA_PADRAO;
 
     /**
      * The From email
      *
      * @author [오지훈]
      */
+    public static String FROM_EMAIL;
+
+    /**
+     * Sets conta padrao.
+     *
+     * @param contaPadrao the conta padrao
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 21. 오후 2:52:48
+     * @Description
+     */
+    @Value("${nike.email.auth.id:}")
+    public void setContaPadrao(String contaPadrao) {
+        CONTA_PADRAO = contaPadrao;
+    }
+
+    /**
+     * Sets senha conta padrao.
+     *
+     * @param senhaContaPadrao the senha conta padrao
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 21. 오후 2:52:49
+     * @Description
+     */
+    @Value("${nike.email.auth.pw:}")
+    public void setSenhaContaPadrao(String senhaContaPadrao) {
+        SENHA_CONTA_PADRAO = senhaContaPadrao;
+    }
+
+    /**
+     * Sets from email.
+     *
+     * @param fromEmail the from email
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 21. 오후 2:52:50
+     * @Description
+     */
     @Value("${nike.email.send.from:}")
-    private String FROM_EMAIL;
+    public void setFromEmail(String fromEmail) {
+        FROM_EMAIL = fromEmail;
+    }
 
     /**
      * Send email.
@@ -80,15 +116,15 @@ public class SendEmailOffice365 {
     /**
      * Send email.
      *
-     * @param from    the from
-     * @param toEmail the to
-     * @param subject the subject
-     * @param file    the file
+     * @param fromEmail the from
+     * @param toEmail   the to
+     * @param subject   the subject
+     * @param file      the file
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오전 11:44:14
      * @Description 메일 발송
      */
-    public void sendEmail(final String from, final String toEmail, final String subject, final String file) {
+    public void sendEmail(final String fromEmail, final String toEmail, final String subject, final String file) {
         log.info("SendEmailOffice365.sendEmail");
         final Session session = Session.getInstance(this.getEmailProperties(), new Authenticator() {
             @Override
@@ -101,26 +137,22 @@ public class SendEmailOffice365 {
             final Message message = new MimeMessage(session);
             message.setHeader("Content-Type", "text/html; charset=UTF-8");
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
-
-            System.out.println("======================================================");
-            System.out.println("CONTA_PADRAO : " + CONTA_PADRAO);
-            System.out.println("SENHA_CONTA_PADRAO : " + SENHA_CONTA_PADRAO);
-            System.out.println("FROM_EMAIL : " + FROM_EMAIL);
-            System.out.println("======================================================");
-
-            message.setFrom(new InternetAddress(from));
+            message.setFrom(new InternetAddress(fromEmail));
             message.setSubject(subject);
 
-            final MimeBodyPart mimeMultipart = new MimeBodyPart();
-            mimeMultipart.setContent(file, "text/html; charset=UTF-8");
-            final Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart(mimeMultipart);
+            if (!file.isEmpty()) {
+                final MimeBodyPart mimeMultipart = new MimeBodyPart();
+                mimeMultipart.setContent(file, "text/html; charset=UTF-8");
+                final Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(mimeMultipart);
+                message.setContent(multipart);
+            } else {
+                message.setText("TEST");
+                message.setSubject("[NIKE SPACE] 발신 테스트 메일입니다.");
+            }
 
-            message.setContent(multipart);
             message.setSentDate(new Date());
             Transport.send(message);
-            System.out.println("발송완료");
-            System.out.println("======================================================");
         } catch (final MessagingException exception) {
             log.error("exception", exception);
         }

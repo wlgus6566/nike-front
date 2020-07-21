@@ -84,28 +84,28 @@ public class StartRunner implements ApplicationRunner {
 
         //TODO[ojh] 오지훈테스트메일
         /*
-        sendEmailOffice365.sendEmail("cokeplay.emotion@emotion.co.kr"
-                ,"jihoon.oh@emotion.co.kr"
-                , "[NIKE D&P] 발신 테스트 메일입니다.");
-        sendEmailOffice365.sendEmail("cokeplay.emotion@emotion.co.kr"
-                ,"nalchi91@daum.net"
-                , "[NIKE D&P] 발신 테스트 메일입니다.");
-        sendEmailOffice365.sendEmail("cokeplay.emotion@emotion.co.kr"
-                ,"lion226@naver.com"
-                , "[NIKE D&P] 발신 테스트 메일입니다.");
-        sendEmailOffice365.sendEmail("cokeplay.emotion@emotion.co.kr"
-                ,"nalch91@gmail.com"
-                , "[NIKE D&P] 발신 테스트 메일입니다.");
+        sendEmailOffice365.sendEmail(
+                "jihoon.oh@emotion.co.kr"
+                ,"[NIKE SPACE] 발신 테스트 메일입니다."
+                ,"");
+        sendEmailOffice365.sendEmail(
+                "nalchi91@daum.net"
+                ,"[NIKE SPACE] 발신 테스트 메일입니다."
+                ,"");
+        sendEmailOffice365.sendEmail(
+                "lion226@naver.com"
+                ,"[NIKE SPACE] 발신 테스트 메일입니다."
+                ,"");
+        sendEmailOffice365.sendEmail(
+                "nalch91@gmail.com"
+                ,"[NIKE SPACE] 발신 테스트 메일입니다."
+                ,"");
          */
 
         //TODO[ojh] 지은유테스트메일
         /*
-        sendEmailOffice365.sendEmail("cokeplay.emotion@emotion.co.kr"
-                ,"rabygun@naver.com"
-                , "[NIKE D&P] 발신 테스트 메일입니다.");
-        sendEmailOffice365.sendEmail("cokeplay.emotion@emotion.co.kr"
-                ,"seonyeaji@gmial.com"
-                , "[NIKE D&P] 발신 테스트 메일입니다.");
+        rabygun@naver.com
+        seonyeaji@gmial.com
         */
 
         //TODO[ojh] [계정 생성 안내] 이메일 발송
