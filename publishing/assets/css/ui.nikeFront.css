@@ -132,7 +132,7 @@ ul[class^="folder-list"] {
   left: 5px;
 }
 
-/* INFORMATION */
+/* Info > AGENCY */
 .inner.bg {
   margin: 0 -20px -50px;
   padding: 20px 20px 50px;
@@ -186,7 +186,7 @@ ul[class^="folder-list"] {
   background-image: url(../images/svg/icon-mail.svg);
 }
 
-/* 공지사항 > 상세 */
+/* Mypage > 공지사항 > 상세 */
 
 /* 버튼 스타일 임시추가 : 슬기 */
 [class^="btn-s"] {
@@ -218,7 +218,6 @@ ul[class^="folder-list"] {
   line-height: 38px;
   color: #000;
   letter-spacing: -0.5px;
-  font-weight: bold;
   word-break: keep-all;
 }
 .detail-view .title-box .date {
