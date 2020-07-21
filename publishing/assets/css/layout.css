@@ -19,7 +19,6 @@ body {
 }
 header {
   display: block;
-  height: 60px;
 }
 header .logo {
   width: 90px;
@@ -31,6 +30,98 @@ header .logo span {
   display: block;
   overflow: hidden;
   text-indent: -9999px;
+}
+.page-header {
+  position: relative;
+  display: flex;
+  min-height: 60px;
+  padding: 0 0 0 20px;
+}
+.btn-back {
+  flex: 0 0 36px;
+  display: block;
+  height: 36px;
+  margin: 7px 10px 0 -10px;
+  background: url("../images/svg/icon-back.svg") no-repeat center;
+  text-indent: -999px;
+  overflow: hidden;
+  transform: rotate(45deg);
+}
+.page-header .inner {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+.page-header .btn-box {
+  margin-left: auto;
+  padding-right: 5px;
+}
+.page-header .btn-box [class^="btn-txt"] {
+  position: relative;
+  height: 60px;
+}
+.page-header .btn-box [class^="btn-txt"] + [class^="btn-txt"]:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: block;
+  width: 1px;
+  height: 10px;
+  background: #d8d8d8;
+  transform: translateY(-50%);
+}
+.page-title {
+  display: block;
+  font-size: 22px;
+  line-height: 60px;
+  font-family: "Bebas Neue", "Noto Sans KR", sans-serif;
+  letter-spacing: 0.5px;
+  color: #000;
+  font-weight: normal;
+}
+.nav-tab {
+  display: flex;
+  margin: -10px 0 0 -15px;
+}
+.nav-tab:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #eee;
+}
+.nav-tab li button {
+  position: relative;
+  display: block;
+  padding: 0 15px;
+}
+.nav-tab li span {
+  position: relative;
+  display: inline-block;
+  padding: 8px 0;
+  line-height: 20px;
+  font-size: 14px;
+  color: #ccc;
+  font-weight: 500;
+  font-family: "Noto Sans KR", "Arial", "Apple SD Gothic Neo", sans-serif;
+}
+.nav-tab li.active span {
+  color: #000;
+}
+.nav-tab li.active span:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #000;
+  transform: translateX(-50%);
 }
 .container {
   overflow: hidden;
