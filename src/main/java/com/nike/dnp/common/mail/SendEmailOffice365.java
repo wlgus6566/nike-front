@@ -45,7 +45,7 @@ public class SendEmailOffice365 {
      * @author [오지훈]
      */
     @Value("${nike.email.auth.id:}")
-    private static transient String CONTA_PADRAO;
+    private String CONTA_PADRAO;
 
     /**
      * The constant SENHA_CONTA_PADRAO
@@ -53,7 +53,7 @@ public class SendEmailOffice365 {
      * @author [오지훈]
      */
     @Value("${nike.email.auth.pw:}")
-    private static transient String SENHA_CONTA_PADRAO;
+    private String SENHA_CONTA_PADRAO;
 
     /**
      * The From email
@@ -61,7 +61,7 @@ public class SendEmailOffice365 {
      * @author [오지훈]
      */
     @Value("${nike.email.send.from:}")
-    private static transient String FROM_EMAIL;
+    private String FROM_EMAIL;
 
     /**
      * Send email.
@@ -101,6 +101,13 @@ public class SendEmailOffice365 {
             final Message message = new MimeMessage(session);
             message.setHeader("Content-Type", "text/html; charset=UTF-8");
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+
+            System.out.println("======================================================");
+            System.out.println("CONTA_PADRAO : " + CONTA_PADRAO);
+            System.out.println("SENHA_CONTA_PADRAO : " + SENHA_CONTA_PADRAO);
+            System.out.println("FROM_EMAIL : " + FROM_EMAIL);
+            System.out.println("======================================================");
+
             message.setFrom(new InternetAddress(from));
             message.setSubject(subject);
 
