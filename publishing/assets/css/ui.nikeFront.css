@@ -536,3 +536,34 @@
   word-break: keep-all;
   color: #333;
 }
+/* NEWS > 목록 */
+.news-list {
+  margin: 10px -20px 0;
+}
+.news-list .news-list-item .thumbnail {
+  padding-top: 46.66%;
+}
+.news-list .news-list-item + .news-list-item {
+  margin-top: 30px;
+}
+.news-list .news-list-item {
+  flex: none;
+}
+.news-list .info-box .title {
+  line-height: 20px;
+  letter-spacing: -0.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+}
+.news-list .info-box .date {
+  display: block;
+  margin-top: 7px;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0;
+  color: #888;
+}
