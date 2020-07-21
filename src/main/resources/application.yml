@@ -39,10 +39,10 @@ security:
 nike:
   email:
     auth:
-      id: "cokeplay.emotion@emotion.co.kr"
-      pw: "5Rzz*w#,Kc%9W7s"
+      id: 'cokeplay.emotion@emotion.co.kr'
+      pw: '5Rzz*w#,Kc%9W7s'
     send:
-      from: "cokeplay.emotion@emotion.co.kr"
+      from: 'cokeplay.emotion@emotion.co.kr'
   #임시 경로
   file:
     root: '/home/file'

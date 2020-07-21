@@ -34,6 +34,14 @@ public class AuthSaveDTO {
     private String authName;
 
     /**
+     * 권한 Depth
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "authDepth", value = "권한 Depth", required = true)
+    private Long authDepth;
+
+    /**
      * 메뉴 역할 시퀀스 배열
      *
      * @author [오지훈]

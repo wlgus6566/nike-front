@@ -59,7 +59,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	 * @Description Swagger Info 작성
 	 */
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("이 문서는 NIKE D&P Rest Api Project API 문서 입니다.")
+		return new ApiInfoBuilder().title("이 문서는 NIKE D&P Project API 문서 입니다.")
 				.description("Created by Emotion").license("Apache License Version 2.0")
 				.licenseUrl("https://github.com/IBM-Bluemix/news-aggregator/blob/master/LICENSE").version("1.0").build();
 	}

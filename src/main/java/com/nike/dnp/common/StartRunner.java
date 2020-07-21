@@ -1,6 +1,8 @@
 package com.nike.dnp.common;
 
+import com.nike.dnp.common.mail.SendEmailOffice365;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -27,6 +29,9 @@ public class StartRunner implements ApplicationRunner {
     public StartRunner() {
         super();
     }
+
+    @Autowired
+    private SendEmailOffice365 sendEmailOffice365;
 
     /**
      * Run.
@@ -91,7 +96,7 @@ public class StartRunner implements ApplicationRunner {
         sendEmailOffice365.sendEmail("cokeplay.emotion@emotion.co.kr"
                 ,"nalch91@gmail.com"
                 , "[NIKE D&P] 발신 테스트 메일입니다.");
-        */
+         */
 
         //TODO[ojh] 지은유테스트메일
         /*
