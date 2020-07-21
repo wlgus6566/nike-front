@@ -209,7 +209,8 @@ public class ServiceEnumCode {
     public enum FileFolderEnumCode {
         PRODUCT("product"),
         CONTENTS("contents"),
-        TEMP("temp");
+        TEMP("temp"),
+        FAQ("faq");
 
         /**
          * 코드값
@@ -219,5 +220,26 @@ public class ServiceEnumCode {
 
         private final String folder;
 
+    }
+
+    /**
+     * The enum Faq enum code.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum FAQEnumCode {
+        ASSET("ASSET/TOOLKIT/FOUNDATION"),
+        SUBSIDIARY("부자재주문"),
+        REPORT("시공보고서"),
+        INFO("INFORMATION"),
+        USED("사이트이용"),
+        ETC("기타");
+
+        /**
+         * The Message
+         *
+         * @author [정주희]
+         */
+        private final String message;
     }
 }
