@@ -98,7 +98,7 @@ public class ContentsController {
     ) {
         contentsSearchDTO.setTopMenuCode(topMenuCode);
         contentsSearchDTO.setMenuCode(menuCode);
-        return responseService.getSingleResult(contentsService.findAllPaging(contentsSearchDTO, authUserDTO));
+        return responseService.getSingleResult(contentsService.findAllPaging(contentsSearchDTO, authUserDTO, topMenuCode, menuCode));
     }
 
 

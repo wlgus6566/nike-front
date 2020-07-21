@@ -7,17 +7,20 @@ import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
+import com.nike.dnp.dto.user.UserContentsSearchDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
+import com.nike.dnp.service.user.UserContentsService;
 import com.nike.dnp.util.FileUtil;
 import com.nike.dnp.util.ImageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
@@ -63,6 +66,11 @@ public class ContentsService {
     private final MailService mailService;
 
     /**
+     * The User contents service.
+     */
+    private final UserContentsService userContentsService;
+
+    /**
      * Find all paging page.
      *
      * @param contentsSearchDTO the contents search dto
@@ -71,10 +79,32 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 13. 오후 3:23:01
      * @Description
      */
-    public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO, final AuthUserDTO authUserDTO) {
+    public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO, final AuthUserDTO authUserDTO, final String topMenuCode, final String menuCode) {
+        // 권한 검사
+        String searchMenuCode = menuCode.equals(ServiceEnumCode.ContentsMenuCode.ALL.toString()) ? topMenuCode : topMenuCode + "_" + menuCode;
+        UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
+        userContentsSearchDTO.setMenuCode(searchMenuCode);
+        userContentsSearchDTO.setSkillCode(ServiceEnumCode.MenuSkillEnumCode.CREATE.toString());
 
-        // 권한 검사 TODO[lsj]
+        // 권한에 따른 조건문
+        contentsSearchDTO.setExposureYn(userContentsService.isAuth(authUserDTO.getAuthSeq(), userContentsSearchDTO) ? null : "Y");
 
+
+//        Page<ContentsResultDTO> contentsResultPage = contentsRepository.findPageContents(
+//                contentsSearchDTO,
+//                PageRequest.of(contentsSearchDTO.getPage()
+//                        , contentsSearchDTO.getSize()
+//                        , contentsSearchDTO.equals(ServiceEnumCode.SearchEnumCode.START_DATE.toString())
+//                                ? Sort.by("campaignBeginDt").ascending() : Sort.by("contentsSeq").descending()));
+//
+//        List<ContentsResultDTO> contentsResultDTOList = contentsResultPage.getContent();
+//
+//        for (ContentsResultDTO contentsResultDTO : contentsResultDTOList) {
+//            contentsSer
+//
+//            userContentsService.isAuth(authUserDTO.getAuthSeq(), )
+//        }
+//        contentsResultPage.
 
         // QueryDsl 기능 이용
         return contentsRepository.findPageContents(
@@ -284,6 +314,11 @@ public class ContentsService {
         }
 
     }
+
+
+//    public boolean isContentsAuth() {
+//        contentsRepository.isContentsAuth
+//    }
 
 
 }

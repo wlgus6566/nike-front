@@ -65,13 +65,13 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                 .where(
                         ContentsPredicateHelper.compareKeyword(contentsSearchDTO)
                         , ContentsPredicateHelper.eqMenuCode(contentsSearchDTO)
-                        , ContentsPredicateHelper.eqExposureYn("Y")
+                        , ContentsPredicateHelper.eqExposureYn(contentsSearchDTO.getExposureYn())
                         , qContents.useYn.eq("Y")
                 );
 
         final List<ContentsResultDTO> contentsList = ObjectMapperUtils.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsResultDTO.class);
-        return new PageImpl<>(contentsList, pageRequest, query.fetchCount());
 
+        return new PageImpl<>(contentsList, pageRequest, query.fetchCount());
     }
 
     /**

@@ -3,6 +3,8 @@ package com.nike.dnp.dto.contents;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.persistence.Column;
+
 
 /**
  * The type Contents file save dto.
@@ -82,6 +84,27 @@ public class ContentsFileSaveDTO {
      */
     @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_thumbnail.jpg")
     private String thumbnailFilePhysicalName;
+
+    /**
+     * 상세 썸네일 명
+     */
+    @Column(name = "DETAIL_THUMBNAIL_FILE_NAME")
+    @ApiModelProperty(name = "detailThumbnailFileName", value ="상세 썸네일 명", example = "example")
+    private String detailThumbnailFileName;
+
+    /**
+     * 상세 썸네일 사이즈
+     */
+    @Column(name = "DETAIL_THUMBNAIL_FILE_SIZE")
+    @ApiModelProperty(name = "detailThumbnailFileSize", value ="상세 썸네일 사이즈", example = "example")
+    private String detailThumbnailFileSize;
+
+    /**
+     * 상세 썸네일 물리 경로
+     */
+    @Column(name = "DETAIL_THUMBNAIL_FILE_PHYSICAL_NAME")
+    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "example")
+    private String detailThumbnailFilePhysicalName;
 
     /**
      * 파일 순서

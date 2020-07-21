@@ -108,10 +108,16 @@ public class ContentsResultDTO {
     private Long readCount;
 
     /**
+     * 권한 여부
+     */
+    @ApiModelProperty(name = "authYn", value = "권한 여부(N : 권한없음)", example = "Y")
+    private String authYn;
+
+    /**
      * 노출 여부
      * @author [이소정]
      */
-    @ApiModelProperty(name = "exposureYn", value = "노출 여부", example = "Y")
+    @ApiModelProperty(name = "exposureYn", value = "노출 여부(N : 진행중)", example = "Y")
     private String exposureYn;
 
 
