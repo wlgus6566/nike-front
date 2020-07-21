@@ -16,34 +16,66 @@
 		<header class="page-header">
 			<button type="button" class="btn-back">뒤로가기</button>
 			<div class="inner">
-				<h1 class="page-title">INFO.</h1>
+				<h1 class="page-title">CUSTOMER CENTER</h1>
+				<ul class="nav-tab">
+					<li>
+						<button type="button"><span>공지사항</span></button>
+					</li>
+					<li class="active">
+						<button type="button"><span>NEWS</span></button>
+					</li>
+					<li>
+						<button type="button"><span>자주 묻는 질문</span></button>
+					</li>
+				</ul>
 			</div>
 		</header>
 		<section class="container">
 			<div class="contents">
-				<div class="inner bg">
-					<div class="info-agency-list">
-						<strong class="title">HISWILL</strong>
-						<p class="text">UX, 웹/모바일사이트, App, 광고 등 Full Service
-							NIKE BY YOU 의류/신발 커스텀 물품
-						</p>
-						<div class="info-box">
-							<a href="tel:02-488-1985" class="info-txt tel">02-488-1985</a>
-							<a href="mailto:hiswill@naver.com" class="info-txt mail">hiswill@naver.com</a>
-						</div>
-					</div>
-					<div class="info-agency-list">
-						<strong class="title">COMPANY F</strong>
-						<p class="text">NIKE KOREA 비품 관리 / 서비스 관리<br>
-							부자재 운영 비품 / 스탭 비품 관리<br>
-							나이키 교육 일정 관리 / 시스템 관리
-						</p>
-						<div class="info-box">
-							<a href="tel:02-488-1985" class="info-txt tel">02-488-1985</a>
-							<a href="mailto:hiswill@naver.com" class="info-txt mail">hiswill@naver.com</a>
-						</div>
+				<div class="sorting-area">
+					<p class="total">전체 <strong>(20)</strong></p>
+					<div class="search-input"> <!-- active 추가하면 검색 화면 보임 -->
+						<input type="text" placeholder="검색어를 입력해주세요." />
+						<button type="button" class="search"><span>검색</span></button>
+						<button type="button" class="btn-txt"><span>취소</span></button>
 					</div>
 				</div>
+				<div class="news-list">
+					<div class="news-list-item">
+						<a href="#">
+							<span class="thumbnail">
+								<img src="http://placehold.it/410X410" alt="">
+							</span>
+							<span class="info-box">
+								<p class="title">글로벌 스포츠 브랜드 나이키, 브랜드 문화 공간 마이클 조던을 담은 ‘조던 서울’ 오픈 포토리캡 글로벌 스포츠 브랜드 나이키, 브랜드 문화 공간 마이클 조던을 담은 ‘조던 서울’ 오픈 포토리캡</p>
+								<span class="date">2020.06.17</span>
+							</span>
+						</a>
+					</div>
+					<div class="news-list-item">
+						<a href="#">
+							<span class="thumbnail">
+								<img src="http://placehold.it/410X410" alt="">
+							</span>
+							<span class="info-box">
+								<p class="title">글로벌 스포츠 브랜드 나이키, AK 수원 오픈 리캡</p>
+								<span class="date">2020.06.17</span>
+							</span>
+						</a>
+					</div>
+					<div class="news-list-item">
+						<a href="#">
+							<span class="thumbnail">
+								<img src="http://placehold.it/410X410" alt="">
+							</span>
+							<span class="info-box">
+								<p class="title">문화적 커뮤니티 공간이 될 조던 서울, 30일 가로수길 오픈</p>
+								<span class="date">2020.06.17</span>
+							</span>
+						</a>
+					</div>
+				</div>
+				<!-- //todo 페이징 el-ui -->
 			</div>
 		</section>
 		<footer>

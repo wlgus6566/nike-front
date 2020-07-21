@@ -14,53 +14,49 @@
 <div id="app">
 	<div id="wrap" class="main">
 		<header class="page-header">
-			<button type="button" class="btn-back">뒤로가기</button>
+		<button type="button" class="btn-back">뒤로가기</button>
 			<div class="inner">
-				<h1 class="page-title">INFO.</h1>
+				<h1 class="page-title">TOOLKIT</h1>
+				<ul class="nav-tab">
+					<li class="active">
+						<button type="button"><span>VMS</span></button>
+					</li>
+					<li>
+						<button type="button"><span>EKIN</span></button>
+					</li>
+					<li>
+						<button type="button"><span>DIGITAL</span></button>
+					</li>
+					<li>
+						<button type="button"><span>RB</span></button>
+					</li>
+				</ul>
 			</div>
 		</header>
 		<section class="container">
 			<div class="contents">
-				<div class="inner bg">
-					<div class="info-agency-list">
-						<strong class="title">HISWILL</strong>
-						<p class="text">UX, 웹/모바일사이트, App, 광고 등 Full Service
-							NIKE BY YOU 의류/신발 커스텀 물품
-						</p>
-						<div class="info-box">
-							<a href="tel:02-488-1985" class="info-txt tel">02-488-1985</a>
-							<a href="mailto:hiswill@naver.com" class="info-txt mail">hiswill@naver.com</a>
-						</div>
+				<div class="sorting-area">
+					<button type="button" class="type-list">
+						<span>컬럼타입</span>
+					</button>
+					<!-- todo select 스크립트 작업 필요  -->
+					<div class="filter-select">
+						<select name="" id="">
+							<option value="최신순">최신순</option>
+						</select>
 					</div>
-					<div class="info-agency-list">
-						<strong class="title">COMPANY F</strong>
-						<p class="text">NIKE KOREA 비품 관리 / 서비스 관리<br>
-							부자재 운영 비품 / 스탭 비품 관리<br>
-							나이키 교육 일정 관리 / 시스템 관리
-						</p>
-						<div class="info-box">
-							<a href="tel:02-488-1985" class="info-txt tel">02-488-1985</a>
-							<a href="mailto:hiswill@naver.com" class="info-txt mail">hiswill@naver.com</a>
-						</div>
+					<div class="search-input"> <!-- active 추가하면 검색 화면 보임 -->
+						<input type="text" placeholder="검색어를 입력해주세요." />
+						<button type="button" class="search"><span>검색</span></button>
+						<button type="button" class="btn-txt"><span>취소</span></button>
 					</div>
+				</div>
+				<div class="no-data">
+					<i class="icon-search"></i>
+					<p class="desc">검색 결과가 없습니다.</p>
 				</div>
 			</div>
 		</section>
-		<footer>
-			<ul class="info-list">
-				<li>
-					<a href="#">
-						<span>이용약관</span>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<span>개인정보처리방침</span>
-					</a>
-				</li>
-			</ul>
-			<p class="copy">© 2020 Nike Korea LLC. All Rights Reserved.</p>
-		</footer>
 		<nav class="nav-area">
 			<ul class="tab-bar">
 				<li>

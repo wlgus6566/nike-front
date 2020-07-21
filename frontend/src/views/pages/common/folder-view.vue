@@ -15,17 +15,17 @@
     </div>
 </template>
 <script>
-    import BtnArea from '@/components/asset-view/btn-area.vue';
-    import folder from '@/components/asset-view/folder.vue';
-    import SortingList from '@/components/asset-view/sorting-list.vue';
-    import fileItem from '@/components/asset-view/file-Item.vue';
-    /*
-		import { createNewPost, fetchPosts } from '@/api/contents';
-		import { contents } from '@/api';
-		import axios from 'axios';
-		const ApiDefault = { url: '/api/contents' };
-		ApiDefault.instance = axios.create({ baseURL: `${process.env.VUE_APP_API_URL}` });
-		 */
+	import BtnArea from '@/components/asset-view/btn-area.vue';
+	import folder from '@/components/asset-view/folder.vue';
+	import SortingList from '@/components/asset-view/sorting-list.vue';
+	import fileItem from '@/components/asset-view/file-Item.vue';
+	/*
+			import { createNewPost, fetchPosts } from '@/api/contents';
+			import { contents } from '@/api';
+			import axios from 'axios';
+			const ApiDefault = { url: '/api/contents' };
+			ApiDefault.instance = axios.create({ baseURL: `${process.env.VUE_APP_API_URL}` });
+			 */
 
 export default {
     name: 'folder-view',
