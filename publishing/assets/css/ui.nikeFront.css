@@ -823,3 +823,69 @@
   letter-spacing: 0;
   color: #888;
 }
+/* etc */
+.error-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  padding-bottom: 30px;
+  text-align: center;
+}
+.error-box [class^="icon-"] {
+  display: inline-block;
+  width: 160px;
+  height: 160px;
+  background: url("../images/svg/illust-page-error.svg") no-repeat center;
+}
+.error-box .title {
+  display: block;
+  font-size: 16px;
+  color: #000;
+  line-height: 24px;
+}
+.error-box .title.inspect {
+  font-size: 18px;
+}
+.error-box .desc {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #555;
+  line-height: 18px;
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+.error-box .btn-area {
+  margin-top: 40px;
+}
+.no-data {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  padding-bottom: 30px;
+  text-align: center;
+}
+.no-data [class^="icon-"] {
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  background: no-repeat center;
+}
+.no-data .icon-search {
+  background-image: url("../images/svg/icon-illust-page-search-none.svg");
+}
+.no-data .icon-folder {
+  background-image: url("../images/svg/icon-illust-page-folder-view-none.svg");
+}
+.no-data .icon-upload {
+  background-image: url("../images/svg/icon-illust-page-folder-upload-none.svg");
+}
+.no-data .desc {
+  line-height: 20px;
+  letter-spacing: -0.5px;
+  font-size: 14px;
+}
