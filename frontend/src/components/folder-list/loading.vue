@@ -1,5 +1,5 @@
 <template>
-    <div style="background: red; height: 500px;">
+    <div style="height: 500px;">
         loading
     </div>
 </template>

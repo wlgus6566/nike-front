@@ -15,6 +15,7 @@ const routes = [
         children: [
             {
                 path: 'upload',
+                name: 'upload',
                 component: pages('asset/upload.vue'),
                 meta: {
                     layout: 'Default',
@@ -85,7 +86,6 @@ const routes = [
                     layout: 'Default',
                     aside: 'Order',
                     topMenuCode: 'ASSET',
-                    menuCode: '',
                     title: '',
                 },
             },

@@ -7,20 +7,23 @@
                 자료는 NIKE.INC.와 NIKE KOREA LLC.의 자산입니다.<br />
                 보안 규정을 준수하시기 바랍니다.
             </p>
-            <button type="button" @click="infiniteScroll" class="btn-s-black">
-                <span class="bebas">UPLOAD</span>
-            </button>
+            <router-link
+                :to="`/${this.$route.meta.topMenuCode.toLowerCase()}/upload`"
+                class="btn-s-black"
+            >
+                UPLOAD
+            </router-link>
         </div>
         <div class="sorting-area">
-            <ListSorting v-bind:listTypes="listTypes" />
+            <ListSorting :listTypes="listTypes" />
             <FilterSelect :listSortSelect="listSortSelect" />
-            <SearchInput v-on:searchSubmit="searchSubmit" />
+            <SearchInput @:searchSubmit="searchSubmit" />
         </div>
         <template v-if="folderListData">
             <FolderList
                 v-if="folderListData.length"
-                v-bind:listTypes="listTypes"
-                v-bind:folderListData="folderListData"
+                :listTypes="listTypes"
+                :folderListData="folderListData"
             />
             <template v-else>
                 <NoData v-if="searchKeyword === ''" />
@@ -44,20 +47,24 @@ import { getContents } from '@/api/contents.js';
 export default {
     name: 'folder-list',
     watch: {
-        '$route.meta.menuCode'() {
-            this.fetchData();
+        '$route.meta.menuCode'(tt) {
+            if (!!tt) {
+                this.initFetchData();
+            }
         },
         'listSortSelect.value'() {
-            this.fetchData();
+            this.initFetchData();
         },
     },
     mounted() {
-        this.fetchData();
+        this.initFetchData();
     },
     data() {
         return {
-            lastPage: false,
+            itemLength: 4,
+            totalPage: null,
             page: 0,
+            loadingData: false,
             searchKeyword: '',
             listSortSelect: {
                 listSortOptions: [
@@ -82,291 +89,11 @@ export default {
                     active: false,
                 },
             ],
-            folderListLoadingList: [
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-                {
-                    campaignBeginDt: '',
-                    campaignEndDt: '',
-                    campaignPeriodSectionCode: '',
-                    contentsSeq: '',
-                    folderContents: '',
-                    folderName: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    imageFileSize: '',
-                    menuCode: '',
-                    readCount: 0,
-                    topMenuCode: '',
-                },
-            ],
             folderListData: null,
-            loadingData: false,
         };
+    },
+    computed: {
+        //
     },
     components: {
         ListSorting,
@@ -378,38 +105,59 @@ export default {
         Loading,
     },
     methods: {
-        searchSubmit(val) {
-            this.searchKeyword = val;
+        handleScroll(event) {
+            if (this.loadingData) return;
+            const windowE = document.documentElement;
+            if (windowE.offsetHeight + windowE.scrollTop >= windowE.scrollHeight) {
+                this.infiniteScroll();
+            }
+        },
+        initFetchData() {
+            this.totalPage = null;
+            this.page = 0;
+            this.folderListData = null;
             this.fetchData();
         },
+        searchSubmit(val) {
+            this.searchKeyword = val;
+            this.initFetchData();
+        },
         infiniteScroll() {
-            if (this.folderListData.length !== 0) {
+            if (
+                this.totalPage > this.page - 1 &&
+                this.folderListData.length >= this.itemLength &&
+                this.folderListData.length !== 0
+            ) {
                 this.fetchData(true);
             }
         },
+        endPage() {
+            alert('마지막 페이지');
+        },
         async fetchData(infinite) {
             this.loadingData = true;
-            if (!infinite) {
-                this.folderListData = null;
-            }
-            this.page = infinite ? this.page + 1 : 0;
             try {
                 const {
                     data: { data: response },
                 } = await getContents(this.$route.meta.topMenuCode, this.$route.meta.menuCode, {
                     page: this.page,
-                    size: 4,
+                    size: this.itemLength,
                     keyword: this.searchKeyword,
                     orderType: this.listSortSelect.value,
                 });
+                console.log(response);
 
-                if (response.totalPages >= this.page) {
-                    if (infinite) {
+                this.totalPage = response.totalPages - 1;
+                if (infinite) {
+                    if (this.totalPage > this.page - 1) {
                         this.folderListData = this.folderListData.concat(response.content);
-                    } else {
-                        this.folderListData = response.content;
+                    } else if (this.totalPage === this.page - 1) {
+                        this.endPage();
                     }
+                } else {
+                    this.folderListData = response.content;
                 }
+                this.page++;
                 this.loadingData = false;
                 return;
             } catch (error) {
@@ -417,7 +165,18 @@ export default {
             }
         },
     },
-    created() {},
+    created() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    activated() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    deactivated() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
 };
 </script>
 <style scoped></style>

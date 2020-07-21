@@ -46,6 +46,7 @@ export default {
 .folder-list-item {
     position: relative;
     margin-top: 20px;
+    transition: all 1000ms;
 }
 .folder-list-item a {
     z-index: 2;
@@ -224,7 +225,7 @@ export default {
 .folder-list-row li .view-area .view:before {
     background-image: url('../../assets/images/svg/icon-view-small.svg');
 }
-/*.folder-list-enter-active,
+.folder-list-enter-active,
 .folder-list-leave-active {
     transition: opacity 0.3s;
 }
@@ -232,5 +233,5 @@ export default {
 .folder-list-leave-to {
     opacity: 0;
     transform: translateY(5px);
-}*/
+}
 </style>
