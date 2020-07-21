@@ -1,11 +1,9 @@
 package com.nike.dnp.controller.contents;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
-import com.nike.dnp.dto.contents.ContentsResultDTO;
-import com.nike.dnp.dto.contents.ContentsSaveDTO;
-import com.nike.dnp.dto.contents.ContentsSearchDTO;
-import com.nike.dnp.dto.contents.ContentsUpdateDTO;
+import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.entity.contents.Contents;
+import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.contents.ContentsService;
@@ -229,14 +227,28 @@ public class ContentsController {
      */
     @ApiOperation(value = "컨텐츠 다운로드", notes = REQUEST_CHARACTER)
     @PostMapping(name = "컨텐츠 다운로드", value = "/{topMenuCode}/{menuCode}/download/{contentsFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public String downloadContents(
+    public CommonResult downloadContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @ApiParam(name="contentsFileSeq", value = "컨텐츠 파일 seq", defaultValue = "1", required = true) @PathVariable final Long contentsFileSeq
-            , @ApiIgnore HttpServletResponse response
+            @ApiParam(name="contentsFileSeq", value = "컨텐츠 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long contentsFileSeq
             ) {
         responseService.getSingleResult(contentsService.downloadContentsFile(contentsFileSeq));
-        return null;
+        return responseService.getSuccessResult();
+    }
+
+    /**
+     * Send email common result.
+     *
+     * @param contentsMailSendDTO the contents mail send dto
+     * @return the common result
+     */
+    @ApiOperation(value = "컨텐츠 알림메일전송", notes = REQUEST_CHARACTER)
+    @PostMapping(name = "컨텐츠 알림메일전송", value = "/sendMail", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public CommonResult sendEmail(
+            @RequestBody final ContentsMailSendDTO contentsMailSendDTO
+    ) {
+        contentsService.sendEmail(contentsMailSendDTO);
+        return responseService.getSuccessResult();
     }
 
 

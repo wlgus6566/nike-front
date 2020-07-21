@@ -28,6 +28,4 @@ public interface ContentsFileRepository extends JpaRepository<ContentsFile, Long
      */
     List<ContentsFile> findByContentsSeqAndUseYn(Long contentsSeq, String useYn);
 
-
-
 }

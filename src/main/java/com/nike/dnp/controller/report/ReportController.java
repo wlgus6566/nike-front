@@ -104,6 +104,12 @@ public class ReportController {
         return responseService.getSingleResult(report);
     }
 
+    /**
+     * Find report single result.
+     *
+     * @param reportSeq the report seq
+     * @return the single result
+     */
     @ApiOperation(
             value = "보고서 상세조회"
             , notes = REQUEST_CHARACTER
