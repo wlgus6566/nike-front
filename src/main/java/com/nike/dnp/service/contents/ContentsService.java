@@ -89,24 +89,8 @@ public class ContentsService {
         // 권한에 따른 조건문
         contentsSearchDTO.setExposureYn(userContentsService.isAuth(authUserDTO.getAuthSeq(), userContentsSearchDTO) ? null : "Y");
 
-
-//        Page<ContentsResultDTO> contentsResultPage = contentsRepository.findPageContents(
-//                contentsSearchDTO,
-//                PageRequest.of(contentsSearchDTO.getPage()
-//                        , contentsSearchDTO.getSize()
-//                        , contentsSearchDTO.equals(ServiceEnumCode.SearchEnumCode.START_DATE.toString())
-//                                ? Sort.by("campaignBeginDt").ascending() : Sort.by("contentsSeq").descending()));
-//
-//        List<ContentsResultDTO> contentsResultDTOList = contentsResultPage.getContent();
-//
-//        for (ContentsResultDTO contentsResultDTO : contentsResultDTOList) {
-//            contentsSer
-//
-//            userContentsService.isAuth(authUserDTO.getAuthSeq(), )
-//        }
-//        contentsResultPage.
-
         // QueryDsl 기능 이용
+        contentsSearchDTO.setUserAuthSeq(authUserDTO.getAuthSeq());
         return contentsRepository.findPageContents(
                 contentsSearchDTO,
                 PageRequest.of(contentsSearchDTO.getPage()
@@ -198,6 +182,7 @@ public class ContentsService {
 
         // contents File
         final List<ContentsFile> beforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contents.get().getContentsSeq(), "Y");
+        final List<ContentsFile> lastBeforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contents.get().getContentsSeq(), "Y");
         List<ContentsFileUpdateDTO> newFileList = contentsUpdateDTO.getContentsFileList();
 
         // 기존에 있는 파일 목록과 DTO받은 파일 목록 비교해서
@@ -208,7 +193,7 @@ public class ContentsService {
             for (ContentsFile beforeFile : beforeFileList) {
                 for (ContentsFileUpdateDTO newFile : newFileList) {
                     if (beforeFile.getContentsFileSeq() == newFile.getContentsFileSeq()) {
-                        beforeFileList.remove(beforeFile);
+                        lastBeforeFileList.remove(beforeFile);
                     }
                 }
             }
@@ -226,7 +211,7 @@ public class ContentsService {
                 }
             }
         }
-        if (!beforeFileList.isEmpty()) {
+        if (!lastBeforeFileList.isEmpty()) {
             for (ContentsFile contentsFile : beforeFileList) {
                 contentsFile.updateUseYn("N");
             }
@@ -314,11 +299,4 @@ public class ContentsService {
         }
 
     }
-
-
-//    public boolean isContentsAuth() {
-//        contentsRepository.isContentsAuth
-//    }
-
-
 }

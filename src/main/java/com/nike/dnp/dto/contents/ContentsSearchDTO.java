@@ -60,6 +60,12 @@ public class ContentsSearchDTO extends SearchDTO {
     private String exposureYn;
 
     /**
+     * The User auth seq.
+     */
+    @ApiModelProperty(name = "userAuthSeq", value = "유저 권한 시퀀스", hidden = true)
+    private Long userAuthSeq;
+
+    /**
      * Method to String
      *
      * @return String string

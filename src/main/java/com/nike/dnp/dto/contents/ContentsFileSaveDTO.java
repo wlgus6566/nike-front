@@ -54,7 +54,7 @@ public class ContentsFileSaveDTO {
      * 파일 사이즈
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileSize", value = "파일 사이즈", example = "600")
+    @ApiModelProperty(name = "fileSize", value = "파일 사이즈", example = "1200")
     private Long fileSize;
 
     /**
@@ -65,17 +65,37 @@ public class ContentsFileSaveDTO {
     private String filePhysicalName;
 
     /**
+     * 상세 썸네일 명
+     */
+    @ApiModelProperty(name = "detailThumbnailFileName", value ="상세 썸네일 명", example = "graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFileName;
+
+    /**
+     * 상세 썸네일 사이즈
+     */
+    @ApiModelProperty(name = "detailThumbnailFileSize", value ="상세 썸네일 사이즈", example = "700")
+    private String detailThumbnailFileSize;
+
+    /**
+     * 상세 썸네일 물리 경로
+     */
+    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFilePhysicalName;
+
+
+    /**
      * 썸네일 파일 물리 명
      * @author [이소정]
      */
     @ApiModelProperty(name = "thumbnailFileName", value = "썸네일 명", example = "graphic_file_name_thumbnail.jpg")
     private String thumbnailFileName;
 
+
     /**
      * 썸네일 파일 물리 명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "thumbnailFileSize", value = "썸네일 파일 사이즈", example = "300")
+    @ApiModelProperty(name = "thumbnailFileSize", value = "썸네일 파일 사이즈", example = "100")
     private String thumbnailFileSize;
 
     /**
@@ -84,27 +104,6 @@ public class ContentsFileSaveDTO {
      */
     @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_thumbnail.jpg")
     private String thumbnailFilePhysicalName;
-
-    /**
-     * 상세 썸네일 명
-     */
-    @Column(name = "DETAIL_THUMBNAIL_FILE_NAME")
-    @ApiModelProperty(name = "detailThumbnailFileName", value ="상세 썸네일 명", example = "example")
-    private String detailThumbnailFileName;
-
-    /**
-     * 상세 썸네일 사이즈
-     */
-    @Column(name = "DETAIL_THUMBNAIL_FILE_SIZE")
-    @ApiModelProperty(name = "detailThumbnailFileSize", value ="상세 썸네일 사이즈", example = "example")
-    private String detailThumbnailFileSize;
-
-    /**
-     * 상세 썸네일 물리 경로
-     */
-    @Column(name = "DETAIL_THUMBNAIL_FILE_PHYSICAL_NAME")
-    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "example")
-    private String detailThumbnailFilePhysicalName;
 
     /**
      * 파일 순서

@@ -60,8 +60,30 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
     @Override
     public Page<ContentsResultDTO> findPageContents(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest) {
         final QContents qContents = QContents.contents;
+        final QUserContents qUserContents = QUserContents.userContents;
+
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-        final JPAQuery<Contents> query = queryFactory.selectFrom(qContents)
+        final JPAQuery<ContentsResultDTO> query = queryFactory
+                .select(Projections.bean(
+                            ContentsResultDTO.class
+                            , qContents.contentsSeq
+                            , qContents.topMenuCode
+                            , qContents.menuCode
+                            , qContents.imageFileName
+                            , qContents.imageFileSize
+                            , qContents.imageFilePhysicalName
+                            , qContents.folderName
+                            , qContents.folderContents
+                            , qContents.campaignPeriodSectionCode
+                            , qContents.campaignBeginDt
+                            , qContents.campaignEndDt
+                            , qContents.readCount
+                            , qContents.exposureYn
+                            , qUserContents.detailAuthYn
+                    )
+                )
+                .from(qContents)
+                .leftJoin(qUserContents).on(qContents.contentsSeq.eq(qUserContents.contentsSeq).and(qUserContents.authSeq.eq(contentsSearchDTO.getUserAuthSeq())))
                 .where(
                         ContentsPredicateHelper.compareKeyword(contentsSearchDTO)
                         , ContentsPredicateHelper.eqMenuCode(contentsSearchDTO)
