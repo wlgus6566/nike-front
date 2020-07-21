@@ -44,21 +44,21 @@ public class SendEmailOffice365 {
      *
      * @author [오지훈]
      */
-    public static String CONTA_PADRAO;
+    public static String contaPadrao;
 
     /**
      * The constant SENHA_CONTA_PADRAO
      *
      * @author [오지훈]
      */
-    public static String SENHA_CONTA_PADRAO;
+    public static String senhaContaPadrao;
 
     /**
      * The From email
      *
      * @author [오지훈]
      */
-    public static String FROM_EMAIL;
+    public static String fromEmail;
 
     /**
      * Sets conta padrao.
@@ -69,8 +69,8 @@ public class SendEmailOffice365 {
      * @Description
      */
     @Value("${nike.email.auth.id:}")
-    public void setContaPadrao(String contaPadrao) {
-        CONTA_PADRAO = contaPadrao;
+    public void setContaPadrao(final String contaPadrao) {
+        SendEmailOffice365.contaPadrao = contaPadrao;
     }
 
     /**
@@ -82,8 +82,8 @@ public class SendEmailOffice365 {
      * @Description
      */
     @Value("${nike.email.auth.pw:}")
-    public void setSenhaContaPadrao(String senhaContaPadrao) {
-        SENHA_CONTA_PADRAO = senhaContaPadrao;
+    public void setSenhaContaPadrao(final String senhaContaPadrao) {
+        SendEmailOffice365.senhaContaPadrao = senhaContaPadrao;
     }
 
     /**
@@ -95,8 +95,8 @@ public class SendEmailOffice365 {
      * @Description
      */
     @Value("${nike.email.send.from:}")
-    public void setFromEmail(String fromEmail) {
-        FROM_EMAIL = fromEmail;
+    public void setFromEmail(final String fromEmail) {
+        SendEmailOffice365.fromEmail = fromEmail;
     }
 
     /**
@@ -110,7 +110,7 @@ public class SendEmailOffice365 {
      * @Description
      */
     public void sendEmail(final String toEmail, final String subject, final String file) {
-        this.sendEmail(FROM_EMAIL, toEmail, subject, file);
+        this.sendEmail(fromEmail, toEmail, subject, file);
     }
 
     /**
@@ -129,7 +129,7 @@ public class SendEmailOffice365 {
         final Session session = Session.getInstance(this.getEmailProperties(), new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(CONTA_PADRAO, SENHA_CONTA_PADRAO);
+                return new PasswordAuthentication(contaPadrao, senhaContaPadrao);
             }
         });
 
@@ -140,15 +140,17 @@ public class SendEmailOffice365 {
             message.setFrom(new InternetAddress(fromEmail));
             message.setSubject(subject);
 
-            if (!file.isEmpty()) {
+            if (file.isEmpty()) {
+                message.setText("TEST");
+                message.setSubject("[NIKE SPACE] 발신 테스트 메일입니다.");
+
+            } else {
                 final MimeBodyPart mimeMultipart = new MimeBodyPart();
                 mimeMultipart.setContent(file, "text/html; charset=UTF-8");
                 final Multipart multipart = new MimeMultipart();
                 multipart.addBodyPart(mimeMultipart);
                 message.setContent(multipart);
-            } else {
-                message.setText("TEST");
-                message.setSubject("[NIKE SPACE] 발신 테스트 메일입니다.");
+
             }
 
             message.setSentDate(new Date());

@@ -9,6 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.List;
 
+/**
+ * The Class Contents update dto.
+ *
+ * @author [오지훈]
+ * @CreatedOn 2020. 7. 21. 오후 3:54:34
+ * @Description
+ */
 @Getter
 @Setter
 @ToString

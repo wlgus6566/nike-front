@@ -1,8 +1,7 @@
 package com.nike.dnp.dto.wishlist;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -15,6 +14,8 @@ import java.util.List;
  */
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor
 public class WishListDeleteDTO {
 
 	/**

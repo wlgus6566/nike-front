@@ -9,9 +9,8 @@ import lombok.*;
  * productSaveDTO
  *
  * @author [윤태호]
+ * @CreatedOn 2020. 7. 21. 오후 3:55:11
  * @Description Product Save DTO 작성
- * @history [오지훈] [2020.06.17] [최초 작성]
- * @since 2020.06.17
  */
 @Getter
 @Setter
@@ -32,6 +31,7 @@ public class ProductUpdateDTO extends BasicDTO {
 
 	/**
 	 * 상태
+	 *
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name="exposureYn",value="상태", required = true,example = "Y")
@@ -87,6 +87,7 @@ public class ProductUpdateDTO extends BasicDTO {
 
 	/**
 	 * 사이즈
+	 *
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "size", value = "사이즈",hidden = true)
@@ -126,6 +127,11 @@ public class ProductUpdateDTO extends BasicDTO {
 	private String imageFilePhysicalName;
 
 
+	/**
+	 * The Image base 64
+	 *
+	 * @author [오지훈]
+	 */
 	@ApiModelProperty(name = "imageBase64", value = "이미지 base64 문자", example = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMD" +
 			"AsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAD0AacDASIAAhEBAxEB/8QA" +
 			"HwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmN" +
