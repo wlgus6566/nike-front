@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.notice;
 
+import com.nike.dnp.dto.notice.NoticeUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -115,15 +116,23 @@ public class NoticeArticle extends BaseTimeEntity {
     @ApiModelProperty(name = "useYn", value ="사용 여부", example = "N")
     private String useYn;
 
+    @PrePersist
+    public void prePersist() {
+        this.useYn = this.useYn == null ? "Y" : this.useYn;
+        this.noticeYn = this.noticeYn == null ? "N" : this.noticeYn;
+    }
+
+
     /**
      * Delete.
      *
+     * @param noticeUpdateDTO the notice update dto
      * @author [정주희]
-     * @CreatedOn 2020. 7. 20. 오후 10:13:14
-     * @Description 게시글 삭제
+     * @CreatedOn 2020. 7. 21. 오후 5:35:02
+     * @Description
      */
-    public void delete() {
-        this.useYn = "N";
+    public void delete(NoticeUpdateDTO noticeUpdateDTO) {
+        setUseYn(noticeUpdateDTO.getUseYn());
     }
 
 }

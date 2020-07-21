@@ -17,13 +17,6 @@ import org.apache.commons.lang.StringUtils;
 @AllArgsConstructor
 public class NoticeSearchDTO {
 
-    /*public void setNoticeArticleSectionCode(String noticeArticleSectionCode) {
-        if(StringUtils.isBlank(noticeArticleSectionCode))
-            throw new RuntimeException();
-
-         this.noticeArticleSectionCode = "CD" + noticeArticleSectionCode;
-    }*/
-
     /**
      * The Notice article section code
      *
@@ -31,8 +24,6 @@ public class NoticeSearchDTO {
      */
     @ApiParam(value = "게시물 구분 코드", name = "noticeArticleSectionCode", defaultValue = "", required = true)
     private String noticeArticleSectionCode;
-
-
 
     /**
      * The Notice article category code
@@ -73,4 +64,8 @@ public class NoticeSearchDTO {
      */
     @ApiParam(value = "사이즈", name = "size", defaultValue = "10")
     private int size = 10;
+
+    public void setNoticeArticleCategoryCode(String noticeArticleCategoryCode) {
+        this.noticeArticleCategoryCode = noticeArticleCategoryCode.toUpperCase();
+    }
 }

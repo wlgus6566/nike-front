@@ -53,16 +53,28 @@ public class NoticeController {
     @ApiOperation(
             value = "Customer Center 목록 조회"
     )
-    @GetMapping({"/{sectionCode}", "/{sectionCode}/{categoryCode}"})
+    @GetMapping({"/{sectionCode}"})
     public SingleResult<Page<NoticeArticeListDTO>> findAll(@ModelAttribute NoticeSearchDTO noticeSearchDTO,
-                                                           @PathVariable String sectionCode,
-                                                           @PathVariable(required = false) String categoryCode) {
+                                                           @PathVariable String sectionCode) {
         noticeSearchDTO.setNoticeArticleSectionCode(sectionCode.toUpperCase());
-        if (!StringUtils.isEmpty(categoryCode)) {
-            noticeSearchDTO.setNoticeArticleCategoryCode(categoryCode.toUpperCase());
-        }
-
         return responseService.getSingleResult(noticeService.findNoticePages(noticeSearchDTO));
+    }
+
+    /**
+     * Find by id single result.
+     *
+     * @param noticeSeq the notice seq
+     * @return the single result
+     * @author [정주희]
+     * @CreatedOn 2020. 7. 21. 오후 4:16:19
+     * @Description Customer Center 상세 조회
+     */
+    @GetMapping("detail/{noticeSeq}")
+    public SingleResult<NoticeArticle> findById(@PathVariable Long noticeSeq) {
+        NoticeArticle noticeArticle = new NoticeArticle();
+        noticeArticle.setNoticeArticleSeq(noticeSeq);
+
+        return responseService.getSingleResult(noticeService.findById(noticeArticle.getNoticeArticleSeq()));
     }
 
     /**
@@ -70,20 +82,15 @@ public class NoticeController {
      *
      * @param noticeSaveDTO the notice save dto
      * @param sectionCode   the section code
-     * @param categoryCode  the category code
      * @return the single result
      * @author [정주희]
      * @CreatedOn 2020. 7. 20. 오후 9:21:31
      * @Description
      */
-    @PostMapping({"/{sectionCode}", "/{sectionCode}/{categoryCode}"})
+    @PostMapping({"/{sectionCode}"})
     public SingleResult<NoticeArticle> saveCustomerCenter(@RequestBody NoticeSaveDTO noticeSaveDTO,
-                                                          @PathVariable String sectionCode,
-                                                          @PathVariable(required = false) String categoryCode) {
+                                                          @PathVariable String sectionCode) {
         noticeSaveDTO.setNoticeArticleSectionCode(sectionCode.toUpperCase());
-        if (!StringUtils.isEmpty(categoryCode)) {
-            noticeSaveDTO.setNoticeArticleCategoryCode(categoryCode.toUpperCase());
-        }
 
         return responseService.getSingleResult(noticeService.save(noticeSaveDTO));
     }
@@ -104,20 +111,17 @@ public class NoticeController {
     /**
      * Delete customer center single result.
      *
-     * @param sectionCode the section code
      * @param noticeSeq   the notice seq
      * @return the single result
      * @author [정주희]
      * @CreatedOn 2020. 7. 20. 오후 9:59:56
      * @Description Customer Center 게시글 삭제
      */
-    @DeleteMapping({"/{sectionCode}/{noticeSeq}"})
-    public SingleResult<Optional<NoticeArticle>> deleteCustomerCenter(@PathVariable String sectionCode,
-                                                                        @PathVariable Long noticeSeq){
+    @DeleteMapping({"/{noticeSeq}"})
+    public SingleResult<Optional<NoticeArticle>> deleteCustomerCenter(@PathVariable Long noticeSeq){
         NoticeUpdateDTO noticeUpdateDTO = new NoticeUpdateDTO();
-        noticeUpdateDTO.setNoticeArticleSectionCode(sectionCode);
         noticeUpdateDTO.setNoticeArticleSeq(noticeSeq);
-        
+        noticeUpdateDTO.setUseYn("N");
         return responseService.getSingleResult(noticeService.deleteCustomerCenter(noticeUpdateDTO));
     }
 }
