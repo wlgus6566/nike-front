@@ -76,4 +76,25 @@ public class FileResultDTO {
 	private Long thumbnailSize;
 
 
+	/**
+	 * 디테일 썸네일 파일 이름
+	 */
+	@ApiModelProperty(name = "detailThumbnailFileName", value = "디테일 썸네일 파일 이름")
+	private String detailThumbnailFileName;
+
+
+	/**
+	 * 디테일 썸네일 파일 물리 경로
+	 */
+	@ApiModelProperty(name = "detailThumbnailPhysicalName", value = "디테일 썸네일 파일 물리 경로")
+	private String detailThumbnailPhysicalName;
+
+
+	/**
+	 * 디테일 썸네일 파일 사이즈
+	 */
+	@ApiModelProperty(name = "detailThumbnailSize", value = "디테일 썸네일 파일 사이즈")
+	private Long detailThumbnailSize;
+
+
 }

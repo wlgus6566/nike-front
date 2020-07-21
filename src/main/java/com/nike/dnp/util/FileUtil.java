@@ -58,7 +58,6 @@ public class FileUtil {
 	private static String imageMagickCommand;
 
 
-
 	/**
 	 * 파일 저장 경로
 	 *
@@ -124,11 +123,10 @@ public class FileUtil {
 	/**
 	 * 파일 저장
 	 *
-	 * @param uploadFile  the upload file
-	 * @param folder      the folder
-	 * @param resize      the resize
-	 * @param resizeExt   the resize ext
-	 * @param width the resize width
+	 * @param uploadFile the upload file
+	 * @param folder     the folder
+	 * @param resize     the resize
+	 * @param resizeExt  the resize ext
 	 * @return the file result dto
 	 * @throws IOException          the io exception
 	 * @throws InterruptedException the interrupted exception
@@ -139,8 +137,7 @@ public class FileUtil {
 	public static FileResultDTO fileSave(final MultipartFile uploadFile,
 										 final String folder,
 										 final boolean resize,
-										 final String resizeExt,
-										 final int width) throws IOException, InterruptedException {
+										 final String resizeExt) throws IOException, InterruptedException {
 
 
 		final String extension = StringUtils.getFilenameExtension(uploadFile.getOriginalFilename());
@@ -156,26 +153,20 @@ public class FileUtil {
 		if(resize && (uploadFile.getContentType().toUpperCase(Locale.getDefault()).contains("IMAGE") || extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(
 				Locale.getDefault()).contains("AI"))){
 			String resizeExtension = "";
-			int resizeWidth = 120; // 기본값
 			if(StringUtils.isEmpty(resizeExt)){
 				resizeExtension = "jpg";
 			}else{
 				resizeExtension = resizeExt;
 			}
-			if(width > 0){
-				resizeWidth = width;
-			}
-			// TODO [YTH] 이미지 사이즈 긴값을 700으로 변환
 
-			// TODO [YTH] 이미지 사이즈 긴값을 x 으로 변환
-
+			// 이미지 사이즈 100x100으로 변환
 			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail." + resizeExtension;
 			final StringBuilder command = new StringBuilder(imageMagick);
 			command.append(File.separator).append(imageMagickCommand+" ").append(toFile.getPath());
 			if(extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(Locale.getDefault()).contains("AI")){
 				command.append("[0]");
 			}
-			command.append(" -resize ").append(resizeWidth).append(' ').append(thumbnailPath);
+			command.append(" -resize 100x100 -background white -gravity center -extent 100x100 ").append(thumbnailPath);
 
 			final Runtime runtime = Runtime.getRuntime();
 			final Process proc = runtime.exec(command.toString());
@@ -188,48 +179,34 @@ public class FileUtil {
 				fileResultDTO.setThumbnailPhysicalName(thumbnailFile.getPath().replace(root, ""));
 				fileResultDTO.setThumbnailSize(thumbnailFile.length());
 			}
+
+			// 이미지 사이즈 700x700 으로 변환
+			final String detailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_detail." + resizeExtension;
+			final StringBuilder detailCommand = new StringBuilder(imageMagick);
+			detailCommand.append(File.separator).append(imageMagickCommand + " ").append(toFile.getPath());
+			if(extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(Locale.getDefault()).contains("AI")){
+				detailCommand.append("[0]");
+			}
+			detailCommand.append(" -resize 700x700 -background white -gravity center -extent 700x700 ").append(detailPath);
+
+			final Runtime runtimeDetail = Runtime.getRuntime();
+			final Process procDetail = runtimeDetail.exec(detailCommand.toString());
+			procDetail.waitFor();
+			final File detailFile = new File(detailPath);
+			if(detailFile.isFile()){
+				String detailThumbnail = uploadFile.getOriginalFilename();
+				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail." + resizeExtension;
+				fileResultDTO.setDetailThumbnailFileName(detailThumbnail);
+				fileResultDTO.setDetailThumbnailPhysicalName(detailFile.getPath().replace(root, ""));
+				fileResultDTO.setDetailThumbnailSize(detailFile.length());
+			}
+
 		}
 		return fileResultDTO;
 	}
 
 	/**
 	 * 파일을 temp에 저장 및 이미지 리사이즈
-	 *
-	 * @param uploadFile the upload file
-	 * @param resize     리사이즈 가로 사이즈
-	 * @return the file result dto
-	 * @throws IOException          the io exception
-	 * @throws InterruptedException the interrupted exception
-	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
-	 * @Description
-	 */
-	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile,
-														   final int resize) throws IOException, InterruptedException {
-		return fileSave(uploadFile, ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder(), true, null, resize);
-	}
-
-	/**
-	 * 파일을 temp에 저장 및 이미지 리사이즈
-	 *
-	 * @param uploadFile the upload file
-	 * @param resizeExt  리사이즈 확장 명
-	 * @param resize     리사이즈 가로 사이즈
-	 * @return the file result dto
-	 * @throws IOException          the io exception
-	 * @throws InterruptedException the interrupted exception
-	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
-	 * @Description
-	 */
-	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile,
-														   final String resizeExt,
-														   final int resize) throws IOException, InterruptedException {
-		return fileSave(uploadFile, ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder(), true, resizeExt, resize);
-	}
-
-	/**
-	 * 파일을 temp 에 저장 및 이미지 리사이즈<br />(가로사이즈 120)
 	 *
 	 * @param uploadFile the upload file
 	 * @return the file result dto
@@ -240,7 +217,24 @@ public class FileUtil {
 	 * @Description
 	 */
 	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile) throws IOException, InterruptedException {
-		return fileSave(uploadFile, ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder(), true, null, 0);
+		return fileSave(uploadFile, ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder(), true, null);
+	}
+
+	/**
+	 * 파일을 temp에 저장 및 이미지 리사이즈
+	 *
+	 * @param uploadFile the upload file
+	 * @param resizeExt  리사이즈 확장 명
+	 * @return the file result dto
+	 * @throws IOException          the io exception
+	 * @throws InterruptedException the interrupted exception
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
+	 * @Description
+	 */
+	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile,
+														   final String resizeExt) throws IOException, InterruptedException {
+		return fileSave(uploadFile, ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder(), true, resizeExt);
 	}
 
 	/**
@@ -257,7 +251,7 @@ public class FileUtil {
 	 */
 	public static FileResultDTO fileSave(final MultipartFile uploadFile,
 										 final String folder) throws IOException, InterruptedException {
-		return fileSave(uploadFile, folder, false, null, 0);
+		return fileSave(uploadFile, folder, false, null);
 	}
 
 	/**
@@ -278,6 +272,7 @@ public class FileUtil {
 
 	/**
 	 * temp 폴더 파일 삭제 (등록후 24시간 지난 파일들만 삭제 처리)
+	 *
 	 * @author [윤태호]
 	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
 	 * @Description

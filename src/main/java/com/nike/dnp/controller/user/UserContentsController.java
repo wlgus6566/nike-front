@@ -70,7 +70,7 @@ public class UserContentsController {
             value = "유저 컨텐츠 권한 목록"
             , notes = OPERATION_CHARACTER
     )
-    @PostMapping(value = "/list", name = "유저 컨텐츠 그룹 권한 목록"
+    @PostMapping(name = "유저 컨텐츠 그룹 권한 목록"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<List<AuthReturnDTO>> list (
             @ApiParam(value = "유저 컨텐츠 권한 검색 DTO", required = true) @RequestBody final UserContentsSearchDTO userContentsSearchDTO
@@ -92,7 +92,7 @@ public class UserContentsController {
             value = "유저 컨텐츠 권한 등록/수정"
             , notes = OPERATION_CHARACTER
     )
-    @PostMapping(value = "/save", name = "유저 컨텐츠 권한 등록/수정"
+    @PostMapping(name = "유저 컨텐츠 권한 등록/수정", value = "/save"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<List<UserContents>> save (
