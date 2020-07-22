@@ -33,23 +33,19 @@ export default new Vuex.Store({
         LOGOUT(state) {
             state.user = null;
             state.token = null;
-            deleteCookie('til_auth');
-            deleteCookie('til_user');
+            deleteCookie('nike_auth');
+            deleteCookie('nike_user');
         },
     },
     actions: {
         async LOGIN({ commit }, data) {
-            //const response = ;//await loginUser(data);
-            commit('SET_USER', 'test@nike.co.kr' /*response.data.user*/);
-            commit(
-                'SET_TOKEN',
-                'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJyZHMiOiJhdXRoczp5dGg1OTE0MzE0OCIsInN1YiI6Inl0aCIsImV4cCI6MTYyNjc2NTk0MywiaWF0IjoxNTk1MjI5OTQzfQ.wg_VqONs3LYXKKHclCwYSHn0jyEv6jM13TMUqKp0vLo_Mhxp0Gwj-PWWFxNhGzsXQKhryIpGV85hXHX7t-DjVA' /*response.data.token*/
-            );
-            saveUserToCookie('test@nike.co.kr' /*response.data.user.username*/);
-            saveAuthToCookie(
-                'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJyZHMiOiJhdXRoczp5dGg1OTE0MzE0OCIsInN1YiI6Inl0aCIsImV4cCI6MTYyNjc2NTk0MywiaWF0IjoxNTk1MjI5OTQzfQ.wg_VqONs3LYXKKHclCwYSHn0jyEv6jM13TMUqKp0vLo_Mhxp0Gwj-PWWFxNhGzsXQKhryIpGV85hXHX7t-DjVA' /*response.data.token*/
-            );
-            //return response;
+            const response = await loginUser(data);
+            console.log(response);
+            //commit('SET_USER', response.data.user);
+            commit('SET_TOKEN', response.headers.authorization);
+            //saveUserToCookie(response.data.user.username);
+            saveAuthToCookie(response.headers.authorization);
+            return response;
         },
     },
 });

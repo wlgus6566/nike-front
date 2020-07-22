@@ -1,5 +1,5 @@
 <template>
-    <form action="" @submit.prevent="login">
+    <form action="#" @submit.prevent="login">
         <div class="login-box">
             <strong class="title">
                 <em>WELCOM TO</em>
@@ -36,11 +36,11 @@ export default {
                 return;
             }
             try {
-                const response = await this.$store.dispatch('LOGIN', {
-                    username: this.username,
-                    password: this.password,
-                });
-                console.log(response);
+                const bodyFormData = new FormData();
+                bodyFormData.set('username', this.username);
+                bodyFormData.set('password', this.password);
+                const response = await this.$store.dispatch('LOGIN', bodyFormData);
+                this.$router.push('/');
             } catch (error) {
                 console.log(error);
             }
