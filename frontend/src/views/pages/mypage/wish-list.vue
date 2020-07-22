@@ -5,16 +5,10 @@
         </h2>
         <div class="all-box">
             <!-- todo 전체선택 스크립트 작업 필요  -->
-            <label class="check-label">
-                <span class="checkbox">
-                    <input type="checkbox" />
-                    <span></span>
-                </span>
-                <strong class="txt">전체선택</strong>
-            </label>
-            <p class="desc">
-                <em>1</em>개의 파일이 선택됨
-            </p>
+            <el-checkbox v-model="checkbox">
+                전체선택
+            </el-checkbox>
+            <p class="desc"><em>1</em>개의 파일이 선택됨</p>
             <!-- todo select 스크립트 작업 필요  -->
             <div class="btn-box">
                 <button type="button" class="btn-s-lightgray-sm">
@@ -28,21 +22,54 @@
             </div>
         </div>
         <!-- wish list -->
-        <router-view />
+        <WishList :listData="wishListData" />
     </div>
 </template>
 
 <script>
-//import wish-list from '@/components/wish-list/index.vue';
-
+import { getWishList } from '@/api/wish-list';
 export default {
     name: 'wish-list',
     components: {
-        //WishList: () => import('@/components/wish-list/index'),
-        // wish-list,
+        WishList: () => import('@/components/wish-list/index'),
     },
     data() {
-        return {};
+        return {
+            wishListData: null,
+            loadingData: false,
+            page: 0,
+            itemLength: 20,
+            //check: this.items.state,
+        };
+    },
+    mounted() {
+        this.fetchData();
+    },
+    methods: {
+        async fetchData() {
+            this.loadingData = true;
+            try {
+                const {
+                    data: { data: response },
+                } = await getWishList({
+                    page: this.page,
+                    size: this.itemLength,
+                });
+                this.wishListData = response.content;
+                console.log(response.content);
+
+                this.loadingData = false;
+                return;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        // checkAllChange(value) {
+        //     this.$emit('checkAllChange', value);
+        // },
+        // checkedCitiesChange(value) {
+        //     this.$emit('checkedCitiesChange', value);
+        // },
     },
 };
 </script>
