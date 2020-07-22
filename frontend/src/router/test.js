@@ -16,5 +16,11 @@ const routes = [
         component: pages('sampleBoard/sampleBoardDetail'),
         meta: { layout: 'Default', aside: 'Order', title: 'ALL' },
     },
+    /* sg */
+    {
+        path: '/newsList',
+        component: pages('testPage/newslist'),
+        meta: { layout: 'Default', aside: 'Order', title: 'ALL' },
+    },
 ];
 export default routes;
