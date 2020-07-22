@@ -1,7 +1,9 @@
 package com.nike.dnp.util;
 
+import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.file.FileResultDTO;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,8 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
@@ -58,6 +59,11 @@ public class FileUtil {
 	private static String imageMagickCommand;
 
 
+	private static String ffmpeg;
+
+
+	private static String ffmpegCommand;
+
 	/**
 	 * 파일 저장 경로
 	 *
@@ -95,6 +101,16 @@ public class FileUtil {
 	@Value("${nike.file.imageMagickCommand:}")
 	public void setImageMagickCommand(final String imageMagickCommand){
 		this.imageMagickCommand = imageMagickCommand;
+	}
+
+	@Value("${nike.file.ffmpeg:}")
+	public void setFfmpeg(final String ffmpeg) {
+		this.ffmpeg = ffmpeg;
+	}
+
+	@Value("${nike.file.ffmpegCommand:}")
+	public void setFfmpegCommand(final String ffmpegCommand) {
+		this.ffmpegCommand = ffmpegCommand;
 	}
 
 	/**
@@ -137,7 +153,7 @@ public class FileUtil {
 	public static FileResultDTO fileSave(final MultipartFile uploadFile,
 										 final String folder,
 										 final boolean resize,
-										 final String resizeExt) throws IOException, InterruptedException {
+										 final String resizeExt) throws IOException {
 
 
 		final String extension = StringUtils.getFilenameExtension(uploadFile.getOriginalFilename());
@@ -168,9 +184,14 @@ public class FileUtil {
 			}
 			command.append(" -resize 100x100 -background white -gravity center -extent 100x100 ").append(thumbnailPath);
 
-			final Runtime runtime = Runtime.getRuntime();
-			final Process proc = runtime.exec(command.toString());
-			proc.waitFor();
+			try{
+				final Runtime runtime = Runtime.getRuntime();
+				final Process proc = runtime.exec(command.toString());
+				proc.waitFor();
+			}catch(InterruptedException e){
+				// 리사이즈 문제
+				throw (CodeMessageHandleException) new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_RESIZE_ERROR.name(), ErrorEnumCode.FileError.FILE_RESIZE_ERROR.getMessage());
+			}
 			final File thumbnailFile = new File(thumbnailPath);
 			if(thumbnailFile.isFile()){
 				String thumbnail = uploadFile.getOriginalFilename();
@@ -189,9 +210,14 @@ public class FileUtil {
 			}
 			detailCommand.append(" -resize 700x700 -background white -gravity center -extent 700x700 ").append(detailPath);
 
+			try{
 			final Runtime runtimeDetail = Runtime.getRuntime();
-			final Process procDetail = runtimeDetail.exec(detailCommand.toString());
-			procDetail.waitFor();
+				final Process procDetail = runtimeDetail.exec(detailCommand.toString());
+				procDetail.waitFor();
+			}catch(InterruptedException e){
+				// 리사이즈 문제
+				throw (CodeMessageHandleException) new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_RESIZE_ERROR.name(), ErrorEnumCode.FileError.FILE_RESIZE_ERROR.getMessage());
+			}
 			final File detailFile = new File(detailPath);
 			if(detailFile.isFile()){
 				String detailThumbnail = uploadFile.getOriginalFilename();
@@ -201,6 +227,47 @@ public class FileUtil {
 				fileResultDTO.setDetailThumbnailSize(detailFile.length());
 			}
 
+		}else if(resize && (uploadFile.getContentType().toUpperCase(Locale.getDefault()).contains("VIDEO"))){
+			// 사이즈 변환시 700:394 를 변경 하면 됨
+			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail.mp4";
+			String[] command = new String[]{ffmpeg+File.separator+ffmpegCommand,"-y","-i",toFile.getPath(),"-vf"
+					,"scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
+					,thumbnailPath};
+			log.debug("command.toString() {}", command.toString());
+			ProcessBuilder processBuilder = new ProcessBuilder(command);
+			processBuilder.redirectErrorStream(true);
+			Process process = null;
+
+			try{
+				process = processBuilder.start();
+			}catch(Exception e){
+				process.destroy();
+				throw (CodeMessageHandleException) new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_RESIZE_ERROR.name(), ErrorEnumCode.FileError.FILE_RESIZE_ERROR.getMessage());
+			}
+
+			exhaustInputStream(process.getInputStream());
+
+			try{
+				process.waitFor();
+			}catch(InterruptedException e){
+				process.destroy();
+				throw (CodeMessageHandleException) new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_RESIZE_ERROR.name(), ErrorEnumCode.FileError.FILE_RESIZE_ERROR.getMessage());
+			}
+
+			// 정상 종료가 되지 않았을 경우
+			if(process.exitValue() != 0){
+				System.out.println("변환 중 에러 발생");
+			}
+
+
+			final File detailFile = new File(thumbnailPath);
+			if(detailFile.isFile()){
+				String detailThumbnail = uploadFile.getOriginalFilename();
+				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail.mp4";
+				fileResultDTO.setDetailThumbnailFileName(detailThumbnail);
+				fileResultDTO.setDetailThumbnailPhysicalName(detailFile.getPath().replace(root, ""));
+				fileResultDTO.setDetailThumbnailSize(detailFile.length());
+			}
 		}
 		return fileResultDTO;
 	}
@@ -316,4 +383,22 @@ public class FileUtil {
 		return new ResponseEntity<>(resource,headers, HttpStatus.OK);
 	}
 
+
+	private static void exhaustInputStream(final InputStream is) {
+
+		// InputStream.read() 에서 블럭상태에 빠지기 때문에 따로 쓰레드를 돌려서 스트림을 소비한다.
+
+		new Thread(() -> {
+			try{
+				BufferedReader br = new BufferedReader(new InputStreamReader(is));
+				String cmd;
+				while((cmd = br.readLine()) != null){ // 읽을 라인이 없을때까지 계속 반복
+					log.debug("cmd {}", cmd);
+				}
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		}).start();
+
+	}
 }
