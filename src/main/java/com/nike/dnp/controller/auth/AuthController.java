@@ -203,7 +203,9 @@ public class AuthController {
     /**
      * Update single result.
      *
+     * @param authSeq       the auth seq
      * @param authUpdateDTO the auth update dto
+     * @param result        the result
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 6. 24. 오후 5:30:14
@@ -213,17 +215,18 @@ public class AuthController {
             value = "그룹(권한) 정보 수정"
             , notes = OPERATION_CHARACTER
     )
-    @PutMapping(name = "그룹(권한) 정보 수정"
+    @PutMapping(name = "그룹(권한) 정보 수정", value = "/{authSeq}"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<Auth> update(
-            @ApiParam(value = "권한(그룹) 수정 DTO") @Valid @RequestBody final AuthUpdateDTO authUpdateDTO
+            @ApiParam(value = "권한(그룹) 시퀀스") @PathVariable final Long authSeq
+            , @ApiParam(value = "권한(그룹) 수정 DTO") @Valid @RequestBody final AuthUpdateDTO authUpdateDTO
             , @ApiIgnore final BindingResult result
     ) {
         log.info("AuthController.update");
         return responseService.getSingleResult(
-                authService.update(authUpdateDTO)
+                authService.update(authSeq, authUpdateDTO)
                 , ServiceEnumCode.ReturnTypeEnumCode.UPDATE.toString()
                 , ServiceEnumCode.ReturnTypeEnumCode.UPDATE.getMessage()
                 , true

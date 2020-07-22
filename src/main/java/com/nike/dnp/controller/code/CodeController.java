@@ -1,5 +1,6 @@
 package com.nike.dnp.controller.code;
 
+import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.dto.code.CodeSaveDTO;
 import com.nike.dnp.dto.code.CodeUpdateDTO;
 import com.nike.dnp.entity.code.Code;
@@ -12,8 +13,10 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,8 +93,10 @@ public class CodeController {
     @PostMapping(name = "코드 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public SingleResult<Code> saveCode(
-            @ApiParam(value = "코드 저장 DTO", required = true) @RequestBody final CodeSaveDTO codeSaveDTO
+            @ApiParam(value = "코드 저장 DTO") @Valid @RequestBody final CodeSaveDTO codeSaveDTO
+            , final BindingResult result
     ) {
         return responseService.getSingleResult(codeService.save(codeSaveDTO));
     }
@@ -113,9 +118,10 @@ public class CodeController {
     @PutMapping(value = "/{code}", name = "코드 수정"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public SingleResult<Optional<Code>> updateCode(
             @ApiParam(name = "code", value = "코드", required = true) @PathVariable final String code
-            , @ApiParam(value = "코드 수정 DTO", required = true) @RequestBody final CodeUpdateDTO codeUpdateDTO
+            , @ApiParam(value = "코드 수정 DTO") @Valid @RequestBody final CodeUpdateDTO codeUpdateDTO
     ) {
         return responseService.getSingleResult(codeService.update(code, codeUpdateDTO));
     }

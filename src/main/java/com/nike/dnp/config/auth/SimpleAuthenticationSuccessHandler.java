@@ -204,8 +204,6 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 		}
 
 		if (isValid) {
-
-
 			StringBuilder redisKey = new StringBuilder("auths:");
 			redisKey.append(authUserDTO.getUsername())
 					.append(LocalDateTime.now().getLong(ChronoField.MILLI_OF_DAY));
@@ -222,8 +220,9 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 					.sign(algorithm);
 
 			// header 에 토큰 입력
+			authUserDTO.setPassword(""); // 비밀번호 삭제
 			response.addHeader(JwtHelper.HEADER_STRING, JwtHelper.TOKEN_PREFIX +token);
-			JsonUtil.write(response.getWriter(), responseService.getSuccessResult());
+			JsonUtil.write(response.getWriter(), responseService.getSingleResult(authUserDTO));
 
 			// 레디스 토큰 저장
 			redisService.set(redisKey.toString(), token, Integer.parseInt(String.valueOf(BeanUtil.getBean("userSessionTime"))));
