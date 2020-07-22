@@ -129,7 +129,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * @Description
 	 */
 	@Bean(name = "userSessionTime")
-	@Value("${spring.redis.userSessionTime:0}")
+	@Value("${spring.redis.userSessionTime:}")
 	public int userSessionTime(final int userSessionTime) {
 		return userSessionTime;
 	}

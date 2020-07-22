@@ -287,7 +287,8 @@ public class ErrorEnumCode {
         NOT_IMAGE_FILE("이미지 파일이 아닙니다."),
         FILE_READ_ERROR("파일 읽기 중 오류 발생"),
         FILE_WRITE_ERROR("파일 쓰기 중 오류 발생"),
-        FILE_COPY_ERROR("파일 저장 중 오류 발생");
+        FILE_COPY_ERROR("파일 저장 중 오류 발생"),
+        FILE_RESIZE_ERROR("파일 변환 중 오류 발생");
 
         /**
          * The Value

@@ -43,3 +43,5 @@ nike:
     root: '/home/emotion/file_temp'
     imageMagick: '/usr/bin'
     imageMagickCommand: 'convert'
+    ffmpeg: '/usr/bin'
+    ffmpegCommand: 'ffmpeg'
