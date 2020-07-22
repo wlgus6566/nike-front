@@ -44,8 +44,10 @@ public class SwaggerConfig implements WebMvcConfigurer {
 				.paths(PathSelectors.ant("/api/**"))
 				.build()
 				.globalOperationParameters(Arrays.asList(
-						new ParameterBuilder().name("Authorization").defaultValue("Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9" +
-																						  ".eyJyZHMiOiJhdXRoczp5dGg1OTE0MzE0OCIsInN1YiI6Inl0aCIsImV4cCI6MTYyNjc2NTk0MywiaWF0IjoxNTk1MjI5OTQzfQ.wg_VqONs3LYXKKHclCwYSHn0jyEv6jM13TMUqKp0vLo_Mhxp0Gwj-PWWFxNhGzsXQKhryIpGV85hXHX7t-DjVA")
+						new ParameterBuilder()
+								.name("Authorization")
+								.defaultValue("Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJyZHMiOiJhdXRoczp5dGg1OTE0MzE0OCIsInN1YiI6Inl0aCIsImV4cCI6MTYyNjc2NTk0MywiaWF0IjoxNTk1MjI5OTQzfQ.wg_VqONs3LYXKKHclCwYSHn0jyEv6jM13TMUqKp0vLo_Mhxp0Gwj-PWWFxNhGzsXQKhryIpGV85hXHX7t-DjVA")
+								.description("인증키")
 								.modelRef(new ModelRef("string")).parameterType("header").required(true).modelRef(new ModelRef("String")).build()))
 				.apiInfo(apiInfo()).useDefaultResponseMessages(false);
 	}

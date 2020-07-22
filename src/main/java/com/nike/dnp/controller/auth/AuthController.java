@@ -1,5 +1,6 @@
 package com.nike.dnp.controller.auth;
 
+import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.auth.AuthSaveDTO;
@@ -16,13 +17,15 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 
 /**
@@ -60,6 +63,10 @@ public class AuthController {
      */
     private static final String OPERATION_CHARACTER
             = "## Request ##\n[하위 Parameters 참조]\n\n\n\n## Response ##\n[하위 Model 참조]\n\n\n\n";
+
+    @Autowired
+    MessageSource messageSource;
+
 
     /**
      * Find all single result.
@@ -161,11 +168,11 @@ public class AuthController {
     @GetMapping(name = "그룹(권한) 상세 조회"
             , value = "/{authSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<Auth>> findAuth(
+    public SingleResult<Auth> findAuth(
             @ApiParam(value = "권한(그룹) 시퀀스", required = true) @PathVariable final Long authSeq
     ) {
         log.info("AuthController.findAuth");
-        return responseService.getSingleResult(authService.findById(authSeq));
+        return responseService.getSingleResult(authService.getById(authSeq));
     }
 
     /**
@@ -199,7 +206,6 @@ public class AuthController {
     /**
      * Update single result.
      *
-     * @param authSeq       the auth seq
      * @param authUpdateDTO the auth update dto
      * @return the single result
      * @author [오지훈]
@@ -211,16 +217,29 @@ public class AuthController {
             , notes = OPERATION_CHARACTER
     )
     @PutMapping(name = "그룹(권한) 정보 수정"
-            , value = "/{authSeq}"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<Auth>> update(
-            @ApiParam(value = "권한(그룹) 시퀀스", required = true) @PathVariable final Long authSeq
-            , @ApiParam(value = "권한(그룹) 수정 DTO", required = true) @RequestBody final AuthUpdateDTO authUpdateDTO
+    @ValidField
+    public SingleResult<Auth> update(
+            @ApiParam(value = "권한(그룹) 수정 DTO", required = true) @Valid @RequestBody final AuthUpdateDTO authUpdateDTO
+            //, final @ApiIgnore Locale locale
+            //, final @ApiIgnore BindingResult result
     ) {
         log.info("AuthController.update");
+
+        /*
+        log.info("locale", locale.getDisplayName());
+        log.info("locale", locale.getDisplayLanguage());
+
+        if (result.hasErrors()) {
+            throw new CodeMessageHandleException(
+                    ErrorEnumCode.DataError.INVALID.toString()
+                    , messageSource.getMessage(Objects.requireNonNull(result.getAllErrors().get(0).getDefaultMessage()), null, locale));
+        }
+        */
+
         return responseService.getSingleResult(
-                authService.update(authSeq, authUpdateDTO)
+                authService.update(authUpdateDTO)
                 , ServiceEnumCode.ReturnTypeEnumCode.UPDATE.toString()
                 , ServiceEnumCode.ReturnTypeEnumCode.UPDATE.getMessage()
                 , true
@@ -243,7 +262,7 @@ public class AuthController {
     @DeleteMapping(name = "그룹(권한) 정보 삭제"
             , value = "/{authSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<Auth>> delete(
+    public SingleResult<Auth> delete(
             @ApiParam(value = "권한(그룹) 시퀀스", required = true) @PathVariable final Long authSeq
     ) {
         log.info("AuthController.delete");

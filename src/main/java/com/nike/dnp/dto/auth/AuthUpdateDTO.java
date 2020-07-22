@@ -3,6 +3,8 @@ package com.nike.dnp.dto.auth;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * The Class Auth update dto.
  *
@@ -18,10 +20,20 @@ import lombok.*;
 public class AuthUpdateDTO {
 
     /**
+     * 권한 시퀀스
+     *
+     * @author [오지훈]
+     */
+    @NotNull(message = "auth.authSeq")
+    @ApiModelProperty(name = "authSeq", value = "권한 시퀀스", required = true)
+    private Long authSeq;
+
+    /**
      * 권한명
      *
      * @author [오지훈]
      */
+    @NotNull(message = "auth.authName")
     @ApiModelProperty(name = "authName", value = "권한명", required = true)
     private String authName;
 

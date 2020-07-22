@@ -85,7 +85,7 @@ public class LoginController {
                 )
         );
         return responseService.getSingleResult(
-                userMailService.sendMailForCreateUser(user)
+                userMailService.sendMailForSetPassword(user)
                 , SuccessEnumCode.LoginSuccess.SEND_EMAIL.toString()
                 , SuccessEnumCode.LoginSuccess.SEND_EMAIL.getMessage()
                 , true

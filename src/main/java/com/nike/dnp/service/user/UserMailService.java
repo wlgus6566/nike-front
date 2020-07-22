@@ -76,19 +76,27 @@ public class UserMailService {
      * @CreatedOn 2020. 7. 3. 오전 11:18:48
      * @Description 비밀번호 설정 안내 메일
      */
-    public void sendMailForSetPassword(final User user) {
+    public String sendMailForSetPassword(final User user) {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
 
+        String keyCode = this.createEncodeCertCode(user.getUserId());
+
+        System.out.println("======================================================");
+        System.out.println(keyCode);
+        System.out.println("======================================================");
+
         //TODO[ojh] 2020-07-02 : 변경예정
-        sendDTO.setPasswordUrl("setPasswordUrl="+this.createEncodeCertCode(user.getUserId()));
+        sendDTO.setPasswordUrl("setPasswordUrl="+keyCode);
 
         mailService.sendMail(
                 ServiceEnumCode.EmailTypeEnumCode.PASSWORD_SETTING.toString()
                 , ServiceEnumCode.EmailTypeEnumCode.PASSWORD_SETTING.getMessage()
                 , sendDTO
         );
+
+        return user.getUserId();
     }
 
     /**

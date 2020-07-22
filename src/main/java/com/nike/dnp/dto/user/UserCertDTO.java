@@ -32,7 +32,7 @@ public class UserCertDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(value = "기존 비밀번호", name = "password", example = "Emotion1!")
+    @ApiModelProperty(value = "기존 비밀번호", name = "password")
     private String password;
 
     /**
