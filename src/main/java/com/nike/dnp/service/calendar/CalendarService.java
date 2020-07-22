@@ -1,8 +1,10 @@
 package com.nike.dnp.service.calendar;
 
 import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.dto.calendar.CalendarDaySearchDTO;
 import com.nike.dnp.dto.calendar.CalendarSaveDTO;
 import com.nike.dnp.dto.calendar.CalendarSearchDTO;
+import com.nike.dnp.dto.calendar.CalendarUpdateDTO;
 import com.nike.dnp.entity.calendar.Calendar;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.calendar.CalendarRepository;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -35,6 +38,11 @@ import java.util.Optional;
 public class CalendarService {
 
 
+    /**
+     * The Calendar repository
+     *
+     * @author [윤태호]
+     */
     private final CalendarRepository calendarRepository;
 
     /**
@@ -42,6 +50,9 @@ public class CalendarService {
      *
      * @param calendarSeq the calendar seq
      * @return the optional
+     * @author [윤태호]
+     * @CreatedOn 2020. 7. 22. 오후 4:45:45
+     * @Description
      */
     public Optional<Calendar> findById(final Long calendarSeq) {
         return calendarRepository.findById(calendarSeq);
@@ -52,6 +63,9 @@ public class CalendarService {
      *
      * @param calendarSaveDTO the calendar save dto
      * @return the calendar
+     * @author [윤태호]
+     * @CreatedOn 2020. 7. 22. 오후 4:45:45
+     * @Description
      */
     public Calendar save(final CalendarSaveDTO calendarSaveDTO){
 
@@ -70,10 +84,13 @@ public class CalendarService {
     }
 
     /**
-     *  Calendar 목록 조회
+     * Calendar 목록 조회
      *
      * @param calendarSearchDTO the calendar search dto
      * @return the page
+     * @author [윤태호]
+     * @CreatedOn 2020. 7. 22. 오후 4:45:45
+     * @Description
      */
     public List<Calendar> findAll(final CalendarSearchDTO calendarSearchDTO) {
         //월의 마지막 날짜 구하기
@@ -91,24 +108,27 @@ public class CalendarService {
     /**
      * Calendar 수정
      *
-     * @param calendarSaveDTO the calendar save dto
+     * @param calendarUpdateDTO the calendar update dto
      * @return the optional
+     * @author [윤태호]
+     * @CreatedOn 2020. 7. 22. 오후 3:58:34
+     * @Description
      */
     @Transactional
-    public Optional<Calendar> update(final CalendarSaveDTO calendarSaveDTO) {
-        Optional<Calendar> calendarEntity = calendarRepository.findById(calendarSaveDTO.getCalendarSeq());
+    public Calendar update(final CalendarUpdateDTO calendarUpdateDTO) {
+        Optional<Calendar> calendarEntity = calendarRepository.findById(calendarUpdateDTO.getCalendarSeq());
 
         if(calendarEntity.isPresent()){
             calendarEntity.ifPresent(
                     value -> {
 
-                        value.setCalendarSectionCode(calendarSaveDTO.getCalendarSectionCode());
-                        value.setScheduleName(calendarSaveDTO.getScheduleName());
-                        value.setContents(calendarSaveDTO.getContents());
+                        value.setCalendarSectionCode(calendarUpdateDTO.getCalendarSectionCode());
+                        value.setScheduleName(calendarUpdateDTO.getScheduleName());
+                        value.setContents(calendarUpdateDTO.getContents());
                         value.setBeginDt(LocalDateUtil.strToLocalDateTime(
-                                calendarSaveDTO.getBeginDt()+" 00:00:00","yyyy.MM.dd HH:mm:ss"));
+                                calendarUpdateDTO.getBeginDt()+" 00:00:00","yyyy.MM.dd HH:mm:ss"));
                         value.setEndDt(LocalDateUtil.strToLocalDateTime(
-                                calendarSaveDTO.getEndDt()+" 23:59:59","yyyy.MM.dd HH:mm:ss"));
+                                calendarUpdateDTO.getEndDt()+" 23:59:59","yyyy.MM.dd HH:mm:ss"));
 
                         value.setRegisterSeq(SecurityUtil.currentUser().getUserSeq());
                         value.setUpdaterSeq(SecurityUtil.currentUser().getUserSeq());
@@ -118,7 +138,7 @@ public class CalendarService {
             throw new CodeMessageHandleException(ErrorEnumCode.DataError.NOT_FOUND.name(),ErrorEnumCode.DataError.NOT_FOUND.getMessage());
         }
 
-        return calendarEntity;
+        return calendarEntity.get();
     }
 
     /**
@@ -126,6 +146,9 @@ public class CalendarService {
      *
      * @param calendarSeq the calendar seq
      * @return the optional
+     * @author [윤태호]
+     * @CreatedOn 2020. 7. 22. 오후 4:45:45
+     * @Description
      */
     @Transactional
     public Long delete(final Long calendarSeq) {
@@ -133,4 +156,19 @@ public class CalendarService {
         return calendarSeq;
     }
 
+    /**
+     * Find all day list.
+     *
+     * @param calendarDaySearchDTO the calendar day search dto
+     * @return the list
+     * @author [윤태호]
+     * @CreatedOn 2020. 7. 22. 오후 4:45:45
+     * @Description
+     */
+    public List<Calendar> findAllDay(CalendarDaySearchDTO calendarDaySearchDTO) {
+        LocalDateTime searchDt = LocalDateTime.of(
+                LocalDate.parse(calendarDaySearchDTO.getSearchDt() ,DateTimeFormatter.ISO_DATE),
+                LocalTime.of(0,0,0));
+        return calendarRepository.findAllByBeginDtBeforeAndEndDtAfter(searchDt, searchDt);
+    }
 }
