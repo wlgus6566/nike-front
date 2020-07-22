@@ -36,7 +36,7 @@
                     </li>
                 </ul>
                 <ul class="folder-list-row">
-                    <li class="folder-list-item">
+                    <li class="folder-item">
                         <a href="#">
                             <div class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />

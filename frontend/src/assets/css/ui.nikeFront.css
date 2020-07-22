@@ -1565,105 +1565,6 @@
 .all-box .btn-box [class^='btn-'] + [class^='btn-'] {
     margin-left: 5px;
 }
-/* login */
-#login {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    font-family: 'Noto Sans KR', sans-serif;
-    background-image: url('../images/bg_login.jpg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 3000px auto;
-}
-
-#login .logo {
-    min-width: 1208px;
-    max-width: 1208px;
-    position: relative;
-    top: -230px;
-}
-
-#login .logo a {
-    display: block;
-    text-align: center;
-}
-
-#login section {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-
-#login section .text {
-    margin-top: 23px;
-    font-size: 14px;
-    text-align: center;
-    color: #888;
-    letter-spacing: -0.5px;
-}
-
-#login section .text strong {
-    color: #000;
-}
-
-.login-form {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 370px;
-    height: 390px;
-    margin: 160px auto 0;
-    padding: 50px 45px 75px;
-    box-sizing: border-box;
-    background-color: rgba(0, 0, 0, 0.7);
-    box-shadow: -20px 20px 8px 0 rgba(0, 0, 0, 0.5);
-    text-align: left;
-}
-
-.login-form form {
-    position: relative;
-}
-
-.login-form .title {
-    margin-bottom: 26px;
-    font-weight: 400;
-    font-size: 40px;
-    font-family: 'Bebas Neue', sans-serif;
-    line-height: 1.1;
-    letter-spacing: -0.5px;
-    color: #fff;
-}
-
-.login-form .email-certification .title,
-.login-form .login-popup .title {
-    margin-bottom: 0;
-    font-weight: 700;
-    font-size: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
-    line-height: normal;
-    letter-spacing: -2px;
-}
-
-.login-form .desc {
-    margin: 9px 0 40px;
-    font-weight: 400;
-    font-size: 14px;
-    letter-spacing: -0.5px;
-    opacity: 0.5;
-    color: #fff;
-}
-
-.login-form .login-popup .desc {
-    margin-bottom: 30px;
-}
-.login-form .title span {
-    font-weight: 200;
-    font-size: 24px;
-    letter-spacing: -0.5px;
-}
 
 .input-group {
     width: 100%;
@@ -1725,6 +1626,7 @@
     color: #888;
     opacity: 0.5;
 }
+/*
 
 .login-form .btn-login {
     width: 100%;
@@ -1753,6 +1655,7 @@
     font-family: inherit;
     letter-spacing: -0.57px;
 }
+*/
 
 .close-pop {
     position: absolute;
@@ -2240,7 +2143,8 @@
     color: #888;
 }
 
-.login {
+/* todo 이거 필요한사람 그냥 주석 풀지 말고 염주성에게 문의 */
+/*.login {
     position: relative;
     display: flex;
     width: 100%;
@@ -2356,7 +2260,7 @@
 }
 .login-box .bnt-box {
     margin-top: 12px;
-}
+}*/
 
 .certified-box {
     display: flex;

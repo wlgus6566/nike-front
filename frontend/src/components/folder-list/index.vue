@@ -7,7 +7,7 @@
             { 'folder-list-row': listTypes[1].active },
         ]"
     >
-        <li class="folder-list-item" v-for="(item, index) in folderListData" :key="index">
+        <li class="folder-item" v-for="(item, index) in folderListData" :key="index">
             <router-link :to="setUrl(item)">
                 <div class="thumbnail">
                     <img :src="item.imageFilePhysicalName" alt="" />
@@ -42,13 +42,12 @@ export default {
 };
 </script>
 <style scoped>
-/* folder-list-item */
-.folder-list-item {
+/* folder-item */
+.folder-item {
     position: relative;
-    margin-top: 20px;
-    transition: all 1000ms;
+    flex: 0 1 auto;
 }
-.folder-list-item a {
+.folder-item a {
     z-index: 2;
     position: relative;
     display: block;
@@ -56,24 +55,25 @@ export default {
     box-sizing: border-box;
     text-align: left;
 }
-.folder-list-item .thumbnail {
+.folder-item .thumbnail {
     position: relative;
     padding-top: 100%;
     overflow: hidden;
     background: url('../../assets/images/img-asset-none@2x.png') no-repeat center;
     background-size: 100%;
 }
-.folder-list-item .thumbnail img {
+.folder-item .thumbnail img {
+    display: none;
     position: absolute;
     top: 50%;
     left: 50%;
     width: 100%;
     transform: translate(-50%, -50%);
 }
-.folder-list-item .info-box {
+.folder-item .info-box {
     overflow: hidden;
 }
-.folder-list-item .info-box .title {
+.folder-item .info-box .title {
     display: block;
     display: -webkit-box;
     margin-top: 12px;
@@ -87,27 +87,27 @@ export default {
     overflow: hidden;
     word-break: keep-all;
 }
-.folder-list-item .info-box .txt {
+.folder-item .info-box .txt {
     margin-top: 8px;
     line-height: 18px;
     font-size: 12px;
     color: #555;
 }
-.folder-list-item .info-box .location {
+.folder-item .info-box .location {
     display: flex;
     margin-top: 10px;
 }
-.folder-list-item .info-box .location li {
+.folder-item .info-box .location li {
     position: relative;
     font-size: 10px;
     color: #555;
     line-height: 11px;
 }
-.folder-list-item .info-box .location li + li {
+.folder-item .info-box .location li + li {
     margin-left: 2px;
     padding-left: 14px;
 }
-.folder-list-item .info-box .location li + li:before {
+.folder-item .info-box .location li + li:before {
     content: '';
     position: absolute;
     top: 50%;
@@ -118,7 +118,7 @@ export default {
     margin-top: -6px;
     background: url('../../assets/images/svg/icon-mypage-route.svg') no-repeat center;
 }
-.folder-list-item .date {
+.folder-item .date {
     margin-top: 8px;
     display: inline-flex;
     align-items: center;
@@ -126,14 +126,14 @@ export default {
     height: 14px;
     color: #888;
 }
-.folder-list-item .view-area {
+.folder-item .view-area {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     padding-top: 100%;
 }
-.folder-list-item .view-area .view {
+.folder-item .view-area .view {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -149,7 +149,7 @@ export default {
     color: #fff;
     background: #919191;
 }
-.folder-list-item .view-area .view:before {
+.folder-item .view-area .view:before {
     content: '';
     display: block;
     width: 20px;
@@ -158,7 +158,9 @@ export default {
     background: url('../../assets/images/svg/icon-view-small-w.svg') no-repeat center;
 }
 [class^='folder-list'] {
+    width: 100%;
     display: flex;
+    margin-top: 20px;
     flex-wrap: wrap;
 }
 [class^='folder-list'] > li {

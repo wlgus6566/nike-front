@@ -85,7 +85,7 @@
                         { 'folder-list-row': listTypes[1].active },
                     ]"
                 >
-                    <li class="folder-list-item" v-for="(item, index) in items" :key="index">
+                    <li class="folder-item" v-for="(item, index) in items" :key="index">
                         <a href="#">
                             <div class="thumbnail">
                                 <img src="item.img" alt="" />

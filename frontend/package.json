@@ -21,6 +21,7 @@
         "lodash": "^4.17.15",
         "swiper": "^5.4.1",
         "vue": "^2.6.11",
+        "vue-cookies": "^1.7.2",
         "vue-cropperjs": "^4.1.0",
         "vue-custom-scrollbar": "^1.2.0",
         "vue-meta": "^2.3.4",

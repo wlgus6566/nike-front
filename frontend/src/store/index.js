@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { loginUser } from '@/api/auth';
+import { loginUser } from '@/api/login';
 import {
     saveAuthToCookie,
     saveUserToCookie,
@@ -39,12 +39,17 @@ export default new Vuex.Store({
     },
     actions: {
         async LOGIN({ commit }, data) {
-            const response = await loginUser(data);
-            commit('SET_USER', response.data.user);
-            commit('SET_TOKEN', response.data.token);
-            saveUserToCookie(response.data.user.username);
-            saveAuthToCookie(response.data.token);
-            return response;
+            //const response = ;//await loginUser(data);
+            commit('SET_USER', 'test@nike.co.kr' /*response.data.user*/);
+            commit(
+                'SET_TOKEN',
+                'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJyZHMiOiJhdXRoczp5dGg1OTE0MzE0OCIsInN1YiI6Inl0aCIsImV4cCI6MTYyNjc2NTk0MywiaWF0IjoxNTk1MjI5OTQzfQ.wg_VqONs3LYXKKHclCwYSHn0jyEv6jM13TMUqKp0vLo_Mhxp0Gwj-PWWFxNhGzsXQKhryIpGV85hXHX7t-DjVA' /*response.data.token*/
+            );
+            saveUserToCookie('test@nike.co.kr' /*response.data.user.username*/);
+            saveAuthToCookie(
+                'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJyZHMiOiJhdXRoczp5dGg1OTE0MzE0OCIsInN1YiI6Inl0aCIsImV4cCI6MTYyNjc2NTk0MywiaWF0IjoxNTk1MjI5OTQzfQ.wg_VqONs3LYXKKHclCwYSHn0jyEv6jM13TMUqKp0vLo_Mhxp0Gwj-PWWFxNhGzsXQKhryIpGV85hXHX7t-DjVA' /*response.data.token*/
+            );
+            //return response;
         },
     },
 });
