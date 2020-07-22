@@ -179,7 +179,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 						.accessDecisionManager(accessDecisionManager())
-						.antMatchers(HttpMethod.POST,"/login").permitAll()
+						.antMatchers(HttpMethod.POST,"/api/login").permitAll()
 						.anyRequest().authenticated();
 
 		http.addFilter(authenticationFilter()) // 인증 필터
@@ -226,6 +226,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		AuthenticationFilter filter = null;
 		try {
 			filter = new AuthenticationFilter(authenticationManager());
+			filter.setFilterProcessesUrl("/api/login");
 			filter.setAuthenticationSuccessHandler(authenticationSuccessHandler()); // 인증 성공 핸들러
 			filter.setAuthenticationFailureHandler(authenticationFailureHandler()); // 인증 실패 핸들러
 			filter.setAuthenticationManager(authenticationManagerBean());
