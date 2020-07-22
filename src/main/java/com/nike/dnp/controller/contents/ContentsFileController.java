@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @Api(description = "컨텐츠", tags = "CONTENTS")
-@RequestMapping(value = "/api/contents/file", name = "컨텐츠 파일")
+@RequestMapping(value = "/api/contents", name = "컨텐츠 파일")
 @RequiredArgsConstructor
 public class ContentsFileController {
 
@@ -88,7 +88,7 @@ public class ContentsFileController {
         + "number||현재페이지|Integer\n"
         + "size||노출갯수|Integer\n\n\n\n"
     )
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 파일 목록 조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}")
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 파일 목록 조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}/file")
     public SingleResult<Page<ContentsFileResultDTO>> findAllContentsFile(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "SP", required = true) @PathVariable final String menuCode,
