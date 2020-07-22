@@ -61,7 +61,7 @@ export default {
     },
     data() {
         return {
-            itemLength: 4,
+            itemLength: 20,
             totalPage: null,
             page: 0,
             loadingData: false,
@@ -108,7 +108,7 @@ export default {
         handleScroll(event) {
             if (this.loadingData) return;
             const windowE = document.documentElement;
-            if (windowE.offsetHeight + windowE.scrollTop >= windowE.scrollHeight) {
+            if (window.outerHeight + windowE.scrollTop >= windowE.scrollHeight) {
                 this.infiniteScroll();
             }
         },
