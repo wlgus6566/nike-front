@@ -1,7 +1,7 @@
 <template>
     <ul class="news-list">
         <li class="news-list-item" v-for="(item, index) in items" :key="index">
-            <a href="#">
+            <a v-bind:href="item.url">
                 <span class="thumbnail">
                     <img :src="item.img" alt="" />
                 </span>
@@ -21,16 +21,16 @@ export default {
             items: [
                 {
                     title:
-                        '글로벌 스포츠 브랜드 나이키, 브랜드 문화 공간 마이클 조던을 담은 ‘조던서울’ 오픈 포토리캡11111',
+                        '111글로벌 스포츠 브랜드 나이키, 브랜드 문화 공간 마이클 조던을 담은 ‘조던서울’ 오픈 포토리캡',
                     img: require('@/assets/images/svg/img-asset-none.svg'),
-                    url: null,
+                    url: 'https://www.nike.co.kr',
                     esc: '2020.06.17',
                 },
                 {
                     title:
-                        '글로벌 스포츠 브랜드 나이키, 브랜드 문화 공간 마이클 조던을 담은 ‘조던서울’ 오픈 포토리캡2222',
+                        '222글로벌 스포츠 브랜드 나이키, 브랜드 문화 공간 마이클 조던을 담은 ‘조던서울’ 오픈 포토리캡',
                     img: require('@/assets/images/svg/img-asset-none.svg'),
-                    url: null,
+                    url: 'https://www.nike.co.kr',
                     esc: '2020.06.18',
                 },
             ],
