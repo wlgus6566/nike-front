@@ -7,11 +7,9 @@ import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.service.log.UserActionLogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -59,7 +57,6 @@ public class LogAspect {
     //@Around("execution(public * com.nike.dnp.controller..*Controller.*(..)) && args(requestDTO,..)")
     @Around("execution(public * com.nike.dnp.controller..*Controller.*(..))")
     public Object onAroundActionLog(final ProceedingJoinPoint joinPoint) throws Throwable {
-        log.debug("========================= ActionLog Start =========================");
         final HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         final UserActionLogSaveDTO actionLog = new UserActionLogSaveDTO();
         for (final Object obj : joinPoint.getArgs()) {
@@ -72,14 +69,21 @@ public class LogAspect {
                 actionLogService.save(actionLog);
             }
         }
-        log.debug("========================= ActionLog End =========================");
         return joinPoint.proceed();
     }
 
-    @Before("@annotation(ValidField)")
-    public void onAroundValidField(final JoinPoint joinPoint) {
-        log.debug("========================= onAroundValidField Start =========================");
-
+    /**
+     * On around valid field object.
+     *
+     * @param joinPoint the join point
+     * @return the object
+     * @throws Throwable the throwable
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 22. 오후 3:53:47
+     * @Description 필드 필수 체크
+     */
+    @Around("@annotation(ValidField)")
+    public Object onAroundValidField(final ProceedingJoinPoint joinPoint) throws Throwable {
         for (final Object obj : joinPoint.getArgs()) {
             if (!ObjectUtils.isEmpty(obj) && obj instanceof BindingResult) {
                 final BindingResult result = (BindingResult) obj;
@@ -90,8 +94,7 @@ public class LogAspect {
                 }
             }
         }
-
-        log.debug("========================= onAroundValidField End =========================");
+        return joinPoint.proceed(joinPoint.getArgs());
     }
 
 }

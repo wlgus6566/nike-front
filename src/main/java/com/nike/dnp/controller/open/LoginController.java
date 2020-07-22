@@ -1,4 +1,4 @@
-package com.nike.dnp.controller.user;
+package com.nike.dnp.controller.open;
 
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.SuccessEnumCode;

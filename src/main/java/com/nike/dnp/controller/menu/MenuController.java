@@ -102,19 +102,6 @@ public class MenuController {
         return responseService.getSingleResult(menuService.findMenus());
     }
 
-    /*@ApiOperation(
-            value = "메뉴 관리 목록 조회(테스트1)"
-            , notes = OPERATION_CHARACTER
-    )
-    @GetMapping(name = "메뉴 목록 조회(테스트1)", value = "/list1"
-            , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<MenuRoleResourceReturnDTO>> getRedisResources(
-            final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
-    ) {
-        log.info("MenuController.getRedisResources");
-        return responseService.getSingleResult(authService.getAuthsResourcesByRoleType(authUserDTO.getRole()));
-    }*/
-
     /**
      * Gets redis menus.
      *

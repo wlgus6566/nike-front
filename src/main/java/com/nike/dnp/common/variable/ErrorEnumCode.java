@@ -316,4 +316,21 @@ public class ErrorEnumCode {
     }
 
 
+    /**
+     * The enum Calendar error.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum CalendarError {
+        NOT_FOUND("해당 켈린더 정보가 존재하지 않습니다.");
+
+        /**
+         * The Message
+         *
+         * @author [윤태호]
+         */
+        private final String message;
+    }
+
+
 }

@@ -1,20 +1,24 @@
 package com.nike.dnp.controller.calendar;
 
+import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.dto.calendar.CalendarDaySearchDTO;
 import com.nike.dnp.dto.calendar.CalendarSaveDTO;
 import com.nike.dnp.dto.calendar.CalendarSearchDTO;
+import com.nike.dnp.dto.calendar.CalendarUpdateDTO;
 import com.nike.dnp.entity.calendar.Calendar;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.calendar.CalendarService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * CalendarController.
@@ -25,7 +29,7 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@Api(description = "CALENDAR", tags = "CALENDAR")
+@Api(description = "캘린더", tags = "CALENDAR")
 @RequestMapping(value = "/api/calendar", name = "Calendar 관리")
 @RequiredArgsConstructor
 public class CalendarController {
@@ -87,6 +91,9 @@ public class CalendarController {
      *
      * @param calendarSaveDTO the calendar save dto
      * @return the single result
+     * @author [윤태호]
+     * @CreatedOn 2020. 7. 22. 오후 4:18:17
+     * @Description
      */
     @ApiOperation(
             value = "Calendar 등록"
@@ -107,8 +114,11 @@ public class CalendarController {
     /**
      * Calendar 수정
      *
-     * @param calendarSaveDTO the calendar save dto
+     * @param calendarUpdateDTO the calendar update dto
      * @return the single result
+     * @author [윤태호]
+     * @CreatedOn 2020. 7. 22. 오후 4:18:17
+     * @Description
      */
     @ApiOperation(
             value = "Calendar 수정"
@@ -120,11 +130,11 @@ public class CalendarController {
     @PutMapping(name = "Calendar 수정"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<Calendar>> updateCalendar(
-            final @RequestBody CalendarSaveDTO calendarSaveDTO
+    public SingleResult<Calendar> updateCalendar(
+            final @RequestBody CalendarUpdateDTO calendarUpdateDTO
     ) {
 
-        return responseService.getSingleResult(calendarService.update(calendarSaveDTO));
+        return responseService.getSingleResult(calendarService.update(calendarUpdateDTO));
     }
 
     /**
@@ -132,6 +142,9 @@ public class CalendarController {
      *
      * @param calendarSeq the calendar seq
      * @return the single result
+     * @author [윤태호]
+     * @CreatedOn 2020. 7. 22. 오후 4:18:17
+     * @Description
      */
     @ApiOperation(
             value = "Calendar 삭제"
@@ -147,5 +160,42 @@ public class CalendarController {
             final @RequestBody Long calendarSeq
     ) {
         return responseService.getSingleResult(calendarService.delete(calendarSeq));
+    }
+
+
+    /**
+     * Find by id single result.
+     *
+     * @param calendarSeq the calendar seq
+     * @return the single result
+     * @author [윤태호]
+     * @CreatedOn 2020. 7. 22. 오후 4:18:17
+     * @Description
+     */
+    @ApiOperation(value = "Calendar 상세보기", notes = REQUEST_CHARACTER + "\n"
+            + "[하위 Parameters 참조]\n\n\n\n"
+            + "## Response ## \n"
+            + "[하위 Model 참조]\n\n\n\n")
+    @GetMapping(value="/view/{calendarSeq}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public SingleResult<Calendar> findById(@PathVariable @ApiParam(value="켈린더 시퀀스",name = "calendarSeq",example = "4") final Long calendarSeq){
+        return responseService.getSingleResult(calendarService.findById(calendarSeq).orElseThrow(() ->
+            new CodeMessageHandleException(ErrorEnumCode.CalendarError.NOT_FOUND.name(),ErrorEnumCode.CalendarError.NOT_FOUND.getMessage())
+        ));
+    }
+
+    /**
+     * Find by all day single result.
+     *
+     * @param calendarDaySearchDTO the calendar day search dto
+     * @return the single result
+     * @author [윤태호]
+     * @CreatedOn 2020. 7. 22. 오후 4:18:17
+     * @Description
+     */
+    @ApiOperation(value = "Calendar 일자 조회", notes = REQUEST_CHARACTER + "\n" + "[하위 Parameters 참조]\n\n\n\n" + "## Response ## \n" + "[하위 Model 참조]\n\n\n\n")
+    @GetMapping(value = "/day", produces = MediaType.APPLICATION_JSON_VALUE)
+    public SingleResult<List<Calendar>> findByAllDay(final CalendarDaySearchDTO calendarDaySearchDTO){
+        List<Calendar> result = calendarService.findAllDay(calendarDaySearchDTO);
+        return responseService.getSingleResult(result);
     }
 }

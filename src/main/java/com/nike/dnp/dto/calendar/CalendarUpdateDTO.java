@@ -16,14 +16,14 @@ import lombok.*;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class CalendarSaveDTO extends BasicDTO {
+public class CalendarUpdateDTO extends BasicDTO {
 
     /**
      * 달력 PK
      *
      * @author [김형욱]
      */
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(name = "calendarSeq", value = "달력 시퀀스")
     private Long calendarSeq;
 
     /**

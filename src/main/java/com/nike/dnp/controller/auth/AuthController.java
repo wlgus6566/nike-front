@@ -17,10 +17,9 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -63,10 +62,6 @@ public class AuthController {
      */
     private static final String OPERATION_CHARACTER
             = "## Request ##\n[하위 Parameters 참조]\n\n\n\n## Response ##\n[하위 Model 참조]\n\n\n\n";
-
-    @Autowired
-    MessageSource messageSource;
-
 
     /**
      * Find all single result.
@@ -191,8 +186,10 @@ public class AuthController {
     @PostMapping(name = "그룹(권한) 정보 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public SingleResult<Auth> save(
-            @ApiParam(value = "권한(그룹) 등록 DTO", required = true) @RequestBody final AuthSaveDTO authSaveDTO
+            @ApiParam(value = "권한(그룹) 등록 DTO") @Valid @RequestBody final AuthSaveDTO authSaveDTO
+            , @ApiIgnore final BindingResult result
     ) {
         log.info("AuthController.save");
         return responseService.getSingleResult(
@@ -221,23 +218,10 @@ public class AuthController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<Auth> update(
-            @ApiParam(value = "권한(그룹) 수정 DTO", required = true) @Valid @RequestBody final AuthUpdateDTO authUpdateDTO
-            //, final @ApiIgnore Locale locale
-            //, final @ApiIgnore BindingResult result
+            @ApiParam(value = "권한(그룹) 수정 DTO") @Valid @RequestBody final AuthUpdateDTO authUpdateDTO
+            , @ApiIgnore final BindingResult result
     ) {
         log.info("AuthController.update");
-
-        /*
-        log.info("locale", locale.getDisplayName());
-        log.info("locale", locale.getDisplayLanguage());
-
-        if (result.hasErrors()) {
-            throw new CodeMessageHandleException(
-                    ErrorEnumCode.DataError.INVALID.toString()
-                    , messageSource.getMessage(Objects.requireNonNull(result.getAllErrors().get(0).getDefaultMessage()), null, locale));
-        }
-        */
-
         return responseService.getSingleResult(
                 authService.update(authUpdateDTO)
                 , ServiceEnumCode.ReturnTypeEnumCode.UPDATE.toString()
