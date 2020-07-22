@@ -178,11 +178,12 @@ public class ContentsController {
             + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
             + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
             + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n")
-    @PutMapping(name = "컨텐츠 수정", value = "/{topMenuCode}/{menuCode}"
+    @PutMapping(name = "컨텐츠 수정", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Contents>> updateContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
+            @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq,
             @ApiParam(name="contentsUpdateDTO", value = "Contents 수정 Json") @RequestBody final ContentsUpdateDTO contentsUpdateDTO
     ) {
         contentsUpdateDTO.setTopMenuCode(topMenuCode);

@@ -3,6 +3,7 @@ package com.nike.dnp.dto.report;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.persistence.Column;
 import java.util.List;
 
 /**
@@ -58,6 +59,14 @@ public class ReportSaveDTO {
      */
     @ApiModelProperty(name = "imageFilePhysicalName", value = "이미지 파일 물리명", example = "/file/report/img")
     private String imageFilePhysicalName;
+
+    /**
+     * 권한 시퀀스
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "authSeq", value = "권한 시퀀스", required = true, example = "1", hidden = true)
+    private Long authSeq;
 
     /**
      * 보고서 파일 목록

@@ -94,6 +94,15 @@ public class Report extends BaseTimeEntity {
     private String useYn;
 
     /**
+     * 권한 시퀀스
+     *
+     * @author [오지훈]
+     */
+    @Column(name = "AUTH_SEQ")
+    @ApiModelProperty(name = "authSeq", value = "권한 시퀀스", required = true, example = "1")
+    private Long authSeq;
+
+    /**
      * The Report file list
      * @author [이소정]
      */
@@ -128,6 +137,7 @@ public class Report extends BaseTimeEntity {
         savedReport.setImageFileName(reportSaveDTO.getImageFileName());
         savedReport.setImageFileSize(reportSaveDTO.getImageFileSize());
         savedReport.setImageFilePhysicalName(reportSaveDTO.getImageFilePhysicalName());
+        savedReport.setAuthSeq(reportSaveDTO.getAuthSeq());
         savedReport.setReadCount(0l);
         savedReport.setUseYn("Y");
         return savedReport;
