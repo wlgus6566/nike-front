@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setInterceptors } from '@/api/config/interceptors';
 
-const apiContents = axios.create({ baseURL: '/api/contents/' });
+const apiContents = axios.create({ baseURL: '/api/contents/', timeout: 3000 });
 setInterceptors(apiContents);
 
 function getContents(topMenuCode, menuCode, params) {
