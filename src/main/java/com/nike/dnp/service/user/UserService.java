@@ -437,7 +437,19 @@ public class UserService implements UserDetailsService {
         final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(userCertDTO.getCertCode()), "Nike DnP");
         final String userId = decodeCertCode.split("\\|")[0];
         final String certKey = decodeCertCode.split("\\|")[1];
+
+        System.out.println("======================================================");
+        System.out.println("userCertDTO.getCertCode() = " + userCertDTO.getCertCode());
+        System.out.println("decodeCertCode = " + decodeCertCode);
+        System.out.println("userId = " + userId);
+        System.out.println("certKey = " + certKey);
+
+
         final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));
+
+        System.out.println("certCode = " + certCode);
+        System.out.println("======================================================");
+
         final String password = userCertDTO.getPassword();
         final String newPassword = userCertDTO.getNewPassword();
         final String confirmPassword = ObjectUtils.isEmpty(userCertDTO.getConfirmPassword()) ? "" : userCertDTO.getConfirmPassword();
@@ -593,7 +605,7 @@ public class UserService implements UserDetailsService {
         }
 
         //인증코드가 맞는지
-        if(certKey.equals(certCode)) {
+        if(!certKey.equals(certCode)) {
             throw new CodeMessageHandleException(
                     ErrorEnumCode.LoginError.NOT_MATCH_CERT_CODE.toString()
                     , ErrorEnumCode.LoginError.NOT_MATCH_CERT_CODE.getMessage());

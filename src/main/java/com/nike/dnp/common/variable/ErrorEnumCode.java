@@ -169,7 +169,8 @@ public class ErrorEnumCode {
          *
          * @author [오지훈]
          */
-        NOT_FOUND("데이터가 존재하지 않습니다.");
+        NOT_FOUND("데이터가 존재하지 않습니다."),
+        INVALID("데이터를 입력해 주세요.");
 
         /**
          * 메시지
