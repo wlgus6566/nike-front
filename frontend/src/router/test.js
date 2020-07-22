@@ -17,9 +17,16 @@ const routes = [
         meta: { layout: 'Default', aside: 'Order', title: 'ALL' },
     },
     /* sg */
+    /* news 목록 */
     {
         path: '/newsList',
-        component: pages('testPage/newslist'),
+        component: pages('testPage/customerenter/newslist'),
+        meta: { layout: 'Default', aside: 'Order', title: 'ALL' },
+    },
+    /* news & 공지사항 상세 */
+    {
+        path: '/myview',
+        component: pages('testPage/customercenter/view'),
         meta: { layout: 'Default', aside: 'Order', title: 'ALL' },
     },
 ];
