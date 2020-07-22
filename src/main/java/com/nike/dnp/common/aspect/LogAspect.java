@@ -1,20 +1,27 @@
 package com.nike.dnp.common.aspect;
 
+import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.UserActionLogSaveDTO;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.service.log.UserActionLogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -36,6 +43,8 @@ public class LogAspect {
      * @author [오지훈]
      */
     private final UserActionLogService actionLogService;
+
+    private final MessageSource messageSource;
 
     /**
      * On around action log object.
@@ -65,6 +74,24 @@ public class LogAspect {
         }
         log.debug("========================= ActionLog End =========================");
         return joinPoint.proceed();
+    }
+
+    @Before("@annotation(ValidField)")
+    public void onAroundValidField(final JoinPoint joinPoint) {
+        log.debug("========================= onAroundValidField Start =========================");
+
+        for (final Object obj : joinPoint.getArgs()) {
+            if (!ObjectUtils.isEmpty(obj) && obj instanceof BindingResult) {
+                final BindingResult result = (BindingResult) obj;
+                if (result.hasErrors()) {
+                    throw new CodeMessageHandleException(
+                            ErrorEnumCode.DataError.INVALID.toString()
+                            , messageSource.getMessage(Objects.requireNonNull(result.getAllErrors().get(0).getDefaultMessage()), null, Locale.KOREA));
+                }
+            }
+        }
+
+        log.debug("========================= onAroundValidField End =========================");
     }
 
 }

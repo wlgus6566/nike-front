@@ -45,3 +45,5 @@ nike:
   file:
     root: '/home/file'
     imageMagick: '/imageTool'
+    ffmpeg: '/usr/bin'
+    ffmpegCommand: 'ffmpeg'

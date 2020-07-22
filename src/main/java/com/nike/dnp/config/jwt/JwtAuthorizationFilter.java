@@ -122,7 +122,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 				final String redisKey = verify.getClaim("rds").asString();
 				String redisToken  = (String)redisService.get(redisKey);
 				log.debug("System.getProperty(spring.profiles.active) {}", System.getProperty("spring.profiles.active"));
-				if(String.valueOf(System.getProperty("spring.profiles.active")).equalsIgnoreCase("local")){
+				if(String.valueOf(System.getProperty("spring.profiles.active")).equalsIgnoreCase("local")
+					|| String.valueOf(System.getProperty("spring.profiles.active")).equalsIgnoreCase("dev")){
 					authentication = getAuthentication(authentication, username, redisKey, redisToken);
 				}else{
 					if(verify.getToken().equals(redisToken)){

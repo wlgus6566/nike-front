@@ -261,6 +261,20 @@ public class AuthService {
     }
 
     /**
+     * Gets by id.
+     *
+     * @param authSeq the auth seq
+     * @return the by id
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 22. 오전 11:32:07
+     * @Description 그룹(권한) 상세 조회
+     */
+    public Auth getById(final Long authSeq) {
+        log.info("AuthService.getById");
+        return this.findById(authSeq).orElse(new Auth());
+    }
+
+    /**
      * Save auth.
      *
      * @param authSaveDTO the auth save dto
@@ -291,7 +305,6 @@ public class AuthService {
     /**
      * Update optional.
      *
-     * @param authSeq       the auth seq
      * @param authUpdateDTO the auth update dto
      * @return the optional
      * @author [오지훈]
@@ -299,24 +312,24 @@ public class AuthService {
      * @Description 그룹(권한) 수정
      */
     @Transactional
-    public Optional<Auth> update(
-            final Long authSeq
-            ,final AuthUpdateDTO authUpdateDTO
-    ) {
+    public Auth update(final AuthUpdateDTO authUpdateDTO) {
         log.info("AuthService.update");
-        final Optional<Auth> auth = this.findById(authSeq);
-        auth.ifPresent(value -> value.update(authUpdateDTO));
+        final Auth auth = this.getById(authUpdateDTO.getAuthSeq());
+        final Long authSeq = auth.getAuthSeq();
+        final String roleType = auth.getRoleType();
+
+        auth.update(authUpdateDTO);
         this.initAuthCache();
 
-        if (auth.isPresent() && authUpdateDTO.getMenuRoleSeqArray().length > 0) {
+        if (authUpdateDTO.getMenuRoleSeqArray().length > 0) {
             this.remove(authSeq);
             Arrays.stream(authUpdateDTO.getMenuRoleSeqArray()).map(
                     menuRoleSeq -> AuthMenuRole.builder()
-                            .authSeq(auth.get().getAuthSeq())
+                            .authSeq(authSeq)
                             .menuRoleSeq(menuRoleSeq)
                             .build()).forEach(authMenuRoleRepository::save);
-            this.setAuthsResourcesByRoleType(auth.get().getRoleType());
-            this.setAuthsMenusByRoleType(auth.get().getRoleType());
+            this.setAuthsResourcesByRoleType(roleType);
+            this.setAuthsMenusByRoleType(roleType);
         }
 
         //TODO[ojh] 2020-07-13 : 등록/삭제 시퀀스배열이 따로 올 경우
@@ -364,18 +377,14 @@ public class AuthService {
      * @Description 그룹(권한) 삭제
      */
     @Transactional
-    public Optional<Auth> delete(final Long authSeq) {
+    public Auth delete(final Long authSeq) {
         log.info("AuthService.delete");
-        final Optional<Auth> auth = this.findById(authSeq);
-        auth.ifPresent(Auth::delete);
+        final Auth auth = this.getById(authSeq);
+        auth.delete();
         this.initAuthCache();
-
-        if (auth.isPresent()) {
-            this.remove(authSeq);
-            redisService.delete("roles:auths:"+auth.get().getRoleType());
-            redisService.delete("roles:menus:"+auth.get().getRoleType());
-        }
-
+        this.remove(authSeq);
+        redisService.delete("roles:auths:"+auth.getRoleType());
+        redisService.delete("roles:menus:"+auth.getRoleType());
         return auth;
     }
 

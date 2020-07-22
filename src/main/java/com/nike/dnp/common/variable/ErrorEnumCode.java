@@ -169,7 +169,8 @@ public class ErrorEnumCode {
          *
          * @author [오지훈]
          */
-        NOT_FOUND("데이터가 존재하지 않습니다.");
+        NOT_FOUND("데이터가 존재하지 않습니다."),
+        INVALID("데이터를 입력해 주세요.");
 
         /**
          * 메시지
@@ -287,7 +288,8 @@ public class ErrorEnumCode {
         NOT_IMAGE_FILE("이미지 파일이 아닙니다."),
         FILE_READ_ERROR("파일 읽기 중 오류 발생"),
         FILE_WRITE_ERROR("파일 쓰기 중 오류 발생"),
-        FILE_COPY_ERROR("파일 저장 중 오류 발생");
+        FILE_COPY_ERROR("파일 저장 중 오류 발생"),
+        FILE_RESIZE_ERROR("파일 변환 중 오류 발생");
 
         /**
          * The Value
