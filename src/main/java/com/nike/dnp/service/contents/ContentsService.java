@@ -1,21 +1,26 @@
 package com.nike.dnp.service.contents;
 
+import com.nike.dnp.common.mail.MailService;
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.*;
+import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
+import com.nike.dnp.dto.user.UserContentsSearchDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
+import com.nike.dnp.service.user.UserContentsService;
 import com.nike.dnp.util.FileUtil;
 import com.nike.dnp.util.ImageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +42,7 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ContentsService {
 
@@ -55,6 +61,16 @@ public class ContentsService {
     private final ContentsFileRepository contentsFileRepository;
 
     /**
+     * The Mail service.
+     */
+    private final MailService mailService;
+
+    /**
+     * The User contents service.
+     */
+    private final UserContentsService userContentsService;
+
+    /**
      * Find all paging page.
      *
      * @param contentsSearchDTO the contents search dto
@@ -63,12 +79,18 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 13. 오후 3:23:01
      * @Description
      */
-    public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO, final AuthUserDTO authUserDTO) {
+    public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO, final AuthUserDTO authUserDTO, final String topMenuCode, final String menuCode) {
+        // 권한 검사
+        String searchMenuCode = menuCode.equals(ServiceEnumCode.ContentsMenuCode.ALL.toString()) ? topMenuCode : topMenuCode + "_" + menuCode;
+        UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
+        userContentsSearchDTO.setMenuCode(searchMenuCode);
+        userContentsSearchDTO.setSkillCode(ServiceEnumCode.MenuSkillEnumCode.CREATE.toString());
 
-        // 권한 검사 TODO[lsj]
-
+        // 권한에 따른 조건문
+        contentsSearchDTO.setExposureYn(userContentsService.isAuth(authUserDTO.getAuthSeq(), userContentsSearchDTO) ? null : "Y");
 
         // QueryDsl 기능 이용
+        contentsSearchDTO.setUserAuthSeq(authUserDTO.getAuthSeq());
         return contentsRepository.findPageContents(
                 contentsSearchDTO,
                 PageRequest.of(contentsSearchDTO.getPage()
@@ -123,6 +145,7 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 2. 오후 2:25:43
      * @Description
      */
+    @Transactional
     public Contents findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
         Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
         final Contents findContents = contents.orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.ContentsError.NOT_FOUND.toString(), ErrorEnumCode.ContentsError.NOT_FOUND.getMessage()));
@@ -159,6 +182,7 @@ public class ContentsService {
 
         // contents File
         final List<ContentsFile> beforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contents.get().getContentsSeq(), "Y");
+        final List<ContentsFile> lastBeforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contents.get().getContentsSeq(), "Y");
         List<ContentsFileUpdateDTO> newFileList = contentsUpdateDTO.getContentsFileList();
 
         // 기존에 있는 파일 목록과 DTO받은 파일 목록 비교해서
@@ -169,7 +193,7 @@ public class ContentsService {
             for (ContentsFile beforeFile : beforeFileList) {
                 for (ContentsFileUpdateDTO newFile : newFileList) {
                     if (beforeFile.getContentsFileSeq() == newFile.getContentsFileSeq()) {
-                        beforeFileList.remove(beforeFile);
+                        lastBeforeFileList.remove(beforeFile);
                     }
                 }
             }
@@ -187,7 +211,7 @@ public class ContentsService {
                 }
             }
         }
-        if (!beforeFileList.isEmpty()) {
+        if (!lastBeforeFileList.isEmpty()) {
             for (ContentsFile contentsFile : beforeFileList) {
                 contentsFile.updateUseYn("N");
             }
@@ -243,5 +267,36 @@ public class ContentsService {
     }
 
 
+    /**
+     * Send email.
+     *
+     * @param contentsMailSendDTO the contents mail send dto
+     */
+    public void sendEmail(final ContentsMailSendDTO contentsMailSendDTO) {
 
+        // 컨텐츠 조회
+        Optional<Contents> contents = Optional.ofNullable(contentsRepository.findById(contentsMailSendDTO.getContentsSeq()).orElseThrow(()
+                -> new CodeMessageHandleException(ErrorEnumCode.ContentsError.NOT_FOUND.toString(), ErrorEnumCode.ContentsError.NOT_FOUND.getMessage())));
+
+        // 수신자 목록 조회
+        List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsMailSendDTO.getContentsSeq());
+
+        // 이메일 발송
+        if (!emailAuthUserList.isEmpty()) {
+            for (ContentsUserEmailDTO userEmailDTO : emailAuthUserList) {
+                SendDTO sendDTO = new SendDTO();
+                sendDTO.setEmail(userEmailDTO.getUserId());
+                sendDTO.setContentsUrl(contentsMailSendDTO.getContentsUrl());
+                sendDTO.setContentsImg(userEmailDTO.getImageFilePhysicalName());
+
+                sendDTO.setContentsName(contents.get().getFolderName());
+                mailService.sendMail(
+                        ServiceEnumCode.EmailTypeEnumCode.CONTENTS_UPDATE.toString(),
+                        ServiceEnumCode.EmailTypeEnumCode.CONTENTS_UPDATE.getMessage(),
+                        sendDTO
+                );
+            }
+        }
+
+    }
 }

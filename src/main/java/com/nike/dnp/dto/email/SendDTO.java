@@ -49,6 +49,11 @@ public class SendDTO {
     private String contentsName = "";
 
     /**
+     * The Contents img.
+     */
+    private String contentsImg = "";
+
+    /**
      * The Agency name
      *
      * @author [오지훈]

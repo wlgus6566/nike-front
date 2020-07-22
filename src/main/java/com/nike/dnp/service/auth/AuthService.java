@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.ErrorEnumCode.DataError;
+import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.auth.AuthSaveDTO;
 import com.nike.dnp.dto.auth.AuthUpdateDTO;
 import com.nike.dnp.dto.menu.MenuReturnDTO;
@@ -102,6 +103,31 @@ public class AuthService {
      */
     public List<AuthMenuRole> findAuthMenuRole(final Long authSeq) {
         return authMenuRoleRepository.findByAuthSeq(authSeq);
+    }
+
+    /**
+     * Find by auth depth list.
+     *
+     * @param authSeq   the auth seq
+     * @param menuCode  the menu code
+     * @param skillCode the skill code
+     * @return the list
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 21. 오후 5:11:54
+     * @Description 권한 뎁스 별 목록 조회
+     */
+    public List<AuthReturnDTO> findByAuthDepth(
+            final Long authSeq
+            , final String menuCode
+            , final String skillCode
+    ) {
+        Optional<Auth> auth = this.findById(authSeq);
+        return authRepository.findByAuthDepth(
+                authSeq
+                , auth.get().getAuthDepth()
+                , menuCode
+                , skillCode
+        );
     }
 
     /**
