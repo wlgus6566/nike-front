@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="page-title">{{ this.$route.meta.title }}</h2>
+        <h2 class="page-title">{{ this.title }}</h2>
         <div class="upload-summury">
             <strong class="title">파일올리기</strong>
             <p class="desc">
@@ -17,7 +17,7 @@
         <div class="sorting-area">
             <ListSorting :listTypes="listTypes" />
             <FilterSelect :listSortSelect="listSortSelect" />
-            <SearchInput @:searchSubmit="searchSubmit" />
+            <SearchInput @searchSubmit="searchSubmit" />
         </div>
         <template v-if="folderListData">
             <FolderList
@@ -53,6 +53,7 @@ export default {
     },
     data() {
         return {
+            title: this.$route.meta.title,
             itemLength: 20,
             totalPage: null,
             page: 0,
@@ -127,9 +128,7 @@ export default {
             alert('마지막 페이지');
         },
         async fetchData(infinite) {
-            console.log('loadingData2', this.loadingData);
             this.loadingData = true;
-            console.log('loadingData3', this.loadingData);
             try {
                 const {
                     data: { data: response },
@@ -151,9 +150,7 @@ export default {
                     this.folderListData = response.content;
                 }
                 this.page++;
-                console.log('loadingData4', this.loadingData);
                 this.loadingData = false;
-                console.log('loadingData5', this.loadingData);
                 return;
             } catch (error) {
                 console.log(error);
