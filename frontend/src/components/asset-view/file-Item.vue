@@ -2,9 +2,13 @@
     <div>
         <div class="all-box">
             <!-- todo 전체선택 스크립트 작업 필요  -->
-            <el-checkbox v-model="checkAll.state" v-on:change="checkAllChange">
-                전체선택
-            </el-checkbox>
+            <label class="check-label">
+                <span class="checkbox">
+                    <input type="checkbox" v-model="checkAll.state" v-on:change="checkAllChange" />
+                    <span></span>
+                </span>
+                <strong class="txt">전체선택</strong>
+            </label>
             <p class="desc">
                 <span v-if="checkAll.state" class="fc-black">
                     전체 파일이 선택됨
@@ -78,9 +82,9 @@
     </div>
 </template>
 <script>
-    import filterSelect from '@/components/filter-select';
+import filterSelect from '@/components/filter-select';
 
-    export default {
+export default {
     name: 'fileItem',
     data() {
         return {

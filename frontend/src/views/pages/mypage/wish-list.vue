@@ -5,9 +5,9 @@
         </h2>
         <div class="all-box">
             <!-- todo 전체선택 스크립트 작업 필요  -->
-            <el-checkbox v-model="checkbox">
-                전체선택
-            </el-checkbox>
+            <el-checkbox v-model="checkList" v-on:change="allCheckFn(allCheck)"
+                >전체선택</el-checkbox
+            >
             <p class="desc"><em>1</em>개의 파일이 선택됨</p>
             <!-- todo select 스크립트 작업 필요  -->
             <div class="btn-box">
@@ -22,12 +22,12 @@
             </div>
         </div>
         <!-- wish list -->
-        <WishList :listData="wishListData" />
+        <WishList :listData="wishListData" v-on:wishDelete="wishDelete" />
     </div>
 </template>
 
 <script>
-import { getWishList } from '@/api/wish-list';
+import { getWishList, deleteWishList, deleteWishListAll } from '@/api/wish-list';
 export default {
     name: 'wish-list',
     components: {
@@ -56,19 +56,30 @@ export default {
                     size: this.itemLength,
                 });
                 this.wishListData = response.content;
-                console.log(response.content);
-
+                this.wishListData.forEach(el => {
+                    el.checked = false;
+                });
                 this.loadingData = false;
                 return;
             } catch (error) {
                 console.log(error);
             }
         },
-        // checkAllChange(value) {
-        //     this.$emit('checkAllChange', value);
-        // },
-        // checkedCitiesChange(value) {
-        //     this.$emit('checkedCitiesChange', value);
+        async wishDelete(seq) {
+            try {
+                await deleteWishList(seq);
+                this.fetchData();
+                return;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        // allCheckFn(val) {
+        //     if (val) {
+        //         //this.checkITem = [1];
+        //         console.log(val);
+        //     }
         // },
     },
 };
