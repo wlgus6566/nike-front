@@ -71,9 +71,19 @@ const routes = [
         },
     },
     {
+        path: '/mypage/news',
+        name: 'news',
+        component: pages('mypage/news-list.vue'),
+        meta: {
+            layout: 'Default',
+            aside: 'Default',
+            title: 'NEWS',
+        },
+    },
+    {
         path: '/mypage/notice',
         name: 'notice',
-        component: pages('mypage/notice.vue'),
+        component: pages('mypage/notice-list.vue'),
         meta: {
             layout: 'Default',
             aside: 'Default',
@@ -81,13 +91,13 @@ const routes = [
         },
     },
     {
-        path: '/mypage/news',
-        name: 'news',
-        component: pages('mypage/news.vue'),
+        path: '/mypage/view',
+        name: 'notice',
+        component: pages('mypage/detail-view.vue'),
         meta: {
             layout: 'Default',
             aside: 'Default',
-            title: 'NEWS',
+            //title: '공지사항',
         },
     },
     {

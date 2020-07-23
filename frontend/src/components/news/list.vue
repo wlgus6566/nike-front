@@ -1,17 +1,19 @@
 <template>
-    <ul class="news-list">
-        <li class="news-list-item" v-for="(item, index) in items" :key="index">
-            <a v-bind:href="item.url">
-                <span class="thumbnail">
-                    <img :src="item.img" alt="" />
-                </span>
-                <span class="info-box">
-                    <strong class="title">{{ item.title }}</strong>
-                    <span class="esc">{{ item.esc }}</span>
-                </span>
-            </a>
-        </li>
-    </ul>
+    <div>
+        <ul class="news-list">
+            <li class="news-list-item" v-for="(item, index) in items" :key="index">
+                <router-link to="/mypage/view">
+                    <span class="thumbnail">
+                        <img :src="item.img" alt="" />
+                    </span>
+                    <span class="info-box">
+                        <strong class="title">{{ item.title }}</strong>
+                        <span class="esc">{{ item.esc }}</span>
+                    </span>
+                </router-link>
+            </li>
+        </ul>
+    </div>
 </template>
 <script>
 export default {
