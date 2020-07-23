@@ -1,6 +1,6 @@
 <template>
     <div>
-        <slot name="btn-right-sign"> </slot>
+        <slot name="btn-bottom-area"> </slot>
         <div class="pagination">
             <button type="button" class="prev"><span>이전</span></button>
             <ul>
@@ -41,9 +41,7 @@
 export default {
     name: 'pagination',
     data() {
-        return {
-            btn: false,
-        };
+        return {};
     },
     methods: {},
 };

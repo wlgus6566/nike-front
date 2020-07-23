@@ -1,13 +1,18 @@
 <template>
     <div>
-        <h2 class="page-title">{{ this.$route.meta.title }}</h2>
+        <h2 class="page-title">
+            <span class="ko">{{ this.$route.meta.title }}</span>
+        </h2>
         <div class="sorting-area">
             <SearchInput @:searchSubmit="searchSubmit" />
         </div>
-        <newsList />
+        <NoticeList />
         <bottomArea>
             <template slot="btn-bottom-area">
                 <div class="btn-tbl-box">
+                    <button type="button" class="btn-form">
+                        <span data-v-1756ba49="">삭제</span>
+                    </button>
                     <div class="right">
                         <button type="button" class="btn-form-gray">
                             <span data-v-1756ba49="">등록</span>
@@ -20,7 +25,7 @@
 </template>
 
 <script>
-import newsList from '@/components/news/news-list';
+import NoticeList from '@/components/news/notice-list';
 import SearchInput from '@/components/search-input/index';
 import bottomArea from '@/components/bottom-area/pagination';
 
@@ -33,7 +38,7 @@ export default {
     },
     components: {
         bottomArea,
-        newsList,
+        NoticeList,
         SearchInput,
     },
     methods: {
