@@ -13969,6 +13969,7 @@
   <term name="시그니처" description="서명" physicalName="SIGNATURE" physicalDescription="서명" tag="//@tag.363"/>
   <term name="위시리스트" description="소망" physicalName="WISH_LIST" tag="//@tag.364"/>
   <term name="히스토리" description="히스토리" physicalName="HISTORY" physicalDescription="히스토리"/>
+  <term name="컨텐트" description="컨텐트" physicalName="CONTENT" physicalDescription="컨텐트"/>
   <tag name="기록물관리"/>
   <tag name="교육인적자원 행정지원"/>
   <tag name="재난예방 관리"/>
