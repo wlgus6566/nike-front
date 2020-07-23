@@ -167,9 +167,10 @@ public class ProductController {
 	 * @Description
 	 */
 	@ApiOperation(value = "상품 수정", notes = BASIC_CHARACTER)
-	@PutMapping(name = "상품 수정", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public SingleResult<Product> updateProduct(@ApiParam(name = "productUpdateDTO", value = "상품 수정 JSON") @RequestBody final ProductUpdateDTO productUpdateDTO) throws IOException {
-
+	@PutMapping(value="/{goodsSeq}",name = "상품 수정", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public SingleResult<Product> updateProduct(@PathVariable @ApiParam(name="goodsSeq",value="상품시퀀스") final Long goodsSeq,
+											   @ApiParam(name = "productUpdateDTO", value = "상품 수정 JSON") @RequestBody final ProductUpdateDTO productUpdateDTO) throws IOException {
+		productUpdateDTO.setGoodsSeq(goodsSeq);
 		return responseService.getSingleResult(productService.update(productUpdateDTO));
 	}
 

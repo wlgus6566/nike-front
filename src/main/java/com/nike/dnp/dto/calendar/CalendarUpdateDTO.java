@@ -23,7 +23,7 @@ public class CalendarUpdateDTO extends BasicDTO {
      *
      * @author [김형욱]
      */
-    @ApiModelProperty(name = "calendarSeq", value = "달력 시퀀스")
+    @ApiModelProperty(name = "calendarSeq", value = "달력 시퀀스",hidden = true)
     private Long calendarSeq;
 
     /**

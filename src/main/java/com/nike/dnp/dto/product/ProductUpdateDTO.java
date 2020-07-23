@@ -25,7 +25,7 @@ public class ProductUpdateDTO extends BasicDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name="goodsSeq",value = "상품 시퀀스",required = true,example = "27")
+	@ApiModelProperty(hidden = true,name="goodsSeq",value = "상품 시퀀스",example = "27")
 	private Long goodsSeq;
 
 
