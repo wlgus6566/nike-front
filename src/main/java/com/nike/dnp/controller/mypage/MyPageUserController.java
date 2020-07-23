@@ -116,11 +116,11 @@ public class MyPageUserController {
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 7. 2. 오후 4:08:39
-     * @Description 마이페이지 비밀번호 변경
+     * @Description MY INFO 비밀번호 변경
      */
-    @ApiOperation(value = "마이페이지 비밀번호 변경"
+    @ApiOperation(value = "MY INFO 비밀번호 변경"
             , notes = OPERATION_CHARACTER)
-    @PutMapping(name = "마이페이지 비밀번호 변경", value = "/change/password"
+    @PutMapping(name = "MY INFO 비밀번호 변경", value = "/change/password"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
