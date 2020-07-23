@@ -1,10 +1,14 @@
 package com.nike.dnp.service.report;
 
+import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.dto.auth.AuthReturnDTO;
+import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.report.*;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.repository.report.ReportFileRepository;
 import com.nike.dnp.repository.report.ReportRepository;
+import com.nike.dnp.service.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -43,6 +47,13 @@ public class ReportService {
     private final ReportFileRepository reportFileRepository;
 
     /**
+     * The Auth service
+     *
+     * @author [오지훈]
+     */
+    private final AuthService authService;
+
+    /**
      * Find all paging page.
      *
      * @param reportSearchDTO the report search dto
@@ -51,7 +62,20 @@ public class ReportService {
      * @CreatedOn 2020. 7. 8. 오후 5:28:17
      * @Description
      */
-    public Page<Report> findAllPaging(final ReportSearchDTO reportSearchDTO) {
+    public Page<Report> findAllPaging(final AuthUserDTO authUserDTO, final ReportSearchDTO reportSearchDTO) {
+
+        // 권한 검색 조건
+        List<Long> authSeqList = new ArrayList<>();
+        if (null != reportSearchDTO.getGroupSeq()) {
+            authSeqList.add(reportSearchDTO.getGroupSeq());
+        } else {
+            List<AuthReturnDTO> authList = authService.findByAuthDepth(authUserDTO.getAuthSeq(), "REPORT_UPLOAD", ServiceEnumCode.MenuSkillEnumCode.REPORT.toString());
+            for (AuthReturnDTO authReturnDTO : authList) {
+                authSeqList.add(authReturnDTO.getAuthSeq());
+            }
+        }
+        reportSearchDTO.setAuthSeqList(authSeqList);
+
         return reportRepository.findPageReport(
                 reportSearchDTO,
                 PageRequest.of(reportSearchDTO.getPage()
@@ -63,6 +87,7 @@ public class ReportService {
     /**
      * Save report.
      *
+     * @param authUserDTO   the auth user dto
      * @param reportSaveDTO the report save dto
      * @return the report
      * @author [이소정]
@@ -70,8 +95,9 @@ public class ReportService {
      * @Description
      */
     @Transactional
-    public Report save(final ReportSaveDTO reportSaveDTO) {
+    public Report save(final AuthUserDTO authUserDTO, final ReportSaveDTO reportSaveDTO) {
         log.info("ReportService.save");
+        reportSaveDTO.setAuthSeq(authUserDTO.getAuthSeq());
         final Report savedReport = reportRepository.save(new Report().save(reportSaveDTO));
         List<ReportFile> reportFileList = new ArrayList<>();
 
