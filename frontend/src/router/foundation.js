@@ -3,20 +3,9 @@ import { pages } from '@/utils/global-methods';
 const routes = [
     {
         path: '/foundation',
-        component: pages('foundation'),
+        component: pages('root'),
         redirect: '/foundation/vms',
         children: [
-            {
-                path: 'upload',
-                name: 'upload',
-                component: pages('foundation/upload'),
-                meta: {
-                    layout: 'Default',
-                    aside: 'Order',
-                    topMenuCode: 'ASSET',
-                    title: 'UPLOAD',
-                },
-            },
             {
                 path: 'vms',
                 component: pages('common/folder-list'),
@@ -59,6 +48,16 @@ const routes = [
                     topMenuCode: 'FOUNDATION',
                     menuCode: 'RB',
                     title: 'RB',
+                },
+            },
+            {
+                path: 'upload',
+                component: pages('foundation/upload'),
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    topMenuCode: 'ASSET',
+                    title: 'UPLOAD',
                 },
             },
             {

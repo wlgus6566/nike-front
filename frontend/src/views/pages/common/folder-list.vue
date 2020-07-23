@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="page-title">{{ this.$route.meta.title }}</h2>
+        <h2 class="page-title">{{ this.title }}</h2>
         <div class="upload-summury">
             <strong class="title">파일올리기</strong>
             <p class="desc">
@@ -17,7 +17,7 @@
         <div class="sorting-area">
             <ListSorting :listTypes="listTypes" />
             <FilterSelect :listSortSelect="listSortSelect" />
-            <SearchInput @:searchSubmit="searchSubmit" />
+            <SearchInput @searchSubmit="searchSubmit" />
         </div>
         <template v-if="folderListData">
             <FolderList
@@ -47,20 +47,13 @@ import { getContents } from '@/api/contents.js';
 export default {
     name: 'folder-list',
     watch: {
-        '$route.meta.menuCode'(tt) {
-            if (!!tt) {
-                this.initFetchData();
-            }
-        },
         'listSortSelect.value'() {
             this.initFetchData();
         },
     },
-    mounted() {
-        this.initFetchData();
-    },
     data() {
         return {
+            title: this.$route.meta.title,
             itemLength: 20,
             totalPage: null,
             page: 0,
@@ -92,9 +85,6 @@ export default {
             folderListData: null,
         };
     },
-    computed: {
-        //
-    },
     components: {
         ListSorting,
         FilterSelect,
@@ -108,7 +98,7 @@ export default {
         handleScroll(event) {
             if (this.loadingData) return;
             const windowE = document.documentElement;
-            if (window.outerHeight + windowE.scrollTop >= windowE.scrollHeight) {
+            if (windowE.clientHeight + windowE.scrollTop >= windowE.scrollHeight) {
                 this.infiniteScroll();
             }
         },
@@ -123,11 +113,14 @@ export default {
             this.initFetchData();
         },
         infiniteScroll() {
+            console.log('loadingData1', this.loadingData);
             if (
+                !this.loadingData &&
                 this.totalPage > this.page - 1 &&
                 this.folderListData.length >= this.itemLength &&
                 this.folderListData.length !== 0
             ) {
+                console.log('loadingData55555555', this.loadingData);
                 this.fetchData(true);
             }
         },
@@ -145,7 +138,6 @@ export default {
                     keyword: this.searchKeyword,
                     orderType: this.listSortSelect.value,
                 });
-                console.log(response);
 
                 this.totalPage = response.totalPages - 1;
                 if (infinite) {
@@ -166,6 +158,7 @@ export default {
         },
     },
     created() {
+        this.initFetchData();
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {

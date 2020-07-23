@@ -1,5 +1,5 @@
 function saveAuthToCookie(value) {
-    document.cookie = `nike_auth=${value}`;
+    document.cookie = `nike_token=${value}`;
 }
 
 function saveUserToCookie(value) {
@@ -7,7 +7,7 @@ function saveUserToCookie(value) {
 }
 
 function getAuthFromCookie() {
-    return document.cookie.replace(/(?:(?:^|.*;\s*)nike_auth\s*=\s*([^;]*).*$)|^.*$/, '$1');
+    return document.cookie.replace(/(?:(?:^|.*;\s*)nike_token\s*=\s*([^;]*).*$)|^.*$/, '$1');
 }
 
 function getUserFromCookie() {

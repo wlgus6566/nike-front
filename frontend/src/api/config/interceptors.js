@@ -4,7 +4,6 @@ import { getAuthFromCookie } from '@/utils/cookies.js';
 function setInterceptors(instance) {
     instance.interceptors.request.use(
         (config) => {
-            console.log(store.getters['userToken']);
             config.headers.Authorization = store.getters['userToken'] || getAuthFromCookie();
             return config;
         },
@@ -12,7 +11,13 @@ function setInterceptors(instance) {
     );
     instance.interceptors.response.use(
         (config) => config,
-        (error) => Promise.reject(error.response)
+        (error) => {
+            if (error.response.data.status === 401) {
+                //
+                this.$router.push('/login');
+            }
+            return Promise.reject(error.response);
+        }
     );
     return instance;
 }

@@ -4,7 +4,7 @@ import { loginUser } from '@/api/login';
 import {
     saveAuthToCookie,
     saveUserToCookie,
-    getUserFromCookie,
+    getAuthFromCookie,
     deleteCookie,
 } from '@/utils/cookies.js';
 
@@ -17,7 +17,7 @@ export default new Vuex.Store({
     },
     getters: {
         isLoggedIn(state) {
-            return !!state.token || getUserFromCookie();
+            return !!state.token || getAuthFromCookie();
         },
         userToken(state) {
             return state.token;
@@ -33,14 +33,13 @@ export default new Vuex.Store({
         LOGOUT(state) {
             state.user = null;
             state.token = null;
-            deleteCookie('nike_auth');
-            deleteCookie('nike_user');
+            deleteCookie('nike_token');
+            //deleteCookie('nike_user');
         },
     },
     actions: {
         async LOGIN({ commit }, data) {
             const response = await loginUser(data);
-            console.log(response);
             //commit('SET_USER', response.data.user);
             commit('SET_TOKEN', response.headers.authorization);
             //saveUserToCookie(response.data.user.username);
