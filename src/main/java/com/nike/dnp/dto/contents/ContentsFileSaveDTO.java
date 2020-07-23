@@ -3,6 +3,8 @@ package com.nike.dnp.dto.contents;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.persistence.Column;
+
 
 /**
  * The type Contents file save dto.
@@ -52,7 +54,7 @@ public class ContentsFileSaveDTO {
      * 파일 사이즈
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileSize", value = "파일 사이즈", example = "600")
+    @ApiModelProperty(name = "fileSize", value = "파일 사이즈", example = "1200")
     private Long fileSize;
 
     /**
@@ -63,17 +65,37 @@ public class ContentsFileSaveDTO {
     private String filePhysicalName;
 
     /**
+     * 상세 썸네일 명
+     */
+    @ApiModelProperty(name = "detailThumbnailFileName", value ="상세 썸네일 명", example = "graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFileName;
+
+    /**
+     * 상세 썸네일 사이즈
+     */
+    @ApiModelProperty(name = "detailThumbnailFileSize", value ="상세 썸네일 사이즈", example = "700")
+    private String detailThumbnailFileSize;
+
+    /**
+     * 상세 썸네일 물리 경로
+     */
+    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFilePhysicalName;
+
+
+    /**
      * 썸네일 파일 물리 명
      * @author [이소정]
      */
     @ApiModelProperty(name = "thumbnailFileName", value = "썸네일 명", example = "graphic_file_name_thumbnail.jpg")
     private String thumbnailFileName;
 
+
     /**
      * 썸네일 파일 물리 명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "thumbnailFileSize", value = "썸네일 파일 사이즈", example = "300")
+    @ApiModelProperty(name = "thumbnailFileSize", value = "썸네일 파일 사이즈", example = "100")
     private String thumbnailFileSize;
 
     /**

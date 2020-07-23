@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.ErrorEnumCode.DataError;
+import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.auth.AuthSaveDTO;
 import com.nike.dnp.dto.auth.AuthUpdateDTO;
 import com.nike.dnp.dto.menu.MenuReturnDTO;
@@ -102,6 +103,31 @@ public class AuthService {
      */
     public List<AuthMenuRole> findAuthMenuRole(final Long authSeq) {
         return authMenuRoleRepository.findByAuthSeq(authSeq);
+    }
+
+    /**
+     * Find by auth depth list.
+     *
+     * @param authSeq   the auth seq
+     * @param menuCode  the menu code
+     * @param skillCode the skill code
+     * @return the list
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 21. 오후 5:11:54
+     * @Description 권한 뎁스 별 목록 조회
+     */
+    public List<AuthReturnDTO> findByAuthDepth(
+            final Long authSeq
+            , final String menuCode
+            , final String skillCode
+    ) {
+        Optional<Auth> auth = this.findById(authSeq);
+        return authRepository.findByAuthDepth(
+                authSeq
+                , auth.get().getAuthDepth()
+                , menuCode
+                , skillCode
+        );
     }
 
     /**
@@ -235,6 +261,20 @@ public class AuthService {
     }
 
     /**
+     * Gets by id.
+     *
+     * @param authSeq the auth seq
+     * @return the by id
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 22. 오전 11:32:07
+     * @Description 그룹(권한) 상세 조회
+     */
+    public Auth getById(final Long authSeq) {
+        log.info("AuthService.getById");
+        return this.findById(authSeq).orElse(new Auth());
+    }
+
+    /**
      * Save auth.
      *
      * @param authSaveDTO the auth save dto
@@ -265,7 +305,6 @@ public class AuthService {
     /**
      * Update optional.
      *
-     * @param authSeq       the auth seq
      * @param authUpdateDTO the auth update dto
      * @return the optional
      * @author [오지훈]
@@ -273,24 +312,26 @@ public class AuthService {
      * @Description 그룹(권한) 수정
      */
     @Transactional
-    public Optional<Auth> update(
+    public Auth update(
             final Long authSeq
-            ,final AuthUpdateDTO authUpdateDTO
+            , final AuthUpdateDTO authUpdateDTO
     ) {
         log.info("AuthService.update");
-        final Optional<Auth> auth = this.findById(authSeq);
-        auth.ifPresent(value -> value.update(authUpdateDTO));
+        final Auth auth = this.getById(authSeq);
+        final String roleType = auth.getRoleType();
+
+        auth.update(authUpdateDTO);
         this.initAuthCache();
 
-        if (auth.isPresent() && authUpdateDTO.getMenuRoleSeqArray().length > 0) {
+        if (authUpdateDTO.getMenuRoleSeqArray().length > 0) {
             this.remove(authSeq);
             Arrays.stream(authUpdateDTO.getMenuRoleSeqArray()).map(
                     menuRoleSeq -> AuthMenuRole.builder()
-                            .authSeq(auth.get().getAuthSeq())
+                            .authSeq(authSeq)
                             .menuRoleSeq(menuRoleSeq)
                             .build()).forEach(authMenuRoleRepository::save);
-            this.setAuthsResourcesByRoleType(auth.get().getRoleType());
-            this.setAuthsMenusByRoleType(auth.get().getRoleType());
+            this.setAuthsResourcesByRoleType(roleType);
+            this.setAuthsMenusByRoleType(roleType);
         }
 
         //TODO[ojh] 2020-07-13 : 등록/삭제 시퀀스배열이 따로 올 경우
@@ -338,18 +379,14 @@ public class AuthService {
      * @Description 그룹(권한) 삭제
      */
     @Transactional
-    public Optional<Auth> delete(final Long authSeq) {
+    public Auth delete(final Long authSeq) {
         log.info("AuthService.delete");
-        final Optional<Auth> auth = this.findById(authSeq);
-        auth.ifPresent(Auth::delete);
+        final Auth auth = this.getById(authSeq);
+        auth.delete();
         this.initAuthCache();
-
-        if (auth.isPresent()) {
-            this.remove(authSeq);
-            redisService.delete("roles:auths:"+auth.get().getRoleType());
-            redisService.delete("roles:menus:"+auth.get().getRoleType());
-        }
-
+        this.remove(authSeq);
+        redisService.delete("roles:auths:"+auth.getRoleType());
+        redisService.delete("roles:menus:"+auth.getRoleType());
         return auth;
     }
 
@@ -366,10 +403,10 @@ public class AuthService {
         final ObjectMapper objectMapper = new ObjectMapper();
         try {
             redisService.set("cache:auths::SimpleKey []", objectMapper.readValue(objectMapper.writeValueAsString(this.findAll()), JSONArray.class), 60 * 24 * 30);
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException exception) {
             throw new CodeMessageHandleException(
                     ErrorEnumCode.ExceptionError.ERROR.toString()
-                    , ErrorEnumCode.ExceptionError.ERROR.getMessage()
+                    , exception.getMessage()
             );
         }
     }

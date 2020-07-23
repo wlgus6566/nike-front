@@ -88,8 +88,10 @@ public class ContentsBasketController {
             value = "컨텐츠 장바구니 등록"
             , notes = REQUEST_CHARACTER
     )
-    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 장바구니 등록")
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 장바구니 등록", value = "/{topMenuCode}/{menuCode}")
     public SingleResult<List<ContentsBasket>> saveContentsBasket(
+            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
+            @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "SP", required = true) @PathVariable final String menuCode,
             @RequestBody final List<Long> contentsBasketSeqList,
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
     ) {

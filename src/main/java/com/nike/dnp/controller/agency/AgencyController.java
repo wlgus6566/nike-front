@@ -122,9 +122,10 @@ public class AgencyController {
      * @Description
      */
     @ApiOperation(value = "에이전시 수정", notes = REQUEST_CHARACTER)
-    @PutMapping(name = "에이전시 수정"
+    @PutMapping(name = "에이전시 수정", value = "/{agencySeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Agency>> updateAgency(
+            @ApiParam(name = "agencySeq", value = "에이전시 시퀀스", defaultValue = "1", required = true) @PathVariable final Long agencySeq,
             @RequestBody final AgencyUpdateDTO agencyUpdateDTO
     ) {
         return responseService.getSingleResult(agencyService.update(agencyUpdateDTO));

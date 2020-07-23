@@ -17,8 +17,6 @@ import lombok.*;
 @AllArgsConstructor
 public class UserSearchDTO extends SearchDTO {
 
-    private String test = "asdasd";
-
     /**
      * The Keyword
      *

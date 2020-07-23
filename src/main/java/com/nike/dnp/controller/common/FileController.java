@@ -77,6 +77,7 @@ public class FileController {
 		FileResultDTO fileResultDTO = null;
 		try{
 			fileResultDTO = FileUtil.fileTempSaveAndImageResize(fileUploadDTO.getUploadFile());
+			//fileResultDTO = FileUtil.fileSave(fileUploadDTO.getUploadFile(),"temp");
 		}catch(InterruptedException | IOException e){
 			// 리사이즈 문제
 			throw (CodeMessageHandleException)new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_COPY_ERROR.name(), ErrorEnumCode.FileError.FILE_COPY_ERROR.getMessage());

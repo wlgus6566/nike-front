@@ -63,6 +63,31 @@ public class ServiceEnumCode {
     }
 
     /**
+     * The enum Contents top menu code.
+     */
+    public enum ContentsTopMenuCode {
+        ASSET
+        , TOOLKIT
+        , FOUNDATION
+    }
+
+    /**
+     * The enum Contents menu code.
+     */
+    public enum ContentsMenuCode {
+        ALL
+        , SP // Asset > SP
+        , SU // Asset > SU
+        , FA // Asset > FA
+        , HO // Asset > HO
+        , VMS // TOOLKIT, FOUNDATION > VMS
+        , EKIN // TOOLKIT, FOUNDATION > EKIN
+        , SOCIAL // TOOLKIT > SOCIAL
+        , RB // TOOLKIT, FOUNDATION > RB
+        , DIGITAL // FOUNDATION > DIGITAL
+    }
+
+    /**
      * The enum User status enum code.
      */
     @RequiredArgsConstructor
@@ -197,7 +222,17 @@ public class ServiceEnumCode {
          * @author [오지훈]
          */
         private final String message;
+        /**
+         * The Field
+         *
+         * @author [오지훈]
+         */
         private final String field;
+        /**
+         * The Sort
+         *
+         * @author [오지훈]
+         */
         private final int sort;
     }
 
@@ -217,7 +252,6 @@ public class ServiceEnumCode {
          *
          * @author [윤태호]
          */
-
         private final String folder;
 
     }

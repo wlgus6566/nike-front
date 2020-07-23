@@ -207,17 +207,20 @@ public class Menu extends BaseTimeEntity implements Serializable {
     public List<SkillCode> getSkillCodes() {
         final List<SkillCode> skillCodes = new ArrayList<>();
         for (final ServiceEnumCode.MenuSkillEnumCode enumCode : ServiceEnumCode.MenuSkillEnumCode.values()) {
-            final SkillCode skillCode = new SkillCode();
-            skillCode.setMenuSeq(this.menuSeq);
-            skillCode.setCode(enumCode.toString());
-            skillCode.setField(enumCode.getField());
-            skillCode.setMessage(enumCode.getMessage());
+            Long menuRoleSeq = 0L;
             for (final MenuRole menuRole : this.menuRoles) {
                 if (menuRole.getMenuSkillCode().equals(enumCode.toString())) {
-                    skillCode.setMenuRoleSeq(menuRole.getMenuRoleSeq());
+                    menuRoleSeq = menuRole.getMenuRoleSeq();
                 }
             }
-            skillCodes.add(skillCode);
+
+            skillCodes.add(SkillCode.builder()
+                    .menuSeq(this.menuSeq)
+                    .code(enumCode.toString())
+                    .field(enumCode.getField())
+                    .message(enumCode.getMessage())
+                    .menuRoleSeq(menuRoleSeq)
+                    .build());
         }
         return skillCodes;
     }
@@ -261,7 +264,33 @@ public class Menu extends BaseTimeEntity implements Serializable {
          *
          * @author [오지훈]
          */
-        private Long menuRoleSeq = 0L;
+        private Long menuRoleSeq;
 
+        /**
+         * Instantiates a new Skill code.
+         *
+         * @param menuSeq     the menu seq
+         * @param code        the code
+         * @param field       the field
+         * @param message     the message
+         * @param menuRoleSeq the menu role seq
+         * @author [오지훈]
+         * @CreatedOn 2020. 7. 21. 오후 3:51:09
+         * @Description
+         */
+        @Builder
+        public SkillCode (
+                final Long menuSeq
+                , final String code
+                , final String field
+                , final String message
+                , final Long menuRoleSeq
+        ) {
+            this.menuSeq = menuSeq;
+            this.code = code;
+            this.field = field;
+            this.message = message;
+            this.menuRoleSeq = menuRoleSeq;
+        }
     }
 }

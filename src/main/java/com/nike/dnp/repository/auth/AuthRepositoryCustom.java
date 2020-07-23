@@ -38,4 +38,22 @@ public interface AuthRepositoryCustom {
      */
     List<AuthReturnDTO> findByConfig(final String menuCode, final String skillCode);
 
+    /**
+     * Find by auth depth list.
+     *
+     * @param authSeq   the auth seq
+     * @param authDepth the auth depth
+     * @param menuCode  the menu code
+     * @param skillCode the skill code
+     * @return the list
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 21. 오후 5:04:25
+     * @Description
+     */
+    public List<AuthReturnDTO> findByAuthDepth(
+            final Long authSeq
+            , final Long authDepth
+            , final String menuCode
+            , final String skillCode);
+
 }

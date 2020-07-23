@@ -56,8 +56,9 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
                         ReportPredicateHelper.compareKeyword(reportSearchDTO)
                         , ReportPredicateHelper.eqSectionCode(reportSearchDTO)
                         , qReport.useYn.eq("Y")
+                        , qReport.authSeq.in(reportSearchDTO.getAuthSeqList())
                 );
-                // TODO[lsj] 선택한 그룹 조건지정
+
 
         final List<Report> reportList = getQuerydsl().applyPagination(pageRequest, query).fetch();
         return new PageImpl<>(reportList, pageRequest, query.fetchCount());

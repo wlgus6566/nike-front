@@ -160,11 +160,13 @@ public class UserReturnDTO {
      * @Description 유저 권한명
      */
     public String getUserStatusCodeName() {
+        String result = "";
         for (final ServiceEnumCode.UserStatusEnumCode enumCode : ServiceEnumCode.UserStatusEnumCode.values()) {
             if (enumCode.toString().equals(this.userStatusCode)) {
-                return enumCode.getMessage();
+                result = enumCode.getMessage();
+                break;
             }
         }
-        return "";
+        return result;
     }
 }

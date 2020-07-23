@@ -4,17 +4,29 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * The Class Product result dto.
+ *
+ * @author [오지훈]
+ * @CreatedOn 2020. 7. 21. 오후 3:55:06
+ * @Description
+ */
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor
 public class ProductResultDTO {
 
-
+	/**
+	 * The Goods seq
+	 *
+	 * @author [오지훈]
+	 */
 	@ApiModelProperty(name = "goodsSeq", value = "상품 시퀀스")
 	private Long goodsSeq;
 
@@ -115,7 +127,6 @@ public class ProductResultDTO {
 	@ApiModelProperty(name = "useYn", value = "사용 여부")
 	private String useYn;
 
-
 	/**
 	 * The Agency name
 	 *
@@ -124,16 +135,34 @@ public class ProductResultDTO {
 	@ApiModelProperty(name = "agencyName", value = "에이젼시 이름")
 	private String agencyName;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")	
+	/**
+	 * The Update dt
+	 *
+	 * @author [오지훈]
+	 */
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
 	@ApiModelProperty(name = "updateDt", value = "최종 수정일")
 	private LocalDateTime updateDt;
 
+	/**
+	 * The Nick name
+	 *
+	 * @author [오지훈]
+	 */
 	@ApiModelProperty(name = "nickName", value = "유저 닉네임")
 	private String nickName;
 
+	/**
+	 * Get category 2 name string.
+	 *
+	 * @return the string
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 7. 21. 오후 4:03:46
+	 * @Description
+	 */
 	@ApiModelProperty(name = "category2Name", value = "카테고리 2 명")
 	public String getCategory2Name(){
-		for(ServiceEnumCode.ProductCategory2EnumCode value : ServiceEnumCode.ProductCategory2EnumCode.values()){
+		for(final ServiceEnumCode.ProductCategory2EnumCode value : ServiceEnumCode.ProductCategory2EnumCode.values()){
 			if(value.name().equalsIgnoreCase(this.category2Code)){
 				return value.getMessage();
 			}
@@ -141,9 +170,17 @@ public class ProductResultDTO {
 		return this.category2Code;
 	}
 
+	/**
+	 * Gets category 3 name.
+	 *
+	 * @return the category 3 name
+	 * @author [오지훈]
+	 * @CreatedOn 2020. 7. 21. 오후 4:03:46
+	 * @Description
+	 */
 	@ApiModelProperty(name = "category3Name", value = "카테고리 3 명")
 	public String getCategory3Name() {
-		for(ServiceEnumCode.ProductCategory3EnumCode value : ServiceEnumCode.ProductCategory3EnumCode.values()){
+		for(final ServiceEnumCode.ProductCategory3EnumCode value : ServiceEnumCode.ProductCategory3EnumCode.values()){
 			if(value.name().equalsIgnoreCase(this.category3Code)){
 				return value.getMessage();
 			}

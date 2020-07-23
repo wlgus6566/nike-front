@@ -69,7 +69,7 @@ public class CryptoUtil {
         } catch (Exception exception) {
             throw new CodeMessageHandleException(
                     ErrorEnumCode.ExceptionError.ERROR.toString()
-                    , ErrorEnumCode.ExceptionError.ERROR.getMessage());
+                    , exception.getMessage());
         }
     }
 
@@ -108,7 +108,7 @@ public class CryptoUtil {
         } catch (Exception exception) {
             throw new CodeMessageHandleException(
                     ErrorEnumCode.ExceptionError.ERROR.toString()
-                    , ErrorEnumCode.ExceptionError.ERROR.getMessage());
+                    , exception.getMessage());
         }
     }
 
@@ -127,7 +127,7 @@ public class CryptoUtil {
         } catch (UnsupportedEncodingException exception) {
             throw new CodeMessageHandleException(
                     ErrorEnumCode.ExceptionError.ERROR.toString()
-                    , ErrorEnumCode.ExceptionError.ERROR.getMessage());
+                    , exception.getMessage());
         }
     }
 
@@ -146,7 +146,7 @@ public class CryptoUtil {
         } catch (UnsupportedEncodingException exception) {
             throw new CodeMessageHandleException(
                     ErrorEnumCode.ExceptionError.ERROR.toString()
-                    , ErrorEnumCode.ExceptionError.ERROR.getMessage());
+                    , exception.getMessage());
         }
     }
 }

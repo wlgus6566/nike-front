@@ -56,7 +56,7 @@ public class AuthReturnDTO {
      * @author [오지훈]
      */
     @ApiModelProperty(name = "detailAuthYn", value = "상세_권한_여부", required = true, example = "N")
-    private String DETAIL_AUTH_YN = ServiceEnumCode.YesOrNoEnumCode.N.toString();
+    private String detailAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
 
     /**
      * 메일_수신_여부
@@ -64,6 +64,6 @@ public class AuthReturnDTO {
      * @author [오지훈]
      */
     @ApiModelProperty(name = "emailReceptionYn", value = "메일_수신_여부", required = true, example = "N")
-    private String EMAIL_RECEPTION_YN = ServiceEnumCode.YesOrNoEnumCode.N.toString();
+    private String emailReceptionYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
 
 }

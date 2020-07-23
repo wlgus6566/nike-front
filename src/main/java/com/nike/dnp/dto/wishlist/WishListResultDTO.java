@@ -3,8 +3,7 @@ package com.nike.dnp.dto.wishlist;
 import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.entity.wishlist.WishList;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * The Class Wish list result dto.
@@ -15,8 +14,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor
 public class WishListResultDTO {
-
 
 	/**
 	 * The Wish list seq
@@ -60,8 +60,8 @@ public class WishListResultDTO {
 	 * @CreatedOn 2020. 7. 6. 오후 3:40:56
 	 * @Description
 	 */
-	public static WishListResultDTO ofSave(WishList wishList) {
-		WishListResultDTO result = new WishListResultDTO();
+	public static WishListResultDTO ofSave(final WishList wishList) {
+		final WishListResultDTO result = new WishListResultDTO();
 		result.setGoodsSeq(wishList.getGoodsSeq());
 		result.setWishListSeq(wishList.getWishListSeq());
 		result.setUserSeq(wishList.getUserSeq());

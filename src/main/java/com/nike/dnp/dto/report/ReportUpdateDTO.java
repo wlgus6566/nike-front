@@ -62,6 +62,14 @@ public class ReportUpdateDTO {
     private String imageFilePhysicalName;
 
     /**
+     * 권한 시퀀스
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "authSeq", value = "권한 시퀀스", required = true, example = "1", hidden = true)
+    private Long authSeq;
+
+    /**
      * 보고서 파일 목록
      * @author [이소정]
      */

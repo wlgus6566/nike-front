@@ -169,7 +169,8 @@ public class ErrorEnumCode {
          *
          * @author [오지훈]
          */
-        NOT_FOUND("데이터가 존재하지 않습니다.");
+        NOT_FOUND("데이터가 존재하지 않습니다."),
+        INVALID("데이터를 입력해 주세요.");
 
         /**
          * 메시지
@@ -187,7 +188,8 @@ public class ErrorEnumCode {
     public enum OrderError {
         NO_PRODUCT_SELECT("하나 이상의 상품을 선택해 주세요."),
         ONLY_NUMBER("숫자만 입력 가능합니다"),
-        CHECK_MINIMUM_QUANTITY("최소주문수량보다 적게 주문이 불가합니다.");
+        CHECK_MINIMUM_QUANTITY("최소주문수량보다 적게 주문이 불가합니다."),
+        NOT_SIZE_BASKET("요청하신 상품과 수량이 다릅니다.");
 
         /**
          * The Value
@@ -267,7 +269,8 @@ public class ErrorEnumCode {
     @RequiredArgsConstructor
     @Getter
     public enum BasketError {
-        NOT_FOUND_BASKET("해당 상품은 장바구니에 없습니다.");
+        NOT_FOUND_BASKET("해당 상품은 장바구니에 없습니다."),
+        NOT_SIZE_BASKET("요청하신 상품과 수량이 다릅니다.");
 
         /**
          * The Value
@@ -287,7 +290,8 @@ public class ErrorEnumCode {
         NOT_IMAGE_FILE("이미지 파일이 아닙니다."),
         FILE_READ_ERROR("파일 읽기 중 오류 발생"),
         FILE_WRITE_ERROR("파일 쓰기 중 오류 발생"),
-        FILE_COPY_ERROR("파일 저장 중 오류 발생");
+        FILE_COPY_ERROR("파일 저장 중 오류 발생"),
+        FILE_RESIZE_ERROR("파일 변환 중 오류 발생");
 
         /**
          * The Value
@@ -309,6 +313,23 @@ public class ErrorEnumCode {
          * The Message
          *
          * @author [이소정]
+         */
+        private final String message;
+    }
+
+
+    /**
+     * The enum Calendar error.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum CalendarError {
+        NOT_FOUND("해당 켈린더 정보가 존재하지 않습니다.");
+
+        /**
+         * The Message
+         *
+         * @author [윤태호]
          */
         private final String message;
     }
