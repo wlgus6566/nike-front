@@ -160,9 +160,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		final String[] staticPatterns = {
 				"/resources/**", "/static/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/css/**", "/font/**", "/js/**", "/images/**", // Static 요소
-				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**" // Swagger 관련
-				,"/api/download", // 임시
-
+				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
+				"/api/download", // 임시
+				"/api/open/**" // 권한 필요없는 api
 		};
 		web.ignoring().antMatchers(staticPatterns);
 
@@ -180,6 +180,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 						.accessDecisionManager(accessDecisionManager())
 						.antMatchers(HttpMethod.POST,"/api/login").permitAll()
+						.antMatchers("/api/mypage/**").authenticated()
 						.anyRequest().authenticated();
 
 		http.addFilter(authenticationFilter()) // 인증 필터
