@@ -19,8 +19,8 @@ const routes = [
     /* sg */
     /* news 목록 */
     {
-        path: '/newsList',
-        component: pages('testPage/customerenter/newslist'),
+        path: '/newslist',
+        component: pages('testPage/customercenter/newslist'),
         meta: { layout: 'Default', aside: 'Order', title: 'ALL' },
     },
     /* news & 공지사항 상세 */
