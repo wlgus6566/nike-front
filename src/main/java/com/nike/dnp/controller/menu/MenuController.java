@@ -1,7 +1,5 @@
 package com.nike.dnp.controller.menu;
 
-import com.nike.dnp.dto.auth.AuthUserDTO;
-import com.nike.dnp.dto.menu.MenuReturnDTO;
 import com.nike.dnp.entity.menu.Menu;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -12,11 +10,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -100,28 +96,6 @@ public class MenuController {
     public SingleResult<List<Menu>> findMenus() {
         log.info("MenuController.findMenus");
         return responseService.getSingleResult(menuService.findMenus());
-    }
-
-    /**
-     * Gets redis menus.
-     *
-     * @param authUserDTO the auth user dto
-     * @return the redis menus
-     * @author [오지훈]
-     * @CreatedOn 2020. 7. 16. 오후 5:16:45
-     * @Description GNB 메뉴 목록
-     */
-    @ApiOperation(
-            value = "GNB 메뉴 목록"
-            , notes = OPERATION_CHARACTER
-    )
-    @GetMapping(name = "GNB 메뉴", value = "/gnb"
-            , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<MenuReturnDTO>> getRedisMenus(
-            final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
-    ) {
-        log.info("MenuController.getRedisMenus");
-        return responseService.getSingleResult(authService.getAuthsMenusByRoleType(authUserDTO.getRole()));
     }
 
 }

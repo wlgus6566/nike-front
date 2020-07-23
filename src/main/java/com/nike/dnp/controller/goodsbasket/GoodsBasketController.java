@@ -72,7 +72,8 @@ public class GoodsBasketController {
 	 */
 	@ApiOperation(value = "장바구니 등록 및 수정", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public SingleResult<GoodsBasket> saveBasket(@RequestBody final GoodsBasketSaveDTO goodsBasketSaveDTO) {
+	public SingleResult<GoodsBasket> saveBasket(
+			@ApiParam(value = "상품 저장 DTO") @RequestBody final GoodsBasketSaveDTO goodsBasketSaveDTO) {
 		final GoodsBasket goodsBasket = goodsBasketService.saveBasket(goodsBasketSaveDTO);
 		return responseService.getSingleResult(goodsBasket);
 	}

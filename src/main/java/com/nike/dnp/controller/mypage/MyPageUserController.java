@@ -1,13 +1,15 @@
-package com.nike.dnp.controller.open;
+package com.nike.dnp.controller.mypage;
 
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.SuccessEnumCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
+import com.nike.dnp.dto.menu.MenuReturnDTO;
 import com.nike.dnp.dto.user.UserCertDTO;
 import com.nike.dnp.dto.user.UserReturnDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
+import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.user.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,6 +22,8 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.List;
+
 /**
  * The Class User my page controller.
  *
@@ -30,9 +34,9 @@ import springfox.documentation.annotations.ApiIgnore;
 @Slf4j
 @RestController
 @Api(description = "마이페이지", tags = "MYPAGE")
-@RequestMapping(value = "/api/mypage", name = "마이페이지")
+@RequestMapping(value = "/api/mypage/user", name = "마이페이지 유저")
 @RequiredArgsConstructor
-public class UserMyPageController {
+public class MyPageUserController {
 
     /**
      * The Response service
@@ -49,12 +53,41 @@ public class UserMyPageController {
     private final UserService userService;
 
     /**
+     * The Auth service
+     *
+     * @author [오지훈]
+     */
+    private final AuthService authService;
+
+    /**
      * OPERATION_CHARACTER
      *
      * @author [오지훈]
      */
     private static final String OPERATION_CHARACTER
             = "## Request ##\n[하위 Parameters 참조]\n\n\n\n## Response ##\n[하위 Model 참조]\n\n\n\n";
+
+    /**
+     * Gets redis menus.
+     *
+     * @param authUserDTO the auth user dto
+     * @return the redis menus
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 16. 오후 5:16:45
+     * @Description GNB 메뉴 목록
+     */
+    @ApiOperation(
+            value = "GNB 메뉴 목록"
+            , notes = OPERATION_CHARACTER
+    )
+    @GetMapping(name = "GNB 메뉴", value = "/gnb"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<List<MenuReturnDTO>> getRedisMenus(
+            final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
+    ) {
+        log.info("MenuController.getRedisMenus");
+        return responseService.getSingleResult(authService.getAuthsMenusByRoleType(authUserDTO.getRole()));
+    }
 
     /**
      * Find user single result.

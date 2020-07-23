@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(description = "로그인 관련", tags = "LOGIN")
 @RequestMapping(value = "/api/open/login", name = "로그인 관련")
 @RequiredArgsConstructor
-public class LoginController {
+public class OpenLoginController {
 
     /**
      * The Response service

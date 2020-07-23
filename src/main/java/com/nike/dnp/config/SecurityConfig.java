@@ -161,8 +161,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/resources/**", "/static/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/css/**", "/font/**", "/js/**", "/images/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
-				"/api/download", // 임시
-				"/api/open/**" // 권한 필요없는 api
+				"/api/download" // 임시
 		};
 		web.ignoring().antMatchers(staticPatterns);
 
@@ -179,7 +178,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 						.accessDecisionManager(accessDecisionManager())
-						.antMatchers(HttpMethod.POST,"/api/login").permitAll()
+						.antMatchers(HttpMethod.POST,"/api/open/**").permitAll()
 						.antMatchers("/api/mypage/**").authenticated()
 						.anyRequest().authenticated();
 
@@ -227,7 +226,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		AuthenticationFilter filter = null;
 		try {
 			filter = new AuthenticationFilter(authenticationManager());
-			filter.setFilterProcessesUrl("/api/login");
+			filter.setFilterProcessesUrl("/api/open/login");
 			filter.setAuthenticationSuccessHandler(authenticationSuccessHandler()); // 인증 성공 핸들러
 			filter.setAuthenticationFailureHandler(authenticationFailureHandler()); // 인증 실패 핸들러
 			filter.setAuthenticationManager(authenticationManagerBean());

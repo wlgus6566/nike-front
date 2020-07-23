@@ -32,7 +32,7 @@ public class GoodsBasketSaveListDTO extends BasicDTO {
 	 *
 	 * @author [오지훈]
 	 */
-	@ApiModelProperty(name = "상품 시퀀스", allowableValues = "1,2,3")
+	@ApiModelProperty(value = "상품 시퀀스", allowableValues = "1,2,3")
 	private List<Long> goodsSeqList;
 
 	/**
@@ -40,7 +40,7 @@ public class GoodsBasketSaveListDTO extends BasicDTO {
 	 *
 	 * @author [오지훈]
 	 */
-	@ApiModelProperty(name = "상품수량", allowableValues = "10,20,30")
+	@ApiModelProperty(value = "상품수량", allowableValues = "10,20,30")
 	private List<Long> orderQuantityList;
 
 }

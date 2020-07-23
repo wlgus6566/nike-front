@@ -30,7 +30,7 @@ public class GoodsBasketSaveDTO extends BasicDTO {
 	 *
 	 * @author [오지훈]
 	 */
-	@ApiModelProperty(name = "상품 시퀀스", example = "33")
+	@ApiModelProperty(value = "상품 시퀀스", example = "33")
 	private Long goodsSeq;
 
 	/**
@@ -38,7 +38,7 @@ public class GoodsBasketSaveDTO extends BasicDTO {
 	 *
 	 * @author [오지훈]
 	 */
-	@ApiModelProperty(name = "상품수량", example = "1")
+	@ApiModelProperty(value = "상품수량", example = "1")
 	private Long orderQuantity;
 
 }

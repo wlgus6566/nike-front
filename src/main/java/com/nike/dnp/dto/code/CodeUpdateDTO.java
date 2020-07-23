@@ -25,7 +25,6 @@ public class CodeUpdateDTO {
      *
      * @author [오지훈]
      */
-    @NotBlank(message = "code.upperCode")
     @ApiModelProperty(name = "upperCode", value = "상위 코드")
     private String upperCode;
 
@@ -54,14 +53,5 @@ public class CodeUpdateDTO {
     @NotNull(message = "code.codeOrder")
     @ApiModelProperty(name = "codeOrder", value = "코드 순서")
     private Long codeOrder;
-
-    /**
-     * 상위 코드 여부
-     *
-     * @author [오지훈]
-     */
-    @NotBlank(message = "code.upperYn")
-    @ApiModelProperty(name = "upperYn", value = "상위 코드 여부", example = "Y")
-    private String upperYn;
 
 }

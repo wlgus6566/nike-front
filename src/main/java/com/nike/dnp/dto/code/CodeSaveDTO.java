@@ -26,7 +26,7 @@ public class CodeSaveDTO {
      * @author [오지훈]
      */
     @NotBlank(message = "code.code")
-    @ApiModelProperty(name = "code", value = "코드", required = true)
+    @ApiModelProperty(name = "code", value = "코드")
     private String code;
 
     /**
@@ -43,7 +43,7 @@ public class CodeSaveDTO {
      * @author [오지훈]
      */
     @NotBlank(message = "code.codeName")
-    @ApiModelProperty(name = "codeName", value = "코드 명", required = true)
+    @ApiModelProperty(name = "codeName", value = "코드 명")
     private String codeName;
 
     /**
@@ -60,7 +60,7 @@ public class CodeSaveDTO {
      * @author [오지훈]
      */
     @NotNull(message = "code.codeOrder")
-    @ApiModelProperty(name = "codeOrder", value = "코드 순서", required = true)
+    @ApiModelProperty(name = "codeOrder", value = "코드 순서")
     private Long codeOrder;
 
     /**
@@ -69,15 +69,7 @@ public class CodeSaveDTO {
      * @author [오지훈]
      */
     @NotBlank(message = "code.useYn")
-    @ApiModelProperty(name = "useYn", value = "사용 여부", required = true)
+    @ApiModelProperty(name = "useYn", value = "사용 여부")
     private String useYn;
-
-    /**
-     * 상위 코드 여부
-     *
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "upperYn", value = "상위 코드 여부", required = true, example = "Y")
-    private String upperYn;
 
 }
