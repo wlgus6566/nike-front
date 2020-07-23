@@ -127,13 +127,15 @@ public class CalendarController {
             + "## Response ## \n"
             + "[하위 Model 참조]\n\n\n\n"
     )
-    @PutMapping(name = "Calendar 수정"
+    @PutMapping(value="/{calendarSeq}"
+            , name = "Calendar 수정"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Calendar> updateCalendar(
-            final @RequestBody CalendarUpdateDTO calendarUpdateDTO
-    ) {
-
+            @RequestBody final CalendarUpdateDTO calendarUpdateDTO,
+            @PathVariable @ApiParam(value="캘린더 시퀀스",name="calendarSeq",example = "4") final Long calendarSeq
+            ) {
+        calendarUpdateDTO.setCalendarSeq(calendarSeq);
         return responseService.getSingleResult(calendarService.update(calendarUpdateDTO));
     }
 
@@ -153,11 +155,11 @@ public class CalendarController {
             + "## Response ## \n"
             + "[하위 Model 참조]\n\n\n\n"
     )
-    @DeleteMapping(name = "Calendar 삭제"
-            , consumes = {MediaType.APPLICATION_JSON_VALUE}
+    @DeleteMapping(value="/{calendarSeq}"
+            , name = "Calendar 삭제"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Long> deleteCalendar(
-            final @RequestBody Long calendarSeq
+            @PathVariable @ApiParam(value = "캘린더 시퀀스", name = "calendarSeq", example = "4") final Long calendarSeq
     ) {
         return responseService.getSingleResult(calendarService.delete(calendarSeq));
     }
