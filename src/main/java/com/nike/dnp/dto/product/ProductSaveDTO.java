@@ -5,6 +5,9 @@ import com.nike.dnp.dto.BasicDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * productSaveDTO
  *
@@ -28,6 +31,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name="exposureYn",value="상태",required = true,example = "Y")
+	@NotBlank(message = "product.exposureYn")
 	private String exposureYn;
 
 	/**
@@ -36,6 +40,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name="category2Code",value="카테고리 2 코드",required = true,example = "NIKE_BY_YOU")
+	@NotBlank(message = "product.category2Code")
 	private String category2Code;
 
 	/**
@@ -44,6 +49,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "category3Code", value = "카테고리 3 코드", required = true,example = "NIKE_BY_YOU27")
+	@NotBlank(message = "product.category3Code")
 	private String category3Code;
 
 	/**
@@ -52,7 +58,8 @@ public class ProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "agencySeq", value = "에이전시 시퀀스", required = true,example = "1")
-	private long agencySeq;
+	@NotNull(message = "product.agencySeq")
+	private Long agencySeq;
 
 	/**
 	 * 상품 명
@@ -60,6 +67,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "goodsName", value = "상품 명", required = true,example = "상품명입니다.")
+	@NotBlank(message = "product.goodsName")
 	private String goodsName;
 
 	/**
@@ -68,6 +76,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "goodsDescription", value = "추가설명", required = true,example = "추가설명 입니다.")
+	@NotBlank(message = "product.goodsDescription")
 	private String goodsDescription;
 
 	/**
@@ -76,6 +85,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "size", value = "단가", required = true,example = "1000")
+	@NotNull(message = "product.unitPrice")
 	private Long unitPrice;
 
 
@@ -85,6 +95,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "minimumOrderQuantity", value = "최소 주문 수량", required = true, example = "10")
+	@NotNull(message = "product.minimumOrderQuantity")
 	private Long minimumOrderQuantity;
 
 	/**
@@ -102,6 +113,7 @@ public class ProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "imageFileName", value = "이미지 파일 명", example = "test.jpg")
+	@NotNull(message = "product.imageBase64")
 	private String imageFileName;
 
 	/**
@@ -241,6 +253,7 @@ public class ProductSaveDTO extends BasicDTO {
 			"8FevPrWxoPw80vSYrWSSP7Vewt5gucsvO7I+Xdjjj8q6mhI2xGL5k40xfwxSUUUzywooooEFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAU" +
 			"UUUAFFFFABRRRQAUUUUAFFFFABRRRQAVFb2dvZhxbwxwh2Lt5ahdzHqTjqfepaKBhRRRQIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoo" +
 			"ooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA//2Q==")
+	@NotNull(message = "product.imageBase64")
 	private String imageBase64;
 
 }

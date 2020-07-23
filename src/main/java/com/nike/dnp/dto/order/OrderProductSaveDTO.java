@@ -5,6 +5,7 @@ import com.nike.dnp.dto.BasicDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -26,6 +27,7 @@ public class OrderProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name="goodsSeqList",value="상품 시퀀스", allowableValues="28,30,31")
+	@NotNull(message = "order.goodsSeqList")
 	private List<Long> goodsSeqList;
 
 	/**
@@ -34,6 +36,7 @@ public class OrderProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "orderQuantityList", value = "상품 시퀀스별 수량", allowableValues = "10,20,30")
+	@NotNull(message = "order.orderQuantityList")
 	private List<Long> orderQuantityList;
 
 	/**
@@ -42,6 +45,7 @@ public class OrderProductSaveDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name="totalAmount",value="총 금액",example = "100000")
+	@NotNull(message = "order.totalAmount")
 	private Long totalAmount;
 
 	/**
@@ -51,17 +55,4 @@ public class OrderProductSaveDTO extends BasicDTO {
 	 */
 	@ApiModelProperty(name="orderDescription",value = "주문 코맨트",example = "코멘트")
 	private String orderDescription;
-
-	/**
-	 * To string string.
-	 *
-	 * @return the string
-	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 21. 오후 4:02:23
-	 * @Description
-	 */
-	@Override
-	public String toString() {
-		return "OrderProductSaveDTO{" + "goodsSeqList=" + goodsSeqList + ", orderQuantityList=" + orderQuantityList + ", totalAmount=" + totalAmount + ", orderDescription='" + orderDescription + '\'' + '}';
-	}
 }

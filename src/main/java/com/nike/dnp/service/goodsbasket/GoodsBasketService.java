@@ -109,6 +109,10 @@ public class GoodsBasketService {
 	@Transactional
 	public List<GoodsBasket> saveBasketList(final GoodsBasketSaveListDTO goodsBasketSaveListDTO) {
 		final List<GoodsBasket> resultList = new ArrayList<>();
+		if(goodsBasketSaveListDTO.getGoodsSeqList().size()!= goodsBasketSaveListDTO.getOrderQuantityList().size()){
+			throw new CodeMessageHandleException(ErrorEnumCode.BasketError.NOT_SIZE_BASKET.name(), ErrorEnumCode.BasketError.NOT_SIZE_BASKET.getMessage());
+		}
+
 		for(int i = 0; i < goodsBasketSaveListDTO.getGoodsSeqList().size(); i++){
 			final Optional<GoodsBasket> findGoodsBasket = goodsBasketRepository.findByGoodsSeqAndUserSeq(goodsBasketSaveListDTO.getGoodsSeqList().get(i), SecurityUtil.currentUser().getUserSeq());
 			final GoodsBasket goodsBasket = findGoodsBasket.orElse(new GoodsBasket());

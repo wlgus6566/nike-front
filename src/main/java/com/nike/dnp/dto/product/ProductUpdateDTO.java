@@ -5,6 +5,9 @@ import com.nike.dnp.dto.BasicDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * productSaveDTO
  *
@@ -35,6 +38,7 @@ public class ProductUpdateDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name="exposureYn",value="상태", required = true,example = "Y")
+	@NotBlank(message = "product.exposureYn")
 	private String exposureYn;
 
 	/**
@@ -43,6 +47,7 @@ public class ProductUpdateDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name="category2Code",value="구분 2 단계", required = true,example = "NIKE_BY_YOU")
+	@NotBlank(message = "product.category2Code")
 	private String category2Code;
 
 	/**
@@ -51,6 +56,7 @@ public class ProductUpdateDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "category3Code", value = "구분 3 단계", required = true,example = "NIKE_BY_YOU27")
+	@NotBlank(message = "product.category3Code")
 	private String category3Code;
 
 	/**
@@ -59,6 +65,7 @@ public class ProductUpdateDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "agencySeq", value = "에이젼시 시퀀스", required = true,example = "1")
+	@NotNull(message = "product.agencySeq")
 	private Long agencySeq;
 
 	/**
@@ -67,6 +74,7 @@ public class ProductUpdateDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "goodsName", value = "상품 명", required = true,example = "수정명입니다.")
+	@NotBlank(message = "product.goodsName")
 	private String goodsName;
 
 	/**
@@ -75,24 +83,8 @@ public class ProductUpdateDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "goodsDescription", value = "추가설명", required = true,example = "수정 추가 설명")
+	@NotBlank(message = "product.goodsDescription")
 	private String goodsDescription;
-
-	/**
-	 * 최소 주문 수량
-	 *
-	 * @author [윤태호]
-	 */
-	@ApiModelProperty(name = "minimumOrderQuantity", value = "최소 주문 수량", required = true,example = "100")
-	private Long minimumOrderQuantity;
-
-	/**
-	 * 사이즈
-	 *
-	 * @author [윤태호]
-	 */
-	@ApiModelProperty(name = "size", value = "사이즈",hidden = true)
-	private String size;
-
 
 	/**
 	 * 단가
@@ -100,7 +92,25 @@ public class ProductUpdateDTO extends BasicDTO {
 	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "size", value = "단가", required = true,example = "10000")
+	@NotNull(message = "product.unitPrice")
 	private Long unitPrice;
+
+	/**
+	 * 최소 주문 수량
+	 *
+	 * @author [윤태호]
+	 */
+	@ApiModelProperty(name = "minimumOrderQuantity", value = "최소 주문 수량", required = true,example = "100")
+	@NotNull(message = "product.minimumOrderQuantity")
+	private Long minimumOrderQuantity;
+	/**
+	 * 사이즈
+	 *
+	 * @author [윤태호]
+	 */
+	 @ApiModelProperty(name = "size", value = "사이즈",hidden = true)
+	private String size;
+
 
 	/**
 	 * 이미지 파일 이름

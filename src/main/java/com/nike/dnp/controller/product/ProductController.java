@@ -1,5 +1,6 @@
 package com.nike.dnp.controller.product;
 
+import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.product.*;
 import com.nike.dnp.entity.product.Product;
@@ -15,9 +16,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.ObjectUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -136,8 +139,10 @@ public class ProductController {
 	 */
 	@ApiOperation(value = "다수 상품 상세 조회", notes = REQUEST_CHARACTER + "goodsSeq|상품시퀀스|true|Integer\n")
 	@GetMapping(name = "상품상세조회", produces = MediaType.APPLICATION_JSON_VALUE)
-	public SingleResult<List<Product>> findbySearchProduct(@ApiParam(name = "goodsSeqList", value = "상품 시퀀스[배열]", defaultValue = "29,30,31") @RequestParam final List<Long> goodsSeqList) {
-		return responseService.getSingleResult(productService.findBySearchId(goodsSeqList));
+	@ValidField
+	public SingleResult<List<Product>> findbySearchProduct( @Valid @ModelAttribute final ProductViewListDTO productViewListDTO,
+															@ApiIgnore final BindingResult result ) {
+		return responseService.getSingleResult(productService.findBySearchId(productViewListDTO.getGoodsSeqList()));
 	}
 
 	/**
@@ -152,7 +157,9 @@ public class ProductController {
 	 */
 	@ApiOperation(value = "상품 등록", notes = BASIC_CHARACTER)
 	@PostMapping(name = "상품 등록", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public SingleResult<Product> saveProduct(@ApiParam(name = "productSaveDTO", value = "상품 등록 JSON") @RequestBody final ProductSaveDTO productSaveDTO) throws IOException {
+	@ValidField
+	public SingleResult<Product> saveProduct(@Valid @ApiParam(name = "productSaveDTO", value = "상품 등록 JSON") @RequestBody final ProductSaveDTO productSaveDTO,
+											 @ApiIgnore final BindingResult result) throws IOException {
 
 		return responseService.getSingleResult(productService.save(productSaveDTO));
 	}
@@ -168,8 +175,10 @@ public class ProductController {
 	 */
 	@ApiOperation(value = "상품 수정", notes = BASIC_CHARACTER)
 	@PutMapping(value="/{goodsSeq}",name = "상품 수정", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public SingleResult<Product> updateProduct(@PathVariable @ApiParam(name="goodsSeq",value="상품시퀀스") final Long goodsSeq,
-											   @ApiParam(name = "productUpdateDTO", value = "상품 수정 JSON") @RequestBody final ProductUpdateDTO productUpdateDTO) throws IOException {
+	@ValidField
+	public SingleResult<Product> updateProduct(@PathVariable @ApiParam(name="goodsSeq",value="제품 시퀀스") final Long goodsSeq,
+											   @Valid @ApiParam(name = "productUpdateDTO", value = "상품 수정 JSON") @RequestBody final ProductUpdateDTO productUpdateDTO,
+											   @ApiIgnore final BindingResult result) throws IOException {
 		productUpdateDTO.setGoodsSeq(goodsSeq);
 		return responseService.getSingleResult(productService.update(productUpdateDTO));
 	}
@@ -205,10 +214,12 @@ public class ProductController {
 	 */
 	@ApiOperation(value = "상품 삭제[배열]", notes = BASIC_CHARACTER)
 	@DeleteMapping(name = "상품 삭제[배열]", produces = MediaType.APPLICATION_JSON_VALUE)
-	public SingleResult<Boolean> deleteProduct(@ApiParam(name = "goodsSeqList", value = "상품 시퀀스", defaultValue = "29,30,31") @RequestParam final List<Long> goodsSeqList,
-											   @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO) {
+	@ValidField
+	public SingleResult<Boolean> deleteProduct(@ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO,
+											   @Valid @ModelAttribute final ProductViewListDTO productViewListDTO,
+											   @ApiIgnore final BindingResult result) {
 
-		final List<Product> productList = productService.findBySearchId(goodsSeqList);
+		final List<Product> productList = productService.findBySearchId(productViewListDTO.getGoodsSeqList());
 
 		final ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO();
 		productUpdateDTO.setUseYn("N");

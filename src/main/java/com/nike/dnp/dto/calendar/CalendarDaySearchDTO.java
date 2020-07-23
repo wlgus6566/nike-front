@@ -17,7 +17,7 @@ import lombok.*;
 @AllArgsConstructor
 public class CalendarDaySearchDTO extends BasicDTO {
 
-	@ApiParam(value = "조회 년월일", name = "searchDt", defaultValue = "2020-07-12")
+	@ApiParam(value = "조회 년월일", name = "searchDt", defaultValue = "2020.07.12")
 	private String searchDt;
 
 }
