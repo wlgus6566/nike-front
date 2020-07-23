@@ -3,20 +3,9 @@ import { pages } from '@/utils/global-methods';
 const routes = [
     {
         path: '/toolkit',
-        component: pages('toolkit'),
-        meta: { layout: 'Default', aside: 'Order', title: '' },
+        component: pages('root'),
         redirect: '/toolkit/vms',
         children: [
-            {
-                path: 'upload',
-                component: pages('toolkit/upload'),
-                meta: {
-                    layout: 'Default',
-                    aside: 'Order',
-                    topMenuCode: 'TOOLKIT',
-                    title: 'UPLOAD',
-                },
-            },
             {
                 path: 'vms',
                 component: pages('common/folder-list'),
@@ -62,13 +51,22 @@ const routes = [
                 },
             },
             {
+                path: 'upload',
+                component: pages('toolkit/upload'),
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    topMenuCode: 'TOOLKIT',
+                    title: 'UPLOAD',
+                },
+            },
+            {
                 path: ':id',
                 component: pages('common/folder-view'),
                 meta: {
                     layout: 'Default',
                     aside: 'Order',
                     topMenuCode: 'TOOLKIT',
-                    title: '',
                 },
             },
         ],

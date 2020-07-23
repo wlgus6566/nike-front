@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-
 // Routes
 import AssetRoutes from './asset';
 import ToolkitRoutes from './toolkit';
@@ -16,7 +15,7 @@ import PubRoutes from './pub';
 // Import methods
 import store from '@/store';
 import { pages } from '@/utils/global-methods';
-import { getUserFromCookie } from '@/utils/cookies.js';
+import { getAuthFromCookie } from '@/utils/cookies';
 
 Vue.use(VueRouter);
 
@@ -28,23 +27,13 @@ const router = new VueRouter({
             component: pages('login'),
             meta: {
                 layout: 'Clean',
+                unauthorized: true,
             },
-            /*beforeEnter(to, from, next) {
-                store.getters['isLoggedIn'] ? next('/') : next();
-            },*/
         },
         {
             path: '/',
             component: pages('main-page'),
             meta: { layout: 'Default', aside: 'Default' },
-            /*beforeEnter(to, from, next) {
-                if (store.getters['isLoggedIn'] || getUserFromCookie()) {
-                    next();
-                } else {
-                    next();
-                    //next('/login');
-                }
-            },*/
         },
         ...AssetRoutes,
         ...ToolkitRoutes,
@@ -61,13 +50,15 @@ const router = new VueRouter({
     ],
 });
 
-export default router;
-
-/*function beforeEnter(to, from, next) {
-    if (store.getters['isLoggedIn'] || getUserFromCookie()) {
-        next();
+router.beforeEach(async (to, from, next) => {
+    if (to.meta.unauthorized) {
+        store.getters['isLoggedIn'] ? next('/') : next();
     } else {
-        alert('sign in please');
-        next('/login');
+        if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
+            next();
+        } else {
+            next('/login');
+        }
     }
-}*/
+});
+export default router;

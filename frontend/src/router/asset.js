@@ -3,27 +3,9 @@ import { pages } from '@/utils/global-methods';
 const routes = [
     {
         path: '/asset',
-        component: pages('asset'),
-        meta: {
-            layout: 'Default',
-            aside: 'Order',
-            topMenuCode: 'ASSET',
-            menuCode: 'ALL',
-            title: 'ALL',
-        },
+        component: pages('root'),
         redirect: '/asset/all',
         children: [
-            {
-                path: 'upload',
-                name: 'upload',
-                component: pages('asset/upload.vue'),
-                meta: {
-                    layout: 'Default',
-                    aside: 'Order',
-                    topMenuCode: 'ASSET',
-                    title: 'UPLOAD',
-                },
-            },
             {
                 path: 'all',
                 component: pages('common/folder-list'),
@@ -80,13 +62,22 @@ const routes = [
                 },
             },
             {
+                path: 'upload',
+                component: pages('asset/upload'),
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    topMenuCode: 'ASSET',
+                    title: 'UPLOAD',
+                },
+            },
+            {
                 path: ':id',
                 component: pages('common/folder-view'),
                 meta: {
                     layout: 'Default',
                     aside: 'Order',
                     topMenuCode: 'ASSET',
-                    title: '',
                 },
             },
         ],

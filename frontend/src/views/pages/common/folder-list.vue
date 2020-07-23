@@ -47,17 +47,9 @@ import { getContents } from '@/api/contents.js';
 export default {
     name: 'folder-list',
     watch: {
-        '$route.meta.menuCode'(tt) {
-            if (!!tt) {
-                this.initFetchData();
-            }
-        },
         'listSortSelect.value'() {
             this.initFetchData();
         },
-    },
-    mounted() {
-        this.initFetchData();
     },
     data() {
         return {
@@ -92,9 +84,6 @@ export default {
             folderListData: null,
         };
     },
-    computed: {
-        //
-    },
     components: {
         ListSorting,
         FilterSelect,
@@ -108,7 +97,7 @@ export default {
         handleScroll(event) {
             if (this.loadingData) return;
             const windowE = document.documentElement;
-            if (window.outerHeight + windowE.scrollTop >= windowE.scrollHeight) {
+            if (windowE.clientHeight + windowE.scrollTop >= windowE.scrollHeight) {
                 this.infiniteScroll();
             }
         },
@@ -123,11 +112,14 @@ export default {
             this.initFetchData();
         },
         infiniteScroll() {
+            console.log('loadingData1', this.loadingData);
             if (
+                !this.loadingData &&
                 this.totalPage > this.page - 1 &&
                 this.folderListData.length >= this.itemLength &&
                 this.folderListData.length !== 0
             ) {
+                console.log('loadingData55555555', this.loadingData);
                 this.fetchData(true);
             }
         },
@@ -135,7 +127,9 @@ export default {
             alert('마지막 페이지');
         },
         async fetchData(infinite) {
+            console.log('loadingData2', this.loadingData);
             this.loadingData = true;
+            console.log('loadingData3', this.loadingData);
             try {
                 const {
                     data: { data: response },
@@ -145,7 +139,6 @@ export default {
                     keyword: this.searchKeyword,
                     orderType: this.listSortSelect.value,
                 });
-                console.log(response);
 
                 this.totalPage = response.totalPages - 1;
                 if (infinite) {
@@ -158,7 +151,9 @@ export default {
                     this.folderListData = response.content;
                 }
                 this.page++;
+                console.log('loadingData4', this.loadingData);
                 this.loadingData = false;
+                console.log('loadingData5', this.loadingData);
                 return;
             } catch (error) {
                 console.log(error);
@@ -166,6 +161,7 @@ export default {
         },
     },
     created() {
+        this.initFetchData();
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
