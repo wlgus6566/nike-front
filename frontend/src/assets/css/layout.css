@@ -6,19 +6,16 @@
 html,
 body {
     box-sizing: border-box;
-    height: 100%;
 }
 body {
     padding: var(--safeTop) 0 var(--safeBtm);
 }
 #app {
-    height: 100%;
 }
 #wrap {
     display: flex;
     flex-wrap: wrap;
     min-width: 1440px;
-    height: 100%;
 }
 header {
     position: relative;
@@ -151,7 +148,6 @@ header .sticky-content {
 }
 
 #container {
-    overflow: hidden;
     display: flex;
     flex-grow: 1;
     flex-shrink: 1;
@@ -162,8 +158,7 @@ header .sticky-content {
 .contents {
     flex-grow: 1;
     flex-shrink: 1;
-    flex-basis: auto;
-    max-width: calc(100% - 300px);
+    flex-basis: calc(100% - 300px);
     padding: 80px 60px 130px;
     box-sizing: border-box;
 }

@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { loginUser } from '@/api/auth';
+import { loginUser } from '@/api/login';
 import {
     saveAuthToCookie,
     saveUserToCookie,
-    getUserFromCookie,
+    getAuthFromCookie,
     deleteCookie,
 } from '@/utils/cookies.js';
 
@@ -17,7 +17,7 @@ export default new Vuex.Store({
     },
     getters: {
         isLoggedIn(state) {
-            return !!state.token || getUserFromCookie();
+            return !!state.token || getAuthFromCookie();
         },
         userToken(state) {
             return state.token;
@@ -33,17 +33,17 @@ export default new Vuex.Store({
         LOGOUT(state) {
             state.user = null;
             state.token = null;
-            deleteCookie('til_auth');
-            deleteCookie('til_user');
+            deleteCookie('nike_token');
+            //deleteCookie('nike_user');
         },
     },
     actions: {
         async LOGIN({ commit }, data) {
             const response = await loginUser(data);
-            commit('SET_USER', response.data.user);
-            commit('SET_TOKEN', response.data.token);
-            saveUserToCookie(response.data.user.username);
-            saveAuthToCookie(response.data.token);
+            //commit('SET_USER', response.data.user);
+            commit('SET_TOKEN', response.headers.authorization);
+            //saveUserToCookie(response.data.user.username);
+            saveAuthToCookie(response.headers.authorization);
             return response;
         },
     },

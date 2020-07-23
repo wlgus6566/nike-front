@@ -4,15 +4,16 @@ import 'es6-promise/auto';
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import axios from './axios';
+import store from './store';
+import VueCookies from 'vue-cookies';
 import CKEditor from 'ckeditor4-vue';
 
 import lineClamp from './utils/lineclamp';
 
-Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
 
 Vue.use(CKEditor);
+Vue.use(VueCookies);
 Vue.directive('lineClamp', lineClamp);
 
 /**
@@ -33,5 +34,6 @@ Vue.filter('formattedNumber', (value, prefix, suffix) => {
 
 new Vue({
     router,
+    store,
     render: (h) => h(App),
 }).$mount('#app');

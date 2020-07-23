@@ -23,7 +23,9 @@
                     v-on:enter="pageEnter"
                     v-on:leave="pageLeave"
                 >
-                    <router-view />
+                    <keep-alive>
+                        <router-view :key="$route.path" />
+                    </keep-alive>
                 </transition>
             </div>
             <aside class="sticky-container" sticky-container>
@@ -270,13 +272,4 @@ export default {
     },
 };
 </script>
-<style scoped>
-/*.layout-change-enter-active,*/
-/*.layout-change-leave-active {*/
-/*    transition: opacity 0.3s ease-in-out;*/
-/*}*/
-/*.layout-change-enter,*/
-/*.layout-change-leave-to {*/
-/*    opacity: 0;*/
-/*}*/
-</style>
+<style scoped></style>
