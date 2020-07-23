@@ -1,102 +1,27 @@
 <template>
     <ul class="wish-list">
-        <li class="wish-list-item">
-            <span class="checkbox">
-                <input type="checkbox" />
-                <span></span>
-            </span>
+        <li class="wish-list-item" v-for="(item, index) in listData" :key="index">
+            <el-checkbox v-model="checkbox"></el-checkbox>
             <a href="#" class="title-box">
                 <span class="thumbnail">
-                    <img src="http://placehold.it/400x200" alt="임시ㅣ미지" />
+                    <img
+                        :src="item.product.imageFilePhysicalName"
+                        :alt="item.product.imageFileName"
+                    />
                 </span>
                 <span class="info-box">
-                    <strong class="title">
-                        뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴
-                        유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설
-                    </strong>
-                    <span class="txt">일이삼사</span>
+                    <strong class="title">{{ item.product.goodsName }}</strong>
+                    <span class="txt">{{ item.product.goodsDescription }}</span>
                     <span class="desc-txt-box">
-                        <span class="desc-txt">15,000원</span>
-                        <span class="desc-txt">에이전시명</span>
+                        <span class="desc-txt">{{ item.product.unitPrice }} 원</span>
+                        <span class="desc-txt">{{ item.product.agency.agencyName }}</span>
                     </span>
                 </span>
             </a>
             <div class="quantity-box">
                 <span class="title">최소주문수량</span>
                 <span class="num">
-                    <em>1,000</em>개
-                </span>
-            </div>
-            <div class="btn-box">
-                <button type="button" class="btn-s-black-sm">
-                    <span>CART</span>
-                </button>
-                <button type="button" class="delete">
-                    <span>삭제</span>
-                </button>
-            </div>
-        </li>
-        <li class="wish-list-item">
-            <span class="checkbox">
-                <input type="checkbox" />
-                <span></span>
-            </span>
-            <a href="#" class="title-box">
-                <span class="thumbnail">
-                    <img src="http://placehold.it/400x200" alt="임시ㅣ미지" />
-                </span>
-                <span class="info-box">
-                    <strong class="title">
-                        뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴
-                        유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설
-                    </strong>
-                    <span class="txt">일이삼사</span>
-                    <span class="desc-txt-box">
-                        <span class="desc-txt">15,000원</span>
-                        <span class="desc-txt">에이전시명</span>
-                    </span>
-                </span>
-            </a>
-            <div class="quantity-box">
-                <span class="title">최소주문수량</span>
-                <span class="num">
-                    <em>1,000</em>개
-                </span>
-            </div>
-            <div class="btn-box">
-                <button type="button" class="btn-s-black-sm">
-                    <span>CART</span>
-                </button>
-                <button type="button" class="delete">
-                    <span>삭제</span>
-                </button>
-            </div>
-        </li>
-        <li class="wish-list-item">
-            <span class="checkbox">
-                <input type="checkbox" />
-                <span></span>
-            </span>
-            <a href="#" class="title-box">
-                <span class="thumbnail">
-                    <img src="http://placehold.it/400x200" alt="임시ㅣ미지" />
-                </span>
-                <span class="info-box">
-                    <strong class="title">
-                        뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴
-                        유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설
-                    </strong>
-                    <span class="txt">일이삼사</span>
-                    <span class="desc-txt-box">
-                        <span class="desc-txt">15,000원</span>
-                        <span class="desc-txt">에이전시명</span>
-                    </span>
-                </span>
-            </a>
-            <div class="quantity-box">
-                <span class="title">최소주문수량</span>
-                <span class="num">
-                    <em>1,000</em>개
+                    <em>{{ item.product.minimumOrderQuantity }}</em>개
                 </span>
             </div>
             <div class="btn-box">
@@ -112,7 +37,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+    name: 'wish-list-comp',
+    props: ['listData'],
+    mounted() {},
+};
 </script>
 
-<style></style>
+<style scoped></style>
