@@ -3,6 +3,9 @@ package com.nike.dnp.dto.user;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * UserUpdateDTO
  *
@@ -21,6 +24,7 @@ public class UserUpdateDTO {
      *
      * @author [오지훈]
      */
+    @NotBlank(message = "user.nickname")
     @ApiModelProperty(name = "nickname", value = "닉네임", required = true, example = "NIKE학동점")
     private String nickname;
 
@@ -29,6 +33,7 @@ public class UserUpdateDTO {
      *
      * @author [오지훈]
      */
+    @NotNull(message = "user.authSeq")
     @ApiModelProperty(name = "authSeq", value = "권한 시퀀스", required = true, example = "1")
     private Long authSeq;
 

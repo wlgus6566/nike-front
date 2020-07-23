@@ -1,12 +1,12 @@
 package com.nike.dnp.controller.mypage;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.aspect.ValidField;
+import com.nike.dnp.common.validation.ValidationGroups;
 import com.nike.dnp.common.variable.SuccessEnumCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.menu.MenuReturnDTO;
 import com.nike.dnp.dto.user.UserCertDTO;
 import com.nike.dnp.dto.user.UserReturnDTO;
-import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.auth.AuthService;
@@ -18,7 +18,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.util.ObjectUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -76,13 +77,11 @@ public class MyPageUserController {
      * @CreatedOn 2020. 7. 16. 오후 5:16:45
      * @Description GNB 메뉴 목록
      */
-    @ApiOperation(
-            value = "GNB 메뉴 목록"
-            , notes = OPERATION_CHARACTER
-    )
+    @ApiOperation(value = "GNB 메뉴 목록"
+            , notes = OPERATION_CHARACTER)
     @GetMapping(name = "GNB 메뉴", value = "/gnb"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<MenuReturnDTO>> getRedisMenus(
+    public SingleResult<List<MenuReturnDTO>> getRedisMenus (
             final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
     ) {
         log.info("MenuController.getRedisMenus");
@@ -96,17 +95,14 @@ public class MyPageUserController {
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 6. 23. 오후 5:19:29
-     * @Description 유저 상세 조회
+     * @Description MY INFO 상세 조회
      */
-    @ApiOperation(
-            value = "마이페이지 상세 조회"
-            , notes = OPERATION_CHARACTER
-    )
-    @GetMapping(name = "마이페이지 상세 조회"
+    @ApiOperation(value = "MY INFO 상세 조회"
+            , notes = OPERATION_CHARACTER)
+    @GetMapping(name = "MY INFO 상세 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<UserReturnDTO> getUser(
-            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
-    ) {
+    public SingleResult<UserReturnDTO> getUser (
+            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO) {
         log.info("UserMyPageController.getUser");
         return responseService.getSingleResult(userService.getMyPage(authUserDTO.getUserSeq()));
     }
@@ -114,33 +110,26 @@ public class MyPageUserController {
     /**
      * Change password single result.
      *
+     * @param authUserDTO the auth user dto
      * @param userCertDTO the user cert dto
+     * @param result      the result
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 7. 2. 오후 4:08:39
      * @Description 마이페이지 비밀번호 변경
      */
-    @ApiOperation(
-            value = "마이페이지 비밀번호 변경"
-            , notes = OPERATION_CHARACTER
-    )
-    @PutMapping(value = "/change/password", name = "마이페이지 비밀번호 변경"
+    @ApiOperation(value = "마이페이지 비밀번호 변경"
+            , notes = OPERATION_CHARACTER)
+    @PutMapping(name = "마이페이지 비밀번호 변경", value = "/change/password"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<UserReturnDTO> changePassword(
+    @ValidField
+    public SingleResult<UserReturnDTO> changePassword (
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
-            , @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody final UserCertDTO userCertDTO
-    ) {
+            , @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody
+                @Validated({ValidationGroups.group1.class, ValidationGroups.group2.class}) final UserCertDTO userCertDTO
+            , @ApiIgnore final BindingResult result) {
         log.info("UserMyPageController.changePassword");
-        userCertDTO.setCertCode("MYPAGE");
-
-        if (ObjectUtils.isEmpty(userCertDTO.getPassword())) {
-            throw new CodeMessageHandleException(
-                    ErrorEnumCode.LoginError.NULL_PASSWORD.toString()
-                    , ErrorEnumCode.LoginError.NULL_PASSWORD.getMessage()
-            );
-        }
-
         return responseService.getSingleResult(
                 userService.confirmPassword(authUserDTO.getUserId(), userCertDTO)
                 , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.toString()

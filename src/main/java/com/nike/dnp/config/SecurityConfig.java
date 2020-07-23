@@ -156,15 +156,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * @author [윤태호]
 	 */
 	@Override
-	public void configure(final WebSecurity web) throws Exception {
+	public void configure(final WebSecurity web) {
 		final String[] staticPatterns = {
 				"/resources/**", "/static/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/css/**", "/font/**", "/js/**", "/images/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
 				"/api/download" // 임시
+				,"/api/open/**"
 		};
 		web.ignoring().antMatchers(staticPatterns);
-
 	}
 
 	/**
@@ -175,11 +175,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
-
 		http.authorizeRequests()
 						.accessDecisionManager(accessDecisionManager())
-						.antMatchers(HttpMethod.POST,"/api/open/**").permitAll()
-						.antMatchers("/api/mypage/**").authenticated()
+						.antMatchers(HttpMethod.POST,"/api/login").permitAll()
+						//.antMatchers("/api/mypage/**").authenticated()
 						.anyRequest().authenticated();
 
 		http.addFilter(authenticationFilter()) // 인증 필터
@@ -226,7 +225,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		AuthenticationFilter filter = null;
 		try {
 			filter = new AuthenticationFilter(authenticationManager());
-			filter.setFilterProcessesUrl("/api/open/login");
+			filter.setFilterProcessesUrl("/api/login");
 			filter.setAuthenticationSuccessHandler(authenticationSuccessHandler()); // 인증 성공 핸들러
 			filter.setAuthenticationFailureHandler(authenticationFailureHandler()); // 인증 실패 핸들러
 			filter.setAuthenticationManager(authenticationManagerBean());

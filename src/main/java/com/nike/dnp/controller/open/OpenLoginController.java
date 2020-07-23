@@ -1,5 +1,7 @@
 package com.nike.dnp.controller.open;
 
+import com.nike.dnp.common.aspect.ValidField;
+import com.nike.dnp.common.validation.ValidationGroups;
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.common.variable.SuccessEnumCode;
 import com.nike.dnp.dto.user.UserCertDTO;
@@ -17,8 +19,12 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.util.ObjectUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
+
+import javax.validation.Valid;
 
 /**
  * The Class Login controller.
@@ -71,19 +77,22 @@ public class OpenLoginController {
      * @CreatedOn 2020. 7. 2. 오전 11:30:10
      * @Description 인증코드 생성 및 이메일 발송
      */
-    @ApiOperation(
-            value = "ID 확인, 인증코드 생성 및 이메일 발송"
-            , notes = OPERATION_CHARACTER
-    )
-    @GetMapping(value = "/send/cert", name = "ID 확인, 인증코드 생성 및 비밀번호 설정 이메일 발송")
-    public SingleResult<String> sendCert(final UserIdDTO userIdDTO) {
+    @ApiOperation(value = "ID 확인, 인증코드 생성 및 이메일 발송"
+            , notes = OPERATION_CHARACTER)
+    @GetMapping(name = "ID 확인, 인증코드 생성 및 비밀번호 설정 이메일 발송", value = "/send/cert")
+    @ValidField
+    public SingleResult<String> sendCert (
+            @ModelAttribute @Valid final UserIdDTO userIdDTO
+            , @ApiIgnore final BindingResult result) {
         log.info("UserController.sendCert");
+
         final User user = userService.findByUserIdReturnOptional(userIdDTO.getUserId()).orElseThrow(
                 () -> new CodeMessageHandleException(
                         ErrorEnumCode.UserError.RETRY_CONFIRM_EMAIL.toString()
                         ,ErrorEnumCode.UserError.RETRY_CONFIRM_EMAIL.getMessage()
                 )
         );
+
         return responseService.getSingleResult(
                 userMailService.sendMailForSetPassword(user)
                 , SuccessEnumCode.LoginSuccess.SEND_EMAIL.toString()
@@ -101,15 +110,16 @@ public class OpenLoginController {
      * @CreatedOn 2020. 6. 22. 오후 4:41:44
      * @Description 인증코드 검증 및 비밀번호 설정
      */
-    @ApiOperation(
-            value = "인증코드 검증 및 비밀번호 설정"
-            , notes = OPERATION_CHARACTER
-    )
-    @PutMapping(value = "/set/password", name = "인증코드 검증 및 비밀번호 설정"
+    @ApiOperation(value = "인증코드 검증 및 비밀번호 설정"
+            , notes = OPERATION_CHARACTER)
+    @PutMapping(name = "인증코드 검증 및 비밀번호 설정", value = "/set/password"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<UserReturnDTO> setPassword(
-            @ApiParam("유저 인증코드 DTO") @RequestBody final UserCertDTO userCertDTO) {
+    @ValidField
+    public SingleResult<UserReturnDTO> setPassword (
+            @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody
+            @Validated({ValidationGroups.group1.class, ValidationGroups.group3.class}) final UserCertDTO userCertDTO
+            , @ApiIgnore final BindingResult result) {
         log.info("UserOpenController.setPassword");
         return responseService.getSingleResult(
                 userService.confirmPassword(userCertDTO)
@@ -128,23 +138,17 @@ public class OpenLoginController {
      * @CreatedOn 2020. 7. 2. 오후 4:08:39
      * @Description 인증코드 검증 및 비밀번호 변경
      */
-    @ApiOperation(
-            value = "인증코드 검증 및 비밀번호 변경"
-            , notes = OPERATION_CHARACTER
-    )
-    @PutMapping(value = "/change/password", name = "인증코드 검증 및 비밀번호 변경"
+    @ApiOperation(value = "인증코드 검증 및 비밀번호 변경"
+            , notes = OPERATION_CHARACTER)
+    @PutMapping(name = "인증코드 검증 및 비밀번호 변경", value = "/change/password"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<UserReturnDTO> changePassword(
-            @ApiParam("유저 인증코드 DTO") @RequestBody final UserCertDTO userCertDTO) {
+    @ValidField
+    public SingleResult<UserReturnDTO> changePassword (
+            @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody
+            @Validated({ValidationGroups.class}) final UserCertDTO userCertDTO
+            , @ApiIgnore final BindingResult result) {
         log.info("UserOpenController.changePassword");
-
-        if (ObjectUtils.isEmpty(userCertDTO.getPassword())) {
-            throw new CodeMessageHandleException(
-                    ErrorEnumCode.LoginError.NULL_PASSWORD.toString()
-                    , ErrorEnumCode.LoginError.NULL_PASSWORD.getMessage()
-            );
-        }
         return responseService.getSingleResult(
                 userService.confirmPassword(userCertDTO)
                 , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.toString()

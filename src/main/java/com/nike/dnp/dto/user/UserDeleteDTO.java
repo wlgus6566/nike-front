@@ -3,6 +3,8 @@ package com.nike.dnp.dto.user;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+
 
 /**
  * UserDeleteDTO
@@ -23,6 +25,7 @@ public class UserDeleteDTO {
      *
      * @author [오지훈]
      */
+    @NotNull(message = "user.userSeqArray")
     @ApiModelProperty(value = "유저 시퀀스 배열", name = "userSeqArray", required = true, allowableValues = "4,5")
     private Long[] userSeqArray;
 

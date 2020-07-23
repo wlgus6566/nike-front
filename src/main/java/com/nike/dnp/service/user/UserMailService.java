@@ -81,11 +81,7 @@ public class UserMailService {
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
 
-        String keyCode = this.createEncodeCertCode(user.getUserId());
-
-        System.out.println("======================================================");
-        System.out.println(keyCode);
-        System.out.println("======================================================");
+        final String keyCode = this.createEncodeCertCode(user.getUserId());
 
         //TODO[ojh] 2020-07-02 : 변경예정
         sendDTO.setPasswordUrl("setPasswordUrl="+keyCode);

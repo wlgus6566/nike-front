@@ -3,7 +3,6 @@ package com.nike.dnp.controller.menu;
 import com.nike.dnp.entity.menu.Menu;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
-import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.menu.MenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,13 +45,6 @@ public class MenuController {
     private final MenuService menuService;
 
     /**
-     * The Auth service
-     *
-     * @author [오지훈]
-     */
-    private final AuthService authService;
-
-    /**
      * OPERATION_CHARACTER
      *
      * @author [오지훈]
@@ -68,13 +60,11 @@ public class MenuController {
      * @CreatedOn 2020. 7. 8. 오후 6:14:49
      * @Description 메뉴 전체 목록 조회
      */
-    @ApiOperation(
-            value = "메뉴 전체 목록 조회"
-            , notes = OPERATION_CHARACTER
-    )
+    @ApiOperation(value = "메뉴 전체 목록 조회"
+            , notes = OPERATION_CHARACTER)
     @GetMapping(name = "메뉴 전체 목록 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<Menu>> findAllMenus() {
+    public SingleResult<List<Menu>> findAllMenus () {
         log.info("MenuController.findAllMenus");
         return responseService.getSingleResult(menuService.findAll());
     }
@@ -87,13 +77,11 @@ public class MenuController {
      * @CreatedOn 2020. 7. 16. 오후 4:43:52
      * @Description 메뉴 관리 목록 조회
      */
-    @ApiOperation(
-            value = "메뉴 관리 목록 조회"
-            , notes = OPERATION_CHARACTER
-    )
+    @ApiOperation(value = "메뉴 관리 목록 조회"
+            , notes = OPERATION_CHARACTER)
     @GetMapping(name = "메뉴 관리 목록 조회", value = "/manage"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<Menu>> findMenus() {
+    public SingleResult<List<Menu>> findMenus () {
         log.info("MenuController.findMenus");
         return responseService.getSingleResult(menuService.findMenus());
     }

@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -65,15 +66,12 @@ public class CodeController {
      * @CreatedOn 2020. 6. 22. 오후 5:22:31
      * @Description
      */
-    @ApiOperation(
-        value = "하위 코드 목록 조회"
-        , notes = OPERATION_CHARACTER
-    )
+    @ApiOperation(value = "하위 코드 목록 조회"
+        , notes = OPERATION_CHARACTER)
     @GetMapping(value = "/{upperCode}", name = "하위 코드 목록 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<List<Code>> getConfCodes(
-            @ApiParam(name = "upperCode", value = "상위 코드", required = true) @PathVariable final String upperCode
-    ) {
+            @ApiParam(name = "upperCode", value = "상위 코드", required = true) @PathVariable final String upperCode) {
         return responseService.getSingleResult(codeService.findCodesByUpperCode(upperCode));
     }
 
@@ -81,23 +79,21 @@ public class CodeController {
      * 코드 등록
      *
      * @param codeSaveDTO the code save dto
+     * @param result      the result
      * @return the response entity
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 5:22:31
      * @Description
      */
-    @ApiOperation(
-        value = "코드 등록"
-        , notes = OPERATION_CHARACTER
-    )
+    @ApiOperation(value = "코드 등록"
+        , notes = OPERATION_CHARACTER)
     @PostMapping(name = "코드 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<Code> saveCode(
             @ApiParam(value = "코드 저장 DTO") @Valid @RequestBody final CodeSaveDTO codeSaveDTO
-            , final BindingResult result
-    ) {
+            , @ApiIgnore final BindingResult result) {
         return responseService.getSingleResult(codeService.save(codeSaveDTO));
     }
 
@@ -106,15 +102,14 @@ public class CodeController {
      *
      * @param code          the code
      * @param codeUpdateDTO the code update dto
+     * @param result        the result
      * @return the response entity
      * @author [오지훈]
      * @CreatedOn 2020. 6. 22. 오후 5:22:31
      * @Description
      */
-    @ApiOperation(
-            value = "코드 수정"
-            , notes = OPERATION_CHARACTER
-    )
+    @ApiOperation(value = "코드 수정"
+            , notes = OPERATION_CHARACTER)
     @PutMapping(value = "/{code}", name = "코드 수정"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -122,7 +117,7 @@ public class CodeController {
     public SingleResult<Optional<Code>> updateCode(
             @ApiParam(name = "code", value = "코드", required = true) @PathVariable final String code
             , @ApiParam(value = "코드 수정 DTO") @Valid @RequestBody final CodeUpdateDTO codeUpdateDTO
-    ) {
+            , @ApiIgnore final BindingResult result) {
         return responseService.getSingleResult(codeService.update(code, codeUpdateDTO));
     }
 
@@ -135,16 +130,13 @@ public class CodeController {
      * @CreatedOn 2020. 6. 22. 오후 5:22:31
      * @Description
      */
-    @ApiOperation(
-            value = "코드 삭제"
-            , notes = OPERATION_CHARACTER
-    )
+    @ApiOperation(value = "코드 삭제"
+            , notes = OPERATION_CHARACTER)
     @DeleteMapping(value = "/{code}", name = "코드 삭제"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<Code>> deleteCode(
-            @ApiParam(name = "code", value = "코드", required = true) @PathVariable final String code
-    ) {
+            @ApiParam(name = "code", value = "코드", required = true) @PathVariable final String code) {
         return responseService.getSingleResult(codeService.delete(code));
     }
 }
