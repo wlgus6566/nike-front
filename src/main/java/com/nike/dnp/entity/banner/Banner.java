@@ -1,7 +1,7 @@
 package com.nike.dnp.entity.banner;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.nike.dnp.dto.banner.BannerUpdateDTO;
+import com.nike.dnp.dto.banner.BannerSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -130,17 +130,17 @@ public class Banner extends BaseTimeEntity implements Serializable {
     @ApiModelProperty(name = "linkUrl", value = "링크_URL", required = true)
     private String linkUrl;
 
-    public Banner saveOrUpdate (BannerUpdateDTO bannerUpdateDTO) {
-        this.title = bannerUpdateDTO.getTitle();
-        this.contents = bannerUpdateDTO.getContents();
-        this.imageFileName = bannerUpdateDTO.getImageFileName();
-        this.imageFileSize = bannerUpdateDTO.getImageFileSize();
-        this.imageFilePhysicalName = bannerUpdateDTO.getImageFilePhysicalName();
-        this.mobileImageFileName = bannerUpdateDTO.getMobileImageFileName();
-        this.mobileImageFileSize = bannerUpdateDTO.getMobileImageFileSize();
-        this.mobileImageFilePhysicalName = bannerUpdateDTO.getMobileImageFilePhysicalName();
-        this.linkUrlTypeCode = bannerUpdateDTO.getLinkUrlTypeCode();
-        this.linkUrl = bannerUpdateDTO.getLinkUrl();
+    public Banner saveOrUpdate (BannerSaveDTO bannerSaveDTO) {
+        this.title = bannerSaveDTO.getTitle();
+        this.contents = bannerSaveDTO.getContents();
+        this.imageFileName = bannerSaveDTO.getImageFileName();
+        this.imageFileSize = bannerSaveDTO.getImageFileSize();
+        this.imageFilePhysicalName = bannerSaveDTO.getImageFilePhysicalName();
+        this.mobileImageFileName = bannerSaveDTO.getMobileImageFileName();
+        this.mobileImageFileSize = bannerSaveDTO.getMobileImageFileSize();
+        this.mobileImageFilePhysicalName = bannerSaveDTO.getMobileImageFilePhysicalName();
+        this.linkUrlTypeCode = bannerSaveDTO.getLinkUrlTypeCode();
+        this.linkUrl = bannerSaveDTO.getLinkUrl();
         return this;
     }
 

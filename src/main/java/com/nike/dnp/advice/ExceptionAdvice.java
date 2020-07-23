@@ -8,6 +8,9 @@ import com.nike.dnp.service.log.ErrorLogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -55,14 +58,17 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.OK)
     protected CommonResult codeMessageHandleException(final CodeMessageHandleException exception) {
         final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        log.debug("==================ERROR===================");
-        log.debug("Exception Status200Exception", exception);
-        log.debug("========================= ErrorLog Start =========================");
-        final ErrorLogSaveDTO errorLog = new ErrorLogSaveDTO();
-        errorLog.setUrl(request.getRequestURI());
-        errorLog.setErrorContents(exception.getMessage());
-        errorLogService.save(errorLog);
-        log.debug("========================= End End =========================");
+        log.error("==================ERROR===================");
+        log.error("Exception Status200Exception", exception);
+        log.error("========================= ErrorLog Start =========================");
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {
+            final ErrorLogSaveDTO errorLog = new ErrorLogSaveDTO();
+            errorLog.setUrl(request.getRequestURI());
+            errorLog.setErrorContents(exception.getMessage());
+            errorLogService.save(errorLog);
+        }
+        log.error("========================= End End =========================");
 
         return responseService.getFailResult(exception.getCode(), exception.getMessage());
     }
@@ -79,14 +85,26 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public CommonResult globalHandelException(final Exception exception) {
         final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        log.debug("==================Global ERROR===================");
-        log.debug("Exception", exception);
-        log.debug("========================= ErrorLog Start =========================");
-        final ErrorLogSaveDTO errorLog = new ErrorLogSaveDTO();
-        errorLog.setUrl(request.getRequestURI());
-        errorLog.setErrorContents(exception.getMessage());
-        errorLogService.save(errorLog);
-        log.debug("========================= ErrorLog End =========================");
+        log.error("==================Global ERROR===================");
+        log.error("Exception", exception);
+        log.error("========================= ErrorLog Start =========================");
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        System.out.println("======================================================");
+        System.out.println(authentication.isAuthenticated());
+        System.out.println(authentication.getDetails());
+        System.out.println(authentication.getCredentials());
+        System.out.println(authentication.getName());
+        System.out.println(authentication.getAuthorities());
+        System.out.println("======================================================");
+
+        if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {
+            final ErrorLogSaveDTO errorLog = new ErrorLogSaveDTO();
+            errorLog.setUrl(request.getRequestURI());
+            errorLog.setErrorContents(exception.getMessage());
+            errorLogService.save(errorLog);
+        }
+        log.error("========================= ErrorLog End =========================");
 
         return responseService.getFailResult();
     }

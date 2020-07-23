@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+
 
 /**
  * UserContentsSearchDTO
@@ -25,6 +27,7 @@ public class UserContentsSearchDTO {
      *
      * @author [오지훈]
      */
+    @NotBlank(message = "userContents.menuCode")
     @ApiModelProperty(name = "menuCode", value = "메뉴 코드", example = "ASSET_SP")
     private String menuCode;
 
@@ -33,6 +36,7 @@ public class UserContentsSearchDTO {
      *
      * @author [오지훈]
      */
+    @NotBlank(message = "userContents.skillCode")
     @ApiModelProperty(name = "skillCode", value = "스킬 코드", example = "VIEW")
     private String skillCode;
 
