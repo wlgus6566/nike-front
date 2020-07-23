@@ -108,6 +108,11 @@ public class NoticeController {
         return responseService.getSingleResult(noticeService.checkNoticeYnCnt());
     }
 
+    @PostMapping("/{noticeSeq}")
+    public SingleResult<NoticeArticle> updateNotice() {
+
+        return null;
+    }
     /**
      * Delete customer center single result.
      *
