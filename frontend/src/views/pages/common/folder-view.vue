@@ -1,7 +1,12 @@
 <template>
     <div>
         {{ viewData }}
-        <BtnArea></BtnArea>
+        <BtnArea>
+            <button type="button" class="btn-o-gray">
+                <i class="icon-mail"></i>
+                <span>알림메일전송</span>
+            </button>
+        </BtnArea>
         <folder :items="items"></folder>
         <SortingList></SortingList>
         <fileItem
@@ -15,11 +20,11 @@
     </div>
 </template>
 <script>
-	import BtnArea from '@/components/asset-view/btn-area.vue';
-	import folder from '@/components/asset-view/folder.vue';
-	import SortingList from '@/components/asset-view/sorting-list.vue';
-	import fileItem from '@/components/asset-view/file-Item.vue';
-	/*
+import BtnArea from '@/components/asset-view/btn-area.vue';
+import folder from '@/components/asset-view/folder.vue';
+import SortingList from '@/components/asset-view/sorting-list.vue';
+import fileItem from '@/components/asset-view/file-Item.vue';
+/*
 			import { createNewPost, fetchPosts } from '@/api/contents';
 			import { contents } from '@/api';
 			import axios from 'axios';
