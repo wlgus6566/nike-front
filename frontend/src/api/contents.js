@@ -4,11 +4,13 @@ import { setInterceptors } from '@/api/config/interceptors';
 const apiContents = axios.create({ baseURL: '/api/contents/', timeout: 3000 });
 setInterceptors(apiContents);
 
+// 컨텐츠 목록 조회
 function getContents(topMenuCode, menuCode, params) {
-    return apiContents.get(`/${topMenuCode}/${menuCode}`, {
+    return axios.get(`/${topMenuCode}/${menuCode}`, {
         params: params,
     });
 }
+
 function getContentsView(topMenuCode, menuCode, contentsSeq) {
     return apiContents.get(`/${topMenuCode}/${menuCode}/${contentsSeq}`);
 }

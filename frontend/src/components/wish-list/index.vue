@@ -1,7 +1,15 @@
 <template>
     <ul class="wish-list">
         <li class="wish-list-item" v-for="(item, index) in listData" :key="index">
-            <el-checkbox v-model="checkbox"></el-checkbox>
+            <span class="checkbox">
+                {{ item.checked }}
+                <input
+                    type="checkbox"
+                    v-model="item.checked"
+                    @change="$emit('updateChecked', $event.target.checked, index)"
+                />
+                <span></span>
+            </span>
             <a href="#" class="title-box">
                 <span class="thumbnail">
                     <img
@@ -21,14 +29,19 @@
             <div class="quantity-box">
                 <span class="title">최소주문수량</span>
                 <span class="num">
-                    <em>{{ item.product.minimumOrderQuantity }}</em>개
+                    <em>{{ item.product.minimumOrderQuantity }}</em
+                    >개
                 </span>
             </div>
             <div class="btn-box">
                 <button type="button" class="btn-s-black-sm">
                     <span>CART</span>
                 </button>
-                <button type="button" class="delete">
+                <button
+                    type="button"
+                    class="delete"
+                    v-on:click="$emit('wishDelete', item.wishListSeq)"
+                >
                     <span>삭제</span>
                 </button>
             </div>
@@ -40,7 +53,10 @@
 export default {
     name: 'wish-list-comp',
     props: ['listData'],
-    mounted() {},
+    mounted() {
+        console.log(this.listData);
+    },
+    methods: {},
 };
 </script>
 
