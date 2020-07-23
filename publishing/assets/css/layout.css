@@ -76,9 +76,13 @@ header .logo span {
   font-size: 22px;
   line-height: 60px;
   font-family: "Bebas Neue", "Noto Sans KR", sans-serif;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;
   color: #000;
   font-weight: normal;
+}
+.page-title span {
+  font-size: 20px;
+  font-weight: bold;
 }
 .nav-tab {
   display: flex;
@@ -195,7 +199,7 @@ footer .copy {
   color: #888;
 }
 .tab-bar li a span {
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;
 }
 .tab-bar li i {
   display: block;
@@ -276,7 +280,7 @@ footer .copy {
   font-size: 18px;
   color: #000;
   font-family: "Bebas Neue", "Noto Sans KR", sans-serif;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;
 }
 .menu-list li a:before {
   content: "";
