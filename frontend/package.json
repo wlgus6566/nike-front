@@ -18,7 +18,7 @@
         "es6-promise": "^4.2.8",
         "fontfaceobserver": "^2.1.0",
         "gsap": "^3.3.4",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.19",
         "swiper": "^5.4.1",
         "vue": "^2.6.11",
         "vue-cookies": "^1.7.2",

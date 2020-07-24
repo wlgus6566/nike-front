@@ -3,7 +3,7 @@
         <div class="detail-view">
             <div class="title-box">
                 <h2 class="title">
-                    {{ title }}
+                    {{ tit }}
                 </h2>
                 <span class="date">{{ date }}</span>
             </div>
@@ -20,7 +20,7 @@ export default {
     data() {
         return {
             ok: true,
-            title:
+            tit:
                 '11글로벌 스포츠 브랜드 나이키, 브랜드 문화 공간 마이클 조던을 담은 ‘조던 서울’ 오픈 포토리캡',
             url: null,
             date: '2020.06.17',

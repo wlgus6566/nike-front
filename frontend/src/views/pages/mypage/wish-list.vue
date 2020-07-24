@@ -5,9 +5,13 @@
         </h2>
         <div class="all-box">
             <!-- todo 전체선택 스크립트 작업 필요  -->
-            <el-checkbox v-model="checkbox">
-                전체선택
-            </el-checkbox>
+            <label class="check-label">
+                <span class="checkbox">
+                    <input type="checkbox" v-model="checkAll" v-on:change="allCheckFn" />
+                    <span></span>
+                </span>
+                <strong class="txt">전체선택</strong>
+            </label>
             <p class="desc"><em>1</em>개의 파일이 선택됨</p>
             <!-- todo select 스크립트 작업 필요  -->
             <div class="btn-box">
@@ -22,12 +26,16 @@
             </div>
         </div>
         <!-- wish list -->
-        <WishList :listData="wishListData" />
+        <WishList
+            :listData="wishListData"
+            @wishDelete="wishDelete"
+            @updateChecked="updateChecked"
+        />
     </div>
 </template>
 
 <script>
-import { getWishList } from '@/api/wish-list';
+import { getWishList, deleteWishList, deleteWishListAll } from '@/api/wish-list';
 export default {
     name: 'wish-list',
     components: {
@@ -39,6 +47,7 @@ export default {
             loadingData: false,
             page: 0,
             itemLength: 20,
+            checkAll: false,
             //check: this.items.state,
         };
     },
@@ -46,6 +55,13 @@ export default {
         this.fetchData();
     },
     methods: {
+        updateChecked(value, seq) {
+            console.log(value);
+            // const idx = this.wishListData.findIndex(el => {
+            //     return el.wishListSeq === seq;
+            // });
+            this.wishListData[seq].checked = value;
+        },
         async fetchData() {
             this.loadingData = true;
             try {
@@ -56,20 +72,29 @@ export default {
                     size: this.itemLength,
                 });
                 this.wishListData = response.content;
-                console.log(response.content);
-
+                this.wishListData.forEach(el => {
+                    el.checked = false;
+                });
                 this.loadingData = false;
                 return;
             } catch (error) {
                 console.log(error);
             }
         },
-        // checkAllChange(value) {
-        //     this.$emit('checkAllChange', value);
-        // },
-        // checkedCitiesChange(value) {
-        //     this.$emit('checkedCitiesChange', value);
-        // },
+        async wishDelete(seq) {
+            try {
+                await deleteWishList(seq);
+                this.fetchData();
+                return;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        allCheckFn() {
+            this.wishListData.forEach(el => {
+                el.checked = this.checkAll;
+            });
+        },
     },
 };
 </script>

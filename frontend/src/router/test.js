@@ -16,18 +16,5 @@ const routes = [
         component: pages('sampleBoard/sampleBoardDetail'),
         meta: { layout: 'Default', aside: 'Order', title: 'ALL' },
     },
-    /* sg */
-    /* news 목록 */
-    {
-        path: '/newslist',
-        component: pages('testPage/customercenter/newslist'),
-        meta: { layout: 'Default', aside: 'Order', title: 'ALL' },
-    },
-    /* news & 공지사항 상세 */
-    {
-        path: '/myview',
-        component: pages('testPage/customercenter/view'),
-        meta: { layout: 'Default', aside: 'Order', title: 'ALL' },
-    },
 ];
 export default routes;

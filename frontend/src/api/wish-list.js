@@ -9,4 +9,18 @@ function getWishList(params) {
         params: params,
     });
 }
-export { getWishList };
+function postWishList(params) {
+    return apiWishList.post(`/save`, {
+        params: params,
+    });
+}
+function deleteWishList(seq) {
+    return apiWishList.delete(`/delete/${seq}`);
+}
+function deleteWishListAll(params) {
+    return apiWishList.delete(`/delete`, {
+        params: params,
+    });
+}
+
+export { getWishList, postWishList, deleteWishList, deleteWishListAll };
