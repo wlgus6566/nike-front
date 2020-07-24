@@ -23,23 +23,21 @@
                     <i class="icon-cart"></i>
                     <span>선택 CART 담기</span>
                 </button>
-                <button
-                    type="button"
-                    class="btn-s-lightgray-sm"
-                    @click="checkedDelete(checkWishItem)"
-                >
+                <button type="button" class="btn-s-lightgray-sm" @click="checkedWishDelete">
                     <i class="icon-del"></i>
                     <span>선택삭제</span>
                 </button>
             </div>
         </div>
         <!-- wish list -->
+
+        <!--todo if 수정-->
         <WishList
             v-if="wishListData.length !== 0"
             :listData="wishListData"
             :checkWishItem="checkWishItem"
             :deleteLoading="deleteLoading"
-            @wishDelete="checkedDelete"
+            @wishDelete="wishDelete"
             @checkedWish="checkedWish"
         />
         <WishListNodata v-else />
@@ -48,7 +46,7 @@
 </template>
 
 <script>
-import { getWishList, deleteWishList, deleteWishListAll } from '@/api/wish-list';
+import { getWishList, deleteWishList, deleteWishListCheck } from '@/api/wish-list';
 export default {
     name: 'wish-list',
     components: {
@@ -73,24 +71,21 @@ export default {
     },
     methods: {
         checkedWish(seq, del) {
-            const indexOfChecked = this.checkWishItem.findIndex(el => el === seq);
-            if (indexOfChecked === -1 && !del) {
+            const indexOfChecked = this.checkWishItem.findIndex((el) => el === seq);
+            if (!del && indexOfChecked === -1) {
                 this.checkWishItem.push(seq);
             } else {
-                this.checkWishItem = this.checkWishItem.filter(el => {
+                this.checkWishItem = this.checkWishItem.filter((el) => {
                     return el !== seq;
                 });
             }
-            console.log(this.checkWishItem.length);
-            console.log(this.wishListData.length);
             this.checkAll = this.checkWishItem.length === this.wishListData.length;
         },
         allCheckFn() {
-            //시퀀스 배열을 받아옴
             if (this.checkAll) {
-                this.wishListData.forEach(el => {
+                this.wishListData.forEach((el) => {
                     const indexOfChecked = this.checkWishItem.findIndex(
-                        elChecked => elChecked === el.wishListSeq
+                        (elChecked) => elChecked === el.wishListSeq
                     );
                     if (indexOfChecked === -1) {
                         this.checkWishItem.push(el.wishListSeq);
@@ -100,14 +95,40 @@ export default {
                 this.checkWishItem = [];
             }
         },
-        checkedDelete(seqArr) {
-            this.deleteLoading = seqArr;
-            seqArr.forEach(el => {
-                this.wishDelete(el);
-            });
+        async checkedWishDelete() {
+            this.deleteLoading = this.checkWishItem;
+            try {
+                await deleteWishListCheck({
+                    wishListSeqList: this.checkWishItem,
+                });
+                await this.fetchData();
+                this.checkWishItem.forEach((seq) => {
+                    this.checkedWish(seq, true);
+                });
+                this.deleteLoading = [];
+            } catch (error) {
+                console.log(error);
+                if (error.data.existMsg) {
+                    alert(error.data.msg);
+                }
+            }
         },
-        async fetchData(ddd) {
-            if (ddd) this.loadingData = true;
+        async wishDelete(seq) {
+            this.deleteLoading.push(seq);
+            try {
+                await deleteWishList(seq);
+                await this.fetchData();
+                this.checkedWish(seq, true);
+                this.deleteLoading = [];
+            } catch (error) {
+                console.log(error);
+                if (error.data.existMsg) {
+                    alert(error.data.msg);
+                }
+            }
+        },
+        async fetchData(mounted) {
+            if (mounted) this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -117,25 +138,6 @@ export default {
                 });
                 this.wishListData = response.content;
                 this.loadingData = false;
-                return;
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        async wishDelete(seq) {
-            try {
-                await deleteWishList(seq);
-                this.fetchData();
-                this.checkedWish(seq, true);
-                return;
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        async wishDeleteAll() {
-            try {
-                await deleteWishListAll();
-                this.fetchData();
                 return;
             } catch (error) {
                 console.log(error);

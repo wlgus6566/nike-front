@@ -17,10 +17,8 @@ function postWishList(params) {
 function deleteWishList(seq) {
     return apiWishList.delete(`/delete/${seq}`);
 }
-function deleteWishListAll(params) {
-    return apiWishList.delete(`/delete`, {
-        params: params,
-    });
+function deleteWishListCheck(data) {
+    return apiWishList.delete(`/delete/`, { data });
 }
 
-export { getWishList, postWishList, deleteWishList, deleteWishListAll };
+export { getWishList, postWishList, deleteWishList, deleteWishListCheck };

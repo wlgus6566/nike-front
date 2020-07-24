@@ -40,7 +40,7 @@
                 <button
                     type="button"
                     class="delete"
-                    v-on:click="$emit('wishDelete', [item.wishListSeq])"
+                    v-on:click="$emit('wishDelete', item.wishListSeq)"
                 >
                     <span>삭제</span>
                 </button>
@@ -56,7 +56,7 @@ export default {
     props: ['listData', 'checkWishItem', 'deleteLoading'],
     methods: {
         loading(seq) {
-            const indexFind = this.deleteLoading.findIndex(el => {
+            const indexFind = this.deleteLoading.findIndex((el) => {
                 return el === seq;
             });
             return indexFind !== -1;

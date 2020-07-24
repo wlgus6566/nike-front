@@ -14,8 +14,10 @@ function changePassword(data) {
     return apiLogin.put('/open/login/change/password', data);
 }
 
-function sendEmail(data) {
-    return apiLogin.get('/open/login/send/cert');
+function sendEmail(params) {
+    return apiLogin.get('/open/login/send/cert', {
+        params: params,
+    });
 }
 
-export { loginUser };
+export { loginUser, sendEmail };
