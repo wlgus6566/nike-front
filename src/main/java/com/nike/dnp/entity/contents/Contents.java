@@ -173,9 +173,9 @@ public class Contents extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 1. 오전 9:59:51
      * @Description 등록
      */
-    public Contents save(ContentsSaveDTO contentsSaveDTO) {
+    public Contents save(final ContentsSaveDTO contentsSaveDTO) {
         log.info("Contents.save");
-        Contents saveContents = new Contents();
+        final Contents saveContents = new Contents();
         saveContentsBasic(contentsSaveDTO, saveContents);
         // 캠페인기간 > 날짜선택 인 경우
         if (ServiceEnumCode.ContentsCampaignPeriodCode.SELECT.toString().equals(contentsSaveDTO.getCampaignPeriodSectionCode())) {
@@ -199,7 +199,7 @@ public class Contents extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 1. \오전 9:59:37
      * @Description 기본적인 부분 등록
      */
-    public static void saveContentsBasic(ContentsSaveDTO contentsSaveDTO, Contents saveContents) {
+    public static void saveContentsBasic(final ContentsSaveDTO contentsSaveDTO, final Contents saveContents) {
         log.info("Contents.saveContentsBasic");
         saveContents.setTopMenuCode(contentsSaveDTO.getTopMenuCode());
         saveContents.setMenuCode(contentsSaveDTO.getMenuCode());

@@ -3,6 +3,9 @@ package com.nike.dnp.dto.code;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * CodeUpdateDTO
  *
@@ -30,6 +33,7 @@ public class CodeUpdateDTO {
      *
      * @author [오지훈]
      */
+    @NotBlank(message = "code.codeName")
     @ApiModelProperty(name = "codeName", value = "코드 명")
     private String codeName;
 
@@ -46,15 +50,8 @@ public class CodeUpdateDTO {
      *
      * @author [오지훈]
      */
+    @NotNull(message = "code.codeOrder")
     @ApiModelProperty(name = "codeOrder", value = "코드 순서")
     private Long codeOrder;
-
-    /**
-     * 상위 코드 여부
-     *
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "upperYn", value = "상위 코드 여부", required = true, example = "Y")
-    private String upperYn;
 
 }

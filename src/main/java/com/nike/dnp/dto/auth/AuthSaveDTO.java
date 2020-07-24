@@ -25,7 +25,7 @@ public class AuthSaveDTO {
      *
      * @author [오지훈]
      */
-    @NotNull(message = "auth.authSeq")
+    @NotNull(message = "auth.upperAuthSeq")
     @ApiModelProperty(name = "upperAuthSeq", value = "상위 권한 시퀀스")
     private Long upperAuthSeq;
 

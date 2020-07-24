@@ -1,5 +1,6 @@
 package com.nike.dnp.controller.calendar;
 
+import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.dto.calendar.CalendarDaySearchDTO;
 import com.nike.dnp.dto.calendar.CalendarSaveDTO;
@@ -16,8 +17,11 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -74,9 +78,8 @@ public class CalendarController {
             + "[하위 Model 참조]\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Calendar 조회")
-    public SingleResult<List<Calendar>> findAllContents(
-            final CalendarSearchDTO calendarSearchDTO
-    ) {
+    @ValidField
+    public SingleResult<List<Calendar>> findAllContents(@Valid @ModelAttribute final CalendarSearchDTO calendarSearchDTO,@ApiIgnore final BindingResult result) {
         // Asset 메뉴 코드 넣어줌.
 //        Calendar prove = new Calendar();
 //        ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny().withIgnorePaths("up","down");
@@ -105,9 +108,9 @@ public class CalendarController {
     @PostMapping(name = "Calendar 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Calendar> saveCalendar(
-            final @RequestBody CalendarSaveDTO calendarSaveDTO
-    ) {
+    @ValidField
+    public SingleResult<Calendar> saveCalendar(@Valid @RequestBody final CalendarSaveDTO calendarSaveDTO,
+                                               @ApiIgnore final BindingResult result) {
         return responseService.getSingleResult(calendarService.save(calendarSaveDTO));
     }
 
@@ -127,13 +130,15 @@ public class CalendarController {
             + "## Response ## \n"
             + "[하위 Model 참조]\n\n\n\n"
     )
-    @PutMapping(name = "Calendar 수정"
+    @PutMapping(value="/{calendarSeq}"
+            , name = "Calendar 수정"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Calendar> updateCalendar(
-            final @RequestBody CalendarUpdateDTO calendarUpdateDTO
-    ) {
-
+    @ValidField
+    public SingleResult<Calendar> updateCalendar(@PathVariable @ApiParam(value="캘린더 시퀀스",name="calendarSeq",defaultValue = "4") final Long calendarSeq,
+                                                 @Valid @RequestBody final CalendarUpdateDTO calendarUpdateDTO,
+                                                 @ApiIgnore final BindingResult result) {
+        calendarUpdateDTO.setCalendarSeq(calendarSeq);
         return responseService.getSingleResult(calendarService.update(calendarUpdateDTO));
     }
 
@@ -153,11 +158,11 @@ public class CalendarController {
             + "## Response ## \n"
             + "[하위 Model 참조]\n\n\n\n"
     )
-    @DeleteMapping(name = "Calendar 삭제"
-            , consumes = {MediaType.APPLICATION_JSON_VALUE}
+    @DeleteMapping(value="/{calendarSeq}"
+            , name = "Calendar 삭제"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Long> deleteCalendar(
-            final @RequestBody Long calendarSeq
+            @PathVariable @ApiParam(value = "캘린더 시퀀스", name = "calendarSeq", example = "4") final Long calendarSeq
     ) {
         return responseService.getSingleResult(calendarService.delete(calendarSeq));
     }
@@ -192,10 +197,9 @@ public class CalendarController {
      * @CreatedOn 2020. 7. 22. 오후 4:18:17
      * @Description
      */
-    @ApiOperation(value = "Calendar 일자 조회", notes = REQUEST_CHARACTER + "\n" + "[하위 Parameters 참조]\n\n\n\n" + "## Response ## \n" + "[하위 Model 참조]\n\n\n\n")
-    @GetMapping(value = "/day", produces = MediaType.APPLICATION_JSON_VALUE)
-    public SingleResult<List<Calendar>> findByAllDay(final CalendarDaySearchDTO calendarDaySearchDTO){
-        List<Calendar> result = calendarService.findAllDay(calendarDaySearchDTO);
-        return responseService.getSingleResult(result);
+    @ApiOperation(value = "Calendar 오늘 조회", notes = REQUEST_CHARACTER + "\n" + "[하위 Parameters 참조]\n\n\n\n" + "## Response ## \n" + "[하위 Model 참조]\n\n\n\n")
+    @GetMapping(value = "/today", produces = MediaType.APPLICATION_JSON_VALUE)
+    public SingleResult<List<Calendar>> findByAllToday(final CalendarDaySearchDTO calendarDaySearchDTO){
+        return responseService.getSingleResult(calendarService.findAllToday(calendarDaySearchDTO));
     }
 }

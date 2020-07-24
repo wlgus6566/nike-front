@@ -1,5 +1,6 @@
 package com.nike.dnp.controller.goodsbasket;
 
+import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.dto.goodsbasket.GoodsBasketSaveDTO;
 import com.nike.dnp.dto.goodsbasket.GoodsBasketSaveListDTO;
 import com.nike.dnp.entity.goodsbasket.GoodsBasket;
@@ -13,8 +14,11 @@ import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -72,7 +76,9 @@ public class GoodsBasketController {
 	 */
 	@ApiOperation(value = "장바구니 등록 및 수정", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public SingleResult<GoodsBasket> saveBasket(@RequestBody final GoodsBasketSaveDTO goodsBasketSaveDTO) {
+	@ValidField
+	public SingleResult<GoodsBasket> saveBasket(@RequestBody @Valid final GoodsBasketSaveDTO goodsBasketSaveDTO,
+												@ApiIgnore final BindingResult result) {
 		final GoodsBasket goodsBasket = goodsBasketService.saveBasket(goodsBasketSaveDTO);
 		return responseService.getSingleResult(goodsBasket);
 	}
@@ -88,7 +94,9 @@ public class GoodsBasketController {
 	 */
 	@ApiOperation(value = "장바구니 다건 등록 및 수정", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/saveList", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public SingleResult<List<GoodsBasket>> saveBasketList(@RequestBody final GoodsBasketSaveListDTO goodsBasketSaveListDTO) {
+	@ValidField
+	public SingleResult<List<GoodsBasket>> saveBasketList(@RequestBody @Valid final GoodsBasketSaveListDTO goodsBasketSaveListDTO,
+														  @ApiIgnore final BindingResult result) {
 		return responseService.getSingleResult(goodsBasketService.saveBasketList(goodsBasketSaveListDTO));
 	}
 

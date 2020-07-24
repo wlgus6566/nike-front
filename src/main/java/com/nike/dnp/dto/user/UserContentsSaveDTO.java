@@ -5,6 +5,7 @@ import com.nike.dnp.common.variable.ServiceEnumCode;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,18 +26,11 @@ import java.util.List;
 public class UserContentsSaveDTO {
 
     /**
-     * 컨텐츠 시퀀스
-     *
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스")
-    private Long contentsSeq;
-
-    /**
      * 권한 체크 목록
      *
      * @author [오지훈]
      */
+    @NotNull(message = "userContents.checks")
     @ApiModelProperty(name = "authChecks", value = "권한 체크 목록")
     private List<AuthCheckDTO> checks = new ArrayList<>();
 

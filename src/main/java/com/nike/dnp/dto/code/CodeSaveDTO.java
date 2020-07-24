@@ -3,6 +3,9 @@ package com.nike.dnp.dto.code;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * CodeSaveDTO
  *
@@ -22,7 +25,8 @@ public class CodeSaveDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "code", value = "코드", required = true)
+    @NotBlank(message = "code.code")
+    @ApiModelProperty(name = "code", value = "코드")
     private String code;
 
     /**
@@ -38,7 +42,8 @@ public class CodeSaveDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "codeName", value = "코드 명", required = true)
+    @NotBlank(message = "code.codeName")
+    @ApiModelProperty(name = "codeName", value = "코드 명")
     private String codeName;
 
     /**
@@ -54,7 +59,8 @@ public class CodeSaveDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "codeOrder", value = "코드 순서", required = true)
+    @NotNull(message = "code.codeOrder")
+    @ApiModelProperty(name = "codeOrder", value = "코드 순서")
     private Long codeOrder;
 
     /**
@@ -62,15 +68,8 @@ public class CodeSaveDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "useYn", value = "사용 여부", required = true)
+    @NotBlank(message = "code.useYn")
+    @ApiModelProperty(name = "useYn", value = "사용 여부")
     private String useYn;
-
-    /**
-     * 상위 코드 여부
-     *
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "upperYn", value = "상위 코드 여부", required = true, example = "Y")
-    private String upperYn;
 
 }

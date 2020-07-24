@@ -188,7 +188,8 @@ public class ErrorEnumCode {
     public enum OrderError {
         NO_PRODUCT_SELECT("하나 이상의 상품을 선택해 주세요."),
         ONLY_NUMBER("숫자만 입력 가능합니다"),
-        CHECK_MINIMUM_QUANTITY("최소주문수량보다 적게 주문이 불가합니다.");
+        CHECK_MINIMUM_QUANTITY("최소주문수량보다 적게 주문이 불가합니다."),
+        NOT_SIZE_BASKET("요청하신 상품과 수량이 다릅니다.");
 
         /**
          * The Value
@@ -268,7 +269,8 @@ public class ErrorEnumCode {
     @RequiredArgsConstructor
     @Getter
     public enum BasketError {
-        NOT_FOUND_BASKET("해당 상품은 장바구니에 없습니다.");
+        NOT_FOUND_BASKET("해당 상품은 장바구니에 없습니다."),
+        NOT_SIZE_BASKET("요청하신 상품과 수량이 다릅니다.");
 
         /**
          * The Value

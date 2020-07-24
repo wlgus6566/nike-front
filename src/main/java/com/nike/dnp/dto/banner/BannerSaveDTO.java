@@ -3,6 +3,8 @@ package com.nike.dnp.dto.banner;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * The Class Banner update dto.
  *
@@ -15,14 +17,15 @@ import lombok.*;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class BannerUpdateDTO {
+public class BannerSaveDTO {
 
     /**
      * 제목
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "title", value = "제목", required = true, example = "EXPLORE THE BEST OF AIR MAX")
+    @NotBlank(message = "banner.title")
+    @ApiModelProperty(name = "title", value = "제목", example = "EXPLORE THE BEST OF AIR MAX")
     private String title;
 
     /**
@@ -30,7 +33,8 @@ public class BannerUpdateDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "contents", value = "내용", required = true
+    @NotBlank(message = "banner.contents")
+    @ApiModelProperty(name = "contents", value = "내용"
             , example = "고무 힐 탭 로고, 머드가드 그리고 올드스쿨 카세트 스타일의 에어유닛으로 미래지향적인 실루엣을 가진  에어맥")
     private String contents;
 
@@ -39,7 +43,8 @@ public class BannerUpdateDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "imageFileName", value = "이미지_파일_명", required = true, example = "NikeAir.jpg")
+    @NotBlank(message = "banner.pcImageFile")
+    @ApiModelProperty(name = "imageFileName", value = "이미지_파일_명", example = "NikeAir.jpg")
     private String imageFileName;
 
     /**
@@ -47,7 +52,8 @@ public class BannerUpdateDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "imageFileSize", value = "이미지_파일_사이즈", required = true, example = "123456")
+    @NotBlank(message = "banner.pcImageFile")
+    @ApiModelProperty(name = "imageFileSize", value = "이미지_파일_사이즈", example = "123456")
     private String imageFileSize;
 
     /**
@@ -55,7 +61,8 @@ public class BannerUpdateDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "imageFilePhysicalName", value = "이미지_파일_물리_명(이미지 경로)", required = true, example = "/images/banner/NikeAir.jpg")
+    @NotBlank(message = "banner.pcImageFile")
+    @ApiModelProperty(name = "imageFilePhysicalName", value = "이미지_파일_물리_명(이미지 경로)", example = "/images/banner/NikeAir.jpg")
     private String imageFilePhysicalName;
 
     /**
@@ -63,7 +70,8 @@ public class BannerUpdateDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "mobileImageFileName", value = "모바일_이미지_파일_명", required = true, example = "NikeAir.jpg")
+    @NotBlank(message = "banner.mobileImageFile")
+    @ApiModelProperty(name = "mobileImageFileName", value = "모바일_이미지_파일_명", example = "NikeAir.jpg")
     private String mobileImageFileName;
 
     /**
@@ -71,7 +79,8 @@ public class BannerUpdateDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "mobileImageFileSize", value = "모바일_이미지_파일_사이즈", required = true, example = "123456")
+    @NotBlank(message = "banner.mobileImageFile")
+    @ApiModelProperty(name = "mobileImageFileSize", value = "모바일_이미지_파일_사이즈", example = "123456")
     private String mobileImageFileSize;
 
     /**
@@ -79,7 +88,8 @@ public class BannerUpdateDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "mobileImageFilePhysicalName", value = "모바일_이미지_파일_물리_명(이미지 경로)", required = true, example = "/images/banner/m-NikeAir.jpg")
+    @NotBlank(message = "banner.mobileImageFile")
+    @ApiModelProperty(name = "mobileImageFilePhysicalName", value = "모바일_이미지_파일_물리_명(이미지 경로)", example = "/images/banner/m-NikeAir.jpg")
     private String mobileImageFilePhysicalName;
 
     /**
@@ -87,7 +97,8 @@ public class BannerUpdateDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "linkUrlTypeCode", value = "링크_URL_타입_공통코드", required = true, allowableValues = "ASSET,URL")
+    @NotBlank(message = "banner.linkUrlTypeCode")
+    @ApiModelProperty(name = "linkUrlTypeCode", value = "링크_URL_타입_공통코드", allowableValues = "ASSET,URL")
     private String linkUrlTypeCode;
 
     /**
@@ -95,6 +106,7 @@ public class BannerUpdateDTO {
      *
      * @author [오지훈]
      */
+    @NotBlank(message = "banner.linkUrl")
     @ApiModelProperty(name = "linkUrl", value = "링크_URL", example = "https://nikespace.com/asset/all")
     private String linkUrl;
 

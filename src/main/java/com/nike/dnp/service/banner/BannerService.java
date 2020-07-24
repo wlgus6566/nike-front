@@ -1,7 +1,7 @@
 package com.nike.dnp.service.banner;
 
 import com.nike.dnp.common.variable.ErrorEnumCode.DataError;
-import com.nike.dnp.dto.banner.BannerUpdateDTO;
+import com.nike.dnp.dto.banner.BannerSaveDTO;
 import com.nike.dnp.entity.banner.Banner;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.banner.BannerRepository;
@@ -75,15 +75,15 @@ public class BannerService {
     /**
      * Save banner.
      *
-     * @param bannerUpdateDTO the banner update dto
+     * @param bannerSaveDTO the banner update dto
      * @return the banner
      * @author [오지훈]
      * @CreatedOn 2020. 7. 20. 오전 11:32:45
      * @Description 배너 등록
      */
     @Transactional
-    public Banner save (final BannerUpdateDTO bannerUpdateDTO) {
-        Banner banner = bannerRepository.save(new Banner().saveOrUpdate(bannerUpdateDTO));
+    public Banner save (final BannerSaveDTO bannerSaveDTO) {
+        Banner banner = bannerRepository.save(new Banner().saveOrUpdate(bannerSaveDTO));
         redisService.set("cache:visual", banner, 0);
         return banner;
     }
@@ -92,15 +92,15 @@ public class BannerService {
      * Update banner.
      *
      * @param bannerSeq       the banner seq
-     * @param bannerUpdateDTO the banner update dto
+     * @param bannerSaveDTO the banner update dto
      * @return the banner
      * @author [오지훈]
      * @CreatedOn 2020. 7. 20. 오전 11:32:46
      * @Description 배너 수정
      */
     @Transactional
-    public Banner update (final Long bannerSeq, final BannerUpdateDTO bannerUpdateDTO) {
-        Banner banner = this.findById(bannerSeq).saveOrUpdate(bannerUpdateDTO);
+    public Banner update (final Long bannerSeq, final BannerSaveDTO bannerSaveDTO) {
+        Banner banner = this.findById(bannerSeq).saveOrUpdate(bannerSaveDTO);
         redisService.delete("cache:visual");
         redisService.set("cache:visual", banner, 0);
         return banner;

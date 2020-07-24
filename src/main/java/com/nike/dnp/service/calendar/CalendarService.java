@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -165,10 +166,13 @@ public class CalendarService {
      * @CreatedOn 2020. 7. 22. 오후 4:45:45
      * @Description
      */
-    public List<Calendar> findAllDay(CalendarDaySearchDTO calendarDaySearchDTO) {
-        LocalDateTime searchDt = LocalDateTime.of(
-                LocalDate.parse(calendarDaySearchDTO.getSearchDt() ,DateTimeFormatter.ISO_DATE),
-                LocalTime.of(0,0,0));
+    public List<Calendar> findAllToday(final CalendarDaySearchDTO calendarDaySearchDTO) {
+        LocalDateTime searchDt = LocalDateTime.now();
+        if(!ObjectUtils.isEmpty(calendarDaySearchDTO.getSearchDt())){
+            searchDt = LocalDateTime.of(
+                    LocalDate.parse(calendarDaySearchDTO.getSearchDt() ,DateTimeFormatter.ofPattern("yyyy.MM.dd")),
+                    LocalTime.of(0,0,0));
+        }
         return calendarRepository.findAllByBeginDtBeforeAndEndDtAfter(searchDt, searchDt);
     }
 }

@@ -1,7 +1,8 @@
 package com.nike.dnp.controller.banner;
 
+import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.dto.banner.BannerUpdateDTO;
+import com.nike.dnp.dto.banner.BannerSaveDTO;
 import com.nike.dnp.entity.banner.Banner;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -12,7 +13,11 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
+
+import javax.validation.Valid;
 
 
 /**
@@ -59,13 +64,11 @@ public class BannerController {
      * @CreatedOn 2020. 7. 20. 오전 11:41:23
      * @Description 메인 비주얼 상세
      */
-    @ApiOperation(
-            value = "메인 비주얼 상세"
-            , notes = OPERATION_CHARACTER
-    )
+    @ApiOperation(value = "메인 비주얼 상세"
+            , notes = OPERATION_CHARACTER)
     @GetMapping(name = "메인 비주얼 상세"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Banner> getBanner() {
+    public SingleResult<Banner> getBanner () {
         log.info("BannerController.getBanner");
         return responseService.getSingleResult(bannerService.getBanner());
     }
@@ -73,25 +76,24 @@ public class BannerController {
     /**
      * Save single result.
      *
-     * @param bannerUpdateDTO the banner update dto
+     * @param bannerSaveDTO the banner update dto
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 7. 20. 오전 11:43:25
      * @Description 메인 비주얼 등록
      */
-    @ApiOperation(
-            value = "메인 비주얼 등록"
-            , notes = OPERATION_CHARACTER
-    )
+    @ApiOperation(value = "메인 비주얼 등록"
+            , notes = OPERATION_CHARACTER)
     @PostMapping(name = "메인 비주얼 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Banner> save(
-            @ApiParam(value = "메인 비주얼 등록 DTO", required = true) @RequestBody final BannerUpdateDTO bannerUpdateDTO
-    ) {
+    @ValidField
+    public SingleResult<Banner> save (
+            @ApiParam(value = "메인 비주얼 등록 DTO", required = true) @Valid @RequestBody final BannerSaveDTO bannerSaveDTO
+            , @ApiIgnore final BindingResult result) {
         log.info("BannerController.save");
         return responseService.getSingleResult(
-                bannerService.save(bannerUpdateDTO)
+                bannerService.save(bannerSaveDTO)
                 , ServiceEnumCode.ReturnTypeEnumCode.CREATE.toString()
                 , ServiceEnumCode.ReturnTypeEnumCode.CREATE.getMessage()
                 , true
@@ -102,27 +104,26 @@ public class BannerController {
      * Update single result.
      *
      * @param bannerSeq       the banner seq
-     * @param bannerUpdateDTO the banner update dto
+     * @param bannerSaveDTO the banner update dto
      * @return the single result
      * @author [오지훈]
      * @CreatedOn 2020. 7. 20. 오전 11:43:23
      * @Description 메인 비주얼 수정
      */
-    @ApiOperation(
-            value = "메인 비주얼 수정"
-            , notes = OPERATION_CHARACTER
-    )
+    @ApiOperation(value = "메인 비주얼 수정"
+            , notes = OPERATION_CHARACTER)
     @PutMapping(name = "메인 비주얼 수정"
             , value = "/{bannerSeq}"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public SingleResult<Banner> update(
             @ApiParam(value = "배너 시퀀스", required = true) @PathVariable final Long bannerSeq
-            , @ApiParam(value = "메인 비주얼 수정 DTO", required = true) @RequestBody final BannerUpdateDTO bannerUpdateDTO
-    ) {
+            , @ApiParam(value = "메인 비주얼 수정 DTO", required = true) @Valid @RequestBody final BannerSaveDTO bannerSaveDTO
+            , @ApiIgnore final BindingResult result) {
         log.info("BannerController.update");
         return responseService.getSingleResult(
-                bannerService.update(bannerSeq, bannerUpdateDTO)
+                bannerService.update(bannerSeq, bannerSaveDTO)
                 , ServiceEnumCode.ReturnTypeEnumCode.UPDATE.toString()
                 , ServiceEnumCode.ReturnTypeEnumCode.UPDATE.getMessage()
                 , true

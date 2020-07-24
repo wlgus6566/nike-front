@@ -57,8 +57,8 @@ public class ReportBasket extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 17. 오후 7:04:39
      * @Description
      */
-    public ReportBasket save(Long reportFileSeq, Long userSeq) {
-        ReportBasket reportBasket = new ReportBasket();
+    public ReportBasket save(final Long reportFileSeq, final Long userSeq) {
+        final ReportBasket reportBasket = new ReportBasket();
         reportBasket.setUserSeq(userSeq);
         reportBasket.setReportFileSeq(reportFileSeq);
         return reportBasket;

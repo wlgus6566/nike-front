@@ -1,12 +1,15 @@
 package com.nike.dnp.controller.order;
 
 
+import com.nike.dnp.common.aspect.ValidField;
+import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.dto.order.OrderProductMappingSaveDTO;
 import com.nike.dnp.dto.order.OrderProductSaveDTO;
 import com.nike.dnp.dto.order.OrderSearchDTO;
 import com.nike.dnp.entity.order.Order;
 import com.nike.dnp.entity.order.OrderProductMapping;
 import com.nike.dnp.entity.product.Product;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.order.OrderProductMappingService;
@@ -20,7 +23,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
+
+import javax.validation.Valid;
 
 /**
  * Order Controller
@@ -91,22 +98,30 @@ public class OrderController {
 	@ApiOperation(value = "주문 등록", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/save", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Transactional
-	public SingleResult<Order> saveOrder(@RequestBody final OrderProductSaveDTO orderProductSaveDTO) {
+	@ValidField
+	public SingleResult<Order> saveOrder(@RequestBody @Valid final OrderProductSaveDTO orderProductSaveDTO,
+										 @ApiIgnore final BindingResult result) {
 
-		final Order order = orderService.saveOrder(orderProductSaveDTO);
+		if(orderProductSaveDTO.getGoodsSeqList().size()!=orderProductSaveDTO.getOrderQuantityList().size()){
+			throw new CodeMessageHandleException(ErrorEnumCode.OrderError.NOT_SIZE_BASKET.name(), ErrorEnumCode.OrderError.NOT_SIZE_BASKET.getMessage());
+		}else{
+			final Order order = orderService.saveOrder(orderProductSaveDTO);
 
-		for(int i = 0; i < orderProductSaveDTO.getGoodsSeqList().size(); i++){
-			final Product product = productService.findByGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
-			OrderProductMappingSaveDTO orderProductMappingSaveDTO = new OrderProductMappingSaveDTO();
-			orderProductMappingSaveDTO.setGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
-			orderProductMappingSaveDTO.setOrderQuantity(orderProductSaveDTO.getOrderQuantityList().get(i));
-			orderProductMappingSaveDTO.setOrderSeq(order.getOrderSeq());
-			orderProductMappingSaveDTO.setAgencySeq(product.getAgencySeq());
+			for(int i = 0; i < orderProductSaveDTO.getGoodsSeqList().size(); i++){
+				final Product product = productService.findByGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
+				OrderProductMappingSaveDTO orderProductMappingSaveDTO = new OrderProductMappingSaveDTO();
+				orderProductMappingSaveDTO.setGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
+				orderProductMappingSaveDTO.setOrderQuantity(orderProductSaveDTO.getOrderQuantityList().get(i));
+				orderProductMappingSaveDTO.setOrderSeq(order.getOrderSeq());
+				orderProductMappingSaveDTO.setAgencySeq(product.getAgencySeq());
 
-			orderProductMappingService.saveOrderProductMapping(orderProductMappingSaveDTO);
+				orderProductMappingService.saveOrderProductMapping(orderProductMappingSaveDTO);
+			}
+			orderProductMappingService.orderSheetSend(order);
+			return responseService.getSingleResult(order);
 		}
-		orderProductMappingService.orderSheetSend(order);
-		return responseService.getSingleResult(order);
+
+
 	}
 
 

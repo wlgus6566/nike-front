@@ -81,10 +81,10 @@ public class UserMailService {
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
 
-        String keyCode = this.createEncodeCertCode(user.getUserId());
+        final String keyCode = this.createEncodeCertCode(user.getUserId());
 
         System.out.println("======================================================");
-        System.out.println(keyCode);
+        System.out.println("keyCode : " + keyCode);
         System.out.println("======================================================");
 
         //TODO[ojh] 2020-07-02 : 변경예정
@@ -96,7 +96,7 @@ public class UserMailService {
                 , sendDTO
         );
 
-        return user.getUserId();
+        return keyCode;
     }
 
     /**

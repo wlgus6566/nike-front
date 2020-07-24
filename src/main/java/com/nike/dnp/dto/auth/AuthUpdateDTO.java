@@ -21,15 +21,6 @@ import javax.validation.constraints.NotNull;
 public class AuthUpdateDTO {
 
     /**
-     * 권한 시퀀스
-     *
-     * @author [오지훈]
-     */
-    @NotNull(message = "auth.authSeq")
-    @ApiModelProperty(name = "authSeq", value = "권한 시퀀스")
-    private Long authSeq;
-
-    /**
      * 권한명
      *
      * @author [오지훈]

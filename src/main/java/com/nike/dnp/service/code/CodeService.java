@@ -1,10 +1,10 @@
 package com.nike.dnp.service.code;
 
-import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.nike.dnp.common.variable.ErrorEnumCode;
 import com.nike.dnp.dto.code.CodeSaveDTO;
 import com.nike.dnp.dto.code.CodeUpdateDTO;
 import com.nike.dnp.entity.code.Code;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.code.CodeRepository;
 import com.nike.dnp.service.RedisService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -87,9 +88,7 @@ public class CodeService {
     public Code save(final CodeSaveDTO codeSaveDTO) {
         final Code codeEntity = new Code();
         codeEntity.setCode(codeSaveDTO.getCode());
-        if(codeSaveDTO.getUpperYn().equals("N")) {
-            codeEntity.setUpperCode(codeSaveDTO.getUpperCode());
-        }
+        codeEntity.setUpperCode(codeSaveDTO.getUpperCode());
         codeEntity.setCodeName(codeSaveDTO.getCodeName());
         codeEntity.setCodeDescription(codeSaveDTO.getCodeDescription());
         codeEntity.setCodeOrder(codeSaveDTO.getCodeOrder());
@@ -115,11 +114,11 @@ public class CodeService {
             , final CodeUpdateDTO codeUpdateDTO
     ) {
         final Optional<Code> codeEntity = Optional.ofNullable(codeRepository.findByCode(code).orElseThrow(
-                () -> new UserNotFoundException(ErrorEnumCode.DataError.NOT_FOUND.toString())
+                () -> new CodeMessageHandleException(ErrorEnumCode.DataError.NOT_FOUND.toString(), ErrorEnumCode.DataError.NOT_FOUND.toString())
         ));
 
         if (codeEntity.isPresent()) {
-            if (codeEntity.get().getUpperCode().isEmpty()) {
+            if (ObjectUtils.isEmpty(codeEntity.get().getUpperCode())) {
                 codeEntity.ifPresent(value -> value.update(
                         codeUpdateDTO.getCodeName()
                         , codeUpdateDTO.getCodeDescription()
@@ -148,7 +147,7 @@ public class CodeService {
      */
     public void redisSaveUpperCode(final String upperCode) {
         log.info("CodeService.redisSaveUpperCode");
-        redisService.set("cache:codes::"+upperCode, codeRepository.findByUpperCode(upperCode), 60);
+        redisService.set("cache:codes:"+upperCode, codeRepository.findByUpperCode(upperCode), 60);
     }
 
 }

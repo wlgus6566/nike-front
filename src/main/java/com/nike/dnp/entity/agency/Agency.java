@@ -89,7 +89,7 @@ public class Agency extends BaseTimeEntity {
      * @Description
      */
     public Agency save(final AgencySaveDTO agencySaveDTO) {
-        Agency agency = new Agency();
+        final Agency agency = new Agency();
         agency.setAgencyName(agencySaveDTO.getAgencyName());
         agency.setAgencyDescription(agencySaveDTO.getAgencyDescription());
         agency.setTelephoneNumber(agencySaveDTO.getTelephoneNumber());

@@ -4,6 +4,7 @@ import com.nike.dnp.dto.BasicDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -33,6 +34,7 @@ public class GoodsBasketSaveListDTO extends BasicDTO {
 	 * @author [오지훈]
 	 */
 	@ApiModelProperty(name = "상품 시퀀스", allowableValues = "1,2,3")
+	@NotNull(message = "goodsBasket.goodsSeq")
 	private List<Long> goodsSeqList;
 
 	/**
@@ -41,6 +43,7 @@ public class GoodsBasketSaveListDTO extends BasicDTO {
 	 * @author [오지훈]
 	 */
 	@ApiModelProperty(name = "상품수량", allowableValues = "10,20,30")
+	@NotNull(message = "goodsBasket.orderQuantity")
 	private List<Long> orderQuantityList;
 
 }

@@ -4,6 +4,8 @@ import com.nike.dnp.dto.BasicDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * The Class Goods basket save dto.
  *
@@ -31,6 +33,7 @@ public class GoodsBasketSaveDTO extends BasicDTO {
 	 * @author [오지훈]
 	 */
 	@ApiModelProperty(name = "상품 시퀀스", example = "33")
+	@NotNull(message = "goodsBasket.goodsSeq")
 	private Long goodsSeq;
 
 	/**
@@ -38,7 +41,8 @@ public class GoodsBasketSaveDTO extends BasicDTO {
 	 *
 	 * @author [오지훈]
 	 */
-	@ApiModelProperty(name = "상품수량", example = "1")
+	@ApiModelProperty(name = "상품 수량", example = "1")
+	@NotNull(message = "goodsBasket.orderQuantity")
 	private Long orderQuantity;
 
 }

@@ -312,10 +312,12 @@ public class AuthService {
      * @Description 그룹(권한) 수정
      */
     @Transactional
-    public Auth update(final AuthUpdateDTO authUpdateDTO) {
+    public Auth update(
+            final Long authSeq
+            , final AuthUpdateDTO authUpdateDTO
+    ) {
         log.info("AuthService.update");
-        final Auth auth = this.getById(authUpdateDTO.getAuthSeq());
-        final Long authSeq = auth.getAuthSeq();
+        final Auth auth = this.getById(authSeq);
         final String roleType = auth.getRoleType();
 
         auth.update(authUpdateDTO);

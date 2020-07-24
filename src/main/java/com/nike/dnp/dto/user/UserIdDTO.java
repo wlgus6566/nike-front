@@ -3,6 +3,8 @@ package com.nike.dnp.dto.user;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+
 
 /**
  * UserIdDTO
@@ -23,9 +25,8 @@ public class UserIdDTO {
      *
      * @author [오지훈]
      */
+    @NotBlank(message = "user.userId")
     @ApiParam(value = "유저 ID", name = "userId", required = true, defaultValue = "test@nike.co.kr")
-    //@ApiModelProperty(value = "유저 ID", name = "userId", required = true, example = "test@nike.co.kr")
     private String userId;
-
 
 }

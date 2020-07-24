@@ -82,6 +82,7 @@ public class AuthMenuRole extends BaseTimeEntity implements Serializable {
             final Long authSeq
             , final Long menuRoleSeq
     ) {
+        super();
         this.authSeq = authSeq;
         this.menuRoleSeq = menuRoleSeq;
     }

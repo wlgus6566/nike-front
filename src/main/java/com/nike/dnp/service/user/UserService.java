@@ -466,7 +466,11 @@ public class UserService implements UserDetailsService {
 
         //비밀번호 업데이트
         user.updatePassword(certPassword);
-        passwordHistoryRepository.save(PasswordHistory.builder().userSeq(user.getUserSeq()).password(certPassword).build());
+        passwordHistoryRepository.save(
+                PasswordHistory.builder()
+                        .userSeq(user.getUserSeq())
+                        .password(certPassword)
+                        .build());
 
         //인증코드 삭제
         redisService.delete("cert:" + userId);
@@ -534,10 +538,12 @@ public class UserService implements UserDetailsService {
     ) {
         log.info("UserService.checkPassword");
         //기존비밀번호확인
-        if (!ObjectUtils.isEmpty(password) && !passwordEncoder.matches(password, userPassword)) {
-            throw new CodeMessageHandleException(
-                    ErrorEnumCode.LoginError.WRONG_PASSWORD.toString()
-                    , ErrorEnumCode.LoginError.WRONG_PASSWORD.getMessage());
+        if (!ObjectUtils.isEmpty(password)) {
+            if (!passwordEncoder.matches(password, userPassword)) {
+                throw new CodeMessageHandleException(
+                        ErrorEnumCode.LoginError.WRONG_PASSWORD.toString()
+                        , ErrorEnumCode.LoginError.WRONG_PASSWORD.getMessage());
+            }
         }
 
         //비밀번호 미입력 시

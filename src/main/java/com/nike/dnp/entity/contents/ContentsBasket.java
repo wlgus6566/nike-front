@@ -63,8 +63,8 @@ public class ContentsBasket extends BaseTimeEntity {
      * @Description
      */
     @Transactional
-    public ContentsBasket save(Long contentsFileSeq, AuthUserDTO authUserDTO) {
-        ContentsBasket saveContentsBasket = new ContentsBasket();
+    public ContentsBasket save(final Long contentsFileSeq, final AuthUserDTO authUserDTO) {
+        final ContentsBasket saveContentsBasket = new ContentsBasket();
         saveContentsBasket.setUserSeq(authUserDTO.getUserSeq());
         saveContentsBasket.setContentsFileSeq(contentsFileSeq);
         return saveContentsBasket;

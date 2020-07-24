@@ -10,6 +10,13 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
+/**
+ * The Class Report file.
+ *
+ * @author [오지훈]
+ * @CreatedOn 2020. 7. 24. 오전 10:06:05
+ * @Description
+ */
 @Slf4j
 @Getter
 @Setter
@@ -134,7 +141,7 @@ public class ReportFile extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 10. 오후 5:39:30
      * @Description
      */
-    private ReportFile newReportFile(Long reportSeq, String fileName, String fileSize, String filePhysicalName) {
+    private ReportFile newReportFile(final Long reportSeq, final String fileName, final String fileSize, final String filePhysicalName) {
         final ReportFile saveReportFile = new ReportFile();
         saveReportFile.setReportSeq(reportSeq);
         saveReportFile.setFileName(fileName);
