@@ -10,7 +10,7 @@
                 />
                 <span></span>
             </span>
-            <router-link to="#" class="title-box">
+            <a href="#" class="title-box">
                 <span class="thumbnail">
                     <img
                         :src="item.product.imageFilePhysicalName"
@@ -25,7 +25,7 @@
                         <span class="desc-txt">{{ item.product.agency.agencyName }}</span>
                     </span>
                 </span>
-            </router-link>
+            </a>
             <div class="quantity-box">
                 <span class="title">최소주문수량</span>
                 <span class="num">
@@ -45,7 +45,8 @@
                     <span>삭제</span>
                 </button>
             </div>
-            <div class="loading" v-if="loading(item.wishListSeq)">loading</div>
+            {{ item.wishListSeq }}
+            <div class="loading" v-if="isLoading(item.wishListSeq)">loading</div>
         </li>
     </transition-group>
 </template>
@@ -55,8 +56,8 @@ export default {
     name: 'wish-list-comp',
     props: ['listData', 'checkWishItem', 'deleteLoading'],
     methods: {
-        loading(seq) {
-            const indexFind = this.deleteLoading.findIndex((el) => {
+        isLoading(seq) {
+            const indexFind = this.deleteLoading.findIndex(el => {
                 return el === seq;
             });
             return indexFind !== -1;

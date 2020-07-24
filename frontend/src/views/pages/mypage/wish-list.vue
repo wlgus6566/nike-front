@@ -1,11 +1,11 @@
 <template>
     <div>
-        {{ checkWishItem }}
-        {{ deleteLoading }}
+        checkWishItem : {{ checkWishItem }}<br />
+        deleteLoading : {{ deleteLoading }}
         <h2 class="page-title">
             <span class="ko">위시리스트</span>
         </h2>
-        <div class="all-box" v-if="wishListData.length !== 0">
+        <div class="all-box" v-if="wishListData">
             <!-- todo 전체선택 스크립트 작업 필요  -->
             <label class="check-label">
                 <span class="checkbox">
@@ -31,16 +31,15 @@
         </div>
         <!-- wish list -->
 
-        <!--todo if 수정-->
         <WishList
-            v-if="wishListData.length !== 0"
+            v-if="wishListData"
             :listData="wishListData"
             :checkWishItem="checkWishItem"
             :deleteLoading="deleteLoading"
             @wishDelete="wishDelete"
             @checkedWish="checkedWish"
         />
-        <WishListNodata v-else />
+        <WishListNodata v-if="wishListData && wishListData.length === 0" />
         <Loading v-if="loadingData" />
     </div>
 </template>
@@ -71,11 +70,11 @@ export default {
     },
     methods: {
         checkedWish(seq, del) {
-            const indexOfChecked = this.checkWishItem.findIndex((el) => el === seq);
+            const indexOfChecked = this.checkWishItem.findIndex(el => el === seq);
             if (!del && indexOfChecked === -1) {
                 this.checkWishItem.push(seq);
             } else {
-                this.checkWishItem = this.checkWishItem.filter((el) => {
+                this.checkWishItem = this.checkWishItem.filter(el => {
                     return el !== seq;
                 });
             }
@@ -83,9 +82,9 @@ export default {
         },
         allCheckFn() {
             if (this.checkAll) {
-                this.wishListData.forEach((el) => {
+                this.wishListData.forEach(el => {
                     const indexOfChecked = this.checkWishItem.findIndex(
-                        (elChecked) => elChecked === el.wishListSeq
+                        elChecked => elChecked === el.wishListSeq
                     );
                     if (indexOfChecked === -1) {
                         this.checkWishItem.push(el.wishListSeq);
@@ -96,13 +95,16 @@ export default {
             }
         },
         async checkedWishDelete() {
+            if (!confirm('위시리스트에서 삭제 됩니다. 삭제하시겠습니까?')) {
+                return false;
+            }
             this.deleteLoading = this.checkWishItem;
             try {
                 await deleteWishListCheck({
                     wishListSeqList: this.checkWishItem,
                 });
                 await this.fetchData();
-                this.checkWishItem.forEach((seq) => {
+                this.checkWishItem.forEach(seq => {
                     this.checkedWish(seq, true);
                 });
                 this.deleteLoading = [];
@@ -114,6 +116,9 @@ export default {
             }
         },
         async wishDelete(seq) {
+            if (!confirm('위시리스트에서 삭제 됩니다. 삭제하시겠습니까?')) {
+                return false;
+            }
             this.deleteLoading.push(seq);
             try {
                 await deleteWishList(seq);
