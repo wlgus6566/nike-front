@@ -5,12 +5,12 @@
                 <input
                     type="checkbox"
                     :value="item.wishListSeq"
-                    v-model="checkWishItem2"
+                    v-model="checkWishItem"
                     @click="$emit('checkedWish', item.wishListSeq)"
                 />
                 <span></span>
             </span>
-            <a href="#" class="title-box">
+            <router-link to="#" class="title-box">
                 <span class="thumbnail">
                     <img
                         :src="item.product.imageFilePhysicalName"
@@ -25,7 +25,7 @@
                         <span class="desc-txt">{{ item.product.agency.agencyName }}</span>
                     </span>
                 </span>
-            </a>
+            </router-link>
             <div class="quantity-box">
                 <span class="title">최소주문수량</span>
                 <span class="num">
@@ -40,11 +40,12 @@
                 <button
                     type="button"
                     class="delete"
-                    v-on:click="$emit('wishDelete', item.wishListSeq)"
+                    v-on:click="$emit('wishDelete', [item.wishListSeq])"
                 >
                     <span>삭제</span>
                 </button>
             </div>
+            <div class="loading" v-if="loading(item.wishListSeq)">loading</div>
         </li>
     </transition-group>
 </template>
@@ -52,7 +53,15 @@
 <script>
 export default {
     name: 'wish-list-comp',
-    props: ['listData', 'checkWishItem2'],
+    props: ['listData', 'checkWishItem', 'deleteLoading'],
+    methods: {
+        loading(seq) {
+            const indexFind = this.deleteLoading.findIndex(el => {
+                return el === seq;
+            });
+            return indexFind !== -1;
+        },
+    },
 };
 </script>
 
@@ -61,6 +70,7 @@ export default {
     position: relative;
 }
 .wish-list-item {
+    position: relative;
     overflow: hidden;
     transition: all 300ms;
 }
@@ -74,5 +84,14 @@ export default {
 .list-leave-active {
     position: absolute;
     width: 100%;
+}
+.loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 </style>
