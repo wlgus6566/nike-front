@@ -466,7 +466,11 @@ public class UserService implements UserDetailsService {
 
         //비밀번호 업데이트
         user.updatePassword(certPassword);
-        passwordHistoryRepository.save(PasswordHistory.builder().userSeq(user.getUserSeq()).password(certPassword).build());
+        passwordHistoryRepository.save(
+                PasswordHistory.builder()
+                        .userSeq(user.getUserSeq())
+                        .password(certPassword)
+                        .build());
 
         //인증코드 삭제
         redisService.delete("cert:" + userId);
