@@ -10,7 +10,7 @@
     </section>
 </template>
 <script>
-import LoginBox from '@/components/login-form/login-form';
+import LoginBox from '@/components/login-box/login-form';
 export default {
     name: 'login',
     data: function () {
