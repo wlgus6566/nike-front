@@ -26,6 +26,8 @@ spring:
     multipart:
       max-file-size: 1000MB
       max-request-size: 1000MB
+  redis:
+    userSessionTime: 30
 
 ## 시큐리티 url/ ip 체크 flag
 security:
