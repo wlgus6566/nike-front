@@ -95,6 +95,8 @@
         async passwordChange() {
             try {
                 const res = await changePassword({
+                    certCode:
+                        'y1v0LCq93KX05pR%2FWw3zF65hK%2FCOqYTZDdIXzM0BsC97m%2Fg1QcY1sCZAEvuTFgmcVg3a8J6xDFalUNjUfmmtu5sWZuI%3D',
                     confirmPassword: this.confirmPassword,
                     newPassword: this.newPassword,
                     password: this.password,
