@@ -79,7 +79,7 @@ public class ReportAnswer extends BaseTimeEntity {
      */
     public ReportAnswer save(final ReportAnswerSaveDTO reportAnswerSaveDTO) {
         log.info("ReportAnswer.save");
-        ReportAnswer saveReportAnswer = new ReportAnswer();
+        final ReportAnswer saveReportAnswer = new ReportAnswer();
         saveReportAnswer.setReportSeq(reportAnswerSaveDTO.getReportSeq());
         saveReportAnswer.setAnswerContents(reportAnswerSaveDTO.getAnswerContents());
         saveReportAnswer.setUseYn("Y");

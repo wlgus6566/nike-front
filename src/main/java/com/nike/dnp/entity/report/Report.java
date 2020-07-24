@@ -131,7 +131,7 @@ public class Report extends BaseTimeEntity {
      */
     public Report save(final ReportSaveDTO reportSaveDTO) {
         log.info("Report.save");
-        Report savedReport = new Report();
+        final Report savedReport = new Report();
         savedReport.setReportSectionCode(reportSaveDTO.getReportSectionCode());
         savedReport.setReportName(reportSaveDTO.getReportName());
         savedReport.setImageFileName(reportSaveDTO.getImageFileName());

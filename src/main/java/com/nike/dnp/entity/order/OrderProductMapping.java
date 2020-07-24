@@ -33,7 +33,7 @@ public class OrderProductMapping extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ORDER_GOODS_SEQ")
-    @ApiModelProperty(name="orderGoodsSeq" , value="주문 상품 시퀀스")
+    @ApiModelProperty(name = "orderGoodsSeq" , value = "주문 상품 시퀀스")
     private Long orderGoodsSeq;
 
 
@@ -43,7 +43,7 @@ public class OrderProductMapping extends BaseTimeEntity {
      * @author [윤태호]
      */
     @Column(name = "ORDER_SEQ")
-    @ApiModelProperty(name = "orderSeq", value = "주문 상품 시퀀스")
+    @ApiModelProperty(name = "orderSeq", value = "주문 시퀀스")
     private Long orderSeq;
     /**
      * The Goods seq
@@ -51,7 +51,7 @@ public class OrderProductMapping extends BaseTimeEntity {
      * @author [윤태호]
      */
     @Column(name = "GOODS_SEQ")
-    @ApiModelProperty(name = "goodsSeq", value = "주문 상품 시퀀스")
+    @ApiModelProperty(name = "goodsSeq", value = "상품 시퀀스")
     private Long goodsSeq;
 
 
@@ -61,7 +61,7 @@ public class OrderProductMapping extends BaseTimeEntity {
      * @author [윤태호]
      */
     @Column(name = "ORDER_QUANTITY")
-    @ApiModelProperty(name = "orderQuantity", value = "주문 상품 시퀀스")
+    @ApiModelProperty(name = "orderQuantity", value = "주문 수량")
     private Long orderQuantity;
 
 
