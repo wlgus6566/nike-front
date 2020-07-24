@@ -1,12 +1,12 @@
 <template>
-    <ul class="wish-list">
-        <li class="wish-list-item" v-for="(item, index) in listData" :key="index">
+    <transition-group tag="ul" class="wish-list" name="list" mode="out-in">
+        <li class="wish-list-item" v-for="item in listData" :key="item.wishListSeq">
             <span class="checkbox">
-                {{ item.checked }}
                 <input
                     type="checkbox"
-                    v-model="item.checked"
-                    @change="$emit('updateChecked', $event.target.checked, index)"
+                    :value="item.wishListSeq"
+                    v-model="checkWishItem2"
+                    @click="$emit('checkedWish', item.wishListSeq)"
                 />
                 <span></span>
             </span>
@@ -46,18 +46,33 @@
                 </button>
             </div>
         </li>
-    </ul>
+    </transition-group>
 </template>
 
 <script>
 export default {
     name: 'wish-list-comp',
-    props: ['listData'],
-    mounted() {
-        console.log(this.listData);
-    },
-    methods: {},
+    props: ['listData', 'checkWishItem2'],
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.wish-list {
+    position: relative;
+}
+.wish-list-item {
+    overflow: hidden;
+    transition: all 300ms;
+}
+.list-enter-active,
+.list-leave-active {
+    transition: all 300ms;
+}
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+    opacity: 0;
+}
+.list-leave-active {
+    position: absolute;
+    width: 100%;
+}
+</style>

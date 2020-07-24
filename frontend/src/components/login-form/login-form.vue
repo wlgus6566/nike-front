@@ -31,8 +31,12 @@ export default {
     },
     methods: {
         async login() {
-            if (!this.username || !this.password) {
-                alert('Fill in the account information');
+            if (!this.username) {
+                alert('아이디를 입력해 주세요.');
+                return;
+            }
+            if (!this.password) {
+                alert('비밀번호를 입력해 주세요.');
                 return;
             }
             try {
@@ -40,9 +44,19 @@ export default {
                 bodyFormData.set('username', this.username);
                 bodyFormData.set('password', this.password);
                 const response = await this.$store.dispatch('LOGIN', bodyFormData);
-                this.$router.push('/');
+                if (response.data.existMsg) {
+                    alert(response.data.msg);
+                }
+                if (response.data.code === 'SEND_EMAIL_CERT_CODE') {
+                    this.$router.push('/');
+                } else {
+                    this.$router.push('/');
+                }
+
+                console.log(response);
+                return;
             } catch (error) {
-                console.log(error);
+                alert(error.response.data.msg);
             }
         },
     },

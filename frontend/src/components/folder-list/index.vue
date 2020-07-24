@@ -7,7 +7,7 @@
             { 'folder-list-row': listTypes[1].active },
         ]"
     >
-        <li class="folder-item" v-for="(item, index) in folderListData" :key="index">
+        <li :class="classBind(item)" v-for="(item, index) in folderListData" :key="index">
             <router-link :to="setUrl(item)">
                 <div class="thumbnail">
                     <img :src="item.imageFilePhysicalName" alt="" />
@@ -15,7 +15,10 @@
                 <div class="info-box">
                     <strong class="title">{{ item.folderName }}</strong>
                     <p class="txt">{{ item.folderContents }}</p>
-                    <p class="date">{{ item.campaignEndDt }}</p>
+                    <p class="date">
+                        {{ $moment(item.campaignBeginDt).format('YYYY.MM.DD') }} ~
+                        {{ $moment(item.campaignEndDt).format('YYYY.MM.DD') }}
+                    </p>
                 </div>
                 <div class="view-area">
                     <span class="view">{{ item.readCount }}</span>
@@ -27,14 +30,17 @@
 <script>
 export default {
     name: 'folder-list',
-    props: ['listTypes', 'folderListData', 'folderListLoadingList'],
-    computed: {
-        url() {
-            return `${item.menuCode}/${item.contentsSeq}`;
-        },
+    props: ['listTypes', 'folderListData'],
+    mounted() {
+        console.log(this.folderListData);
     },
-    mounted() {},
     methods: {
+        classBind(el) {
+            const defaultClass = 'folder-item';
+            const detailAuth = el.detailAuthYn === 'Y' ? ' detail-auth' : '';
+            const exposure = el.exposure === 'Y' ? ' exposure' : '';
+            return `${defaultClass}${detailAuth}${exposure}`;
+        },
         setUrl(item) {
             return `${item.contentsSeq}`.toLocaleLowerCase();
         },

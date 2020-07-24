@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 // Routes
+import LoginRoutes from './login';
 import AssetRoutes from './asset';
 import ToolkitRoutes from './toolkit';
 import FoundationRoutes from './foundation';
@@ -24,18 +25,11 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/login',
-            component: pages('login'),
-            meta: {
-                layout: 'Clean',
-                unauthorized: true,
-            },
-        },
-        {
             path: '/',
             component: pages('main-page'),
             meta: { layout: 'Default', aside: 'Default' },
         },
+        ...LoginRoutes,
         ...AssetRoutes,
         ...ToolkitRoutes,
         ...FoundationRoutes,

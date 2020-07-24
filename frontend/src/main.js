@@ -14,6 +14,8 @@ Vue.config.productionTip = false;
 
 Vue.use(CKEditor);
 Vue.use(VueCookies);
+Vue.use(require('vue-moment'));
+
 Vue.directive('lineClamp', lineClamp);
 
 /**

@@ -28,8 +28,9 @@
         <!-- wish list -->
         <WishList
             :listData="wishListData"
+            :checkWishItem2="checkWishItem"
             @wishDelete="wishDelete"
-            @updateChecked="updateChecked"
+            @checkedWish="checkedWish"
         />
     </div>
 </template>
@@ -48,6 +49,7 @@ export default {
             page: 0,
             itemLength: 20,
             checkAll: false,
+            checkWishItem: [],
             //check: this.items.state,
         };
     },
@@ -55,12 +57,25 @@ export default {
         this.fetchData();
     },
     methods: {
-        updateChecked(value, seq) {
-            console.log(value);
-            // const idx = this.wishListData.findIndex(el => {
-            //     return el.wishListSeq === seq;
-            // });
-            this.wishListData[seq].checked = value;
+        checkedWish(seq) {
+            const indexOfChecked = this.checkWishItem.findIndex((el) => el === seq);
+            if (indexOfChecked === -1) {
+                this.checkWishItem.push(seq);
+            } else {
+                this.checkWishItem = this.checkWishItem.filter((el) => {
+                    return el !== seq;
+                });
+            }
+            this.checkAll = this.checkWishItem.length === this.wishListData.length;
+        },
+        allCheckFn() {
+            if (this.checkAll) {
+                this.wishListData.forEach((el) => {
+                    this.checkWishItem.push(el.wishListSeq);
+                });
+            } else {
+                this.checkWishItem = [];
+            }
         },
         async fetchData() {
             this.loadingData = true;
@@ -72,9 +87,6 @@ export default {
                     size: this.itemLength,
                 });
                 this.wishListData = response.content;
-                this.wishListData.forEach(el => {
-                    el.checked = false;
-                });
                 this.loadingData = false;
                 return;
             } catch (error) {
@@ -89,11 +101,6 @@ export default {
             } catch (error) {
                 console.log(error);
             }
-        },
-        allCheckFn() {
-            this.wishListData.forEach(el => {
-                el.checked = this.checkAll;
-            });
         },
     },
 };
