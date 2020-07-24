@@ -165,7 +165,7 @@ public class FileUtil {
 		fileResultDTO.setFilePhysicalName(toFile.getPath().replace(root, ""));
 		fileResultDTO.setFileSize(toFile.length());
 		fileResultDTO.setFileContentType(uploadFile.getContentType());
-
+		fileResultDTO.setFileExtension(extension);
 		if(resize && (uploadFile.getContentType().toUpperCase(Locale.getDefault()).contains("IMAGE") || extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(
 				Locale.getDefault()).contains("AI"))){
 			String resizeExtension = "";
