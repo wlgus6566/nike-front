@@ -91,11 +91,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	protected void doFilterInternal(final HttpServletRequest request,
 									final HttpServletResponse response,
 									final FilterChain chain) throws IOException, ServletException {
-		final String header = request.getHeader(JwtHelper.HEADER_STRING);
+		// 항상 헤더 토큰 체크
+		/*final String header = request.getHeader(JwtHelper.HEADER_STRING);
 		if(header == null  || !header.startsWith(JwtHelper.TOKEN_PREFIX)){
 			chain.doFilter(request,response);
 			return;
-		}
+		}*/
 
 		final Authentication authentication = getUsernamePasswordAuthentication(request);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -135,10 +136,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
 				}
 			}catch(JWTDecodeException | IllegalArgumentException e){
-				throw new CodeMessageHandleException(ErrorEnumCode.LoginError.WRONG_TOKEN.toString(), ErrorEnumCode.LoginError.WRONG_TOKEN.getMessage());
+				throw new CodeMessageHandleException(ErrorEnumCode.AuthError.NO_AUTH.toString(), ErrorEnumCode.AuthError.NO_AUTH.getMessage());
 			}
 		}else{
-			throw new CodeMessageHandleException(ErrorEnumCode.LoginError.WRONG_TOKEN.toString(), ErrorEnumCode.LoginError.WRONG_TOKEN.getMessage());
+			throw new CodeMessageHandleException(ErrorEnumCode.AuthError.NO_AUTH.toString(), ErrorEnumCode.AuthError.NO_AUTH.getMessage());
 		}
 		return authentication;
 	}
