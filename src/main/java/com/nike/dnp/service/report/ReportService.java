@@ -9,6 +9,7 @@ import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.repository.report.ReportFileRepository;
 import com.nike.dnp.repository.report.ReportRepository;
 import com.nike.dnp.service.auth.AuthService;
+import com.nike.dnp.service.history.HistoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -52,6 +53,11 @@ public class ReportService {
      * @author [오지훈]
      */
     private final AuthService authService;
+
+    /**
+     * The History service.
+     */
+    private final HistoryService historyService;
 
     /**
      * Find all paging page.
@@ -126,6 +132,10 @@ public class ReportService {
     public Report findByReportSeq(final Long reportSeq) {
         Report findReport = reportRepository.findByReportSeq(reportSeq);
         findReport.updateReadCount(findReport.getReadCount());
+
+        // history 저장
+        historyService.save(reportSeq, ServiceEnumCode.HistoryTabEnumCode.REPORT.toString());
+
         return findReport;
     }
 

@@ -1,14 +1,20 @@
 package com.nike.dnp.dto.contents;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 
 /**
  * The type Contents file save dto.
+ *
+ * @author [이소정]
+ * @CreatedOn 2020. 7. 23. 오전 11:23:42
+ * @Description
  */
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class ContentsFileSaveDTO {
@@ -61,6 +67,22 @@ public class ContentsFileSaveDTO {
      */
     @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명", example = "http://cdnUrl/file/contents/graphic_img.jpg")
     private String filePhysicalName;
+
+    /**
+     * 파일 컨텐츠 타입
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileContentType", value = "파일 컨텐츠 타입", example = "image/jpeg")
+    private String fileContentType;
+
+    /**
+     * 파일 확장자
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "JPG")
+    private String fileExtension;
 
     /**
      * 상세 썸네일 명

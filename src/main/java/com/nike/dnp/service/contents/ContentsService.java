@@ -10,9 +10,11 @@ import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
+import com.nike.dnp.entity.history.History;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
+import com.nike.dnp.service.history.HistoryService;
 import com.nike.dnp.service.user.UserContentsService;
 import com.nike.dnp.util.FileUtil;
 import com.nike.dnp.util.ImageUtil;
@@ -67,6 +69,11 @@ public class ContentsService {
      * The User contents service.
      */
     private final UserContentsService userContentsService;
+
+    /**
+     * The History service.
+     */
+    private final HistoryService historyService;
 
     /**
      * Find all paging page.
@@ -148,6 +155,10 @@ public class ContentsService {
         Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
         final Contents findContents = contents.orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.ContentsError.NOT_FOUND.toString(), ErrorEnumCode.ContentsError.NOT_FOUND.getMessage()));
         findContents.updateReadCount(findContents.getReadCount());
+
+        // history 저장
+        historyService.save(contentsSeq, topMenuCode);
+
         return findContents;
     }
 

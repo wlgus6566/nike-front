@@ -1,6 +1,7 @@
 package com.nike.dnp.dto.contents;
 
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.*;
 
 
@@ -80,6 +81,22 @@ public class ContentsFileUpdateDTO {
      */
     @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명", example = "http://cdnUrl/file/contents/graphic_img.jpg")
     private String filePhysicalName;
+
+    /**
+     * 파일 컨텐츠 타입
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileExtension", value = "파일 컨텐츠 타입", example = "image/jpeg")
+    private String fileContentType;
+
+    /**
+     * 파일 확장자
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "JPG")
+    private String fileExtension;
 
     /**
      * 상세 썸네일 명

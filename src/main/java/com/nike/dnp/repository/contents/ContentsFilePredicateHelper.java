@@ -53,7 +53,7 @@ public class ContentsFilePredicateHelper {
 		final String fileExtension = contentsFileSearchDTO.getFileExtension();
 
 		if (!StringUtils.isEmpty(fileExtension)) {
-			builder.and(QContentsFile.contentsFile.fileName.contains(fileExtension));
+			builder.and(QContentsFile.contentsFile.fileExtension.eq(fileExtension));
 		}
 		return builder;
 	}

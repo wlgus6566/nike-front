@@ -53,7 +53,7 @@ public class FileResultDTO {
 	/**
 	 * 파일 확장자
 	 */
-	@ApiModelProperty(name = "fileExtension", value = "파일 확장자")
+	@ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "JPG")
 	private String fileExtension;
 
 	/**
