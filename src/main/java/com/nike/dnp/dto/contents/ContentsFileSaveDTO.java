@@ -73,7 +73,7 @@ public class ContentsFileSaveDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileContentType", value = "파일 컨텐츠 타입", example = "jpg")
+    @ApiModelProperty(name = "fileContentType", value = "파일 컨텐츠 타입", example = "image/jpeg")
     private String fileContentType;
 
     /**
@@ -81,7 +81,7 @@ public class ContentsFileSaveDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileExtension", value = "파일 확장자")
+    @ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "JPG")
     private String fileExtension;
 
     /**

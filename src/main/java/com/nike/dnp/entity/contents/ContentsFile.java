@@ -112,7 +112,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "FILE_CONTENT_TYPE")
-    @ApiModelProperty(name = "fileContentType", value = "파일 컨텐츠 타입")
+    @ApiModelProperty(name = "fileContentType", value = "파일 컨텐츠 타입", example = "image/jpeg")
     private String fileContentType;
 
     /**
@@ -121,7 +121,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "FILE_EXTENSION")
-    @ApiModelProperty(name = "fileExtension", value = "파일 확장자")
+    @ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "JPG")
     private String fileExtension;
 
     /**
@@ -233,6 +233,7 @@ public class ContentsFile extends BaseTimeEntity {
                 , contentsFileSaveDTO.getFileSize()
                 , contentsFileSaveDTO.getFilePhysicalName()
                 , contentsFileSaveDTO.getFileContentType()
+                , contentsFileSaveDTO.getFileExtension()
                 , contentsFileSaveDTO.getTitle()
                 , contentsFileSaveDTO.getUrl()
                 , contentsFileSaveDTO.getThumbnailFileName()
@@ -268,6 +269,7 @@ public class ContentsFile extends BaseTimeEntity {
                 , contentsFileUpdateDTO.getFileSize()
                 , contentsFileUpdateDTO.getFilePhysicalName()
                 , contentsFileUpdateDTO.getFileContentType()
+                , contentsFileUpdateDTO.getFileExtension()
                 , contentsFileUpdateDTO.getTitle()
                 , contentsFileUpdateDTO.getUrl()
                 , contentsFileUpdateDTO.getThumbnailFileName()
@@ -310,6 +312,7 @@ public class ContentsFile extends BaseTimeEntity {
             , Long fileSize
             , String filePhysicalName
             , String fileContentType
+            , String fileExtension
             , String title
             , String url
             , String thumbnailFileName
@@ -321,14 +324,15 @@ public class ContentsFile extends BaseTimeEntity {
             , Long fileOrder
     ) {
 
-        boolean isFile = ServiceEnumCode.ContentsFileKindCode.FILE.toString().equals(fileKindCode);
+//        TODO validation 2020.07.24 by.sojeong.lee
+//        if (isFile) {
+//            this.checkStringValidation(fileName, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
+//        } else {
+//            this.checkStringValidation(title, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.getMessage());
+//            this.checkStringValidation(url, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
+//        }
 
-        if (isFile) {
-            this.checkStringValidation(fileName, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
-        } else {
-            this.checkStringValidation(title, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.getMessage());
-            this.checkStringValidation(url, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
-        }
+        boolean isFile = ServiceEnumCode.ContentsFileKindCode.FILE.toString().equals(fileKindCode);
 
         contentsFile.setFileSectionCode(fileSectionCode);
         contentsFile.setFileKindCode(fileKindCode);
@@ -338,6 +342,7 @@ public class ContentsFile extends BaseTimeEntity {
         contentsFile.setFileSize(isFile ? fileSize : null);
         contentsFile.setFilePhysicalName(isFile ? filePhysicalName : null);
         contentsFile.setFileContentType(isFile ? fileContentType : null);
+        contentsFile.setFileExtension(isFile ? fileExtension.toUpperCase() : null);
 
         contentsFile.setThumbnailFileName(isFile ? thumbnailFileName : null);
         contentsFile.setThumbnailFileSize(isFile ? thumbnailFileSize : null);
@@ -364,14 +369,15 @@ public class ContentsFile extends BaseTimeEntity {
     public void update(final ContentsFileUpdateDTO contentsFileUpdateDTO) {
         log.info("ContentsFile.update");
 
-        boolean isFile = ServiceEnumCode.ContentsFileKindCode.FILE.toString().equals(contentsFileUpdateDTO.getFileKindCode());
+//        TODO validation 2020.07.24 by.sojeong.lee
+//        if (isFile) {
+//            this.checkStringValidation(contentsFileUpdateDTO.getFileName(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
+//        } else {
+//            this.checkStringValidation(contentsFileUpdateDTO.getTitle(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.getMessage());
+//            this.checkStringValidation(contentsFileUpdateDTO.getUrl(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
+//        }
 
-        if (isFile) {
-            this.checkStringValidation(contentsFileUpdateDTO.getFileName(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
-        } else {
-            this.checkStringValidation(contentsFileUpdateDTO.getTitle(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.getMessage());
-            this.checkStringValidation(contentsFileUpdateDTO.getUrl(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
-        }
+        boolean isFile = ServiceEnumCode.ContentsFileKindCode.FILE.toString().equals(contentsFileUpdateDTO.getFileKindCode());
 
         this.fileSectionCode = contentsFileUpdateDTO.getFileSectionCode();
         this.fileKindCode = contentsFileUpdateDTO.getFileKindCode();
@@ -381,6 +387,7 @@ public class ContentsFile extends BaseTimeEntity {
         this.fileSize = isFile ? contentsFileUpdateDTO.getFileSize() : null;
         this.filePhysicalName = isFile ? contentsFileUpdateDTO.getFilePhysicalName() : null;
         this.fileContentType = isFile ? contentsFileUpdateDTO.getFileContentType() : null;
+        this.fileExtension = isFile ? contentsFileUpdateDTO.getFileExtension().toUpperCase() : null;
 
         this.thumbnailFileName = isFile ? contentsFileUpdateDTO.getThumbnailFileName() : null;
         this.thumbnailFileSize = isFile ? contentsFileUpdateDTO.getThumbnailFileSize() : null;

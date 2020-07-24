@@ -87,7 +87,7 @@ public class ContentsFileUpdateDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileExtension", value = "확장자", example = "JPG")
+    @ApiModelProperty(name = "fileExtension", value = "파일 컨텐츠 타입", example = "image/jpeg")
     private String fileContentType;
 
     /**
@@ -95,7 +95,7 @@ public class ContentsFileUpdateDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "jpg")
+    @ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "JPG")
     private String fileExtension;
 
     /**
