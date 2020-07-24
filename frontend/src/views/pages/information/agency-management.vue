@@ -12,7 +12,12 @@
                     <div class="title-wrap">
                         <h3 class="form-title mt0">AGENCY 관리</h3>
                         <div class="right">
-                            <button type="button" class="txt-btn-orange">
+                            <button
+                                type="button"
+                                class="txt-btn-orange"
+                                v-if="agencySeq"
+                                v-on:click="$emit('delAgencyManagement', agencySeq)"
+                            >
                                 <span>AGENCY 삭제</span>
                             </button>
                         </div>
@@ -24,7 +29,7 @@
                                 <label class="label-title required">AGENCY 명</label>
                             </div>
                             <div class="form-column">
-                                <input type="text" />
+                                <input type="text" v-model="addAgencyData.agencyName" required />
                             </div>
                         </li>
                         <li class="form-row">
@@ -33,7 +38,13 @@
                             </div>
                             <div class="form-column">
                                 <span class="textarea">
-                                    <textarea cols="100" rows="2"> </textarea>
+                                    <textarea
+                                        cols="100"
+                                        rows="2"
+                                        v-model="addAgencyData.agencyDescription"
+                                        required
+                                    >
+                                    </textarea>
                                 </span>
                             </div>
                         </li>
@@ -42,7 +53,7 @@
                                 <label class="label-title">대표번호</label>
                             </div>
                             <div class="form-column">
-                                <input type="text" />
+                                <input type="tel" v-model="addAgencyData.telephoneNumber" />
                             </div>
                         </li>
                         <li class="form-row">
@@ -50,14 +61,29 @@
                                 <label class="label-title required">대표 E-MAIL</label>
                             </div>
                             <div class="form-column">
-                                <input type="text" />
+                                <input type="email" v-model="addAgencyData.email" required />
                             </div>
                         </li>
                     </ul>
                     <hr class="hr-gray" />
                     <div class="btn-area">
                         <button type="button" class="btn-s"><span>취소</span></button>
-                        <button type="button" class="btn-s-black"><span>저장</span></button>
+                        <button
+                            type="button"
+                            class="btn-s-black"
+                            v-if="agencySeq"
+                            v-on:click="$emit('modifyAgencyManagement', agencySeq)"
+                        >
+                            <span>수정</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-s-black"
+                            v-else
+                            v-on:click="$emit('addAgencyManagement')"
+                        >
+                            <span>저장</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -76,8 +102,10 @@ export default {
     props: {
         visible: Boolean,
         receipt: Object,
+        addAgencyData: Object,
+        agencySeq: false,
     },
-
+    created() {},
     methods: {
         removeBodyClass(className) {
             const body = document.body;
