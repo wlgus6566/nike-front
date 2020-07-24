@@ -141,7 +141,7 @@ public class ContentsFile extends BaseTimeEntity {
     private long fileOrder;
 
     /**
-     * 사용여부
+     * 사용 여부
      * @author [이소정]
      */
     @Column(name = "USE_YN")

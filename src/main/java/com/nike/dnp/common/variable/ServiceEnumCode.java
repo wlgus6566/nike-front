@@ -261,7 +261,8 @@ public class ServiceEnumCode {
     @RequiredArgsConstructor
     @Getter
     public enum HistoryTabEnumCode {
-        ASSET
+        ALL
+        , ASSET
         , TOOLKIT
         , FOUNDATION
         , REPORT;

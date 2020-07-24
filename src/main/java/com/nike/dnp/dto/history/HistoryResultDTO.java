@@ -28,13 +28,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class HistoryResultDTO {
 
-//    /**
-//     * The History seq
-//     *
-//     * @author [이소정]
-//     */
-//    @ApiModelProperty(name = "historySeq", value ="히스토리 시퀀스", example = "1")
-//    private Long historySeq;
+    /**
+     * The History seq
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "historySeq", value ="히스토리 시퀀스", example = "1")
+    private Long historySeq;
 
     /**
      * The Type cd
@@ -51,24 +51,6 @@ public class HistoryResultDTO {
     @Column(name = "FOLDER_SEQ")
     @ApiModelProperty(name = "folderSeq", value ="폴더 시퀀스(콘텐츠, 리포트 시퀀스)", example = "4")
     private Long folderSeq;
-
-    /**
-     * The Contents seq
-     *
-     * @author [이소정]
-     */
-//    @Column(name = "CONTENTS_SEQ")
-//    @ApiModelProperty(name = "contentsSeq", value ="콘텐츠 시퀀스", example = "4")
-//    private Long contentsSeq;
-
-    /**
-     * The Report seq
-     *
-     * @author [이소정]
-     */
-//    @Column(name = "REPORT_SEQ")
-//    @ApiModelProperty(name = "reportSeq", value ="보고서 시퀀스", example = "3")
-//    private Long reportSeq;
 
     /**
      * 최고 메뉴 공통코드
@@ -152,18 +134,23 @@ public class HistoryResultDTO {
     private LocalDateTime campaignEndDt;
 
     /**
-     * The Report name
-     * @author [이소정]
-     */
-//    @Column(name = "REPORT_NAME")
-//    @ApiModelProperty(name = "reportName", value = "보고서 명")
-//    private String reportName;
-
-    /**
      * 조회수
      * @author [이소정]
      */
     @Column(name = "READ_COUNT")
     @ApiModelProperty(name = "readCount", value = "조회수")
     private Long readCount;
+
+    /**
+     * 최초 작성일
+     *
+     * @author [오지훈]
+     */
+    @Column(name = "REGISTRATION_DT")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    @CreationTimestamp
+    @ApiModelProperty(name = "registrationDt", value = "최초 작성일", hidden = true)
+    private LocalDateTime registrationDt;
 }

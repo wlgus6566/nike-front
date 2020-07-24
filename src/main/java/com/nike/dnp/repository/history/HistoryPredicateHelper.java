@@ -1,6 +1,7 @@
 package com.nike.dnp.repository.history;
 
 
+import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.history.HistorySearchDTO;
 import com.nike.dnp.entity.history.QHistory;
 import com.querydsl.core.BooleanBuilder;
@@ -31,7 +32,7 @@ public class HistoryPredicateHelper {
 		final BooleanBuilder builder = new BooleanBuilder();
 		final String typeCd = historySearchDTO.getTypeCd();
 
-		if(!StringUtils.isEmpty(typeCd.trim())) {
+		if(!StringUtils.isEmpty(typeCd.trim()) || !ServiceEnumCode.HistoryTabEnumCode.ALL.toString().equals(typeCd.trim())) {
 			builder.and(QHistory.history.typeCd.eq(typeCd));
 		}
 
