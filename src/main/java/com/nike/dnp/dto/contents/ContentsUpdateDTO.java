@@ -1,5 +1,7 @@
 package com.nike.dnp.dto.contents;
 
+import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.dto.user.UserContentsSaveDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -7,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -242,5 +246,52 @@ public class ContentsUpdateDTO {
      */
     @ApiModelProperty(name = "contentsFileList", value = "컨텐츠 파일 리스트")
     private List<ContentsFileUpdateDTO> contentsFileList;
+
+    //    권한 관련 DTO
+    /**
+     * 권한 체크 목록
+     *
+     * @author [오지훈]
+     */
+    @NotNull(message = "userContents.checks")
+    @ApiModelProperty(name = "authChecks", value = "권한 체크 목록")
+    private List<UserContentsSaveDTO.AuthCheckDTO> checks = new ArrayList<>();
+
+    /**
+     * The Class Auth check.
+     *
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 20. 오후 12:23:51
+     * @Description 권한 체크 DTO
+     */
+    @Getter
+    @Setter
+    public static class AuthCheckDTO {
+
+        /**
+         * The Auth seq
+         *
+         * @author [오지훈]
+         */
+        @ApiModelProperty(name = "authSeq", value = "권한 시퀀스")
+        private Long authSeq;
+
+        /**
+         * The Detail auth yn
+         *
+         * @author [오지훈]
+         */
+        @ApiModelProperty(name = "detailAuthYn", value = "상세_권한_여부", example = "N")
+        private String detailAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
+
+        /**
+         * The Email reception yn
+         *
+         * @author [오지훈]
+         */
+        @ApiModelProperty(name = "emailReceptionYn", value = "메일_수신_여부", example = "N")
+        private String emailReceptionYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
+
+    }
 
 }

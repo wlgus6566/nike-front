@@ -304,4 +304,15 @@ public class ServiceEnumCode {
          */
         private final String fileExtension;
     }
+
+    /**
+     * The enum Alarm action enum code.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum AlarmActionEnumCode {
+        NEW
+        , UPDATE
+        , FEEDBACK
+    }
 }

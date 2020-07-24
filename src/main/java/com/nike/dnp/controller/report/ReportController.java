@@ -154,7 +154,7 @@ public class ReportController {
             @ApiParam(name="reportUpdateDTO", value = "보고서 수정 Json") @RequestBody final ReportUpdateDTO reportUpdateDTO,
             @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq
     ) {
-        return responseService.getSingleResult(reportService.update(reportUpdateDTO));
+        return responseService.getSingleResult(reportService.update(reportSeq, reportUpdateDTO));
     }
 
     /**

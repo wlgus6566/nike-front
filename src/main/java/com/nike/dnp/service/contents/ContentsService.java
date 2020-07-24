@@ -7,13 +7,19 @@ import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
+import com.nike.dnp.dto.user.UserContentsSaveDTO;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
+import com.nike.dnp.entity.alarm.Alarm;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
-import com.nike.dnp.entity.history.History;
+import com.nike.dnp.entity.user.UserAuth;
+import com.nike.dnp.entity.user.UserContents;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.repository.alarm.AlarmRepository;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
+import com.nike.dnp.repository.user.UserAuthRepository;
+import com.nike.dnp.service.alarm.AlarmService;
 import com.nike.dnp.service.history.HistoryService;
 import com.nike.dnp.service.user.UserContentsService;
 import com.nike.dnp.util.FileUtil;
@@ -62,18 +68,38 @@ public class ContentsService {
 
     /**
      * The Mail service.
+     *
+     * @author [이소정]
      */
     private final MailService mailService;
 
     /**
      * The User contents service.
+     *
+     * @author [이소정]
      */
     private final UserContentsService userContentsService;
 
     /**
      * The History service.
+     *
+     * @author [이소정]
      */
     private final HistoryService historyService;
+
+    /**
+     * The Alarm service
+     *
+     * @author [이소정]
+     */
+    private final AlarmService alarmService;
+
+    /**
+     * The User auth repository
+     *
+     * @author [이소정]
+     */
+    private final UserAuthRepository userAuthRepository;
 
     /**
      * Find all paging page.
@@ -116,6 +142,7 @@ public class ContentsService {
     @Transactional
     public Contents save(final ContentsSaveDTO contentsSaveDTO) {
         log.info("contentsService.save");
+
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
             FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsSaveDTO.getImageBase64());
@@ -127,17 +154,57 @@ public class ContentsService {
         final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
         List<ContentsFile> savedContentsFileList = new ArrayList<>();
 
-//        contentsFile 추가
+        // 컨텐츠 파일 저장
         if (!contentsSaveDTO.getContentsFileList().isEmpty()) {
             for (ContentsFileSaveDTO contentsFileSaveDTO : contentsSaveDTO.getContentsFileList()) {
                 ContentsFile savedContentsFile = contentsFileRepository.save(new ContentsFile().save(savedContents, contentsFileSaveDTO));
                 savedContentsFileList.add(savedContentsFile);
             }
         }
-
         savedContents.setContentsFileList(savedContentsFileList);
+
+        // 사용자 컨텐츠 권한 저장
+        UserContentsSaveDTO userContentsSaveDTO = new UserContentsSaveDTO();
+        userContentsSaveDTO.setChecks(contentsSaveDTO.getChecks());
+        this.saveUserContentsAuth(savedContents.getContentsSeq(), userContentsSaveDTO);
+
+        // 노출인 경우 > 권한 그룹에 알림 전송
+        if ("Y".equals(contentsSaveDTO.getExposureYn())) {
+            alarmService.sendAlarmTargetList(
+                    ServiceEnumCode.AlarmActionEnumCode.NEW.toString()
+                    , contentsSaveDTO.getTopMenuCode()
+                    , savedContents.getContentsSeq()
+                    , null
+                    , this.findAllAuthUser(contentsSaveDTO.getChecks()));
+
+        }
+
         return savedContents;
     }
+
+    /**
+     * Find all auth user list.
+     *
+     * @param authCheckList the auth check list
+     * @return the list
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 24. 오후 7:30:13
+     * @Description
+     */
+    public List<Long> findAllAuthUser(final List<UserContentsSaveDTO.AuthCheckDTO> authCheckList) {
+        List<Long> userSeqList = new ArrayList<>();
+        for (UserContentsSaveDTO.AuthCheckDTO authCheckDTO : authCheckList) {
+            if ("Y".equals(authCheckDTO.getDetailAuthYn())) {
+                // authSeq 를 가지고 userSeq 목록 가져오기
+                List<UserAuth> userAuthList = userAuthRepository.findAllByAuthSeq(authCheckDTO.getAuthSeq());
+                for (UserAuth userAuth : userAuthList) {
+                    userSeqList.add(userAuth.getUserSeq());
+                }
+            }
+        }
+        return userSeqList;
+    }
+
 
     /**
      * Find by contents seq contents.
@@ -172,9 +239,11 @@ public class ContentsService {
      * @Description
      */
     @Transactional
-    public Optional<Contents> update(final ContentsUpdateDTO contentsUpdateDTO) {
+    public Optional<Contents> update(final Long contentsSeq, final ContentsUpdateDTO contentsUpdateDTO) {
         log.info("contentsService.update");
+
         // contents Update
+        contentsUpdateDTO.setContentsSeq(contentsSeq);
         final Optional<Contents> contents = Optional.ofNullable(contentsRepository.findById(contentsUpdateDTO.getContentsSeq()).orElseThrow(() ->
                 new CodeMessageHandleException(ErrorEnumCode.ContentsError.NOT_FOUND.toString(), ErrorEnumCode.ContentsError.NOT_FOUND.getMessage())));
 
@@ -225,6 +294,22 @@ public class ContentsService {
                 contentsFile.updateUseYn("N");
             }
         }
+
+        // 사용자 컨텐츠 권한 저장
+        UserContentsSaveDTO userContentsSaveDTO = new UserContentsSaveDTO();
+        userContentsSaveDTO.setChecks(contentsUpdateDTO.getChecks());
+        this.saveUserContentsAuth(contentsUpdateDTO.getContentsSeq(), userContentsSaveDTO);
+
+        // 노출인 경우 > 권한 그룹에 알림 전송
+        if ("Y".equals(contentsUpdateDTO.getExposureYn())) {
+            alarmService.sendAlarmTargetList(
+                    ServiceEnumCode.AlarmActionEnumCode.UPDATE.toString()
+                    , contentsUpdateDTO.getTopMenuCode()
+                    , contentsUpdateDTO.getContentsSeq()
+                    , null
+                    , this.findAllAuthUser(contentsUpdateDTO.getChecks()));
+        }
+
         return contents;
     }
 
@@ -274,6 +359,22 @@ public class ContentsService {
             return null;
         }
     }
+
+
+    /**
+     * Save user contents auth list.
+     *
+     * @param contentsSeq         the contents seq
+     * @param userContentsSaveDTO the user contents save dto
+     * @return the list
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 24. 오후 7:01:22
+     * @Description
+     */
+    public List<UserContents> saveUserContentsAuth(final Long contentsSeq, final UserContentsSaveDTO userContentsSaveDTO) {
+        return userContentsService.save(contentsSeq, userContentsSaveDTO);
+    }
+
 
 
     /**

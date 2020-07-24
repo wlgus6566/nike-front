@@ -1,0 +1,90 @@
+package com.nike.dnp.controller.alarm;
+
+import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.dto.SearchDTO;
+import com.nike.dnp.dto.auth.AuthUserDTO;
+import com.nike.dnp.dto.contents.*;
+import com.nike.dnp.dto.report.ReportSearchDTO;
+import com.nike.dnp.entity.alarm.Alarm;
+import com.nike.dnp.entity.contents.Contents;
+import com.nike.dnp.model.response.CommonResult;
+import com.nike.dnp.model.response.SingleResult;
+import com.nike.dnp.service.ResponseService;
+import com.nike.dnp.service.alarm.AlarmService;
+import com.nike.dnp.service.contents.ContentsService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.Optional;
+
+/**
+ * The Class Alarm controller.
+ *
+ * @author [이소정]
+ * @CreatedOn 2020. 7. 24. 오후 7:41:14
+ * @Description
+ */
+@Slf4j
+@RestController
+@Api(description = "알림", tags = "ALARM")
+@RequestMapping(value = "/api/alarm", name = "알림")
+@RequiredArgsConstructor
+public class AlarmController {
+
+    /**
+     * 응답 서비스
+     *
+     * @author [이소정]
+     */
+    private final ResponseService responseService;
+
+    /**
+     * The Alarm service
+     *
+     * @author [이소정]
+     */
+    private final AlarmService alarmService;
+
+    /**
+     * The constant REQUEST_CHARACTER
+     *
+     * @author [이소정]
+     */
+    private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
+
+    @ApiOperation(
+        value = "알림 목록 조회"
+        , notes = REQUEST_CHARACTER
+        + "page|페이지|false|Integer|0부터 시작\n"
+        + "size|사이즈|false|Integer\n"
+        + "[하위 Parameters 참조]\n\n\n\n"
+        + "## Public/Paging Response ## \n"
+        + "필드명||필드설명|데이터 타입(길이)\n" + "-|-|-|-\n"
+        + "content||본문내용|Array\n"
+        + "totalPages||총페이지수|Integer\n"
+        + "totalElements||총데이터수|Integer\n"
+        + "first||첫페이지여부|Boolean\n"
+        + "last||마지막페이지여부|Boolean\n"
+        + "empty||빈값여부|Boolean\n"
+        + "number||현재페이지|Integer\n"
+        + "size||노출갯수|Integer\n\n\n\n"
+    )
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "알림 목록 조회")
+    public SingleResult<Page<AlarmResultDTO>> findAllAlarm(
+            final SearchDTO searchDTO,
+            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
+    ) {
+        return responseService.getSingleResult(alarmService.findAllPaging(authUserDTO.getUserSeq(), searchDTO));
+    }
+
+
+}
+

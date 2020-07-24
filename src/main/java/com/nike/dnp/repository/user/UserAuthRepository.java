@@ -5,6 +5,7 @@ import com.nike.dnp.entity.user.UserAuth;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -27,5 +28,16 @@ public interface UserAuthRepository extends JpaRepository<UserAuth, Long>, UserA
      * @Description 상세 조회
      */
     Optional<UserAuth> findByUser(User user);
+
+    /**
+     * Find all by auth seq list.
+     *
+     * @param authSeq the auth seq
+     * @return the list
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 24. 오후 7:27:44
+     * @Description
+     */
+    List<UserAuth> findAllByAuthSeq(Long authSeq);
 
 }

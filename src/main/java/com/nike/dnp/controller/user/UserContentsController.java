@@ -79,31 +79,31 @@ public class UserContentsController {
         return responseService.getSingleResult(userContentsService.getAuthList(userContentsSearchDTO));
     }
 
-    /**
-     * Save single result.
-     *
-     * @param userContentsSaveDTO the user contents save dto
-     * @return the single result
-     * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오후 2:38:11
-     * @Description 유저 컨텐츠 권한 등록/수정
-     */
-    @ApiOperation(value = "유저 컨텐츠 권한 등록/수정"
-            , notes = OPERATION_CHARACTER)
-    @PostMapping(name = "유저 컨텐츠 권한 등록/수정", value = "/save/{contentsSeq}"
-            , consumes = {MediaType.APPLICATION_JSON_VALUE}
-            , produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ValidField
-    public SingleResult<List<UserContents>> save (
-            @ApiParam(value = "컨텐츠 시퀀스", required = true) @PathVariable final Long contentsSeq
-            , @ApiParam(value = "유저 컨텐츠 권한 저장 DTO", required = true) @Valid @RequestBody final UserContentsSaveDTO userContentsSaveDTO
-            , @ApiIgnore final BindingResult result) {
-        log.info("UserContentsController.save");
-        return responseService.getSingleResult(
-                userContentsService.save(contentsSeq, userContentsSaveDTO)
-                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.toString()
-                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.getMessage()
-                , true
-        );
-    }
+//    /**
+//     * Save single result.
+//     *
+//     * @param userContentsSaveDTO the user contents save dto
+//     * @return the single result
+//     * @author [오지훈]
+//     * @CreatedOn 2020. 7. 20. 오후 2:38:11
+//     * @Description 유저 컨텐츠 권한 등록/수정
+//     */
+//    @ApiOperation(value = "유저 컨텐츠 권한 등록/수정"
+//            , notes = OPERATION_CHARACTER)
+//    @PostMapping(name = "유저 컨텐츠 권한 등록/수정", value = "/save/{contentsSeq}"
+//            , consumes = {MediaType.APPLICATION_JSON_VALUE}
+//            , produces = {MediaType.APPLICATION_JSON_VALUE})
+//    @ValidField
+//    public SingleResult<List<UserContents>> save (
+//            @ApiParam(value = "컨텐츠 시퀀스", required = true) @PathVariable final Long contentsSeq
+//            , @ApiParam(value = "유저 컨텐츠 권한 저장 DTO", required = true) @Valid @RequestBody final UserContentsSaveDTO userContentsSaveDTO
+//            , @ApiIgnore final BindingResult result) {
+//        log.info("UserContentsController.save");
+//        return responseService.getSingleResult(
+//                userContentsService.save(contentsSeq, userContentsSaveDTO)
+//                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.toString()
+//                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.getMessage()
+//                , true
+//        );
+//    }
 }
