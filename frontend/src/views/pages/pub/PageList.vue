@@ -170,6 +170,17 @@ export default {
                     comment: '',
                     depth: [
                         {
+                            title: 'pagination',
+                            depthTitle: false,
+                            name: '지은유',
+                            filename: 'pagination.vue',
+                            link: 'pagination',
+                            com: ' ',
+                            abc: '',
+                            comment: ' ',
+                            depth: false,
+                        },
+                        {
                             title: 'BUTTON',
                             depthTitle: false,
                             name: '지은유',

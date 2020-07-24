@@ -17,7 +17,6 @@
         </header>
         <section id="container">
             <div class="contents">
-                <h2 class="page-title"><span class="ko">회원정보 조회</span></h2>
                 <div class="member-inquiry">
                     <div class="inner">
                         <span class="desc">HELLO!</span>

@@ -26,7 +26,7 @@ export default {
     data() {
         return {
             username: 'yth',
-            password: '1',
+            password: 'Qdlthauts!235',
         };
     },
     methods: {

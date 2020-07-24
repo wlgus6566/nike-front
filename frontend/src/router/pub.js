@@ -13,6 +13,11 @@ const routes = [
             },
             //guide
             {
+                path: 'pagination',
+                component: pages('pub/pagination.vue'),
+                meta: { layout: 'Pub' },
+            },
+            {
                 path: 'button',
                 component: pages('pub/button'),
                 meta: { layout: 'Pub' },
