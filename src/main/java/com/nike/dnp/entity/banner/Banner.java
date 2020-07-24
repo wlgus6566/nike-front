@@ -130,7 +130,16 @@ public class Banner extends BaseTimeEntity implements Serializable {
     @ApiModelProperty(name = "linkUrl", value = "링크_URL", required = true)
     private String linkUrl;
 
-    public Banner saveOrUpdate (BannerSaveDTO bannerSaveDTO) {
+    /**
+     * Save or update banner.
+     *
+     * @param bannerSaveDTO the banner save dto
+     * @return the banner
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 24. 오전 10:05:40
+     * @Description
+     */
+    public Banner saveOrUpdate (final BannerSaveDTO bannerSaveDTO) {
         this.title = bannerSaveDTO.getTitle();
         this.contents = bannerSaveDTO.getContents();
         this.imageFileName = bannerSaveDTO.getImageFileName();
@@ -143,17 +152,4 @@ public class Banner extends BaseTimeEntity implements Serializable {
         this.linkUrl = bannerSaveDTO.getLinkUrl();
         return this;
     }
-
-    /*public void update (BannerUpdateDTO bannerUpdateDTO) {
-        this.title = bannerUpdateDTO.getTitle();
-        this.contents = bannerUpdateDTO.getContents();
-        this.imageFileName = bannerUpdateDTO.getImageFileName();
-        this.imageFileSize = bannerUpdateDTO.getImageFileSize();
-        this.imageFilePhysicalName = bannerUpdateDTO.getImageFilePhysicalName();
-        this.mobileImageFileName = bannerUpdateDTO.getMobileImageFileName();
-        this.mobileImageFileSize = bannerUpdateDTO.getMobileImageFileSize();
-        this.mobileImageFilePhysicalName = bannerUpdateDTO.getMobileImageFilePhysicalName();
-        this.linkUrlTypeCode = bannerUpdateDTO.getLinkUrlTypeCode();
-        this.linkUrl = bannerUpdateDTO.getLinkUrl();
-    }*/
 }

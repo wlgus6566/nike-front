@@ -27,6 +27,7 @@ public class SimpleAccessDeniedHandler implements AccessDeniedHandler {
 	public void handle(final HttpServletRequest request,
 					   final HttpServletResponse response,
 					   final AccessDeniedException exception) throws IOException {
+
 		response.setContentType("application/json;charset=utf-8");
 		response.setStatus(HttpStatus.FORBIDDEN.value());
 

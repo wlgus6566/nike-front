@@ -2,13 +2,9 @@ package com.nike.dnp.repository.contents;
 
 import com.nike.dnp.dto.contents.ContentsFileResultDTO;
 import com.nike.dnp.dto.contents.ContentsFileSearchDTO;
-import com.nike.dnp.dto.contents.ContentsMailResultDTO;
-import com.nike.dnp.dto.email.SendDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * The Interface Contents file repository custom.

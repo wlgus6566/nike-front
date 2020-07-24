@@ -1,6 +1,5 @@
 package com.nike.dnp.dto.user;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
 
@@ -19,7 +18,6 @@ import javax.validation.constraints.NotBlank;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-@ApiModel(value = "유저 저장 DTO")
 public class UserIdDTO {
 
     /**

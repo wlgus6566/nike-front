@@ -10,8 +10,8 @@ import com.nike.dnp.exception.CodeMessageHandleException;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
@@ -197,9 +197,9 @@ public class ContentsFile extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 1. 오전 11:24:43
      * @Description
      */
-    public ContentsFile save(Contents savedContents, ContentsFileSaveDTO contentsFileSaveDTO) {
+    public ContentsFile save(final Contents savedContents, final ContentsFileSaveDTO contentsFileSaveDTO) {
         log.info("ContentsFile.save");
-        ContentsFile contentsFile = new ContentsFile();
+        final ContentsFile contentsFile = new ContentsFile();
 
         contentsFile.setThumbnailFileName(contentsFileSaveDTO.getThumbnailFileName());
         contentsFile.setThumbnailFileSize(contentsFileSaveDTO.getThumbnailFileSize());
@@ -235,9 +235,9 @@ public class ContentsFile extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 6. 오후 5:52:49
      * @Description
      */
-    public ContentsFile newContentsFile(Long contentsSeq, ContentsFileUpdateDTO contentsFileUpdateDTO) {
+    public ContentsFile newContentsFile(final Long contentsSeq, final ContentsFileUpdateDTO contentsFileUpdateDTO) {
         log.info("ContentsFile.newContentsFile");
-        ContentsFile contentsFile = new ContentsFile();
+        final ContentsFile contentsFile = new ContentsFile();
 
         contentsFile.setDownloadCount(0l);
         contentsFile.setUseYn("Y");
@@ -278,24 +278,24 @@ public class ContentsFile extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 7. 오전 10:41:43
      * @Description
      */
-    private ContentsFile applyContentsFile(ContentsFile contentsFile
-            , String fileSectionCode
-            , String fileKindCode
-            , String fileName
-            , Long fileSize
-            , String filePhysicalName
-            , String title
-            , String url
-            , String thumbnailFileName
-            , String thumbnailFileSize
-            , String thumbnailFilePhysicalName
-            , String detailThumbnailFileName
-            , String detailThumbnailFileSize
-            , String detailThumbnailFilePhysicalName
-            , Long fileOrder
+    private ContentsFile applyContentsFile(final ContentsFile contentsFile
+            , final String fileSectionCode
+            , final String fileKindCode
+            , final String fileName
+            , final Long fileSize
+            , final String filePhysicalName
+            , final String title
+            , final String url
+            , final String thumbnailFileName
+            , final String thumbnailFileSize
+            , final String thumbnailFilePhysicalName
+            , final String detailThumbnailFileName
+            , final String detailThumbnailFileSize
+            , final String detailThumbnailFilePhysicalName
+            , final Long fileOrder
     ) {
 
-        boolean isFile = ServiceEnumCode.ContentsFileKindCode.FILE.toString().equals(fileKindCode);
+        final boolean isFile = ServiceEnumCode.ContentsFileKindCode.FILE.toString().equals(fileKindCode);
 
         if (isFile) {
             this.checkStringValidation(fileName, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
@@ -320,8 +320,8 @@ public class ContentsFile extends BaseTimeEntity {
         contentsFile.setDetailThumbnailFileSize(isFile ? detailThumbnailFileSize : null);
         contentsFile.setDetailThumbnailFilePhysicalName(isFile ? detailThumbnailFilePhysicalName : null);
 
-        contentsFile.setTitle(!isFile ? title : null);
-        contentsFile.setUrl(!isFile ? url : null);
+        contentsFile.setTitle(isFile ? null : title);
+        contentsFile.setUrl(isFile ? null : url);
 
         return contentsFile;
     }
@@ -337,7 +337,7 @@ public class ContentsFile extends BaseTimeEntity {
     public void update(final ContentsFileUpdateDTO contentsFileUpdateDTO) {
         log.info("ContentsFile.update");
 
-        boolean isFile = ServiceEnumCode.ContentsFileKindCode.FILE.toString().equals(contentsFileUpdateDTO.getFileKindCode());
+        final boolean isFile = ServiceEnumCode.ContentsFileKindCode.FILE.toString().equals(contentsFileUpdateDTO.getFileKindCode());
 
         if (isFile) {
             this.checkStringValidation(contentsFileUpdateDTO.getFileName(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
@@ -349,7 +349,6 @@ public class ContentsFile extends BaseTimeEntity {
         this.fileSectionCode = contentsFileUpdateDTO.getFileSectionCode();
         this.fileKindCode = contentsFileUpdateDTO.getFileKindCode();
         this.fileOrder = contentsFileUpdateDTO.getFileOrder();
-
         this.fileName = isFile ? contentsFileUpdateDTO.getFileName() : null;
         this.fileSize = isFile ? contentsFileUpdateDTO.getFileSize() : null;
         this.filePhysicalName = isFile ? contentsFileUpdateDTO.getFilePhysicalName() : null;
@@ -359,8 +358,7 @@ public class ContentsFile extends BaseTimeEntity {
         this.detailThumbnailFileName = isFile ? contentsFileUpdateDTO.getDetailThumbnailFileName() : null;
         this.detailThumbnailFileSize = isFile ? contentsFileUpdateDTO.getDetailThumbnailFileSize() : null;
         this.detailThumbnailFilePhysicalName = isFile ? contentsFileUpdateDTO.getDetailThumbnailFilePhysicalName() : null;
-
-        this.title = !isFile ? contentsFileUpdateDTO.getTitle() : null;
+        this.title = isFile ? null : contentsFileUpdateDTO.getTitle();
         this.url = isFile ? null : contentsFileUpdateDTO.getUrl();
     }
 
@@ -400,8 +398,9 @@ public class ContentsFile extends BaseTimeEntity {
      * @CreatedOn 2020. 6. 26. 오후 5:30:51
      * @Description
      */
-    public Boolean checkStringValidation(String value, String errorCode, String errorMessage) {
-        if (value.isEmpty() || value.trim().isEmpty()) {
+    public Boolean checkStringValidation(final String value, final String errorCode, final String errorMessage) {
+        //if (value.isEmpty() || value.trim().isEmpty()) {
+        if (StringUtils.isBlank(value)) {
             throw new CodeMessageHandleException(errorCode, errorMessage);
         }
         return true;
