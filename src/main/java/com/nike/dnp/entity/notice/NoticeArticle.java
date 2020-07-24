@@ -1,13 +1,10 @@
 package com.nike.dnp.entity.notice;
 
-import com.nike.dnp.dto.notice.NoticeUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Timestamp;
 
 /**
  * The Class Notice article.
@@ -120,19 +117,6 @@ public class NoticeArticle extends BaseTimeEntity {
     public void prePersist() {
         this.useYn = this.useYn == null ? "Y" : this.useYn;
         this.noticeYn = this.noticeYn == null ? "N" : this.noticeYn;
-    }
-
-
-    /**
-     * Delete.
-     *
-     * @param noticeUpdateDTO the notice update dto
-     * @author [정주희]
-     * @CreatedOn 2020. 7. 21. 오후 5:35:02
-     * @Description
-     */
-    public void delete(NoticeUpdateDTO noticeUpdateDTO) {
-        setUseYn(noticeUpdateDTO.getUseYn());
     }
 
 }

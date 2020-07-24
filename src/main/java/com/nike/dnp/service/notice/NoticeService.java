@@ -98,9 +98,9 @@ public class NoticeService {
                 FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
                         ServiceEnumCode.FileFolderEnumCode.FAQ.getFolder(), noticeSaveDTO.getImageBase64());
 
-                noticeSaveDTO.setThumbnailFileName(fileResultDTO.getThumbnailFileName());
-                noticeSaveDTO.setThumbnailFilePhysicalName(fileResultDTO.getThumbnailPhysicalName());
-                noticeSaveDTO.setThumbnailFileSize(String.valueOf(fileResultDTO.getFileSize()));
+                noticeArticle.setThumbnailFileName(fileResultDTO.getFileName());
+                noticeArticle.setThumbnailFilePhysicalName(fileResultDTO.getFilePhysicalName());
+                noticeArticle.setThumbnailFileSize(String.valueOf(fileResultDTO.getFileSize()));
             }
         }
         if (StringUtils.equalsIgnoreCase(noticeSaveDTO.getNoticeArticleSectionCode(), "QNA")) {
@@ -134,12 +134,56 @@ public class NoticeService {
      * @Description customer center 삭제 (사용여부 == 'N')
      */
     @Transactional
-    public Optional<NoticeArticle> deleteCustomerCenter(NoticeUpdateDTO noticeUpdateDTO) {
+    public NoticeArticle deleteCustomerCenter(NoticeUpdateDTO noticeUpdateDTO) {
         log.info("NoticeService.deleteCustomerCenter");
 
-        Optional<NoticeArticle> noticeArticle = noticeRepository.findById(noticeUpdateDTO.getNoticeArticleSeq());
-        noticeArticle.ifPresent(value -> value.delete(noticeUpdateDTO));
+        final Optional<NoticeArticle> deleteNnotice = noticeRepository.findById(noticeUpdateDTO.getNoticeArticleSeq());
+        final NoticeArticle noticeArticle = deleteNnotice.orElse(new NoticeArticle());
+
+        noticeArticle.setUseYn(noticeUpdateDTO.getUseYn());
 
         return noticeArticle;
+    }
+
+    /**
+     * Update customer center notice article.
+     *
+     * @param noticeUpdateDTO the notice update dto
+     * @return the notice article
+     * @author [정주희]
+     * @CreatedOn 2020. 7. 23. 오후 10:11:06
+     * @Description Customer Center 게시글 수정
+     */
+    @Transactional
+    public NoticeArticle updateCustomerCenter(NoticeUpdateDTO noticeUpdateDTO) {
+        log.info("NoticeService.updateCustomerCenter");
+
+        final Optional<NoticeArticle> updateNotice = noticeRepository.findById(noticeUpdateDTO.getNoticeArticleSeq());
+
+        final NoticeArticle noticeArticle = updateNotice.orElse(new NoticeArticle());
+
+        noticeArticle.setNoticeArticleSectionCode(noticeUpdateDTO.getNoticeArticleSectionCode());
+        noticeArticle.setTitle(noticeUpdateDTO.getTitle());
+        noticeArticle.setContents(noticeUpdateDTO.getContents());
+        noticeArticle.setUseYn(noticeUpdateDTO.getUseYn());
+
+        if (StringUtils.equalsIgnoreCase(noticeUpdateDTO.getNoticeArticleSectionCode(), "NOTICE")) {
+            noticeArticle.setNoticeYn(noticeUpdateDTO.getNoticeYn());
+        }
+        if (StringUtils.equalsIgnoreCase(noticeUpdateDTO.getNoticeArticleSectionCode(), "NEWS")) {
+            if (!ObjectUtils.isEmpty(noticeUpdateDTO.getImageBase64())) {
+                FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
+                        ServiceEnumCode.FileFolderEnumCode.FAQ.getFolder(), noticeUpdateDTO.getImageBase64());
+
+                noticeArticle.setThumbnailFileName(fileResultDTO.getFileName());
+                noticeArticle.setThumbnailFilePhysicalName(fileResultDTO.getFilePhysicalName());
+                noticeArticle.setThumbnailFileSize(String.valueOf(fileResultDTO.getFileSize()));
+            }
+        }
+        if (StringUtils.equalsIgnoreCase(noticeUpdateDTO.getNoticeArticleSectionCode(), "QNA")) {
+            noticeArticle.setNoticeArticleCategoryCode(noticeUpdateDTO.getNoticeArticleCategoryCode());
+        }
+
+        return noticeRepository.save(noticeArticle);
     }
 }

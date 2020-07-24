@@ -1,6 +1,5 @@
 package com.nike.dnp.controller.notice;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nike.dnp.dto.notice.NoticeArticeListDTO;
 import com.nike.dnp.dto.notice.NoticeSaveDTO;
 import com.nike.dnp.dto.notice.NoticeSearchDTO;
@@ -14,10 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 /**
  * The Class Notice controller.
@@ -39,6 +35,11 @@ public class NoticeController {
      * @author [정주희]
      */
     private final NoticeService noticeService;
+    /**
+     * The Response service
+     *
+     * @author [정주희]
+     */
     private final ResponseService responseService;
 
     /**
@@ -56,6 +57,8 @@ public class NoticeController {
     @GetMapping({"/{sectionCode}"})
     public SingleResult<Page<NoticeArticeListDTO>> findAll(@ModelAttribute NoticeSearchDTO noticeSearchDTO,
                                                            @PathVariable String sectionCode) {
+        log.info("NoticeService.findAll");
+
         noticeSearchDTO.setNoticeArticleSectionCode(sectionCode.toUpperCase());
         return responseService.getSingleResult(noticeService.findNoticePages(noticeSearchDTO));
     }
@@ -71,6 +74,8 @@ public class NoticeController {
      */
     @GetMapping("detail/{noticeSeq}")
     public SingleResult<NoticeArticle> findById(@PathVariable Long noticeSeq) {
+        log.info("NoticeService.findAll");
+
         NoticeArticle noticeArticle = new NoticeArticle();
         noticeArticle.setNoticeArticleSeq(noticeSeq);
 
@@ -85,11 +90,13 @@ public class NoticeController {
      * @return the single result
      * @author [정주희]
      * @CreatedOn 2020. 7. 20. 오후 9:21:31
-     * @Description
+     * @Description Customer Center 등록
      */
     @PostMapping({"/{sectionCode}"})
     public SingleResult<NoticeArticle> saveCustomerCenter(@RequestBody NoticeSaveDTO noticeSaveDTO,
                                                           @PathVariable String sectionCode) {
+        log.info("NoticeService.findAll");
+
         noticeSaveDTO.setNoticeArticleSectionCode(sectionCode.toUpperCase());
 
         return responseService.getSingleResult(noticeService.save(noticeSaveDTO));
@@ -105,14 +112,20 @@ public class NoticeController {
      */
     @GetMapping("/NOTICE/noticeYnCnt")
     public SingleResult<Long> checkNoticeYnCnt() {
+        log.info("NoticeService.checkNoticeYnCnt");
+
         return responseService.getSingleResult(noticeService.checkNoticeYnCnt());
     }
 
-    @PostMapping("/{noticeSeq}")
-    public SingleResult<NoticeArticle> updateNotice() {
+    @PutMapping("/{noticeSeq}")
+    public SingleResult<NoticeArticle> updateNotice(@RequestBody NoticeUpdateDTO noticeUpdateDTO,
+                                                    @PathVariable Long noticeSeq) {
+        log.info("NoticeService.updateNotice");
 
-        return null;
+        noticeUpdateDTO.setNoticeArticleSeq(noticeSeq);
+        return responseService.getSingleResult(noticeService.updateCustomerCenter(noticeUpdateDTO));
     }
+
     /**
      * Delete customer center single result.
      *
@@ -123,7 +136,9 @@ public class NoticeController {
      * @Description Customer Center 게시글 삭제
      */
     @DeleteMapping({"/{noticeSeq}"})
-    public SingleResult<Optional<NoticeArticle>> deleteCustomerCenter(@PathVariable Long noticeSeq){
+    public SingleResult<NoticeArticle> deleteCustomerCenter(@PathVariable Long noticeSeq){
+        log.info("NoticeService.deleteCustomerCenter");
+
         NoticeUpdateDTO noticeUpdateDTO = new NoticeUpdateDTO();
         noticeUpdateDTO.setNoticeArticleSeq(noticeSeq);
         noticeUpdateDTO.setUseYn("N");
