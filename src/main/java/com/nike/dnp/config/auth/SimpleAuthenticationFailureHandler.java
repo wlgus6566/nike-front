@@ -12,6 +12,7 @@ import org.springframework.security.authentication.InsufficientAuthenticationExc
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -71,6 +72,15 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 					));
 		// 비밀번호 틀림
 		} else if (exception instanceof BadCredentialsException) {
+			final String password = request.getParameter("password");
+			if (ObjectUtils.isEmpty(password)) {
+				JsonUtil.write(response.getWriter()
+						, responseService.getFailResult(
+								LoginError.CHECK_ID_PASSWORD.toString()
+								, LoginError.CHECK_ID_PASSWORD.getMessage()
+						));
+			}
+
 			JsonUtil.write(response.getWriter()
 					, responseService.getFailResult(
 							LoginError.WRONG_PASSWORD.toString()
