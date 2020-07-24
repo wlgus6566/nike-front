@@ -1,9 +1,13 @@
 package com.nike.dnp.repository.contents;
 
+import com.nike.dnp.dto.history.HistoryResultDTO;
 import com.nike.dnp.entity.contents.Contents;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -28,6 +32,4 @@ public interface ContentsRepository extends JpaRepository<Contents, Long>, Conte
      * @Description
      */
     Optional<Contents> findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(Long contentsSeq, String topMenuCode, String menuCode, String useYn);
-
-
 }

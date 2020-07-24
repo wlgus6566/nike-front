@@ -1,5 +1,6 @@
 package com.nike.dnp.dto.contents;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
@@ -44,12 +45,12 @@ public class ContentsFileSearchDTO extends SearchDTO {
     private String orderType = "";
 
     /**
-     * 확장자
+     * 파일 컨텐츠 타입
      *
      * @author [이소정]
      */
     @ApiParam(value = "확장자", name = "fileExtension" , defaultValue = "JPG")
-    private String fileExtension = "";
+    private String fileContentType;
 
     /**
      * Method to String

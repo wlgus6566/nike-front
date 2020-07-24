@@ -107,6 +107,24 @@ public class ContentsFile extends BaseTimeEntity {
     private String filePhysicalName;
 
     /**
+     * 파일 컨텐츠 타입
+     *
+     * @author [이소정]
+     */
+    @Column(name = "FILE_CONTENT_TYPE")
+    @ApiModelProperty(name = "fileContentType", value = "파일 컨텐츠 타입")
+    private String fileContentType;
+
+    /**
+     * 파일 확장자
+     *
+     * @author [이소정]
+     */
+    @Column(name = "FILE_EXTENSION")
+    @ApiModelProperty(name = "fileExtension", value = "파일 확장자")
+    private String fileExtension;
+
+    /**
      * 다운로드 수
      * @author [이소정]
      */
@@ -214,6 +232,7 @@ public class ContentsFile extends BaseTimeEntity {
                 , contentsFileSaveDTO.getFileName()
                 , contentsFileSaveDTO.getFileSize()
                 , contentsFileSaveDTO.getFilePhysicalName()
+                , contentsFileSaveDTO.getFileContentType()
                 , contentsFileSaveDTO.getTitle()
                 , contentsFileSaveDTO.getUrl()
                 , contentsFileSaveDTO.getThumbnailFileName()
@@ -248,6 +267,7 @@ public class ContentsFile extends BaseTimeEntity {
                 , contentsFileUpdateDTO.getFileName()
                 , contentsFileUpdateDTO.getFileSize()
                 , contentsFileUpdateDTO.getFilePhysicalName()
+                , contentsFileUpdateDTO.getFileContentType()
                 , contentsFileUpdateDTO.getTitle()
                 , contentsFileUpdateDTO.getUrl()
                 , contentsFileUpdateDTO.getThumbnailFileName()
@@ -262,17 +282,22 @@ public class ContentsFile extends BaseTimeEntity {
     /**
      * Apply contents file contents file.
      *
-     * @param contentsFile              the contents file
-     * @param fileSectionCode           the file section code
-     * @param fileKindCode              the file kind code
-     * @param fileName                  the file name
-     * @param fileSize                  the file size
-     * @param filePhysicalName          the file physical name
-     * @param title                     the title
-     * @param url                       the url
-     * @param thumbnailFileName         the thumbnail file name
-     * @param thumbnailFileSize         the thumbnail file size
-     * @param thumbnailFilePhysicalName the thumbnail file physical name
+     * @param contentsFile                    the contents file
+     * @param fileSectionCode                 the file section code
+     * @param fileKindCode                    the file kind code
+     * @param fileName                        the file name
+     * @param fileSize                        the file size
+     * @param filePhysicalName                the file physical name
+     * @param fileContentType                 the file content type
+     * @param title                           the title
+     * @param url                             the url
+     * @param thumbnailFileName               the thumbnail file name
+     * @param thumbnailFileSize               the thumbnail file size
+     * @param thumbnailFilePhysicalName       the thumbnail file physical name
+     * @param detailThumbnailFileName         the detail thumbnail file name
+     * @param detailThumbnailFileSize         the detail thumbnail file size
+     * @param detailThumbnailFilePhysicalName the detail thumbnail file physical name
+     * @param fileOrder                       the file order
      * @return the contents file
      * @author [이소정]
      * @CreatedOn 2020. 7. 7. 오전 10:41:43
@@ -284,6 +309,7 @@ public class ContentsFile extends BaseTimeEntity {
             , String fileName
             , Long fileSize
             , String filePhysicalName
+            , String fileContentType
             , String title
             , String url
             , String thumbnailFileName
@@ -311,6 +337,7 @@ public class ContentsFile extends BaseTimeEntity {
         contentsFile.setFileName(isFile ? fileName : null);
         contentsFile.setFileSize(isFile ? fileSize : null);
         contentsFile.setFilePhysicalName(isFile ? filePhysicalName : null);
+        contentsFile.setFileContentType(isFile ? fileContentType : null);
 
         contentsFile.setThumbnailFileName(isFile ? thumbnailFileName : null);
         contentsFile.setThumbnailFileSize(isFile ? thumbnailFileSize : null);
@@ -353,6 +380,8 @@ public class ContentsFile extends BaseTimeEntity {
         this.fileName = isFile ? contentsFileUpdateDTO.getFileName() : null;
         this.fileSize = isFile ? contentsFileUpdateDTO.getFileSize() : null;
         this.filePhysicalName = isFile ? contentsFileUpdateDTO.getFilePhysicalName() : null;
+        this.fileContentType = isFile ? contentsFileUpdateDTO.getFileContentType() : null;
+
         this.thumbnailFileName = isFile ? contentsFileUpdateDTO.getThumbnailFileName() : null;
         this.thumbnailFileSize = isFile ? contentsFileUpdateDTO.getThumbnailFileSize() : null;
         this.thumbnailFilePhysicalName = isFile ? contentsFileUpdateDTO.getThumbnailFilePhysicalName() : null;

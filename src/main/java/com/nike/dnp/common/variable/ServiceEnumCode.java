@@ -254,4 +254,16 @@ public class ServiceEnumCode {
         private final String folder;
 
     }
+
+    /**
+     * The enum History tab enum code.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum HistoryTabEnumCode {
+        ASSET
+        , TOOLKIT
+        , FOUNDATION
+        , REPORT;
+    }
 }

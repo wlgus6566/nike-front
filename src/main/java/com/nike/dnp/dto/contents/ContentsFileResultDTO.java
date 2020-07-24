@@ -2,6 +2,7 @@ package com.nike.dnp.dto.contents;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.*;
 
 /**
@@ -118,5 +119,13 @@ public class ContentsFileResultDTO {
      */
     @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_thumbnail.jpg")
     private String thumbnailFilePhysicalName;
+
+    /**
+     * 파일 컨텐츠 타입
+     *
+     * @author [이소정]
+     */
+    @ApiParam(value = "확장자", name = "fileExtension" , defaultValue = "JPG")
+    private String fileContentType;
 
 }

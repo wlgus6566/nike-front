@@ -4,8 +4,11 @@ import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.dto.contents.ContentsUserEmailDTO;
 import com.nike.dnp.dto.email.SendDTO;
+import com.nike.dnp.dto.history.HistoryResultDTO;
+import com.nike.dnp.dto.history.HistorySearchDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -41,5 +44,4 @@ public interface ContentsRepositoryCustom {
      * @return the list
      */
     List<ContentsUserEmailDTO> findAllContentsMailAuthUser(final long contentsSeq);
-
 }
