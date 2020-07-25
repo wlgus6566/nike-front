@@ -3,45 +3,7 @@
         <h3 class="form-title mt20">등록/수정</h3>
         <hr class="hr-black" />
         <ul class="form-list">
-            <li class="form-row">
-                <div class="form-column">
-                    <span class="label-title">상단 고정 여부</span>
-                </div>
-                <div class="form-column">
-                    <label class="check-label">
-                        <span class="radio">
-                            <input type="radio" name="show" checked />
-                            <span></span>
-                        </span>
-                        <span>고정</span>
-                    </label>
-                    <label class="check-label">
-                        <span class="radio">
-                            <input type="radio" name="show" />
-                            <span></span>
-                        </span>
-                        <span>비고정</span>
-                    </label>
-                </div>
-            </li>
-            <li class="form-row">
-                <div class="form-column">
-                    <label class="label-title required">제목</label>
-                </div>
-                <div class="form-column">
-                    <input type="text" />
-                </div>
-            </li>
-            <li class="form-row">
-                <div class="form-column">
-                    <label class="label-title required">내용</label>
-                </div>
-                <div class="form-column">
-                    <span class="textarea">
-                        <textarea cols="100" rows="2" style="height: 300px;"></textarea>
-                    </span>
-                </div>
-            </li>
+            <EditInner />
         </ul>
         <hr class="hr-gray" />
         <div class="btn-area">
@@ -51,6 +13,8 @@
     </div>
 </template>
 <script>
+import EditInner from '@/components/news/edit-inner.vue';
+
 export default {
     name: 'Edit',
     data() {
@@ -71,6 +35,9 @@ export default {
                 '   <img src="http://placehold.it/400x200" alt="임시이미지"></div> ' +
                 '   나이키가 서울 강남 가로수길에서 조던 브랜드 전용 공간을 선보11인다111.',
         };
+    },
+    components: {
+        EditInner,
     },
     methods: {},
 };

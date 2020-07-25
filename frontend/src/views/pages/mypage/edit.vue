@@ -1,14 +1,17 @@
 <template>
     <div>
-        <h2 class="page-title">
+        <h2 class="page-title" v-if="$route.meta.title == '공지사항'">
             <span class="ko">{{ this.$route.meta.title }}</span>
         </h2>
-        <Edit />
+        <h2 class="page-title" v-else>
+            {{ this.$route.meta.title }}
+        </h2>
+        <Edit> </Edit>
     </div>
 </template>
 
 <script>
-import Edit from '@/components/news/edit-index.vue';
+import Edit from '@/components/news/edit.vue';
 
 //import {  } from '@/api/.js';
 
