@@ -2507,13 +2507,19 @@
 
 .news-list {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     margin-top: 20px;
 }
+.news-list + hr.gray {
+    padding-top: 30px;
+}
 .news-list li {
-    flex-basis: 50%;
+    width: calc(50% - 20px);
+    margin-bottom: 30px;
 }
 .news-list li + li {
-    margin-left: 20px;
+    /*margin-left: 20px;*/
 }
 .news-list li a {
     display: block;

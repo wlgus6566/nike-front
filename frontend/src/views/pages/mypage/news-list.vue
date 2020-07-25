@@ -5,8 +5,10 @@
             <SearchInput @:searchSubmit="searchSubmit" />
         </div>
         <newsList />
+
         <bottomArea>
             <template slot="btn-bottom-area">
+                <hr class="hr-gray" />
                 <div class="btn-tbl-box">
                     <div class="right">
                         <button type="button" class="btn-form-gray">

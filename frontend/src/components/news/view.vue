@@ -10,7 +10,9 @@
             <div class="detail-cont" v-html="cont"></div>
         </div>
         <div class="btn-area">
-            <button type="button" class="btn-s-black"><span>목록으로 가기</span></button>
+            <button type="button" class="btn-s-black" @click="$router.go(-1)">
+                <span>목록으로 가기</span>
+            </button>
         </div>
     </div>
 </template>

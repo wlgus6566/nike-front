@@ -101,6 +101,16 @@ const routes = [
         },
     },
     {
+        path: '/mypage/edit',
+        name: 'notice',
+        component: pages('mypage/edit-index.vue'),
+        meta: {
+            layout: 'Default',
+            aside: 'Default',
+            title: '공지사항',
+        },
+    },
+    {
         path: '/mypage/faq',
         name: 'faq',
         component: pages('mypage/faq.vue'),

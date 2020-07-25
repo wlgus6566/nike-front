@@ -1,6 +1,8 @@
 <template>
     <div>
         <slot name="btn-bottom-area"> </slot>
+        <!--        <el-pagination :page-size="10" :pager-count="11" layout="prev, pager, next" :total="100">-->
+        <!--        </el-pagination>-->
         <div class="pagination">
             <button type="button" class="prev"><span>이전</span></button>
             <ul>
