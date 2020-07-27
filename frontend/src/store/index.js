@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import {loginUser} from '@/api/login';
 import {deleteBasket, getBasketList} from '@/api/basket.js';
-import {deleteCookie, getAuthFromCookie, saveAuthToCookie,} from '@/utils/cookies.js';
+import {deleteCookie, getAuthFromCookie, saveAuthToCookie} from '@/utils/cookies.js';
 
 Vue.use(Vuex);
 
