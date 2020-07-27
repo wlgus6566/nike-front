@@ -107,7 +107,8 @@ public class ImageUtil {
 		fileResultDTO.setFilePhysicalName(StringUtils.remove(newFile.getPath(), root));
 		fileResultDTO.setFileSize(newFile.length());
 
-		// TODO [YTH] 이미지 파일 s3 로 업로드 필요함
+		// S3 업로드
+		S3Util.upload(fileResultDTO);
 
 		return fileResultDTO;
 

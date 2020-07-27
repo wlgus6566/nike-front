@@ -49,3 +49,15 @@ nike:
     imageMagick: '/imageTool'
     ffmpeg: '/usr/bin'
     ffmpegCommand: 'ffmpeg'
+
+cloud:
+  aws:
+    credentials:
+      accessKey: 'AKIA4FO4XQUFNEBRAZU4'
+      secretKey: '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'
+    s3:
+      bucket: 'nike-test-bucket-dnp'
+    region:
+      static: 'ap-northeast-2'
+    stack:
+      auto:  false
