@@ -34,6 +34,18 @@ public interface ContentsRepositoryCustom {
 
 
     /**
+     * Find recent contents list.
+     *
+     * @param topMenuCode the top menu code
+     * @param pageRequest the page request
+     * @return the list
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 27. 오후 6:41:13
+     * @Description
+     */
+    List<ContentsResultDTO> findRecentContents(final String topMenuCode, final PageRequest pageRequest);
+
+    /**
      * Find all contents mail auth user list.
      *
      * @param contentsSeq the contents seq

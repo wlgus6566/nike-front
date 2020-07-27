@@ -1,6 +1,7 @@
 package com.nike.dnp.repository.contents;
 
 import com.nike.dnp.common.ObjectMapperUtils;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.dto.contents.ContentsUserEmailDTO;
@@ -90,6 +91,52 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
         final List<ContentsResultDTO> contentsList = ObjectMapperUtils.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsResultDTO.class);
 
         return new PageImpl<>(contentsList, pageRequest, query.fetchCount());
+    }
+
+    /**
+     * Find recent contents list.
+     *
+     * @param topMenuCode the top menu code
+     * @param pageRequest the page request
+     * @return the list
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 27. 오후 6:39:10
+     * @Description
+     */
+    public List<ContentsResultDTO> findRecentContents(final String topMenuCode, final PageRequest pageRequest) {
+        ContentsSearchDTO contentsSearchDTO = new ContentsSearchDTO();
+        contentsSearchDTO.setTopMenuCode(topMenuCode);
+
+        final QContents qContents = QContents.contents;
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+
+        final JPAQuery<ContentsResultDTO> query = queryFactory
+                .select(Projections.bean(
+                        ContentsResultDTO.class
+                        , qContents.contentsSeq
+                        , qContents.topMenuCode
+                        , qContents.menuCode
+                        , qContents.imageFileName
+                        , qContents.imageFileSize
+                        , qContents.imageFilePhysicalName
+                        , qContents.folderName
+                        , qContents.folderContents
+                        , qContents.campaignPeriodSectionCode
+                        , qContents.campaignBeginDt
+                        , qContents.campaignEndDt
+                        , qContents.readCount
+                        , qContents.exposureYn
+                        )
+                )
+                .from(qContents)
+                .where(
+                        ContentsPredicateHelper.eqMenuCode(contentsSearchDTO)
+                        , ContentsPredicateHelper.eqExposureYn(contentsSearchDTO.getExposureYn())
+                        , qContents.useYn.eq("Y")
+                );
+
+        return ObjectMapperUtils.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsResultDTO.class);
+
     }
 
     /**

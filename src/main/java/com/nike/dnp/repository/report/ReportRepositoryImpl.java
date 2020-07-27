@@ -1,5 +1,8 @@
 package com.nike.dnp.repository.report;
 
+import com.nike.dnp.common.ObjectMapperUtils;
+import com.nike.dnp.dto.contents.ContentsResultDTO;
+import com.nike.dnp.dto.report.ReportResultDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.entity.report.QReport;
 import com.nike.dnp.entity.report.Report;
@@ -65,30 +68,19 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
     }
 
     /**
-     * Find alls page.
+     * Find recent report list.
      *
-     * @param contentsSearchDTO the contents search dto
-     * @param pageRequest       the page request
-     * @return the page
+     * @param pageRequest the page request
+     * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:54:39
+     * @CreatedOn 2020. 7. 27. 오후 6:31:34
      * @Description
      */
-//    @Override
-//    public Page<Contents> findPageContents(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest) {
-//        final QContents qContents = QContents.contents;
-//        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-//        final JPAQuery<Contents> query = queryFactory.selectFrom(qContents)
-//                .where(
-//                        ContentsPredicateHelper.compareKeyword(contentsSearchDTO)
-//                        , ContentsPredicateHelper.eqMenuCode(contentsSearchDTO)
-//                        , ContentsPredicateHelper.eqExposureYn("Y")
-//                        , qContents.useYn.eq("Y")
-//                );
-//
-//        final List<Contents> contentsList = getQuerydsl().applyPagination(pageRequest, query).fetch();
-//        return new PageImpl<>(contentsList, pageRequest, query.fetchCount());
-//
-//
-//    }
+    @Override
+    public List<ReportResultDTO> findRecentReport(final PageRequest pageRequest) {
+        final QReport qReport = QReport.report;
+        final JPAQuery<Report> query = new JPAQueryFactory(this.getEntityManager()).selectFrom(qReport)
+                .where(QReport.report.useYn.eq("Y"));
+        return ObjectMapperUtils.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ReportResultDTO.class);
+    }
 }
