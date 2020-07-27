@@ -1,6 +1,7 @@
 package com.nike.dnp.common;
 
 import com.nike.dnp.common.mail.SendEmailOffice365;
+import com.nike.dnp.util.S3Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -44,7 +45,11 @@ public class StartRunner implements ApplicationRunner {
     @Override
     public void run(final ApplicationArguments args) {
         log.info("Application Runner!!");
-        /*for (String key : redisService.keys("codes:*")) {
+
+        //S3 init
+        S3Util.init();
+
+       /*for (String key : redisService.keys("codes:*")) {
             redisService.delete(key);
         }*/
 

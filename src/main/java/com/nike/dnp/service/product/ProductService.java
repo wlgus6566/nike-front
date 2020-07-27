@@ -96,7 +96,6 @@ public class ProductService {
 		if(!ObjectUtils.isEmpty(productSaveDTO.getImageBase64()) &&
 			productSaveDTO.getImageBase64().contains("base64")){
 			final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.PRODUCT.getFolder(), productSaveDTO.getImageBase64());
-
 			product.setImageFileName(productSaveDTO.getImageFileName());
 			product.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
 			product.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
