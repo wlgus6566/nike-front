@@ -75,8 +75,8 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 		} else if (exception instanceof InternalAuthenticationServiceException) {
 			JsonUtil.write(response.getWriter()
 					, responseService.getFailResult(
-							FailCode.ConfigureError.NOT_JOIN.name()
-							, MessageUtil.getMessage(FailCode.ConfigureError.NOT_JOIN.name())
+							FailCode.ConfigureError.CHECK_ID_PASSWORD.name()
+							, MessageUtil.getMessage(FailCode.ConfigureError.CHECK_ID_PASSWORD.name())
 					));
 
 		// 기타

@@ -37,9 +37,7 @@ public class FailCode {
     public enum ConfigureError {
         NO_AUTH
         , FAIL_DELETE
-        , NOT_JOIN
         , NULL_PASSWORD
-        , WRONG_PASSWORD
         , CHECK_ID_PASSWORD
         , OVERTIME_PASSWORD
         , EXPIRED_PERIOD

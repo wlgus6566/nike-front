@@ -123,7 +123,7 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 				userMailService.createCertCode(authUserDTO.getUserId());
 
 				JsonUtil.write(response.getWriter()
-						, responseService.getFailResult(
+						, responseService.getSuccessResult(
 								FailCode.ConfigureError.IS_DORMANT.name()
 								, MessageUtil.getMessage(FailCode.ConfigureError.IS_DORMANT.name())
 						));
@@ -193,7 +193,7 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 		if (isValid && ServiceCode.YesOrNoEnumCode.N.toString().equals(termsAgreeYn)
 				&& ServiceCode.YesOrNoEnumCode.N.toString().equals(user.get().getTermsAgreeYn())) {
 			JsonUtil.write(response.getWriter()
-					, responseService.getFailResult(
+					, responseService.getSuccessResult(
 							SuccessCode.ConfigureSuccess.TERMS_AGREEMENT.name()
 							, MessageUtil.getMessage(SuccessCode.ConfigureSuccess.TERMS_AGREEMENT.name())
 					));

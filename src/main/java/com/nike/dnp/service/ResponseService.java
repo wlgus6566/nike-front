@@ -75,6 +75,25 @@ public class ResponseService {
     }
 
     /**
+     * Gets success result.
+     *
+     * @param code the code
+     * @param msg  the msg
+     * @return the success result
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 27. 오후 4:41:38
+     * @Description 성공 코드와 메시지만 리턴하는 메소드
+     */
+    public CommonResult getSuccessResult(final String code, final String msg) {
+        final CommonResult result = new CommonResult();
+        result.setSuccess(true);
+        result.setExistMsg(false);
+        result.setCode(code);
+        result.setMsg(msg);
+        return result;
+    }
+
+    /**
      * Sets success result.
      *
      * @param result the result
