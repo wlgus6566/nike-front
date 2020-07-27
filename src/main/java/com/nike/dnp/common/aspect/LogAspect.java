@@ -1,6 +1,6 @@
 package com.nike.dnp.common.aspect;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.UserActionLogSaveDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
@@ -91,7 +91,7 @@ public class LogAspect {
                 final BindingResult result = (BindingResult) obj;
                 if (result.hasErrors()) {
                     throw new CodeMessageHandleException(
-                            ErrorEnumCode.DataError.INVALID.toString()
+                            FailCode.ExceptionError.INVALID.toString()
                             , MessageUtil.getMessage(result.getAllErrors().get(0).getDefaultMessage()));
                 }
             }

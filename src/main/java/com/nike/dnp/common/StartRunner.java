@@ -114,8 +114,8 @@ public class StartRunner implements ApplicationRunner {
         sendDTO.setNickname("ojh");
         sendDTO.setEmail("lion226@naver.com");
         mailService.sendMail(
-                ServiceEnumCode.EmailType.USER_CREATE.toString()
-                ,ServiceEnumCode.EmailType.USER_CREATE.getMessage()
+                ServiceCode.EmailType.USER_CREATE.toString()
+                ,ServiceCode.EmailType.USER_CREATE.getMessage()
                 ,sendDTO
         );
         */
@@ -155,8 +155,8 @@ public class StartRunner implements ApplicationRunner {
         }
         sendDTO1.setOrderArea(sb.toString());
         mailService.sendMail(
-                ServiceEnumCode.EmailTypeEnumCode.ORDER.toString()
-                ,ServiceEnumCode.EmailTypeEnumCode.ORDER.getMessage()
+                ServiceCode.EmailTypeEnumCode.ORDER.toString()
+                ,ServiceCode.EmailTypeEnumCode.ORDER.getMessage()
                 ,sendDTO1
         );
         */

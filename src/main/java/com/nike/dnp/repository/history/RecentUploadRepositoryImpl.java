@@ -1,22 +1,21 @@
 package com.nike.dnp.repository.history;
 
 import com.nike.dnp.common.ObjectMapperUtils;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.history.HistoryResultDTO;
 import com.nike.dnp.dto.history.HistorySearchDTO;
 import com.nike.dnp.entity.contents.QRecentUpload;
 import com.nike.dnp.entity.contents.RecentUpload;
-import com.nike.dnp.entity.history.History;
-import com.nike.dnp.entity.history.QHistory;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The Class Recent upload repository.
@@ -58,7 +57,7 @@ public class RecentUploadRepositoryImpl extends QuerydslRepositorySupport implem
             historyResultDTO.setTypeCd(recentUpload.getTypeCd());
             historyResultDTO.setRegistrationDt(recentUpload.getRegistrationDt());
 //            report인 경우
-            if (recentUpload.getTypeCd().equals(ServiceEnumCode.HistoryTabEnumCode.REPORT_MANAGE.toString())) {
+            if (recentUpload.getTypeCd().equals(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString())) {
                 historyResultDTO.setFolderSeq(recentUpload.getReportSeq());
                 historyResultDTO.setImageFileName(recentUpload.getReport().getImageFileName());
                 historyResultDTO.setImageFileSize(recentUpload.getReport().getImageFileSize());

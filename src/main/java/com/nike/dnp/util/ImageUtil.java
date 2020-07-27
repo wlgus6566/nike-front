@@ -1,6 +1,6 @@
 package com.nike.dnp.util;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import org.apache.commons.lang.StringUtils;
@@ -63,7 +63,9 @@ public class ImageUtil {
 
 		final String info = base64Str.split(",")[0];
 		if(!info.contains("image")){
-			throw new CodeMessageHandleException(ErrorEnumCode.FileError.NOT_IMAGE_FILE.name(),ErrorEnumCode.FileError.NOT_IMAGE_FILE.getMessage());
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 		}
 
 		final String base64 = base64Str.split(",")[1];
@@ -74,8 +76,8 @@ public class ImageUtil {
 			image = ImageIO.read(bis);
 			bis.close();
 		}catch(IOException e){
-			throw (CodeMessageHandleException)new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_WRITE_ERROR.name(),
-																			 ErrorEnumCode.FileError.FILE_WRITE_ERROR.getMessage());
+			throw (CodeMessageHandleException)new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(),
+																			 MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 		}
 		String extension = "";
 		final String type = info.substring(info.indexOf('/') + 1, info.indexOf(';'));
@@ -95,7 +97,9 @@ public class ImageUtil {
 		try{
 			ImageIO.write(image, type, newFile);
 		}catch(IOException e){
-			throw (CodeMessageHandleException) new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_READ_ERROR.name(), ErrorEnumCode.FileError.FILE_READ_ERROR.getMessage());
+			throw (CodeMessageHandleException) new CodeMessageHandleException(
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 		}
 
 		final FileResultDTO fileResultDTO = new FileResultDTO();

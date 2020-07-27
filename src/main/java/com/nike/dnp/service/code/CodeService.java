@@ -1,12 +1,13 @@
 package com.nike.dnp.service.code;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.code.CodeSaveDTO;
 import com.nike.dnp.dto.code.CodeUpdateDTO;
 import com.nike.dnp.entity.code.Code;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.code.CodeRepository;
 import com.nike.dnp.service.RedisService;
+import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
@@ -114,7 +115,9 @@ public class CodeService {
             , final CodeUpdateDTO codeUpdateDTO
     ) {
         final Optional<Code> codeEntity = Optional.ofNullable(codeRepository.findByCode(code).orElseThrow(
-                () -> new CodeMessageHandleException(ErrorEnumCode.DataError.NOT_FOUND.toString(), ErrorEnumCode.DataError.NOT_FOUND.toString())
+                () -> new CodeMessageHandleException(
+                        FailCode.ExceptionError.NOT_FOUND.name()
+                        , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))
         ));
 
         if (codeEntity.isPresent()) {

@@ -1,25 +1,20 @@
 package com.nike.dnp.service.history;
 
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.history.HistoryResultDTO;
 import com.nike.dnp.dto.history.HistorySearchDTO;
-import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.RecentUpload;
 import com.nike.dnp.entity.history.History;
-import com.nike.dnp.repository.contents.ContentsRepository;
 import com.nike.dnp.repository.history.HistoryRepository;
 import com.nike.dnp.repository.history.RecentUploadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * The Class History service.
@@ -97,7 +92,7 @@ public class HistoryService {
     public RecentUpload saveRecentUploadHistory(Long folderSeq, String typeCd) {
         RecentUpload recentUpload = new RecentUpload();
         recentUpload.setTypeCd(typeCd);
-        if (ServiceEnumCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(typeCd)) {
+        if (ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(typeCd)) {
             recentUpload.setReportSeq(folderSeq);
         } else {
             recentUpload.setContentsSeq(folderSeq);
@@ -115,7 +110,7 @@ public class HistoryService {
     public History saveViewHistory(Long folderSeq, String typeCd) {
         History history = new History();
         history.setTypeCd(typeCd);
-        if (ServiceEnumCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(typeCd)) {
+        if (ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(typeCd)) {
             history.setReportSeq(folderSeq);
         } else {
             history.setContentsSeq(folderSeq);

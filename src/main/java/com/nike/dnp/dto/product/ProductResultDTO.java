@@ -2,7 +2,7 @@ package com.nike.dnp.dto.product;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -162,7 +162,7 @@ public class ProductResultDTO {
 	 */
 	@ApiModelProperty(name = "category2Name", value = "카테고리 2 명")
 	public String getCategory2Name(){
-		for(final ServiceEnumCode.ProductCategory2EnumCode value : ServiceEnumCode.ProductCategory2EnumCode.values()){
+		for(final ServiceCode.ProductCategory2EnumCode value : ServiceCode.ProductCategory2EnumCode.values()){
 			if(value.name().equalsIgnoreCase(this.category2Code)){
 				return value.getMessage();
 			}
@@ -180,7 +180,7 @@ public class ProductResultDTO {
 	 */
 	@ApiModelProperty(name = "category3Name", value = "카테고리 3 명")
 	public String getCategory3Name() {
-		for(final ServiceEnumCode.ProductCategory3EnumCode value : ServiceEnumCode.ProductCategory3EnumCode.values()){
+		for(final ServiceCode.ProductCategory3EnumCode value : ServiceCode.ProductCategory3EnumCode.values()){
 			if(value.name().equalsIgnoreCase(this.category3Code)){
 				return value.getMessage();
 			}

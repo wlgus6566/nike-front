@@ -1,7 +1,7 @@
 package com.nike.dnp.entity.contents;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
 import com.nike.dnp.dto.contents.ContentsFileUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
@@ -330,7 +330,7 @@ public class ContentsFile extends BaseTimeEntity {
 //            this.checkStringValidation(url, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
 //        }
 
-        boolean isFile = ServiceEnumCode.ContentsFileKindCode.FILE.toString().equals(fileKindCode);
+        boolean isFile = ServiceCode.ContentsFileKindCode.FILE.toString().equals(fileKindCode);
 
         contentsFile.setFileSectionCode(fileSectionCode);
         contentsFile.setFileKindCode(fileKindCode);
@@ -375,7 +375,7 @@ public class ContentsFile extends BaseTimeEntity {
 //            this.checkStringValidation(contentsFileUpdateDTO.getUrl(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
 //        }
 
-        boolean isFile = ServiceEnumCode.ContentsFileKindCode.FILE.toString().equals(contentsFileUpdateDTO.getFileKindCode());
+        boolean isFile = ServiceCode.ContentsFileKindCode.FILE.toString().equals(contentsFileUpdateDTO.getFileKindCode());
 
         this.fileSectionCode = contentsFileUpdateDTO.getFileSectionCode();
         this.fileKindCode = contentsFileUpdateDTO.getFileKindCode();

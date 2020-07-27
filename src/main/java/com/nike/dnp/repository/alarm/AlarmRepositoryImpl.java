@@ -1,6 +1,6 @@
 package com.nike.dnp.repository.alarm;
 
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.controller.alarm.AlarmResultDTO;
 import com.nike.dnp.entity.alarm.Alarm;
 import com.nike.dnp.entity.alarm.QAlarm;
@@ -61,7 +61,7 @@ public class AlarmRepositoryImpl extends QuerydslRepositorySupport implements Al
             alarmResultDTO.setTypeAction(alarm.getTypeAction());
             alarmResultDTO.setTypeCd(alarm.getTypeCd());
 
-            if (ServiceEnumCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(alarm.getTypeCd())) {
+            if (ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(alarm.getTypeCd())) {
                 alarmResultDTO.setFolderSeq(alarm.getReport().getReportSeq());
                 alarmResultDTO.setFolderName(alarm.getReport().getReportName());
             } else {

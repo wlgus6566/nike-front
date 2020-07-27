@@ -101,8 +101,8 @@ public class UserContentsController {
 //        log.info("UserContentsController.save");
 //        return responseService.getSingleResult(
 //                userContentsService.save(contentsSeq, userContentsSaveDTO)
-//                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.toString()
-//                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.getMessage()
+//                , ServiceCode.ReturnTypeEnumCode.CREATE.toString()
+//                , ServiceCode.ReturnTypeEnumCode.CREATE.getMessage()
 //                , true
 //        );
 //    }

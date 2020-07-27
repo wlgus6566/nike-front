@@ -1,14 +1,13 @@
 package com.nike.dnp.config.auth;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
-import com.nike.dnp.common.variable.ErrorEnumCode.LoginError;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.util.JsonUtil;
+import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -54,51 +53,38 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 	) throws IOException {
 		response.setContentType("application/json;charset=utf-8");
 		response.setStatus(HttpStatus.BAD_REQUEST.value());
-		String errorMessage = "";
-		String errorCode = "";
-		for(final LoginError message : LoginError.values()){
-			if(message.toString().equals(exception.getMessage())){
-				errorMessage = message.getMessage();
-				errorCode = exception.getMessage();
-			}
-		}
 
-		// 아이디 비번 입력 안함
-		if (exception instanceof InsufficientAuthenticationException) {
-			JsonUtil.write(response.getWriter()
-					, responseService.getFailResult(
-							errorCode
-							, errorMessage
-					));
 		// 비밀번호 틀림
-		} else if (exception instanceof BadCredentialsException) {
+		if (exception instanceof BadCredentialsException) {
 			final String password = request.getParameter("password");
 			if (ObjectUtils.isEmpty(password)) {
 				JsonUtil.write(response.getWriter()
 						, responseService.getFailResult(
-								LoginError.CHECK_ID_PASSWORD.toString()
-								, LoginError.CHECK_ID_PASSWORD.getMessage()
+								FailCode.ConfigureError.CHECK_ID_PASSWORD.name()
+								, MessageUtil.getMessage(FailCode.ConfigureError.CHECK_ID_PASSWORD.name())
 						));
 			}
 
 			JsonUtil.write(response.getWriter()
 					, responseService.getFailResult(
-							LoginError.WRONG_PASSWORD.toString()
-							, LoginError.WRONG_PASSWORD.getMessage()
+							FailCode.ConfigureError.CHECK_ID_PASSWORD.name()
+							, MessageUtil.getMessage(FailCode.ConfigureError.CHECK_ID_PASSWORD.name())
 					));
+
 		// 계정 정보 없음
 		} else if (exception instanceof InternalAuthenticationServiceException) {
 			JsonUtil.write(response.getWriter()
 					, responseService.getFailResult(
-							LoginError.NOT_JOIN.toString()
-							, LoginError.NOT_JOIN.getMessage()
+							FailCode.ConfigureError.NOT_JOIN.name()
+							, MessageUtil.getMessage(FailCode.ConfigureError.NOT_JOIN.name())
 					));
+
 		// 기타
 		} else {
 			JsonUtil.write(response.getWriter()
 					, responseService.getFailResult(
-							ErrorEnumCode.ExceptionError.ERROR.toString()
-							, errorCode
+							FailCode.ExceptionError.ERROR.name()
+							, exception.getMessage()
 					));
 		}
 

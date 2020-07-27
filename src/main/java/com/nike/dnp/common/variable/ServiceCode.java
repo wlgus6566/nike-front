@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @AllArgsConstructor
-public class ServiceEnumCode {
+public class ServiceCode {
 
     /**
      * Y or N

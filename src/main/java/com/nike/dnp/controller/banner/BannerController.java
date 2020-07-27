@@ -1,7 +1,7 @@
 package com.nike.dnp.controller.banner;
 
 import com.nike.dnp.common.aspect.ValidField;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.banner.BannerSaveDTO;
 import com.nike.dnp.entity.banner.Banner;
 import com.nike.dnp.model.response.SingleResult;
@@ -94,8 +94,8 @@ public class BannerController {
         log.info("BannerController.save");
         return responseService.getSingleResult(
                 bannerService.save(bannerSaveDTO)
-                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.toString()
-                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.getMessage()
+                , ServiceCode.ReturnTypeEnumCode.CREATE.toString()
+                , ServiceCode.ReturnTypeEnumCode.CREATE.getMessage()
                 , true
         );
     }
@@ -124,8 +124,8 @@ public class BannerController {
         log.info("BannerController.update");
         return responseService.getSingleResult(
                 bannerService.update(bannerSeq, bannerSaveDTO)
-                , ServiceEnumCode.ReturnTypeEnumCode.UPDATE.toString()
-                , ServiceEnumCode.ReturnTypeEnumCode.UPDATE.getMessage()
+                , ServiceCode.ReturnTypeEnumCode.UPDATE.toString()
+                , ServiceCode.ReturnTypeEnumCode.UPDATE.getMessage()
                 , true
         );
     }

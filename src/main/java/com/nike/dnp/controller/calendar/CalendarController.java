@@ -1,7 +1,7 @@
 package com.nike.dnp.controller.calendar;
 
 import com.nike.dnp.common.aspect.ValidField;
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.calendar.CalendarDaySearchDTO;
 import com.nike.dnp.dto.calendar.CalendarSaveDTO;
 import com.nike.dnp.dto.calendar.CalendarSearchDTO;
@@ -11,6 +11,7 @@ import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.calendar.CalendarService;
+import com.nike.dnp.util.MessageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -184,7 +185,9 @@ public class CalendarController {
     @GetMapping(value="/view/{calendarSeq}",produces = MediaType.APPLICATION_JSON_VALUE)
     public SingleResult<Calendar> findById(@PathVariable @ApiParam(value="켈린더 시퀀스",name = "calendarSeq",example = "4") final Long calendarSeq){
         return responseService.getSingleResult(calendarService.findById(calendarSeq).orElseThrow(() ->
-            new CodeMessageHandleException(ErrorEnumCode.CalendarError.NOT_FOUND.name(),ErrorEnumCode.CalendarError.NOT_FOUND.getMessage())
+            new CodeMessageHandleException(
+                    FailCode.ExceptionError.NOT_FOUND.name()
+                    , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))
         ));
     }
 

@@ -1,7 +1,7 @@
 package com.nike.dnp.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -59,7 +59,7 @@ public class UserContentsSaveDTO {
          * @author [오지훈]
          */
         @ApiModelProperty(name = "detailAuthYn", value = "상세_권한_여부", example = "N")
-        private String detailAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
+        private String detailAuthYn = ServiceCode.YesOrNoEnumCode.N.toString();
 
         /**
          * The Email reception yn
@@ -67,7 +67,7 @@ public class UserContentsSaveDTO {
          * @author [오지훈]
          */
         @ApiModelProperty(name = "emailReceptionYn", value = "메일_수신_여부", example = "N")
-        private String emailReceptionYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
+        private String emailReceptionYn = ServiceCode.YesOrNoEnumCode.N.toString();
 
     }
 

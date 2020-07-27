@@ -2,7 +2,7 @@ package com.nike.dnp.entity.menu;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -82,7 +82,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
      */
     @Column(name = "CREATION_AUTH_YN")
     @ApiModelProperty(name = "creationAuthYn", value = "생성 권한 여부", required = true)
-    private String creationAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
+    private String creationAuthYn = ServiceCode.YesOrNoEnumCode.N.toString();
 
     /**
      * 삭제 권한 여부
@@ -91,7 +91,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
      */
     @Column(name = "DELETE_AUTH_YN")
     @ApiModelProperty(name = "deleteAuthYn", value = "삭제 권한 여부", required = true)
-    private String deleteAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
+    private String deleteAuthYn = ServiceCode.YesOrNoEnumCode.N.toString();
 
     /**
      * 다운로드 권한 여부
@@ -100,7 +100,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
      */
     @Column(name = "DOWNLOAD_AUTH_YN")
     @ApiModelProperty(name = "downloadAuthYn", value = "다운로드 권한 여부", required = true)
-    private String downloadAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
+    private String downloadAuthYn = ServiceCode.YesOrNoEnumCode.N.toString();
 
     /**
      * 목록 권한 여부
@@ -109,7 +109,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
      */
     @Column(name = "LIST_AUTH_YN")
     @ApiModelProperty(name = "listAuthYn", value = "목록 권한 여부", required = true)
-    private String listAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
+    private String listAuthYn = ServiceCode.YesOrNoEnumCode.N.toString();
 
     /**
      * 상세 권한 여부
@@ -118,7 +118,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
      */
     @Column(name = "DETAIL_AUTH_YN")
     @ApiModelProperty(name = "detailAuthYn", value = "상세 권한 여부", required = true)
-    private String detailAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
+    private String detailAuthYn = ServiceCode.YesOrNoEnumCode.N.toString();
 
     /**
      * 리포트 권한 여부
@@ -127,7 +127,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
      */
     @Column(name = "REPORT_AUTH_YN")
     @ApiModelProperty(name = "reportAuthYn", value = "리포트 권한 여부", required = true)
-    private String reportAuthYn = ServiceEnumCode.YesOrNoEnumCode.N.toString();
+    private String reportAuthYn = ServiceCode.YesOrNoEnumCode.N.toString();
 
     /**
      * 메뉴 순서
@@ -206,7 +206,7 @@ public class Menu extends BaseTimeEntity implements Serializable {
      */
     public List<SkillCode> getSkillCodes() {
         final List<SkillCode> skillCodes = new ArrayList<>();
-        for (final ServiceEnumCode.MenuSkillEnumCode enumCode : ServiceEnumCode.MenuSkillEnumCode.values()) {
+        for (final ServiceCode.MenuSkillEnumCode enumCode : ServiceCode.MenuSkillEnumCode.values()) {
             Long menuRoleSeq = 0L;
             for (final MenuRole menuRole : this.menuRoles) {
                 if (menuRole.getMenuSkillCode().equals(enumCode.toString())) {

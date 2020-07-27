@@ -1,8 +1,10 @@
 package com.nike.dnp.service;
 
-import com.nike.dnp.common.variable.CommonResponse;
+import com.nike.dnp.common.variable.FailCode;
+import com.nike.dnp.common.variable.SuccessCode;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
+import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,20 +20,6 @@ import java.util.HashMap;
 @Service
 @RequiredArgsConstructor
 public class ResponseService {
-
-    /**
-     * CommonResponse FAIL
-     *
-     * @author [오지훈]
-     */
-    private static final CommonResponse FAIL = CommonResponse.FAIL;
-
-    /**
-     * CommonResponse SUCCESS
-     *
-     * @author [오지훈]
-     */
-    private static final CommonResponse SUCCESS = CommonResponse.SUCCESS;
 
     /**
      * Gets single result.
@@ -97,10 +85,10 @@ public class ResponseService {
     private static void setSuccessResult(final CommonResult result) {
         result.setSuccess(true);
         if(result.getCode().isEmpty()) {
-            result.setCode(SUCCESS.getCode());
+            result.setCode(SuccessCode.ConfigureSuccess.SUCCESS.name());
         }
         if(result.getMsg().isEmpty()) {
-            result.setMsg(SUCCESS.getMsg());
+            result.setMsg(MessageUtil.getMessage(SuccessCode.ConfigureSuccess.SUCCESS.name()));
         }
     }
 
@@ -116,8 +104,8 @@ public class ResponseService {
         final CommonResult result = new CommonResult();
         result.setSuccess(false);
         result.setExistMsg(true);
-        result.setCode(FAIL.getCode());
-        result.setMsg(FAIL.getMsg());
+        result.setCode(FailCode.ExceptionError.ERROR.name());
+        result.setMsg(MessageUtil.getMessage(FailCode.ExceptionError.ERROR.name()));
         return result;
     }
 
@@ -148,19 +136,6 @@ public class ResponseService {
         result.setMsg(msg);
         result.setPayload(payload);
         return result;
-    }
-
-    /**
-     * Gets fail result.
-     *
-     * @param msg the msg
-     * @return the fail result
-     * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:00:51
-     * @Description
-     */
-    public CommonResult getFailResult(final String msg) {
-        return getFailResult(FAIL.getCode(), msg);
     }
 
 }

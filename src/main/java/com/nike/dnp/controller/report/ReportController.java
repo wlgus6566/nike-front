@@ -1,6 +1,6 @@
 package com.nike.dnp.controller.report;
 
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.report.ReportSaveDTO;
@@ -195,7 +195,7 @@ public class ReportController {
     ) {
         log.info("AuthController.findByAuthDepth");
         return responseService.getSingleResult(
-                authService.findByAuthDepth(authUserDTO.getAuthSeq(), "REPORT_UPLOAD", ServiceEnumCode.MenuSkillEnumCode.REPORT.toString()));
+                authService.findByAuthDepth(authUserDTO.getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString()));
     }
 }
 

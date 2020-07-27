@@ -1,6 +1,6 @@
 package com.nike.dnp.controller.contents;
 
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.entity.contents.Contents;
@@ -131,8 +131,8 @@ public class ContentsController {
         contentsSaveDTO.setMenuCode(menuCode);
         return responseService.getSingleResult(
                 contentsService.save(contentsSaveDTO)
-                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.toString()
-                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.getMessage()
+                , ServiceCode.ReturnTypeEnumCode.CREATE.toString()
+                , ServiceCode.ReturnTypeEnumCode.CREATE.getMessage()
                 , true
         );
     }
@@ -159,8 +159,8 @@ public class ContentsController {
 //        log.info("UserContentsController.save");
 //        return responseService.getSingleResult(
 //                userContentsService.save(contentsSeq, userContentsSaveDTO)
-//                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.toString()
-//                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.getMessage()
+//                , ServiceCode.ReturnTypeEnumCode.CREATE.toString()
+//                , ServiceCode.ReturnTypeEnumCode.CREATE.getMessage()
 //                , true
 //        );
 //    }
