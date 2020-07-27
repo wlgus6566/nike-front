@@ -42,7 +42,6 @@
             </li>
         </ul>
         <ul class="form-list" v-show="$route.meta.title == 'NEWS'">
-            >
             <li class="form-row">
                 <div class="form-column">
                     <span class="label-title required">썸네일 이미지</span>

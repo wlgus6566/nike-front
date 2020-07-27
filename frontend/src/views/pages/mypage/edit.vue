@@ -18,7 +18,9 @@ import Edit from '@/components/news/edit.vue';
 export default {
     name: 'edit',
     data() {
-        return {};
+        return {
+            num: 10,
+        };
     },
     components: {
         Edit,
