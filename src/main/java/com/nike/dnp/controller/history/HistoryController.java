@@ -51,7 +51,7 @@ public class HistoryController {
             , notes = REQUEST_CHARACTER
             + "page|페이지|false|Integer|0부터 시작\n"
             + "size|사이즈|false|Integer\n"
-            + "typeCd|타입 코드(값 없을 경우 ALL)|false|String|ALL/ASSET/TOOLKIT/FOUNDATION/REPORT\n"
+            + "typeCd|타입 코드(부모코드 : HISTORY_FOLDER_TAB)|false|String|ALL/ASSET/TOOLKIT/FOUNDATION/REPORT\n"
             + "[하위 Parameters 참조]\n\n\n\n"
             + "## Public/Paging Response ## \n"
             + "필드명||필드설명|데이터 타입(길이)\n" + "-|-|-|-\n"

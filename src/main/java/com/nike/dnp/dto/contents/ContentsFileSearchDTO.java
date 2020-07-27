@@ -49,7 +49,7 @@ public class ContentsFileSearchDTO extends SearchDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "JPG")
+    @ApiModelProperty(name = "fileExtension(부모코드:FILE_EXTENSION)", value = "파일 확장자", example = "JPG")
     private String fileExtension;
 
     /**
