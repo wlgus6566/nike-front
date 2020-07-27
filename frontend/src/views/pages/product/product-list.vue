@@ -8,7 +8,6 @@
                 v-if="productListData.length"
                 :productListData="productListData"
                 @showdetailView="showdetailView"
-                @addProductBasket="addProductBasket"
             />
             <template v-else>
                 <NoData v-if="searchKeyword === ''" />
@@ -28,7 +27,6 @@
     import detailView from '@/views/pages/product/detail-view';
 
     import {getProductList} from '@/api/product.js';
-    import {postBasketSave} from '@/api/basket.js';
 
     export default {
     name: 'product-list',
@@ -44,7 +42,6 @@
                 minimumOrderQuantity: '',
                 exposureYn: '',
             },
-            addProductBasketArray: [],
             loadingData: false,
             page: 0,
             itemLength: 5,
@@ -54,6 +51,7 @@
             },
         };
     },
+    created() {},
     components: {
         SearchInput,
         ProductList,
@@ -92,34 +90,24 @@
         // detial modal open
         showdetailView(goodsSeq) {
             this.visible.detailView = true;
-            this.productDetailData = this.productListData[this.goodeSeqIndex(goodsSeq)];
+            const findIndex = this.productListData.findIndex((el) => el.goodsSeq === goodsSeq);
+            this.productDetailData = this.productListData[findIndex];
         },
 
-        // 카트 장바구니 누르면 배열에 상품이 담김
-        // addProductBasket(goodsSeq) {
-        //     this.addProductBasketArray.push(this.productListData[this.goodeSeqIndex(goodsSeq)]);
-        //     console.log(this.addProductBasketArray);
-        // },
-
-        //상품 시퀀스가 속한 배열의 index 값을 리턴
-        goodeSeqIndex(goodsSeq) {
-            const goodsSeqIndex = this.productListData
-                .map((data) => data.goodsSeq)
-                .indexOf(goodsSeq);
-
-            return goodsSeqIndex;
-        },
-
-        // 상품 장바구니에 담기
-        async addProductBasket() {
+        /*// 상품 장바구니에 담기
+        async addProductBasket(goodsSeq) {
             try {
                 const {
                     data: { data: response },
-                } = await postBasketSave({});
+                } = await postBasketSave({
+                    goodsSeq: goodsSeq,
+                    orderQuantity: 1,
+                });
+                await this.$store.dispatch('basketList');
             } catch (error) {
                 console.log(error);
             }
-        },
+        },*/
     },
 };
 </script>

@@ -3257,3 +3257,46 @@
     border: 1px solid #ddd;
     background: #f7f7f7;
 }
+
+/* quantity */
+.quantity {
+    display: flex;
+}
+.quantity .el-input-number {
+    width: auto;
+    line-height: 1.5em;
+}
+.el-input-number .el-input__inner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    padding: 0 25px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    background: transparent;
+}
+.quantity .num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.quantity [class*='el-input-number__'] {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: url('../../assets/images/svg/icon-spinner-minus.svg') no-repeat center;
+}
+.quantity [class*='el-input-number__'] i {
+    display: none;
+}
+.quantity .el-input-number__increase {
+    background-image: url('../../assets/images/svg/icon-spinner-plus.svg');
+}

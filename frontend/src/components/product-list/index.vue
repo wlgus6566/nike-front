@@ -1,6 +1,6 @@
 <template>
     <ul class="product-list">
-        <li class="product-list-item" v-for="(item, index) in productListData" :key="index">
+        <li class="product-list-item" v-for="(item, index) in productListData" :key="item.goodsSeq">
             <button type="button" @click="$emit('showdetailView', item.goodsSeq)">
                 <span class="thumbnail">
                     <img :src="item.imageFilePhysicalName" :alt="item.imageFileName" />
@@ -24,25 +24,60 @@
                 <button
                     type="button"
                     class="cart"
-                    @click="$emit('addProductBasket', item.goodsSeq)"
+                    :class="cartActive(item.goodsSeq)"
+                    @click="toggleProductBasket(item)"
                 >
                     <span>카드담기</span>
                 </button>
-                {{ item.state }}
             </div>
         </li>
     </ul>
 </template>
 <script>
-export default {
+    import {addProductBasket, deleteBasketItem} from '@/utils/basket';
+
+    export default {
     name: 'index',
-    props: ['productListData', 'activeCart'],
+    data() {
+        return {};
+    },
+    props: ['productListData'],
+    created() {
+        console.log(this.productListData);
+    },
     computed: {
-        activeFn() {
-            return this.activeCart;
+        basketList() {
+            return this.$store.state.basketListData.map((data) => {
+                return {
+                    goodsSeq: data.goodsSeq,
+                    goodsBasketSeq: data.goodsBasketSeq,
+                };
+            });
         },
     },
-    methods: {},
+    mounted() {
+        //console.log(this.active);
+    },
+    methods: {
+        cartActive(goodsSeq) {
+            const findIndex = this.basketList.findIndex((el) => {
+                return el.goodsSeq === goodsSeq;
+            });
+            if (findIndex !== -1) {
+                return 'active';
+            }
+        },
+        toggleProductBasket(item) {
+            const findIndex = this.basketList.findIndex((el) => {
+                return el.goodsSeq === item.goodsSeq;
+            });
+            if (findIndex === -1) {
+                addProductBasket(item.goodsSeq, item.minimumOrderQuantity);
+            } else {
+                deleteBasketItem(this.basketList[findIndex].goodsBasketSeq);
+            }
+        },
+    },
 };
 </script>
 <style scoped>
