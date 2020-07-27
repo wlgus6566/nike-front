@@ -8,9 +8,9 @@
     </div>
 </template>
 <script>
-	import detailView from '@/views/pages/product/detail-view';
+    import detailView from '@/views/pages/product/detail-view';
 
-	export default {
+    export default {
     name: 'NIKE_P_MANAGE_02_002P',
     data() {
         return {
