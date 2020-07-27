@@ -25,7 +25,7 @@ public class HistorySearchDTO extends SearchDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "typeCd", value ="타입 코드(ALL/ASSET/TOOLKIT/FOUNDATION/REPORT)", example = "ALL")
+    @ApiModelProperty(name = "typeCd", value ="타입 코드(ALL/ASSET/TOOLKIT/FOUNDATION/REPORT_MANAGE)", example = "ALL")
     private String typeCd = "";
 
     /**

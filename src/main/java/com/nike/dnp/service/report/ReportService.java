@@ -144,10 +144,14 @@ public class ReportService {
         // 알림 저장
         alarmService.sendAlarmTargetList(
                 ServiceEnumCode.AlarmActionEnumCode.UPDATE.toString()
-                , ServiceEnumCode.HistoryTabEnumCode.REPORT.toString()
+                , ServiceEnumCode.HistoryTabEnumCode.REPORT_MANAGE.toString()
                 , null
                 , savedReport.getReportSeq()
                 , this.findAllAuthUser());
+
+
+        // 최근 업로드 목록 추가
+        historyService.saveRecentUploadHistory(savedReport.getReportSeq(), ServiceEnumCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
 
         return savedReport;
     }
@@ -167,7 +171,7 @@ public class ReportService {
         findReport.updateReadCount(findReport.getReadCount());
 
         // history 저장
-        historyService.save(reportSeq, ServiceEnumCode.HistoryTabEnumCode.REPORT.toString());
+        historyService.saveViewHistory(reportSeq, ServiceEnumCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
 
         return findReport;
     }
@@ -224,7 +228,7 @@ public class ReportService {
         // 알림 저장
         alarmService.sendAlarmTargetList(
                 ServiceEnumCode.AlarmActionEnumCode.UPDATE.toString()
-                , ServiceEnumCode.HistoryTabEnumCode.REPORT.toString()
+                , ServiceEnumCode.HistoryTabEnumCode.REPORT_MANAGE.toString()
                 , null
                 , reportSeq
                 , this.findAllAuthUser());
@@ -242,7 +246,7 @@ public class ReportService {
      */
     public List<Long> findAllAuthUser() {
         UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
-        userContentsSearchDTO.setMenuCode("REPORT");
+        userContentsSearchDTO.setMenuCode(ServiceEnumCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
         userContentsSearchDTO.setSkillCode(ServiceEnumCode.MenuSkillEnumCode.VIEW.toString());
         List<AuthReturnDTO> authList = userContentsService.getAuthList(userContentsSearchDTO);
 

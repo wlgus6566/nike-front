@@ -177,6 +177,9 @@ public class ContentsService {
 
         }
 
+        // 최근 업로드 목록 추가
+        historyService.saveRecentUploadHistory(savedContents.getContentsSeq(), contentsSaveDTO.getTopMenuCode());
+
         return savedContents;
     }
 
@@ -222,7 +225,7 @@ public class ContentsService {
         findContents.updateReadCount(findContents.getReadCount());
 
         // history 저장
-        historyService.save(contentsSeq, topMenuCode);
+        historyService.saveViewHistory(contentsSeq, topMenuCode);
 
         return findContents;
     }

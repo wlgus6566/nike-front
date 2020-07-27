@@ -1,10 +1,17 @@
 package com.nike.dnp.repository.history;
 
 import com.nike.dnp.common.ObjectMapperUtils;
+import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.history.HistoryResultDTO;
 import com.nike.dnp.dto.history.HistorySearchDTO;
+import com.nike.dnp.entity.contents.QContents;
 import com.nike.dnp.entity.history.History;
 import com.nike.dnp.entity.history.QHistory;
+import com.nike.dnp.entity.report.QReport;
+import com.nike.dnp.repository.contents.ContentsPredicateHelper;
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
@@ -37,7 +44,7 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
         final JPAQuery<History> query = queryFactory
                 .selectFrom(qHistory)
                 .where(
-                        HistoryPredicateHelper.eqTypeCd(historySearchDTO),
+                        HistoryPredicateHelper.eqTypeCdViewHistory(historySearchDTO),
                         qHistory.registerSeq.eq(historySearchDTO.getRegisterSeq()
                         ));
 
@@ -49,7 +56,7 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
             historyResultDTO.setTypeCd(history.getTypeCd());
             historyResultDTO.setRegistrationDt(history.getRegistrationDt());
 //            report인 경우
-            if (history.getTypeCd().equals("REPORT")) {
+            if (history.getTypeCd().equals(ServiceEnumCode.HistoryTabEnumCode.REPORT_MANAGE.toString())) {
                 historyResultDTO.setFolderSeq(history.getReportSeq());
                 historyResultDTO.setImageFileName(history.getReport().getImageFileName());
                 historyResultDTO.setImageFileSize(history.getReport().getImageFileSize());

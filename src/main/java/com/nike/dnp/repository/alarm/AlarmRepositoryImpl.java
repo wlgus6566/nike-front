@@ -61,7 +61,7 @@ public class AlarmRepositoryImpl extends QuerydslRepositorySupport implements Al
             alarmResultDTO.setTypeAction(alarm.getTypeAction());
             alarmResultDTO.setTypeCd(alarm.getTypeCd());
 
-            if (ServiceEnumCode.HistoryTabEnumCode.REPORT.toString().equals(alarm.getTypeCd())) {
+            if (ServiceEnumCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(alarm.getTypeCd())) {
                 alarmResultDTO.setFolderSeq(alarm.getReport().getReportSeq());
                 alarmResultDTO.setFolderName(alarm.getReport().getReportName());
             } else {
