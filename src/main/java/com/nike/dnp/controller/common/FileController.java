@@ -54,8 +54,9 @@ public class FileController {
 
 		final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO);
 
-		URL url = S3Util.upload(fileResultDTO);
-		S3Util.fileCopy(fileResultDTO.getFilePhysicalName(), "test");
+		URL url = S3Util.upload(fileResultDTO);//.업로드
+//		S3Util.fileCopy(fileResultDTO.getFilePhysicalName(), "test"); //"test" 경로로 카피
+
 		return responseService.getSingleResult(fileResultDTO);
 	}
 
