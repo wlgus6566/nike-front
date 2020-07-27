@@ -435,6 +435,12 @@ public class UserService implements UserDetailsService {
     public Boolean checkCertCode(final UserCertDTO userCertDTO) {
         log.info("UserService.checkCertCode");
         final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(userCertDTO.getCertCode()), "Nike DnP");
+        if (FailCode.ExceptionError.ERROR.name().equals(decodeCertCode)) {
+            throw new CodeMessageHandleException(
+                    FailCode.ConfigureError.EXPIRED_CERT_CODE.name()
+                    , MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
+            );
+        }
         final String userId = decodeCertCode.split("\\|")[0];
         final String certKey = decodeCertCode.split("\\|")[1];
         final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));
@@ -454,6 +460,12 @@ public class UserService implements UserDetailsService {
     public UserReturnDTO confirmPassword(final UserCertDTO userCertDTO) {
         log.info("UserService.confirmPassword1");
         final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(userCertDTO.getCertCode()), "Nike DnP");
+        if (FailCode.ExceptionError.ERROR.name().equals(decodeCertCode)) {
+            throw new CodeMessageHandleException(
+                    FailCode.ConfigureError.EXPIRED_CERT_CODE.name()
+                    , MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
+            );
+        }
         final String userId = decodeCertCode.split("\\|")[0];
         final String certKey = decodeCertCode.split("\\|")[1];
 
