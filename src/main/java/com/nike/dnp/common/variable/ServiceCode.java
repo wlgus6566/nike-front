@@ -338,4 +338,15 @@ public class ServiceCode {
          */
         private final String message;
     }
+
+    /**
+     * The enum Notice article section enum code.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum NoticeArticleSectionEnumCode {
+        NOTICE
+        , NEWS
+        , QNA
+    }
 }

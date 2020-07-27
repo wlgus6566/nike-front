@@ -126,7 +126,7 @@ public class ContentsService {
                 PageRequest.of(contentsSearchDTO.getPage()
                         , contentsSearchDTO.getSize()
                         , contentsSearchDTO.equals(ServiceCode.SearchEnumCode.START_DATE.toString())
-                                ? Sort.by("campaignBeginDt").ascending() : Sort.by("contentsSeq").descending()));
+                                ? Sort.by("campaignBeginDt").ascending() : Sort.by("updateDt").descending()));
     }
 
     /**

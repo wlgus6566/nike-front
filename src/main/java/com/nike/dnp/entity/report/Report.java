@@ -111,15 +111,6 @@ public class Report extends BaseTimeEntity {
     @ApiModelProperty(name="reportFileList", value = "보고서 파일 목록", required = true)
     private List<ReportFile> reportFileList;
 
-//    /**
-//     * The Report answer list
-//     * @author [이소정]
-//     */
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "report")
-//    @ApiModelProperty(name = "reportAnswerList", value = "보고서 댓글 목록", required = true)
-//    private List<ReportAnswer> reportAnswerList;
-
     /**
      * Save report.
      *

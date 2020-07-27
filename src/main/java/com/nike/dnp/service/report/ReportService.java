@@ -112,7 +112,7 @@ public class ReportService {
                 reportSearchDTO,
                 PageRequest.of(reportSearchDTO.getPage()
                 , reportSearchDTO.getSize()
-                , Sort.by("readCount").descending())
+                , Sort.by("updateDt").descending())
         );
     }
 
