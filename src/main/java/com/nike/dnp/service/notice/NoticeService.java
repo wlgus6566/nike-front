@@ -1,7 +1,6 @@
 package com.nike.dnp.service.notice;
 
-import com.nike.dnp.common.ObjectMapperUtils;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.notice.NoticeArticleListDTO;
 import com.nike.dnp.dto.notice.NoticeSaveDTO;
@@ -13,9 +12,7 @@ import com.nike.dnp.util.ImageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,7 +98,7 @@ public class NoticeService {
         if (StringUtils.equalsIgnoreCase(noticeSaveDTO.getNoticeArticleSectionCode(), "NEWS")) {
             if (!ObjectUtils.isEmpty(noticeSaveDTO.getImageBase64())) {
                 FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
-                        ServiceEnumCode.FileFolderEnumCode.FAQ.getFolder(), noticeSaveDTO.getImageBase64());
+                        ServiceCode.FileFolderEnumCode.FAQ.getFolder(), noticeSaveDTO.getImageBase64());
 
                 noticeArticle.setThumbnailFileName(fileResultDTO.getFileName());
                 noticeArticle.setThumbnailFilePhysicalName(fileResultDTO.getFilePhysicalName());
@@ -157,7 +154,7 @@ public class NoticeService {
         if (StringUtils.equalsIgnoreCase(noticeUpdateDTO.getNoticeArticleSectionCode(), "NEWS")) {
             if (!ObjectUtils.isEmpty(noticeUpdateDTO.getImageBase64())) {
                 FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
-                        ServiceEnumCode.FileFolderEnumCode.FAQ.getFolder(), noticeUpdateDTO.getImageBase64());
+                        ServiceCode.FileFolderEnumCode.FAQ.getFolder(), noticeUpdateDTO.getImageBase64());
 
                 noticeArticle.setThumbnailFileName(fileResultDTO.getFileName());
                 noticeArticle.setThumbnailFilePhysicalName(fileResultDTO.getFilePhysicalName());

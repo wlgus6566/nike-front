@@ -73,10 +73,8 @@ public class NoticeController {
     @GetMapping(value = "/{sectionCode}",
             name = "Customer Center 게시글 목록 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Page<NoticeArticleListDTO>> findAll(
-                                @ApiParam(name = "sectionCode",
-                                        value = "Customer Center 게시글 종류 코드",
-                                        allowableValues = "NOTICE, NEWS, QNA",
-                                        required = true)
+                                @ApiParam(name = "sectionCode", value = "Customer Center 게시글 종류 코드",
+                                        allowableValues = "NOTICE, NEWS, QNA", required = true)
                                 @PathVariable final String sectionCode,
                                 @ModelAttribute final NoticeSearchDTO noticeSearchDTO) {
         log.info("NoticeService.findAll");
@@ -102,8 +100,7 @@ public class NoticeController {
     @GetMapping(value = "detail/{noticeSeq}",
             name = "Customer Center 게시글 상세 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<NoticeArticle> findById(
-                                @ApiParam(name = "sectionCode",
-                                        value = "Customer Center 게시글 시퀀스",
+                                @ApiParam(name = "sectionCode", value = "Customer Center 게시글 시퀀스",
                                         defaultValue = "23", required = true)
                                 @PathVariable final Long noticeSeq) {
         log.info("NoticeService.findAll");
@@ -131,10 +128,8 @@ public class NoticeController {
     @PostMapping(value = "/{sectionCode}",
             name = "Customer Center 게시글 등록", produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<NoticeArticle> saveCustomerCenter(
-                                @ApiParam(name = "sectionCode",
-                                        value = "Customer Center 게시글 종류 코드",
-                                        allowableValues = "NOTICE, NEWS, QNA",
-                                        required = true)
+                                @ApiParam(name = "sectionCode", value = "Customer Center 게시글 종류 코드",
+                                        allowableValues = "NOTICE, NEWS, QNA", required = true)
                                 @PathVariable final String sectionCode,
                                 @RequestBody final NoticeSaveDTO noticeSaveDTO) {
         log.info("NoticeService.findAll");
@@ -177,8 +172,7 @@ public class NoticeController {
     @PutMapping(value = "/{noticeSeq}",
             name = "Customer Center 게시글 수정", produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<NoticeArticle> updateNotice(
-                                @ApiParam(name = "sectionCode",
-                                        value = "Customer Center 게시글 시퀀스",
+                                @ApiParam(name = "sectionCode", value = "Customer Center 게시글 시퀀스",
                                         defaultValue = "23", required = true)
                                 @PathVariable final Long noticeSeq,
                                 @RequestBody final NoticeUpdateDTO noticeUpdateDTO) {
@@ -200,8 +194,7 @@ public class NoticeController {
     @ApiOperation(value = "상품 삭제", notes = BASIC_CHARACTER)
     @DeleteMapping({"/{noticeSeq}"})
     public SingleResult<NoticeArticle> deleteCustomerCenter(
-                                @ApiParam(name = "sectionCode",
-                                        value = "Customer Center 게시글 시퀀스",
+                                @ApiParam(name = "sectionCode", value = "Customer Center 게시글 시퀀스",
                                         defaultValue = "23", required = true)
                                 @PathVariable final Long noticeSeq){
         log.info("NoticeService.deleteCustomerCenter");
