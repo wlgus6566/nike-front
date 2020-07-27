@@ -1,5 +1,6 @@
 package com.nike.dnp.controller.contents;
 
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.entity.contents.Contents;
@@ -128,9 +129,43 @@ public class ContentsController {
     ) {
         contentsSaveDTO.setTopMenuCode(topMenuCode);
         contentsSaveDTO.setMenuCode(menuCode);
-        Contents contents = contentsService.save(contentsSaveDTO);
-        return responseService.getSingleResult(contents);
+        return responseService.getSingleResult(
+                contentsService.save(contentsSaveDTO)
+                , ServiceCode.ReturnTypeEnumCode.CREATE.toString()
+                , ServiceCode.ReturnTypeEnumCode.CREATE.getMessage()
+                , true
+        );
     }
+
+//    /**
+//     * Save single result.
+//     *
+//     * @param userContentsSaveDTO the user contents save dto
+//     * @return the single result
+//     * @author [오지훈]
+//     * @CreatedOn 2020. 7. 20. 오후 2:38:11
+//     * @Description 유저 컨텐츠 권한 등록/수정
+//     */
+//    @ApiOperation(value = "유저 컨텐츠 권한 등록/수정"
+//            , notes = OPERATION_CHARACTER)
+//    @PostMapping(name = "유저 컨텐츠 권한 등록/수정", value = "/save/{contentsSeq}"
+//            , consumes = {MediaType.APPLICATION_JSON_VALUE}
+//            , produces = {MediaType.APPLICATION_JSON_VALUE})
+//    @ValidField
+//    public SingleResult<List<UserContents>> save (
+//            @ApiParam(value = "컨텐츠 시퀀스", required = true) @PathVariable final Long contentsSeq
+//            , @ApiParam(value = "유저 컨텐츠 권한 저장 DTO", required = true) @Valid @RequestBody final UserContentsSaveDTO userContentsSaveDTO
+//            , @ApiIgnore final BindingResult result) {
+//        log.info("UserContentsController.save");
+//        return responseService.getSingleResult(
+//                userContentsService.save(contentsSeq, userContentsSaveDTO)
+//                , ServiceCode.ReturnTypeEnumCode.CREATE.toString()
+//                , ServiceCode.ReturnTypeEnumCode.CREATE.getMessage()
+//                , true
+//        );
+//    }
+
+
 
     /**
      * Find contents single result.
@@ -187,7 +222,7 @@ public class ContentsController {
     ) {
         contentsUpdateDTO.setTopMenuCode(topMenuCode);
         contentsUpdateDTO.setMenuCode(menuCode);
-        return responseService.getSingleResult(contentsService.update(contentsUpdateDTO));
+        return responseService.getSingleResult(contentsService.update(contentsSeq, contentsUpdateDTO));
     }
 
 

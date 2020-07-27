@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @AllArgsConstructor
-public class ServiceEnumCode {
+public class ServiceCode {
 
     /**
      * Y or N
@@ -254,6 +254,68 @@ public class ServiceEnumCode {
          */
         private final String folder;
 
+    }
+
+    /**
+     * The enum History tab enum code.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum HistoryTabEnumCode {
+        ALL
+        , ASSET
+        , TOOLKIT
+        , FOUNDATION
+        , REPORT_MANAGE
+    }
+
+
+    /**
+     * The enum File extension enum code.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum FileExtensionEnumCode {
+        AI(".ai")
+        , JPG(".jpg")
+        , JPEG(".jpeg")
+        , GIF(".gif")
+        , TIF(".tif")
+        , PSD(".psd")
+        , BMP(".bmp")
+        , PNG(".png")
+        , PDF(".pdf")
+        , PPT(".ppt")
+        , PPTX(".pptx")
+        , DOC(".doc")
+        , DOCX(".docx")
+        , XLS(".xls")
+        , XLSX(".xlsx")
+        , KEY(".key")
+        , MP4(".mp4")
+        , AVI(".avi")
+        , MOV(".mov")
+        , TTF(".TTF")
+        , OTF(".OTF")
+        , INDD(".INDD");
+
+        /**
+         * 확장자값
+         *
+         * @author [이소정]
+         */
+        private final String fileExtension;
+    }
+
+    /**
+     * The enum Alarm action enum code.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum AlarmActionEnumCode {
+        NEW
+        , UPDATE
+        , FEEDBACK
     }
 
     /**

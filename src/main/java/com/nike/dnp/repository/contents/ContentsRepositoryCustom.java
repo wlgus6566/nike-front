@@ -40,5 +40,4 @@ public interface ContentsRepositoryCustom {
      * @return the list
      */
     List<ContentsUserEmailDTO> findAllContentsMailAuthUser(final long contentsSeq);
-
 }

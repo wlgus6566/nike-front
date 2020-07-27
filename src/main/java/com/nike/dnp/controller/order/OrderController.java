@@ -2,7 +2,7 @@ package com.nike.dnp.controller.order;
 
 
 import com.nike.dnp.common.aspect.ValidField;
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.order.OrderProductMappingSaveDTO;
 import com.nike.dnp.dto.order.OrderProductSaveDTO;
 import com.nike.dnp.dto.order.OrderSearchDTO;
@@ -15,6 +15,7 @@ import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.order.OrderProductMappingService;
 import com.nike.dnp.service.order.OrderService;
 import com.nike.dnp.service.product.ProductService;
+import com.nike.dnp.util.MessageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -103,7 +104,9 @@ public class OrderController {
 										 @ApiIgnore final BindingResult result) {
 
 		if(orderProductSaveDTO.getGoodsSeqList().size()!=orderProductSaveDTO.getOrderQuantityList().size()){
-			throw new CodeMessageHandleException(ErrorEnumCode.OrderError.NOT_SIZE_BASKET.name(), ErrorEnumCode.OrderError.NOT_SIZE_BASKET.getMessage());
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.INVALID_ORDER.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_ORDER.name()));
 		}else{
 			final Order order = orderService.saveOrder(orderProductSaveDTO);
 

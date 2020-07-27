@@ -61,36 +61,6 @@ public class ContentsFileResultDTO {
     @ApiModelProperty(name = "url", value = "url")
     private String url;
 
-//    상세페이지에서 필요 없어서 주석 by.2020.07.17 sojeong.lee
-//
-//    /**
-//     * 파일 명
-//     * @author [이소정]
-//     */
-//    @ApiModelProperty(name = "fileName", value = "파일 명")
-//    private String fileName;
-//
-//    /**
-//     * 파일 사이즈
-//     * @author [이소정]
-//     */
-//    @ApiModelProperty(name = "fileSize", value = "파일 사이즈")
-//    private Long fileSize;
-//
-//    /**
-//     * 파일 물리 명
-//     * @author [이소정]
-//     */
-//    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명")
-//    private String filePhysicalName;
-//
-//    /**
-//     * 다운로드 수
-//     * @author [이소정]
-//     */
-//    @ApiModelProperty(name = "downloadCount", value = "다운로드 수")
-//    private long downloadCount;
-
     /**
      * 파일 순서
      * @author [이소정]
@@ -118,5 +88,51 @@ public class ContentsFileResultDTO {
      */
     @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_thumbnail.jpg")
     private String thumbnailFilePhysicalName;
+
+    /**
+     * 파일 컨텐츠 타입
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileExtension", value = "파일 컨텐츠 타입", example = "image/jpeg")
+    private String fileContentType;
+
+    /**
+     * 파일 확장자
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "JPG")
+    private String fileExtension;
+
+//    TODO[lsj] 상세페이지에서 필요 없어서 주석 추후 삭제 예정
+//     by.2020.07.17 sojeong.lee
+//    /**
+//     * 파일 명
+//     * @author [이소정]
+//     */
+//    @ApiModelProperty(name = "fileName", value = "파일 명")
+//    private String fileName;
+//
+//    /**
+//     * 파일 사이즈
+//     * @author [이소정]
+//     */
+//    @ApiModelProperty(name = "fileSize", value = "파일 사이즈")
+//    private Long fileSize;
+//
+//    /**
+//     * 파일 물리 명
+//     * @author [이소정]
+//     */
+//    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명")
+//    private String filePhysicalName;
+//
+//    /**
+//     * 다운로드 수
+//     * @author [이소정]
+//     */
+//    @ApiModelProperty(name = "downloadCount", value = "다운로드 수")
+//    private long downloadCount;
 
 }

@@ -82,6 +82,22 @@ public class ContentsFileUpdateDTO {
     private String filePhysicalName;
 
     /**
+     * 파일 컨텐츠 타입
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileExtension", value = "파일 컨텐츠 타입", example = "image/jpeg")
+    private String fileContentType;
+
+    /**
+     * 파일 확장자
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "JPG")
+    private String fileExtension;
+
+    /**
      * 상세 썸네일 명
      */
     @ApiModelProperty(name = "detailThumbnailFileName", value ="상세 썸네일 명", example = "graphic_file_name_detail_thumbnail.jpg")

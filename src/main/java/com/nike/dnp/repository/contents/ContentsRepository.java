@@ -28,6 +28,4 @@ public interface ContentsRepository extends JpaRepository<Contents, Long>, Conte
      * @Description
      */
     Optional<Contents> findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(Long contentsSeq, String topMenuCode, String menuCode, String useYn);
-
-
 }

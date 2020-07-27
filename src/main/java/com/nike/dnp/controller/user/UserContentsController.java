@@ -1,11 +1,8 @@
 package com.nike.dnp.controller.user;
 
 import com.nike.dnp.common.aspect.ValidField;
-import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
-import com.nike.dnp.dto.user.UserContentsSaveDTO;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
-import com.nike.dnp.entity.user.UserContents;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.user.UserContentsService;
@@ -16,7 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
@@ -79,31 +79,31 @@ public class UserContentsController {
         return responseService.getSingleResult(userContentsService.getAuthList(userContentsSearchDTO));
     }
 
-    /**
-     * Save single result.
-     *
-     * @param userContentsSaveDTO the user contents save dto
-     * @return the single result
-     * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오후 2:38:11
-     * @Description 유저 컨텐츠 권한 등록/수정
-     */
-    @ApiOperation(value = "유저 컨텐츠 권한 등록/수정"
-            , notes = OPERATION_CHARACTER)
-    @PostMapping(name = "유저 컨텐츠 권한 등록/수정", value = "/save/{contentsSeq}"
-            , consumes = {MediaType.APPLICATION_JSON_VALUE}
-            , produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ValidField
-    public SingleResult<List<UserContents>> save (
-            @ApiParam(value = "컨텐츠 시퀀스", required = true) @PathVariable final Long contentsSeq
-            , @ApiParam(value = "유저 컨텐츠 권한 저장 DTO", required = true) @Valid @RequestBody final UserContentsSaveDTO userContentsSaveDTO
-            , @ApiIgnore final BindingResult result) {
-        log.info("UserContentsController.save");
-        return responseService.getSingleResult(
-                userContentsService.save(contentsSeq, userContentsSaveDTO)
-                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.toString()
-                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.getMessage()
-                , true
-        );
-    }
+//    /**
+//     * Save single result.
+//     *
+//     * @param userContentsSaveDTO the user contents save dto
+//     * @return the single result
+//     * @author [오지훈]
+//     * @CreatedOn 2020. 7. 20. 오후 2:38:11
+//     * @Description 유저 컨텐츠 권한 등록/수정
+//     */
+//    @ApiOperation(value = "유저 컨텐츠 권한 등록/수정"
+//            , notes = OPERATION_CHARACTER)
+//    @PostMapping(name = "유저 컨텐츠 권한 등록/수정", value = "/save/{contentsSeq}"
+//            , consumes = {MediaType.APPLICATION_JSON_VALUE}
+//            , produces = {MediaType.APPLICATION_JSON_VALUE})
+//    @ValidField
+//    public SingleResult<List<UserContents>> save (
+//            @ApiParam(value = "컨텐츠 시퀀스", required = true) @PathVariable final Long contentsSeq
+//            , @ApiParam(value = "유저 컨텐츠 권한 저장 DTO", required = true) @Valid @RequestBody final UserContentsSaveDTO userContentsSaveDTO
+//            , @ApiIgnore final BindingResult result) {
+//        log.info("UserContentsController.save");
+//        return responseService.getSingleResult(
+//                userContentsService.save(contentsSeq, userContentsSaveDTO)
+//                , ServiceCode.ReturnTypeEnumCode.CREATE.toString()
+//                , ServiceCode.ReturnTypeEnumCode.CREATE.getMessage()
+//                , true
+//        );
+//    }
 }

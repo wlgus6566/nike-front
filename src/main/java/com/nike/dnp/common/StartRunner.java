@@ -1,6 +1,7 @@
 package com.nike.dnp.common;
 
 import com.nike.dnp.common.mail.SendEmailOffice365;
+import com.nike.dnp.util.S3Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -44,7 +45,11 @@ public class StartRunner implements ApplicationRunner {
     @Override
     public void run(final ApplicationArguments args) {
         log.info("Application Runner!!");
-        /*for (String key : redisService.keys("codes:*")) {
+
+        //S3 init
+        S3Util.init();
+
+       /*for (String key : redisService.keys("codes:*")) {
             redisService.delete(key);
         }*/
 
@@ -114,8 +119,8 @@ public class StartRunner implements ApplicationRunner {
         sendDTO.setNickname("ojh");
         sendDTO.setEmail("lion226@naver.com");
         mailService.sendMail(
-                ServiceEnumCode.EmailType.USER_CREATE.toString()
-                ,ServiceEnumCode.EmailType.USER_CREATE.getMessage()
+                ServiceCode.EmailType.USER_CREATE.toString()
+                ,ServiceCode.EmailType.USER_CREATE.getMessage()
                 ,sendDTO
         );
         */
@@ -155,8 +160,8 @@ public class StartRunner implements ApplicationRunner {
         }
         sendDTO1.setOrderArea(sb.toString());
         mailService.sendMail(
-                ServiceEnumCode.EmailTypeEnumCode.ORDER.toString()
-                ,ServiceEnumCode.EmailTypeEnumCode.ORDER.getMessage()
+                ServiceCode.EmailTypeEnumCode.ORDER.toString()
+                ,ServiceCode.EmailTypeEnumCode.ORDER.getMessage()
                 ,sendDTO1
         );
         */

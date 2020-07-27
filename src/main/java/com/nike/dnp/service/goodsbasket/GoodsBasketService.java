@@ -1,11 +1,12 @@
 package com.nike.dnp.service.goodsbasket;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.goodsbasket.GoodsBasketSaveDTO;
 import com.nike.dnp.dto.goodsbasket.GoodsBasketSaveListDTO;
 import com.nike.dnp.entity.goodsbasket.GoodsBasket;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.goodsbasket.GoodsBasketRepository;
+import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -80,7 +81,10 @@ public class GoodsBasketService {
 	public void deleteBasket(final Long goodsBasketSeq) {
 
 		final Optional<GoodsBasket> optionalGoodsBasket = goodsBasketRepository.findById(goodsBasketSeq);
-		final GoodsBasket goodsBasket = optionalGoodsBasket.orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.BasketError.NOT_FOUND_BASKET.name(),ErrorEnumCode.BasketError.NOT_FOUND_BASKET.getMessage()));
+		final GoodsBasket goodsBasket = optionalGoodsBasket.orElseThrow(
+				() -> new CodeMessageHandleException(
+						FailCode.ExceptionError.NOT_FOUND.name()
+						, MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
 		goodsBasketRepository.delete(goodsBasket);
 	}
 
@@ -110,7 +114,9 @@ public class GoodsBasketService {
 	public List<GoodsBasket> saveBasketList(final GoodsBasketSaveListDTO goodsBasketSaveListDTO) {
 		final List<GoodsBasket> resultList = new ArrayList<>();
 		if(goodsBasketSaveListDTO.getGoodsSeqList().size()!= goodsBasketSaveListDTO.getOrderQuantityList().size()){
-			throw new CodeMessageHandleException(ErrorEnumCode.BasketError.NOT_SIZE_BASKET.name(), ErrorEnumCode.BasketError.NOT_SIZE_BASKET.getMessage());
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.INVALID_ORDER.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_ORDER.name()));
 		}
 
 		for(int i = 0; i < goodsBasketSaveListDTO.getGoodsSeqList().size(); i++){

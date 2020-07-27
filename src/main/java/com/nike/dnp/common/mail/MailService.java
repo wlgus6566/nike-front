@@ -43,6 +43,7 @@ public class MailService {
      * @Description
      */
     public void sendMail(final String emailType, final String subject, final SendDTO sendDTO) {
+        log.info("MailService.sendMail");
         sendEmailOffice365.sendEmail(
                 sendDTO.getEmail()
                 , subject
@@ -60,9 +61,10 @@ public class MailService {
      * @Description template 파일 read > String 으로 저장
      */
     public String getFile(final String emailType) {
+        log.info("MailService.getFile");
         String result = "";
         try {
-            final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new ClassPathResource("templates/email/NIKE_DNP_"+emailType+".html").getInputStream()));
+            final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new ClassPathResource("templates/email/NIKESPACE_"+emailType+".html").getInputStream()));
             /*String inputLine;
             final StringBuilder response = new StringBuilder();
             while ((inputLine = bufferedReader.readLine()) != null) {
@@ -100,7 +102,7 @@ public class MailService {
             try {
                 field.setAccessible(true);
                 if (!ObjectUtils.isEmpty(field.get(sendDTO))
-                        && BasicVariable.String.toString().equals(field.getType().getSimpleName())
+                        && BasicVariable.String.name().equals(field.getType().getSimpleName())
                         && file.contains("["+ field.getName() +"]")
                 ) {
                     result = result.replace("["+ field.getName() +"]", (String) field.get(sendDTO));

@@ -66,6 +66,17 @@ public class ContentsBasketController {
     @ApiOperation(
             value = "컨텐츠 장바구니 목록 조회"
             , notes = REQUEST_CHARACTER
+            + "[하위 Parameters 참조]\n\n\n\n"
+            + "## Public/Paging Response ## \n"
+            + "필드명||필드설명|데이터 타입(길이)\n" + "-|-|-|-\n"
+            + "content||본문내용|Array\n"
+            + "totalPages||총페이지수|Integer\n"
+            + "totalElements||총데이터수|Integer\n"
+            + "first||첫페이지여부|Boolean\n"
+            + "last||마지막페이지여부|Boolean\n"
+            + "empty||빈값여부|Boolean\n"
+            + "number||현재페이지|Integer\n"
+            + "size||노출갯수|Integer\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 장바구니 목록 조회")
     public SingleResult<List<ContentsBasketResultDTO>> findAllContentsBasket(

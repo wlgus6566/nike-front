@@ -1,12 +1,14 @@
 package com.nike.dnp.controller.common;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.file.FileUploadDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.util.FileUtil;
+import com.nike.dnp.util.MessageUtil;
+import com.nike.dnp.util.S3Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,10 +51,12 @@ public class FileController {
 	public SingleResult<FileResultDTO> upload(final FileUploadDTO fileUploadDTO,
 							   @ApiParam(name = "uploadFile", value = "파일업로드") final MultipartFile uploadFile) {
 
-		final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO);
-		// TODO [YTH] s3 파일 업로드
-		return responseService.getSingleResult(fileResultDTO);
 
+		final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO);
+
+		URL url = S3Util.upload(fileResultDTO);
+		S3Util.fileCopy(fileResultDTO.getFilePhysicalName(), "test");
+		return responseService.getSingleResult(fileResultDTO);
 	}
 
 
@@ -66,7 +71,8 @@ public class FileController {
 			FileUploadDTO fileParam = new FileUploadDTO();
 			fileParam.setUploadFile(multipartFile);
 			final FileResultDTO fileResultDTO = fileUpload(fileParam);
-			// TODO [YTH] s3 파일 업로드
+			URL url = S3Util.upload(fileResultDTO);
+			S3Util.fileCopy(fileResultDTO.getFilePhysicalName(),"test");
 			resultList.add(fileResultDTO);
 		});
 
@@ -80,7 +86,9 @@ public class FileController {
 			//fileResultDTO = FileUtil.fileSave(fileUploadDTO.getUploadFile(),"temp");
 		}catch(InterruptedException | IOException e){
 			// 리사이즈 문제
-			throw (CodeMessageHandleException)new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_COPY_ERROR.name(), ErrorEnumCode.FileError.FILE_COPY_ERROR.getMessage());
+			throw (CodeMessageHandleException)new CodeMessageHandleException(
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 		}
 		return fileResultDTO;
 	}

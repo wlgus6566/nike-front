@@ -1,6 +1,6 @@
 package com.nike.dnp.repository.auth;
 
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.auth.QAuth;
@@ -78,7 +78,7 @@ public class AuthRepositoryImpl extends QuerydslRepositorySupport implements Aut
                         .and(menu.menuCode.eq(menuCode))
                 )
                 .leftJoin(userContents).on(auth.authSeq.eq(userContents.authSeq))
-                .where(auth.useYn.eq(ServiceEnumCode.YesOrNoEnumCode.Y.toString()))
+                .where(auth.useYn.eq(ServiceCode.YesOrNoEnumCode.Y.toString()))
                 .fetch();
     }
 
@@ -109,7 +109,7 @@ public class AuthRepositoryImpl extends QuerydslRepositorySupport implements Aut
                 .leftJoin(upperAuth).on(auth.upperAuthSeq.eq(upperAuth.authSeq))
                 .where(
                         auth.authSeq.in(authSeqArray)
-                        , auth.useYn.eq(ServiceEnumCode.YesOrNoEnumCode.Y.toString())
+                        , auth.useYn.eq(ServiceCode.YesOrNoEnumCode.Y.toString())
                 )
                 .fetch();
     }
@@ -164,7 +164,7 @@ public class AuthRepositoryImpl extends QuerydslRepositorySupport implements Aut
                 .leftJoin(userContents).on(auth.authSeq.eq(userContents.authSeq))
                 .where(
                         AuthPredicateHelper.compareDepth(authSeq, authDepth)
-                        , auth.useYn.eq(ServiceEnumCode.YesOrNoEnumCode.Y.toString())
+                        , auth.useYn.eq(ServiceCode.YesOrNoEnumCode.Y.toString())
                 )
                 .fetch();
     }

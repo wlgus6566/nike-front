@@ -1,6 +1,6 @@
 package com.nike.dnp.service.contents;
 
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.contents.ContentsFileResultDTO;
 import com.nike.dnp.dto.contents.ContentsFileSearchDTO;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
@@ -49,7 +49,7 @@ public class ContentsFileService {
                 contentsFileSearchDTO,
                 PageRequest.of(contentsFileSearchDTO.getPage()
                 , contentsFileSearchDTO.getSize()
-                , contentsFileSearchDTO.getOrderType().equals(ServiceEnumCode.SearchEnumCode.ORDER.toString())
+                , contentsFileSearchDTO.getOrderType().equals(ServiceCode.SearchEnumCode.ORDER.toString())
                         ? Sort.by("fileOrder").ascending() : Sort.by("fileName").ascending()));
     }
 }

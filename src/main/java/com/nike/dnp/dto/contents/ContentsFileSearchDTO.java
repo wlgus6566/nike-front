@@ -44,12 +44,12 @@ public class ContentsFileSearchDTO extends SearchDTO {
     private String orderType = "";
 
     /**
-     * 확장자
+     * 파일 확장자
      *
      * @author [이소정]
      */
-    @ApiParam(value = "확장자", name = "fileExtension" , defaultValue = "JPG")
-    private String fileExtension = "";
+    @ApiModelProperty(name = "fileExtension(부모코드:FILE_EXTENSION)", value = "파일 확장자", example = "JPG")
+    private String fileExtension;
 
     /**
      * Method to String

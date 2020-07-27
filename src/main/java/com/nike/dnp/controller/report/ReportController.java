@@ -1,6 +1,6 @@
 package com.nike.dnp.controller.report;
 
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.report.ReportSaveDTO;
@@ -68,7 +68,7 @@ public class ReportController {
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
     @ApiOperation(
-        value = "Report 목록 조회"
+        value = "보고서 목록 조회"
         , notes = REQUEST_CHARACTER
         + "page|페이지|false|Integer|0부터 시작\n"
         + "size|사이즈|false|Integer\n"
@@ -154,7 +154,7 @@ public class ReportController {
             @ApiParam(name="reportUpdateDTO", value = "보고서 수정 Json") @RequestBody final ReportUpdateDTO reportUpdateDTO,
             @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq
     ) {
-        return responseService.getSingleResult(reportService.update(reportUpdateDTO));
+        return responseService.getSingleResult(reportService.update(reportSeq, reportUpdateDTO));
     }
 
     /**
@@ -195,7 +195,7 @@ public class ReportController {
     ) {
         log.info("AuthController.findByAuthDepth");
         return responseService.getSingleResult(
-                authService.findByAuthDepth(authUserDTO.getAuthSeq(), "REPORT_UPLOAD", ServiceEnumCode.MenuSkillEnumCode.REPORT.toString()));
+                authService.findByAuthDepth(authUserDTO.getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString()));
     }
 }
 

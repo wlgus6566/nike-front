@@ -1,7 +1,7 @@
 package com.nike.dnp.controller.auth;
 
 import com.nike.dnp.common.aspect.ValidField;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthSaveDTO;
 import com.nike.dnp.dto.auth.AuthUpdateDTO;
 import com.nike.dnp.entity.auth.Auth;
@@ -154,8 +154,8 @@ public class AuthController {
         log.info("AuthController.save");
         return responseService.getSingleResult(
                 authService.save(authSaveDTO)
-                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.toString()
-                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.getMessage()
+                , ServiceCode.ReturnTypeEnumCode.CREATE.toString()
+                , ServiceCode.ReturnTypeEnumCode.CREATE.getMessage()
                 , true
         );
     }
@@ -184,8 +184,8 @@ public class AuthController {
         log.info("AuthController.update");
         return responseService.getSingleResult(
                 authService.update(authSeq, authUpdateDTO)
-                , ServiceEnumCode.ReturnTypeEnumCode.UPDATE.toString()
-                , ServiceEnumCode.ReturnTypeEnumCode.UPDATE.getMessage()
+                , ServiceCode.ReturnTypeEnumCode.UPDATE.toString()
+                , ServiceCode.ReturnTypeEnumCode.UPDATE.getMessage()
                 , true
         );
     }
@@ -209,8 +209,8 @@ public class AuthController {
         log.info("AuthController.delete");
         return responseService.getSingleResult(
                 authService.delete(authSeq)
-                , ServiceEnumCode.ReturnTypeEnumCode.DELETE.toString()
-                , ServiceEnumCode.ReturnTypeEnumCode.DELETE.getMessage()
+                , ServiceCode.ReturnTypeEnumCode.DELETE.toString()
+                , ServiceCode.ReturnTypeEnumCode.DELETE.getMessage()
                 , true
         );
     }

@@ -1,7 +1,6 @@
 package com.nike.dnp.util;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
-import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.common.variable.FailCode;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -67,9 +66,10 @@ public class CryptoUtil {
 
             return Base64.getEncoder().encodeToString(buffer);
         } catch (Exception exception) {
-            throw new CodeMessageHandleException(
-                    ErrorEnumCode.ExceptionError.ERROR.toString()
-                    , exception.getMessage());
+            return FailCode.ExceptionError.ERROR.name();
+            /*throw new CodeMessageHandleException(
+                    FailCode.ExceptionError.ERROR.name()
+                    , exception.getMessage());*/
         }
     }
 
@@ -106,9 +106,10 @@ public class CryptoUtil {
 
             return new String(cipher.doFinal(encryoptedTextBytes));
         } catch (Exception exception) {
-            throw new CodeMessageHandleException(
-                    ErrorEnumCode.ExceptionError.ERROR.toString()
-                    , exception.getMessage());
+            return FailCode.ExceptionError.ERROR.name();
+            /*throw new CodeMessageHandleException(
+                    FailCode.ExceptionError.ERROR.name()
+                    , exception.getMessage());*/
         }
     }
 
@@ -125,9 +126,10 @@ public class CryptoUtil {
         try {
             return URLEncoder.encode(value, "UTF-8");
         } catch (UnsupportedEncodingException exception) {
-            throw new CodeMessageHandleException(
-                    ErrorEnumCode.ExceptionError.ERROR.toString()
-                    , exception.getMessage());
+            return FailCode.ExceptionError.ERROR.name();
+            /*throw new CodeMessageHandleException(
+                    FailCode.ExceptionError.ERROR.name()
+                    , exception.getMessage());*/
         }
     }
 
@@ -144,9 +146,10 @@ public class CryptoUtil {
         try {
             return URLDecoder.decode(value, "UTF-8");
         } catch (UnsupportedEncodingException exception) {
-            throw new CodeMessageHandleException(
-                    ErrorEnumCode.ExceptionError.ERROR.toString()
-                    , exception.getMessage());
+            return FailCode.ExceptionError.ERROR.name();
+            /*throw new CodeMessageHandleException(
+                    FailCode.ExceptionError.ERROR.name()
+                    , exception.getMessage());*/
         }
     }
 }

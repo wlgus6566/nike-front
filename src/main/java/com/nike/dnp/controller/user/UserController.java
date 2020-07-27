@@ -1,8 +1,8 @@
 package com.nike.dnp.controller.user;
 
 import com.nike.dnp.common.aspect.ValidField;
-import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.common.variable.SuccessEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.common.variable.SuccessCode;
 import com.nike.dnp.dto.user.*;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -126,7 +126,7 @@ public class UserController {
         log.info("UserController.save");
         final SingleResult<Integer> singleResult = userService.checkId(userSaveDTO.getUserId());
         SingleResult<UserReturnDTO> returnz = new SingleResult<>(singleResult.getCode(), singleResult.getMsg(), true, true);
-        if(singleResult.getCode().equals(SuccessEnumCode.UserSuccess.NOT_DUPLICATE.toString())) {
+        if(singleResult.getCode().equals(SuccessCode.ConfigureSuccess.NOT_DUPLICATE.name())) {
             returnz = responseService.getSingleResult(userService.save(userSaveDTO));
         }
         return returnz;
@@ -173,8 +173,8 @@ public class UserController {
             @ApiParam(value = "유저 시퀀스", required = true) @PathVariable final Long userSeq) {
         log.info("UserController.deleteOne");
         return responseService.getSingleResult(userService.deleteOne(userSeq)
-                , ServiceEnumCode.ReturnTypeEnumCode.DELETE.toString()
-                , ServiceEnumCode.ReturnTypeEnumCode.DELETE.getMessage()
+                , ServiceCode.ReturnTypeEnumCode.DELETE.toString()
+                , ServiceCode.ReturnTypeEnumCode.DELETE.getMessage()
                 , true);
     }
 
@@ -197,8 +197,8 @@ public class UserController {
             @ApiParam(value = "유저 삭제 DTO", required = true) @Valid @RequestBody final UserDeleteDTO userDeleteDTO) {
         log.info("UserController.deleteArray");
         return responseService.getSingleResult(userService.deleteArray(userDeleteDTO)
-                , ServiceEnumCode.ReturnTypeEnumCode.DELETE.toString()
-                , ServiceEnumCode.ReturnTypeEnumCode.DELETE.getMessage()
+                , ServiceCode.ReturnTypeEnumCode.DELETE.toString()
+                , ServiceCode.ReturnTypeEnumCode.DELETE.getMessage()
                 , true);
     }
 
