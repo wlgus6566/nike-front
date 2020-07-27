@@ -43,7 +43,7 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
         final JPAQuery<History> query = queryFactory
                 .selectFrom(qHistory)
                 .where(
-                        HistoryPredicateHelper.eqTypeCd(historySearchDTO),
+                        HistoryPredicateHelper.eqTypeCdViewHistory(historySearchDTO),
                         qHistory.registerSeq.eq(historySearchDTO.getRegisterSeq()
                         ));
 

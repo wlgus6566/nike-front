@@ -9,13 +9,11 @@ import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.user.UserContentsSaveDTO;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
-import com.nike.dnp.entity.alarm.Alarm;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.entity.user.UserContents;
 import com.nike.dnp.exception.CodeMessageHandleException;
-import com.nike.dnp.repository.alarm.AlarmRepository;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
@@ -179,6 +177,9 @@ public class ContentsService {
 
         }
 
+        // 최근 업로드 목록 추가
+        historyService.saveRecentUploadHistory(savedContents.getContentsSeq(), contentsSaveDTO.getTopMenuCode());
+
         return savedContents;
     }
 
@@ -224,7 +225,7 @@ public class ContentsService {
         findContents.updateReadCount(findContents.getReadCount());
 
         // history 저장
-        historyService.save(contentsSeq, topMenuCode);
+        historyService.saveViewHistory(contentsSeq, topMenuCode);
 
         return findContents;
     }

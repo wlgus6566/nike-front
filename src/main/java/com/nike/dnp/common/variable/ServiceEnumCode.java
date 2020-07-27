@@ -265,8 +265,9 @@ public class ServiceEnumCode {
         , ASSET
         , TOOLKIT
         , FOUNDATION
-        , REPORT;
+        , REPORT_MANAGE
     }
+
 
     /**
      * The enum File extension enum code.

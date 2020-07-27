@@ -68,7 +68,7 @@ public class ReportController {
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
     @ApiOperation(
-        value = "Report 목록 조회"
+        value = "보고서 목록 조회"
         , notes = REQUEST_CHARACTER
         + "page|페이지|false|Integer|0부터 시작\n"
         + "size|사이즈|false|Integer\n"
