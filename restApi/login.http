@@ -3,7 +3,7 @@ POST http://{{host}}/api/login?username=yth&password=Emotion1!@
 Accept: application/json
 Cache-Control: no-cache
 
-
+# Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJyZHMiOiJhdXRoczp5dGg2NDk3NTMxOCIsInN1YiI6Inl0aCIsImV4cCI6MTYyNzM3NjU3NSwiaWF0IjoxNTk1ODQwNTc1fQ.zqcIYBGv6N8fDMnakdz-MdYrwQVCh_Px_ZVvWxf0xMT45SkZXPi7c0D6qm7Ao4bx5kuGOxqqF3YVYh8IIOYMDQ
 
 ### 마이페이지
 GET http://{{host}}/api/mypage/user

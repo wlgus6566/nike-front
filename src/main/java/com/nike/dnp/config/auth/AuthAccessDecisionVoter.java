@@ -150,13 +150,13 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 		final String method = ((FilterInvocation) object).getRequest().getMethod();
 		final String url = ((FilterInvocation) object).getRequestUrl();
 
-
 		final AuthUserDTO authUserDTO = (AuthUserDTO) authentication.getPrincipal();
 		final List<MenuRoleResourceReturnDTO> authsResourcesByRoleType = authService.getAuthsResourcesByRoleType(authUserDTO.getRole());
 
 		//url 체크
 		final AntPathMatcher antPathMatcher = new AntPathMatcher();
-		int result = ACCESS_ABSTAIN;
+
+		int result = ACCESS_DENIED;
 		for(final MenuRoleResourceReturnDTO menuRoleResourceReturnDTO : authsResourcesByRoleType){
 			StringBuilder resourceUrl = new StringBuilder(menuRoleResourceReturnDTO.getResourceUrl());
 			final String resourceMethod = menuRoleResourceReturnDTO.getResourceMethod();
@@ -188,10 +188,7 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 							}
 						}
 					}*/
-				}else{
-					result = ACCESS_DENIED;
 				}
-				break;
 			}
 		}
 		return result;
