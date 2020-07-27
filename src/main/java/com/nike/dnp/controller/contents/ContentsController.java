@@ -1,12 +1,9 @@
 package com.nike.dnp.controller.contents;
 
-import com.nike.dnp.common.aspect.ValidField;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.*;
-import com.nike.dnp.dto.user.UserContentsSaveDTO;
 import com.nike.dnp.entity.contents.Contents;
-import com.nike.dnp.entity.user.UserContents;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -19,12 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -137,8 +131,8 @@ public class ContentsController {
         contentsSaveDTO.setMenuCode(menuCode);
         return responseService.getSingleResult(
                 contentsService.save(contentsSaveDTO)
-                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.toString()
-                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.getMessage()
+                , ServiceCode.ReturnTypeEnumCode.CREATE.toString()
+                , ServiceCode.ReturnTypeEnumCode.CREATE.getMessage()
                 , true
         );
     }
@@ -165,8 +159,8 @@ public class ContentsController {
 //        log.info("UserContentsController.save");
 //        return responseService.getSingleResult(
 //                userContentsService.save(contentsSeq, userContentsSaveDTO)
-//                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.toString()
-//                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.getMessage()
+//                , ServiceCode.ReturnTypeEnumCode.CREATE.toString()
+//                , ServiceCode.ReturnTypeEnumCode.CREATE.getMessage()
 //                , true
 //        );
 //    }

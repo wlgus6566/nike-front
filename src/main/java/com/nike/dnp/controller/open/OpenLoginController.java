@@ -2,8 +2,8 @@ package com.nike.dnp.controller.open;
 
 import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.validation.ValidationGroups;
-import com.nike.dnp.common.variable.ErrorEnumCode;
-import com.nike.dnp.common.variable.SuccessEnumCode;
+import com.nike.dnp.common.variable.FailCode;
+import com.nike.dnp.common.variable.SuccessCode;
 import com.nike.dnp.dto.user.UserCertDTO;
 import com.nike.dnp.dto.user.UserIdDTO;
 import com.nike.dnp.dto.user.UserReturnDTO;
@@ -13,6 +13,7 @@ import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.user.UserMailService;
 import com.nike.dnp.service.user.UserService;
+import com.nike.dnp.util.MessageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -88,15 +89,15 @@ public class OpenLoginController {
 
         final User user = userService.findByUserIdReturnOptional(userIdDTO.getUserId()).orElseThrow(
                 () -> new CodeMessageHandleException(
-                        ErrorEnumCode.UserError.RETRY_CONFIRM_EMAIL.toString()
-                        ,ErrorEnumCode.UserError.RETRY_CONFIRM_EMAIL.getMessage()
+                        FailCode.ConfigureError.RETRY_CONFIRM_EMAIL.name()
+                        , MessageUtil.getMessage(FailCode.ConfigureError.RETRY_CONFIRM_EMAIL.name())
                 )
         );
 
         return responseService.getSingleResult(
                 userMailService.sendMailForSetPassword(user)
-                , SuccessEnumCode.LoginSuccess.SEND_EMAIL.toString()
-                , SuccessEnumCode.LoginSuccess.SEND_EMAIL.getMessage()
+                , SuccessCode.ConfigureSuccess.SEND_EMAIL.name()
+                , MessageUtil.getMessage(SuccessCode.ConfigureSuccess.SEND_EMAIL.name())
                 , true
         );
     }
@@ -123,8 +124,8 @@ public class OpenLoginController {
         log.info("UserOpenController.setPassword");
         return responseService.getSingleResult(
                 userService.confirmPassword(userCertDTO)
-                , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.toString()
-                , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.getMessage()
+                , SuccessCode.ConfigureSuccess.CHANGE_PASSWORD.name()
+                , MessageUtil.getMessage(SuccessCode.ConfigureSuccess.CHANGE_PASSWORD.name())
                 , true
         );
     }
@@ -151,9 +152,36 @@ public class OpenLoginController {
         log.info("UserOpenController.changePassword");
         return responseService.getSingleResult(
                 userService.confirmPassword(userCertDTO)
-                , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.toString()
-                , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.getMessage()
+                , SuccessCode.ConfigureSuccess.CHANGE_PASSWORD.name()
+                , MessageUtil.getMessage(SuccessCode.ConfigureSuccess.CHANGE_PASSWORD.name())
                 , true
+        );
+    }
+
+    /**
+     * Check cert single result.
+     *
+     * @param userCertDTO the user cert dto
+     * @param result      the result
+     * @return the single result
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 27. 오후 4:12:52
+     * @Description 인증코드 검증
+     */
+    @ApiOperation(value = "인증코드 검증"
+            , notes = OPERATION_CHARACTER)
+    @GetMapping(name = "인증코드 검증", value = "/check/cert"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
+    public SingleResult<Boolean> checkCert (
+            @ModelAttribute @Validated({ValidationGroups.group3.class}) final UserCertDTO userCertDTO
+            , @ApiIgnore final BindingResult result) {
+        log.info("UserOpenController.checkCert");
+        return responseService.getSingleResult(
+                userService.checkCertCode(userCertDTO)
+                , SuccessCode.ConfigureSuccess.SUCCESS.name()
+                , MessageUtil.getMessage(SuccessCode.ConfigureSuccess.SUCCESS.name())
+                , false
         );
     }
 

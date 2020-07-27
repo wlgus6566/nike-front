@@ -1,8 +1,6 @@
-package com.nike.dnp.entity.history;
+package com.nike.dnp.entity.contents;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.entity.BaseTimeEntity;
-import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.report.Report;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -10,31 +8,31 @@ import lombok.*;
 import javax.persistence.*;
 
 /**
- * The Class History.
+ * The Class Recent upload.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 23. 오전 11:04:28
+ * @CreatedOn 2020. 7. 27. 오후 2:07:16
  * @Description
  */
 @Getter
 @Setter
 @NoArgsConstructor(access=AccessLevel.PUBLIC)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 @Entity
-@Table(name = "TB_HISTORY")
-public class History extends BaseTimeEntity {
+@Table(name = "TB_RECENT_UPLOAD")
+public class RecentUpload extends BaseTimeEntity {
+
 
     /**
-     * The History seq
+     * The Recent upload seq
      *
      * @author [이소정]
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "HISTORY_SEQ")
-    @ApiModelProperty(name = "historySeq", value ="히스토리 시퀀스", example = "1")
-    private Long historySeq;
+    @Column(name = "RECENT_UPLOAD_SEQ")
+    @ApiModelProperty(name = "recentUploadSeq", value ="최근 업로드 시퀀스", example = "1")
+    private Long recentUploadSeq;
 
     /**
      * The Report seq
@@ -42,7 +40,7 @@ public class History extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "REPORT_SEQ")
-    @ApiModelProperty(name = "reportSeq", value ="보고서 시퀀스", example = "3")
+    @ApiModelProperty(name = "reportSeq", value ="reportSeq", example = "example")
     private Long reportSeq;
 
     /**
@@ -51,7 +49,7 @@ public class History extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "CONTENTS_SEQ")
-    @ApiModelProperty(name = "contentsSeq", value ="콘텐츠 시퀀스", example = "4")
+    @ApiModelProperty(name = "contentsSeq", value ="contentsSeq", example = "example")
     private Long contentsSeq;
 
     /**
@@ -60,7 +58,7 @@ public class History extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "TYPE_CD")
-    @ApiModelProperty(name = "typeCd", value ="타입 코드(ALL/ASSET/TOOLKIT/FOUNDATION/REPORT_MANAGE)", example = "ALL")
+    @ApiModelProperty(name = "typeCd", value ="typeCd", example = "example")
     private String typeCd;
 
     /**

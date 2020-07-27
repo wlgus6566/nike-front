@@ -1,6 +1,6 @@
 package com.nike.dnp.service.report;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.report.ReportBasketResultDTO;
 import com.nike.dnp.entity.report.ReportBasket;
@@ -8,6 +8,7 @@ import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.report.ReportBasketRepository;
 import com.nike.dnp.repository.report.ReportFileRepository;
+import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -93,7 +94,9 @@ public class ReportBasketService {
     @Transactional
     public ReportBasket delete(final Long reportBasketSeq) {
         Optional<ReportBasket> reportBasket = reportBasketRepository.findById(reportBasketSeq);
-        ReportBasket savedReportBasket = reportBasket.orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.ReportBasketError.NOT_FOUND_BASKET.toString(), ErrorEnumCode.ReportBasketError.NOT_FOUND_BASKET.getMessage()));
+        ReportBasket savedReportBasket = reportBasket.orElseThrow(() -> new CodeMessageHandleException(
+                FailCode.ExceptionError.NOT_FOUND.name()
+                , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
         reportBasketRepository.delete(savedReportBasket);
         return savedReportBasket;
     }

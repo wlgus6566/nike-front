@@ -1,8 +1,7 @@
 package com.nike.dnp.entity.contents;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.dto.contents.ContentsUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
@@ -178,7 +177,7 @@ public class Contents extends BaseTimeEntity {
         final Contents saveContents = new Contents();
         saveContentsBasic(contentsSaveDTO, saveContents);
         // 캠페인기간 > 날짜선택 인 경우
-        if (ServiceEnumCode.ContentsCampaignPeriodCode.SELECT.toString().equals(contentsSaveDTO.getCampaignPeriodSectionCode())) {
+        if (ServiceCode.ContentsCampaignPeriodCode.SELECT.toString().equals(contentsSaveDTO.getCampaignPeriodSectionCode())) {
             saveContents.setCampaignBeginDt(LocalDateUtil.strToLocalDateTime(contentsSaveDTO.getCampaignBeginDt()+" 00:00:00","yyyy.MM.dd HH:mm:ss"));
             saveContents.setCampaignEndDt(LocalDateUtil.strToLocalDateTime(contentsSaveDTO.getCampaignEndDt()+" 23:59:59","yyyy.MM.dd HH:mm:ss"));
         } else {

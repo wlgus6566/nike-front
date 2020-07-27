@@ -1,6 +1,6 @@
 package com.nike.dnp.service.product;
 
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.product.ProductResultDTO;
 import com.nike.dnp.dto.product.ProductSaveDTO;
@@ -95,7 +95,8 @@ public class ProductService {
 
 		if(!ObjectUtils.isEmpty(productSaveDTO.getImageBase64()) &&
 			productSaveDTO.getImageBase64().contains("base64")){
-			final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.PRODUCT.getFolder(), productSaveDTO.getImageBase64());
+			final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.PRODUCT.getFolder(), productSaveDTO.getImageBase64());
+
 			product.setImageFileName(productSaveDTO.getImageFileName());
 			product.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
 			product.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
@@ -129,7 +130,7 @@ public class ProductService {
 		product.setMinimumOrderQuantity(productUpdateDTO.getMinimumOrderQuantity());
 		product.setUnitPrice(productUpdateDTO.getUnitPrice());
 		if(!ObjectUtils.isEmpty(productUpdateDTO.getImageBase64()) && productUpdateDTO.getImageBase64().contains("base64")){
-			final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.PRODUCT.getFolder(), productUpdateDTO.getImageBase64());
+			final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.PRODUCT.getFolder(), productUpdateDTO.getImageBase64());
 			product.setImageFileName(productUpdateDTO.getImageFileName());
 			product.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
 			product.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());

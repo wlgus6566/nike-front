@@ -2,7 +2,7 @@ package com.nike.dnp.controller.mypage;
 
 import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.validation.ValidationGroups;
-import com.nike.dnp.common.variable.SuccessEnumCode;
+import com.nike.dnp.common.variable.SuccessCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.menu.MenuReturnDTO;
 import com.nike.dnp.dto.user.UserCertDTO;
@@ -11,6 +11,7 @@ import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.user.UserService;
+import com.nike.dnp.util.MessageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -132,8 +133,8 @@ public class MyPageUserController {
         log.info("UserMyPageController.changePassword");
         return responseService.getSingleResult(
                 userService.confirmPassword(authUserDTO.getUserId(), userCertDTO)
-                , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.toString()
-                , SuccessEnumCode.LoginSuccess.CHANGE_PASSWORD.getMessage()
+                , SuccessCode.ConfigureSuccess.CHANGE_PASSWORD.name()
+                , MessageUtil.getMessage(SuccessCode.ConfigureSuccess.CHANGE_PASSWORD.name())
                 , true
         );
     }

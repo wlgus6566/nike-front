@@ -1,7 +1,7 @@
 package com.nike.dnp.util;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.FailCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import lombok.extern.slf4j.Slf4j;
@@ -215,7 +215,7 @@ public class FileUtil {
 				proc.waitFor();
 			}catch(InterruptedException e){
 				// 리사이즈 문제
-				throw (CodeMessageHandleException) new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_RESIZE_ERROR.name(), ErrorEnumCode.FileError.FILE_RESIZE_ERROR.getMessage());
+				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			final File thumbnailFile = new File(thumbnailPath);
 			if(thumbnailFile.isFile()){
@@ -241,7 +241,7 @@ public class FileUtil {
 				procDetail.waitFor();
 			}catch(InterruptedException e){
 				// 리사이즈 문제
-				throw (CodeMessageHandleException) new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_RESIZE_ERROR.name(), ErrorEnumCode.FileError.FILE_RESIZE_ERROR.getMessage());
+				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			final File detailFile = new File(detailPath);
 			if(detailFile.isFile()){
@@ -267,7 +267,7 @@ public class FileUtil {
 				process = processBuilder.start();
 			}catch(Exception e){
 				process.destroy();
-				throw (CodeMessageHandleException) new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_RESIZE_ERROR.name(), ErrorEnumCode.FileError.FILE_RESIZE_ERROR.getMessage());
+				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 
 			exhaustInputStream(process.getInputStream());
@@ -276,7 +276,7 @@ public class FileUtil {
 				process.waitFor();
 			}catch(InterruptedException e){
 				process.destroy();
-				throw (CodeMessageHandleException) new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_RESIZE_ERROR.name(), ErrorEnumCode.FileError.FILE_RESIZE_ERROR.getMessage());
+				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 
 			// 정상 종료가 되지 않았을 경우
@@ -309,7 +309,7 @@ public class FileUtil {
 	 * @Description
 	 */
 	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile) throws IOException, InterruptedException {
-		return fileSave(uploadFile, ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder(), true, null);
+		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder(), true, null);
 	}
 
 	/**
@@ -326,7 +326,7 @@ public class FileUtil {
 	 */
 	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile,
 														   final String resizeExt) throws IOException, InterruptedException {
-		return fileSave(uploadFile, ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder(), true, resizeExt);
+		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder(), true, resizeExt);
 	}
 
 	/**
@@ -358,7 +358,7 @@ public class FileUtil {
 	 * @Description
 	 */
 	public static FileResultDTO fileTempSave(final MultipartFile uploadFile) throws IOException, InterruptedException {
-		return fileSave(uploadFile, ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder());
+		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder());
 	}
 
 
@@ -370,7 +370,7 @@ public class FileUtil {
 	 * @Description
 	 */
 	public static void deleteTemp() {
-		final File tempFile = new File(root+File.separator+ ServiceEnumCode.FileFolderEnumCode.TEMP.getFolder());
+		final File tempFile = new File(root+File.separator+ ServiceCode.FileFolderEnumCode.TEMP.getFolder());
 		final File[] files = tempFile.listFiles();
 
 		for(final File file : files){

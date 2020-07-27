@@ -4,13 +4,14 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.user.UserRepository;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.util.BeanUtil;
+import com.nike.dnp.util.MessageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -131,15 +132,21 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 						// 유저정보 시큐리티에 넣음
 						authentication = getAuthentication(authentication, username, redisKey, redisToken);
 					}else{
-						throw new CodeMessageHandleException(ErrorEnumCode.LoginError.NOT_SESSION.toString(), ErrorEnumCode.LoginError.NOT_SESSION.getMessage());
+						throw new CodeMessageHandleException(
+								FailCode.ConfigureError.NOT_SESSION.name()
+								, MessageUtil.getMessage(FailCode.ConfigureError.NOT_SESSION.name()));
 					}
 
 				}
 			}catch(JWTDecodeException | IllegalArgumentException e){
-				throw new CodeMessageHandleException(ErrorEnumCode.AuthError.NO_AUTH.toString(), ErrorEnumCode.AuthError.NO_AUTH.getMessage());
+				throw new CodeMessageHandleException(
+						FailCode.ConfigureError.NO_AUTH.name()
+						, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name()));
 			}
 		}else{
-			throw new CodeMessageHandleException(ErrorEnumCode.AuthError.NO_AUTH.toString(), ErrorEnumCode.AuthError.NO_AUTH.getMessage());
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.NO_AUTH.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name()));
 		}
 		return authentication;
 	}

@@ -1,6 +1,5 @@
 package com.nike.dnp.service.alarm;
 
-import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.controller.alarm.AlarmResultDTO;
 import com.nike.dnp.dto.SearchDTO;
 import com.nike.dnp.entity.alarm.Alarm;

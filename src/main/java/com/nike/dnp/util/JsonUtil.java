@@ -1,7 +1,7 @@
 package com.nike.dnp.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ public class JsonUtil {
 			new ObjectMapper().writeValue(writer, value);
 		} catch (IOException exception) {
 			throw new CodeMessageHandleException(
-					ErrorEnumCode.ExceptionError.ERROR.toString()
+					FailCode.ExceptionError.ERROR.name()
 					, exception.getMessage());
 		}
 	}

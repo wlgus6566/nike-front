@@ -1,16 +1,16 @@
 package com.nike.dnp.common.aspect;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.UserActionLogSaveDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.service.log.UserActionLogService;
+import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -43,8 +42,6 @@ public class LogAspect {
      * @author [오지훈]
      */
     private final UserActionLogService actionLogService;
-
-    private final MessageSource messageSource;
 
     /**
      * On around action log object.
@@ -94,8 +91,8 @@ public class LogAspect {
                 final BindingResult result = (BindingResult) obj;
                 if (result.hasErrors()) {
                     throw new CodeMessageHandleException(
-                            ErrorEnumCode.DataError.INVALID.toString()
-                            , messageSource.getMessage(Objects.requireNonNull(result.getAllErrors().get(0).getDefaultMessage()), null, Locale.KOREA));
+                            FailCode.ExceptionError.INVALID.toString()
+                            , MessageUtil.getMessage(result.getAllErrors().get(0).getDefaultMessage()));
                 }
             }
         }

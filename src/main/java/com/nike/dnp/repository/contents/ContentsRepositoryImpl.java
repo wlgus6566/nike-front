@@ -4,28 +4,20 @@ import com.nike.dnp.common.ObjectMapperUtils;
 import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.dto.contents.ContentsUserEmailDTO;
-import com.nike.dnp.dto.email.SendDTO;
-import com.nike.dnp.dto.history.HistoryResultDTO;
-import com.nike.dnp.dto.history.HistorySearchDTO;
-import com.nike.dnp.entity.auth.QAuth;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.QContents;
-import com.nike.dnp.entity.report.QReport;
 import com.nike.dnp.entity.user.QUser;
 import com.nike.dnp.entity.user.QUserAuth;
 import com.nike.dnp.entity.user.QUserContents;
-import com.nike.dnp.entity.user.UserContents;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.querydsl.jpa.sql.JPASQLQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

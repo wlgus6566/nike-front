@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @AllArgsConstructor
-public class ServiceEnumCode {
+public class ServiceCode {
 
     /**
      * Y or N
@@ -265,8 +265,9 @@ public class ServiceEnumCode {
         , ASSET
         , TOOLKIT
         , FOUNDATION
-        , REPORT;
+        , REPORT_MANAGE
     }
+
 
     /**
      * The enum File extension enum code.

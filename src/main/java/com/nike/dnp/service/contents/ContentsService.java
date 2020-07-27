@@ -1,21 +1,19 @@
 package com.nike.dnp.service.contents;
 
 import com.nike.dnp.common.mail.MailService;
-import com.nike.dnp.common.variable.ErrorEnumCode;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.FailCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.user.UserContentsSaveDTO;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
-import com.nike.dnp.entity.alarm.Alarm;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.entity.user.UserContents;
 import com.nike.dnp.exception.CodeMessageHandleException;
-import com.nike.dnp.repository.alarm.AlarmRepository;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
@@ -24,6 +22,7 @@ import com.nike.dnp.service.history.HistoryService;
 import com.nike.dnp.service.user.UserContentsService;
 import com.nike.dnp.util.FileUtil;
 import com.nike.dnp.util.ImageUtil;
+import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -112,10 +111,10 @@ public class ContentsService {
      */
     public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO, final AuthUserDTO authUserDTO, final String topMenuCode, final String menuCode) {
         // 권한 검사
-        String searchMenuCode = menuCode.equals(ServiceEnumCode.ContentsMenuCode.ALL.toString()) ? topMenuCode : topMenuCode + "_" + menuCode;
+        String searchMenuCode = menuCode.equals(ServiceCode.ContentsMenuCode.ALL.toString()) ? topMenuCode : topMenuCode + "_" + menuCode;
         UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
         userContentsSearchDTO.setMenuCode(searchMenuCode);
-        userContentsSearchDTO.setSkillCode(ServiceEnumCode.MenuSkillEnumCode.CREATE.toString());
+        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.CREATE.toString());
 
         // 권한에 따른 조건문
         contentsSearchDTO.setExposureYn(userContentsService.isAuth(authUserDTO.getAuthSeq(), userContentsSearchDTO) ? null : "Y");
@@ -126,7 +125,7 @@ public class ContentsService {
                 contentsSearchDTO,
                 PageRequest.of(contentsSearchDTO.getPage()
                         , contentsSearchDTO.getSize()
-                        , contentsSearchDTO.equals(ServiceEnumCode.SearchEnumCode.START_DATE.toString())
+                        , contentsSearchDTO.equals(ServiceCode.SearchEnumCode.START_DATE.toString())
                                 ? Sort.by("campaignBeginDt").ascending() : Sort.by("contentsSeq").descending()));
     }
 
@@ -145,7 +144,7 @@ public class ContentsService {
 
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
-            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsSaveDTO.getImageBase64());
+            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsSaveDTO.getImageBase64());
 
             contentsSaveDTO.setImageFileName(fileResultDTO.getFileName());
             contentsSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
@@ -171,13 +170,16 @@ public class ContentsService {
         // 노출인 경우 > 권한 그룹에 알림 전송
         if ("Y".equals(contentsSaveDTO.getExposureYn())) {
             alarmService.sendAlarmTargetList(
-                    ServiceEnumCode.AlarmActionEnumCode.NEW.toString()
+                    ServiceCode.AlarmActionEnumCode.NEW.toString()
                     , contentsSaveDTO.getTopMenuCode()
                     , savedContents.getContentsSeq()
                     , null
                     , this.findAllAuthUser(contentsSaveDTO.getChecks()));
 
         }
+
+        // 최근 업로드 목록 추가
+        historyService.saveRecentUploadHistory(savedContents.getContentsSeq(), contentsSaveDTO.getTopMenuCode());
 
         return savedContents;
     }
@@ -220,11 +222,11 @@ public class ContentsService {
     @Transactional
     public Contents findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
         Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
-        final Contents findContents = contents.orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.ContentsError.NOT_FOUND.toString(), ErrorEnumCode.ContentsError.NOT_FOUND.getMessage()));
+        final Contents findContents = contents.orElseThrow(() -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
         findContents.updateReadCount(findContents.getReadCount());
 
         // history 저장
-        historyService.save(contentsSeq, topMenuCode);
+        historyService.saveViewHistory(contentsSeq, topMenuCode);
 
         return findContents;
     }
@@ -245,11 +247,11 @@ public class ContentsService {
         // contents Update
         contentsUpdateDTO.setContentsSeq(contentsSeq);
         final Optional<Contents> contents = Optional.ofNullable(contentsRepository.findById(contentsUpdateDTO.getContentsSeq()).orElseThrow(() ->
-                new CodeMessageHandleException(ErrorEnumCode.ContentsError.NOT_FOUND.toString(), ErrorEnumCode.ContentsError.NOT_FOUND.getMessage())));
+                new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
 
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(contentsUpdateDTO.getImageBase64())) {
-            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceEnumCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsUpdateDTO.getImageBase64());
+            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsUpdateDTO.getImageBase64());
 
             contentsUpdateDTO.setFolderName(fileResultDTO.getFileName());
             contentsUpdateDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
@@ -303,7 +305,7 @@ public class ContentsService {
         // 노출인 경우 > 권한 그룹에 알림 전송
         if ("Y".equals(contentsUpdateDTO.getExposureYn())) {
             alarmService.sendAlarmTargetList(
-                    ServiceEnumCode.AlarmActionEnumCode.UPDATE.toString()
+                    ServiceCode.AlarmActionEnumCode.UPDATE.toString()
                     , contentsUpdateDTO.getTopMenuCode()
                     , contentsUpdateDTO.getContentsSeq()
                     , null
@@ -386,7 +388,7 @@ public class ContentsService {
 
         // 컨텐츠 조회
         Optional<Contents> contents = Optional.ofNullable(contentsRepository.findById(contentsMailSendDTO.getContentsSeq()).orElseThrow(()
-                -> new CodeMessageHandleException(ErrorEnumCode.ContentsError.NOT_FOUND.toString(), ErrorEnumCode.ContentsError.NOT_FOUND.getMessage())));
+                -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
 
         // 수신자 목록 조회
         List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsMailSendDTO.getContentsSeq());
@@ -401,8 +403,8 @@ public class ContentsService {
 
                 sendDTO.setContentsName(contents.get().getFolderName());
                 mailService.sendMail(
-                        ServiceEnumCode.EmailTypeEnumCode.CONTENTS_UPDATE.toString(),
-                        ServiceEnumCode.EmailTypeEnumCode.CONTENTS_UPDATE.getMessage(),
+                        ServiceCode.EmailTypeEnumCode.CONTENTS_UPDATE.toString(),
+                        ServiceCode.EmailTypeEnumCode.CONTENTS_UPDATE.getMessage(),
                         sendDTO
                 );
             }

@@ -1,11 +1,12 @@
 package com.nike.dnp.service.wishlist;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.wishlist.WishListDeleteDTO;
 import com.nike.dnp.dto.wishlist.WishListSearchDTO;
 import com.nike.dnp.entity.wishlist.WishList;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.wishlist.WishListRepository;
+import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,7 +61,9 @@ public class WishListService {
 		try{
 			return wishListRepository.save(wishList);
 		} catch (DataIntegrityViolationException e){
-			throw (CodeMessageHandleException)new CodeMessageHandleException(ErrorEnumCode.WishListError.DUPLICATE_GOODS.name(), ErrorEnumCode.WishListError.DUPLICATE_GOODS.getMessage());
+			throw (CodeMessageHandleException)new CodeMessageHandleException(
+					FailCode.ConfigureError.DUPLICATE_GOODS.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.DUPLICATE_GOODS.name()));
 		}
 	}
 
@@ -88,7 +91,10 @@ public class WishListService {
 	@Transactional
 	public void delete(final Long wishListSeq) {
 		final Optional<WishList> userWishList = wishListRepository.findByWishListSeqAndUserSeq(wishListSeq, SecurityUtil.currentUser().getUserSeq());
-		final WishList wishList = userWishList.orElseThrow(() -> new CodeMessageHandleException(ErrorEnumCode.WishListError.NOT_FOUND_WISHLIST.name(), ErrorEnumCode.WishListError.NOT_FOUND_WISHLIST.getMessage()));
+		final WishList wishList = userWishList.orElseThrow(
+				() -> new CodeMessageHandleException(
+						FailCode.ExceptionError.NOT_FOUND.name()
+						, MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
 		wishListRepository.delete(wishList);
 	}
 

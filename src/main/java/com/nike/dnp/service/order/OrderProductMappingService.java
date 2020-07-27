@@ -1,7 +1,7 @@
 package com.nike.dnp.service.order;
 
 import com.nike.dnp.common.mail.MailService;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.email.OrderProductDTO;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.order.OrderProductMappingSaveDTO;
@@ -134,8 +134,8 @@ public class OrderProductMappingService {
 			}
 			sendDTO.setOrderArea(builder.toString());
 			mailService.sendMail(
-					ServiceEnumCode.EmailTypeEnumCode.ORDER.toString(),
-					ServiceEnumCode.EmailTypeEnumCode.ORDER.getMessage(),
+					ServiceCode.EmailTypeEnumCode.ORDER.toString(),
+					ServiceCode.EmailTypeEnumCode.ORDER.getMessage(),
 					sendDTO);
 
 		}

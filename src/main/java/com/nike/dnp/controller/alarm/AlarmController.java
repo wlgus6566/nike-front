@@ -1,29 +1,21 @@
 package com.nike.dnp.controller.alarm;
 
-import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.SearchDTO;
 import com.nike.dnp.dto.auth.AuthUserDTO;
-import com.nike.dnp.dto.contents.*;
-import com.nike.dnp.dto.report.ReportSearchDTO;
-import com.nike.dnp.entity.alarm.Alarm;
-import com.nike.dnp.entity.contents.Contents;
-import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.alarm.AlarmService;
-import com.nike.dnp.service.contents.ContentsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
-
-import java.util.Optional;
 
 /**
  * The Class Alarm controller.

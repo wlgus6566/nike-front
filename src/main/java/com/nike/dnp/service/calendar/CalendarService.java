@@ -1,6 +1,6 @@
 package com.nike.dnp.service.calendar;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.calendar.CalendarDaySearchDTO;
 import com.nike.dnp.dto.calendar.CalendarSaveDTO;
 import com.nike.dnp.dto.calendar.CalendarSearchDTO;
@@ -9,6 +9,7 @@ import com.nike.dnp.entity.calendar.Calendar;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.calendar.CalendarRepository;
 import com.nike.dnp.util.LocalDateUtil;
+import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -136,7 +137,7 @@ public class CalendarService {
                     }
             );
         }else{
-            throw new CodeMessageHandleException(ErrorEnumCode.DataError.NOT_FOUND.name(),ErrorEnumCode.DataError.NOT_FOUND.getMessage());
+            throw new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()));
         }
 
         return calendarEntity.get();

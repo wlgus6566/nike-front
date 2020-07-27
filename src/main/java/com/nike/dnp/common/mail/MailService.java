@@ -102,7 +102,7 @@ public class MailService {
             try {
                 field.setAccessible(true);
                 if (!ObjectUtils.isEmpty(field.get(sendDTO))
-                        && BasicVariable.String.toString().equals(field.getType().getSimpleName())
+                        && BasicVariable.String.name().equals(field.getType().getSimpleName())
                         && file.contains("["+ field.getName() +"]")
                 ) {
                     result = result.replace("["+ field.getName() +"]", (String) field.get(sendDTO));

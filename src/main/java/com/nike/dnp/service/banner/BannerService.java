@@ -1,11 +1,12 @@
 package com.nike.dnp.service.banner;
 
-import com.nike.dnp.common.variable.ErrorEnumCode.DataError;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.banner.BannerSaveDTO;
 import com.nike.dnp.entity.banner.Banner;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.banner.BannerRepository;
 import com.nike.dnp.service.RedisService;
+import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -69,7 +70,9 @@ public class BannerService {
      */
     public Banner findById(final Long bannerSeq) {
         return bannerRepository.findById(bannerSeq).orElseThrow(
-                () -> new CodeMessageHandleException(DataError.NOT_FOUND.toString(), DataError.NOT_FOUND.getMessage()));
+                () -> new CodeMessageHandleException(
+                        FailCode.ExceptionError.NOT_FOUND.name()
+                        , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
     }
 
     /**

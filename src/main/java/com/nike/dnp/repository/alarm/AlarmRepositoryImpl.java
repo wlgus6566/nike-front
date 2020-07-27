@@ -1,19 +1,14 @@
 package com.nike.dnp.repository.alarm;
 
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.controller.alarm.AlarmResultDTO;
 import com.nike.dnp.entity.alarm.Alarm;
 import com.nike.dnp.entity.alarm.QAlarm;
-import com.nike.dnp.entity.contents.Contents;
-import com.nike.dnp.entity.report.Report;
-import com.nike.dnp.repository.report.ReportPredicateHelper;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -66,7 +61,7 @@ public class AlarmRepositoryImpl extends QuerydslRepositorySupport implements Al
             alarmResultDTO.setTypeAction(alarm.getTypeAction());
             alarmResultDTO.setTypeCd(alarm.getTypeCd());
 
-            if (ServiceEnumCode.HistoryTabEnumCode.REPORT.toString().equals(alarm.getTypeCd())) {
+            if (ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(alarm.getTypeCd())) {
                 alarmResultDTO.setFolderSeq(alarm.getReport().getReportSeq());
                 alarmResultDTO.setFolderName(alarm.getReport().getReportName());
             } else {

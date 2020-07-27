@@ -1,12 +1,13 @@
 package com.nike.dnp.controller.common;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.file.FileUploadDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.util.FileUtil;
+import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.S3Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -85,7 +86,9 @@ public class FileController {
 			//fileResultDTO = FileUtil.fileSave(fileUploadDTO.getUploadFile(),"temp");
 		}catch(InterruptedException | IOException e){
 			// 리사이즈 문제
-			throw (CodeMessageHandleException)new CodeMessageHandleException(ErrorEnumCode.FileError.FILE_COPY_ERROR.name(), ErrorEnumCode.FileError.FILE_COPY_ERROR.getMessage());
+			throw (CodeMessageHandleException)new CodeMessageHandleException(
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 		}
 		return fileResultDTO;
 	}

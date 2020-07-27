@@ -2,7 +2,7 @@ package com.nike.dnp.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.log.UserLoginLog;
 import com.nike.dnp.entity.user.PasswordHistory;
@@ -161,7 +161,7 @@ public class UserReturnDTO {
      */
     public String getUserStatusCodeName() {
         String result = "";
-        for (final ServiceEnumCode.UserStatusEnumCode enumCode : ServiceEnumCode.UserStatusEnumCode.values()) {
+        for (final ServiceCode.UserStatusEnumCode enumCode : ServiceCode.UserStatusEnumCode.values()) {
             if (enumCode.toString().equals(this.userStatusCode)) {
                 result = enumCode.getMessage();
                 break;

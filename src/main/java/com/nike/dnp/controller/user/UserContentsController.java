@@ -1,11 +1,8 @@
 package com.nike.dnp.controller.user;
 
 import com.nike.dnp.common.aspect.ValidField;
-import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
-import com.nike.dnp.dto.user.UserContentsSaveDTO;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
-import com.nike.dnp.entity.user.UserContents;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.user.UserContentsService;
@@ -16,7 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
@@ -101,8 +101,8 @@ public class UserContentsController {
 //        log.info("UserContentsController.save");
 //        return responseService.getSingleResult(
 //                userContentsService.save(contentsSeq, userContentsSaveDTO)
-//                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.toString()
-//                , ServiceEnumCode.ReturnTypeEnumCode.CREATE.getMessage()
+//                , ServiceCode.ReturnTypeEnumCode.CREATE.toString()
+//                , ServiceCode.ReturnTypeEnumCode.CREATE.getMessage()
 //                , true
 //        );
 //    }

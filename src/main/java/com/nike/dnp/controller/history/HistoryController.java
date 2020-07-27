@@ -3,10 +3,6 @@ package com.nike.dnp.controller.history;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.history.HistoryResultDTO;
 import com.nike.dnp.dto.history.HistorySearchDTO;
-import com.nike.dnp.dto.user.UserReturnDTO;
-import com.nike.dnp.dto.user.UserSearchDTO;
-import com.nike.dnp.entity.contents.Contents;
-import com.nike.dnp.entity.history.History;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.history.HistoryService;
@@ -18,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
@@ -45,19 +40,18 @@ public class HistoryController {
     private final HistoryService historyService;
 
     /**
-     * OPERATION_CHARACTER
+     * The constant REQUEST_CHARACTER
      *
-     * @author [오지훈]
+     * @author [이소정]
      */
-    private static final String REQUEST_CHARACTER
-            = "## Request ##\n[하위 Parameters 참조]\n\n\n\n## Response ##\n[하위 Model 참조]\n\n\n\n";
+    private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
     @ApiOperation(
             value = "최근 업로드한 폴더 목록"
             , notes = REQUEST_CHARACTER
             + "page|페이지|false|Integer|0부터 시작\n"
             + "size|사이즈|false|Integer\n"
-            + "typeCd|타입 코드(값 없을 경우 ALL)|false|String|ALL/ASSET/TOOLKIT/FOUNDATION/REPORT\n"
+            + "typeCd|타입 코드(부모코드 : HISTORY_FOLDER_TAB)|false|String|ALL/ASSET/TOOLKIT/FOUNDATION/REPORT_MANAGE\n"
             + "[하위 Parameters 참조]\n\n\n\n"
             + "## Public/Paging Response ## \n"
             + "필드명||필드설명|데이터 타입(길이)\n" + "-|-|-|-\n"
@@ -77,8 +71,7 @@ public class HistoryController {
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
     ) {
         log.info("HistoryController.findAllUploadFolder");
-        historySearchDTO.setRegisterSeq(authUserDTO.getUserSeq());
-        return responseService.getSingleResult(historyService.findAllUploadFolderPaging(historySearchDTO));
+        return responseService.getSingleResult(historyService.findAllUploadHistoryPaging(historySearchDTO, authUserDTO));
     }
 
     @ApiOperation(
@@ -86,7 +79,7 @@ public class HistoryController {
             , notes = REQUEST_CHARACTER
             + "page|페이지|false|Integer|0부터 시작\n"
             + "size|사이즈|false|Integer\n"
-            + "typeCd|타입 코드(값 없을 경우 ALL)|false|String|ALL/ASSET/TOOLKIT/FOUNDATION/REPORT\n"
+            + "typeCd|타입 코드(값 없을 경우 ALL)|false|String|ALL/ASSET/TOOLKIT/FOUNDATION/REPORT_MANAGE\n"
             + "[하위 Parameters 참조]\n\n\n\n"
             + "## Public/Paging Response ## \n"
             + "필드명||필드설명|데이터 타입(길이)\n" + "-|-|-|-\n"

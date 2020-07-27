@@ -1,6 +1,6 @@
 package com.nike.dnp.service.report;
 
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.report.*;
@@ -101,7 +101,7 @@ public class ReportService {
         if (null != reportSearchDTO.getGroupSeq()) {
             authSeqList.add(reportSearchDTO.getGroupSeq());
         } else {
-            List<AuthReturnDTO> authList = authService.findByAuthDepth(authUserDTO.getAuthSeq(), "REPORT_UPLOAD", ServiceEnumCode.MenuSkillEnumCode.REPORT.toString());
+            List<AuthReturnDTO> authList = authService.findByAuthDepth(authUserDTO.getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString());
             for (AuthReturnDTO authReturnDTO : authList) {
                 authSeqList.add(authReturnDTO.getAuthSeq());
             }
@@ -143,11 +143,15 @@ public class ReportService {
 
         // 알림 저장
         alarmService.sendAlarmTargetList(
-                ServiceEnumCode.AlarmActionEnumCode.UPDATE.toString()
-                , ServiceEnumCode.HistoryTabEnumCode.REPORT.toString()
+                ServiceCode.AlarmActionEnumCode.UPDATE.toString()
+                , ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString()
                 , null
                 , savedReport.getReportSeq()
                 , this.findAllAuthUser());
+
+
+        // 최근 업로드 목록 추가
+        historyService.saveRecentUploadHistory(savedReport.getReportSeq(), ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
 
         return savedReport;
     }
@@ -167,7 +171,7 @@ public class ReportService {
         findReport.updateReadCount(findReport.getReadCount());
 
         // history 저장
-        historyService.save(reportSeq, ServiceEnumCode.HistoryTabEnumCode.REPORT.toString());
+        historyService.saveViewHistory(reportSeq, ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
 
         return findReport;
     }
@@ -223,8 +227,8 @@ public class ReportService {
 
         // 알림 저장
         alarmService.sendAlarmTargetList(
-                ServiceEnumCode.AlarmActionEnumCode.UPDATE.toString()
-                , ServiceEnumCode.HistoryTabEnumCode.REPORT.toString()
+                ServiceCode.AlarmActionEnumCode.UPDATE.toString()
+                , ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString()
                 , null
                 , reportSeq
                 , this.findAllAuthUser());
@@ -242,8 +246,8 @@ public class ReportService {
      */
     public List<Long> findAllAuthUser() {
         UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
-        userContentsSearchDTO.setMenuCode("REPORT");
-        userContentsSearchDTO.setSkillCode(ServiceEnumCode.MenuSkillEnumCode.VIEW.toString());
+        userContentsSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
+        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
         List<AuthReturnDTO> authList = userContentsService.getAuthList(userContentsSearchDTO);
 
         List<Long> userSeqList  = new ArrayList<>();

@@ -1,6 +1,6 @@
 package com.nike.dnp.service.contents;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.ContentsBasketResultDTO;
 import com.nike.dnp.entity.contents.ContentsBasket;
@@ -8,6 +8,7 @@ import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.contents.ContentsBasketRepository;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
+import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -93,7 +94,8 @@ public class ContentsBasketService {
         log.info("ContentsBasketService.delete");
         Optional<ContentsBasket> contentsBasket = contentsBasketRepository.findById(contentsBasketSeq);
         final ContentsBasket savedContentsBasket = contentsBasket.orElseThrow(() -> new CodeMessageHandleException(
-                ErrorEnumCode.ContentsBasketError.NOT_FOUND_BASKET.toString(), ErrorEnumCode.ContentsBasketError.NOT_FOUND_BASKET.getMessage()));
+                FailCode.ExceptionError.NOT_FOUND.name()
+                , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
         contentsBasketRepository.delete(savedContentsBasket);
         return contentsBasket;
     }

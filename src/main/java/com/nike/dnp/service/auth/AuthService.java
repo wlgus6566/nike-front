@@ -2,8 +2,7 @@ package com.nike.dnp.service.auth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nike.dnp.common.variable.ErrorEnumCode;
-import com.nike.dnp.common.variable.ErrorEnumCode.DataError;
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.auth.AuthSaveDTO;
 import com.nike.dnp.dto.auth.AuthUpdateDTO;
@@ -17,6 +16,7 @@ import com.nike.dnp.repository.auth.AuthRepository;
 import com.nike.dnp.repository.menu.MenuRepository;
 import com.nike.dnp.repository.menu.MenuRoleResourceRepository;
 import com.nike.dnp.service.RedisService;
+import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
@@ -146,7 +146,7 @@ public class AuthService {
             return objectMapper.readValue(objectMapper.writeValueAsString(this.findAll()), JSONArray.class);
         } catch (JsonProcessingException exception) {
             throw new CodeMessageHandleException(
-                    ErrorEnumCode.ExceptionError.ERROR.toString()
+                    FailCode.ExceptionError.ERROR.toString()
                     , exception.getMessage()
             );
         }
@@ -164,7 +164,9 @@ public class AuthService {
     public Optional<Auth> findByRoleType(final String roleType) {
         log.info("AuthService.findByRoleType");
         return Optional.ofNullable(authRepository.findByRoleType(roleType).orElseThrow(() ->
-                new CodeMessageHandleException(DataError.NOT_FOUND.toString(), DataError.NOT_FOUND.getMessage())));
+                new CodeMessageHandleException(
+                        FailCode.ExceptionError.NOT_FOUND.toString()
+                        , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.toString()))));
     }
 
     /**
@@ -255,9 +257,8 @@ public class AuthService {
         log.info("AuthService.findById");
         return Optional.ofNullable(authRepository.findById(authSeq).orElseThrow(
                 () -> new CodeMessageHandleException(
-                        DataError.NOT_FOUND.toString()
-                        , DataError.NOT_FOUND.getMessage()
-                )));
+                        FailCode.ExceptionError.NOT_FOUND.toString()
+                        , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.toString()))));
     }
 
     /**
@@ -382,6 +383,14 @@ public class AuthService {
     public Auth delete(final Long authSeq) {
         log.info("AuthService.delete");
         final Auth auth = this.getById(authSeq);
+
+        if (auth.getSubAuths().size() > 0) {
+            throw new CodeMessageHandleException(
+                    FailCode.ConfigureError.FAIL_DELETE.name()
+                    , MessageUtil.getMessage(FailCode.ConfigureError.FAIL_DELETE.name())
+            );
+        }
+
         auth.delete();
         this.initAuthCache();
         this.remove(authSeq);
@@ -405,7 +414,7 @@ public class AuthService {
             redisService.set("cache:auths::SimpleKey []", objectMapper.readValue(objectMapper.writeValueAsString(this.findAll()), JSONArray.class), 60 * 24 * 30);
         } catch (JsonProcessingException exception) {
             throw new CodeMessageHandleException(
-                    ErrorEnumCode.ExceptionError.ERROR.toString()
+                    FailCode.ExceptionError.ERROR.toString()
                     , exception.getMessage()
             );
         }
