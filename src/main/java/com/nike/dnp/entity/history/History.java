@@ -1,7 +1,6 @@
 package com.nike.dnp.entity.history;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.report.Report;
@@ -9,8 +8,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Timestamp;
 
 /**
  * The Class History.

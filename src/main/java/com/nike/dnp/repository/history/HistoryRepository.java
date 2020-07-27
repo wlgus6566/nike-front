@@ -1,14 +1,12 @@
 package com.nike.dnp.repository.history;
 
 import com.nike.dnp.dto.history.HistoryResultDTO;
-import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.history.History;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface HistoryRepository extends JpaRepository<History, Long>, HistoryRepositoryCustom {

@@ -1,6 +1,5 @@
 package com.nike.dnp.dto.contents;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;

@@ -22,13 +22,7 @@ public class ErrorEnumCode {
     @RequiredArgsConstructor
     @Getter
     public enum ExceptionError {
-        ERROR("서버에서 오류가 발생하였습니다.");
-
-        /**
-         * The Value
-         * @author [오지훈]
-         */
-        private final String message;
+        ERROR
     }
 
     /**
@@ -38,7 +32,7 @@ public class ErrorEnumCode {
     @Getter
     public enum AuthError {
         NO_AUTH("접근 권한이 없습니다."),
-        FAIL_DELETE("해당 권한 그룹에 속한 계정이 있어 삭제가 불가능합니다. 권한 변경 후 삭제해 주세요");
+        FAIL_DELETE("해당 권한 그룹에 속한 계정이 있어 삭제가 불가능 합니다. 권한 변경 후 삭제해 주세요.");
 
         /**
          * The Value
@@ -61,14 +55,14 @@ public class ErrorEnumCode {
         DUPLICATE_EMAIL("이미 사용중인 이메일 입니다."),
         NULL_PASSWORD("비밀번호를 입력해주세요."),
         WRONG_PASSWORD("비밀번호가 틀렸습니다."),
-        CHECK_ID_PASSWORD("아이디 또는 비밀번호를 확인 후 다시 입력해 주세요"),
-        OVERTIME_PASSWORD("비밀번호를 변경하신지 90일이 지났습니다. 비밀번호를 변경해 주세요"),
-        EXPIRED_PERIOD("유효기간이 만료된 url 입니다"),
-        INVALID_PASSWORD("(8~16자/대소문자/숫자/특수문자 포함)의 비밀번호를 입력해 주세요"),
+        CHECK_ID_PASSWORD("아이디 또는 비밀번호를 확인 후 다시 입력해 주세요."),
+        OVERTIME_PASSWORD("비밀번호를 변경하신지 90일이 지났습니다. 비밀번호를 변경해 주세요."),
+        EXPIRED_PERIOD("유효기간이 만료된 url 입니다."),
+        INVALID_PASSWORD("(8~16자/대소문자/숫자/특수문자 포함)의 비밀번호를 입력해 주세요."),
         DUPLICATE_ID_PASSWORD("비밀번호는 ID와 중복됩니다. 다시 입력해 주세요."),
-        USED_PASSWORD("전에 사용하지 않은 비밀번호로 변경해 주세요"),
+        USED_PASSWORD("전에 사용하지 않은 비밀번호로 변경해 주세요."),
         NOT_MATCH_PASSWORD("입력하신 비밀번호가 일치하지 않습니다."),
-        EXPIRED_CERT_CODE("인증코드 유효기간이 만료되었습니다. 다시 인증해 주세요"),
+        EXPIRED_CERT_CODE("인증코드 유효기간이 만료되었습니다. 다시 인증해 주세요."),
         NOT_MATCH_CERT_CODE("인증코드를 확인해 주세요.(인증코드는 대소문자를 구별합니다.)"),
         IS_SLANG("간단한 패턴이나 공통 사전 단어를 포함한 비밀번호를 설정할 수 없습니다. 확인 후 다시 설정해 주세요."),
         IS_DORMANT("휴면회원 입니다."),
@@ -147,8 +141,8 @@ public class ErrorEnumCode {
     @RequiredArgsConstructor
     @Getter
     public enum ManagerError {
-        NO_SELECT_ACCOUNT("하나 이상의 계정을 선택해 주세요"),
-        START_DATE_BIGGER("시작날짜가 종료일자보다 큽니다");
+        NO_SELECT_ACCOUNT("하나 이상의 계정을 선택해 주세요."),
+        START_DATE_BIGGER("시작날짜가 종료일자보다 큽니다.");
 
         /**
          * The Value
@@ -187,7 +181,7 @@ public class ErrorEnumCode {
     @Getter
     public enum OrderError {
         NO_PRODUCT_SELECT("하나 이상의 상품을 선택해 주세요."),
-        ONLY_NUMBER("숫자만 입력 가능합니다"),
+        ONLY_NUMBER("숫자만 입력 가능합니다."),
         CHECK_MINIMUM_QUANTITY("최소주문수량보다 적게 주문이 불가합니다."),
         NOT_SIZE_BASKET("요청하신 상품과 수량이 다릅니다.");
 

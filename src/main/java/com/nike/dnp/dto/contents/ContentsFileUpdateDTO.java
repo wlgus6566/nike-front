@@ -1,7 +1,6 @@
 package com.nike.dnp.dto.contents;
 
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiParam;
 import lombok.*;
 
 

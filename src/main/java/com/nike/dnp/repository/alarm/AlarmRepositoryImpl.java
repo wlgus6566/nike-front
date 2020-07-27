@@ -4,16 +4,11 @@ import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.controller.alarm.AlarmResultDTO;
 import com.nike.dnp.entity.alarm.Alarm;
 import com.nike.dnp.entity.alarm.QAlarm;
-import com.nike.dnp.entity.contents.Contents;
-import com.nike.dnp.entity.report.Report;
-import com.nike.dnp.repository.report.ReportPredicateHelper;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

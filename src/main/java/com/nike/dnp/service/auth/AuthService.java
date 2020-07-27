@@ -382,6 +382,14 @@ public class AuthService {
     public Auth delete(final Long authSeq) {
         log.info("AuthService.delete");
         final Auth auth = this.getById(authSeq);
+
+        if (auth.getSubAuths().size() > 0) {
+            throw new CodeMessageHandleException(
+                    ErrorEnumCode.AuthError.FAIL_DELETE.toString()
+                    , ErrorEnumCode.AuthError.FAIL_DELETE.getMessage()
+            );
+        }
+
         auth.delete();
         this.initAuthCache();
         this.remove(authSeq);

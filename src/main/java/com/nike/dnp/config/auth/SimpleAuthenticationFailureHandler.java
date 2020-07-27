@@ -98,7 +98,7 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 			JsonUtil.write(response.getWriter()
 					, responseService.getFailResult(
 							ErrorEnumCode.ExceptionError.ERROR.toString()
-							, ErrorEnumCode.ExceptionError.ERROR.getMessage()
+							, errorCode
 					));
 		}
 

@@ -23,9 +23,8 @@ public class SuccessEnumCode {
     @RequiredArgsConstructor
     @Getter
     public enum LoginSuccess {
-        CHECK_EMAIL("E-MAIL을 다시 확인 후 입력해 주세요"),
-        SEND_EMAIL_CERT_CODE("해당 계정의 E-MAIL로 인증코드가 발송되었습니다. 이메일 확인 후 인증코드를 입력해 주세요"),
-        SEND_EMAIL("E-MAIL이 발송되었습니다. E-MAIL을 확인주세요"),
+        SEND_EMAIL_CERT_CODE("해당 계정의 E-MAIL로 인증코드가 발송되었습니다. 이메일 확인 후 인증코드를 입력해 주세요."),
+        SEND_EMAIL("E-MAIL이 발송되었습니다. E-MAIL을 확인주세요."),
         CHANGE_PASSWORD("설정한 비밀번호로 로그인 해 주세요."),
         TERMS_AGREEMENT("약관동의를 진행해 주세요.");
 
@@ -58,24 +57,9 @@ public class SuccessEnumCode {
     @RequiredArgsConstructor
     @Getter
     public enum OrderSuccess {
-        ADDED_WISHLIST("위시리스트에 추가 되었습니다. 위시리스트는 마이페이지에서 확인가능합니다"),
-        ADDED_CART("CART에 담겼습니다"),
+        ADDED_WISHLIST("위시리스트에 추가 되었습니다. 위시리스트는 마이페이지에서 확인가능합니다."),
+        ADDED_CART("CART에 담겼습니다."),
         SEND_ORDER_MAIL("주문메일이 발송 되었습니다.");
-
-        /**
-         * The Value
-         * @author [이소정]
-         */
-        private final String message;
-    }
-
-    /**
-     * The enum Report success enum.
-     */
-    @RequiredArgsConstructor
-    @Getter
-    public enum ReportSuccess {
-        SAVED_REPORT("등록 되었습니다.");
 
         /**
          * The Value

@@ -13,6 +13,7 @@ import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.user.UserMailService;
 import com.nike.dnp.service.user.UserService;
+import com.nike.dnp.util.MessageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -89,7 +90,7 @@ public class OpenLoginController {
         final User user = userService.findByUserIdReturnOptional(userIdDTO.getUserId()).orElseThrow(
                 () -> new CodeMessageHandleException(
                         ErrorEnumCode.UserError.RETRY_CONFIRM_EMAIL.toString()
-                        ,ErrorEnumCode.UserError.RETRY_CONFIRM_EMAIL.getMessage()
+                        , MessageUtil.getMessage(ErrorEnumCode.UserError.RETRY_CONFIRM_EMAIL.toString())
                 )
         );
 
