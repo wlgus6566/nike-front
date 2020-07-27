@@ -1,5 +1,6 @@
 package com.nike.dnp.dto.notice;
 
+import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
 import org.apache.commons.lang.StringUtils;
@@ -15,7 +16,7 @@ import org.apache.commons.lang.StringUtils;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class NoticeSearchDTO {
+public class NoticeSearchDTO extends SearchDTO {
 
     /**
      * The Notice article section code
@@ -50,21 +51,13 @@ public class NoticeSearchDTO {
     private String useYn = "N";
 
     /**
-     * The Page
+     * Sets notice article category code.
      *
+     * @param noticeArticleCategoryCode the notice article category code
      * @author [정주희]
+     * @CreatedOn 2020. 7. 25. 오후 6:03:48
+     * @Description FAQ -> 카테고리 명 대문자 변환
      */
-    @ApiParam(value = "페이지", name = "page", defaultValue = "0")
-    private int page;
-
-    /**
-     * The Size
-     *
-     * @author [정주희]
-     */
-    @ApiParam(value = "사이즈", name = "size", defaultValue = "10")
-    private int size = 10;
-
     public void setNoticeArticleCategoryCode(String noticeArticleCategoryCode) {
         this.noticeArticleCategoryCode = noticeArticleCategoryCode.toUpperCase();
     }

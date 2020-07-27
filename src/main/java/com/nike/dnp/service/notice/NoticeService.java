@@ -1,8 +1,9 @@
 package com.nike.dnp.service.notice;
 
+import com.nike.dnp.common.ObjectMapperUtils;
 import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.file.FileResultDTO;
-import com.nike.dnp.dto.notice.NoticeArticeListDTO;
+import com.nike.dnp.dto.notice.NoticeArticleListDTO;
 import com.nike.dnp.dto.notice.NoticeSaveDTO;
 import com.nike.dnp.dto.notice.NoticeSearchDTO;
 import com.nike.dnp.dto.notice.NoticeUpdateDTO;
@@ -12,7 +13,9 @@ import com.nike.dnp.util.ImageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +38,7 @@ public class NoticeService {
 
     private final NoticeRepository noticeRepository;
 
+
     /**
      * Find notice pages page.
      *
@@ -44,12 +48,13 @@ public class NoticeService {
      * @CreatedOn 2020. 7. 20. 오후 10:07:02
      * @Description Customer Center 게시글 목록 조회
      */
-    public Page<NoticeArticeListDTO> findNoticePages(NoticeSearchDTO noticeSearchDTO) {
+    public Page<NoticeArticleListDTO> findNoticePages(final NoticeSearchDTO noticeSearchDTO) {
         log.info("NoticeService.findNoticePages");
 
-        return noticeRepository.findNoticePages(
-                noticeSearchDTO,
-                PageRequest.of(noticeSearchDTO.getPage(), noticeSearchDTO.getSize()));
+        Page<NoticeArticleListDTO> noticeArticles = noticeRepository.findNoticePages(
+                noticeSearchDTO, PageRequest.of(noticeSearchDTO.getPage(), noticeSearchDTO.getSize()));
+
+        return noticeArticles;
     }
 
     /**
@@ -62,7 +67,7 @@ public class NoticeService {
      * @Description Customer Center 상세 조회
      */
     @Transactional
-    public NoticeArticle findById(Long noticeSeq) {
+    public NoticeArticle findById(final Long noticeSeq) {
         log.info("NoticeService.findById");
 
         return noticeRepository.findByNoticeArticleSeq(noticeSeq);
@@ -78,7 +83,7 @@ public class NoticeService {
      * @Description Customer Center 게시글 등록
      */
     @Transactional
-    public NoticeArticle save(NoticeSaveDTO noticeSaveDTO) {
+    public NoticeArticle save(final NoticeSaveDTO noticeSaveDTO) {
         log.info("NoticeService.save");
 
         NoticeArticle noticeArticle = new NoticeArticle();
@@ -125,27 +130,6 @@ public class NoticeService {
     }
 
     /**
-     * Delete customer center optional.
-     *
-     * @param noticeUpdateDTO the notice update dto
-     * @return the optional
-     * @author [정주희]
-     * @CreatedOn 2020. 7. 20. 오후 10:06:54
-     * @Description customer center 삭제 (사용여부 == 'N')
-     */
-    @Transactional
-    public NoticeArticle deleteCustomerCenter(NoticeUpdateDTO noticeUpdateDTO) {
-        log.info("NoticeService.deleteCustomerCenter");
-
-        final Optional<NoticeArticle> deleteNnotice = noticeRepository.findById(noticeUpdateDTO.getNoticeArticleSeq());
-        final NoticeArticle noticeArticle = deleteNnotice.orElse(new NoticeArticle());
-
-        noticeArticle.setUseYn(noticeUpdateDTO.getUseYn());
-
-        return noticeArticle;
-    }
-
-    /**
      * Update customer center notice article.
      *
      * @param noticeUpdateDTO the notice update dto
@@ -155,7 +139,7 @@ public class NoticeService {
      * @Description Customer Center 게시글 수정
      */
     @Transactional
-    public NoticeArticle updateCustomerCenter(NoticeUpdateDTO noticeUpdateDTO) {
+    public NoticeArticle updateCustomerCenter(final NoticeUpdateDTO noticeUpdateDTO) {
         log.info("NoticeService.updateCustomerCenter");
 
         final Optional<NoticeArticle> updateNotice = noticeRepository.findById(noticeUpdateDTO.getNoticeArticleSeq());
@@ -183,6 +167,27 @@ public class NoticeService {
         if (StringUtils.equalsIgnoreCase(noticeUpdateDTO.getNoticeArticleSectionCode(), "QNA")) {
             noticeArticle.setNoticeArticleCategoryCode(noticeUpdateDTO.getNoticeArticleCategoryCode());
         }
+
+        return noticeRepository.save(noticeArticle);
+    }
+
+    /**
+     * Delete customer center optional.
+     *
+     * @param noticeUpdateDTO the notice update dto
+     * @return the optional
+     * @author [정주희]
+     * @CreatedOn 2020. 7. 20. 오후 10:06:54
+     * @Description customer center 삭제 (사용 여부 == 'N')
+     */
+    @Transactional
+    public NoticeArticle deleteCustomerCenter(final NoticeUpdateDTO noticeUpdateDTO) {
+        log.info("NoticeService.deleteCustomerCenter");
+
+        final Optional<NoticeArticle> deleteNnotice = noticeRepository.findById(noticeUpdateDTO.getNoticeArticleSeq());
+        final NoticeArticle noticeArticle = deleteNnotice.orElse(new NoticeArticle());
+
+        noticeArticle.setUseYn(noticeUpdateDTO.getUseYn());
 
         return noticeRepository.save(noticeArticle);
     }

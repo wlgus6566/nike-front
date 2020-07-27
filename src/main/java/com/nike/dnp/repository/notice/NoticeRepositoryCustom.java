@@ -1,7 +1,8 @@
 package com.nike.dnp.repository.notice;
 
-import com.nike.dnp.dto.notice.NoticeArticeListDTO;
+import com.nike.dnp.dto.notice.NoticeArticleListDTO;
 import com.nike.dnp.dto.notice.NoticeSearchDTO;
+import com.nike.dnp.entity.notice.NoticeArticle;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -14,7 +15,7 @@ import org.springframework.data.domain.PageRequest;
  */
 public interface NoticeRepositoryCustom {
 
-    Page<NoticeArticeListDTO> findNoticePages(NoticeSearchDTO noticeSearchDTO, PageRequest pageRequest);
+    Page<NoticeArticleListDTO> findNoticePages(NoticeSearchDTO noticeSearchDTO, PageRequest pageRequest);
 
     Long checkNoticeYnCnt();
 }
