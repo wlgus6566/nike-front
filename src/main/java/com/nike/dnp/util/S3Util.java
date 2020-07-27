@@ -151,6 +151,7 @@ public class S3Util {
 	 * @Description
 	 */
 	public static AmazonS3 init(){
+		log.debug("S3 Init");
 		AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
 		client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(awsCredentials)).withRegion(region).build();
 		return client;

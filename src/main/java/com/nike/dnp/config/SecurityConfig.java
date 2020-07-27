@@ -162,6 +162,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/css/**", "/font/**", "/js/**", "/images/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
 				"/api/download" // 임시
+				, "/error" // 에러
 				,"/api/open/**"
 		};
 		web.ignoring().antMatchers(staticPatterns);
