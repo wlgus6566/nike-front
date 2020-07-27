@@ -1,19 +1,23 @@
 package com.nike.dnp.repository.notice;
 
 import com.nike.dnp.common.ObjectMapperUtils;
-import com.nike.dnp.dto.notice.NoticeArticeListDTO;
+import com.nike.dnp.dto.notice.NoticeArticleListDTO;
 import com.nike.dnp.dto.notice.NoticeSearchDTO;
 import com.nike.dnp.entity.notice.NoticeArticle;
 import com.nike.dnp.entity.notice.QNoticeArticle;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +33,7 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
 
     public NoticeRepositoryCustomImpl() {super(NoticeArticle.class);}
 
+
     /**
      * Find notice pages page.
      *
@@ -40,11 +45,13 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
      * @Description Customer Center 목록 조회
      */
     @Override
-    public Page<NoticeArticeListDTO> findNoticePages(NoticeSearchDTO noticeSearchDTO, PageRequest pageRequest) {
+    public Page<NoticeArticleListDTO> findNoticePages(NoticeSearchDTO noticeSearchDTO, PageRequest pageRequest) {
         log.info("NoticeRepositoryCustomImpl.findNoticePages");
 
         QNoticeArticle qNoticeArticle = QNoticeArticle.noticeArticle;
         JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+
+        //일반 게시글 조회
         JPAQuery<NoticeArticle> query = queryFactory.selectFrom(qNoticeArticle)
                 .where(
                         qNoticeArticle.useYn.eq("Y"),
@@ -53,14 +60,24 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         NoticePredicateHelper.containsKeword(noticeSearchDTO.getKeyword())
                 );
 
-        List<NoticeArticeListDTO> noticeArticleList = ObjectMapperUtils.mapAll(
-                getQuerydsl()
-                .applyPagination(pageRequest, query).fetch(),
-                NoticeArticeListDTO.class
-        );
-        return new PageImpl<>(noticeArticleList, pageRequest, query.fetchCount());
+        if (StringUtils.equalsIgnoreCase(noticeSearchDTO.getNoticeArticleSectionCode() ,"NOTICE")) {
+            query.orderBy(qNoticeArticle.noticeYn.desc(), qNoticeArticle.registrationDt.desc());
+        }
+
+        List<NoticeArticleListDTO> noticeArticleListDTOList = ObjectMapperUtils.mapAll(
+                getQuerydsl().applyPagination(pageRequest, query).fetch(), NoticeArticleListDTO.class);
+
+        return new PageImpl<>(noticeArticleListDTOList, pageRequest, query.fetchCount());
     }
 
+    /**
+     * Check notice yn cnt long.
+     *
+     * @return the long
+     * @author [정주희]
+     * @CreatedOn 2020. 7. 25. 오후 7:57:35
+     * @Description 공지사항 등록시 상단 고정된 게시글 개수 확인
+     */
     @Override
     public Long checkNoticeYnCnt() {
         log.info("NoticeRepositoryCustomImpl.checkNoticeYnCnt");
