@@ -23,7 +23,7 @@ public class NoticeSaveDTO extends BasicDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(value = "게시물 구분 코드", name = "noticeArticleSectionCode", defaultValue = "", required = true)
+    @ApiParam(name = "noticeArticleSectionCode", value = "게시물 구분 코드", defaultValue = "", required = true)
     private String noticeArticleSectionCode;
 
     /**
@@ -31,7 +31,7 @@ public class NoticeSaveDTO extends BasicDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(value = "게시물 카테고리 코드", name = "noticeArticleCategoryCode", defaultValue = "")
+    @ApiParam(name = "noticeArticleCategoryCode", value = "[QNA] 게시물 카테고리 코드", defaultValue = "")
     private String noticeArticleCategoryCode;
 
 
@@ -48,7 +48,7 @@ public class NoticeSaveDTO extends BasicDTO {
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "noticeYn", value = "공지 여부")
+    @ApiModelProperty(name = "noticeYn", value = "[공지사항] 공지 여부")
     private String noticeYn;
 
     /**
@@ -56,7 +56,7 @@ public class NoticeSaveDTO extends BasicDTO {
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "thumbnailFileName", value = "썸네일 파일 명")
+    @ApiModelProperty(name = "thumbnailFileName", value = "[NEWS] 썸네일 파일 명")
     private String thumbnailFileName;
 
     /**
@@ -64,7 +64,7 @@ public class NoticeSaveDTO extends BasicDTO {
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "thumbnailFileSize", value = "썸네일 파일 사이즈")
+    @ApiModelProperty(name = "thumbnailFileSize", value = "[NEWS] 썸네일 파일 사이즈")
     private String thumbnailFileSize;
 
     /**
@@ -72,7 +72,7 @@ public class NoticeSaveDTO extends BasicDTO {
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명")
+    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "[NEWS] 썸네일 파일 물리 명")
     private String thumbnailFilePhysicalName;
 
     /**
@@ -104,7 +104,7 @@ public class NoticeSaveDTO extends BasicDTO {
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "imageBase64", value = "이미지 base64 문자", example = "data:image/jpeg;base64," + "/9j/4AAQSkZJRgABAQEAYABgAAD" +
+    @ApiModelProperty(name = "imageBase64", value = "[NEWS] 이미지 base64 문자", example = "data:image/jpeg;base64," + "/9j/4AAQSkZJRgABAQEAYABgAAD" +
             "/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUF" +
             "BQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAD0AacDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhB" +
             "yJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19" +

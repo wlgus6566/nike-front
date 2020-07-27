@@ -32,7 +32,7 @@ public class NoticeArticleListDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(value = "게시물 구분 코드", name = "noticeArticleSectionCode", defaultValue = "", required = true)
+    @ApiParam(name = "noticeArticleSectionCode", value = "게시물 구분 코드", defaultValue = "", required = true)
     private String noticeArticleSectionCode;
 
 
@@ -42,7 +42,7 @@ public class NoticeArticleListDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(value = "게시물 카테고리 코드", name = "noticeArticleCategoryCode", defaultValue = "")
+    @ApiParam(name = "noticeArticleCategoryCode", value = "[QNA] 게시물 카테고리 코드", defaultValue = "")
     private String noticeArticleCategoryCode;
 
     /**
@@ -50,7 +50,7 @@ public class NoticeArticleListDTO {
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "noticeYn", value = "공지 여부")
+    @ApiModelProperty(name = "noticeYn", value = "[공지사항] 공지 여부")
     private String noticeYn;
 
     /**
@@ -58,7 +58,7 @@ public class NoticeArticleListDTO {
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "thumbnailFileName", value = "썸네일 파일 명")
+    @ApiModelProperty(name = "thumbnailFileName", value = "[NEWS] 썸네일 파일 명")
     private String thumbnailFileName;
 
     /**
@@ -66,7 +66,7 @@ public class NoticeArticleListDTO {
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "thumbnailFileSize", value = "썸네일 파일 사이즈")
+    @ApiModelProperty(name = "thumbnailFileSize", value = "[NEWS] 썸네일 파일 사이즈")
     private String thumbnailFileSize;
 
     /**
@@ -74,7 +74,7 @@ public class NoticeArticleListDTO {
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명")
+    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "[NEWS] 썸네일 파일 물리 명")
     private String thumbnailFilePhysicalName;
 
     /**
