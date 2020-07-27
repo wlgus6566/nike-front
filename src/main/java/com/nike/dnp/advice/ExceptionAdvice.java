@@ -89,15 +89,6 @@ public class ExceptionAdvice {
         log.error("Exception", exception);
         log.error("========================= ErrorLog Start =========================");
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        System.out.println("======================================================");
-        System.out.println(authentication.isAuthenticated());
-        System.out.println(authentication.getDetails());
-        System.out.println(authentication.getCredentials());
-        System.out.println(authentication.getName());
-        System.out.println(authentication.getAuthorities());
-        System.out.println("======================================================");
-
         if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {
             final ErrorLogSaveDTO errorLog = new ErrorLogSaveDTO();
             errorLog.setUrl(request.getRequestURI());
