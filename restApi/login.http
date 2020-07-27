@@ -1,5 +1,5 @@
 ### 로그인
-POST http://{{host}}/api/login?username=yth&password=1
+POST http://{{host}}/api/login?username=yth&password=Emotion1!@
 Accept: application/json
 Cache-Control: no-cache
 
