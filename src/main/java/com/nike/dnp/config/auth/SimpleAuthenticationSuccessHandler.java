@@ -130,7 +130,15 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 				isValid = false;
 			} else {
 				final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(certCode), "Nike DnP").split("\\|")[1];
-				if (certCode.equals(decodeCertCode)) {
+				if (FailCode.ExceptionError.ERROR.name().equals(decodeCertCode)) {
+					JsonUtil.write(response.getWriter()
+							, responseService.getFailResult(
+									FailCode.ConfigureError.EXPIRED_CERT_CODE.name()
+									, MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
+							));
+					isValid = false;
+				}
+				if (isValid && certCode.equals(decodeCertCode)) {
 					user.get().updateStatus(ServiceCode.UserStatusEnumCode.NORMAL.toString());
 					//TODO[ojh] 2020-07-02 : [휴면계정 해제 안내] 메일 발송
 					userMailService.sendMailForChangeDormant(user.get());
@@ -142,17 +150,28 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 		if (isValid && userRepository.countByPaswordChangePeriod(authUserDTO.getUserSeq()) > 0) {
 			final String randomCode = RandomUtil.randomCertCode2(10);
 			final String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(authUserDTO.getUserId() + "|" + randomCode, "Nike DnP"));
-			redisService.set("cert:"+authUserDTO.getUserId(), randomCode, 60);
+			if (FailCode.ExceptionError.ERROR.name().equals(encodeCertCode)) {
+				JsonUtil.write(response.getWriter()
+						, responseService.getFailResult(
+								FailCode.ConfigureError.EXPIRED_CERT_CODE.name()
+								, MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
+						));
+				isValid = false;
+			}
 
-			final HashMap<String, Object> payload = new HashMap<>();
-			payload.put("certCode", encodeCertCode);
-			JsonUtil.write(response.getWriter()
-					, responseService.getFailResult(
-							FailCode.ConfigureError.OVERTIME_PASSWORD.name()
-							, MessageUtil.getMessage(FailCode.ConfigureError.OVERTIME_PASSWORD.name())
-							, payload
-					));
-			isValid = false;
+			if (isValid) {
+				redisService.set("cert:"+authUserDTO.getUserId(), randomCode, 60);
+
+				final HashMap<String, Object> payload = new HashMap<>();
+				payload.put("certCode", encodeCertCode);
+				JsonUtil.write(response.getWriter()
+						, responseService.getFailResult(
+								FailCode.ConfigureError.OVERTIME_PASSWORD.name()
+								, MessageUtil.getMessage(FailCode.ConfigureError.OVERTIME_PASSWORD.name())
+								, payload
+						));
+				isValid = false;
+			}
 		}
 
 		// 비밀번호가 변경되었을 경우
@@ -170,6 +189,15 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 			} else  {
 				final String redisCertCode = (String) redisService.get("cert:"+authUserDTO.getUserId());
 				final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(certCode), "Nike DnP");
+
+				if (FailCode.ExceptionError.ERROR.name().equals(decodeCertCode)) {
+					JsonUtil.write(response.getWriter()
+							, responseService.getFailResult(
+									FailCode.ConfigureError.EXPIRED_CERT_CODE.name()
+									, MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
+							));
+					isValid = false;
+				}
 
 				if(ObjectUtils.isEmpty(redisCertCode)) {
 					JsonUtil.write(response.getWriter()
