@@ -170,11 +170,13 @@ public class OpenLoginController {
      */
     @ApiOperation(value = "인증코드 검증"
             , notes = OPERATION_CHARACTER)
-    @GetMapping(name = "인증코드 검증", value = "/check/cert"
+    @PostMapping(name = "인증코드 검증", value = "/check/cert"
+            , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<Boolean> checkCert (
-            @ModelAttribute @Validated({ValidationGroups.group3.class}) final UserCertDTO userCertDTO
+            @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody
+            @Validated({ValidationGroups.group3.class}) final UserCertDTO userCertDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserOpenController.checkCert");
         return responseService.getSingleResult(
