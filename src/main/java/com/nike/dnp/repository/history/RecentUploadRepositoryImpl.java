@@ -1,6 +1,7 @@
 package com.nike.dnp.repository.history;
 
 import com.nike.dnp.common.ObjectMapperUtils;
+import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.history.HistoryResultDTO;
 import com.nike.dnp.dto.history.HistorySearchDTO;
 import com.nike.dnp.entity.contents.QRecentUpload;
@@ -57,7 +58,7 @@ public class RecentUploadRepositoryImpl extends QuerydslRepositorySupport implem
             historyResultDTO.setTypeCd(recentUpload.getTypeCd());
             historyResultDTO.setRegistrationDt(recentUpload.getRegistrationDt());
 //            report인 경우
-            if (recentUpload.getTypeCd().equals("REPORT")) {
+            if (recentUpload.getTypeCd().equals(ServiceEnumCode.HistoryTabEnumCode.REPORT_MANAGE.toString())) {
                 historyResultDTO.setFolderSeq(recentUpload.getReportSeq());
                 historyResultDTO.setImageFileName(recentUpload.getReport().getImageFileName());
                 historyResultDTO.setImageFileSize(recentUpload.getReport().getImageFileSize());

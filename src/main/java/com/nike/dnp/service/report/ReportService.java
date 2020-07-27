@@ -246,7 +246,7 @@ public class ReportService {
      */
     public List<Long> findAllAuthUser() {
         UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
-        userContentsSearchDTO.setMenuCode("REPORT");
+        userContentsSearchDTO.setMenuCode(ServiceEnumCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
         userContentsSearchDTO.setSkillCode(ServiceEnumCode.MenuSkillEnumCode.VIEW.toString());
         List<AuthReturnDTO> authList = userContentsService.getAuthList(userContentsSearchDTO);
 

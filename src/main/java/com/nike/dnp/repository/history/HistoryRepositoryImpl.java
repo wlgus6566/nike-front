@@ -1,6 +1,7 @@
 package com.nike.dnp.repository.history;
 
 import com.nike.dnp.common.ObjectMapperUtils;
+import com.nike.dnp.common.variable.ServiceEnumCode;
 import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.history.HistoryResultDTO;
 import com.nike.dnp.dto.history.HistorySearchDTO;
@@ -55,7 +56,7 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
             historyResultDTO.setTypeCd(history.getTypeCd());
             historyResultDTO.setRegistrationDt(history.getRegistrationDt());
 //            report인 경우
-            if (history.getTypeCd().equals("REPORT")) {
+            if (history.getTypeCd().equals(ServiceEnumCode.HistoryTabEnumCode.REPORT_MANAGE.toString())) {
                 historyResultDTO.setFolderSeq(history.getReportSeq());
                 historyResultDTO.setImageFileName(history.getReport().getImageFileName());
                 historyResultDTO.setImageFileSize(history.getReport().getImageFileSize());
