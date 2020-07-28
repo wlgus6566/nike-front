@@ -103,16 +103,12 @@ public class OrderController {
 	public SingleResult<Order> saveOrder(@RequestBody @Valid final OrderProductSaveDTO orderProductSaveDTO,
 										 @ApiIgnore final BindingResult result) {
 
-		if(orderProductSaveDTO.getGoodsSeqList().size()!=orderProductSaveDTO.getOrderQuantityList().size()){
-			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.INVALID_ORDER.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_ORDER.name()));
-		}else{
+		if(orderProductSaveDTO.getGoodsSeqList().size() == orderProductSaveDTO.getOrderQuantityList().size()){
 			final Order order = orderService.saveOrder(orderProductSaveDTO);
 
 			for(int i = 0; i < orderProductSaveDTO.getGoodsSeqList().size(); i++){
 				final Product product = productService.findByGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
-				OrderProductMappingSaveDTO orderProductMappingSaveDTO = new OrderProductMappingSaveDTO();
+				final OrderProductMappingSaveDTO orderProductMappingSaveDTO = new OrderProductMappingSaveDTO();
 				orderProductMappingSaveDTO.setGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
 				orderProductMappingSaveDTO.setOrderQuantity(orderProductSaveDTO.getOrderQuantityList().get(i));
 				orderProductMappingSaveDTO.setOrderSeq(order.getOrderSeq());
@@ -122,6 +118,10 @@ public class OrderController {
 			}
 			orderProductMappingService.orderSheetSend(order);
 			return responseService.getSingleResult(order);
+		}else{
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.INVALID_ORDER.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_ORDER.name()));
 		}
 
 

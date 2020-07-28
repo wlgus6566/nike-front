@@ -43,8 +43,7 @@ import java.util.Optional;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class
-SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 	/**
 	 * The Response service
@@ -229,12 +228,12 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 		}
 
 		if (isValid) {
-			StringBuilder redisKey = new StringBuilder("auths:");
+			final StringBuilder redisKey = new StringBuilder("auths:");
 			redisKey.append(authUserDTO.getUsername())
 					.append(LocalDateTime.now().getLong(ChronoField.MILLI_OF_DAY));
-			Algorithm algorithm = Algorithm.HMAC512(JwtHelper.SECRET.getBytes());
+			final Algorithm algorithm = Algorithm.HMAC512(JwtHelper.SECRET.getBytes());
 			// jwt 토큰 생성
-			HashMap<String, Object> head = new HashMap<>();
+			final HashMap<String, Object> head = new HashMap<>();
 			head.put("typ","JWT");
 			final String token = JWT.create()
 									.withSubject(authUserDTO.getUsername())

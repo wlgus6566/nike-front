@@ -37,7 +37,7 @@ public class EmailSendingLog extends BaseTimeEntity {
      *
      * @author [오지훈]
      */
-    @Column(name = "USER_SEQ")
+    @Column(name = "EMAIL")
     @ApiModelProperty(name = "userSeq", value = "사용자 시퀀스", required = true)
     private Long userSeq;
 

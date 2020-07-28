@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,14 +82,17 @@ public class FileController {
 	@ApiOperation(value = "파일 업로드", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/api/open/upload",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public SingleResult<FileResultDTO> upload(final FileUploadDTO fileUploadDTO,
-							   @ApiParam(name = "uploadFile", value = "파일업로드") final MultipartFile uploadFile) {
+							   @ApiParam(name = "uploadFile", value = "파일업로드") final MultipartFile uploadFile) throws IOException {
 
 
-		final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO);
-
-		String path = S3Util.upload(fileResultDTO);
-		S3Util.fileCopy(fileResultDTO.getFilePhysicalName(), "test");
-		return responseService.getSingleResult(fileResultDTO);
+		File file = new File(uploadFile.getOriginalFilename());
+		log.debug("file.toString() {}", file.toString());
+		log.debug("file.getPath() {}", file.getPath());
+		return null;
+		/*final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO);
+		S3Util.upload(fileResultDTO);
+		//S3Util.fileCopy(fileResultDTO.getFilePhysicalName(), "test");
+		return responseService.getSingleResult(fileResultDTO);*/
 	}
 
 
@@ -108,13 +112,12 @@ public class FileController {
 
 		final List<FileResultDTO> resultList = new ArrayList<>();
 
-
 		fileUploadDTO.getUploadFileList().forEach(multipartFile -> {
-			FileUploadDTO fileParam = new FileUploadDTO();
+			final FileUploadDTO fileParam = new FileUploadDTO();
 			fileParam.setUploadFile(multipartFile);
 			final FileResultDTO fileResultDTO = fileUpload(fileParam);
-			String path = S3Util.upload(fileResultDTO);
-			S3Util.fileCopy(fileResultDTO.getFilePhysicalName(),"test");
+			S3Util.upload(fileResultDTO);
+			//S3Util.fileCopy(fileResultDTO.getFilePhysicalName(),"test");
 			resultList.add(fileResultDTO);
 		});
 

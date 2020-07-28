@@ -168,37 +168,27 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 				resourceUrl.append('*');
 			}
 			//url 매칭 되는것이 있는지 체크
-			if(antPathMatcher.match(resourceUrl.toString(),url)){
-				// http 메소드 확인
-				if(String.valueOf(resourceMethod).isEmpty() || resourceMethod.contains(method)){
-					result = ACCESS_GRANTED;
-					break;
+			if(antPathMatcher.match(resourceUrl.toString(),url) &&
+					(String.valueOf(resourceMethod).isEmpty() || resourceMethod.contains(method))){
+				result = ACCESS_GRANTED;
+				break;
 
-					/* role 이 여러개일 경우 */
-					/*final String[] roleArray = urlFilterMata.getExpression().split(",");
-					for(final String role : roleArray){
-						if(role.equalsIgnoreCase(permitAll)){
-							result = ACCESS_GRANTED;
-						}else{
-							for(final GrantedAuthority authority : authentication.getAuthorities()){
-								if(authority.getAuthority().equalsIgnoreCase(role)){
-									result = ACCESS_GRANTED;
-									break;
-								}
+				/* role 이 여러개일 경우 */
+				/*final String[] roleArray = urlFilterMata.getExpression().split(",");
+				for(final String role : roleArray){
+					if(role.equalsIgnoreCase(permitAll)){
+						result = ACCESS_GRANTED;
+					}else{
+						for(final GrantedAuthority authority : authentication.getAuthorities()){
+							if(authority.getAuthority().equalsIgnoreCase(role)){
+								result = ACCESS_GRANTED;
+								break;
 							}
 						}
-					}*/
-				}
+					}
+				}*/
 			}
 		}
 		return result;
 	}
-
-
-	public static void main(String[] args) {
-		final AntPathMatcher antPathMatcher = new AntPathMatcher();
-		System.out.println(antPathMatcher.match("/api/user/*", "/api/user/view"));
-	}
-
-
 }

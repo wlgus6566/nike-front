@@ -1,5 +1,6 @@
 package com.nike.dnp.advice;
 
+import lombok.AllArgsConstructor;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,7 @@ import java.util.Map;
  * @Description
  */
 @Component
+@AllArgsConstructor
 public class CustomErrorAttributes extends DefaultErrorAttributes {
 
 
@@ -32,8 +34,8 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	 * @Description
 	 */
 	@Override
-	public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
-		Map<String, Object> errorAttributes = new LinkedHashMap<>();
+	public LinkedHashMap<String, Object> getErrorAttributes(final WebRequest webRequest,final boolean includeStackTrace) {
+		final LinkedHashMap<String, Object> errorAttributes = new LinkedHashMap<>();
 		addStatus(errorAttributes, webRequest);
 		addErrorMessage(errorAttributes, webRequest);
 		addPath(errorAttributes, webRequest);
@@ -49,8 +51,8 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	 * @CreatedOn 2020. 7. 27. 오전 11:33:10
 	 * @Description
 	 */
-	private void addStatus(Map<String, Object> errorAttributes, RequestAttributes requestAttributes) {
-		Integer status = getAttribute(requestAttributes, "javax.servlet.error.status_code");
+	private void addStatus(final Map<String, Object> errorAttributes,final RequestAttributes requestAttributes) {
+		final Integer status = getAttribute(requestAttributes, "javax.servlet.error.status_code");
 		if(status == null){
 			errorAttributes.put("status", 999);
 			errorAttributes.put("error", "None");
@@ -69,9 +71,9 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	 * @CreatedOn 2020. 7. 27. 오전 11:33:10
 	 * @Description
 	 */
-	private void addErrorMessage(Map<String, Object> errorAttributes, WebRequest webRequest) {
-		Throwable error = getError(webRequest);
-		BindingResult result = extractBindingResult(error);
+	private void addErrorMessage(final Map<String, Object> errorAttributes,final WebRequest webRequest) {
+		final Throwable error = getError(webRequest);
+		final BindingResult result = extractBindingResult(error);
 		if(result == null){
 			errorAttributes.put("message", error.getMessage());
 			return;
@@ -93,7 +95,7 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	 * @CreatedOn 2020. 7. 27. 오전 11:33:10
 	 * @Description
 	 */
-	private BindingResult extractBindingResult(Throwable error) {
+	private BindingResult extractBindingResult(final Throwable error) {
 		if(error instanceof BindingResult){
 			return (BindingResult) error;
 		}
@@ -112,8 +114,8 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	 * @CreatedOn 2020. 7. 27. 오전 11:33:10
 	 * @Description
 	 */
-	private void addPath(Map<String, Object> errorAttributes, RequestAttributes requestAttributes) {
-		String path = getAttribute(requestAttributes, "javax.servlet.error.request_uri");
+	private void addPath(final Map<String, Object> errorAttributes, final RequestAttributes requestAttributes) {
+		final String path = getAttribute(requestAttributes, "javax.servlet.error.request_uri");
 		if(path != null){
 			errorAttributes.put("path", path);
 		}
@@ -130,7 +132,7 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	 * @CreatedOn 2020. 7. 27. 오전 11:33:10
 	 * @Description
 	 */
-	private <T> T getAttribute(RequestAttributes requestAttributes, String name) {
+	private <T> T getAttribute(final RequestAttributes requestAttributes, final String name) {
 		return (T) requestAttributes.getAttribute(name, RequestAttributes.SCOPE_REQUEST);
 	}
 }

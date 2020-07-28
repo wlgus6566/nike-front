@@ -18,6 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.util.ObjectUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -55,7 +56,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	 *
 	 * @author [오지훈]
 	 */
-	private final RedisService redisService;
+	private transient final RedisService redisService;
 
 	/**
 	 * Instantiates a new Jwt authorization filter.
@@ -116,36 +117,36 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	private Authentication getUsernamePasswordAuthentication(final HttpServletRequest request) {
 		final String token = request.getHeader(JwtHelper.HEADER_STRING);
 		Authentication authentication = null;
-		if(token != null){
+		if(ObjectUtils.isEmpty(token)){
+			throw new CodeMessageHandleException(FailCode.ConfigureError.NO_AUTH.name(),
+												 MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name()));
+		}else{
 			try{
-				DecodedJWT verify = JWT.require(Algorithm.HMAC512(SECRET_KEY.getBytes())).build().verify(token.replace(JwtHelper.TOKEN_PREFIX, ""));
+				final DecodedJWT verify = JWT.require(Algorithm.HMAC512(SECRET_KEY.getBytes())).build()
+											 .verify(token.replace(JwtHelper.TOKEN_PREFIX, ""));
 				// 토큰 디코드
 				final String username = verify.getSubject();
 				final String redisKey = verify.getClaim("rds").asString();
-				String redisToken  = (String)redisService.get(redisKey);
-				if(String.valueOf(System.getProperty("spring.profiles.active")).equalsIgnoreCase("local")
-					|| String.valueOf(System.getProperty("spring.profiles.active")).equalsIgnoreCase("dev")){
-					authentication = getAuthentication(authentication, username, redisKey, redisToken);
+				final String redisToken = (String) redisService.get(redisKey);
+				if(String.valueOf(System.getProperty("spring.profiles.active")).equalsIgnoreCase("local") ||
+						String.valueOf(System.getProperty("spring.profiles.active")).equalsIgnoreCase("dev")){
+
+					authentication = getAuthentication(username, redisKey, redisToken);
 				}else{
 					if(verify.getToken().equals(redisToken)){
 						// 유저정보 시큐리티에 넣음
-						authentication = getAuthentication(authentication, username, redisKey, redisToken);
+						authentication = getAuthentication(username, redisKey, redisToken);
 					}else{
-						throw new CodeMessageHandleException(
-								FailCode.ConfigureError.NOT_SESSION.name()
-								, MessageUtil.getMessage(FailCode.ConfigureError.NOT_SESSION.name()));
+						throw new CodeMessageHandleException(FailCode.ConfigureError.NOT_SESSION.name(),
+															 MessageUtil.getMessage(FailCode.ConfigureError.NOT_SESSION.name()));
 					}
 
 				}
 			}catch(JWTDecodeException | IllegalArgumentException e){
-				throw new CodeMessageHandleException(
-						FailCode.ConfigureError.NO_AUTH.name()
-						, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name()));
+				throw new CodeMessageHandleException(//NOPMD
+													 FailCode.ConfigureError.NO_AUTH.name(),
+													 MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name()));
 			}
-		}else{
-			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name()));
 		}
 		return authentication;
 	}
@@ -153,16 +154,16 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	/**
 	 * Gets authentication.
 	 *
-	 * @param authentication the authentication
-	 * @param username       the username
-	 * @param redisKey       the redis key
-	 * @param redisToken     the redis token
+	 * @param username   the username
+	 * @param redisKey   the redis key
+	 * @param redisToken the redis token
 	 * @return the authentication
 	 * @author [오지훈]
 	 * @CreatedOn 2020. 7. 21. 오후 4:22:06
 	 * @Description
 	 */
-	private Authentication getAuthentication(Authentication authentication, String username, String redisKey, String redisToken) {
+	private Authentication getAuthentication(final String username, final String redisKey, final String redisToken) {
+		Authentication authentication = null;
 		if(username != null){
 			final Optional<User> user = userRepository.findByUserId(username);
 			final AuthUserDTO authUserDTO = new AuthUserDTO(user.get());
