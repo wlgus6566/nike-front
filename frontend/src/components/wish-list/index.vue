@@ -1,6 +1,10 @@
 <template>
     <transition-group tag="ul" class="wish-list" name="list" mode="out-in">
-        <li class="wish-list-item" v-for="item in listData" :key="item.wishListSeq">
+        <li
+            class="wish-list-item"
+            v-for="item in listData"
+            :key="item.wishListSeq"
+        >
             <span class="checkbox">
                 <input
                     type="checkbox"
@@ -21,8 +25,12 @@
                     <strong class="title">{{ item.product.goodsName }}</strong>
                     <span class="txt">{{ item.product.goodsDescription }}</span>
                     <span class="desc-txt-box">
-                        <span class="desc-txt">{{ item.product.unitPrice }} 원</span>
-                        <span class="desc-txt">{{ item.product.agency.agencyName }}</span>
+                        <span class="desc-txt"
+                            >{{ item.product.unitPrice }} 원</span
+                        >
+                        <span class="desc-txt">{{
+                            item.product.agency.agencyName
+                        }}</span>
                     </span>
                 </span>
             </a>
@@ -46,7 +54,9 @@
                 </button>
             </div>
             {{ item.wishListSeq }}
-            <div class="loading" v-if="isLoading(item.wishListSeq)">loading</div>
+            <div class="loading" v-if="isLoading(item.wishListSeq)">
+                loading
+            </div>
         </li>
     </transition-group>
 </template>
@@ -57,7 +67,7 @@ export default {
     props: ['listData', 'checkWishItem', 'deleteLoading'],
     methods: {
         isLoading(seq) {
-            const indexFind = this.deleteLoading.findIndex((el) => {
+            const indexFind = this.deleteLoading.findIndex(el => {
                 return el === seq;
             });
             return indexFind !== -1;
