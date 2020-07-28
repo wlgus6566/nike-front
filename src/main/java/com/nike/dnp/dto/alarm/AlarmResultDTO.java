@@ -1,4 +1,4 @@
-package com.nike.dnp.controller.alarm;
+package com.nike.dnp.dto.alarm;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;

@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.log;
 
+import com.nike.dnp.dto.log.EmailSendingLogSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -33,13 +34,13 @@ public class EmailSendingLog extends BaseTimeEntity {
     private Long emailSendingLogSeq;
 
     /**
-     * 사용자 시퀀스
+     * 수신자 이메일
      *
      * @author [오지훈]
      */
     @Column(name = "EMAIL")
-    @ApiModelProperty(name = "userSeq", value = "사용자 시퀀스", required = true)
-    private Long userSeq;
+    @ApiModelProperty(name = "email", value = "수신자 이메일", required = true)
+    private String email;
 
     /**
      * 제목
@@ -59,4 +60,18 @@ public class EmailSendingLog extends BaseTimeEntity {
     @ApiModelProperty(name = "contents", value = "내용", required = true)
     private String contents;
 
+    /**
+     * Instantiates a new Email sending log.
+     *
+     * @param emailSendingLogSaveDTO the email sending log save dto
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 28. 오후 4:06:35
+     * @Description
+     */
+    @Builder
+    public EmailSendingLog (final EmailSendingLogSaveDTO emailSendingLogSaveDTO) {
+        this.email = emailSendingLogSaveDTO.getEmail();
+        this.title = emailSendingLogSaveDTO.getTitle();
+        this.contents = emailSendingLogSaveDTO.getContents();
+    }
 }

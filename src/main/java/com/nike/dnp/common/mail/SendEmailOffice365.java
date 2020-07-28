@@ -1,9 +1,12 @@
 package com.nike.dnp.common.mail;
 
+import com.nike.dnp.dto.log.EmailSendingLogSaveDTO;
+import com.nike.dnp.service.log.EmailSendingLogService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -59,6 +62,13 @@ public class SendEmailOffice365 {
      * @author [오지훈]
      */
     public static String fromEmail;
+
+    /**
+     * The Email sending log service
+     *
+     * @author [오지훈]
+     */
+    private final EmailSendingLogService emailSendingLogService;
 
     /**
      * Sets conta padrao.
@@ -141,8 +151,8 @@ public class SendEmailOffice365 {
             message.setSubject(subject);
 
             if (file.isEmpty()) {
-                message.setText("TEST");
                 message.setSubject("[NIKE SPACE] 발신 테스트 메일입니다.");
+                message.setText("TEST");
 
             } else {
                 final MimeBodyPart mimeMultipart = new MimeBodyPart();
@@ -155,6 +165,14 @@ public class SendEmailOffice365 {
 
             message.setSentDate(new Date());
             Transport.send(message);
+
+            emailSendingLogService.save(
+                    EmailSendingLogSaveDTO.builder()
+                            .email(toEmail)
+                            .title(message.getSubject())
+                            .contents(ObjectUtils.isEmpty(file) ? "" : file)
+                            .build());
+
         } catch (final MessagingException exception) {
             log.error("exception", exception);
         }

@@ -39,10 +39,7 @@ public class ErrorLogService {
      */
     @Transactional
     public ErrorLog save(final ErrorLogSaveDTO saveDTO) {
-        final ErrorLog saveLog = new ErrorLog();
-        saveLog.setUrl(saveDTO.getUrl());
-        saveLog.setErrorContents(saveDTO.getErrorContents());
-        return logRepository.save(saveLog);
+        return logRepository.save(ErrorLog.builder().errorLogSaveDTO(saveDTO).build());
     }
 
 }

@@ -1,19 +1,14 @@
 package com.nike.dnp.service.main;
 
 import com.nike.dnp.common.variable.ServiceCode;
-import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.dto.main.MainResultDTO;
-import com.nike.dnp.dto.notice.NoticeArticleListDTO;
 import com.nike.dnp.dto.notice.NoticeSearchDTO;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import com.nike.dnp.repository.report.ReportRepository;
 import com.nike.dnp.service.banner.BannerService;
-import com.nike.dnp.service.contents.ContentsService;
 import com.nike.dnp.service.notice.NoticeService;
-import com.nike.dnp.service.report.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
