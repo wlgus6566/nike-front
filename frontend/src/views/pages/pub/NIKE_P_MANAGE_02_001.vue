@@ -3,7 +3,7 @@
         <header>
             <div class="inner">
                 <h1>
-                    <a href="#"><img alt="" src="@/assets/images/logo-nike.svg" /></a>
+                    <a href="#"><img alt="" src="@/assets/images/logo-nike.svg"/></a>
                 </h1>
                 <nav>
                     <ul>
@@ -77,7 +77,10 @@
                         <thead>
                             <tr>
                                 <th>
-                                    <el-checkbox v-model="checked" />
+                                    <span class="checkbox">
+                                        <input type="checkbox" v-model="checked" />
+                                        <span></span>
+                                    </span>
                                 </th>
                                 <th>계정명</th>
                                 <th>ID (E-MAIL)</th>
@@ -89,7 +92,10 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <el-checkbox v-model="checked" />
+                                    <span class="checkbox">
+                                        <input type="checkbox" v-model="checked" />
+                                        <span></span>
+                                    </span>
                                 </td>
                                 <td>
                                     <a href="#" class="under-link"><span>포스터 600X800</span></a>
@@ -101,7 +107,10 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <el-checkbox v-model="checked" />
+                                    <span class="checkbox">
+                                        <input type="checkbox" v-model="checked" />
+                                        <span></span>
+                                    </span>
                                 </td>
                                 <td>
                                     <a href="#" class="under-link"><span>포스터 600X800</span></a>

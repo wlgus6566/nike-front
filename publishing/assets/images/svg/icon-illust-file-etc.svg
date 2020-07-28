@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+    <g fill="none" fill-rule="evenodd">
+        <path fill="#F7F7F7" d="M0 0H80V80H0z"/>
+        <g transform="translate(20 17)">
+            <rect width="35.8" height="44.8" x="3.6" y=".6" fill="#FFF" stroke="#BBB" stroke-width="1.2" rx=".4"/>
+            <rect width="23.8" height="5.8" x="9.6" y="6.6" fill="#FFF" stroke="#AAA" stroke-width="1.2" rx=".4"/>
+            <path fill="#AAA" d="M9 15H34V16.2H9zM9 18.2H16V19.4H9z"/>
+            <g transform="translate(0 28)">
+                <rect width="32" height="13" fill="#000" rx=".8"/>
+                <text fill="#FFF" font-family="Roboto-Bold, Roboto" font-size="9" font-weight="bold">
+                    <tspan x="7.74" y="9.5">ETC</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -31,8 +31,8 @@
                         </el-date-picker>
                     </div>
                 </div>
-                <ul class="period-item-list">
-                    <li class="period-item">
+                <ul class="period-list">
+                    <li class="period-list-item">
                         <a href="#" class="top">
                             <strong class="num">주문일 : 2020.01.20 12:00</strong>
                             <span class="link-txt">주문상세보기</span>
@@ -49,7 +49,7 @@
                             </span>
                         </div>
                     </li>
-                    <li class="period-item">
+                    <li class="period-list-item">
                         <a href="#" class="top">
                             <strong class="num">주문일 : 2020.01.20 12:00</strong>
                             <span class="link-txt">주문상세보기</span>

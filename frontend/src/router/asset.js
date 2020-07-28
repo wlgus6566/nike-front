@@ -3,44 +3,94 @@ import { pages } from '@/utils/global-methods';
 const routes = [
     {
         path: '/asset',
-        component: pages('asset'),
-        meta: { layout: 'Default', aside: 'Order', title: 'ALL' },
+        component: pages('root'),
         redirect: '/asset/all',
         children: [
             {
-                path: 'upload',
-                component: pages('asset/upload.vue'),
-                meta: { layout: 'Default', aside: 'Order', title: 'UPLOAD' },
-            },
-            {
                 path: 'all',
                 component: pages('common/folder-list'),
-                meta: { layout: 'Default', aside: 'Order', title: 'ALL' },
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    topMenuCode: 'ASSET',
+                    menuCode: 'ALL',
+                    title: 'ALL',
+                },
             },
             {
                 path: 'sp',
                 component: pages('common/folder-list'),
-                meta: { layout: 'Default', aside: 'Order', title: 'SP' },
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    topMenuCode: 'ASSET',
+                    menuCode: 'SP',
+                    title: 'SP',
+                },
             },
             {
                 path: 'su',
                 component: pages('common/folder-list'),
-                meta: { layout: 'Default', aside: 'Order', title: 'SU' },
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    topMenuCode: 'ASSET',
+                    menuCode: 'SU',
+                    title: 'SU',
+                },
             },
             {
                 path: 'fa',
                 component: pages('common/folder-list'),
-                meta: { layout: 'Default', aside: 'Order', title: 'FA' },
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    topMenuCode: 'ASSET',
+                    menuCode: 'FA',
+                    title: 'FA',
+                },
             },
             {
                 path: 'ho',
                 component: pages('common/folder-list'),
-                meta: { layout: 'Default', aside: 'Order', title: 'HO' },
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    topMenuCode: 'ASSET',
+                    menuCode: 'HO',
+                    title: 'HO',
+                },
             },
             {
-                path: ':id',
+                path: 'upload',
+                component: pages('asset/upload'),
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    topMenuCode: 'ASSET',
+                    title: 'UPLOAD',
+                },
+            },
+            {
+                path: '*/:id',
                 component: pages('common/folder-view'),
-                meta: { layout: 'Default', aside: 'Order', title: '' },
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    topMenuCode: 'ASSET',
+                },
+                beforeEnter: (to, from, next) => {
+                    const menuCodeArr = ['sp', 'su', 'fa', 'ho'];
+                    const findMenuCode = menuCodeArr.findIndex(
+                        (el) => el === to.params.pathMatch
+                    );
+                    if (findMenuCode !== -1) {
+                        to.meta.menuCode = menuCodeArr[findMenuCode];
+                        next();
+                    } else {
+                        next('404'); //todo 404 만들기
+                    }
+                },
             },
         ],
     },

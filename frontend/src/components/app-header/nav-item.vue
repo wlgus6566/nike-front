@@ -17,7 +17,7 @@
                     :navIdx="index"
                     :item="child"
                     :depth="depth + 1"
-                    :activeIndex="myIndex"
+                    :activeIndex="myActiveIndex"
                 />
             </ul>
         </transition>
@@ -36,7 +36,7 @@ export default {
     },
     data: function () {
         return {
-            myIndex: null,
+            myActiveIndex: null,
         };
     },
     computed: {
@@ -83,7 +83,7 @@ export default {
             }
         },
         update(index, initState) {
-            this.myIndex = !!initState ? index : this.myIndex === index ? null : index;
+            this.myActiveIndex = !!initState ? index : this.myActiveIndex === index ? null : index;
         },
     },
     mounted() {

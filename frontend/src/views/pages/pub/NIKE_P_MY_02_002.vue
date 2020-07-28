@@ -38,8 +38,8 @@
                         </button>
                     </div>
                 </div>
-                <ul class="wish-item-list">
-                    <li class="wish-item">
+                <ul class="wish-list">
+                    <li class="wish-list-item">
                         <span class="checkbox">
                             <input type="checkbox" />
                             <span></span>
@@ -74,7 +74,7 @@
                             </button>
                         </div>
                     </li>
-                    <li class="wish-item">
+                    <li class="wish-list-item">
                         <span class="checkbox">
                             <input type="checkbox" />
                             <span></span>
@@ -109,7 +109,7 @@
                             </button>
                         </div>
                     </li>
-                    <li class="wish-item">
+                    <li class="wish-list-item">
                         <span class="checkbox">
                             <input type="checkbox" />
                             <span></span>
