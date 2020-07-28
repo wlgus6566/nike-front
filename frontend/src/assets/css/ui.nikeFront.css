@@ -3101,6 +3101,9 @@
 .no-data .icon-wish {
     background-image: url('../images/svg/illust-page-folder-wish-none.svg');
 }
+.no-data .icon-drop {
+    background-image: url('../images/svg/illust-file-empty.svg');
+}
 .no-data .desc {
     line-height: 20px;
     font-size: 14px;
@@ -3197,7 +3200,7 @@
 /* sheet-item */
 .sheet-item {
     display: flex;
-    padding: 15px 20px 5px 10px;
+    padding: 15px 20px 15px 10px;
 }
 .sheet-item + .sheet-item {
     border-top: 1px solid #ddd;
@@ -3297,7 +3300,8 @@
     width: 20px;
     height: 20px;
     border: none;
-    background: url('../../assets/images/svg/icon-spinner-minus.svg') no-repeat center;
+    background: url('../../assets/images/svg/icon-spinner-minus.svg') no-repeat
+        center;
 }
 .quantity [class*='el-input-number__'] i {
     display: none;

@@ -7,7 +7,7 @@
                 v-bind:key="index"
                 v-on:click="tabClick(index)"
             >
-                <a href="#"
+                <a href="javascript:void(0);"
                     ><span>{{ tabMenu.title }}</span></a
                 >
             </li>
@@ -32,8 +32,10 @@ export default {
         ContentOrder: () => import('@/components/tab-comp/content-order.vue'),
         ContentFile: () => import('@/components/tab-comp/content-file.vue'),
         ContentAsset: () => import('@/components/tab-comp/content-asset.vue'),
-        ContentTooKlit: () => import('@/components/tab-comp/content-tookit.vue'),
-        ContentFoundation: () => import('@/components/tab-comp/content-foundation.vue'),
+        ContentTooKlit: () =>
+            import('@/components/tab-comp/content-tookit.vue'),
+        ContentFoundation: () =>
+            import('@/components/tab-comp/content-foundation.vue'),
     },
     methods: {
         tabClick(index) {

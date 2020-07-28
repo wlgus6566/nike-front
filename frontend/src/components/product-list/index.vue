@@ -7,7 +7,7 @@
         >
             <button
                 type="button"
-                @click="$emit('showdetailView', item.goodsSeq)"
+                @click="$emit('showDetailView', item.goodsSeq)"
             >
                 <span class="thumbnail">
                     <img
@@ -55,32 +55,41 @@
     created() {},
     computed: {
         basketList() {
-            return this.$store.state.basketListData.map((data) => {
-                return {
-                    goodsSeq: data.goodsSeq,
-                    goodsBasketSeq: data.goodsBasketSeq,
-                };
-            });
+            if (!!this.$store.state.basketListData) {
+                return this.$store.state.basketListData.map((data) => {
+                    return {
+                        goodsSeq: data.goodsSeq,
+                        goodsBasketSeq: data.goodsBasketSeq,
+                    };
+                });
+            } else {
+                return null;
+            }
         },
     },
     mounted() {},
     methods: {
         cartActive(goodsSeq) {
-            const findIndex = this.basketList.findIndex((el) => {
-                return el.goodsSeq === goodsSeq;
-            });
-            if (findIndex !== -1) {
-                return 'active';
+            if (this.basketList) {
+                const findIndex = this.basketList.findIndex((el) => {
+                    return el.goodsSeq === goodsSeq;
+                });
+                if (findIndex !== -1) {
+                    return 'active';
+                }
             }
         },
         toggleProductBasket(item) {
-            const findIndex = this.basketList.findIndex((el) => {
-                return el.goodsSeq === item.goodsSeq;
-            });
-            if (findIndex === -1) {
-                addProductBasket(item.goodsSeq, item.minimumOrderQuantity);
-            } else {
-                deleteBasketItem(this.basketList[findIndex].goodsBasketSeq);
+            console.log(this.basketList);
+            if (this.basketList) {
+                const findIndex = this.basketList.findIndex((el) => {
+                    return el.goodsSeq === item.goodsSeq;
+                });
+                if (findIndex === -1) {
+                    addProductBasket(item.goodsSeq, item.minimumOrderQuantity);
+                } else {
+                    deleteBasketItem(this.basketList[findIndex].goodsBasketSeq);
+                }
             }
         },
     },
