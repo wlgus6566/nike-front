@@ -1,9 +1,19 @@
 <template>
     <ul class="product-list">
-        <li class="product-list-item" v-for="(item, index) in productListData" :key="item.goodsSeq">
-            <button type="button" @click="$emit('showdetailView', item.goodsSeq)">
+        <li
+            class="product-list-item"
+            v-for="(item, index) in productListData"
+            :key="item.goodsSeq"
+        >
+            <button
+                type="button"
+                @click="$emit('showdetailView', item.goodsSeq)"
+            >
                 <span class="thumbnail">
-                    <img :src="item.imageFilePhysicalName" :alt="item.imageFileName" />
+                    <img
+                        :src="item.imageFilePhysicalName"
+                        :alt="item.imageFileName"
+                    />
                 </span>
                 <span class="info-box">
                     <strong class="title">{{ item.goodsName }}</strong>
@@ -42,9 +52,7 @@
         return {};
     },
     props: ['productListData'],
-    created() {
-        console.log(this.productListData);
-    },
+    created() {},
     computed: {
         basketList() {
             return this.$store.state.basketListData.map((data) => {
@@ -55,9 +63,7 @@
             });
         },
     },
-    mounted() {
-        //console.log(this.active);
-    },
+    mounted() {},
     methods: {
         cartActive(goodsSeq) {
             const findIndex = this.basketList.findIndex((el) => {
@@ -97,7 +103,8 @@
     display: block;
     padding-top: 100%;
     overflow: hidden;
-    background: url('../../assets/images/img-asset-none@2x.png') no-repeat center;
+    background: url('../../assets/images/img-asset-none@2x.png') no-repeat
+        center;
     background-size: 100%;
 }
 .product-list-item .thumbnail img {
@@ -158,7 +165,8 @@
     right: 0;
     width: 24px;
     height: 24px;
-    background: url('../../assets/images/svg/icon-order-cart-off.svg') no-repeat center;
+    background: url('../../assets/images/svg/icon-order-cart-off.svg') no-repeat
+        center;
 }
 .product-list-item .cart-box .cart.active {
     background-image: url('../../assets/images/svg/icon-order-cart-on.svg');
