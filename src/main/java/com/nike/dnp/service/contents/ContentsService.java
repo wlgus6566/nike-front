@@ -1,6 +1,5 @@
 package com.nike.dnp.service.contents;
 
-import com.nike.dnp.common.ObjectMapperUtils;
 import com.nike.dnp.common.mail.MailService;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
@@ -21,10 +20,7 @@ import com.nike.dnp.repository.user.UserAuthRepository;
 import com.nike.dnp.service.alarm.AlarmService;
 import com.nike.dnp.service.history.HistoryService;
 import com.nike.dnp.service.user.UserContentsService;
-import com.nike.dnp.util.FileUtil;
-import com.nike.dnp.util.ImageUtil;
-import com.nike.dnp.util.MessageUtil;
-import com.nike.dnp.util.S3Util;
+import com.nike.dnp.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -275,7 +271,7 @@ public class ContentsService {
         // history 저장
         historyService.saveViewHistory(contentsSeq, topMenuCode);
 
-        return ObjectMapperUtils.map(findContents, ContentsResultDTO.class);
+        return ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
     }
 
     /**
