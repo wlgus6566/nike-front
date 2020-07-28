@@ -1,9 +1,16 @@
 <template>
     <div class="aside-order">
         <ul class="cart-item-list">
-            <li class="cart-item" v-for="(item, index) in basketList" :key="index">
+            <li
+                class="cart-item"
+                v-for="(item, index) in basketList"
+                :key="index"
+            >
                 <div class="thumbnail">
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
+                    <img
+                        src="../../assets/images/img-asset-none@2x.png"
+                        alt=""
+                    />
                 </div>
                 <div class="info-box">
                     <p class="title">{{ item.product.goodsName }}</p>
@@ -15,7 +22,11 @@
                         />
                     </div>
                 </div>
-                <button type="button" class="del" @click="deleteClick(item.goodsBasketSeq)">
+                <button
+                    type="button"
+                    class="del"
+                    @click="deleteClick(item.goodsBasketSeq)"
+                >
                     <span>삭제</span>
                 </button>
             </li>
@@ -88,7 +99,8 @@
     display: block;
     width: 30px;
     height: 30px;
-    background: url(../../assets/images/svg/icon-close-small.svg) no-repeat center;
+    background: url(../../assets/images/svg/icon-close-small.svg) no-repeat
+        center;
 }
 .cart-item .del span {
     display: block;

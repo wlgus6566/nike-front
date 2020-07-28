@@ -102,7 +102,9 @@
         // detial modal open
         showdetailView(goodsSeq) {
             this.visible.detailView = true;
-            const findIndex = this.productListData.findIndex((el) => el.goodsSeq === goodsSeq);
+            const findIndex = this.productListData.findIndex(
+                (el) => el.goodsSeq === goodsSeq
+            );
             this.productDetailData = this.productListData[findIndex];
         },
 

@@ -9,7 +9,11 @@
             <!-- todo 전체선택 스크립트 작업 필요  -->
             <label class="check-label">
                 <span class="checkbox">
-                    <input type="checkbox" v-model="checkAll" v-on:change="allCheckFn" />
+                    <input
+                        type="checkbox"
+                        v-model="checkAll"
+                        v-on:change="allCheckFn"
+                    />
                     <span></span>
                 </span>
                 <strong class="txt">전체선택</strong>
@@ -23,7 +27,11 @@
                     <i class="icon-cart"></i>
                     <span>선택 CART 담기</span>
                 </button>
-                <button type="button" class="btn-s-lightgray-sm" @click="checkedWishDelete">
+                <button
+                    type="button"
+                    class="btn-s-lightgray-sm"
+                    @click="checkedWishDelete"
+                >
                     <i class="icon-del"></i>
                     <span>선택삭제</span>
                 </button>
@@ -45,7 +53,7 @@
 </template>
 
 <script>
-    import {deleteWishList, deleteWishListCheck, getWishList} from '@/api/wish-list';
+    import {deleteWishList, deleteWishListCheck, getWishList,} from '@/api/wish-list';
 
     export default {
     name: 'wish-list',
@@ -72,7 +80,9 @@
     },
     methods: {
         checkedWish(seq, del) {
-            const indexOfChecked = this.checkWishItem.findIndex((el) => el === seq);
+            const indexOfChecked = this.checkWishItem.findIndex(
+                (el) => el === seq
+            );
             if (!del && indexOfChecked === -1) {
                 this.checkWishItem.push(seq);
             } else {
@@ -80,7 +90,8 @@
                     return el !== seq;
                 });
             }
-            this.checkAll = this.checkWishItem.length === this.wishListData.length;
+            this.checkAll =
+                this.checkWishItem.length === this.wishListData.length;
         },
         allCheckFn() {
             if (this.checkAll) {

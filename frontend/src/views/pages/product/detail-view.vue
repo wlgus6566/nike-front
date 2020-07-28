@@ -30,7 +30,9 @@
                                 </span>
                                 <span class="desc-txt">
                                     최소주문수량
-                                    <em>{{ productDetailData.minimumOrderQuantity }}</em>
+                                    <em>{{
+                                        productDetailData.minimumOrderQuantity
+                                    }}</em>
                                     개
                                 </span>
                             </div>
