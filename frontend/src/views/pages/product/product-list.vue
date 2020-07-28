@@ -23,17 +23,17 @@
     </div>
 </template>
 <script>
-	import SearchInput from '@/components/search-input';
-	import ProductList from '@/components/product-list';
-	import Loading from '@/components/product-list/loading';
-	import NoData from '@/components/product-list/nodata';
-	import NoDataSearch from '@/components/product-list/nodata-search';
-	import detailView from '@/views/pages/product/detail-view';
+    import SearchInput from '@/components/search-input';
+    import ProductList from '@/components/product-list';
+    import Loading from '@/components/product-list/loading';
+    import NoData from '@/components/product-list/nodata';
+    import NoDataSearch from '@/components/product-list/nodata-search';
+    import detailView from '@/views/pages/product/detail-view';
 
-	import {getProductList} from '@/api/product.js';
-	import {getWishList, postWishList} from '@/api/wish-list';
+    import {getProductList} from '@/api/product.js';
+    import {getWishList, postWishList} from '@/api/wish-list';
 
-	export default {
+    export default {
     name: 'product-list',
     data() {
         return {
