@@ -1,5 +1,7 @@
 package com.nike.dnp.service.contents;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nike.dnp.common.ObjectMapperUtils;
 import com.nike.dnp.common.mail.MailService;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
@@ -220,7 +222,7 @@ public class ContentsService {
      * @Description
      */
     @Transactional
-    public Contents findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
+    public ContentsResultDTO findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
         Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
         final Contents findContents = contents.orElseThrow(() -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
         findContents.updateReadCount(findContents.getReadCount());
@@ -228,7 +230,7 @@ public class ContentsService {
         // history 저장
         historyService.saveViewHistory(contentsSeq, topMenuCode);
 
-        return findContents;
+        return ObjectMapperUtils.map(findContents, ContentsResultDTO.class);
     }
 
     /**

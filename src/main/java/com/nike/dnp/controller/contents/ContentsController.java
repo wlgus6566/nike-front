@@ -188,7 +188,7 @@ public class ContentsController {
     )
     @GetMapping(name = " 컨텐츠 상세조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Contents> findContents(
+    public SingleResult<ContentsResultDTO> findContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
             @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {

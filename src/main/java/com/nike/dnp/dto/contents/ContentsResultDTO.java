@@ -3,6 +3,7 @@ package com.nike.dnp.dto.contents;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -22,7 +23,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
-public class ContentsResultDTO {
+public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 컨텐츠 시퀀스
