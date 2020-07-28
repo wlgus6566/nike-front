@@ -16,7 +16,6 @@ import java.util.List;
  *
  * @author [이소정]
  * @CreatedOn 2020. 7. 7. 오후 2:34:04
- * @Description
  */
 @Slf4j
 @Getter
@@ -118,7 +117,6 @@ public class Report extends BaseTimeEntity {
      * @return the report
      * @author [이소정]
      * @CreatedOn 2020. 7. 8. 오후 5:33:21
-     * @Description
      */
     public Report save(final ReportSaveDTO reportSaveDTO) {
         log.info("Report.save");
@@ -140,7 +138,6 @@ public class Report extends BaseTimeEntity {
      * @param reportUpdateDTO the report update dto
      * @author [이소정]
      * @CreatedOn 2020. 7. 9. 오후 6:30:48
-     * @Description
      */
     public void update(final ReportUpdateDTO reportUpdateDTO) {
         log.info("Report.update");
@@ -167,7 +164,6 @@ public class Report extends BaseTimeEntity {
      * @param readCount the read count
      * @author [이소정]
      * @CreatedOn 2020. 7. 8. 오후 5:34:20
-     * @Description
      */
     public void updateReadCount(final Long readCount) {
         log.info("Report.updateReadCount");

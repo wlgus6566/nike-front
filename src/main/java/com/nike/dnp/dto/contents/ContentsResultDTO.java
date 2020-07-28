@@ -2,12 +2,12 @@ package com.nike.dnp.dto.contents;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 /**
@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
  *
  * @author [이소정]
  * @CreatedOn 2020. 7. 13. 오후 2:52:03
- * @Description
  */
 @Getter
 @Setter
@@ -23,6 +22,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
+@Component
 public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
@@ -131,5 +131,25 @@ public class ContentsResultDTO extends BaseTimeEntity {
     @ApiModelProperty(name = "exposureYn", value = "노출 여부(N : 진행중)", example = "Y")
     private String exposureYn;
 
+    private String accessKey;
 
-}
+    /**
+     * Sets access key.
+     *
+     * @param accessKey the access key
+     * @author [윤태호]
+     * @CreatedOn 2020. 7. 27. 오후 4:09:51
+     * @Description
+     */
+    @Value("${cloud.aws.credentials.accessKey:}")
+    public void setAccessKey(final String accessKey) {
+        this.accessKey = accessKey;
+    }
+
+    public String getImageFilePhysicalName() {
+        return this.accessKey + imageFilePhysicalName;
+    }
+
+
+
+    }

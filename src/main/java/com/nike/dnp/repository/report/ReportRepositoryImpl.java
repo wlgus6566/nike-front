@@ -22,7 +22,6 @@ import java.util.List;
  *
  * @author [이소정]
  * @CreatedOn 2020. 7. 7. 오후 2:46:09
- * @Description
  */
 @Repository
 public class ReportRepositoryImpl extends QuerydslRepositorySupport implements ReportRepositoryCustom {
@@ -34,7 +33,6 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
      *
      * @author [이소정]
      * @CreatedOn 2020. 6. 19. 오후 6:15:29
-     * @Description
      */
     public ReportRepositoryImpl() {
         super(Report.class);
@@ -48,7 +46,6 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
      * @return the page
      * @author [이소정]
      * @CreatedOn 2020. 7. 7. 오후 4:49:05
-     * @Description
      */
     @Override
     public Page<Report> findPageReport(final ReportSearchDTO reportSearchDTO, final PageRequest pageRequest) {
@@ -74,7 +71,6 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
      * @return the list
      * @author [이소정]
      * @CreatedOn 2020. 7. 27. 오후 6:31:34
-     * @Description
      */
     @Override
     public List<ReportResultDTO> findRecentReport(final PageRequest pageRequest) {

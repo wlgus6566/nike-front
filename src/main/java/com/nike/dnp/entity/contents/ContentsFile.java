@@ -6,6 +6,7 @@ import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
 import com.nike.dnp.dto.contents.ContentsFileUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.util.S3Util;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -211,7 +212,6 @@ public class ContentsFile extends BaseTimeEntity {
      * @return the contents file
      * @author [이소정]
      * @CreatedOn 2020. 7. 1. 오전 11:24:43
-     * @Description
      */
     public ContentsFile save(Contents savedContents, ContentsFileSaveDTO contentsFileSaveDTO) {
         log.info("ContentsFile.save");
@@ -251,7 +251,6 @@ public class ContentsFile extends BaseTimeEntity {
      * @return the contents file
      * @author [이소정]
      * @CreatedOn 2020. 7. 6. 오후 5:52:49
-     * @Description
      */
     public ContentsFile newContentsFile(Long contentsSeq, ContentsFileUpdateDTO contentsFileUpdateDTO) {
         log.info("ContentsFile.newContentsFile");
@@ -301,7 +300,6 @@ public class ContentsFile extends BaseTimeEntity {
      * @return the contents file
      * @author [이소정]
      * @CreatedOn 2020. 7. 7. 오전 10:41:43
-     * @Description
      */
     private ContentsFile applyContentsFile(ContentsFile contentsFile
             , String fileSectionCode
@@ -321,31 +319,21 @@ public class ContentsFile extends BaseTimeEntity {
             , String detailThumbnailFilePhysicalName
             , Long fileOrder
     ) {
-
-//        TODO validation 2020.07.24 by.sojeong.lee
-//        if (isFile) {
-//            this.checkStringValidation(fileName, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
-//        } else {
-//            this.checkStringValidation(title, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.getMessage());
-//            this.checkStringValidation(url, ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
-//        }
-
         boolean isFile = ServiceCode.ContentsFileKindCode.FILE.toString().equals(fileKindCode);
 
         contentsFile.setFileSectionCode(fileSectionCode);
         contentsFile.setFileKindCode(fileKindCode);
         contentsFile.setFileOrder(fileOrder);
 
-        contentsFile.setFileName(isFile ? fileName : null);
-        contentsFile.setFileSize(isFile ? fileSize : null);
-        contentsFile.setFilePhysicalName(isFile ? filePhysicalName : null);
         contentsFile.setFileContentType(isFile ? fileContentType : null);
         contentsFile.setFileExtension(isFile ? fileExtension.toUpperCase() : null);
 
+        contentsFile.setFileName(isFile ? fileName : null);
+        contentsFile.setFileSize(isFile ? fileSize : null);
+        contentsFile.setFilePhysicalName(isFile ? filePhysicalName : null);
         contentsFile.setThumbnailFileName(isFile ? thumbnailFileName : null);
         contentsFile.setThumbnailFileSize(isFile ? thumbnailFileSize : null);
         contentsFile.setThumbnailFilePhysicalName(isFile ? thumbnailFilePhysicalName : null);
-
         contentsFile.setDetailThumbnailFileName(isFile ? detailThumbnailFileName : null);
         contentsFile.setDetailThumbnailFileSize(isFile ? detailThumbnailFileSize : null);
         contentsFile.setDetailThumbnailFilePhysicalName(isFile ? detailThumbnailFilePhysicalName : null);
@@ -362,18 +350,9 @@ public class ContentsFile extends BaseTimeEntity {
      * @param contentsFileUpdateDTO the contents file update dto
      * @author [이소정]
      * @CreatedOn 2020. 7. 3. 오후 5:27:06
-     * @Description
      */
     public void update(final ContentsFileUpdateDTO contentsFileUpdateDTO) {
         log.info("ContentsFile.update");
-
-//        TODO validation 2020.07.24 by.sojeong.lee
-//        if (isFile) {
-//            this.checkStringValidation(contentsFileUpdateDTO.getFileName(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_NAME.getMessage());
-//        } else {
-//            this.checkStringValidation(contentsFileUpdateDTO.getTitle(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_TITLE.getMessage());
-//            this.checkStringValidation(contentsFileUpdateDTO.getUrl(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.toString(), ErrorEnumCode.ContentsError.NOT_EXIST_FILE_URL.getMessage());
-//        }
 
         boolean isFile = ServiceCode.ContentsFileKindCode.FILE.toString().equals(contentsFileUpdateDTO.getFileKindCode());
 
@@ -381,12 +360,12 @@ public class ContentsFile extends BaseTimeEntity {
         this.fileKindCode = contentsFileUpdateDTO.getFileKindCode();
         this.fileOrder = contentsFileUpdateDTO.getFileOrder();
 
-        this.fileName = isFile ? contentsFileUpdateDTO.getFileName() : null;
-        this.fileSize = isFile ? contentsFileUpdateDTO.getFileSize() : null;
-        this.filePhysicalName = isFile ? contentsFileUpdateDTO.getFilePhysicalName() : null;
         this.fileContentType = isFile ? contentsFileUpdateDTO.getFileContentType() : null;
         this.fileExtension = isFile ? contentsFileUpdateDTO.getFileExtension().toUpperCase() : null;
 
+        this.fileName = isFile ? contentsFileUpdateDTO.getFileName() : null;
+        this.fileSize = isFile ? contentsFileUpdateDTO.getFileSize() : null;
+        this.filePhysicalName = isFile ? contentsFileUpdateDTO.getFilePhysicalName() : null;
         this.thumbnailFileName = isFile ? contentsFileUpdateDTO.getThumbnailFileName() : null;
         this.thumbnailFileSize = isFile ? contentsFileUpdateDTO.getThumbnailFileSize() : null;
         this.thumbnailFilePhysicalName = isFile ? contentsFileUpdateDTO.getThumbnailFilePhysicalName() : null;
@@ -404,7 +383,6 @@ public class ContentsFile extends BaseTimeEntity {
      * @param downloadCount the download count
      * @author [이소정]
      * @CreatedOn 2020. 7. 3. 오후 5:28:11
-     * @Description
      */
     public void updateDownloadCount(final Long downloadCount) {
         log.info("ContentsFile.updateDownloadCount");
@@ -417,7 +395,6 @@ public class ContentsFile extends BaseTimeEntity {
      * @param useYn the use yn
      * @author [이소정]
      * @CreatedOn 2020. 7. 6. 오후 12:02:25
-     * @Description
      */
     public void updateUseYn(final String useYn) {
         this.useYn = useYn;
@@ -432,7 +409,6 @@ public class ContentsFile extends BaseTimeEntity {
      * @return the boolean
      * @author [이소정]
      * @CreatedOn 2020. 6. 26. 오후 5:30:51
-     * @Description
      */
     public Boolean checkStringValidation(String value, String errorCode, String errorMessage) {
         if (value.isEmpty() || value.trim().isEmpty()) {

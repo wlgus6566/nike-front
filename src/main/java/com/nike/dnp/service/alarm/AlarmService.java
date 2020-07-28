@@ -20,7 +20,6 @@ import java.util.List;
  *
  * @author [이소정]
  * @CreatedOn 2020. 7. 24. 오후 7:44:29
- * @Description
  */
 @Slf4j
 @Service
@@ -43,7 +42,6 @@ public class AlarmService {
      * @return the page
      * @author [이소정]
      * @CreatedOn 2020. 7. 24. 오후 8:09:49
-     * @Description
      */
     public Page<AlarmResultDTO> findAllPaging(final Long userSeq, final SearchDTO searchDTO) {
         return alarmRepositoryl.findAllPaging(
@@ -64,7 +62,6 @@ public class AlarmService {
      * @return the list
      * @author [이소정]
      * @CreatedOn 2020. 7. 24. 오후 7:16:33
-     * @Description
      */
     public List<Alarm> sendAlarmTargetList(
             final String actionCode, final String typeCd

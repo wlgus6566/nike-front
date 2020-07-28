@@ -9,7 +9,6 @@ import java.io.Serializable;
  *
  * @author [이소정]
  * @CreatedOn 2020. 6. 24. 오후 6:11:52
- * @Description Status 500 Exception 작성
  */
 @Getter
 public class CodeMessageHandleException extends RuntimeException implements Serializable {
