@@ -8,7 +8,7 @@
     </div>
 </template>
 <script>
-    import orderSheet from '@/views/pages/order/order-sheet';
+    import orderSheet from '@/views/pages/product/order-sheet';
 
     export default {
     name: 'NIKE_P_MANAGE_02_002P',

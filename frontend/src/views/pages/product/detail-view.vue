@@ -10,20 +10,29 @@
             <div class="el-dialog__inner">
                 <div class="order-detail-view">
                     <div class="thumbnail">
-                        <img src="http://placehold.it/400x200" alt="임시이미지" />
+                        <img
+                            :src="productDetailData.imageFilePhysicalName"
+                            :alt="productDetailData.imageFileName"
+                        />
                     </div>
                     <div class="info-box">
                         <div class="title-box">
                             <strong class="title">
-                                일이삼사오육칠팔구십일이삼사오육칠팔구십일
-                                일이삼사오육칠팔구십일이삼사오육칠팔구십일
+                                {{ productDetailData.goodsName }}
                             </strong>
                             <p class="txt">
-                                일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠
+                                {{ productDetailData.goodsDescription }}
                             </p>
                             <div class="desc-txt-box">
-                                <span class="desc-txt">1,000원</span>
-                                <span class="desc-txt">최소주문수량 1,000개</span>
+                                <span class="desc-txt">
+                                    <em> {{ productDetailData.unitPrice }}</em>
+                                    원
+                                </span>
+                                <span class="desc-txt">
+                                    최소주문수량
+                                    <em>{{ productDetailData.minimumOrderQuantity }}</em>
+                                    개
+                                </span>
                             </div>
                         </div>
                         <div class="btn-box">
@@ -46,8 +55,8 @@ export default {
     props: {
         visible: Boolean,
         receipt: Object,
+        productDetailData: Object,
     },
-
     methods: {
         removeBodyClass(className) {
             const body = document.body;

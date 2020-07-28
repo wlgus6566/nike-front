@@ -24,8 +24,8 @@
                         <button type="button"><span>검색</span></button>
                     </div>
                 </div>
-                <ul class="order-list">
-                    <li class="order-list-item">
+                <ul class="product-list">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -46,7 +46,7 @@
                             <button type="button" class="cart active"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-list-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -65,7 +65,7 @@
                             <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-list-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -84,7 +84,7 @@
                             <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-list-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -103,7 +103,7 @@
                             <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-list-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -122,7 +122,7 @@
                             <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-list-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -141,7 +141,7 @@
                             <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-list-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -160,7 +160,7 @@
                             <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-list-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -179,7 +179,7 @@
                             <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-list-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />

@@ -27,7 +27,9 @@
                             <span class="num">{{ item.num }}</span>
                         </td>
                         <td class="agl">
-                            <a href="#">{{ item.agl }}</a>
+                            <router-link to="/mypage/view">
+                                {{ item.agl }}
+                            </router-link>
                         </td>
                         <td>
                             <span class="date">{{ item.date }}</span>
@@ -63,22 +65,46 @@ export default {
                     agl: '3 NIKE 2020 PSKO 일정이 업데이트 되었습니다.',
                 },
                 {
-                    num: null,
-                    noti: true,
+                    num: '4',
+                    noti: false,
                     date: '2020.06.18',
                     agl: '4 NIKE 2020 PSKO 일정이 업데이트 되었습니다.',
                 },
                 {
-                    num: null,
-                    noti: true,
+                    num: '5',
+                    noti: false,
                     date: '2020.06.18',
                     agl: '5 NIKE 2020 PSKO 일정이 업데이트 되었습니다.',
+                },
+                {
+                    num: '6',
+                    noti: false,
+                    date: '2020.06.18',
+                    agl: '6 NIKE 2020 PSKO 일정이 업데이트 되었습니다.',
+                },
+                {
+                    num: '7',
+                    noti: false,
+                    date: '2020.06.18',
+                    agl: '6 NIKE 2020 PSKO 일정이 업데이트 되었습니다.',
                 },
                 {
                     num: null,
                     noti: true,
                     date: '2020.06.18',
-                    agl: '6 NIKE 2020 PSKO 일정이 업데이트 되었습니다',
+                    agl: '8 NIKE 2020 PSKO 일정이 업데이트 되었습니다.',
+                },
+                {
+                    num: null,
+                    noti: true,
+                    date: '2020.06.18',
+                    agl: '9 NIKE 2020 PSKO 일정이 업데이트 되었습니다.',
+                },
+                {
+                    num: null,
+                    noti: true,
+                    date: '2020.06.18',
+                    agl: '10 NIKE 2020 PSKO 일정이 업데이트 되었습니다.',
                 },
             ],
         };

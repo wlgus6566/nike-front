@@ -1,11 +1,14 @@
 import axios from 'axios';
-import { setInterceptors } from '@/api/config/interceptors';
+import {setInterceptors} from '@/api/config/interceptors';
 
 const apiBasket = axios.create({ baseURL: '/api/goodsBasket', timeout: 3000 });
 setInterceptors(apiBasket);
 
-function getBasketList() {
-    return apiBasket.get(`/list`);
+function getBasketList(params) {
+    return apiBasket.get(`/list`, {
+        params: params,
+    });
+    console.log(params);
 }
 
 function postBasketSave(data) {
@@ -16,8 +19,8 @@ function postBasketSaveList(data) {
     return apiBasket.post(`/saveList`, data);
 }
 
-function deleteBasket(seq) {
-    return apiBasket.delete(`/${seq}`);
+function deleteBasket(goodsBasketSeq) {
+    return apiBasket.delete(`/${goodsBasketSeq}`);
 }
 
 export { getBasketList, postBasketSave, postBasketSaveList, deleteBasket };

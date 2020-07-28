@@ -14,9 +14,11 @@
                         <span data-v-1756ba49="">삭제</span>
                     </button>
                     <div class="right">
-                        <button type="button" class="btn-form-gray">
-                            <span data-v-1756ba49="">등록</span>
-                        </button>
+                        <router-link to="/mypage/edit/notice">
+                            <button type="button" class="btn-form-gray">
+                                <span data-v-1756ba49="">등록</span>
+                            </button>
+                        </router-link>
                     </div>
                 </div>
             </template>
