@@ -46,8 +46,8 @@
         <button
             type="button"
             class="btn-order"
-            @click="showorderSheet"
-            :disabled="basketList.length"
+            @click="showOrderSheet"
+            :disabled="!basketList.length"
         >
             <span class="txt">ORDER</span>
         </button>
@@ -117,7 +117,8 @@
         console.log(this.$store.state.basketListData);
     },
     methods: {
-        showorderSheet() {
+        showOrderSheet() {
+            console.log('asd');
             this.visible.orderSheet = true;
         },
 
@@ -148,10 +149,6 @@
     padding: 8px 18px;
     background: #eee;
     overflow: auto;
-}
-.cart-item-wrap .no-data {
-    margin-top: 0;
-    height: 100%;
 }
 .cart-item {
     position: relative;
@@ -222,6 +219,10 @@
     position: relative;
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 0.58px;
+}
+.btn-order:disabled {
+    background: #ccc;
+    cursor: auto;
 }
 .total-price-wrap {
     margin-top: 25px;

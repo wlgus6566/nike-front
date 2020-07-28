@@ -13,8 +13,9 @@
     </div>
 </template>
 <script>
-import navItem from './nav-item';
-export default {
+	import navItem from './nav-item';
+
+	export default {
     name: 'nav-wrap',
     data() {
         return {
@@ -153,6 +154,11 @@ export default {
                                 {
                                     title: `오픈 패키지`,
                                     to: '/order/subsidiary/open-package',
+                                    exact: false,
+                                },
+                                {
+                                    title: `나이키 골프`,
+                                    to: '/order/subsidiary/nike-golf',
                                     exact: false,
                                 },
                             ],

@@ -3,16 +3,14 @@
         <div class="aside-wrap">
             <UserInfo></UserInfo>
             <TabComponent v-bind:tabMenus="tabMenus"></TabComponent>
-            <strong class="tab-title">HISTORY</strong>
-            <TabComponent v-bind:tabMenus="historyTab"></TabComponent>
         </div>
     </div>
 </template>
 <script>
-    import UserInfo from './user.vue';
-    import TabComponent from '@/components/tab-comp/index.vue';
+	import UserInfo from './user.vue';
+	import TabComponent from '@/components/tab-comp/index.vue';
 
-    export default {
+	export default {
     name: 'AsideOrder',
     data: function () {
         return {
@@ -26,23 +24,6 @@
                     {
                         title: 'CART',
                         component: 'ContentOrder',
-                    },
-                ],
-            },
-            historyTab: {
-                tabClass: 'tab-list-sm',
-                tabList: [
-                    {
-                        title: 'ASSET',
-                        component: 'ContentAsset',
-                    },
-                    {
-                        title: 'TOOLKIT',
-                        component: 'ContentTooKlit',
-                    },
-                    {
-                        title: 'FOUNDATION',
-                        component: 'ContentFoundation',
                     },
                 ],
             },

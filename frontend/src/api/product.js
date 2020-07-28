@@ -10,10 +10,17 @@ function getProductList(params) {
         params: params,
     });
 }
+
+// PRODUCT 목록 유저 조회
+function getUserProductList(category2Code, params) {
+    return apiProduct.get(`/${category2Code}/list`, {
+        params: params,
+    });
+}
 // PRODUCT 상세 조회
 function getProductDetail(goodsSeq, params) {
     return apiProduct.get(`/list/${goodsSeq}`, {
         params: params,
     });
 }
-export { getProductList, getProductDetail };
+export { getProductList, getUserProductList, getProductDetail };

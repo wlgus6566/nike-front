@@ -2,7 +2,7 @@
     <ul class="product-list">
         <li
             class="product-list-item"
-            v-for="(item, index) in productListData"
+            v-for="(item, index) in userProductListData"
             :key="item.goodsSeq"
         >
             <button
@@ -51,7 +51,7 @@
     data() {
         return {};
     },
-    props: ['productListData'],
+    props: ['userProductListData'],
     created() {},
     computed: {
         basketList() {
