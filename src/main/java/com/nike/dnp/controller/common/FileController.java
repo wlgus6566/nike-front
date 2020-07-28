@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +53,7 @@ public class FileController {
 
 		final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO);
 
-		URL url = S3Util.upload(fileResultDTO);
+		String path = S3Util.upload(fileResultDTO);
 		S3Util.fileCopy(fileResultDTO.getFilePhysicalName(), "test");
 		return responseService.getSingleResult(fileResultDTO);
 	}
@@ -71,7 +70,7 @@ public class FileController {
 			FileUploadDTO fileParam = new FileUploadDTO();
 			fileParam.setUploadFile(multipartFile);
 			final FileResultDTO fileResultDTO = fileUpload(fileParam);
-			URL url = S3Util.upload(fileResultDTO);
+			String path = S3Util.upload(fileResultDTO);
 			S3Util.fileCopy(fileResultDTO.getFilePhysicalName(),"test");
 			resultList.add(fileResultDTO);
 		});
