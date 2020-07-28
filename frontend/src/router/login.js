@@ -27,9 +27,8 @@ const routes = [
         beforeEnter: async (to, from, next) => {
             try {
                 const { data: response } = await certCode({
-                    certCode: to.query.certCode,
+                    certCode: encodeURIComponent(to.query.certCode),
                 });
-                console.log(response);
                 if (response.success) {
                     next();
                 } else {

@@ -2,23 +2,37 @@
     <div>
         <h2 class="page-title">AGENCY CONTACT</h2>
         <ul class="contact-list">
-            <li class="contact-item" v-for="(agencyData, index) in agencyData" :key="index">
-                <strong class="store-name"> {{ agencyData.agencyName }} </strong>
+            <li
+                class="contact-item"
+                v-for="(agencyData, index) in agencyData"
+                :key="index"
+            >
+                <strong class="store-name">
+                    {{ agencyData.agencyName }}
+                </strong>
                 <p class="store-desc">
                     {{ agencyData.agencyDescription }}
                 </p>
                 <div class="info-box">
-                    <a :href="'tel:' + agencyData.telephoneNumber" class="info-txt tel">
+                    <a
+                        :href="'tel:' + agencyData.telephoneNumber"
+                        class="info-txt tel"
+                    >
                         {{ agencyData.telephoneNumber }}
                     </a>
-                    <a :href="'mailto:' + agencyData.email" class="info-txt mail">
+                    <a
+                        :href="'mailto:' + agencyData.email"
+                        class="info-txt mail"
+                    >
                         {{ agencyData.email }}
                     </a>
                 </div>
                 <button
                     type="button"
                     class="modi"
-                    v-on:click="$emit('detailAgencyManagement', agencyData.agencySeq)"
+                    v-on:click="
+                        $emit('detailAgencyManagement', agencyData.agencySeq)
+                    "
                 >
                     <span>수정</span>
                 </button>
@@ -50,9 +64,7 @@ export default {
     },
     props: ['agencyData', 'loadingData'],
     computed: {
-        check() {
-            console.log(this.agencyData.length);
-        },
+        check() {},
     },
     methods: {},
     created() {},

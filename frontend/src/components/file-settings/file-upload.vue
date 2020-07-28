@@ -14,10 +14,16 @@
         >
         </el-upload-custom>
         <div class="btn-box">
-            <button type="button" class="btn-form-gray" @click.prevent="selectFile">
+            <button
+                type="button"
+                class="btn-form-gray"
+                @click.prevent="selectFile"
+            >
                 찾기
             </button>
-            <button type="button" class="btn-form" @click.prevent="deleteFile">삭제</button>
+            <button type="button" class="btn-form" @click.prevent="deleteFile">
+                삭제
+            </button>
         </div>
     </div>
 </template>
@@ -53,21 +59,18 @@ export default {
     computed: {
         checkedList() {
             return this.fileList.filter((el) => {
-                console.log(el);
                 return !el.check;
             });
         },
     },
     methods: {
-        handleRemove(file, fileList) {
-            console.log(file, fileList);
-        },
-        handlePreview(file) {
-            console.log(file);
-        },
+        handleRemove(file, fileList) {},
+        handlePreview(file) {},
         handleExceed(files, fileList) {
             this.$message.warning(
-                `The limit is 3, you selected ${files.length} files this time, add up to ${
+                `The limit is 3, you selected ${
+                    files.length
+                } files this time, add up to ${
                     files.length + fileList.length
                 } totally`
             );
