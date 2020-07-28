@@ -19,11 +19,11 @@
     </aside>
 </template>
 <script>
-	import Sticky from 'vue-sticky-directive';
-	import UserInfo from './user.vue';
-	import TabComponent from '@/components/tab-comp/index.vue';
+    import Sticky from 'vue-sticky-directive';
+    import UserInfo from './user.vue';
+    import TabComponent from '@/components/tab-comp/index.vue';
 
-	export default {
+    export default {
     name: 'AsideFile',
     props: ['shouldStick'],
     data: function () {
