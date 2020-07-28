@@ -9,7 +9,12 @@
             </button>
         </div>
         <div>
-            <input type="file" ref="uploadIpt" multiple @change="uploadIptChange" />
+            <input
+                type="file"
+                ref="uploadIpt"
+                multiple
+                @change="uploadIptChange"
+            />
             <draggable
                 v-model="fileList"
                 v-bind="dragOptions"
@@ -80,7 +85,6 @@ export default {
         },
         uploadFiles(files) {
             let postFiles = Array.prototype.slice.call(files);
-            console.log(postFiles);
 
             if (postFiles.length === 0) {
                 return;
@@ -143,7 +147,6 @@ export default {
         fileSelect() {
             this.$refs.uploadIpt.value = null;
             this.$refs.uploadIpt.click();
-            console.log();
         },
     },
 };

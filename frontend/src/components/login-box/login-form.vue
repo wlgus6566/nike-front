@@ -71,7 +71,6 @@ export default {
                     //this.$router.push('/');
                 }
 
-                console.log(response);
                 return;
             } catch (error) {
                 alert(error.response.data.msg);

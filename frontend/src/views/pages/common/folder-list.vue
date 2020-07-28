@@ -7,10 +7,7 @@
                 자료는 NIKE.INC.와 NIKE KOREA LLC.의 자산입니다.<br />
                 보안 규정을 준수하시기 바랍니다.
             </p>
-            <router-link
-                :to="`/${this.$route.meta.topMenuCode.toLowerCase()}/upload`"
-                class="btn-s-black"
-            >
+            <router-link :to="uploadLink" class="btn-s-black">
                 UPLOAD
             </router-link>
         </div>
@@ -49,6 +46,13 @@ export default {
     watch: {
         'listSortSelect.value'() {
             this.initFetchData();
+        },
+    },
+    computed: {
+        uploadLink() {
+            return this.$route.meta.topMenuCode
+                ? `/${this.$route.meta.topMenuCode.toLowerCase()}/upload`
+                : '/';
         },
     },
     data() {
@@ -106,6 +110,7 @@ export default {
             }
         },
         initFetchData() {
+            console.log('initFetchData');
             this.totalPage = null;
             this.page = 0;
             this.folderListData = null;
@@ -122,6 +127,7 @@ export default {
                 this.folderListData.length >= this.itemLength &&
                 this.folderListData.length !== 0
             ) {
+                console.log('infiniteScroll');
                 this.fetchData(true);
             }
         },
@@ -165,6 +171,7 @@ export default {
         },
     },
     created() {
+        console.log('folder-list-created');
         this.initFetchData();
         window.addEventListener('scroll', this.handleScroll);
     },
