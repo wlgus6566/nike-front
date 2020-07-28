@@ -7,7 +7,7 @@
             <ProductList
                 v-if="productListData.length"
                 :productListData="productListData"
-                @showdetailView="showdetailView"
+                @showDetailView="showDetailView"
             />
             <template v-else>
                 <NoData v-if="searchKeyword === ''" />
@@ -23,17 +23,17 @@
     </div>
 </template>
 <script>
-    import SearchInput from '@/components/search-input';
-    import ProductList from '@/components/product-list';
-    import Loading from '@/components/product-list/loading';
-    import NoData from '@/components/product-list/nodata';
-    import NoDataSearch from '@/components/product-list/nodata-search';
-    import detailView from '@/views/pages/product/detail-view';
+	import SearchInput from '@/components/search-input';
+	import ProductList from '@/components/product-list';
+	import Loading from '@/components/product-list/loading';
+	import NoData from '@/components/product-list/nodata';
+	import NoDataSearch from '@/components/product-list/nodata-search';
+	import detailView from '@/views/pages/product/detail-view';
 
-    import {getProductList} from '@/api/product.js';
-    import {getWishList, postWishList} from '@/api/wish-list';
+	import {getProductList} from '@/api/product.js';
+	import {getWishList, postWishList} from '@/api/wish-list';
 
-    export default {
+	export default {
     name: 'product-list',
     data() {
         return {
@@ -57,7 +57,9 @@
             },
         };
     },
-    created() {},
+    created() {
+        this.getProduct();
+    },
     components: {
         SearchInput,
         ProductList,
@@ -70,11 +72,9 @@
         this.getProduct();
         this.getWishiList();
     },
-    activated() {
-        console.log('test');
-    },
+    activated() {},
     methods: {
-        // 상품 리스트 api
+        // 상품 검색 api
         searchSubmit(val) {
             this.searchKeyword = val;
             this.getProduct();
@@ -92,15 +92,15 @@
                     category3Code: this.$route.meta.category3Code,
                     keyword: this.searchKeyword,
                 });
-                console.log(response);
+
                 this.productListData = response.content;
             } catch (error) {
                 console.log(error);
             }
         },
 
-        // detial modal open
-        showdetailView(goodsSeq) {
+        // 상세 팝업
+        showDetailView(goodsSeq) {
             this.visible.detailView = true;
             const findIndex = this.productListData.findIndex(
                 (el) => el.goodsSeq === goodsSeq
@@ -135,7 +135,7 @@
                     });
                     await this.getWishiList();
                     alert(
-                        '위시리스트에 추가 되었습니다. 위시리스트는 마이페이지에서 확인가능합니다.'
+                        '위시리스트에 추가 되었습니다.\n 위시리스트는 마이페이지에서 확인가능합니다.'
                     );
                 } else {
                     alert('이미 담긴 상품입니다.');

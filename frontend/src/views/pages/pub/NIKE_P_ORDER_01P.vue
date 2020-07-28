@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-button type="white" size="small" @click="showdetailView">
+        <el-button type="white" size="small" @click="showDetailView">
             계정 관리
         </el-button>
 
@@ -8,9 +8,9 @@
     </div>
 </template>
 <script>
-    import detailView from '@/views/pages/product/detail-view';
+	import detailView from '@/views/pages/product/detail-view';
 
-    export default {
+	export default {
     name: 'NIKE_P_MANAGE_02_002P',
     data() {
         return {
@@ -21,7 +21,7 @@
     },
     components: { detailView },
     methods: {
-        showdetailView() {
+        showDetailView() {
             this.visible.detailView = true;
         },
     },

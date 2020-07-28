@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import {loginUser} from '@/api/login';
 import {deleteBasket, getBasketList} from '@/api/basket.js';
-import {deleteCookie, getAuthFromCookie, saveAuthToCookie} from '@/utils/cookies.js';
+import {deleteCookie, getAuthFromCookie, saveAuthToCookie,} from '@/utils/cookies.js';
 
 Vue.use(Vuex);
 
@@ -28,8 +28,8 @@ export default new Vuex.Store({
         SET_TOKEN(state, token) {
             state.token = token;
         },
-        SET_BASKET(state, baketList) {
-            state.basketListData = baketList;
+        SET_BASKET(state, basketList) {
+            state.basketListData = basketList;
         },
         SET_BASKETDEL(state, goodsBasketSeq) {
             state.goodsBasketSeq = goodsBasketSeq;
