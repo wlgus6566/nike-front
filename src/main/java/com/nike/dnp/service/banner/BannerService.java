@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.util.Optional;
+
 
 /**
  * BannerService
@@ -62,6 +64,19 @@ public class BannerService {
     }
 
     /**
+     * Find by id optional.
+     *
+     * @param bannerSeq the banner seq
+     * @return the optional
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 28. 오후 5:21:37
+     * @Description
+     */
+    public Optional<Banner> findById(final Long bannerSeq) {
+        return bannerRepository.findById(bannerSeq);
+    }
+
+    /**
      * Find by id banner.
      *
      * @param bannerSeq the banner seq
@@ -70,8 +85,8 @@ public class BannerService {
      * @CreatedOn 2020. 7. 20. 오전 11:34:05
      * @Description 배너 상세
      */
-    public Banner findById(final Long bannerSeq) {
-        return bannerRepository.findById(bannerSeq).orElseThrow(
+    public Banner findByBannerSeq(final Long bannerSeq) {
+        return this.findById(bannerSeq).orElseThrow(
                 () -> new CodeMessageHandleException(
                         FailCode.ExceptionError.NOT_FOUND.name()
                         , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
@@ -107,11 +122,10 @@ public class BannerService {
      */
     @Transactional
     public Banner update (final Long bannerSeq, final BannerSaveDTO bannerSaveDTO) {
-        Banner banner = this.findById(bannerSeq);
-
-
+        Banner banner = this.findByBannerSeq(bannerSeq);
+        bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
+        bannerSaveDTO.setMobileImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getMobileImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
         banner.saveOrUpdate(bannerSaveDTO);
-
         redisService.delete("cache:visual");
         redisService.set("cache:visual", banner, 0);
         return banner;
