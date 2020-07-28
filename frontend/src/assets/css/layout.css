@@ -228,3 +228,7 @@ footer {
     opacity: 0;
     transform: translateY(10px);
 }
+/* modal open css */
+.el-popup-parent--hidden {
+    padding-right: 0 !important;
+}

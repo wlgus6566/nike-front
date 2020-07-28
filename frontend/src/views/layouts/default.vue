@@ -1,6 +1,10 @@
 <template>
     <div id="wrap">
-        <header class="sticky-container" sticky-container v-on:mouseleave="mouseEvent(true)">
+        <header
+            class="sticky-container"
+            sticky-container
+            v-on:mouseleave="mouseEvent(true)"
+        >
             <div
                 class="sticky-content"
                 sticky-offset="{top:0, bottom:0}"
@@ -105,8 +109,12 @@ export default {
             const bg = header.querySelector('.header-bg');
             const nav = header.querySelector('nav');
             const anchor = nav.querySelector('.depth1 > .router-link-active');
-            const ul = anchor.nextSibling;
-
+            let parentN = null;
+            let ul = null;
+            if (anchor) {
+                parentN = anchor.parentNode;
+                ul = anchor.nextSibling;
+            }
             this.tw.clear();
             this.tw
                 .set(header, {
@@ -168,7 +176,7 @@ export default {
                     },
                     0.3
                 )
-                .set(anchor.parentNode, {
+                .set(parentN, {
                     display: 'block',
                 })
                 .set(
@@ -216,7 +224,10 @@ export default {
         pageAppear() {},
         pageEnter() {},
         pageLeave() {
-            if (this.newRoutePath.split('/')[1] !== this.oldRoutePath.split('/')[1]) {
+            if (
+                this.newRoutePath.split('/')[1] !==
+                this.oldRoutePath.split('/')[1]
+            ) {
                 if (this.newRoutePath !== '/') {
                     this.headerAni();
                 }
