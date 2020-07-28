@@ -2,7 +2,6 @@ package com.nike.dnp.repository.notice;
 
 import com.nike.dnp.dto.notice.NoticeArticleListDTO;
 import com.nike.dnp.dto.notice.NoticeSearchDTO;
-import com.nike.dnp.entity.notice.NoticeArticle;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 

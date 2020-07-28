@@ -34,7 +34,7 @@ public class UserAuditAware implements AuditorAware<Long> {
     @Override
     public Optional<Long> getCurrentAuditor() {
         log.info("UserAuditAware.getCurrentAuditor");
-        Optional<Long> result = Optional.empty();
+        Optional<Long> result = Optional.of(0L);
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {
             final AuthUserDTO authUserDTO = (AuthUserDTO) authentication.getPrincipal();

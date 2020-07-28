@@ -39,11 +39,7 @@ public class EmailSendingLogService {
      */
     @Transactional
     public EmailSendingLog save(final EmailSendingLogSaveDTO saveDTO) {
-        final EmailSendingLog saveLog = new EmailSendingLog();
-        saveLog.setUserSeq(saveDTO.getUserSeq());
-        saveLog.setTitle(saveDTO.getTitle());
-        saveLog.setContents(saveDTO.getContents());
-        return logRepository.save(saveLog);
+        return logRepository.save(EmailSendingLog.builder().emailSendingLogSaveDTO(saveDTO).build());
     }
 
 }

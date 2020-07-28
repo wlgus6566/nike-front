@@ -1,7 +1,5 @@
 package com.nike.dnp.repository.contents;
 
-import com.nike.dnp.common.ObjectMapperUtils;
-import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.dto.contents.ContentsUserEmailDTO;
@@ -10,6 +8,7 @@ import com.nike.dnp.entity.contents.QContents;
 import com.nike.dnp.entity.user.QUser;
 import com.nike.dnp.entity.user.QUserAuth;
 import com.nike.dnp.entity.user.QUserContents;
+import com.nike.dnp.util.ObjectMapperUtil;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -85,7 +84,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                         , qContents.useYn.eq("Y")
                 );
 
-        final List<ContentsResultDTO> contentsList = ObjectMapperUtils.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsResultDTO.class);
+        final List<ContentsResultDTO> contentsList = ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsResultDTO.class);
 
         return new PageImpl<>(contentsList, pageRequest, query.fetchCount());
     }
@@ -131,7 +130,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                         , qContents.useYn.eq("Y")
                 );
 
-        return ObjectMapperUtils.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsResultDTO.class);
+        return ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsResultDTO.class);
 
     }
 

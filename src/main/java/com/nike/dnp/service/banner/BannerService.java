@@ -1,12 +1,14 @@
 package com.nike.dnp.service.banner;
 
 import com.nike.dnp.common.variable.FailCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.banner.BannerSaveDTO;
 import com.nike.dnp.entity.banner.Banner;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.banner.BannerRepository;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.util.MessageUtil;
+import com.nike.dnp.util.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -86,6 +88,8 @@ public class BannerService {
      */
     @Transactional
     public Banner save (final BannerSaveDTO bannerSaveDTO) {
+        bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
+        bannerSaveDTO.setMobileImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getMobileImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
         Banner banner = bannerRepository.save(new Banner().saveOrUpdate(bannerSaveDTO));
         redisService.set("cache:visual", banner, 0);
         return banner;
@@ -103,7 +107,11 @@ public class BannerService {
      */
     @Transactional
     public Banner update (final Long bannerSeq, final BannerSaveDTO bannerSaveDTO) {
-        Banner banner = this.findById(bannerSeq).saveOrUpdate(bannerSaveDTO);
+        Banner banner = this.findById(bannerSeq);
+
+
+        banner.saveOrUpdate(bannerSaveDTO);
+
         redisService.delete("cache:visual");
         redisService.set("cache:visual", banner, 0);
         return banner;

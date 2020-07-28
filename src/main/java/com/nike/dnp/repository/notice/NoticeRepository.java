@@ -2,7 +2,6 @@ package com.nike.dnp.repository.notice;
 
 import com.nike.dnp.entity.notice.NoticeArticle;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 /**
  * The Interface Notice repository.

@@ -1,7 +1,5 @@
 package com.nike.dnp.controller.notice;
 
-import com.nike.dnp.common.aspect.ValidField;
-import com.nike.dnp.common.validation.ValidationGroups;
 import com.nike.dnp.dto.notice.NoticeArticleListDTO;
 import com.nike.dnp.dto.notice.NoticeSaveDTO;
 import com.nike.dnp.dto.notice.NoticeSearchDTO;
@@ -17,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
