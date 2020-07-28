@@ -18,12 +18,22 @@
         <el-dialog
             title="Tips"
             :visible.sync="dialogVisible"
-            width="30%"
+            width="800px"
             :before-close="handleClose"
         >
             <div>
-                <div class="preview" />
-                <vue-cropper ref="cropper" :aspect-ratio="1 / 1" :src="imgSrc" preview=".preview" />
+                <vue-cropper
+                    ref="cropper"
+                    :aspect-ratio="1 / 1"
+                    :aspectRatio="1 / 1"
+                    :viewMode="1"
+                    :responsive="false"
+                    :guides="false"
+                    :center="false"
+                    :src="imgSrc"
+                    :minContainerWidth="700"
+                    :minContainerHeight="700"
+                />
             </div>
             <a href="#" role="button" @click.prevent="cropImage">
                 Crop
@@ -50,6 +60,7 @@ export default {
     methods: {
         inputReset() {
             console.log(this.$refs.input);
+            this.cropImg = null;
             this.$refs.input.value = null;
         },
         handleClose(done) {

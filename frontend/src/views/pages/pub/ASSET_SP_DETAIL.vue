@@ -30,11 +30,14 @@
                 </div>
 
                 <div class="folder-wrap">
-                    <h2 class="folder-title">NIKE DIRECT AM90 NIKE DIRECT AM90 나이키 다이렉트 NSW</h2>
+                    <h2 class="folder-title">
+                        NIKE DIRECT AM90 NIKE DIRECT AM90 나이키 다이렉트 NSW
+                    </h2>
                     <div class="inner">
                         <p class="folder-desc">
-                            나이키 다이렉트 캠페인 자료와 동영상, 스타일가이드, 기타 그래픽자료가 업데이트 되었습니다. SP20 나이키 다이렉트 NSW 캠페인
-                            시공 에셋 자료가 업데이트 되었습니다.
+                            나이키 다이렉트 캠페인 자료와 동영상, 스타일가이드, 기타 그래픽자료가
+                            업데이트 되었습니다. SP20 나이키 다이렉트 NSW 캠페인 시공 에셋 자료가
+                            업데이트 되었습니다.
                         </p>
                         <span class="folder-date">2020.01.01 - 2020.01.03</span>
                         <p class="folder-name">나이키 담당자 정보 : <em>홍길동</em></p>
@@ -43,10 +46,12 @@
                     <div class="noti-box">
                         <ul class="noti-item-list">
                             <li class="noti-item">
-                                KEEP IT TIGHT! 본 자료는 NIKE.INC.와 NIKE KOREA LLC.의 자산입니다. 보안 규정을 준수하시기 바랍니다.
+                                KEEP IT TIGHT! 본 자료는 NIKE.INC.와 NIKE KOREA LLC.의 자산입니다.
+                                보안 규정을 준수하시기 바랍니다.
                             </li>
                             <li class="noti-item">
-                                자료의 조회와 다운로드 이력이 추적 / 관리됩니다. 자료의 불법적인 유출은 관련 법에 의거 처벌될 수 있습니다.
+                                자료의 조회와 다운로드 이력이 추적 / 관리됩니다. 자료의 불법적인
+                                유출은 관련 법에 의거 처벌될 수 있습니다.
                             </li>
                         </ul>
                     </div>
@@ -64,15 +69,15 @@
                     </li>
                 </ul>
                 <div class="all-box">
-                    <!-- todo 전체선택 스크립트 작업 필요  -->
-                    <label class="check-label">
-                        <span class="checkbox">
-                            <input type="checkbox" />
-                            <span></span>
-                        </span>
-                        <strong class="txt">전체선택</strong>
-                    </label>
-                    <p class="desc"><em>1</em>개의 파일이 선택됨</p>
+                    <el-checkbox v-model="allCheck" v-on:change="allCheckFn(allCheck)">
+                        전체선택
+                    </el-checkbox>
+                    <p class="desc">
+                        <em>
+                            0
+                        </em>
+                        개의 파일이 선택됨
+                    </p>
                     <!-- todo select 스크립트 작업 필요  -->
                     <div class="filter-select">
                         <select>
@@ -82,212 +87,34 @@
                 </div>
                 <!-- todo 추가 스크립트 작업 필요  -->
                 <ul class="file-item-list">
-                    <li class="file-item">
+                    <li class="file-item" v-for="(item, index) in items" :key="index">
                         <div class="list">
-                            <label>
-                                <span class="checkbox">
-                                    <input type="checkbox" checked />
-                                    <span></span>
-                                </span>
+                            <el-checkbox v-model="item.state" v-on:change="checkFn">
                                 <span class="thumbnail">
-                                    <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                                    <img :src="item.img" alt="" />
                                 </span>
                                 <span class="info-box">
-                                    <strong class="title"
-                                        >타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
-                                        타이틀입니다 타이틀입니다타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다타이틀입니다
-                                        타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
-                                        타이틀입니다</strong
-                                    >
+                                    <strong class="title">{{ item.title }}</strong>
                                 </span>
-                            </label>
+                            </el-checkbox>
                             <div class="btn-box">
-                                <button type="button" class="btn-s-sm-white"><i class="icon-check"></i><span>ADDED</span></button>
-                                <button type="button" class="btn-more active"><span>더보기</span></button>
+                                <button type="button" class="btn-s-sm-white">
+                                    <i class="icon-check"></i><span>ADDED</span>
+                                </button>
+                                <button type="button" class="btn-more active">
+                                    <span>더보기</span>
+                                </button>
                             </div>
                         </div>
                         <div class="detail active">
                             <div class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                                <img :src="item.img" alt="" />
                             </div>
                             <div class="down-info">
                                 <span class="key">다운로드 횟수</span>
-                                <span class="val"><strong>100,300</strong> 회</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="file-item video">
-                        <div class="list">
-                            <label>
-                                <span class="checkbox">
-                                    <input type="checkbox" checked />
-                                    <span></span>
-                                </span>
-                                <span class="thumbnail">
-                                    <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                                </span>
-                                <span class="info-box">
-                                    <strong class="title"
-                                        >타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
-                                        타이틀입니다 타이틀입니다타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다타이틀입니다
-                                        타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
-                                        타이틀입니다</strong
-                                    >
-                                </span>
-                            </label>
-                            <div class="btn-box">
-                                <button type="button" class="btn-s-sm-white"><i class="icon-check"></i><span>ADDED</span></button>
-                                <button type="button" class="btn-more active"><span>더보기</span></button>
-                            </div>
-                        </div>
-                        <div class="detail active">
-                            <div class="video">
-                                <iframe
-                                    src="https://www.youtube.com/embed/i_IrO7R78Ro"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen
-                                ></iframe>
-                            </div>
-                            <div class="down-info">
-                                <span class="key">다운로드 횟수</span>
-                                <span class="val"><strong>100,300</strong> 회</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="file-item">
-                        <div class="list">
-                            <label>
-                                <span class="checkbox">
-                                    <input type="checkbox" />
-                                    <span></span>
-                                </span>
-                                <span class="thumbnail">
-                                    <img src="@/assets/images/svg/icon-illust-file-doc.svg" alt="" />
-                                </span>
-                                <span class="info-box">
-                                    <strong class="title">타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 </strong>
-                                </span>
-                            </label>
-                            <div class="btn-box">
-                                <button type="button" class="btn-s-sm-black"><span>ADD</span></button>
-                                <button type="button" class="btn-more"><span>더보기</span></button>
-                            </div>
-                        </div>
-                        <div class="detail">
-                            <div class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                            </div>
-                            <div class="down-info">
-                                <span class="key">다운로드 횟수</span>
-                                <span class="val"><strong>100,300</strong> 회</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="file-item">
-                        <div class="list">
-                            <label>
-                                <span class="checkbox">
-                                    <input type="checkbox" disabled />
-                                    <span></span>
-                                </span>
-                                <span class="thumbnail">
-                                    <img src="@/assets/images/svg/icon-illust-file-ar.svg" alt="" />
-                                </span>
-                                <span class="info-box">
-                                    <strong class="title">타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 </strong>
-                                </span>
-                            </label>
-                            <div class="btn-box">
-                                <a href="#" class="btn-s-sm-white"><i class="icon-link"></i><span>LINK</span></a>
-                                <button type="button" class="btn-more" disabled><span>더보기</span></button>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="file-item">
-                        <div class="list">
-                            <label>
-                                <span class="checkbox">
-                                    <input type="checkbox" />
-                                    <span></span>
-                                </span>
-                                <span class="thumbnail">
-                                    <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                                </span>
-                                <span class="info-box">
-                                    <strong class="title">타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 </strong>
-                                </span>
-                            </label>
-                            <div class="btn-box">
-                                <button type="button" class="btn-s-sm-black"><span>ADD</span></button>
-                                <button type="button" class="btn-more"><span>더보기</span></button>
-                            </div>
-                        </div>
-                        <div class="detail">
-                            <div class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                            </div>
-                            <div class="down-info">
-                                <span class="key">다운로드 횟수</span>
-                                <span class="val"><strong>100,300</strong> 회</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="file-item">
-                        <div class="list">
-                            <label>
-                                <span class="checkbox">
-                                    <input type="checkbox" />
-                                    <span></span>
-                                </span>
-                                <span class="thumbnail">
-                                    <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                                </span>
-                                <span class="info-box">
-                                    <strong class="title">타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 </strong>
-                                </span>
-                            </label>
-                            <div class="btn-box">
-                                <button type="button" class="btn-s-sm-black"><span>ADD</span></button>
-                                <button type="button" class="btn-more"><span>더보기</span></button>
-                            </div>
-                        </div>
-                        <div class="detail">
-                            <div class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                            </div>
-                            <div class="down-info">
-                                <span class="key">다운로드 횟수</span>
-                                <span class="val"><strong>100,300</strong> 회</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="file-item">
-                        <div class="list">
-                            <label>
-                                <span class="checkbox">
-                                    <input type="checkbox" />
-                                    <span></span>
-                                </span>
-                                <span class="thumbnail">
-                                    <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                                </span>
-                                <span class="info-box">
-                                    <strong class="title">타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 </strong>
-                                </span>
-                            </label>
-                            <div class="btn-box">
-                                <button type="button" class="btn-s-sm-black"><span>ADD</span></button>
-                                <button type="button" class="btn-more"><span>더보기</span></button>
-                            </div>
-                        </div>
-                        <div class="detail">
-                            <div class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                            </div>
-                            <div class="down-info">
-                                <span class="key">다운로드 횟수</span>
-                                <span class="val"><strong>100,300</strong> 회</span>
+                                <span class="val"
+                                    ><strong>{{ item.down }}</strong> 회</span
+                                >
                             </div>
                         </div>
                     </li>
@@ -304,7 +131,59 @@
 </template>
 <script>
 export default {
-    name: 'ASSET_SP_DETAIL',
+    data() {
+        return {
+            items: [
+                {
+                    title: '타이틀',
+                    state: true,
+                    img: require('@/assets/images/img-asset-none@2x.png'),
+                    url: null,
+                    down: 0,
+                },
+                {
+                    title: '타이틀2',
+                    state: true,
+                    img: require('@/assets/images/img-asset-none@2x.png'),
+                    url: 'https://question0.tistory.com/20',
+                    down: 100,
+                },
+                {
+                    title: '타이틀3',
+                    state: true,
+                    img: require('@/assets/images/img-asset-none@2x.png'),
+                    url: 'https://question0.tistory.com/20',
+                    down: 100,
+                },
+            ],
+            checkITem: [],
+            allCheck: false,
+        };
+    },
+    created() {
+        this.checkFn();
+    },
+    computed: {},
+    methods: {
+        checkFn() {
+            this.items.forEach((item) => {
+                if (item.state) {
+                    this.checkITem.push(item.state);
+                    if (this.checkITem.length == this.items.length) {
+                        this.allCheck = true;
+                    } else {
+                        this.allCheck = false;
+                    }
+                }
+            });
+        },
+        allCheckFn(val) {
+            if (val) {
+                this.checkITem = [1];
+            } else {
+            }
+        },
+    },
 };
 </script>
 <style scoped></style>

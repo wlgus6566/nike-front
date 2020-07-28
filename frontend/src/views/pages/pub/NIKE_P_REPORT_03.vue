@@ -29,8 +29,9 @@
                     <h2 class="folder-title">일산라페스타</h2>
                     <div class="inner">
                         <p class="folder-desc">
-                            나이키 다이렉트 캠페인 자료와 동영상, 스타일가이드, 기타 그래픽자료가 업데이트 되었습니다. SP20 나이키 다이렉트 NSW 캠페인
-                            시공 에셋 자료가 업데이트 되었습니다.
+                            나이키 다이렉트 캠페인 자료와 동영상, 스타일가이드, 기타 그래픽자료가
+                            업데이트 되었습니다. SP20 나이키 다이렉트 NSW 캠페인 시공 에셋 자료가
+                            업데이트 되었습니다.
                         </p>
                         <span class="folder-date">2020.01.01 - 2020.01.03</span>
                     </div>
@@ -48,10 +49,13 @@
                         </li>
                         <li class="feedback-item">
                             <p class="txt">
-                                일 산 라페스타점 점장님, 시공보고서 확인완료 했습니다.산 라페스타점 점장님, 시공보고서 확인완료 했습니다.산 라페스타점
-                                점장님, 시공보고서 확인완료 했습니다.산 라페스타점 점장님, 시공보고서 확인완료 했습니다.산 라페스타점 점장님,
-                                시공보고서 확인완료 했습니다.산 라페스타점 점장님, 시공보고서 확인완료 했습니다.산 라페스타점 점장님, 시공보고서
-                                확인완료 했습니다.산 라페스타점 점장님, 시공보고서 확인완료 했습니다.
+                                일 산 라페스타점 점장님, 시공보고서 확인완료 했습니다.산 라페스타점
+                                점장님, 시공보고서 확인완료 했습니다.산 라페스타점 점장님,
+                                시공보고서 확인완료 했습니다.산 라페스타점 점장님, 시공보고서
+                                확인완료 했습니다.산 라페스타점 점장님, 시공보고서 확인완료
+                                했습니다.산 라페스타점 점장님, 시공보고서 확인완료 했습니다.산
+                                라페스타점 점장님, 시공보고서 확인완료 했습니다.산 라페스타점
+                                점장님, 시공보고서 확인완료 했습니다.
                             </p>
                             <div class="info">
                                 <span class="name">NIKE MKT 01</span>
@@ -60,9 +64,9 @@
                             <button type="button" class="del"><span>삭제</span></button>
                         </li>
                     </ul>
-                    <div class="more-box">
-                        <button type="button" class="txt-btn"><span>더보기</span></button>
-                    </div>
+                    <!--                    <div class="more-box">-->
+                    <!--                        <button type="button" class="txt-btn"><span>더보기</span></button>-->
+                    <!--                    </div>-->
                     <div class="textarea">
                         <textarea></textarea>
                         <button type="button" class="btn-form-gray">댓글등록</button>
@@ -104,16 +108,23 @@
                                 </span>
                                 <span class="info-box">
                                     <strong class="title"
-                                        >타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
-                                        타이틀입니다 타이틀입니다타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다타이틀입니다
-                                        타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
-                                        타이틀입니다</strong
+                                        >타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
+                                        타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
+                                        타이틀입니다 타이틀입니다타이틀입니다 타이틀입니다
+                                        타이틀입니다 타이틀입니다 타이틀입니다타이틀입니다
+                                        타이틀입니다 타이틀입니다 타이틀입니다
+                                        타이틀입니다타이틀입니다 타이틀입니다 타이틀입니다
+                                        타이틀입니다 타이틀입니다</strong
                                     >
                                 </span>
                             </label>
                             <div class="btn-box">
-                                <button type="button" class="btn-s-sm-white"><i class="icon-check"></i><span>ADDED</span></button>
-                                <button type="button" class="btn-more active"><span>더보기</span></button>
+                                <button type="button" class="btn-s-sm-white">
+                                    <i class="icon-check"></i><span>ADDED</span>
+                                </button>
+                                <button type="button" class="btn-more active">
+                                    <span>더보기</span>
+                                </button>
                             </div>
                         </div>
                         <div class="detail active">
@@ -138,16 +149,23 @@
                                 </span>
                                 <span class="info-box">
                                     <strong class="title"
-                                        >타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
-                                        타이틀입니다 타이틀입니다타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다타이틀입니다
-                                        타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
-                                        타이틀입니다</strong
+                                        >타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
+                                        타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
+                                        타이틀입니다 타이틀입니다타이틀입니다 타이틀입니다
+                                        타이틀입니다 타이틀입니다 타이틀입니다타이틀입니다
+                                        타이틀입니다 타이틀입니다 타이틀입니다
+                                        타이틀입니다타이틀입니다 타이틀입니다 타이틀입니다
+                                        타이틀입니다 타이틀입니다</strong
                                     >
                                 </span>
                             </label>
                             <div class="btn-box">
-                                <button type="button" class="btn-s-sm-white"><i class="icon-check"></i><span>ADDED</span></button>
-                                <button type="button" class="btn-more active"><span>더보기</span></button>
+                                <button type="button" class="btn-s-sm-white">
+                                    <i class="icon-check"></i><span>ADDED</span>
+                                </button>
+                                <button type="button" class="btn-more active">
+                                    <span>더보기</span>
+                                </button>
                             </div>
                         </div>
                         <div class="detail active">
@@ -173,14 +191,21 @@
                                     <span></span>
                                 </span>
                                 <span class="thumbnail">
-                                    <img src="@/assets/images/svg/icon-illust-file-doc.svg" alt="" />
+                                    <img
+                                        src="@/assets/images/svg/icon-illust-file-doc.svg"
+                                        alt=""
+                                    />
                                 </span>
                                 <span class="info-box">
-                                    <strong class="title">타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 </strong>
+                                    <strong class="title"
+                                        >타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
+                                    </strong>
                                 </span>
                             </label>
                             <div class="btn-box">
-                                <button type="button" class="btn-s-sm-black"><span>ADD</span></button>
+                                <button type="button" class="btn-s-sm-black">
+                                    <span>ADD</span>
+                                </button>
                                 <button type="button" class="btn-more"><span>더보기</span></button>
                             </div>
                         </div>
@@ -205,12 +230,18 @@
                                     <img src="@/assets/images/svg/icon-illust-file-ar.svg" alt="" />
                                 </span>
                                 <span class="info-box">
-                                    <strong class="title">타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 </strong>
+                                    <strong class="title"
+                                        >타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
+                                    </strong>
                                 </span>
                             </label>
                             <div class="btn-box">
-                                <a href="#" class="btn-s-sm-white"><i class="icon-link"></i><span>LINK</span></a>
-                                <button type="button" class="btn-more" disabled><span>더보기</span></button>
+                                <a href="#" class="btn-s-sm-white"
+                                    ><i class="icon-link"></i><span>LINK</span></a
+                                >
+                                <button type="button" class="btn-more" disabled>
+                                    <span>더보기</span>
+                                </button>
                             </div>
                         </div>
                     </li>
@@ -225,11 +256,15 @@
                                     <img src="@/assets/images/img-asset-none@2x.png" alt="" />
                                 </span>
                                 <span class="info-box">
-                                    <strong class="title">타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 </strong>
+                                    <strong class="title"
+                                        >타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
+                                    </strong>
                                 </span>
                             </label>
                             <div class="btn-box">
-                                <button type="button" class="btn-s-sm-black"><span>ADD</span></button>
+                                <button type="button" class="btn-s-sm-black">
+                                    <span>ADD</span>
+                                </button>
                                 <button type="button" class="btn-more"><span>더보기</span></button>
                             </div>
                         </div>
@@ -254,11 +289,15 @@
                                     <img src="@/assets/images/img-asset-none@2x.png" alt="" />
                                 </span>
                                 <span class="info-box">
-                                    <strong class="title">타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 </strong>
+                                    <strong class="title"
+                                        >타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
+                                    </strong>
                                 </span>
                             </label>
                             <div class="btn-box">
-                                <button type="button" class="btn-s-sm-black"><span>ADD</span></button>
+                                <button type="button" class="btn-s-sm-black">
+                                    <span>ADD</span>
+                                </button>
                                 <button type="button" class="btn-more"><span>더보기</span></button>
                             </div>
                         </div>
@@ -283,11 +322,15 @@
                                     <img src="@/assets/images/img-asset-none@2x.png" alt="" />
                                 </span>
                                 <span class="info-box">
-                                    <strong class="title">타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다 </strong>
+                                    <strong class="title"
+                                        >타이틀입니다 타이틀입니다 타이틀입니다 타이틀입니다
+                                    </strong>
                                 </span>
                             </label>
                             <div class="btn-box">
-                                <button type="button" class="btn-s-sm-black"><span>ADD</span></button>
+                                <button type="button" class="btn-s-sm-black">
+                                    <span>ADD</span>
+                                </button>
                                 <button type="button" class="btn-more"><span>더보기</span></button>
                             </div>
                         </div>
