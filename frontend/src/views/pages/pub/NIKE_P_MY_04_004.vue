@@ -24,7 +24,7 @@
                         <button type="button"><span>검색</span></button>
                     </div>
                 </div>
-                <ul class="new-list">
+                <ul class="news-list">
                     <li>
                         <a href="#">
                             <span class="thumbnail">
@@ -32,7 +32,8 @@
                             </span>
                             <span class="info-box">
                                 <strong class="title"
-                                    >글로벌 스포츠 브랜드 나이키, 브랜드 문화 공간 마이클 조던을 담은 ‘조던 서울’ 오픈 포토리캡</strong
+                                    >글로벌 스포츠 브랜드 나이키, 브랜드 문화 공간 마이클 조던을
+                                    담은 ‘조던 서울’ 오픈 포토리캡</strong
                                 >
                                 <span class="esc">2020.06.17</span>
                             </span>
@@ -45,7 +46,8 @@
                             </span>
                             <span class="info-box">
                                 <strong class="title"
-                                    >글로벌 스포츠 브랜드 나이키, 브랜드 문화 공간 마이클 조던을 담은 ‘조던 서울’ 오픈 포토리캡</strong
+                                    >글로벌 스포츠 브랜드 나이키, 브랜드 문화 공간 마이클 조던을
+                                    담은 ‘조던 서울’ 오픈 포토리캡</strong
                                 >
                                 <span class="esc">2020.06.17</span>
                             </span>

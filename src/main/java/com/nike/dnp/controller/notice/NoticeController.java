@@ -1,5 +1,7 @@
 package com.nike.dnp.controller.notice;
 
+import com.nike.dnp.common.aspect.ValidField;
+import com.nike.dnp.common.validation.ValidationGroups;
 import com.nike.dnp.dto.notice.NoticeArticleListDTO;
 import com.nike.dnp.dto.notice.NoticeSaveDTO;
 import com.nike.dnp.dto.notice.NoticeSearchDTO;
@@ -15,7 +17,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * The Class Notice controller.
@@ -26,7 +31,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@Api(description = "Customer Center", tags = "Customer")
+@Api(description = "Customer Center", tags = "CUSTOMER")
 @RequestMapping(value = "/api/customer", name = "Customer Center")
 @RequiredArgsConstructor
 public class NoticeController {
@@ -49,7 +54,7 @@ public class NoticeController {
      *
      * @author [정주희]
      */
-    private static final String REQUEST_CHARACTER = "## Reqeust ## \\n\" + \"필드명|설명|필수여부|데이터 타입(길이)|추가\\n\" + \"-|-|-|-|-|-\\n";
+    private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
     private static final String BASIC_CHARACTER = "## Request ## \n" + "[하위 Parameters 참조] \n" + "## Request ## \n" + "[하위 Model 참조]\n\n";
     
@@ -65,9 +70,9 @@ public class NoticeController {
     @ApiOperation(
             value = "Customer Center 목록 조회",
             notes = REQUEST_CHARACTER +
-                    "keyword|키워드|false|String\n" +
-                    "page|페이지|false|Integer\n" +
-                    "size|사이즈|false|Integer\n" +
+                    "keyword|키워드|false|String| \n" +
+                    "page|페이지|false|Integer| \n" +
+                    "size|사이즈|false|Integer| \n" +
                     "noticeArticleCategoryCode|QNA 카테고리 코드|false|String|ASSET/SUBSIDIARY/REPORT/INFO/USED/ETC"
     )
     @GetMapping(value = "/{sectionCode}",
@@ -76,7 +81,7 @@ public class NoticeController {
                                 @ApiParam(name = "sectionCode", value = "Customer Center 게시글 종류 코드",
                                         allowableValues = "NOTICE, NEWS, QNA", required = true)
                                 @PathVariable final String sectionCode,
-                                @ModelAttribute final NoticeSearchDTO noticeSearchDTO) {
+                                @Valid @ModelAttribute final NoticeSearchDTO noticeSearchDTO) {
         log.info("NoticeService.findAll");
 
         noticeSearchDTO.setNoticeArticleSectionCode(sectionCode.toUpperCase());
@@ -100,7 +105,7 @@ public class NoticeController {
     @GetMapping(value = "detail/{noticeSeq}",
             name = "Customer Center 게시글 상세 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<NoticeArticle> findById(
-                                @ApiParam(name = "sectionCode", value = "Customer Center 게시글 시퀀스",
+                                @ApiParam(name = "noticeSeq", value = "Customer Center 게시글 시퀀스",
                                         defaultValue = "23", required = true)
                                 @PathVariable final Long noticeSeq) {
         log.info("NoticeService.findAll");
@@ -166,7 +171,7 @@ public class NoticeController {
      * @Description Customer Center 게시글 수정
      */
     @ApiOperation(
-            value = "Customer Center 게시글 등록",
+            value = "Customer Center 게시글 수정",
             notes = BASIC_CHARACTER
     )
     @PutMapping(value = "/{noticeSeq}",

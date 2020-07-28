@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+    <g fill="none" fill-rule="evenodd">
+        <path fill="#F7F7F7" d="M0 0H80V80H0z"/>
+        <g transform="translate(20 17)">
+            <rect width="35.8" height="44.8" x="3.6" y=".6" fill="#FFF" stroke="#BBB" stroke-width="1.2" rx=".4"/>
+            <path fill="#BBB" d="M34 46V0h1.161l.001 5H40v1.2h-4.838v4.5H40v1.2h-4.838v4.5H40v1.2h-4.838v4.5H40v1.2h-4.838v4.5H40V29h-4.838v4.5H40v1.2h-4.838v4.5H40v1.2h-4.838V46H34zM9 46V0H7.839l-.001 5H3v1.2h4.838v4.5H3v1.2h4.838v4.5H3v1.2h4.838v4.5H3v1.2h4.838v4.5H3V29h4.838v4.5H3v1.2h4.838v4.5H3v1.2h4.838V46H9zM21.5 8c3.59 0 6.5 2.91 6.5 6.5S25.09 21 21.5 21 15 18.09 15 14.5 17.91 8 21.5 8zm-1.225 4.076c-.22 0-.4.179-.4.4v4.116c0 .069.018.136.051.196.109.193.353.261.545.153l3.66-2.059c.063-.035.116-.088.152-.152.108-.193.04-.436-.153-.545l-3.659-2.058c-.06-.034-.127-.051-.196-.051z"/>
+            <g transform="translate(0 28)">
+                <rect width="32" height="12.8" fill="#007B68" rx=".8"/>
+                <text fill="#FFF" font-family="Roboto-Bold, Roboto" font-size="9" font-weight="bold">
+                    <tspan x="6.009" y="9.4">MOV</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

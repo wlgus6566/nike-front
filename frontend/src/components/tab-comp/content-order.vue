@@ -1,167 +1,23 @@
 <template>
     <div class="aside-order">
         <ul class="cart-item-list">
-            <li class="cart-item">
+            <li class="cart-item" v-for="(item, index) in basketList" :key="index">
                 <div class="thumbnail">
                     <img src="../../assets/images/img-asset-none@2x.png" alt="" />
                 </div>
                 <div class="info-box">
-                    <p class="title">듀브레</p>
+                    <p class="title">{{ item.product.goodsName }}</p>
                     <div class="quantity">
-                        <button type="button" class="quantity-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="quantity-up">
-                            <span>증가</span>
-                        </button>
+                        <el-input-number
+                            v-model="item.orderQuantity"
+                            @change="changeQuantity(item)"
+                            :min="item.product.minimumOrderQuantity"
+                        />
                     </div>
                 </div>
-                <button type="button" class="del"><span>삭제</span></button>
-            </li>
-            <li class="cart-item">
-                <div class="thumbnail">
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="quantity-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="quantity-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="del"><span>삭제</span></button>
-            </li>
-            <li class="cart-item">
-                <div class="thumbnail">
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="quantity-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="quantity-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="del"><span>삭제</span></button>
-            </li>
-            <li class="cart-item">
-                <div class="thumbnail">
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="quantity-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="quantity-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="del"><span>삭제</span></button>
-            </li>
-            <li class="cart-item">
-                <div class="thumbnail">
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="quantity-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="quantity-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="del"><span>삭제</span></button>
-            </li>
-            <li class="cart-item">
-                <div class="thumbnail">
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="quantity-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="quantity-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="del"><span>삭제</span></button>
-            </li>
-            <li class="cart-item">
-                <div class="thumbnail">
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="quantity-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="quantity-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="del"><span>삭제</span></button>
-            </li>
-            <li class="cart-item">
-                <div class="thumbnail">
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="quantity-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="quantity-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="del"><span>삭제</span></button>
-            </li>
-            <li class="cart-item">
-                <div class="thumbnail">
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                </div>
-                <div class="info-box">
-                    <p class="title">듀브레</p>
-                    <div class="quantity">
-                        <button type="button" class="quantity-down">
-                            <span>감소</span>
-                        </button>
-                        <span class="num">100</span>
-                        <button type="button" class="quantity-up">
-                            <span>증가</span>
-                        </button>
-                    </div>
-                </div>
-                <button type="button" class="del"><span>삭제</span></button>
+                <button type="button" class="del" @click="deleteClick(item.goodsBasketSeq)">
+                    <span>삭제</span>
+                </button>
             </li>
         </ul>
         <button type="button" class="btn-order">
@@ -170,14 +26,38 @@
     </div>
 </template>
 <script>
-export default {
+    import {addProductBasket, deleteBasketItem} from '@/utils/basket';
+
+    export default {
     name: 'OderItem',
+    data() {
+        return {};
+    },
+    computed: {
+        basketList() {
+            return this.$store.state.basketListData;
+        },
+    },
+    mounted() {
+        console.log(this.basketList);
+    },
+    methods: {
+        // 장바구니 삭제 api
+        deleteClick(goodsBasketSeq) {
+            deleteBasketItem(goodsBasketSeq);
+        },
+        // 최소수량
+        changeQuantity(item) {
+            addProductBasket(item.goodsSeq, item.orderQuantity);
+        },
+    },
 };
 </script>
 <style scoped>
 .aside-order {
     margin-top: 15px;
 }
+
 .cart-item-list {
     box-sizing: border-box;
     height: 360px;
@@ -223,31 +103,6 @@ export default {
     font-size: 12px;
     letter-spacing: -0.05px;
     color: #000;
-}
-.quantity {
-    display: flex;
-}
-.quantity .num {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    font-size: 12px;
-    font-weight: bold;
-}
-.quantity [class*='quantity-'] {
-    display: block;
-    width: 20px;
-    height: 20px;
-    background: url('../../assets/images/svg/icon-spinner-minus.svg') no-repeat center;
-}
-.quantity .quantity-up {
-    background-image: url('../../assets/images/svg/icon-spinner-plus.svg');
-}
-.quantity [class^='quantity-'] span {
-    display: block;
-    overflow: hidden;
-    text-indent: -9999px;
 }
 .btn-order {
     position: relative;

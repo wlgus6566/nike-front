@@ -5,10 +5,7 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.CopyObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.*;
 import com.nike.dnp.dto.file.FileResultDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -150,11 +147,11 @@ public class S3Util {
 	 * @CreatedOn 2020. 7. 27. 오후 4:09:52
 	 * @Description
 	 */
-	public static AmazonS3 init(){
+	public static void init(){
 		log.debug("S3 Init");
 		AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
 		client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(awsCredentials)).withRegion(region).build();
-		return client;
+
 	}
 
 	/**
@@ -166,13 +163,13 @@ public class S3Util {
 	 * @CreatedOn 2020. 7. 27. 오후 4:09:52
 	 * @Description
 	 */
-	public static URL upload(final FileResultDTO fileResultDTO) {
+	public static String upload(final FileResultDTO fileResultDTO) {
 		File file = new File(root+ fileResultDTO.getFilePhysicalName());
 		String uploadUrl = awsPathReplace(fileResultDTO.getFilePhysicalName());
 		client.putObject(new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.PublicRead));
 		URL url = client.getUrl(bucket, uploadUrl);
 		log.debug("url.toString() {}", url.toString());
-		return url;
+		return url.getPath();
 	}
 
 	/**
@@ -186,7 +183,7 @@ public class S3Util {
 	 * @CreatedOn 2020. 7. 27. 오후 4:09:52
 	 * @Description
 	 */
-	public static URL fileCopy(final String oldFile, String newFolder,boolean oldFileDelete) {
+	public static String fileCopy(final String oldFile, String newFolder,boolean oldFileDelete) {
 		final String awsOldPath = awsPathReplace(oldFile);
 		final String fileName = StringUtils.getFilename(awsOldPath);
 		final String awsNewPath = newFolder+"/"+fileName;
@@ -198,7 +195,7 @@ public class S3Util {
 			client.deleteObject(bucket, awsOldPath);
 		}
 		log.debug("url.toString() {}", url.toString());
-		return url;
+		return url.getPath();
 	}
 
 
@@ -212,7 +209,7 @@ public class S3Util {
 	 * @CreatedOn 2020. 7. 27. 오후 4:09:52
 	 * @Description
 	 */
-	public static URL fileCopyAndOldFileDelete(final String oldFile, final String newFolder){
+	public static String fileCopyAndOldFileDelete(final String oldFile, final String newFolder){
 		return fileCopy(oldFile, newFolder,true);
 	}
 
@@ -226,7 +223,7 @@ public class S3Util {
 	 * @CreatedOn 2020. 7. 27. 오후 4:11:49
 	 * @Description
 	 */
-	public static URL fileCopy(final String oldFile, final String newFolder) {
+	public static String fileCopy(final String oldFile, final String newFolder) {
 		return fileCopy(oldFile, newFolder, false);
 	}
 
@@ -263,9 +260,23 @@ public class S3Util {
 		client.deleteObject(bucket, awsFile);
 	}
 
+	/**
+	 * S3ObjectInputStream 조회
+	 *
+	 * @param path the path
+	 * @return the file
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 28. 오후 2:18:36
+	 */
+	public static S3ObjectInputStream getFile(String path) {
+		String awsPath = awsPathReplace(path);
+		S3Object object = client.getObject(bucket, awsPath);
+		return object.getObjectContent();
+	}
+
 
 	/**
-	 * Aws path replace string.
+	 * 아마존 패스 경로 수정
 	 *
 	 * @param oldPath the old path
 	 * @return the string

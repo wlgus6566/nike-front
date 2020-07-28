@@ -1,5 +1,7 @@
 package com.nike.dnp.util;
 
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.util.IOUtils;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.file.FileResultDTO;
@@ -7,6 +9,7 @@ import com.nike.dnp.exception.CodeMessageHandleException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -73,6 +76,8 @@ public class FileUtil {
 	 * @author [윤태호]
 	 */
 	private static String ffmpegCommand;
+
+
 
 	/**
 	 * 파일 저장 경로
@@ -390,7 +395,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * File download single result.
+	 * File download
 	 *
 	 * @param filePath the file path
 	 * @return the single result
@@ -412,6 +417,28 @@ public class FileUtil {
 //		final Resource resource = new InputStreamResource(Files.newInputStream(path));
 		final Resource resource = new FileSystemResource(new File(path.toUri()));
 		return new ResponseEntity<>(resource,headers, HttpStatus.OK);
+	}
+
+
+	/**
+	 * S3 파일 다운로드
+	 *
+	 * @param path     다운로드 파일 경로
+	 * @param fileName 다운로드 파일 명
+	 * @return the response entity
+	 * @throws IOException the io exception
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 28. 오후 2:19:30
+	 */
+	public static ResponseEntity<Resource> s3FileDownload(String path, String fileName) throws IOException {
+
+		S3ObjectInputStream s3ObjectInputStream = S3Util.getFile(path);
+
+		final HttpHeaders headers = new HttpHeaders();
+		Resource resource = new ByteArrayResource(IOUtils.toByteArray(s3ObjectInputStream));
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
+		headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.contentLength()));
+		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 
 

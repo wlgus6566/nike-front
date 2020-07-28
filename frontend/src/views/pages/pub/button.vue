@@ -75,6 +75,7 @@
 
                 <h2>텍스트용버튼</h2>
                 <button type="button" class="txt-btn-black"><span>이미지 재등록</span></button>
+                <button type="button" class="txt-btn-orange"><span>이미지 재등록</span></button>
                 <a href="#" class="txt-btn"><span>더보기</span></a>
                 <button class="btn-file-txt">
                     <i class="icon-add"></i>

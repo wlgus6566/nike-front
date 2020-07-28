@@ -1,16 +1,22 @@
 import '@babel/polyfill';
+import 'es6-promise/auto';
 
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import axios from './axios';
+import store from './store';
+import VueCookies from 'vue-cookies';
 import CKEditor from 'ckeditor4-vue';
 
-Vue.prototype.$axios = axios;
+import lineClamp from './utils/lineclamp';
 
 Vue.config.productionTip = false;
 
 Vue.use(CKEditor);
+Vue.use(VueCookies);
+Vue.use(require('vue-moment'));
+
+Vue.directive('lineClamp', lineClamp);
 
 /**
  * Thousands Separators 천단위 ',' 숫자 표시 [이소정]
@@ -30,5 +36,6 @@ Vue.filter('formattedNumber', (value, prefix, suffix) => {
 
 new Vue({
     router,
+    store,
     render: (h) => h(App),
 }).$mount('#app');

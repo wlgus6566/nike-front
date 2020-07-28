@@ -36,20 +36,8 @@
                                 <span class="label-title required">상태</span>
                             </div>
                             <div class="form-column">
-                                <label class="check-label">
-                                    <span class="radio">
-                                        <input type="radio" name="campaign" checked />
-                                        <span></span>
-                                    </span>
-                                    <span>노출</span>
-                                </label>
-                                <label class="check-label">
-                                    <span class="radio">
-                                        <input type="radio" name="campaign" />
-                                        <span></span>
-                                    </span>
-                                    <span>미노출</span>
-                                </label>
+                                <el-radio v-model="stateRadio" label="노출">노출</el-radio>
+                                <el-radio v-model="stateRadio" label="미노출">미노출</el-radio>
                             </div>
                         </li>
                         <li class="form-row">
@@ -57,34 +45,10 @@
                                 <span class="label-title required">업로드 위치</span>
                             </div>
                             <div class="form-column">
-                                <label class="check-label">
-                                    <span class="radio">
-                                        <input type="radio" name="upload" checked />
-                                        <span></span>
-                                    </span>
-                                    <span>SP</span>
-                                </label>
-                                <label class="check-label">
-                                    <span class="radio">
-                                        <input type="radio" name="upload" />
-                                        <span></span>
-                                    </span>
-                                    <span>SU</span>
-                                </label>
-                                <label class="check-label">
-                                    <span class="radio">
-                                        <input type="radio" name="upload" />
-                                        <span></span>
-                                    </span>
-                                    <span>FA</span>
-                                </label>
-                                <label class="check-label">
-                                    <span class="radio">
-                                        <input type="radio" name="upload" />
-                                        <span></span>
-                                    </span>
-                                    <span>HO</span>
-                                </label>
+                                <el-radio v-model="uploadRadio" label="SP">SP</el-radio>
+                                <el-radio v-model="uploadRadio" label="SU">SU</el-radio>
+                                <el-radio v-model="uploadRadio" label="FA">FA</el-radio>
+                                <el-radio v-model="uploadRadio" label="HO">HO</el-radio>
                             </div>
                         </li>
                         <li class="form-row">
@@ -92,11 +56,8 @@
                                 <label class="label-title required">캠페인 명</label>
                             </div>
                             <div class="form-column">
-                                <span class="textarea">
-                                    <textarea cols="100" rows="2">
-SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90</textarea
-                                    >
-                                </span>
+                                <el-input type="textarea" :rows="2" v-model="CampaignNameTextarea">
+                                </el-input>
                             </div>
                         </li>
                         <li class="form-row">
@@ -105,9 +66,13 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                             </div>
                             <div class="form-column">
                                 <span class="textarea">
-                                    <textarea cols="100" rows="2">
-나이키 다이렉트 캠페인 자료와 동영상, 스타일가이드, 기타 그래픽자료가 업데이트 되었습니다. SP20 나이키 다이렉트 NSW 캠페인 시공 에셋 자료가 업데이트 되었습니다.</textarea
+                                    <el-input
+                                        type="textarea"
+                                        :rows="2"
+                                        v-model="CampaignDetailTextarea"
+                                        class="type2"
                                     >
+                                    </el-input>
                                 </span>
                             </div>
                         </li>
@@ -117,25 +82,17 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                             </div>
                             <div class="form-column">
                                 <div>
-                                    <label class="check-label">
-                                        <span class="radio">
-                                            <input type="radio" name="upload" checked />
-                                            <span></span>
-                                        </span>
-                                        <span>기간선택</span>
-                                    </label>
-                                    <label class="check-label">
-                                        <span class="radio">
-                                            <input type="radio" name="upload" checked />
-                                            <span></span>
-                                        </span>
-                                        <span>365</span>
-                                    </label>
+                                    <el-radio v-model="campaignPeriodRadio" label="기간선택"
+                                        >기간선택</el-radio
+                                    >
+                                    <el-radio v-model="campaignPeriodRadio" label="365"
+                                        >365</el-radio
+                                    >
                                 </div>
                                 <!-- todo 추가 스크립트 작업 필요  -->
                                 <div class="data-picker">
                                     <el-date-picker
-                                        v-model="value1"
+                                        v-model="datapicker"
                                         type="daterange"
                                         range-separator="-"
                                         start-placeholder="Start date"
@@ -150,15 +107,15 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                 <label class="label-title">메모</label>
                             </div>
                             <div class="form-column">
-                                <!-- todo 추가 스크립트 작업 필요  -->
-                                <span class="textarea">
-                                    <textarea cols="100" rows="2" style="height: 80px;">
-나이키 다이렉트 캠페인 자료와 동영상, 스타일가이드, 기타 그래픽자료가 업데이트 되었습니다. SP20 나이키 다이렉트 NSW 캠페인 시공 에셋 자료가 업데이트 되었습니다.</textarea
-                                    >
-                                    <span class="count"
-                                        ><strong>100</strong> / <em>150</em>byte</span
-                                    >
-                                </span>
+                                <!-- todo count 제어  -->
+                                <el-input
+                                    type="textarea"
+                                    v-model="memoTextarea"
+                                    maxlength="150"
+                                    show-word-limit
+                                    class="type2"
+                                >
+                                </el-input>
                             </div>
                         </li>
                         <li class="form-row">
@@ -190,20 +147,18 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                     <span class="label-title required">파일 구분</span>
                                 </div>
                                 <div class="form-column">
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="file" checked />
-                                            <span></span>
-                                        </span>
-                                        <span>ASSET</span>
-                                    </label>
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="file" />
-                                            <span></span>
-                                        </span>
-                                        <span>GUIDE</span>
-                                    </label>
+                                    <el-radio
+                                        v-model="fileSortationRadio"
+                                        label="ASSET"
+                                        class="type2"
+                                        >ASSET</el-radio
+                                    >
+                                    <el-radio
+                                        v-model="fileSortationRadio"
+                                        label="GUIDE"
+                                        class="type2"
+                                        >GUIDE</el-radio
+                                    >
                                 </div>
                             </li>
                             <li class="form-row">
@@ -211,27 +166,18 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                     <span class="label-title required">파일 종류</span>
                                 </div>
                                 <div class="form-column">
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="kind" checked />
-                                            <span></span>
-                                        </span>
-                                        <span>파일</span>
-                                    </label>
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="kind" />
-                                            <span></span>
-                                        </span>
-                                        <span>동영상(URL)</span>
-                                    </label>
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="kind" />
-                                            <span></span>
-                                        </span>
-                                        <span>VR</span>
-                                    </label>
+                                    <el-radio v-model="fileTypeRadio" label="파일" class="type2"
+                                        >파일</el-radio
+                                    >
+                                    <el-radio
+                                        v-model="fileTypeRadio"
+                                        label="동영상(URL)"
+                                        class="type2"
+                                        >동영상(URL)</el-radio
+                                    >
+                                    <el-radio v-model="fileTypeRadio" label="VR" class="type2"
+                                        >VR</el-radio
+                                    >
                                 </div>
                             </li>
                             <!-- todo 추가 스크립트 작업 필요  -->
@@ -240,95 +186,7 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                     <span class="label-title">업로드 된 파일</span>
                                 </div>
                                 <div class="form-column">
-                                    <div class="upload-file-box">
-                                        <div class="upload-file-list actice">
-                                            <ul>
-                                                <li>
-                                                    <label>
-                                                        <span class="checkbox">
-                                                            <input type="checkbox" />
-                                                            <span></span>
-                                                        </span>
-                                                        <span class="txt"
-                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpgP20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpg</span
-                                                        >
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label>
-                                                        <span class="checkbox">
-                                                            <input type="checkbox" />
-                                                            <span></span>
-                                                        </span>
-                                                        <span class="txt"
-                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                                        >
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label>
-                                                        <span class="checkbox">
-                                                            <input type="checkbox" />
-                                                            <span></span>
-                                                        </span>
-                                                        <span class="txt"
-                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                                        >
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label>
-                                                        <span class="checkbox">
-                                                            <input type="checkbox" />
-                                                            <span></span>
-                                                        </span>
-                                                        <span class="txt"
-                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                                        >
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label>
-                                                        <span class="checkbox">
-                                                            <input type="checkbox" />
-                                                            <span></span>
-                                                        </span>
-                                                        <span class="txt"
-                                                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                                        >
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="btn-box">
-                                            <div class="fine-file">
-                                                <span class="btn-form-gray"><span>찾기</span></span>
-                                                <input type="file" />
-                                            </div>
-                                            <button type="button" class="btn-form">
-                                                <span>삭제</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="form-row">
-                                <div class="form-column">
-                                    <span class="label-title">업로드 된 파일</span>
-                                </div>
-                                <div class="form-column">
-                                    <div class="upload-file-box">
-                                        <div class="upload-file-list"></div>
-                                        <div class="btn-box">
-                                            <div class="fine-file">
-                                                <span class="btn-form-gray"><span>찾기</span></span>
-                                                <input type="file" />
-                                            </div>
-                                            <button type="button" class="btn-form">
-                                                <span>삭제</span>
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <fileUpload />
                                 </div>
                             </li>
                         </ul>
@@ -341,20 +199,18 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                     <span class="label-title required">파일 구분</span>
                                 </div>
                                 <div class="form-column">
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="file2" checked />
-                                            <span></span>
-                                        </span>
-                                        <span>ASSET</span>
-                                    </label>
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="file2" />
-                                            <span></span>
-                                        </span>
-                                        <span>GUIDE</span>
-                                    </label>
+                                    <el-radio
+                                        v-model="fileSortationRadio2"
+                                        label="ASSET"
+                                        class="type2"
+                                        >ASSET</el-radio
+                                    >
+                                    <el-radio
+                                        v-model="fileSortationRadio2"
+                                        label="GUIDE"
+                                        class="type2"
+                                        >GUIDE</el-radio
+                                    >
                                 </div>
                             </li>
                             <li class="form-row">
@@ -362,27 +218,18 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                     <span class="label-title required">파일 종류</span>
                                 </div>
                                 <div class="form-column">
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="kind2" />
-                                            <span></span>
-                                        </span>
-                                        <span>파일</span>
-                                    </label>
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="kind2" checked />
-                                            <span></span>
-                                        </span>
-                                        <span>동영상(URL)</span>
-                                    </label>
-                                    <label class="check-label type2">
-                                        <span class="radio">
-                                            <input type="radio" name="kind2" />
-                                            <span></span>
-                                        </span>
-                                        <span>VR</span>
-                                    </label>
+                                    <el-radio v-model="fileTypeRadio2" label="파일" class="type2"
+                                        >파일</el-radio
+                                    >
+                                    <el-radio
+                                        v-model="fileTypeRadio2"
+                                        label="동영상(URL)"
+                                        class="type2"
+                                        >동영상(URL)</el-radio
+                                    >
+                                    <el-radio v-model="fileTypeRadio2" label="VR" class="type2"
+                                        >VR</el-radio
+                                    >
                                 </div>
                             </li>
                             <li class="form-row">
@@ -390,9 +237,9 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                     <label class="label-title">파일 타이틀</label>
                                 </div>
                                 <div class="form-column">
-                                    <input
-                                        type="text"
-                                        value="P20_Nsw_Nike_Gallery_graphic_1_700x1000"
+                                    <el-input
+                                        v-model="fileTileInput"
+                                        placeholder="파일 타이틀을 입력해 주세요."
                                     />
                                 </div>
                             </li>
@@ -401,7 +248,7 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
                                     <label class="label-title">URL</label>
                                 </div>
                                 <div class="form-column">
-                                    <input type="text" value="vimeo.com/101912729" />
+                                    <el-input v-model="urlInput" placeholder="URL을 입력" />
                                 </div>
                             </li>
                         </ul>
@@ -430,11 +277,26 @@ SP20 NSW NIKE DIRECT AM90 2020 NSW NIKE DIRECT AM90 NIKE DIRECT AM90 2020 NSW NI
     </div>
 </template>
 <script>
-export default {
+    import fileUpload from '@/components/file-settings/file-upload';
+
+    export default {
     name: 'NIKE_P_ASSET_01',
     data() {
         return {
             buttons: [],
+            stateRadio: '노출',
+            uploadRadio: 'SP',
+            campaignPeriodRadio: '기간선택',
+            CampaignNameTextarea: '',
+            CampaignDetailTextarea: '',
+            memoTextarea: '',
+            fileSortationRadio: 'ASSET',
+            fileTypeRadio: '파일',
+            fileSortationRadio2: 'ASSET',
+            fileTypeRadio2: '파일',
+            fileTileInput: '',
+            urlInput: '',
+            datapicker: '',
             pickerOptions: {
                 shortcuts: [
                     {
@@ -466,14 +328,13 @@ export default {
                     },
                 ],
             },
-            value1: '',
-            value2: '',
         };
     },
     components: {
         'my-component': {
             template: '<div>파일추가</div>',
         },
+        fileUpload,
     },
     methods: {
         add() {

@@ -1,12 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { loginUser } from '@/api/auth';
-import {
-    saveAuthToCookie,
-    saveUserToCookie,
-    getUserFromCookie,
-    deleteCookie,
-} from '@/utils/cookies.js';
+import {loginUser} from '@/api/login';
+import {deleteBasket, getBasketList} from '@/api/basket.js';
+import {deleteCookie, getAuthFromCookie, saveAuthToCookie} from '@/utils/cookies.js';
 
 Vue.use(Vuex);
 
@@ -14,10 +10,12 @@ export default new Vuex.Store({
     state: {
         user: {},
         token: '',
+        basketListData: null,
+        goodsBasketSeq: '',
     },
     getters: {
         isLoggedIn(state) {
-            return !!state.token || getUserFromCookie();
+            return !!state.token || getAuthFromCookie();
         },
         userToken(state) {
             return state.token;
@@ -30,21 +28,41 @@ export default new Vuex.Store({
         SET_TOKEN(state, token) {
             state.token = token;
         },
+        SET_BASKET(state, baketList) {
+            state.basketListData = baketList;
+        },
+        SET_BASKETDEL(state, goodsBasketSeq) {
+            state.goodsBasketSeq = goodsBasketSeq;
+        },
         LOGOUT(state) {
             state.user = null;
             state.token = null;
-            deleteCookie('til_auth');
-            deleteCookie('til_user');
+            deleteCookie('nike_token');
+            //deleteCookie('nike_user');
         },
     },
     actions: {
         async LOGIN({ commit }, data) {
             const response = await loginUser(data);
-            commit('SET_USER', response.data.user);
-            commit('SET_TOKEN', response.data.token);
-            saveUserToCookie(response.data.user.username);
-            saveAuthToCookie(response.data.token);
+            //commit('SET_USER', response.data.user);
+            commit('SET_TOKEN', response.headers.authorization);
+            //saveUserToCookie(response.data.user.username);
+            saveAuthToCookie(response.headers.authorization);
             return response;
+        },
+
+        // 장바구니 리스트 api
+        async basketList({ commit }, data) {
+            const {
+                data: { data: response },
+            } = await getBasketList(data);
+            commit('SET_BASKET', response);
+        },
+
+        //장바구니 삭제 api
+        async deleteBasketItem({ commit }, goodsBasketSeq) {
+            await deleteBasket(goodsBasketSeq);
+            commit('SET_BASKETDEL', goodsBasketSeq);
         },
     },
 });

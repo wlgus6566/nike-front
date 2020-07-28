@@ -23,7 +23,7 @@ public class NoticeSearchDTO extends SearchDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(value = "게시물 구분 코드", name = "noticeArticleSectionCode", defaultValue = "", required = true)
+    @ApiParam(value = "게시물 구분 코드", name = "noticeArticleSectionCode", defaultValue = "", required = false)
     private String noticeArticleSectionCode;
 
     /**
@@ -31,7 +31,7 @@ public class NoticeSearchDTO extends SearchDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(value = "게시물 카테고리 코드", name = "noticeArticleCategoryCode", defaultValue = "")
+    @ApiParam(value = "QNA 게시물 카테고리 코드", name = "noticeArticleCategoryCode", defaultValue = "")
     private String noticeArticleCategoryCode;
 
     /**
