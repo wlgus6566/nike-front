@@ -19,9 +19,7 @@ export default {
     name: 'App',
     render: (h) => h(App),
     watch: {
-        $route() {
-            console.log(this.$route);
-        },
+        $route() {},
     },
     data() {
         return {};
