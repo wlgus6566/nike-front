@@ -26,7 +26,6 @@ import java.util.List;
  *
  * @author [이소정]
  * @CreatedOn 2020. 6. 19. 오후 5:54:32
- * @Description Contents RepositoryImpl 작성
  */
 @Repository
 public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements ContentsRepositoryCustom {
@@ -38,7 +37,6 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      *
      * @author [이소정]
      * @CreatedOn 2020. 6. 19. 오후 6:15:29
-     * @Description
      */
     public ContentsRepositoryImpl() {
         super(Contents.class);
@@ -52,7 +50,6 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @return the page
      * @author [이소정]
      * @CreatedOn 2020. 6. 19. 오후 5:54:39
-     * @Description
      */
     @Override
     public Page<ContentsResultDTO> findPageContents(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest) {
@@ -101,7 +98,6 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @return the list
      * @author [이소정]
      * @CreatedOn 2020. 7. 27. 오후 6:39:10
-     * @Description
      */
     public List<ContentsResultDTO> findRecentContents(final String topMenuCode, final PageRequest pageRequest) {
         ContentsSearchDTO contentsSearchDTO = new ContentsSearchDTO();

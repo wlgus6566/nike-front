@@ -17,7 +17,6 @@ import java.util.List;
  *
  * @author [이소정]
  * @CreatedOn 2020. 7. 7. 오후 2:46:09
- * @Description
  */
 @Repository
 public class ReportBasketRepositoryImpl extends QuerydslRepositorySupport implements ReportBasketRepositoryCustom {
@@ -29,7 +28,6 @@ public class ReportBasketRepositoryImpl extends QuerydslRepositorySupport implem
      *
      * @author [이소정]
      * @CreatedOn 2020. 6. 19. 오후 6:15:29
-     * @Description
      */
     public ReportBasketRepositoryImpl() {
         super(ReportBasket.class);
@@ -43,7 +41,6 @@ public class ReportBasketRepositoryImpl extends QuerydslRepositorySupport implem
      * @return the list
      * @author [이소정]
      * @CreatedOn 2020. 7. 17. 오후 6:45:22
-     * @Description
      */
     @Override
     public List<ReportBasketResultDTO> findAllReportBasket(Long userSeq) {

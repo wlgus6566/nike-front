@@ -10,7 +10,6 @@ import java.util.List;
  *
  * @author [오지훈]
  * @CreatedOn 2020. 7. 21. 오후 3:55:39
- * @Description
  */
 @Getter
 @Setter

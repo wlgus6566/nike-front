@@ -11,7 +11,6 @@ import java.util.List;
  *
  * @author [이소정]
  * @CreatedOn 2020. 7. 17. 오후 6:34:33
- * @Description
  */
 @Repository
 public interface ReportBasketRepositoryCustom {

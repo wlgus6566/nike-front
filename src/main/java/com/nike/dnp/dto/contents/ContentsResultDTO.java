@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 /**
@@ -100,6 +101,13 @@ public class ContentsResultDTO {
     @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020.09.01 23:59:59")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime campaignEndDt;
+
+    /**
+     * 메모
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "memo", value = "메모")
+    private String memo;
 
     /**
      * 조회수
