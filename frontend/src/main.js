@@ -30,7 +30,9 @@ Vue.filter('formattedNumber', (value, prefix, suffix) => {
     if (!value || value.isNaN) {
         return `${prefix} 0 ${suffix}`;
     }
-    const formatted = value.toFixed(0).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,');
+    const formatted = value
+        .toFixed(0)
+        .replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,');
     return `${prefix} ${formatted} ${suffix}`;
 });
 
