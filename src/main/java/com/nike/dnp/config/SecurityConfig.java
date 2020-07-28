@@ -180,7 +180,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						.accessDecisionManager(accessDecisionManager())
 						.antMatchers(HttpMethod.POST,"/api/login").permitAll()
 						.antMatchers("/api/mypage/**", "/api/main/**").authenticated()
-						.antMatchers("/api/mypage/**", "/api/main/**").authenticated()
 						.anyRequest().authenticated();
 
 		http.addFilter(authenticationFilter()) // 인증 필터

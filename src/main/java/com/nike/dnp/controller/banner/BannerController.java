@@ -64,8 +64,7 @@ public class BannerController {
      * @CreatedOn 2020. 7. 20. 오전 11:41:23
      * @Description 메인 비주얼 상세
      */
-    @ApiOperation(value = "메인 비주얼 상세"
-            , notes = OPERATION_CHARACTER)
+    @ApiOperation(value = "메인 비주얼 상세", notes = OPERATION_CHARACTER)
     @GetMapping(name = "메인 비주얼 상세"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Banner> getBanner () {
@@ -82,8 +81,7 @@ public class BannerController {
      * @CreatedOn 2020. 7. 20. 오전 11:43:25
      * @Description 메인 비주얼 등록
      */
-    @ApiOperation(value = "메인 비주얼 등록"
-            , notes = OPERATION_CHARACTER)
+    @ApiOperation(value = "메인 비주얼 등록", notes = OPERATION_CHARACTER)
     @PostMapping(name = "메인 비주얼 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -110,8 +108,7 @@ public class BannerController {
      * @CreatedOn 2020. 7. 20. 오전 11:43:23
      * @Description 메인 비주얼 수정
      */
-    @ApiOperation(value = "메인 비주얼 수정"
-            , notes = OPERATION_CHARACTER)
+    @ApiOperation(value = "메인 비주얼 수정", notes = OPERATION_CHARACTER)
     @PutMapping(name = "메인 비주얼 수정"
             , value = "/{bannerSeq}"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}

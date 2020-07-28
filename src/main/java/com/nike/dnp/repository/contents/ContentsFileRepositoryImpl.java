@@ -1,10 +1,10 @@
 package com.nike.dnp.repository.contents;
 
-import com.nike.dnp.common.ObjectMapperUtils;
 import com.nike.dnp.dto.contents.ContentsFileResultDTO;
 import com.nike.dnp.dto.contents.ContentsFileSearchDTO;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.entity.contents.QContentsFile;
+import com.nike.dnp.util.ObjectMapperUtil;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
@@ -60,7 +60,7 @@ public class ContentsFileRepositoryImpl extends QuerydslRepositorySupport implem
                         , qContentsFile.contentsSeq.eq(contentsFileSearchDTO.getContentsSeq())
                         , qContentsFile.useYn.eq("Y")
                 );
-        final List<ContentsFileResultDTO> contentsFileResultDTOList = ObjectMapperUtils.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsFileResultDTO.class);
+        final List<ContentsFileResultDTO> contentsFileResultDTOList = ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsFileResultDTO.class);
         return new PageImpl<>(contentsFileResultDTOList, pageRequest, query.fetchCount());
     }
 }

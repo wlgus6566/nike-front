@@ -1,7 +1,7 @@
 package com.nike.dnp.service.alarm;
 
-import com.nike.dnp.controller.alarm.AlarmResultDTO;
 import com.nike.dnp.dto.SearchDTO;
+import com.nike.dnp.dto.alarm.AlarmResultDTO;
 import com.nike.dnp.entity.alarm.Alarm;
 import com.nike.dnp.repository.alarm.AlarmRepository;
 import lombok.RequiredArgsConstructor;

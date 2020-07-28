@@ -36,9 +36,7 @@
 export default {
     name: 'folder-list',
     props: ['listTypes', 'folderListData'],
-    mounted() {
-        console.log(this.folderListData);
-    },
+    mounted() {},
     methods: {
         classBind(el) {
             const defaultClass = 'folder-item';

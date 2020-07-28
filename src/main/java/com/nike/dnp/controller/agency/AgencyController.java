@@ -67,8 +67,7 @@ public class AgencyController {
         , notes = REQUEST_CHARACTER
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "에이전시 목록 조회")
-    public SingleResult<List<Agency>> findAllAgency(
-    ) {
+    public SingleResult<List<Agency>> findAllAgency () {
         return responseService.getSingleResult(agencyService.findAll());
     }
 

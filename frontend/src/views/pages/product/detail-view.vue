@@ -30,16 +30,26 @@
                                 </span>
                                 <span class="desc-txt">
                                     최소주문수량
-                                    <em>{{ productDetailData.minimumOrderQuantity }}</em>
+                                    <em>{{
+                                        productDetailData.minimumOrderQuantity
+                                    }}</em>
                                     개
                                 </span>
                             </div>
                         </div>
                         <div class="btn-box">
-                            <button type="button" class="btn-s">
+                            <button
+                                type="button"
+                                class="btn-s"
+                                @click="$emit('addWishList', productDetailData)"
+                            >
                                 <span>위시리스트 담기</span>
                             </button>
-                            <button type="button" class="btn-s-black">
+                            <button
+                                type="button"
+                                class="btn-s-black"
+                                @click="toggleProductBasket(productDetailData)"
+                            >
                                 <span>CART 담기</span>
                             </button>
                         </div>
@@ -51,11 +61,27 @@
 </template>
 
 <script>
-export default {
+    import {addProductBasket, deleteBasketItem} from '@/utils/basket';
+
+    export default {
+    data() {
+        return {};
+    },
     props: {
         visible: Boolean,
         receipt: Object,
         productDetailData: Object,
+    },
+    mounted() {},
+    computed: {
+        basketList() {
+            return this.$store.state.basketListData.map((data) => {
+                return {
+                    goodsSeq: data.goodsSeq,
+                    goodsBasketSeq: data.goodsBasketSeq,
+                };
+            });
+        },
     },
     methods: {
         removeBodyClass(className) {
@@ -65,6 +91,18 @@ export default {
         print() {
             this.removeBodyClass('print-detail');
             window.print();
+        },
+        toggleProductBasket(item) {
+            const findIndex = this.basketList.findIndex((el) => {
+                return el.goodsSeq === item.goodsSeq;
+            });
+            if (findIndex === -1) {
+                addProductBasket(item.goodsSeq, item.minimumOrderQuantity);
+                alert('CART에 담겼습니다');
+            } else {
+                deleteBasketItem(this.basketList[findIndex].goodsBasketSeq);
+                alert('CART에 삭제 되었습니다');
+            }
         },
     },
 };

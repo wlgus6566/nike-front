@@ -46,9 +46,9 @@ const router = new VueRouter({
     ],
 });
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
     if (to.meta.unauthorized) {
-        store.getters['isLoggedIn'] ? next('/') : next();
+        next();
     } else {
         if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
             next();

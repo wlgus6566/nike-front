@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { setInterceptors } from '@/api/config/interceptors';
+import {setInterceptors} from '@/api/config/interceptors';
 
 const apiWishList = axios.create({ baseURL: '/api/wishlist', timeout: 3000 });
 setInterceptors(apiWishList);
@@ -10,7 +10,7 @@ function getWishList(params) {
     });
 }
 function postWishList(params) {
-    return apiWishList.post(`/save`, {
+    return apiWishList.post(`/save`, null, {
         params: params,
     });
 }

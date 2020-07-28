@@ -1,10 +1,10 @@
 package com.nike.dnp.repository.notice;
 
-import com.nike.dnp.common.ObjectMapperUtils;
 import com.nike.dnp.dto.notice.NoticeArticleListDTO;
 import com.nike.dnp.dto.notice.NoticeSearchDTO;
 import com.nike.dnp.entity.notice.NoticeArticle;
 import com.nike.dnp.entity.notice.QNoticeArticle;
+import com.nike.dnp.util.ObjectMapperUtil;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -61,7 +61,7 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
             query.orderBy(qNoticeArticle.noticeYn.desc(), qNoticeArticle.registrationDt.desc());
         }
 
-        List<NoticeArticleListDTO> noticeArticleListDTOList = ObjectMapperUtils.mapAll(
+        List<NoticeArticleListDTO> noticeArticleListDTOList = ObjectMapperUtil.mapAll(
                 getQuerydsl().applyPagination(pageRequest, query).fetch(), NoticeArticleListDTO.class);
 
         return new PageImpl<>(noticeArticleListDTOList, pageRequest, query.fetchCount());

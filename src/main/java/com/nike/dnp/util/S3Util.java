@@ -6,6 +6,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -209,8 +210,12 @@ public class S3Util {
 	 * @CreatedOn 2020. 7. 27. 오후 4:09:52
 	 * @Description
 	 */
-	public static String fileCopyAndOldFileDelete(final String oldFile, final String newFolder){
-		return fileCopy(oldFile, newFolder,true);
+	public static String fileCopyAndOldFileDelete(final String oldFile, final String newFolder) {
+		String result = oldFile;
+		if (oldFile.contains(ServiceCode.FileFolderEnumCode.TEMP.getFolder())) {
+			result = fileCopy(oldFile, newFolder,true);
+		}
+		return result;
 	}
 
 	/**

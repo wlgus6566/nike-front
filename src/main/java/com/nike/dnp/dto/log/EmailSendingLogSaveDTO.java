@@ -14,7 +14,6 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-@AllArgsConstructor
 public class EmailSendingLogSaveDTO {
 
     /**
@@ -22,8 +21,8 @@ public class EmailSendingLogSaveDTO {
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "userSeq", value = "사용자 시퀀스", required = true)
-    private Long userSeq;
+    @ApiModelProperty(name = "email", value = "수신 이메일", required = true)
+    private String email;
 
     /**
      * 제목
@@ -40,5 +39,26 @@ public class EmailSendingLogSaveDTO {
      */
     @ApiModelProperty(name = "contents", value = "내용", required = true)
     private String contents;
+
+    /**
+     * Instantiates a new Email sending log save dto.
+     *
+     * @param email    the email
+     * @param title    the title
+     * @param contents the contents
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 28. 오후 3:56:42
+     * @Description Builder 생성
+     */
+    @Builder
+    public EmailSendingLogSaveDTO (
+            final String email
+            , final String title
+            , final String contents
+    ) {
+        this.email = email;
+        this.title = title;
+        this.contents = contents;
+    }
 
 }

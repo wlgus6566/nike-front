@@ -1,11 +1,10 @@
 package com.nike.dnp.repository.report;
 
-import com.nike.dnp.common.ObjectMapperUtils;
-import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.report.ReportResultDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.entity.report.QReport;
 import com.nike.dnp.entity.report.Report;
+import com.nike.dnp.util.ObjectMapperUtil;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
@@ -77,6 +76,6 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
         final QReport qReport = QReport.report;
         final JPAQuery<Report> query = new JPAQueryFactory(this.getEntityManager()).selectFrom(qReport)
                 .where(QReport.report.useYn.eq("Y"));
-        return ObjectMapperUtils.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ReportResultDTO.class);
+        return ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ReportResultDTO.class);
     }
 }

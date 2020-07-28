@@ -112,15 +112,15 @@ public class ServiceCode {
     @RequiredArgsConstructor
     @Getter
     public enum EmailTypeEnumCode {
-        USER_CREATE("[NIKE/TEST] NIKE D&P PLATFORM 계정 생성 안내"),
-        PASSWORD_SETTING("[NIKE/TEST] NIKE D&P PLATFORM 비밀번호 설정 안내"),
-        PASSWORD_GUIDE("[NIKE/TEST] NIKE D&P PLATFORM 비밀번호 변경 안내"),
-        CERT_CODE_SEND("[NIKE/TEST] NIKE D&P PLATFORM E-MAIL 인증 안내"),
-        DORMANT_PREV("[NIKE/TEST] NIKE D&P PLATFORM 휴면계정 전환 사전 안내"),
-        DORMANT_ACTIVE("[NIKE/TEST] NIKE D&P PLATFORM 휴면계정 처리 안내"),
-        DORMANT_CHANGE("[NIKE/TEST] NIKE D&P PLATFORM 휴면계정 해제 안내"),
-        CONTENTS_UPDATE("[NIKE/TEST] NIKE D&P PLATFORM 컨텐츠 업데이트 알림"),
-        ORDER("[NIKE/TEST] NIKE D&P PLATFORM 주문서");
+        USER_CREATE("[NIKESPACE] NIKE D&P PLATFORM 계정 생성 안내"),
+        PASSWORD_SETTING("[NIKESPACE] NIKE D&P PLATFORM 비밀번호 설정 안내"),
+        PASSWORD_GUIDE("[NIKESPACE] NIKE D&P PLATFORM 비밀번호 변경 안내"),
+        CERT_CODE_SEND("[NIKESPACE] NIKE D&P PLATFORM E-MAIL 인증 안내"),
+        DORMANT_PREV("[NIKESPACE] NIKE D&P PLATFORM 휴면계정 전환 사전 안내"),
+        DORMANT_ACTIVE("[NIKESPACE] NIKE D&P PLATFORM 휴면계정 처리 안내"),
+        DORMANT_CHANGE("[NIKESPACE] NIKE D&P PLATFORM 휴면계정 해제 안내"),
+        CONTENTS_UPDATE("[NIKESPACE] NIKE D&P PLATFORM 컨텐츠 업데이트 알림"),
+        ORDER("[NIKESPACE] NIKE D&P PLATFORM 주문서");
 
         /**
          * 코드값
@@ -246,7 +246,9 @@ public class ServiceCode {
         CONTENTS("contents"),
         REPORT("report"),
         TEMP("temp"),
-        FAQ("faq");
+        FAQ("faq"),
+        BANNER("banner")
+        ;
 
         /**
          * 코드값
