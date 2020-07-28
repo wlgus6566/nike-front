@@ -1666,7 +1666,8 @@
     width: 30px;
     height: 30px;
     font-size: 0;
-    background: url('../images/icon-close-mideum@2x.png') no-repeat center center;
+    background: url('../images/icon-close-mideum@2x.png') no-repeat center
+        center;
     background-size: 30px auto;
 }
 .pw-find {
@@ -1741,52 +1742,55 @@
     position: relative;
     font-weight: 700;
 }
-.table-col {
+.table {
     border-bottom: 1px solid #ccc;
 }
-.table-col label {
+.table .table-row {
     display: flex;
     align-items: center;
     padding: 15px 40px;
     color: #333;
 }
-.table-col label + label {
+.table .table-row + .table-row {
     border-top: 1px solid #eee;
 }
-.table-col input {
+.table .table-th {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 200px;
+}
+.table .table-td {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 100%;
+}
+.table .input-box {
     height: 40px;
     padding: 10px 18px;
     border: 1px solid #ddd;
     font-size: 14px;
+    width: 100%;
 }
-.table-col input::placeholder {
+.table .input-box::placeholder {
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 200;
     font-size: 14px;
     color: #888 !important;
     letter-spacing: -0.5px;
 }
-.table-col input::-webkit-input-placeholder {
+.table .input-box::-webkit-input-placeholder {
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 200;
     font-size: 14px;
     color: #888 !important;
     letter-spacing: -0.5px;
 }
-.table-col input::-ms-input-placeholder {
+.table .input-box::-ms-input-placeholder {
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 200;
     font-size: 14px;
     color: #888 !important;
     letter-spacing: -0.5px;
-}
-.table-col .tit {
-    flex-grow: 0;
-    flex-shrink: 0;
-    flex-basis: 200px;
 }
 
 .bullet-list {
@@ -3179,7 +3183,8 @@
     display: block;
     width: 120px;
     height: 120px;
-    background: url('../images/svg/illust-page-folder-upload-none.svg') no-repeat center;
+    background: url('../images/svg/illust-page-folder-upload-none.svg')
+        no-repeat center;
 }
 .no-data .icon-search {
     background-image: url('../images/svg/illust-page-folder-wish-none.svg');

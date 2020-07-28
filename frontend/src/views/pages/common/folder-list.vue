@@ -98,7 +98,10 @@ export default {
         handleScroll(event) {
             if (this.loadingData) return;
             const windowE = document.documentElement;
-            if (windowE.clientHeight + windowE.scrollTop >= windowE.scrollHeight) {
+            if (
+                windowE.clientHeight + windowE.scrollTop >=
+                windowE.scrollHeight
+            ) {
                 this.infiniteScroll();
             }
         },
@@ -113,14 +116,12 @@ export default {
             this.initFetchData();
         },
         infiniteScroll() {
-            console.log('loadingData1', this.loadingData);
             if (
                 !this.loadingData &&
                 this.totalPage > this.page - 1 &&
                 this.folderListData.length >= this.itemLength &&
                 this.folderListData.length !== 0
             ) {
-                console.log('loadingData55555555', this.loadingData);
                 this.fetchData(true);
             }
         },
@@ -132,17 +133,23 @@ export default {
             try {
                 const {
                     data: { data: response },
-                } = await getContents(this.$route.meta.topMenuCode, this.$route.meta.menuCode, {
-                    page: this.page,
-                    size: this.itemLength,
-                    keyword: this.searchKeyword,
-                    orderType: this.listSortSelect.value,
-                });
+                } = await getContents(
+                    this.$route.meta.topMenuCode,
+                    this.$route.meta.menuCode,
+                    {
+                        page: this.page,
+                        size: this.itemLength,
+                        keyword: this.searchKeyword,
+                        orderType: this.listSortSelect.value,
+                    }
+                );
 
                 this.totalPage = response.totalPages - 1;
                 if (infinite) {
                     if (this.totalPage > this.page - 1) {
-                        this.folderListData = this.folderListData.concat(response.content);
+                        this.folderListData = this.folderListData.concat(
+                            response.content
+                        );
                     } else if (this.totalPage === this.page - 1) {
                         this.endPage();
                     }

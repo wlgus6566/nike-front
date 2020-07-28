@@ -1,7 +1,7 @@
 <template>
     <section class="login">
         <div class="login-inner">
-            <LoginBox />
+            <component :is="LoginBox" @changeLoginBox="changeLoginBox" />
             <p class="f-desc">
                 사용자는 NIKE SPACE에 로그인함으로써,<br />
                 개인정보 처리방침 및 이용약관에 동의합니다.
@@ -10,14 +10,22 @@
     </section>
 </template>
 <script>
-import LoginBox from '@/components/login-box/login-form';
+import LoginForm from '@/components/login-box/login-form';
+import CertCode from '@/components/login-box/cert-code';
+import FindPW from '@/components/login-box/find-password';
 export default {
     name: 'login',
     data: function () {
-        return {};
+        return {
+            LoginBox: 'LoginForm',
+        };
     },
-    components: { LoginBox },
-    methods: {},
+    components: { LoginForm, CertCode, FindPW },
+    methods: {
+        changeLoginBox(compName) {
+            this.LoginBox = compName;
+        },
+    },
 };
 </script>
 
@@ -30,8 +38,8 @@ export default {
     height: 100%;
     align-items: center;
     flex-direction: column;
-    background: url('../../../assets/images/img-login-main-bg@2x.png') no-repeat 50% 50% / 3000px
-        2000px #000;
+    background: url('../../../assets/images/img-login-main-bg@2x.png') no-repeat
+        50% 50% / 3000px 2000px #000;
 }
 .login-inner {
     position: absolute;
@@ -48,8 +56,8 @@ export default {
     display: block;
     width: 500px;
     height: 500px;
-    background: url('../../../assets/images/svg/img-login-swoosh.svg') no-repeat center center /
-        contain;
+    background: url('../../../assets/images/svg/img-login-swoosh.svg') no-repeat
+        center center / contain;
 }
 .login .f-desc {
     display: block;

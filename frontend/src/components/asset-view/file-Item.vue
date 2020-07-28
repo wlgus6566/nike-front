@@ -4,29 +4,30 @@
             <!-- todo 전체선택 스크립트 작업 필요  -->
             <label class="check-label">
                 <span class="checkbox">
-                    <input type="checkbox" v-model="checkAll.state" v-on:change="checkAllChange" />
+                    <input />
                     <span></span>
                 </span>
                 <strong class="txt">전체선택</strong>
             </label>
             <p class="desc">
-                <span v-if="checkAll.state" class="fc-black">
+                <span class="fc-black">
                     전체 파일이 선택됨
                 </span>
-                <span v-else :class="{ 'fc-black': checkTT }">
-                    <em>
-                        {{ checkTxt.length }}
-                    </em>
+                <span>
+                    <em>0</em>
                     개의 파일이 선택됨
                 </span>
             </p>
             <div class="right">
                 <filterSelect :listSortSelect="listSortSelect" />
-                <filterSelect :listSortSelect="listSortSelect2" />
             </div>
         </div>
         <ul class="file-item-list">
-            <li class="file-item" v-for="(item, index) in items" :key="index">
+            <li
+                class="file-item"
+                v-for="(item, index) in contentsFileList"
+                :key="index"
+            >
                 <div class="list">
                     <el-checkbox
                         v-model="item.state"
@@ -41,11 +42,20 @@
                         </span>
                     </el-checkbox>
                     <div class="btn-box">
-                        <a :href="item.url" target="_blank" class="btn-s-sm-white" v-if="item.url">
+                        <a
+                            :href="item.url"
+                            target="_blank"
+                            class="btn-s-sm-white"
+                            v-if="item.url"
+                        >
                             <i class="icon-link"></i><span>LINK</span>
                         </a>
                         <div v-else>
-                            <button type="button" class="btn-s-sm-white" v-if="item.state">
+                            <button
+                                type="button"
+                                class="btn-s-sm-white"
+                                v-if="item.state"
+                            >
                                 <i class="icon-check"></i><span>ADDED</span>
                             </button>
                             <button type="button" class="btn-s-sm-black" v-else>
@@ -92,48 +102,15 @@ export default {
             listSortSelect: {
                 listSortOptions: [
                     {
-                        value: '기본 정렬',
+                        value: 'ORDER',
                         label: '기본 정렬',
                     },
                     {
-                        value: '파일명 순',
+                        value: 'FILE_NAME',
                         label: '파일명 순',
                     },
                 ],
-                value: '기본 정렬',
-            },
-            listSortSelect2: {
-                listSortOptions: [
-                    {
-                        value: '전체확장자',
-                        label: '전체확장자',
-                    },
-                    {
-                        value: 'ai',
-                        label: 'ai',
-                    },
-                    {
-                        value: 'jpg',
-                        label: 'jpg',
-                    },
-                    {
-                        value: 'jpeg',
-                        label: 'jpeg',
-                    },
-                    {
-                        value: 'gif',
-                        label: 'gif',
-                    },
-                    {
-                        value: 'tif',
-                        label: 'tif',
-                    },
-                    {
-                        value: 'psd',
-                        label: 'psd',
-                    },
-                ],
-                value: '전체확장자',
+                value: 'ORDER',
             },
         };
     },
@@ -141,7 +118,7 @@ export default {
         filterSelect,
     },
     props: {
-        items: Array,
+        contentsFileList: Array,
         checkAll: Object,
         checkTxt: Object,
     },

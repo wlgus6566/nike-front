@@ -14,6 +14,12 @@ function getContents(topMenuCode, menuCode, params) {
 function getContentsView(topMenuCode, menuCode, contentsSeq) {
     return apiContents.get(`/${topMenuCode}/${menuCode}/${contentsSeq}`);
 }
+function getContentsViewFile(topMenuCode, menuCode, contentsSeq, params) {
+    return apiContents.get(`/${topMenuCode}/${menuCode}/${contentsSeq}/file`, {
+        params: params,
+    });
+}
+
 function postContents(topMenuCode, menuCode, data) {
     return apiContents.post(`/${topMenuCode}/${menuCode}`, data);
 }
@@ -23,4 +29,11 @@ function putContents(topMenuCode, menuCode, data) {
 function deleteContents(topMenuCode, menuCode, contentsSeq) {
     return apiContents.delete(`/${topMenuCode}/${menuCode}/${contentsSeq}`);
 }
-export { getContents, getContentsView, postContents, putContents, deleteContents };
+export {
+    getContents,
+    getContentsView,
+    getContentsViewFile,
+    postContents,
+    putContents,
+    deleteContents,
+};

@@ -9,6 +9,9 @@ function loginUser(data) {
 function setPassword(data) {
     return apiLogin.put('/open/login/set/password', data);
 }
+function certCode(data) {
+    return apiLogin.post('/open/login/check/cert', data);
+}
 
 function changePassword(data) {
     return apiLogin.put('/open/login/change/password', data);
@@ -20,4 +23,4 @@ function sendEmail(params) {
     });
 }
 
-export { loginUser, sendEmail };
+export { loginUser, sendEmail, setPassword, changePassword, certCode };

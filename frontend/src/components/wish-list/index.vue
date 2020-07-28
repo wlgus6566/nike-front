@@ -57,7 +57,7 @@ export default {
     props: ['listData', 'checkWishItem', 'deleteLoading'],
     methods: {
         isLoading(seq) {
-            const indexFind = this.deleteLoading.findIndex(el => {
+            const indexFind = this.deleteLoading.findIndex((el) => {
                 return el === seq;
             });
             return indexFind !== -1;

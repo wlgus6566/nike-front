@@ -8,7 +8,12 @@
             </p>
             <div class="form-box">
                 <div class="pw-box">
-                    <input type="text" v-model="userId" placeholder="ID(E-MAIL)" />
+                    <input
+                        ref="mailId"
+                        type="text"
+                        v-model="userId"
+                        placeholder="ID(E-MAIL)"
+                    />
                 </div>
             </div>
             <div class="login-btn-wrap">
@@ -16,7 +21,11 @@
                     <span>E-MAIL 발송</span>
                 </button>
             </div>
-            <button type="button" class="btn-close" @click="$emit('changeLoginBox', 'LoginForm')">
+            <button
+                type="button"
+                class="btn-close"
+                @click="$emit('changeLoginBox', 'LoginForm')"
+            >
                 <span>닫기</span>
             </button>
         </div>
@@ -35,6 +44,7 @@ export default {
         async findPW() {
             if (!this.userId) {
                 alert('아이디를 입력해 주세요.');
+                this.$refs.mailId.focus();
                 return;
             }
             try {
@@ -46,12 +56,13 @@ export default {
                     alert(response.msg);
                 }
                 if (response.success) {
-                    console.log(response.data);
                     this.$emit('changeLoginBox', 'LoginForm');
+                } else {
+                    this.$refs.mailId.focus();
                 }
-                return;
             } catch (error) {
                 alert(error.response.data.msg);
+                this.$refs.mailId.focus();
             }
         },
     },

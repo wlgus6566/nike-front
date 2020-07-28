@@ -7,7 +7,11 @@
             { 'folder-list-row': listTypes[1].active },
         ]"
     >
-        <li :class="classBind(item)" v-for="(item, index) in folderListData" :key="index">
+        <li
+            :class="classBind(item)"
+            v-for="(item, index) in folderListData"
+            :key="index"
+        >
             <router-link :to="setUrl(item)">
                 <div class="thumbnail">
                     <img :src="item.imageFilePhysicalName" alt="" />
@@ -16,7 +20,8 @@
                     <strong class="title">{{ item.folderName }}</strong>
                     <p class="txt">{{ item.folderContents }}</p>
                     <p class="date">
-                        {{ $moment(item.campaignBeginDt).format('YYYY.MM.DD') }} ~
+                        {{ $moment(item.campaignBeginDt).format('YYYY.MM.DD') }}
+                        ~
                         {{ $moment(item.campaignEndDt).format('YYYY.MM.DD') }}
                     </p>
                 </div>
@@ -42,7 +47,7 @@ export default {
             return `${defaultClass}${detailAuth}${exposure}`;
         },
         setUrl(item) {
-            return `${item.contentsSeq}`.toLocaleLowerCase();
+            return `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase();
         },
     },
 };
@@ -65,7 +70,8 @@ export default {
     position: relative;
     padding-top: 100%;
     overflow: hidden;
-    background: url('../../assets/images/img-asset-none@2x.png') no-repeat center;
+    background: url('../../assets/images/img-asset-none@2x.png') no-repeat
+        center;
     background-size: 100%;
 }
 .folder-item .thumbnail img {
@@ -122,7 +128,8 @@ export default {
     width: 12px;
     height: 12px;
     margin-top: -6px;
-    background: url('../../assets/images/svg/icon-mypage-route.svg') no-repeat center;
+    background: url('../../assets/images/svg/icon-mypage-route.svg') no-repeat
+        center;
 }
 .folder-item .date {
     margin-top: 8px;
@@ -161,7 +168,8 @@ export default {
     width: 20px;
     height: 20px;
     margin-left: 2px;
-    background: url('../../assets/images/svg/icon-view-small-w.svg') no-repeat center;
+    background: url('../../assets/images/svg/icon-view-small-w.svg') no-repeat
+        center;
 }
 [class^='folder-list'] {
     width: 100%;

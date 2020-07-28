@@ -7,14 +7,29 @@
             </strong>
             <div class="form-box">
                 <div class="input-box">
-                    <input type="text" v-model="username" placeholder="ID(E-MAIL)" />
-                    <input type="password" v-model="password" placeholder="PW" />
+                    <input
+                        type="text"
+                        v-model="username"
+                        placeholder="ID(E-MAIL)"
+                    />
+                    <input
+                        type="password"
+                        v-model="password"
+                        placeholder="PW"
+                    />
                 </div>
             </div>
             <div class="login-btn-wrap">
-                <button type="submit" class="btn-s-lg-orage"><span>로그인</span></button>
+                <button type="submit" class="btn-s-lg-orage">
+                    <span>로그인</span>
+                </button>
                 <div class="bnt-box">
-                    <a href="#" class="txt-btn"><span>비밀번호 찾기</span></a>
+                    <a
+                        href="#"
+                        class="txt-btn"
+                        @click.prevent="$emit('changeLoginBox', 'FindPW')"
+                        ><span>비밀번호 찾기</span></a
+                    >
                 </div>
             </div>
         </div>
@@ -26,7 +41,7 @@ export default {
     data() {
         return {
             username: 'yth',
-            password: 'Qdlthauts!235',
+            password: 'Emotion1!@',
         };
     },
     methods: {
@@ -43,14 +58,17 @@ export default {
                 const bodyFormData = new FormData();
                 bodyFormData.set('username', this.username);
                 bodyFormData.set('password', this.password);
-                const response = await this.$store.dispatch('LOGIN', bodyFormData);
+                const response = await this.$store.dispatch(
+                    'LOGIN',
+                    bodyFormData
+                );
                 if (response.data.existMsg) {
                     alert(response.data.msg);
                 }
                 if (response.data.code === 'SEND_EMAIL_CERT_CODE') {
-                    this.$router.push('/');
+                    //this.$router.push('/');
                 } else {
-                    this.$router.push('/');
+                    //this.$router.push('/');
                 }
 
                 console.log(response);

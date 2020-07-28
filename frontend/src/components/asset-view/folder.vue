@@ -1,29 +1,29 @@
 <template>
     <div class="folder-wrap">
         <h2 class="folder-title">
-            {{ items.folderName }}
+            {{ folderDetail.folderName }}
         </h2>
         <div class="inner">
             <p class="folder-desc">
-                {{ items.folderContents }}
+                {{ folderDetail.folderContents }}
             </p>
             <span class="folder-date">
-                <em>{{ items.campaignBeginDt }}</em>
+                <em>{{ folderDetail.campaignBeginDt }}</em>
                 -
-                <em>{{ items.campaignEndDt }}</em>
+                <em>{{ folderDetail.campaignEndDt }}</em>
             </span>
             <p class="folder-name">나이키 담당자 정보 : <em>홍길동</em></p>
         </div>
-        {{ items.memo }}
+        {{ folderDetail.memo }}
         <div class="noti-box">
             <ul class="noti-item-list">
                 <li class="noti-item">
-                    KEEP IT TIGHT! 본 자료는 NIKE.INC.와 NIKE KOREA LLC.의 자산입니다. 보안 규정을
-                    준수하시기 바랍니다.
+                    KEEP IT TIGHT! 본 자료는 NIKE.INC.와 NIKE KOREA LLC.의
+                    자산입니다. 보안 규정을 준수하시기 바랍니다.
                 </li>
                 <li class="noti-item">
-                    자료의 조회와 다운로드 이력이 추적 / 관리됩니다. 자료의 불법적인 유출은 관련
-                    법에 의거 처벌될 수 있습니다.
+                    자료의 조회와 다운로드 이력이 추적 / 관리됩니다. 자료의
+                    불법적인 유출은 관련 법에 의거 처벌될 수 있습니다.
                 </li>
             </ul>
         </div>
@@ -32,7 +32,8 @@
 <script>
 export default {
     name: 'folder',
-    props: ['items'],
+    props: ['folderDetail'],
+    created() {},
 };
 </script>
 <style scoped></style>
