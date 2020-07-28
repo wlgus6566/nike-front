@@ -38,9 +38,7 @@
             return this.$store.state.basketListData;
         },
     },
-    mounted() {
-        console.log(this.basketList);
-    },
+    mounted() {},
     methods: {
         // 장바구니 삭제 api
         deleteClick(goodsBasketSeq) {

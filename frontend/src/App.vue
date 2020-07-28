@@ -21,9 +21,7 @@ export default {
     data() {
         return {};
     },
-    created() {
-        this.$store.dispatch('basketList');
-    },
+
     computed: {
         AppLayout() {
             return `Layout${this.$route.meta.layout || 'Default'}`;

@@ -45,8 +45,9 @@
 </template>
 
 <script>
-import { getWishList, deleteWishList, deleteWishListCheck } from '@/api/wish-list';
-export default {
+    import {deleteWishList, deleteWishListCheck, getWishList} from '@/api/wish-list';
+
+    export default {
     name: 'wish-list',
     components: {
         WishList: () => import('@/components/wish-list/index'),
@@ -65,16 +66,17 @@ export default {
             //check: this.items.state,
         };
     },
-    mounted() {
+    activated() {
+        console.log('test');
         this.fetchData(true);
     },
     methods: {
         checkedWish(seq, del) {
-            const indexOfChecked = this.checkWishItem.findIndex(el => el === seq);
+            const indexOfChecked = this.checkWishItem.findIndex((el) => el === seq);
             if (!del && indexOfChecked === -1) {
                 this.checkWishItem.push(seq);
             } else {
-                this.checkWishItem = this.checkWishItem.filter(el => {
+                this.checkWishItem = this.checkWishItem.filter((el) => {
                     return el !== seq;
                 });
             }
@@ -82,9 +84,9 @@ export default {
         },
         allCheckFn() {
             if (this.checkAll) {
-                this.wishListData.forEach(el => {
+                this.wishListData.forEach((el) => {
                     const indexOfChecked = this.checkWishItem.findIndex(
-                        elChecked => elChecked === el.wishListSeq
+                        (elChecked) => elChecked === el.wishListSeq
                     );
                     if (indexOfChecked === -1) {
                         this.checkWishItem.push(el.wishListSeq);
@@ -104,7 +106,7 @@ export default {
                     wishListSeqList: this.checkWishItem,
                 });
                 await this.fetchData();
-                this.checkWishItem.forEach(seq => {
+                this.checkWishItem.forEach((seq) => {
                     this.checkedWish(seq, true);
                 });
                 this.deleteLoading = [];

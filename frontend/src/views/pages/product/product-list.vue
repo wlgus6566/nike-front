@@ -15,7 +15,11 @@
             </template>
         </template>
         <Loading v-if="loadingData" />
-        <detailView :visible.sync="visible.detailView" :productDetailData="productDetailData" />
+        <detailView
+            :visible.sync="visible.detailView"
+            :productDetailData="productDetailData"
+            @addWishList="addWishList"
+        />
     </div>
 </template>
 <script>
@@ -27,6 +31,7 @@
     import detailView from '@/views/pages/product/detail-view';
 
     import {getProductList} from '@/api/product.js';
+    import {getWishList, postWishList} from '@/api/wish-list';
 
     export default {
     name: 'product-list',
@@ -44,7 +49,8 @@
             },
             loadingData: false,
             page: 0,
-            itemLength: 5,
+            itemLength: 20,
+            wishListData: null,
             searchKeyword: '',
             visible: {
                 detailView: false,
@@ -61,16 +67,21 @@
         detailView,
     },
     mounted() {
-        this.fetchData();
+        this.getProduct();
+        this.getWishiList();
+    },
+    activated() {
+        console.log('test');
     },
     methods: {
         // 상품 리스트 api
         searchSubmit(val) {
             this.searchKeyword = val;
-            this.fetchData();
+            this.getProduct();
         },
+
         // 상품 리스트 api
-        async fetchData() {
+        async getProduct() {
             try {
                 const {
                     data: { data: response },
@@ -81,6 +92,7 @@
                     category3Code: this.$route.meta.category3Code,
                     keyword: this.searchKeyword,
                 });
+                console.log(response);
                 this.productListData = response.content;
             } catch (error) {
                 console.log(error);
@@ -94,20 +106,42 @@
             this.productDetailData = this.productListData[findIndex];
         },
 
-        /*// 상품 장바구니에 담기
-        async addProductBasket(goodsSeq) {
+        // 위시리스트 목록 가져오기
+        async getWishiList() {
             try {
                 const {
                     data: { data: response },
-                } = await postBasketSave({
-                    goodsSeq: goodsSeq,
-                    orderQuantity: 1,
+                } = await getWishList({
+                    page: this.page,
+                    size: this.itemLength,
                 });
-                await this.$store.dispatch('basketList');
+                this.wishListData = response.content;
             } catch (error) {
                 console.log(error);
             }
-        },*/
+        },
+
+        // 위시리스트에 상품 추가
+        async addWishList(goodsSeq) {
+            try {
+                const findIndex = this.wishListData.findIndex(
+                    (el) => el.goodsSeq === goodsSeq.goodsSeq
+                );
+                if (findIndex == -1) {
+                    await postWishList({
+                        goodsSeq: goodsSeq.goodsSeq,
+                    });
+                    await this.getWishiList();
+                    alert(
+                        '위시리스트에 추가 되었습니다. 위시리스트는 마이페이지에서 확인가능합니다.'
+                    );
+                } else {
+                    alert('이미 담긴 상품입니다.');
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
     },
 };
 </script>

@@ -42,9 +42,7 @@
         return {};
     },
     props: ['productListData'],
-    created() {
-        console.log(this.productListData);
-    },
+    created() {},
     computed: {
         basketList() {
             return this.$store.state.basketListData.map((data) => {
@@ -55,9 +53,7 @@
             });
         },
     },
-    mounted() {
-        //console.log(this.active);
-    },
+    mounted() {},
     methods: {
         cartActive(goodsSeq) {
             const findIndex = this.basketList.findIndex((el) => {
