@@ -1,12 +1,13 @@
 package com.nike.dnp.controller.notice;
 
-import com.nike.dnp.common.ObjectMapperUtils;
+
 import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.dto.notice.*;
 import com.nike.dnp.entity.notice.NoticeArticle;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.notice.NoticeService;
+import com.nike.dnp.util.ObjectMapperUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -133,7 +134,7 @@ public class NoticeController {
                                                   BindingResult bindingResult) {
         log.info("NoticeController.saveNotice");
 
-        CustomerSaveDTO customerSaveDTO = ObjectMapperUtils.map(noticeSaveDTO, CustomerSaveDTO.class);
+        CustomerSaveDTO customerSaveDTO = ObjectMapperUtil.map(noticeSaveDTO, CustomerSaveDTO.class);
 
         return responseService.getSingleResult(noticeService.save(customerSaveDTO));
     }
@@ -148,7 +149,7 @@ public class NoticeController {
                                                 BindingResult bindingResult) {
         log.info("NoticeController.saveNews");
 
-        CustomerSaveDTO customerSaveDTO = ObjectMapperUtils.map(newsSaveDTO, CustomerSaveDTO.class);
+        CustomerSaveDTO customerSaveDTO = ObjectMapperUtil.map(newsSaveDTO, CustomerSaveDTO.class);
 
         return responseService.getSingleResult(noticeService.save(customerSaveDTO));
     }
@@ -163,7 +164,7 @@ public class NoticeController {
                                                BindingResult bindingResult) {
         log.info("NoticeController.saveQna");
 
-        CustomerSaveDTO customerSaveDTO = ObjectMapperUtils.map(qnaSaveDTO, CustomerSaveDTO.class);
+        CustomerSaveDTO customerSaveDTO = ObjectMapperUtil.map(qnaSaveDTO, CustomerSaveDTO.class);
 
         return responseService.getSingleResult(noticeService.save(customerSaveDTO));
     }
@@ -209,7 +210,7 @@ public class NoticeController {
                                 BindingResult bindingResult) {
         log.info("NoticeController.updateNotice");
 
-        CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtils.map(noticeUpdateDTO, CustomerUpdateDTO.class);
+        CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtil.map(noticeUpdateDTO, CustomerUpdateDTO.class);
         customerUpdateDTO.setNoticeArticleSeq(noticeSeq);
 
         return responseService.getSingleResult(noticeService.updateCustomerCenter(customerUpdateDTO));
@@ -229,7 +230,7 @@ public class NoticeController {
                                 BindingResult bindingResult) {
         log.info("NoticeController.updateNotice");
 
-        CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtils.map(newsUpdateDTO, CustomerUpdateDTO.class);
+        CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtil.map(newsUpdateDTO, CustomerUpdateDTO.class);
         customerUpdateDTO.setNoticeArticleSeq(noticeSeq);
 
         return responseService.getSingleResult(noticeService.updateCustomerCenter(customerUpdateDTO));
@@ -249,7 +250,7 @@ public class NoticeController {
                                 BindingResult bindingResult) {
         log.info("NoticeController.updateNotice");
 
-        CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtils.map(qnaUpdateDTO, CustomerUpdateDTO.class);
+        CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtil.map(qnaUpdateDTO, CustomerUpdateDTO.class);
         customerUpdateDTO.setNoticeArticleSeq(noticeSeq);
 
         return responseService.getSingleResult(noticeService.updateCustomerCenter(customerUpdateDTO));
