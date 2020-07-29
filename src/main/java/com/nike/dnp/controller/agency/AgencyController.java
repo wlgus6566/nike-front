@@ -23,7 +23,7 @@ import java.util.Optional;
  *
  * @author [이소정]
  * @since 2020. 7. 20. 오후 12:00:36
- * @apiNote
+ * @apiNote 메이전시 관리 컨트롤러
  */
 @Slf4j
 @RestController
@@ -60,7 +60,7 @@ public class AgencyController {
      * @return the single result
      * @author [이소정]
      * @since 2020. 7. 20. 오후 12:09:11
-     * @apiNote
+     * @apiNote 에이전시 목록 조회
      */
     @ApiOperation(
         value = "에이전시 목록 조회"
@@ -78,7 +78,7 @@ public class AgencyController {
      * @return the single result
      * @author [이소정]
      * @since 2020. 7. 20. 오후 12:12:19
-     * @apiNote
+     * @apiNote 에이전시 등록
      */
     @ApiOperation(
             value = "에이전시 등록"
@@ -98,7 +98,7 @@ public class AgencyController {
      * @return the single result
      * @author [이소정]
      * @since 2020. 7. 20. 오후 12:10:50
-     * @apiNote
+     * @apiNote 에이전시 상세조회
      */
     @ApiOperation(
             value = "에이전시 상세조회"
@@ -118,7 +118,7 @@ public class AgencyController {
      * @return the single result
      * @author [이소정]
      * @since 2020. 7. 20. 오후 2:16:42
-     * @apiNote
+     * @apiNote 에이전시 수정
      */
     @ApiOperation(value = "에이전시 수정", notes = REQUEST_CHARACTER)
     @PutMapping(name = "에이전시 수정", value = "/{agencySeq}"
@@ -138,7 +138,7 @@ public class AgencyController {
      * @return the single result
      * @author [이소정]
      * @since 2020. 7. 20. 오후 2:21:32
-     * @apiNote
+     * @apiNote 에이전시 삭제
      */
     @ApiOperation(value="에이전시 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "에이전시 삭제", value = "/{agencySeq}"

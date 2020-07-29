@@ -22,7 +22,7 @@ import java.util.Optional;
  *
  * @author [이소정]
  * @since 2020. 7. 10. 오전 11:07:25
- * @apiNote
+ * @apiNote 보고서 컨트롤러
  */
 @Slf4j
 @RestController
@@ -58,7 +58,7 @@ public class ReportAnswerController {
      * @return the all reports
      * @author [이소정]
      * @since 2020. 7. 10. 오후 6:50:40
-     * @apiNote
+     * @apiNote 보고서 댓글(feedback) 목록 조회
      */
     @ApiOperation(
             value = "보고서 댓글 목록 조회"
@@ -93,7 +93,7 @@ public class ReportAnswerController {
      * @return the single result
      * @author [이소정]
      * @since 2020. 7. 10. 오후 6:39:54
-     * @apiNote
+     * @apiNote 보고서 댓글(feedback) 등록
      */
     @ApiOperation(
             value = "보고서 댓글 등록"
@@ -115,7 +115,7 @@ public class ReportAnswerController {
      * @return the single result
      * @author [이소정]
      * @since 2020. 7. 10. 오후 6:39:49
-     * @apiNote
+     * @apiNote 보고서 댓글(feedback) 삭제
      */
     @ApiOperation(value="보고서 댓글 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "보고서 댓글 삭제", value = "/{answerSeq}"

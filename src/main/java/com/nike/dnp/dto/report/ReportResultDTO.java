@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
  *
  * @author [이소정]
  * @since 2020. 7. 27. 오후 7:11:04
- * @implNote
+ * @implNote 보고서 결과 DTO
  */
 @Getter
 @Setter

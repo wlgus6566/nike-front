@@ -16,9 +16,9 @@ import java.util.List;
 /**
  * The Class Contents update dto.
  *
- * @author [오지훈]
+ * @author [이소정]
  * @since 2020. 7. 21. 오후 3:54:34
- * @implNote
+ * @implNote 컨텐츠 수정 DTO
  */
 @Getter
 @Setter

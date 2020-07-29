@@ -73,15 +73,26 @@ public class ContentsBasketResultDTO {
     private static String cdnUrl;
 
     /**
-     * Sets cdn url.
+     * cndUrl 셋팅
      *
      * @param cdnUrl the cdn url
+     * @author [이소정]
+     * @implNote cndUrl 셋팅
+     * @since 2020. 7. 29. 오후 6:49:28
      */
     @Value("${nike.file.cdnUrl:}")
     public void setCdnUrl(final String cdnUrl) {
         this.cdnUrl = cdnUrl;
     }
 
+    /**
+     * Gets file physical name.
+     *
+     * @return the file physical name
+     * @author [이소정]
+     * @implNote cndUrl + FilePhysicalName
+     * @since 2020. 7. 29. 오후 6:48:59
+     */
     public String getFilePhysicalName() {
         return this.cdnUrl + filePhysicalName;
     }

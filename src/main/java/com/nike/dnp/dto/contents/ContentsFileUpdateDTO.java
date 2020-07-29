@@ -9,7 +9,7 @@ import lombok.*;
  *
  * @author [이소정]
  * @since 2020. 7. 3. 오후 3:39:34
- * @implNote
+ * @implNote 컨텐츠 파일 수정 DTO
  */
 @Getter
 @Setter

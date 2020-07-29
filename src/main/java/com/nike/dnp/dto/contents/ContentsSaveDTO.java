@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author [이소정]
  * @since 2020. 6. 24. 오후 3:25:23
- * @implNote
+ * @implNote 컨텐츠 저장 DTO
  */
 @Getter
 @Setter

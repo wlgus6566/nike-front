@@ -28,7 +28,7 @@ import java.util.List;
  *
  * @author [이소정]
  * @since 2020. 7. 27. 오후 5:04:19
- * @apiNote
+ * @apiNote 메인 페이지 controller
  */
 @Slf4j
 @RestController
@@ -72,7 +72,7 @@ public class MainController {
      * @return the single result
      * @author [이소정]
      * @since 2020. 7. 27. 오후 5:38:53
-     * @apiNote
+     * @apiNote 메인(Home) 조회 (메인비쥬얼, asset, toolkit, foundation, report, notice, report, news 포함 calendar 제외)
      */
     @ApiOperation(
         value = "메인 조회(calendar 제외)"
@@ -91,7 +91,7 @@ public class MainController {
      * @return the single result
      * @author [김형욱]
      * @since 2020. 7. 2. 오전 8:55:29
-     * @apiNote
+     * @apiNote Calendar 조회
      */
     @ApiOperation(
             value = "Calendar 조회"

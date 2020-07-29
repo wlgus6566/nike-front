@@ -27,7 +27,7 @@ import java.util.Optional;
  *
  * @author [이소정]
  * @since 2020. 7. 13. 오전 11:52:57
- * @apiNote
+ * @apiNote 컨텐츠 컨트롤러
  */
 @Slf4j
 @RestController
@@ -64,7 +64,7 @@ public class ContentsController {
      * @return all managers
      * @author [이소정]
      * @since 2020. 6. 19. 오후 5:56:03
-     * @apiNote
+     * @apiNote 컨텐츠 목록 조회
      */
     @ApiOperation(
         value = "컨텐츠 목록 조회"
@@ -112,7 +112,7 @@ public class ContentsController {
      * @return the single result
      * @author [이소정]
      * @since 2020. 7. 13. 오전 11:58:47
-     * @apiNote
+     * @apiNote 컨텐츠 등록
      */
     @ApiOperation(
             value = "컨텐츠 등록"
@@ -147,7 +147,7 @@ public class ContentsController {
      * @return the single result
      * @author [이소정]
      * @since 2020. 7. 13. 오전 11:58:42
-     * @apiNote
+     * @apiNote 컨텐츠 상세조회
      */
     @ApiOperation(
             value = "컨텐츠 상세조회"

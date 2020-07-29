@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
  *
  * @author [이소정]
  * @since 2020. 7. 17. 오후 5:54:19
- * @implNote
+ * @implNote 보고서 장바구니 결과 DTO
  */
 @Getter
 @Setter

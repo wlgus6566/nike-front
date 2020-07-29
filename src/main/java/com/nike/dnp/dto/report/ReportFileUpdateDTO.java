@@ -10,7 +10,7 @@ import javax.persistence.Column;
  *
  * @author [이소정]
  * @since 2020. 7. 9. 오후 6:10:18
- * @implNote
+ * @implNote 보고서 파일 수정 DTO
  */
 @Getter
 @Setter

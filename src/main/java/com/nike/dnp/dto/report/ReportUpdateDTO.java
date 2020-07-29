@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author [이소정]
  * @since 2020. 7. 9. 오후 6:09:16
- * @implNote
+ * @implNote 보고서 수정 DTO
  */
 @Getter
 @Setter
