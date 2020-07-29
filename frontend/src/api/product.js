@@ -23,4 +23,10 @@ function getProductDetail(goodsSeq, params) {
         params: params,
     });
 }
-export { getProductList, getUserProductList, getProductDetail };
+// PRODUCT 상품 삭제[배열]
+function delProduct(params) {
+    return apiProduct.delete(`/`, {
+        params: params,
+    });
+}
+export { getProductList, getUserProductList, getProductDetail, delProduct };

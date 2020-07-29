@@ -1,7 +1,12 @@
 <template>
     <div class="aside-order">
         <div class="cart-item-wrap">
-            <ul class="cart-item-list" v-if="basketList.length">
+            <transition-group
+                tag="ul"
+                class="cart-item-list"
+                v-if="basketList.length"
+                name="fade"
+            >
                 <li
                     class="cart-item"
                     v-for="(item, index) in basketList"
@@ -33,7 +38,7 @@
                         <span>삭제</span>
                     </button>
                 </li>
-            </ul>
+            </transition-group>
             <div class="no-data" v-else>
                 <i class="icon-drop"></i>
                 <p class="txt">더욱 빠르게 파일 받기</p>
@@ -72,10 +77,10 @@
     </div>
 </template>
 <script>
-    import {addProductBasket, deleteBasketItem} from '@/utils/basket';
-    import orderSheet from '@/views/pages/product/order-sheet.vue';
+	import {addProductBasket, deleteBasketItem} from '@/utils/basket';
+	import orderSheet from '@/views/pages/product/order-sheet.vue';
 
-    export default {
+	export default {
     name: 'OderItem',
     data() {
         return {
@@ -156,17 +161,7 @@
     display: flex;
     padding: 10px 0;
     align-items: center;
-    animation: delay 0.5s;
     background: #eee;
-}
-@keyframes delay {
-    from {
-        margin-top: -20px;
-    }
-
-    to {
-        margin-top: 0;
-    }
 }
 .cart-item + .cart-item {
     border-top: 1px solid #e5e5e5;
@@ -258,5 +253,12 @@
     text-align: right;
     font-size: 10px;
     color: #888;
+}
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
 }
 </style>
