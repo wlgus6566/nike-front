@@ -41,7 +41,6 @@ const router = new VueRouter({
         ...ErrorRoutes,
 
         ...PubRoutes,
-
         ...testRoutes,
     ],
 });
