@@ -120,6 +120,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 	/**
+	 * User session time int.
+	 *
+	 * @param userSessionTime the user session time
+	 * @return the int
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 20. 오후 4:07:10
+	 * @Description
+	 */
+	@Bean(name = "userSessionTime")
+	@Value("${spring.redis.userSessionTime:}")
+	public int userSessionTime(final int userSessionTime) {
+		return userSessionTime;
+	}
+
+
+	/**
 	 * 암호화 모듈
 	 *
 	 * @return the password encoder
@@ -140,16 +156,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * @author [윤태호]
 	 */
 	@Override
-	public void configure(final WebSecurity web) throws Exception {
+	public void configure(final WebSecurity web) {
 		final String[] staticPatterns = {
 				"/resources/**", "/static/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/css/**", "/font/**", "/js/**", "/images/**", // Static 요소
-				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**" // Swagger 관련
-				,"/api/download", // 임시
-
+				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
+				"/api/download" // 임시
+				, "/error" // 에러
+				,"/api/open/**"
 		};
 		web.ignoring().antMatchers(staticPatterns);
-
 	}
 
 	/**
@@ -160,14 +176,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
-
 		http.authorizeRequests()
 						.accessDecisionManager(accessDecisionManager())
-						.antMatchers(HttpMethod.POST,"/login").permitAll()
+						.antMatchers(HttpMethod.POST,"/api/login").permitAll()
+						.antMatchers("/api/mypage/**", "/api/main/**").authenticated()
 						.anyRequest().authenticated();
 
 		http.addFilter(authenticationFilter()) // 인증 필터
-			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository)) //jwt 토큰 인증 필터
+			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository,this.redisService)) //jwt 토큰 인증 필터
 			.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
 			.and()
 			.csrf().disable() // csrf 사용 안함
@@ -210,6 +226,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		AuthenticationFilter filter = null;
 		try {
 			filter = new AuthenticationFilter(authenticationManager());
+			filter.setFilterProcessesUrl("/api/login");
 			filter.setAuthenticationSuccessHandler(authenticationSuccessHandler()); // 인증 성공 핸들러
 			filter.setAuthenticationFailureHandler(authenticationFailureHandler()); // 인증 실패 핸들러
 			filter.setAuthenticationManager(authenticationManagerBean());

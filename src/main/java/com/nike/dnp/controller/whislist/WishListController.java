@@ -1,8 +1,10 @@
 package com.nike.dnp.controller.whislist;
 
+import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.wishlist.WishListDeleteDTO;
 import com.nike.dnp.dto.wishlist.WishListResultDTO;
+import com.nike.dnp.dto.wishlist.WishListSaveDTO;
 import com.nike.dnp.dto.wishlist.WishListSearchDTO;
 import com.nike.dnp.entity.wishlist.WishList;
 import com.nike.dnp.model.response.CommonResult;
@@ -17,8 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.validation.Valid;
 
 
 /**
@@ -30,7 +35,7 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @Slf4j
 @RestController
-@Api(description = "위시리스트", tags = "wishList")
+@Api(description = "위시리스트", tags = "WISHLIST")
 @RequestMapping(value = "/api/wishlist", name = "위시리스트")
 @AllArgsConstructor
 public class WishListController {
@@ -76,8 +81,10 @@ public class WishListController {
 	 */
 	@ApiOperation(value = "위시리스트 등록", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
-	public SingleResult<WishListResultDTO> saveWishList(@ApiParam(name = "goodsSeq", value = "제품 시퀀스", defaultValue = "4") @RequestParam final Long goodsSeq) {
-		return responseService.getSingleResult(WishListResultDTO.ofSave(wishListService.save(goodsSeq)));
+	@ValidField
+	public SingleResult<WishListResultDTO> saveWishList(@Valid @ModelAttribute final WishListSaveDTO wishListSaveDTO,
+														@ApiIgnore final BindingResult result) {
+		return responseService.getSingleResult(WishListResultDTO.ofSave(wishListService.save(wishListSaveDTO.getGoodsSeq())));
 	}
 
 	/**
@@ -127,7 +134,8 @@ public class WishListController {
 	 */
 	@ApiOperation(value = "위시리스트 다건 삭제", notes = BASIC_CHARACTER)
 	@DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public CommonResult deleteWishListList(@RequestBody final WishListDeleteDTO wishListDeleteDTO) {
+	@ValidField
+	public CommonResult deleteWishListList(@RequestBody @Valid final WishListDeleteDTO wishListDeleteDTO, @ApiIgnore final BindingResult result) {
 		wishListService.deleteList(wishListDeleteDTO);
 		return responseService.getSuccessResult();
 	}

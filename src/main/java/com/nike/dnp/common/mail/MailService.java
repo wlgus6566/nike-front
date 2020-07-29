@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.util.stream.Collectors;
 
 /**
  * The Class Mail service.
@@ -42,6 +43,7 @@ public class MailService {
      * @Description
      */
     public void sendMail(final String emailType, final String subject, final SendDTO sendDTO) {
+        log.info("MailService.sendMail");
         sendEmailOffice365.sendEmail(
                 sendDTO.getEmail()
                 , subject
@@ -59,16 +61,22 @@ public class MailService {
      * @Description template 파일 read > String 으로 저장
      */
     public String getFile(final String emailType) {
+        log.info("MailService.getFile");
         String result = "";
         try {
-            final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new ClassPathResource("templates/email/NIKE_DNP_"+emailType+".html").getInputStream()));
-            String inputLine;
+            final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new ClassPathResource("templates/email/NIKESPACE_"+emailType+".html").getInputStream()));
+            /*String inputLine;
             final StringBuilder response = new StringBuilder();
             while ((inputLine = bufferedReader.readLine()) != null) {
                 response.append(inputLine);
-            }
-            result = response.toString();
+            }*/
+            //TODO[ojh] 2020-07-21 : 기능 작동하는지 확인 안될 경우 위의 주석 해제
+            final String response = bufferedReader.lines().collect(Collectors.joining());
+            result = response;
             bufferedReader.close();
+
+
+
 
         } catch (IOException exception) {
             log.error("exception", exception);
@@ -94,7 +102,7 @@ public class MailService {
             try {
                 field.setAccessible(true);
                 if (!ObjectUtils.isEmpty(field.get(sendDTO))
-                        && "String".equals(field.getType().getSimpleName())
+                        && BasicVariable.String.name().equals(field.getType().getSimpleName())
                         && file.contains("["+ field.getName() +"]")
                 ) {
                     result = result.replace("["+ field.getName() +"]", (String) field.get(sendDTO));
@@ -106,4 +114,12 @@ public class MailService {
         return result;
     }
 
+    /**
+     * The enum Basic variable.
+     *
+     * @author [오지훈]
+     */
+    public enum BasicVariable {
+        String
+    }
 }

@@ -2,8 +2,7 @@ package com.nike.dnp.dto.file;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * The Class File upload dto.
@@ -15,6 +14,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor
 public class FileResultDTO {
 
 	/**
@@ -34,6 +35,14 @@ public class FileResultDTO {
 	private String filePhysicalName;
 
 	/**
+	 * 새로운 파일 이름
+	 *
+	 * @author [윤태호]
+	 */
+	@ApiModelProperty(hidden = true)
+	private String fileNewName;
+
+	/**
 	 * 파일 사이즈
 	 *
 	 * @author [윤태호]
@@ -51,12 +60,16 @@ public class FileResultDTO {
 
 	/**
 	 * 파일 확장자
+	 *
+	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "fileExtension", value = "파일 확장자")
+	@ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "JPG")
 	private String fileExtension;
 
 	/**
 	 * 썸네일 파일 이름
+	 *
+	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "thumbnailFileName", value = "썸네일 파일 이름")
 	private String thumbnailFileName;
@@ -64,6 +77,8 @@ public class FileResultDTO {
 
 	/**
 	 * 썸네일 파일 물리 경로
+	 *
+	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "thumbnailPhysicalName", value = "썸네일 파일 물리 경로")
 	private String thumbnailPhysicalName;
@@ -71,9 +86,38 @@ public class FileResultDTO {
 
 	/**
 	 * 썸네일 파일 사이즈
+	 *
+	 * @author [윤태호]
 	 */
 	@ApiModelProperty(name = "thumbnailSize", value = "썸네일 파일 사이즈")
 	private Long thumbnailSize;
+
+
+	/**
+	 * 디테일 썸네일 파일 이름
+	 *
+	 * @author [윤태호]
+	 */
+	@ApiModelProperty(name = "detailThumbnailFileName", value = "디테일 썸네일 파일 이름")
+	private String detailThumbnailFileName;
+
+
+	/**
+	 * 디테일 썸네일 파일 물리 경로
+	 *
+	 * @author [윤태호]
+	 */
+	@ApiModelProperty(name = "detailThumbnailPhysicalName", value = "디테일 썸네일 파일 물리 경로")
+	private String detailThumbnailPhysicalName;
+
+
+	/**
+	 * 디테일 썸네일 파일 사이즈
+	 *
+	 * @author [윤태호]
+	 */
+	@ApiModelProperty(name = "detailThumbnailSize", value = "디테일 썸네일 파일 사이즈")
+	private Long detailThumbnailSize;
 
 
 }

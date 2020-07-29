@@ -31,30 +31,60 @@ import java.time.LocalDateTime;
 @Table(name = "TB_CALENDAR")
 public class Calendar  implements Serializable {
 
+    /**
+     * The Calendar seq
+     *
+     * @author [오지훈]
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CALENDAR_SEQ")
     @ApiModelProperty(name = "calendarSeq", value = "달력 시퀀스")
     private Long calendarSeq;
 
+    /**
+     * The Calendar section code
+     *
+     * @author [오지훈]
+     */
     @Column(name = "CALENDAR_SECTION_CODE")
     @ApiModelProperty(name = "calendarSectionCode", value = "메뉴 코드", required = true)
     private String calendarSectionCode;
 
+    /**
+     * The Schedule name
+     *
+     * @author [오지훈]
+     */
     @Column(name = "SCHEDULE_NAME")
     @ApiModelProperty(name = "scheduleName", value = "일정 명", required = true)
     private String scheduleName;
 
+    /**
+     * The Contents
+     *
+     * @author [오지훈]
+     */
     @Lob
     @Column(name = "CONTENTS")
     @ApiModelProperty(name = "contents", value = "내용", required = true)
     private String contents;
 
+    /**
+     * The Begin dt
+     *
+     * @author [오지훈]
+     */
     @Column(name = "BEGIN_DT")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
     @ApiModelProperty(name = "beginDt", value = "시작 일시")
     private LocalDateTime beginDt;
 
+    /**
+     * The End dt
+     *
+     * @author [오지훈]
+     */
     @Column(name = "END_DT")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
     @ApiModelProperty(name = "endDt", value = "종료 일시")

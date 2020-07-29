@@ -4,6 +4,15 @@ import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
 
+import java.util.List;
+
+/**
+ * The Class Report search dto.
+ *
+ * @author [오지훈]
+ * @CreatedOn 2020. 7. 21. 오후 3:55:43
+ * @Description
+ */
 @Getter
 @Setter
 @ToString
@@ -34,6 +43,12 @@ public class ReportSearchDTO extends SearchDTO {
      */
     @ApiParam(name = "groupSeq", value = "그룹 시퀀스")
     private Long groupSeq;
+
+    /**
+     * The Auth seq list.
+     */
+    @ApiParam(name = "authSeqList", value = "그룹 시퀀스 목록", hidden = true)
+    private List<Long> authSeqList;
 
     /**
      * Method to String

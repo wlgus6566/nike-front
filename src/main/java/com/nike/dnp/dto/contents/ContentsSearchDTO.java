@@ -5,18 +5,14 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
 
-import javax.persistence.Column;
-
 /**
  * Contents Search DTO
  *
  * @author [이소정]
  * @CreatedOn 2020. 6. 19. 오후 5:57:26
- * @Description Contents Search DTO 작성
  */
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class ContentsSearchDTO extends SearchDTO {
@@ -42,7 +38,6 @@ public class ContentsSearchDTO extends SearchDTO {
      *
      * @author [이소정]
      */
-    @Column(name = "TOP_MENU_CODE")
     @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 코드", hidden = true)
     private String topMenuCode = "";
 
@@ -51,9 +46,20 @@ public class ContentsSearchDTO extends SearchDTO {
      *
      * @author [이소정]
      */
-    @Column(name = "MENU_CODE")
     @ApiParam(value = "2depth 메뉴 코드", name = "menuCode", hidden = true)
     private String menuCode = "";
+
+    /**
+     * 노출 여부
+     */
+    @ApiParam(value = "노출 여부", name = "exposureYn", hidden = true)
+    private String exposureYn;
+
+    /**
+     * The User auth seq.
+     */
+    @ApiModelProperty(name = "userAuthSeq", value = "유저 권한 시퀀스", hidden = true)
+    private Long userAuthSeq;
 
     /**
      * Method to String
@@ -61,7 +67,6 @@ public class ContentsSearchDTO extends SearchDTO {
      * @return String string
      * @author [이소정]
      * @CreatedOn 2020. 6. 19. 오후 5:57:26
-     * @Description
      */
     @Override
     public String toString() {

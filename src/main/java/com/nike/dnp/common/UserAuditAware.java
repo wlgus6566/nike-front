@@ -7,6 +7,7 @@ import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Optional;
 
@@ -33,9 +34,9 @@ public class UserAuditAware implements AuditorAware<Long> {
     @Override
     public Optional<Long> getCurrentAuditor() {
         log.info("UserAuditAware.getCurrentAuditor");
-        Optional<Long> result = Optional.empty();
+        Optional<Long> result = Optional.of(0L);
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(null == authentication || !authentication.isAuthenticated())) {
+        if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {
             final AuthUserDTO authUserDTO = (AuthUserDTO) authentication.getPrincipal();
             result = Optional.of(authUserDTO.getUserSeq());
         }

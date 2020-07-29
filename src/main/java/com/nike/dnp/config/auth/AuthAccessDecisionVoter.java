@@ -155,10 +155,9 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 
 		//url 체크
 		final AntPathMatcher antPathMatcher = new AntPathMatcher();
-		int result = ACCESS_ABSTAIN;
-		for(final MenuRoleResourceReturnDTO menuRoleResourceReturnDTO : authsResourcesByRoleType){
-			//String resourceUrl = menuRoleResourceReturnDTO.getResourceUrl();
 
+		int result = ACCESS_DENIED;
+		for(final MenuRoleResourceReturnDTO menuRoleResourceReturnDTO : authsResourcesByRoleType){
 			StringBuilder resourceUrl = new StringBuilder(menuRoleResourceReturnDTO.getResourceUrl());
 			final String resourceMethod = menuRoleResourceReturnDTO.getResourceMethod();
 			if(resourceUrl.toString().contains("{")){
@@ -168,7 +167,6 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 			if(method.equalsIgnoreCase(HttpMethod.GET.name())){
 				resourceUrl.append('*');
 			}
-			log.debug("resourceUrl {}", resourceUrl);
 			//url 매칭 되는것이 있는지 체크
 			if(antPathMatcher.match(resourceUrl.toString(),url)){
 				// http 메소드 확인
@@ -190,13 +188,16 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 							}
 						}
 					}*/
-				}else{
-					result = ACCESS_DENIED;
 				}
-				break;
 			}
 		}
 		return result;
+	}
+
+
+	public static void main(String[] args) {
+		final AntPathMatcher antPathMatcher = new AntPathMatcher();
+		System.out.println(antPathMatcher.match("/api/user/*", "/api/user/view"));
 	}
 
 

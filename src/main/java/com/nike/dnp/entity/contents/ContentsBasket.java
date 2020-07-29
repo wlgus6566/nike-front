@@ -1,14 +1,12 @@
 package com.nike.dnp.entity.contents;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
-import com.nike.dnp.dto.contents.ContentsBasketSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * The Class Contents basket.
@@ -20,7 +18,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor(access=AccessLevel.PUBLIC)
-
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_CONTENTS_BASKET")
@@ -58,18 +55,18 @@ public class ContentsBasket extends BaseTimeEntity {
     /**
      * Save contents basket.
      *
-     * @param contentsBasketSaveDTO the contents basket save dto
-     * @param authUserDTO           the auth user dto
+     * @param contentsFileSeq the contents file seq
+     * @param authUserDTO     the auth user dto
      * @return the contents basket
      * @author [이소정]
      * @CreatedOn 2020. 7. 15. 오후 12:02:37
      * @Description
      */
     @Transactional
-    public ContentsBasket save(ContentsBasketSaveDTO contentsBasketSaveDTO, AuthUserDTO authUserDTO) {
-        ContentsBasket saveContentsBasket = new ContentsBasket();
+    public ContentsBasket save(final Long contentsFileSeq, final AuthUserDTO authUserDTO) {
+        final ContentsBasket saveContentsBasket = new ContentsBasket();
         saveContentsBasket.setUserSeq(authUserDTO.getUserSeq());
-        saveContentsBasket.setContentsFileSeq(contentsBasketSaveDTO.getContentsFileSeq());
+        saveContentsBasket.setContentsFileSeq(contentsFileSeq);
         return saveContentsBasket;
     }
 

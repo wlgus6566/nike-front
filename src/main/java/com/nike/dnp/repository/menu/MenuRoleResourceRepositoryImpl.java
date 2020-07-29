@@ -64,7 +64,8 @@ public class MenuRoleResourceRepositoryImpl extends QuerydslRepositorySupport im
                 .innerJoin(qAuthMenuRole).on(qAuthMenuRole.menuRoleSeq.eq(qMenuRole.menuRoleSeq))
                 .innerJoin(qAuth).on(qAuth.authSeq.eq(qAuthMenuRole.authSeq))
                 .where(qAuth.authSeq.eq(authSeq))
-                .orderBy(qMenuRoleResource.menuRoleResourceSeq.desc())
+                //.orderBy(qMenuRoleResource.menuRoleResourceSeq.desc())
+                .orderBy(qMenuRoleResource.resourceUrl.length().desc())
                 .fetch()
                 ;
     }

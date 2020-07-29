@@ -61,9 +61,15 @@ public class WishList extends BaseTimeEntity {
     @JoinColumn(name = "GOODS_SEQ", insertable = false, updatable = false)
     private Product product;
 
-
+    /**
+     * Pre persist.
+     *
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 24. 오전 10:02:38
+     * @Description
+     */
     @PrePersist
-    private void prePersist(){
+    private void prePersist () {
         if(ObjectUtils.isEmpty(this.userSeq)){
             this.userSeq = SecurityUtil.currentUser().getUserSeq();
         }

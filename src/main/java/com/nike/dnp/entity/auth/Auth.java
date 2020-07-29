@@ -68,6 +68,15 @@ public class Auth extends BaseTimeEntity implements Serializable {
     private String roleType;
 
     /**
+     * 권한 Depth
+     *
+     * @author [오지훈]
+     */
+    @Column(name = "AUTH_DEPTH")
+    @ApiModelProperty(name = "authDepth", value = "권한 Depth")
+    private Long authDepth;
+
+    /**
      * 사용 여부
      *
      * @author [오지훈]
@@ -85,6 +94,7 @@ public class Auth extends BaseTimeEntity implements Serializable {
     @JoinColumn(name = "UPPER_AUTH_SEQ",
             referencedColumnName = "AUTH_SEQ",
             insertable = false, updatable = false)
+    @ApiModelProperty(name = "subAuths", value = "하위 권한")
     private List<Auth> subAuths;
 
     /**
@@ -96,11 +106,13 @@ public class Auth extends BaseTimeEntity implements Serializable {
      * @Description 그룹(권한) 생성
      */
     @Builder
-    public Auth(final AuthSaveDTO authSaveDTO) {
+    public Auth (final AuthSaveDTO authSaveDTO) {
+        super();
         this.upperAuthSeq = authSaveDTO.getUpperAuthSeq();
         this.authName = authSaveDTO.getAuthName();
         this.roleType = "ROLE_" + authSaveDTO.getUpperAuthSeq() + "_" + System.currentTimeMillis();
         this.useYn = "Y";
+        this.authDepth = authSaveDTO.getAuthDepth();
     }
 
     /**

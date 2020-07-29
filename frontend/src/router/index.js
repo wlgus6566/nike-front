@@ -38,7 +38,6 @@ const router = new VueRouter({
         ...InformationRoutes,
         ...MyPageRoutes,
         ...ErrorRoutes,
-
         ...PubRoutes,
     ],
 });

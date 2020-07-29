@@ -1,7 +1,7 @@
 package com.nike.dnp.service.user;
 
 import com.nike.dnp.common.mail.MailService;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.service.RedisService;
@@ -60,8 +60,8 @@ public class UserMailService {
         //sendDTO.setLoginUrl("loginUrl");
 
         mailService.sendMail(
-                ServiceEnumCode.EmailTypeEnumCode.USER_CREATE.toString()
-                , ServiceEnumCode.EmailTypeEnumCode.USER_CREATE.getMessage()
+                ServiceCode.EmailTypeEnumCode.USER_CREATE.toString()
+                , ServiceCode.EmailTypeEnumCode.USER_CREATE.getMessage()
                 , sendDTO
         );
 
@@ -76,19 +76,27 @@ public class UserMailService {
      * @CreatedOn 2020. 7. 3. 오전 11:18:48
      * @Description 비밀번호 설정 안내 메일
      */
-    public void sendMailForSetPassword(final User user) {
+    public String sendMailForSetPassword(final User user) {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
 
+        final String keyCode = this.createEncodeCertCode(user.getUserId());
+
+        System.out.println("======================================================");
+        System.out.println("keyCode : " + keyCode);
+        System.out.println("======================================================");
+
         //TODO[ojh] 2020-07-02 : 변경예정
-        sendDTO.setPasswordUrl("setPasswordUrl="+this.createEncodeCertCode(user.getUserId()));
+        sendDTO.setPasswordUrl("url?certCode="+keyCode);
 
         mailService.sendMail(
-                ServiceEnumCode.EmailTypeEnumCode.PASSWORD_SETTING.toString()
-                , ServiceEnumCode.EmailTypeEnumCode.PASSWORD_SETTING.getMessage()
+                ServiceCode.EmailTypeEnumCode.PASSWORD_SETTING.toString()
+                , ServiceCode.EmailTypeEnumCode.PASSWORD_SETTING.getMessage()
                 , sendDTO
         );
+
+        return keyCode;
     }
 
     /**
@@ -108,8 +116,8 @@ public class UserMailService {
         sendDTO.setLoginUrl("loginUrl");
 
         mailService.sendMail(
-                ServiceEnumCode.EmailTypeEnumCode.PASSWORD_GUIDE.toString()
-                , ServiceEnumCode.EmailTypeEnumCode.PASSWORD_GUIDE.getMessage()
+                ServiceCode.EmailTypeEnumCode.PASSWORD_GUIDE.toString()
+                , ServiceCode.EmailTypeEnumCode.PASSWORD_GUIDE.getMessage()
                 , sendDTO
         );
     }
@@ -129,8 +137,8 @@ public class UserMailService {
         sendDTO.setCertCode(this.createCertCode(user.getUserId()));
 
         mailService.sendMail(
-                ServiceEnumCode.EmailTypeEnumCode.CERT_CODE_SEND.toString()
-                , ServiceEnumCode.EmailTypeEnumCode.CERT_CODE_SEND.getMessage()
+                ServiceCode.EmailTypeEnumCode.CERT_CODE_SEND.toString()
+                , ServiceCode.EmailTypeEnumCode.CERT_CODE_SEND.getMessage()
                 , sendDTO
         );
     }
@@ -154,8 +162,8 @@ public class UserMailService {
         sendDTO.setLoginUrl("loginUrl");
 
         mailService.sendMail(
-                ServiceEnumCode.EmailTypeEnumCode.DORMANT_PREV.toString()
-                , ServiceEnumCode.EmailTypeEnumCode.DORMANT_PREV.getMessage()
+                ServiceCode.EmailTypeEnumCode.DORMANT_PREV.toString()
+                , ServiceCode.EmailTypeEnumCode.DORMANT_PREV.getMessage()
                 , sendDTO
         );
     }
@@ -178,8 +186,8 @@ public class UserMailService {
         sendDTO.setLoginUrl("loginUrl");
 
         mailService.sendMail(
-                ServiceEnumCode.EmailTypeEnumCode.DORMANT_ACTIVE.toString()
-                , ServiceEnumCode.EmailTypeEnumCode.DORMANT_ACTIVE.getMessage()
+                ServiceCode.EmailTypeEnumCode.DORMANT_ACTIVE.toString()
+                , ServiceCode.EmailTypeEnumCode.DORMANT_ACTIVE.getMessage()
                 , sendDTO
         );
     }
@@ -201,8 +209,8 @@ public class UserMailService {
         sendDTO.setLoginUrl("loginUrl");
 
         mailService.sendMail(
-                ServiceEnumCode.EmailTypeEnumCode.DORMANT_CHANGE.toString()
-                , ServiceEnumCode.EmailTypeEnumCode.DORMANT_CHANGE.getMessage()
+                ServiceCode.EmailTypeEnumCode.DORMANT_CHANGE.toString()
+                , ServiceCode.EmailTypeEnumCode.DORMANT_CHANGE.getMessage()
                 , sendDTO
         );
     }

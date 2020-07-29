@@ -1,6 +1,6 @@
 package com.nike.dnp.repository.user;
 
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.user.UserReturnDTO;
 import com.nike.dnp.dto.user.UserSearchDTO;
 import com.nike.dnp.entity.auth.QAuth;
@@ -76,7 +76,7 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
                     , UserPredicateHelper.compareDate(userSearchDTO)
                     , UserPredicateHelper.compareStatus(userSearchDTO)
                     , UserPredicateHelper.compareAuth(userSearchDTO)
-                    , qUser.userStatusCode.ne(ServiceEnumCode.UserStatusEnumCode.DELETE.toString())
+                    , qUser.userStatusCode.ne(ServiceCode.UserStatusEnumCode.DELETE.toString())
                 );
         final List<UserReturnDTO> users = Objects.requireNonNull(getQuerydsl()).applyPagination(pageRequest, jpaQuery).fetch();
         return new PageImpl<>(users, pageRequest, jpaQuery.fetchCount());

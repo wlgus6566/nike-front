@@ -43,7 +43,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	@Override
 	public Authentication attemptAuthentication(final HttpServletRequest request,
 												final HttpServletResponse response) {
-		//setFilterProcessesUrl("/auth/login");// TODO [yth] 추후 경로 확인
 		UsernamePasswordAuthenticationToken token = null;
 		try {
 			final String username = obtainUsername(request);

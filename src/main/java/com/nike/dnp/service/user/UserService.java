@@ -1,7 +1,7 @@
 package com.nike.dnp.service.user;
 
-import com.nike.dnp.common.variable.ErrorEnumCode;
-import com.nike.dnp.common.variable.SuccessEnumCode;
+import com.nike.dnp.common.variable.FailCode;
+import com.nike.dnp.common.variable.SuccessCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.user.*;
 import com.nike.dnp.entity.auth.Auth;
@@ -19,6 +19,7 @@ import com.nike.dnp.repository.user.UserRepository;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.util.CryptoUtil;
 import com.nike.dnp.util.EmailPatternUtil;
+import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.PasswordPatternUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -144,7 +145,7 @@ public class UserService implements UserDetailsService {
     public Optional<User> findById(final Long userSeq) {
         log.info("UserService.findById");
         return Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
-                () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.UserError.NOT_FOUND.getMessage())));
+                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
     }
 
     /**
@@ -159,7 +160,7 @@ public class UserService implements UserDetailsService {
     public UserReturnDTO getUser(final Long userSeq) {
         log.info("UserService.getUser");
         final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
-                () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.UserError.NOT_FOUND.getMessage())));
+                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
 
         final UserReturnDTO userReturnDTO = new UserReturnDTO();
         if (user.isPresent()) {
@@ -186,7 +187,7 @@ public class UserService implements UserDetailsService {
     public UserReturnDTO getMyPage(final Long userSeq) {
         log.info("UserService.getMyPage");
         final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
-                () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.UserError.NOT_FOUND.getMessage())));
+                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
 
         final UserReturnDTO userReturnDTO = new UserReturnDTO();
         if (user.isPresent()) {
@@ -214,7 +215,7 @@ public class UserService implements UserDetailsService {
     public User findByUserId(final String userId) {
         log.info("UserService.findByUserId");
         return userRepository.findByUserId(userId).orElseThrow(
-                () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.UserError.NOT_FOUND.getMessage()));
+                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
     }
 
     /**
@@ -242,7 +243,7 @@ public class UserService implements UserDetailsService {
      */
     public Optional<UserAuth> findByUser(final User user) {
         return Optional.ofNullable(userAuthRepository.findByUser(user).orElseThrow(
-                () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.DataError.NOT_FOUND.getMessage())));
+                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
     }
 
     /**
@@ -274,7 +275,7 @@ public class UserService implements UserDetailsService {
         this.checkId(userSaveDTO.getUserId());
         final User user = userRepository.save(new User().save(userSaveDTO));
         final Auth auth = authRepository.findById(userSaveDTO.getAuthSeq()).orElseThrow(
-                () -> new CodeMessageHandleException(ErrorEnumCode.UserError.NOT_FOUND.toString(), ErrorEnumCode.DataError.NOT_FOUND.getMessage()));
+                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
 
         if(user.getUserSeq() > 0) {
             userAuthRepository.save(new UserAuth().save(user, auth));
@@ -409,17 +410,41 @@ public class UserService implements UserDetailsService {
      */
     public SingleResult<Integer> checkId(final String userId) {
         final SingleResult<Integer> result = new SingleResult<>();
-        String code = ErrorEnumCode.UserError.NOT_VALID_EMAIL.toString();
-        String msg = ErrorEnumCode.UserError.NOT_VALID_EMAIL.getMessage();
+        String code = FailCode.ConfigureError.NOT_VALID_EMAIL.name();
+        String msg = MessageUtil.getMessage(FailCode.ConfigureError.NOT_VALID_EMAIL.name());
         result.setData(0);
 
         if (EmailPatternUtil.isValidEmail(userId)) {
             final int count = this.countByUserId(userId);
-            code = count > 0 ? ErrorEnumCode.UserError.USE_ID.toString() : SuccessEnumCode.UserSuccess.NOT_DUPLICATE.toString();
-            msg = count > 0 ? ErrorEnumCode.UserError.USE_ID.getMessage() : SuccessEnumCode.UserSuccess.NOT_DUPLICATE.getMessage();
+            code = count > 0 ? FailCode.ConfigureError.USED_ID.name() : SuccessCode.ConfigureSuccess.NOT_DUPLICATE.name();
+            msg = count > 0 ? MessageUtil.getMessage(FailCode.ConfigureError.USED_ID.name()) : MessageUtil.getMessage(SuccessCode.ConfigureSuccess.NOT_DUPLICATE.name());
             result.setData(count);
         }
         return new SingleResult<>(code, msg, true, true);
+    }
+
+    /**
+     * Check cert code boolean.
+     *
+     * @param userCertDTO the user cert dto
+     * @return the boolean
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 27. 오후 4:12:37
+     * @Description
+     */
+    public Boolean checkCertCode(final UserCertDTO userCertDTO) {
+        log.info("UserService.checkCertCode");
+        final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(userCertDTO.getCertCode()), "Nike DnP");
+        if (FailCode.ExceptionError.ERROR.name().equals(decodeCertCode)) {
+            throw new CodeMessageHandleException(
+                    FailCode.ConfigureError.EXPIRED_CERT_CODE.name()
+                    , MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
+            );
+        }
+        final String userId = decodeCertCode.split("\\|")[0];
+        final String certKey = decodeCertCode.split("\\|")[1];
+        final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));
+        return this.checkCertCode(certCode, certKey);
     }
 
     /**
@@ -435,9 +460,27 @@ public class UserService implements UserDetailsService {
     public UserReturnDTO confirmPassword(final UserCertDTO userCertDTO) {
         log.info("UserService.confirmPassword1");
         final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(userCertDTO.getCertCode()), "Nike DnP");
+        if (FailCode.ExceptionError.ERROR.name().equals(decodeCertCode)) {
+            throw new CodeMessageHandleException(
+                    FailCode.ConfigureError.EXPIRED_CERT_CODE.name()
+                    , MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
+            );
+        }
         final String userId = decodeCertCode.split("\\|")[0];
         final String certKey = decodeCertCode.split("\\|")[1];
+
+        System.out.println("======================================================");
+        System.out.println("userCertDTO.getCertCode() = " + userCertDTO.getCertCode());
+        System.out.println("decodeCertCode = " + decodeCertCode);
+        System.out.println("userId = " + userId);
+        System.out.println("certKey = " + certKey);
+
+
         final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));
+
+        System.out.println("certCode = " + certCode);
+        System.out.println("======================================================");
+
         final String password = userCertDTO.getPassword();
         final String newPassword = userCertDTO.getNewPassword();
         final String confirmPassword = ObjectUtils.isEmpty(userCertDTO.getConfirmPassword()) ? "" : userCertDTO.getConfirmPassword();
@@ -454,7 +497,11 @@ public class UserService implements UserDetailsService {
 
         //비밀번호 업데이트
         user.updatePassword(certPassword);
-        passwordHistoryRepository.save(PasswordHistory.builder().userSeq(user.getUserSeq()).password(certPassword).build());
+        passwordHistoryRepository.save(
+                PasswordHistory.builder()
+                        .userSeq(user.getUserSeq())
+                        .password(certPassword)
+                        .build());
 
         //인증코드 삭제
         redisService.delete("cert:" + userId);
@@ -522,38 +569,40 @@ public class UserService implements UserDetailsService {
     ) {
         log.info("UserService.checkPassword");
         //기존비밀번호확인
-        if (!ObjectUtils.isEmpty(password) && !passwordEncoder.matches(password, userPassword)) {
-            throw new CodeMessageHandleException(
-                    ErrorEnumCode.LoginError.WRONG_PASSWORD.toString()
-                    , ErrorEnumCode.LoginError.WRONG_PASSWORD.getMessage());
+        if (!ObjectUtils.isEmpty(password)) {
+            if (!passwordEncoder.matches(password, userPassword)) {
+                throw new CodeMessageHandleException(
+                        FailCode.ConfigureError.CHECK_ID_PASSWORD.name()
+                        , MessageUtil.getMessage(FailCode.ConfigureError.CHECK_ID_PASSWORD.name()));
+            }
         }
 
         //비밀번호 미입력 시
         if (ObjectUtils.isEmpty(newPassword)) {
             throw new CodeMessageHandleException(
-                    ErrorEnumCode.LoginError.NULL_PASSWORD.toString()
-                    , ErrorEnumCode.LoginError.NULL_PASSWORD.getMessage());
+                    FailCode.ConfigureError.NULL_PASSWORD.name()
+                    , MessageUtil.getMessage(FailCode.ConfigureError.NULL_PASSWORD.name()));
         }
 
         //입력한 새로운 비밀번호와 확인 비밀번호 비교
         if (!newPassword.equals(confirmPassword)) {
             throw new CodeMessageHandleException(
-                    ErrorEnumCode.LoginError.NOT_MATCH_PASSWORD.toString()
-                    , ErrorEnumCode.LoginError.NOT_MATCH_PASSWORD.getMessage());
+                    FailCode.ConfigureError.NOT_MATCH_PASSWORD.name()
+                    , MessageUtil.getMessage(FailCode.ConfigureError.NOT_MATCH_PASSWORD.name()));
         }
 
         //아이디와 비밀번호 비교
         if (PasswordPatternUtil.sameId(newPassword, userId)) {
             throw new CodeMessageHandleException(
-                    ErrorEnumCode.LoginError.DUPLICATE_ID_PASSWORD.toString()
-                    , ErrorEnumCode.LoginError.DUPLICATE_ID_PASSWORD.getMessage());
+                    FailCode.ConfigureError.DUPLICATE_ID_PASSWORD.name()
+                    , MessageUtil.getMessage(FailCode.ConfigureError.DUPLICATE_ID_PASSWORD.name()));
         }
 
         //비밀번호 정규식 체크
         if (PasswordPatternUtil.invalidPassword(newPassword)) {
             throw new CodeMessageHandleException(
-                    ErrorEnumCode.LoginError.INVALID_PASSWORD.toString()
-                    , ErrorEnumCode.LoginError.INVALID_PASSWORD.getMessage());
+                    FailCode.ConfigureError.INVALID_PASSWORD.name()
+                    , MessageUtil.getMessage(FailCode.ConfigureError.INVALID_PASSWORD.name()));
         }
 
         //사용되었던 비밀번호 비교 (최근 6개)
@@ -561,16 +610,16 @@ public class UserService implements UserDetailsService {
         for (final PasswordHistory history : histories) {
             if (passwordEncoder.matches(newPassword, history.getPassword())) {
                 throw new CodeMessageHandleException(
-                        ErrorEnumCode.LoginError.USED_PASSWORD.toString()
-                        , ErrorEnumCode.LoginError.USED_PASSWORD.getMessage());
+                        FailCode.ConfigureError.USED_PASSWORD.name()
+                        , MessageUtil.getMessage(FailCode.ConfigureError.USED_PASSWORD.name()));
             }
         }
 
         //공통사전 비교
         if (slangRepository.countBySlangContains(newPassword) > 0) {
             throw new CodeMessageHandleException(
-                    ErrorEnumCode.LoginError.IS_SLANG.toString()
-                    , ErrorEnumCode.LoginError.IS_SLANG.getMessage());
+                    FailCode.ConfigureError.IS_SLANG.name()
+                    , MessageUtil.getMessage(FailCode.ConfigureError.IS_SLANG.name()));
         }
     }
 
@@ -583,20 +632,21 @@ public class UserService implements UserDetailsService {
      * @CreatedOn 2020. 7. 6. 오후 3:32:21
      * @Description
      */
-    public void checkCertCode (final String certCode, final String certKey) {
+    public Boolean checkCertCode (final String certCode, final String certKey) {
         log.info("UserService.checkCertCode");
         //인증코드가 존재하는지 확인
         if(certCode.isEmpty()) {
             throw new CodeMessageHandleException(
-                    ErrorEnumCode.LoginError.EXPIRED_PERIOD.toString()
-                    , ErrorEnumCode.LoginError.EXPIRED_PERIOD.getMessage());
+                    FailCode.ConfigureError.EXPIRED_PERIOD.name()
+                    , MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_PERIOD.name()));
         }
 
         //인증코드가 맞는지
-        if(certKey.equals(certCode)) {
+        if(!certKey.equals(certCode)) {
             throw new CodeMessageHandleException(
-                    ErrorEnumCode.LoginError.NOT_MATCH_CERT_CODE.toString()
-                    , ErrorEnumCode.LoginError.NOT_MATCH_CERT_CODE.getMessage());
+                    FailCode.ConfigureError.NOT_MATCH_CERT_CODE.name()
+                    , MessageUtil.getMessage(FailCode.ConfigureError.NOT_MATCH_CERT_CODE.name()));
         }
+        return true;
     }
 }
