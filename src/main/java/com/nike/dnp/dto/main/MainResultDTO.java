@@ -2,17 +2,11 @@ package com.nike.dnp.dto.main;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.dto.contents.ContentsResultDTO;
-import com.nike.dnp.dto.notice.NoticeArticleListDTO;
+import com.nike.dnp.dto.notice.CustomerListDTO;
 import com.nike.dnp.dto.report.ReportResultDTO;
 import com.nike.dnp.entity.banner.Banner;
-import com.nike.dnp.entity.report.Report;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.List;
 
 /**
@@ -70,12 +64,12 @@ public class MainResultDTO {
      *
      * @author [이소정]
      */
-    private List<NoticeArticleListDTO> noticeArticleList;
+    private List<CustomerListDTO> noticeArticleList;
 
     /**
      * The News article list
      *
      * @author [이소정]
      */
-    private List<NoticeArticleListDTO> newsArticleList;
+    private List<CustomerListDTO> newsArticleList;
 }

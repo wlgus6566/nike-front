@@ -1,10 +1,8 @@
 package com.nike.dnp.service.main;
 
 import com.nike.dnp.common.variable.ServiceCode;
-import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.dto.main.MainResultDTO;
-import com.nike.dnp.dto.notice.NoticeArticleListDTO;
-import com.nike.dnp.dto.notice.NoticeSearchDTO;
+import com.nike.dnp.dto.notice.CustomerSearchDTO;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import com.nike.dnp.repository.report.ReportRepository;
 import com.nike.dnp.service.banner.BannerService;
@@ -13,7 +11,6 @@ import com.nike.dnp.service.notice.NoticeService;
 import com.nike.dnp.service.report.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -96,15 +93,15 @@ public class MainService {
         ));
 
         // NOTICE
-        NoticeSearchDTO noticeSearchDTO = new NoticeSearchDTO();
-        noticeSearchDTO.setNoticeArticleSectionCode(ServiceCode.NoticeArticleSectionEnumCode.NOTICE.toString());
-        noticeSearchDTO.setPage(0);
-        noticeSearchDTO.setSize(5);
-        mainResultDTO.setNoticeArticleList(noticeService.findNoticePages(noticeSearchDTO).getContent());
+        CustomerSearchDTO customerSearchDTO = new CustomerSearchDTO();
+        customerSearchDTO.setNoticeArticleSectionCode(ServiceCode.NoticeArticleSectionEnumCode.NOTICE.toString());
+        customerSearchDTO.setPage(0);
+        customerSearchDTO.setSize(5);
+        mainResultDTO.setNoticeArticleList(noticeService.findNoticePages(customerSearchDTO).getContent());
 
 
         // NEWS
-        NoticeSearchDTO newsSearchDTO = new NoticeSearchDTO();
+        CustomerSearchDTO newsSearchDTO = new CustomerSearchDTO();
         newsSearchDTO.setNoticeArticleSectionCode(ServiceCode.NoticeArticleSectionEnumCode.NEWS.toString());
         newsSearchDTO.setPage(0);
         newsSearchDTO.setSize(2);

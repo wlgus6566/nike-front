@@ -18,7 +18,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class NoticeUpdateDTO extends BasicDTO {
+public class QnaUpdateDTO extends BasicDTO {
 
     /**
      * The Notice article section code
@@ -29,29 +29,29 @@ public class NoticeUpdateDTO extends BasicDTO {
     private String noticeArticleSectionCode;
 
     /**
+     * The Notice article category code
+     *
+     * @author [정주희]
+     */
+    @ApiParam(name = "noticeArticleCategoryCode", value = "[QNA] 게시물 카테고리 코드", defaultValue = "ASSET")
+    private String noticeArticleCategoryCode;
+
+
+    /**
      * The Notice article seq
      *
      * @author [정주희]
      */
     @ApiModelProperty(name = "noticeArticleSeq", value = "게시글 시퀀스")
     private Long noticeArticleSeq;
-    /**
-     * The Notice yn
-     *
-     * @author [정주희]
-     */
-    @NotBlank(message = "customer.noticeYn")
-    @ApiModelProperty(name = "noticeYn", value = "[공지사항] 상단 고정 여부")
-    private String noticeYn;
-
 
     /**
      * The Title
      *
      * @author [정주희]
      */
-    @NotBlank(message="customer.title")
-    @ApiModelProperty(name = "title", value = "제목")
+    @NotBlank(message = "customer.question")
+    @ApiModelProperty(name = "title", value = "질문")
     private String title;
 
     /**
@@ -59,7 +59,7 @@ public class NoticeUpdateDTO extends BasicDTO {
      *
      * @author [정주희]
      */
-    @NotBlank(message="customer.contents")
+    @NotBlank(message = "customer.contents")
     @ApiModelProperty(name = "contents", value = "내용")
     private String contents;
 
@@ -70,4 +70,15 @@ public class NoticeUpdateDTO extends BasicDTO {
      */
     private String useYn;
 
+    /**
+     * Sets notice article category code.
+     *
+     * @param noticeArticleCategoryCode the notice article category code
+     * @author [정주희]
+     * @CreatedOn 2020. 7. 29. 오후 4:43:45
+     * @Description
+     */
+    public void setNoticeArticleCategoryCode(String noticeArticleCategoryCode) {
+        this.noticeArticleCategoryCode = noticeArticleCategoryCode.toUpperCase();
+    }
 }

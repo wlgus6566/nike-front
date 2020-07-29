@@ -245,7 +245,7 @@ public class ServiceCode {
         PRODUCT("product"),
         CONTENTS("contents"),
         TEMP("temp"),
-        FAQ("faq");
+        QNA("QNA");
 
         /**
          * 코드값
@@ -323,7 +323,7 @@ public class ServiceCode {
      */
     @RequiredArgsConstructor
     @Getter
-    public enum FAQEnumCode {
+    public enum QNAEnumCode {
         ASSET("ASSET/TOOLKIT/FOUNDATION"),
         SUBSIDIARY("부자재주문"),
         REPORT("시공보고서"),

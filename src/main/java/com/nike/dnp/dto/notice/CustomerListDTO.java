@@ -17,7 +17,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class NoticeArticleListDTO {
+public class CustomerListDTO {
 
     /**
      * The Notice article seq
