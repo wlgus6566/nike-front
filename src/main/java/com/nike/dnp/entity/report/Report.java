@@ -7,6 +7,7 @@ import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
 @Slf4j
 @Getter
 @Setter
-@NoArgsConstructor(access= AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_REPORT")
@@ -186,8 +187,8 @@ public class Report extends BaseTimeEntity {
      *
      * @param readCount the read count
      * @author [이소정]
-     * @since 2020. 7. 8. 오후 5:34:20
-     * @implNote
+     * @CreatedOn 2020. 7. 8. 오후 5:34:20
+     * @Description
      */
     public void updateReadCount(final Long readCount) {
         log.info("Report.updateReadCount");
