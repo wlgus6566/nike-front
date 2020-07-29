@@ -54,4 +54,65 @@ public class ReportFileUpdateDTO {
     @Column(name = "FILE_PHYSICAL_NAME")
     private String filePhysicalName;
 
+    /**
+     * 파일 컨텐츠 타입
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileContentType", value = "파일 컨텐츠 타입", example = "image/jpeg")
+    private String fileContentType;
+
+    /**
+     * 파일 확장자
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "JPG")
+    private String fileExtension;
+
+    /**
+     * 상세 썸네일 명
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailThumbnailFileName", value ="상세 썸네일 명", example = "graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFileName;
+
+    /**
+     * 상세 썸네일 사이즈
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailThumbnailFileSize", value ="상세 썸네일 사이즈", example = "700")
+    private String detailThumbnailFileSize;
+
+    /**
+     * 상세 썸네일 물리 경로
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFilePhysicalName;
+
+    /**
+     * 썸네일 파일 물리 명
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "thumbnailFileName", value = "썸네일 명", example = "graphic_file_name_thumbnail.jpg")
+    private String thumbnailFileName;
+
+    /**
+     * 썸네일 파일 물리 명
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "thumbnailFileSize", value = "썸네일 파일 사이즈", example = "100")
+    private String thumbnailFileSize;
+
+    /**
+     * 썸네일 파일 물리 명
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_thumbnail.jpg")
+    private String thumbnailFilePhysicalName;
+
 }

@@ -54,7 +54,7 @@ public class UserSearchDTO extends SearchDTO {
      *
      * @author [오지훈]
      */
-    @ApiParam(value = "시작일", name = "beginDt", defaultValue = "2020-06-01")
+    @ApiParam(value = "시작일", name = "beginDt", defaultValue = "2020.06.01")
     private String beginDt;
 
     /**
@@ -62,7 +62,7 @@ public class UserSearchDTO extends SearchDTO {
      *
      * @author [오지훈]
      */
-    @ApiParam(value = "종료일", name = "endDt", defaultValue = "2020-12-31")
+    @ApiParam(value = "종료일", name = "endDt", defaultValue = "2020.12.31")
     private String endDt;
 
     /**

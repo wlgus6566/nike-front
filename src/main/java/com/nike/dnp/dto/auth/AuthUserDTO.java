@@ -63,7 +63,19 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 */
 	private String password;
 
+	/**
+	 * The Role
+	 *
+	 * @author [오지훈]
+	 */
 	private String role;
+
+	/**
+	 * The Auth seq
+	 *
+	 * @author [오지훈]
+	 */
+	private Long authSeq;
 
 	/**
 	 * Instantiates a new Auth user dto.
@@ -79,6 +91,7 @@ public class AuthUserDTO implements UserDetails, Serializable {
 		this.nickname = user.getNickname();
 		this.password = user.getPassword();
 		this.role = user.getUserAuth().getAuth().getRoleType();
+		this.authSeq = user.getUserAuth().getAuth().getAuthSeq();
 	}
 
 	/**

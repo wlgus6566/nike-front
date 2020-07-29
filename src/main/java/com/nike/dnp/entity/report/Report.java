@@ -7,7 +7,6 @@ import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.List;
@@ -95,6 +94,15 @@ public class Report extends BaseTimeEntity {
     private String useYn;
 
     /**
+     * 권한 시퀀스
+     *
+     * @author [오지훈]
+     */
+    @Column(name = "AUTH_SEQ")
+    @ApiModelProperty(name = "authSeq", value = "권한 시퀀스", required = true, example = "1")
+    private Long authSeq;
+
+    /**
      * The Report file list
      * @author [이소정]
      */
@@ -102,15 +110,6 @@ public class Report extends BaseTimeEntity {
     @OneToMany(mappedBy = "report")
     @ApiModelProperty(name="reportFileList", value = "보고서 파일 목록", required = true)
     private List<ReportFile> reportFileList;
-
-//    /**
-//     * The Report answer list
-//     * @author [이소정]
-//     */
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "report")
-//    @ApiModelProperty(name = "reportAnswerList", value = "보고서 댓글 목록", required = true)
-//    private List<ReportAnswer> reportAnswerList;
 
     /**
      * Save report.
@@ -121,15 +120,15 @@ public class Report extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 8. 오후 5:33:21
      * @Description
      */
-    @Transactional
     public Report save(final ReportSaveDTO reportSaveDTO) {
         log.info("Report.save");
-        Report savedReport = new Report();
+        final Report savedReport = new Report();
         savedReport.setReportSectionCode(reportSaveDTO.getReportSectionCode());
         savedReport.setReportName(reportSaveDTO.getReportName());
         savedReport.setImageFileName(reportSaveDTO.getImageFileName());
         savedReport.setImageFileSize(reportSaveDTO.getImageFileSize());
         savedReport.setImageFilePhysicalName(reportSaveDTO.getImageFilePhysicalName());
+        savedReport.setAuthSeq(reportSaveDTO.getAuthSeq());
         savedReport.setReadCount(0l);
         savedReport.setUseYn("Y");
         return savedReport;
@@ -143,7 +142,6 @@ public class Report extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 9. 오후 6:30:48
      * @Description
      */
-    @Transactional
     public void update(final ReportUpdateDTO reportUpdateDTO) {
         log.info("Report.update");
         this.reportSectionCode = reportUpdateDTO.getReportSectionCode();
@@ -158,7 +156,6 @@ public class Report extends BaseTimeEntity {
      *
      * @param useYn the use yn
      */
-    @Transactional
     public void updateUseYn(final String useYn) {
         log.info("Report.updateUseYn");
         this.useYn = useYn;
@@ -172,9 +169,8 @@ public class Report extends BaseTimeEntity {
      * @CreatedOn 2020. 7. 8. 오후 5:34:20
      * @Description
      */
-    @Transactional
-    public void updateReadCound(final Long readCount) {
-        log.info("Report.updateReadCound");
+    public void updateReadCount(final Long readCount) {
+        log.info("Report.updateReadCount");
         this.readCount = readCount + 1;
     }
 

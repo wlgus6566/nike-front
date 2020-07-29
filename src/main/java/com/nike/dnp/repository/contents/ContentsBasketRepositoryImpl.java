@@ -1,6 +1,5 @@
 package com.nike.dnp.repository.contents;
 
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.ContentsBasketResultDTO;
 import com.nike.dnp.entity.contents.ContentsBasket;
 import com.nike.dnp.entity.contents.QContentsBasket;
@@ -38,14 +37,14 @@ public class ContentsBasketRepositoryImpl extends QuerydslRepositorySupport impl
     /**
      * Find all with contents file list.
      *
-     * @param authUserDTO the auth user dto
+     * @param userSeq the user seq
      * @return the list
      * @author [이소정]
      * @CreatedOn 2020. 7. 15. 오후 12:19:14
      * @Description
      */
     @Override
-    public List<ContentsBasketResultDTO> findAllWithContentsFile(AuthUserDTO authUserDTO, String useYn) {
+    public List<ContentsBasketResultDTO> findAllWithContentsFile(Long userSeq) {
         final QContentsBasket qContentsBasket = QContentsBasket.contentsBasket;
         final QContentsFile qContentsFile = QContentsFile.contentsFile;
 
@@ -56,10 +55,12 @@ public class ContentsBasketRepositoryImpl extends QuerydslRepositorySupport impl
                         , qContentsFile.fileName
                         , qContentsFile.fileSize
                         , qContentsFile.filePhysicalName
+                        , qContentsBasket.userSeq
                         , qContentsBasket.contentsFileSeq
                         , qContentsBasket.contentsBasketSeq) )
                 .from(qContentsBasket)
                 .innerJoin(qContentsFile).on(qContentsBasket.contentsFileSeq.eq(qContentsFile.contentsFileSeq))
+                .where(qContentsBasket.userSeq.eq(userSeq))
                 .orderBy(qContentsBasket.registrationDt.desc())
                 .fetch();
 

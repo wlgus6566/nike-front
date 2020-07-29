@@ -2,8 +2,7 @@ package com.nike.dnp.dto.wishlist;
 
 import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiParam;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * The Class Wish list search dto.
@@ -14,6 +13,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor
 public class WishListSearchDTO extends SearchDTO {
 
 	/**

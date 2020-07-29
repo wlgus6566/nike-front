@@ -23,8 +23,14 @@
                 :folderListData="folderListData"
             />
             <template v-else>
-                <NoData v-if="searchKeyword === ''" />
-                <NoDataSearch v-else />
+                <NoData v-if="searchKeyword === ''">
+                    <i class="icon-file"></i>
+                    <p class="desc">업로드한 폴더가 없습니다.</p>
+                </NoData>
+                <NoData v-else>
+                    <i class="icon-search"></i>
+                    <p class="desc">검색 결과가 없습니다.</p>
+                </NoData>
             </template>
         </template>
         <Loading v-if="loadingData" />
@@ -35,9 +41,9 @@ import FilterSelect from '@/components/filter-select';
 import ListSorting from '@/components/list-sorting/index';
 import SearchInput from '@/components/search-input';
 import FolderList from '@/components/folder-list';
-import Loading from '@/components/folder-list/loading';
-import NoData from '@/components/folder-list/nodata';
-import NoDataSearch from '@/components/folder-list/nodata-search';
+import Loading from '@/components/loading';
+import NoData from '@/components/no-data';
+import NoDataSearch from '@/components/no-data/nodata-search';
 
 import { getContents } from '@/api/contents.js';
 

@@ -1,8 +1,12 @@
 package com.nike.dnp.dto.contents;
 
+import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.user.UserContentsSaveDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,7 +28,7 @@ public class ContentsSaveDTO {
      * 최고 메뉴 공통코드
      * @author [이소정]
      */
-    @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 공통코드", hidden = true)
+    @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 공통코드 (ASSET/TOOLKIT/FOUNDATION)", hidden = true)
     private String topMenuCode;
 
     /**
@@ -195,21 +199,21 @@ public class ContentsSaveDTO {
      * 캠페인 기간 구분 공통코드
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드", required = true, example = "EVERY")
+    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드(날짜선택:SELECT/365:EVERY)", required = true, example = "EVERY")
     private String campaignPeriodSectionCode;
 
     /**
      * 캠페인 시작 일시
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020-06-01")
+    @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020.06.01")
     private String campaignBeginDt;
 
     /**
      * 캠페인 종료 일시
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020-09-01")
+    @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020.09.01")
     private String campaignEndDt;
 
     /**
@@ -223,7 +227,60 @@ public class ContentsSaveDTO {
      * 콘텐트 파일 리스트
      * @author [이소정]
      */
-    @ApiModelProperty(name = "contentsFileList", value = "콘텐츠 파일 리스트")
+    @ApiModelProperty(name = "contentsFileList", value = "컨텐츠 파일 리스트")
     private List<ContentsFileSaveDTO> contentsFileList;
 
+    /**
+     * 노출 여부
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "exposureYn", value = "폴더 상태(노출 여부 Y/N)", example = "Y")
+    private String exposureYn;
+
+//    권한 관련 DTO
+    /**
+     * 권한 체크 목록
+     *
+     * @author [오지훈]
+     */
+    @NotNull(message = "userContents.checks")
+    @ApiModelProperty(name = "authChecks", value = "권한 체크 목록")
+    private List<UserContentsSaveDTO.AuthCheckDTO> checks = new ArrayList<>();
+
+    /**
+     * The Class Auth check.
+     *
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 20. 오후 12:23:51
+     * @Description 권한 체크 DTO
+     */
+    @Getter
+    @Setter
+    public static class AuthCheckDTO {
+
+        /**
+         * The Auth seq
+         *
+         * @author [오지훈]
+         */
+        @ApiModelProperty(name = "authSeq", value = "권한 시퀀스")
+        private Long authSeq;
+
+        /**
+         * The Detail auth yn
+         *
+         * @author [오지훈]
+         */
+        @ApiModelProperty(name = "detailAuthYn", value = "상세_권한_여부", example = "N")
+        private String detailAuthYn = ServiceCode.YesOrNoEnumCode.N.toString();
+
+        /**
+         * The Email reception yn
+         *
+         * @author [오지훈]
+         */
+        @ApiModelProperty(name = "emailReceptionYn", value = "메일_수신_여부", example = "N")
+        private String emailReceptionYn = ServiceCode.YesOrNoEnumCode.N.toString();
+
+    }
 }

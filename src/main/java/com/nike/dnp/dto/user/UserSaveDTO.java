@@ -3,6 +3,7 @@ package com.nike.dnp.dto.user;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -23,7 +24,7 @@ public class UserSaveDTO {
      *
      * @author [오지훈]
      */
-    @NotNull(message = "아이디를(을) 입력해 주세요.")
+    @NotBlank(message = "user.userId")
     @ApiModelProperty(name = "userId", value = "유저 ID", required = true, example = "test@nike.co.kr")
     private String userId;
 
@@ -32,7 +33,7 @@ public class UserSaveDTO {
      *
      * @author [오지훈]
      */
-    @NotNull(message = "닉네임을(를) 입력해 주세요.")
+    @NotBlank(message = "user.nickname")
     @ApiModelProperty(name = "nickname", value = "닉네임", required = true, example = "NIKE학동점")
     private String nickname;
 
@@ -41,6 +42,7 @@ public class UserSaveDTO {
      *
      * @author [오지훈]
      */
+    @NotNull(message = "user.authSeq")
     @ApiModelProperty(name = "authSeq", value = "권한 시퀀스", required = true, example = "1")
     private Long authSeq;
 

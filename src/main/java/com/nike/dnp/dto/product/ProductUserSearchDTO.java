@@ -5,10 +5,12 @@ import io.swagger.annotations.ApiParam;
 import lombok.*;
 
 
-
-
 /**
  * Product search dto.
+ *
+ * @author [오지훈]
+ * @CreatedOn 2020. 7. 21. 오후 3:55:34
+ * @Description
  */
 @Getter
 @Setter
@@ -26,15 +28,23 @@ public class ProductUserSearchDTO extends SearchDTO {
 
 	/**
 	 * 카테고리 2
+	 *
 	 * @author [윤태호]
 	 */
 	@ApiParam(value = "카테고리 2 코드",name = "category2Code", defaultValue = "",hidden = true)
 	private String category2Code;
 
+	/**
+	 * The Category 3 code
+	 *
+	 * @author [오지훈]
+	 */
 	@ApiParam(value = "카테고리 3 코드", name = "category3Code", allowableValues = "SUBSIDIARY21,SUBSIDIARY22,SUBSIDIARY23,SUBSIDIARY24,SUBSIDIARY25,SUBSIDIARY26",required = true)
 	private String category3Code;
 	/**
 	 * 노출 여부
+	 *
+	 * @author [오지훈]
 	 */
 	@ApiParam(value = "노출 여부", name = "exposureYn",allowableValues = "Y,N", defaultValue = "Y",hidden = true)
 	private String exposureYn;

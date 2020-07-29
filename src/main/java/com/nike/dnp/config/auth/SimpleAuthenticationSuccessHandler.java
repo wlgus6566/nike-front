@@ -2,9 +2,9 @@ package com.nike.dnp.config.auth;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.nike.dnp.common.variable.ErrorEnumCode;
-import com.nike.dnp.common.variable.ServiceEnumCode;
-import com.nike.dnp.common.variable.SuccessEnumCode;
+import com.nike.dnp.common.variable.FailCode;
+import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.common.variable.SuccessCode;
 import com.nike.dnp.config.jwt.JwtHelper;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.UserLoginLogSaveDTO;
@@ -14,9 +14,7 @@ import com.nike.dnp.service.RedisService;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.log.UserLoginLogService;
 import com.nike.dnp.service.user.UserMailService;
-import com.nike.dnp.util.CryptoUtil;
-import com.nike.dnp.util.JsonUtil;
-import com.nike.dnp.util.RandomUtil;
+import com.nike.dnp.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -29,6 +27,8 @@ import org.springframework.util.ObjectUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoField;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -110,28 +110,36 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 		if(!user.isPresent()) {
 			JsonUtil.write(response.getWriter()
 					, responseService.getFailResult(
-							ErrorEnumCode.UserError.NOT_FOUND.toString()
-							, ErrorEnumCode.UserError.NOT_FOUND.getMessage()
+							FailCode.ExceptionError.NOT_FOUND.name()
+							, MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())
 					));
 			isValid = false;
 		}
 
 		//TODO[ojh] 2020-07-02 : 휴면회원 확인 (추후 로직 추가예정)
-		if (isValid && ServiceEnumCode.UserStatusEnumCode.DORMANT.toString().equals(user.get().getUserStatusCode())) {
+		if (isValid && ServiceCode.UserStatusEnumCode.DORMANT.toString().equals(user.get().getUserStatusCode())) {
 			if (certCode.isEmpty()) {
 				//TODO[ojh] 2020-07-02 : [인증코드] 메일 발송
 				userMailService.createCertCode(authUserDTO.getUserId());
 
 				JsonUtil.write(response.getWriter()
-						, responseService.getFailResult(
-								ErrorEnumCode.LoginError.IS_DORMANT.toString()
-								, ErrorEnumCode.LoginError.IS_DORMANT.getMessage()
+						, responseService.getSuccessResult(
+								FailCode.ConfigureError.IS_DORMANT.name()
+								, MessageUtil.getMessage(FailCode.ConfigureError.IS_DORMANT.name())
 						));
 				isValid = false;
 			} else {
 				final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(certCode), "Nike DnP").split("\\|")[1];
-				if (certCode.equals(decodeCertCode)) {
-					user.get().updateStatus(ServiceEnumCode.UserStatusEnumCode.NORMAL.toString());
+				if (FailCode.ExceptionError.ERROR.name().equals(decodeCertCode)) {
+					JsonUtil.write(response.getWriter()
+							, responseService.getFailResult(
+									FailCode.ConfigureError.EXPIRED_CERT_CODE.name()
+									, MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
+							));
+					isValid = false;
+				}
+				if (isValid && certCode.equals(decodeCertCode)) {
+					user.get().updateStatus(ServiceCode.UserStatusEnumCode.NORMAL.toString());
 					//TODO[ojh] 2020-07-02 : [휴면계정 해제 안내] 메일 발송
 					userMailService.sendMailForChangeDormant(user.get());
 				}
@@ -142,17 +150,28 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 		if (isValid && userRepository.countByPaswordChangePeriod(authUserDTO.getUserSeq()) > 0) {
 			final String randomCode = RandomUtil.randomCertCode2(10);
 			final String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(authUserDTO.getUserId() + "|" + randomCode, "Nike DnP"));
-			redisService.set("cert:"+authUserDTO.getUserId(), randomCode, 60);
+			if (FailCode.ExceptionError.ERROR.name().equals(encodeCertCode)) {
+				JsonUtil.write(response.getWriter()
+						, responseService.getFailResult(
+								FailCode.ConfigureError.EXPIRED_CERT_CODE.name()
+								, MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
+						));
+				isValid = false;
+			}
 
-			final HashMap<String, Object> payload = new HashMap<>();
-			payload.put("certCode", encodeCertCode);
-			JsonUtil.write(response.getWriter()
-					, responseService.getFailResult(
-							ErrorEnumCode.LoginError.OVERTIME_PASSWORD.toString()
-							, ErrorEnumCode.LoginError.OVERTIME_PASSWORD.getMessage()
-							, payload
-					));
-			isValid = false;
+			if (isValid) {
+				redisService.set("cert:"+authUserDTO.getUserId(), randomCode, 60);
+
+				final HashMap<String, Object> payload = new HashMap<>();
+				payload.put("certCode", encodeCertCode);
+				JsonUtil.write(response.getWriter()
+						, responseService.getFailResult(
+								FailCode.ConfigureError.OVERTIME_PASSWORD.name()
+								, MessageUtil.getMessage(FailCode.ConfigureError.OVERTIME_PASSWORD.name())
+								, payload
+						));
+				isValid = false;
+			}
 		}
 
 		// 비밀번호가 변경되었을 경우
@@ -163,26 +182,35 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 				JsonUtil.write(response.getWriter()
 						, responseService.getFailResult(
-								SuccessEnumCode.LoginSuccess.SEND_EMAIL_CERT_CODE.toString()
-								, SuccessEnumCode.LoginSuccess.SEND_EMAIL_CERT_CODE.getMessage()
+								SuccessCode.ConfigureSuccess.SEND_EMAIL_CERT_CODE.name()
+								, MessageUtil.getMessage(SuccessCode.ConfigureSuccess.SEND_EMAIL_CERT_CODE.name())
 						));
 				isValid = false;
 			} else  {
 				final String redisCertCode = (String) redisService.get("cert:"+authUserDTO.getUserId());
 				final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(certCode), "Nike DnP");
 
+				if (FailCode.ExceptionError.ERROR.name().equals(decodeCertCode)) {
+					JsonUtil.write(response.getWriter()
+							, responseService.getFailResult(
+									FailCode.ConfigureError.EXPIRED_CERT_CODE.name()
+									, MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
+							));
+					isValid = false;
+				}
+
 				if(ObjectUtils.isEmpty(redisCertCode)) {
 					JsonUtil.write(response.getWriter()
 							, responseService.getFailResult(
-									ErrorEnumCode.LoginError.EXPIRED_CERT_CODE.toString()
-									, ErrorEnumCode.LoginError.EXPIRED_CERT_CODE.getMessage()
+									FailCode.ConfigureError.EXPIRED_CERT_CODE.name()
+									, MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
 							));
 					isValid = false;
 				} else if(!redisCertCode.equals(decodeCertCode.split("\\|")[1])) {
 					JsonUtil.write(response.getWriter()
 							, responseService.getFailResult(
-									ErrorEnumCode.LoginError.NOT_MATCH_CERT_CODE.toString()
-									, ErrorEnumCode.LoginError.NOT_MATCH_CERT_CODE.getMessage()
+									FailCode.ConfigureError.NOT_MATCH_CERT_CODE.name()
+									, MessageUtil.getMessage(FailCode.ConfigureError.NOT_MATCH_CERT_CODE.name())
 							));
 					isValid = false;
 				}
@@ -190,25 +218,39 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 		}
 
 		// 최초접속여부/약관동의여부
-		if (isValid && ServiceEnumCode.YesOrNoEnumCode.N.toString().equals(termsAgreeYn)
-				&& ServiceEnumCode.YesOrNoEnumCode.N.toString().equals(user.get().getTermsAgreeYn())) {
+		if (isValid && ServiceCode.YesOrNoEnumCode.N.toString().equals(termsAgreeYn)
+				&& ServiceCode.YesOrNoEnumCode.N.toString().equals(user.get().getTermsAgreeYn())) {
 			JsonUtil.write(response.getWriter()
-					, responseService.getFailResult(
-							SuccessEnumCode.LoginSuccess.TERMS_AGREEMENT.toString()
-							, SuccessEnumCode.LoginSuccess.TERMS_AGREEMENT.getMessage()
+					, responseService.getSuccessResult(
+							SuccessCode.ConfigureSuccess.TERMS_AGREEMENT.name()
+							, MessageUtil.getMessage(SuccessCode.ConfigureSuccess.TERMS_AGREEMENT.name())
 					));
 			isValid = false;
 		}
 
 		if (isValid) {
+			StringBuilder redisKey = new StringBuilder("auths:");
+			redisKey.append(authUserDTO.getUsername())
+					.append(LocalDateTime.now().getLong(ChronoField.MILLI_OF_DAY));
+			Algorithm algorithm = Algorithm.HMAC512(JwtHelper.SECRET.getBytes());
 			// jwt 토큰 생성
-			final String token = JWT.create().withSubject(authUserDTO.getUsername())
-					.withExpiresAt(new Date(System.currentTimeMillis() + JwtHelper.EXPIRATION_TIME))
-					.sign(Algorithm.HMAC512(JwtHelper.SECRET));
+			HashMap<String, Object> head = new HashMap<>();
+			head.put("typ","JWT");
+			final String token = JWT.create()
+									.withSubject(authUserDTO.getUsername())
+									.withClaim("rds",redisKey.toString())
+									.withClaim("iat",new Date())
+									.withHeader(head)
+									.withExpiresAt(new Date(System.currentTimeMillis() + JwtHelper.EXPIRATION_TIME))
+					.sign(algorithm);
 
 			// header 에 토큰 입력
+			authUserDTO.setPassword(""); // 비밀번호 삭제
 			response.addHeader(JwtHelper.HEADER_STRING, JwtHelper.TOKEN_PREFIX +token);
-			JsonUtil.write(response.getWriter(), responseService.getSuccessResult());
+			JsonUtil.write(response.getWriter(), responseService.getSingleResult(authUserDTO));
+
+			// 레디스 토큰 저장
+			redisService.set(redisKey.toString(), token, Integer.parseInt(String.valueOf(BeanUtil.getBean("userSessionTime"))));
 
 			// 로그인일자 / header정보 업데이트
 			final HashMap<String, String> header = new HashMap<>();
@@ -221,8 +263,8 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 			user.ifPresent(value -> value.updateLoginDt(header.toString()));
 
 			// 약관동의 업데이트
-			if (ServiceEnumCode.YesOrNoEnumCode.Y.toString().equals(termsAgreeYn)
-					&& ServiceEnumCode.YesOrNoEnumCode.N.toString().equals(user.get().getTermsAgreeYn())
+			if (ServiceCode.YesOrNoEnumCode.Y.toString().equals(termsAgreeYn)
+					&& ServiceCode.YesOrNoEnumCode.N.toString().equals(user.get().getTermsAgreeYn())
 			) {
 				user.ifPresent(User::updateAgreement);
 			}

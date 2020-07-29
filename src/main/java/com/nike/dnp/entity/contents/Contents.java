@@ -1,16 +1,17 @@
 package com.nike.dnp.entity.contents;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.dto.contents.ContentsUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.util.LocalDateUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -18,7 +19,6 @@ import java.util.List;
  *
  * @author [이소정]
  * @CreatedOn 2020. 6. 19. 오후 5:57:35
- * @Description Contents Entity 작성
  */
 @Slf4j
 @Getter
@@ -100,7 +100,7 @@ public class Contents extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_PERIOD_SECTION_CODE")
-    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드", required = true)
+    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드(날짜선택:SELECT/365:EVERY)", required = true)
     private String campaignPeriodSectionCode;
 
     /**
@@ -109,7 +109,8 @@ public class Contents extends BaseTimeEntity {
      */
     @Column(name = "CAMPAIGN_BEGIN_DT")
     @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시")
-    private String campaignBeginDt;
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime campaignBeginDt;
 
     /**
      * 캠페인 종료 일시
@@ -117,7 +118,8 @@ public class Contents extends BaseTimeEntity {
      */
     @Column(name = "CAMPAIGN_END_DT")
     @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시")
-    private String campaignEndDt;
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime campaignEndDt;
 
     /**
      * 메모
@@ -157,7 +159,7 @@ public class Contents extends BaseTimeEntity {
      */
     @JsonManagedReference
     @OneToMany(mappedBy = "contents")
-    @ApiModelProperty(name = "contentsFileList", value = "콘텐츠 파일 목록", required = true)
+    @ApiModelProperty(name = "contentsFileList", value = "컨텐츠 파일 목록", required = true)
     private List<ContentsFile> contentsFileList;
 
     /**
@@ -167,20 +169,20 @@ public class Contents extends BaseTimeEntity {
      * @return the contents
      * @author [이소정]
      * @CreatedOn 2020. 7. 1. 오전 9:59:51
-     * @Description 등록
      */
-    @Transactional
-    public Contents save(ContentsSaveDTO contentsSaveDTO) {
+    public Contents save(final ContentsSaveDTO contentsSaveDTO) {
         log.info("Contents.save");
-        Contents saveContents = new Contents();
+        final Contents saveContents = new Contents();
         saveContentsBasic(contentsSaveDTO, saveContents);
         // 캠페인기간 > 날짜선택 인 경우
-        if (ServiceEnumCode.ContentsCampaignPeriodCode.EVERY.toString().equals(contentsSaveDTO.getCampaignPeriodSectionCode())) {
-            saveContents.setCampaignBeginDt(contentsSaveDTO.getCampaignBeginDt());
-            saveContents.setCampaignEndDt(contentsSaveDTO.getCampaignEndDt());
+        if (ServiceCode.ContentsCampaignPeriodCode.SELECT.toString().equals(contentsSaveDTO.getCampaignPeriodSectionCode())) {
+            saveContents.setCampaignBeginDt(LocalDateUtil.strToLocalDateTime(contentsSaveDTO.getCampaignBeginDt()+" 00:00:00","yyyy.MM.dd HH:mm:ss"));
+            saveContents.setCampaignEndDt(LocalDateUtil.strToLocalDateTime(contentsSaveDTO.getCampaignEndDt()+" 23:59:59","yyyy.MM.dd HH:mm:ss"));
+        } else {
+            saveContents.setCampaignBeginDt(null);
+            saveContents.setCampaignEndDt(null);
         }
         saveContents.setMemo(contentsSaveDTO.getMemo());
-        // TODO[lsj] 권한설정 추가 하기
 
         return saveContents;
     }
@@ -192,9 +194,8 @@ public class Contents extends BaseTimeEntity {
      * @param saveContents    the save contents
      * @author [이소정]
      * @CreatedOn 2020. 7. 1. \오전 9:59:37
-     * @Description 기본적인 부분 등록
      */
-    public static void saveContentsBasic(ContentsSaveDTO contentsSaveDTO, Contents saveContents) {
+    public static void saveContentsBasic(final ContentsSaveDTO contentsSaveDTO, final Contents saveContents) {
         log.info("Contents.saveContentsBasic");
         saveContents.setTopMenuCode(contentsSaveDTO.getTopMenuCode());
         saveContents.setMenuCode(contentsSaveDTO.getMenuCode());
@@ -204,8 +205,8 @@ public class Contents extends BaseTimeEntity {
         saveContents.setFolderName(contentsSaveDTO.getFolderName());
         saveContents.setFolderContents(contentsSaveDTO.getFolderContents());
         saveContents.setCampaignPeriodSectionCode(contentsSaveDTO.getCampaignPeriodSectionCode());
+        saveContents.setExposureYn(contentsSaveDTO.getExposureYn());
 
-        saveContents.setExposureYn("Y");
         saveContents.setUseYn("Y");
         saveContents.setReadCount(0l);
     }
@@ -217,9 +218,7 @@ public class Contents extends BaseTimeEntity {
      * @param contentsUpdateDTO the contents update dto
      * @author [이소정]
      * @CreatedOn 2020. 7. 3. 오후 4:01:36
-     * @Description
      */
-    @Transactional
     public void update(final ContentsUpdateDTO contentsUpdateDTO) {
         log.info("Contents.update");
         this.menuCode = contentsUpdateDTO.getMenuCode();
@@ -229,6 +228,7 @@ public class Contents extends BaseTimeEntity {
         this.folderName = contentsUpdateDTO.getFolderName();
         this.folderContents = contentsUpdateDTO.getFolderContents();
         this.campaignPeriodSectionCode = contentsUpdateDTO.getCampaignPeriodSectionCode();
+        this.exposureYn = contentsUpdateDTO.getExposureYn();
     }
 
     /**
@@ -237,9 +237,7 @@ public class Contents extends BaseTimeEntity {
      * @param readCount the read count
      * @author [이소정]
      * @CreatedOn 2020. 7. 3. 오후 5:22:59
-     * @Description
      */
-    @Transactional
     public void updateReadCount(final Long readCount) {
         log.info("Contents.updateReadCount");
         this.readCount = readCount + 1;
@@ -251,9 +249,7 @@ public class Contents extends BaseTimeEntity {
      *
      * @author [이소정]
      * @CreatedOn 2020. 7. 7. 오후 2:06:34
-     * @Description
      */
-    @Transactional
     public void delete() {
         this.useYn = "N";
     }

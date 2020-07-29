@@ -1,6 +1,6 @@
 package com.nike.dnp.repository.menu;
 
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.menu.MenuReturnDTO;
 import com.nike.dnp.entity.auth.QAuthMenuRole;
 import com.nike.dnp.entity.menu.Menu;
@@ -62,7 +62,7 @@ public class MenuRepositoryImpl extends QuerydslRepositorySupport implements Men
                         ))
                 .from(qMenu)
                 .innerJoin(qUpperMenu).on(qMenu.upperMenuSeq.eq(qUpperMenu.menuSeq))
-                .where(qMenu.useYn.eq(ServiceEnumCode.yesOrNoEnumCode.Y.toString()))
+                .where(qMenu.useYn.eq(ServiceCode.yesOrNoEnumCode.Y.toString()))
                 .fetch();
     }*/
 
@@ -97,13 +97,13 @@ public class MenuRepositoryImpl extends QuerydslRepositorySupport implements Men
                 .innerJoin(qUpperMenu).on(qMenu.upperMenuSeq.eq(qUpperMenu.menuSeq))
                 .innerJoin(qMenuRole).on(
                         qMenu.menuSeq.eq(qMenuRole.menuSeq)
-                        , qMenuRole.menuSkillCode.eq(ServiceEnumCode.MenuSkillEnumCode.LIST.toString())
+                        , qMenuRole.menuSkillCode.eq(ServiceCode.MenuSkillEnumCode.LIST.toString())
                 ).fetchJoin()
                 .innerJoin(qAuthMenuRole).on(
                         qMenuRole.menuRoleSeq.eq(qAuthMenuRole.menuRoleSeq)
                         , qAuthMenuRole.authSeq.eq(authSeq)
                 ).fetchJoin()
-                .where(qMenu.useYn.eq(ServiceEnumCode.YesOrNoEnumCode.Y.toString()))
+                .where(qMenu.useYn.eq(ServiceCode.YesOrNoEnumCode.Y.toString()))
                 .groupBy(qMenu.menuSeq)
                 .fetch();
     }

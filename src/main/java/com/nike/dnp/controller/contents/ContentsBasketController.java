@@ -2,8 +2,6 @@ package com.nike.dnp.controller.contents;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.ContentsBasketResultDTO;
-import com.nike.dnp.dto.contents.ContentsBasketSaveDTO;
-import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsBasket;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -68,19 +66,30 @@ public class ContentsBasketController {
     @ApiOperation(
             value = "컨텐츠 장바구니 목록 조회"
             , notes = REQUEST_CHARACTER
+            + "[하위 Parameters 참조]\n\n\n\n"
+            + "## Public/Paging Response ## \n"
+            + "필드명||필드설명|데이터 타입(길이)\n" + "-|-|-|-\n"
+            + "content||본문내용|Array\n"
+            + "totalPages||총페이지수|Integer\n"
+            + "totalElements||총데이터수|Integer\n"
+            + "first||첫페이지여부|Boolean\n"
+            + "last||마지막페이지여부|Boolean\n"
+            + "empty||빈값여부|Boolean\n"
+            + "number||현재페이지|Integer\n"
+            + "size||노출갯수|Integer\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 장바구니 목록 조회")
-    public SingleResult<List<ContentsBasketResultDTO>> getAllContentsBasket(
+    public SingleResult<List<ContentsBasketResultDTO>> findAllContentsBasket(
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
             ) {
-        return responseService.getSingleResult(contentsBasketService.getAllContentsBasket(authUserDTO));
+        return responseService.getSingleResult(contentsBasketService.findAllContentsBasket(authUserDTO));
     }
 
     /**
      * Save contents single result.
      *
-     * @param contentsBasketSaveDTOList the contents basket save dto list
-     * @param authUserDTO               the auth user dto
+     * @param contentsBasketSeqList the contents basket seq list
+     * @param authUserDTO           the auth user dto
      * @return the single result
      * @author [이소정]
      * @CreatedOn 2020. 7. 15. 오후 12:16:18
@@ -90,12 +99,14 @@ public class ContentsBasketController {
             value = "컨텐츠 장바구니 등록"
             , notes = REQUEST_CHARACTER
     )
-    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 장바구니 등록")
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 장바구니 등록", value = "/{topMenuCode}/{menuCode}")
     public SingleResult<List<ContentsBasket>> saveContentsBasket(
-            @RequestBody final List<ContentsBasketSaveDTO> contentsBasketSaveDTOList,
+            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
+            @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "SP", required = true) @PathVariable final String menuCode,
+            @RequestBody final List<Long> contentsBasketSeqList,
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
     ) {
-        List<ContentsBasket> contentsBasketList = contentsBasketService.save(contentsBasketSaveDTOList, authUserDTO);
+        List<ContentsBasket> contentsBasketList = contentsBasketService.save(contentsBasketSeqList, authUserDTO);
         return responseService.getSingleResult(contentsBasketList);
     }
 
@@ -108,8 +119,7 @@ public class ContentsBasketController {
      * @CreatedOn 2020. 7. 15. 오후 2:41:27
      * @Description
      */
-    @ApiOperation(value="컨텐츠 장바구니," +
-            " 삭제", notes = REQUEST_CHARACTER)
+    @ApiOperation(value="컨텐츠 장바구니 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "컨텐츠 장바구니 삭제", value = "/{contentsBasketSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Optional<ContentsBasket>> deleteContentsBasket(

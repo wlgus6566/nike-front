@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.nike.dnp.common.variable.ServiceEnumCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.user.UserSaveDTO;
 import com.nike.dnp.dto.user.UserUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
@@ -147,6 +147,7 @@ public class User extends BaseTimeEntity {
      */
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonManagedReference
+    @ApiModelProperty(name = "userAuth", value = "유저 권한")
     private UserAuth userAuth;
 
     /**
@@ -157,6 +158,7 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonManagedReference
     @OrderBy("registrationDt DESC")
+    @ApiModelProperty(name = "histories", value = "비밀번호 변경 이력")
     private List<PasswordHistory> histories = new ArrayList<>();
 
     /**
@@ -170,7 +172,7 @@ public class User extends BaseTimeEntity {
     public void prePersist() {
         this.termsAgreeYn = this.termsAgreeYn == null ? "N" : this.termsAgreeYn;
         this.passwordChangeYn = this.passwordChangeYn == null ? "N" : this.passwordChangeYn;
-        this.userStatusCode = ServiceEnumCode.UserStatusEnumCode.NORMAL.toString();
+        this.userStatusCode = ServiceCode.UserStatusEnumCode.NORMAL.toString();
     }
 
     /**
@@ -244,7 +246,7 @@ public class User extends BaseTimeEntity {
         this.userId = String.valueOf(userSeq);
         this.password = String.valueOf(userSeq);
         this.nickname = String.valueOf(userSeq);
-        this.userStatusCode = ServiceEnumCode.UserStatusEnumCode.DELETE.toString();
+        this.userStatusCode = ServiceCode.UserStatusEnumCode.DELETE.toString();
     }
 
     /**

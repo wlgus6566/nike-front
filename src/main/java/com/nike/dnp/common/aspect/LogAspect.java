@@ -1,15 +1,21 @@
 package com.nike.dnp.common.aspect;
 
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.UserActionLogSaveDTO;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.service.log.UserActionLogService;
+import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -50,21 +56,47 @@ public class LogAspect {
     //@Around("execution(public * com.nike.dnp.controller..*Controller.*(..)) && args(requestDTO,..)")
     @Around("execution(public * com.nike.dnp.controller..*Controller.*(..))")
     public Object onAroundActionLog(final ProceedingJoinPoint joinPoint) throws Throwable {
-        log.debug("========================= ActionLog Start =========================");
-        final HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        final UserActionLogSaveDTO actionLog = new UserActionLogSaveDTO();
-        for (final Object obj : joinPoint.getArgs()) {
-            if (!ObjectUtils.isEmpty(obj) && obj instanceof AuthUserDTO) {
-                actionLog.setUserSeq(((AuthUserDTO) obj).getUserSeq());
-                actionLog.setUrl(request.getRequestURI());
-                actionLog.setParameter(Arrays.toString(joinPoint.getArgs()));
-                actionLog.setMethodTypeName(request.getMethod());
-                actionLog.setMethodSignature(joinPoint.getSignature().getName());
-                actionLogService.save(actionLog);
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {
+            final HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+            final UserActionLogSaveDTO actionLog = new UserActionLogSaveDTO();
+            for (final Object obj : joinPoint.getArgs()) {
+                if (!ObjectUtils.isEmpty(obj) && obj instanceof AuthUserDTO) {
+                    actionLog.setUserSeq(((AuthUserDTO) obj).getUserSeq());
+                    actionLog.setUrl(request.getRequestURI());
+                    actionLog.setParameter(Arrays.toString(joinPoint.getArgs()));
+                    actionLog.setMethodTypeName(request.getMethod());
+                    actionLog.setMethodSignature(joinPoint.getSignature().getName());
+                    actionLogService.save(actionLog);
+                }
             }
         }
-        log.debug("========================= ActionLog End =========================");
         return joinPoint.proceed();
+    }
+
+    /**
+     * On around valid field object.
+     *
+     * @param joinPoint the join point
+     * @return the object
+     * @throws Throwable the throwable
+     * @author [오지훈]
+     * @CreatedOn 2020. 7. 22. 오후 3:53:47
+     * @Description 필드 필수 체크
+     */
+    @Around("@annotation(ValidField)")
+    public Object onAroundValidField(final ProceedingJoinPoint joinPoint) throws Throwable {
+        for (final Object obj : joinPoint.getArgs()) {
+            if (!ObjectUtils.isEmpty(obj) && obj instanceof BindingResult) {
+                final BindingResult result = (BindingResult) obj;
+                if (result.hasErrors()) {
+                    throw new CodeMessageHandleException(
+                            FailCode.ExceptionError.INVALID.toString()
+                            , MessageUtil.getMessage(result.getAllErrors().get(0).getDefaultMessage()));
+                }
+            }
+        }
+        return joinPoint.proceed(joinPoint.getArgs());
     }
 
 }

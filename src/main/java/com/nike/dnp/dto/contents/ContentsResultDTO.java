@@ -1,7 +1,12 @@
 package com.nike.dnp.dto.contents;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 /**
  * The Class Contents list dto.
@@ -14,8 +19,16 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
-public class ContentsResultDTO {
+public class ContentsResultDTO extends BaseTimeEntity {
+
+    /**
+     * 컨텐츠 시퀀스
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스")
+    private Long contentsSeq;
 
     /**
      * 최고 메뉴 공통코드
@@ -69,22 +82,31 @@ public class ContentsResultDTO {
      * 캠페인 기간 구분 공통코드
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드", required = true, example = "EVERY")
+    @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드(날짜선택:SELECT/365:EVERY)", required = true, example = "EVERY")
     private String campaignPeriodSectionCode;
 
     /**
      * 캠페인 시작 일시
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020-06-01")
-    private String campaignBeginDt;
+    @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020.06.01 00:00:00")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime campaignBeginDt;
 
     /**
      * 캠페인 종료 일시
      * @author [이소정]
      */
-    @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020-09-01")
-    private String campaignEndDt;
+    @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020.09.01 23:59:59")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime campaignEndDt;
+
+    /**
+     * 메모
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "memo", value = "메모")
+    private String memo;
 
     /**
      * 조회수
@@ -92,6 +114,20 @@ public class ContentsResultDTO {
      */
     @ApiModelProperty(name = "readCount", value = "조회수")
     private Long readCount;
+
+    /**
+     * 상세 권한 여부
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailAuthYn", value = "상세 권한 여부(N : 권한없음)", example = "Y")
+    private String detailAuthYn = "N";
+
+    /**
+     * 노출 여부
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "exposureYn", value = "노출 여부(N : 진행중)", example = "Y")
+    private String exposureYn;
 
 
 }

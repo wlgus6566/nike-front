@@ -1,10 +1,5 @@
 spring:
   profiles: prod
-  datasource:
-    driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mysql://10.80.1.212:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
-    username: nikemanager
-    password: 'emotion!@'
   devtools:
     livereload:
       enabled: false
@@ -22,6 +17,7 @@ spring:
         cache-null-values: false
         use-key-prefix: true
       type: redis
+    userSessionTime: 30
 
 logging:
   config: classpath:logback-prod.xml

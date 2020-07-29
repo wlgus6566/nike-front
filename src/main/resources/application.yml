@@ -10,7 +10,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties:
       hibernate:
-        #show-sql: true
+        show-sql: true
         SQL: debug
         format_sql: true
         use_sql_comments: true
@@ -26,8 +26,8 @@ spring:
     multipart:
       max-file-size: 1000MB
       max-request-size: 1000MB
-
-
+  redis:
+    userSessionTime: 30
 
 ## 시큐리티 url/ ip 체크 flag
 security:
@@ -39,11 +39,25 @@ security:
 nike:
   email:
     auth:
-      id: "cokeplay.emotion@emotion.co.kr"
-      pw: "5Rzz*w#,Kc%9W7s"
+      id: 'cokeplay.emotion@emotion.co.kr'
+      pw: '5Rzz*w#,Kc%9W7s'
     send:
-      from: "cokeplay.emotion@emotion.co.kr"
+      from: 'cokeplay.emotion@emotion.co.kr'
   #임시 경로
   file:
     root: '/home/file'
     imageMagick: '/imageTool'
+    ffmpeg: '/usr/bin'
+    ffmpegCommand: 'ffmpeg'
+
+cloud:
+  aws:
+    credentials:
+      accessKey: 'AKIA4FO4XQUFNEBRAZU4'
+      secretKey: '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'
+    s3:
+      bucket: 'nike-test-bucket-dnp'
+    region:
+      static: 'ap-northeast-2'
+    stack:
+      auto:  false

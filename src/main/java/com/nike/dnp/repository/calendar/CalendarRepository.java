@@ -17,4 +17,6 @@ public interface CalendarRepository extends JpaRepository<Calendar, Long>{
 
     List<Calendar> findByBeginDtGreaterThanEqualAndEndDtLessThanEqual(LocalDateTime beginDt, LocalDateTime endDt);
 
+
+    List<Calendar> findAllByBeginDtBeforeAndEndDtAfter(LocalDateTime beginDt,LocalDateTime endDt);
 }

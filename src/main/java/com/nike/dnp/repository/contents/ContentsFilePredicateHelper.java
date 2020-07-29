@@ -2,8 +2,6 @@ package com.nike.dnp.repository.contents;
 
 
 import com.nike.dnp.dto.contents.ContentsFileSearchDTO;
-import com.nike.dnp.dto.contents.ContentsSearchDTO;
-import com.nike.dnp.entity.contents.QContents;
 import com.nike.dnp.entity.contents.QContentsFile;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -55,7 +53,7 @@ public class ContentsFilePredicateHelper {
 		final String fileExtension = contentsFileSearchDTO.getFileExtension();
 
 		if (!StringUtils.isEmpty(fileExtension)) {
-			builder.and(QContentsFile.contentsFile.fileName.contains(fileExtension));
+			builder.and(QContentsFile.contentsFile.fileExtension.eq(fileExtension));
 		}
 		return builder;
 	}
