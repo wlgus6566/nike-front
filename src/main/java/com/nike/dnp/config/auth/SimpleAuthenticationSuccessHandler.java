@@ -81,7 +81,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 	private final UserMailService userMailService;
 
 	/**
-	 * On authentication success.
+	 * 로그인 성공 처리
 	 *
 	 * @param request        the request
 	 * @param response       the response

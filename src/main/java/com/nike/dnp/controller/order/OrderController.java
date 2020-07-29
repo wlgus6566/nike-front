@@ -31,11 +31,11 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.Valid;
 
 /**
- * Order Controller
+ * 주문 Controller
  *
  * @author [윤태호]
  * @CreatedOn 2020. 6. 26. 오후 3:27:34
- * @Description
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -88,7 +88,7 @@ public class OrderController {
 	private static final String BASIC_CHARACTER = "## Request ## \n" + "[하위 Parameters 참조] \n" + "## Request ## \n" + "[하위 Model 참조]\n\n";
 
 	/**
-	 * Save order single result.
+	 * 주문 등록
 	 *
 	 * @param orderProductSaveDTO the order product save dto
 	 * @return the single result
@@ -102,7 +102,7 @@ public class OrderController {
 	@ValidField
 	public SingleResult<Order> saveOrder(@RequestBody @Valid final OrderProductSaveDTO orderProductSaveDTO,
 										 @ApiIgnore final BindingResult result) {
-
+		log.info("OrderController.saveOrder");
 		if(orderProductSaveDTO.getGoodsSeqList().size() == orderProductSaveDTO.getOrderQuantityList().size()){
 			final Order order = orderService.saveOrder(orderProductSaveDTO);
 
@@ -129,7 +129,7 @@ public class OrderController {
 
 
 	/**
-	 * List single result.
+	 * 주문내역 조회
 	 *
 	 * @param orderSearchDTO the order search dto
 	 * @return the single result
@@ -140,12 +140,13 @@ public class OrderController {
 	@ApiOperation(value = "주문내역", notes = REQUEST_CHARACTER + "beginDt|시작일|false|String\n" + "endDt|종료일|false|String\n")
 	@GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<Page<OrderProductMapping>> list(final OrderSearchDTO orderSearchDTO) {
+		log.info("OrderController.list");
 		return responseService.getSingleResult(orderProductMappingService.findPageOrder(orderSearchDTO));
 	}
 
 
 	/**
-	 * View single result.
+	 * 주문 상세 내역
 	 *
 	 * @param orderGoodsSeq the order goods seq
 	 * @return the single result
@@ -156,6 +157,7 @@ public class OrderController {
 	@ApiOperation(value = "주문 상세 내역", notes = BASIC_CHARACTER)
 	@GetMapping(value = "/{orderGoodsSeq}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<OrderProductMapping> view(@ApiParam(name = "orderGoodsSeq", value = "주문 상품 시퀀스", defaultValue = "13") @PathVariable final Long orderGoodsSeq) {
+		log.info("OrderController.view");
 		return responseService.getSingleResult(orderProductMappingService.findById(orderGoodsSeq));
 	}
 

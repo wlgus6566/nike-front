@@ -17,7 +17,7 @@ import java.util.Optional;
 public interface GoodsBasketRepository extends JpaRepository<GoodsBasket,Long> {
 
 	/**
-	 * Find by goods seq and user seq optional.
+	 * 제품 시퀀스와 유저 시퀀스 장바구니 조회
 	 *
 	 * @param goodsSeq the goods seq
 	 * @param userSeq  the user seq
@@ -29,7 +29,7 @@ public interface GoodsBasketRepository extends JpaRepository<GoodsBasket,Long> {
 	Optional<GoodsBasket> findByGoodsSeqAndUserSeq(Long goodsSeq,Long userSeq);
 
 	/**
-	 * Find by user seq order by goods basket seq desc list.
+	 * 유저 시퀀스로 장바구니 조회
 	 *
 	 * @param userSeq the user seq
 	 * @return the list

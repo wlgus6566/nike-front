@@ -18,7 +18,7 @@ import lombok.*;
 public class CalendarDaySearchDTO extends BasicDTO {
 
 	/**
-	 * The Search dt
+	 * 조회 년월일
 	 *
 	 * @author [윤태호]
 	 */

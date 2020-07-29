@@ -29,6 +29,7 @@ import java.util.List;
 @Slf4j
 @Repository
 public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport implements OrderProductMapperRepositoryCustom {
+
 	/**
 	 * Creates a new {@link QuerydslRepositorySupport} instance for the given domain type.
 	 *
@@ -41,7 +42,7 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 	}
 
 	/**
-	 * Find search email value list.
+	 * 이메일 정보 조회
 	 *
 	 * @param orderSeq the order seq
 	 * @return the list
@@ -51,6 +52,7 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 	 */
 	@Override
 	public List<OrderProductResultDTO> findSearchEmailValue(final Long orderSeq) {
+		log.info("OrderProductMapperRepositoryImpl.findSearchEmailValue");
 		final QOrderProductMapping orderProductMapping = QOrderProductMapping.orderProductMapping;
 		final QProduct product = QProduct.product;
 		final QOrder order = QOrder.order;
@@ -78,7 +80,7 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 	}
 
 	/**
-	 * Find pages order page.
+	 * 주문 내역 리스트 조회
 	 *
 	 * @param orderSearchDTO the order search dto
 	 * @param pageRequest    the page request
@@ -90,6 +92,7 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 	@Override
 	public Page<OrderProductMapping> findPagesOrder(final OrderSearchDTO orderSearchDTO,
 													final PageRequest pageRequest) {
+		log.info("OrderProductMapperRepositoryImpl.findPagesOrder");
 		final QOrderProductMapping qOrderProductMapping = QOrderProductMapping.orderProductMapping;
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 

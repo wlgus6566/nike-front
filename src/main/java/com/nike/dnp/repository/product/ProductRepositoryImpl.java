@@ -46,7 +46,7 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 	}
 
 	/**
-	 * Find all pages page.
+	 * 제품 관리 리스트 조회
 	 *
 	 * @param productSearchDTO the product search dto
 	 * @param pageRequest      the page request
@@ -58,6 +58,7 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 	@Override
 	public Page<ProductResultDTO> findPagesProduct(final ProductSearchDTO productSearchDTO,
 												   final PageRequest pageRequest) {
+		log.info("ProductRepositoryImpl.findPagesProduct");
 		final QProduct qProduct = QProduct.product;
 		final QAgency qAgency = QAgency.agency;
 		final QUser qUser = QUser.user;

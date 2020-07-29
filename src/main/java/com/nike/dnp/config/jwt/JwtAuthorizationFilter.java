@@ -66,7 +66,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	 * @param redisService   the redis service
 	 * @author [오지훈]
 	 * @CreatedOn 2020. 7. 21. 오후 4:22:06
-	 * @Description
 	 */
 	public JwtAuthorizationFilter(
 			final AuthenticationManager authManager

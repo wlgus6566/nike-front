@@ -19,7 +19,7 @@ import lombok.*;
 public class WishListResultDTO {
 
 	/**
-	 * The Wish list seq
+	 * 위시 리스트 시퀀스
 	 *
 	 * @author [윤태호]
 	 */
@@ -52,7 +52,7 @@ public class WishListResultDTO {
 
 
 	/**
-	 * Of save wish list result dto.
+	 * 위시리스트 엔티티를 dto로 변경
 	 *
 	 * @param wishList the wish list
 	 * @return the wish list result dto

@@ -23,7 +23,7 @@ public class Order extends BaseTimeEntity {
 
 
     /**
-     * The Order seq
+     * 주문 시퀀스
      *
      * @author [윤태호]
      */
@@ -34,7 +34,7 @@ public class Order extends BaseTimeEntity {
     private Long orderSeq;
 
     /**
-     * The Order description
+     * 주문 코멘트
      *
      * @author [윤태호]
      */
@@ -43,7 +43,7 @@ public class Order extends BaseTimeEntity {
     private String orderDescription;
 
     /**
-     * The Total amount
+     * 총 금액
      *
      * @author [윤태호]
      */

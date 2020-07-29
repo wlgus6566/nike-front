@@ -17,7 +17,7 @@ public interface ProductRepository extends JpaRepository<Product,Long>,ProductRe
 
 
 	/**
-	 * GoodsSeq
+	 * 제품 조회
 	 *
 	 * @param goodsSeq      goodsSeq
 	 * @return the product

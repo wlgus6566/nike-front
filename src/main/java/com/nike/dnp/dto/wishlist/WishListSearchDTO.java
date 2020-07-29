@@ -18,7 +18,7 @@ import lombok.*;
 public class WishListSearchDTO extends SearchDTO {
 
 	/**
-	 * The User seq
+	 * 유저 시퀀스
 	 *
 	 * @author [윤태호]
 	 */

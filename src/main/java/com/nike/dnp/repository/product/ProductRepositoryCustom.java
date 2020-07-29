@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepositoryCustom {
 
 	/**
-	 * Find alls page.
+	 * 제품 관리 리스트 페이지
 	 *
 	 * @param productSearchDTO the product search dto
 	 * @param pageRequest      the page request

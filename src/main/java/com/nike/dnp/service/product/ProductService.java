@@ -43,7 +43,7 @@ public class ProductService {
 	public final ProductRepository productRepository;
 
 	/**
-	 * Find all pages page.
+	 * 제품 관리 리스트 페이징
 	 *
 	 * @param productSearchDTO the product search dto
 	 * @return the page
@@ -52,6 +52,7 @@ public class ProductService {
 	 * @Description
 	 */
 	public Page<ProductResultDTO> findPagesProduct(final ProductSearchDTO productSearchDTO) {
+		log.info("ProductService.findPagesProduct");
 		return productRepository.findPagesProduct(
 				productSearchDTO,
 				PageRequest.of(productSearchDTO.getPage(), productSearchDTO.getSize(), Sort.by("goodsSeq").descending()
@@ -68,6 +69,7 @@ public class ProductService {
 	 * @Description
 	 */
 	public Product findByGoodsSeq(final Long goodsSeq) {
+		log.info("ProductService.findByGoodsSeq");
 		return productRepository.findByGoodsSeq(goodsSeq );	}
 
 	/**
@@ -81,7 +83,7 @@ public class ProductService {
 	 */
 	@Transactional
 	public Product save(final ProductSaveDTO productSaveDTO) {
-
+		log.info("ProductService.save");
 		final Product product = new Product();
 		product.setCategory2Code(productSaveDTO.getCategory2Code());
 		product.setCategory3Code(productSaveDTO.getCategory3Code());
@@ -118,8 +120,8 @@ public class ProductService {
 	 */
 	@Transactional
 	public Product update(final ProductUpdateDTO productUpdateDTO) {
+		log.info("ProductService.update");
 		final Optional<Product> optionalProduct = productRepository.findById(productUpdateDTO.getGoodsSeq());
-
 		final Product product = optionalProduct.orElse(new Product());
 		product.setExposureYn(productUpdateDTO.getExposureYn());
 		product.setCategory2Code(productUpdateDTO.getCategory2Code());
@@ -150,6 +152,7 @@ public class ProductService {
 	 */
 	@Transactional
 	public Optional<Product> delete(final ProductUpdateDTO productUpdateDTO) {
+		log.info("ProductService.delete");
 		final Optional<Product> product = productRepository.findById(productUpdateDTO.getGoodsSeq());
 		product.ifPresent(value -> value.delete(productUpdateDTO));
 		return product;
@@ -166,7 +169,8 @@ public class ProductService {
 	 * @Description
 	 */
 	@Transactional
-	public List<Product> findBySearchId(final List<Long> goodsSeqList) {
+	public List<Product> findBySearchId(final List<Long> goodsSeqList){
+		log.info("ProductService.findBySearchId");
 		return productRepository.findAllById(goodsSeqList);
 	}
 
@@ -183,7 +187,7 @@ public class ProductService {
 	@Transactional
 	public boolean deleteArray(final List<Product> productList,
 										 final ProductUpdateDTO productUpdateDTO) {
-
+		log.info("ProductService.deleteArray");
 		productList.forEach(product -> product.delete(productUpdateDTO));
 		return true;
 	}

@@ -39,7 +39,7 @@ public class GoodsBasketService {
 	private final GoodsBasketRepository goodsBasketRepository;
 
 	/**
-	 * Save basket.
+	 * 장바구니 저장
 	 *
 	 * @param goodsBasketSaveDTO the goods basket save dto
 	 * @return goods basket
@@ -49,6 +49,7 @@ public class GoodsBasketService {
 	 */
 	@Transactional
 	public GoodsBasket saveBasket(final GoodsBasketSaveDTO goodsBasketSaveDTO) {
+		log.info("GoodsBasketService.saveBasket");
 		final Optional<GoodsBasket> goodsBasket = goodsBasketRepository.findByGoodsSeqAndUserSeq(goodsBasketSaveDTO.getGoodsSeq(), SecurityUtil.currentUser().getUserSeq());
 		final GoodsBasket saveGoodsBasket = goodsBasket.orElse(new GoodsBasket());
 		saveGoodsBasket.setGoodsSeq(goodsBasketSaveDTO.getGoodsSeq());
@@ -58,7 +59,7 @@ public class GoodsBasketService {
 	}
 
 	/**
-	 * Find by all list.
+	 * 장바구니 조회
 	 *
 	 * @return the list
 	 * @author [윤태호]
@@ -66,11 +67,12 @@ public class GoodsBasketService {
 	 * @Description
 	 */
 	public List<GoodsBasket> findByAll() {
+		log.info("GoodsBasketService.findByAll");
 		return goodsBasketRepository.findByUserSeqOrderByGoodsBasketSeqDesc(SecurityUtil.currentUser().getUserSeq());
 	}
 
 	/**
-	 * Delete basket.
+	 * 장바구니 삭제
 	 *
 	 * @param goodsBasketSeq the goods basket seq
 	 * @author [윤태호]
@@ -79,7 +81,7 @@ public class GoodsBasketService {
 	 */
 	@Transactional
 	public void deleteBasket(final Long goodsBasketSeq) {
-
+		log.info("GoodsBasketService.deleteBasket");
 		final Optional<GoodsBasket> optionalGoodsBasket = goodsBasketRepository.findById(goodsBasketSeq);
 		final GoodsBasket goodsBasket = optionalGoodsBasket.orElseThrow(
 				() -> new CodeMessageHandleException(
@@ -97,6 +99,7 @@ public class GoodsBasketService {
 	 */
 	@Transactional
 	public void deleteAll() {
+		log.info("GoodsBasketService.deleteAll");
 		goodsBasketRepository.deleteAll();
 
 	}
@@ -112,6 +115,7 @@ public class GoodsBasketService {
 	 */
 	@Transactional
 	public List<GoodsBasket> saveBasketList(final GoodsBasketSaveListDTO goodsBasketSaveListDTO) {
+		log.info("GoodsBasketService.saveBasketList");
 		final List<GoodsBasket> resultList = new ArrayList<>();
 		if(goodsBasketSaveListDTO.getGoodsSeqList().size()!= goodsBasketSaveListDTO.getOrderQuantityList().size()){
 			throw new CodeMessageHandleException(

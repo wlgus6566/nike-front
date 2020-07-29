@@ -54,7 +54,7 @@ public class OrderProductMappingService {
 
 
 	/**
-	 * Save order product mapping order product mapping.
+	 * 주문 제품 맴핑 저장
 	 *
 	 * @param orderProductMappingSaveDTO the order product mapping save dto
 	 * @return the order product mapping
@@ -64,6 +64,7 @@ public class OrderProductMappingService {
 	 */
 	@Transactional
 	public OrderProductMapping saveOrderProductMapping(final OrderProductMappingSaveDTO orderProductMappingSaveDTO) {
+		log.info("OrderProductMappingService.saveOrderProductMapping");
 		final OrderProductMapping orderProductMapping = new OrderProductMapping();
 		orderProductMapping.setGoodsSeq(orderProductMappingSaveDTO.getGoodsSeq());
 		orderProductMapping.setOrderSeq(orderProductMappingSaveDTO.getOrderSeq());
@@ -73,7 +74,7 @@ public class OrderProductMappingService {
 
 
 	/**
-	 * Order sheet send boolean.
+	 * 주문내역 이메일 발송
 	 *
 	 * @param order the order
 	 * @return the boolean
@@ -82,6 +83,7 @@ public class OrderProductMappingService {
 	 * @Description
 	 */
 	public void orderSheetSend(final Order order) {
+		log.info("OrderProductMappingService.orderSheetSend");
 		final List<OrderProductResultDTO> emailList = orderProductMapperRepository.findSearchEmailValue(order.getOrderSeq());
 
 		final List<Long> agencyList = new ArrayList<>();
@@ -142,7 +144,7 @@ public class OrderProductMappingService {
 	}
 
 	/**
-	 * Find page order page.
+	 * 주문 페이징
 	 *
 	 * @param orderSearchDTO the order search dto
 	 * @return the page
@@ -151,6 +153,7 @@ public class OrderProductMappingService {
 	 * @Description
 	 */
 	public Page<OrderProductMapping> findPageOrder(final OrderSearchDTO orderSearchDTO) {
+		log.info("OrderProductMappingService.findPageOrder");
 		orderSearchDTO.setUserSeq(SecurityUtil.currentUser()
 											  .getUserSeq());
 
@@ -164,7 +167,7 @@ public class OrderProductMappingService {
 	}
 
 	/**
-	 * Find by id order product mapping.
+	 * 주문 제품 맴핑 조회
 	 *
 	 * @param orderGoodsSeq the order goods seq
 	 * @return the order product mapping
@@ -173,6 +176,7 @@ public class OrderProductMappingService {
 	 * @Description
 	 */
 	public OrderProductMapping findById(final Long orderGoodsSeq) {
+		log.info("OrderProductMappingService.findById");
 		return orderProductMapperRepository.findById(orderGoodsSeq).orElse(new OrderProductMapping());
 	}
 

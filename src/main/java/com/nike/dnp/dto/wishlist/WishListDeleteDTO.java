@@ -20,7 +20,7 @@ import java.util.List;
 public class WishListDeleteDTO {
 
 	/**
-	 * The Wish list seq list
+	 * 위시 리스트 시퀀스 리스트
 	 *
 	 * @author [윤태호]
 	 */

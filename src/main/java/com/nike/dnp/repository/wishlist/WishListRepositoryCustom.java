@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 public interface WishListRepositoryCustom {
 
 	/**
-	 * Find pages wish list page.
+	 * 위시 리스트 조회
 	 *
 	 * @param wishListSearchDTO the wish list search dto
 	 * @param wishListSeq       the wish list seq

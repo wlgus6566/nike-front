@@ -155,9 +155,9 @@ public class FileUtil {
 	 * @Description
 	 */
 	public static File makeNewFile(final String folder,final String extension) {
+		log.info("FileUtil.makeNewFile");
 		final String newFilepath = root + File.separator + folder;
-		final String newFileName = LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE) + LocalDateTime.now().get(ChronoField.MICRO_OF_SECOND)
-				+ RandomStringUtils.random(10, true, true) + "." + extension;
+		final String newFileName = makeFileName() + "." + extension;
 		final File result = new File(newFilepath+File.separator+ newFileName);
 		if(result.isFile()){
 			return makeNewFile(folder,extension);
@@ -165,6 +165,19 @@ public class FileUtil {
 			new File(newFilepath).mkdirs();
 			return result;
 		}
+	}
+
+	/**
+	 * 파일명 생성
+	 *
+	 * @return the string
+	 * @author [윤태호]
+	 * @CreatedOn 2020. 7. 29. 오후 2:02:25
+	 */
+	public static String makeFileName(){
+		log.info("FileUtil.makeFileName");
+		return LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE) + LocalDateTime.now().get(ChronoField.MICRO_OF_SECOND) + RandomStringUtils
+				.random(10, true, true);
 	}
 
 	/**
@@ -184,7 +197,7 @@ public class FileUtil {
 										 final String folder,
 										 final boolean resize,
 										 final String resizeExt) throws IOException {
-
+		log.info("FileUtil.fileSave");
 
 		final String extension = StringUtils.getFilenameExtension(uploadFile.getOriginalFilename());
 
@@ -313,7 +326,8 @@ public class FileUtil {
 	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
 	 * @Description
 	 */
-	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile) throws IOException, InterruptedException {
+	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile) throws IOException {
+		log.info("FileUtil.fileTempSaveAndImageResize");
 		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder(), true, null);
 	}
 
@@ -330,7 +344,8 @@ public class FileUtil {
 	 * @Description
 	 */
 	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile,
-														   final String resizeExt) throws IOException, InterruptedException {
+														   final String resizeExt) throws IOException  {
+		log.info("FileUtil.fileTempSaveAndImageResize");
 		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder(), true, resizeExt);
 	}
 
@@ -346,8 +361,8 @@ public class FileUtil {
 	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
 	 * @Description
 	 */
-	public static FileResultDTO fileSave(final MultipartFile uploadFile,
-										 final String folder) throws IOException, InterruptedException {
+	public static FileResultDTO fileSave(final MultipartFile uploadFile, final String folder) throws IOException {		
+		log.info("FileUtil.fileSave");
 		return fileSave(uploadFile, folder, false, null);
 	}
 
@@ -362,7 +377,8 @@ public class FileUtil {
 	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
 	 * @Description
 	 */
-	public static FileResultDTO fileTempSave(final MultipartFile uploadFile) throws IOException, InterruptedException {
+	public static FileResultDTO fileTempSave(final MultipartFile uploadFile) throws IOException {		
+		log.info("FileUtil.fileTempSave");
 		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder());
 	}
 
@@ -375,6 +391,7 @@ public class FileUtil {
 	 * @Description
 	 */
 	public static void deleteTemp() {
+		log.info("FileUtil.deleteTemp");
 		final File tempFile = new File(root+File.separator+ ServiceCode.FileFolderEnumCode.TEMP.getFolder());
 		final File[] files = tempFile.listFiles();
 
@@ -395,7 +412,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * File download
+	 * 파일 다운로드
 	 *
 	 * @param filePath the file path
 	 * @return the single result
@@ -404,6 +421,7 @@ public class FileUtil {
 	 * @Description
 	 */
 	public static ResponseEntity<Resource> fileDownload(final String filePath) {
+		log.info("FileUtil.fileDownload");
 		final Path path = Paths.get(filePath);
 
 		final HttpHeaders headers = new HttpHeaders();
@@ -431,9 +449,8 @@ public class FileUtil {
 	 * @CreatedOn 2020. 7. 28. 오후 2:19:30
 	 */
 	public static ResponseEntity<Resource> s3FileDownload(String path, String fileName) throws IOException {
-
+		log.info("FileUtil.s3FileDownload");
 		S3ObjectInputStream s3ObjectInputStream = S3Util.getFile(path);
-
 		final HttpHeaders headers = new HttpHeaders();
 		Resource resource = new ByteArrayResource(IOUtils.toByteArray(s3ObjectInputStream));
 		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
@@ -451,7 +468,7 @@ public class FileUtil {
 	 * @Description
 	 */
 	private static void exhaustInputStream(final InputStream is) {
-
+		log.info("FileUtil.exhaustInputStream");
 		// InputStream.read() 에서 블럭상태에 빠지기 때문에 따로 쓰레드를 돌려서 스트림을 소비한다.
 		new Thread(() -> {
 			try{

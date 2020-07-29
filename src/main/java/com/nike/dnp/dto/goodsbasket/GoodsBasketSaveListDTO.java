@@ -21,7 +21,7 @@ import java.util.List;
 public class GoodsBasketSaveListDTO extends BasicDTO {
 
 	/**
-	 * The User seq
+	 * 유저 시퀀스
 	 *
 	 * @author [오지훈]
 	 */
@@ -29,7 +29,7 @@ public class GoodsBasketSaveListDTO extends BasicDTO {
 	private Long userSeq;
 
 	/**
-	 * The Goods seq list
+	 * 상품 시퀀스 리스트
 	 *
 	 * @author [오지훈]
 	 */
@@ -38,7 +38,7 @@ public class GoodsBasketSaveListDTO extends BasicDTO {
 	private List<Long> goodsSeqList;
 
 	/**
-	 * The Order quantity list
+	 * 상품 수량 리스트
 	 *
 	 * @author [오지훈]
 	 */

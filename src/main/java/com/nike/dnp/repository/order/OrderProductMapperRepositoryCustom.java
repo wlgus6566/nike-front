@@ -16,9 +16,10 @@ import java.util.List;
  * @Description
  */
 public interface OrderProductMapperRepositoryCustom {
+
 	/**
-	 * Find search email value list.
 	 *
+	 * 이메일 정보 조회
 	 * @param orderSeq the order seq
 	 * @return the list
 	 * @author [윤태호]
@@ -28,7 +29,7 @@ public interface OrderProductMapperRepositoryCustom {
 	List<OrderProductResultDTO> findSearchEmailValue(final Long orderSeq);
 
 	/**
-	 * Find pages order page.
+	 * 주문 페이지 리스트 조회
 	 *
 	 * @param orderSearchDTO the order search dto
 	 * @param pageRequest    the page request

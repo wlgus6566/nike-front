@@ -20,7 +20,7 @@ import java.util.List;
 public class FileUploadDTO {
 
 	/**
-	 * The Upload file
+	 * 멀티 파트 파일
 	 *
 	 * @author [오지훈]
 	 */
@@ -28,7 +28,7 @@ public class FileUploadDTO {
 	private MultipartFile uploadFile;
 
 	/**
-	 * The Upload file list
+	 * 멀티 파트 파일 리스트
 	 *
 	 * @author [오지훈]
 	 */

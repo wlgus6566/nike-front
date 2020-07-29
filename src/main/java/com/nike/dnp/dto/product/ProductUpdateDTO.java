@@ -138,7 +138,7 @@ public class ProductUpdateDTO extends BasicDTO {
 
 
 	/**
-	 * The Image base 64
+	 * 이미지 문자열
 	 *
 	 * @author [오지훈]
 	 */

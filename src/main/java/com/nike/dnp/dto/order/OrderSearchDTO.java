@@ -18,7 +18,7 @@ import lombok.*;
 public class OrderSearchDTO extends SearchDTO {
 
 	/**
-	 * The Begin dt
+	 * 검색 시작날짜
 	 *
 	 * @author [윤태호]
 	 */
@@ -26,7 +26,7 @@ public class OrderSearchDTO extends SearchDTO {
 	private String beginDt;
 
 	/**
-	 * The End dt
+	 * 검색 종료 날짜
 	 *
 	 * @author [윤태호]
 	 */

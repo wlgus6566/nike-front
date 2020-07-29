@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 public class WishListSaveDTO {
 
 	/**
-	 * The Goods seq
+	 * 상품 시퀀스
 	 *
 	 * @author [윤태호]
 	 */

@@ -30,7 +30,7 @@ public class OrderService {
 	private final OrderRepository orderRepository;
 
 	/**
-	 * Save order order.
+	 * 주문 저장
 	 *
 	 * @param orderProductSaveDTO the order product save dto
 	 * @return the order
@@ -40,6 +40,7 @@ public class OrderService {
 	 */
 	@Transactional
 	public Order saveOrder(final OrderProductSaveDTO orderProductSaveDTO) {
+		log.info("OrderService.saveOrder");
 		final Order order = new Order();
 		order.setOrderDescription(orderProductSaveDTO.getOrderDescription());
 		order.setTotalAmount(orderProductSaveDTO.getTotalAmount());

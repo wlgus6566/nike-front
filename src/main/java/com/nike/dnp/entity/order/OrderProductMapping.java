@@ -26,7 +26,7 @@ public class OrderProductMapping extends BaseTimeEntity {
 
 
     /**
-     * The Order goods seq
+     * 주문 상품 시퀀스
      *
      * @author [윤태호]
      */
@@ -38,15 +38,16 @@ public class OrderProductMapping extends BaseTimeEntity {
 
 
     /**
-     * The Order seq
+     * 주문 시퀀스
      *
      * @author [윤태호]
      */
     @Column(name = "ORDER_SEQ")
     @ApiModelProperty(name = "orderSeq", value = "주문 시퀀스")
     private Long orderSeq;
+
     /**
-     * The Goods seq
+     * 상품 시퀀스
      *
      * @author [윤태호]
      */
@@ -56,7 +57,7 @@ public class OrderProductMapping extends BaseTimeEntity {
 
 
     /**
-     * The Order quantity
+     * 주문 수량
      *
      * @author [윤태호]
      */
@@ -66,7 +67,7 @@ public class OrderProductMapping extends BaseTimeEntity {
 
 
     /**
-     * The Product
+     * 제품 정보
      *
      * @author [윤태호]
      */
@@ -76,7 +77,7 @@ public class OrderProductMapping extends BaseTimeEntity {
     private Product product;
 
     /**
-     * The Order
+     * 주문 정보
      *
      * @author [윤태호]
      */

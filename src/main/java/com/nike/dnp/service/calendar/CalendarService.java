@@ -57,6 +57,7 @@ public class CalendarService {
      * @Description
      */
     public Optional<Calendar> findById(final Long calendarSeq) {
+        log.info("CalendarService.findById");
         return calendarRepository.findById(calendarSeq);
     }
 
@@ -70,7 +71,7 @@ public class CalendarService {
      * @Description
      */
     public Calendar save(final CalendarSaveDTO calendarSaveDTO){
-
+        log.info("CalendarService.save");   
         ModelMapper modelMapper = new ModelMapper();
         Calendar calendar   = modelMapper.map(calendarSaveDTO, Calendar.class);
 
@@ -95,6 +96,7 @@ public class CalendarService {
      * @Description
      */
     public List<Calendar> findAll(final CalendarSearchDTO calendarSearchDTO) {
+        log.info("CalendarService.findAll");
         //월의 마지막 날짜 구하기
         YearMonth targetYearMonth = YearMonth.from(LocalDate.parse(calendarSearchDTO.getYyyyMm()+".01", DateTimeFormatter.ofPattern("yyyy.MM.dd")));
 
@@ -118,6 +120,7 @@ public class CalendarService {
      */
     @Transactional
     public Calendar update(final CalendarUpdateDTO calendarUpdateDTO) {
+        log.info("CalendarService.update");
         Optional<Calendar> calendarEntity = calendarRepository.findById(calendarUpdateDTO.getCalendarSeq());
 
         if(calendarEntity.isPresent()){
@@ -154,12 +157,13 @@ public class CalendarService {
      */
     @Transactional
     public Long delete(final Long calendarSeq) {
+        log.info("CalendarService.delete");
         calendarRepository.deleteById(calendarSeq);
         return calendarSeq;
     }
 
     /**
-     * Find all day list.
+     * calendar 날짜 조회
      *
      * @param calendarDaySearchDTO the calendar day search dto
      * @return the list
@@ -168,6 +172,7 @@ public class CalendarService {
      * @Description
      */
     public List<Calendar> findAllToday(final CalendarDaySearchDTO calendarDaySearchDTO) {
+        log.info("CalendarService.findAllToday");
         LocalDateTime searchDt = LocalDateTime.now();
         if(!ObjectUtils.isEmpty(calendarDaySearchDTO.getSearchDt())){
             searchDt = LocalDateTime.of(

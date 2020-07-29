@@ -18,7 +18,7 @@ public class WishListPredicateHelper {
 
 
 	/**
-	 * eq userSeq
+	 * 유저 시퀀스 조건
 	 *
 	 * @param userSeq the user seq
 	 * @return the predicate

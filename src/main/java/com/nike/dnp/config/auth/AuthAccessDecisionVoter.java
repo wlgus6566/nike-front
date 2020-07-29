@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * The type Auth access decision voter.
+ * 시큐리티 권한 체크
  *
  * @author [윤태호]
  * @CreatedOn 2020. 7. 14. 오후 5:54:43

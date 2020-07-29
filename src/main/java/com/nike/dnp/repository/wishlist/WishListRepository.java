@@ -19,7 +19,7 @@ public interface WishListRepository extends JpaRepository<WishList, Long> ,WishL
 
 
 	/**
-	 * Find by wish list seq and user seq optional.
+	 * 위시 리스트 시퀀스 와 유저 시퀀스 로 위시 리스트 조회
 	 *
 	 * @param wishListSeq the wish list seq
 	 * @param userSeq     the user seq
@@ -32,7 +32,7 @@ public interface WishListRepository extends JpaRepository<WishList, Long> ,WishL
 
 
 	/**
-	 * Find by registration dt before list.
+	 * 검색일 전 조회
 	 *
 	 * @param searchDt the search dt
 	 * @return the list

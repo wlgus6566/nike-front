@@ -20,8 +20,9 @@ import java.time.format.DateTimeFormatter;
  */
 @UtilityClass
 public class OrderProductMappingPredicateHelper {
+
 	/**
-	 * After start dt predicate.
+	 * where 시작 날짜 이후
 	 *
 	 * @param beginDt the begin dt
 	 * @return the predicate
@@ -42,7 +43,7 @@ public class OrderProductMappingPredicateHelper {
 	}
 
 	/**
-	 * Before end dt predicate.
+	 * 종료 날짜 이전
 	 *
 	 * @param endDt the end dt
 	 * @return the predicate

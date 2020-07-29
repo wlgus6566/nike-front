@@ -37,7 +37,7 @@ public class WishListRepositoryImpl  extends QuerydslRepositorySupport implement
 	}
 
 	/**
-	 * Find pages wish list page.
+	 * 위시리스트 페이징
 	 *
 	 * @param wishListSearchDTO the wish list search dto
 	 * @param pageRequest       the page request
@@ -49,6 +49,7 @@ public class WishListRepositoryImpl  extends QuerydslRepositorySupport implement
 	@Override
 	public Page<WishList> findPagesWishList(final WishListSearchDTO wishListSearchDTO,
 						 					final PageRequest pageRequest) {
+		log.info("WishListRepositoryImpl.findPagesWishList");
 		final QWishList wishList = QWishList.wishList;
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 

@@ -27,7 +27,7 @@ import javax.validation.Valid;
 
 
 /**
- * WishListController
+ * 위시리스트 Controller
  *
  * @author [윤태호]
  * @CreatedOn 2020. 7. 3. 오후 3:38:34
@@ -73,7 +73,8 @@ public class WishListController {
 	/**
 	 * 위시리스트 등록
 	 *
-	 * @param goodsSeq the goods seq
+	 * @param wishListSaveDTO the wish list save dto
+	 * @param result          the result
 	 * @return the single result
 	 * @author [윤태호]
 	 * @CreatedOn 2020. 7. 3. 오후 3:38:34
@@ -84,6 +85,7 @@ public class WishListController {
 	@ValidField
 	public SingleResult<WishListResultDTO> saveWishList(@Valid @ModelAttribute final WishListSaveDTO wishListSaveDTO,
 														@ApiIgnore final BindingResult result) {
+		log.info("WishListController.saveWishList");
 		return responseService.getSingleResult(WishListResultDTO.ofSave(wishListService.save(wishListSaveDTO.getGoodsSeq())));
 	}
 
@@ -102,12 +104,13 @@ public class WishListController {
 	@GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<Page<WishList>> findByPagesWishList(@ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO,
 															final WishListSearchDTO wishListSearchDTO) {
+		log.info("WishListController.findByPagesWishList");
 		wishListSearchDTO.setUserSeq(authUserDTO.getUserSeq());
 		return responseService.getSingleResult(wishListService.findPagesWishList(wishListSearchDTO));
 	}
 
 	/**
-	 * Delete wish list common result.
+	 * 위시 리스트 삭제
 	 *
 	 * @param wishListSeq the wish list seq
 	 * @return the common result
@@ -118,13 +121,14 @@ public class WishListController {
 	@ApiOperation(value = "위시리스트 삭제", notes = BASIC_CHARACTER)
 	@DeleteMapping(value = "/delete/{wishListSeq}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public CommonResult deleteWishList(@ApiParam(name = "wishListSeq", value = "위시리스트 시퀀스", defaultValue = "20") @PathVariable final Long wishListSeq) {
+		log.info("WishListController.deleteWishList");
 		wishListService.delete(wishListSeq);
 		return responseService.getSuccessResult();
 	}
 
 
 	/**
-	 * Delete wish list list common result.
+	 * 위시 리스트 다건 삭제
 	 *
 	 * @param wishListDeleteDTO the wish list delete dto
 	 * @return the common result
@@ -136,6 +140,7 @@ public class WishListController {
 	@DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ValidField
 	public CommonResult deleteWishListList(@RequestBody @Valid final WishListDeleteDTO wishListDeleteDTO, @ApiIgnore final BindingResult result) {
+		log.info("WishListController.deleteWishListList");
 		wishListService.deleteList(wishListDeleteDTO);
 		return responseService.getSuccessResult();
 	}

@@ -3,6 +3,7 @@ package com.nike.dnp.util;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ import java.io.IOException;
  * @Description
  */
 @Component
+@Slf4j
 public class ImageUtil {
 
 	/**
@@ -59,8 +61,7 @@ public class ImageUtil {
 	 * @Description
 	 */
 	public static FileResultDTO fileSaveForBase64(final String folder, final String base64Str) {
-
-
+		log.info("ImageUtil.fileSaveForBase64");
 		final String info = base64Str.split(",")[0];
 		if(!info.contains("image")){
 			throw new CodeMessageHandleException(

@@ -36,7 +36,7 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 	private final ResponseService responseService;
 
 	/**
-	 * On authentication failure.
+	 * 로그인 실패 처리
 	 *
 	 * @param request   the request
 	 * @param response  the response
