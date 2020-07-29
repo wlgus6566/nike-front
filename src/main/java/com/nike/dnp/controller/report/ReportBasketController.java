@@ -23,8 +23,8 @@ import java.util.List;
  * The Class Report controller.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 7. 오후 2:37:43
- * @Description
+ * @since 2020. 7. 7. 오후 2:37:43
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -71,8 +71,8 @@ public class ReportBasketController {
      * @param authUserDTO   the auth user dto
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 17. 오후 7:07:33
-     * @Description
+     * @since 2020. 7. 17. 오후 7:07:33
+     * @apiNote
      */
     @ApiOperation(
             value = "Report 장바구니 등록"
@@ -94,8 +94,8 @@ public class ReportBasketController {
      * @param reportBasketSeq the report basket seq
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 17. 오후 7:07:35
-     * @Description
+     * @since 2020. 7. 17. 오후 7:07:35
+     * @apiNote
      */
     @ApiOperation(value="Report 장바구니 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "Report 장바구니 삭제", value = "/{reportBasketSeq}"

@@ -8,8 +8,8 @@ import lombok.*;
  * The Class Calendar day search dto.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 22. 오후 4:16:45
- * @Description
+ * @since 2020. 7. 22. 오후 4:16:45
+ * @implNote
  */
 @Getter
 @Setter
@@ -18,7 +18,7 @@ import lombok.*;
 public class CalendarDaySearchDTO extends BasicDTO {
 
 	/**
-	 * The Search dt
+	 * 조회 년월일
 	 *
 	 * @author [윤태호]
 	 */

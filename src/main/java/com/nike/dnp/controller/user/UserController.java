@@ -25,8 +25,8 @@ import java.util.List;
  * The Class User controller.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 22. 오후 4:41:44
- * @Description
+ * @since 2020. 6. 22. 오후 4:41:44
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -63,8 +63,8 @@ public class UserController {
      * @param userSearchDTO the user search dto
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 3:37:10
-     * @Description 유저 목록 조회
+     * @since 2020. 6. 23. 오후 3:37:10
+     * @apiNote 유저 목록 조회
      */
     @ApiOperation(value = "유저 목록 조회"
             , notes = "## Reqeust ##\n"
@@ -92,8 +92,8 @@ public class UserController {
      * @param userSeq the user seq
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 5:19:29
-     * @Description 유저 상세 조회
+     * @since 2020. 6. 23. 오후 5:19:29
+     * @apiNote 유저 상세 조회
      */
     @ApiOperation(value = "유저 상세 조회"
             , notes = OPERATION_CHARACTER)
@@ -111,8 +111,8 @@ public class UserController {
      * @param userSaveDTO the user save dto
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 5:33:44
-     * @Description 유저 등록
+     * @since 2020. 6. 23. 오후 5:33:44
+     * @apiNote 유저 등록
      */
     @ApiOperation(value = "유저 등록"
             , notes = OPERATION_CHARACTER)
@@ -139,8 +139,8 @@ public class UserController {
      * @param userUpdateDTO the user update dto
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 5:31:41
-     * @Description 유저 상세 수정
+     * @since 2020. 6. 23. 오후 5:31:41
+     * @apiNote 유저 상세 수정
      */
     @ApiOperation(value = "유저 상세 수정" + "\n"
             , notes = OPERATION_CHARACTER)
@@ -162,8 +162,8 @@ public class UserController {
      * @param userSeq the user seq
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 5:47:53
-     * @Description 유저 단건 삭제
+     * @since 2020. 6. 23. 오후 5:47:53
+     * @apiNote 유저 단건 삭제
      */
     @ApiOperation(value = "유저 단건 삭제" + "\n"
             , notes = OPERATION_CHARACTER)
@@ -184,8 +184,8 @@ public class UserController {
      * @param userDeleteDTO the user delete dto
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 6:01:16
-     * @Description 유저 배열 삭제
+     * @since 2020. 6. 23. 오후 6:01:16
+     * @apiNote 유저 배열 삭제
      */
     @ApiOperation(value = "유저 배열 삭제"
             , notes = OPERATION_CHARACTER)
@@ -208,8 +208,8 @@ public class UserController {
      * @param userIdDTO the user id dto
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 1. 오후 2:13:24
-     * @Description ID 중복 체크
+     * @since 2020. 7. 1. 오후 2:13:24
+     * @apiNote ID 중복 체크
      */
     @ApiOperation(value = "ID 중복 체크"
             , notes = OPERATION_CHARACTER)

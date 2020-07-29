@@ -12,8 +12,8 @@ import javax.persistence.*;
  * The Class Report answer.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 10. 오전 11:05:42
- * @Description
+ * @since 2020. 7. 10. 오전 11:05:42
+ * @implNote
  */
 @Slf4j
 @Getter
@@ -74,8 +74,8 @@ public class ReportAnswer extends BaseTimeEntity {
      * @param reportAnswerSaveDTO the report answer save dto
      * @return the report answer
      * @author [이소정]
-     * @CreatedOn 2020. 7. 10. 오전 11:20:05
-     * @Description
+     * @since 2020. 7. 10. 오전 11:20:05
+     * @implNote
      */
     public ReportAnswer save(final ReportAnswerSaveDTO reportAnswerSaveDTO) {
         log.info("ReportAnswer.save");
@@ -91,8 +91,8 @@ public class ReportAnswer extends BaseTimeEntity {
      *
      * @param useYn the use yn
      * @author [이소정]
-     * @CreatedOn 2020. 7. 10. 오후 5:47:03
-     * @Description
+     * @since 2020. 7. 10. 오후 5:47:03
+     * @implNote
      */
     public void updateUseYn(final String useYn) {
         log.info("ReportAnswer.updateUseYn");

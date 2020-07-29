@@ -7,8 +7,8 @@ import lombok.*;
  * UserUpdateStatusDTO
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:09:35
- * @Description User(유저) Update Status DTO 작성
+ * @since 2020. 6. 24. 오후 6:09:35
+ * @implNote User(유저) Update Status DTO 작성
  */
 @Getter
 @Setter

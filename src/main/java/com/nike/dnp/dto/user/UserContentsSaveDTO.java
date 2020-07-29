@@ -14,8 +14,8 @@ import java.util.List;
  * UserContentsSaveDTO
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 22. 오후 12:14:01
- * @Description UserContents(유저 컨텐츠 권한) Save DTO 작성
+ * @since 2020. 6. 22. 오후 12:14:01
+ * @implNote UserContents(유저 컨텐츠 권한) Save DTO 작성
  */
 @Getter
 @Setter
@@ -38,8 +38,8 @@ public class UserContentsSaveDTO {
      * The Class Auth check.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오후 12:23:51
-     * @Description 권한 체크 DTO
+     * @since 2020. 7. 20. 오후 12:23:51
+     * @implNote 권한 체크 DTO
      */
     @Getter
     @Setter

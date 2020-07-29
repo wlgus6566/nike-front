@@ -17,8 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
  * The Class Contents file service.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 13. 오후 5:42:58
- * @Description
+ * @since 2020. 7. 13. 오후 5:42:58
+ * @implNote
  */
 @Slf4j
 @Service
@@ -39,8 +39,8 @@ public class ContentsFileService {
      * @param contentsFileSearchDTO the contents file search dto
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 13. 오후 6:01:00
-     * @Description
+     * @since 2020. 7. 13. 오후 6:01:00
+     * @implNote
      */
     public Page<ContentsFileResultDTO> findAllContentsFilePaging(final ContentsFileSearchDTO contentsFileSearchDTO) {
 

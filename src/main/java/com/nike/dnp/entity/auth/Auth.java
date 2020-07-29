@@ -16,8 +16,8 @@ import java.util.List;
  * Auth Entity
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 3:41:36
- * @Description Auth(권한) Entity 작성
+ * @since 2020. 6. 24. 오후 3:41:36
+ * @implNote Auth(권한) Entity 작성
  */
 @Getter
 @Setter
@@ -102,8 +102,8 @@ public class Auth extends BaseTimeEntity implements Serializable {
      *
      * @param authSaveDTO the auth save dto
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 4:35:39
-     * @Description 그룹(권한) 생성
+     * @since 2020. 6. 24. 오후 4:35:39
+     * @implNote 그룹(권한) 생성
      */
     @Builder
     public Auth (final AuthSaveDTO authSaveDTO) {
@@ -120,8 +120,8 @@ public class Auth extends BaseTimeEntity implements Serializable {
      *
      * @param authUpdateDTO the auth update dto
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 3:41:36
-     * @Description 그룹(권한) 정보 수정
+     * @since 2020. 6. 24. 오후 3:41:36
+     * @implNote 그룹(권한) 정보 수정
      */
     public void update(final AuthUpdateDTO authUpdateDTO) {
         this.authName = authUpdateDTO.getAuthName();
@@ -131,8 +131,8 @@ public class Auth extends BaseTimeEntity implements Serializable {
      * Delete.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 4:35:37
-     * @Description 그룹(권한) 삭제
+     * @since 2020. 6. 24. 오후 4:35:37
+     * @implNote 그룹(권한) 삭제
      */
     public void delete() {
         this.useYn = "N";

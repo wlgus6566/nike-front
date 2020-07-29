@@ -10,8 +10,8 @@ import java.util.List;
  * The Class File upload dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 21. 오후 3:54:36
- * @Description
+ * @since 2020. 7. 21. 오후 3:54:36
+ * @implNote
  */
 @Getter
 @Setter
@@ -20,7 +20,7 @@ import java.util.List;
 public class FileUploadDTO {
 
 	/**
-	 * The Upload file
+	 * 멀티 파트 파일
 	 *
 	 * @author [오지훈]
 	 */
@@ -28,7 +28,7 @@ public class FileUploadDTO {
 	private MultipartFile uploadFile;
 
 	/**
-	 * The Upload file list
+	 * 멀티 파트 파일 리스트
 	 *
 	 * @author [오지훈]
 	 */

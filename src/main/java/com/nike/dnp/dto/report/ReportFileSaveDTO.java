@@ -7,8 +7,8 @@ import lombok.*;
  * The Class Report file save dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 10. 오전 11:10:48
- * @Description
+ * @since 2020. 7. 10. 오전 11:10:48
+ * @implNote
  */
 @Getter
 @Setter

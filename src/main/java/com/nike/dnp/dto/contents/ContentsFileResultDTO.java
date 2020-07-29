@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
  * The Class Contents list dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 13. 오후 2:52:03
- * @Description
+ * @since 2020. 7. 13. 오후 2:52:03
+ * @implNote
  */
 @Getter
 @Setter

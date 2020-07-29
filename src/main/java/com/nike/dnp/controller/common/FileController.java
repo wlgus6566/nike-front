@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,11 +29,10 @@ import java.util.List;
 
 
 /**
- * The Class File controller.
+ * 파일컨트롤러
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 28. 오전 11:08:35
- * @Description
+ * @since 2020. 7. 28. 오전 11:08:35
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -55,66 +55,62 @@ public class FileController {
 	private static final String BASIC_CHARACTER = "## Request ## \n" + "[하위 Parameters 참조] \n" + "## Request ## \n" + "[하위 Model 참조]\n\n";
 
 	/**
-	 * Download response entity.
+	 * 파일 다운로드 테스트
 	 *
 	 * @return the response entity
+	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 28. 오전 11:08:35
-	 * @Description
+	 * @since 2020. 7. 28. 오전 11:08:35
 	 */
-	@ApiOperation(value = "파일 다운로드", notes = BASIC_CHARACTER)
+	@ApiIgnore
 	@GetMapping("/api/download")
 	public ResponseEntity<Resource> download() throws IOException {
+		log.info("FileController.download");
 		return FileUtil.s3FileDownload("/test/20200728897000dVPDUIzevI.pptx", "test.pptx");
 	}
 
 	/**
-	 * Upload single result.
+	 * 단일 파일 업로드
 	 *
 	 * @param fileUploadDTO the file upload dto
 	 * @param uploadFile    the upload file
 	 * @return the single result
+	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 28. 오전 11:08:35
-	 * @Description
+	 * @since 2020. 7. 28. 오전 11:08:35
 	 */
 	@ApiOperation(value = "파일 업로드", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/api/open/upload",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public SingleResult<FileResultDTO> upload(final FileUploadDTO fileUploadDTO,
-							   @ApiParam(name = "uploadFile", value = "파일업로드") final MultipartFile uploadFile) {
-
-
+							   @ApiParam(name = "uploadFile", value = "파일업로드") final MultipartFile uploadFile) throws IOException {
+		log.info("FileController.upload");
 		final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO);
-
-		String path = S3Util.upload(fileResultDTO);
-		S3Util.fileCopy(fileResultDTO.getFilePhysicalName(), "test");
+		String upload = S3Util.upload(fileResultDTO);
 		return responseService.getSingleResult(fileResultDTO);
+
 	}
 
 
 	/**
-	 * Upload list single result.
+	 * 리스트 파일 업로드
 	 *
 	 * @param fileUploadDTO  the file upload dto
 	 * @param uploadFileList the upload file list
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 28. 오전 11:08:35
-	 * @Description
+	 * @since 2020. 7. 28. 오전 11:08:35
 	 */
 	@ApiOperation(value = "파일 업로드 리스트", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/api/open/uploadList", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public SingleResult<List<FileResultDTO>> uploadList(final FileUploadDTO fileUploadDTO, @ApiParam(name = "uploadFileList", value = "파일업로드") final List<MultipartFile> uploadFileList) {
-
+		log.info("FileController.uploadList");
 		final List<FileResultDTO> resultList = new ArrayList<>();
 
-
 		fileUploadDTO.getUploadFileList().forEach(multipartFile -> {
-			FileUploadDTO fileParam = new FileUploadDTO();
+			final FileUploadDTO fileParam = new FileUploadDTO();
 			fileParam.setUploadFile(multipartFile);
 			final FileResultDTO fileResultDTO = fileUpload(fileParam);
-			String path = S3Util.upload(fileResultDTO);
-			S3Util.fileCopy(fileResultDTO.getFilePhysicalName(),"test");
+			S3Util.upload(fileResultDTO);
 			resultList.add(fileResultDTO);
 		});
 
@@ -122,20 +118,20 @@ public class FileController {
 	}
 
 	/**
-	 * File upload file result dto.
+	 * 파일 업로드
 	 *
 	 * @param fileUploadDTO the file upload dto
 	 * @return the file result dto
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 28. 오전 11:08:35
-	 * @Description
+	 * @since 2020. 7. 28. 오전 11:08:35
 	 */
 	private FileResultDTO fileUpload(final FileUploadDTO fileUploadDTO) {
+		log.info("FileController.fileUpload");
 		FileResultDTO fileResultDTO = null;
 		try{
 			fileResultDTO = FileUtil.fileTempSaveAndImageResize(fileUploadDTO.getUploadFile());
 			//fileResultDTO = FileUtil.fileSave(fileUploadDTO.getUploadFile(),"temp");
-		}catch(InterruptedException | IOException e){
+		}catch(IOException e){
 			// 리사이즈 문제
 			throw (CodeMessageHandleException)new CodeMessageHandleException(
 					FailCode.ConfigureError.INVALID_FILE.name()

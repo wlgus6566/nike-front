@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
  * The Class Order product result dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 21. 오후 3:54:59
- * @Description
+ * @since 2020. 7. 21. 오후 3:54:59
+ * @implNote
  */
 @Getter
 @Setter
@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 public class OrderProductResultDTO {
 
 	/**
-	 * The Order seq
+	 * 주문 상품 시퀀스
 	 *
 	 * @author [오지훈]
 	 */
@@ -32,7 +32,7 @@ public class OrderProductResultDTO {
 	private Long orderSeq;
 
 	/**
-	 * The Registration dt
+	 * 등록일
 	 *
 	 * @author [오지훈]
 	 */
@@ -43,7 +43,7 @@ public class OrderProductResultDTO {
 	private LocalDateTime registrationDt;
 
 	/**
-	 * The Order quantity
+	 * 주문 상품 시퀀스
 	 *
 	 * @author [오지훈]
 	 */
@@ -51,7 +51,7 @@ public class OrderProductResultDTO {
 	private Long orderQuantity;
 
 	/**
-	 * The Goods name
+	 * 상품명
 	 *
 	 * @author [오지훈]
 	 */
@@ -59,7 +59,7 @@ public class OrderProductResultDTO {
 	private String goodsName;
 
 	/**
-	 * The Goods description
+	 * 상품 설명
 	 *
 	 * @author [오지훈]
 	 */
@@ -67,7 +67,7 @@ public class OrderProductResultDTO {
 	private String goodsDescription;
 
 	/**
-	 * The Agency name
+	 * 에이젼시 이름
 	 *
 	 * @author [오지훈]
 	 */
@@ -75,7 +75,7 @@ public class OrderProductResultDTO {
 	private String agencyName;
 
 	/**
-	 * The Agency seq
+	 * 에이젼시 시퀀스
 	 *
 	 * @author [오지훈]
 	 */
@@ -83,7 +83,7 @@ public class OrderProductResultDTO {
 	private long agencySeq;
 
 	/**
-	 * The Email
+	 * 이메일
 	 *
 	 * @author [오지훈]
 	 */
@@ -91,7 +91,7 @@ public class OrderProductResultDTO {
 	private String email;
 
 	/**
-	 * The Order description
+	 * 주문 코멘트
 	 *
 	 * @author [오지훈]
 	 */

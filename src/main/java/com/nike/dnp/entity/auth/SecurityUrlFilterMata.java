@@ -11,7 +11,7 @@ import java.io.Serializable;
  * SecurityFilterMata Entity
  *
  * @author [윤태호]
- * @Description SecurityFilterMata Entity 작성
+ * @implNote SecurityFilterMata Entity 작성
  * @history [윤태호] [2020.06.11] [최초 작성]
  * @since 2020.06.11
  */

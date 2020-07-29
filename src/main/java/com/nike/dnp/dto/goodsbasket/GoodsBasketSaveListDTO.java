@@ -11,8 +11,8 @@ import java.util.List;
  * The Class Goods basket save list dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 21. 오후 3:54:50
- * @Description
+ * @since 2020. 7. 21. 오후 3:54:50
+ * @implNote
  */
 @Getter
 @Setter
@@ -21,7 +21,7 @@ import java.util.List;
 public class GoodsBasketSaveListDTO extends BasicDTO {
 
 	/**
-	 * The User seq
+	 * 유저 시퀀스
 	 *
 	 * @author [오지훈]
 	 */
@@ -29,7 +29,7 @@ public class GoodsBasketSaveListDTO extends BasicDTO {
 	private Long userSeq;
 
 	/**
-	 * The Goods seq list
+	 * 상품 시퀀스 리스트
 	 *
 	 * @author [오지훈]
 	 */
@@ -38,7 +38,7 @@ public class GoodsBasketSaveListDTO extends BasicDTO {
 	private List<Long> goodsSeqList;
 
 	/**
-	 * The Order quantity list
+	 * 상품 수량 리스트
 	 *
 	 * @author [오지훈]
 	 */

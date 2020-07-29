@@ -21,8 +21,8 @@ import java.util.List;
  * The Class Recent upload repository.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 27. 오후 2:11:58
- * @Description
+ * @since 2020. 7. 27. 오후 2:11:58
+ * @implNote
  */
 @Repository
 public class RecentUploadRepositoryImpl extends QuerydslRepositorySupport implements RecentUploadRepositoryCustom {
@@ -31,8 +31,8 @@ public class RecentUploadRepositoryImpl extends QuerydslRepositorySupport implem
      * Instantiates a new Recent upload repository.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 7. 27. 오후 2:11:55
-     * @Description
+     * @since 2020. 7. 27. 오후 2:11:55
+     * @implNote
      */
     public RecentUploadRepositoryImpl() {
         super(RecentUpload.class);

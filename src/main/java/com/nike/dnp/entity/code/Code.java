@@ -12,8 +12,8 @@ import java.io.Serializable;
  * Code Entity
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:09:56
- * @Description Code(공통 코드) Entity 작성
+ * @since 2020. 6. 24. 오후 6:09:56
+ * @implNote Code(공통 코드) Entity 작성
  */
 @Getter
 @Setter
@@ -97,8 +97,8 @@ public class Code extends BaseTimeEntity implements Serializable {
      * @param codeOrder       the code order
      * @param upperCode       the upper code
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:09:56
-     * @Description 하위 Update.
+     * @since 2020. 6. 24. 오후 6:09:56
+     * @implNote 하위 Update.
      */
     public void update(
             final String codeName
@@ -119,8 +119,8 @@ public class Code extends BaseTimeEntity implements Serializable {
      * @param codeDescription the code description
      * @param codeOrder       the code order
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:09:56
-     * @Description 상위 Update.
+     * @since 2020. 6. 24. 오후 6:09:56
+     * @implNote 상위 Update.
      */
     public void update(
             final String codeName
@@ -137,8 +137,8 @@ public class Code extends BaseTimeEntity implements Serializable {
      *
      * @param useYn the use yn
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:09:56
-     * @Description
+     * @since 2020. 6. 24. 오후 6:09:56
+     * @implNote
      */
     public void delete(final String useYn) {
         this.useYn = useYn;

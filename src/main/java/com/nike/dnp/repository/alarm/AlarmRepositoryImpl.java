@@ -18,8 +18,8 @@ import java.util.List;
  * The Class Alarm repository.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 24. 오후 7:53:49
- * @Description
+ * @since 2020. 7. 24. 오후 7:53:49
+ * @implNote
  */
 @Repository
 public class AlarmRepositoryImpl extends QuerydslRepositorySupport implements AlarmRepositoryCustom{
@@ -28,8 +28,8 @@ public class AlarmRepositoryImpl extends QuerydslRepositorySupport implements Al
      * Instantiates a new Alarm repository.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 7. 24. 오후 7:53:51
-     * @Description
+     * @since 2020. 7. 24. 오후 7:53:51
+     * @implNote
      */
     public AlarmRepositoryImpl() {
         super(Alarm.class);
@@ -43,8 +43,8 @@ public class AlarmRepositoryImpl extends QuerydslRepositorySupport implements Al
      * @param pageRequest the page request
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 24. 오후 7:56:25
-     * @Description
+     * @since 2020. 7. 24. 오후 7:56:25
+     * @implNote
      */
     @Override
     public Page<AlarmResultDTO> findAllPaging(Long userSeq, PageRequest pageRequest) {

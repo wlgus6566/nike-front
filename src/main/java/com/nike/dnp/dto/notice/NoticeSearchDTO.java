@@ -11,8 +11,8 @@ import lombok.Setter;
  * The Class Notice search dto.
  *
  * @author [정주희]
- * @CreatedOn 2020. 7. 13. 오후 7:30:20
- * @Description Customer Center 검색 DTO
+ * @since 2020. 7. 13. 오후 7:30:20
+ * @implNote Customer Center 검색 DTO
  */
 @Setter
 @Getter
@@ -57,8 +57,8 @@ public class NoticeSearchDTO extends SearchDTO {
      *
      * @param noticeArticleCategoryCode the notice article category code
      * @author [정주희]
-     * @CreatedOn 2020. 7. 25. 오후 6:03:48
-     * @Description FAQ -> 카테고리 명 대문자 변환
+     * @since 2020. 7. 25. 오후 6:03:48
+     * @implNote FAQ -> 카테고리 명 대문자 변환
      */
     public void setNoticeArticleCategoryCode(String noticeArticleCategoryCode) {
         this.noticeArticleCategoryCode = noticeArticleCategoryCode.toUpperCase();

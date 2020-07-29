@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  * Global Exception Handler
  *
  * @author [이소정]
- * @Description Global Exception Handler 작성
+ * @implNote Global Exception Handler 작성
  * @history [이소정] [2020.06.03] [최초 작성]
  * @since 2020.06.03
  */

@@ -24,8 +24,8 @@ import java.util.Optional;
  * The Class Notice service.
  *
  * @author [정주희]
- * @CreatedOn 2020. 7. 13. 오후 6:15:37
- * @Description
+ * @since 2020. 7. 13. 오후 6:15:37
+ * @implNote
  */
 @Slf4j
 @Service
@@ -42,8 +42,8 @@ public class NoticeService {
      * @param noticeSearchDTO the notice search dto
      * @return the page
      * @author [정주희]
-     * @CreatedOn 2020. 7. 20. 오후 10:07:02
-     * @Description Customer Center 게시글 목록 조회
+     * @since 2020. 7. 20. 오후 10:07:02
+     * @implNote Customer Center 게시글 목록 조회
      */
     public Page<NoticeArticleListDTO> findNoticePages(final NoticeSearchDTO noticeSearchDTO) {
         log.info("NoticeService.findNoticePages");
@@ -60,8 +60,8 @@ public class NoticeService {
      * @param noticeSeq the notice seq
      * @return the notice article
      * @author [정주희]
-     * @CreatedOn 2020. 7. 21. 오후 4:07:10
-     * @Description Customer Center 상세 조회
+     * @since 2020. 7. 21. 오후 4:07:10
+     * @implNote Customer Center 상세 조회
      */
     @Transactional
     public NoticeArticle findById(final Long noticeSeq) {
@@ -76,8 +76,8 @@ public class NoticeService {
      * @param noticeSaveDTO the notice save dto
      * @return the notice article
      * @author [정주희]
-     * @CreatedOn 2020. 7. 20. 오후 9:21:49
-     * @Description Customer Center 게시글 등록
+     * @since 2020. 7. 20. 오후 9:21:49
+     * @implNote Customer Center 게시글 등록
      */
     @Transactional
     public NoticeArticle save(final NoticeSaveDTO noticeSaveDTO) {
@@ -117,8 +117,8 @@ public class NoticeService {
      *
      * @return the long
      * @author [정주희]
-     * @CreatedOn 2020. 7. 20. 오후 9:21:57
-     * @Description 공지사항 등록시 상단 고정된 게시글 개수 확인
+     * @since 2020. 7. 20. 오후 9:21:57
+     * @implNote 공지사항 등록시 상단 고정된 게시글 개수 확인
      */
     public Long checkNoticeYnCnt() {
         log.info("NoticeService.checkNoticeYnCnt");
@@ -132,8 +132,8 @@ public class NoticeService {
      * @param noticeUpdateDTO the notice update dto
      * @return the notice article
      * @author [정주희]
-     * @CreatedOn 2020. 7. 23. 오후 10:11:06
-     * @Description Customer Center 게시글 수정
+     * @since 2020. 7. 23. 오후 10:11:06
+     * @implNote Customer Center 게시글 수정
      */
     @Transactional
     public NoticeArticle updateCustomerCenter(final NoticeUpdateDTO noticeUpdateDTO) {
@@ -174,8 +174,8 @@ public class NoticeService {
      * @param noticeUpdateDTO the notice update dto
      * @return the optional
      * @author [정주희]
-     * @CreatedOn 2020. 7. 20. 오후 10:06:54
-     * @Description customer center 삭제 (사용 여부 == 'N')
+     * @since 2020. 7. 20. 오후 10:06:54
+     * @implNote customer center 삭제 (사용 여부 == 'N')
      */
     @Transactional
     public NoticeArticle deleteCustomerCenter(final NoticeUpdateDTO noticeUpdateDTO) {

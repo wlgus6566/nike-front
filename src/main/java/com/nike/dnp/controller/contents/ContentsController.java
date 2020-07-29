@@ -19,14 +19,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
-import java.io.IOException;
 import java.util.Optional;
 
 /**
  * The Class Contents controller.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 13. 오전 11:52:57
+ * @since 2020. 7. 13. 오전 11:52:57
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -62,7 +62,8 @@ public class ContentsController {
      * @param contentsSearchDTO the contents search dto
      * @return all managers
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:56:03
+     * @since 2020. 6. 19. 오후 5:56:03
+     * @apiNote
      */
     @ApiOperation(
         value = "컨텐츠 목록 조회"
@@ -109,7 +110,8 @@ public class ContentsController {
      * @param contentsSaveDTO the contents save dto
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 13. 오전 11:58:47
+     * @since 2020. 7. 13. 오전 11:58:47
+     * @apiNote
      */
     @ApiOperation(
             value = "컨텐츠 등록"
@@ -143,7 +145,8 @@ public class ContentsController {
      * @param contentsSeq the contents seq
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 13. 오전 11:58:42
+     * @since 2020. 7. 13. 오전 11:58:42
+     * @apiNote
      */
     @ApiOperation(
             value = "컨텐츠 상세조회"
@@ -170,7 +173,8 @@ public class ContentsController {
      * @param contentsUpdateDTO the contents update dto
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 13. 오전 11:59:45
+     * @since 2020. 7. 13. 오전 11:59:45
+     * @apiNote
      */
     @ApiOperation(value = "컨텐츠 수정", notes = REQUEST_CHARACTER
             + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
@@ -198,7 +202,8 @@ public class ContentsController {
      * @param contentsSeq the contents seq
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 7. 오후 2:06:55
+     * @since 2020. 7. 7. 오후 2:06:55
+     * @apiNote
      */
     @ApiOperation(value="컨텐츠 삭제", notes = REQUEST_CHARACTER
             + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
@@ -222,7 +227,8 @@ public class ContentsController {
      * @param menuCode    the menu code
      * @return the string
      * @author [이소정]
-     * @CreatedOn 2020. 7. 15. 오후 6:30:45
+     * @since 2020. 7. 15. 오후 6:30:45
+     * @apiNote
      */
     @ApiOperation(value = "컨텐츠 다운로드", notes = REQUEST_CHARACTER)
     @PostMapping(name = "컨텐츠 다운로드", value = "/{topMenuCode}/{menuCode}/download/{contentsFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -240,8 +246,6 @@ public class ContentsController {
      *
      * @param contentsMailSendDTO the contents mail send dto
      * @return the common result
-     * @author [이소정]
-     * @CreatedOn 2020. 7. 28. 오후 3:53:51
      */
     @ApiOperation(value = "컨텐츠 알림메일전송", notes = REQUEST_CHARACTER)
     @PostMapping(name = "컨텐츠 알림메일전송", value = "/sendMail", produces = {MediaType.APPLICATION_JSON_VALUE})

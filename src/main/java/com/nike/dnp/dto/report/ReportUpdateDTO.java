@@ -9,8 +9,8 @@ import java.util.List;
  * The Class Report update dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 9. 오후 6:09:16
- * @Description
+ * @since 2020. 7. 9. 오후 6:09:16
+ * @implNote
  */
 @Getter
 @Setter

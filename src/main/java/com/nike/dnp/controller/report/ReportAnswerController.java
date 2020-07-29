@@ -21,8 +21,8 @@ import java.util.Optional;
  * The Class Report answer controller.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 10. 오전 11:07:25
- * @Description
+ * @since 2020. 7. 10. 오전 11:07:25
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -57,8 +57,8 @@ public class ReportAnswerController {
      * @param reportSeq the report seq
      * @return the all reports
      * @author [이소정]
-     * @CreatedOn 2020. 7. 10. 오후 6:50:40
-     * @Description
+     * @since 2020. 7. 10. 오후 6:50:40
+     * @apiNote
      */
     @ApiOperation(
             value = "보고서 댓글 목록 조회"
@@ -92,8 +92,8 @@ public class ReportAnswerController {
      * @param answerSaveDTO the answer save dto
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 10. 오후 6:39:54
-     * @Description
+     * @since 2020. 7. 10. 오후 6:39:54
+     * @apiNote
      */
     @ApiOperation(
             value = "보고서 댓글 등록"
@@ -114,8 +114,8 @@ public class ReportAnswerController {
      * @param answerSeq the answer seq
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 10. 오후 6:39:49
-     * @Description
+     * @since 2020. 7. 10. 오후 6:39:49
+     * @apiNote
      */
     @ApiOperation(value="보고서 댓글 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "보고서 댓글 삭제", value = "/{answerSeq}"

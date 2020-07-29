@@ -20,8 +20,8 @@ import java.util.List;
  * The Class Contents file repository.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 13. 오후 5:57:36
- * @Description
+ * @since 2020. 7. 13. 오후 5:57:36
+ * @implNote
  */
 @Repository
 public class ContentsFileRepositoryImpl extends QuerydslRepositorySupport implements ContentsFileRepositoryCustom {
@@ -32,8 +32,8 @@ public class ContentsFileRepositoryImpl extends QuerydslRepositorySupport implem
      * Instantiates a new Contents repository.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 6:15:29
-     * @Description
+     * @since 2020. 6. 19. 오후 6:15:29
+     * @implNote
      */
     public ContentsFileRepositoryImpl() {
         super(ContentsFile.class);
@@ -46,8 +46,8 @@ public class ContentsFileRepositoryImpl extends QuerydslRepositorySupport implem
      * @param contentsFileSearchDTO the contents file search dto
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 13. 오후 6:16:50
-     * @Description
+     * @since 2020. 7. 13. 오후 6:16:50
+     * @implNote
      */
     @Override
     public Page<ContentsFileResultDTO> findAllContentsFilePaging(final ContentsFileSearchDTO contentsFileSearchDTO, final PageRequest pageRequest) {

@@ -15,8 +15,8 @@ import javax.persistence.*;
  * The Class Report file.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 24. 오전 10:06:05
- * @Description
+ * @since 2020. 7. 24. 오전 10:06:05
+ * @implNote
  */
 @Slf4j
 @Getter
@@ -196,8 +196,8 @@ public class ReportFile extends BaseTimeEntity {
      * @param reportFileSaveDTO the report file save dto
      * @return the report file
      * @author [이소정]
-     * @CreatedOn 2020. 7. 8. 오후 5:47:08
-     * @Description
+     * @since 2020. 7. 8. 오후 5:47:08
+     * @implNote
      */
     public ReportFile save(final Long reportSeq, final ReportFileSaveDTO reportFileSaveDTO) {
         return newReportFile(
@@ -222,8 +222,8 @@ public class ReportFile extends BaseTimeEntity {
      * @param reportFileUpdateDTO the report file update dto
      * @return the report file
      * @author [이소정]
-     * @CreatedOn 2020. 7. 9. 오후 6:47:01
-     * @Description
+     * @since 2020. 7. 9. 오후 6:47:01
+     * @implNote
      */
     public ReportFile updateNewFile(final Long reportSeq, final ReportFileUpdateDTO reportFileUpdateDTO) {
         return newReportFile(
@@ -251,8 +251,8 @@ public class ReportFile extends BaseTimeEntity {
      * @param filePhysicalName the file physical name
      * @return the report file
      * @author [이소정]
-     * @CreatedOn 2020. 7. 10. 오후 5:39:30
-     * @Description
+     * @since 2020. 7. 10. 오후 5:39:30
+     * @implNote
      */
     private ReportFile newReportFile(
             final Long reportSeq
@@ -297,8 +297,8 @@ public class ReportFile extends BaseTimeEntity {
      *
      * @param reportFileUpdateDTO the report file update dto
      * @author [이소정]
-     * @CreatedOn 2020. 7. 9. 오후 6:50:26
-     * @Description
+     * @since 2020. 7. 9. 오후 6:50:26
+     * @implNote
      */
     public void update(final ReportFileUpdateDTO reportFileUpdateDTO) {
         this.fileName = reportFileUpdateDTO.getFileName();
@@ -311,8 +311,8 @@ public class ReportFile extends BaseTimeEntity {
      *
      * @param useYn the use yn
      * @author [이소정]
-     * @CreatedOn 2020. 7. 9. 오후 6:50:24
-     * @Description
+     * @since 2020. 7. 9. 오후 6:50:24
+     * @implNote
      */
     public void updateUseYn(final String useYn) {
         log.info("Report.updateUseYn");
@@ -325,8 +325,8 @@ public class ReportFile extends BaseTimeEntity {
 //     *
 //     * @param downloadCount the download count
 //     * @author [이소정]
-//     * @CreatedOn 2020. 7. 8. 오후 5:47:39
-//     * @Description
+//     * @since 2020. 7. 8. 오후 5:47:39
+//     * @implNote
 //     */
 //    public void updateDownloadCount(final Long downloadCount) {
 //        this.downloadCount = downloadCount + 1;

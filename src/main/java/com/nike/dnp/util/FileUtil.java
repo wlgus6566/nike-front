@@ -33,8 +33,8 @@ import java.util.TimeZone;
  * FileUtil
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 10. 오후 2:39:36
- * @Description
+ * @since 2020. 7. 10. 오후 2:39:36
+ * @implNote
  */
 @Component
 @Slf4j
@@ -84,8 +84,8 @@ public class FileUtil {
 	 *
 	 * @param root the root
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 10. 오후 2:39:36
-	 * @Description
+	 * @since 2020. 7. 10. 오후 2:39:36
+	 * @implNote
 	 */
 	@Value("${nike.file.root:}")
 	public void setRoot(final String root){
@@ -97,8 +97,8 @@ public class FileUtil {
 	 *
 	 * @param imageMagick the image magick
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 2:30:09
-	 * @Description
+	 * @since 2020. 7. 13. 오후 2:30:09
+	 * @implNote
 	 */
 	@Value("${nike.file.imageMagick:}")
 	public void setImageMagick(final String imageMagick){
@@ -110,8 +110,8 @@ public class FileUtil {
 	 *
 	 * @param imageMagickCommand the image magick command
 	 * @author [김형욱]
-	 * @CreatedOn 2020. 7. 17. 오전 11:55:43
-	 * @Description
+	 * @since 2020. 7. 17. 오전 11:55:43
+	 * @implNote
 	 */
 	@Value("${nike.file.imageMagickCommand:}")
 	public void setImageMagickCommand(final String imageMagickCommand){
@@ -123,8 +123,8 @@ public class FileUtil {
 	 *
 	 * @param ffmpeg the ffmpeg
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 27. 오후 4:58:36
-	 * @Description
+	 * @since 2020. 7. 27. 오후 4:58:36
+	 * @implNote
 	 */
 	@Value("${nike.file.ffmpeg:}")
 	public void setFfmpeg(final String ffmpeg) {
@@ -136,8 +136,8 @@ public class FileUtil {
 	 *
 	 * @param ffmpegCommand the ffmpeg command
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 27. 오후 4:58:36
-	 * @Description
+	 * @since 2020. 7. 27. 오후 4:58:36
+	 * @implNote
 	 */
 	@Value("${nike.file.ffmpegCommand:}")
 	public void setFfmpegCommand(final String ffmpegCommand) {
@@ -151,13 +151,13 @@ public class FileUtil {
 	 * @param extension 파일 확장자
 	 * @return the file
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 10. 오후 2:39:36
-	 * @Description
+	 * @since 2020. 7. 10. 오후 2:39:36
+	 * @implNote
 	 */
 	public static File makeNewFile(final String folder,final String extension) {
+		log.info("FileUtil.makeNewFile");
 		final String newFilepath = root + File.separator + folder;
-		final String newFileName = LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE) + LocalDateTime.now().get(ChronoField.MICRO_OF_SECOND)
-				+ RandomStringUtils.random(10, true, true) + "." + extension;
+		final String newFileName = makeFileName() + "." + extension;
 		final File result = new File(newFilepath+File.separator+ newFileName);
 		if(result.isFile()){
 			return makeNewFile(folder,extension);
@@ -165,6 +165,19 @@ public class FileUtil {
 			new File(newFilepath).mkdirs();
 			return result;
 		}
+	}
+
+	/**
+	 * 파일명 생성
+	 *
+	 * @return the string
+	 * @author [윤태호]
+	 * @since 2020. 7. 29. 오후 2:02:25
+	 */
+	public static String makeFileName(){
+		log.info("FileUtil.makeFileName");
+		return LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE) + LocalDateTime.now().get(ChronoField.MICRO_OF_SECOND) + RandomStringUtils
+				.random(10, true, true);
 	}
 
 	/**
@@ -177,14 +190,14 @@ public class FileUtil {
 	 * @return the file result dto
 	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
-	 * @Description
+	 * @since 2020. 7. 13. 오후 4:55:25
+	 * @implNote
 	 */
 	public static FileResultDTO fileSave(final MultipartFile uploadFile,
 										 final String folder,
 										 final boolean resize,
 										 final String resizeExt) throws IOException {
-
+		log.info("FileUtil.fileSave");
 
 		final String extension = StringUtils.getFilenameExtension(uploadFile.getOriginalFilename());
 
@@ -310,10 +323,11 @@ public class FileUtil {
 	 * @throws IOException          the io exception
 	 * @throws InterruptedException the interrupted exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
-	 * @Description
+	 * @since 2020. 7. 13. 오후 4:55:25
+	 * @implNote
 	 */
-	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile) throws IOException, InterruptedException {
+	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile) throws IOException {
+		log.info("FileUtil.fileTempSaveAndImageResize");
 		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder(), true, null);
 	}
 
@@ -326,11 +340,12 @@ public class FileUtil {
 	 * @throws IOException          the io exception
 	 * @throws InterruptedException the interrupted exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
-	 * @Description
+	 * @since 2020. 7. 13. 오후 4:55:25
+	 * @implNote
 	 */
 	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile,
-														   final String resizeExt) throws IOException, InterruptedException {
+														   final String resizeExt) throws IOException  {
+		log.info("FileUtil.fileTempSaveAndImageResize");
 		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder(), true, resizeExt);
 	}
 
@@ -343,11 +358,11 @@ public class FileUtil {
 	 * @throws IOException          the io exception
 	 * @throws InterruptedException the interrupted exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
-	 * @Description
+	 * @since 2020. 7. 13. 오후 4:55:25
+	 * @implNote
 	 */
-	public static FileResultDTO fileSave(final MultipartFile uploadFile,
-										 final String folder) throws IOException, InterruptedException {
+	public static FileResultDTO fileSave(final MultipartFile uploadFile, final String folder) throws IOException {		
+		log.info("FileUtil.fileSave");
 		return fileSave(uploadFile, folder, false, null);
 	}
 
@@ -359,10 +374,11 @@ public class FileUtil {
 	 * @throws IOException          the io exception
 	 * @throws InterruptedException the interrupted exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
-	 * @Description
+	 * @since 2020. 7. 13. 오후 4:55:25
+	 * @implNote
 	 */
-	public static FileResultDTO fileTempSave(final MultipartFile uploadFile) throws IOException, InterruptedException {
+	public static FileResultDTO fileTempSave(final MultipartFile uploadFile) throws IOException {		
+		log.info("FileUtil.fileTempSave");
 		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder());
 	}
 
@@ -371,10 +387,11 @@ public class FileUtil {
 	 * temp 폴더 파일 삭제 (등록후 24시간 지난 파일들만 삭제 처리)
 	 *
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
-	 * @Description
+	 * @since 2020. 7. 13. 오후 4:55:25
+	 * @implNote
 	 */
 	public static void deleteTemp() {
+		log.info("FileUtil.deleteTemp");
 		final File tempFile = new File(root+File.separator+ ServiceCode.FileFolderEnumCode.TEMP.getFolder());
 		final File[] files = tempFile.listFiles();
 
@@ -395,15 +412,16 @@ public class FileUtil {
 	}
 
 	/**
-	 * File download
+	 * 파일 다운로드
 	 *
 	 * @param filePath the file path
 	 * @return the single result
 	 * @author [이소정]
-	 * @CreatedOn 2020. 7. 16. 오후 6:15:26
-	 * @Description
+	 * @since 2020. 7. 16. 오후 6:15:26
+	 * @implNote
 	 */
 	public static ResponseEntity<Resource> fileDownload(final String filePath) {
+		log.info("FileUtil.fileDownload");
 		final Path path = Paths.get(filePath);
 
 		final HttpHeaders headers = new HttpHeaders();
@@ -428,12 +446,11 @@ public class FileUtil {
 	 * @return the response entity
 	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 28. 오후 2:19:30
+	 * @since 2020. 7. 28. 오후 2:19:30
 	 */
 	public static ResponseEntity<Resource> s3FileDownload(String path, String fileName) throws IOException {
-
+		log.info("FileUtil.s3FileDownload");
 		S3ObjectInputStream s3ObjectInputStream = S3Util.getFile(path);
-
 		final HttpHeaders headers = new HttpHeaders();
 		Resource resource = new ByteArrayResource(IOUtils.toByteArray(s3ObjectInputStream));
 		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
@@ -447,11 +464,11 @@ public class FileUtil {
 	 *
 	 * @param is the is
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 27. 오후 4:52:29
-	 * @Description
+	 * @since 2020. 7. 27. 오후 4:52:29
+	 * @implNote
 	 */
 	private static void exhaustInputStream(final InputStream is) {
-
+		log.info("FileUtil.exhaustInputStream");
 		// InputStream.read() 에서 블럭상태에 빠지기 때문에 따로 쓰레드를 돌려서 스트림을 소비한다.
 		new Thread(() -> {
 			try{

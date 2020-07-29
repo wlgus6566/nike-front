@@ -8,7 +8,8 @@ import java.io.Serializable;
  * Status 500 Exception, code, message
  *
  * @author [이소정]
- * @CreatedOn 2020. 6. 24. 오후 6:11:52
+ * @since 2020. 6. 24. 오후 6:11:52
+ * @implNote Status 500 Exception 작성
  */
 @Getter
 public class CodeMessageHandleException extends RuntimeException implements Serializable {
@@ -26,8 +27,8 @@ public class CodeMessageHandleException extends RuntimeException implements Seri
      * @param code the code
      * @param msg  the msg
      * @author [이소정]
-     * @CreatedOn 2020. 6. 24. 오후 6:11:52
-     * @Description
+     * @since 2020. 6. 24. 오후 6:11:52
+     * @implNote
      */
     public CodeMessageHandleException(final String code, final String msg) {
         super(msg);

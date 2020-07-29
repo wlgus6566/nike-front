@@ -18,8 +18,8 @@ import java.util.Objects;
  * AuthUserDTO
  *
  * @author [윤태호]
- * @CreatedOn 2020. 6. 24. 오후 6:07:49
- * @Description
+ * @since 2020. 6. 24. 오후 6:07:49
+ * @implNote
  * @history [윤태호] [2020.05.22] [최초 작성]
  * @since 2020.05.22
  */
@@ -82,8 +82,8 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 *
 	 * @param user the user
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:07:49
+	 * @implNote
 	 */
 	public AuthUserDTO(final User user) {
 		this.userSeq = user.getUserSeq();
@@ -99,8 +99,8 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 *
 	 * @return the password
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:07:49
+	 * @implNote
 	 */
 	@Override
 	public String getPassword() {
@@ -112,8 +112,8 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 *
 	 * @return the username
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:07:49
+	 * @implNote
 	 */
 	@Override
 	public String getUsername() {
@@ -125,8 +125,8 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 *
 	 * @return the user seq
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:07:49
+	 * @implNote
 	 */
 	public long getUserSeq() {return userSeq;}
 
@@ -136,8 +136,8 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 *
 	 * @return the authorities
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:07:49
+	 * @implNote
 	 */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -150,8 +150,8 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 *
 	 * @return the boolean
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:07:49
+	 * @implNote
 	 */
 	@Override
 	public boolean isAccountNonExpired() {
@@ -163,8 +163,8 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 *
 	 * @return the boolean
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:07:49
+	 * @implNote
 	 */
 	@Override
 	public boolean isAccountNonLocked() {
@@ -176,8 +176,8 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 *
 	 * @return the boolean
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:07:49
+	 * @implNote
 	 */
 	@Override
 	public boolean isCredentialsNonExpired() {
@@ -189,8 +189,8 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 *
 	 * @return the boolean
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:07:49
+	 * @implNote
 	 */
 	@Override
 	public boolean isEnabled() {
@@ -203,8 +203,8 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 * @param object the object
 	 * @return the boolean
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:07:49
+	 * @implNote
 	 */
 	@Override
 	public boolean equals(final Object object) {
@@ -225,8 +225,8 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 *
 	 * @return the int
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:07:49
+	 * @implNote
 	 */
 	@Override
 	public int hashCode() {
@@ -238,8 +238,8 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 *
 	 * @return the string
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:07:49
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:07:49
+	 * @implNote
 	 */
 	@Override
 	public String toString() {

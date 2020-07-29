@@ -14,8 +14,8 @@ import java.util.HashMap;
  * ResponseService
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:00:51
- * @Description 공통 response 서비스 작성
+ * @since 2020. 6. 24. 오후 6:00:51
+ * @implNote 공통 response 서비스 작성
  */
 @Service
 @RequiredArgsConstructor
@@ -28,8 +28,8 @@ public class ResponseService {
      * @param data the data
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:00:51
-     * @Description 단일건 결과를 처리하는 메소드
+     * @since 2020. 6. 24. 오후 6:00:51
+     * @implNote 단일건 결과를 처리하는 메소드
      */
     public <T> SingleResult<T> getSingleResult(final T data) {
         final SingleResult<T> result = new SingleResult<>();
@@ -46,8 +46,8 @@ public class ResponseService {
      * @param msg  the msg
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 30. 오후 4:59:21
-     * @Description 메시지 포함
+     * @since 2020. 6. 30. 오후 4:59:21
+     * @implNote 메시지 포함
      */
     public <T> SingleResult<T> getSingleResult(final T data
             , final String code, final String msg, final Boolean existMsg) {
@@ -65,8 +65,8 @@ public class ResponseService {
      *
      * @return the success result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:00:51
-     * @Description 성공 결과만 처리하는 메소드
+     * @since 2020. 6. 24. 오후 6:00:51
+     * @implNote 성공 결과만 처리하는 메소드
      */
     public CommonResult getSuccessResult() {
         final CommonResult result = new CommonResult();
@@ -81,8 +81,8 @@ public class ResponseService {
      * @param msg  the msg
      * @return the success result
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 27. 오후 4:41:38
-     * @Description 성공 코드와 메시지만 리턴하는 메소드
+     * @since 2020. 7. 27. 오후 4:41:38
+     * @implNote 성공 코드와 메시지만 리턴하는 메소드
      */
     public CommonResult getSuccessResult(final String code, final String msg) {
         final CommonResult result = new CommonResult();
@@ -98,8 +98,8 @@ public class ResponseService {
      *
      * @param result the result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:00:51
-     * @Description 결과 모델에 api 요청 성공 데이터를 세팅해주는 메소드
+     * @since 2020. 6. 24. 오후 6:00:51
+     * @implNote 결과 모델에 api 요청 성공 데이터를 세팅해주는 메소드
      */
     private static void setSuccessResult(final CommonResult result) {
         result.setSuccess(true);
@@ -116,8 +116,8 @@ public class ResponseService {
      *
      * @return the fail result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:00:51
-     * @Description 실패 결과만 처리하는 메소드
+     * @since 2020. 6. 24. 오후 6:00:51
+     * @implNote 실패 결과만 처리하는 메소드
      */
     public CommonResult getFailResult() {
         final CommonResult result = new CommonResult();
@@ -135,8 +135,8 @@ public class ResponseService {
      * @param msg  the msg
      * @return the fail result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:00:51
-     * @Description 실패 결과, 메세지를 처리하는 메소드
+     * @since 2020. 6. 24. 오후 6:00:51
+     * @implNote 실패 결과, 메세지를 처리하는 메소드
      */
     public CommonResult getFailResult(final String code, final String msg) {
         final CommonResult result = new CommonResult();

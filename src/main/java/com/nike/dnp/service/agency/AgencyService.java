@@ -20,8 +20,8 @@ import java.util.Optional;
  * The Class Agency service.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 20. 오후 12:08:45
- * @Description
+ * @since 2020. 7. 20. 오후 12:08:45
+ * @implNote
  */
 @Slf4j
 @Service
@@ -40,8 +40,8 @@ public class AgencyService {
      *
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 20. 오후 12:08:40
-     * @Description
+     * @since 2020. 7. 20. 오후 12:08:40
+     * @implNote
      */
     public List<Agency> findAll() {
         return agencyRepository.findAllByUseYn("Y");
@@ -53,8 +53,8 @@ public class AgencyService {
      * @param agencySaveDTO the agency save dto
      * @return the agency
      * @author [이소정]
-     * @CreatedOn 2020. 7. 20. 오후 12:19:37
-     * @Description
+     * @since 2020. 7. 20. 오후 12:19:37
+     * @implNote
      */
     @Transactional
     public Agency save(final AgencySaveDTO agencySaveDTO) {
@@ -67,8 +67,8 @@ public class AgencyService {
      * @param agencySeq the agency seq
      * @return the agency
      * @author [이소정]
-     * @CreatedOn 2020. 7. 20. 오후 12:26:58
-     * @Description
+     * @since 2020. 7. 20. 오후 12:26:58
+     * @implNote
      */
     public Agency findByAgencySeq(final Long agencySeq) {
         return this.findById(agencySeq).get();
@@ -80,8 +80,8 @@ public class AgencyService {
      * @param agencyUpdateDTO the agency update dto
      * @return the agency
      * @author [이소정]
-     * @CreatedOn 2020. 7. 20. 오후 2:05:32
-     * @Description
+     * @since 2020. 7. 20. 오후 2:05:32
+     * @implNote
      */
     @Transactional
     public Agency update(final AgencyUpdateDTO agencyUpdateDTO) {
@@ -96,8 +96,8 @@ public class AgencyService {
      * @param agencySeq the agency seq
      * @return the agency
      * @author [이소정]
-     * @CreatedOn 2020. 7. 20. 오후 2:21:07
-     * @Description
+     * @since 2020. 7. 20. 오후 2:21:07
+     * @implNote
      */
     @Transactional
     public Agency delete(final long agencySeq) {

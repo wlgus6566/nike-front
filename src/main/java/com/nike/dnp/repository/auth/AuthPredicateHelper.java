@@ -9,8 +9,8 @@ import lombok.experimental.UtilityClass;
 /**
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 23. 오후 2:55:42
- * @Description Auth(권한) 검색 조건
+ * @since 2020. 6. 23. 오후 2:55:42
+ * @implNote Auth(권한) 검색 조건
  */
 @UtilityClass
 public class AuthPredicateHelper {
@@ -22,8 +22,8 @@ public class AuthPredicateHelper {
      * @param authDepth the auth depth
      * @return the predicate
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 21. 오후 5:11:00
-     * @Description
+     * @since 2020. 7. 21. 오후 5:11:00
+     * @implNote
      */
     public Predicate compareDepth(final Long authSeq, final Long authDepth) {
         final BooleanBuilder builder = new BooleanBuilder();

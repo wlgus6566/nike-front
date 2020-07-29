@@ -35,8 +35,8 @@ import java.util.Optional;
  * AuthService
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 22. 오후 2:40:43
- * @Description Auth(권한) Service 작성
+ * @since 2020. 6. 22. 오후 2:40:43
+ * @implNote Auth(권한) Service 작성
  */
 @Slf4j
 @Service
@@ -84,8 +84,8 @@ public class AuthService {
      *
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 7. 오후 3:37:06
-     * @Description 그룹(권한) 목록 조회
+     * @since 2020. 7. 7. 오후 3:37:06
+     * @implNote 그룹(권한) 목록 조회
      */
     public List<Auth> findAll() {
         log.info("AuthService.findAll");
@@ -98,8 +98,8 @@ public class AuthService {
      * @param authSeq the auth seq
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 13. 오전 11:08:18
-     * @Description 권한 메뉴 역할 조회
+     * @since 2020. 7. 13. 오전 11:08:18
+     * @implNote 권한 메뉴 역할 조회
      */
     public List<AuthMenuRole> findAuthMenuRole(final Long authSeq) {
         return authMenuRoleRepository.findByAuthSeq(authSeq);
@@ -113,8 +113,8 @@ public class AuthService {
      * @param skillCode the skill code
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 21. 오후 5:11:54
-     * @Description 권한 뎁스 별 목록 조회
+     * @since 2020. 7. 21. 오후 5:11:54
+     * @implNote 권한 뎁스 별 목록 조회
      */
     public List<AuthReturnDTO> findByAuthDepth(
             final Long authSeq
@@ -135,8 +135,8 @@ public class AuthService {
      *
      * @return the json array
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:43
-     * @Description 그룹(권한) 목록 조회(캐시)
+     * @since 2020. 6. 22. 오후 2:40:43
+     * @implNote 그룹(권한) 목록 조회(캐시)
      */
     @Cacheable(value = "cache:auths", cacheManager = "cacheManager")
     public JSONArray findAllByCache() {
@@ -158,8 +158,8 @@ public class AuthService {
      * @param roleType the role type
      * @return the optional
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 13. 오후 1:38:11
-     * @Description 권한 상세 조회(role type으로)
+     * @since 2020. 7. 13. 오후 1:38:11
+     * @implNote 권한 상세 조회(role type으로)
      */
     public Optional<Auth> findByRoleType(final String roleType) {
         log.info("AuthService.findByRoleType");
@@ -175,8 +175,8 @@ public class AuthService {
      * @param roleType the role type
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 13. 오후 1:28:37
-     * @Description 권한별 접근 가능 리소스 목록 조회
+     * @since 2020. 7. 13. 오후 1:28:37
+     * @implNote 권한별 접근 가능 리소스 목록 조회
      */
     public List<MenuRoleResourceReturnDTO> getAuthsResourcesByRoleType(final String roleType) {
         log.info("AuthService.getAuthsResourcesByRoleType");
@@ -195,8 +195,8 @@ public class AuthService {
      *
      * @param roleType the role type
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 13. 오후 1:33:11
-     * @Description 권한별 접근 가능 리소스 목록 저장(redis)
+     * @since 2020. 7. 13. 오후 1:33:11
+     * @implNote 권한별 접근 가능 리소스 목록 저장(redis)
      */
     public void setAuthsResourcesByRoleType(final String roleType) {
         log.info("AuthService.setAuthsResourcesByRoleType");
@@ -209,8 +209,8 @@ public class AuthService {
      * @param roleType the role type
      * @return the auths menus by role type
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 13. 오후 1:37:19
-     * @Description 권한별 접근 가능 메뉴 목록 조회
+     * @since 2020. 7. 13. 오후 1:37:19
+     * @implNote 권한별 접근 가능 메뉴 목록 조회
      */
     public List<MenuReturnDTO> getAuthsMenusByRoleType(final String roleType) {
         log.info("AuthService.getAuthsMenusByRoleType");
@@ -235,8 +235,8 @@ public class AuthService {
      *
      * @param roleType the role type
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 13. 오후 1:44:34
-     * @Description 권한별 접근 가능 메뉴 목록 저장(redis)
+     * @since 2020. 7. 13. 오후 1:44:34
+     * @implNote 권한별 접근 가능 메뉴 목록 저장(redis)
      */
     public void setAuthsMenusByRoleType(final String roleType) {
         log.info("AuthService.setAuthsMenusByRoleType");
@@ -250,8 +250,8 @@ public class AuthService {
      * @param authSeq the auth seq
      * @return the optional
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:45:32
-     * @Description 그룹(권한) 상세 조회
+     * @since 2020. 6. 24. 오후 5:45:32
+     * @implNote 그룹(권한) 상세 조회
      */
     public Optional<Auth> findById(final Long authSeq) {
         log.info("AuthService.findById");
@@ -267,8 +267,8 @@ public class AuthService {
      * @param authSeq the auth seq
      * @return the by id
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 22. 오전 11:32:07
-     * @Description 그룹(권한) 상세 조회
+     * @since 2020. 7. 22. 오전 11:32:07
+     * @implNote 그룹(권한) 상세 조회
      */
     public Auth getById(final Long authSeq) {
         log.info("AuthService.getById");
@@ -281,8 +281,8 @@ public class AuthService {
      * @param authSaveDTO the auth save dto
      * @return the auth
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:36:07
-     * @Description 그룹(권한) 등록
+     * @since 2020. 6. 24. 오후 5:36:07
+     * @implNote 그룹(권한) 등록
      */
     @Transactional
     public Auth save(final AuthSaveDTO authSaveDTO) {
@@ -309,8 +309,8 @@ public class AuthService {
      * @param authUpdateDTO the auth update dto
      * @return the optional
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:27:08
-     * @Description 그룹(권한) 수정
+     * @since 2020. 6. 24. 오후 5:27:08
+     * @implNote 그룹(권한) 수정
      */
     @Transactional
     public Auth update(
@@ -361,8 +361,8 @@ public class AuthService {
      *
      * @param authSeq the auth seq
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 13. 오후 3:34:40
-     * @Description 권한 메뉴 역할 삭제
+     * @since 2020. 7. 13. 오후 3:34:40
+     * @implNote 권한 메뉴 역할 삭제
      */
     @Transactional
     public void remove(final Long authSeq) {
@@ -376,8 +376,8 @@ public class AuthService {
      * @param authSeq the auth seq
      * @return the optional
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:37:29
-     * @Description 그룹(권한) 삭제
+     * @since 2020. 6. 24. 오후 5:37:29
+     * @implNote 그룹(권한) 삭제
      */
     @Transactional
     public Auth delete(final Long authSeq) {
@@ -403,8 +403,8 @@ public class AuthService {
      * Init auth cache.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 7. 오후 4:31:05
-     * @Description 캐시 초기화
+     * @since 2020. 7. 7. 오후 4:31:05
+     * @implNote 캐시 초기화
      */
     public void initAuthCache() {
         log.info("AuthService.initAuthCache");

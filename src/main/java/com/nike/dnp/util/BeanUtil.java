@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
  * BeanUtil
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:01:19
- * @Description BeanUtil 작성
+ * @since 2020. 6. 24. 오후 6:01:19
+ * @implNote BeanUtil 작성
  */
 @Component
 @RequiredArgsConstructor
@@ -28,8 +28,8 @@ public class BeanUtil implements ApplicationContextAware {
      *
      * @param context the context
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:01:19
-     * @Description
+     * @since 2020. 6. 24. 오후 6:01:19
+     * @implNote
      */
     @Override
     public void setApplicationContext(final ApplicationContext context) {
@@ -43,8 +43,8 @@ public class BeanUtil implements ApplicationContextAware {
      * @param clazz the clazz
      * @return bean bean
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:01:19
-     * @Description class타입으로 bean을 가져온다.
+     * @since 2020. 6. 24. 오후 6:01:19
+     * @implNote class타입으로 bean을 가져온다.
      */
     public static <T> T getBean(final Class<T> clazz) {
         return context.getBean(clazz);
@@ -56,8 +56,8 @@ public class BeanUtil implements ApplicationContextAware {
      * @param beanName the bean name
      * @return bean bean
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:01:19
-     * @Description 이름으로 bean을 가져온다.
+     * @since 2020. 6. 24. 오후 6:01:19
+     * @implNote 이름으로 bean을 가져온다.
      */
     public static Object getBean(final String beanName) {
         return context.getBean(beanName);

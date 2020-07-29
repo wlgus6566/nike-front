@@ -22,8 +22,8 @@ import java.util.Optional;
  * The Class Contents basket service.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 14. 오후 6:24:23
- * @Description
+ * @since 2020. 7. 14. 오후 6:24:23
+ * @implNote
  */
 @Slf4j
 @Service
@@ -49,8 +49,8 @@ public class ContentsBasketService {
      * @param authUserDTO the auth user dto
      * @return the all contents basket
      * @author [이소정]
-     * @CreatedOn 2020. 7. 14. 오후 6:24:19
-     * @Description
+     * @since 2020. 7. 14. 오후 6:24:19
+     * @implNote
      */
     public List<ContentsBasketResultDTO> findAllContentsBasket(final AuthUserDTO authUserDTO) {
         return contentsBasketRepository.findAllWithContentsFile(authUserDTO.getUserSeq());
@@ -63,8 +63,8 @@ public class ContentsBasketService {
      * @param authUserDTO         the auth user dto
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 15. 오후 12:02:32
-     * @Description
+     * @since 2020. 7. 15. 오후 12:02:32
+     * @implNote
      */
     @Transactional
     public List<ContentsBasket> save(final List<Long> contentsFileSeqList, final AuthUserDTO authUserDTO) {
@@ -99,8 +99,8 @@ public class ContentsBasketService {
      * @param contentsBasketSeq the contents basket seq
      * @return the contents basket
      * @author [이소정]
-     * @CreatedOn 2020. 7. 15. 오후 2:38:45
-     * @Description
+     * @since 2020. 7. 15. 오후 2:38:45
+     * @implNote
      */
     @Transactional
     public ContentsBasket delete(final Long contentsBasketSeq) {

@@ -18,8 +18,8 @@ import java.util.List;
  * The Class Wish list repository.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 3. 오후 3:55:37
- * @Description
+ * @since 2020. 7. 3. 오후 3:55:37
+ * @implNote
  */
 @Slf4j
 @Repository
@@ -29,26 +29,27 @@ public class WishListRepositoryImpl  extends QuerydslRepositorySupport implement
 	 * Creates a new {@link QuerydslRepositorySupport} instance for the given domain type.
 	 *
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 3. 오후 3:55:37
-	 * @Description
+	 * @since 2020. 7. 3. 오후 3:55:37
+	 * @implNote
 	 */
 	public WishListRepositoryImpl() {
 		super(WishList.class);
 	}
 
 	/**
-	 * Find pages wish list page.
+	 * 위시리스트 페이징
 	 *
 	 * @param wishListSearchDTO the wish list search dto
 	 * @param pageRequest       the page request
 	 * @return the page
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 3. 오후 3:55:37
-	 * @Description
+	 * @since 2020. 7. 3. 오후 3:55:37
+	 * @implNote
 	 */
 	@Override
 	public Page<WishList> findPagesWishList(final WishListSearchDTO wishListSearchDTO,
 						 					final PageRequest pageRequest) {
+		log.info("WishListRepositoryImpl.findPagesWishList");
 		final QWishList wishList = QWishList.wishList;
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 

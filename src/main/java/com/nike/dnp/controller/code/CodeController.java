@@ -25,8 +25,8 @@ import java.util.Optional;
  * CodeController
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 22. 오후 5:22:30
- * @Description Code(공통 코드) Controller 작성
+ * @since 2020. 6. 22. 오후 5:22:30
+ * @apiNote Code(공통 코드) Controller 작성
  */
 @Slf4j
 @RestController
@@ -63,8 +63,8 @@ public class CodeController {
      * @param upperCode the upper code
      * @return the conf codes
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 5:22:31
-     * @Description
+     * @since 2020. 6. 22. 오후 5:22:31
+     * @apiNote
      */
     @ApiOperation(value = "하위 코드 목록 조회"
         , notes = OPERATION_CHARACTER)
@@ -82,8 +82,8 @@ public class CodeController {
      * @param result      the result
      * @return the response entity
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 5:22:31
-     * @Description
+     * @since 2020. 6. 22. 오후 5:22:31
+     * @apiNote
      */
     @ApiOperation(value = "코드 등록"
         , notes = OPERATION_CHARACTER)
@@ -105,8 +105,8 @@ public class CodeController {
      * @param result        the result
      * @return the response entity
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 5:22:31
-     * @Description
+     * @since 2020. 6. 22. 오후 5:22:31
+     * @apiNote
      */
     @ApiOperation(value = "코드 수정"
             , notes = OPERATION_CHARACTER)
@@ -127,8 +127,8 @@ public class CodeController {
      * @param code the code
      * @return the response entity
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 5:22:31
-     * @Description
+     * @since 2020. 6. 22. 오후 5:22:31
+     * @apiNote
      */
     @ApiOperation(value = "코드 삭제"
             , notes = OPERATION_CHARACTER)

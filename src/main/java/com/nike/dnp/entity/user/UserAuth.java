@@ -15,8 +15,8 @@ import java.io.Serializable;
  * UserAuth Entity
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:11:14
- * @Description UserAuth(유저 권한) Entity 작성
+ * @since 2020. 6. 24. 오후 6:11:14
+ * @implNote UserAuth(유저 권한) Entity 작성
  */
 @Slf4j
 @Getter
@@ -85,8 +85,8 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
      * @param auth the auth
      * @return the user auth
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 30. 오후 4:38:13
-     * @Description 유저권한 저장
+     * @since 2020. 6. 30. 오후 4:38:13
+     * @implNote 유저권한 저장
      */
     public UserAuth save(final User user, final Auth auth) {
         log.info("UserAuth.save");
@@ -101,8 +101,8 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
      *
      * @param userUpdateDTO the user update dto
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 30. 오후 4:38:14
-     * @Description 유저권한 업데이트
+     * @since 2020. 6. 30. 오후 4:38:14
+     * @implNote 유저권한 업데이트
      */
     public void update(final UserUpdateDTO userUpdateDTO) {
         log.info("UserAuth.authUpdate");

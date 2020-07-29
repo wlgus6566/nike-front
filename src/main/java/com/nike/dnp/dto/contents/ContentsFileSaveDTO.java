@@ -8,8 +8,8 @@ import lombok.*;
  * The type Contents file save dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 23. 오전 11:23:42
- * @Description
+ * @since 2020. 7. 23. 오전 11:23:42
+ * @implNote
  */
 @Getter
 @Setter

@@ -10,8 +10,8 @@ import java.util.List;
  * UserLoginLogRepository
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 5:50:55
- * @Description UserLoginLog(유저_로그인_로그) Repository 작성
+ * @since 2020. 6. 24. 오후 5:50:55
+ * @implNote UserLoginLog(유저_로그인_로그) Repository 작성
  */
 @Repository
 public interface UserLoginLogRepository extends JpaRepository<UserLoginLog, Long> {
@@ -22,8 +22,8 @@ public interface UserLoginLogRepository extends JpaRepository<UserLoginLog, Long
      * @param userSeq the user seq
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 6. 오후 2:55:54
-     * @Description 최근 5개 조회
+     * @since 2020. 7. 6. 오후 2:55:54
+     * @implNote 최근 5개 조회
      */
     List<UserLoginLog>findTop5ByUserSeqOrderByRegistrationDtDesc(Long userSeq);
 

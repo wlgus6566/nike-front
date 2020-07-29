@@ -20,8 +20,8 @@ import java.time.LocalDateTime;
  * Calendar Entity.
  *
  * @author [김형욱]
- * @CreatedOn 2020. 6. 29. 오후 8:30:58
- * @Description 달력 Entity
+ * @since 2020. 6. 29. 오후 8:30:58
+ * @implNote 달력 Entity
  */
 @Getter
 @Setter
@@ -32,7 +32,7 @@ import java.time.LocalDateTime;
 public class Calendar  implements Serializable {
 
     /**
-     * The Calendar seq
+     * 달력 시퀀스
      *
      * @author [오지훈]
      */
@@ -43,7 +43,7 @@ public class Calendar  implements Serializable {
     private Long calendarSeq;
 
     /**
-     * The Calendar section code
+     * 메뉴 코드
      *
      * @author [오지훈]
      */
@@ -52,7 +52,7 @@ public class Calendar  implements Serializable {
     private String calendarSectionCode;
 
     /**
-     * The Schedule name
+     * 일정 명
      *
      * @author [오지훈]
      */
@@ -61,7 +61,7 @@ public class Calendar  implements Serializable {
     private String scheduleName;
 
     /**
-     * The Contents
+     * 내용
      *
      * @author [오지훈]
      */
@@ -71,7 +71,7 @@ public class Calendar  implements Serializable {
     private String contents;
 
     /**
-     * The Begin dt
+     * 시작 일시
      *
      * @author [오지훈]
      */
@@ -81,7 +81,7 @@ public class Calendar  implements Serializable {
     private LocalDateTime beginDt;
 
     /**
-     * The End dt
+     * 종료 일시
      *
      * @author [오지훈]
      */

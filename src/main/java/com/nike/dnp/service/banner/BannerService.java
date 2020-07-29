@@ -22,8 +22,8 @@ import java.util.Optional;
  * BannerService
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 22. 오후 2:40:43
- * @Description Banner(메인 비주얼) Service 작성
+ * @since 2020. 6. 22. 오후 2:40:43
+ * @implNote Banner(메인 비주얼) Service 작성
  */
 @Slf4j
 @Service
@@ -50,8 +50,8 @@ public class BannerService {
      *
      * @return the banner
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오전 11:36:13
-     * @Description 배너 상세(캐시)
+     * @since 2020. 7. 20. 오전 11:36:13
+     * @implNote 배너 상세(캐시)
      */
     public Banner getBanner() {
         Banner banner = (Banner) redisService.get("cache:visual");
@@ -69,8 +69,8 @@ public class BannerService {
      * @param bannerSeq the banner seq
      * @return the optional
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 28. 오후 5:21:37
-     * @Description
+     * @since 2020. 7. 28. 오후 5:21:37
+     * @implNote
      */
     public Optional<Banner> findById(final Long bannerSeq) {
         return bannerRepository.findById(bannerSeq);
@@ -82,8 +82,8 @@ public class BannerService {
      * @param bannerSeq the banner seq
      * @return the banner
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오전 11:34:05
-     * @Description 배너 상세
+     * @since 2020. 7. 20. 오전 11:34:05
+     * @implNote 배너 상세
      */
     public Banner findByBannerSeq(final Long bannerSeq) {
         return this.findById(bannerSeq).orElseThrow(
@@ -98,8 +98,8 @@ public class BannerService {
      * @param bannerSaveDTO the banner update dto
      * @return the banner
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오전 11:32:45
-     * @Description 배너 등록
+     * @since 2020. 7. 20. 오전 11:32:45
+     * @implNote 배너 등록
      */
     @Transactional
     public Banner save (final BannerSaveDTO bannerSaveDTO) {
@@ -117,8 +117,8 @@ public class BannerService {
      * @param bannerSaveDTO the banner update dto
      * @return the banner
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오전 11:32:46
-     * @Description 배너 수정
+     * @since 2020. 7. 20. 오전 11:32:46
+     * @implNote 배너 수정
      */
     @Transactional
     public Banner update (final Long bannerSeq, final BannerSaveDTO bannerSaveDTO) {

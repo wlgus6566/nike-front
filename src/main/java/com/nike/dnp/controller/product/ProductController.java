@@ -26,11 +26,11 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * ProductController
+ * 상품 Controller
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 1. 오후 3:34:40
- * @Description 주문 상품관련 컨트롤러
+ * @since 2020. 7. 1. 오후 3:34:40
+ * @apiNote 주문 상품관련 컨트롤러
  * @history [윤태호] [2020.06.17] [최초 작성]
  * @since 2020.06.17
  */
@@ -67,13 +67,13 @@ public class ProductController {
 	private static final String BASIC_CHARACTER = "## Request ## \n" + "[하위 Parameters 참조] \n" + "## Request ## \n" + "[하위 Model 참조]\n\n";
 
 	/**
-	 * 상품 목록 조회
+	 * 상품 목록 조회[관리자]
 	 *
 	 * @param productSearchDTO the product search dto
 	 * @return the all product
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 24. 오후 12:15:13
-	 * @Description
+	 * @since 2020. 6. 24. 오후 12:15:13
+	 * @apiNote
 	 */
 	@ApiOperation(value = "상품 목록 조회", notes = REQUEST_CHARACTER
 			+ "category2Code|카테고리 2 코드|false|String\n"
@@ -86,10 +86,20 @@ public class ProductController {
 			+ "size|사이즈|false|Integer\n")
 	@GetMapping(value = "/list", name = "상품 목록 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public SingleResult<Page<ProductResultDTO>> findPagesProduct(final ProductSearchDTO productSearchDTO) {
+		log.info("ProductController.findPagesProduct");
 		return responseService.getSingleResult(productService.findPagesProduct(productSearchDTO));
 	}
 
 
+	/**
+	 * 상품 목록 조회[사용자] 
+	 *
+	 * @param category2Code        the category 2 code
+	 * @param productUserSearchDTO the product user search dto
+	 * @return the single result
+	 * @author [윤태호]
+	 * @since 2020. 7. 29. 오후 3:07:30
+	 */
 	@ApiOperation(value = "상품 목록 조회(유저용)", notes = REQUEST_CHARACTER
 			+ "keyword|키워드|false|String\n"
 			+ "page|페이지|false|Integer\n"
@@ -98,7 +108,7 @@ public class ProductController {
 	@GetMapping(value = "{category2Code}/list", name = "상품 목록 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public SingleResult<Page<ProductResultDTO>> findPagesProductCategory2(@PathVariable @ApiParam(name="category2Code",value="카테고리 2 코드",allowableValues = "SUBSIDIARY,NIKE_BY_YOU,CUSTOM23,MNQ",required = true) final String category2Code,
 																		  final ProductUserSearchDTO productUserSearchDTO) {
-
+		log.info("ProductController.findPagesProductCategory2");
 		final ProductSearchDTO productSearchDTO = new ProductSearchDTO();
 		productSearchDTO.setPage(productUserSearchDTO.getPage());
 		productSearchDTO.setSize(productUserSearchDTO.getSize());
@@ -118,12 +128,13 @@ public class ProductController {
 	 * @param goodsSeq the goods seq
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 24. 오후 12:14:05
-	 * @Description
+	 * @since 2020. 6. 24. 오후 12:14:05
+	 * @apiNote
 	 */
 	@ApiOperation(value = "상품 상세 조회", notes = REQUEST_CHARACTER + "goodsSeq|상품시퀀스|true|Integer\n")
 	@GetMapping(value = "/{goodsSeq}", name = "상품상세조회", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public SingleResult<Product> findProduct(@ApiParam(name = "goodsSeq", value = "상품 시퀀스", defaultValue = "31") @PathVariable final Long goodsSeq) {
+		log.info("ProductController.findProduct");
 		return responseService.getSingleResult(productService.findByGoodsSeq(goodsSeq));
 	}
 
@@ -131,17 +142,19 @@ public class ProductController {
 	/**
 	 * 다수 상품 상세 조회
 	 *
-	 * @param goodsSeqList the goods seq list
+	 * @param productViewListDTO the product view list dto
+	 * @param result             the result
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 24. 오후 12:14:05
-	 * @Description
+	 * @since 2020. 6. 24. 오후 12:14:05
+	 * @apiNote
 	 */
 	@ApiOperation(value = "다수 상품 상세 조회", notes = REQUEST_CHARACTER + "goodsSeq|상품시퀀스|true|Integer\n")
 	@GetMapping(name = "상품상세조회", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ValidField
 	public SingleResult<List<Product>> findbySearchProduct( @Valid @ModelAttribute final ProductViewListDTO productViewListDTO,
 															@ApiIgnore final BindingResult result ) {
+		log.info("ProductController.findbySearchProduct");
 		return responseService.getSingleResult(productService.findBySearchId(productViewListDTO.getGoodsSeqList()));
 	}
 
@@ -152,15 +165,15 @@ public class ProductController {
 	 * @return the single result
 	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 26. 오후 4:42:04
-	 * @Description
+	 * @since 2020. 6. 26. 오후 4:42:04
+	 * @apiNote
 	 */
 	@ApiOperation(value = "상품 등록", notes = BASIC_CHARACTER)
 	@PostMapping(name = "상품 등록", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ValidField
 	public SingleResult<Product> saveProduct(@Valid @ApiParam(name = "productSaveDTO", value = "상품 등록 JSON") @RequestBody final ProductSaveDTO productSaveDTO,
-											 @ApiIgnore final BindingResult result) throws IOException {
-
+											 @ApiIgnore final BindingResult result) {
+		log.info("ProductController.saveProduct");
 		return responseService.getSingleResult(productService.save(productSaveDTO));
 	}
 
@@ -170,8 +183,8 @@ public class ProductController {
 	 * @param productUpdateDTO the product update dto
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 23. 오후 5:28:44
-	 * @Description
+	 * @since 2020. 6. 23. 오후 5:28:44
+	 * @apiNote
 	 */
 	@ApiOperation(value = "상품 수정", notes = BASIC_CHARACTER)
 	@PutMapping(value="/{goodsSeq}",name = "상품 수정", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -179,6 +192,7 @@ public class ProductController {
 	public SingleResult<Product> updateProduct(@PathVariable @ApiParam(name="goodsSeq",value="제품 시퀀스") final Long goodsSeq,
 											   @Valid @ApiParam(name = "productUpdateDTO", value = "상품 수정 JSON") @RequestBody final ProductUpdateDTO productUpdateDTO,
 											   @ApiIgnore final BindingResult result) throws IOException {
+		log.info("ProductController.updateProduct");
 		productUpdateDTO.setGoodsSeq(goodsSeq);
 		return responseService.getSingleResult(productService.update(productUpdateDTO));
 	}
@@ -189,12 +203,13 @@ public class ProductController {
 	 * @param goodsSeq the goods seq
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 23. 오후 5:28:44
-	 * @Description
+	 * @since 2020. 6. 23. 오후 5:28:44
+	 * @apiNote
 	 */
 	@ApiOperation(value = "상품 삭제", notes = BASIC_CHARACTER)
 	@DeleteMapping(value = "/{goodsSeq}", name = "상품 삭제", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<Optional<Product>> delProduct(@ApiParam(name = "goodsSeq", value = "상품 시퀀스", defaultValue = "28") @PathVariable final Long goodsSeq) {
+		log.info("ProductController.delProduct");
 		final ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO();
 		productUpdateDTO.setGoodsSeq(goodsSeq);
 		productUpdateDTO.setUseYn("N");
@@ -205,12 +220,13 @@ public class ProductController {
 	/**
 	 * 다수 상품 삭제
 	 *
-	 * @param goodsSeqList the goods seq list
-	 * @param authUserDTO  the auth user dto
+	 * @param authUserDTO        the auth user dto
+	 * @param productViewListDTO the product view list dto
+	 * @param result             the result
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 26. 오후 3:08:11
-	 * @Description
+	 * @since 2020. 6. 26. 오후 3:08:11
+	 * @apiNote
 	 */
 	@ApiOperation(value = "상품 삭제[배열]", notes = BASIC_CHARACTER)
 	@DeleteMapping(name = "상품 삭제[배열]", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -218,9 +234,8 @@ public class ProductController {
 	public SingleResult<Boolean> deleteProduct(@ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO,
 											   @Valid @ModelAttribute final ProductViewListDTO productViewListDTO,
 											   @ApiIgnore final BindingResult result) {
-
+		log.info("ProductController.deleteProduct");
 		final List<Product> productList = productService.findBySearchId(productViewListDTO.getGoodsSeqList());
-
 		final ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO();
 		productUpdateDTO.setUseYn("N");
 		productUpdateDTO.setUpdaterSeq(authUserDTO.getUserSeq());

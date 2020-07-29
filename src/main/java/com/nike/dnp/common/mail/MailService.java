@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
  * The Class Mail service.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 1. 오후 2:31:56
- * @Description
+ * @since 2020. 7. 1. 오후 2:31:56
+ * @implNote
  */
 @Service
 @Slf4j
@@ -39,8 +39,8 @@ public class MailService {
      * @param subject   the subject
      * @param sendDTO   the send dto
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 1. 오후 2:31:56
-     * @Description
+     * @since 2020. 7. 1. 오후 2:31:56
+     * @implNote
      */
     public void sendMail(final String emailType, final String subject, final SendDTO sendDTO) {
         log.info("MailService.sendMail");
@@ -57,8 +57,8 @@ public class MailService {
      * @param emailType the email type
      * @return the file
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 1. 오후 2:31:56
-     * @Description template 파일 read > String 으로 저장
+     * @since 2020. 7. 1. 오후 2:31:56
+     * @implNote template 파일 read > String 으로 저장
      */
     public String getFile(final String emailType) {
         log.info("MailService.getFile");
@@ -92,8 +92,8 @@ public class MailService {
      * @param sendDTO the send dto
      * @return the string
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 1. 오후 2:31:56
-     * @Description template String 문자열의 대체변수에 데이터 대입
+     * @since 2020. 7. 1. 오후 2:31:56
+     * @implNote template String 문자열의 대체변수에 데이터 대입
      */
     public String convert(final String file, final SendDTO sendDTO) {
         log.info("MailService.convert");

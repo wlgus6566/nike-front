@@ -43,8 +43,8 @@ import java.util.Optional;
  * UserService
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 22. 오후 2:40:43
- * @Description User(유저) Service 작성
+ * @since 2020. 6. 22. 오후 2:40:43
+ * @implNote User(유저) Service 작성
  */
 @Slf4j
 @Service
@@ -121,8 +121,8 @@ public class UserService implements UserDetailsService {
      * @param userSearchDTO the user search dto
      * @return the page
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:43
-     * @Description 페이징 조회(paging)
+     * @since 2020. 6. 22. 오후 2:40:43
+     * @implNote 페이징 조회(paging)
      */
     public Page<UserReturnDTO> findPages(final UserSearchDTO userSearchDTO) {
         log.info("UserService.findPages");
@@ -139,8 +139,8 @@ public class UserService implements UserDetailsService {
      * @param userSeq the user seq
      * @return the optional
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 25. 오후 6:32:35
-     * @Description 상세 조회
+     * @since 2020. 6. 25. 오후 6:32:35
+     * @implNote 상세 조회
      */
     public Optional<User> findById(final Long userSeq) {
         log.info("UserService.findById");
@@ -154,8 +154,8 @@ public class UserService implements UserDetailsService {
      * @param userSeq the user seq
      * @return the user
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 6. 오후 2:38:47
-     * @Description 상세 부분 조회
+     * @since 2020. 7. 6. 오후 2:38:47
+     * @implNote 상세 부분 조회
      */
     public UserReturnDTO getUser(final Long userSeq) {
         log.info("UserService.getUser");
@@ -181,8 +181,8 @@ public class UserService implements UserDetailsService {
      * @param userSeq the user seq
      * @return the my page
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 14. 오후 12:02:26
-     * @Description
+     * @since 2020. 7. 14. 오후 12:02:26
+     * @implNote
      */
     public UserReturnDTO getMyPage(final Long userSeq) {
         log.info("UserService.getMyPage");
@@ -209,8 +209,8 @@ public class UserService implements UserDetailsService {
      * @param userId 유저 ID
      * @return the user
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:43
-     * @Description 상세 조회
+     * @since 2020. 6. 22. 오후 2:40:43
+     * @implNote 상세 조회
      */
     public User findByUserId(final String userId) {
         log.info("UserService.findByUserId");
@@ -224,8 +224,8 @@ public class UserService implements UserDetailsService {
      * @param userId the user id
      * @return the optional
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 2. 오전 11:27:53
-     * @Description 상세 조회
+     * @since 2020. 7. 2. 오전 11:27:53
+     * @implNote 상세 조회
      */
     public Optional<User> findByUserIdReturnOptional(final String userId) {
         log.info("UserService.findByUserId");
@@ -238,8 +238,8 @@ public class UserService implements UserDetailsService {
      * @param user the user
      * @return the optional
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 30. 오후 4:46:46
-     * @Description 유저 권한 조회
+     * @since 2020. 6. 30. 오후 4:46:46
+     * @implNote 유저 권한 조회
      */
     public Optional<UserAuth> findByUser(final User user) {
         return Optional.ofNullable(userAuthRepository.findByUser(user).orElseThrow(
@@ -252,8 +252,8 @@ public class UserService implements UserDetailsService {
      * @param userId the user id
      * @return the int
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 1. 오후 2:15:45
-     * @Description 유저 아이디 카운트
+     * @since 2020. 7. 1. 오후 2:15:45
+     * @implNote 유저 아이디 카운트
      */
     public int countByUserId(final String userId) {
         log.info("UserService.countByUserId");
@@ -266,8 +266,8 @@ public class UserService implements UserDetailsService {
      * @param userSaveDTO the user save dto
      * @return the user
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:44
-     * @Description 등록
+     * @since 2020. 6. 22. 오후 2:40:44
+     * @implNote 등록
      */
     @Transactional
     public UserReturnDTO save(final UserSaveDTO userSaveDTO) {
@@ -296,8 +296,8 @@ public class UserService implements UserDetailsService {
      * @param userUpdateDTO the user update dto
      * @return user user
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:44
-     * @Description 닉네임 /권한 수정
+     * @since 2020. 6. 22. 오후 2:40:44
+     * @implNote 닉네임 /권한 수정
      */
     @Transactional
     public UserReturnDTO update(
@@ -325,8 +325,8 @@ public class UserService implements UserDetailsService {
      * @param userUpdateStatusDTO the user update status dto
      * @return the optional
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:44
-     * @Description 상태값 변경
+     * @since 2020. 6. 22. 오후 2:40:44
+     * @implNote 상태값 변경
      */
     @Transactional
     public UserReturnDTO updateStatus(
@@ -348,8 +348,8 @@ public class UserService implements UserDetailsService {
      * @param userSeq the user seq
      * @return the optional
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 5:47:29
-     * @Description 유저 단건 삭제
+     * @since 2020. 6. 23. 오후 5:47:29
+     * @implNote 유저 단건 삭제
      */
     @Transactional
     public UserReturnDTO deleteOne(final Long userSeq) {
@@ -368,8 +368,8 @@ public class UserService implements UserDetailsService {
      * @param userDeleteDTO the user delete dto
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 6:15:52
-     * @Description 유저 배열 삭제
+     * @since 2020. 6. 23. 오후 6:15:52
+     * @implNote 유저 배열 삭제
      */
     @Transactional
     public List<Long> deleteArray(final UserDeleteDTO userDeleteDTO) {
@@ -390,8 +390,8 @@ public class UserService implements UserDetailsService {
      * @param userId 유저 ID
      * @return the authUserDTO
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 2:40:44
-     * @Description 로그인 검증
+     * @since 2020. 6. 22. 오후 2:40:44
+     * @implNote 로그인 검증
      */
     @Override
     public UserDetails loadUserByUsername(final String userId) {
@@ -405,8 +405,8 @@ public class UserService implements UserDetailsService {
      * @param userId the user id
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 1. 오후 2:52:56
-     * @Description ID 중복 체크
+     * @since 2020. 7. 1. 오후 2:52:56
+     * @implNote ID 중복 체크
      */
     public SingleResult<Integer> checkId(final String userId) {
         final SingleResult<Integer> result = new SingleResult<>();
@@ -429,8 +429,8 @@ public class UserService implements UserDetailsService {
      * @param userCertDTO the user cert dto
      * @return the boolean
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 27. 오후 4:12:37
-     * @Description
+     * @since 2020. 7. 27. 오후 4:12:37
+     * @implNote
      */
     public Boolean checkCertCode(final UserCertDTO userCertDTO) {
         log.info("UserService.checkCertCode");
@@ -453,8 +453,8 @@ public class UserService implements UserDetailsService {
      * @param userCertDTO the user cert dto
      * @return the boolean
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 4:18:42
-     * @Description 인증코드 검증 및 비밀번호 변경
+     * @since 2020. 6. 22. 오후 4:18:42
+     * @implNote 인증코드 검증 및 비밀번호 변경
      */
     @Transactional
     public UserReturnDTO confirmPassword(final UserCertDTO userCertDTO) {
@@ -518,8 +518,8 @@ public class UserService implements UserDetailsService {
      * @param userCertDTO the user cert dto
      * @return the boolean
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 6. 오후 3:32:25
-     * @Description
+     * @since 2020. 7. 6. 오후 3:32:25
+     * @implNote
      */
     @Transactional
     public UserReturnDTO confirmPassword(final String userId, final UserCertDTO userCertDTO) {
@@ -556,8 +556,8 @@ public class UserService implements UserDetailsService {
      * @param newPassword     the new password
      * @param confirmPassword the confirm password
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 6. 오후 3:32:17
-     * @Description
+     * @since 2020. 7. 6. 오후 3:32:17
+     * @implNote
      */
     public void checkPassword(
             final Long userSeq
@@ -629,8 +629,8 @@ public class UserService implements UserDetailsService {
      * @param certCode the cert code
      * @param certKey  the cert key
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 6. 오후 3:32:21
-     * @Description
+     * @since 2020. 7. 6. 오후 3:32:21
+     * @implNote
      */
     public Boolean checkCertCode (final String certCode, final String certKey) {
         log.info("UserService.checkCertCode");

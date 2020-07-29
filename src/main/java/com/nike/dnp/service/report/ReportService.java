@@ -41,7 +41,8 @@ import java.util.Optional;
  * The Class Report service.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 7. 오후 2:40:15
+ * @since 2020. 7. 7. 오후 2:40:15
+ * @implNote
  */
 @Slf4j
 @Service
@@ -100,7 +101,8 @@ public class ReportService {
      * @param reportSearchDTO the report search dto
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 8. 오후 5:28:17
+     * @since 2020. 7. 8. 오후 5:28:17
+     * @implNote
      */
     public Page<Report> findAllPaging(final AuthUserDTO authUserDTO, final ReportSearchDTO reportSearchDTO) {
 
@@ -131,7 +133,8 @@ public class ReportService {
      * @param reportSaveDTO the report save dto
      * @return the report
      * @author [이소정]
-     * @CreatedOn 2020. 7. 8. 오후 5:28:20
+     * @since 2020. 7. 8. 오후 5:28:20
+     * @implNote
      */
     @Transactional
     public Report save(final AuthUserDTO authUserDTO, final ReportSaveDTO reportSaveDTO) {
@@ -152,7 +155,7 @@ public class ReportService {
 
         if (!reportSaveDTO.getReportFileSaveDTOList().isEmpty()) {
             for (ReportFileSaveDTO reportFileSaveDTO : reportSaveDTO.getReportFileSaveDTOList()) {
-                ReportFile savedReportFile = reportFileRepository.save(new ReportFile().save(savedReport.getReportSeq(), this.s3FileCopyUpdate(reportFileSaveDTO)));
+                ReportFile savedReportFile = reportFileRepository.save(new ReportFile().save(savedReport.getReportSeq(), reportFileSaveDTO));
                 reportFileList.add(savedReportFile);
             }
         }
@@ -210,7 +213,8 @@ public class ReportService {
      * @param reportSeq the report seq
      * @return the report
      * @author [이소정]
-     * @CreatedOn 2020. 7. 8. 오후 5:52:10
+     * @since 2020. 7. 8. 오후 5:52:10
+     * @implNote
      */
     @Transactional
     public Report findByReportSeq(final Long reportSeq) {
@@ -238,9 +242,10 @@ public class ReportService {
      * Update optional.
      *
      * @param reportUpdateDTO the report update dto
-     * @return the report
+     * @return the optional
      * @author [이소정]
      * @CreatedOn 2020. 7. 9. 오후 6:49:17
+     * @Description
      */
     @Transactional
     public Report update(final ReportUpdateDTO reportUpdateDTO) {
@@ -328,7 +333,8 @@ public class ReportService {
      *
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 24. 오후 8:20:01
+     * @since 2020. 7. 24. 오후 8:20:01
+     * @implNote 보고서 상세 권한 있는 그룹의 회원 목록
      */
     public List<Long> findAllAuthUser() {
         UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
@@ -354,8 +360,8 @@ public class ReportService {
      * @param reportSeq the report seq
      * @return the optional
      * @author [이소정]
-     * @CreatedOn 2020. 7. 9. 오후 5:49:18
-     * @Description
+     * @since 2020. 7. 9. 오후 5:49:18
+     * @implNote
      */
     @Transactional
     public Report delete(final Long reportSeq) {

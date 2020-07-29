@@ -22,8 +22,8 @@ import java.util.List;
  * UserContentsService
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 22. 오후 2:40:43
- * @Description UserContents(유저 컨텐츠 권한) Service 작성
+ * @since 2020. 6. 22. 오후 2:40:43
+ * @implNote UserContents(유저 컨텐츠 권한) Service 작성
  */
 @Slf4j
 @Service
@@ -43,8 +43,8 @@ public class UserContentsService {
      * @param userContentsSaveDTO the user contents save dto
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오후 12:30:08
-     * @Description 컨텐츠 권한 저장
+     * @since 2020. 7. 20. 오후 12:30:08
+     * @implNote 컨텐츠 권한 저장
      */
     public List<UserContents> save (final Long contentsSeq, final UserContentsSaveDTO userContentsSaveDTO) {
         log.info("UserContentsService.save");
@@ -72,8 +72,8 @@ public class UserContentsService {
      * @param userContentsSearchDTO the user contents search dto
      * @return the auth list
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오후 4:25:19
-     * @Description 컨텐츠 권한 목록
+     * @since 2020. 7. 20. 오후 4:25:19
+     * @implNote 컨텐츠 권한 목록
      */
     public List<AuthReturnDTO> getAuthList (final UserContentsSearchDTO userContentsSearchDTO) {
         log.info("UserContentsService.getAuthList");
@@ -90,8 +90,8 @@ public class UserContentsService {
      * @param userContentsSearchDTO the user contents search dto
      * @return the boolean
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오후 4:25:14
-     * @Description 권한 존재 여부
+     * @since 2020. 7. 20. 오후 4:25:14
+     * @implNote 권한 존재 여부
      */
     public boolean isAuth(final Long authSeq, final UserContentsSearchDTO userContentsSearchDTO) {
         log.info("UserContentsService.isAuth");

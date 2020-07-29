@@ -13,8 +13,8 @@ import java.util.List;
  * The Class Main result dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 27. 오후 5:40:14
- * @Description
+ * @since 2020. 7. 27. 오후 5:40:14
+ * @implNote
  */
 @Getter
 @Setter

@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
  * The Class Contents basket result dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 14. 오후 5:23:51
- * @Description
+ * @since 2020. 7. 14. 오후 5:23:51
+ * @implNote
  */
 @Getter
 @Setter

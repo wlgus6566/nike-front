@@ -11,31 +11,31 @@ import java.util.Optional;
  * The Interface Goods basket repository.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 14. 오후 3:37:34
- * @Description
+ * @since 2020. 7. 14. 오후 3:37:34
+ * @implNote
  */
 public interface GoodsBasketRepository extends JpaRepository<GoodsBasket,Long> {
 
 	/**
-	 * Find by goods seq and user seq optional.
+	 * 제품 시퀀스와 유저 시퀀스 장바구니 조회
 	 *
 	 * @param goodsSeq the goods seq
 	 * @param userSeq  the user seq
 	 * @return the optional
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 14. 오후 3:37:34
-	 * @Description
+	 * @since 2020. 7. 14. 오후 3:37:34
+	 * @implNote
 	 */
 	Optional<GoodsBasket> findByGoodsSeqAndUserSeq(Long goodsSeq,Long userSeq);
 
 	/**
-	 * Find by user seq order by goods basket seq desc list.
+	 * 유저 시퀀스로 장바구니 조회
 	 *
 	 * @param userSeq the user seq
 	 * @return the list
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 14. 오후 3:37:34
-	 * @Description
+	 * @since 2020. 7. 14. 오후 3:37:34
+	 * @implNote
 	 */
 	List<GoodsBasket> findByUserSeqOrderByGoodsBasketSeqDesc(Long userSeq);
 

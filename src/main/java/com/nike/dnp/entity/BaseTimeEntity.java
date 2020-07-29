@@ -22,8 +22,8 @@ import java.time.LocalDateTime;
  * BaseTimeEntity Entity
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 19. 오후 4:52:28
- * @Description BaseTimeEntity Entity 작성
+ * @since 2020. 6. 19. 오후 4:52:28
+ * @implNote BaseTimeEntity Entity 작성
  */
 @Data
 @MappedSuperclass

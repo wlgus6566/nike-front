@@ -13,8 +13,8 @@ import java.io.Writer;
  * JsonUtil
  *
  * @author [윤태호]
- * @CreatedOn 2020. 6. 24. 오후 6:03:44
- * @Description JsonUtil 작성
+ * @since 2020. 6. 24. 오후 6:03:44
+ * @implNote JsonUtil 작성
  * @history [윤태호] [2020.05.21] [최초 작성]
  * @since 2020.05.21
  */
@@ -28,8 +28,8 @@ public class JsonUtil {
 	 * @param writer the writer
 	 * @param value  the value
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 24. 오후 6:03:44
-	 * @Description value > json 형태로 writer
+	 * @since 2020. 6. 24. 오후 6:03:44
+	 * @implNote value > json 형태로 writer
 	 */
 	public void write(final Writer writer, final Object value) {
 		try {

@@ -23,8 +23,8 @@ import javax.validation.Valid;
  * The Class Notice controller.
  *
  * @author [정주희]
- * @CreatedOn 2020. 7. 9. 오후 6:19:28
- * @Description
+ * @since 2020. 7. 9. 오후 6:19:28
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -61,8 +61,8 @@ public class NoticeController {
      * @param noticeSearchDTO the notice search dto
      * @return the single result
      * @author [정주희]
-     * @CreatedOn 2020. 7. 13. 오후 11:07:03
-     * @Description Customer Center 목록 조회
+     * @since 2020. 7. 13. 오후 11:07:03
+     * @apiNote Customer Center 목록 조회
      */
     @ApiOperation(
             value = "Customer Center 목록 조회",
@@ -91,8 +91,8 @@ public class NoticeController {
      * @param noticeSeq the notice seq
      * @return the single result
      * @author [정주희]
-     * @CreatedOn 2020. 7. 21. 오후 4:16:19
-     * @Description Customer Center 상세 조회
+     * @since 2020. 7. 21. 오후 4:16:19
+     * @apiNote Customer Center 상세 조회
      */
     @ApiOperation(
             value = "Customer Center 게시글 상세 조회",
@@ -120,8 +120,8 @@ public class NoticeController {
      * @param sectionCode   the section code
      * @return the single result
      * @author [정주희]
-     * @CreatedOn 2020. 7. 20. 오후 9:21:31
-     * @Description Customer Center 등록
+     * @since 2020. 7. 20. 오후 9:21:31
+     * @apiNote Customer Center 등록
      */
     @ApiOperation(
             value = "Customer Center 게시글 등록",
@@ -146,8 +146,8 @@ public class NoticeController {
      *
      * @return the single result
      * @author [정주희]
-     * @CreatedOn 2020. 7. 20. 오후 9:26:05
-     * @Description 공지사항 등록/수정시 상단 고정된 게시글 개수 확인
+     * @since 2020. 7. 20. 오후 9:26:05
+     * @apiNote 공지사항 등록/수정시 상단 고정된 게시글 개수 확인
      */
     @ApiOperation(value = "공지사항 고정게시글 개수 조회")
     @GetMapping("/NOTICE/noticeYnCnt")
@@ -164,8 +164,8 @@ public class NoticeController {
      * @param noticeSeq       the notice seq
      * @return the single result
      * @author [정주희]
-     * @CreatedOn 2020. 7. 25. 오후 6:41:37
-     * @Description Customer Center 게시글 수정
+     * @since 2020. 7. 25. 오후 6:41:37
+     * @apiNote Customer Center 게시글 수정
      */
     @ApiOperation(
             value = "Customer Center 게시글 수정",
@@ -190,8 +190,8 @@ public class NoticeController {
      * @param noticeSeq   the notice seq
      * @return the single result
      * @author [정주희]
-     * @CreatedOn 2020. 7. 20. 오후 9:59:56
-     * @Description Customer Center 게시글 삭제
+     * @since 2020. 7. 20. 오후 9:59:56
+     * @apiNote Customer Center 게시글 삭제
      */
     @ApiOperation(value = "상품 삭제", notes = BASIC_CHARACTER)
     @DeleteMapping({"/{noticeSeq}"})

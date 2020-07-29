@@ -11,8 +11,8 @@ import java.io.Serializable;
  * UserContents Entity
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:11:29
- * @Description UserContents(컨텐츠 권한) Entity 작성
+ * @since 2020. 6. 24. 오후 6:11:29
+ * @implNote UserContents(컨텐츠 권한) Entity 작성
  */
 @Getter
 @Setter
@@ -78,8 +78,8 @@ public class UserContents extends BaseTimeEntity implements Serializable {
      * @param emailReceptionYn the email reception yn
      * @return the user contents
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오후 12:08:11
-     * @Description 저장
+     * @since 2020. 7. 20. 오후 12:08:11
+     * @implNote 저장
      */
     public UserContents save (
             final Long contentSeq

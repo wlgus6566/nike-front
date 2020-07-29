@@ -20,8 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
  * The Class History service.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 23. 오전 11:32:16
- * @Description
+ * @since 2020. 7. 23. 오전 11:32:16
+ * @implNote
  */
 @Slf4j
 @Service
@@ -50,8 +50,8 @@ public class HistoryService {
      * @param authUserDTO      the auth user dto
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 27. 오후 2:19:02
-     * @Description
+     * @since 2020. 7. 27. 오후 2:19:02
+     * @implNote
      */
     public Page<HistoryResultDTO> findAllUploadHistoryPaging(final HistorySearchDTO historySearchDTO, final AuthUserDTO authUserDTO) {
         historySearchDTO.setRegisterSeq(authUserDTO.getUserSeq());
@@ -69,8 +69,8 @@ public class HistoryService {
      * @param authUserDTO      the auth user dto
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 24. 오후 4:00:56
-     * @Description
+     * @since 2020. 7. 24. 오후 4:00:56
+     * @implNote
      */
     public Page<HistoryResultDTO> findAllViewHistoryPaging(final HistorySearchDTO historySearchDTO, final AuthUserDTO authUserDTO) {
         historySearchDTO.setRegisterSeq(authUserDTO.getUserSeq());

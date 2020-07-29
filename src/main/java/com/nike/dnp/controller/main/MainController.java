@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
  * The Class Main controller.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 27. 오후 5:04:19
- * @Description
+ * @since 2020. 7. 27. 오후 5:04:19
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -49,8 +49,8 @@ public class MainController {
      *
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 27. 오후 5:38:53
-     * @Description
+     * @since 2020. 7. 27. 오후 5:38:53
+     * @apiNote
      */
     @ApiOperation(
         value = "메인 조회(calendar 제외)"

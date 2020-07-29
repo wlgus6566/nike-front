@@ -3,6 +3,7 @@ package com.nike.dnp.util;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -18,10 +19,11 @@ import java.io.IOException;
  * ImageUtil
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 10. 오후 2:41:58
- * @Description
+ * @since 2020. 7. 10. 오후 2:41:58
+ * @implNote
  */
 @Component
+@Slf4j
 public class ImageUtil {
 
 	/**
@@ -36,8 +38,8 @@ public class ImageUtil {
 	 *
 	 * @param root the root
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 10. 오후 2:41:58
-	 * @Description
+	 * @since 2020. 7. 10. 오후 2:41:58
+	 * @implNote
 	 */
 	@Value("${nike.file.root:}")
 	public void setRoot(final String root) {
@@ -55,12 +57,11 @@ public class ImageUtil {
 	 * @throws IOException                the io exception
 	 * @throws CodeMessageHandleException the code message handle exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 10. 오후 2:41:58
-	 * @Description
+	 * @since 2020. 7. 10. 오후 2:41:58
+	 * @implNote
 	 */
 	public static FileResultDTO fileSaveForBase64(final String folder, final String base64Str) {
-
-
+		log.info("ImageUtil.fileSaveForBase64");
 		final String info = base64Str.split(",")[0];
 		if(!info.contains("image")){
 			throw new CodeMessageHandleException(

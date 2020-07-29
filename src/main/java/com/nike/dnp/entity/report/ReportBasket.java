@@ -10,8 +10,8 @@ import javax.persistence.*;
  * The Class Report basket.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 17. 오후 5:53:48
- * @Description
+ * @since 2020. 7. 17. 오후 5:53:48
+ * @implNote
  */
 @Getter
 @Setter
@@ -54,8 +54,8 @@ public class ReportBasket extends BaseTimeEntity {
      * @param userSeq       the user seq
      * @return the report basket
      * @author [이소정]
-     * @CreatedOn 2020. 7. 17. 오후 7:04:39
-     * @Description
+     * @since 2020. 7. 17. 오후 7:04:39
+     * @implNote
      */
     public ReportBasket save(final Long reportFileSeq, final Long userSeq) {
         final ReportBasket reportBasket = new ReportBasket();
