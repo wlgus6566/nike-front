@@ -120,7 +120,7 @@ public class ReportAnswerController {
     @ApiOperation(value="보고서 댓글 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "보고서 댓글 삭제", value = "/{answerSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<ReportAnswer>> deleteReport(
+    public SingleResult<ReportAnswer> deleteReport(
             @ApiParam(name = "answerSeq", value = "보고서 댓글 시퀀스", defaultValue = "1") @PathVariable final Long answerSeq) {
         log.info("ReportController.deleteReport");
         return responseService.getSingleResult(reportAnswerService.delete(answerSeq));

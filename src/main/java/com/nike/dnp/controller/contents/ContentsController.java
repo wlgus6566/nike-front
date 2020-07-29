@@ -179,7 +179,7 @@ public class ContentsController {
             + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n")
     @PutMapping(name = "컨텐츠 수정", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<Contents>> updateContents(
+    public SingleResult<Contents> updateContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
             @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq,
@@ -187,7 +187,8 @@ public class ContentsController {
     ) {
         contentsUpdateDTO.setTopMenuCode(topMenuCode);
         contentsUpdateDTO.setMenuCode(menuCode);
-        return responseService.getSingleResult(contentsService.update(contentsSeq, contentsUpdateDTO));
+        contentsUpdateDTO.setContentsSeq(contentsSeq);
+        return responseService.getSingleResult(contentsService.update(contentsUpdateDTO));
     }
 
 
@@ -206,7 +207,7 @@ public class ContentsController {
             + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n")
     @DeleteMapping(name = "컨텐츠 삭제", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<Contents>> deleteContents(
+    public SingleResult<Contents> deleteContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
             @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {

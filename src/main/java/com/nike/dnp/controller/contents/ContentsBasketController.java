@@ -122,7 +122,7 @@ public class ContentsBasketController {
     @ApiOperation(value="컨텐츠 장바구니 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "컨텐츠 장바구니 삭제", value = "/{contentsBasketSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<ContentsBasket>> deleteContentsBasket(
+    public SingleResult<ContentsBasket> deleteContentsBasket(
             @ApiParam(name = "contentsBasketSeq", value = "컨텐츠 장바구니 시퀀스", defaultValue = "2", required = true) @PathVariable final Long contentsBasketSeq) {
         log.info("ContentsController.delete");
         return responseService.getSingleResult(contentsBasketService.delete(contentsBasketSeq));

@@ -31,7 +31,6 @@ import java.util.Optional;
  *
  * @author [이소정]
  * @CreatedOn 2020. 7. 7. 오후 2:37:43
- * @Description
  */
 @Slf4j
 @RestController
@@ -67,6 +66,13 @@ public class ReportController {
      */
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
+    /**
+     * Find all reports single result.
+     *
+     * @param reportSearchDTO the report search dto
+     * @param authUserDTO     the auth user dto
+     * @return the single result
+     */
     @ApiOperation(
         value = "보고서 목록 조회"
         , notes = REQUEST_CHARACTER
@@ -104,7 +110,6 @@ public class ReportController {
      * @return the single result
      * @author [이소정]
      * @CreatedOn 2020. 7. 8. 오후 5:48:17
-     * @Description
      */
     @ApiOperation(
             value = "보고서 등록"
@@ -145,16 +150,16 @@ public class ReportController {
      * @return the single result
      * @author [이소정]
      * @CreatedOn 2020. 7. 9. 오후 6:18:36
-     * @Description
      */
     @ApiOperation(value = "보고서 수정", notes = REQUEST_CHARACTER)
     @PutMapping(name = "보고서 수정", value = "/{reportSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<Report>> updateReport(
+    public SingleResult<Report> updateReport(
             @ApiParam(name="reportUpdateDTO", value = "보고서 수정 Json") @RequestBody final ReportUpdateDTO reportUpdateDTO,
             @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq
     ) {
-        return responseService.getSingleResult(reportService.update(reportSeq, reportUpdateDTO));
+        reportUpdateDTO.setReportSeq(reportSeq);
+        return responseService.getSingleResult(reportService.update(reportUpdateDTO));
     }
 
     /**
@@ -169,7 +174,7 @@ public class ReportController {
     @ApiOperation(value="보고서 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "보고서 삭제", value = "/{reportSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<Report>> deleteReport(
+    public SingleResult<Report> deleteReport(
             @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq) {
         log.info("ReportController.deleteReport");
         return responseService.getSingleResult(reportService.delete(reportSeq));

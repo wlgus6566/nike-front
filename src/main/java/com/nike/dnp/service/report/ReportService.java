@@ -1,5 +1,6 @@
 package com.nike.dnp.service.report;
 
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.auth.AuthUserDTO;
@@ -11,6 +12,7 @@ import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.entity.user.UserAuth;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.report.ReportFileRepository;
 import com.nike.dnp.repository.report.ReportRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
@@ -20,6 +22,7 @@ import com.nike.dnp.service.contents.ContentsService;
 import com.nike.dnp.service.history.HistoryService;
 import com.nike.dnp.service.user.UserContentsService;
 import com.nike.dnp.util.ImageUtil;
+import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -221,19 +224,28 @@ public class ReportService {
     }
 
     /**
+     * Find by id optional.
+     *
+     * @param reportSeq the report seq
+     * @return the optional
+     */
+    public Optional<Report> findById(final Long reportSeq) {
+        return Optional.ofNullable(reportRepository.findById(reportSeq).orElseThrow(
+                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+    }
+
+    /**
      * Update optional.
      *
      * @param reportUpdateDTO the report update dto
-     * @return the optional
+     * @return the report
      * @author [이소정]
      * @CreatedOn 2020. 7. 9. 오후 6:49:17
      */
     @Transactional
-    public Optional<Report> update(final Long reportSeq, final ReportUpdateDTO reportUpdateDTO) {
+    public Report update(final ReportUpdateDTO reportUpdateDTO) {
         log.info("reportService.update");
-        reportUpdateDTO.setReportSeq(reportSeq);
-
-        final Optional<Report> report = reportRepository.findById(reportUpdateDTO.getReportSeq());
+        final Optional<Report> report = this.findById(reportUpdateDTO.getReportSeq());
 
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(reportUpdateDTO.getImageBase64())) {
@@ -290,10 +302,10 @@ public class ReportService {
                 ServiceCode.AlarmActionEnumCode.UPDATE.toString()
                 , ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString()
                 , null
-                , reportSeq
+                , reportUpdateDTO.getReportSeq()
                 , this.findAllAuthUser());
 
-        return report;
+        return report.get();
     }
 
     /**
@@ -346,17 +358,18 @@ public class ReportService {
      * @Description
      */
     @Transactional
-    public Optional<Report> delete(final Long reportSeq) {
-        Optional<Report> report = reportRepository.findById(reportSeq);
+    public Report delete(final Long reportSeq) {
+        Optional<Report> report = this.findById(reportSeq);
+        Report savedReport = report.get();
         report.ifPresent(value -> value.updateUseYn("N"));
 
-        if (!report.get().getReportFileList().isEmpty()) {
-            for (ReportFile reportFile : report.get().getReportFileList()) {
+        if (!savedReport.getReportFileList().isEmpty()) {
+            for (ReportFile reportFile : savedReport.getReportFileList()) {
                 reportFile.updateUseYn("N");
             }
         }
 
-        return report;
+        return savedReport;
     }
 
 }

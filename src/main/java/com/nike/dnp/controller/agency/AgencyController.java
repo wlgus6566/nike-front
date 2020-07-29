@@ -106,7 +106,7 @@ public class AgencyController {
     )
     @GetMapping(name = " 에이전시 상세조회", value = "/{agencySeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<Agency>> findAgency(
+    public SingleResult<Agency> findAgency(
             @ApiParam(name = "agencySeq", value = "에이전시 시퀀스", defaultValue = "1", required = true) @PathVariable final Long agencySeq) {
         return  responseService.getSingleResult(agencyService.findByAgencySeq(agencySeq));
     }
@@ -123,10 +123,11 @@ public class AgencyController {
     @ApiOperation(value = "에이전시 수정", notes = REQUEST_CHARACTER)
     @PutMapping(name = "에이전시 수정", value = "/{agencySeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<Agency>> updateAgency(
+    public SingleResult<Agency> updateAgency(
             @ApiParam(name = "agencySeq", value = "에이전시 시퀀스", defaultValue = "1", required = true) @PathVariable final Long agencySeq,
             @RequestBody final AgencyUpdateDTO agencyUpdateDTO
     ) {
+        agencyUpdateDTO.setAgencySeq(agencySeq);
         return responseService.getSingleResult(agencyService.update(agencyUpdateDTO));
     }
 
@@ -142,7 +143,7 @@ public class AgencyController {
     @ApiOperation(value="에이전시 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "에이전시 삭제", value = "/{agencySeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<Agency>> deleteAgency(
+    public SingleResult<Agency> deleteAgency(
             @ApiParam(name = "agencySeq", value = "에이전시 시퀀스", defaultValue = "1", required = true) @PathVariable final Long agencySeq) {
         log.info("AgencyController.deleteAgency");
         return responseService.getSingleResult(agencyService.delete(agencySeq));

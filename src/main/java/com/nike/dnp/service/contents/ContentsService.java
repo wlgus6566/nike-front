@@ -10,7 +10,9 @@ import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.user.UserContentsSaveDTO;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
 import com.nike.dnp.entity.contents.Contents;
+import com.nike.dnp.entity.contents.ContentsBasket;
 import com.nike.dnp.entity.contents.ContentsFile;
+import com.nike.dnp.entity.user.User;
 import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.entity.user.UserContents;
 import com.nike.dnp.exception.CodeMessageHandleException;
@@ -265,7 +267,8 @@ public class ContentsService {
     @Transactional
     public ContentsResultDTO findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
         Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
-        final Contents findContents = contents.orElseThrow(() -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
+        final Contents findContents = contents.orElseThrow(
+                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
         findContents.updateReadCount(findContents.getReadCount());
 
         // history 저장
@@ -283,17 +286,15 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 3. 오후 4:01:24
      */
     @Transactional
-    public Optional<Contents> update(final Long contentsSeq, final ContentsUpdateDTO contentsUpdateDTO) {
+    public Contents update(final ContentsUpdateDTO contentsUpdateDTO) {
         log.info("contentsService.update");
-
-        // contents Update
-        contentsUpdateDTO.setContentsSeq(contentsSeq);
-        final Optional<Contents> contents = Optional.ofNullable(contentsRepository.findById(contentsUpdateDTO.getContentsSeq()).orElseThrow(() ->
-                new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+        Optional<Contents> contents = this.findById(contentsUpdateDTO.getContentsSeq());
+        Contents savedContents = contents.get();
 
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(contentsUpdateDTO.getImageBase64())) {
-            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsUpdateDTO.getImageBase64());
+            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
+                    ServiceCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsUpdateDTO.getImageBase64());
 
             contentsUpdateDTO.setImageFileName(fileResultDTO.getFileName());
             contentsUpdateDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
@@ -303,8 +304,8 @@ public class ContentsService {
         contents.ifPresent(value -> value.update(contentsUpdateDTO));
 
         // contents File
-        final List<ContentsFile> beforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contents.get().getContentsSeq(), "Y");
-        final List<ContentsFile> lastBeforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contents.get().getContentsSeq(), "Y");
+        final List<ContentsFile> beforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contentsUpdateDTO.getContentsSeq(), "Y");
+        final List<ContentsFile> lastBeforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contentsUpdateDTO.getContentsSeq(), "Y");
         List<ContentsFileUpdateDTO> newFileList = contentsUpdateDTO.getContentsFileList();
 
         // 기존에 있는 파일 목록과 DTO받은 파일 목록 비교해서
@@ -358,7 +359,7 @@ public class ContentsService {
                     , null
                     , this.findAllAuthUser(contentsUpdateDTO.getChecks()));
         }
-        return contents;
+        return savedContents;
     }
 
 
@@ -371,10 +372,10 @@ public class ContentsService {
      * @CreatedOn 2020. 7. 7. 오전 10:59:29
      */
     @Transactional
-    public Optional<Contents> delete(final Long contentsSeq) {
+    public Contents delete(final Long contentsSeq) {
         log.info("contentsService.delete");
 
-        Optional<Contents> contents = contentsRepository.findById(contentsSeq);
+        Optional<Contents> contents = this.findById(contentsSeq);
         contents.ifPresent(value -> value.delete());
 
         List<ContentsFile> contentsFileList = contents.get().getContentsFileList();
@@ -384,7 +385,7 @@ public class ContentsService {
             }
         }
 
-        return contents;
+        return contents.get();
     }
 
     /**
@@ -404,6 +405,18 @@ public class ContentsService {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Find by id optional.
+     *
+     * @param contentsSeq the contents seq
+     * @return the optional
+     */
+    public Optional<Contents> findById(final Long contentsSeq) {
+        log.info("UserService.findById");
+        return Optional.ofNullable(contentsRepository.findById(contentsSeq).orElseThrow(
+                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
     }
 
     /**
