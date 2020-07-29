@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.log;
 
+import com.nike.dnp.dto.log.ErrorLogSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -10,8 +11,8 @@ import javax.persistence.*;
  * ErrorLog Entity
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:10:25
- * @Description ErrorLog(오류 로그) Entity 작성
+ * @since 2020. 6. 24. 오후 6:10:25
+ * @implNote ErrorLog(오류 로그) Entity 작성
  */
 @Getter
 @Setter
@@ -49,5 +50,19 @@ public class ErrorLog extends BaseTimeEntity {
     @Column(name = "ERROR_CONTENTS")
     @ApiModelProperty(name = "errorContents", value = "오류 내용", required = true)
     private String errorContents;
+
+    /**
+     * Instantiates a new Error log.
+     *
+     * @param errorLogSaveDTO the error log save dto
+     * @author [오지훈]
+     * @since 2020. 7. 28. 오후 4:26:35
+     * @implNote
+     */
+    @Builder
+    public ErrorLog (final ErrorLogSaveDTO errorLogSaveDTO) {
+        this.url = errorLogSaveDTO.getUrl();
+        this.errorContents = errorLogSaveDTO.getErrorContents();
+    }
 
 }

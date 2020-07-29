@@ -9,8 +9,8 @@ import javax.persistence.Column;
  * UserActionLogSaveDTO
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:09:08
- * @Description UserActionLog(유저_활동_로그) Save DTO 작성
+ * @since 2020. 6. 24. 오후 6:09:08
+ * @implNote UserActionLog(유저_활동_로그) Save DTO 작성
  */
 @Getter
 @Setter

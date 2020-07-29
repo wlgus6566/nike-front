@@ -1,6 +1,6 @@
 package com.nike.dnp.repository.alarm;
 
-import com.nike.dnp.controller.alarm.AlarmResultDTO;
+import com.nike.dnp.dto.alarm.AlarmResultDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
@@ -15,8 +15,8 @@ public interface AlarmRepositoryCustom {
      * @param pageRequest the page request
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 24. 오후 7:54:36
-     * @Description
+     * @since 2020. 7. 24. 오후 7:54:36
+     * @implNote
      */
     Page<AlarmResultDTO> findAllPaging(Long userSeq, PageRequest pageRequest);
 }

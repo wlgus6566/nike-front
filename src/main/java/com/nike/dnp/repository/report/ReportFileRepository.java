@@ -11,8 +11,8 @@ import java.util.List;
  * The Interface Report file repository.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 8. 오후 5:55:07
- * @Description
+ * @since 2020. 7. 8. 오후 5:55:07
+ * @implNote
  */
 @Repository
 public interface ReportFileRepository extends JpaRepository<ReportFile, Long> {
@@ -24,8 +24,8 @@ public interface ReportFileRepository extends JpaRepository<ReportFile, Long> {
      * @param useYn     the use yn
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 8. 오후 5:57:26
-     * @Description
+     * @since 2020. 7. 8. 오후 5:57:26
+     * @implNote
      */
     List<ReportFile> findByReportSeqAndUseYn(Long reportSeq, String useYn);
 

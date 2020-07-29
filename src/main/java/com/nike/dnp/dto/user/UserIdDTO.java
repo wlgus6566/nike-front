@@ -10,8 +10,8 @@ import javax.validation.constraints.NotBlank;
  * UserIdDTO
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 22. 오후 12:14:01
- * @Description User(유저) ID로 검색 DTO 작성
+ * @since 2020. 6. 22. 오후 12:14:01
+ * @implNote User(유저) ID로 검색 DTO 작성
  */
 @Getter
 @Setter

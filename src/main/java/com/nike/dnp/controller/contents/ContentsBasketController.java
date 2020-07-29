@@ -23,8 +23,8 @@ import java.util.Optional;
  * The Class Contents basket controller.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 14. 오후 4:50:17
- * @Description
+ * @since 2020. 7. 14. 오후 4:50:17
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -60,8 +60,8 @@ public class ContentsBasketController {
      * @param authUserDTO the auth user dto
      * @return the all contents basket
      * @author [이소정]
-     * @CreatedOn 2020. 7. 15. 오후 12:16:20
-     * @Description
+     * @since 2020. 7. 15. 오후 12:16:20
+     * @apiNote
      */
     @ApiOperation(
             value = "컨텐츠 장바구니 목록 조회"
@@ -92,8 +92,8 @@ public class ContentsBasketController {
      * @param authUserDTO           the auth user dto
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 15. 오후 12:16:18
-     * @Description
+     * @since 2020. 7. 15. 오후 12:16:18
+     * @apiNote
      */
     @ApiOperation(
             value = "컨텐츠 장바구니 등록"
@@ -116,8 +116,8 @@ public class ContentsBasketController {
      * @param contentsBasketSeq the contents basket seq
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 15. 오후 2:41:27
-     * @Description
+     * @since 2020. 7. 15. 오후 2:41:27
+     * @apiNote
      */
     @ApiOperation(value="컨텐츠 장바구니 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "컨텐츠 장바구니 삭제", value = "/{contentsBasketSeq}"

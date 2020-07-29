@@ -9,8 +9,8 @@ import lombok.*;
  * The Class History search dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 23. 오전 11:24:45
- * @Description
+ * @since 2020. 7. 23. 오전 11:24:45
+ * @implNote
  */
 @Getter
 @Setter

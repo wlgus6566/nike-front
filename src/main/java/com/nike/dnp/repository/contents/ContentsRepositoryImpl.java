@@ -1,7 +1,5 @@
 package com.nike.dnp.repository.contents;
 
-import com.nike.dnp.common.ObjectMapperUtils;
-import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.dto.contents.ContentsUserEmailDTO;
@@ -10,6 +8,7 @@ import com.nike.dnp.entity.contents.QContents;
 import com.nike.dnp.entity.user.QUser;
 import com.nike.dnp.entity.user.QUserAuth;
 import com.nike.dnp.entity.user.QUserContents;
+import com.nike.dnp.util.ObjectMapperUtil;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -25,8 +24,7 @@ import java.util.List;
  * Contents Repository Impl
  *
  * @author [이소정]
- * @CreatedOn 2020. 6. 19. 오후 5:54:32
- * @Description Contents RepositoryImpl 작성
+ * @since 2020. 6. 19. 오후 5:54:32
  */
 @Repository
 public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements ContentsRepositoryCustom {
@@ -37,8 +35,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * Instantiates a new Contents repository.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 6:15:29
-     * @Description
+     * @since 2020. 6. 19. 오후 6:15:29
      */
     public ContentsRepositoryImpl() {
         super(Contents.class);
@@ -51,8 +48,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @param pageRequest       the page request
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:54:39
-     * @Description
+     * @since 2020. 6. 19. 오후 5:54:39
      */
     @Override
     public Page<ContentsResultDTO> findPageContents(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest) {
@@ -88,7 +84,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                         , qContents.useYn.eq("Y")
                 );
 
-        final List<ContentsResultDTO> contentsList = ObjectMapperUtils.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsResultDTO.class);
+        final List<ContentsResultDTO> contentsList = ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsResultDTO.class);
 
         return new PageImpl<>(contentsList, pageRequest, query.fetchCount());
     }
@@ -100,8 +96,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @param pageRequest the page request
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 27. 오후 6:39:10
-     * @Description
+     * @since 2020. 7. 27. 오후 6:39:10
      */
     public List<ContentsResultDTO> findRecentContents(final String topMenuCode, final PageRequest pageRequest) {
         ContentsSearchDTO contentsSearchDTO = new ContentsSearchDTO();
@@ -135,7 +130,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                         , qContents.useYn.eq("Y")
                 );
 
-        return ObjectMapperUtils.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsResultDTO.class);
+        return ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsResultDTO.class);
 
     }
 

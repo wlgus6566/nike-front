@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
  * CodeSaveDTO
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:08:43
- * @Description Code(공통코드) Save DTO 작성
+ * @since 2020. 6. 24. 오후 6:08:43
+ * @implNote Code(공통코드) Save DTO 작성
  */
 @Getter
 @Setter

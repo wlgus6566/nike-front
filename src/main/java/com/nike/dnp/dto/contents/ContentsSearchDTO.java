@@ -9,8 +9,7 @@ import lombok.*;
  * Contents Search DTO
  *
  * @author [이소정]
- * @CreatedOn 2020. 6. 19. 오후 5:57:26
- * @Description Contents Search DTO 작성
+ * @since 2020. 6. 19. 오후 5:57:26
  */
 @Getter
 @Setter
@@ -67,8 +66,7 @@ public class ContentsSearchDTO extends SearchDTO {
      *
      * @return String string
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:57:26
-     * @Description
+     * @since 2020. 6. 19. 오후 5:57:26
      */
     @Override
     public String toString() {

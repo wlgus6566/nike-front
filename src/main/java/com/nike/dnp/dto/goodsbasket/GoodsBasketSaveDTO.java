@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
  * The Class Goods basket save dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 21. 오후 3:54:41
- * @Description
+ * @since 2020. 7. 21. 오후 3:54:41
+ * @implNote
  */
 @Getter
 @Setter
@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 public class GoodsBasketSaveDTO extends BasicDTO {
 
 	/**
-	 * The User seq
+	 * 유저 seq
 	 *
 	 * @author [오지훈]
 	 */
@@ -28,7 +28,7 @@ public class GoodsBasketSaveDTO extends BasicDTO {
 	private Long userSeq;
 
 	/**
-	 * The Goods seq
+	 * 상품 seq
 	 *
 	 * @author [오지훈]
 	 */
@@ -37,7 +37,7 @@ public class GoodsBasketSaveDTO extends BasicDTO {
 	private Long goodsSeq;
 
 	/**
-	 * The Order quantity
+	 * 상품 수량
 	 *
 	 * @author [오지훈]
 	 */

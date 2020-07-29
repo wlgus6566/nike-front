@@ -9,8 +9,8 @@ import javax.persistence.*;
  * The Class Slang.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 2. 오전 11:36:36
- * @Description 금칙어 Entity 작성
+ * @since 2020. 7. 2. 오전 11:36:36
+ * @implNote 금칙어 Entity 작성
  */
 @Getter
 @Setter

@@ -8,8 +8,8 @@ import java.util.regex.Pattern;
  * PatternUtil
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 23. 오전 9:43:19
- * @Description 패스워드 정규식
+ * @since 2020. 6. 23. 오전 9:43:19
+ * @implNote 패스워드 정규식
  */
 @UtilityClass
 public class PasswordPatternUtil {
@@ -55,8 +55,8 @@ public class PasswordPatternUtil {
      * @param newPwd the new pwd
      * @return the boolean
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오전 9:43:19
-     * @Description 비밀번호 정규식 체크
+     * @since 2020. 6. 23. 오전 9:43:19
+     * @implNote 비밀번호 정규식 체크
      */
     public Boolean invalidPassword(final String newPwd) {
         return !(Pattern.compile(PATTERN).matcher(newPwd).find()
@@ -70,8 +70,8 @@ public class PasswordPatternUtil {
      * @param pwd the pwd
      * @return boolean boolean
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오전 9:43:19
-     * @Description 연속 문자, 숫자 4자리 체크
+     * @since 2020. 6. 23. 오전 9:43:19
+     * @implNote 연속 문자, 숫자 4자리 체크
      */
     public boolean continuousPassword(final String pwd) {
         int o = 0;
@@ -98,8 +98,8 @@ public class PasswordPatternUtil {
      * @param id  the id
      * @return boolean boolean
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오전 9:43:19
-     * @Description 아이디와 동일체크
+     * @since 2020. 6. 23. 오전 9:43:19
+     * @implNote 아이디와 동일체크
      */
     public boolean sameId(final String pwd, final String id) {
         return pwd.equals(id);
@@ -112,8 +112,8 @@ public class PasswordPatternUtil {
      * @param id  the id
      * @return the boolean
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 2. 오전 11:04:47
-     * @Description 아이디와 동일 문자 4자리 체크
+     * @since 2020. 7. 2. 오전 11:04:47
+     * @implNote 아이디와 동일 문자 4자리 체크
      */
     public boolean sameLengthId(final String pwd, final String id) {
         for(int i=0; i<pwd.length()-3; i++) {

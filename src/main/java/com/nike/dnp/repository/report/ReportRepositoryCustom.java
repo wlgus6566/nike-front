@@ -13,7 +13,7 @@ import java.util.List;
  * Contents Repository Custom
  *
  * @author [이소정]
- * @Description Contents Repository Custom 작성
+ * @implNote Contents Repository Custom 작성
  * @history [이소정] [2020.06.11] [최초 작성]
  * @since 2020.06.11
  */
@@ -27,8 +27,8 @@ public interface ReportRepositoryCustom {
      * @param pageRequest     the page request
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:57:50
-     * @Description
+     * @since 2020. 6. 19. 오후 5:57:50
+     * @implNote
      */
     Page<Report> findPageReport(final ReportSearchDTO reportSearchDTO, final PageRequest pageRequest);
 
@@ -38,8 +38,8 @@ public interface ReportRepositoryCustom {
      * @param pageRequest the page request
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 27. 오후 6:19:35
-     * @Description
+     * @since 2020. 7. 27. 오후 6:19:35
+     * @implNote
      */
     List<ReportResultDTO> findRecentReport(final PageRequest pageRequest);
 

@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <transition name="layout-change" mode="out-in">
-            <component :is="AppLayout" />
+            <component :is="AppLayout" :key="$route.meta.layout" />
         </transition>
     </div>
 </template>
@@ -9,16 +9,22 @@
 import Vue from 'vue';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/lib/locale/lang/en';
 import App from './App.vue';
 import { layouts } from '@/utils/global-methods';
-Vue.use(ElementUI);
+
+Vue.use(ElementUI, { locale });
 
 export default {
     name: 'App',
     render: (h) => h(App),
+    watch: {
+        $route() {},
+    },
     data() {
         return {};
     },
+
     computed: {
         AppLayout() {
             return `Layout${this.$route.meta.layout || 'Default'}`;

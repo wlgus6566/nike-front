@@ -24,14 +24,16 @@
                         <button type="button"><span>검색</span></button>
                     </div>
                 </div>
-                <ul class="order-item-list">
-                    <li class="order-item">
+                <ul class="product-list">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
                             </span>
                             <span class="info-box">
-                                <strong class="title">타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다 </strong>
+                                <strong class="title"
+                                    >타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다
+                                </strong>
                                 <p class="txt">설명입니다</p>
                                 <span class="desc-txt-box">
                                     <p class="desc">15,000원</p>
@@ -44,7 +46,7 @@
                             <button type="button" class="cart active"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -63,7 +65,7 @@
                             <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -82,7 +84,7 @@
                             <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -101,7 +103,7 @@
                             <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -120,7 +122,7 @@
                             <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -139,7 +141,7 @@
                             <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -158,7 +160,7 @@
                             <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />
@@ -177,7 +179,7 @@
                             <button type="button" class="cart"><span>카드담기</span></button>
                         </div>
                     </li>
-                    <li class="order-item">
+                    <li class="product-list-item">
                         <a href="#">
                             <span class="thumbnail">
                                 <img src="@/assets/images/img-asset-none@2x.png" alt="" />

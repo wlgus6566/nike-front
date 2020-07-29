@@ -11,17 +11,17 @@ import com.nike.dnp.service.notice.NoticeService;
 import com.nike.dnp.service.report.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * The Class Main service.
+ * 메인 화면(HOME 화면)관련 Service 입니다.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 27. 오후 5:39:29
- * @Description
+ * @since 2020. 7. 27. 오후 5:39:29
  */
 @Slf4j
 @Service
@@ -29,6 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MainService {
 
+    /**
+     * 베너 서비스 (메인 비쥬얼 서비스)
+     *
+     *
+     * @author [이소정]
+     */
     private final BannerService bannerService;
 
     private final ContentsService contentsService;
@@ -36,7 +42,7 @@ public class MainService {
     private final ReportService reportService;
 
     /**
-     * The Report repository
+     * 보고서 repository
      *
      * @author [이소정]
      */

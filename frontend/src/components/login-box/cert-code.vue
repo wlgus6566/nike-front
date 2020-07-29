@@ -1,0 +1,168 @@
+<template>
+    <form action="#" @submit.prevent="login">
+        <div class="login-box">
+            <strong class="title2"> E-MAIL 인증 </strong>
+            <p class="desc">
+                해당 계정의 E-MAIL로 인증코드가 발송되었습니다.<br />
+                E-MAIL 확인 후 인증코드를 입력해 주세요.<br />
+                ※인증코드는 대소문자를 구분합니다.
+            </p>
+            <div class="form-box">
+                <div class="certified-box">
+                    <input type="txt" max="1" />
+                    <input type="txt" max="1" />
+                    <input type="txt" max="1" />
+                    <input type="txt" max="1" />
+                    <input type="txt" max="1" />
+                    <input type="txt" max="1" />
+                    <input type="txt" max="1" />
+                    <input type="txt" max="1" />
+                </div>
+            </div>
+            <div class="login-btn-wrap">
+                <button type="button" class="btn-s-lg-orage">
+                    <span>인증하기</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</template>
+<script>
+export default {
+    name: 'loginForm',
+    data() {
+        return {
+            username: 'yth',
+            password: 'Qdlthauts!235',
+        };
+    },
+    methods: {
+        async login() {
+            if (!this.username) {
+                alert('아이디를 입력해 주세요.');
+                return;
+            }
+            if (!this.password) {
+                alert('비밀번호를 입력해 주세요.');
+                return;
+            }
+            try {
+                const bodyFormData = new FormData();
+                bodyFormData.set('username', this.username);
+                bodyFormData.set('password', this.password);
+                const response = await this.$store.dispatch(
+                    'LOGIN',
+                    bodyFormData
+                );
+                if (response.data.existMsg) {
+                    alert(response.data.msg);
+                }
+                if (response.data.code === 'SEND_EMAIL_CERT_CODE') {
+                    // 인증코드 입력
+                    this.$emit('changeLoginBox', 'certCode');
+                    //this.$router.push('/');
+                } else if (response.data.code === 'PASSWORD') {
+                    // 페스워드 변경 페이지 이동
+                    this.$router.push('/password-change');
+                } else {
+                    this.$router.push('/');
+                }
+
+                return;
+            } catch (error) {
+                alert(error.response.data.msg);
+            }
+        },
+    },
+};
+</script>
+<style scoped>
+.login-box {
+    position: relative;
+    width: 370px;
+    height: 390px;
+    margin-top: -100px;
+    padding: 50px 45px 45px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: -20px 20px 8px 0 rgba(0, 0, 0, 0.5);
+}
+.login-box .title {
+    display: block;
+    font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
+    color: #fff;
+    font-weight: normal;
+}
+.login-box .title em {
+    display: block;
+    font-size: 30px;
+    letter-spacing: 0.38px;
+    line-height: 36px;
+}
+.login-box .title span {
+    display: block;
+    vertical-align: top;
+    font-size: 46px;
+    line-height: 55px;
+    letter-spacing: 0.58px;
+}
+.login-box .title2 {
+    display: block;
+    font-size: 30px;
+    line-height: 44px;
+    letter-spacing: -2px;
+    color: #fff;
+    font-weight: bold;
+}
+.login-box .desc {
+    display: block;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #fff;
+    line-height: 20px;
+    opacity: 0.5;
+}
+.login-box .txt-btn {
+    font-weight: normal;
+}
+.form-box {
+    margin-top: 20px;
+}
+.form-box input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    font-size: 16px;
+    font-weight: normal;
+    color: #fff;
+    letter-spacing: 0;
+}
+.form-box input::placeholder,
+.form-box input::-webkit-input-placeholder {
+    font-family: 'Bebas Neue', sans-serif !important;
+    font-size: 16px !important;
+    letter-spacing: 0.5px !important;
+    color: #a7a7a7 !important;
+}
+.form-box input + input {
+    margin-top: 8px;
+}
+.login-btn-wrap {
+    margin-top: 20px;
+}
+.login-btn-wrap.half [class^='btn-s'] {
+    flex-basis: calc((100% - 10px) / 2);
+}
+.login-btn-wrap.half [class^='btn-s'] + [class^='btn-s'] {
+    margin-left: 10px;
+}
+.login-btn-wrap.half .btn-s {
+    border-color: #fff;
+}
+.login-btn-wrap .btn-s-lg-orage {
+    width: 100%;
+}
+.login-box .bnt-box {
+    margin-top: 12px;
+}
+</style>

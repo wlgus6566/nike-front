@@ -2,7 +2,7 @@ package com.nike.dnp.dto.contents;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
  * The Class Contents list dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 13. 오후 2:52:03
- * @Description
+ * @since 2020. 7. 13. 오후 2:52:03
+ * @implNote
  */
 @Getter
 @Setter
@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
-public class ContentsResultDTO {
+public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 컨텐츠 시퀀스
@@ -100,6 +100,13 @@ public class ContentsResultDTO {
     @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020.09.01 23:59:59")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime campaignEndDt;
+
+    /**
+     * 메모
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "memo", value = "메모")
+    private String memo;
 
     /**
      * 조회수

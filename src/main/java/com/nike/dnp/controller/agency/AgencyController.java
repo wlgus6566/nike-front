@@ -22,8 +22,8 @@ import java.util.Optional;
  * The Class Agency controller.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 20. 오후 12:00:36
- * @Description
+ * @since 2020. 7. 20. 오후 12:00:36
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -59,16 +59,15 @@ public class AgencyController {
      *
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 20. 오후 12:09:11
-     * @Description
+     * @since 2020. 7. 20. 오후 12:09:11
+     * @apiNote
      */
     @ApiOperation(
         value = "에이전시 목록 조회"
         , notes = REQUEST_CHARACTER
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "에이전시 목록 조회")
-    public SingleResult<List<Agency>> findAllAgency(
-    ) {
+    public SingleResult<List<Agency>> findAllAgency () {
         return responseService.getSingleResult(agencyService.findAll());
     }
 
@@ -78,8 +77,8 @@ public class AgencyController {
      * @param agencySaveDTO the agency save dto
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 20. 오후 12:12:19
-     * @Description
+     * @since 2020. 7. 20. 오후 12:12:19
+     * @apiNote
      */
     @ApiOperation(
             value = "에이전시 등록"
@@ -98,8 +97,8 @@ public class AgencyController {
      * @param agencySeq the agency seq
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 20. 오후 12:10:50
-     * @Description
+     * @since 2020. 7. 20. 오후 12:10:50
+     * @apiNote
      */
     @ApiOperation(
             value = "에이전시 상세조회"
@@ -118,8 +117,8 @@ public class AgencyController {
      * @param agencyUpdateDTO the agency update dto
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 20. 오후 2:16:42
-     * @Description
+     * @since 2020. 7. 20. 오후 2:16:42
+     * @apiNote
      */
     @ApiOperation(value = "에이전시 수정", notes = REQUEST_CHARACTER)
     @PutMapping(name = "에이전시 수정", value = "/{agencySeq}"
@@ -137,8 +136,8 @@ public class AgencyController {
      * @param agencySeq the agency seq
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 20. 오후 2:21:32
-     * @Description
+     * @since 2020. 7. 20. 오후 2:21:32
+     * @apiNote
      */
     @ApiOperation(value="에이전시 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "에이전시 삭제", value = "/{agencySeq}"

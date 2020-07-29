@@ -31,8 +31,8 @@ import javax.validation.Valid;
  * The Class Login controller.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 22. 오후 4:41:44
- * @Description
+ * @since 2020. 6. 22. 오후 4:41:44
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -75,8 +75,8 @@ public class OpenLoginController {
      * @param userIdDTO the user id dto
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 2. 오전 11:30:10
-     * @Description 인증코드 생성 및 이메일 발송
+     * @since 2020. 7. 2. 오전 11:30:10
+     * @apiNote 인증코드 생성 및 이메일 발송
      */
     @ApiOperation(value = "ID 확인, 인증코드 생성 및 이메일 발송"
             , notes = OPERATION_CHARACTER)
@@ -108,8 +108,8 @@ public class OpenLoginController {
      * @param userCertDTO the user cert dto
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 4:41:44
-     * @Description 인증코드 검증 및 비밀번호 설정
+     * @since 2020. 6. 22. 오후 4:41:44
+     * @apiNote 인증코드 검증 및 비밀번호 설정
      */
     @ApiOperation(value = "인증코드 검증 및 비밀번호 설정"
             , notes = OPERATION_CHARACTER)
@@ -136,8 +136,8 @@ public class OpenLoginController {
      * @param userCertDTO the user cert dto
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 2. 오후 4:08:39
-     * @Description 인증코드 검증 및 비밀번호 변경
+     * @since 2020. 7. 2. 오후 4:08:39
+     * @apiNote 인증코드 검증 및 비밀번호 변경
      */
     @ApiOperation(value = "인증코드 검증 및 비밀번호 변경"
             , notes = OPERATION_CHARACTER)
@@ -165,8 +165,8 @@ public class OpenLoginController {
      * @param result      the result
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 27. 오후 4:12:52
-     * @Description 인증코드 검증
+     * @since 2020. 7. 27. 오후 4:12:52
+     * @apiNote 인증코드 검증
      */
     @ApiOperation(value = "인증코드 검증"
             , notes = OPERATION_CHARACTER)

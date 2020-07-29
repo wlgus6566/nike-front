@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="column">
                                     <select>
-                                        <option>대구분</option>
+                                        <option>소구분</option>
                                     </select>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                         </div>
                         <div class="form-column">
                             <select style="width: 100%;">
-                                <option>소구분</option>
+                                <option>에이전시 선택</option>
                             </select>
                         </div>
                     </li>

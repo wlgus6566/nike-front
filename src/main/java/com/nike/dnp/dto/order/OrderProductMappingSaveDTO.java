@@ -6,8 +6,8 @@ import lombok.*;
  * The Class Order product mapping save dto.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 1. 오후 12:00:47
- * @Description
+ * @since 2020. 7. 1. 오후 12:00:47
+ * @implNote
  */
 @Getter
 @Setter
@@ -16,28 +16,28 @@ import lombok.*;
 public class OrderProductMappingSaveDTO {
 
 	/**
-	 * The Goods seq
+	 * 굿즈 시퀀스
 	 *
 	 * @author [윤태호]
 	 */
 	private  Long goodsSeq;
 
 	/**
-	 * The Order seq
+	 * 주문 시퀀스
 	 *
 	 * @author [윤태호]
 	 */
 	private Long orderSeq;
 
 	/**
-	 * The Order quantity
+	 * 주문 수량
 	 *
 	 * @author [윤태호]
 	 */
 	private Long orderQuantity;
 
 	/**
-	 * The Agency seq
+	 * 에이젼시 시퀀스
 	 *
 	 * @author [윤태호]
 	 */

@@ -17,8 +17,8 @@ import java.util.List;
  * The Class Contents update dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 21. 오후 3:54:34
- * @Description
+ * @since 2020. 7. 21. 오후 3:54:34
+ * @implNote
  */
 @Getter
 @Setter
@@ -261,8 +261,8 @@ public class ContentsUpdateDTO {
      * The Class Auth check.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오후 12:23:51
-     * @Description 권한 체크 DTO
+     * @since 2020. 7. 20. 오후 12:23:51
+     * @implNote 권한 체크 DTO
      */
     @Getter
     @Setter

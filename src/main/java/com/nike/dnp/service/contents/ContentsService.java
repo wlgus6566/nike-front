@@ -23,6 +23,7 @@ import com.nike.dnp.service.user.UserContentsService;
 import com.nike.dnp.util.FileUtil;
 import com.nike.dnp.util.ImageUtil;
 import com.nike.dnp.util.MessageUtil;
+import com.nike.dnp.util.ObjectMapperUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -42,8 +43,8 @@ import java.util.Optional;
  * Contents Service
  *
  * @author [이소정]
- * @CreatedOn 2020. 6. 11. 오후 3:25:23
- * @Description Contents Service 작성
+ * @since 2020. 6. 11. 오후 3:25:23
+ * @implNote Contents Service 작성
  */
 @Slf4j
 @Service
@@ -106,8 +107,8 @@ public class ContentsService {
      * @param contentsSearchDTO the contents search dto
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 13. 오후 3:23:01
-     * @Description
+     * @since 2020. 7. 13. 오후 3:23:01
+     * @implNote
      */
     public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO, final AuthUserDTO authUserDTO, final String topMenuCode, final String menuCode) {
         // 권한 검사
@@ -135,8 +136,8 @@ public class ContentsService {
      * @param contentsSaveDTO the contents save dto
      * @return the contents
      * @author [이소정]
-     * @CreatedOn 2020. 6. 24. 오후 3:22:15
-     * @Description
+     * @since 2020. 6. 24. 오후 3:22:15
+     * @implNote
      */
     @Transactional
     public Contents save(final ContentsSaveDTO contentsSaveDTO) {
@@ -190,8 +191,8 @@ public class ContentsService {
      * @param authCheckList the auth check list
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 24. 오후 7:30:13
-     * @Description
+     * @since 2020. 7. 24. 오후 7:30:13
+     * @implNote
      */
     public List<Long> findAllAuthUser(final List<UserContentsSaveDTO.AuthCheckDTO> authCheckList) {
         List<Long> userSeqList = new ArrayList<>();
@@ -216,11 +217,11 @@ public class ContentsService {
      * @param menuCode    the menu code
      * @return the contents
      * @author [이소정]
-     * @CreatedOn 2020. 7. 2. 오후 2:25:43
-     * @Description
+     * @since 2020. 7. 2. 오후 2:25:43
+     * @implNote
      */
     @Transactional
-    public Contents findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
+    public ContentsResultDTO findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
         Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
         final Contents findContents = contents.orElseThrow(() -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
         findContents.updateReadCount(findContents.getReadCount());
@@ -228,7 +229,7 @@ public class ContentsService {
         // history 저장
         historyService.saveViewHistory(contentsSeq, topMenuCode);
 
-        return findContents;
+        return ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
     }
 
     /**
@@ -237,8 +238,8 @@ public class ContentsService {
      * @param contentsUpdateDTO the contents update dto
      * @return the contents
      * @author [이소정]
-     * @CreatedOn 2020. 7. 3. 오후 4:01:24
-     * @Description
+     * @since 2020. 7. 3. 오후 4:01:24
+     * @implNote
      */
     @Transactional
     public Optional<Contents> update(final Long contentsSeq, final ContentsUpdateDTO contentsUpdateDTO) {
@@ -322,8 +323,8 @@ public class ContentsService {
      * @param contentsSeq the contents seq
      * @return the optional
      * @author [이소정]
-     * @CreatedOn 2020. 7. 7. 오전 10:59:29
-     * @Description
+     * @since 2020. 7. 7. 오전 10:59:29
+     * @implNote
      */
     @Transactional
     public Optional<Contents> delete(final Long contentsSeq) {
@@ -348,8 +349,8 @@ public class ContentsService {
      * @param contentsFileSeq the contents file seq
      * @return the string
      * @author [이소정]
-     * @CreatedOn 2020. 7. 16. 오후 2:51:01
-     * @Description
+     * @since 2020. 7. 16. 오후 2:51:01
+     * @implNote
      */
     @Transactional
     public ResponseEntity<Resource> downloadContentsFile(final Long contentsFileSeq) {
@@ -370,8 +371,8 @@ public class ContentsService {
      * @param userContentsSaveDTO the user contents save dto
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 24. 오후 7:01:22
-     * @Description
+     * @since 2020. 7. 24. 오후 7:01:22
+     * @implNote
      */
     public List<UserContents> saveUserContentsAuth(final Long contentsSeq, final UserContentsSaveDTO userContentsSaveDTO) {
         return userContentsService.save(contentsSeq, userContentsSaveDTO);

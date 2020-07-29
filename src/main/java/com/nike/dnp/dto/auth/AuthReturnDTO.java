@@ -8,8 +8,8 @@ import lombok.*;
  * The Class Auth return dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 5:21:03
- * @Description Auth(권한) Return DTO 작성
+ * @since 2020. 6. 24. 오후 5:21:03
+ * @implNote Auth(권한) Return DTO 작성
  */
 @Getter
 @Setter

@@ -14,8 +14,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * StartApplication
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:04:47
- * @Description StartApplication 작성
+ * @since 2020. 6. 24. 오후 6:04:47
+ * @implNote StartApplication 작성
  */
 @Slf4j
 @EnableCaching
@@ -30,8 +30,8 @@ public class StartApplication extends SpringBootServletInitializer {
 	 *
 	 * @param args the input arguments
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:04:47
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:04:47
+	 * @implNote
 	 */
 	public static void main(final String[] args) {
 		SpringApplication.run(StartApplication.class, args);
@@ -43,8 +43,8 @@ public class StartApplication extends SpringBootServletInitializer {
 	 * @param builder the builder
 	 * @return the spring application builder
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:04:47
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:04:47
+	 * @implNote
 	 */
 	@Override
 	protected final SpringApplicationBuilder configure(final SpringApplicationBuilder builder) {

@@ -22,8 +22,8 @@ import java.util.List;
  * User Entity
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 23. 오후 5:26:57
- * @Description User(유저) Entity 작성
+ * @since 2020. 6. 23. 오후 5:26:57
+ * @implNote User(유저) Entity 작성
  */
 @Slf4j
 @Getter
@@ -165,8 +165,8 @@ public class User extends BaseTimeEntity {
      * 쿼리 실행 전 기본값 설정
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 5:26:57
-     * @Description
+     * @since 2020. 6. 23. 오후 5:26:57
+     * @implNote
      */
     @PrePersist
     public void prePersist() {
@@ -181,8 +181,8 @@ public class User extends BaseTimeEntity {
      * @param userSaveDTO the user save dto
      * @return the user
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 25. 오후 5:59:50
-     * @Description
+     * @since 2020. 6. 25. 오후 5:59:50
+     * @implNote
      */
     public User save(final UserSaveDTO userSaveDTO) {
         log.info("User.save");
@@ -197,8 +197,8 @@ public class User extends BaseTimeEntity {
      *
      * @param userUpdateDTO the user update dto
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 5:26:57
-     * @Description 닉네임 /권한 변경
+     * @since 2020. 6. 23. 오후 5:26:57
+     * @implNote 닉네임 /권한 변경
      */
     public void update(final UserUpdateDTO userUpdateDTO) {
         log.info("User.update");
@@ -210,8 +210,8 @@ public class User extends BaseTimeEntity {
      *
      * @param password the password
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 5:26:57
-     * @Description 비밀번호 변경
+     * @since 2020. 6. 23. 오후 5:26:57
+     * @implNote 비밀번호 변경
      */
     public void updatePassword(final String password) {
         log.info("User.updatePassword");
@@ -225,8 +225,8 @@ public class User extends BaseTimeEntity {
      *
      * @param userStatusCode the user status code
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 5:26:57
-     * @Description 상태값 변경
+     * @since 2020. 6. 23. 오후 5:26:57
+     * @implNote 상태값 변경
      */
     public void updateStatus(final String userStatusCode) {
         log.info("User.updateStatus");
@@ -238,8 +238,8 @@ public class User extends BaseTimeEntity {
      *
      * @param userSeq the user seq
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 5:41:15
-     * @Description 삭제
+     * @since 2020. 6. 23. 오후 5:41:15
+     * @implNote 삭제
      */
     public void delete(final Long userSeq) {
         log.info("User.delete");
@@ -253,8 +253,8 @@ public class User extends BaseTimeEntity {
      * Update login dt.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 5:26:57
-     * @Description 최종 로그인 일시 변경 / 브라우저 헤더 업데이트
+     * @since 2020. 6. 23. 오후 5:26:57
+     * @implNote 최종 로그인 일시 변경 / 브라우저 헤더 업데이트
      */
     public void updateLoginDt(final String loginBrowserHeader) {
         log.info("User.updateLoginDt");
@@ -266,8 +266,8 @@ public class User extends BaseTimeEntity {
      * Update agreement.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 2. 오후 5:03:18
-     * @Description 약관동의
+     * @since 2020. 7. 2. 오후 5:03:18
+     * @implNote 약관동의
      */
     public void updateAgreement() {
         log.info("User.updateAgreement");
@@ -278,8 +278,8 @@ public class User extends BaseTimeEntity {
      * Update password change.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 2. 오후 6:03:14
-     * @Description 업데이트 변경 여부 수정
+     * @since 2020. 7. 2. 오후 6:03:14
+     * @implNote 업데이트 변경 여부 수정
      */
     public void updatePasswordChange() {
         log.info("User.updatePasswordChange");

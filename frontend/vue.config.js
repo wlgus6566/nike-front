@@ -1,5 +1,10 @@
+const ansiRegex = require('ansi-regex');
 module.exports = {
-    runtimeCompiler: true,
+    lintOnSave: false,
+    assetsDir: 'pc',
+    indexPath: 'pc.html',
+    outputDir: '../dist',
+    transpileDependencies: [ansiRegex],
     devServer: {
         proxy: {
             '/api': {

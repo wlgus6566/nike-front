@@ -1,6 +1,7 @@
 package com.nike.dnp.controller.alarm;
 
 import com.nike.dnp.dto.SearchDTO;
+import com.nike.dnp.dto.alarm.AlarmResultDTO;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -21,8 +22,8 @@ import springfox.documentation.annotations.ApiIgnore;
  * The Class Alarm controller.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 24. 오후 7:41:14
- * @Description
+ * @since 2020. 7. 24. 오후 7:41:14
+ * @apiNote
  */
 @Slf4j
 @RestController

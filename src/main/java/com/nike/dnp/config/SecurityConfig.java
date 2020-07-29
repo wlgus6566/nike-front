@@ -36,7 +36,7 @@ import java.util.List;
  * Security Config
  *
  * @author [오지훈]
- * @Description Security Config 작성
+ * @implNote Security Config 작성
  * @history [오지훈] [2020.05.21] [최초 작성]
  * @since 2020.05.21
  */
@@ -125,8 +125,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * @param userSessionTime the user session time
 	 * @return the int
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 20. 오후 4:07:10
-	 * @Description
+	 * @since 2020. 7. 20. 오후 4:07:10
+	 * @implNote
 	 */
 	@Bean(name = "userSessionTime")
 	@Value("${spring.redis.userSessionTime:}")
@@ -161,7 +161,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/resources/**", "/static/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/css/**", "/font/**", "/js/**", "/images/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
-				"/api/download", "/api/upload" // 임시
+				"/api/download" // 임시
 				, "/error" // 에러
 				,"/api/open/**"
 		};
@@ -179,7 +179,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 						.accessDecisionManager(accessDecisionManager())
 						.antMatchers(HttpMethod.POST,"/api/login").permitAll()
-						.antMatchers("/api/mypage/**", "/api/main/**").authenticated()
 						.antMatchers("/api/mypage/**", "/api/main/**").authenticated()
 						.anyRequest().authenticated();
 

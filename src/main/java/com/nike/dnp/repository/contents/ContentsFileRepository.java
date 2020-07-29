@@ -10,8 +10,8 @@ import java.util.List;
  * The Interface Contents file repository.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 1. 오전 10:41:27
- * @Description
+ * @since 2020. 7. 1. 오전 10:41:27
+ * @implNote
  */
 @Repository
 public interface ContentsFileRepository extends JpaRepository<ContentsFile, Long>, ContentsFileRepositoryCustom {
@@ -23,8 +23,8 @@ public interface ContentsFileRepository extends JpaRepository<ContentsFile, Long
      * @param useYn       the use yn
      * @return the optional
      * @author [이소정]
-     * @CreatedOn 2020. 7. 6. 오후 6:30:42
-     * @Description
+     * @since 2020. 7. 6. 오후 6:30:42
+     * @implNote
      */
     List<ContentsFile> findByContentsSeqAndUseYn(Long contentsSeq, String useYn);
 

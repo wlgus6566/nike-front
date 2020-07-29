@@ -1,11 +1,11 @@
 package com.nike.dnp.repository.history;
 
-import com.nike.dnp.common.ObjectMapperUtils;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.history.HistoryResultDTO;
 import com.nike.dnp.dto.history.HistorySearchDTO;
 import com.nike.dnp.entity.contents.QRecentUpload;
 import com.nike.dnp.entity.contents.RecentUpload;
+import com.nike.dnp.util.ObjectMapperUtil;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
@@ -21,8 +21,8 @@ import java.util.List;
  * The Class Recent upload repository.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 27. 오후 2:11:58
- * @Description
+ * @since 2020. 7. 27. 오후 2:11:58
+ * @implNote
  */
 @Repository
 public class RecentUploadRepositoryImpl extends QuerydslRepositorySupport implements RecentUploadRepositoryCustom {
@@ -31,8 +31,8 @@ public class RecentUploadRepositoryImpl extends QuerydslRepositorySupport implem
      * Instantiates a new Recent upload repository.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 7. 27. 오후 2:11:55
-     * @Description
+     * @since 2020. 7. 27. 오후 2:11:55
+     * @implNote
      */
     public RecentUploadRepositoryImpl() {
         super(RecentUpload.class);
@@ -49,7 +49,7 @@ public class RecentUploadRepositoryImpl extends QuerydslRepositorySupport implem
                         qRecentUpload.registerSeq.eq(historySearchDTO.getRegisterSeq()
                         ));
 
-        final List<RecentUpload> recentUploadList = ObjectMapperUtils.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), RecentUpload.class);
+        final List<RecentUpload> recentUploadList = ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), RecentUpload.class);
         List<HistoryResultDTO> recentUploadResultList = new ArrayList<>();
         for (RecentUpload recentUpload : recentUploadList) {
             HistoryResultDTO historyResultDTO = new HistoryResultDTO();

@@ -65,16 +65,16 @@
             </div>
         </div>
         <hr style="margin: 50px 0;" />
-        <FileUpload />
+        <!--<FileUpload />-->
     </div>
 </template>
 <script>
-    import FileUpload from '@/components/file-upload';
-    import api from '@/axios';
+//import FileUpload from '@/components/file-upload';
+import api from '@/axios';
 
-    export default {
+export default {
     name: 'file',
-    components: { FileUpload },
+    //components: { FileUpload },
     data() {
         return {
             key: 0,
@@ -82,60 +82,64 @@
                 authSeq: 0,
                 managerId: '',
                 managerName: '',
-                password: ''
-            }
-        }
+                password: '',
+            },
+        };
     },
     methods: {
         getData() {
             let vm = this;
-            api.detail(vm.key).then(response => {
+            api.detail(vm.key).then((response) => {
                 console.log('=======param start=====');
                 console.log('사용하는 데이터부분');
                 console.log(response.data.data);
                 vm.info = response.data.data;
             });
         },
-        getFileDownload(){
+        getFileDownload() {
             // 임시 파일 다운 로드 경로
-            let url = "/api/download";
+            let url = '/api/download';
             let dataFile = {};
             // 파일 2개 받는다고 가정함
             for (let i = 0; i < 2; i++) {
-                dataFile["data"+i] = {};
-                dataFile["data" + i]['size'] = 0;
+                dataFile['data' + i] = {};
+                dataFile['data' + i]['size'] = 0;
             }
-            for (let i = 0; i <  2; i++) {
+            for (let i = 0; i < 2; i++) {
                 api.get(url, {
                     responseType: 'blob',
                     timeout: 0,
                     onDownloadProgress: function (progressEvent) {
-                        dataFile["data" + i]['totalSize'] = progressEvent.total;
-                        dataFile["data" + i]['curSize'] = progressEvent.loaded;
+                        dataFile['data' + i]['totalSize'] = progressEvent.total;
+                        dataFile['data' + i]['curSize'] = progressEvent.loaded;
                         let total = 0;
                         let cur = 0;
-                        for (let fileData in dataFile){
-                            total+= dataFile[fileData]['totalSize'];
+                        for (let fileData in dataFile) {
+                            total += dataFile[fileData]['totalSize'];
                             cur += dataFile[fileData]['curSize'];
                         }
-                        console.log("=============i ::::" + i + "::::" + Math.round((cur * 100) / total));
-                    }
-                }).then((response) => {
-                    const url = window.URL.createObjectURL(new Blob([response.data]));
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.id = "id_" + i;
-                    link.setAttribute('download', 'test.zip'); //파일명은 따로 입력
-                    document.body.appendChild(link);
-                    link.click();
-                }).catch(function (error) {
-                    console.log(error);
-                });
+                        console.log(
+                            '=============i ::::' + i + '::::' + Math.round((cur * 100) / total)
+                        );
+                    },
+                })
+                    .then((response) => {
+                        const url = window.URL.createObjectURL(new Blob([response.data]));
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.id = 'id_' + i;
+                        link.setAttribute('download', 'test.zip'); //파일명은 따로 입력
+                        document.body.appendChild(link);
+                        link.click();
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             }
-        }
+        },
     },
     created() {
-        const vm = this
+        const vm = this;
         console.log('created');
         console.log(vm.$route.params);
         console.log(vm.$route.params.key);
@@ -143,11 +147,8 @@
         // vm.$route.params.evntSn
 
         vm.getData();
-
-    }
+    },
 };
 </script>
-
-
 
 <style scoped></style>

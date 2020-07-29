@@ -10,8 +10,8 @@ import javax.persistence.*;
  * The Class Notice article.
  *
  * @author [정주희]
- * @CreatedOn 2020. 7. 13. 오후 6:02:22
- * @Description
+ * @since 2020. 7. 13. 오후 6:02:22
+ * @implNote
  */
 @Getter
 @Setter

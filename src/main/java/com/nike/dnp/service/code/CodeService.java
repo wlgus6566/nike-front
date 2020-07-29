@@ -22,8 +22,8 @@ import java.util.Optional;
  * CodeService
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 5:55:50
- * @Description Code(공통 코드) Service 작성
+ * @since 2020. 6. 24. 오후 5:55:50
+ * @implNote Code(공통 코드) Service 작성
  */
 @Slf4j
 @Service
@@ -51,8 +51,8 @@ public class CodeService {
      * @param upperCode 상위 코드
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:55:50
-     * @Description 하위 코드 목록 조회
+     * @since 2020. 6. 24. 오후 5:55:50
+     * @implNote 하위 코드 목록 조회
      */
     @Cacheable(value = "cache:codes", cacheManager = "cacheManager")
     public List<Code> findCodesByUpperCode(final String upperCode) {
@@ -65,8 +65,8 @@ public class CodeService {
      * @param code the code
      * @return the optional
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:55:50
-     * @Description 삭제
+     * @since 2020. 6. 24. 오후 5:55:50
+     * @implNote 삭제
      */
     @Transactional
     public Optional<Code> delete(final String code) {
@@ -82,8 +82,8 @@ public class CodeService {
      * @param codeSaveDTO the code save dto
      * @return the code
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:55:50
-     * @Description 등록
+     * @since 2020. 6. 24. 오후 5:55:50
+     * @implNote 등록
      */
     @Transactional
     public Code save(final CodeSaveDTO codeSaveDTO) {
@@ -106,8 +106,8 @@ public class CodeService {
      * @param codeUpdateDTO the code update dto
      * @return the optional
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:55:50
-     * @Description 수정
+     * @since 2020. 6. 24. 오후 5:55:50
+     * @implNote 수정
      */
     @Transactional
     public Optional<Code> update(
@@ -145,8 +145,8 @@ public class CodeService {
      * Redis save upper code.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:55:50
-     * @Description Redis code 갱신
+     * @since 2020. 6. 24. 오후 5:55:50
+     * @implNote Redis code 갱신
      */
     public void redisSaveUpperCode(final String upperCode) {
         log.info("CodeService.redisSaveUpperCode");

@@ -16,8 +16,7 @@ import java.util.List;
  * The Class Report repository.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 7. 오후 2:46:09
- * @Description
+ * @since 2020. 7. 7. 오후 2:46:09
  */
 @Repository
 public class ReportBasketRepositoryImpl extends QuerydslRepositorySupport implements ReportBasketRepositoryCustom {
@@ -28,8 +27,7 @@ public class ReportBasketRepositoryImpl extends QuerydslRepositorySupport implem
      * Instantiates a new Contents repository.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 6:15:29
-     * @Description
+     * @since 2020. 6. 19. 오후 6:15:29
      */
     public ReportBasketRepositoryImpl() {
         super(ReportBasket.class);
@@ -42,8 +40,7 @@ public class ReportBasketRepositoryImpl extends QuerydslRepositorySupport implem
      * @param userSeq the user seq
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 17. 오후 6:45:22
-     * @Description
+     * @since 2020. 7. 17. 오후 6:45:22
      */
     @Override
     public List<ReportBasketResultDTO> findAllReportBasket(Long userSeq) {

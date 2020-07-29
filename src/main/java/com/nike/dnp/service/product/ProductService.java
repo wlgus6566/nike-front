@@ -26,8 +26,8 @@ import java.util.Optional;
  * The Class Product service.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 6. 23. 오후 3:24:39
- * @Description
+ * @since 2020. 6. 23. 오후 3:24:39
+ * @implNote
  */
 @Slf4j
 @Service
@@ -43,15 +43,16 @@ public class ProductService {
 	public final ProductRepository productRepository;
 
 	/**
-	 * Find all pages page.
+	 * 제품 관리 리스트 페이징
 	 *
 	 * @param productSearchDTO the product search dto
 	 * @return the page
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 23. 오후 3:24:30
-	 * @Description
+	 * @since 2020. 6. 23. 오후 3:24:30
+	 * @implNote
 	 */
 	public Page<ProductResultDTO> findPagesProduct(final ProductSearchDTO productSearchDTO) {
+		log.info("ProductService.findPagesProduct");
 		return productRepository.findPagesProduct(
 				productSearchDTO,
 				PageRequest.of(productSearchDTO.getPage(), productSearchDTO.getSize(), Sort.by("goodsSeq").descending()
@@ -64,10 +65,11 @@ public class ProductService {
 	 * @param goodsSeq the goods seq
 	 * @return the optional
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 24. 오전 11:39:06
-	 * @Description
+	 * @since 2020. 6. 24. 오전 11:39:06
+	 * @implNote
 	 */
 	public Product findByGoodsSeq(final Long goodsSeq) {
+		log.info("ProductService.findByGoodsSeq");
 		return productRepository.findByGoodsSeq(goodsSeq );	}
 
 	/**
@@ -76,12 +78,12 @@ public class ProductService {
 	 * @param productSaveDTO the product save dto
 	 * @return product
 	 * @author [윤태호]`
-	 * @CreatedOn 2020. 6. 23. 오후 3:24:48
-	 * @Description
+	 * @since 2020. 6. 23. 오후 3:24:48
+	 * @implNote
 	 */
 	@Transactional
 	public Product save(final ProductSaveDTO productSaveDTO) {
-
+		log.info("ProductService.save");
 		final Product product = new Product();
 		product.setCategory2Code(productSaveDTO.getCategory2Code());
 		product.setCategory3Code(productSaveDTO.getCategory3Code());
@@ -113,13 +115,13 @@ public class ProductService {
 	 * @param productUpdateDTO the product update dto
 	 * @return the product
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 24. 오후 4:42:09
-	 * @Description
+	 * @since 2020. 6. 24. 오후 4:42:09
+	 * @implNote
 	 */
 	@Transactional
 	public Product update(final ProductUpdateDTO productUpdateDTO) {
+		log.info("ProductService.update");
 		final Optional<Product> optionalProduct = productRepository.findById(productUpdateDTO.getGoodsSeq());
-
 		final Product product = optionalProduct.orElse(new Product());
 		product.setExposureYn(productUpdateDTO.getExposureYn());
 		product.setCategory2Code(productUpdateDTO.getCategory2Code());
@@ -145,11 +147,12 @@ public class ProductService {
 	 * @param productUpdateDTO the product update dto
 	 * @return the product
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 24. 오후 5:23:04
-	 * @Description
+	 * @since 2020. 6. 24. 오후 5:23:04
+	 * @implNote
 	 */
 	@Transactional
 	public Optional<Product> delete(final ProductUpdateDTO productUpdateDTO) {
+		log.info("ProductService.delete");
 		final Optional<Product> product = productRepository.findById(productUpdateDTO.getGoodsSeq());
 		product.ifPresent(value -> value.delete(productUpdateDTO));
 		return product;
@@ -162,11 +165,12 @@ public class ProductService {
 	 * @param goodsSeqList the goods seq list
 	 * @return the list
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 25. 오후 2:37:34
-	 * @Description
+	 * @since 2020. 6. 25. 오후 2:37:34
+	 * @implNote
 	 */
 	@Transactional
-	public List<Product> findBySearchId(final List<Long> goodsSeqList) {
+	public List<Product> findBySearchId(final List<Long> goodsSeqList){
+		log.info("ProductService.findBySearchId");
 		return productRepository.findAllById(goodsSeqList);
 	}
 
@@ -177,13 +181,13 @@ public class ProductService {
 	 * @param productUpdateDTO the product update dto
 	 * @return the optional
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 26. 오후 3:14:32
-	 * @Description
+	 * @since 2020. 6. 26. 오후 3:14:32
+	 * @implNote
 	 */
 	@Transactional
 	public boolean deleteArray(final List<Product> productList,
 										 final ProductUpdateDTO productUpdateDTO) {
-
+		log.info("ProductService.deleteArray");
 		productList.forEach(product -> product.delete(productUpdateDTO));
 		return true;
 	}

@@ -8,8 +8,8 @@ import lombok.*;
  * The Class Order search dto.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 7. 오전 10:40:22
- * @Description
+ * @since 2020. 7. 7. 오전 10:40:22
+ * @implNote
  */
 @Getter
 @Setter
@@ -18,7 +18,7 @@ import lombok.*;
 public class OrderSearchDTO extends SearchDTO {
 
 	/**
-	 * The Begin dt
+	 * 검색 시작날짜
 	 *
 	 * @author [윤태호]
 	 */
@@ -26,7 +26,7 @@ public class OrderSearchDTO extends SearchDTO {
 	private String beginDt;
 
 	/**
-	 * The End dt
+	 * 검색 종료 날짜
 	 *
 	 * @author [윤태호]
 	 */
@@ -47,8 +47,8 @@ public class OrderSearchDTO extends SearchDTO {
 	 *
 	 * @return the string
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 7. 오전 10:44:10
-	 * @Description
+	 * @since 2020. 7. 7. 오전 10:44:10
+	 * @implNote
 	 */
 	@Override
 	public String toString() {

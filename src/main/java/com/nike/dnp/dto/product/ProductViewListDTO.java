@@ -10,8 +10,8 @@ import java.util.List;
  * The Class Product view list dto.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 24. 오전 9:58:57
- * @Description
+ * @since 2020. 7. 24. 오전 9:58:57
+ * @implNote
  */
 @Getter
 @Setter
@@ -20,7 +20,7 @@ import java.util.List;
 public class ProductViewListDTO {
 
 	/**
-	 * The Goods seq list
+	 * 상품 시퀀스 리스트
 	 *
 	 * @author [윤태호]
 	 */

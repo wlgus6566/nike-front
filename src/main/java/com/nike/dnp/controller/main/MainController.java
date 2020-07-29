@@ -1,34 +1,24 @@
 package com.nike.dnp.controller.main;
 
-import com.nike.dnp.common.variable.ServiceCode;
-import com.nike.dnp.dto.auth.AuthUserDTO;
-import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.dto.main.MainResultDTO;
-import com.nike.dnp.entity.contents.Contents;
-import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
-import com.nike.dnp.service.contents.ContentsService;
 import com.nike.dnp.service.main.MainService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * The Class Main controller.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 27. 오후 5:04:19
- * @Description
+ * @since 2020. 7. 27. 오후 5:04:19
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -59,8 +49,8 @@ public class MainController {
      *
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 27. 오후 5:38:53
-     * @Description
+     * @since 2020. 7. 27. 오후 5:38:53
+     * @apiNote
      */
     @ApiOperation(
         value = "메인 조회(calendar 제외)"

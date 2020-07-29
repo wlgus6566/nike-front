@@ -11,8 +11,8 @@ import javax.validation.constraints.NotBlank;
  * The Class Notice save dto.
  *
  * @author [정주희]
- * @CreatedOn 2020. 7. 19. 오전 1:14:17
- * @Description
+ * @since 2020. 7. 19. 오전 1:14:17
+ * @implNote
  */
 @Getter
 @Setter

@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
  * The Class Success enum code.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 1. 오후 5:01:10
- * @Description
+ * @since 2020. 7. 1. 오후 5:01:10
+ * @implNote
  */
 @Component
 @AllArgsConstructor

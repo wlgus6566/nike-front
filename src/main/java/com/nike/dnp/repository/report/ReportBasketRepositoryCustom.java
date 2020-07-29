@@ -10,8 +10,7 @@ import java.util.List;
  * The Interface Report basket repository custom.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 17. 오후 6:34:33
- * @Description
+ * @since 2020. 7. 17. 오후 6:34:33
  */
 @Repository
 public interface ReportBasketRepositoryCustom {
@@ -22,8 +21,8 @@ public interface ReportBasketRepositoryCustom {
      * @param userSeq the user seq
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:57:50
-     * @Description
+     * @since 2020. 6. 19. 오후 5:57:50
+     * @implNote
      */
     List<ReportBasketResultDTO> findAllReportBasket(final Long userSeq);
 

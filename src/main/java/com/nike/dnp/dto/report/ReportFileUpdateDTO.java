@@ -9,8 +9,8 @@ import javax.persistence.Column;
  * The Class Report file update dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 9. 오후 6:10:18
- * @Description
+ * @since 2020. 7. 9. 오후 6:10:18
+ * @implNote
  */
 @Getter
 @Setter

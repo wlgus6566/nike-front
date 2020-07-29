@@ -23,8 +23,8 @@ import java.util.Base64;
  * CryptoUtil
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 22. 오후 4:08:32
- * @Description 암호화 관련 Util 작성
+ * @since 2020. 6. 22. 오후 4:08:32
+ * @implNote 암호화 관련 Util 작성
  */
 @Slf4j
 @UtilityClass
@@ -37,8 +37,8 @@ public class CryptoUtil {
      * @param key the key
      * @return the string
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 4:08:32
-     * @Description AES256 암호화
+     * @since 2020. 6. 22. 오후 4:08:32
+     * @implNote AES256 암호화
      */
     public String encryptAES256(String msg, String key) {
         try {
@@ -80,8 +80,8 @@ public class CryptoUtil {
      * @param key the key
      * @return the string
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 4:08:32
-     * @Description AES256 복호화
+     * @since 2020. 6. 22. 오후 4:08:32
+     * @implNote AES256 복호화
      */
     public String decryptAES256(String msg, String key) {
         try {
@@ -119,8 +119,8 @@ public class CryptoUtil {
      * @param value the value
      * @return the string
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 4:08:32
-     * @Description Url 암호화
+     * @since 2020. 6. 22. 오후 4:08:32
+     * @implNote Url 암호화
      */
     public String urlEncode(String value)  {
         try {
@@ -139,8 +139,8 @@ public class CryptoUtil {
      * @param value the value
      * @return the string
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 4:08:32
-     * @Description Url 복호화
+     * @since 2020. 6. 22. 오후 4:08:32
+     * @implNote Url 복호화
      */
     public String urlDecode(String value) {
         try {

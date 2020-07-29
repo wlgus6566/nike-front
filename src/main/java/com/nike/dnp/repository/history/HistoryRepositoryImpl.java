@@ -1,11 +1,11 @@
 package com.nike.dnp.repository.history;
 
-import com.nike.dnp.common.ObjectMapperUtils;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.history.HistoryResultDTO;
 import com.nike.dnp.dto.history.HistorySearchDTO;
 import com.nike.dnp.entity.history.History;
 import com.nike.dnp.entity.history.QHistory;
+import com.nike.dnp.util.ObjectMapperUtil;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
@@ -24,8 +24,8 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
      * Instantiates a new History repository.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 7. 23. 오전 11:37:32
-     * @Description
+     * @since 2020. 7. 23. 오전 11:37:32
+     * @implNote
      */
     public HistoryRepositoryImpl() {
         super(History.class);
@@ -42,7 +42,7 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
                         qHistory.registerSeq.eq(historySearchDTO.getRegisterSeq()
                         ));
 
-        final List<History> historyList = ObjectMapperUtils.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), History.class);
+        final List<History> historyList = ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), History.class);
         List<HistoryResultDTO> historyResultList = new ArrayList<>();
         for (History history : historyList) {
             HistoryResultDTO historyResultDTO = new HistoryResultDTO();

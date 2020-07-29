@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
  * EmailSendingLogService
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 5:58:31
- * @Description EmailSendingLog(메일_발송_로그) Service 작성
+ * @since 2020. 6. 24. 오후 5:58:31
+ * @implNote EmailSendingLog(메일_발송_로그) Service 작성
  */
 @Slf4j
 @Service
@@ -34,16 +34,12 @@ public class EmailSendingLogService {
      * @param saveDTO the save dto
      * @return email sending log
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:58:31
-     * @Description 메일 발송 로그 등록
+     * @since 2020. 6. 24. 오후 5:58:31
+     * @implNote 메일 발송 로그 등록
      */
     @Transactional
     public EmailSendingLog save(final EmailSendingLogSaveDTO saveDTO) {
-        final EmailSendingLog saveLog = new EmailSendingLog();
-        saveLog.setUserSeq(saveDTO.getUserSeq());
-        saveLog.setTitle(saveDTO.getTitle());
-        saveLog.setContents(saveDTO.getContents());
-        return logRepository.save(saveLog);
+        return logRepository.save(EmailSendingLog.builder().emailSendingLogSaveDTO(saveDTO).build());
     }
 
 }

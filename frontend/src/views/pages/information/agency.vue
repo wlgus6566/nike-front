@@ -1,9 +1,149 @@
 <template>
-    <div>agency</div>
+    <div>
+        <AgencyContact
+            v-bind:agencyData="agencyData"
+            v-bind:loadingData="loadingData"
+            v-on:showAgencyManagement="showAgencyManagement"
+            v-on:detailAgencyManagement="detailAgencyManagement"
+        />
+        <agencyManagement
+            :visible.sync="visible.agencyManagement"
+            v-bind:addAgencyData="addAgencyData"
+            v-bind:agencySeq="agencySeq"
+            v-on:addAgencyManagement="addAgencyManagement"
+            v-on:delAgencyManagement="delAgencyManagement"
+            v-on:modifyAgencyManagement="modifyAgencyManagement"
+        />
+        <Loading v-if="loadingData" />
+    </div>
 </template>
 <script>
+import {
+    delAgencyContact,
+    getAgencyContact,
+    getDetailAgencyContact,
+    postAgencyContact,
+    putAgencyContact,
+} from '@/api/agency';
+import agencyManagement from '@/views/pages/information/agency-management';
+import Loading from '@/components/loading/index';
+
 export default {
     name: 'agency',
+    data() {
+        return {
+            agencyData: null,
+            addAgencyData: {
+                agencyDescription: '',
+                agencyName: '',
+                email: '',
+                telephoneNumber: '',
+            },
+            visible: {
+                agencyManagement: false,
+            },
+            agencySeq: '',
+            loadingData: false,
+        };
+    },
+    components: {
+        AgencyContact: () => import('@/components/agency-contact/index'),
+        agencyManagement,
+        Loading,
+    },
+    mounted() {
+        this.fetchData();
+    },
+    computed: {},
+    methods: {
+        showAgencyManagement() {
+            this.addAgencyData = {
+                agencyDescription: '',
+                agencyName: '',
+                email: '',
+                telephoneNumber: '',
+            };
+            this.agencySeq = '';
+            this.visible.agencyManagement = true;
+        },
+        async fetchData() {
+            this.loadingData = true;
+            try {
+                const {
+                    data: { data: response },
+                } = await getAgencyContact({});
+                this.agencyData = response;
+                this.loadingData = false;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async addAgencyManagement() {
+            //todo 필수값 체크
+            let addAlert = confirm('AGENCY를 등록하시겠습니까?');
+            if (addAlert) {
+                try {
+                    const {
+                        data: { data: response },
+                    } = await postAgencyContact({
+                        agencyDescription: this.addAgencyData.agencyDescription,
+                        agencyName: this.addAgencyData.agencyName,
+                        email: this.addAgencyData.email,
+                        telephoneNumber: this.addAgencyData.telephoneNumber,
+                    });
+                    this.visible.agencyManagement = false;
+                    this.fetchData();
+                } catch (error) {
+                    console.log(error.response);
+                }
+            }
+        },
+        async detailAgencyManagement(agencySeq) {
+            this.visible.agencyManagement = true;
+            try {
+                const {
+                    data: { data: response },
+                } = await getDetailAgencyContact(agencySeq, {});
+                this.addAgencyData = response;
+                this.agencySeq = agencySeq;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async delAgencyManagement(agencySeq) {
+            this.visible.agencyManagement = true;
+            let delAlert = confirm('선택한 AGENCY정보를 삭제하시겠습니까?');
+            if (delAlert) {
+                try {
+                    const {
+                        data: { data: response },
+                    } = await delAgencyContact(agencySeq);
+                    this.visible.agencyManagement = false;
+                    this.fetchData();
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        },
+        async modifyAgencyManagement(agencySeq) {
+            try {
+                const {
+                    data: { data: response },
+                } = await putAgencyContact(agencySeq, {
+                    agencyDescription: this.addAgencyData.agencyDescription,
+                    agencyName: this.addAgencyData.agencyName,
+                    email: this.addAgencyData.email,
+                    telephoneNumber: this.addAgencyData.telephoneNumber,
+                    agencySeq: agencySeq,
+                });
+                this.addAgencyData = response;
+                this.visible.agencyManagement = false;
+                this.fetchData();
+            } catch (error) {
+                console.log(error);
+            }
+        },
+    },
 };
 </script>
 <style scoped></style>

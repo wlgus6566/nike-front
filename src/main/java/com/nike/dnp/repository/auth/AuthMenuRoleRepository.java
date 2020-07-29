@@ -14,8 +14,8 @@ import java.util.List;
  * AuthRepository
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 7. 오후 5:02:48
- * @Description Auth(권한) Repository Interface 작성
+ * @since 2020. 7. 7. 오후 5:02:48
+ * @implNote Auth(권한) Repository Interface 작성
  */
 @Repository
 public interface AuthMenuRoleRepository extends JpaRepository<AuthMenuRole, Long> {
@@ -26,8 +26,8 @@ public interface AuthMenuRoleRepository extends JpaRepository<AuthMenuRole, Long
      * @param authSeq the auth seq
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 13. 오전 10:05:40
-     * @Description 권한 메뉴 역할 목록 조회
+     * @since 2020. 7. 13. 오전 10:05:40
+     * @implNote 권한 메뉴 역할 목록 조회
      */
     List<AuthMenuRole> findByAuthSeq(final Long authSeq);
 
@@ -37,8 +37,8 @@ public interface AuthMenuRoleRepository extends JpaRepository<AuthMenuRole, Long
      * @param menuRoleSeqArray the menu role seq array
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오후 2:43:44
-     * @Description
+     * @since 2020. 7. 20. 오후 2:43:44
+     * @implNote
      */
     List<AuthMenuRole> findByMenuRoleSeqIn(final Long... menuRoleSeqArray);
 
@@ -47,8 +47,8 @@ public interface AuthMenuRoleRepository extends JpaRepository<AuthMenuRole, Long
      *
      * @param authSeq the auth seq
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 13. 오후 3:33:21
-     * @Description 권한 메뉴 역할 목록 삭제
+     * @since 2020. 7. 13. 오후 3:33:21
+     * @implNote 권한 메뉴 역할 목록 삭제
      */
     @Transactional
     @Modifying
@@ -61,8 +61,8 @@ public interface AuthMenuRoleRepository extends JpaRepository<AuthMenuRole, Long
      * @param authSeq          the auth seq
      * @param menuRoleSeqArray the menu role seq array
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 14. 오전 10:03:50
-     * @Description 권한 메뉴 역할 목록 삭제
+     * @since 2020. 7. 14. 오전 10:03:50
+     * @implNote 권한 메뉴 역할 목록 삭제
      */
     @Transactional
     @Modifying

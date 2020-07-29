@@ -12,33 +12,33 @@ import java.util.Optional;
  * The Interface Wish list repository.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 6. 오후 3:45:22
- * @Description
+ * @since 2020. 7. 6. 오후 3:45:22
+ * @implNote
  */
 public interface WishListRepository extends JpaRepository<WishList, Long> ,WishListRepositoryCustom {
 
 
 	/**
-	 * Find by wish list seq and user seq optional.
+	 * 위시 리스트 시퀀스 와 유저 시퀀스 로 위시 리스트 조회
 	 *
 	 * @param wishListSeq the wish list seq
 	 * @param userSeq     the user seq
 	 * @return the optional
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 6. 오후 3:45:22
-	 * @Description
+	 * @since 2020. 7. 6. 오후 3:45:22
+	 * @implNote
 	 */
 	Optional<WishList> findByWishListSeqAndUserSeq(Long wishListSeq,Long userSeq);
 
 
 	/**
-	 * Find by registration dt before list.
+	 * 검색일 전 조회
 	 *
 	 * @param searchDt the search dt
 	 * @return the list
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 14. 오후 3:38:11
-	 * @Description
+	 * @since 2020. 7. 14. 오후 3:38:11
+	 * @implNote
 	 */
 	List<WishList> findByRegistrationDtBefore(LocalDateTime searchDt);
 }

@@ -17,8 +17,8 @@ import java.util.List;
  * MenuRepositoryImpl
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 23. 오전 11:51:57
- * @Description Menu(메뉴) Repository interface 작성
+ * @since 2020. 6. 23. 오전 11:51:57
+ * @implNote Menu(메뉴) Repository interface 작성
  */
 @Repository
 public class MenuRepositoryImpl extends QuerydslRepositorySupport implements MenuRepositoryCustom {
@@ -27,8 +27,8 @@ public class MenuRepositoryImpl extends QuerydslRepositorySupport implements Men
      * Instantiates a new Manager repository.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오전 11:51:57
-     * @Description 생성자 주입
+     * @since 2020. 6. 23. 오전 11:51:57
+     * @implNote 생성자 주입
      */
     public MenuRepositoryImpl() {
         super(Menu.class);
@@ -39,8 +39,8 @@ public class MenuRepositoryImpl extends QuerydslRepositorySupport implements Men
      *
      * @return the menus
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 8. 오후 6:16:36
-     * @Description 메뉴 목록(전체)
+     * @since 2020. 7. 8. 오후 6:16:36
+     * @implNote 메뉴 목록(전체)
      */
     /*@Override
     public List<MenuReturnDTO> getMenus() {
@@ -72,8 +72,8 @@ public class MenuRepositoryImpl extends QuerydslRepositorySupport implements Men
      * @param authSeq the auth seq
      * @return the menus
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 8. 오후 6:19:23
-     * @Description 메뉴 목록(권한)
+     * @since 2020. 7. 8. 오후 6:19:23
+     * @implNote 메뉴 목록(권한)
      */
     @Override
     public  List<MenuReturnDTO> getMenus(final Long authSeq) {

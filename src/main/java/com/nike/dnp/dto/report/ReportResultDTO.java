@@ -3,19 +3,13 @@ package com.nike.dnp.dto.report;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.List;
-
 
 /**
  * The Class Report result dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 27. 오후 7:11:04
- * @Description
+ * @since 2020. 7. 27. 오후 7:11:04
+ * @implNote
  */
 @Getter
 @Setter

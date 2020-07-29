@@ -1,6 +1,10 @@
 <template>
     <div id="wrap">
-        <header class="sticky-container" sticky-container v-on:mouseleave="mouseEvent(true)">
+        <header
+            class="sticky-container"
+            sticky-container
+            v-on:mouseleave="mouseEvent(true)"
+        >
             <div
                 class="sticky-content"
                 sticky-offset="{top:0, bottom:0}"
@@ -19,11 +23,11 @@
                     name="page-change"
                     mode="out-in"
                     appear
-                    v-on:appear="pageAppear"
-                    v-on:enter="pageEnter"
                     v-on:leave="pageLeave"
                 >
-                    <router-view></router-view>
+                    <keep-alive max="2">
+                        <router-view :key="$route.fullPath" />
+                    </keep-alive>
                 </transition>
             </div>
             <aside class="sticky-container" sticky-container>
@@ -62,16 +66,23 @@ import appHeader from '@/components/app-header';
 
 export default {
     name: 'LayoutDefault',
+    created() {},
     data() {
         return {
             tw: new TimelineLite({ paused: true }),
             newRoutePath: '',
             oldRoutePath: '',
+            activeLink: null,
+            activeParent: null,
+            activeUl: null,
         };
     },
     computed: {
         AppAside() {
             return `Aside${this.$route.meta.aside || 'Default'}`;
+        },
+        headerActiveNav() {
+            return this.$route.path !== '/' && this.activeLink;
         },
     },
     directives: {
@@ -81,6 +92,7 @@ export default {
         $route(newRoute, oldRoute) {
             this.newRoutePath = newRoute.path;
             this.oldRoutePath = oldRoute.path;
+            this.activeSet();
         },
     },
     components: {
@@ -90,21 +102,35 @@ export default {
         AsideOrder: () => import('@/components/app-aside/order.vue'),
     },
     mounted() {
+        this.activeSet();
         this.headerAni();
-        this.toggleHeader(this.$route.path !== '/', this.tw._dur);
+        this.toggleHeader(this.headerActiveNav, this.tw._dur);
         const target = [document.querySelector('header .inner')];
         this.layoutAnimation(target, '-100%', '0%');
     },
 
     methods: {
+        activeSet() {
+            this.activeLink = document.querySelector(
+                `.depth1 > a[href='${this.$route.matched[0].path}']`
+            );
+            if (this.activeLink) {
+                this.activeParent = this.activeLink.parentNode;
+                this.activeUl = this.activeLink.nextSibling;
+            }
+        },
         headerAni() {
             const header = document.querySelector('header');
             const logo = header.querySelector('h1');
             const bg = header.querySelector('.header-bg');
             const nav = header.querySelector('nav');
             const anchor = nav.querySelector('.depth1 > .router-link-active');
-            const ul = anchor.nextSibling;
-
+            let parentN = null;
+            let ul = null;
+            if (anchor) {
+                parentN = anchor.parentNode;
+                ul = anchor.nextSibling;
+            }
             this.tw.clear();
             this.tw
                 .set(header, {
@@ -166,7 +192,7 @@ export default {
                     },
                     0.3
                 )
-                .set(anchor.parentNode, {
+                .set(parentN, {
                     display: 'block',
                 })
                 .set(
@@ -211,14 +237,15 @@ export default {
                     0.4
                 );
         },
-        pageAppear() {},
-        pageEnter() {},
         pageLeave() {
-            if (this.newRoutePath.split('/')[1] !== this.oldRoutePath.split('/')[1]) {
-                if (this.newRoutePath !== '/') {
+            if (
+                this.newRoutePath.split('/')[1] !==
+                this.oldRoutePath.split('/')[1]
+            ) {
+                if (this.headerActiveNav) {
                     this.headerAni();
                 }
-                this.toggleHeader(this.$route.path !== '/');
+                this.toggleHeader(this.headerActiveNav);
             }
         },
         toggleHeader(status, duration) {
@@ -230,7 +257,7 @@ export default {
         },
 
         mouseEvent(status) {
-            if (this.$route.path !== '/') {
+            if (this.headerActiveNav) {
                 this.toggleHeader(status);
             }
         },
@@ -270,13 +297,4 @@ export default {
     },
 };
 </script>
-<style scoped>
-/*.layout-change-enter-active,*/
-/*.layout-change-leave-active {*/
-/*    transition: opacity 0.3s ease-in-out;*/
-/*}*/
-/*.layout-change-enter,*/
-/*.layout-change-leave-to {*/
-/*    opacity: 0;*/
-/*}*/
-</style>
+<style scoped></style>

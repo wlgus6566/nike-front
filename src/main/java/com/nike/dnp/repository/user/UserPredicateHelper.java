@@ -14,8 +14,8 @@ import org.apache.commons.lang.StringUtils;
  * The Class User predicate helper.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 23. 오후 2:55:42
- * @Description User(유저) 검색 조건
+ * @since 2020. 6. 23. 오후 2:55:42
+ * @implNote User(유저) 검색 조건
  */
 @UtilityClass
 public class UserPredicateHelper {
@@ -26,8 +26,8 @@ public class UserPredicateHelper {
      * @param userSearchDTO the user search dto
      * @return the predicate
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 2:55:42
-     * @Description 검색어 비교
+     * @since 2020. 6. 23. 오후 2:55:42
+     * @implNote 검색어 비교
      */
     public Predicate compareKeyword(final UserSearchDTO userSearchDTO) {
         final BooleanBuilder builder = new BooleanBuilder();
@@ -48,8 +48,8 @@ public class UserPredicateHelper {
      * @param userSearchDTO the user search dto
      * @return the predicate
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 13. 오후 5:03:47
-     * @Description 상태값 비교
+     * @since 2020. 7. 13. 오후 5:03:47
+     * @implNote 상태값 비교
      */
     public Predicate compareStatus(final UserSearchDTO userSearchDTO) {
         final BooleanBuilder builder = new BooleanBuilder();
@@ -68,8 +68,8 @@ public class UserPredicateHelper {
      * @param userSearchDTO the user search dto
      * @return the predicate
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 2:55:42
-     * @Description 로그인 일자 비교
+     * @since 2020. 6. 23. 오후 2:55:42
+     * @implNote 로그인 일자 비교
      */
     public Predicate compareDate(final UserSearchDTO userSearchDTO) {
         final BooleanBuilder builder = new BooleanBuilder();
@@ -105,8 +105,8 @@ public class UserPredicateHelper {
      * @param userSearchDTO the user search dto
      * @return the predicate
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 3:35:09
-     * @Description 그룹 검색
+     * @since 2020. 6. 23. 오후 3:35:09
+     * @implNote 그룹 검색
      */
     public Predicate compareAuth(final UserSearchDTO userSearchDTO) {
         final BooleanBuilder builder = new BooleanBuilder();

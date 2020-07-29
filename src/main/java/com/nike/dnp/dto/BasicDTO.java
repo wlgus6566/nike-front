@@ -7,8 +7,8 @@ import lombok.*;
  * BasicDTO
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:09:38
- * @Description 공통 DTO 작성
+ * @since 2020. 6. 24. 오후 6:09:38
+ * @implNote 공통 DTO 작성
  */
 @Getter
 @Setter

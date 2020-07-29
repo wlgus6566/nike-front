@@ -15,8 +15,8 @@ import java.io.Serializable;
  * Banner Entity
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:09:56
- * @Description Banner(메인 비주얼) Entity 작성
+ * @since 2020. 6. 24. 오후 6:09:56
+ * @implNote Banner(메인 비주얼) Entity 작성
  */
 @Getter
 @Setter
@@ -136,8 +136,8 @@ public class Banner extends BaseTimeEntity implements Serializable {
      * @param bannerSaveDTO the banner save dto
      * @return the banner
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 24. 오전 10:05:40
-     * @Description
+     * @since 2020. 7. 24. 오전 10:05:40
+     * @implNote
      */
     public Banner saveOrUpdate (final BannerSaveDTO bannerSaveDTO) {
         this.title = bannerSaveDTO.getTitle();
