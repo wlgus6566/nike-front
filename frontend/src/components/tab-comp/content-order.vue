@@ -77,10 +77,10 @@
     </div>
 </template>
 <script>
-	import {addProductBasket, deleteBasketItem} from '@/utils/basket';
-	import orderSheet from '@/views/pages/product/order-sheet.vue';
+    import {addProductBasket, deleteBasketItem} from '@/utils/basket';
+    import orderSheet from '@/views/pages/product/order-sheet.vue';
 
-	export default {
+    export default {
     name: 'OderItem',
     data() {
         return {
