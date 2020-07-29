@@ -11,6 +11,12 @@ function getContents(topMenuCode, menuCode, params) {
     });
 }
 
+/**
+ * @description 컨텐츠 상세 조회
+ * @param {string} topMenuCode (ASSET,TOOLKIT,FOUNDATION)
+ * @param {string} menuCode
+ * @param {number} contentsSeq 컨텐츠 시컨스
+ */
 function getContentsView(topMenuCode, menuCode, contentsSeq) {
     return apiContents.get(`/${topMenuCode}/${menuCode}/${contentsSeq}`);
 }

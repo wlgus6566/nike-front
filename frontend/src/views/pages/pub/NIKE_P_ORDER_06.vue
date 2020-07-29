@@ -3,7 +3,9 @@
         <header>
             <div class="inner">
                 <h1>
-                    <a href="#"><img alt="" src="@/assets/images/logo-nike.svg" /></a>
+                    <a href="#"
+                        ><img alt="" src="@/assets/images/logo-nike.svg"
+                    /></a>
                 </h1>
                 <nav>
                     <ul>
@@ -21,7 +23,11 @@
                 <div class="sorting-area">
                     <!-- todo select 스크립트 작업 필요  -->
                     <div class="filter-select">
-                        <el-select v-model="value1" placeholder="Select" style="width: 100px;">
+                        <el-select
+                            v-model="value1"
+                            placeholder="Select"
+                            style="width: 100px;"
+                        >
                             <el-option
                                 v-for="item in options1"
                                 :key="item.value"
@@ -54,21 +60,24 @@
                         </el-select>
                     </div>
                     <div class="search-input">
-                        <input type="text" placeholder="검색어를 입력해주세요." />
+                        <input
+                            type="text"
+                            placeholder="검색어를 입력해주세요."
+                        />
                         <button type="button"><span>검색</span></button>
                     </div>
                 </div>
                 <div class="tbl-list">
                     <table>
                         <colgroup>
-                            <col style="width: 7.317%;" />
-                            <col style="width: 20.731%;" />
-                            <col style="width: auto;" />
-                            <col style="width: 8.536%;" />
-                            <col style="width: 9.756%;" />
-                            <col style="width: 12.195%;" />
-                            <col style="width: 9.756%;" />
-                            <col style="width: 6.707%;" />
+                            <col style="width: 60px;" />
+                            <col style="width: 160px;" />
+                            <col style="width: 219px;" />
+                            <col style="width: 62px;" />
+                            <col style="width: 89px;" />
+                            <col style="width: 91px;" />
+                            <col style="width: 88px;" />
+                            <col style="width: 51px;" />
                         </colgroup>
                         <thead>
                             <tr>
@@ -97,7 +106,9 @@
                                 </td>
                                 <td>부자재 > 운영 비품</td>
                                 <td>
-                                    <a href="#" class="under-link"><span>포스터 600X800</span></a>
+                                    <a href="#" class="under-link"
+                                        ><span>포스터 600X800</span></a
+                                    >
                                 </td>
                                 <td>10,000</td>
                                 <td>HISWILL</td>
@@ -114,7 +125,9 @@
                                 </td>
                                 <td>부자재 > 운영 비품</td>
                                 <td>
-                                    <a href="#" class="under-link"><span>포스터 600X800</span></a>
+                                    <a href="#" class="under-link"
+                                        ><span>포스터 600X800</span></a
+                                    >
                                 </td>
                                 <td>10,000</td>
                                 <td>HISWILL</td>
@@ -131,7 +144,9 @@
                                 </td>
                                 <td>부자재 > 운영 비품</td>
                                 <td>
-                                    <a href="#" class="under-link"><span>포스터 600X800</span></a>
+                                    <a href="#" class="under-link"
+                                        ><span>포스터 600X800</span></a
+                                    >
                                 </td>
                                 <td>10,000</td>
                                 <td>HISWILL</td>
@@ -155,7 +170,9 @@
                 </div>
 
                 <div class="pagination">
-                    <button type="button" class="prev"><span>이전</span></button>
+                    <button type="button" class="prev">
+                        <span>이전</span>
+                    </button>
                     <ul>
                         <li><em>1</em></li>
                         <li>
@@ -186,7 +203,9 @@
                             <button type="button"><span>10</span></button>
                         </li>
                     </ul>
-                    <button type="button" class="next"><span>다음</span></button>
+                    <button type="button" class="next">
+                        <span>다음</span>
+                    </button>
                 </div>
             </div>
             <aside>

@@ -110,7 +110,6 @@
 <script>
 export default {
     props: ['visible', 'receipt', 'basketList', 'totalPrice'],
-
     methods: {},
 };
 </script>
