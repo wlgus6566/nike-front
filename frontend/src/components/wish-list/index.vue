@@ -42,7 +42,11 @@
                 </span>
             </div>
             <div class="btn-box">
-                <button type="button" class="btn-s-black-sm">
+                <button
+                    type="button"
+                    class="btn-s-black-sm"
+                    @click="$emit('addBasket', item)"
+                >
                     <span>CART</span>
                 </button>
                 <button

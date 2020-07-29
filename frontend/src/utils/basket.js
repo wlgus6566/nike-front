@@ -3,7 +3,6 @@ import store from '@/store';
 import { postBasketSave, postBasketSaveList } from '@/api/basket';
 
 const addProductBasket = async (goodsSeq, orderQuantity) => {
-    console.log(goodsSeq, orderQuantity);
     try {
         await postBasketSave({
             goodsSeq: goodsSeq,

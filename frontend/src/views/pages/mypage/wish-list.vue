@@ -23,7 +23,11 @@
                 >개의 파일이 선택됨
             </p>
             <div class="btn-box">
-                <button type="button" class="btn-s-lightgray-sm">
+                <button
+                    type="button"
+                    class="btn-s-lightgray-sm"
+                    @click="checkedWishBasket"
+                >
                     <i class="icon-cart"></i>
                     <span>선택 CART 담기</span>
                 </button>
@@ -44,6 +48,7 @@
             :listData="wishListData"
             :checkWishItem="checkWishItem"
             :deleteLoading="deleteLoading"
+            @addBasket="addBasket"
             @wishDelete="wishDelete"
             @checkedWish="checkedWish"
         />
@@ -53,9 +58,15 @@
 </template>
 
 <script>
-    import {deleteWishList, deleteWishListCheck, getWishList,} from '@/api/wish-list';
+import {
+    deleteWishList,
+    deleteWishListCheck,
+    getWishList,
+} from '@/api/wish-list';
+// import { postBasketSaveList } from '@/api/basket';
+import { addProductBasket, addBasketList } from '@/utils/basket';
 
-    export default {
+export default {
     name: 'wish-list',
     components: {
         WishList: () => import('@/components/wish-list/index'),
@@ -71,6 +82,7 @@
             checkAll: false,
             checkWishItem: [],
             deleteLoading: [],
+            basketList: [],
             //check: this.items.state,
         };
     },
@@ -81,12 +93,12 @@
     methods: {
         checkedWish(seq, del) {
             const indexOfChecked = this.checkWishItem.findIndex(
-                (el) => el === seq
+                el => el === seq
             );
             if (!del && indexOfChecked === -1) {
                 this.checkWishItem.push(seq);
             } else {
-                this.checkWishItem = this.checkWishItem.filter((el) => {
+                this.checkWishItem = this.checkWishItem.filter(el => {
                     return el !== seq;
                 });
             }
@@ -95,9 +107,9 @@
         },
         allCheckFn() {
             if (this.checkAll) {
-                this.wishListData.forEach((el) => {
+                this.wishListData.forEach(el => {
                     const indexOfChecked = this.checkWishItem.findIndex(
-                        (elChecked) => elChecked === el.wishListSeq
+                        elChecked => elChecked === el.wishListSeq
                     );
                     if (indexOfChecked === -1) {
                         this.checkWishItem.push(el.wishListSeq);
@@ -117,7 +129,7 @@
                     wishListSeqList: this.checkWishItem,
                 });
                 await this.fetchData();
-                this.checkWishItem.forEach((seq) => {
+                this.checkWishItem.forEach(seq => {
                     this.checkedWish(seq, true);
                 });
                 this.deleteLoading = [];
@@ -161,6 +173,45 @@
                 console.log(error);
             }
         },
+        routeBasket() {
+            //장바구니 페이지 이동
+        },
+        addBasket(item) {
+            if (confirm('CART에 담으시겠습니까?')) {
+                console.log('담을거야');
+                //장바구니 담기
+                addProductBasket(
+                    item.goodsSeq,
+                    item.product.minimumOrderQuantity
+                );
+            } else {
+                return false;
+            }
+        },
+        checkedWishBasket() {
+            if (confirm('CART에 담으시겠습니까?')) {
+                const goodsSeq = [];
+                const minimumOrder = [];
+                this.wishListData.forEach(el => {
+                    const indexOfChecked = this.checkWishItem.findIndex(
+                        item => {
+                            console.log(item, el.wishListSeq);
+                            return item === el.wishListSeq;
+                        }
+                    );
+                    if (indexOfChecked !== -1) {
+                        goodsSeq.push(el.goodsSeq);
+                        minimumOrder.push(el.product.minimumOrderQuantity);
+                    }
+                });
+                addBasketList(goodsSeq, minimumOrder);
+            } else {
+                return false;
+            }
+        },
+    },
+    created() {
+        this.$store.dispatch('basketList');
     },
 };
 </script>
