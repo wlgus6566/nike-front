@@ -144,7 +144,7 @@ public class ContentsService {
 
             contentsSaveDTO.setImageFileName(fileResultDTO.getFileName());
             contentsSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
-            contentsSaveDTO.setImageFilePhysicalName(this.fileMoveTempToRealPath(fileResultDTO.getFilePhysicalName()));
+            contentsSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
         }
         final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
         List<ContentsFile> savedContentsFileList = new ArrayList<>();
@@ -297,7 +297,7 @@ public class ContentsService {
 
             contentsUpdateDTO.setImageFileName(fileResultDTO.getFileName());
             contentsUpdateDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
-            contentsUpdateDTO.setImageFilePhysicalName(this.fileMoveTempToRealPath(fileResultDTO.getFilePhysicalName()));
+            contentsUpdateDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
         }
 
         contents.ifPresent(value -> value.update(contentsUpdateDTO));

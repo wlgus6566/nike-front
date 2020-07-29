@@ -141,7 +141,7 @@ public class ReportService {
 
             reportSaveDTO.setImageFileName(fileResultDTO.getFileName());
             reportSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
-            reportSaveDTO.setImageFilePhysicalName(this.fileMoveTempToRealPath(fileResultDTO.getFilePhysicalName()));
+            reportSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
         }
 
         final Report savedReport = reportRepository.save(new Report().save(reportSaveDTO));
@@ -241,7 +241,7 @@ public class ReportService {
 
             reportUpdateDTO.setImageFileName(fileResultDTO.getFileName());
             reportUpdateDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
-            reportUpdateDTO.setImageFilePhysicalName(this.fileMoveTempToRealPath(fileResultDTO.getFilePhysicalName()));
+            reportUpdateDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
         }
 
 

@@ -2,6 +2,7 @@ package com.nike.dnp.dto.report;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
 
 
 /**
@@ -24,6 +25,7 @@ public class ReportResultDTO {
      */
     @ApiModelProperty(name = "reportName", value = "보고서 시퀀스")
     private Long reportSeq;
+
 
     /**
      * 보고서 구분 코드
@@ -67,4 +69,23 @@ public class ReportResultDTO {
     @ApiModelProperty(name = "readCount", value = "조회 수")
     private Long readCount;
 
+    /**
+     * The constant cdnUrl.
+     */
+    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    private static String cdnUrl;
+
+    /**
+     * Sets cdn url.
+     *
+     * @param cdnUrl the cdn url
+     */
+    @Value("${nike.file.cdnUrl:}")
+    public void setCdnUrl(final String cdnUrl) {
+        this.cdnUrl = cdnUrl;
+    }
+
+    public String getImageFilePhysicalName() {
+        return this.cdnUrl + imageFilePhysicalName;
+    }
 }

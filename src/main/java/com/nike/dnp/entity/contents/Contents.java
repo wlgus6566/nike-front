@@ -9,6 +9,7 @@ import com.nike.dnp.util.LocalDateUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -252,5 +253,25 @@ public class Contents extends BaseTimeEntity {
      */
     public void delete() {
         this.useYn = "N";
+    }
+
+    /**
+     * The constant cdnUrl.
+     */
+    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    private static String cdnUrl;
+
+    /**
+     * Sets cdn url.
+     *
+     * @param cdnUrl the cdn url
+     */
+    @Value("${nike.file.cdnUrl:}")
+    public void setCdnUrl(final String cdnUrl) {
+        this.cdnUrl = cdnUrl;
+    }
+
+    public String getImageFilePhysicalName() {
+        return this.cdnUrl + imageFilePhysicalName;
     }
 }

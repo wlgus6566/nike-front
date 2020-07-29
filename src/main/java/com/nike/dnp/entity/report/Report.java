@@ -7,6 +7,7 @@ import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.util.List;
@@ -109,6 +110,26 @@ public class Report extends BaseTimeEntity {
     @OneToMany(mappedBy = "report")
     @ApiModelProperty(name="reportFileList", value = "보고서 파일 목록", required = true)
     private List<ReportFile> reportFileList;
+
+    /**
+     * The constant cdnUrl.
+     */
+    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    private static String cdnUrl;
+
+    /**
+     * Sets cdn url.
+     *
+     * @param cdnUrl the cdn url
+     */
+    @Value("${nike.file.cdnUrl:}")
+    public void setCdnUrl(final String cdnUrl) {
+        this.cdnUrl = cdnUrl;
+    }
+
+    public String getImageFilePhysicalName() {
+        return this.cdnUrl + imageFilePhysicalName;
+    }
 
     /**
      * Save report.

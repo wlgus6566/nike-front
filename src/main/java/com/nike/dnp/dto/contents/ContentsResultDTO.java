@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 @Component
@@ -131,25 +131,26 @@ public class ContentsResultDTO extends BaseTimeEntity {
     @ApiModelProperty(name = "exposureYn", value = "노출 여부(N : 진행중)", example = "Y")
     private String exposureYn;
 
-    private String accessKey;
+    /**
+     * The constant cdnUrl.
+     */
+    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    private static String cdnUrl;
 
     /**
-     * Sets access key.
+     * Sets cdn url.
      *
-     * @param accessKey the access key
-     * @author [윤태호]
-     * @CreatedOn 2020. 7. 27. 오후 4:09:51
-     * @Description
+     * @param cdnUrl the cdn url
      */
-    @Value("${cloud.aws.credentials.accessKey:}")
-    public void setAccessKey(final String accessKey) {
-        this.accessKey = accessKey;
+    @Value("${nike.file.cdnUrl:}")
+    public void setCdnUrl(final String cdnUrl) {
+        this.cdnUrl = cdnUrl;
     }
 
     public String getImageFilePhysicalName() {
-        return this.accessKey + imageFilePhysicalName;
+        return this.cdnUrl + imageFilePhysicalName;
     }
 
 
 
-    }
+}

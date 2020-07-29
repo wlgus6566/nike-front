@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 
@@ -202,6 +203,35 @@ public class ContentsFile extends BaseTimeEntity {
     @JoinColumn(name = "CONTENTS_SEQ", insertable = false, updatable = false)
     @ApiModelProperty(name = "contents", value = "The Contents", hidden = true)
     private Contents contents;
+
+    /**
+     * The constant cdnUrl.
+     */
+    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    private static String cdnUrl;
+
+    /**
+     * Sets cdn url.
+     *
+     * @param cdnUrl the cdn url
+     */
+    @Value("${nike.file.cdnUrl:}")
+    public void setCdnUrl(final String cdnUrl) {
+        this.cdnUrl = cdnUrl;
+    }
+
+    public String getFilePhysicalName() {
+        return this.cdnUrl + filePhysicalName;
+    }
+
+    public String getThumbnailFilePhysicalName() {
+        return this.cdnUrl + thumbnailFilePhysicalName;
+    }
+
+    public String getDetailThumbnailFilePhysicalName() {
+        return this.cdnUrl + detailThumbnailFilePhysicalName;
+    }
+
 
 
     /**
