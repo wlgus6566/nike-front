@@ -7,10 +7,7 @@
                 자료는 NIKE.INC.와 NIKE KOREA LLC.의 자산입니다.<br />
                 보안 규정을 준수하시기 바랍니다.
             </p>
-            <router-link
-                :to="`/${this.$route.meta.topMenuCode.toLowerCase()}/upload`"
-                class="btn-s-black"
-            >
+            <router-link :to="uploadLink" class="btn-s-black">
                 UPLOAD
             </router-link>
         </div>
@@ -26,8 +23,14 @@
                 :folderListData="folderListData"
             />
             <template v-else>
-                <NoData v-if="searchKeyword === ''" />
-                <NoDataSearch v-else />
+                <NoData v-if="searchKeyword === ''">
+                    <i class="icon-file"></i>
+                    <p class="desc">업로드한 폴더가 없습니다.</p>
+                </NoData>
+                <NoData v-else>
+                    <i class="icon-search"></i>
+                    <p class="desc">검색 결과가 없습니다.</p>
+                </NoData>
             </template>
         </template>
         <Loading v-if="loadingData" />
@@ -38,9 +41,9 @@ import FilterSelect from '@/components/filter-select';
 import ListSorting from '@/components/list-sorting/index';
 import SearchInput from '@/components/search-input';
 import FolderList from '@/components/folder-list';
-import Loading from '@/components/folder-list/loading';
-import NoData from '@/components/folder-list/nodata';
-import NoDataSearch from '@/components/folder-list/nodata-search';
+import Loading from '@/components/loading';
+import NoData from '@/components/no-data';
+import NoDataSearch from '@/components/no-data/nodata-search';
 
 import { getContents } from '@/api/contents.js';
 
@@ -49,6 +52,13 @@ export default {
     watch: {
         'listSortSelect.value'() {
             this.initFetchData();
+        },
+    },
+    computed: {
+        uploadLink() {
+            return this.$route.meta.topMenuCode
+                ? `/${this.$route.meta.topMenuCode.toLowerCase()}/upload`
+                : '/';
         },
     },
     data() {
@@ -106,6 +116,7 @@ export default {
             }
         },
         initFetchData() {
+            console.log('initFetchData');
             this.totalPage = null;
             this.page = 0;
             this.folderListData = null;
@@ -122,6 +133,7 @@ export default {
                 this.folderListData.length >= this.itemLength &&
                 this.folderListData.length !== 0
             ) {
+                console.log('infiniteScroll');
                 this.fetchData(true);
             }
         },
@@ -165,6 +177,7 @@ export default {
         },
     },
     created() {
+        console.log('folder-list-created');
         this.initFetchData();
         window.addEventListener('scroll', this.handleScroll);
     },

@@ -50,7 +50,10 @@ export default {
                 const bodyFormData = new FormData();
                 bodyFormData.set('username', this.username);
                 bodyFormData.set('password', this.password);
-                const response = await this.$store.dispatch('LOGIN', bodyFormData);
+                const response = await this.$store.dispatch(
+                    'LOGIN',
+                    bodyFormData
+                );
                 if (response.data.existMsg) {
                     alert(response.data.msg);
                 }
@@ -65,7 +68,6 @@ export default {
                     this.$router.push('/');
                 }
 
-                console.log(response);
                 return;
             } catch (error) {
                 alert(error.response.data.msg);

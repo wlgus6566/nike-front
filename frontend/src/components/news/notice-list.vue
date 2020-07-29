@@ -114,9 +114,7 @@ export default {
             return array.slice().reverse();
         },
     },
-    mounted() {
-        console.log(this.items);
-    },
+    mounted() {},
     computed: {},
     methods: {},
 };
