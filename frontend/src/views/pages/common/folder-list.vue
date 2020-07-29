@@ -41,8 +41,8 @@ import FilterSelect from '@/components/filter-select';
 import ListSorting from '@/components/list-sorting/index';
 import SearchInput from '@/components/search-input';
 import FolderList from '@/components/folder-list';
-import Loading from '@/components/loading/index';
-import NoData from '@/components/no-data/index';
+import Loading from '@/components/loading';
+import NoData from '@/components/no-data';
 import NoDataSearch from '@/components/no-data/nodata-search';
 
 import { getContents } from '@/api/contents.js';
