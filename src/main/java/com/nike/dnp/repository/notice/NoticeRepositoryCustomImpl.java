@@ -21,8 +21,8 @@ import java.util.List;
  * The Class Notice repository custom.
  *
  * @author [정주희]
- * @CreatedOn 2020. 7. 13. 오후 6:25:37
- * @Description
+ * @since 2020. 7. 13. 오후 6:25:37
+ * @implNote
  */
 @Slf4j
 @Repository
@@ -38,8 +38,8 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
      * @param pageRequest     the page request
      * @return the page
      * @author [정주희]
-     * @CreatedOn 2020. 7. 13. 오후 10:58:41
-     * @Description Customer Center 목록 조회
+     * @since 2020. 7. 13. 오후 10:58:41
+     * @implNote Customer Center 목록 조회
      */
     @Override
     public Page<NoticeArticleListDTO> findNoticePages(NoticeSearchDTO noticeSearchDTO, PageRequest pageRequest) {
@@ -72,8 +72,8 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
      *
      * @return the long
      * @author [정주희]
-     * @CreatedOn 2020. 7. 25. 오후 7:57:35
-     * @Description 공지사항 등록시 상단 고정된 게시글 개수 확인
+     * @since 2020. 7. 25. 오후 7:57:35
+     * @implNote 공지사항 등록시 상단 고정된 게시글 개수 확인
      */
     @Override
     public Long checkNoticeYnCnt() {

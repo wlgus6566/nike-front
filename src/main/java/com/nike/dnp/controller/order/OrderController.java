@@ -34,7 +34,7 @@ import javax.validation.Valid;
  * 주문 Controller
  *
  * @author [윤태호]
- * @CreatedOn 2020. 6. 26. 오후 3:27:34
+ * @since 2020. 6. 26. 오후 3:27:34
  * @apiNote
  */
 @Slf4j
@@ -93,8 +93,8 @@ public class OrderController {
 	 * @param orderProductSaveDTO the order product save dto
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 1. 오후 2:48:06
-	 * @Description
+	 * @since 2020. 7. 1. 오후 2:48:06
+	 * @apiNote
 	 */
 	@ApiOperation(value = "주문 등록", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/save", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -134,8 +134,8 @@ public class OrderController {
 	 * @param orderSearchDTO the order search dto
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 7. 오전 11:25:09
-	 * @Description
+	 * @since 2020. 7. 7. 오전 11:25:09
+	 * @apiNote
 	 */
 	@ApiOperation(value = "주문내역", notes = REQUEST_CHARACTER + "beginDt|시작일|false|String\n" + "endDt|종료일|false|String\n")
 	@GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -151,8 +151,8 @@ public class OrderController {
 	 * @param orderGoodsSeq the order goods seq
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 7. 오후 2:43:50
-	 * @Description
+	 * @since 2020. 7. 7. 오후 2:43:50
+	 * @apiNote
 	 */
 	@ApiOperation(value = "주문 상세 내역", notes = BASIC_CHARACTER)
 	@GetMapping(value = "/{orderGoodsSeq}", produces = MediaType.APPLICATION_JSON_VALUE)

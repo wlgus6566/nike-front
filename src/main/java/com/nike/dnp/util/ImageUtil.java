@@ -19,8 +19,8 @@ import java.io.IOException;
  * ImageUtil
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 10. 오후 2:41:58
- * @Description
+ * @since 2020. 7. 10. 오후 2:41:58
+ * @implNote
  */
 @Component
 @Slf4j
@@ -38,8 +38,8 @@ public class ImageUtil {
 	 *
 	 * @param root the root
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 10. 오후 2:41:58
-	 * @Description
+	 * @since 2020. 7. 10. 오후 2:41:58
+	 * @implNote
 	 */
 	@Value("${nike.file.root:}")
 	public void setRoot(final String root) {
@@ -57,8 +57,8 @@ public class ImageUtil {
 	 * @throws IOException                the io exception
 	 * @throws CodeMessageHandleException the code message handle exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 10. 오후 2:41:58
-	 * @Description
+	 * @since 2020. 7. 10. 오후 2:41:58
+	 * @implNote
 	 */
 	public static FileResultDTO fileSaveForBase64(final String folder, final String base64Str) {
 		log.info("ImageUtil.fileSaveForBase64");

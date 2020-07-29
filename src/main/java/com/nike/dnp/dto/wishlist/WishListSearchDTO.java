@@ -8,8 +8,8 @@ import lombok.*;
  * The Class Wish list search dto.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 3. 오후 3:44:44
- * @Description
+ * @since 2020. 7. 3. 오후 3:44:44
+ * @implNote
  */
 @Getter
 @Setter

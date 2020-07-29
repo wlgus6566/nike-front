@@ -13,8 +13,8 @@ import java.util.List;
  * The type Security filter mata service.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:12:05
- * @Description
+ * @since 2020. 6. 24. 오후 6:12:05
+ * @implNote
  */
 @Slf4j
 @Service
@@ -36,8 +36,8 @@ public class SecurityFilterMataService {
 	 *
 	 * @return the list
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:12:05
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:12:05
+	 * @implNote
 	 */
 	public List<SecurityIpFilterMata> ipFindAll() {
 		return ipFilterRepo.findAll();

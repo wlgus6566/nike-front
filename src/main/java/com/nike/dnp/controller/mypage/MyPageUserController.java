@@ -30,8 +30,8 @@ import java.util.List;
  * The Class User my page controller.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 6. 오후 2:56:56
- * @Description 마이페이지 User Controller
+ * @since 2020. 7. 6. 오후 2:56:56
+ * @apiNote 마이페이지 User Controller
  */
 @Slf4j
 @RestController
@@ -75,8 +75,8 @@ public class MyPageUserController {
      * @param authUserDTO the auth user dto
      * @return the redis menus
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 16. 오후 5:16:45
-     * @Description GNB 메뉴 목록
+     * @since 2020. 7. 16. 오후 5:16:45
+     * @apiNote GNB 메뉴 목록
      */
     @ApiOperation(value = "GNB 메뉴 목록"
             , notes = OPERATION_CHARACTER)
@@ -95,8 +95,8 @@ public class MyPageUserController {
      * @param authUserDTO the auth user dto
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 5:19:29
-     * @Description MY INFO 상세 조회
+     * @since 2020. 6. 23. 오후 5:19:29
+     * @apiNote MY INFO 상세 조회
      */
     @ApiOperation(value = "MY INFO 상세 조회"
             , notes = OPERATION_CHARACTER)
@@ -116,8 +116,8 @@ public class MyPageUserController {
      * @param result      the result
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 2. 오후 4:08:39
-     * @Description MY INFO 비밀번호 변경
+     * @since 2020. 7. 2. 오후 4:08:39
+     * @apiNote MY INFO 비밀번호 변경
      */
     @ApiOperation(value = "MY INFO 비밀번호 변경"
             , notes = OPERATION_CHARACTER)

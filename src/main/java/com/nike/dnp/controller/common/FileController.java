@@ -32,7 +32,7 @@ import java.util.List;
  * 파일컨트롤러
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 28. 오전 11:08:35
+ * @since 2020. 7. 28. 오전 11:08:35
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -60,7 +60,7 @@ public class FileController {
 	 * @return the response entity
 	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 28. 오전 11:08:35
+	 * @since 2020. 7. 28. 오전 11:08:35
 	 */
 	@ApiIgnore
 	@GetMapping("/api/download")
@@ -77,7 +77,7 @@ public class FileController {
 	 * @return the single result
 	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 28. 오전 11:08:35
+	 * @since 2020. 7. 28. 오전 11:08:35
 	 */
 	@ApiOperation(value = "파일 업로드", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/api/open/upload",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -98,7 +98,7 @@ public class FileController {
 	 * @param uploadFileList the upload file list
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 28. 오전 11:08:35
+	 * @since 2020. 7. 28. 오전 11:08:35
 	 */
 	@ApiOperation(value = "파일 업로드 리스트", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/api/open/uploadList", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -123,7 +123,7 @@ public class FileController {
 	 * @param fileUploadDTO the file upload dto
 	 * @return the file result dto
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 28. 오전 11:08:35
+	 * @since 2020. 7. 28. 오전 11:08:35
 	 */
 	private FileResultDTO fileUpload(final FileUploadDTO fileUploadDTO) {
 		log.info("FileController.fileUpload");

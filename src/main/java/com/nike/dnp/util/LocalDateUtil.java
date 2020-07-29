@@ -10,8 +10,8 @@ import java.time.format.DateTimeFormatter;
  * LocalDateTime Util
  *
  * @author [김형욱]
- * @CreatedOn 2020. 7. 13. 오후 4:53:33
- * @Description LocalDateUtil 작성
+ * @since 2020. 7. 13. 오후 4:53:33
+ * @implNote LocalDateUtil 작성
  */
 @Slf4j
 @UtilityClass

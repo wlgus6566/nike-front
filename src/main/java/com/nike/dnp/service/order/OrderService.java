@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
  * The Class Order service.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 6. 30. 오후 5:37:34
- * @Description
+ * @since 2020. 6. 30. 오후 5:37:34
+ * @implNote
  */
 @Slf4j
 @Service
@@ -35,8 +35,8 @@ public class OrderService {
 	 * @param orderProductSaveDTO the order product save dto
 	 * @return the order
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 1. 오후 2:47:41
-	 * @Description
+	 * @since 2020. 7. 1. 오후 2:47:41
+	 * @implNote
 	 */
 	@Transactional
 	public Order saveOrder(final OrderProductSaveDTO orderProductSaveDTO) {

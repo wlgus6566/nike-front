@@ -15,8 +15,8 @@ public interface AlarmRepositoryCustom {
      * @param pageRequest the page request
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 24. 오후 7:54:36
-     * @Description
+     * @since 2020. 7. 24. 오후 7:54:36
+     * @implNote
      */
     Page<AlarmResultDTO> findAllPaging(Long userSeq, PageRequest pageRequest);
 }

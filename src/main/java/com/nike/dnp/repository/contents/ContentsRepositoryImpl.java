@@ -24,7 +24,7 @@ import java.util.List;
  * Contents Repository Impl
  *
  * @author [이소정]
- * @CreatedOn 2020. 6. 19. 오후 5:54:32
+ * @since 2020. 6. 19. 오후 5:54:32
  */
 @Repository
 public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements ContentsRepositoryCustom {
@@ -35,7 +35,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * Instantiates a new Contents repository.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 6:15:29
+     * @since 2020. 6. 19. 오후 6:15:29
      */
     public ContentsRepositoryImpl() {
         super(Contents.class);
@@ -48,7 +48,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @param pageRequest       the page request
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:54:39
+     * @since 2020. 6. 19. 오후 5:54:39
      */
     @Override
     public Page<ContentsResultDTO> findPageContents(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest) {
@@ -96,7 +96,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @param pageRequest the page request
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 27. 오후 6:39:10
+     * @since 2020. 7. 27. 오후 6:39:10
      */
     public List<ContentsResultDTO> findRecentContents(final String topMenuCode, final PageRequest pageRequest) {
         ContentsSearchDTO contentsSearchDTO = new ContentsSearchDTO();

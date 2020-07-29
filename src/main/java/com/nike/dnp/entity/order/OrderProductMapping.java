@@ -12,8 +12,8 @@ import javax.persistence.*;
  * The Class Order product mapping.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 6. 26. 오후 4:16:42
- * @Description
+ * @since 2020. 6. 26. 오후 4:16:42
+ * @implNote
  */
 @Getter
 @Setter

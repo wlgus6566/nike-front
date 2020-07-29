@@ -11,8 +11,8 @@ import java.util.Optional;
  * CodeRepository
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 5:51:09
- * @Description Code(공통 코드) Repository Interface 작성
+ * @since 2020. 6. 24. 오후 5:51:09
+ * @implNote Code(공통 코드) Repository Interface 작성
  */
 @Repository
 public interface CodeRepository extends JpaRepository<Code, Long>, CodeRepositoryCustom {
@@ -22,8 +22,8 @@ public interface CodeRepository extends JpaRepository<Code, Long>, CodeRepositor
      *
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:51:09
-     * @Description 최상위 코드 목록 조회
+     * @since 2020. 6. 24. 오후 5:51:09
+     * @implNote 최상위 코드 목록 조회
      */
     List<Code> findAllByUpperCodeIsNullOrderByCodeOrderAsc();
 
@@ -33,8 +33,8 @@ public interface CodeRepository extends JpaRepository<Code, Long>, CodeRepositor
      * @param code the code
      * @return the code
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:51:09
-     * @Description 상세 조회
+     * @since 2020. 6. 24. 오후 5:51:09
+     * @implNote 상세 조회
      */
     Optional<Code> findByCode(String code);
 
@@ -44,8 +44,8 @@ public interface CodeRepository extends JpaRepository<Code, Long>, CodeRepositor
      * @param upperCode the upper code
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 7. 오전 11:50:44
-     * @Description 상위코드로 하위코드 목록 조회
+     * @since 2020. 7. 7. 오전 11:50:44
+     * @implNote 상위코드로 하위코드 목록 조회
      */
     List<Code> findByUpperCode(String upperCode);
 

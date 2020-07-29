@@ -8,8 +8,8 @@ import lombok.*;
  * The Class File upload dto.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 10. 오전 10:09:12
- * @Description
+ * @since 2020. 7. 10. 오전 10:09:12
+ * @implNote
  */
 @Getter
 @Setter

@@ -10,8 +10,8 @@ import java.util.List;
  * The Class Wish list delete dto.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 6. 오후 3:41:39
- * @Description
+ * @since 2020. 7. 6. 오후 3:41:39
+ * @implNote
  */
 @Getter
 @Setter

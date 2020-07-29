@@ -10,8 +10,8 @@ import javax.persistence.*;
  * The Class Order.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 6. 26. 오후 4:16:38
- * @Description
+ * @since 2020. 6. 26. 오후 4:16:38
+ * @implNote
  */
 @Getter
 @Setter

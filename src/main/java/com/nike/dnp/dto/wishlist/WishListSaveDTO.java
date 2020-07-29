@@ -9,8 +9,8 @@ import javax.validation.constraints.NotNull;
  * The Class Wish list save dto.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 24. 오전 9:59:03
- * @Description
+ * @since 2020. 7. 24. 오전 9:59:03
+ * @implNote
  */
 @Getter
 @Setter

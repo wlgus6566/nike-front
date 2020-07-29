@@ -23,8 +23,8 @@ import java.util.List;
  * ProductRepositoryImpl
  *
  * @author [윤태호]
- * @CreatedOn 2020. 6. 23. 오후 3:23:31
- * @Description Product(제품) Repository interface 작성
+ * @since 2020. 6. 23. 오후 3:23:31
+ * @implNote Product(제품) Repository interface 작성
  * @history [윤태호] [2020.06.18] [최초 작성]
  * @since 2020.06.18
  */
@@ -38,8 +38,8 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 	 * Instantiates a new Manager repository.
 	 *
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 23. 오후 3:23:31
-	 * @Description
+	 * @since 2020. 6. 23. 오후 3:23:31
+	 * @implNote
 	 */
 	public ProductRepositoryImpl() {
 		super(Product.class);
@@ -52,8 +52,8 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 	 * @param pageRequest      the page request
 	 * @return page
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 23. 오후 3:23:31
-	 * @Description
+	 * @since 2020. 6. 23. 오후 3:23:31
+	 * @implNote
 	 */
 	@Override
 	public Page<ProductResultDTO> findPagesProduct(final ProductSearchDTO productSearchDTO,

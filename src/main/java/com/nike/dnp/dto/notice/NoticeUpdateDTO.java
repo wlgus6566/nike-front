@@ -10,8 +10,8 @@ import lombok.*;
  * The Class Notice update dto.
  *
  * @author [정주희]
- * @CreatedOn 2020. 7. 20. 오후 10:02:38
- * @Description
+ * @since 2020. 7. 20. 오후 10:02:38
+ * @implNote
  */
 @Getter
 @Setter

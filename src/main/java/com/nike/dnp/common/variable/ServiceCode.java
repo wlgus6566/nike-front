@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
  * The Class Service enum code.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 3. 오전 11:34:38
- * @Description
+ * @since 2020. 7. 3. 오전 11:34:38
+ * @implNote
  */
 @Component
 @AllArgsConstructor

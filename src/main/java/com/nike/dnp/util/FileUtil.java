@@ -33,8 +33,8 @@ import java.util.TimeZone;
  * FileUtil
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 10. 오후 2:39:36
- * @Description
+ * @since 2020. 7. 10. 오후 2:39:36
+ * @implNote
  */
 @Component
 @Slf4j
@@ -84,8 +84,8 @@ public class FileUtil {
 	 *
 	 * @param root the root
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 10. 오후 2:39:36
-	 * @Description
+	 * @since 2020. 7. 10. 오후 2:39:36
+	 * @implNote
 	 */
 	@Value("${nike.file.root:}")
 	public void setRoot(final String root){
@@ -97,8 +97,8 @@ public class FileUtil {
 	 *
 	 * @param imageMagick the image magick
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 2:30:09
-	 * @Description
+	 * @since 2020. 7. 13. 오후 2:30:09
+	 * @implNote
 	 */
 	@Value("${nike.file.imageMagick:}")
 	public void setImageMagick(final String imageMagick){
@@ -110,8 +110,8 @@ public class FileUtil {
 	 *
 	 * @param imageMagickCommand the image magick command
 	 * @author [김형욱]
-	 * @CreatedOn 2020. 7. 17. 오전 11:55:43
-	 * @Description
+	 * @since 2020. 7. 17. 오전 11:55:43
+	 * @implNote
 	 */
 	@Value("${nike.file.imageMagickCommand:}")
 	public void setImageMagickCommand(final String imageMagickCommand){
@@ -123,8 +123,8 @@ public class FileUtil {
 	 *
 	 * @param ffmpeg the ffmpeg
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 27. 오후 4:58:36
-	 * @Description
+	 * @since 2020. 7. 27. 오후 4:58:36
+	 * @implNote
 	 */
 	@Value("${nike.file.ffmpeg:}")
 	public void setFfmpeg(final String ffmpeg) {
@@ -136,8 +136,8 @@ public class FileUtil {
 	 *
 	 * @param ffmpegCommand the ffmpeg command
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 27. 오후 4:58:36
-	 * @Description
+	 * @since 2020. 7. 27. 오후 4:58:36
+	 * @implNote
 	 */
 	@Value("${nike.file.ffmpegCommand:}")
 	public void setFfmpegCommand(final String ffmpegCommand) {
@@ -151,8 +151,8 @@ public class FileUtil {
 	 * @param extension 파일 확장자
 	 * @return the file
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 10. 오후 2:39:36
-	 * @Description
+	 * @since 2020. 7. 10. 오후 2:39:36
+	 * @implNote
 	 */
 	public static File makeNewFile(final String folder,final String extension) {
 		log.info("FileUtil.makeNewFile");
@@ -172,7 +172,7 @@ public class FileUtil {
 	 *
 	 * @return the string
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 29. 오후 2:02:25
+	 * @since 2020. 7. 29. 오후 2:02:25
 	 */
 	public static String makeFileName(){
 		log.info("FileUtil.makeFileName");
@@ -190,8 +190,8 @@ public class FileUtil {
 	 * @return the file result dto
 	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
-	 * @Description
+	 * @since 2020. 7. 13. 오후 4:55:25
+	 * @implNote
 	 */
 	public static FileResultDTO fileSave(final MultipartFile uploadFile,
 										 final String folder,
@@ -323,8 +323,8 @@ public class FileUtil {
 	 * @throws IOException          the io exception
 	 * @throws InterruptedException the interrupted exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
-	 * @Description
+	 * @since 2020. 7. 13. 오후 4:55:25
+	 * @implNote
 	 */
 	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile) throws IOException {
 		log.info("FileUtil.fileTempSaveAndImageResize");
@@ -340,8 +340,8 @@ public class FileUtil {
 	 * @throws IOException          the io exception
 	 * @throws InterruptedException the interrupted exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
-	 * @Description
+	 * @since 2020. 7. 13. 오후 4:55:25
+	 * @implNote
 	 */
 	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile,
 														   final String resizeExt) throws IOException  {
@@ -358,8 +358,8 @@ public class FileUtil {
 	 * @throws IOException          the io exception
 	 * @throws InterruptedException the interrupted exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
-	 * @Description
+	 * @since 2020. 7. 13. 오후 4:55:25
+	 * @implNote
 	 */
 	public static FileResultDTO fileSave(final MultipartFile uploadFile, final String folder) throws IOException {		
 		log.info("FileUtil.fileSave");
@@ -374,8 +374,8 @@ public class FileUtil {
 	 * @throws IOException          the io exception
 	 * @throws InterruptedException the interrupted exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
-	 * @Description
+	 * @since 2020. 7. 13. 오후 4:55:25
+	 * @implNote
 	 */
 	public static FileResultDTO fileTempSave(final MultipartFile uploadFile) throws IOException {		
 		log.info("FileUtil.fileTempSave");
@@ -387,8 +387,8 @@ public class FileUtil {
 	 * temp 폴더 파일 삭제 (등록후 24시간 지난 파일들만 삭제 처리)
 	 *
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 13. 오후 4:55:25
-	 * @Description
+	 * @since 2020. 7. 13. 오후 4:55:25
+	 * @implNote
 	 */
 	public static void deleteTemp() {
 		log.info("FileUtil.deleteTemp");
@@ -417,8 +417,8 @@ public class FileUtil {
 	 * @param filePath the file path
 	 * @return the single result
 	 * @author [이소정]
-	 * @CreatedOn 2020. 7. 16. 오후 6:15:26
-	 * @Description
+	 * @since 2020. 7. 16. 오후 6:15:26
+	 * @implNote
 	 */
 	public static ResponseEntity<Resource> fileDownload(final String filePath) {
 		log.info("FileUtil.fileDownload");
@@ -446,7 +446,7 @@ public class FileUtil {
 	 * @return the response entity
 	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 28. 오후 2:19:30
+	 * @since 2020. 7. 28. 오후 2:19:30
 	 */
 	public static ResponseEntity<Resource> s3FileDownload(String path, String fileName) throws IOException {
 		log.info("FileUtil.s3FileDownload");
@@ -464,8 +464,8 @@ public class FileUtil {
 	 *
 	 * @param is the is
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 27. 오후 4:52:29
-	 * @Description
+	 * @since 2020. 7. 27. 오후 4:52:29
+	 * @implNote
 	 */
 	private static void exhaustInputStream(final InputStream is) {
 		log.info("FileUtil.exhaustInputStream");

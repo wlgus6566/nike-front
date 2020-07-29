@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
  * The Class Email pattern util.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 1. 오후 2:51:02
- * @Description 이메일 정규식
+ * @since 2020. 7. 1. 오후 2:51:02
+ * @implNote 이메일 정규식
  */
 @UtilityClass
 public class EmailPatternUtil {
@@ -21,8 +21,8 @@ public class EmailPatternUtil {
      * @param email the email
      * @return the boolean
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 1. 오후 4:15:28
-     * @Description 정상 이메일 형식 여부
+     * @since 2020. 7. 1. 오후 4:15:28
+     * @implNote 정상 이메일 형식 여부
      */
     public boolean isValidEmail(final String email) {
         boolean isValid = false;

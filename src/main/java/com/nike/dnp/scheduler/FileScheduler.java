@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
  * The Class File scheduler.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 14. 오전 11:51:33
- * @Description
+ * @since 2020. 7. 14. 오전 11:51:33
+ * @implNote
  */
 @Slf4j
 @Component
@@ -22,8 +22,8 @@ public class FileScheduler {
 	 * [00초], [00분], [00시], [매일], [매월], [매년]
 	 *
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 10. 오후 5:55:23
-	 * @Description
+	 * @since 2020. 7. 10. 오후 5:55:23
+	 * @implNote
 	 */
 	@Scheduled(cron = "0 0 0 * * *")
 	//@Scheduled(cron = "*/10 * * * * *")

@@ -23,8 +23,8 @@ import java.util.List;
  * The Class Order product mapper repository.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 1. 오후 4:11:28
- * @Description
+ * @since 2020. 7. 1. 오후 4:11:28
+ * @implNote
  */
 @Slf4j
 @Repository
@@ -34,8 +34,8 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 	 * Creates a new {@link QuerydslRepositorySupport} instance for the given domain type.
 	 *
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 1. 오후 4:17:41
-	 * @Description
+	 * @since 2020. 7. 1. 오후 4:17:41
+	 * @implNote
 	 */
 	public OrderProductMapperRepositoryImpl() {
 		super(OrderProductMapping.class);
@@ -47,8 +47,8 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 	 * @param orderSeq the order seq
 	 * @return the list
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 2. 오전 11:25:16
-	 * @Description
+	 * @since 2020. 7. 2. 오전 11:25:16
+	 * @implNote
 	 */
 	@Override
 	public List<OrderProductResultDTO> findSearchEmailValue(final Long orderSeq) {
@@ -86,8 +86,8 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 	 * @param pageRequest    the page request
 	 * @return the page
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 7. 오후 12:14:28
-	 * @Description
+	 * @since 2020. 7. 7. 오후 12:14:28
+	 * @implNote
 	 */
 	@Override
 	public Page<OrderProductMapping> findPagesOrder(final OrderSearchDTO orderSearchDTO,

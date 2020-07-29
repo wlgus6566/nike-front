@@ -38,8 +38,8 @@ import java.util.Optional;
  * 로그인 성공 후 핸들러
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 3. 오전 11:30:01
- * @Description
+ * @since 2020. 7. 3. 오전 11:30:01
+ * @implNote
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -88,8 +88,8 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 	 * @param authentication the authentication
 	 * @throws IOException the io exception
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 3. 오전 11:30:01
-	 * @Description
+	 * @since 2020. 7. 3. 오전 11:30:01
+	 * @implNote
 	 */
 	@Transactional
 	@Override

@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 메인 화면(HOME 화면)관련 Service 입니다.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 27. 오후 5:39:29
+ * @since 2020. 7. 27. 오후 5:39:29
  */
 @Slf4j
 @Service
@@ -60,8 +60,8 @@ public class MainService {
      *
      * @return the main result dto
      * @author [이소정]
-     * @CreatedOn 2020. 7. 27. 오후 6:53:07
-     * @Description
+     * @since 2020. 7. 27. 오후 6:53:07
+     * @implNote
      */
     public MainResultDTO findMainInfo() {
         MainResultDTO mainResultDTO = new MainResultDTO();

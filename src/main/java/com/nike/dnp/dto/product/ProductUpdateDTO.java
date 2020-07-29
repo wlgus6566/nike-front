@@ -12,8 +12,8 @@ import javax.validation.constraints.NotNull;
  * productSaveDTO
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 21. 오후 3:55:11
- * @Description Product Save DTO 작성
+ * @since 2020. 7. 21. 오후 3:55:11
+ * @implNote Product Save DTO 작성
  */
 @Getter
 @Setter

@@ -24,8 +24,8 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
      * Instantiates a new History repository.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 7. 23. 오전 11:37:32
-     * @Description
+     * @since 2020. 7. 23. 오전 11:37:32
+     * @implNote
      */
     public HistoryRepositoryImpl() {
         super(History.class);

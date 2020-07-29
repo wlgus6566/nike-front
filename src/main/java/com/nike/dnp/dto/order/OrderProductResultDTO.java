@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
  * The Class Order product result dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 21. 오후 3:54:59
- * @Description
+ * @since 2020. 7. 21. 오후 3:54:59
+ * @implNote
  */
 @Getter
 @Setter

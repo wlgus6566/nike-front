@@ -6,8 +6,8 @@ import lombok.*;
  * The Class Order product mapping save dto.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 1. 오후 12:00:47
- * @Description
+ * @since 2020. 7. 1. 오후 12:00:47
+ * @implNote
  */
 @Getter
 @Setter

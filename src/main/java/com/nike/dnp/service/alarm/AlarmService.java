@@ -19,8 +19,8 @@ import java.util.List;
  * The Class Alarm service.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 24. 오후 7:44:29
- * @Description
+ * @since 2020. 7. 24. 오후 7:44:29
+ * @implNote
  */
 @Slf4j
 @Service
@@ -42,8 +42,8 @@ public class AlarmService {
      * @param searchDTO the search dto
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 24. 오후 8:09:49
-     * @Description
+     * @since 2020. 7. 24. 오후 8:09:49
+     * @implNote
      */
     public Page<AlarmResultDTO> findAllPaging(final Long userSeq, final SearchDTO searchDTO) {
         return alarmRepositoryl.findAllPaging(
@@ -63,8 +63,8 @@ public class AlarmService {
      * @param targetUserList the target user list
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 24. 오후 7:16:33
-     * @Description
+     * @since 2020. 7. 24. 오후 7:16:33
+     * @implNote
      */
     public List<Alarm> sendAlarmTargetList(
             final String actionCode, final String typeCd

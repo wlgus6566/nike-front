@@ -29,8 +29,8 @@ import java.util.List;
  * 캘린더 컨트롤러
  *
  * @author [김형욱]
- * @CreatedOn 2020. 6. 29. 오후 8:57:04
- * @Description 일정 Controller 작성
+ * @since 2020. 6. 29. 오후 8:57:04
+ * @apiNote 일정 Controller 작성
  */
 @Slf4j
 @RestController
@@ -68,8 +68,8 @@ public class CalendarController {
      * @param calendarSearchDTO the calendar search dto
      * @return the single result
      * @author [김형욱]
-     * @CreatedOn 2020. 7. 2. 오전 8:55:29
-     * @Description
+     * @since 2020. 7. 2. 오전 8:55:29
+     * @apiNote
      */
     @ApiOperation(
             value = "Calendar 조회"
@@ -92,8 +92,8 @@ public class CalendarController {
      * @param calendarSaveDTO the calendar save dto
      * @return the single result
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 4:18:17
-     * @Description
+     * @since 2020. 7. 22. 오후 4:18:17
+     * @apiNote
      */
     @ApiOperation(
             value = "Calendar 등록"
@@ -118,8 +118,8 @@ public class CalendarController {
      * @param calendarUpdateDTO the calendar update dto
      * @return the single result
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 4:18:17
-     * @Description
+     * @since 2020. 7. 22. 오후 4:18:17
+     * @apiNote
      */
     @ApiOperation(
             value = "Calendar 수정"
@@ -147,8 +147,8 @@ public class CalendarController {
      * @param calendarSeq the calendar seq
      * @return the single result
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 4:18:17
-     * @Description
+     * @since 2020. 7. 22. 오후 4:18:17
+     * @apiNote
      */
     @ApiOperation(
             value = "Calendar 삭제"
@@ -174,8 +174,8 @@ public class CalendarController {
      * @param calendarSeq the calendar seq
      * @return the single result
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 4:18:17
-     * @Description
+     * @since 2020. 7. 22. 오후 4:18:17
+     * @apiNote
      */
     @ApiOperation(value = "Calendar 상세보기", notes = REQUEST_CHARACTER + "\n"
             + "[하위 Parameters 참조]\n\n\n\n"
@@ -197,8 +197,8 @@ public class CalendarController {
      * @param calendarDaySearchDTO the calendar day search dto
      * @return the single result
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 4:18:17
-     * @Description
+     * @since 2020. 7. 22. 오후 4:18:17
+     * @apiNote
      */
     @ApiOperation(value = "Calendar 오늘 조회", notes = REQUEST_CHARACTER + "\n" + "[하위 Parameters 참조]\n\n\n\n" + "## Response ## \n" + "[하위 Model 참조]\n\n\n\n")
     @GetMapping(value = "/today", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
  * UserActionLogService
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 5:58:49
- * @Description UserActionLog(유저_활동_로그) Service 작성
+ * @since 2020. 6. 24. 오후 5:58:49
+ * @implNote UserActionLog(유저_활동_로그) Service 작성
  */
 @Slf4j
 @Service
@@ -34,8 +34,8 @@ public class UserActionLogService {
      * @param saveDTO the save dto
      * @return user action log
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:58:49
-     * @Description 유저 활동 로그 등록
+     * @since 2020. 6. 24. 오후 5:58:49
+     * @implNote 유저 활동 로그 등록
      */
     @Transactional
     public UserActionLog save(final UserActionLogSaveDTO saveDTO) {

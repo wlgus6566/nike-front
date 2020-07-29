@@ -18,7 +18,7 @@ import java.util.List;
  * Contents Entity
  *
  * @author [이소정]
- * @CreatedOn 2020. 6. 19. 오후 5:57:35
+ * @since 2020. 6. 19. 오후 5:57:35
  */
 @Slf4j
 @Getter
@@ -168,7 +168,7 @@ public class Contents extends BaseTimeEntity {
      * @param contentsSaveDTO the contents save dto
      * @return the contents
      * @author [이소정]
-     * @CreatedOn 2020. 7. 1. 오전 9:59:51
+     * @since 2020. 7. 1. 오전 9:59:51
      */
     public Contents save(final ContentsSaveDTO contentsSaveDTO) {
         log.info("Contents.save");
@@ -193,7 +193,7 @@ public class Contents extends BaseTimeEntity {
      * @param contentsSaveDTO the contents save dto
      * @param saveContents    the save contents
      * @author [이소정]
-     * @CreatedOn 2020. 7. 1. \오전 9:59:37
+     * @since 2020. 7. 1. \오전 9:59:37
      */
     public static void saveContentsBasic(final ContentsSaveDTO contentsSaveDTO, final Contents saveContents) {
         log.info("Contents.saveContentsBasic");
@@ -217,7 +217,7 @@ public class Contents extends BaseTimeEntity {
      *
      * @param contentsUpdateDTO the contents update dto
      * @author [이소정]
-     * @CreatedOn 2020. 7. 3. 오후 4:01:36
+     * @since 2020. 7. 3. 오후 4:01:36
      */
     public void update(final ContentsUpdateDTO contentsUpdateDTO) {
         log.info("Contents.update");
@@ -236,7 +236,7 @@ public class Contents extends BaseTimeEntity {
      *
      * @param readCount the read count
      * @author [이소정]
-     * @CreatedOn 2020. 7. 3. 오후 5:22:59
+     * @since 2020. 7. 3. 오후 5:22:59
      */
     public void updateReadCount(final Long readCount) {
         log.info("Contents.updateReadCount");
@@ -248,7 +248,7 @@ public class Contents extends BaseTimeEntity {
      * Delete.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 7. 7. 오후 2:06:34
+     * @since 2020. 7. 7. 오후 2:06:34
      */
     public void delete() {
         this.useYn = "N";

@@ -22,8 +22,8 @@ import java.util.Optional;
  * The Class C report basket service.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 17. 오후 6:18:20
- * @Description
+ * @since 2020. 7. 17. 오후 6:18:20
+ * @implNote
  */
 @Slf4j
 @Service
@@ -51,8 +51,8 @@ public class ReportBasketService {
      * @param authUserDTO the auth user dto
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 17. 오후 6:50:47
-     * @Description
+     * @since 2020. 7. 17. 오후 6:50:47
+     * @implNote
      */
     public List<ReportBasketResultDTO> findAllReportBasket(final AuthUserDTO authUserDTO) {
         return reportBasketRepository.findAllReportBasket(authUserDTO.getUserSeq());
@@ -65,8 +65,8 @@ public class ReportBasketService {
      * @param authUserDTO       the auth user dto
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 17. 오후 7:06:01
-     * @Description
+     * @since 2020. 7. 17. 오후 7:06:01
+     * @implNote
      */
     @Transactional
     public List<ReportBasket> save(final List<Long> reportFileSeqList, final AuthUserDTO authUserDTO) {
@@ -88,8 +88,8 @@ public class ReportBasketService {
      * @param reportBasketSeq the report basket seq
      * @return the report basket
      * @author [이소정]
-     * @CreatedOn 2020. 7. 17. 오후 6:58:54
-     * @Description
+     * @since 2020. 7. 17. 오후 6:58:54
+     * @implNote
      */
     @Transactional
     public ReportBasket delete(final Long reportBasketSeq) {

@@ -20,8 +20,8 @@ import java.time.LocalDateTime;
  * Calendar Entity.
  *
  * @author [김형욱]
- * @CreatedOn 2020. 6. 29. 오후 8:30:58
- * @Description 달력 Entity
+ * @since 2020. 6. 29. 오후 8:30:58
+ * @implNote 달력 Entity
  */
 @Getter
 @Setter

@@ -15,7 +15,7 @@ import java.util.Map;
  * 커스텀 에러 Attributes
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 27. 오전 11:33:10
+ * @since 2020. 7. 27. 오전 11:33:10
  */
 @Component
 @AllArgsConstructor
@@ -29,7 +29,7 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	 * @param includeStackTrace the include stack trace
 	 * @return the error attributes
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 27. 오전 11:33:10
+	 * @since 2020. 7. 27. 오전 11:33:10
 	 */
 	@Override
 	public LinkedHashMap<String, Object> getErrorAttributes(final WebRequest webRequest,final boolean includeStackTrace) {
@@ -46,7 +46,7 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	 * @param errorAttributes   the error attributes
 	 * @param requestAttributes the request attributes
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 27. 오전 11:33:10
+	 * @since 2020. 7. 27. 오전 11:33:10
 	 */
 	private void addStatus(final Map<String, Object> errorAttributes,final RequestAttributes requestAttributes) {
 		final Integer status = getAttribute(requestAttributes, "javax.servlet.error.status_code");
@@ -65,7 +65,7 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	 * @param errorAttributes the error attributes
 	 * @param webRequest      the web request
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 27. 오전 11:33:10
+	 * @since 2020. 7. 27. 오전 11:33:10
 	 */
 	private void addErrorMessage(final Map<String, Object> errorAttributes,final WebRequest webRequest) {
 		final Throwable error = getError(webRequest);
@@ -88,7 +88,7 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	 * @param error the error
 	 * @return the binding result
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 27. 오전 11:33:10
+	 * @since 2020. 7. 27. 오전 11:33:10
 	 */
 	private BindingResult extractBindingResult(final Throwable error) {
 		if(error instanceof BindingResult){
@@ -106,7 +106,7 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	 * @param errorAttributes   the error attributes
 	 * @param requestAttributes the request attributes
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 27. 오전 11:33:10
+	 * @since 2020. 7. 27. 오전 11:33:10
 	 */
 	private void addPath(final Map<String, Object> errorAttributes, final RequestAttributes requestAttributes) {
 		final String path = getAttribute(requestAttributes, "javax.servlet.error.request_uri");
@@ -123,7 +123,7 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	 * @param name              the name
 	 * @return the attribute
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 27. 오전 11:33:10
+	 * @since 2020. 7. 27. 오전 11:33:10
 	 */
 	private <T> T getAttribute(final RequestAttributes requestAttributes, final String name) {
 		return (T) requestAttributes.getAttribute(name, RequestAttributes.SCOPE_REQUEST);

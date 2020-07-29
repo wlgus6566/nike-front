@@ -31,8 +31,8 @@ import java.util.Optional;
  * jwt 필터
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 21. 오후 4:22:06
- * @Description
+ * @since 2020. 7. 21. 오후 4:22:06
+ * @implNote
  */
 @Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
@@ -65,7 +65,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	 * @param userRepository the user repository
 	 * @param redisService   the redis service
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 21. 오후 4:22:06
+	 * @since 2020. 7. 21. 오후 4:22:06
 	 */
 	public JwtAuthorizationFilter(
 			final AuthenticationManager authManager
@@ -85,8 +85,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	 * @throws IOException      the io exception
 	 * @throws ServletException the servlet exception
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 21. 오후 4:22:06
-	 * @Description
+	 * @since 2020. 7. 21. 오후 4:22:06
+	 * @implNote
 	 */
 	@Override
 	protected void doFilterInternal(final HttpServletRequest request,
@@ -110,8 +110,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	 * @param request the request
 	 * @return the username password authentication
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 21. 오후 4:22:06
-	 * @Description
+	 * @since 2020. 7. 21. 오후 4:22:06
+	 * @implNote
 	 */
 	private Authentication getUsernamePasswordAuthentication(final HttpServletRequest request) {
 		final String token = request.getHeader(JwtHelper.HEADER_STRING);
@@ -158,8 +158,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	 * @param redisToken the redis token
 	 * @return the authentication
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 21. 오후 4:22:06
-	 * @Description
+	 * @since 2020. 7. 21. 오후 4:22:06
+	 * @implNote
 	 */
 	private Authentication getAuthentication(final String username, final String redisKey, final String redisToken) {
 		Authentication authentication = null;

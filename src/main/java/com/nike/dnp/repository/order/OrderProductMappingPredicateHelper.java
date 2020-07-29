@@ -15,8 +15,8 @@ import java.time.format.DateTimeFormatter;
  * The Class Order product mapping predicate helper.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 7. 오후 12:13:36
- * @Description
+ * @since 2020. 7. 7. 오후 12:13:36
+ * @implNote
  */
 @UtilityClass
 public class OrderProductMappingPredicateHelper {
@@ -27,8 +27,8 @@ public class OrderProductMappingPredicateHelper {
 	 * @param beginDt the begin dt
 	 * @return the predicate
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 7. 오후 12:13:36
-	 * @Description
+	 * @since 2020. 7. 7. 오후 12:13:36
+	 * @implNote
 	 */
 	public static Predicate afterStartDt(final String beginDt) {
 		final BooleanBuilder builder = new BooleanBuilder();
@@ -48,8 +48,8 @@ public class OrderProductMappingPredicateHelper {
 	 * @param endDt the end dt
 	 * @return the predicate
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 7. 오후 12:13:36
-	 * @Description
+	 * @since 2020. 7. 7. 오후 12:13:36
+	 * @implNote
 	 */
 	public static Predicate beforeEndDt(final String endDt) {
 		final BooleanBuilder builder = new BooleanBuilder();

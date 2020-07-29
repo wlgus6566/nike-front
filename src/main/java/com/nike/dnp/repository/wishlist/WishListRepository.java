@@ -12,8 +12,8 @@ import java.util.Optional;
  * The Interface Wish list repository.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 6. 오후 3:45:22
- * @Description
+ * @since 2020. 7. 6. 오후 3:45:22
+ * @implNote
  */
 public interface WishListRepository extends JpaRepository<WishList, Long> ,WishListRepositoryCustom {
 
@@ -25,8 +25,8 @@ public interface WishListRepository extends JpaRepository<WishList, Long> ,WishL
 	 * @param userSeq     the user seq
 	 * @return the optional
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 6. 오후 3:45:22
-	 * @Description
+	 * @since 2020. 7. 6. 오후 3:45:22
+	 * @implNote
 	 */
 	Optional<WishList> findByWishListSeqAndUserSeq(Long wishListSeq,Long userSeq);
 
@@ -37,8 +37,8 @@ public interface WishListRepository extends JpaRepository<WishList, Long> ,WishL
 	 * @param searchDt the search dt
 	 * @return the list
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 14. 오후 3:38:11
-	 * @Description
+	 * @since 2020. 7. 14. 오후 3:38:11
+	 * @implNote
 	 */
 	List<WishList> findByRegistrationDtBefore(LocalDateTime searchDt);
 }

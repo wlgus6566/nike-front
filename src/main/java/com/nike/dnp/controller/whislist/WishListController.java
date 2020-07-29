@@ -30,8 +30,8 @@ import javax.validation.Valid;
  * 위시리스트 Controller
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 3. 오후 3:38:34
- * @Description
+ * @since 2020. 7. 3. 오후 3:38:34
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -77,8 +77,8 @@ public class WishListController {
 	 * @param result          the result
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 3. 오후 3:38:34
-	 * @Description
+	 * @since 2020. 7. 3. 오후 3:38:34
+	 * @apiNote
 	 */
 	@ApiOperation(value = "위시리스트 등록", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -95,8 +95,8 @@ public class WishListController {
 	 * @param authUserDTO the auth user dto
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 3. 오후 3:59:10
-	 * @Description
+	 * @since 2020. 7. 3. 오후 3:59:10
+	 * @apiNote
 	 */
 	@ApiOperation(value = "위시리스트 조회", notes = REQUEST_CHARACTER
 			+ "page|페이지 번호|true|int\n"
@@ -115,8 +115,8 @@ public class WishListController {
 	 * @param wishListSeq the wish list seq
 	 * @return the common result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 6. 오후 2:22:31
-	 * @Description
+	 * @since 2020. 7. 6. 오후 2:22:31
+	 * @apiNote
 	 */
 	@ApiOperation(value = "위시리스트 삭제", notes = BASIC_CHARACTER)
 	@DeleteMapping(value = "/delete/{wishListSeq}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -133,8 +133,8 @@ public class WishListController {
 	 * @param wishListDeleteDTO the wish list delete dto
 	 * @return the common result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 6. 오후 3:46:42
-	 * @Description
+	 * @since 2020. 7. 6. 오후 3:46:42
+	 * @apiNote
 	 */
 	@ApiOperation(value = "위시리스트 다건 삭제", notes = BASIC_CHARACTER)
 	@DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)

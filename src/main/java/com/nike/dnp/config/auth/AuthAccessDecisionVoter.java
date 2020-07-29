@@ -23,8 +23,8 @@ import java.util.List;
  * 시큐리티 권한 체크
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 14. 오후 5:54:43
- * @Description
+ * @since 2020. 7. 14. 오후 5:54:43
+ * @implNote
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -57,8 +57,8 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 	 * @param attribute the attribute
 	 * @return the boolean
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 14. 오후 5:54:43
-	 * @Description
+	 * @since 2020. 7. 14. 오후 5:54:43
+	 * @implNote
 	 */
 	@Override
 	public boolean supports(final ConfigAttribute attribute) {
@@ -71,8 +71,8 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 	 * @param clazz the clazz
 	 * @return the boolean
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 14. 오후 5:54:43
-	 * @Description
+	 * @since 2020. 7. 14. 오후 5:54:43
+	 * @implNote
 	 */
 	@Override
 	public boolean supports(final Class<?> clazz) {
@@ -87,8 +87,8 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 	 * @param attributes     the attributes
 	 * @return the int
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 14. 오후 5:54:44
-	 * @Description
+	 * @since 2020. 7. 14. 오후 5:54:44
+	 * @implNote
 	 */
 	@Override
 	public int vote(final Authentication authentication,
@@ -116,8 +116,8 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 	 * @param object the object
 	 * @return int
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 14. 오후 5:54:44
-	 * @Description
+	 * @since 2020. 7. 14. 오후 5:54:44
+	 * @implNote
 	 */
 	private int ipExpression(final Object object) {
 
@@ -141,8 +141,8 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 	 * @param object         the object
 	 * @return int
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 14. 오후 5:54:44
-	 * @Description
+	 * @since 2020. 7. 14. 오후 5:54:44
+	 * @implNote
 	 */
 	private int urlExpression(final Authentication authentication,final Object object) {
 

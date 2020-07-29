@@ -12,8 +12,8 @@ import java.util.List;
  * The Interface Order product mapper repository custom.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 7. 오후 12:07:04
- * @Description
+ * @since 2020. 7. 7. 오후 12:07:04
+ * @implNote
  */
 public interface OrderProductMapperRepositoryCustom {
 
@@ -23,8 +23,8 @@ public interface OrderProductMapperRepositoryCustom {
 	 * @param orderSeq the order seq
 	 * @return the list
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 7. 오후 12:07:04
-	 * @Description
+	 * @since 2020. 7. 7. 오후 12:07:04
+	 * @implNote
 	 */
 	List<OrderProductResultDTO> findSearchEmailValue(final Long orderSeq);
 
@@ -35,8 +35,8 @@ public interface OrderProductMapperRepositoryCustom {
 	 * @param pageRequest    the page request
 	 * @return the page
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 7. 오후 12:07:04
-	 * @Description
+	 * @since 2020. 7. 7. 오후 12:07:04
+	 * @implNote
 	 */
 	Page<OrderProductMapping> findPagesOrder(final OrderSearchDTO orderSearchDTO,
 											 final PageRequest pageRequest);

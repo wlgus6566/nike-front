@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
  * The Class Product result dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 21. 오후 3:55:06
- * @Description
+ * @since 2020. 7. 21. 오후 3:55:06
+ * @implNote
  */
 @Getter
 @Setter
@@ -157,8 +157,8 @@ public class ProductResultDTO {
 	 *
 	 * @return the string
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 21. 오후 4:03:46
-	 * @Description
+	 * @since 2020. 7. 21. 오후 4:03:46
+	 * @implNote
 	 */
 	@ApiModelProperty(name = "category2Name", value = "카테고리 2 명")
 	public String getCategory2Name(){
@@ -175,8 +175,8 @@ public class ProductResultDTO {
 	 *
 	 * @return the category 3 name
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 21. 오후 4:03:46
-	 * @Description
+	 * @since 2020. 7. 21. 오후 4:03:46
+	 * @implNote
 	 */
 	@ApiModelProperty(name = "category3Name", value = "카테고리 3 명")
 	public String getCategory3Name() {

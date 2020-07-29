@@ -21,8 +21,8 @@ import java.io.IOException;
  * 로그인 실패  핸들러
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 7. 오후 2:10:50
- * @Description
+ * @since 2020. 7. 7. 오후 2:10:50
+ * @implNote
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -43,8 +43,8 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 	 * @param exception the exception
 	 * @throws IOException the io exception
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 7. 오후 2:10:50
-	 * @Description
+	 * @since 2020. 7. 7. 오후 2:10:50
+	 * @implNote
 	 */
 	@Override
 	public void onAuthenticationFailure(final HttpServletRequest request,

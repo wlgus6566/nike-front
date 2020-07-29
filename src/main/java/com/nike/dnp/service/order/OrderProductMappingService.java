@@ -29,8 +29,8 @@ import java.util.List;
  * The Class Order product mapping service.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 1. 오전 11:51:28
- * @Description
+ * @since 2020. 7. 1. 오전 11:51:28
+ * @implNote
  */
 @Slf4j
 @Service
@@ -59,8 +59,8 @@ public class OrderProductMappingService {
 	 * @param orderProductMappingSaveDTO the order product mapping save dto
 	 * @return the order product mapping
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 2. 오후 3:07:14
-	 * @Description
+	 * @since 2020. 7. 2. 오후 3:07:14
+	 * @implNote
 	 */
 	@Transactional
 	public OrderProductMapping saveOrderProductMapping(final OrderProductMappingSaveDTO orderProductMappingSaveDTO) {
@@ -79,8 +79,8 @@ public class OrderProductMappingService {
 	 * @param order the order
 	 * @return the boolean
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 2. 오후 3:07:14
-	 * @Description
+	 * @since 2020. 7. 2. 오후 3:07:14
+	 * @implNote
 	 */
 	public void orderSheetSend(final Order order) {
 		log.info("OrderProductMappingService.orderSheetSend");
@@ -149,8 +149,8 @@ public class OrderProductMappingService {
 	 * @param orderSearchDTO the order search dto
 	 * @return the page
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 7. 오후 2:44:07
-	 * @Description
+	 * @since 2020. 7. 7. 오후 2:44:07
+	 * @implNote
 	 */
 	public Page<OrderProductMapping> findPageOrder(final OrderSearchDTO orderSearchDTO) {
 		log.info("OrderProductMappingService.findPageOrder");
@@ -172,8 +172,8 @@ public class OrderProductMappingService {
 	 * @param orderGoodsSeq the order goods seq
 	 * @return the order product mapping
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 7. 오후 2:44:07
-	 * @Description
+	 * @since 2020. 7. 7. 오후 2:44:07
+	 * @implNote
 	 */
 	public OrderProductMapping findById(final Long orderGoodsSeq) {
 		log.info("OrderProductMappingService.findById");

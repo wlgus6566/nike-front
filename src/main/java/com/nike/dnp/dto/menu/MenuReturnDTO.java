@@ -8,8 +8,8 @@ import lombok.*;
  * MenuReturnDTO
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 19. 오후 4:52:14
- * @Description Menu(메뉴) Return DTO 작성
+ * @since 2020. 6. 19. 오후 4:52:14
+ * @implNote Menu(메뉴) Return DTO 작성
  */
 @Getter
 @Setter

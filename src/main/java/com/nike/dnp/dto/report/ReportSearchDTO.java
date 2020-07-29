@@ -10,8 +10,8 @@ import java.util.List;
  * The Class Report search dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 21. 오후 3:55:43
- * @Description
+ * @since 2020. 7. 21. 오후 3:55:43
+ * @implNote
  */
 @Getter
 @Setter
@@ -55,8 +55,8 @@ public class ReportSearchDTO extends SearchDTO {
      *
      * @return String string
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:57:26
-     * @Description
+     * @since 2020. 6. 19. 오후 5:57:26
+     * @implNote
      */
     @Override
     public String toString() {

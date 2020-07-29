@@ -11,8 +11,8 @@ import java.util.List;
  * The Class Goods basket save list dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 21. 오후 3:54:50
- * @Description
+ * @since 2020. 7. 21. 오후 3:54:50
+ * @implNote
  */
 @Getter
 @Setter

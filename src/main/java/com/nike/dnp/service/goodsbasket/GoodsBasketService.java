@@ -21,8 +21,8 @@ import java.util.Optional;
  * The Class Goods basket service.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 2. 오후 4:30:52
- * @Description
+ * @since 2020. 7. 2. 오후 4:30:52
+ * @implNote
  */
 @Slf4j
 @Service
@@ -44,8 +44,8 @@ public class GoodsBasketService {
 	 * @param goodsBasketSaveDTO the goods basket save dto
 	 * @return goods basket
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 2. 오후 4:34:23
-	 * @Description
+	 * @since 2020. 7. 2. 오후 4:34:23
+	 * @implNote
 	 */
 	@Transactional
 	public GoodsBasket saveBasket(final GoodsBasketSaveDTO goodsBasketSaveDTO) {
@@ -63,8 +63,8 @@ public class GoodsBasketService {
 	 *
 	 * @return the list
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 3. 오후 12:05:29
-	 * @Description
+	 * @since 2020. 7. 3. 오후 12:05:29
+	 * @implNote
 	 */
 	public List<GoodsBasket> findByAll() {
 		log.info("GoodsBasketService.findByAll");
@@ -76,8 +76,8 @@ public class GoodsBasketService {
 	 *
 	 * @param goodsBasketSeq the goods basket seq
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 3. 오후 12:05:29
-	 * @Description
+	 * @since 2020. 7. 3. 오후 12:05:29
+	 * @implNote
 	 */
 	@Transactional
 	public void deleteBasket(final Long goodsBasketSeq) {
@@ -94,8 +94,8 @@ public class GoodsBasketService {
 	 * 장바구니 전체 삭제 - 스케쥴용
 	 *
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 3. 오후 12:05:29
-	 * @Description
+	 * @since 2020. 7. 3. 오후 12:05:29
+	 * @implNote
 	 */
 	@Transactional
 	public void deleteAll() {
@@ -110,8 +110,8 @@ public class GoodsBasketService {
 	 * @param goodsBasketSaveListDTO the goods basket save list dto
 	 * @return the list
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 6. 오전 11:37:09
-	 * @Description
+	 * @since 2020. 7. 6. 오전 11:37:09
+	 * @implNote
 	 */
 	@Transactional
 	public List<GoodsBasket> saveBasketList(final GoodsBasketSaveListDTO goodsBasketSaveListDTO) {

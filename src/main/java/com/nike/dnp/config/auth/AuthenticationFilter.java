@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  * 인증 필터
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 7. 오후 2:11:02
- * @Description
+ * @since 2020. 7. 7. 오후 2:11:02
+ * @implNote
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -37,8 +37,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	 * @param response the response
 	 * @return the authentication
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 7. 오후 2:11:02
-	 * @Description
+	 * @since 2020. 7. 7. 오후 2:11:02
+	 * @implNote
 	 */
 	@Override
 	public Authentication attemptAuthentication(final HttpServletRequest request,

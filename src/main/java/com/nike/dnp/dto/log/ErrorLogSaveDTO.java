@@ -7,8 +7,8 @@ import lombok.*;
  * ErrorLogSaveDTO
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:09:06
- * @Description ErrorLog(오류 로그) Save DTO 작성
+ * @since 2020. 6. 24. 오후 6:09:06
+ * @implNote ErrorLog(오류 로그) Save DTO 작성
  */
 @Getter
 @Setter

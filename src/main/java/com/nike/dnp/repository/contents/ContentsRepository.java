@@ -10,7 +10,7 @@ import java.util.Optional;
  * Contents Repository
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 6. 오후 6:28:17
+ * @since 2020. 7. 6. 오후 6:28:17
  */
 @Repository
 public interface ContentsRepository extends JpaRepository<Contents, Long>, ContentsRepositoryCustom {
@@ -23,8 +23,8 @@ public interface ContentsRepository extends JpaRepository<Contents, Long>, Conte
      * @param menuCode    the menu code
      * @return contents contents
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:57:43
-     * @Description
+     * @since 2020. 6. 19. 오후 5:57:43
+     * @implNote
      */
     Optional<Contents> findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(Long contentsSeq, String topMenuCode, String menuCode, String useYn);
 }

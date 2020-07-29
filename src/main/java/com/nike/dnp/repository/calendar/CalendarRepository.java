@@ -11,7 +11,7 @@ import java.util.List;
  * The Interface Calendar repository.
  *
  * @author [김형욱]
- * @CreatedOn 2020. 7. 29. 오후 3:27:03
+ * @since 2020. 7. 29. 오후 3:27:03
  */
 @Repository
 public interface CalendarRepository extends JpaRepository<Calendar, Long>{
@@ -23,7 +23,7 @@ public interface CalendarRepository extends JpaRepository<Calendar, Long>{
      * @param endDt   the end dt
      * @return the list
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 29. 오후 3:27:03
+     * @since 2020. 7. 29. 오후 3:27:03
      */
     List<Calendar> findByBeginDtGreaterThanEqualAndEndDtLessThanEqual(LocalDateTime beginDt, LocalDateTime endDt);
 
@@ -35,7 +35,7 @@ public interface CalendarRepository extends JpaRepository<Calendar, Long>{
      * @param endDt   the end dt
      * @return the list
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 29. 오후 3:27:03
+     * @since 2020. 7. 29. 오후 3:27:03
      */
     List<Calendar> findAllByBeginDtBeforeAndEndDtAfter(LocalDateTime beginDt,LocalDateTime endDt);
 }

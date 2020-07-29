@@ -29,8 +29,8 @@ import java.util.Optional;
  * 상품 Controller
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 1. 오후 3:34:40
- * @Description 주문 상품관련 컨트롤러
+ * @since 2020. 7. 1. 오후 3:34:40
+ * @apiNote 주문 상품관련 컨트롤러
  * @history [윤태호] [2020.06.17] [최초 작성]
  * @since 2020.06.17
  */
@@ -72,8 +72,8 @@ public class ProductController {
 	 * @param productSearchDTO the product search dto
 	 * @return the all product
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 24. 오후 12:15:13
-	 * @Description
+	 * @since 2020. 6. 24. 오후 12:15:13
+	 * @apiNote
 	 */
 	@ApiOperation(value = "상품 목록 조회", notes = REQUEST_CHARACTER
 			+ "category2Code|카테고리 2 코드|false|String\n"
@@ -98,7 +98,7 @@ public class ProductController {
 	 * @param productUserSearchDTO the product user search dto
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 29. 오후 3:07:30
+	 * @since 2020. 7. 29. 오후 3:07:30
 	 */
 	@ApiOperation(value = "상품 목록 조회(유저용)", notes = REQUEST_CHARACTER
 			+ "keyword|키워드|false|String\n"
@@ -128,8 +128,8 @@ public class ProductController {
 	 * @param goodsSeq the goods seq
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 24. 오후 12:14:05
-	 * @Description
+	 * @since 2020. 6. 24. 오후 12:14:05
+	 * @apiNote
 	 */
 	@ApiOperation(value = "상품 상세 조회", notes = REQUEST_CHARACTER + "goodsSeq|상품시퀀스|true|Integer\n")
 	@GetMapping(value = "/{goodsSeq}", name = "상품상세조회", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -146,8 +146,8 @@ public class ProductController {
 	 * @param result             the result
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 24. 오후 12:14:05
-	 * @Description
+	 * @since 2020. 6. 24. 오후 12:14:05
+	 * @apiNote
 	 */
 	@ApiOperation(value = "다수 상품 상세 조회", notes = REQUEST_CHARACTER + "goodsSeq|상품시퀀스|true|Integer\n")
 	@GetMapping(name = "상품상세조회", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -165,8 +165,8 @@ public class ProductController {
 	 * @return the single result
 	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 26. 오후 4:42:04
-	 * @Description
+	 * @since 2020. 6. 26. 오후 4:42:04
+	 * @apiNote
 	 */
 	@ApiOperation(value = "상품 등록", notes = BASIC_CHARACTER)
 	@PostMapping(name = "상품 등록", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -183,8 +183,8 @@ public class ProductController {
 	 * @param productUpdateDTO the product update dto
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 23. 오후 5:28:44
-	 * @Description
+	 * @since 2020. 6. 23. 오후 5:28:44
+	 * @apiNote
 	 */
 	@ApiOperation(value = "상품 수정", notes = BASIC_CHARACTER)
 	@PutMapping(value="/{goodsSeq}",name = "상품 수정", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -203,8 +203,8 @@ public class ProductController {
 	 * @param goodsSeq the goods seq
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 23. 오후 5:28:44
-	 * @Description
+	 * @since 2020. 6. 23. 오후 5:28:44
+	 * @apiNote
 	 */
 	@ApiOperation(value = "상품 삭제", notes = BASIC_CHARACTER)
 	@DeleteMapping(value = "/{goodsSeq}", name = "상품 삭제", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -225,8 +225,8 @@ public class ProductController {
 	 * @param result             the result
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 26. 오후 3:08:11
-	 * @Description
+	 * @since 2020. 6. 26. 오후 3:08:11
+	 * @apiNote
 	 */
 	@ApiOperation(value = "상품 삭제[배열]", notes = BASIC_CHARACTER)
 	@DeleteMapping(name = "상품 삭제[배열]", produces = MediaType.APPLICATION_JSON_VALUE)

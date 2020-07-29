@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
  * The Class Goods basket save dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 21. 오후 3:54:41
- * @Description
+ * @since 2020. 7. 21. 오후 3:54:41
+ * @implNote
  */
 @Getter
 @Setter

@@ -11,8 +11,8 @@ import javax.persistence.*;
  * The Class Recent upload.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 27. 오후 2:07:16
- * @Description
+ * @since 2020. 7. 27. 오후 2:07:16
+ * @implNote
  */
 @Getter
 @Setter

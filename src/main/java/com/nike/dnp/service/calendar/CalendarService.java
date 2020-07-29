@@ -30,8 +30,8 @@ import java.util.Optional;
  * CalendarService
  *
  * @author [김형욱]
- * @CreatedOn 2020. 6. 29. 오후 8:58:21
- * @Description 달력 Service
+ * @since 2020. 6. 29. 오후 8:58:21
+ * @implNote 달력 Service
  */
 @Slf4j
 @Service
@@ -53,8 +53,8 @@ public class CalendarService {
      * @param calendarSeq the calendar seq
      * @return the optional
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 4:45:45
-     * @Description
+     * @since 2020. 7. 22. 오후 4:45:45
+     * @implNote
      */
     public Optional<Calendar> findById(final Long calendarSeq) {
         log.info("CalendarService.findById");
@@ -67,8 +67,8 @@ public class CalendarService {
      * @param calendarSaveDTO the calendar save dto
      * @return the calendar
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 4:45:45
-     * @Description
+     * @since 2020. 7. 22. 오후 4:45:45
+     * @implNote
      */
     public Calendar save(final CalendarSaveDTO calendarSaveDTO){
         log.info("CalendarService.save");   
@@ -92,8 +92,8 @@ public class CalendarService {
      * @param calendarSearchDTO the calendar search dto
      * @return the page
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 4:45:45
-     * @Description
+     * @since 2020. 7. 22. 오후 4:45:45
+     * @implNote
      */
     public List<Calendar> findAll(final CalendarSearchDTO calendarSearchDTO) {
         log.info("CalendarService.findAll");
@@ -115,8 +115,8 @@ public class CalendarService {
      * @param calendarUpdateDTO the calendar update dto
      * @return the optional
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 3:58:34
-     * @Description
+     * @since 2020. 7. 22. 오후 3:58:34
+     * @implNote
      */
     @Transactional
     public Calendar update(final CalendarUpdateDTO calendarUpdateDTO) {
@@ -152,8 +152,8 @@ public class CalendarService {
      * @param calendarSeq the calendar seq
      * @return the optional
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 4:45:45
-     * @Description
+     * @since 2020. 7. 22. 오후 4:45:45
+     * @implNote
      */
     @Transactional
     public Long delete(final Long calendarSeq) {
@@ -168,8 +168,8 @@ public class CalendarService {
      * @param calendarDaySearchDTO the calendar day search dto
      * @return the list
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 4:45:45
-     * @Description
+     * @since 2020. 7. 22. 오후 4:45:45
+     * @implNote
      */
     public List<Calendar> findAllToday(final CalendarDaySearchDTO calendarDaySearchDTO) {
         log.info("CalendarService.findAllToday");

@@ -9,8 +9,8 @@ import lombok.*;
  * The Class Wish list result dto.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 6. 오후 3:40:56
- * @Description
+ * @since 2020. 7. 6. 오후 3:40:56
+ * @implNote
  */
 @Getter
 @Setter
@@ -57,8 +57,8 @@ public class WishListResultDTO {
 	 * @param wishList the wish list
 	 * @return the wish list result dto
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 6. 오후 3:40:56
-	 * @Description
+	 * @since 2020. 7. 6. 오후 3:40:56
+	 * @implNote
 	 */
 	public static WishListResultDTO ofSave(final WishList wishList) {
 		final WishListResultDTO result = new WishListResultDTO();

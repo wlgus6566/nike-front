@@ -9,8 +9,8 @@ import lombok.*;
  * The Class Contents file search dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 13. 오후 5:47:03
- * @Description
+ * @since 2020. 7. 13. 오후 5:47:03
+ * @implNote
  */
 @Getter
 @Setter
@@ -56,8 +56,8 @@ public class ContentsFileSearchDTO extends SearchDTO {
      *
      * @return String string
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:57:26
-     * @Description
+     * @since 2020. 6. 19. 오후 5:57:26
+     * @implNote
      */
     @Override
     public String toString() {

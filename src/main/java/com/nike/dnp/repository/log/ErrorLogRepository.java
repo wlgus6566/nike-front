@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
  * ErrorLogRepository
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 5:50:48
- * @Description ErrorLog(오류 로그) Repository 작성
+ * @since 2020. 6. 24. 오후 5:50:48
+ * @implNote ErrorLog(오류 로그) Repository 작성
  */
 @Repository
 public interface ErrorLogRepository extends JpaRepository<ErrorLog, Long> {

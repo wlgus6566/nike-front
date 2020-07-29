@@ -30,8 +30,8 @@ import java.util.Optional;
  * The Class Report controller.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 7. 오후 2:37:43
- * @Description
+ * @since 2020. 7. 7. 오후 2:37:43
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -103,8 +103,8 @@ public class ReportController {
      * @param reportSaveDTO the report save dto
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 8. 오후 5:48:17
-     * @Description
+     * @since 2020. 7. 8. 오후 5:48:17
+     * @apiNote
      */
     @ApiOperation(
             value = "보고서 등록"
@@ -144,8 +144,8 @@ public class ReportController {
      * @param reportUpdateDTO the report update dto
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 9. 오후 6:18:36
-     * @Description
+     * @since 2020. 7. 9. 오후 6:18:36
+     * @apiNote
      */
     @ApiOperation(value = "보고서 수정", notes = REQUEST_CHARACTER)
     @PutMapping(name = "보고서 수정", value = "/{reportSeq}"
@@ -163,8 +163,8 @@ public class ReportController {
      * @param reportSeq the report seq
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 9. 오후 6:18:40
-     * @Description
+     * @since 2020. 7. 9. 오후 6:18:40
+     * @apiNote
      */
     @ApiOperation(value="보고서 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "보고서 삭제", value = "/{reportSeq}"
@@ -181,8 +181,8 @@ public class ReportController {
      * @param authUserDTO the auth user dto
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 21. 오후 5:14:14
-     * @Description 그룹(권한) depth별 목록 조회
+     * @since 2020. 7. 21. 오후 5:14:14
+     * @apiNote 그룹(권한) depth별 목록 조회
      */
     @ApiOperation(
             value = "보고서 그룹(권한) depth별 목록 조회"

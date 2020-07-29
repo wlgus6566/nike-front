@@ -17,8 +17,8 @@ import javax.persistence.*;
  * The Class Contents file Entity.
  *
  * @author [이소정]
- * @CreatedOn 2020. 6. 24. 오후 3:56:22
- * @Description
+ * @since 2020. 6. 24. 오후 3:56:22
+ * @implNote
  */
 @Slf4j
 @Getter
@@ -210,8 +210,8 @@ public class ContentsFile extends BaseTimeEntity {
      * @param contentsFileSaveDTO the contents file save dto
      * @return the contents file
      * @author [이소정]
-     * @CreatedOn 2020. 7. 1. 오전 11:24:43
-     * @Description
+     * @since 2020. 7. 1. 오전 11:24:43
+     * @implNote
      */
     public ContentsFile save(Contents savedContents, ContentsFileSaveDTO contentsFileSaveDTO) {
         log.info("ContentsFile.save");
@@ -250,8 +250,8 @@ public class ContentsFile extends BaseTimeEntity {
      * @param contentsFileUpdateDTO the contents file update dto
      * @return the contents file
      * @author [이소정]
-     * @CreatedOn 2020. 7. 6. 오후 5:52:49
-     * @Description
+     * @since 2020. 7. 6. 오후 5:52:49
+     * @implNote
      */
     public ContentsFile newContentsFile(Long contentsSeq, ContentsFileUpdateDTO contentsFileUpdateDTO) {
         log.info("ContentsFile.newContentsFile");
@@ -300,8 +300,8 @@ public class ContentsFile extends BaseTimeEntity {
      * @param fileOrder                       the file order
      * @return the contents file
      * @author [이소정]
-     * @CreatedOn 2020. 7. 7. 오전 10:41:43
-     * @Description
+     * @since 2020. 7. 7. 오전 10:41:43
+     * @implNote
      */
     private ContentsFile applyContentsFile(ContentsFile contentsFile
             , String fileSectionCode
@@ -361,8 +361,8 @@ public class ContentsFile extends BaseTimeEntity {
      *
      * @param contentsFileUpdateDTO the contents file update dto
      * @author [이소정]
-     * @CreatedOn 2020. 7. 3. 오후 5:27:06
-     * @Description
+     * @since 2020. 7. 3. 오후 5:27:06
+     * @implNote
      */
     public void update(final ContentsFileUpdateDTO contentsFileUpdateDTO) {
         log.info("ContentsFile.update");
@@ -403,8 +403,8 @@ public class ContentsFile extends BaseTimeEntity {
      *
      * @param downloadCount the download count
      * @author [이소정]
-     * @CreatedOn 2020. 7. 3. 오후 5:28:11
-     * @Description
+     * @since 2020. 7. 3. 오후 5:28:11
+     * @implNote
      */
     public void updateDownloadCount(final Long downloadCount) {
         log.info("ContentsFile.updateDownloadCount");
@@ -416,8 +416,8 @@ public class ContentsFile extends BaseTimeEntity {
      *
      * @param useYn the use yn
      * @author [이소정]
-     * @CreatedOn 2020. 7. 6. 오후 12:02:25
-     * @Description
+     * @since 2020. 7. 6. 오후 12:02:25
+     * @implNote
      */
     public void updateUseYn(final String useYn) {
         this.useYn = useYn;
@@ -431,8 +431,8 @@ public class ContentsFile extends BaseTimeEntity {
      * @param errorMessage the error message
      * @return the boolean
      * @author [이소정]
-     * @CreatedOn 2020. 6. 26. 오후 5:30:51
-     * @Description
+     * @since 2020. 6. 26. 오후 5:30:51
+     * @implNote
      */
     public Boolean checkStringValidation(String value, String errorCode, String errorMessage) {
         if (value.isEmpty() || value.trim().isEmpty()) {

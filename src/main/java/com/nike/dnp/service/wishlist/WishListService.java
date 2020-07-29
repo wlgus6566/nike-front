@@ -27,8 +27,8 @@ import java.util.Optional;
  * The Class Wish list service.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 6. 오후 2:29:57
- * @Description
+ * @since 2020. 7. 6. 오후 2:29:57
+ * @implNote
  */
 @Slf4j
 @Service
@@ -51,8 +51,8 @@ public class WishListService {
 	 * @param goodsSeq the goods seq
 	 * @return the wish list
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 6. 오후 2:29:57
-	 * @Description
+	 * @since 2020. 7. 6. 오후 2:29:57
+	 * @implNote
 	 */
 	@Transactional
 	public WishList save(final Long goodsSeq) {
@@ -74,8 +74,8 @@ public class WishListService {
 	 * @param wishListSearchDTO the wish list search dto
 	 * @return the page
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 6. 오후 2:29:57
-	 * @Description
+	 * @since 2020. 7. 6. 오후 2:29:57
+	 * @implNote
 	 */
 	public Page<WishList> findPagesWishList(final WishListSearchDTO wishListSearchDTO) {
 		log.info("WishListService.findPagesWishList");
@@ -87,8 +87,8 @@ public class WishListService {
 	 *
 	 * @param wishListSeq the wish list seq
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 6. 오후 2:29:57
-	 * @Description
+	 * @since 2020. 7. 6. 오후 2:29:57
+	 * @implNote
 	 */
 	@Transactional
 	public void delete(final Long wishListSeq) {
@@ -106,8 +106,8 @@ public class WishListService {
 	 *
 	 * @param wishListDeleteDTO the wish list delete dto
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 6. 오후 3:46:26
-	 * @Description
+	 * @since 2020. 7. 6. 오후 3:46:26
+	 * @implNote
 	 */
 	@Transactional
 	public void deleteList(final WishListDeleteDTO wishListDeleteDTO) {
@@ -124,8 +124,8 @@ public class WishListService {
 	 * 위시리스트 삭제 [스케쥴용]
 	 *
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 14. 오후 3:22:10
-	 * @Description
+	 * @since 2020. 7. 14. 오후 3:22:10
+	 * @implNote
 	 */
 	@Transactional
 	public void deleteScheduler() {

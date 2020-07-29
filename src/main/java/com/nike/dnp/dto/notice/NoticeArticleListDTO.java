@@ -9,8 +9,8 @@ import lombok.*;
  * The Class Notice list dto.
  *
  * @author [정주희]
- * @CreatedOn 2020. 7. 13. 오후 7:11:50
- * @Description Customer Center 목록 반환 DTO
+ * @since 2020. 7. 13. 오후 7:11:50
+ * @implNote Customer Center 목록 반환 DTO
  */
 @Getter
 @Setter

@@ -31,8 +31,8 @@ import java.util.Optional;
  * The Class Report service.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 7. 오후 2:40:15
- * @Description
+ * @since 2020. 7. 7. 오후 2:40:15
+ * @implNote
  */
 @Slf4j
 @Service
@@ -91,8 +91,8 @@ public class ReportService {
      * @param reportSearchDTO the report search dto
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 8. 오후 5:28:17
-     * @Description
+     * @since 2020. 7. 8. 오후 5:28:17
+     * @implNote
      */
     public Page<Report> findAllPaging(final AuthUserDTO authUserDTO, final ReportSearchDTO reportSearchDTO) {
 
@@ -123,8 +123,8 @@ public class ReportService {
      * @param reportSaveDTO the report save dto
      * @return the report
      * @author [이소정]
-     * @CreatedOn 2020. 7. 8. 오후 5:28:20
-     * @Description
+     * @since 2020. 7. 8. 오후 5:28:20
+     * @implNote
      */
     @Transactional
     public Report save(final AuthUserDTO authUserDTO, final ReportSaveDTO reportSaveDTO) {
@@ -162,8 +162,8 @@ public class ReportService {
      * @param reportSeq the report seq
      * @return the report
      * @author [이소정]
-     * @CreatedOn 2020. 7. 8. 오후 5:52:10
-     * @Description
+     * @since 2020. 7. 8. 오후 5:52:10
+     * @implNote
      */
     @Transactional
     public Report findByReportSeq(final Long reportSeq) {
@@ -182,8 +182,8 @@ public class ReportService {
      * @param reportUpdateDTO the report update dto
      * @return the optional
      * @author [이소정]
-     * @CreatedOn 2020. 7. 9. 오후 6:49:17
-     * @Description
+     * @since 2020. 7. 9. 오후 6:49:17
+     * @implNote
      */
     @Transactional
     public Optional<Report> update(final Long reportSeq, final ReportUpdateDTO reportUpdateDTO) {
@@ -241,8 +241,8 @@ public class ReportService {
      *
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 24. 오후 8:20:01
-     * @Description 보고서 상세 권한 있는 그룹의 회원 목록
+     * @since 2020. 7. 24. 오후 8:20:01
+     * @implNote 보고서 상세 권한 있는 그룹의 회원 목록
      */
     public List<Long> findAllAuthUser() {
         UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
@@ -268,8 +268,8 @@ public class ReportService {
      * @param reportSeq the report seq
      * @return the optional
      * @author [이소정]
-     * @CreatedOn 2020. 7. 9. 오후 5:49:18
-     * @Description
+     * @since 2020. 7. 9. 오후 5:49:18
+     * @implNote
      */
     @Transactional
     public Optional<Report> delete(final Long reportSeq) {

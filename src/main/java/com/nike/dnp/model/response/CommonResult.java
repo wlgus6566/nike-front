@@ -10,8 +10,8 @@ import java.util.HashMap;
  * CommonResult
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:11:42
- * @Description CommonResult 작성
+ * @since 2020. 6. 24. 오후 6:11:42
+ * @implNote CommonResult 작성
  */
 @Getter
 @Setter

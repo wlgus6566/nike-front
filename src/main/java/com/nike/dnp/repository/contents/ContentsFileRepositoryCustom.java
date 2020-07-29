@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
  * The Interface Contents file repository custom.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 13. 오후 5:57:19
- * @Description
+ * @since 2020. 7. 13. 오후 5:57:19
+ * @implNote
  */
 @Repository
 public interface ContentsFileRepositoryCustom {
@@ -24,8 +24,8 @@ public interface ContentsFileRepositoryCustom {
      * @param pageRequest           the page request
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 14. 오후 3:18:37
-     * @Description
+     * @since 2020. 7. 14. 오후 3:18:37
+     * @implNote
      */
     Page<ContentsFileResultDTO> findAllContentsFilePaging(final ContentsFileSearchDTO contentsFileSearchDTO, final PageRequest pageRequest);
 
