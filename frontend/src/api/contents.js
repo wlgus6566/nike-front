@@ -35,6 +35,20 @@ function putContents(topMenuCode, menuCode, data) {
 function deleteContents(topMenuCode, menuCode, contentsSeq) {
     return apiContents.delete(`/${topMenuCode}/${menuCode}/${contentsSeq}`);
 }
+
+// 컨텐츠 장바구니 목록 조회
+function getContentsBasket() {
+    return apiContents.get('/basket/');
+}
+// 컨텐츠 장바구니 등록
+function addContentsBasket(topMenuCode, menuCode, data) {
+    return apiContents.post(`/basket/${topMenuCode}/${menuCode}`, data);
+}
+// 컨텐츠 장바구니 삭제
+function delContentsBasket(contentsBasketSeq) {
+    return apiContents.delete(`/basket/${contentsBasketSeq}`);
+}
+
 export {
     getContents,
     getContentsView,
@@ -42,4 +56,7 @@ export {
     postContents,
     putContents,
     deleteContents,
+    getContentsBasket,
+    addContentsBasket,
+    delContentsBasket,
 };

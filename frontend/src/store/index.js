@@ -1,17 +1,23 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {loginUser} from '@/api/login';
-import {deleteBasket, getBasketList} from '@/api/basket.js';
-import {deleteCookie, getAuthFromCookie, saveAuthToCookie,} from '@/utils/cookies.js';
+import { loginUser } from '@/api/login';
+import { getBasketList } from '@/api/basket.js';
+import { getContentsBasket } from '@/api/contents';
+
+import {
+    deleteCookie,
+    getAuthFromCookie,
+    saveAuthToCookie,
+} from '@/utils/cookies.js';
 
 Vue.use(Vuex);
-
 export default new Vuex.Store({
     state: {
         user: {},
         token: '',
         basketListData: null,
         goodsBasketSeq: '',
+        contBasketList: null,
     },
     getters: {
         isLoggedIn(state) {
@@ -28,6 +34,7 @@ export default new Vuex.Store({
         SET_TOKEN(state, token) {
             state.token = token;
         },
+
         SET_BASKET(state, basketList) {
             state.basketListData = basketList;
         },
@@ -40,13 +47,16 @@ export default new Vuex.Store({
             deleteCookie('nike_token');
             //deleteCookie('nike_user');
         },
+
+        SET_CONT_BASKET(state, data) {
+            console.log(data);
+            state.contBasketList = data;
+        },
     },
     actions: {
         async LOGIN({ commit }, data) {
             const response = await loginUser(data);
-            //commit('SET_USER', response.data.user);
             commit('SET_TOKEN', response.headers.authorization);
-            //saveUserToCookie(response.data.user.username);
             saveAuthToCookie(response.headers.authorization);
             return response;
         },
@@ -59,10 +69,12 @@ export default new Vuex.Store({
             commit('SET_BASKET', response);
         },
 
-        //장바구니 삭제 api
-        async deleteBasketItem({ commit }, goodsBasketSeq) {
-            await deleteBasket(goodsBasketSeq);
-            commit('SET_BASKETDEL', goodsBasketSeq);
+        // 컨텐츠 장바구니 목록
+        async getContBasket({ commit }) {
+            const response = await getContentsBasket();
+            console.log(response.data.data);
+            commit('SET_CONT_BASKET', response.data.data);
+            return response;
         },
     },
 });
