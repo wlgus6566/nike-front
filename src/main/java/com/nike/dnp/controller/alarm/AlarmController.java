@@ -23,7 +23,7 @@ import springfox.documentation.annotations.ApiIgnore;
  *
  * @author [이소정]
  * @since 2020. 7. 24. 오후 7:41:14
- * @apiNote
+ * @apiNote 알림 컨트롤러
  */
 @Slf4j
 @RestController
@@ -53,6 +53,16 @@ public class AlarmController {
      */
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
+    /**
+     * Find all alarm single result.
+     *
+     * @param searchDTO   the search dto
+     * @param authUserDTO the auth user dto
+     * @return the single result
+     * @author [이소정]
+     * @implNote 알림 목록 조회
+     * @since 2020. 7. 29. 오후 6:48:34
+     */
     @ApiOperation(
         value = "알림 목록 조회"
         , notes = REQUEST_CHARACTER

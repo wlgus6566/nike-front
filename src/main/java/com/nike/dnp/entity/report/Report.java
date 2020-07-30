@@ -7,6 +7,7 @@ import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
 @Slf4j
 @Getter
 @Setter
-@NoArgsConstructor(access= AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_REPORT")
@@ -112,6 +113,26 @@ public class Report extends BaseTimeEntity {
     private List<ReportFile> reportFileList;
 
     /**
+     * The constant cdnUrl.
+     */
+    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    private static String cdnUrl;
+
+    /**
+     * Sets cdn url.
+     *
+     * @param cdnUrl the cdn url
+     */
+    @Value("${nike.file.cdnUrl:}")
+    public void setCdnUrl(final String cdnUrl) {
+        this.cdnUrl = cdnUrl;
+    }
+
+    public String getImageFilePhysicalName() {
+        return this.cdnUrl + imageFilePhysicalName;
+    }
+
+    /**
      * Save report.
      *
      * @param reportSaveDTO the report save dto
@@ -166,8 +187,8 @@ public class Report extends BaseTimeEntity {
      *
      * @param readCount the read count
      * @author [이소정]
-     * @since 2020. 7. 8. 오후 5:34:20
-     * @implNote
+     * @CreatedOn 2020. 7. 8. 오후 5:34:20
+     * @Description
      */
     public void updateReadCount(final Long readCount) {
         log.info("Report.updateReadCount");

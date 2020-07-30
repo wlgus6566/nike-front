@@ -7,6 +7,10 @@ import javax.persistence.Column;
 
 /**
  * The type Contents user email dto.
+ *
+ * @author [이소정]
+ * @apiNote 사용자 이메일 DTO
+ * @since 2020. 7. 29. 오후 6:53:58
  */
 @Getter
 @Setter

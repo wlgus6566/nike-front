@@ -8,7 +8,7 @@ import lombok.*;
  *
  * @author [이소정]
  * @since 2020. 7. 10. 오전 11:10:48
- * @implNote
+ * @implNote 보고서 파일 저장 DTO
  */
 @Getter
 @Setter
