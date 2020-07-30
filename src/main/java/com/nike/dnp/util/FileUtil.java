@@ -405,7 +405,7 @@ public class FileUtil {
 				try{
 					S3Util.fileDelete(awsDeleteFile);
 				}catch(Exception e){
-					// TODO [YTH] 아마존 파일 없음
+					// 아마존 파일 없음
 				}
 			}
 		}
