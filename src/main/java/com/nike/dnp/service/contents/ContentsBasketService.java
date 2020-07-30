@@ -81,22 +81,33 @@ public class ContentsBasketService {
     }
 
     /**
-     * Delete.
+     * Find by id optional.
      *
      * @param contentsBasketSeq the contents basket seq
      * @return the optional
+     */
+    public Optional<ContentsBasket> findById(final Long contentsBasketSeq) {
+        return Optional.ofNullable(contentsBasketRepository.findById(contentsBasketSeq).orElseThrow(
+                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())))
+        );
+    }
+
+
+    /**
+     * Delete.
+     *
+     * @param contentsBasketSeq the contents basket seq
+     * @return the contents basket
      * @author [이소정]
      * @since 2020. 7. 15. 오후 2:38:45
      * @implNote
      */
     @Transactional
-    public Optional<ContentsBasket> delete(final Long contentsBasketSeq) {
+    public ContentsBasket delete(final Long contentsBasketSeq) {
         log.info("ContentsBasketService.delete");
-        Optional<ContentsBasket> contentsBasket = contentsBasketRepository.findById(contentsBasketSeq);
-        final ContentsBasket savedContentsBasket = contentsBasket.orElseThrow(() -> new CodeMessageHandleException(
-                FailCode.ExceptionError.NOT_FOUND.name()
-                , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
+        Optional<ContentsBasket> contentsBasket = this.findById(contentsBasketSeq);
+        final ContentsBasket savedContentsBasket = contentsBasket.get();
         contentsBasketRepository.delete(savedContentsBasket);
-        return contentsBasket;
+        return savedContentsBasket;
     }
 }

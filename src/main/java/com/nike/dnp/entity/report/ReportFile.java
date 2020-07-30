@@ -7,6 +7,7 @@ import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 
@@ -158,6 +159,35 @@ public class ReportFile extends BaseTimeEntity {
     @JoinColumn(name = "REPORT_SEQ", insertable = false, updatable = false)
     @ApiModelProperty(name = "report", value = "The Report", hidden = true)
     private Report report;
+
+    /**
+     * The constant cdnUrl.
+     */
+    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    private static String cdnUrl;
+
+    /**
+     * Sets cdn url.
+     *
+     * @param cdnUrl the cdn url
+     */
+    @Value("${nike.file.cdnUrl:}")
+    public void setCdnUrl(final String cdnUrl) {
+        this.cdnUrl = cdnUrl;
+    }
+
+    public String getFilePhysicalName() {
+        return this.cdnUrl + filePhysicalName;
+    }
+
+    public String getThumbnailFilePhysicalName() {
+        return this.cdnUrl + thumbnailFilePhysicalName;
+    }
+
+    public String getDetailThumbnailFilePhysicalName() {
+        return this.cdnUrl + detailThumbnailFilePhysicalName;
+    }
+
 
     /**
      * Save report file.

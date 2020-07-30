@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
@@ -13,14 +15,15 @@ import java.time.LocalDateTime;
  *
  * @author [이소정]
  * @since 2020. 7. 13. 오후 2:52:03
- * @implNote
+ * @implNote 컨텐츠 결과 DTO
  */
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
+@Component
 public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
@@ -128,6 +131,27 @@ public class ContentsResultDTO extends BaseTimeEntity {
      */
     @ApiModelProperty(name = "exposureYn", value = "노출 여부(N : 진행중)", example = "Y")
     private String exposureYn;
+
+    /**
+     * The constant cdnUrl.
+     */
+    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    private static String cdnUrl;
+
+    /**
+     * Sets cdn url.
+     *
+     * @param cdnUrl the cdn url
+     */
+    @Value("${nike.file.cdnUrl:}")
+    public void setCdnUrl(final String cdnUrl) {
+        this.cdnUrl = cdnUrl;
+    }
+
+    public String getImageFilePhysicalName() {
+        return this.cdnUrl + imageFilePhysicalName;
+    }
+
 
 
 }

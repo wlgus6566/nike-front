@@ -5,7 +5,11 @@ import lombok.*;
 
 
 /**
- * The type Contents mail send dto.
+ * The Class Contents update dto.
+ *
+ * @author [이소정]
+ * @since 2020. 7. 21. 오후 3:54:34
+ * @implNote 컨텐츠 메일 전송 DTO
  */
 @Getter
 @Setter

@@ -244,6 +244,7 @@ public class ServiceCode {
     public enum FileFolderEnumCode {
         PRODUCT("product"),
         CONTENTS("contents"),
+        REPORT("report"),
         TEMP("temp"),
         QNA("QNA"),
         BANNER("banner")

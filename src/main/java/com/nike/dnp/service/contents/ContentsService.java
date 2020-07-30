@@ -10,7 +10,9 @@ import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.user.UserContentsSaveDTO;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
 import com.nike.dnp.entity.contents.Contents;
+import com.nike.dnp.entity.contents.ContentsBasket;
 import com.nike.dnp.entity.contents.ContentsFile;
+import com.nike.dnp.entity.user.User;
 import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.entity.user.UserContents;
 import com.nike.dnp.exception.CodeMessageHandleException;
@@ -20,10 +22,7 @@ import com.nike.dnp.repository.user.UserAuthRepository;
 import com.nike.dnp.service.alarm.AlarmService;
 import com.nike.dnp.service.history.HistoryService;
 import com.nike.dnp.service.user.UserContentsService;
-import com.nike.dnp.util.FileUtil;
-import com.nike.dnp.util.ImageUtil;
-import com.nike.dnp.util.MessageUtil;
-import com.nike.dnp.util.ObjectMapperUtil;
+import com.nike.dnp.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -35,6 +34,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -157,7 +157,9 @@ public class ContentsService {
         // 컨텐츠 파일 저장
         if (!contentsSaveDTO.getContentsFileList().isEmpty()) {
             for (ContentsFileSaveDTO contentsFileSaveDTO : contentsSaveDTO.getContentsFileList()) {
-                ContentsFile savedContentsFile = contentsFileRepository.save(new ContentsFile().save(savedContents, contentsFileSaveDTO));
+                ContentsFile savedContentsFile = contentsFileRepository.save(
+                        new ContentsFile().save(savedContents, this.s3FileCopySave(contentsFileSaveDTO))
+                );
                 savedContentsFileList.add(savedContentsFile);
             }
         }
@@ -184,6 +186,53 @@ public class ContentsService {
 
         return savedContents;
     }
+
+    /**
+     * S3 file copy contents file save dto.
+     *
+     * @param contentsFileSaveDTO the contents file save dto
+     * @return the contents file save dto
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 28. 오후 4:01:22
+     */
+    public ContentsFileSaveDTO s3FileCopySave(final ContentsFileSaveDTO contentsFileSaveDTO) {
+        contentsFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getFilePhysicalName()));
+        contentsFileSaveDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getThumbnailFilePhysicalName()));
+        contentsFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getThumbnailFilePhysicalName()));
+        return contentsFileSaveDTO;
+    }
+
+    /**
+     * S 3 file copy update contents file save dto.
+     *
+     * @param contentsFileUpdateDTO the contents file update dto
+     * @return the contents file save dto
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 28. 오후 4:05:42
+     */
+    public ContentsFileUpdateDTO s3FileCopyUpdate(final ContentsFileUpdateDTO contentsFileUpdateDTO) {
+        contentsFileUpdateDTO.setFilePhysicalName(this.fileMoveTempToRealPath(contentsFileUpdateDTO.getFilePhysicalName()));
+        contentsFileUpdateDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileUpdateDTO.getThumbnailFilePhysicalName()));
+        contentsFileUpdateDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileUpdateDTO.getThumbnailFilePhysicalName()));
+        return contentsFileUpdateDTO;
+    }
+
+    /**
+     * Temp to real path file move string.
+     *
+     * @param filePhysicalName the file physical name
+     * @return the string
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 28. 오후 3:59:37
+     */
+    public String fileMoveTempToRealPath(final String filePhysicalName) {
+        String imgPath = filePhysicalName;
+        if (null  != filePhysicalName) {
+            imgPath = S3Util.fileCopyAndOldFileDelete(filePhysicalName, ServiceCode.FileFolderEnumCode.CONTENTS.getFolder());
+        }
+        return imgPath;
+    }
+
 
     /**
      * Find all auth user list.
@@ -223,7 +272,8 @@ public class ContentsService {
     @Transactional
     public ContentsResultDTO findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
         Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
-        final Contents findContents = contents.orElseThrow(() -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
+        final Contents findContents = contents.orElseThrow(
+                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
         findContents.updateReadCount(findContents.getReadCount());
 
         // history 저장
@@ -242,19 +292,17 @@ public class ContentsService {
      * @implNote
      */
     @Transactional
-    public Optional<Contents> update(final Long contentsSeq, final ContentsUpdateDTO contentsUpdateDTO) {
+    public Contents update(final ContentsUpdateDTO contentsUpdateDTO) {
         log.info("contentsService.update");
-
-        // contents Update
-        contentsUpdateDTO.setContentsSeq(contentsSeq);
-        final Optional<Contents> contents = Optional.ofNullable(contentsRepository.findById(contentsUpdateDTO.getContentsSeq()).orElseThrow(() ->
-                new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+        Optional<Contents> contents = this.findById(contentsUpdateDTO.getContentsSeq());
+        Contents savedContents = contents.get();
 
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(contentsUpdateDTO.getImageBase64())) {
-            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsUpdateDTO.getImageBase64());
+            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
+                    ServiceCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsUpdateDTO.getImageBase64());
 
-            contentsUpdateDTO.setFolderName(fileResultDTO.getFileName());
+            contentsUpdateDTO.setImageFileName(fileResultDTO.getFileName());
             contentsUpdateDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
             contentsUpdateDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
         }
@@ -262,8 +310,8 @@ public class ContentsService {
         contents.ifPresent(value -> value.update(contentsUpdateDTO));
 
         // contents File
-        final List<ContentsFile> beforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contents.get().getContentsSeq(), "Y");
-        final List<ContentsFile> lastBeforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contents.get().getContentsSeq(), "Y");
+        final List<ContentsFile> beforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contentsUpdateDTO.getContentsSeq(), "Y");
+        final List<ContentsFile> lastBeforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contentsUpdateDTO.getContentsSeq(), "Y");
         List<ContentsFileUpdateDTO> newFileList = contentsUpdateDTO.getContentsFileList();
 
         // 기존에 있는 파일 목록과 DTO받은 파일 목록 비교해서
@@ -282,18 +330,23 @@ public class ContentsService {
 
         if (!newFileList.isEmpty()) {
             for (ContentsFileUpdateDTO contentsFileUpdateDTO : newFileList) {
-                Long contentsFileSeq = contentsFileUpdateDTO.getContentsFileSeq();
-                ContentsFile saveContentsFile = new ContentsFile().newContentsFile(contents.get().getContentsSeq(), contentsFileUpdateDTO);
-                if (null != contentsFileSeq) {
-                    Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileUpdateDTO.getContentsFileSeq());
+                Long contentsFileSeq = null != contentsFileUpdateDTO.getContentsFileSeq() ? contentsFileUpdateDTO.getContentsFileSeq() : 0l;
+                final Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
+
+                this.s3FileCopyUpdate(contentsFileUpdateDTO);
+                ContentsFile saveContentsFile = contentsFile.orElse(
+                        new ContentsFile().newContentsFile(contents.get().getContentsSeq(), contentsFileUpdateDTO));
+
+                if (0l != contentsFileSeq) {
                     contentsFile.ifPresent(value -> value.update(contentsFileUpdateDTO));
                 } else {
                     contentsFileRepository.save(saveContentsFile);
                 }
             }
         }
+
         if (!lastBeforeFileList.isEmpty()) {
-            for (ContentsFile contentsFile : beforeFileList) {
+            for (ContentsFile contentsFile : lastBeforeFileList) {
                 contentsFile.updateUseYn("N");
             }
         }
@@ -312,8 +365,7 @@ public class ContentsService {
                     , null
                     , this.findAllAuthUser(contentsUpdateDTO.getChecks()));
         }
-
-        return contents;
+        return savedContents;
     }
 
 
@@ -327,10 +379,10 @@ public class ContentsService {
      * @implNote
      */
     @Transactional
-    public Optional<Contents> delete(final Long contentsSeq) {
+    public Contents delete(final Long contentsSeq) {
         log.info("contentsService.delete");
 
-        Optional<Contents> contents = contentsRepository.findById(contentsSeq);
+        Optional<Contents> contents = this.findById(contentsSeq);
         contents.ifPresent(value -> value.delete());
 
         List<ContentsFile> contentsFileList = contents.get().getContentsFileList();
@@ -340,7 +392,7 @@ public class ContentsService {
             }
         }
 
-        return contents;
+        return contents.get();
     }
 
     /**
@@ -353,7 +405,7 @@ public class ContentsService {
      * @implNote
      */
     @Transactional
-    public ResponseEntity<Resource> downloadContentsFile(final Long contentsFileSeq) {
+    public ResponseEntity<Resource> downloadContentsFile(final Long contentsFileSeq) throws IOException {
         Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
         if (contentsFile.isPresent()) {
             contentsFile.ifPresent(value -> value.updateDownloadCount(contentsFile.get().getDownloadCount()));
@@ -363,6 +415,17 @@ public class ContentsService {
         }
     }
 
+    /**
+     * Find by id optional.
+     *
+     * @param contentsSeq the contents seq
+     * @return the optional
+     */
+    public Optional<Contents> findById(final Long contentsSeq) {
+        log.info("UserService.findById");
+        return Optional.ofNullable(contentsRepository.findById(contentsSeq).orElseThrow(
+                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+    }
 
     /**
      * Save user contents auth list.
@@ -374,11 +437,11 @@ public class ContentsService {
      * @since 2020. 7. 24. 오후 7:01:22
      * @implNote
      */
-    public List<UserContents> saveUserContentsAuth(final Long contentsSeq, final UserContentsSaveDTO userContentsSaveDTO) {
+    public List<UserContents> saveUserContentsAuth(
+            final Long contentsSeq, final UserContentsSaveDTO userContentsSaveDTO
+    ) {
         return userContentsService.save(contentsSeq, userContentsSaveDTO);
     }
-
-
 
     /**
      * Send email.

@@ -3,6 +3,7 @@ package com.nike.dnp.dto.report;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
 
 
 /**
@@ -10,7 +11,7 @@ import lombok.*;
  *
  * @author [이소정]
  * @since 2020. 7. 17. 오후 5:54:19
- * @implNote
+ * @implNote 보고서 장바구니 결과 DTO
  */
 @Getter
 @Setter
@@ -61,6 +62,26 @@ public class ReportBasketResultDTO {
      */
     @ApiModelProperty(name = "filePhysicalName", value = "파일 물리명")
     private String filePhysicalName;
+
+    /**
+     * The constant cdnUrl.
+     */
+    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    private static String cdnUrl;
+
+    /**
+     * Sets cdn url.
+     *
+     * @param cdnUrl the cdn url
+     */
+    @Value("${nike.file.cdnUrl:}")
+    public void setCdnUrl(final String cdnUrl) {
+        this.cdnUrl = cdnUrl;
+    }
+
+    public String getFilePhysicalName() {
+        return this.cdnUrl + filePhysicalName;
+    }
 
 
 
