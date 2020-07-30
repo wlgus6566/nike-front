@@ -61,9 +61,9 @@
 </template>
 
 <script>
-	import {addProductBasket} from '@/utils/basket';
+    import {addProductBasket} from '@/utils/basket';
 
-	export default {
+    export default {
     data() {
         return {};
     },
