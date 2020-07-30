@@ -7,8 +7,8 @@ import lombok.*;
  * The Class Agency save dto.
  *
  * @author [이소정]
+ * @implNote 에이전시 저장 DTO
  * @since 2020. 7. 20. 오후 12:13:03
- * @implNote
  */
 @Getter
 @Setter

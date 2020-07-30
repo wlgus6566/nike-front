@@ -1,5 +1,6 @@
 package com.nike.dnp.service.report;
 
+import com.google.firebase.database.core.Repo;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.report.ReportBasketResultDTO;
@@ -19,11 +20,11 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The Class C report basket service.
+ * The Class Report basket service.
  *
  * @author [이소정]
+ * @implNote 보고서 장바구니 서비스
  * @since 2020. 7. 17. 오후 6:18:20
- * @implNote
  */
 @Slf4j
 @Service
@@ -40,6 +41,7 @@ public class ReportBasketService {
 
     /**
      * The Report file repository
+     *
      * @author [이소정]
      */
     private final ReportFileRepository reportFileRepository;
@@ -51,8 +53,8 @@ public class ReportBasketService {
      * @param authUserDTO the auth user dto
      * @return the list
      * @author [이소정]
+     * @implNote 보고서 장바구니 목록 전체 조회
      * @since 2020. 7. 17. 오후 6:50:47
-     * @implNote
      */
     public List<ReportBasketResultDTO> findAllReportBasket(final AuthUserDTO authUserDTO) {
         return reportBasketRepository.findAllReportBasket(authUserDTO.getUserSeq());
@@ -65,8 +67,8 @@ public class ReportBasketService {
      * @param authUserDTO       the auth user dto
      * @return the list
      * @author [이소정]
+     * @implNote 보고서 장바구니 저장
      * @since 2020. 7. 17. 오후 7:06:01
-     * @implNote
      */
     @Transactional
     public List<ReportBasket> save(final List<Long> reportFileSeqList, final AuthUserDTO authUserDTO) {
@@ -88,17 +90,30 @@ public class ReportBasketService {
      * @param reportBasketSeq the report basket seq
      * @return the report basket
      * @author [이소정]
+     * @implNote 보고서 장바구니 삭제
      * @since 2020. 7. 17. 오후 6:58:54
-     * @implNote
      */
     @Transactional
     public ReportBasket delete(final Long reportBasketSeq) {
-        Optional<ReportBasket> reportBasket = reportBasketRepository.findById(reportBasketSeq);
-        ReportBasket savedReportBasket = reportBasket.orElseThrow(() -> new CodeMessageHandleException(
-                FailCode.ExceptionError.NOT_FOUND.name()
-                , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
+        Optional<ReportBasket> reportBasket = this.findById(reportBasketSeq);
+        ReportBasket savedReportBasket = reportBasket.get();
         reportBasketRepository.delete(savedReportBasket);
         return savedReportBasket;
+    }
+
+    /**
+     * Find by id optional.
+     *
+     * @param reportBasketSeq the report basket seq
+     * @return the optional
+     * @author [이소정]
+     * @implNote 보고서 장바구니 seq 로 상세 조회
+     * @since 2020. 7. 30. 오후 2:56:21
+     */
+    public Optional<ReportBasket> findById(final Long reportBasketSeq) {
+        return Optional.ofNullable(reportBasketRepository.findById(reportBasketSeq).orElseThrow(() -> new CodeMessageHandleException(
+                        FailCode.ExceptionError.NOT_FOUND.name() , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()
+        ))));
     }
 
 }

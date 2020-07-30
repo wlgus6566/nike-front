@@ -22,8 +22,8 @@ import springfox.documentation.annotations.ApiIgnore;
  * The Class Alarm controller.
  *
  * @author [이소정]
- * @since 2020. 7. 24. 오후 7:41:14
  * @apiNote 알림 컨트롤러
+ * @since 2020. 7. 24. 오후 7:41:14
  */
 @Slf4j
 @RestController

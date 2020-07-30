@@ -10,8 +10,8 @@ import java.util.List;
  * The Interface Contents file repository.
  *
  * @author [이소정]
+ * @implNote 콘텐츠 파일 repository interface
  * @since 2020. 7. 1. 오전 10:41:27
- * @implNote
  */
 @Repository
 public interface ContentsFileRepository extends JpaRepository<ContentsFile, Long>, ContentsFileRepositoryCustom {
@@ -19,12 +19,12 @@ public interface ContentsFileRepository extends JpaRepository<ContentsFile, Long
     /**
      * Find by contents seq and use yn optional.
      *
-     * @param contentsSeq the contents seq
-     * @param useYn       the use yn
+     * @param contentsSeq 콘텐츠 seq
+     * @param useYn       사용여부(Y, N)
      * @return the optional
      * @author [이소정]
+     * @implNote 콘텐츠seq, 사용여부에 따른 파일 목록 조회
      * @since 2020. 7. 6. 오후 6:30:42
-     * @implNote
      */
     List<ContentsFile> findByContentsSeqAndUseYn(Long contentsSeq, String useYn);
 

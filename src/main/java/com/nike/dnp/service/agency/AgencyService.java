@@ -20,8 +20,8 @@ import java.util.Optional;
  * The Class Agency service.
  *
  * @author [이소정]
+ * @implNote 에이전시 서비스
  * @since 2020. 7. 20. 오후 12:08:45
- * @implNote
  */
 @Slf4j
 @Service
@@ -31,6 +31,7 @@ public class AgencyService {
 
     /**
      * The Agency repository
+     *
      * @author [이소정]
      */
     private final AgencyRepository agencyRepository;
@@ -40,8 +41,8 @@ public class AgencyService {
      *
      * @return the list
      * @author [이소정]
+     * @implNote 에이전시 목록 조회
      * @since 2020. 7. 20. 오후 12:08:40
-     * @implNote
      */
     public List<Agency> findAll() {
         return agencyRepository.findAllByUseYn("Y");
@@ -53,8 +54,8 @@ public class AgencyService {
      * @param agencySaveDTO the agency save dto
      * @return the agency
      * @author [이소정]
+     * @implNote 에이전시 저장
      * @since 2020. 7. 20. 오후 12:19:37
-     * @implNote
      */
     @Transactional
     public Agency save(final AgencySaveDTO agencySaveDTO) {
@@ -67,8 +68,8 @@ public class AgencyService {
      * @param agencySeq the agency seq
      * @return the agency
      * @author [이소정]
+     * @implNote 에이전시 seq로 상세 조회
      * @since 2020. 7. 20. 오후 12:26:58
-     * @implNote
      */
     public Agency findByAgencySeq(final Long agencySeq) {
         return this.findById(agencySeq).get();
@@ -80,8 +81,8 @@ public class AgencyService {
      * @param agencyUpdateDTO the agency update dto
      * @return the agency
      * @author [이소정]
+     * @implNote 에이전시 수정
      * @since 2020. 7. 20. 오후 2:05:32
-     * @implNote
      */
     @Transactional
     public Agency update(final AgencyUpdateDTO agencyUpdateDTO) {
@@ -96,8 +97,8 @@ public class AgencyService {
      * @param agencySeq the agency seq
      * @return the agency
      * @author [이소정]
+     * @implNote 에이전시 삭제
      * @since 2020. 7. 20. 오후 2:21:07
-     * @implNote
      */
     @Transactional
     public Agency delete(final long agencySeq) {
@@ -111,6 +112,9 @@ public class AgencyService {
      *
      * @param agencySeq the agency seq
      * @return the optional
+     * @author [이소정]
+     * @implNote 에이전시 seq로 상세 조회
+     * @since 2020. 7. 30. 오후 3:07:57
      */
     public Optional<Agency> findById(final Long agencySeq) {
         return Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencySeq, "Y").orElseThrow(() ->

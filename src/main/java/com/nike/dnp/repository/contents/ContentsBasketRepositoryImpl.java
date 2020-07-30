@@ -16,8 +16,8 @@ import java.util.List;
  * The Class Contents basket repository.
  *
  * @author [이소정]
+ * @implNote 콘텐츠 장바구니 repository
  * @since 2020. 7. 15. 오후 12:19:07
- * @implNote
  */
 @Repository
 public class ContentsBasketRepositoryImpl extends QuerydslRepositorySupport implements ContentsBasketRepositoryCustom {
@@ -27,8 +27,8 @@ public class ContentsBasketRepositoryImpl extends QuerydslRepositorySupport impl
      * Instantiates a new Contents repository.
      *
      * @author [이소정]
+     * @implNote 생성자 주입
      * @since 2020. 6. 19. 오후 6:15:29
-     * @implNote
      */
     public ContentsBasketRepositoryImpl() {
         super(ContentsBasket.class);
@@ -37,11 +37,11 @@ public class ContentsBasketRepositoryImpl extends QuerydslRepositorySupport impl
     /**
      * Find all with contents file list.
      *
-     * @param userSeq the user seq
+     * @param userSeq 사용자 seq
      * @return the list
      * @author [이소정]
+     * @implNote 사용자에 맞는 콘텐츠 장바구니 목록 조회
      * @since 2020. 7. 15. 오후 12:19:14
-     * @implNote
      */
     @Override
     public List<ContentsBasketResultDTO> findAllWithContentsFile(Long userSeq) {

@@ -19,8 +19,8 @@ import javax.persistence.*;
  * The Class Contents file Entity.
  *
  * @author [이소정]
+ * @implNote 콘텐츠 파일 entity
  * @since 2020. 6. 24. 오후 3:56:22
- * @implNote
  */
 @Slf4j
 @Getter
@@ -34,6 +34,7 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 컨텐츠 파일 시퀀스
+     *
      * @author [이소정]
      */
     @Id
@@ -44,6 +45,7 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 컨텐츠 시퀀스
+     *
      * @author [이소정]
      */
     @Column(name = "CONTENTS_SEQ")
@@ -52,6 +54,7 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 파일 구분 공통코드
+     *
      * @author [이소정]
      */
     @Column(name = "FILE_SECTION_CODE")
@@ -60,6 +63,7 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 파일 종류 공통코드
+     *
      * @author [이소정]
      */
     @Column(name = "FILE_KIND_CODE")
@@ -68,14 +72,17 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 타이틀
+     *
      * @author [이소정]
      */
     @Column(name = "TITLE")
     @ApiModelProperty(name = "title", value = "타이틀")
     private String title;
 
-    /**e
+    /**
+     * e
      * url
+     *
      * @author [이소정]
      */
     @Column(name = "URL")
@@ -84,6 +91,7 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 파일 명
+     *
      * @author [이소정]
      */
     @Column(name = "FILE_NAME")
@@ -92,6 +100,7 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 파일 사이즈
+     *
      * @author [이소정]
      */
     @Column(name = "FILE_SIZE")
@@ -100,6 +109,7 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 파일 물리 명
+     *
      * @author [이소정]
      */
     @Column(name = "FILE_PHYSICAL_NAME")
@@ -126,6 +136,7 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 다운로드 수
+     *
      * @author [이소정]
      */
     @Column(name = "DOWNLOAD_COUNT")
@@ -134,6 +145,7 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 파일 순서
+     *
      * @author [이소정]
      */
     @Column(name = "FILE_ORDER")
@@ -142,6 +154,7 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 사용 여부
+     *
      * @author [이소정]
      */
     @Column(name = "USE_YN")
@@ -150,6 +163,7 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 썸네일 파일 물리 명
+     *
      * @author [이소정]
      */
     @Column(name = "THUMBNAIL_FILE_NAME")
@@ -158,6 +172,7 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 썸네일 파일 물리 명
+     *
      * @author [이소정]
      */
     @Column(name = "THUMBNAIL_FILE_SIZE")
@@ -166,6 +181,7 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 썸네일 파일 물리 명
+     *
      * @author [이소정]
      */
     @Column(name = "THUMBNAIL_FILE_PHYSICAL_NAME")
@@ -175,6 +191,8 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 상세 썸네일 명
+     *
+     * @author [이소정]
      */
     @Column(name = "DETAIL_THUMBNAIL_FILE_NAME")
     @ApiModelProperty(name = "detailThumbnailFileName", value ="상세 썸네일 명", example = "graphic_file_name_detail_thumbnail.jpg")
@@ -182,6 +200,8 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 상세 썸네일 사이즈
+     *
+     * @author [이소정]
      */
     @Column(name = "DETAIL_THUMBNAIL_FILE_SIZE")
     @ApiModelProperty(name = "detailThumbnailFileSize", value ="상세 썸네일 사이즈", example = "700")
@@ -189,6 +209,8 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * 상세 썸네일 물리 경로
+     *
+     * @author [이소정]
      */
     @Column(name = "DETAIL_THUMBNAIL_FILE_PHYSICAL_NAME")
     @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg")
@@ -196,6 +218,7 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * The Contents
+     *
      * @author [이소정]
      */
     @JsonBackReference
@@ -206,6 +229,8 @@ public class ContentsFile extends BaseTimeEntity {
 
     /**
      * The constant cdnUrl.
+     *
+     * @author [이소정]
      */
     @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
     private static String cdnUrl;
@@ -214,24 +239,50 @@ public class ContentsFile extends BaseTimeEntity {
      * Sets cdn url.
      *
      * @param cdnUrl the cdn url
+     * @author [이소정]
+     * @implNote cdnUrl 셋팅
+     * @since 2020. 7. 30. 오후 3:49:08
      */
     @Value("${nike.file.cdnUrl:}")
     public void setCdnUrl(final String cdnUrl) {
         this.cdnUrl = cdnUrl;
     }
 
+    /**
+     * Gets file physical name.
+     *
+     * @return the file physical name
+     * @author [이소정]
+     * @implNote cdnUrl + filePhysicalName
+     * @since 2020. 7. 30. 오후 3:49:08
+     */
     public String getFilePhysicalName() {
         return this.cdnUrl + filePhysicalName;
     }
 
+    /**
+     * Gets thumbnail file physical name.
+     *
+     * @return the thumbnail file physical name
+     * @author [이소정]
+     * @implNote cdnUrl + thumbnailFilePhysicalName
+     * @since 2020. 7. 30. 오후 3:49:08
+     */
     public String getThumbnailFilePhysicalName() {
         return this.cdnUrl + thumbnailFilePhysicalName;
     }
 
+    /**
+     * Gets detail thumbnail file physical name.
+     *
+     * @return the detail thumbnail file physical name
+     * @author [이소정]
+     * @implNote cdnUrl + detailThumbnailFilePhysicalName
+     * @since 2020. 7. 30. 오후 3:49:08
+     */
     public String getDetailThumbnailFilePhysicalName() {
         return this.cdnUrl + detailThumbnailFilePhysicalName;
     }
-
 
 
     /**
@@ -241,8 +292,8 @@ public class ContentsFile extends BaseTimeEntity {
      * @param contentsFileSaveDTO the contents file save dto
      * @return the contents file
      * @author [이소정]
+     * @implNote 콘텐츠 파일 저장
      * @since 2020. 7. 1. 오전 11:24:43
-     * @implNote
      */
     public ContentsFile save(Contents savedContents, ContentsFileSaveDTO contentsFileSaveDTO) {
         log.info("ContentsFile.save");
@@ -281,8 +332,8 @@ public class ContentsFile extends BaseTimeEntity {
      * @param contentsFileUpdateDTO the contents file update dto
      * @return the contents file
      * @author [이소정]
+     * @implNote 새로운 콘텐츠 파일 저장
      * @since 2020. 7. 6. 오후 5:52:49
-     * @implNote
      */
     public ContentsFile newContentsFile(Long contentsSeq, ContentsFileUpdateDTO contentsFileUpdateDTO) {
         log.info("ContentsFile.newContentsFile");
@@ -320,6 +371,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @param fileSize                        the file size
      * @param filePhysicalName                the file physical name
      * @param fileContentType                 the file content type
+     * @param fileExtension                   the file extension
      * @param title                           the title
      * @param url                             the url
      * @param thumbnailFileName               the thumbnail file name
@@ -331,8 +383,8 @@ public class ContentsFile extends BaseTimeEntity {
      * @param fileOrder                       the file order
      * @return the contents file
      * @author [이소정]
+     * @implNote 콘텐츠 파일 셋팅
      * @since 2020. 7. 7. 오전 10:41:43
-     * @implNote
      */
     private ContentsFile applyContentsFile(ContentsFile contentsFile
             , String fileSectionCode
@@ -382,8 +434,8 @@ public class ContentsFile extends BaseTimeEntity {
      *
      * @param contentsFileUpdateDTO the contents file update dto
      * @author [이소정]
+     * @implNote 콘텐츠 파일 수정
      * @since 2020. 7. 3. 오후 5:27:06
-     * @implNote
      */
     public void update(final ContentsFileUpdateDTO contentsFileUpdateDTO) {
         log.info("ContentsFile.update");
@@ -416,9 +468,8 @@ public class ContentsFile extends BaseTimeEntity {
      *
      * @param downloadCount the download count
      * @author [이소정]
+     * @implNote 콘텐츠 파일 다운로드 수 1 더하기
      * @since 2020. 7. 3. 오후 5:28:11
-     * @implNote
-     * @CreatedOn 2020. 7. 3. 오후 5:28:11
      */
     public void updateDownloadCount(final Long downloadCount) {
         log.info("ContentsFile.updateDownloadCount");
@@ -430,30 +481,11 @@ public class ContentsFile extends BaseTimeEntity {
      *
      * @param useYn the use yn
      * @author [이소정]
+     * @implNote 콘텐츠 파일 사용여부 수정
      * @since 2020. 7. 6. 오후 12:02:25
-     * @implNote
      */
     public void updateUseYn(final String useYn) {
         this.useYn = useYn;
     }
-
-    /**
-     * Check string validation boolean.
-     *
-     * @param value        the value
-     * @param errorCode    the error code
-     * @param errorMessage the error message
-     * @return the boolean
-     * @author [이소정]
-     * @since 2020. 6. 26. 오후 5:30:51
-     * @implNote
-     */
-    public Boolean checkStringValidation(String value, String errorCode, String errorMessage) {
-        if (value.isEmpty() || value.trim().isEmpty()) {
-            throw new CodeMessageHandleException(errorCode, errorMessage);
-        }
-        return true;
-    }
-
 
 }

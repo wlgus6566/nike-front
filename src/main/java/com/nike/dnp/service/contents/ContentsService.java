@@ -43,8 +43,8 @@ import java.util.Optional;
  * Contents Service
  *
  * @author [이소정]
- * @since 2020. 6. 11. 오후 3:25:23
  * @implNote Contents Service 작성
+ * @since 2020. 6. 11. 오후 3:25:23
  */
 @Slf4j
 @Service
@@ -105,10 +105,13 @@ public class ContentsService {
      * Find all paging page.
      *
      * @param contentsSearchDTO the contents search dto
+     * @param authUserDTO       the auth user dto
+     * @param topMenuCode       the top menu code
+     * @param menuCode          the menu code
      * @return the page
      * @author [이소정]
+     * @implNote 콘텐츠 페이징 처리 한 목록
      * @since 2020. 7. 13. 오후 3:23:01
-     * @implNote
      */
     public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO, final AuthUserDTO authUserDTO, final String topMenuCode, final String menuCode) {
         // 권한 검사
@@ -136,8 +139,8 @@ public class ContentsService {
      * @param contentsSaveDTO the contents save dto
      * @return the contents
      * @author [이소정]
+     * @implNote 컨텐츠 저장
      * @since 2020. 6. 24. 오후 3:22:15
-     * @implNote
      */
     @Transactional
     public Contents save(final ContentsSaveDTO contentsSaveDTO) {
@@ -193,7 +196,8 @@ public class ContentsService {
      * @param contentsFileSaveDTO the contents file save dto
      * @return the contents file save dto
      * @author [이소정]
-     * @CreatedOn 2020. 7. 28. 오후 4:01:22
+     * @implNote 컨텐츠 저장 > 파일 경로(temp -> contents) 변경 후 set
+     * @since 2020. 7. 28. 오후 4:01:22
      */
     public ContentsFileSaveDTO s3FileCopySave(final ContentsFileSaveDTO contentsFileSaveDTO) {
         contentsFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getFilePhysicalName()));
@@ -208,7 +212,8 @@ public class ContentsService {
      * @param contentsFileUpdateDTO the contents file update dto
      * @return the contents file save dto
      * @author [이소정]
-     * @CreatedOn 2020. 7. 28. 오후 4:05:42
+     * @implNote 컨텐츠 수정 파일 경로(temp -> contents) 변경 후 set
+     * @since 2020. 7. 28. 오후 4:05:42
      */
     public ContentsFileUpdateDTO s3FileCopyUpdate(final ContentsFileUpdateDTO contentsFileUpdateDTO) {
         contentsFileUpdateDTO.setFilePhysicalName(this.fileMoveTempToRealPath(contentsFileUpdateDTO.getFilePhysicalName()));
@@ -223,7 +228,8 @@ public class ContentsService {
      * @param filePhysicalName the file physical name
      * @return the string
      * @author [이소정]
-     * @CreatedOn 2020. 7. 28. 오후 3:59:37
+     * @implNote 콘텐츠 파일 경로 temp -> contents
+     * @since 2020. 7. 28. 오후 3:59:37
      */
     public String fileMoveTempToRealPath(final String filePhysicalName) {
         String imgPath = filePhysicalName;
@@ -240,8 +246,8 @@ public class ContentsService {
      * @param authCheckList the auth check list
      * @return the list
      * @author [이소정]
+     * @implNote 컨텐츠 상세 권한 있는 authSeq에 포함된 사용자 seq 목록 조회
      * @since 2020. 7. 24. 오후 7:30:13
-     * @implNote
      */
     public List<Long> findAllAuthUser(final List<UserContentsSaveDTO.AuthCheckDTO> authCheckList) {
         List<Long> userSeqList = new ArrayList<>();
@@ -266,8 +272,8 @@ public class ContentsService {
      * @param menuCode    the menu code
      * @return the contents
      * @author [이소정]
+     * @implNote 컨텐츠 seq, 컨텐츠 메뉴 코드 로 컨텐츠 조회
      * @since 2020. 7. 2. 오후 2:25:43
-     * @implNote
      */
     @Transactional
     public ContentsResultDTO findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
@@ -288,8 +294,8 @@ public class ContentsService {
      * @param contentsUpdateDTO the contents update dto
      * @return the contents
      * @author [이소정]
+     * @implNote 컨텐츠 수정
      * @since 2020. 7. 3. 오후 4:01:24
-     * @implNote
      */
     @Transactional
     public Contents update(final ContentsUpdateDTO contentsUpdateDTO) {
@@ -313,7 +319,6 @@ public class ContentsService {
         final List<ContentsFile> beforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contentsUpdateDTO.getContentsSeq(), "Y");
         final List<ContentsFile> lastBeforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contentsUpdateDTO.getContentsSeq(), "Y");
         List<ContentsFileUpdateDTO> newFileList = contentsUpdateDTO.getContentsFileList();
-
         // 기존에 있는 파일 목록과 DTO받은 파일 목록 비교해서
         // case1.기본목록O, 새로운목록X : useYn = 'N' update
         // case2.기존목록X, 새로운목록O : save
@@ -375,8 +380,8 @@ public class ContentsService {
      * @param contentsSeq the contents seq
      * @return the optional
      * @author [이소정]
+     * @implNote 컨텐츠 삭제
      * @since 2020. 7. 7. 오전 10:59:29
-     * @implNote
      */
     @Transactional
     public Contents delete(final Long contentsSeq) {
@@ -401,11 +406,11 @@ public class ContentsService {
      * @param contentsFileSeq the contents file seq
      * @return the string
      * @author [이소정]
+     * @implNote 컨텐츠 파일 다운로드
      * @since 2020. 7. 16. 오후 2:51:01
-     * @implNote
      */
     @Transactional
-    public ResponseEntity<Resource> downloadContentsFile(final Long contentsFileSeq) throws IOException {
+    public ResponseEntity<Resource> downloadContentsFile(final Long contentsFileSeq) {
         Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
         if (contentsFile.isPresent()) {
             contentsFile.ifPresent(value -> value.updateDownloadCount(contentsFile.get().getDownloadCount()));
@@ -420,6 +425,9 @@ public class ContentsService {
      *
      * @param contentsSeq the contents seq
      * @return the optional
+     * @author [이소정]
+     * @implNote 컨텐츠 seq 로 컨텐츠 조회 및 notFound 처리
+     * @since 2020. 7. 30. 오후 12:01:26
      */
     public Optional<Contents> findById(final Long contentsSeq) {
         log.info("UserService.findById");
@@ -434,8 +442,8 @@ public class ContentsService {
      * @param userContentsSaveDTO the user contents save dto
      * @return the list
      * @author [이소정]
+     * @implNote 컨텐츠 상세 보기 권한 저장
      * @since 2020. 7. 24. 오후 7:01:22
-     * @implNote
      */
     public List<UserContents> saveUserContentsAuth(
             final Long contentsSeq, final UserContentsSaveDTO userContentsSaveDTO
@@ -447,6 +455,9 @@ public class ContentsService {
      * Send email.
      *
      * @param contentsMailSendDTO the contents mail send dto
+     * @author [이소정]
+     * @implNote 컨텐츠 저장, 수정 시 메일 보내기
+     * @since 2020. 7. 30. 오후 12:01:26
      */
     public void sendEmail(final ContentsMailSendDTO contentsMailSendDTO) {
 

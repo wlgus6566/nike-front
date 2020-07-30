@@ -14,8 +14,8 @@ import java.util.List;
  * The Class Contents save dto.
  *
  * @author [이소정]
- * @since 2020. 6. 24. 오후 3:25:23
  * @implNote 컨텐츠 저장 DTO
+ * @since 2020. 6. 24. 오후 3:25:23
  */
 @Getter
 @Setter
@@ -26,6 +26,7 @@ public class ContentsSaveDTO {
 
     /**
      * 최고 메뉴 공통코드
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 공통코드 (ASSET/TOOLKIT/FOUNDATION)", hidden = true)
@@ -33,6 +34,7 @@ public class ContentsSaveDTO {
 
     /**
      * 2depth 메뉴 코드
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "menuCode", value = "2depth 메뉴 코드", hidden = true)
@@ -162,6 +164,7 @@ public class ContentsSaveDTO {
 
     /**
      * 이미지 파일명
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "imageFileName", value = "이미지 파일명", required = true, example = "main_img.jpg", hidden = true)
@@ -169,6 +172,7 @@ public class ContentsSaveDTO {
 
     /**
      * 이미지 파일 사이즈
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "imageFileSize", value = "이미지 파일 사이즈", required = true, example = "500", hidden = true)
@@ -176,6 +180,7 @@ public class ContentsSaveDTO {
 
     /**
      * 이미지 파일 물리명
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "imageFilePhysicalName", value = "이미지 파일 물리명", required = true, example = "8080/cdn/contnets/", hidden = true)
@@ -183,6 +188,7 @@ public class ContentsSaveDTO {
 
     /**
      * 폴더명
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "folderName", value = "폴더명", required = true, example = "SP20 NSW NIKE DIRECT AM90")
@@ -190,6 +196,7 @@ public class ContentsSaveDTO {
 
     /**
      * 폴더 내용
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "folderContents", value = "폴더 내용", required = true, example = "SP20 나이키 다이렉트 NSW 캠페인 시공 에셋 자료")
@@ -197,6 +204,7 @@ public class ContentsSaveDTO {
 
     /**
      * 캠페인 기간 구분 공통코드
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드(날짜선택:SELECT/365:EVERY)", required = true, example = "EVERY")
@@ -204,6 +212,7 @@ public class ContentsSaveDTO {
 
     /**
      * 캠페인 시작 일시
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020.06.01")
@@ -211,6 +220,7 @@ public class ContentsSaveDTO {
 
     /**
      * 캠페인 종료 일시
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020.09.01")
@@ -218,6 +228,7 @@ public class ContentsSaveDTO {
 
     /**
      * 메모
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "memo", value = "메모", example = "메모 입력\n메모 입력\n메모 입력\n")
@@ -225,6 +236,7 @@ public class ContentsSaveDTO {
 
     /**
      * 콘텐트 파일 리스트
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "contentsFileList", value = "컨텐츠 파일 리스트")
@@ -232,6 +244,7 @@ public class ContentsSaveDTO {
 
     /**
      * 노출 여부
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "exposureYn", value = "폴더 상태(노출 여부 Y/N)", example = "Y")
@@ -251,8 +264,8 @@ public class ContentsSaveDTO {
      * The Class Auth check.
      *
      * @author [오지훈]
-     * @since 2020. 7. 20. 오후 12:23:51
      * @implNote 권한 체크 DTO
+     * @since 2020. 7. 20. 오후 12:23:51
      */
     @Getter
     @Setter

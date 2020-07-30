@@ -26,8 +26,8 @@ import java.util.Optional;
  * The Class Contents controller.
  *
  * @author [이소정]
+ * @implNote 컨텐츠 컨트롤러
  * @since 2020. 7. 13. 오전 11:52:57
- * @apiNote 컨텐츠 컨트롤러
  */
 @Slf4j
 @RestController
@@ -60,11 +60,14 @@ public class ContentsController {
     /**
      * 컨텐츠 전체목록 조회
      *
+     * @param topMenuCode       the top menu code
+     * @param menuCode          the menu code
      * @param contentsSearchDTO the contents search dto
+     * @param authUserDTO       the auth user dto
      * @return all managers
      * @author [이소정]
+     * @implNote 컨텐츠 목록 조회
      * @since 2020. 6. 19. 오후 5:56:03
-     * @apiNote 컨텐츠 목록 조회
      */
     @ApiOperation(
         value = "컨텐츠 목록 조회"
@@ -111,8 +114,8 @@ public class ContentsController {
      * @param contentsSaveDTO the contents save dto
      * @return the single result
      * @author [이소정]
+     * @implNote 컨텐츠 등록
      * @since 2020. 7. 13. 오전 11:58:47
-     * @apiNote 컨텐츠 등록
      */
     @ApiOperation(
             value = "컨텐츠 등록"
@@ -146,8 +149,8 @@ public class ContentsController {
      * @param contentsSeq the contents seq
      * @return the single result
      * @author [이소정]
+     * @implNote 컨텐츠 상세조회
      * @since 2020. 7. 13. 오전 11:58:42
-     * @apiNote 컨텐츠 상세조회
      */
     @ApiOperation(
             value = "컨텐츠 상세조회"
@@ -171,11 +174,12 @@ public class ContentsController {
      *
      * @param topMenuCode       the top menu code
      * @param menuCode          the menu code
+     * @param contentsSeq       the contents seq
      * @param contentsUpdateDTO the contents update dto
      * @return the single result
      * @author [이소정]
+     * @apiNote 콘텐츠 수정
      * @since 2020. 7. 13. 오전 11:59:45
-     * @apiNote
      */
     @ApiOperation(value = "컨텐츠 수정", notes = REQUEST_CHARACTER
             + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
@@ -200,11 +204,14 @@ public class ContentsController {
     /**
      * Delete contents single result.
      *
+     * @param topMenuCode the top menu code
+     * @param menuCode    the menu code
      * @param contentsSeq the contents seq
      * @return the single result
      * @author [이소정]
-     * @since 2020. 7. 7. 오후 2:06:55
+     * @implNote
      * @apiNote
+     * @since 2020. 7. 7. 오후 2:06:55
      */
     @ApiOperation(value="컨텐츠 삭제", notes = REQUEST_CHARACTER
             + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
@@ -224,12 +231,15 @@ public class ContentsController {
     /**
      * 컨텐츠 다운로드
      *
-     * @param topMenuCode the top menu code
-     * @param menuCode    the menu code
+     * @param topMenuCode     the top menu code
+     * @param menuCode        the menu code
+     * @param contentsFileSeq the contents file seq
      * @return the string
+     * @throws IOException the io exception
      * @author [이소정]
-     * @since 2020. 7. 15. 오후 6:30:45
+     * @implNote
      * @apiNote
+     * @since 2020. 7. 15. 오후 6:30:45
      */
     @ApiOperation(value = "컨텐츠 다운로드", notes = REQUEST_CHARACTER)
     @PostMapping(name = "컨텐츠 다운로드", value = "/{topMenuCode}/{menuCode}/download/{contentsFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -247,6 +257,9 @@ public class ContentsController {
      *
      * @param contentsMailSendDTO the contents mail send dto
      * @return the common result
+     * @author [이소정]
+     * @implNote
+     * @since 2020. 7. 30. 오후 3:58:41
      */
     @ApiOperation(value = "컨텐츠 알림메일전송", notes = REQUEST_CHARACTER)
     @PostMapping(name = "컨텐츠 알림메일전송", value = "/sendMail", produces = {MediaType.APPLICATION_JSON_VALUE})

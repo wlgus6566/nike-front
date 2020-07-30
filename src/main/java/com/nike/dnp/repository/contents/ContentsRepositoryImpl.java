@@ -24,6 +24,7 @@ import java.util.List;
  * Contents Repository Impl
  *
  * @author [이소정]
+ * @implNote 콘텐츠 repository
  * @since 2020. 6. 19. 오후 5:54:32
  */
 @Repository
@@ -35,6 +36,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * Instantiates a new Contents repository.
      *
      * @author [이소정]
+     * @implNote 생성자 주입
      * @since 2020. 6. 19. 오후 6:15:29
      */
     public ContentsRepositoryImpl() {
@@ -48,6 +50,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @param pageRequest       the page request
      * @return the page
      * @author [이소정]
+     * @implNote 페이징 처리 된 콘텐츠 목록 조회
      * @since 2020. 6. 19. 오후 5:54:39
      */
     @Override
@@ -96,6 +99,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @param pageRequest the page request
      * @return the list
      * @author [이소정]
+     * @implNote 최근 콘텐츠 목록 조회
      * @since 2020. 7. 27. 오후 6:39:10
      */
     public List<ContentsResultDTO> findRecentContents(final String topMenuCode, final PageRequest pageRequest) {
@@ -139,6 +143,9 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      *
      * @param contentsSeq the contents seq
      * @return the list
+     * @author [이소정]
+     * @implNote 콘텐츠 메일 수신자 목록 조회
+     * @since 2020. 7. 30. 오후 3:40:06
      */
     @Override
     public List<ContentsUserEmailDTO> findAllContentsMailAuthUser(long contentsSeq) {

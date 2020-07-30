@@ -30,8 +30,8 @@ import java.util.Optional;
  * The Class Report controller.
  *
  * @author [이소정]
+ * @implNote 보고서 컨트롤러
  * @since 2020. 7. 7. 오후 2:37:43
- * @apiNote 보고서 컨트롤러
  */
 @Slf4j
 @RestController
@@ -42,6 +42,7 @@ public class ReportController {
 
     /**
      * 응답 서비스
+     *
      * @author [이소정]
      */
     private final ResponseService responseService;
@@ -49,6 +50,7 @@ public class ReportController {
 
     /**
      * The Report service
+     *
      * @author [이소정]
      */
     private final ReportService reportService;
@@ -74,9 +76,8 @@ public class ReportController {
      * @param authUserDTO     the auth user dto
      * @return the single result
      * @author [이소정]
-     * @implNote [method 설명]
+     * @implNote 보고서 목록 조회
      * @since 2020. 7. 29. 오후 6:47:30
-     * @apiNote 보고서 목록 조회
      */
     @ApiOperation(
         value = "보고서 목록 조회"
@@ -112,10 +113,11 @@ public class ReportController {
      * Save report single result.
      *
      * @param reportSaveDTO the report save dto
+     * @param authUserDTO   the auth user dto
      * @return the single result
      * @author [이소정]
+     * @implNote 보고서 등록
      * @since 2020. 7. 8. 오후 5:48:17
-     * @apiNote 보고서 등록
      */
     @ApiOperation(
             value = "보고서 등록"
@@ -137,8 +139,7 @@ public class ReportController {
      * @param reportSeq the report seq
      * @return the single result
      * @author [이소정]
-     * @implNote [method 설명]
-     * @apiNote 보고서 등록
+     * @implNote 보고서 상세조회
      * @since 2020. 7. 29. 오후 6:47:56
      */
     @ApiOperation(
@@ -157,10 +158,11 @@ public class ReportController {
      * Update report single result.
      *
      * @param reportUpdateDTO the report update dto
+     * @param reportSeq       the report seq
      * @return the single result
      * @author [이소정]
+     * @implNote 보고서 수정
      * @since 2020. 7. 9. 오후 6:18:36
-     * @apiNote 보고서 수정
      */
     @ApiOperation(value = "보고서 수정", notes = REQUEST_CHARACTER)
     @PutMapping(name = "보고서 수정", value = "/{reportSeq}"
@@ -179,8 +181,8 @@ public class ReportController {
      * @param reportSeq the report seq
      * @return the single result
      * @author [이소정]
+     * @implNote 보고서 삭제
      * @since 2020. 7. 9. 오후 6:18:40
-     * @apiNote 보고서 삭제
      */
     @ApiOperation(value="보고서 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "보고서 삭제", value = "/{reportSeq}"
@@ -197,8 +199,8 @@ public class ReportController {
      * @param authUserDTO the auth user dto
      * @return the single result
      * @author [오지훈]
+     * @implNote 그룹(권한) depth별 목록 조회
      * @since 2020. 7. 21. 오후 5:14:14
-     * @apiNote 그룹(권한) depth별 목록 조회
      */
     @ApiOperation(
             value = "보고서 그룹(권한) depth별 목록 조회"

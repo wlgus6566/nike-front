@@ -14,6 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The Class Report answer service.
+ *
+ * @author [이소정]
+ * @implNote 보고서 피드백 서비스
+ * @since 2020. 7. 30. 오후 2:52:51
+ */
 @Slf4j
 @Service
 @Transactional(readOnly = true)
@@ -33,8 +40,8 @@ public class ReportAnswerService {
      * @param reportSeq the report seq
      * @return the list
      * @author [이소정]
+     * @implNote 보고서 피드백 전체 목록 조회
      * @since 2020. 7. 10. 오후 6:48:57
-     * @implNote
      */
     public List<ReportAnswer> findAll(final Long reportSeq) {
         log.info("ReportAnswerService.findAll");
@@ -48,8 +55,8 @@ public class ReportAnswerService {
      * @param reportAnswerSaveDTO the report answer save dto
      * @return the report answer
      * @author [이소정]
+     * @implNote 보고서 피드백 저장
      * @since 2020. 7. 10. 오전 11:29:37
-     * @implNote
      */
     @Transactional
     public ReportAnswer save(final ReportAnswerSaveDTO reportAnswerSaveDTO) {
@@ -64,8 +71,8 @@ public class ReportAnswerService {
      * @param answerSeq the answer seq
      * @return the report answer
      * @author [이소정]
+     * @implNote 보고서 피드백 삭제
      * @since 2020. 7. 10. 오전 11:29:34
-     * @implNote
      */
     @Transactional
     public ReportAnswer delete(final Long answerSeq) {
@@ -81,6 +88,9 @@ public class ReportAnswerService {
      *
      * @param answerSeq the answer seq
      * @return the optional
+     * @author [이소정]
+     * @implNote 보고서 피드백 seq로 상세 조회
+     * @since 2020. 7. 30. 오후 2:52:41
      */
     public Optional<ReportAnswer> findById(final Long answerSeq) {
         return Optional.ofNullable(reportAnswerRepository.findById(answerSeq).orElseThrow((
