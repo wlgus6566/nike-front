@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,47 +65,55 @@ public class AgencyService {
      * Find by agency seq optional.
      *
      * @param agencySeq the agency seq
-     * @return the optional
+     * @return the agency
      * @author [이소정]
      * @since 2020. 7. 20. 오후 12:26:58
      * @implNote
      */
-    public Optional<Agency> findByAgencySeq(final Long agencySeq) {
-        return Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencySeq, "Y").orElseThrow(() ->
-                new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+    public Agency findByAgencySeq(final Long agencySeq) {
+        return this.findById(agencySeq).get();
     }
 
     /**
      * Update optional.
      *
      * @param agencyUpdateDTO the agency update dto
-     * @return the optional
+     * @return the agency
      * @author [이소정]
      * @since 2020. 7. 20. 오후 2:05:32
      * @implNote
      */
     @Transactional
-    public Optional<Agency> update(final AgencyUpdateDTO agencyUpdateDTO) {
-        final Optional<Agency> savedAgency = Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencyUpdateDTO.getAgencySeq(), "Y").orElseThrow(() ->
-                new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+    public Agency update(final AgencyUpdateDTO agencyUpdateDTO) {
+        Optional<Agency> savedAgency = this.findById(agencyUpdateDTO.getAgencySeq());
         savedAgency.ifPresent(value -> value.update(agencyUpdateDTO));
-        return savedAgency;
+        return savedAgency.get();
     }
 
     /**
      * Delete optional.
      *
      * @param agencySeq the agency seq
-     * @return the optional
+     * @return the agency
      * @author [이소정]
      * @since 2020. 7. 20. 오후 2:21:07
      * @implNote
      */
     @Transactional
-    public Optional<Agency> delete(final long agencySeq) {
-        final Optional<Agency> findAgency =Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencySeq, "Y").orElseThrow(() ->
-                new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+    public Agency delete(final long agencySeq) {
+        Optional<Agency> findAgency = this.findById(agencySeq);
         findAgency.ifPresent(value -> value.updateUseYn("N"));
-        return findAgency;
+        return findAgency.get();
+    }
+
+    /**
+     * Find by id optional.
+     *
+     * @param agencySeq the agency seq
+     * @return the optional
+     */
+    public Optional<Agency> findById(final Long agencySeq) {
+        return Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencySeq, "Y").orElseThrow(() ->
+                new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
     }
 }

@@ -2,7 +2,7 @@ import store from '@/store';
 import { postBasketSave, postBasketSaveList } from '@/api/basket';
 
 /**
- * 장바구니 상품 단건 추가
+ * 컨텐츠 장바구니 목록
  * @param {number} goodsSeq
  * @param {number} orderQuantity
  * @returns {Promise<void>}
@@ -20,7 +20,7 @@ const addProductBasket = async (goodsSeq, orderQuantity) => {
 };
 
 /**
- * 장바구니 상품 다건 추가
+ * 컨텐츠 장바구니 추가
  * @param {array} goodsSeqList
  * @param {array} orderQuantityList
  * @returns {Promise<void>}
@@ -38,7 +38,7 @@ const addBasketList = async (goodsSeqList, orderQuantityList) => {
 };
 
 /**
- * 장바구니 상품 단건 삭제
+ * 컨텐츠 장바구니 삭제
  * @param {number} goodsBasketSeq
  * @returns {Promise<void>}
  */

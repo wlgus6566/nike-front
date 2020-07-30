@@ -33,74 +33,67 @@
                                 <span class="label-title">총 예상 금액</span>
                             </div>
                             <div class="form-column">
-                                <span class="form-val">99,000,000 원</span>
+                                <span class="form-val">
+                                    <em>{{ totalPrice }}</em>
+                                    원
+                                </span>
                             </div>
                         </li>
                     </ul>
                     <hr class="hr-gray" />
                     <p class="form-desc">
-                        * VAT 및 운송비,기타,운용비는 제외된 금액입니다. (실제 세금계산서의 금액은
-                        다를 수 있습니다.)
+                        * VAT 및 운송비,기타,운용비는 제외된 금액입니다. (실제
+                        세금계산서의 금액은 다를 수 있습니다.)
                     </p>
                     <ul class="sheet-list">
-                        <li class="sheet-item">
+                        <li
+                            class="sheet-item"
+                            v-for="(item, index) in basketList"
+                            :key="index"
+                        >
                             <span class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                                <img
+                                    :src="item.product.imageFilePhysicalName"
+                                    :alt="item.product.imageFileName"
+                                />
                             </span>
                             <span class="info-box">
-                                <strong class="title"
-                                    >타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다
+                                <strong class="title">
+                                    {{ item.product.goodsName }}
                                 </strong>
-                                <p class="txt">설명입니다</p>
+                                <p class="txt">
+                                    {{ item.product.goodsDescription }}
+                                </p>
                                 <span class="desc-txt-box">
-                                    <p class="desc">에이젼시명</p>
+                                    <p class="desc">
+                                        {{ item.product.goodsName }}
+                                    </p>
                                 </span>
                             </span>
-                            <span class="quantity-txt"><em>1,000</em> 개</span>
-                        </li>
-                        <li class="sheet-item">
-                            <span class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
+                            <span class="quantity-txt">
+                                <em>{{ item.orderQuantity }}</em>
+                                개
                             </span>
-                            <span class="info-box">
-                                <strong class="title"
-                                    >타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다
-                                </strong>
-                                <p class="txt">설명입니다</p>
-                                <span class="desc-txt-box">
-                                    <p class="desc">에이젼시명</p>
-                                </span>
-                            </span>
-                            <span class="quantity-txt"><em>1,000</em> 개</span>
-                        </li>
-                        <li class="sheet-item">
-                            <span class="thumbnail">
-                                <img src="@/assets/images/img-asset-none@2x.png" alt="" />
-                            </span>
-                            <span class="info-box">
-                                <strong class="title"
-                                    >타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다타이틀입니다
-                                </strong>
-                                <p class="txt">설명입니다</p>
-                                <span class="desc-txt-box">
-                                    <p class="desc">에이젼시명</p>
-                                </span>
-                            </span>
-                            <span class="quantity-txt"><em>1,000</em> 개</span>
                         </li>
                     </ul>
                     <h3 class="sub-title">COMMENT</h3>
                     <div class="mt10">
                         <span class="textarea">
-                            <textarea cols="100" rows="2" style="height: 80px;"></textarea>
+                            <textarea
+                                cols="100"
+                                rows="2"
+                                style="height: 80px;"
+                            ></textarea>
                         </span>
                     </div>
                     <p class="form-desc-red">
-                        * 업무상 필요한 정보 외의 개인 연락처 정보를 기재하지 않도록 주의하시기
-                        바랍니다.
+                        * 업무상 필요한 정보 외의 개인 연락처 정보를 기재하지
+                        않도록 주의하시기 바랍니다.
                     </p>
                     <div class="btn-area">
-                        <button type="button" class="btn-s-black"><span>주문서 발송</span></button>
+                        <button type="button" class="btn-s-black">
+                            <span>주문서 발송</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -116,21 +109,8 @@
 
 <script>
 export default {
-    props: {
-        visible: Boolean,
-        receipt: Object,
-    },
-
-    methods: {
-        removeBodyClass(className) {
-            const body = document.body;
-            body.classList.remove(className);
-        },
-        print() {
-            this.removeBodyClass('print-detail');
-            window.print();
-        },
-    },
+    props: ['visible', 'receipt', 'basketList', 'totalPrice'],
+    methods: {},
 };
 </script>
 <style>

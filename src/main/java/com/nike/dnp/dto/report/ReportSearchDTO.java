@@ -7,11 +7,11 @@ import lombok.*;
 import java.util.List;
 
 /**
- * The Class Report search dto.
+ * The Class Report Search dto.
  *
- * @author [오지훈]
- * @since 2020. 7. 21. 오후 3:55:43
- * @implNote
+ * @author [이소정]
+ * @since 2020. 7. 29. 오후 6:56:23
+ * @implNote 보고서 조회 DTO
  */
 @Getter
 @Setter

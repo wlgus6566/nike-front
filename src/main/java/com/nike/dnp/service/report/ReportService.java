@@ -1,20 +1,29 @@
 package com.nike.dnp.service.report;
 
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.auth.AuthUserDTO;
+import com.nike.dnp.dto.contents.ContentsFileUpdateDTO;
+import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.report.*;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
+import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.entity.user.UserAuth;
+import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.report.ReportFileRepository;
 import com.nike.dnp.repository.report.ReportRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
 import com.nike.dnp.service.alarm.AlarmService;
 import com.nike.dnp.service.auth.AuthService;
+import com.nike.dnp.service.contents.ContentsService;
 import com.nike.dnp.service.history.HistoryService;
 import com.nike.dnp.service.user.UserContentsService;
+import com.nike.dnp.util.ImageUtil;
+import com.nike.dnp.util.MessageUtil;
+import com.nike.dnp.util.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -98,14 +107,14 @@ public class ReportService {
     public Page<Report> findAllPaging(final AuthUserDTO authUserDTO, final ReportSearchDTO reportSearchDTO) {
 
         // 권한 검색 조건
-        final List<Long> authSeqList = new ArrayList<>();
-        if (ObjectUtils.isEmpty(reportSearchDTO.getGroupSeq())) {
-            final List<AuthReturnDTO> authList = authService.findByAuthDepth(authUserDTO.getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString());
-            for (final AuthReturnDTO authReturnDTO : authList) {
+        List<Long> authSeqList = new ArrayList<>();
+        if (null != reportSearchDTO.getGroupSeq()) {
+            authSeqList.add(reportSearchDTO.getGroupSeq());
+        } else {
+            List<AuthReturnDTO> authList = authService.findByAuthDepth(authUserDTO.getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString());
+            for (AuthReturnDTO authReturnDTO : authList) {
                 authSeqList.add(authReturnDTO.getAuthSeq());
             }
-        } else {
-            authSeqList.add(reportSearchDTO.getGroupSeq());
         }
         reportSearchDTO.setAuthSeqList(authSeqList);
 
@@ -131,12 +140,22 @@ public class ReportService {
     public Report save(final AuthUserDTO authUserDTO, final ReportSaveDTO reportSaveDTO) {
         log.info("ReportService.save");
         reportSaveDTO.setAuthSeq(authUserDTO.getAuthSeq());
+
+        // 썸네일 base64 -> file 정보로 변환
+        if (!ObjectUtils.isEmpty(reportSaveDTO.getImageBase64())) {
+            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.REPORT.getFolder(), reportSaveDTO.getImageBase64());
+
+            reportSaveDTO.setImageFileName(fileResultDTO.getFileName());
+            reportSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
+            reportSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
+        }
+
         final Report savedReport = reportRepository.save(new Report().save(reportSaveDTO));
-        final List<ReportFile> reportFileList = new ArrayList<>();
+        List<ReportFile> reportFileList = new ArrayList<>();
 
         if (!reportSaveDTO.getReportFileSaveDTOList().isEmpty()) {
-            for (final ReportFileSaveDTO reportFileSaveDTO : reportSaveDTO.getReportFileSaveDTOList()) {
-                final ReportFile savedReportFile = reportFileRepository.save(new ReportFile().save(savedReport.getReportSeq(), reportFileSaveDTO));
+            for (ReportFileSaveDTO reportFileSaveDTO : reportSaveDTO.getReportFileSaveDTOList()) {
+                ReportFile savedReportFile = reportFileRepository.save(new ReportFile().save(savedReport.getReportSeq(), reportFileSaveDTO));
                 reportFileList.add(savedReportFile);
             }
         }
@@ -158,6 +177,37 @@ public class ReportService {
     }
 
     /**
+     * Temp to real path file move string.
+     *
+     * @param filePhysicalName the file physical name
+     * @return the string
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 28. 오후 3:59:37
+     */
+    public String fileMoveTempToRealPath(final String filePhysicalName) {
+        String imgPath = filePhysicalName;
+        if (null  != filePhysicalName) {
+            imgPath = S3Util.fileCopyAndOldFileDelete(filePhysicalName, ServiceCode.FileFolderEnumCode.REPORT.getFolder());
+        }
+        return imgPath;
+    }
+
+    /**
+     * S 3 file copy update report file save dto.
+     *
+     * @param reportFileSaveDTO the report file save dto
+     * @return the report file save dto
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 28. 오후 5:21:39
+     */
+    public ReportFileSaveDTO s3FileCopyUpdate(final ReportFileSaveDTO reportFileSaveDTO) {
+        reportFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getFilePhysicalName()));
+        reportFileSaveDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getThumbnailFilePhysicalName()));
+        reportFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getThumbnailFilePhysicalName()));
+        return reportFileSaveDTO;
+    }
+
+    /**
      * Find by report seq report.
      *
      * @param reportSeq the report seq
@@ -168,7 +218,7 @@ public class ReportService {
      */
     @Transactional
     public Report findByReportSeq(final Long reportSeq) {
-        final Report findReport = reportRepository.findByReportSeq(reportSeq);
+        Report findReport = reportRepository.findByReportSeq(reportSeq);
         findReport.updateReadCount(findReport.getReadCount());
 
         // history 저장
@@ -178,50 +228,76 @@ public class ReportService {
     }
 
     /**
+     * Find by id optional.
+     *
+     * @param reportSeq the report seq
+     * @return the optional
+     */
+    public Optional<Report> findById(final Long reportSeq) {
+        return Optional.ofNullable(reportRepository.findById(reportSeq).orElseThrow(
+                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+    }
+
+    /**
      * Update optional.
      *
      * @param reportUpdateDTO the report update dto
      * @return the optional
      * @author [이소정]
-     * @since 2020. 7. 9. 오후 6:49:17
-     * @implNote
+     * @CreatedOn 2020. 7. 9. 오후 6:49:17
+     * @Description
      */
     @Transactional
-    public Optional<Report> update(final Long reportSeq, final ReportUpdateDTO reportUpdateDTO) {
+    public Report update(final ReportUpdateDTO reportUpdateDTO) {
         log.info("reportService.update");
-        reportUpdateDTO.setReportSeq(reportSeq);
+        final Optional<Report> report = this.findById(reportUpdateDTO.getReportSeq());
 
-        final Optional<Report> report = reportRepository.findById(reportUpdateDTO.getReportSeq());
+        // 썸네일 base64 -> file 정보로 변환
+        if (!ObjectUtils.isEmpty(reportUpdateDTO.getImageBase64())) {
+            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.REPORT.getFolder(), reportUpdateDTO.getImageBase64());
+
+            reportUpdateDTO.setImageFileName(fileResultDTO.getFileName());
+            reportUpdateDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
+            reportUpdateDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
+        }
+
+
         report.ifPresent(value -> value.update(reportUpdateDTO));
 
         final List<ReportFile> beforeFileList = reportFileRepository.findByReportSeqAndUseYn(reportUpdateDTO.getReportSeq(), "Y");
-        final List<ReportFileUpdateDTO> newFileList = reportUpdateDTO.getReportFileUpdateDTOList();
+        final List<ReportFile> lastBeforeFileList = reportFileRepository.findByReportSeqAndUseYn(reportUpdateDTO.getReportSeq(), "Y");
+        List<ReportFileUpdateDTO> newFileList = reportUpdateDTO.getReportFileUpdateDTOList();
 
         if (!beforeFileList.isEmpty() && !newFileList.isEmpty()) {
-            for (final ReportFile beforeFile : beforeFileList) {
-                for (final ReportFileUpdateDTO newFile : newFileList) {
+            for (ReportFile beforeFile : beforeFileList) {
+                for (ReportFileUpdateDTO newFile : newFileList) {
                     if (beforeFile.getReportFileSeq() == newFile.getReportFileSeq()) {
-                        beforeFileList.remove(beforeFile);
+                        lastBeforeFileList.remove(beforeFile);
                     }
                 }
             }
         }
 
         if (!newFileList.isEmpty()) {
-            for (final ReportFileUpdateDTO reportFileUpdateDTO : newFileList) {
-                final Long contentsFileSeq = reportFileUpdateDTO.getReportFileSeq();
-                final ReportFile saveReportFile = new ReportFile().updateNewFile(report.get().getReportSeq(), reportFileUpdateDTO);
-                if (ObjectUtils.isEmpty(contentsFileSeq)) {
-                    reportFileRepository.save(saveReportFile);
-                } else {
-                    final Optional<ReportFile> reportFile = reportFileRepository.findById(reportFileUpdateDTO.getReportFileSeq());
+            for (ReportFileUpdateDTO reportFileUpdateDTO : newFileList) {
+                Long reportFileSeq = null != reportFileUpdateDTO.getReportFileSeq() ? reportFileUpdateDTO.getReportFileSeq() : 0l;
+                final Optional<ReportFile> reportFile = reportFileRepository.findById(reportFileSeq);
+
+                this.s3FileCopyUpdate(reportFileUpdateDTO);
+                ReportFile saveReportFile = reportFile.orElse(
+                        new ReportFile().updateNewFile(report.get().getReportSeq(), reportFileUpdateDTO)
+                );
+
+                if (0l != reportFileSeq) {
                     reportFile.ifPresent(value -> value.update(reportFileUpdateDTO));
+                } else {
+                    reportFileRepository.save(saveReportFile);
                 }
             }
         }
 
-        if (!beforeFileList.isEmpty()) {
-            for (final ReportFile reportFile : beforeFileList) {
+        if (!lastBeforeFileList.isEmpty()) {
+            for (ReportFile reportFile : lastBeforeFileList) {
                 reportFile.updateUseYn("N");
             }
         }
@@ -231,14 +307,29 @@ public class ReportService {
                 ServiceCode.AlarmActionEnumCode.UPDATE.toString()
                 , ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString()
                 , null
-                , reportSeq
+                , reportUpdateDTO.getReportSeq()
                 , this.findAllAuthUser());
 
-        return report;
+        return report.get();
     }
 
     /**
-     * Find all auth user list.
+     * S 3 file copy update contents file save dto.
+     *
+     * @param reportFileUpdateDTO the report file update dto
+     * @return the contents file save dto
+     * @author [이소정]
+     * @CreatedOn 2020. 7. 28. 오후 4:05:42
+     */
+    public ReportFileUpdateDTO s3FileCopyUpdate(final ReportFileUpdateDTO reportFileUpdateDTO) {
+        reportFileUpdateDTO.setFilePhysicalName(this.fileMoveTempToRealPath(reportFileUpdateDTO.getFilePhysicalName()));
+        reportFileUpdateDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileUpdateDTO.getThumbnailFilePhysicalName()));
+        reportFileUpdateDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileUpdateDTO.getThumbnailFilePhysicalName()));
+        return reportFileUpdateDTO;
+    }
+
+    /**
+     * 보고서 상세 권한 있는 그룹의 회원 목록
      *
      * @return the list
      * @author [이소정]
@@ -246,15 +337,16 @@ public class ReportService {
      * @implNote 보고서 상세 권한 있는 그룹의 회원 목록
      */
     public List<Long> findAllAuthUser() {
-        final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
+        UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
         userContentsSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
         userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
-        final List<AuthReturnDTO> authList = userContentsService.getAuthList(userContentsSearchDTO);
-        final List<Long> userSeqList  = new ArrayList<>();
-        for (final AuthReturnDTO authReturnDTO : authList) {
+        List<AuthReturnDTO> authList = userContentsService.getAuthList(userContentsSearchDTO);
+
+        List<Long> userSeqList  = new ArrayList<>();
+        for (AuthReturnDTO authReturnDTO : authList) {
             // authSeq 를 가지고 userSeq 목록 가져오기
-            final List<UserAuth> userAuthList = userAuthRepository.findAllByAuthSeq(authReturnDTO.getAuthSeq());
-            for (final UserAuth userAuth : userAuthList) {
+            List<UserAuth> userAuthList = userAuthRepository.findAllByAuthSeq(authReturnDTO.getAuthSeq());
+            for (UserAuth userAuth : userAuthList) {
                 userSeqList.add(userAuth.getUserSeq());
             }
         }
@@ -272,17 +364,18 @@ public class ReportService {
      * @implNote
      */
     @Transactional
-    public Optional<Report> delete(final Long reportSeq) {
-        final Optional<Report> report = reportRepository.findById(reportSeq);
+    public Report delete(final Long reportSeq) {
+        Optional<Report> report = this.findById(reportSeq);
+        Report savedReport = report.get();
         report.ifPresent(value -> value.updateUseYn("N"));
 
-        if (!report.get().getReportFileList().isEmpty()) {
-            for (final ReportFile reportFile : report.get().getReportFileList()) {
+        if (!savedReport.getReportFileList().isEmpty()) {
+            for (ReportFile reportFile : savedReport.getReportFileList()) {
                 reportFile.updateUseYn("N");
             }
         }
 
-        return report;
+        return savedReport;
     }
 
 }

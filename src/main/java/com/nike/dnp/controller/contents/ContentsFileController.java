@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author [이소정]
  * @since 2020. 7. 13. 오후 5:42:24
+ * @apiNote 컨텐츠 파일 컨트롤러
  */
 @Slf4j
 @RestController
@@ -62,6 +63,7 @@ public class ContentsFileController {
      * @return the all contents file
      * @author [이소정]
      * @since 2020. 7. 13. 오후 6:23:50
+     * @apiNote 컨텐츠 파일 목록 조회
      */
     @ApiOperation(
         value = "컨텐츠 파일 목록 조회"

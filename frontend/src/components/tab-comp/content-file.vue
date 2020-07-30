@@ -1,8 +1,8 @@
 <template>
     <div class="aside-file">
-        <div>
-            <ul class="file-list">
-                <!-- <li class="no-data">
+        <button @click="getContBasket2()">123</button>
+        <ul class="file-list" v-if="contBasketList">
+            <!-- <li class="no-data">
 					<i class="icon-file"></i>
 					<p class="txt">더욱 빠르게 파일 받기</p>
 					<p class="desc">
@@ -10,64 +10,85 @@
 						다운받을 수 있어요.
 					</p>
 				</li>-->
-                <li>
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    <button type="button" class="btn-sel">
-                        <span>삭제</span>
-                    </button>
-                </li>
+            <li v-for="item in contBasketList" :key="item.contentsFileSeq">
+                <img :src="item.filePhysicalName" alt="" />
+                <button type="button" class="btn-del">
+                    <span>삭제</span>
+                </button>
+            </li>
+        </ul>
+        <button type="button" class="btn-download">
+            <span class="gage" style="width: 50%;"></span>
+            <span class="txt" style="display: none;">DOWNLOAD</span>
+            <span class="txt">DOWNLOAD...</span>
+        </button>
 
-                <li>
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    <button type="button" class="btn-sel">
-                        <span>삭제</span>
-                    </button>
-                </li>
-                <li>
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    <button type="button" class="btn-sel">
-                        <span>삭제</span>
-                    </button>
-                </li>
-                <li>
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    <button type="button" class="btn-sel">
-                        <span>삭제</span>
-                    </button>
-                </li>
-                <li>
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    <button type="button" class="btn-sel">
-                        <span>삭제</span>
-                    </button>
-                </li>
-                <li>
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    <button type="button" class="btn-sel">
-                        <span>삭제</span>
-                    </button>
-                </li>
-                <li>
-                    <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    <button type="button" class="btn-sel">
-                        <span>삭제</span>
-                    </button>
-                </li>
-            </ul>
-            <button type="button" class="btn-sown">
-                <span class="gage" style="width: 50%;"></span>
-                <span class="txt" style="display: none;">DOWNLOAD</span>
-                <span class="txt">DOWNLOAD...</span>
-            </button>
-        </div>
+        <strong class="tab-title">HISTORY</strong>
+        <TabComponent v-bind:tabMenus="historyTab"></TabComponent>
     </div>
 </template>
 <script>
+import TabComponent from '@/components/tab-comp';
+
 export default {
     name: 'FileItem',
+    data() {
+        return {
+            historyTab: {
+                tabClass: 'tab-list-sm',
+                tabList: [
+                    {
+                        title: 'ASSET',
+                        component: 'ContentAsset',
+                    },
+                    {
+                        title: 'TOOLKIT',
+                        component: 'ContentTooKit',
+                    },
+                    {
+                        title: 'FOUNDATION',
+                        component: 'ContentFoundation',
+                    },
+                ],
+            },
+            contBasketList: null,
+        };
+    },
+    computed: {
+        /* contBasketList() {
+            return this.$store.state.contBasketList;
+        },*/
+    },
+    mounted() {
+        this.getContBasket2();
+    },
+    methods: {
+        async getContBasket2() {
+            try {
+                const test = await this.$store.dispatch('getContBasket');
+                this.contBasketList = test;
+                console.log(test);
+            } catch (e) {
+                console.log(e);
+            }
+        },
+    },
+    components: {
+        TabComponent,
+    },
 };
 </script>
 <style scoped>
+.tab-title {
+    display: block;
+    margin-top: 40px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: #000;
+}
 .file-list {
     display: flex;
     flex-wrap: wrap;
@@ -101,7 +122,7 @@ export default {
     top: 0;
     left: 0;
 }
-.file-list li .btn-sel {
+.file-list li .btn-del {
     position: absolute;
     top: 0;
     right: 0;
@@ -109,9 +130,10 @@ export default {
     width: 20px;
     height: 20px;
     border-radius: 0;
-    background: url(../../assets/images/svg/icon-close-white-small.svg) no-repeat center;
+    background: url(../../assets/images/svg/icon-close-white-small.svg)
+        no-repeat center;
 }
-.file-list li .btn-sel span {
+.file-list li .btn-del span {
     display: block;
     text-indent: -9999999px;
     overflow: hidden;
@@ -119,7 +141,7 @@ export default {
 .file-list li img {
     vertical-align: top;
 }
-.btn-sown {
+.btn-download {
     position: relative;
     display: flex;
     width: 100%;
@@ -131,7 +153,7 @@ export default {
     color: #fff;
     background: #ccc;
 }
-.btn-sown .gage {
+.btn-download .gage {
     position: absolute;
     top: 0;
     left: 0;
@@ -140,12 +162,12 @@ export default {
     height: 100%;
     background: #fa5400;
 }
-.btn-sown .txt {
+.btn-download .txt {
     position: relative;
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 0.58px;
 }
-.btn-sown:disabled .gage {
+.btn-download:disabled .gage {
     width: 0;
 }
 .flag-box .flag {

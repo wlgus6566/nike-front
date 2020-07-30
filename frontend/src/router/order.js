@@ -20,7 +20,11 @@ const routes = [
             {
                 path: 'complete',
                 component: pages('product/complete'),
-                meta: { layout: 'Default', aside: 'Order', title: '주문완료 안내' },
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    title: '주문완료 안내',
+                },
             },
             {
                 path: 'subsidiary',
@@ -95,6 +99,17 @@ const routes = [
                         },
                     },
                     {
+                        path: 'nike-golf',
+                        component: pages('product/product-list'),
+                        meta: {
+                            layout: 'Default',
+                            aside: 'Order',
+                            category2Code: 'SUBSIDIARY',
+                            category3Code: 'SUBSIDIARY26',
+                            title: '나이키 골프',
+                        },
+                    },
+                    {
                         path: 'open-package/:id',
                         component: pages('order/order-view'),
                         meta: {
@@ -110,7 +125,11 @@ const routes = [
             {
                 path: 'niki-by-you',
                 component: pages('root'),
-                meta: { layout: 'Default', aside: 'Order', title: 'Niki By You' },
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    title: 'Niki By You',
+                },
                 redirect: '/order/niki-by-you/shoes',
                 children: [
                     {
