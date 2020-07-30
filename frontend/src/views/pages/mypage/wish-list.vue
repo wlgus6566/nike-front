@@ -1,7 +1,5 @@
 <template>
     <div>
-        checkWishItem : {{ checkWishItem }}<br />
-        deleteLoading : {{ deleteLoading }}
         <h2 class="page-title">
             <span class="ko">위시리스트</span>
         </h2>
@@ -9,33 +7,20 @@
             <!-- todo 전체선택 스크립트 작업 필요  -->
             <label class="check-label">
                 <span class="checkbox">
-                    <input
-                        type="checkbox"
-                        v-model="checkAll"
-                        v-on:change="allCheckFn"
-                    />
+                    <input type="checkbox" v-model="checkAll" v-on:change="allCheckFn" />
                     <span></span>
                 </span>
                 <strong class="txt">전체선택</strong>
             </label>
             <p class="desc">
-                <em>{{ checkWishItem.length }}</em
-                >개의 파일이 선택됨
+                <em>{{ checkWishItem.length }}</em>개의 파일이 선택됨
             </p>
             <div class="btn-box">
-                <button
-                    type="button"
-                    class="btn-s-lightgray-sm"
-                    @click="checkedWishBasket"
-                >
+                <button type="button" class="btn-s-lightgray-sm" @click="checkedWishBasket">
                     <i class="icon-cart"></i>
                     <span>선택 CART 담기</span>
                 </button>
-                <button
-                    type="button"
-                    class="btn-s-lightgray-sm"
-                    @click="checkedWishDelete"
-                >
+                <button type="button" class="btn-s-lightgray-sm" @click="checkedWishDelete">
                     <i class="icon-del"></i>
                     <span>선택삭제</span>
                 </button>
@@ -87,7 +72,6 @@ export default {
         };
     },
     activated() {
-        console.log('test');
         this.fetchData(true);
     },
     methods: {
@@ -178,8 +162,6 @@ export default {
         },
         addBasket(item) {
             if (confirm('CART에 담으시겠습니까?')) {
-                console.log('담을거야');
-                //장바구니 담기
                 addProductBasket(
                     item.goodsSeq,
                     item.product.minimumOrderQuantity
@@ -195,7 +177,6 @@ export default {
                 this.wishListData.forEach(el => {
                     const indexOfChecked = this.checkWishItem.findIndex(
                         item => {
-                            console.log(item, el.wishListSeq);
                             return item === el.wishListSeq;
                         }
                     );
