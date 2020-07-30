@@ -15,6 +15,7 @@ import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.entity.user.UserContents;
+import com.nike.dnp.entity.wishlist.WishList;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
@@ -35,6 +36,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -299,7 +303,7 @@ public class ContentsService {
      */
     @Transactional
     public Contents update(final ContentsUpdateDTO contentsUpdateDTO) {
-        log.info("contentsService.update");
+        log.info("ContentsService.update");
         Optional<Contents> contents = this.findById(contentsUpdateDTO.getContentsSeq());
         Contents savedContents = contents.get();
 
@@ -385,7 +389,7 @@ public class ContentsService {
      */
     @Transactional
     public Contents delete(final Long contentsSeq) {
-        log.info("contentsService.delete");
+        log.info("ContentsService.delete");
 
         Optional<Contents> contents = this.findById(contentsSeq);
         contents.ifPresent(value -> value.delete());
@@ -430,7 +434,7 @@ public class ContentsService {
      * @since 2020. 7. 30. 오후 12:01:26
      */
     public Optional<Contents> findById(final Long contentsSeq) {
-        log.info("UserService.findById");
+        log.info("ContentsService.findById");
         return Optional.ofNullable(contentsRepository.findById(contentsSeq).orElseThrow(
                 () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
     }
@@ -486,4 +490,23 @@ public class ContentsService {
         }
 
     }
+
+    /**
+     * Delete contents.
+     * 수정일 기준 일정기간 이전 콘텐츠 삭제 - 배치용
+     *
+     * @param beforeDate  the before date
+     * @param topMenuCode the top menu code
+     * @author [이소정]
+     * @implNote 수정일 기준 일정기간 이전 콘텐츠 삭제 - 배치용
+     * @since 2020. 7. 30. 오후 6:29:17
+     */
+    @Transactional
+    public void deleteContents(final LocalDateTime beforeDate, final String topMenuCode) {
+        log.info("ContentsService.deleteContents");
+        final List<Contents> contentsList
+                = contentsRepository.findByUpdateDtBeforeAndTopMenuCode(beforeDate, topMenuCode);
+        contentsRepository.deleteAll(contentsList);
+    }
+
 }

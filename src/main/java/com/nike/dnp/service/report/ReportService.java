@@ -1,5 +1,6 @@
 package com.nike.dnp.service.report;
 
+import com.google.firebase.database.core.Repo;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
@@ -9,6 +10,7 @@ import com.nike.dnp.dto.contents.ContentsFileUpdateDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.report.*;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
+import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportFile;
@@ -35,6 +37,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -391,6 +394,23 @@ public class ReportService {
         }
 
         return savedReport;
+    }
+
+    /**
+     * Delete report.
+     * 수정일 기준 일정기간 이전 보고서 삭제 - 배치용
+     *
+     * @param beforeDate  the before date
+     * @author [이소정]
+     * @implNote 수정일 기준 일정기간 이전 보고서 삭제 - 배치용
+     * @since 2020. 7. 30. 오후 6:29:17
+     */
+    @Transactional
+    public void deleteReport(final LocalDateTime beforeDate) {
+        log.info("ReportService.deleteContents");
+        final List<Report> reportList
+                = reportRepository.findByUpdateDtBefore(beforeDate);
+        reportRepository.deleteAll(reportList);
     }
 
 }

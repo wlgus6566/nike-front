@@ -71,6 +71,7 @@ public class ReportBasketService {
      */
     @Transactional
     public List<ReportBasket> save(final List<Long> reportFileSeqList) {
+        log.info("ReportBasketService.save");
         List<ReportBasket> reportBasketList = new ArrayList<>();
         for (Long reportFileSeq : reportFileSeqList) {
             Optional<ReportFile> reportFile = reportFileRepository.findById(reportFileSeq);
@@ -94,6 +95,7 @@ public class ReportBasketService {
      */
     @Transactional
     public ReportBasket delete(final Long reportBasketSeq) {
+        log.info("ReportBasketService.delete");
         Optional<ReportBasket> reportBasket = this.findById(reportBasketSeq);
         ReportBasket savedReportBasket = reportBasket.get();
         reportBasketRepository.delete(savedReportBasket);
@@ -110,9 +112,23 @@ public class ReportBasketService {
      * @since 2020. 7. 30. 오후 2:56:21
      */
     public Optional<ReportBasket> findById(final Long reportBasketSeq) {
+        log.info("ReportBasketService.findById");
         return Optional.ofNullable(reportBasketRepository.findById(reportBasketSeq).orElseThrow(() -> new CodeMessageHandleException(
                         FailCode.ExceptionError.NOT_FOUND.name() , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()
         ))));
+    }
+
+    /**
+     * Delete all.
+     *
+     * @author [이소정]
+     * @implNote 보고서 장바구니 전체 삭제 - 배치용
+     * @since 2020. 7. 30. 오후 5:44:43
+     */
+    @Transactional
+    public void deleteAll() {
+        log.info("ReportBasketService.deleteAll");
+        reportBasketRepository.deleteAll();
     }
 
 }

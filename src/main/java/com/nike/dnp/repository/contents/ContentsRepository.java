@@ -4,6 +4,8 @@ import com.nike.dnp.entity.contents.Contents;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,4 +31,16 @@ public interface ContentsRepository extends JpaRepository<Contents, Long>, Conte
      * @since 2020. 6. 19. 오후 5:57:43
      */
     Optional<Contents> findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(Long contentsSeq, String topMenuCode, String menuCode, String useYn);
+
+    /**
+     * Find by update dt before list.
+     *
+     * @param searchDateTime 검색 일시
+     * @param topMenuCode    최상단 메뉴 코드(ASSET/TOOLKIT/FOUNDATION)
+     * @return the list
+     * @author [이소정]
+     * @implNote 특정 일시 이전 콘텐츠 목록 조회
+     * @since 2020. 7. 30. 오후 5:59:03
+     */
+    List<Contents> findByUpdateDtBeforeAndTopMenuCode(LocalDateTime searchDateTime, String topMenuCode);
 }

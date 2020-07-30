@@ -96,7 +96,6 @@ public class ContentsBasketService {
         );
     }
 
-
     /**
      * Delete.
      *
@@ -113,5 +112,18 @@ public class ContentsBasketService {
         final ContentsBasket savedContentsBasket = contentsBasket.get();
         contentsBasketRepository.delete(savedContentsBasket);
         return savedContentsBasket;
+    }
+
+    /**
+     * Delete all.
+     *
+     * @author [이소정]
+     * @implNote 콘텐츠 장바구니 전체 삭제 - 배치용
+     * @since 2020. 7. 30. 오후 5:44:43
+     */
+    @Transactional
+    public void deleteAll() {
+        log.info("ContentsBasketService.deleteAll");
+        contentsBasketRepository.deleteAll();
     }
 }
