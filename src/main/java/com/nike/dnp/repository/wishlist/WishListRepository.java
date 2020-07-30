@@ -41,4 +41,13 @@ public interface WishListRepository extends JpaRepository<WishList, Long> ,WishL
 	 * @implNote
 	 */
 	List<WishList> findByRegistrationDtBefore(LocalDateTime searchDt);
+
+	/**
+	 * 제품 시퀀스로 위시 리스트 삭제
+	 *
+	 * @param goodsSeq the goods seq
+	 * @author [윤태호]
+	 * @since 2020. 7. 30. 오후 12:00:20
+	 */
+	void deleteByGoodsSeq(Long goodsSeq);
 }
