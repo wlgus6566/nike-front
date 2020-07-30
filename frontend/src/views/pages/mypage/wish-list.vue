@@ -1,7 +1,5 @@
 <template>
     <div>
-        checkWishItem : {{ checkWishItem }}<br />
-        deleteLoading : {{ deleteLoading }}
         <h2 class="page-title">
             <span class="ko">위시리스트</span>
         </h2>
@@ -9,29 +7,20 @@
             <!-- todo 전체선택 스크립트 작업 필요  -->
             <label class="check-label">
                 <span class="checkbox">
-                    <input
-                        type="checkbox"
-                        v-model="checkAll"
-                        v-on:change="allCheckFn"
-                    />
+                    <input type="checkbox" v-model="checkAll" v-on:change="allCheckFn" />
                     <span></span>
                 </span>
                 <strong class="txt">전체선택</strong>
             </label>
             <p class="desc">
-                <em>{{ checkWishItem.length }}</em
-                >개의 파일이 선택됨
+                <em>{{ checkWishItem.length }}</em>개의 파일이 선택됨
             </p>
             <div class="btn-box">
-                <button type="button" class="btn-s-lightgray-sm">
+                <button type="button" class="btn-s-lightgray-sm" @click="checkedWishBasket">
                     <i class="icon-cart"></i>
                     <span>선택 CART 담기</span>
                 </button>
-                <button
-                    type="button"
-                    class="btn-s-lightgray-sm"
-                    @click="checkedWishDelete"
-                >
+                <button type="button" class="btn-s-lightgray-sm" @click="checkedWishDelete">
                     <i class="icon-del"></i>
                     <span>선택삭제</span>
                 </button>
@@ -44,6 +33,7 @@
             :listData="wishListData"
             :checkWishItem="checkWishItem"
             :deleteLoading="deleteLoading"
+            @addBasket="addBasket"
             @wishDelete="wishDelete"
             @checkedWish="checkedWish"
         />
@@ -53,9 +43,15 @@
 </template>
 
 <script>
-    import {deleteWishList, deleteWishListCheck, getWishList,} from '@/api/wish-list';
+import {
+    deleteWishList,
+    deleteWishListCheck,
+    getWishList,
+} from '@/api/wish-list';
+// import { postBasketSaveList } from '@/api/basket';
+import { addProductBasket, addBasketList } from '@/utils/basket';
 
-    export default {
+export default {
     name: 'wish-list',
     components: {
         WishList: () => import('@/components/wish-list/index'),
@@ -71,22 +67,22 @@
             checkAll: false,
             checkWishItem: [],
             deleteLoading: [],
+            basketList: [],
             //check: this.items.state,
         };
     },
     activated() {
-        console.log('test');
         this.fetchData(true);
     },
     methods: {
         checkedWish(seq, del) {
             const indexOfChecked = this.checkWishItem.findIndex(
-                (el) => el === seq
+                el => el === seq
             );
             if (!del && indexOfChecked === -1) {
                 this.checkWishItem.push(seq);
             } else {
-                this.checkWishItem = this.checkWishItem.filter((el) => {
+                this.checkWishItem = this.checkWishItem.filter(el => {
                     return el !== seq;
                 });
             }
@@ -95,9 +91,9 @@
         },
         allCheckFn() {
             if (this.checkAll) {
-                this.wishListData.forEach((el) => {
+                this.wishListData.forEach(el => {
                     const indexOfChecked = this.checkWishItem.findIndex(
-                        (elChecked) => elChecked === el.wishListSeq
+                        elChecked => elChecked === el.wishListSeq
                     );
                     if (indexOfChecked === -1) {
                         this.checkWishItem.push(el.wishListSeq);
@@ -117,7 +113,7 @@
                     wishListSeqList: this.checkWishItem,
                 });
                 await this.fetchData();
-                this.checkWishItem.forEach((seq) => {
+                this.checkWishItem.forEach(seq => {
                     this.checkedWish(seq, true);
                 });
                 this.deleteLoading = [];
@@ -161,6 +157,42 @@
                 console.log(error);
             }
         },
+        routeBasket() {
+            //장바구니 페이지 이동
+        },
+        addBasket(item) {
+            if (confirm('CART에 담으시겠습니까?')) {
+                addProductBasket(
+                    item.goodsSeq,
+                    item.product.minimumOrderQuantity
+                );
+            } else {
+                return false;
+            }
+        },
+        checkedWishBasket() {
+            if (confirm('CART에 담으시겠습니까?')) {
+                const goodsSeq = [];
+                const minimumOrder = [];
+                this.wishListData.forEach(el => {
+                    const indexOfChecked = this.checkWishItem.findIndex(
+                        item => {
+                            return item === el.wishListSeq;
+                        }
+                    );
+                    if (indexOfChecked !== -1) {
+                        goodsSeq.push(el.goodsSeq);
+                        minimumOrder.push(el.product.minimumOrderQuantity);
+                    }
+                });
+                addBasketList(goodsSeq, minimumOrder);
+            } else {
+                return false;
+            }
+        },
+    },
+    created() {
+        this.$store.dispatch('basketList');
     },
 };
 </script>

@@ -40,5 +40,12 @@ public interface GoodsBasketRepository extends JpaRepository<GoodsBasket,Long> {
 	List<GoodsBasket> findByUserSeqOrderByGoodsBasketSeqDesc(Long userSeq);
 
 
-
+	/**
+	 * 상품 시퀀스로 장바구니 삭제
+	 *
+	 * @param goodsSeq the goods seq
+	 * @author [윤태호]
+	 * @since 2020. 7. 30. 오전 11:59:29
+	 */
+	void deleteByGoodsSeq(Long goodsSeq);
 }

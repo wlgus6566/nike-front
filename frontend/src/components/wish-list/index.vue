@@ -22,19 +22,22 @@
                     <span class="txt">{{ item.product.goodsDescription }}</span>
                     <span class="desc-txt-box">
                         <span class="desc-txt">{{ item.product.unitPrice }} 원</span>
-                        <span class="desc-txt">{{ item.product.agency.agencyName }}</span>
+                        <span class="desc-txt">
+                            {{
+                            item.product.agency.agencyName
+                            }}
+                        </span>
                     </span>
                 </span>
             </a>
             <div class="quantity-box">
                 <span class="title">최소주문수량</span>
                 <span class="num">
-                    <em>{{ item.product.minimumOrderQuantity }}</em
-                    >개
+                    <em>{{ item.product.minimumOrderQuantity }}</em>개
                 </span>
             </div>
             <div class="btn-box">
-                <button type="button" class="btn-s-black-sm">
+                <button type="button" class="btn-s-black-sm" @click="$emit('addBasket', item)">
                     <span>CART</span>
                 </button>
                 <button
@@ -45,7 +48,6 @@
                     <span>삭제</span>
                 </button>
             </div>
-            {{ item.wishListSeq }}
             <div class="loading" v-if="isLoading(item.wishListSeq)">loading</div>
         </li>
     </transition-group>
@@ -57,7 +59,7 @@ export default {
     props: ['listData', 'checkWishItem', 'deleteLoading'],
     methods: {
         isLoading(seq) {
-            const indexFind = this.deleteLoading.findIndex((el) => {
+            const indexFind = this.deleteLoading.findIndex(el => {
                 return el === seq;
             });
             return indexFind !== -1;

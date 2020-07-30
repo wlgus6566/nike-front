@@ -3,11 +3,11 @@
         <div class="sorting-area">
             <SearchInput @searchSubmit="searchSubmit" />
         </div>
-        <template v-if="productListData">
+        <template v-if="userProductListData">
             <ProductList
-                v-if="productListData.length"
-                :productListData="productListData"
-                @showdetailView="showdetailView"
+                v-if="userProductListData.length"
+                :userProductListData="userProductListData"
+                @showDetailView="showDetailView"
             />
             <template v-else>
                 <NoData v-if="searchKeyword === ''" />
@@ -30,14 +30,14 @@
     import NoDataSearch from '@/components/product-list/nodata-search';
     import detailView from '@/views/pages/product/detail-view';
 
-    import {getProductList} from '@/api/product.js';
+    import {getUserProductList} from '@/api/product.js';
     import {getWishList, postWishList} from '@/api/wish-list';
 
     export default {
     name: 'product-list',
     data() {
         return {
-            productListData: null,
+            userProductListData: null,
             productDetailData: {
                 goodsName: '',
                 goodsDescription: '',
@@ -50,14 +50,16 @@
             loadingData: false,
             page: 0,
             itemLength: 20,
-            wishListData: null,
             searchKeyword: '',
+            wishListData: null,
             visible: {
                 detailView: false,
             },
         };
     },
-    created() {},
+    created() {
+        this.getUserProduct();
+    },
     components: {
         SearchInput,
         ProductList,
@@ -67,45 +69,41 @@
         detailView,
     },
     mounted() {
-        this.getProduct();
+        this.getUserProduct();
         this.getWishiList();
     },
-    activated() {
-        console.log('test');
-    },
+    activated() {},
     methods: {
-        // 상품 리스트 api
+        // 상품 검색 api
         searchSubmit(val) {
             this.searchKeyword = val;
-            this.getProduct();
+            this.getUserProduct();
         },
 
         // 상품 리스트 api
-        async getProduct() {
+        async getUserProduct() {
             try {
                 const {
                     data: { data: response },
-                } = await getProductList({
+                } = await getUserProductList(this.$route.meta.category2Code, {
                     page: this.page,
                     size: this.itemLength,
-                    category2Code: this.$route.meta.category2Code,
                     category3Code: this.$route.meta.category3Code,
                     keyword: this.searchKeyword,
                 });
-                console.log(response);
-                this.productListData = response.content;
+                this.userProductListData = response.content;
             } catch (error) {
                 console.log(error);
             }
         },
 
-        // detial modal open
-        showdetailView(goodsSeq) {
+        // 상세 팝업
+        showDetailView(goodsSeq) {
             this.visible.detailView = true;
-            const findIndex = this.productListData.findIndex(
+            const findIndex = this.userProductListData.findIndex(
                 (el) => el.goodsSeq === goodsSeq
             );
-            this.productDetailData = this.productListData[findIndex];
+            this.productDetailData = this.userProductListData[findIndex];
         },
 
         // 위시리스트 목록 가져오기
@@ -135,7 +133,7 @@
                     });
                     await this.getWishiList();
                     alert(
-                        '위시리스트에 추가 되었습니다. 위시리스트는 마이페이지에서 확인가능합니다.'
+                        '위시리스트에 추가 되었습니다.\n 위시리스트는 마이페이지에서 확인가능합니다.'
                     );
                 } else {
                     alert('이미 담긴 상품입니다.');

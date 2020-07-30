@@ -61,9 +61,9 @@
 </template>
 
 <script>
-    import {addProductBasket, deleteBasketItem} from '@/utils/basket';
+import { addProductBasket, deleteBasketItem } from '@/utils/basket';
 
-    export default {
+export default {
     data() {
         return {};
     },
@@ -84,14 +84,6 @@
         },
     },
     methods: {
-        removeBodyClass(className) {
-            const body = document.body;
-            body.classList.remove(className);
-        },
-        print() {
-            this.removeBodyClass('print-detail');
-            window.print();
-        },
         toggleProductBasket(item) {
             const findIndex = this.basketList.findIndex((el) => {
                 return el.goodsSeq === item.goodsSeq;
