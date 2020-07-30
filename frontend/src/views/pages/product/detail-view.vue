@@ -61,9 +61,9 @@
 </template>
 
 <script>
-import { addProductBasket, deleteBasketItem } from '@/utils/basket';
+	import {addProductBasket} from '@/utils/basket';
 
-export default {
+	export default {
     data() {
         return {};
     },
@@ -92,8 +92,7 @@ export default {
                 addProductBasket(item.goodsSeq, item.minimumOrderQuantity);
                 alert('CART에 담겼습니다');
             } else {
-                deleteBasketItem(this.basketList[findIndex].goodsBasketSeq);
-                alert('CART에 삭제 되었습니다');
+                alert('이미 담긴 상품입니다.');
             }
         },
     },

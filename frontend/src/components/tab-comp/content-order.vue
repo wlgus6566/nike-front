@@ -1,52 +1,54 @@
 <template>
     <div class="aside-order">
         <div class="cart-item-wrap">
-            <transition-group
-                tag="ul"
-                class="cart-item-list"
-                v-if="basketList.length"
-                name="fade"
-            >
-                <li
-                    class="cart-item"
-                    v-for="(item, index) in basketList"
-                    :key="index"
+            <template v-if="basketList">
+                <transition-group
+                    tag="ul"
+                    class="cart-item-list"
+                    v-if="basketList.length"
+                    name="fade"
                 >
-                    <div class="thumbnail">
-                        <img
-                            :src="item.product.imageFilePhysicalName"
-                            :alt="item.product.imageFileName"
-                        />
-                    </div>
-                    <div class="info-box">
-                        <p class="title">{{ item.product.goodsName }}</p>
-                        <div class="quantity">
-                            <el-input-number
-                                v-model="item.orderQuantity"
-                                @change="changeQuantity(item)"
-                                @focusout="changeQuantity(item)"
-                                :disabled="test"
-                                :min="item.product.minimumOrderQuantity"
+                    <li
+                        class="cart-item"
+                        v-for="(item, index) in basketList"
+                        :key="index"
+                    >
+                        <div class="thumbnail">
+                            <img
+                                :src="item.product.imageFilePhysicalName"
+                                :alt="item.product.imageFileName"
                             />
                         </div>
-                    </div>
-                    <button
-                        type="button"
-                        class="del"
-                        @click="deleteClick(item.goodsBasketSeq)"
-                    >
-                        <span>삭제</span>
-                    </button>
-                </li>
-            </transition-group>
-            <div class="no-data" v-else>
-                <i class="icon-drop"></i>
-                <p class="txt">더욱 빠르게 파일 받기</p>
-                <p class="desc">
-                    이곳에 끌어다 놓으면 파일을 바로<br />
-                    다운받을 수 있어요.
-                </p>
-            </div>
+                        <div class="info-box">
+                            <p class="title">{{ item.product.goodsName }}</p>
+                            <div class="quantity">
+                                <el-input-number
+                                    v-model="item.orderQuantity"
+                                    @change="changeQuantity(item)"
+                                    @focusout="changeQuantity(item)"
+                                    :disabled="test"
+                                    :min="item.product.minimumOrderQuantity"
+                                />
+                            </div>
+                        </div>
+                        <button
+                            type="button"
+                            class="del"
+                            @click="deleteClick(item.goodsBasketSeq)"
+                        >
+                            <span>삭제</span>
+                        </button>
+                    </li>
+                </transition-group>
+                <NoData v-else>
+                    <i class="icon-drop"></i>
+                    <p class="txt">더욱 빠르게 파일 받기</p>
+                    <p class="desc">
+                        이곳에 끌어다 놓으면 파일을 바로<br />
+                        다운받을 수 있어요.
+                    </p>
+                </NoData>
+            </template>
         </div>
         <button
             type="button"
@@ -69,7 +71,7 @@
                 (실제 세금계산서의 금액은 다를 수 있습니다.)
             </p>
         </div>
-        <orderSheet
+        <OrderSheet
             :visible.sync="visible.orderSheet"
             :basketList="basketList"
             :totalPrice="totalPrice"
@@ -78,7 +80,8 @@
 </template>
 <script>
     import {addProductBasket, deleteBasketItem} from '@/utils/basket';
-    import orderSheet from '@/views/pages/product/order-sheet.vue';
+    import OrderSheet from '@/views/pages/product/order-sheet.vue';
+    import NoData from '@/components/no-data';
 
     export default {
     name: 'OderItem',
@@ -91,7 +94,8 @@
         };
     },
     components: {
-        orderSheet,
+        OrderSheet,
+        NoData,
     },
 
     computed: {
@@ -99,7 +103,7 @@
             if (!!this.$store.state.basketListData) {
                 return this.$store.state.basketListData;
             } else {
-                return null;
+                return [];
             }
         },
         totalPrice() {
@@ -123,7 +127,6 @@
     },
     methods: {
         showOrderSheet() {
-            console.log('asd');
             this.visible.orderSheet = true;
         },
 

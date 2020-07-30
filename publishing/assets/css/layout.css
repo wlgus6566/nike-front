@@ -14,6 +14,9 @@ body {
 #app {
 }
 #wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   box-sizing: border-box;
   padding-bottom: 60px;
 }
@@ -127,11 +130,13 @@ header .logo span {
   background: #000;
   transform: translateX(-50%);
 }
-.container {
-  overflow: hidden;
-}
 .contents {
-  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 0 20px 50px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 footer {
   display: flex;
@@ -314,4 +319,8 @@ footer .copy {
   width: 20px;
   height: 20px;
   background: url(../images/svg/icon-more-gray.svg) no-repeat center;
+}
+
+.sticky-wrap .contents {
+  padding-bottom: 100px;
 }

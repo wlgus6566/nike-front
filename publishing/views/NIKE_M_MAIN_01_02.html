@@ -12,82 +12,57 @@
 </head>
 <body>
 <div id="app">
-		<div id="wrap">
-		<header class="page-header">
-			<!--<button type="button" class="btn-back">뒤로가기</button>-->
-			<div class="inner">
-				<h1 class="page-title">REPORT</h1>
-				<ul class="nav-tab">
-					<li class="active">
-						<button type="button"><span>업로드</span></button>
-					</li>
-					<li>
-						<button type="button"><span>관리</span></button>
-					</li>
-				</ul>
-			</div>
-		</header>
-			<section class="contents">
-				<ul class="upload-list">
-					<li class="upload-item thumbnail-file">
-						프론트엔드
-					</li>
-					<li class="upload-item">
-						<div class="form-column">
-							<label class="label-title required">구분</label>
-						</div>
-						<div class="form-column">
-							<div class="radio-box">
-								<label class="check-item">
-									<input type="radio">
-									<span class="txt">SP</span>
-								</label>
-								<label class="check-item">
-									<input type="radio">
-									<span class="txt">SU</span>
-								</label>
-								<label class="check-item">
-									<input type="radio">
-									<span class="txt">FA</span>
-								</label>
-								<label class="check-item auto">
-									<input type="radio">
-									<span class="txt">HO</span>
-								</label>
-							</div>
-						</div>
-					</li>
-					<li class="upload-item">
-						<div class="form-column">
-							<label class="label-title required">보고서 명</label>
-						</div>
-						<div class="form-column">
-							<div class="txtarea">
-								<textarea></textarea>
-							</div>
-						</div>
-					</li>
-				</ul>
-				<div class="btn-area">
-					<button type="button" class="btn-s-sm">취소</button>
-					<button type="button" class="btn-s-black-sm">확인</button>
+	<div id="wrap">
+		<div class="my-main">
+			<div class="user-info">
+				<strong class="name">ADMIN</strong>
+				<div class="store">store</div>
+				<div class="email">email@email.com</div>
+				<div class="btn-box">
+					<button type="button" class="btn-out">나가기</button>
+					<button type="button" class="btn-alarm">알람</button>
 				</div>
-			</section>
-		<footer>
-			<ul class="info-list">
+			</div>
+			<hr>
+			<ul class="my-menu">
 				<li>
-					<a href="#">
-						<span>이용약관</span>
-					</a>
+					<strong class="title">HISTORY</strong>
+					<ul>
+						<li>
+							<a href="#">내가 업로드한 폴더</a>
+						</li>
+						<li>
+							<a href="#">최근 본 폴더</a>
+						</li>
+					</ul>
 				</li>
 				<li>
-					<a href="#">
-						<span>개인정보처리방침</span>
-					</a>
+					<strong class="title">MY INFO</strong>
+					<ul>
+						<li>
+							<a href="#">회원정보 조회</a>
+						</li>
+						<li>
+							<a href="#">비밀번호 변경</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<strong class="title">CUSTOMER CENTER</strong>
+					<ul>
+						<li>
+							<a href="#">공지사항</a>
+						</li>
+						<li>
+							<a href="#">NEWS</a>
+						</li>
+						<li>
+							<a href="#">자주 묻는 질문</a>
+						</li>
+					</ul>
 				</li>
 			</ul>
-			<p class="copy">© 2020 Nike Korea LLC. All Rights Reserved.</p>
-		</footer>
+		</div>
 		<nav class="nav-area">
 			<ul class="tab-bar">
 				<li>

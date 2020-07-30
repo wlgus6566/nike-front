@@ -18,17 +18,17 @@
     </div>
 </template>
 <script>
-import {
-    delAgencyContact,
-    getAgencyContact,
-    getDetailAgencyContact,
-    postAgencyContact,
-    putAgencyContact,
-} from '@/api/agency';
-import agencyManagement from '@/views/pages/information/agency-management';
-import Loading from '@/components/loading/index';
+	import {
+		delAgencyContact,
+		getAgencyContact,
+		getDetailAgencyContact,
+		postAgencyContact,
+		putAgencyContact,
+	} from '@/api/agency';
+	import agencyManagement from '@/views/pages/information/agency-management';
+	import Loading from '@/components/loading';
 
-export default {
+	export default {
     name: 'agency',
     data() {
         return {

@@ -10,8 +10,14 @@
                 @showDetailView="showDetailView"
             />
             <template v-else>
-                <NoData v-if="searchKeyword === ''" />
-                <NoDataSearch v-else />
+                <NoData v-if="searchKeyword === ''">
+                    <i class="icon-file"></i>
+                    <p class="desc">업로드한 폴더가 없습니다.</p>
+                </NoData>
+                <NoData v-else>
+                    <i class="icon-search"></i>
+                    <p class="desc">검색 결과가 없습니다.</p>
+                </NoData>
             </template>
         </template>
         <Loading v-if="loadingData" />
@@ -23,17 +29,17 @@
     </div>
 </template>
 <script>
-    import SearchInput from '@/components/search-input';
-    import ProductList from '@/components/product-list';
-    import Loading from '@/components/product-list/loading';
-    import NoData from '@/components/product-list/nodata';
-    import NoDataSearch from '@/components/product-list/nodata-search';
-    import detailView from '@/views/pages/product/detail-view';
+	import SearchInput from '@/components/search-input';
+	import ProductList from '@/components/product-list';
+	import Loading from '@/components/loading';
+	import NoData from '@/components/no-data';
+	import NoDataSearch from '@/components/no-data/nodata-search';
+	import detailView from '@/views/pages/product/detail-view';
 
-    import {getUserProductList} from '@/api/product.js';
-    import {getWishList, postWishList} from '@/api/wish-list';
+	import {getUserProductList} from '@/api/product.js';
+	import {getWishList, postWishList} from '@/api/wish-list';
 
-    export default {
+	export default {
     name: 'product-list',
     data() {
         return {
