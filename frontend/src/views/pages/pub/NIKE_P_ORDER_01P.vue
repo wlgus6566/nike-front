@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-button type="white" size="small" @click="showdetailView">
+        <el-button type="white" size="small" @click="showDetailView">
             계정 관리
         </el-button>
 
@@ -21,7 +21,7 @@
     },
     components: { detailView },
     methods: {
-        showdetailView() {
+        showDetailView() {
             this.visible.detailView = true;
         },
     },

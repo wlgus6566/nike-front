@@ -241,7 +241,7 @@ export default {
 }
 .folder-list-enter-active,
 .folder-list-leave-active {
-    transition: opacity 0.3s;
+    transition: all 0.1s;
 }
 .folder-list-enter,
 .folder-list-leave-to {
