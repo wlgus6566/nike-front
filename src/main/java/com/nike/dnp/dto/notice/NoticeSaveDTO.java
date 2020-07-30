@@ -25,25 +25,18 @@ public class NoticeSaveDTO extends BasicDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(name = "noticeArticleSectionCode", value = "게시물 구분 코드", defaultValue = "", required = true)
+    @ApiModelProperty(name = "noticeArticleSectionCode",
+            value = "게시물 구분 코드", example = "NOTICE", required = true)
     private String noticeArticleSectionCode;
 
-    /**
-     * The Notice article seq
-     *
-     * @author [정주희]
-     */
-    @ApiModelProperty(name = "noticeArticleSeq", value = "게시글 시퀀스")
-    private Long noticeArticleSeq;
     /**
      * The Notice yn
      *
      * @author [정주희]
      */
     @NotBlank(message = "customer.noticeYn")
-    @ApiModelProperty(name = "noticeYn", value = "[공지사항] 상단 고정 여부")
+    @ApiModelProperty(name = "noticeYn", value = "[공지사항] 상단 고정 여부", example = "N", required = true)
     private String noticeYn;
-
 
     /**
      * The Title
@@ -51,7 +44,7 @@ public class NoticeSaveDTO extends BasicDTO {
      * @author [정주희]
      */
     @NotBlank(message="customer.title")
-    @ApiModelProperty(name = "title", value = "제목")
+    @ApiModelProperty(name = "title", value = "제목", example = "제목입니다.", required = true)
     private String title;
 
     /**
@@ -60,7 +53,7 @@ public class NoticeSaveDTO extends BasicDTO {
      * @author [정주희]
      */
     @NotBlank(message="customer.contents")
-    @ApiModelProperty(name = "contents", value = "내용")
+    @ApiModelProperty(name = "contents", value = "내용", example = "내용입니다.", required = true)
     private String contents;
 
     /**
@@ -68,6 +61,7 @@ public class NoticeSaveDTO extends BasicDTO {
      *
      * @author [정주희]
      */
+    @ApiModelProperty(name = "useYn", value = "게시글 사용 여부", example = "Y", required = true)
     private String useYn;
 
 }

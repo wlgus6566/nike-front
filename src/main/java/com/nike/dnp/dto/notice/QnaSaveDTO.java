@@ -25,7 +25,8 @@ public class QnaSaveDTO extends BasicDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(name = "noticeArticleSectionCode", value = "게시물 구분 코드", defaultValue = "", required = true)
+    @ApiModelProperty(name = "noticeArticleSectionCode",
+            value = "게시물 구분 코드", example = "QNA", required = true)
     private String noticeArticleSectionCode;
 
     /**
@@ -33,17 +34,9 @@ public class QnaSaveDTO extends BasicDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(name = "noticeArticleCategoryCode", value = "[QNA] 게시물 카테고리 코드", defaultValue = "ASSET")
+    @ApiModelProperty(name = "noticeArticleCategoryCode",
+            value = "[QNA] 게시물 카테고리 코드", example = "ASSET", required = true)
     private String noticeArticleCategoryCode;
-
-
-    /**
-     * The Notice article seq
-     *
-     * @author [정주희]
-     */
-    @ApiModelProperty(name = "noticeArticleSeq", value = "게시글 시퀀스")
-    private Long noticeArticleSeq;
 
     /**
      * The Title
@@ -51,7 +44,7 @@ public class QnaSaveDTO extends BasicDTO {
      * @author [정주희]
      */
     @NotBlank(message = "customer.question")
-    @ApiModelProperty(name = "title", value = "질문")
+    @ApiModelProperty(name = "title", value = "질문", example = "질문입니다.", required = true)
     private String title;
 
     /**
@@ -60,7 +53,7 @@ public class QnaSaveDTO extends BasicDTO {
      * @author [정주희]
      */
     @NotBlank(message = "customer.contents")
-    @ApiModelProperty(name = "contents", value = "내용")
+    @ApiModelProperty(name = "contents", value = "내용", example = "내용입니다.", required = true)
     private String contents;
 
     /**
@@ -68,6 +61,7 @@ public class QnaSaveDTO extends BasicDTO {
      *
      * @author [정주희]
      */
+    @ApiModelProperty(name = "useYn", value = "게시글 사용 여부", example = "Y", required = true)
     private String useYn;
 
     /**

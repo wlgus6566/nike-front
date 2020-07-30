@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class NoticeController {
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
     private static final String BASIC_CHARACTER = "## Request ## \n" + "[하위 Parameters 참조] \n" + "## Request ## \n" + "[하위 Model 참조]\n\n";
-    
+
     /**
      * Find all single result.
      *
@@ -116,8 +117,7 @@ public class NoticeController {
     /**
      * Save customer center single result.
      *
-     * @param customerSaveDTO the notice save dto
-     * @param sectionCode   the section code
+     * @param noticeSaveDTO the notice save dto
      * @return the single result
      * @author [정주희]
      * @since 2020. 7. 20. 오후 9:21:31
@@ -131,7 +131,7 @@ public class NoticeController {
             name = "Customer Center 공지사항 등록", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<NoticeArticle> saveNotice(@Valid @RequestBody final NoticeSaveDTO noticeSaveDTO,
-                                                  BindingResult bindingResult) {
+                                                  @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.saveNotice");
 
         CustomerSaveDTO customerSaveDTO = ObjectMapperUtil.map(noticeSaveDTO, CustomerSaveDTO.class);
@@ -146,7 +146,7 @@ public class NoticeController {
     @PostMapping(value = "/NEWS",
             name = "Customer Center 뉴스 등록", produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<NoticeArticle> saveNews(@Valid @RequestBody final NewsSaveDTO newsSaveDTO,
-                                                BindingResult bindingResult) {
+                                                @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.saveNews");
 
         CustomerSaveDTO customerSaveDTO = ObjectMapperUtil.map(newsSaveDTO, CustomerSaveDTO.class);
@@ -161,7 +161,7 @@ public class NoticeController {
     @PostMapping(value = "/QnA",
             name = "Customer Center QnA 등록", produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<NoticeArticle> saveQna(@Valid @RequestBody final QnaSaveDTO qnaSaveDTO,
-                                               BindingResult bindingResult) {
+                                               @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.saveQna");
 
         CustomerSaveDTO customerSaveDTO = ObjectMapperUtil.map(qnaSaveDTO, CustomerSaveDTO.class);
@@ -188,7 +188,7 @@ public class NoticeController {
     /**
      * Update notice single result.
      *
-     * @param customerUpdateDTO the notice update dto
+     * @param noticeUpdateDTO the notice update dto
      * @param noticeSeq       the notice seq
      * @return the single result
      * @author [정주희]
@@ -199,7 +199,7 @@ public class NoticeController {
             value = "Customer Center 공지사항 게시글 수정",
             notes = BASIC_CHARACTER
     )
-    @PutMapping(value = "NOTICE/{noticeSeq}",
+    @PutMapping(value = "/NOTICE/{noticeSeq}",
             name = "Customer Center 공지사항 게시글 수정", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<NoticeArticle> updateNotice(
@@ -207,7 +207,7 @@ public class NoticeController {
                                         defaultValue = "23", required = true)
                                 @PathVariable final Long noticeSeq,
                                 @Valid @RequestBody final NoticeUpdateDTO noticeUpdateDTO,
-                                BindingResult bindingResult) {
+                                @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.updateNotice");
 
         CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtil.map(noticeUpdateDTO, CustomerUpdateDTO.class);
@@ -220,14 +220,14 @@ public class NoticeController {
             value = "Customer Center NEWS 게시글 수정",
             notes = BASIC_CHARACTER
     )
-    @PutMapping(value = "NEWS/{noticeSeq}",
+    @PutMapping(value = "/NEWS/{noticeSeq}",
             name = "Customer Center NEWS 게시글 수정", produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<NoticeArticle> updateNews(
                                 @ApiParam(name = "noticeSeq", value = "Customer Center NEWS 게시글 시퀀스",
                                         defaultValue = "23", required = true)
                                 @PathVariable final Long noticeSeq,
                                 @RequestBody final NewsUpdateDTO newsUpdateDTO,
-                                BindingResult bindingResult) {
+                                @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.updateNotice");
 
         CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtil.map(newsUpdateDTO, CustomerUpdateDTO.class);
@@ -240,14 +240,14 @@ public class NoticeController {
             value = "Customer Center QnA 게시글 수정",
             notes = BASIC_CHARACTER
     )
-    @PutMapping(value = "QNA/{noticeSeq}",
+    @PutMapping(value = "/QNA/{noticeSeq}",
             name = "Customer Center QnA 게시글 수정", produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<NoticeArticle> updateQna(
                                 @ApiParam(name = "noticeSeq", value = "Customer Center QnA 게시글 시퀀스",
                                         defaultValue = "23", required = true)
                                 @PathVariable final Long noticeSeq,
                                 @RequestBody final QnaUpdateDTO qnaUpdateDTO,
-                                BindingResult bindingResult) {
+                                @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.updateNotice");
 
         CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtil.map(qnaUpdateDTO, CustomerUpdateDTO.class);
@@ -268,7 +268,7 @@ public class NoticeController {
     @ApiOperation(value = "Customer Center 게시글 삭제", notes = BASIC_CHARACTER)
     @DeleteMapping({"/{noticeSeq}"})
     public SingleResult<NoticeArticle> deleteCustomerCenter(
-                                @ApiParam(name = "sectionCode", value = "Customer Center 게시글 시퀀스",
+                                @ApiParam(name = "noticeSeq", value = "Customer Center 게시글 시퀀스",
                                         defaultValue = "23", required = true)
                                 @PathVariable final Long noticeSeq){
         log.info("NoticeController.deleteCustomerCenter");
@@ -280,10 +280,14 @@ public class NoticeController {
         return responseService.getSingleResult(noticeService.deleteCustomerCenter(customerUpdateDTO));
     }
 
+    @ApiOperation(value = "Customer Center 에디터 이미지 업로드", notes = BASIC_CHARACTER)
     @PostMapping("/{sectionCode}/images")
-    public void uploadEditorImages(@PathVariable String sectionCode,
-                                   MultipartHttpServletRequest multiReq) throws IOException {
+    public SingleResult<String> uploadEditorImages(
+                                @ApiParam(name = "sectionCode", value = "Customer Center 게시글 종류 코드",
+                                        allowableValues = "NOTICE, NEWS, QNA", required = true)
+                                @PathVariable final String sectionCode,
+                                MultipartHttpServletRequest multiReq) throws IOException {
         log.info("NoticeController.uploadEditorImages");
-        noticeService.uploadEditorImages(sectionCode, multiReq);
+        return responseService.getSingleResult(noticeService.uploadEditorImages(multiReq, sectionCode));
     }
 }
