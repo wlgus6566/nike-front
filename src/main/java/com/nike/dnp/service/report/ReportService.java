@@ -25,6 +25,7 @@ import com.nike.dnp.service.user.UserContentsService;
 import com.nike.dnp.util.ImageUtil;
 import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.S3Util;
+import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -103,21 +104,20 @@ public class ReportService {
     /**
      * Find all paging page.
      *
-     * @param authUserDTO     the auth user dto
      * @param reportSearchDTO the report search dto
      * @return the page
      * @author [이소정]
      * @implNote 보고서 페이징 처리 된 목록 조회
      * @since 2020. 7. 8. 오후 5:28:17
      */
-    public Page<Report> findAllPaging(final AuthUserDTO authUserDTO, final ReportSearchDTO reportSearchDTO) {
+    public Page<Report> findAllPaging(final ReportSearchDTO reportSearchDTO) {
 
         // 권한 검색 조건
         List<Long> authSeqList = new ArrayList<>();
         if (null != reportSearchDTO.getGroupSeq()) {
             authSeqList.add(reportSearchDTO.getGroupSeq());
         } else {
-            List<AuthReturnDTO> authList = authService.findByAuthDepth(authUserDTO.getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString());
+            List<AuthReturnDTO> authList = authService.findByAuthDepth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString());
             for (AuthReturnDTO authReturnDTO : authList) {
                 authSeqList.add(authReturnDTO.getAuthSeq());
             }
@@ -135,7 +135,6 @@ public class ReportService {
     /**
      * Save report.
      *
-     * @param authUserDTO   the auth user dto
      * @param reportSaveDTO the report save dto
      * @return the report
      * @author [이소정]
@@ -143,9 +142,9 @@ public class ReportService {
      * @since 2020. 7. 8. 오후 5:28:20
      */
     @Transactional
-    public Report save(final AuthUserDTO authUserDTO, final ReportSaveDTO reportSaveDTO) {
+    public Report save(final ReportSaveDTO reportSaveDTO) {
         log.info("ReportService.save");
-        reportSaveDTO.setAuthSeq(authUserDTO.getAuthSeq());
+        reportSaveDTO.setAuthSeq(SecurityUtil.currentUser().getAuthSeq());
 
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(reportSaveDTO.getImageBase64())) {

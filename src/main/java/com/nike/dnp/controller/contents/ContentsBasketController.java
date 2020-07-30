@@ -57,7 +57,6 @@ public class ContentsBasketController {
     /**
      * Gets all contents basket.
      *
-     * @param authUserDTO the auth user dto
      * @return the all contents basket
      * @author [이소정]
      * @implNote 컨텐츠 장바구니 목록 조회
@@ -79,10 +78,8 @@ public class ContentsBasketController {
             + "size||노출갯수|Integer\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 장바구니 목록 조회")
-    public SingleResult<List<ContentsBasketResultDTO>> findAllContentsBasket(
-            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
-            ) {
-        return responseService.getSingleResult(contentsBasketService.findAllContentsBasket(authUserDTO));
+    public SingleResult<List<ContentsBasketResultDTO>> findAllContentsBasket() {
+        return responseService.getSingleResult(contentsBasketService.findAllContentsBasket());
     }
 
     /**
@@ -91,7 +88,6 @@ public class ContentsBasketController {
      * @param topMenuCode           the top menu code
      * @param menuCode              the menu code
      * @param contentsBasketSeqList the contents basket seq list
-     * @param authUserDTO           the auth user dto
      * @return the single result
      * @author [이소정]
      * @implNote 컨텐츠 장바구니 등록
@@ -105,10 +101,9 @@ public class ContentsBasketController {
     public SingleResult<List<ContentsBasket>> saveContentsBasket(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @RequestBody final List<Long> contentsBasketSeqList,
-            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
+            @RequestBody final List<Long> contentsBasketSeqList
     ) {
-        List<ContentsBasket> contentsBasketList = contentsBasketService.save(contentsBasketSeqList, authUserDTO);
+        List<ContentsBasket> contentsBasketList = contentsBasketService.save(contentsBasketSeqList);
         return responseService.getSingleResult(contentsBasketList);
     }
 
@@ -125,7 +120,8 @@ public class ContentsBasketController {
     @DeleteMapping(name = "컨텐츠 장바구니 삭제", value = "/{contentsBasketSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<ContentsBasket> deleteContentsBasket(
-            @ApiParam(name = "contentsBasketSeq", value = "컨텐츠 장바구니 시퀀스", defaultValue = "2", required = true) @PathVariable final Long contentsBasketSeq) {
+            @ApiParam(name = "contentsBasketSeq", value = "컨텐츠 장바구니 시퀀스", defaultValue = "2", required = true) @PathVariable final Long contentsBasketSeq
+    ) {
         log.info("ContentsController.delete");
         return responseService.getSingleResult(contentsBasketService.delete(contentsBasketSeq));
     }

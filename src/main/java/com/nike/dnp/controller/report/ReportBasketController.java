@@ -57,7 +57,6 @@ public class ReportBasketController {
     /**
      * Find all report basket single result.
      *
-     * @param authUserDTO the auth user dto
      * @return the single result
      * @author [이소정]
      * @implNote 보고서 장바구니 목록 조회
@@ -68,18 +67,15 @@ public class ReportBasketController {
         , notes = REQUEST_CHARACTER
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Report 장바구니 목록 조회")
-    public SingleResult<List<ReportBasketResultDTO>> findAllReportBasket(
-            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
-    ) {
+    public SingleResult<List<ReportBasketResultDTO>> findAllReportBasket() {
         log.info("ReportBasketController.findAllReportBasket");
-        return responseService.getSingleResult(reportBasketService.findAllReportBasket(authUserDTO));
+        return responseService.getSingleResult(reportBasketService.findAllReportBasket());
     }
 
     /**
      * Save report basket single result.
      *
      * @param reportFileSeq the report file seq
-     * @param authUserDTO   the auth user dto
      * @return the single result
      * @author [이소정]
      * @implNote Report 장바구니 등록
@@ -91,11 +87,10 @@ public class ReportBasketController {
     )
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Report 장바구니 등록")
     public SingleResult<List<ReportBasket>> saveReportBasket(
-            @RequestBody final List<Long> reportFileSeq,
-            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
+            @RequestBody final List<Long> reportFileSeq
     ) {
         log.info("ReportBasketController.saveReportBasket");
-        List<ReportBasket> reportBasketList = reportBasketService.save(reportFileSeq, authUserDTO);
+        List<ReportBasket> reportBasketList = reportBasketService.save(reportFileSeq);
         return responseService.getSingleResult(reportBasketList);
     }
 
@@ -112,7 +107,8 @@ public class ReportBasketController {
     @DeleteMapping(name = "Report 장바구니 삭제", value = "/{reportBasketSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<ReportBasket> deleteReportBasket(
-            @ApiParam(name = "reportBasketSeq", value = "Report 장바구니 시퀀스", defaultValue = "2", required = true) @PathVariable final Long reportBasketSeq) {
+            @ApiParam(name = "reportBasketSeq", value = "Report 장바구니 시퀀스", defaultValue = "2", required = true) @PathVariable final Long reportBasketSeq
+    ) {
         log.info("ReportBasketController.deleteReportBasket");
         return responseService.getSingleResult(reportBasketService.delete(reportBasketSeq));
     }

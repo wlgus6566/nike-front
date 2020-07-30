@@ -10,6 +10,7 @@ import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.report.ReportBasketRepository;
 import com.nike.dnp.repository.report.ReportFileRepository;
 import com.nike.dnp.util.MessageUtil;
+import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -50,33 +51,31 @@ public class ReportBasketService {
     /**
      * Find all report basket list.
      *
-     * @param authUserDTO the auth user dto
      * @return the list
      * @author [이소정]
      * @implNote 보고서 장바구니 목록 전체 조회
      * @since 2020. 7. 17. 오후 6:50:47
      */
-    public List<ReportBasketResultDTO> findAllReportBasket(final AuthUserDTO authUserDTO) {
-        return reportBasketRepository.findAllReportBasket(authUserDTO.getUserSeq());
+    public List<ReportBasketResultDTO> findAllReportBasket() {
+        return reportBasketRepository.findAllReportBasket(SecurityUtil.currentUser().getUserSeq());
     }
 
     /**
      * Save list.
      *
      * @param reportFileSeqList the report file seq list
-     * @param authUserDTO       the auth user dto
      * @return the list
      * @author [이소정]
      * @implNote 보고서 장바구니 저장
      * @since 2020. 7. 17. 오후 7:06:01
      */
     @Transactional
-    public List<ReportBasket> save(final List<Long> reportFileSeqList, final AuthUserDTO authUserDTO) {
+    public List<ReportBasket> save(final List<Long> reportFileSeqList) {
         List<ReportBasket> reportBasketList = new ArrayList<>();
         for (Long reportFileSeq : reportFileSeqList) {
             Optional<ReportFile> reportFile = reportFileRepository.findById(reportFileSeq);
             if (reportFile.isPresent()) {
-                ReportBasket savedReportBasket = reportBasketRepository.save(new ReportBasket().save(reportFileSeq, authUserDTO.getUserSeq()));
+                ReportBasket savedReportBasket = reportBasketRepository.save(new ReportBasket().save(reportFileSeq, SecurityUtil.currentUser().getUserSeq()));
                 reportBasketList.add(savedReportBasket);
             }
         }

@@ -4,6 +4,7 @@ import com.nike.dnp.dto.SearchDTO;
 import com.nike.dnp.dto.alarm.AlarmResultDTO;
 import com.nike.dnp.entity.alarm.Alarm;
 import com.nike.dnp.repository.alarm.AlarmRepository;
+import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -38,16 +39,15 @@ public class AlarmService {
     /**
      * Find all paging page.
      *
-     * @param userSeq   the user seq
      * @param searchDTO the search dto
      * @return the page
      * @author [이소정]
      * @implNote 알림 페이징 처리 된 목록 조회
      * @since 2020. 7. 24. 오후 8:09:49
      */
-    public Page<AlarmResultDTO> findAllPaging(final Long userSeq, final SearchDTO searchDTO) {
+    public Page<AlarmResultDTO> findAllPaging(final SearchDTO searchDTO) {
         return alarmRepositoryl.findAllPaging(
-                userSeq,
+                SecurityUtil.currentUser().getUserSeq(),
                 PageRequest.of(searchDTO.getPage()
                         , searchDTO.getSize()
                         , Sort.by("registrationDt").descending()));

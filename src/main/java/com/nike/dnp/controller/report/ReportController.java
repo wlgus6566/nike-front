@@ -11,6 +11,7 @@ import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.report.ReportService;
+import com.nike.dnp.util.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -101,11 +102,10 @@ public class ReportController {
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 목록 조회")
     public SingleResult<Page<Report>> findAllReports(
-            final ReportSearchDTO reportSearchDTO,
-            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
+            final ReportSearchDTO reportSearchDTO
     ) {
         log.info("ReportController.findAllReports");
-        return responseService.getSingleResult(reportService.findAllPaging(authUserDTO, reportSearchDTO));
+        return responseService.getSingleResult(reportService.findAllPaging(reportSearchDTO));
     }
 
 
@@ -113,7 +113,6 @@ public class ReportController {
      * Save report single result.
      *
      * @param reportSaveDTO the report save dto
-     * @param authUserDTO   the auth user dto
      * @return the single result
      * @author [이소정]
      * @implNote 보고서 등록
@@ -125,11 +124,10 @@ public class ReportController {
     )
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 등록")
     public SingleResult<Report> saveReport(
-            @RequestBody final ReportSaveDTO reportSaveDTO,
-            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
+            @RequestBody final ReportSaveDTO reportSaveDTO
     ) {
         log.info("ReportController.saveReport");
-        Report report = reportService.save(authUserDTO, reportSaveDTO);
+        Report report = reportService.save(reportSaveDTO);
         return responseService.getSingleResult(report);
     }
 
@@ -149,7 +147,8 @@ public class ReportController {
     @GetMapping(name = " 보고서 상세조회", value = "/{reportSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Report> findReport(
-            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq) {
+            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq
+    ) {
         log.info("ReportController.findReport");
         return responseService.getSingleResult(reportService.findByReportSeq(reportSeq));
     }
@@ -188,7 +187,8 @@ public class ReportController {
     @DeleteMapping(name = "보고서 삭제", value = "/{reportSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Report> deleteReport(
-            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq) {
+            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq
+    ) {
         log.info("ReportController.deleteReport");
         return responseService.getSingleResult(reportService.delete(reportSeq));
     }
@@ -208,12 +208,10 @@ public class ReportController {
     )
     @GetMapping(name = "그룹 목록 조회", value = "/groupList"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<AuthReturnDTO>> findByAuthDepth(
-            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
-    ) {
+    public SingleResult<List<AuthReturnDTO>> findByAuthDepth() {
         log.info("AuthController.findByAuthDepth");
         return responseService.getSingleResult(
-                authService.findByAuthDepth(authUserDTO.getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString()));
+                authService.findByAuthDepth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString()));
     }
 }
 

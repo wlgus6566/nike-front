@@ -9,6 +9,7 @@ import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.contents.ContentsBasketRepository;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.util.MessageUtil;
+import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -48,34 +49,32 @@ public class ContentsBasketService {
     /**
      * Gets all contents basket.
      *
-     * @param authUserDTO the auth user dto
      * @return the all contents basket
      * @author [이소정]
      * @implNote 콘텐츠 장바구니 모든 목록
      * @since 2020. 7. 14. 오후 6:24:19
      */
-    public List<ContentsBasketResultDTO> findAllContentsBasket(final AuthUserDTO authUserDTO) {
-        return contentsBasketRepository.findAllWithContentsFile(authUserDTO.getUserSeq());
+    public List<ContentsBasketResultDTO> findAllContentsBasket() {
+        return contentsBasketRepository.findAllWithContentsFile(SecurityUtil.currentUser().getUserSeq());
     }
 
     /**
      * Save list.
      *
      * @param contentsFileSeqList the contents file seq list
-     * @param authUserDTO         the auth user dto
      * @return the list
      * @author [이소정]
      * @implNote 콘텐츠 장바구니 저장
      * @since 2020. 7. 15. 오후 12:02:32
      */
     @Transactional
-    public List<ContentsBasket> save(final List<Long> contentsFileSeqList, final AuthUserDTO authUserDTO) {
+    public List<ContentsBasket> save(final List<Long> contentsFileSeqList) {
         log.info("contentsBasketService.save");
         List<ContentsBasket> savedBasketList = new ArrayList<>();
         for (Long contentsFileSeq : contentsFileSeqList) {
             Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
             if (contentsFile.isPresent()) {
-                ContentsBasket contentsBasket = contentsBasketRepository.save(new ContentsBasket().save(contentsFileSeq, authUserDTO));
+                ContentsBasket contentsBasket = contentsBasketRepository.save(new ContentsBasket().save(contentsFileSeq, SecurityUtil.currentUser()));
                 savedBasketList.add(contentsBasket);
             }
         }

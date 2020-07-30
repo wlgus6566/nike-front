@@ -56,8 +56,7 @@ public class AlarmController {
     /**
      * Find all alarm single result.
      *
-     * @param searchDTO   the search dto
-     * @param authUserDTO the auth user dto
+     * @param searchDTO   알림 조회 dto
      * @return the single result
      * @author [이소정]
      * @implNote 알림 목록 조회
@@ -82,10 +81,9 @@ public class AlarmController {
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "알림 목록 조회")
     public SingleResult<Page<AlarmResultDTO>> findAllAlarm(
-            final SearchDTO searchDTO,
-            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
+            final SearchDTO searchDTO
     ) {
-        return responseService.getSingleResult(alarmService.findAllPaging(authUserDTO.getUserSeq(), searchDTO));
+        return responseService.getSingleResult(alarmService.findAllPaging(searchDTO));
     }
 
 

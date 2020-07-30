@@ -105,7 +105,6 @@ public class ContentsService {
      * Find all paging page.
      *
      * @param contentsSearchDTO the contents search dto
-     * @param authUserDTO       the auth user dto
      * @param topMenuCode       the top menu code
      * @param menuCode          the menu code
      * @return the page
@@ -113,7 +112,8 @@ public class ContentsService {
      * @implNote 콘텐츠 페이징 처리 한 목록
      * @since 2020. 7. 13. 오후 3:23:01
      */
-    public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO, final AuthUserDTO authUserDTO, final String topMenuCode, final String menuCode) {
+    public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO, final String topMenuCode, final String menuCode) {
+        Long authSeq = SecurityUtil.currentUser().getAuthSeq();
         // 권한 검사
         String searchMenuCode = menuCode.equals(ServiceCode.ContentsMenuCode.ALL.toString()) ? topMenuCode : topMenuCode + "_" + menuCode;
         UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
@@ -121,10 +121,10 @@ public class ContentsService {
         userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.CREATE.toString());
 
         // 권한에 따른 조건문
-        contentsSearchDTO.setExposureYn(userContentsService.isAuth(authUserDTO.getAuthSeq(), userContentsSearchDTO) ? null : "Y");
+        contentsSearchDTO.setExposureYn(userContentsService.isAuth(authSeq, userContentsSearchDTO) ? null : "Y");
 
         // QueryDsl 기능 이용
-        contentsSearchDTO.setUserAuthSeq(authUserDTO.getAuthSeq());
+        contentsSearchDTO.setUserAuthSeq(authSeq);
         return contentsRepository.findPageContents(
                 contentsSearchDTO,
                 PageRequest.of(contentsSearchDTO.getPage()

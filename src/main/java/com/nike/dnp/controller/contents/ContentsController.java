@@ -63,7 +63,6 @@ public class ContentsController {
      * @param topMenuCode       the top menu code
      * @param menuCode          the menu code
      * @param contentsSearchDTO the contents search dto
-     * @param authUserDTO       the auth user dto
      * @return all managers
      * @author [이소정]
      * @implNote 컨텐츠 목록 조회
@@ -96,13 +95,12 @@ public class ContentsController {
     public SingleResult<Page<ContentsResultDTO>> findAllContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "ALL", required = true) @PathVariable final String menuCode,
-            final ContentsSearchDTO contentsSearchDTO,
-            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
+            final ContentsSearchDTO contentsSearchDTO
 
     ) {
         contentsSearchDTO.setTopMenuCode(topMenuCode);
         contentsSearchDTO.setMenuCode(menuCode);
-        return responseService.getSingleResult(contentsService.findAllPaging(contentsSearchDTO, authUserDTO, topMenuCode, menuCode));
+        return responseService.getSingleResult(contentsService.findAllPaging(contentsSearchDTO, topMenuCode, menuCode));
     }
 
 
@@ -223,7 +221,8 @@ public class ContentsController {
     public SingleResult<Contents> deleteContents(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
+            @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq
+    ) {
         log.info("ContentsController.delete");
         return responseService.getSingleResult(contentsService.delete(contentsSeq));
     }
@@ -235,7 +234,6 @@ public class ContentsController {
      * @param menuCode        the menu code
      * @param contentsFileSeq the contents file seq
      * @return the string
-     * @throws IOException the io exception
      * @author [이소정]
      * @implNote
      * @apiNote
@@ -247,7 +245,7 @@ public class ContentsController {
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
             @ApiParam(name="contentsFileSeq", value = "컨텐츠 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long contentsFileSeq
-        ) throws IOException {
+    ) {
         responseService.getSingleResult(contentsService.downloadContentsFile(contentsFileSeq));
         return responseService.getSuccessResult();
     }

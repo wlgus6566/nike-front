@@ -88,7 +88,6 @@ public class MainController {
      * Calendar 조회
      *
      * @param calendarSearchDTO the calendar search dto
-     * @param result            the result
      * @return the single result
      * @author [김형욱]
      * @implNote Calendar 조회
@@ -103,7 +102,7 @@ public class MainController {
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Calendar 조회", value = "/calendar")
     @ValidField
-    public SingleResult<List<Calendar>> findAllCalendar(@Valid @ModelAttribute final CalendarSearchDTO calendarSearchDTO, @ApiIgnore final BindingResult result) {
+    public SingleResult<List<Calendar>> findAllCalendar(@Valid @ModelAttribute final CalendarSearchDTO calendarSearchDTO) {
         log.info("MainController.findAllCalendar");
         return responseService.getSingleResult(calendarService.findAll(calendarSearchDTO));
     }
