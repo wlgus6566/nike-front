@@ -98,6 +98,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @author [이소정]
      * @since 2020. 7. 27. 오후 6:39:10
      */
+    @Override
     public List<ContentsResultDTO> findRecentContents(final String topMenuCode, final PageRequest pageRequest) {
         ContentsSearchDTO contentsSearchDTO = new ContentsSearchDTO();
         contentsSearchDTO.setTopMenuCode(topMenuCode);

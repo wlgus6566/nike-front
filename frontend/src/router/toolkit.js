@@ -70,10 +70,10 @@ const routes = [
                 },
                 beforeEnter: (to, from, next) => {
                     const menuCodeArr = ['vms', 'ekin', 'social', 'rb'];
-                    const findMenuCode = menuCodeArr.findIndex(
+                    const findMenuCode = menuCodeArr.some(
                         (el) => el === to.params.pathMatch
                     );
-                    if (findMenuCode !== -1) {
+                    if (findMenuCode) {
                         to.meta.menuCode = menuCodeArr[findMenuCode];
                         next();
                     } else {

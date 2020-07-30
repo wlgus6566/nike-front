@@ -7,7 +7,9 @@ import com.nike.dnp.dto.product.ProductSaveDTO;
 import com.nike.dnp.dto.product.ProductSearchDTO;
 import com.nike.dnp.dto.product.ProductUpdateDTO;
 import com.nike.dnp.entity.product.Product;
+import com.nike.dnp.repository.goodsbasket.GoodsBasketRepository;
 import com.nike.dnp.repository.product.ProductRepository;
+import com.nike.dnp.repository.wishlist.WishListRepository;
 import com.nike.dnp.util.ImageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +43,10 @@ public class ProductService {
 	 * @author [윤태호]
 	 */
 	public final ProductRepository productRepository;
+
+	public final WishListRepository wishListRepository;
+
+	public final GoodsBasketRepository goodsBasketRepository;
 
 	/**
 	 * 제품 관리 리스트 페이징
@@ -154,7 +160,11 @@ public class ProductService {
 	public Optional<Product> delete(final ProductUpdateDTO productUpdateDTO) {
 		log.info("ProductService.delete");
 		final Optional<Product> product = productRepository.findById(productUpdateDTO.getGoodsSeq());
-		product.ifPresent(value -> value.delete(productUpdateDTO));
+		product.ifPresent(value -> {
+			value.delete(productUpdateDTO);
+			goodsBasketRepository.deleteByGoodsSeq(value.getGoodsSeq());
+			wishListRepository.deleteByGoodsSeq(value.getGoodsSeq());
+		});
 		return product;
 	}
 
@@ -188,7 +198,11 @@ public class ProductService {
 	public boolean deleteArray(final List<Product> productList,
 										 final ProductUpdateDTO productUpdateDTO) {
 		log.info("ProductService.deleteArray");
-		productList.forEach(product -> product.delete(productUpdateDTO));
+		productList.forEach(product -> {
+			product.delete(productUpdateDTO);
+			goodsBasketRepository.deleteByGoodsSeq(product.getGoodsSeq());
+			wishListRepository.deleteByGoodsSeq(product.getGoodsSeq());
+		});
 		return true;
 	}
 }

@@ -11,7 +11,7 @@ const routes = [
                 component: pages('common/folder-list'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'ASSET',
                     menuCode: 'ALL',
                     title: 'ALL',
@@ -22,7 +22,7 @@ const routes = [
                 component: pages('common/folder-list'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'ASSET',
                     menuCode: 'SP',
                     title: 'SP',
@@ -33,7 +33,7 @@ const routes = [
                 component: pages('common/folder-list'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'ASSET',
                     menuCode: 'SU',
                     title: 'SU',
@@ -44,7 +44,7 @@ const routes = [
                 component: pages('common/folder-list'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'ASSET',
                     menuCode: 'FA',
                     title: 'FA',
@@ -55,7 +55,7 @@ const routes = [
                 component: pages('common/folder-list'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'ASSET',
                     menuCode: 'HO',
                     title: 'HO',
@@ -66,7 +66,7 @@ const routes = [
                 component: pages('asset/upload'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'ASSET',
                     title: 'UPLOAD',
                 },
@@ -76,7 +76,7 @@ const routes = [
                 component: pages('common/folder-view'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'ASSET',
                 },
                 beforeEnter: (to, from, next) => {

@@ -70,11 +70,11 @@ public class ReportBasketService {
      */
     @Transactional
     public List<ReportBasket> save(final List<Long> reportFileSeqList, final AuthUserDTO authUserDTO) {
-        List<ReportBasket> reportBasketList = new ArrayList<>();
-        for (Long reportFileSeq : reportFileSeqList) {
-            Optional<ReportFile> reportFile = reportFileRepository.findById(reportFileSeq);
+        final List<ReportBasket> reportBasketList = new ArrayList<>();
+        for (final Long reportFileSeq : reportFileSeqList) {
+            final Optional<ReportFile> reportFile = reportFileRepository.findById(reportFileSeq);
             if (reportFile.isPresent()) {
-                ReportBasket savedReportBasket = reportBasketRepository.save(new ReportBasket().save(reportFileSeq, authUserDTO.getUserSeq()));
+                final ReportBasket savedReportBasket = reportBasketRepository.save(new ReportBasket().save(reportFileSeq, authUserDTO.getUserSeq()));
                 reportBasketList.add(savedReportBasket);
             }
         }
@@ -93,8 +93,8 @@ public class ReportBasketService {
      */
     @Transactional
     public ReportBasket delete(final Long reportBasketSeq) {
-        Optional<ReportBasket> reportBasket = reportBasketRepository.findById(reportBasketSeq);
-        ReportBasket savedReportBasket = reportBasket.orElseThrow(() -> new CodeMessageHandleException(
+        final Optional<ReportBasket> reportBasket = reportBasketRepository.findById(reportBasketSeq);
+        final ReportBasket savedReportBasket = reportBasket.orElseThrow(() -> new CodeMessageHandleException(
                 FailCode.ExceptionError.NOT_FOUND.name()
                 , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
         reportBasketRepository.delete(savedReportBasket);

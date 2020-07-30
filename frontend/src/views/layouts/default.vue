@@ -98,7 +98,7 @@ export default {
     components: {
         appHeader,
         AsideDefault: () => import('@/components/app-aside/default.vue'),
-        AsideFile: () => import('@/components/app-aside/default.vue'),
+        AsideFile: () => import('@/components/app-aside/file.vue'),
         AsideOrder: () => import('@/components/app-aside/order.vue'),
     },
     mounted() {

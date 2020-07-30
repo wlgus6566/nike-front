@@ -149,8 +149,8 @@ public class ProductResultDTO {
 	 *
 	 * @author [오지훈]
 	 */
-	@ApiModelProperty(name = "nickName", value = "유저 닉네임")
-	private String nickName;
+	@ApiModelProperty(name = "nickname", value = "유저 닉네임")
+	private String nickname;
 
 	/**
 	 * 카테고리 2 코드명

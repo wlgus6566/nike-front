@@ -11,7 +11,6 @@ import InformationRoutes from './information';
 import ManagementRoutes from './management';
 import MyPageRoutes from './mypage';
 import ErrorRoutes from './error';
-import testRoutes from './test';
 import PubRoutes from './pub';
 
 // Import methods
@@ -27,7 +26,7 @@ const router = new VueRouter({
         {
             path: '/',
             component: pages('main-page'),
-            meta: { layout: 'Default', aside: 'Default' },
+            meta: { layout: 'Default', aside: 'File' },
         },
         ...LoginRoutes,
         ...AssetRoutes,
@@ -39,9 +38,7 @@ const router = new VueRouter({
         ...InformationRoutes,
         ...MyPageRoutes,
         ...ErrorRoutes,
-
         ...PubRoutes,
-        ...testRoutes,
     ],
 });
 
