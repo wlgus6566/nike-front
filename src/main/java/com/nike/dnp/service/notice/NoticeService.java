@@ -33,6 +33,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class NoticeService {
 
+    /**
+     * The Notice repository
+     *
+     * @author [오지훈]
+     */
     private final NoticeRepository noticeRepository;
 
 
@@ -47,11 +52,9 @@ public class NoticeService {
      */
     public Page<NoticeArticleListDTO> findNoticePages(final NoticeSearchDTO noticeSearchDTO) {
         log.info("NoticeService.findNoticePages");
-
-        Page<NoticeArticleListDTO> noticeArticles = noticeRepository.findNoticePages(
-                noticeSearchDTO, PageRequest.of(noticeSearchDTO.getPage(), noticeSearchDTO.getSize()));
-
-        return noticeArticles;
+        return noticeRepository.findNoticePages(
+                noticeSearchDTO
+                , PageRequest.of(noticeSearchDTO.getPage(), noticeSearchDTO.getSize()));
     }
 
     /**
@@ -83,8 +86,7 @@ public class NoticeService {
     public NoticeArticle save(final NoticeSaveDTO noticeSaveDTO) {
         log.info("NoticeService.save");
 
-        NoticeArticle noticeArticle = new NoticeArticle();
-
+        final NoticeArticle noticeArticle = new NoticeArticle();
         noticeArticle.setNoticeArticleSectionCode(noticeSaveDTO.getNoticeArticleSectionCode());
         noticeArticle.setTitle(noticeSaveDTO.getTitle());
         noticeArticle.setContents(noticeSaveDTO.getContents());
@@ -97,7 +99,7 @@ public class NoticeService {
         }
         if (StringUtils.equalsIgnoreCase(noticeSaveDTO.getNoticeArticleSectionCode(), "NEWS")) {
             if (!ObjectUtils.isEmpty(noticeSaveDTO.getImageBase64())) {
-                FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
+                final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
                         ServiceCode.FileFolderEnumCode.FAQ.getFolder(), noticeSaveDTO.getImageBase64());
 
                 noticeArticle.setThumbnailFileName(fileResultDTO.getFileName());
@@ -138,11 +140,8 @@ public class NoticeService {
     @Transactional
     public NoticeArticle updateCustomerCenter(final NoticeUpdateDTO noticeUpdateDTO) {
         log.info("NoticeService.updateCustomerCenter");
-
         final Optional<NoticeArticle> updateNotice = noticeRepository.findById(noticeUpdateDTO.getNoticeArticleSeq());
-
         final NoticeArticle noticeArticle = updateNotice.orElse(new NoticeArticle());
-
         noticeArticle.setNoticeArticleSectionCode(noticeUpdateDTO.getNoticeArticleSectionCode());
         noticeArticle.setTitle(noticeUpdateDTO.getTitle());
         noticeArticle.setContents(noticeUpdateDTO.getContents());
@@ -153,7 +152,7 @@ public class NoticeService {
         }
         if (StringUtils.equalsIgnoreCase(noticeUpdateDTO.getNoticeArticleSectionCode(), "NEWS")) {
             if (!ObjectUtils.isEmpty(noticeUpdateDTO.getImageBase64())) {
-                FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
+                final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
                         ServiceCode.FileFolderEnumCode.FAQ.getFolder(), noticeUpdateDTO.getImageBase64());
 
                 noticeArticle.setThumbnailFileName(fileResultDTO.getFileName());

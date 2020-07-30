@@ -69,11 +69,11 @@ public class ContentsBasketService {
     @Transactional
     public List<ContentsBasket> save(final List<Long> contentsFileSeqList, final AuthUserDTO authUserDTO) {
         log.info("contentsBasketService.save");
-        List<ContentsBasket> savedBasketList = new ArrayList<>();
-        for (Long contentsFileSeq : contentsFileSeqList) {
-            Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
+        final List<ContentsBasket> savedBasketList = new ArrayList<>();
+        for (final Long contentsFileSeq : contentsFileSeqList) {
+            final Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
             if (contentsFile.isPresent()) {
-                ContentsBasket contentsBasket = contentsBasketRepository.save(new ContentsBasket().save(contentsFileSeq, authUserDTO));
+                final ContentsBasket contentsBasket = contentsBasketRepository.save(new ContentsBasket().save(contentsFileSeq, authUserDTO));
                 savedBasketList.add(contentsBasket);
             }
         }
@@ -92,7 +92,7 @@ public class ContentsBasketService {
     @Transactional
     public Optional<ContentsBasket> delete(final Long contentsBasketSeq) {
         log.info("ContentsBasketService.delete");
-        Optional<ContentsBasket> contentsBasket = contentsBasketRepository.findById(contentsBasketSeq);
+        final Optional<ContentsBasket> contentsBasket = contentsBasketRepository.findById(contentsBasketSeq);
         final ContentsBasket savedContentsBasket = contentsBasket.orElseThrow(() -> new CodeMessageHandleException(
                 FailCode.ExceptionError.NOT_FOUND.name()
                 , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));

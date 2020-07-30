@@ -27,8 +27,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class MainService {
 
     /**
+     * The constant SORT_BY
+     *
+     * @author [오지훈]
+     */
+    private final static String SORT_BY = "updateDt";
+
+    /**
      * 베너 서비스 (메인 비쥬얼 서비스)
-     * 
      *
      * @author [이소정]
      */
@@ -64,7 +70,7 @@ public class MainService {
      * @implNote
      */
     public MainResultDTO findMainInfo() {
-        MainResultDTO mainResultDTO = new MainResultDTO();
+        final MainResultDTO mainResultDTO = new MainResultDTO();
 
         // 메인 비쥬얼(베너)
         mainResultDTO.setMainVisual(bannerService.getBanner());
@@ -72,27 +78,27 @@ public class MainService {
         // 콘텐츠 (ASSET, TOOLKIT, FOUNDATION)
         mainResultDTO.setAssetContentsList(
                 contentsRepository.findRecentContents(ServiceCode.ContentsTopMenuCode.ASSET.toString(),
-                        PageRequest.of(0, 4, Sort.by("updateDt").descending())
+                        PageRequest.of(0, 4, Sort.by(SORT_BY).descending())
                 )
         );
         mainResultDTO.setToolKitContentsList(
                 contentsRepository.findRecentContents(ServiceCode.ContentsTopMenuCode.TOOLKIT.toString(),
-                        PageRequest.of(0, 2, Sort.by("updateDt").descending())
+                        PageRequest.of(0, 2, Sort.by(SORT_BY).descending())
                 )
         );
         mainResultDTO.setFoundationContentsList(
                 contentsRepository.findRecentContents(ServiceCode.ContentsTopMenuCode.FOUNDATION.toString(),
-                        PageRequest.of(0, 2, Sort.by("updateDt").descending())
+                        PageRequest.of(0, 2, Sort.by(SORT_BY).descending())
                 )
         );
 
         // REPORT
         mainResultDTO.setReportList(reportRepository.findRecentReport(
-                PageRequest.of(0, 4, Sort.by("updateDt").descending())
+                PageRequest.of(0, 4, Sort.by(SORT_BY).descending())
         ));
 
         // NOTICE
-        NoticeSearchDTO noticeSearchDTO = new NoticeSearchDTO();
+        final NoticeSearchDTO noticeSearchDTO = new NoticeSearchDTO();
         noticeSearchDTO.setNoticeArticleSectionCode(ServiceCode.NoticeArticleSectionEnumCode.NOTICE.toString());
         noticeSearchDTO.setPage(0);
         noticeSearchDTO.setSize(5);
@@ -100,7 +106,7 @@ public class MainService {
 
 
         // NEWS
-        NoticeSearchDTO newsSearchDTO = new NoticeSearchDTO();
+        final NoticeSearchDTO newsSearchDTO = new NoticeSearchDTO();
         newsSearchDTO.setNoticeArticleSectionCode(ServiceCode.NoticeArticleSectionEnumCode.NEWS.toString());
         newsSearchDTO.setPage(0);
         newsSearchDTO.setSize(2);

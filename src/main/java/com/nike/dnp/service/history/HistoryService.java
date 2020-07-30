@@ -89,8 +89,8 @@ public class HistoryService {
      * @param typeCd    the type cd
      * @return the history
      */
-    public RecentUpload saveRecentUploadHistory(Long folderSeq, String typeCd) {
-        RecentUpload recentUpload = new RecentUpload();
+    public RecentUpload saveRecentUploadHistory(final Long folderSeq, final String typeCd) {
+        final RecentUpload recentUpload = new RecentUpload();
         recentUpload.setTypeCd(typeCd);
         if (ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(typeCd)) {
             recentUpload.setReportSeq(folderSeq);
@@ -107,8 +107,8 @@ public class HistoryService {
      * @param typeCd    the type cd
      * @return the history
      */
-    public History saveViewHistory(Long folderSeq, String typeCd) {
-        History history = new History();
+    public History saveViewHistory(final Long folderSeq, final String typeCd) {
+        final History history = new History();
         history.setTypeCd(typeCd);
         if (ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(typeCd)) {
             history.setReportSeq(folderSeq);

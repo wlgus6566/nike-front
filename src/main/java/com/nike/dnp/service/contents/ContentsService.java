@@ -112,13 +112,16 @@ public class ContentsService {
      */
     public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO, final AuthUserDTO authUserDTO, final String topMenuCode, final String menuCode) {
         // 권한 검사
-        String searchMenuCode = menuCode.equals(ServiceCode.ContentsMenuCode.ALL.toString()) ? topMenuCode : topMenuCode + "_" + menuCode;
-        UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
+        final String searchMenuCode = menuCode.equals(ServiceCode.ContentsMenuCode.ALL.toString()) ? topMenuCode : topMenuCode + "_" + menuCode;
+        final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
         userContentsSearchDTO.setMenuCode(searchMenuCode);
         userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.CREATE.toString());
 
         // 권한에 따른 조건문
-        contentsSearchDTO.setExposureYn(userContentsService.isAuth(authUserDTO.getAuthSeq(), userContentsSearchDTO) ? null : "Y");
+        //contentsSearchDTO.setExposureYn(userContentsService.isAuth(authUserDTO.getAuthSeq(), userContentsSearchDTO) ? null : "Y");
+        if (!userContentsService.isAuth(authUserDTO.getAuthSeq(), userContentsSearchDTO)) {
+            contentsSearchDTO.setExposureYn("Y");
+        }
 
         // QueryDsl 기능 이용
         contentsSearchDTO.setUserAuthSeq(authUserDTO.getAuthSeq());
@@ -145,26 +148,25 @@ public class ContentsService {
 
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
-            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsSaveDTO.getImageBase64());
-
+            final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsSaveDTO.getImageBase64());
             contentsSaveDTO.setImageFileName(fileResultDTO.getFileName());
             contentsSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
             contentsSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
         }
         final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
-        List<ContentsFile> savedContentsFileList = new ArrayList<>();
+        final List<ContentsFile> savedContentsFileList = new ArrayList<>();
 
         // 컨텐츠 파일 저장
         if (!contentsSaveDTO.getContentsFileList().isEmpty()) {
-            for (ContentsFileSaveDTO contentsFileSaveDTO : contentsSaveDTO.getContentsFileList()) {
-                ContentsFile savedContentsFile = contentsFileRepository.save(new ContentsFile().save(savedContents, contentsFileSaveDTO));
+            for (final ContentsFileSaveDTO contentsFileSaveDTO : contentsSaveDTO.getContentsFileList()) {
+                final ContentsFile savedContentsFile = contentsFileRepository.save(new ContentsFile().save(savedContents, contentsFileSaveDTO));
                 savedContentsFileList.add(savedContentsFile);
             }
         }
         savedContents.setContentsFileList(savedContentsFileList);
 
         // 사용자 컨텐츠 권한 저장
-        UserContentsSaveDTO userContentsSaveDTO = new UserContentsSaveDTO();
+        final UserContentsSaveDTO userContentsSaveDTO = new UserContentsSaveDTO();
         userContentsSaveDTO.setChecks(contentsSaveDTO.getChecks());
         this.saveUserContentsAuth(savedContents.getContentsSeq(), userContentsSaveDTO);
 
@@ -195,12 +197,12 @@ public class ContentsService {
      * @implNote
      */
     public List<Long> findAllAuthUser(final List<UserContentsSaveDTO.AuthCheckDTO> authCheckList) {
-        List<Long> userSeqList = new ArrayList<>();
-        for (UserContentsSaveDTO.AuthCheckDTO authCheckDTO : authCheckList) {
+        final List<Long> userSeqList = new ArrayList<>();
+        for (final UserContentsSaveDTO.AuthCheckDTO authCheckDTO : authCheckList) {
             if ("Y".equals(authCheckDTO.getDetailAuthYn())) {
                 // authSeq 를 가지고 userSeq 목록 가져오기
-                List<UserAuth> userAuthList = userAuthRepository.findAllByAuthSeq(authCheckDTO.getAuthSeq());
-                for (UserAuth userAuth : userAuthList) {
+                final List<UserAuth> userAuthList = userAuthRepository.findAllByAuthSeq(authCheckDTO.getAuthSeq());
+                for (final UserAuth userAuth : userAuthList) {
                     userSeqList.add(userAuth.getUserSeq());
                 }
             }
@@ -222,7 +224,7 @@ public class ContentsService {
      */
     @Transactional
     public ContentsResultDTO findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
-        Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
+        final Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
         final Contents findContents = contents.orElseThrow(() -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
         findContents.updateReadCount(findContents.getReadCount());
 
@@ -252,8 +254,7 @@ public class ContentsService {
 
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(contentsUpdateDTO.getImageBase64())) {
-            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsUpdateDTO.getImageBase64());
-
+            final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsUpdateDTO.getImageBase64());
             contentsUpdateDTO.setFolderName(fileResultDTO.getFileName());
             contentsUpdateDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
             contentsUpdateDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
@@ -264,15 +265,15 @@ public class ContentsService {
         // contents File
         final List<ContentsFile> beforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contents.get().getContentsSeq(), "Y");
         final List<ContentsFile> lastBeforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contents.get().getContentsSeq(), "Y");
-        List<ContentsFileUpdateDTO> newFileList = contentsUpdateDTO.getContentsFileList();
+        final List<ContentsFileUpdateDTO> newFileList = contentsUpdateDTO.getContentsFileList();
 
         // 기존에 있는 파일 목록과 DTO받은 파일 목록 비교해서
         // case1.기본목록O, 새로운목록X : useYn = 'N' update
         // case2.기존목록X, 새로운목록O : save
         // case3.기존목록O, 새로운목록O : update
         if (!beforeFileList.isEmpty() && !newFileList.isEmpty()) {
-            for (ContentsFile beforeFile : beforeFileList) {
-                for (ContentsFileUpdateDTO newFile : newFileList) {
+            for (final ContentsFile beforeFile : beforeFileList) {
+                for (final ContentsFileUpdateDTO newFile : newFileList) {
                     if (beforeFile.getContentsFileSeq() == newFile.getContentsFileSeq()) {
                         lastBeforeFileList.remove(beforeFile);
                     }
@@ -281,25 +282,25 @@ public class ContentsService {
         }
 
         if (!newFileList.isEmpty()) {
-            for (ContentsFileUpdateDTO contentsFileUpdateDTO : newFileList) {
-                Long contentsFileSeq = contentsFileUpdateDTO.getContentsFileSeq();
-                ContentsFile saveContentsFile = new ContentsFile().newContentsFile(contents.get().getContentsSeq(), contentsFileUpdateDTO);
-                if (null != contentsFileSeq) {
-                    Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileUpdateDTO.getContentsFileSeq());
-                    contentsFile.ifPresent(value -> value.update(contentsFileUpdateDTO));
-                } else {
+            for (final ContentsFileUpdateDTO contentsFileUpdateDTO : newFileList) {
+                final Long contentsFileSeq = contentsFileUpdateDTO.getContentsFileSeq();
+                final ContentsFile saveContentsFile = new ContentsFile().newContentsFile(contents.get().getContentsSeq(), contentsFileUpdateDTO);
+                if (ObjectUtils.isEmpty(contentsFileSeq)) {
                     contentsFileRepository.save(saveContentsFile);
+                } else {
+                    final Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileUpdateDTO.getContentsFileSeq());
+                    contentsFile.ifPresent(value -> value.update(contentsFileUpdateDTO));
                 }
             }
         }
         if (!lastBeforeFileList.isEmpty()) {
-            for (ContentsFile contentsFile : beforeFileList) {
+            for (final ContentsFile contentsFile : beforeFileList) {
                 contentsFile.updateUseYn("N");
             }
         }
 
         // 사용자 컨텐츠 권한 저장
-        UserContentsSaveDTO userContentsSaveDTO = new UserContentsSaveDTO();
+        final UserContentsSaveDTO userContentsSaveDTO = new UserContentsSaveDTO();
         userContentsSaveDTO.setChecks(contentsUpdateDTO.getChecks());
         this.saveUserContentsAuth(contentsUpdateDTO.getContentsSeq(), userContentsSaveDTO);
 
@@ -330,12 +331,12 @@ public class ContentsService {
     public Optional<Contents> delete(final Long contentsSeq) {
         log.info("contentsService.delete");
 
-        Optional<Contents> contents = contentsRepository.findById(contentsSeq);
+        final Optional<Contents> contents = contentsRepository.findById(contentsSeq);
         contents.ifPresent(value -> value.delete());
 
-        List<ContentsFile> contentsFileList = contents.get().getContentsFileList();
+        final List<ContentsFile> contentsFileList = contents.get().getContentsFileList();
         if (!contentsFileList.isEmpty()) {
-            for (ContentsFile contentsFile : contentsFileList) {
+            for (final ContentsFile contentsFile : contentsFileList) {
                 contentsFile.updateUseYn("N");
             }
         }
@@ -354,13 +355,13 @@ public class ContentsService {
      */
     @Transactional
     public ResponseEntity<Resource> downloadContentsFile(final Long contentsFileSeq) {
-        Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
+        ResponseEntity<Resource> resource = null;
+        final Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
         if (contentsFile.isPresent()) {
             contentsFile.ifPresent(value -> value.updateDownloadCount(contentsFile.get().getDownloadCount()));
-            return FileUtil.fileDownload(contentsFile.get().getFilePhysicalName());
-        } else {
-            return null;
+            resource = FileUtil.fileDownload(contentsFile.get().getFilePhysicalName());
         }
+        return resource;
     }
 
 
@@ -388,20 +389,19 @@ public class ContentsService {
     public void sendEmail(final ContentsMailSendDTO contentsMailSendDTO) {
 
         // 컨텐츠 조회
-        Optional<Contents> contents = Optional.ofNullable(contentsRepository.findById(contentsMailSendDTO.getContentsSeq()).orElseThrow(()
+        final Optional<Contents> contents = Optional.ofNullable(contentsRepository.findById(contentsMailSendDTO.getContentsSeq()).orElseThrow(()
                 -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
 
         // 수신자 목록 조회
-        List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsMailSendDTO.getContentsSeq());
+        final List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsMailSendDTO.getContentsSeq());
 
         // 이메일 발송
         if (!emailAuthUserList.isEmpty()) {
-            for (ContentsUserEmailDTO userEmailDTO : emailAuthUserList) {
-                SendDTO sendDTO = new SendDTO();
+            for (final ContentsUserEmailDTO userEmailDTO : emailAuthUserList) {
+                final SendDTO sendDTO = new SendDTO();
                 sendDTO.setEmail(userEmailDTO.getUserId());
                 sendDTO.setContentsUrl(contentsMailSendDTO.getContentsUrl());
                 sendDTO.setContentsImg(userEmailDTO.getImageFilePhysicalName());
-
                 sendDTO.setContentsName(contents.get().getFolderName());
                 mailService.sendMail(
                         ServiceCode.EmailTypeEnumCode.CONTENTS_UPDATE.toString(),

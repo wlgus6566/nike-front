@@ -85,7 +85,7 @@ public class AgencyService {
      */
     @Transactional
     public Optional<Agency> update(final AgencyUpdateDTO agencyUpdateDTO) {
-        Optional<Agency> savedAgency = Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencyUpdateDTO.getAgencySeq(), "Y").orElseThrow(() ->
+        final Optional<Agency> savedAgency = Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencyUpdateDTO.getAgencySeq(), "Y").orElseThrow(() ->
                 new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
         savedAgency.ifPresent(value -> value.update(agencyUpdateDTO));
         return savedAgency;
@@ -102,7 +102,7 @@ public class AgencyService {
      */
     @Transactional
     public Optional<Agency> delete(final long agencySeq) {
-        Optional<Agency> findAgency =Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencySeq, "Y").orElseThrow(() ->
+        final Optional<Agency> findAgency =Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencySeq, "Y").orElseThrow(() ->
                 new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
         findAgency.ifPresent(value -> value.updateUseYn("N"));
         return findAgency;

@@ -11,6 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The Class Report answer service.
+ *
+ * @author [오지훈]
+ * @since 2020. 7. 30. 오후 3:56:52
+ */
 @Slf4j
 @Service
 @Transactional(readOnly = true)
@@ -51,8 +57,7 @@ public class ReportAnswerService {
     @Transactional
     public ReportAnswer save(final ReportAnswerSaveDTO reportAnswerSaveDTO) {
         log.info("ReportAnswerService.save");
-        final ReportAnswer savedReportAnswer = reportAnswerRepository.save(new ReportAnswer().save(reportAnswerSaveDTO));
-        return savedReportAnswer;
+        return reportAnswerRepository.save(new ReportAnswer().save(reportAnswerSaveDTO));
     }
 
     /**
@@ -67,7 +72,7 @@ public class ReportAnswerService {
     @Transactional
     public Optional<ReportAnswer> delete(final Long answerSeq) {
         log.info("ReportAnswerService.delete");
-        Optional<ReportAnswer> reportAnswer = reportAnswerRepository.findById(answerSeq);
+        final Optional<ReportAnswer> reportAnswer = reportAnswerRepository.findById(answerSeq);
         reportAnswer.ifPresent(value -> value.updateUseYn("Y"));
         return reportAnswer;
 
