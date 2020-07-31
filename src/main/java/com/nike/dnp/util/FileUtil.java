@@ -201,7 +201,7 @@ public class FileUtil {
 										 final boolean resize,
 										 final String resizeExt) throws IOException {
 		log.info("FileUtil.fileSave");
-		StopWatch stopWatch = new StopWatch();
+		final StopWatch stopWatch = new StopWatch();
 		stopWatch.start("fileUpload");
 
 		final String extension = StringUtils.getFilenameExtension(uploadFile.getOriginalFilename());
@@ -284,18 +284,16 @@ public class FileUtil {
 				fileResultDTO.setThumbnailSize(thumbnailFile.length());
 			}
 
-
-
 		}else if(resize && (uploadFile.getContentType().toUpperCase(Locale.getDefault()).contains("VIDEO"))){
 
 			// 사이즈 변환시 700:394 를 변경 하면 됨
 			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail.mp4";
-			String[] command = new String[]{ffmpeg+File.separator+ffmpegCommand,"-y","-i",toFile.getPath(),"-vf"
+			final String[] command = {ffmpeg+File.separator+ffmpegCommand,"-y","-i",toFile.getPath(),"-vf"
 					,"scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
 					,thumbnailPath};
 			log.debug("command.toString() {}", command.toString());
 			stopWatch.start("videoResize");
-			ProcessBuilder processBuilder = new ProcessBuilder(command);
+			final ProcessBuilder processBuilder = new ProcessBuilder(command);
 			processBuilder.redirectErrorStream(true);
 			Process process = null;
 
@@ -317,7 +315,7 @@ public class FileUtil {
 
 			// 정상 종료가 되지 않았을 경우
 			if(process.exitValue() != 0){
-				System.out.println("변환 중 에러 발생");
+				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
 			log.debug("stopWatch.getLastTaskTimeMillis() {}", stopWatch.getLastTaskTimeMillis());
@@ -418,9 +416,9 @@ public class FileUtil {
 		for(final File file : files){
 			LocalDateTime updateDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), TimeZone.getDefault().toZoneId());
 			updateDate = updateDate.plusHours(24);
-			LocalDateTime today = LocalDateTime.now();
+			final LocalDateTime today = LocalDateTime.now();
 			if(updateDate.isBefore(today) && file.isFile()){
-				String awsDeleteFile = file.getPath().replace(root, "");
+				final String awsDeleteFile = file.getPath().replace(root, "");
 				file.delete();
 				try{
 					S3Util.fileDelete(awsDeleteFile);
@@ -472,11 +470,11 @@ public class FileUtil {
 	 * @author [윤태호]
 	 * @since 2020. 7. 28. 오후 2:19:30
 	 */
-	public static ResponseEntity<Resource> s3FileDownload(final String path, final String fileName) throws IOException {
+	public static ResponseEntity<Resource> s3FileDownload(final String path,final String fileName) throws IOException {
 		log.info("FileUtil.s3FileDownload");
-		S3ObjectInputStream s3ObjectInputStream = S3Util.getFile(path);
+		final S3ObjectInputStream s3ObjectInputStream = S3Util.getFile(path);
 		final HttpHeaders headers = new HttpHeaders();
-		Resource resource = new ByteArrayResource(IOUtils.toByteArray(s3ObjectInputStream));
+		final Resource resource = new ByteArrayResource(IOUtils.toByteArray(s3ObjectInputStream));
 		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
 		headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.contentLength()));
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
@@ -496,16 +494,13 @@ public class FileUtil {
 		// InputStream.read() 에서 블럭상태에 빠지기 때문에 따로 쓰레드를 돌려서 스트림을 소비한다.
 		new Thread(() -> {
 			try{
-				BufferedReader br = new BufferedReader(new InputStreamReader(is));
+				final BufferedReader br = new BufferedReader(new InputStreamReader(is));
 				String cmd;
 				while((cmd = br.readLine()) != null){ // 읽을 라인이 없을때까지 계속 반복
-					//log.debug("cmd {}", cmd);
+					log.debug("cmd {}", cmd);
 				}
-			}catch(IOException exception){
-				throw (CodeMessageHandleException) new CodeMessageHandleException(
-						FailCode.ExceptionError.ERROR.name()
-						, exception.getMessage()
-				);
+			}catch(IOException e){
+				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 		}).start();
 

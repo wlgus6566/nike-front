@@ -156,7 +156,7 @@ public class S3Util {
 	 */
 	public static void init(){
 		log.debug("S3 Init");
-		AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
+		final AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
 		client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(awsCredentials)).withRegion(region).build();
 
 	}
@@ -172,7 +172,7 @@ public class S3Util {
 	 */
 	public static void upload(final FileResultDTO fileResultDTO) {
 		log.info("S3Util.upload");
-		StopWatch stopWatch = new StopWatch("S3Util.upload");
+		final StopWatch stopWatch = new StopWatch("S3Util.upload");
 		if(!ObjectUtils.isEmpty(fileResultDTO.getFilePhysicalName())){
 			stopWatch.start("original upload");
 			s3upload(fileResultDTO.getFilePhysicalName());
@@ -204,11 +204,11 @@ public class S3Util {
 	 * @author [윤태호]
 	 * @since 2020. 7. 31. 오전 11:15:34
 	 */
-	private static void s3upload(String filePath){
-		File file = new File(root + filePath);
-		String uploadUrl = awsPathReplace(filePath);
+	private static void s3upload(final String filePath){
+		final File file = new File(root + filePath);
+		final String uploadUrl = awsPathReplace(filePath);
 		client.putObject(new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.PublicRead));
-		URL url = client.getUrl(bucket, uploadUrl);
+		final URL url = client.getUrl(bucket, uploadUrl);
 		log.debug("url.getPath() {}", url.getPath());
 	}
 
@@ -223,7 +223,7 @@ public class S3Util {
 	 * @implNote
 	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
-	public static String fileCopy(final String oldFile, final String newFolder, final boolean oldFileDelete) {
+	public static String fileCopy(final String oldFile, final String newFolder,final boolean oldFileDelete) {
 		log.info("S3Util.fileCopy");
 		final String awsOldPath = awsPathReplace(oldFile);
 		final String fileName = StringUtils.getFilename(awsOldPath);
@@ -319,8 +319,8 @@ public class S3Util {
 	 */
 	public static S3ObjectInputStream getFile(final String path) {
 		log.info("S3Util.getFile");
-		String awsPath = awsPathReplace(path);
-		S3Object object = client.getObject(bucket, awsPath);
+		final String awsPath = awsPathReplace(path);
+		final S3Object object = client.getObject(bucket, awsPath);
 		return object.getObjectContent();
 	}
 
@@ -335,13 +335,13 @@ public class S3Util {
 	 * @author [윤태호]
 	 * @since 2020. 7. 29. 오후 2:03:53
 	 */
-	public static String upload(final MultipartFile multipartFile, final String folder) throws IOException {
+	public static String upload(final MultipartFile multipartFile,final String folder) throws IOException {
 		log.info("S3Util.upload");
-		String ext = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
-		String awsPath =folder+"/"+FileUtil.makeFileName()+"."+ext;
-		ObjectMetadata objectMetadata = new ObjectMetadata();
+		final String ext = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
+		final String awsPath =folder+"/"+FileUtil.makeFileName()+"."+ext;
+		final ObjectMetadata objectMetadata = new ObjectMetadata();
 		client.putObject(new PutObjectRequest(bucket,awsPath,multipartFile.getInputStream(),objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead));
-		URL url = client.getUrl(bucket, awsPath);
+		final URL url = client.getUrl(bucket, awsPath);
 		log.debug("url.toString() {}", url.toString());
 		return url.getPath();
 	}
