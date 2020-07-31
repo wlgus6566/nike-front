@@ -1,5 +1,6 @@
 package com.nike.dnp.controller.contents;
 
+import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.*;
@@ -16,9 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -124,10 +127,12 @@ public class ContentsController {
             + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n"
     )
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 등록", value = "/{topMenuCode}/{menuCode}")
+    @ValidField
     public SingleResult<Contents> saveContents(
-            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
-            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @RequestBody final ContentsSaveDTO contentsSaveDTO
+            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode
+            , @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode
+            , @RequestBody @Valid final ContentsSaveDTO contentsSaveDTO
+            , @ApiIgnore final BindingResult result
     ) {
         contentsSaveDTO.setTopMenuCode(topMenuCode);
         contentsSaveDTO.setMenuCode(menuCode);
@@ -160,9 +165,9 @@ public class ContentsController {
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = " 컨텐츠 상세조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}")
     public SingleResult<ContentsResultDTO> findContents(
-            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
-            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
+            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode
+            , @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode
+            , @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
         return responseService.getSingleResult(contentsService.findByContentsSeq(contentsSeq, topMenuCode, menuCode));
     }
 
@@ -186,11 +191,13 @@ public class ContentsController {
             + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n")
     @PutMapping(name = "컨텐츠 수정", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public SingleResult<Contents> updateContents(
-            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
-            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq,
-            @ApiParam(name="contentsUpdateDTO", value = "Contents 수정 Json") @RequestBody final ContentsUpdateDTO contentsUpdateDTO
+            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode
+            , @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode
+            , @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq
+            , @ApiParam(name="contentsUpdateDTO", value = "Contents 수정 Json") @RequestBody @Valid final ContentsUpdateDTO contentsUpdateDTO
+            , @ApiIgnore final BindingResult result
     ) {
         contentsUpdateDTO.setTopMenuCode(topMenuCode);
         contentsUpdateDTO.setMenuCode(menuCode);
@@ -219,34 +226,29 @@ public class ContentsController {
     @DeleteMapping(name = "컨텐츠 삭제", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Contents> deleteContents(
-            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
-            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq
+            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode
+            , @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode
+            , @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq
     ) {
         log.info("ContentsController.delete");
         return responseService.getSingleResult(contentsService.delete(contentsSeq));
     }
 
     /**
-     * 컨텐츠 다운로드
+     * 콘텐츠 파일 다운로드
      *
-     * @param topMenuCode     the top menu code
-     * @param menuCode        the menu code
      * @param contentsFileSeq the contents file seq
      * @return the string
      * @author [이소정]
-     * @implNote
-     * @apiNote
+     * @implNote 콘텐츠 파일 다운로드
      * @since 2020. 7. 15. 오후 6:30:45
      */
-    @ApiOperation(value = "컨텐츠 다운로드", notes = REQUEST_CHARACTER)
-    @PostMapping(name = "컨텐츠 다운로드", value = "/{topMenuCode}/{menuCode}/download/{contentsFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiOperation(value = "컨텐츠 파일 다운로드", notes = REQUEST_CHARACTER)
+    @GetMapping(name = "컨텐츠 파일 다운로드", value = "/download/{contentsFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public CommonResult downloadContents(
-            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
-            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
             @ApiParam(name="contentsFileSeq", value = "컨텐츠 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long contentsFileSeq
     ) {
-        responseService.getSingleResult(contentsService.downloadContentsFile(contentsFileSeq));
+        responseService.getSingleResult(contentsService.downloadFile(contentsFileSeq));
         return responseService.getSuccessResult();
     }
 
@@ -261,8 +263,10 @@ public class ContentsController {
      */
     @ApiOperation(value = "컨텐츠 알림메일전송", notes = REQUEST_CHARACTER)
     @PostMapping(name = "컨텐츠 알림메일전송", value = "/sendMail", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public CommonResult sendEmail(
-            @RequestBody final ContentsMailSendDTO contentsMailSendDTO
+            @RequestBody @Valid final ContentsMailSendDTO contentsMailSendDTO
+            , @ApiIgnore final BindingResult result
     ) {
         contentsService.sendEmail(contentsMailSendDTO);
         return responseService.getSuccessResult();
@@ -271,4 +275,5 @@ public class ContentsController {
 
 
 }
+
 

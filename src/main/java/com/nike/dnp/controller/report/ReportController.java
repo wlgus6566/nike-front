@@ -7,6 +7,7 @@ import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.dto.report.ReportUpdateDTO;
 import com.nike.dnp.entity.report.Report;
+import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.auth.AuthService;
@@ -74,7 +75,6 @@ public class ReportController {
      * Find all reports single result.
      *
      * @param reportSearchDTO the report search dto
-     * @param authUserDTO     the auth user dto
      * @return the single result
      * @author [이소정]
      * @implNote 보고서 목록 조회
@@ -196,7 +196,6 @@ public class ReportController {
     /**
      * Find by auth depth single result.
      *
-     * @param authUserDTO the auth user dto
      * @return the single result
      * @author [오지훈]
      * @implNote 그룹(권한) depth별 목록 조회
@@ -212,6 +211,23 @@ public class ReportController {
         log.info("AuthController.findByAuthDepth");
         return responseService.getSingleResult(
                 authService.findByAuthDepth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString()));
+    }
+
+    /**
+     * 보고서 파일 다운로드
+     *
+     * @return the string
+     * @author [이소정]
+     * @implNote 보고서 파일 다운로드
+     * @since 2020. 7. 15. 오후 6:30:45
+     */
+    @ApiOperation(value = "보고서 파일 다운로드", notes = REQUEST_CHARACTER)
+    @PostMapping(name = "보고서 파일 다운로드", value = "/download/{reportFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public CommonResult downloadFile(
+            @ApiParam(name="reportFileSeq", value = "보고서 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long reportFileSeq
+    ) {
+        responseService.getSingleResult(reportService.downloadFile(reportFileSeq));
+        return responseService.getSuccessResult();
     }
 }
 

@@ -3,6 +3,8 @@ package com.nike.dnp.dto.contents;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+
 
 /**
  * The Class Contents update dto.
@@ -23,6 +25,7 @@ public class ContentsMailSendDTO {
      *
      * @author [이소정]
      */
+    @NotNull(message = "contentsMailSend.contentsSeq")
     @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스", example = "4")
     private Long contentsSeq;
 
@@ -31,6 +34,7 @@ public class ContentsMailSendDTO {
      *
      * @author [이소정]
      */
+    @NotNull(message = "contentsMailSend.topMenuCode")
     @ApiModelProperty(name = "topMenuCode", value = "컨텐츠 url", example = "/contents/detail/4")
     private String contentsUrl;
 

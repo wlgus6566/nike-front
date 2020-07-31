@@ -3,6 +3,8 @@ package com.nike.dnp.dto.contents;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+
 
 /**
  * The Class Contents file update dto.
@@ -22,6 +24,7 @@ public class ContentsFileUpdateDTO {
      *
      * @author [이소정]
      */
+    @NotNull(message = "contentsFile.contentsFileSeq")
     @ApiModelProperty(name = "contentsFileSeq", value = "컨텐츠 파일 시퀀스", required = true, example = "7")
     private Long contentsFileSeq;
 
@@ -31,6 +34,7 @@ public class ContentsFileUpdateDTO {
      *
      * @author [이소정]
      */
+    @NotNull(message = "contentsFile.contentsSeq")
     @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스", example = "10")
     private Long contentsSeq;
 
@@ -39,6 +43,7 @@ public class ContentsFileUpdateDTO {
      *
      * @author [이소정]
      */
+    @NotNull(message = "contentsFile.fileSectionCode")
     @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드(ASSET/GUIDE/VIDEO)", required = true, example = "GUIDE")
     private String fileSectionCode;
 
@@ -47,6 +52,7 @@ public class ContentsFileUpdateDTO {
      *
      * @author [이소정]
      */
+    @NotNull(message = "contentsFile.fileKindCode")
     @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드(FILE/VIDEO/VR)", required = true, example = "VIDEO")
     private String fileKindCode;
 
@@ -159,6 +165,7 @@ public class ContentsFileUpdateDTO {
      *
      * @author [이소정]
      */
+    @NotNull(message = "contentsFile.fileOrder")
     @ApiModelProperty(name = "fileOrder", value = "파일 순서", example = "1")
     private Long fileOrder;
 

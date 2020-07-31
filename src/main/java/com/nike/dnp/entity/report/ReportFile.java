@@ -373,19 +373,16 @@ public class ReportFile extends BaseTimeEntity {
         log.info("Report.updateUseYn");
         this.useYn = useYn;
     }
-//
-//    TODO[lsj] 추후 삭제 예정 by.sojeong.lee 2020.07.20
-//    보고서파일은 다운로드수 조회 X
 
-//    /**
-//     * Update download count.
-//     *
-//     * @param downloadCount the download count
-//     * @author [이소정]
-//     * @since 2020. 7. 8. 오후 5:47:39
-//     * @implNote
-//     */
-//    public void updateDownloadCount(final Long downloadCount) {
-//        this.downloadCount = downloadCount + 1;
-//    }
+    /**
+     * Update download count.
+     *
+     * @param downloadCount the download count
+     * @author [이소정]
+     * @implNote 보고서 다운로드 수 1 더하기
+     * @since 2020. 7. 8. 오후 5:47:39
+     */
+    public void updateDownloadCount(final Long downloadCount) {
+        this.downloadCount = downloadCount + 1;
+    }
 }

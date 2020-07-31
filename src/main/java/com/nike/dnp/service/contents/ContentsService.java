@@ -138,6 +138,23 @@ public class ContentsService {
     }
 
     /**
+     * Check validation.
+     *
+     * @param campaignPeriodSectionCode the campaign period section code
+     * @author [이소정]
+     * @implNote 캠페인 기간 구분 코드에 따른 validation check
+     *            날짜선택:SELECT/365:EVERY
+     * @since 2020. 7. 31. 오후 5:43:32
+     */
+    public void checkValidation(final String campaignPeriodSectionCode, final String campaignBeginDt, final String campaignEndDt) {
+        if (campaignPeriodSectionCode.equals(ServiceCode.ContentsCampaignPeriodCode.SELECT.toString())) {
+            if (null == campaignBeginDt || null == campaignEndDt) {
+//                new CodeMessageHandleException(FailCode.ExceptionError..name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))
+            }
+        }
+    }
+
+    /**
      * Save contents.
      *
      * @param contentsSaveDTO the contents save dto
@@ -414,7 +431,7 @@ public class ContentsService {
      * @since 2020. 7. 16. 오후 2:51:01
      */
     @Transactional
-    public ResponseEntity<Resource> downloadContentsFile(final Long contentsFileSeq) {
+    public ResponseEntity<Resource> downloadFile(final Long contentsFileSeq) {
         Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
         if (contentsFile.isPresent()) {
             contentsFile.ifPresent(value -> value.updateDownloadCount(contentsFile.get().getDownloadCount()));

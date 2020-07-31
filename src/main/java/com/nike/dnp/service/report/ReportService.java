@@ -1,17 +1,11 @@
 package com.nike.dnp.service.report;
 
-import com.google.firebase.database.core.Repo;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
-import com.nike.dnp.dto.auth.AuthUserDTO;
-import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
-import com.nike.dnp.dto.contents.ContentsFileUpdateDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.report.*;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
-import com.nike.dnp.entity.contents.Contents;
-import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.entity.user.UserAuth;
@@ -21,18 +15,16 @@ import com.nike.dnp.repository.report.ReportRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
 import com.nike.dnp.service.alarm.AlarmService;
 import com.nike.dnp.service.auth.AuthService;
-import com.nike.dnp.service.contents.ContentsService;
 import com.nike.dnp.service.history.HistoryService;
 import com.nike.dnp.service.user.UserContentsService;
-import com.nike.dnp.util.ImageUtil;
-import com.nike.dnp.util.MessageUtil;
-import com.nike.dnp.util.S3Util;
-import com.nike.dnp.util.SecurityUtil;
+import com.nike.dnp.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -114,7 +106,7 @@ public class ReportService {
      * @since 2020. 7. 8. 오후 5:28:17
      */
     public Page<Report> findAllPaging(final ReportSearchDTO reportSearchDTO) {
-
+        log.info("ReportService.findAllPaging");
         // 권한 검색 조건
         List<Long> authSeqList = new ArrayList<>();
         if (null != reportSearchDTO.getGroupSeq()) {
@@ -197,6 +189,7 @@ public class ReportService {
      */
     @Transactional
     public Report findByReportSeq(final Long reportSeq) {
+        log.info("ReportService.findByReportSeq");
         Report findReport = reportRepository.findByReportSeq(reportSeq);
         findReport.updateReadCount(findReport.getReadCount());
 
@@ -204,20 +197,6 @@ public class ReportService {
         historyService.saveViewHistory(reportSeq, ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
 
         return findReport;
-    }
-
-    /**
-     * Find by id optional.
-     *
-     * @param reportSeq the report seq
-     * @return the optional
-     * @author [이소정]
-     * @implNote
-     * @since 2020. 7. 30. 오후 2:58:57
-     */
-    public Optional<Report> findById(final Long reportSeq) {
-        return Optional.ofNullable(reportRepository.findById(reportSeq).orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
     }
 
     /**
@@ -298,81 +277,6 @@ public class ReportService {
     }
 
     /**
-     * S 3 file copy update report file save dto.
-     *
-     * @param reportFileSaveDTO the report file save dto
-     * @return the report file save dto
-     * @author [이소정]
-     * @implNote 보고서 저장 > 파일 경로(temp -> report) 변경 후 set
-     * @since 2020. 7. 28. 오후 5:21:39
-     */
-    public ReportFileSaveDTO s3FileCopySave(final ReportFileSaveDTO reportFileSaveDTO) {
-        reportFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getFilePhysicalName()));
-        reportFileSaveDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getThumbnailFilePhysicalName()));
-        reportFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getThumbnailFilePhysicalName()));
-        return reportFileSaveDTO;
-    }
-
-    /**
-     * S 3 file copy update contents file save dto.
-     *
-     * @param reportFileUpdateDTO the report file update dto
-     * @return the contents file save dto
-     * @author [이소정]
-     * @implNote 보고서 수정 > 파일 경로(temp -> report) 변경 후 set
-     * @since 2020. 7. 28. 오후 4:05:42
-     */
-    public ReportFileUpdateDTO s3FileCopyUpdate(final ReportFileUpdateDTO reportFileUpdateDTO) {
-        reportFileUpdateDTO.setFilePhysicalName(this.fileMoveTempToRealPath(reportFileUpdateDTO.getFilePhysicalName()));
-        reportFileUpdateDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileUpdateDTO.getThumbnailFilePhysicalName()));
-        reportFileUpdateDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileUpdateDTO.getThumbnailFilePhysicalName()));
-        return reportFileUpdateDTO;
-    }
-
-    /**
-     * Temp to real path file move string.
-     *
-     * @param filePhysicalName the file physical name
-     * @return the string
-     * @author [이소정]
-     * @implNote 보고서 파일 경로 temp -> report
-     * @since 2020. 7. 30. 오후 2:58:57
-     */
-    public String fileMoveTempToRealPath(final String filePhysicalName) {
-        String imgPath = filePhysicalName;
-        if (null  != filePhysicalName) {
-            imgPath = S3Util.fileCopyAndOldFileDelete(filePhysicalName, ServiceCode.FileFolderEnumCode.REPORT.getFolder());
-        }
-        return imgPath;
-    }
-
-    /**
-     * 보고서 상세 권한 있는 그룹의 회원 목록
-     *
-     * @return the list
-     * @author [이소정]
-     * @implNote 보고서 상세 권한 있는 그룹의 회원 목록
-     * @since 2020. 7. 24. 오후 8:20:01
-     */
-    public List<Long> findAllAuthUser() {
-        UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
-        userContentsSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
-        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
-        List<AuthReturnDTO> authList = userContentsService.getAuthList(userContentsSearchDTO);
-
-        List<Long> userSeqList  = new ArrayList<>();
-        for (AuthReturnDTO authReturnDTO : authList) {
-            // authSeq 를 가지고 userSeq 목록 가져오기
-            List<UserAuth> userAuthList = userAuthRepository.findAllByAuthSeq(authReturnDTO.getAuthSeq());
-            for (UserAuth userAuth : userAuthList) {
-                userSeqList.add(userAuth.getUserSeq());
-            }
-        }
-        return userSeqList;
-    }
-
-
-    /**
      * Delete optional.
      *
      * @param reportSeq the report seq
@@ -383,6 +287,7 @@ public class ReportService {
      */
     @Transactional
     public Report delete(final Long reportSeq) {
+        log.info("ReportService.delete");
         Optional<Report> report = this.findById(reportSeq);
         Report savedReport = report.get();
         report.ifPresent(value -> value.updateUseYn("N"));
@@ -408,9 +313,137 @@ public class ReportService {
     @Transactional
     public void deleteReport(final LocalDateTime beforeDate) {
         log.info("ReportService.deleteContents");
-        final List<Report> reportList
-                = reportRepository.findByUpdateDtBefore(beforeDate);
+        final List<Report> reportList = reportRepository.findByUpdateDtBefore(beforeDate);
         reportRepository.deleteAll(reportList);
+    }
+
+    /**
+     * Download file response entity.
+     *
+     * @param reportFileSeq the report file seq
+     * @return the response entity
+     * @author [이소정]
+     * @implNote 보고서 파일 다운로드
+     * @since 2020. 7. 31. 오후 3:24:10
+     */
+    @Transactional
+    public ResponseEntity<Resource> downloadFile(final Long reportFileSeq) {
+        log.info("ReportService.downloadFile");
+        Optional<ReportFile> reportFile = this.findByFileId(reportFileSeq);
+        if (reportFile.isPresent()) {
+            reportFile.ifPresent(value -> value.updateDownloadCount(reportFile.get().getDownloadCount()));
+            return FileUtil.fileDownload(reportFile.get().getFilePhysicalName());
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 보고서 상세 권한 있는 그룹의 회원 목록
+     *
+     * @return the list
+     * @author [이소정]
+     * @implNote 보고서 상세 권한 있는 그룹의 회원 목록
+     * @since 2020. 7. 24. 오후 8:20:01
+     */
+    public List<Long> findAllAuthUser() {
+        log.info("ReportService.findAllAuthUser");
+        UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
+        userContentsSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
+        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+        List<AuthReturnDTO> authList = userContentsService.getAuthList(userContentsSearchDTO);
+
+        List<Long> userSeqList  = new ArrayList<>();
+        for (AuthReturnDTO authReturnDTO : authList) {
+            // authSeq 를 가지고 userSeq 목록 가져오기
+            List<UserAuth> userAuthList = userAuthRepository.findAllByAuthSeq(authReturnDTO.getAuthSeq());
+            for (UserAuth userAuth : userAuthList) {
+                userSeqList.add(userAuth.getUserSeq());
+            }
+        }
+        return userSeqList;
+    }
+
+    /**
+     * Find by id optional.
+     *
+     * @param reportSeq the report seq
+     * @return the optional
+     * @author [이소정]
+     * @implNote 보고서 seq 로 조회
+     * @since 2020. 7. 30. 오후 2:58:57
+     */
+    public Optional<Report> findById(final Long reportSeq) {
+        log.info("ReportService.findById");
+        return Optional.ofNullable(reportRepository.findById(reportSeq).orElseThrow(
+                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+    }
+
+    /**
+     * Find by file id optional.
+     *
+     * @param reportFileSeq the report file seq
+     * @return the optional
+     * @author [이소정]
+     * @implNote 보고서 파일 seq 로 조회
+     * @since 2020. 7. 31. 오후 3:36:50
+     */
+    public Optional<ReportFile> findByFileId(final Long reportFileSeq) {
+        log.info("ReportService.findByFileId");
+        return Optional.ofNullable(reportFileRepository.findById(reportFileSeq).orElseThrow(
+                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+    }
+
+    /**
+     * S 3 file copy update report file save dto.
+     *
+     * @param reportFileSaveDTO the report file save dto
+     * @return the report file save dto
+     * @author [이소정]
+     * @implNote 보고서 저장 > 파일 경로(temp -> report) 변경 후 set
+     * @since 2020. 7. 28. 오후 5:21:39
+     */
+    public ReportFileSaveDTO s3FileCopySave(final ReportFileSaveDTO reportFileSaveDTO) {
+        log.info("ReportService.s3FileCopySave");
+        reportFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getFilePhysicalName()));
+        reportFileSaveDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getThumbnailFilePhysicalName()));
+        reportFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getThumbnailFilePhysicalName()));
+        return reportFileSaveDTO;
+    }
+
+    /**
+     * S 3 file copy update contents file save dto.
+     *
+     * @param reportFileUpdateDTO the report file update dto
+     * @return the contents file save dto
+     * @author [이소정]
+     * @implNote 보고서 수정 > 파일 경로(temp -> report) 변경 후 set
+     * @since 2020. 7. 28. 오후 4:05:42
+     */
+    public ReportFileUpdateDTO s3FileCopyUpdate(final ReportFileUpdateDTO reportFileUpdateDTO) {
+        log.info("ReportService.s3FileCopyUpdate");
+        reportFileUpdateDTO.setFilePhysicalName(this.fileMoveTempToRealPath(reportFileUpdateDTO.getFilePhysicalName()));
+        reportFileUpdateDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileUpdateDTO.getThumbnailFilePhysicalName()));
+        reportFileUpdateDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileUpdateDTO.getThumbnailFilePhysicalName()));
+        return reportFileUpdateDTO;
+    }
+
+    /**
+     * Temp to real path file move string.
+     *
+     * @param filePhysicalName the file physical name
+     * @return the string
+     * @author [이소정]
+     * @implNote 보고서 파일 경로 temp -> report
+     * @since 2020. 7. 30. 오후 2:58:57
+     */
+    public String fileMoveTempToRealPath(final String filePhysicalName) {
+        log.info("ReportService.fileMoveTempToRealPath");
+        String imgPath = filePhysicalName;
+        if (null  != filePhysicalName) {
+            imgPath = S3Util.fileCopyAndOldFileDelete(filePhysicalName, ServiceCode.FileFolderEnumCode.REPORT.getFolder());
+        }
+        return imgPath;
     }
 
 }

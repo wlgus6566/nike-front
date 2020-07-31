@@ -5,6 +5,7 @@ import com.nike.dnp.dto.user.UserContentsSaveDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,7 @@ public class ContentsSaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "contents.imageBase64")
     @ApiModelProperty(name = "imageBase64", value = "이미지 base64 문자", required = true, example = "data:image/jpeg;base64," + "/9j/4AAQSkZJRgABAQEAYABgAAD" +
             "/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUF" +
             "BQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAD0AacDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhB" +
@@ -191,6 +193,7 @@ public class ContentsSaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "contents.folderName")
     @ApiModelProperty(name = "folderName", value = "폴더명", required = true, example = "SP20 NSW NIKE DIRECT AM90")
     private String folderName;
 
@@ -199,6 +202,7 @@ public class ContentsSaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "contents.folderContents")
     @ApiModelProperty(name = "folderContents", value = "폴더 내용", required = true, example = "SP20 나이키 다이렉트 NSW 캠페인 시공 에셋 자료")
     private String folderContents;
 
@@ -207,6 +211,7 @@ public class ContentsSaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "contents.campaignPeriodSectionCode")
     @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드(날짜선택:SELECT/365:EVERY)", required = true, example = "EVERY")
     private String campaignPeriodSectionCode;
 
@@ -239,6 +244,7 @@ public class ContentsSaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "contents.contentsFileList")
     @ApiModelProperty(name = "contentsFileList", value = "컨텐츠 파일 리스트")
     private List<ContentsFileSaveDTO> contentsFileList;
 
@@ -247,6 +253,7 @@ public class ContentsSaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "contents.exposureYn")
     @ApiModelProperty(name = "exposureYn", value = "폴더 상태(노출 여부 Y/N)", example = "Y")
     private String exposureYn;
 
@@ -256,7 +263,6 @@ public class ContentsSaveDTO {
      *
      * @author [오지훈]
      */
-    @NotNull(message = "userContents.checks")
     @ApiModelProperty(name = "authChecks", value = "권한 체크 목록")
     private List<UserContentsSaveDTO.AuthCheckDTO> checks = new ArrayList<>();
 

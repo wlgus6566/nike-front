@@ -3,6 +3,8 @@ package com.nike.dnp.dto.contents;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+
 
 /**
  * The type Contents file save dto.
@@ -23,6 +25,7 @@ public class ContentsFileSaveDTO {
      *
      * @author [이소정]
      */
+    @NotNull(message = "contentsFile.fileSectionCode")
     @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드(ASSET/GUIDE/VIDEO)", required = true, example = "GUIDE")
     private String fileSectionCode;
 
@@ -31,6 +34,7 @@ public class ContentsFileSaveDTO {
      *
      * @author [이소정]
      */
+    @NotNull(message = "contentsFile.fileKindCode")
     @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드(FILE/VIDEO/VR)", required = true, example = "FILE")
     private String fileKindCode;
 
@@ -145,6 +149,7 @@ public class ContentsFileSaveDTO {
      *
      * @author [이소정]
      */
+    @NotNull(message = "contentsFile.fileOrder")
     @ApiModelProperty(name = "fileOrder", value = "파일 순서", example = "1")
     private Long fileOrder;
 
