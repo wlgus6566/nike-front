@@ -12,8 +12,8 @@ import java.util.List;
  * The Interface Order product mapper repository custom.
  *
  * @author [윤태호]
- * @since 2020. 7. 7. 오후 12:07:04
  * @implNote
+ * @since 2020. 7. 7. 오후 12:07:04
  */
 public interface OrderProductMapperRepositoryCustom {
 
@@ -40,4 +40,16 @@ public interface OrderProductMapperRepositoryCustom {
 	 */
 	Page<OrderProductMapping> findPagesOrder(final OrderSearchDTO orderSearchDTO,
 											 final PageRequest pageRequest);
+
+
+	/**
+	 * 주문내역 상세
+	 *
+	 * @param orderGoodsSeq the order goods seq
+	 * @param useYn         the use yn
+	 * @return the optional
+	 * @author [윤태호]
+	 * @since 2020. 7. 31. 오후 12:14:37
+	 */
+	OrderProductMapping findByIdAndUseYn(Long orderGoodsSeq, String useYn);
 }

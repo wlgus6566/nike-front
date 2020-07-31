@@ -175,9 +175,9 @@ public class OrderProductMappingService {
 	 * @since 2020. 7. 7. 오후 2:44:07
 	 * @implNote
 	 */
-	public OrderProductMapping findById(final Long orderGoodsSeq) {
-		log.info("OrderProductMappingService.findById");
-		return orderProductMapperRepository.findById(orderGoodsSeq).orElse(new OrderProductMapping());
+	public OrderProductMapping findByIdAndUseYn(final Long orderGoodsSeq,String useYn) {
+		log.info("OrderProductMappingService.findByIdAndUseYn");
+		return orderProductMapperRepository.findByIdAndUseYn(orderGoodsSeq,useYn);
 	}
 
 }

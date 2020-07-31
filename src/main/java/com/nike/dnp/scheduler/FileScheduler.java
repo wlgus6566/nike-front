@@ -26,9 +26,8 @@ public class FileScheduler {
 	 * @implNote
 	 */
 	@Scheduled(cron = "0 0 0 * * *")
-	//@Scheduled(cron = "*/10 * * * * *")
+//	@Scheduled(cron = "*/10 * * * * *")
 	public void fileDeleteScheduler() {
-		// TODO [YTH] 내일 템프 파일 삭제 테스트 필요
 		log.debug("===== temp 파일 삭제 ==== ");
 		FileUtil.deleteTemp();
 
