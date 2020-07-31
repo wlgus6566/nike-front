@@ -1,6 +1,6 @@
 <template>
     <div>
-        <span class="thumb-file file-upload">
+        <span class="thumb-file file-upload active">
             <input
                 ref="input"
                 id="test"
@@ -10,7 +10,11 @@
                 @change="setImage"
             />
             <span class="thumb">
-                <img v-if="cropImg" :src="cropImg" alt="Cropped Image" />
+                <img
+                    v-if="imageFilePhysicalName"
+                    :src="imageFilePhysicalName"
+                    alt="Cropped Image"
+                />
             </span>
             <span class="txt" @click="inputReset">썸네일 이미지 재등록</span>
         </span>
@@ -43,24 +47,26 @@
 </template>
 
 <script>
-import VueCropper from 'vue-cropperjs';
-import 'cropperjs/dist/cropper.css';
+    import VueCropper from 'vue-cropperjs';
+    import 'cropperjs/dist/cropper.css';
 
-export default {
+    export default {
     name: 'index',
+    props: ['imageFilePhysicalName'],
     data() {
         return {
             dialogVisible: false,
             imgSrc: require('@/assets/images/@test1.jpg'),
-            cropImg: null, //require('@/assets/images/@test1.jpg')
+            cropImg: null,
             data: null,
         };
     },
+    created() {},
     components: { VueCropper },
     methods: {
         inputReset() {
             console.log(this.$refs.input);
-            this.cropImg = null;
+            this.imageFilePhysicalName = null;
             this.$refs.input.value = null;
         },
         handleClose(done) {
@@ -73,8 +79,11 @@ export default {
         },
         cropImage() {
             // get image data for post processing, e.g. upload or setting image src
-            this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
+            this.imageFilePhysicalName = this.$refs.cropper
+                .getCroppedCanvas()
+                .toDataURL();
             this.dialogVisible = false;
+            this.$emit('cropImage', this.cropImg);
         },
         flipX() {
             const dom = this.$refs.flipX;
@@ -91,7 +100,11 @@ export default {
             dom.setAttribute('data-scale', scale);
         },
         getCropBoxData() {
-            this.data = JSON.stringify(this.$refs.cropper.getCropBoxData(), null, 4);
+            this.data = JSON.stringify(
+                this.$refs.cropper.getCropBoxData(),
+                null,
+                4
+            );
         },
         getData() {
             this.data = JSON.stringify(this.$refs.cropper.getData(), null, 4);

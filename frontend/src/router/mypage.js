@@ -1,4 +1,5 @@
-import { pages } from '@/utils/global-methods';
+import {pages} from '@/utils/global-methods';
+
 const routes = [
     {
         path: '/mypage/upload',
@@ -77,6 +78,7 @@ const routes = [
         meta: {
             layout: 'Default',
             aside: 'Default',
+            sectionCode: 'NEWS',
             title: 'NEWS',
         },
     },
@@ -87,6 +89,7 @@ const routes = [
         meta: {
             layout: 'Default',
             aside: 'Default',
+            sectionCode: 'NOTICE',
             title: '공지사항',
         },
     },
@@ -119,7 +122,11 @@ const routes = [
             {
                 path: 'notice',
                 component: pages('mypage/edit.vue'),
-                meta: { layout: 'Default', aside: 'Default', title: '공지사항' },
+                meta: {
+                    layout: 'Default',
+                    aside: 'Default',
+                    title: '공지사항',
+                },
             },
         ],
     },
@@ -131,6 +138,7 @@ const routes = [
         meta: {
             layout: 'Default',
             aside: 'Default',
+            sectionCode: 'QNA',
             title: '자주 묻는 질문',
         },
     },

@@ -19,14 +19,27 @@ function getUserProductList(category2Code, params) {
 }
 // PRODUCT 상세 조회
 function getProductDetail(goodsSeq, params) {
-    return apiProduct.get(`/list/${goodsSeq}`, {
+    return apiProduct.get(`/${goodsSeq}`, {
         params: params,
     });
 }
+
+// PRODUCT 등록
+function postProduct(data) {
+    console.log(data);
+    return apiProduct.post(`/`, data);
+}
+
 // PRODUCT 상품 삭제[배열]
 function delProduct(params) {
     return apiProduct.delete(`/`, {
         params: params,
     });
 }
-export { getProductList, getUserProductList, getProductDetail, delProduct };
+export {
+    getProductList,
+    getUserProductList,
+    getProductDetail,
+    postProduct,
+    delProduct,
+};

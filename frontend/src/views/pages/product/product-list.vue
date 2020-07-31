@@ -1,5 +1,8 @@
 <template>
     <div>
+        <h2 class="page-title">
+            <span class="ko">{{ this.$route.meta.title }}</span>
+        </h2>
         <div class="sorting-area">
             <SearchInput @searchSubmit="searchSubmit" />
         </div>
@@ -63,9 +66,7 @@
             },
         };
     },
-    created() {
-        this.getUserProduct();
-    },
+    created() {},
     components: {
         SearchInput,
         ProductList,

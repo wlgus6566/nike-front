@@ -1,6 +1,8 @@
 <template>
     <div>
-        <h2 class="page-title"><span class="ko">회원정보 조회</span></h2>
+        <h2 class="page-title">
+            <span class="ko">{{ this.$route.meta.title }}</span>
+        </h2>
         <div class="member-inquiry">
             <div class="inner">
                 <span class="desc">HELLO!</span>
@@ -18,7 +20,10 @@
                     <dt>최종접속일시</dt>
                     <dd>
                         <ul class="data-list">
-                            <li v-for="(loginLog, index) in loginLogs" :key="index">
+                            <li
+                                v-for="(loginLog, index) in loginLogs"
+                                :key="index"
+                            >
                                 {{ loginLog.loginDt }}
                             </li>
                         </ul>
@@ -30,9 +35,9 @@
 </template>
 
 <script>
-    import {getMyInfo} from '@/api/mypage';
+	import {getMyInfo} from '@/api/mypage';
 
-    export default {
+	export default {
     data() {
         return {
             userData: null,

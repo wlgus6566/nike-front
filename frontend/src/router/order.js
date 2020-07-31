@@ -13,6 +13,11 @@ const routes = [
                 meta: { layout: 'Default', aside: 'Order', title: '상품 등록' },
             },
             {
+                path: 'registration/:id',
+                component: pages('product/registration'),
+                meta: { layout: 'Default', aside: 'Order', title: '상품 수정' },
+            },
+            {
                 path: 'management',
                 component: pages('product/management'),
                 meta: { layout: 'Default', aside: 'Order', title: '상품 관리' },
