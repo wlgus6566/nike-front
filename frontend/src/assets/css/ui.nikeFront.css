@@ -616,37 +616,42 @@
 .el-input__inner:focus {
     border-color: #000;
 }
-/* data-picker */
-.data-picker {
+/* date-picker */
+.date-picker {
     border-bottom:1px solid black;
 }
-.data-picker-group {
+.date-picker-group {
     display:flex;
 }
-.data-picker-group .data-picker {
+.date-picker-group .date-picker {
     flex-basis: 107px;
     width:107px;
-}
-.data-picker .focus\:vc-shadow:focus {box-shadow:none;}
-.data-picker-group .data-picker + .data-picker {
-    margin-left:46px;
-}
-.data-picker .vc-leading-tight {
-    height:40px;
-    line-height:16px;
-    padding:0;
-    box-sizing:border-box;
-}
-.data-picker .el-range-editor.el-input__inner {
-    border-color: #ddd;
-    border-radius: 0;
-}
-.data-picker .el-date-editor .el-range__icon {
-    display: none;
 }
 .vc-popover-content-wrapper {
     -webkit-box-shadow: 0px 2px 5px 0 rgba(0,0,0,0.08);
     box-shadow: 0px 2px 5px 0 rgba(0,0,0,0.08);
+    z-index:30 !important;
+}
+.date-picker .focus\:vc-shadow:focus {box-shadow:none;}
+.date-picker-group .date-picker + .date-picker {
+    margin-left:46px;
+}
+.date-picker .vc-leading-tight {
+    height:39px;
+    line-height:16px;
+    padding:0 36px 0 0;
+    box-sizing:border-box;
+    background:url('../images/svg/icon-input-calender.svg') right 10px no-repeat;
+    font-size:14px;
+    color:#888;
+    letter-spacing: 0;
+}
+.date-picker .el-range-editor.el-input__inner {
+    border-color: #ddd;
+    border-radius: 0;
+}
+.date-picker .el-date-editor .el-range__icon {
+    display: none;
 }
 .vc-title {
     font-size: 20px !important;
@@ -3010,7 +3015,7 @@
     border-radius: 0;
     box-sizing: border-box;
     border: 1px solid #ccc;
-    background: url('../images/svg/icon-delete-on-black.svg') no-repeat center;
+    background: url('../images/svg/icon-trash.svg') no-repeat center;
 }
 .wish-list-item .btn-box .delete span {
     position: relative;
