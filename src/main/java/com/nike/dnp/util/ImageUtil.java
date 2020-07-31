@@ -3,6 +3,8 @@ package com.nike.dnp.util;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -18,10 +20,12 @@ import java.io.IOException;
  * ImageUtil
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 10. 오후 2:41:58
- * @Description
+ * @since 2020. 7. 10. 오후 2:41:58
+ * @implNote
  */
 @Component
+@Slf4j
+@NoArgsConstructor
 public class ImageUtil {
 
 	/**
@@ -36,8 +40,8 @@ public class ImageUtil {
 	 *
 	 * @param root the root
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 10. 오후 2:41:58
-	 * @Description
+	 * @since 2020. 7. 10. 오후 2:41:58
+	 * @implNote
 	 */
 	@Value("${nike.file.root:}")
 	public void setRoot(final String root) {
@@ -55,12 +59,11 @@ public class ImageUtil {
 	 * @throws IOException                the io exception
 	 * @throws CodeMessageHandleException the code message handle exception
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 10. 오후 2:41:58
-	 * @Description
+	 * @since 2020. 7. 10. 오후 2:41:58
+	 * @implNote
 	 */
 	public static FileResultDTO fileSaveForBase64(final String folder, final String base64Str) {
-
-
+		log.info("ImageUtil.fileSaveForBase64");
 		final String info = base64Str.split(",")[0];
 		if(!info.contains("image")){
 			throw new CodeMessageHandleException(
@@ -71,7 +74,7 @@ public class ImageUtil {
 		final String base64 = base64Str.split(",")[1];
 		final byte[] imageByte = DatatypeConverter.parseBase64Binary(base64);
 		final ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
-		BufferedImage image = null;
+		BufferedImage image;
 		try{
 			image = ImageIO.read(bis);
 			bis.close();
@@ -106,7 +109,6 @@ public class ImageUtil {
 		fileResultDTO.setFileName(newFile.getName());
 		fileResultDTO.setFilePhysicalName(StringUtils.remove(newFile.getPath(), root));
 		fileResultDTO.setFileSize(newFile.length());
-
 		// S3 업로드
 		S3Util.upload(fileResultDTO);
 

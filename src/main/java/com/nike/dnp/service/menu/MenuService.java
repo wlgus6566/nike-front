@@ -14,8 +14,8 @@ import java.util.List;
  * The Class Menu service.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 13. 오후 1:50:23
- * @Description Menu(메뉴) Service 작성
+ * @since 2020. 7. 13. 오후 1:50:23
+ * @implNote Menu(메뉴) Service 작성
  */
 @Slf4j
 @Service
@@ -35,8 +35,8 @@ public class MenuService {
      *
      * @return the menus
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 8. 오후 6:18:35
-     * @Description 메뉴 목록(전체)
+     * @since 2020. 7. 8. 오후 6:18:35
+     * @implNote 메뉴 목록(전체)
      */
     public List<Menu> findAll() {
         log.info("AuthService.findAll");
@@ -48,8 +48,8 @@ public class MenuService {
      *
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 16. 오후 4:40:39
-     * @Description 메뉴 목록(1depth)
+     * @since 2020. 7. 16. 오후 4:40:39
+     * @implNote 메뉴 목록(1depth)
      */
     public List<Menu> findMenus() {
         log.info("MenuService.findMenus");

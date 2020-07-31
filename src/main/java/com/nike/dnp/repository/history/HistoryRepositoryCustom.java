@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
  * The Interface History repository custom.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 23. 오후 12:16:19
- * @Description
+ * @since 2020. 7. 23. 오후 12:16:19
+ * @implNote
  */
 @Repository
 public interface HistoryRepositoryCustom {
@@ -23,8 +23,8 @@ public interface HistoryRepositoryCustom {
      * @param pageRequest      the page request
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 24. 오후 4:01:02
-     * @Description
+     * @since 2020. 7. 24. 오후 4:01:02
+     * @implNote
      */
     Page<HistoryResultDTO> findAllHistoryPage(final HistorySearchDTO historySearchDTO, final PageRequest pageRequest);
 }

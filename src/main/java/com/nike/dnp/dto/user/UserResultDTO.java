@@ -18,8 +18,8 @@ import java.util.List;
  * UserReturnDTO
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 22. 오후 12:14:01
- * @Description User(유저) Return DTO 작성
+ * @since 2020. 6. 22. 오후 12:14:01
+ * @implNote User(유저) Return DTO 작성
  */
 @Getter
 @Setter
@@ -27,7 +27,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserReturnDTO {
+public class UserResultDTO {
 
     /**
      * 유저 시퀀스
@@ -156,8 +156,8 @@ public class UserReturnDTO {
      *
      * @return the user status code name
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 6. 오후 2:31:09
-     * @Description 유저 권한명
+     * @since 2020. 7. 6. 오후 2:31:09
+     * @implNote 유저 권한명
      */
     public String getUserStatusCodeName() {
         String result = "";

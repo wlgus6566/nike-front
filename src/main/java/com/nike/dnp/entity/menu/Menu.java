@@ -16,8 +16,8 @@ import java.util.List;
  * Menu Entity
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 19. 오후 4:52:14
- * @Description Menu(메뉴) Entity 작성
+ * @since 2020. 6. 19. 오후 4:52:14
+ * @implNote Menu(메뉴) Entity 작성
  */
 @Getter
 @Setter
@@ -201,8 +201,8 @@ public class Menu extends BaseTimeEntity implements Serializable {
      *
      * @return the skill codes
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 8. 오후 4:16:43
-     * @Description
+     * @since 2020. 7. 8. 오후 4:16:43
+     * @implNote
      */
     public List<SkillCode> getSkillCodes() {
         final List<SkillCode> skillCodes = new ArrayList<>();
@@ -229,8 +229,8 @@ public class Menu extends BaseTimeEntity implements Serializable {
      * The Class Skill code.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 14. 오후 12:02:07
-     * @Description
+     * @since 2020. 7. 14. 오후 12:02:07
+     * @implNote
      */
     @Getter
     @Setter
@@ -275,8 +275,8 @@ public class Menu extends BaseTimeEntity implements Serializable {
          * @param message     the message
          * @param menuRoleSeq the menu role seq
          * @author [오지훈]
-         * @CreatedOn 2020. 7. 21. 오후 3:51:09
-         * @Description
+         * @since 2020. 7. 21. 오후 3:51:09
+         * @implNote
          */
         @Builder
         public SkillCode (

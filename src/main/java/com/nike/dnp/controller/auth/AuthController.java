@@ -28,8 +28,8 @@ import java.util.List;
  * The Class Auth controller.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 23. 오후 5:22:14
- * @Description
+ * @since 2020. 6. 23. 오후 5:22:14
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -65,8 +65,8 @@ public class AuthController {
      *
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 3:37:10
-     * @Description 그룹(권한) 목록 조회(캐시)
+     * @since 2020. 6. 23. 오후 3:37:10
+     * @apiNote 그룹(권한) 목록 조회(캐시)
      */
     @ApiOperation(value = "그룹(권한) 목록 조회(캐시)"
             , notes = OPERATION_CHARACTER)
@@ -82,8 +82,8 @@ public class AuthController {
      *
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 7. 오후 3:37:35
-     * @Description 그룹(권한) 관리 목록 조회
+     * @since 2020. 7. 7. 오후 3:37:35
+     * @apiNote 그룹(권한) 관리 목록 조회
      */
     @ApiOperation(value = "그룹(권한) 관리 목록 조회"
             , notes = OPERATION_CHARACTER)
@@ -100,8 +100,8 @@ public class AuthController {
      * @param authSeq the auth seq
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 13. 오전 10:06:37
-     * @Description 그룹(그룹 및 메뉴권한) 체크 목록
+     * @since 2020. 7. 13. 오전 10:06:37
+     * @apiNote 그룹(그룹 및 메뉴권한) 체크 목록
      */
     @ApiOperation(value = "그룹(그룹 및 메뉴권한) 체크 목록"
             , notes = OPERATION_CHARACTER)
@@ -119,8 +119,8 @@ public class AuthController {
      * @param authSeq the auth seq
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:45:54
-     * @Description 그룹(권한) 상세 조회
+     * @since 2020. 6. 24. 오후 5:45:54
+     * @apiNote 그룹(권한) 상세 조회
      */
     @ApiOperation(value = "그룹(권한) 상세 조회"
             , notes = OPERATION_CHARACTER)
@@ -139,8 +139,8 @@ public class AuthController {
      * @param authSaveDTO the auth save dto
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:36:41
-     * @Description 그룹(권한) 정보 등록
+     * @since 2020. 6. 24. 오후 5:36:41
+     * @apiNote 그룹(권한) 정보 등록
      */
     @ApiOperation(value = "그룹(권한) 정보 등록"
             , notes = OPERATION_CHARACTER)
@@ -149,7 +149,7 @@ public class AuthController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<Auth> save(
-            @ApiParam(value = "권한(그룹) 등록 DTO") @Valid @RequestBody final AuthSaveDTO authSaveDTO
+            @ApiParam(value = "권한(그룹) 등록 DTO", name = "authSaveDTO") @Valid @RequestBody final AuthSaveDTO authSaveDTO
             , @ApiIgnore final BindingResult result) {
         log.info("AuthController.save");
         return responseService.getSingleResult(
@@ -168,8 +168,8 @@ public class AuthController {
      * @param result        the result
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:30:14
-     * @Description 그룹(권한) 정보 수정
+     * @since 2020. 6. 24. 오후 5:30:14
+     * @apiNote 그룹(권한) 정보 수정
      */
     @ApiOperation(value = "그룹(권한) 정보 수정"
             , notes = OPERATION_CHARACTER)
@@ -178,8 +178,8 @@ public class AuthController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<Auth> update (
-            @ApiParam(value = "권한(그룹) 시퀀스") @PathVariable final Long authSeq
-            , @ApiParam(value = "권한(그룹) 수정 DTO") @Valid @RequestBody final AuthUpdateDTO authUpdateDTO
+            @ApiParam(value = "권한(그룹) 시퀀스", name = "authSeq") @PathVariable final Long authSeq
+            , @ApiParam(value = "권한(그룹) 수정 DTO", name = "authUpdateDTO") @Valid @RequestBody final AuthUpdateDTO authUpdateDTO
             , @ApiIgnore final BindingResult result) {
         log.info("AuthController.update");
         return responseService.getSingleResult(
@@ -196,8 +196,8 @@ public class AuthController {
      * @param authSeq the auth seq
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:38:30
-     * @Description 그룹(권한) 정보 삭제
+     * @since 2020. 6. 24. 오후 5:38:30
+     * @apiNote 그룹(권한) 정보 삭제
      */
     @ApiOperation(value = "그룹(권한) 정보 삭제"
             , notes = OPERATION_CHARACTER)

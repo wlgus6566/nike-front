@@ -6,8 +6,8 @@ import lombok.*;
  * The Class Security filter mata dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:07:59
- * @Description
+ * @since 2020. 6. 24. 오후 6:07:59
+ * @implNote
  */
 @Getter
 @Setter

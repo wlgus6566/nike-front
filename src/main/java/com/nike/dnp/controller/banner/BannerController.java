@@ -24,8 +24,8 @@ import javax.validation.Valid;
  * The Class Banner controller.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 23. 오후 5:22:14
- * @Description 메인 비주얼 컨트롤러 작성
+ * @since 2020. 6. 23. 오후 5:22:14
+ * @apiNote 메인 비주얼 컨트롤러 작성
  */
 @Slf4j
 @RestController
@@ -61,8 +61,8 @@ public class BannerController {
      *
      * @return the banner
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오전 11:41:23
-     * @Description 메인 비주얼 상세
+     * @since 2020. 7. 20. 오전 11:41:23
+     * @apiNote 메인 비주얼 상세
      */
     @ApiOperation(value = "메인 비주얼 상세", notes = OPERATION_CHARACTER)
     @GetMapping(name = "메인 비주얼 상세"
@@ -78,8 +78,8 @@ public class BannerController {
      * @param bannerSaveDTO the banner update dto
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오전 11:43:25
-     * @Description 메인 비주얼 등록
+     * @since 2020. 7. 20. 오전 11:43:25
+     * @apiNote 메인 비주얼 등록
      */
     @ApiOperation(value = "메인 비주얼 등록", notes = OPERATION_CHARACTER)
     @PostMapping(name = "메인 비주얼 등록"
@@ -105,8 +105,8 @@ public class BannerController {
      * @param bannerSaveDTO the banner update dto
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오전 11:43:23
-     * @Description 메인 비주얼 수정
+     * @since 2020. 7. 20. 오전 11:43:23
+     * @apiNote 메인 비주얼 수정
      */
     @ApiOperation(value = "메인 비주얼 수정", notes = OPERATION_CHARACTER)
     @PutMapping(name = "메인 비주얼 수정"

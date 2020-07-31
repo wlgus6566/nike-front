@@ -19,8 +19,8 @@ import java.util.Optional;
  * The Class Agency service.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 20. 오후 12:08:45
- * @Description
+ * @since 2020. 7. 20. 오후 12:08:45
+ * @implNote
  */
 @Slf4j
 @Service
@@ -39,8 +39,8 @@ public class AgencyService {
      *
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 20. 오후 12:08:40
-     * @Description
+     * @since 2020. 7. 20. 오후 12:08:40
+     * @implNote
      */
     public List<Agency> findAll() {
         return agencyRepository.findAllByUseYn("Y");
@@ -52,8 +52,8 @@ public class AgencyService {
      * @param agencySaveDTO the agency save dto
      * @return the agency
      * @author [이소정]
-     * @CreatedOn 2020. 7. 20. 오후 12:19:37
-     * @Description
+     * @since 2020. 7. 20. 오후 12:19:37
+     * @implNote
      */
     @Transactional
     public Agency save(final AgencySaveDTO agencySaveDTO) {
@@ -64,47 +64,55 @@ public class AgencyService {
      * Find by agency seq optional.
      *
      * @param agencySeq the agency seq
-     * @return the optional
+     * @return the agency
      * @author [이소정]
-     * @CreatedOn 2020. 7. 20. 오후 12:26:58
-     * @Description
+     * @since 2020. 7. 20. 오후 12:26:58
+     * @implNote
      */
-    public Optional<Agency> findByAgencySeq(final Long agencySeq) {
-        return Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencySeq, "Y").orElseThrow(() ->
-                new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+    public Agency findByAgencySeq(final Long agencySeq) {
+        return this.findById(agencySeq).get();
     }
 
     /**
      * Update optional.
      *
      * @param agencyUpdateDTO the agency update dto
-     * @return the optional
+     * @return the agency
      * @author [이소정]
-     * @CreatedOn 2020. 7. 20. 오후 2:05:32
-     * @Description
+     * @since 2020. 7. 20. 오후 2:05:32
+     * @implNote
      */
     @Transactional
-    public Optional<Agency> update(final AgencyUpdateDTO agencyUpdateDTO) {
-        Optional<Agency> savedAgency = Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencyUpdateDTO.getAgencySeq(), "Y").orElseThrow(() ->
-                new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+    public Agency update(final AgencyUpdateDTO agencyUpdateDTO) {
+        Optional<Agency> savedAgency = this.findById(agencyUpdateDTO.getAgencySeq());
         savedAgency.ifPresent(value -> value.update(agencyUpdateDTO));
-        return savedAgency;
+        return savedAgency.get();
     }
 
     /**
      * Delete optional.
      *
      * @param agencySeq the agency seq
-     * @return the optional
+     * @return the agency
      * @author [이소정]
-     * @CreatedOn 2020. 7. 20. 오후 2:21:07
-     * @Description
+     * @since 2020. 7. 20. 오후 2:21:07
+     * @implNote
      */
     @Transactional
-    public Optional<Agency> delete(final long agencySeq) {
-        Optional<Agency> findAgency =Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencySeq, "Y").orElseThrow(() ->
-                new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+    public Agency delete(final long agencySeq) {
+        Optional<Agency> findAgency = this.findById(agencySeq);
         findAgency.ifPresent(value -> value.updateUseYn("N"));
-        return findAgency;
+        return findAgency.get();
+    }
+
+    /**
+     * Find by id optional.
+     *
+     * @param agencySeq the agency seq
+     * @return the optional
+     */
+    public Optional<Agency> findById(final Long agencySeq) {
+        return Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencySeq, "Y").orElseThrow(() ->
+                new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
     }
 }

@@ -17,14 +17,13 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The Class Contents basket controller.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 14. 오후 4:50:17
- * @Description
+ * @since 2020. 7. 14. 오후 4:50:17
+ * @apiNote 컨텐츠 장바구니 컨트롤러
  */
 @Slf4j
 @RestController
@@ -60,8 +59,8 @@ public class ContentsBasketController {
      * @param authUserDTO the auth user dto
      * @return the all contents basket
      * @author [이소정]
-     * @CreatedOn 2020. 7. 15. 오후 12:16:20
-     * @Description
+     * @since 2020. 7. 15. 오후 12:16:20
+     * @apiNote 컨텐츠 장바구니 목록 조회
      */
     @ApiOperation(
             value = "컨텐츠 장바구니 목록 조회"
@@ -92,8 +91,8 @@ public class ContentsBasketController {
      * @param authUserDTO           the auth user dto
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 15. 오후 12:16:18
-     * @Description
+     * @since 2020. 7. 15. 오후 12:16:18
+     * @apiNote 컨텐츠 장바구니 등록
      */
     @ApiOperation(
             value = "컨텐츠 장바구니 등록"
@@ -106,8 +105,7 @@ public class ContentsBasketController {
             @RequestBody final List<Long> contentsBasketSeqList,
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
     ) {
-        List<ContentsBasket> contentsBasketList = contentsBasketService.save(contentsBasketSeqList, authUserDTO);
-        return responseService.getSingleResult(contentsBasketList);
+        return responseService.getSingleResult(contentsBasketService.save(contentsBasketSeqList, authUserDTO));
     }
 
     /**
@@ -116,13 +114,13 @@ public class ContentsBasketController {
      * @param contentsBasketSeq the contents basket seq
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 15. 오후 2:41:27
-     * @Description
+     * @since 2020. 7. 15. 오후 2:41:27
+     * @apiNote 컨텐츠 장바구니 삭제
      */
     @ApiOperation(value="컨텐츠 장바구니 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "컨텐츠 장바구니 삭제", value = "/{contentsBasketSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<ContentsBasket>> deleteContentsBasket(
+    public SingleResult<ContentsBasket> deleteContentsBasket(
             @ApiParam(name = "contentsBasketSeq", value = "컨텐츠 장바구니 시퀀스", defaultValue = "2", required = true) @PathVariable final Long contentsBasketSeq) {
         log.info("ContentsController.delete");
         return responseService.getSingleResult(contentsBasketService.delete(contentsBasketSeq));

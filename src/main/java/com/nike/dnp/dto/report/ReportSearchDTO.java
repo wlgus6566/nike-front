@@ -7,11 +7,11 @@ import lombok.*;
 import java.util.List;
 
 /**
- * The Class Report search dto.
+ * The Class Report Search dto.
  *
- * @author [오지훈]
- * @CreatedOn 2020. 7. 21. 오후 3:55:43
- * @Description
+ * @author [이소정]
+ * @since 2020. 7. 29. 오후 6:56:23
+ * @implNote 보고서 조회 DTO
  */
 @Getter
 @Setter
@@ -55,8 +55,8 @@ public class ReportSearchDTO extends SearchDTO {
      *
      * @return String string
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:57:26
-     * @Description
+     * @since 2020. 6. 19. 오후 5:57:26
+     * @implNote
      */
     @Override
     public String toString() {

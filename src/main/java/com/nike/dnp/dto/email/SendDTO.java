@@ -10,8 +10,8 @@ import java.util.List;
  * The Class Send dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 3. 오전 11:22:37
- * @Description
+ * @since 2020. 7. 3. 오전 11:22:37
+ * @implNote
  */
 @Getter
 @Setter
@@ -124,8 +124,8 @@ public class SendDTO {
      *
      * @return the processing dt
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 3. 오전 11:22:37
-     * @Description
+     * @since 2020. 7. 3. 오전 11:22:37
+     * @implNote
      */
     public String getProcessingDt() {
         final LocalDate currentDate = LocalDate.now();

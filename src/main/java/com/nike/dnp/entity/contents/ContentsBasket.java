@@ -12,8 +12,8 @@ import javax.persistence.*;
  * The Class Contents basket.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 14. 오후 5:22:10
- * @Description
+ * @since 2020. 7. 14. 오후 5:22:10
+ * @implNote
  */
 @Getter
 @Setter
@@ -59,8 +59,8 @@ public class ContentsBasket extends BaseTimeEntity {
      * @param authUserDTO     the auth user dto
      * @return the contents basket
      * @author [이소정]
-     * @CreatedOn 2020. 7. 15. 오후 12:02:37
-     * @Description
+     * @since 2020. 7. 15. 오후 12:02:37
+     * @implNote
      */
     @Transactional
     public ContentsBasket save(final Long contentsFileSeq, final AuthUserDTO authUserDTO) {

@@ -17,8 +17,8 @@ import java.util.List;
  * MenuRepositoryImpl
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 23. 오전 11:51:57
- * @Description Menu(메뉴 역할 리소스) Repository interface 작성
+ * @since 2020. 6. 23. 오전 11:51:57
+ * @implNote Menu(메뉴 역할 리소스) Repository interface 작성
  */
 @Repository
 public class MenuRoleResourceRepositoryImpl extends QuerydslRepositorySupport implements MenuRoleResourceRepositoryCustom {
@@ -27,8 +27,8 @@ public class MenuRoleResourceRepositoryImpl extends QuerydslRepositorySupport im
      * Instantiates a new Menu role resource repository.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오전 11:51:57
-     * @Description 생성자 주입
+     * @since 2020. 6. 23. 오전 11:51:57
+     * @implNote 생성자 주입
      */
     public MenuRoleResourceRepositoryImpl() {
         super(MenuRoleResource.class);
@@ -40,8 +40,8 @@ public class MenuRoleResourceRepositoryImpl extends QuerydslRepositorySupport im
      * @param authSeq the auth seq
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 13. 오전 11:19:07
-     * @Description 권한별 리소스 목록
+     * @since 2020. 7. 13. 오전 11:19:07
+     * @implNote 권한별 리소스 목록
      */
     @Override
     public List<MenuRoleResourceReturnDTO> getResources(final Long authSeq) {

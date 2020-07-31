@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
  * The Class History result dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 23. 오전 11:27:50
- * @Description
+ * @since 2020. 7. 23. 오전 11:27:50
+ * @implNote
  */
 @Getter
 @Setter

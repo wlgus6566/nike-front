@@ -27,8 +27,8 @@ import java.util.Objects;
  * LogAspect
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:05:00
- * @Description LogAspect 작성
+ * @since 2020. 6. 24. 오후 6:05:00
+ * @implNote LogAspect 작성
  */
 @Slf4j
 @Aspect
@@ -50,8 +50,8 @@ public class LogAspect {
      * @return the object
      * @throws Throwable the throwable
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:05:00
-     * @Description 유저 활동 로그 등록
+     * @since 2020. 6. 24. 오후 6:05:00
+     * @implNote 유저 활동 로그 등록
      */
     //@Around("execution(public * com.nike.dnp.controller..*Controller.*(..)) && args(requestDTO,..)")
     @Around("execution(public * com.nike.dnp.controller..*Controller.*(..))")
@@ -81,8 +81,8 @@ public class LogAspect {
      * @return the object
      * @throws Throwable the throwable
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 22. 오후 3:53:47
-     * @Description 필드 필수 체크
+     * @since 2020. 7. 22. 오후 3:53:47
+     * @implNote 필드 필수 체크
      */
     @Around("@annotation(ValidField)")
     public Object onAroundValidField(final ProceedingJoinPoint joinPoint) throws Throwable {

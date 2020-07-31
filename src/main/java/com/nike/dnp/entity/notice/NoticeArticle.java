@@ -1,18 +1,29 @@
 package com.nike.dnp.entity.notice;
 
+import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.file.FileResultDTO;
+import com.nike.dnp.dto.notice.CustomerSaveDTO;
+import com.nike.dnp.dto.notice.CustomerUpdateDTO;
+import com.nike.dnp.dto.notice.NoticeSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.util.ImageUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 /**
  * The Class Notice article.
  *
  * @author [정주희]
- * @CreatedOn 2020. 7. 13. 오후 6:02:22
- * @Description
+ * @since 2020. 7. 13. 오후 6:02:22
+ * @implNote
  */
+@Slf4j
 @Getter
 @Setter
 @NoArgsConstructor(access=AccessLevel.PUBLIC)
@@ -119,4 +130,70 @@ public class NoticeArticle extends BaseTimeEntity {
         this.noticeYn = this.noticeYn == null ? "N" : this.noticeYn;
     }
 
+    /**
+     * Save notice article.
+     *
+     * @param customerSaveDTO the customer save dto
+     * @return the notice article
+     * @author [정주희]
+     * @CreatedOn 2020. 7. 30. 오후 10:35:21
+     * @Description
+     */
+    public NoticeArticle save(final CustomerSaveDTO customerSaveDTO) {
+        log.info("NoticeArticle.save");
+        final NoticeArticle noticeArticle = new NoticeArticle();
+
+        noticeArticle.setNoticeArticleSectionCode(customerSaveDTO.getNoticeArticleSectionCode());
+        noticeArticle.setTitle(customerSaveDTO.getTitle());
+        noticeArticle.setContents(customerSaveDTO.getContents());
+        noticeArticle.setUseYn(customerSaveDTO.getUseYn());
+        noticeArticle.setRegisterSeq(customerSaveDTO.getRegisterSeq());
+        noticeArticle.setUpdaterSeq(customerSaveDTO.getRegisterSeq());
+
+        if (StringUtils.equals(customerSaveDTO.getNoticeArticleSectionCode(), "NOTICE")) {
+            noticeArticle.setNoticeYn(customerSaveDTO.getNoticeYn());
+        } else if (StringUtils.equals(customerSaveDTO.getNoticeArticleSectionCode(), "NEWS")) {
+            if (!ObjectUtils.isEmpty(customerSaveDTO.getImageBase64())) {
+                FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
+                        ServiceCode.FileFolderEnumCode.QNA.getFolder(), customerSaveDTO.getImageBase64());
+
+                noticeArticle.setThumbnailFileName(fileResultDTO.getFileName());
+                noticeArticle.setThumbnailFilePhysicalName(fileResultDTO.getFilePhysicalName());
+                noticeArticle.setThumbnailFileSize(String.valueOf(fileResultDTO.getFileSize()));
+            }
+        } else if (StringUtils.equals(customerSaveDTO.getNoticeArticleSectionCode(), "QNA")) {
+            noticeArticle.setNoticeArticleCategoryCode(customerSaveDTO.getNoticeArticleCategoryCode());
+        }
+
+        return noticeArticle;
+    }
+
+    public NoticeArticle update(final CustomerUpdateDTO customerUpdateDTO) {
+        log.info("NoticeArticle.update");
+
+        // TODO [jjh] 업데이트 수정
+        final NoticeArticle noticeArticle = new NoticeArticle();
+
+        noticeArticle.setNoticeArticleSectionCode(customerUpdateDTO.getNoticeArticleSectionCode());
+        noticeArticle.setTitle(customerUpdateDTO.getTitle());
+        noticeArticle.setContents(customerUpdateDTO.getContents());
+        noticeArticle.setUseYn(customerUpdateDTO.getUseYn());
+
+        if (StringUtils.equals(customerUpdateDTO.getNoticeArticleSectionCode(), "NOTICE")) {
+            noticeArticle.setNoticeYn(customerUpdateDTO.getNoticeYn());
+        } else if (StringUtils.equals(customerUpdateDTO.getNoticeArticleSectionCode(), "NEWS")) {
+            if (!ObjectUtils.isEmpty(customerUpdateDTO.getImageBase64())) {
+                FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
+                        ServiceCode.FileFolderEnumCode.QNA.getFolder(), customerUpdateDTO.getImageBase64());
+
+                noticeArticle.setThumbnailFileName(fileResultDTO.getFileName());
+                noticeArticle.setThumbnailFilePhysicalName(fileResultDTO.getFilePhysicalName());
+                noticeArticle.setThumbnailFileSize(String.valueOf(fileResultDTO.getFileSize()));
+            }
+        } else if (StringUtils.equals(customerUpdateDTO.getNoticeArticleSectionCode(), "QNA")) {
+            noticeArticle.setNoticeArticleCategoryCode(customerUpdateDTO.getNoticeArticleCategoryCode());
+        }
+
+        return noticeArticle;
+    }
 }

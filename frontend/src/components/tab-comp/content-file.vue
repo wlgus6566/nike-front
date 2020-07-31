@@ -1,22 +1,38 @@
 <template>
     <div class="aside-file">
-        <button @click="getContBasket2()">123</button>
-        <ul class="file-list" v-if="contBasketList">
-            <!-- <li class="no-data">
-					<i class="icon-file"></i>
-					<p class="txt">더욱 빠르게 파일 받기</p>
-					<p class="desc">
-						이곳에 끌어다 놓으면 파일을 바로<br>
-						다운받을 수 있어요.
-					</p>
-				</li>-->
-            <li v-for="item in contBasketList" :key="item.contentsFileSeq">
-                <img :src="item.filePhysicalName" alt="" />
-                <button type="button" class="btn-del">
-                    <span>삭제</span>
-                </button>
-            </li>
-        </ul>
+        <div class="file-list-wrap">
+            <div
+                v-if="contBasketList"
+                @mouseenter="basketEnter"
+                @mouseleave="basketLeave"
+            >
+                <ul class="file-list" v-if="contBasketList.length">
+                    <li
+                        v-for="item in contBasketList"
+                        :key="item.contentsBasketSeq"
+                    >
+                        <img :src="item.filePhysicalName" alt="" />
+                        <button
+                            type="button"
+                            class="btn-del"
+                            @click="delContBasket(item.contentsBasketSeq)"
+                        >
+                            <span>삭제</span>
+                        </button>
+                        <Loading v-if="isLoading(item.contentsBasketSeq)" />
+                    </li>
+                </ul>
+                <NoData v-else>
+                    <i class="icon-file"></i>
+                    <p class="txt">더욱 빠르게 파일 받기</p>
+                    <p class="desc">
+                        이곳에 끌어다 놓으면 파일을 바로<br />
+                        다운받을 수 있어요.
+                    </p>
+                </NoData>
+            </div>
+            <Loading v-else />
+        </div>
         <button type="button" class="btn-download">
             <span class="gage" style="width: 50%;"></span>
             <span class="txt" style="display: none;">DOWNLOAD</span>
@@ -29,6 +45,9 @@
 </template>
 <script>
 import TabComponent from '@/components/tab-comp';
+import NoData from '@/components/no-data';
+import Loading from '@/components/loading';
+import { addContentsBasket, delContentsBasket } from '@/api/contents';
 
 export default {
     name: 'FileItem',
@@ -51,29 +70,60 @@ export default {
                     },
                 ],
             },
-            contBasketList: null,
+            deleteLoading: [],
         };
     },
     computed: {
-        /* contBasketList() {
-            return this.$store.state.contBasketList;
-        },*/
+        contBasketList: {
+            get() {
+                return this.$store.state.contBasketList;
+            },
+            set(value) {
+                this.$store.commit('SET_CONT_BASKET', value);
+            },
+        },
     },
     mounted() {
-        this.getContBasket2();
+        this.getContBasket();
     },
     methods: {
-        async getContBasket2() {
+        basketEnter() {
+            console.log('basketEnter');
+            this.$store.commit('SET_FILE_MOUSEENTER', true);
+        },
+        basketLeave() {
+            console.log('basketLeave');
+            this.$store.commit('SET_FILE_MOUSEENTER', false);
+        },
+        isLoading(seq) {
+            return this.deleteLoading.some((el) => {
+                return el === seq;
+            });
+        },
+        async getContBasket() {
             try {
-                const test = await this.$store.dispatch('getContBasket');
-                this.contBasketList = test;
-                console.log(test);
+                const {
+                    data: { data: response },
+                } = await this.$store.dispatch('getContBasket');
+                this.contBasketList = response;
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        async delContBasket(seq) {
+            this.deleteLoading.push(seq);
+            try {
+                await delContentsBasket(seq);
+                await this.$store.dispatch('getContBasket');
+                this.deleteLoading = [];
             } catch (e) {
                 console.log(e);
             }
         },
     },
     components: {
+        NoData,
+        Loading,
         TabComponent,
     },
 };
@@ -89,15 +139,20 @@ export default {
     letter-spacing: 0.5px;
     color: #000;
 }
+.file-list-wrap {
+    margin-top: 15px;
+    background: #eee;
+}
+.file-list-wrap .no-data {
+    height: 360px;
+}
 .file-list {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
     box-sizing: border-box;
     height: 360px;
-    margin-top: 15px;
-    padding: 15px 0 15px 15px;
-    background: #eee;
+    padding: 18px 0 18px 18px;
     overflow: auto;
 }
 .file-list .no-data {
@@ -107,6 +162,13 @@ export default {
     position: relative;
     flex: 0 0 100px;
     height: 100px;
+}
+.file-list li .loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
 }
 .file-list li:nth-child(2n) {
     margin-left: 4px;
@@ -139,6 +201,10 @@ export default {
     overflow: hidden;
 }
 .file-list li img {
+    width: 100%;
+    height: 100%;
+    background: red;
+    display: block;
     vertical-align: top;
 }
 .btn-download {

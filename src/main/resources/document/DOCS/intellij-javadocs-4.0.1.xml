@@ -32,8 +32,8 @@
         * @param &lt;${typeParameter.name}&gt; the type parameter\n
 &lt;/#list&gt;
 * @author [${user}]\n
-* @CreatedOn ${nowDateTile}\n
-* @Description\n
+* @since ${nowDateTile}\n
+* @implNote\n
  */</VALUE>
         </CLASS>
         <CLASS>
@@ -54,8 +54,8 @@
  * The Class ${name}.\n
 
 * @author [${user}]\n
-* @CreatedOn ${nowDateTile}\n
-* @Description\n
+* @since ${nowDateTile}\n
+* @implNote\n
 
 &lt;#if element.typeParameters?has_content&gt;        * \n
 &lt;/#if&gt;
@@ -72,8 +72,8 @@
               /**\n
  * The type ${name}.\n
 * @author [${user}]\n
-* @CreatedOn ${nowDateTile}\n
-* @Description\n
+* @since ${nowDateTile}\n
+* @implNote\n
  */</VALUE>
         </CLASS>
       </CLASSES>
@@ -86,8 +86,8 @@
               /**\n
  * Instantiates a new ${name}.\n
 * @author [${user}]\n
-* @CreatedOn ${nowDateTile}\n
-* @Description\n
+* @since ${nowDateTile}\n
+* @implNote\n
 &lt;#if element.parameterList.parameters?has_content&gt;
          *\n
 &lt;/#if&gt;
@@ -112,8 +112,8 @@
               /**\n
  * Gets ${partName}.\n
 * @author [${user}]\n
-* @CreatedOn ${nowDateTile}\n
-* @Description\n
+* @since ${nowDateTile}\n
+* @implNote\n
 &lt;#if element.typeParameters?has_content&gt;         * \n
 &lt;/#if&gt;
 &lt;#list element.typeParameters as typeParameter&gt;
@@ -145,8 +145,8 @@
               /**\n
  * Sets ${partName}.\n
 * @author [${user}]\n
-* @CreatedOn ${nowDateTile}\n
-* @Description\n
+* @since ${nowDateTile}\n
+* @implNote\n
 &lt;#if element.typeParameters?has_content&gt;         * \n
 &lt;/#if&gt;
 &lt;#list element.typeParameters as typeParameter&gt;
@@ -178,8 +178,8 @@
               /**\n
  * The entry point of application.\n
 * @author [${user}]\n
-* @CreatedOn ${nowDateTile}\n
-* @Description\n
+* @since ${nowDateTile}\n
+* @implNote\n
      &lt;#if element.parameterList.parameters?has_content&gt;
          *\n
 &lt;/#if&gt;
@@ -200,8 +200,8 @@
               /**\n
  * ${name}&lt;#if isNotVoid&gt; ${return}&lt;/#if&gt;.\n
 * @author [${user}]\n
-* @CreatedOn ${nowDateTile}\n
-* @Description\n
+* @since ${nowDateTile}\n
+* @implNote\n
 &lt;#if element.typeParameters?has_content&gt;         * \n
 &lt;/#if&gt;
 &lt;#list element.typeParameters as typeParameter&gt;

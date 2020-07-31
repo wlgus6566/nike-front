@@ -9,6 +9,7 @@ import com.nike.dnp.util.LocalDateUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ import java.util.List;
  * Contents Entity
  *
  * @author [이소정]
- * @CreatedOn 2020. 6. 19. 오후 5:57:35
+ * @since 2020. 6. 19. 오후 5:57:35
  */
 @Slf4j
 @Getter
@@ -168,12 +169,12 @@ public class Contents extends BaseTimeEntity {
      * @param contentsSaveDTO the contents save dto
      * @return the contents
      * @author [이소정]
-     * @CreatedOn 2020. 7. 1. 오전 9:59:51
+     * @since 2020. 7. 1. 오전 9:59:51
      */
     public Contents save(final ContentsSaveDTO contentsSaveDTO) {
         log.info("Contents.save");
         final Contents saveContents = new Contents();
-        saveContentsBasic(contentsSaveDTO, saveContents);
+        this.saveContentsBasic(contentsSaveDTO, saveContents);
         // 캠페인기간 > 날짜선택 인 경우
         if (ServiceCode.ContentsCampaignPeriodCode.SELECT.toString().equals(contentsSaveDTO.getCampaignPeriodSectionCode())) {
             saveContents.setCampaignBeginDt(LocalDateUtil.strToLocalDateTime(contentsSaveDTO.getCampaignBeginDt()+" 00:00:00","yyyy.MM.dd HH:mm:ss"));
@@ -193,7 +194,7 @@ public class Contents extends BaseTimeEntity {
      * @param contentsSaveDTO the contents save dto
      * @param saveContents    the save contents
      * @author [이소정]
-     * @CreatedOn 2020. 7. 1. \오전 9:59:37
+     * @since 2020. 7. 1. \오전 9:59:37
      */
     public static void saveContentsBasic(final ContentsSaveDTO contentsSaveDTO, final Contents saveContents) {
         log.info("Contents.saveContentsBasic");
@@ -217,7 +218,7 @@ public class Contents extends BaseTimeEntity {
      *
      * @param contentsUpdateDTO the contents update dto
      * @author [이소정]
-     * @CreatedOn 2020. 7. 3. 오후 4:01:36
+     * @since 2020. 7. 3. 오후 4:01:36
      */
     public void update(final ContentsUpdateDTO contentsUpdateDTO) {
         log.info("Contents.update");
@@ -236,7 +237,7 @@ public class Contents extends BaseTimeEntity {
      *
      * @param readCount the read count
      * @author [이소정]
-     * @CreatedOn 2020. 7. 3. 오후 5:22:59
+     * @since 2020. 7. 3. 오후 5:22:59
      */
     public void updateReadCount(final Long readCount) {
         log.info("Contents.updateReadCount");
@@ -248,9 +249,29 @@ public class Contents extends BaseTimeEntity {
      * Delete.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 7. 7. 오후 2:06:34
+     * @since 2020. 7. 7. 오후 2:06:34
      */
     public void delete() {
         this.useYn = "N";
+    }
+
+    /**
+     * The constant cdnUrl.
+     */
+    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    private static String cdnUrl;
+
+    /**
+     * Sets cdn url.
+     *
+     * @param cdnUrl the cdn url
+     */
+    @Value("${nike.file.cdnUrl:}")
+    public void setCdnUrl(final String cdnUrl) {
+        this.cdnUrl = cdnUrl;
+    }
+
+    public String getImageFilePhysicalName() {
+        return this.cdnUrl + imageFilePhysicalName;
     }
 }

@@ -20,8 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
  * The Class History service.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 23. 오전 11:32:16
- * @Description
+ * @since 2020. 7. 23. 오전 11:32:16
+ * @implNote
  */
 @Slf4j
 @Service
@@ -50,8 +50,8 @@ public class HistoryService {
      * @param authUserDTO      the auth user dto
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 27. 오후 2:19:02
-     * @Description
+     * @since 2020. 7. 27. 오후 2:19:02
+     * @implNote
      */
     public Page<HistoryResultDTO> findAllUploadHistoryPaging(final HistorySearchDTO historySearchDTO, final AuthUserDTO authUserDTO) {
         historySearchDTO.setRegisterSeq(authUserDTO.getUserSeq());
@@ -69,8 +69,8 @@ public class HistoryService {
      * @param authUserDTO      the auth user dto
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 24. 오후 4:00:56
-     * @Description
+     * @since 2020. 7. 24. 오후 4:00:56
+     * @implNote
      */
     public Page<HistoryResultDTO> findAllViewHistoryPaging(final HistorySearchDTO historySearchDTO, final AuthUserDTO authUserDTO) {
         historySearchDTO.setRegisterSeq(authUserDTO.getUserSeq());
@@ -89,8 +89,8 @@ public class HistoryService {
      * @param typeCd    the type cd
      * @return the history
      */
-    public RecentUpload saveRecentUploadHistory(Long folderSeq, String typeCd) {
-        RecentUpload recentUpload = new RecentUpload();
+    public RecentUpload saveRecentUploadHistory(final Long folderSeq, final String typeCd) {
+        final RecentUpload recentUpload = new RecentUpload();
         recentUpload.setTypeCd(typeCd);
         if (ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(typeCd)) {
             recentUpload.setReportSeq(folderSeq);
@@ -107,8 +107,8 @@ public class HistoryService {
      * @param typeCd    the type cd
      * @return the history
      */
-    public History saveViewHistory(Long folderSeq, String typeCd) {
-        History history = new History();
+    public History saveViewHistory(final Long folderSeq, final String typeCd) {
+        final History history = new History();
         history.setTypeCd(typeCd);
         if (ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(typeCd)) {
             history.setReportSeq(folderSeq);

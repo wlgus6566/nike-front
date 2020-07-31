@@ -20,8 +20,8 @@ import java.util.List;
  * The Class Report repository.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 7. 오후 2:46:09
- * @Description
+ * @since 2020. 7. 7. 오후 2:46:09
+ * @implNote
  */
 @Repository
 public class ReportRepositoryImpl extends QuerydslRepositorySupport implements ReportRepositoryCustom {
@@ -32,8 +32,8 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
      * Instantiates a new Contents repository.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 6:15:29
-     * @Description
+     * @since 2020. 6. 19. 오후 6:15:29
+     * @implNote
      */
     public ReportRepositoryImpl() {
         super(Report.class);
@@ -46,8 +46,8 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
      * @param pageRequest     the page request
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 7. 오후 4:49:05
-     * @Description
+     * @since 2020. 7. 7. 오후 4:49:05
+     * @implNote
      */
     @Override
     public Page<Report> findPageReport(final ReportSearchDTO reportSearchDTO, final PageRequest pageRequest) {
@@ -72,8 +72,8 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
      * @param pageRequest the page request
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 27. 오후 6:31:34
-     * @Description
+     * @since 2020. 7. 27. 오후 6:31:34
+     * @implNote
      */
     @Override
     public List<ReportResultDTO> findRecentReport(final PageRequest pageRequest) {

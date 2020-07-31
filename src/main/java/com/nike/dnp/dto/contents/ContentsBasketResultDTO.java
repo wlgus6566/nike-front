@@ -3,14 +3,15 @@ package com.nike.dnp.dto.contents;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
 
 
 /**
  * The Class Contents basket result dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 14. 오후 5:23:51
- * @Description
+ * @since 2020. 7. 14. 오후 5:23:51
+ * @implNote
  */
 @Getter
 @Setter
@@ -64,5 +65,36 @@ public class ContentsBasketResultDTO {
      */
     @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명", example = "http://cdnUrl/file/contents/graphic_img.jpg")
     private String filePhysicalName;
+
+    /**
+     * The constant cdnUrl.
+     */
+    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    private static String cdnUrl;
+
+    /**
+     * cndUrl 셋팅
+     *
+     * @param cdnUrl the cdn url
+     * @author [이소정]
+     * @implNote cndUrl 셋팅
+     * @since 2020. 7. 29. 오후 6:49:28
+     */
+    @Value("${nike.file.cdnUrl:}")
+    public void setCdnUrl(final String cdnUrl) {
+        this.cdnUrl = cdnUrl;
+    }
+
+    /**
+     * Gets file physical name.
+     *
+     * @return the file physical name
+     * @author [이소정]
+     * @implNote cndUrl + FilePhysicalName
+     * @since 2020. 7. 29. 오후 6:48:59
+     */
+    public String getFilePhysicalName() {
+        return this.cdnUrl + filePhysicalName;
+    }
 
 }

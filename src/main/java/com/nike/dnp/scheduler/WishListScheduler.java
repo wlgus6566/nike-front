@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
  * The Class Wish list scheduler.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 6. 오후 4:57:56
- * @Description
+ * @since 2020. 7. 6. 오후 4:57:56
+ * @implNote
  */
 @Slf4j
 @Component
@@ -32,10 +32,10 @@ public class WishListScheduler {
 	 * [00초], [00분], [00시], [매일], [매월], [매년]
 	 *
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 6. 오후 4:28:04
-	 * @Description
+	 * @since 2020. 7. 6. 오후 4:28:04
+	 * @implNote
 	 */
-	//@Scheduled(cron = "0 * * * * *")
+	//	@Scheduled(cron = "*/10 * * * * *")
 	@Scheduled(cron = "0 0 0 * * *")
 	public void wishListDeleteScheduler() {
 		log.debug("===== 위시리스트 등록 7일 이후 데이터 삭제 ==== ");

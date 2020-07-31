@@ -5,13 +5,14 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * CommonResult
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:11:42
- * @Description CommonResult 작성
+ * @since 2020. 6. 24. 오후 6:11:42
+ * @implNote CommonResult 작성
  */
 @Getter
 @Setter
@@ -59,7 +60,7 @@ public class CommonResult {
      */
     @ApiModelProperty(value = "추가 응답 데이터", name = "payload", allowableValues = "{}")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private HashMap<String, Object> payload;
+    private Set<HashMap<String, Object>> payload;
 
 }
 

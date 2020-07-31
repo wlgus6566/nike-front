@@ -12,8 +12,8 @@ import java.io.Serializable;
  * AuthMenuRole Entity
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:09:47
- * @Description AuthMenuRole(권한_메뉴_역할) Entity 작성
+ * @since 2020. 6. 24. 오후 6:09:47
+ * @implNote AuthMenuRole(권한_메뉴_역할) Entity 작성
  */
 @Getter
 @Setter
@@ -74,8 +74,8 @@ public class AuthMenuRole extends BaseTimeEntity implements Serializable {
      * @param authSeq     the auth seq
      * @param menuRoleSeq the menu role seq
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 13. 오후 3:33:32
-     * @Description 등록
+     * @since 2020. 7. 13. 오후 3:33:32
+     * @implNote 등록
      */
     @Builder
     public AuthMenuRole (

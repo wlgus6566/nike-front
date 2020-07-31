@@ -23,8 +23,8 @@ import java.util.List;
  * The Class Report controller.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 7. 오후 2:37:43
- * @Description
+ * @since 2020. 7. 7. 오후 2:37:43
+ * @apiNote 보고서 장바구니
  */
 @Slf4j
 @RestController
@@ -52,6 +52,16 @@ public class ReportBasketController {
      */
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
+    /**
+     * Find all report basket single result.
+     *
+     * @param authUserDTO the auth user dto
+     * @return the single result
+     * @author [이소정]
+     * @implNote [method 설명]
+     * @since 2020. 7. 29. 오후 6:45:27
+     * @apiNote 보고서 장바구니 목록 조회
+     */
     @ApiOperation(
         value = "Report 장바구니 목록 조회"
         , notes = REQUEST_CHARACTER
@@ -71,8 +81,8 @@ public class ReportBasketController {
      * @param authUserDTO   the auth user dto
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 17. 오후 7:07:33
-     * @Description
+     * @since 2020. 7. 17. 오후 7:07:33
+     * @apiNote Report 장바구니 등록
      */
     @ApiOperation(
             value = "Report 장바구니 등록"
@@ -84,8 +94,7 @@ public class ReportBasketController {
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
     ) {
         log.info("ReportBasketController.saveReportBasket");
-        List<ReportBasket> reportBasketList = reportBasketService.save(reportFileSeq, authUserDTO);
-        return responseService.getSingleResult(reportBasketList);
+        return responseService.getSingleResult(reportBasketService.save(reportFileSeq, authUserDTO));
     }
 
     /**
@@ -94,8 +103,8 @@ public class ReportBasketController {
      * @param reportBasketSeq the report basket seq
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 17. 오후 7:07:35
-     * @Description
+     * @since 2020. 7. 17. 오후 7:07:35
+     * @apiNote Report 장바구니 삭제
      */
     @ApiOperation(value="Report 장바구니 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "Report 장바구니 삭제", value = "/{reportBasketSeq}"

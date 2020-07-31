@@ -2,10 +2,8 @@ package com.nike.dnp.dto.notice;
 
 import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiParam;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * The Class Notice search dto.
@@ -18,7 +16,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class NoticeSearchDTO extends SearchDTO {
+public class CustomerSearchDTO extends SearchDTO {
 
     /**
      * The Notice article section code
@@ -33,7 +31,7 @@ public class NoticeSearchDTO extends SearchDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(value = "QNA 게시물 카테고리 코드", name = "noticeArticleCategoryCode", defaultValue = "")
+    @ApiParam(value = "[QNA] 게시물 카테고리 코드", name = "noticeArticleCategoryCode", defaultValue = "")
     private String noticeArticleCategoryCode;
 
     /**
@@ -44,23 +42,4 @@ public class NoticeSearchDTO extends SearchDTO {
     @ApiParam(value = "검색어", name = "keyword", defaultValue = "", required = false)
     private String keyword = "";
 
-    /**
-     * The Use yn
-     *
-     * @author [정주희]
-     */
-    @ApiParam(value = "게시글 사용 여부", name = "useYn", defaultValue = "N")
-    private String useYn = "N";
-
-    /**
-     * Sets notice article category code.
-     *
-     * @param noticeArticleCategoryCode the notice article category code
-     * @author [정주희]
-     * @CreatedOn 2020. 7. 25. 오후 6:03:48
-     * @Description FAQ -> 카테고리 명 대문자 변환
-     */
-    public void setNoticeArticleCategoryCode(String noticeArticleCategoryCode) {
-        this.noticeArticleCategoryCode = noticeArticleCategoryCode.toUpperCase();
-    }
 }

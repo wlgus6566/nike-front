@@ -56,8 +56,8 @@ export default {
             }
             try {
                 const bodyFormData = new FormData();
-                bodyFormData.set('username', this.username);
-                bodyFormData.set('password', this.password);
+                bodyFormData.append('username', this.username);
+                bodyFormData.append('password', this.password);
                 const response = await this.$store.dispatch(
                     'LOGIN',
                     bodyFormData

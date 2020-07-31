@@ -15,8 +15,8 @@ import java.util.Optional;
  * The Class User audit aware.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 30. 오후 4:27:15
- * @Description
+ * @since 2020. 6. 30. 오후 4:27:15
+ * @implNote
  */
 @Slf4j
 @Service
@@ -28,8 +28,8 @@ public class UserAuditAware implements AuditorAware<Long> {
      *
      * @return the current auditor
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 30. 오후 4:27:15
-     * @Description
+     * @since 2020. 6. 30. 오후 4:27:15
+     * @implNote
      */
     @Override
     public Optional<Long> getCurrentAuditor() {

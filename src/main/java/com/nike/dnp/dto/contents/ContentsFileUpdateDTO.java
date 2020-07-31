@@ -8,8 +8,8 @@ import lombok.*;
  * The Class Contents file update dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 3. 오후 3:39:34
- * @Description
+ * @since 2020. 7. 3. 오후 3:39:34
+ * @implNote 컨텐츠 파일 수정 DTO
  */
 @Getter
 @Setter

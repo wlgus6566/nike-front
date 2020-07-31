@@ -14,15 +14,14 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 /**
  * The Class Report answer controller.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 10. 오전 11:07:25
- * @Description
+ * @since 2020. 7. 10. 오전 11:07:25
+ * @apiNote 보고서 컨트롤러
  */
 @Slf4j
 @RestController
@@ -57,8 +56,8 @@ public class ReportAnswerController {
      * @param reportSeq the report seq
      * @return the all reports
      * @author [이소정]
-     * @CreatedOn 2020. 7. 10. 오후 6:50:40
-     * @Description
+     * @since 2020. 7. 10. 오후 6:50:40
+     * @apiNote 보고서 댓글(feedback) 목록 조회
      */
     @ApiOperation(
             value = "보고서 댓글 목록 조회"
@@ -92,8 +91,8 @@ public class ReportAnswerController {
      * @param answerSaveDTO the answer save dto
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 10. 오후 6:39:54
-     * @Description
+     * @since 2020. 7. 10. 오후 6:39:54
+     * @apiNote 보고서 댓글(feedback) 등록
      */
     @ApiOperation(
             value = "보고서 댓글 등록"
@@ -104,8 +103,7 @@ public class ReportAnswerController {
             @RequestBody final ReportAnswerSaveDTO answerSaveDTO
     ) {
         log.info("ReportAnswerController.saveReportAnswer");
-        ReportAnswer reportAnswer = reportAnswerService.save(answerSaveDTO);
-        return responseService.getSingleResult(reportAnswer);
+        return responseService.getSingleResult(reportAnswerService.save(answerSaveDTO));
     }
 
     /**
@@ -114,13 +112,13 @@ public class ReportAnswerController {
      * @param answerSeq the answer seq
      * @return the single result
      * @author [이소정]
-     * @CreatedOn 2020. 7. 10. 오후 6:39:49
-     * @Description
+     * @since 2020. 7. 10. 오후 6:39:49
+     * @apiNote 보고서 댓글(feedback) 삭제
      */
     @ApiOperation(value="보고서 댓글 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "보고서 댓글 삭제", value = "/{answerSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<ReportAnswer>> deleteReport(
+    public SingleResult<ReportAnswer> deleteReport(
             @ApiParam(name = "answerSeq", value = "보고서 댓글 시퀀스", defaultValue = "1") @PathVariable final Long answerSeq) {
         log.info("ReportController.deleteReport");
         return responseService.getSingleResult(reportAnswerService.delete(answerSeq));

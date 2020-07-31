@@ -8,8 +8,8 @@ import lombok.*;
  * CodeSearchDTO
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:08:47
- * @Description Code(공통코드) Search DTO 작성
+ * @since 2020. 6. 24. 오후 6:08:47
+ * @implNote Code(공통코드) Search DTO 작성
  */
 @Getter
 @Setter
@@ -30,8 +30,8 @@ public class CodeSearchDTO extends SearchDTO {
      *
      * @return String string
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:08:48
-     * @Description
+     * @since 2020. 6. 24. 오후 6:08:48
+     * @implNote
      */
     @Override
     public String toString() {

@@ -9,8 +9,8 @@ import lombok.*;
  * Product search dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 21. 오후 3:55:34
- * @Description
+ * @since 2020. 7. 21. 오후 3:55:34
+ * @implNote
  */
 @Getter
 @Setter
@@ -27,7 +27,7 @@ public class ProductUserSearchDTO extends SearchDTO {
 	private String keyword = "";
 
 	/**
-	 * 카테고리 2
+	 * 카테고리 2 코드
 	 *
 	 * @author [윤태호]
 	 */
@@ -35,7 +35,7 @@ public class ProductUserSearchDTO extends SearchDTO {
 	private String category2Code;
 
 	/**
-	 * The Category 3 code
+	 * 카테고리 3 코드
 	 *
 	 * @author [오지훈]
 	 */

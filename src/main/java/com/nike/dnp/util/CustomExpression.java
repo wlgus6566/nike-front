@@ -5,6 +5,7 @@ import com.querydsl.core.types.dsl.DateTemplate;
 import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
+import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 import java.time.LocalDateTime;
@@ -14,10 +15,11 @@ import java.time.LocalDateTime;
  * The Class Date expression.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 2. 오후 12:24:28
- * @Description
+ * @since 2020. 7. 2. 오후 12:24:28
+ * @implNote
  */
 @UtilityClass
+@NoArgsConstructor
 public class CustomExpression {
 
     /**
@@ -27,10 +29,10 @@ public class CustomExpression {
      * @param pattern the pattern
      * @return the date template
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 2. 오후 12:24:16
-     * @Description Expressions LocalDateTime formatDate
+     * @since 2020. 7. 2. 오후 12:24:16
+     * @implNote Expressions LocalDateTime formatDate
      */
-    public DateTemplate<LocalDateTime> formatDate(String date, String pattern) {
+    public DateTemplate<LocalDateTime> formatDate(final String date, final String pattern) {
         return Expressions.dateTemplate(LocalDateTime.class, "DATE_FORMAT({0},{1})", date, ConstantImpl.create(pattern));
     }
 
@@ -40,10 +42,10 @@ public class CustomExpression {
      * @param date the date
      * @return the number expression
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 2. 오후 2:37:40
-     * @Description Expressions DateDiff
+     * @since 2020. 7. 2. 오후 2:37:40
+     * @implNote Expressions DateDiff
      */
-    public NumberExpression<Integer> dateDiff(DateTimePath<LocalDateTime> date) {
+    public NumberExpression<Integer> dateDiff(final DateTimePath<LocalDateTime> date) {
         return Expressions.numberTemplate(Integer.class, "DATEDIFF(SYSDATE(), {0})", date);
     }
 
