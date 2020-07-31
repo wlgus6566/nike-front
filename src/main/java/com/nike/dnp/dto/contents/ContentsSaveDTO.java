@@ -14,8 +14,8 @@ import java.util.List;
  * The Class Contents save dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 6. 24. 오후 3:25:23
- * @Description
+ * @since 2020. 6. 24. 오후 3:25:23
+ * @implNote 컨텐츠 저장 DTO
  */
 @Getter
 @Setter
@@ -43,7 +43,7 @@ public class ContentsSaveDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "imageBase64", value = "이미지 base64 문자", example = "data:image/jpeg;base64," + "/9j/4AAQSkZJRgABAQEAYABgAAD" +
+    @ApiModelProperty(name = "imageBase64", value = "이미지 base64 문자", required = true, example = "data:image/jpeg;base64," + "/9j/4AAQSkZJRgABAQEAYABgAAD" +
             "/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUF" +
             "BQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAD0AacDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhB" +
             "yJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19" +
@@ -251,8 +251,8 @@ public class ContentsSaveDTO {
      * The Class Auth check.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오후 12:23:51
-     * @Description 권한 체크 DTO
+     * @since 2020. 7. 20. 오후 12:23:51
+     * @implNote 권한 체크 DTO
      */
     @Getter
     @Setter

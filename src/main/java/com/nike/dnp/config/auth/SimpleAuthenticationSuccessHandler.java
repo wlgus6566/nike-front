@@ -29,22 +29,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * 로그인 성공 후 핸들러
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 3. 오전 11:30:01
- * @Description
+ * @since 2020. 7. 3. 오전 11:30:01
+ * @implNote
  */
 @Slf4j
 @RequiredArgsConstructor
-public class
-SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 	/**
 	 * The Response service
@@ -82,15 +78,15 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 	private final UserMailService userMailService;
 
 	/**
-	 * On authentication success.
+	 * 로그인 성공 처리
 	 *
 	 * @param request        the request
 	 * @param response       the response
 	 * @param authentication the authentication
 	 * @throws IOException the io exception
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 3. 오전 11:30:01
-	 * @Description
+	 * @since 2020. 7. 3. 오전 11:30:01
+	 * @implNote
 	 */
 	@Transactional
 	@Override
@@ -162,13 +158,13 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 			if (isValid) {
 				redisService.set("cert:"+authUserDTO.getUserId(), randomCode, 60);
 
-				final HashMap<String, Object> payload = new HashMap<>();
-				payload.put("certCode", encodeCertCode);
+				final HashMap<String, Object> map = new HashMap<>();
+				map.put("certCode", encodeCertCode);
 				JsonUtil.write(response.getWriter()
 						, responseService.getFailResult(
 								FailCode.ConfigureError.OVERTIME_PASSWORD.name()
 								, MessageUtil.getMessage(FailCode.ConfigureError.OVERTIME_PASSWORD.name())
-								, payload
+								, Collections.singleton(map)
 						));
 				isValid = false;
 			}
@@ -229,12 +225,12 @@ SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 		}
 
 		if (isValid) {
-			StringBuilder redisKey = new StringBuilder("auths:");
+			final StringBuilder redisKey = new StringBuilder("auths:");
 			redisKey.append(authUserDTO.getUsername())
 					.append(LocalDateTime.now().getLong(ChronoField.MILLI_OF_DAY));
-			Algorithm algorithm = Algorithm.HMAC512(JwtHelper.SECRET.getBytes());
+			final Algorithm algorithm = Algorithm.HMAC512(JwtHelper.SECRET.getBytes());
 			// jwt 토큰 생성
-			HashMap<String, Object> head = new HashMap<>();
+			final HashMap<String, Object> head = new HashMap<>();
 			head.put("typ","JWT");
 			final String token = JWT.create()
 									.withSubject(authUserDTO.getUsername())

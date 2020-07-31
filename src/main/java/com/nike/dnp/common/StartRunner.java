@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
  * Runner
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 22. 오후 5:05:10
- * @Description Runner 작성
+ * @since 2020. 6. 22. 오후 5:05:10
+ * @implNote Runner 작성
  */
 @Slf4j
 @Component
@@ -22,8 +22,8 @@ public class StartRunner implements ApplicationRunner {
      * Instantiates a new Start runner.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 5:05:10
-     * @Description
+     * @since 2020. 6. 22. 오후 5:05:10
+     * @implNote
      */
     public StartRunner() {
         super();
@@ -34,8 +34,8 @@ public class StartRunner implements ApplicationRunner {
      *
      * @param args the args
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오후 5:05:10
-     * @Description
+     * @since 2020. 6. 22. 오후 5:05:10
+     * @implNote
      */
     @Override
     public void run(final ApplicationArguments args) {

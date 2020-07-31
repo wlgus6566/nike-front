@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
  * The Class Auth update dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 5:21:01
- * @Description Auth(권한) Update DTO 작성
+ * @since 2020. 6. 24. 오후 5:21:01
+ * @implNote Auth(권한) Update DTO 작성
  */
 @Getter
 @Setter

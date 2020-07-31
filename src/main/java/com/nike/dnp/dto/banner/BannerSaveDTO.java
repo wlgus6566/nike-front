@@ -9,8 +9,8 @@ import javax.validation.constraints.NotBlank;
  * The Class Banner update dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 21. 오후 3:54:32
- * @Description
+ * @since 2020. 7. 21. 오후 3:54:32
+ * @implNote
  */
 @Getter
 @Setter

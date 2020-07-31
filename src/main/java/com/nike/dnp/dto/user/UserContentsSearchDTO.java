@@ -11,8 +11,8 @@ import javax.validation.constraints.NotBlank;
  * UserContentsSearchDTO
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 22. 오후 12:14:01
- * @Description UserContents(유저 컨텐츠 권한) Search DTO 작성
+ * @since 2020. 6. 22. 오후 12:14:01
+ * @implNote UserContents(유저 컨텐츠 권한) Search DTO 작성
  */
 @Getter
 @Setter

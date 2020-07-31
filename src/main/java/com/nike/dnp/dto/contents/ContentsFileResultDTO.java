@@ -3,13 +3,14 @@ package com.nike.dnp.dto.contents;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * The Class Contents list dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 13. 오후 2:52:03
- * @Description
+ * @since 2020. 7. 13. 오후 2:52:03
+ * @implNote 컨텐츠 파일 결과 DTO
  */
 @Getter
 @Setter
@@ -104,6 +105,28 @@ public class ContentsFileResultDTO {
      */
     @ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "JPG")
     private String fileExtension;
+
+    /**
+     * The constant cdnUrl.
+     */
+    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    private static String cdnUrl;
+
+    /**
+     * Sets cdn url.
+     *
+     * @param cdnUrl the cdn url
+     */
+    @Value("${nike.file.cdnUrl:}")
+    public void setCdnUrl(final String cdnUrl) {
+        this.cdnUrl = cdnUrl;
+    }
+
+    public String getThumbnailFilePhysicalName() {
+        return this.cdnUrl + thumbnailFilePhysicalName;
+    }
+
+
 
 //    TODO[lsj] 상세페이지에서 필요 없어서 주석 추후 삭제 예정
 //     by.2020.07.17 sojeong.lee

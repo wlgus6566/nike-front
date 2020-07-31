@@ -13,8 +13,8 @@ import javax.persistence.*;
  * Product Entity
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 9. 오후 5:18:04
- * @Description Product Entity 작성
+ * @since 2020. 7. 9. 오후 5:18:04
+ * @implNote Product Entity 작성
  * @history [윤태호] [2020.06.17] [최초 작성]
  * @since 2020.06.17
  */
@@ -170,8 +170,8 @@ public class Product extends BaseTimeEntity {
 	 * Pre persist.
 	 *
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 9. 오후 5:18:04
-	 * @Description
+	 * @since 2020. 7. 9. 오후 5:18:04
+	 * @implNote
 	 */
 	@PrePersist
 	public void prePersist() {
@@ -184,8 +184,8 @@ public class Product extends BaseTimeEntity {
 	 *
 	 * @param productUpdateDTO the product update dto
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 24. 오후 5:32:08
-	 * @Description
+	 * @since 2020. 6. 24. 오후 5:32:08
+	 * @implNote
 	 */
 	public void delete(final ProductUpdateDTO productUpdateDTO) {
 		setUseYn(productUpdateDTO.getUseYn());

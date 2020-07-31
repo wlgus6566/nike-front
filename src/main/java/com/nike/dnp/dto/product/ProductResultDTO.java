@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
  * The Class Product result dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 21. 오후 3:55:06
- * @Description
+ * @since 2020. 7. 21. 오후 3:55:06
+ * @implNote
  */
 @Getter
 @Setter
@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class ProductResultDTO {
 
 	/**
-	 * The Goods seq
+	 * 상품 시퀀스
 	 *
 	 * @author [오지훈]
 	 */
@@ -128,7 +128,7 @@ public class ProductResultDTO {
 	private String useYn;
 
 	/**
-	 * The Agency name
+	 * 에이전시 이름
 	 *
 	 * @author [윤태호]
 	 */
@@ -136,7 +136,7 @@ public class ProductResultDTO {
 	private String agencyName;
 
 	/**
-	 * The Update dt
+	 * 최종 수정일
 	 *
 	 * @author [오지훈]
 	 */
@@ -145,20 +145,20 @@ public class ProductResultDTO {
 	private LocalDateTime updateDt;
 
 	/**
-	 * The Nick name
+	 * 유저 닉네임
 	 *
 	 * @author [오지훈]
 	 */
-	@ApiModelProperty(name = "nickName", value = "유저 닉네임")
-	private String nickName;
+	@ApiModelProperty(name = "nickname", value = "유저 닉네임")
+	private String nickname;
 
 	/**
-	 * Get category 2 name string.
+	 * 카테고리 2 코드명
 	 *
 	 * @return the string
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 21. 오후 4:03:46
-	 * @Description
+	 * @since 2020. 7. 21. 오후 4:03:46
+	 * @implNote
 	 */
 	@ApiModelProperty(name = "category2Name", value = "카테고리 2 명")
 	public String getCategory2Name(){
@@ -171,12 +171,12 @@ public class ProductResultDTO {
 	}
 
 	/**
-	 * Gets category 3 name.
+	 * 카테고리 3 코드명
 	 *
 	 * @return the category 3 name
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 7. 21. 오후 4:03:46
-	 * @Description
+	 * @since 2020. 7. 21. 오후 4:03:46
+	 * @implNote
 	 */
 	@ApiModelProperty(name = "category3Name", value = "카테고리 3 명")
 	public String getCategory3Name() {

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * ProductRepositoryCustom
  *
  * @author [윤태호]
- * @Description Product(제품) Repository Custom Interface 작성
+ * @implNote Product(제품) Repository Custom Interface 작성
  * @history [윤태호] [2020.06.18] [최초 작성]
  * @since 2020.06.18
  */
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepositoryCustom {
 
 	/**
-	 * Find alls page.
+	 * 제품 관리 리스트 페이지
 	 *
 	 * @param productSearchDTO the product search dto
 	 * @param pageRequest      the page request

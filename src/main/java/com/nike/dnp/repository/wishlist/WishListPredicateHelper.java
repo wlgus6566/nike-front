@@ -10,21 +10,21 @@ import org.springframework.util.ObjectUtils;
  * WishListPredicateHelper
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 3. 오후 3:54:34
- * @Description
+ * @since 2020. 7. 3. 오후 3:54:34
+ * @implNote
  */
 @UtilityClass
 public class WishListPredicateHelper {
 
 
 	/**
-	 * eq userSeq
+	 * 유저 시퀀스 조건
 	 *
 	 * @param userSeq the user seq
 	 * @return the predicate
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 3. 오후 3:54:34
-	 * @Description
+	 * @since 2020. 7. 3. 오후 3:54:34
+	 * @implNote
 	 */
 	public static Predicate eqUserSeq(final Long userSeq) {
 		final BooleanBuilder builder = new BooleanBuilder();

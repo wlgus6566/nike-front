@@ -20,8 +20,8 @@ import java.util.Properties;
  * The Class Send email office 365.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오전 11:44:13
- * @Description Office365용 Email 전송 Service 작성
+ * @since 2020. 6. 24. 오전 11:44:13
+ * @implNote Office365용 Email 전송 Service 작성
  */
 @Service
 @Slf4j
@@ -75,8 +75,8 @@ public class SendEmailOffice365 {
      *
      * @param contaPadrao the conta padrao
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 21. 오후 2:52:48
-     * @Description
+     * @since 2020. 7. 21. 오후 2:52:48
+     * @implNote
      */
     @Value("${nike.email.auth.id:}")
     public void setContaPadrao(final String contaPadrao) {
@@ -88,8 +88,8 @@ public class SendEmailOffice365 {
      *
      * @param senhaContaPadrao the senha conta padrao
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 21. 오후 2:52:49
-     * @Description
+     * @since 2020. 7. 21. 오후 2:52:49
+     * @implNote
      */
     @Value("${nike.email.auth.pw:}")
     public void setSenhaContaPadrao(final String senhaContaPadrao) {
@@ -101,8 +101,8 @@ public class SendEmailOffice365 {
      *
      * @param fromEmail the from email
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 21. 오후 2:52:50
-     * @Description
+     * @since 2020. 7. 21. 오후 2:52:50
+     * @implNote
      */
     @Value("${nike.email.send.from:}")
     public void setFromEmail(final String fromEmail) {
@@ -116,8 +116,8 @@ public class SendEmailOffice365 {
      * @param subject the subject
      * @param file    the file
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 14. 오전 11:53:51
-     * @Description
+     * @since 2020. 7. 14. 오전 11:53:51
+     * @implNote
      */
     public void sendEmail(final String toEmail, final String subject, final String file) {
         this.sendEmail(fromEmail, toEmail, subject, file);
@@ -131,8 +131,8 @@ public class SendEmailOffice365 {
      * @param subject   the subject
      * @param file      the file
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오전 11:44:14
-     * @Description 메일 발송
+     * @since 2020. 6. 24. 오전 11:44:14
+     * @implNote 메일 발송
      */
     public void sendEmail(final String fromEmail, final String toEmail, final String subject, final String file) {
         log.info("SendEmailOffice365.sendEmail");
@@ -183,8 +183,8 @@ public class SendEmailOffice365 {
      *
      * @return the email properties
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오전 11:44:14
-     * @Description properties 설정
+     * @since 2020. 6. 24. 오전 11:44:14
+     * @implNote properties 설정
      */
     public Properties getEmailProperties() {
         final Properties config = new Properties();

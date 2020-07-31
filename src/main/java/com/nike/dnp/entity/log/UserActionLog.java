@@ -10,8 +10,8 @@ import javax.persistence.*;
  * UserActionLog Entity
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:10:30
- * @Description UserActionLog(유저_활동_로그) Entity 작성
+ * @since 2020. 6. 24. 오후 6:10:30
+ * @implNote UserActionLog(유저_활동_로그) Entity 작성
  */
 @Getter
 @Setter

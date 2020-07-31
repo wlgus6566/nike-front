@@ -21,8 +21,8 @@ import java.util.Optional;
  * The Class Goods basket service.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 2. 오후 4:30:52
- * @Description
+ * @since 2020. 7. 2. 오후 4:30:52
+ * @implNote
  */
 @Slf4j
 @Service
@@ -39,16 +39,17 @@ public class GoodsBasketService {
 	private final GoodsBasketRepository goodsBasketRepository;
 
 	/**
-	 * Save basket.
+	 * 장바구니 저장
 	 *
 	 * @param goodsBasketSaveDTO the goods basket save dto
 	 * @return goods basket
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 2. 오후 4:34:23
-	 * @Description
+	 * @since 2020. 7. 2. 오후 4:34:23
+	 * @implNote
 	 */
 	@Transactional
 	public GoodsBasket saveBasket(final GoodsBasketSaveDTO goodsBasketSaveDTO) {
+		log.info("GoodsBasketService.saveBasket");
 		final Optional<GoodsBasket> goodsBasket = goodsBasketRepository.findByGoodsSeqAndUserSeq(goodsBasketSaveDTO.getGoodsSeq(), SecurityUtil.currentUser().getUserSeq());
 		final GoodsBasket saveGoodsBasket = goodsBasket.orElse(new GoodsBasket());
 		saveGoodsBasket.setGoodsSeq(goodsBasketSaveDTO.getGoodsSeq());
@@ -58,28 +59,29 @@ public class GoodsBasketService {
 	}
 
 	/**
-	 * Find by all list.
+	 * 장바구니 조회
 	 *
 	 * @return the list
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 3. 오후 12:05:29
-	 * @Description
+	 * @since 2020. 7. 3. 오후 12:05:29
+	 * @implNote
 	 */
 	public List<GoodsBasket> findByAll() {
+		log.info("GoodsBasketService.findByAll");
 		return goodsBasketRepository.findByUserSeqOrderByGoodsBasketSeqDesc(SecurityUtil.currentUser().getUserSeq());
 	}
 
 	/**
-	 * Delete basket.
+	 * 장바구니 삭제
 	 *
 	 * @param goodsBasketSeq the goods basket seq
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 3. 오후 12:05:29
-	 * @Description
+	 * @since 2020. 7. 3. 오후 12:05:29
+	 * @implNote
 	 */
 	@Transactional
 	public void deleteBasket(final Long goodsBasketSeq) {
-
+		log.info("GoodsBasketService.deleteBasket");
 		final Optional<GoodsBasket> optionalGoodsBasket = goodsBasketRepository.findById(goodsBasketSeq);
 		final GoodsBasket goodsBasket = optionalGoodsBasket.orElseThrow(
 				() -> new CodeMessageHandleException(
@@ -92,11 +94,12 @@ public class GoodsBasketService {
 	 * 장바구니 전체 삭제 - 스케쥴용
 	 *
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 3. 오후 12:05:29
-	 * @Description
+	 * @since 2020. 7. 3. 오후 12:05:29
+	 * @implNote
 	 */
 	@Transactional
 	public void deleteAll() {
+		log.info("GoodsBasketService.deleteAll");
 		goodsBasketRepository.deleteAll();
 
 	}
@@ -107,18 +110,19 @@ public class GoodsBasketService {
 	 * @param goodsBasketSaveListDTO the goods basket save list dto
 	 * @return the list
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 6. 오전 11:37:09
-	 * @Description
+	 * @since 2020. 7. 6. 오전 11:37:09
+	 * @implNote
 	 */
 	@Transactional
 	public List<GoodsBasket> saveBasketList(final GoodsBasketSaveListDTO goodsBasketSaveListDTO) {
-		final List<GoodsBasket> resultList = new ArrayList<>();
+		log.info("GoodsBasketService.saveBasketList");
 		if(goodsBasketSaveListDTO.getGoodsSeqList().size()!= goodsBasketSaveListDTO.getOrderQuantityList().size()){
 			throw new CodeMessageHandleException(
 					FailCode.ConfigureError.INVALID_ORDER.name()
 					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_ORDER.name()));
 		}
 
+		final List<GoodsBasket> resultList = new ArrayList<>();
 		for(int i = 0; i < goodsBasketSaveListDTO.getGoodsSeqList().size(); i++){
 			final Optional<GoodsBasket> findGoodsBasket = goodsBasketRepository.findByGoodsSeqAndUserSeq(goodsBasketSaveListDTO.getGoodsSeqList().get(i), SecurityUtil.currentUser().getUserSeq());
 			final GoodsBasket goodsBasket = findGoodsBasket.orElse(new GoodsBasket());

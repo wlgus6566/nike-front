@@ -13,8 +13,8 @@ import javax.persistence.*;
  * The Class History.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 23. 오전 11:04:28
- * @Description
+ * @since 2020. 7. 23. 오전 11:04:28
+ * @implNote
  */
 @Getter
 @Setter

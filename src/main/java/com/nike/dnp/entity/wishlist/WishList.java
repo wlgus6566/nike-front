@@ -13,8 +13,8 @@ import javax.persistence.*;
  * WishList
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 2. 오후 4:18:55
- * @Description
+ * @since 2020. 7. 2. 오후 4:18:55
+ * @implNote
  */
 @Getter
 @Setter
@@ -65,8 +65,8 @@ public class WishList extends BaseTimeEntity {
      * Pre persist.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 24. 오전 10:02:38
-     * @Description
+     * @since 2020. 7. 24. 오전 10:02:38
+     * @implNote
      */
     @PrePersist
     private void prePersist () {

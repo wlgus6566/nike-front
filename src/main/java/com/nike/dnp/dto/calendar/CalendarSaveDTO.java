@@ -10,8 +10,8 @@ import javax.validation.constraints.NotBlank;
  * CalendarDTO
  *
  * @author [김형욱]
- * @CreatedOn 2020. 6. 30. 오전 10:00:08
- * @Description calendar Save DTO 작성
+ * @since 2020. 6. 30. 오전 10:00:08
+ * @implNote calendar Save DTO 작성
  */
 @Getter
 @Setter

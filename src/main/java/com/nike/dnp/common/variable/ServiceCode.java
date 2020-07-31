@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
  * The Class Service enum code.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 3. 오전 11:34:38
- * @Description
+ * @since 2020. 7. 3. 오전 11:34:38
+ * @implNote
  */
 @Component
 @AllArgsConstructor
@@ -244,8 +244,9 @@ public class ServiceCode {
     public enum FileFolderEnumCode {
         PRODUCT("product"),
         CONTENTS("contents"),
+        REPORT("report"),
         TEMP("temp"),
-        FAQ("faq"),
+        QNA("QNA"),
         BANNER("banner")
         ;
 
@@ -325,7 +326,7 @@ public class ServiceCode {
      */
     @RequiredArgsConstructor
     @Getter
-    public enum FAQEnumCode {
+    public enum QNAEnumCode {
         ASSET("ASSET/TOOLKIT/FOUNDATION"),
         SUBSIDIARY("부자재주문"),
         REPORT("시공보고서"),

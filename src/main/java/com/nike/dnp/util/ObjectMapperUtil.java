@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class ObjectMapperUtil {
 
-    private static ModelMapper modelMapper = new ModelMapper();
+    private static final ModelMapper modelMapper;
 
     /**
      * Model mapper property setting are specified in the following block.
@@ -36,7 +36,7 @@ public class ObjectMapperUtil {
      * @param outClass class of result object.
      * @return new object of <code>outClass</code> type.
      */
-    public static <D, T> D map(final T entity, Class<D> outClass) {
+    public static <D, T> D map(final T entity, final Class<D> outClass) {
         return modelMapper.map(entity, outClass);
     }
 
@@ -49,7 +49,7 @@ public class ObjectMapperUtil {
      * @param <T>        type of entity in <code>entityList</code>
      * @return list of mapped object with <code><D></code> type.
      */
-    public static <D, T> List<D> mapAll(final Collection<T> entityList, Class<D> outCLass) {
+    public static <D, T> List<D> mapAll(final Collection<T> entityList, final Class<D> outCLass) {
         return entityList.stream()
                 .map(entity -> map(entity, outCLass))
                 .collect(Collectors.toList());
@@ -61,7 +61,7 @@ public class ObjectMapperUtil {
      * @param source      object to map from
      * @param destination object to map to
      */
-    public static <S, D> D map(final S source, D destination) {
+    public static <S, D> D map(final S source, final D destination) {
         modelMapper.map(source, destination);
         return destination;
     }

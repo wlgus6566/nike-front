@@ -1,5 +1,6 @@
 package com.nike.dnp.util;
 
+import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,11 +10,12 @@ import java.util.Random;
  * RandomUtil
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 19. 오후 4:53:33
- * @Description RandomUtil 작성
+ * @since 2020. 6. 19. 오후 4:53:33
+ * @implNote RandomUtil 작성
  */
 @Slf4j
 @UtilityClass
+@NoArgsConstructor
 public class RandomUtil {
 
 	/**
@@ -22,8 +24,8 @@ public class RandomUtil {
 	 * @param size the size
 	 * @return the string
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 19. 오후 5:45:12
-	 * @Description 인증코드 생성 방법
+	 * @since 2020. 6. 19. 오후 5:45:12
+	 * @implNote 인증코드 생성 방법
 	 */
 	public String randomCertCode1(final int size) {
 		final StringBuilder temp = new StringBuilder();
@@ -72,8 +74,8 @@ public class RandomUtil {
 	 * @param size the size
 	 * @return the string
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 19. 오후 5:45:12
-	 * @Description 인증코드 생성 방법
+	 * @since 2020. 6. 19. 오후 5:45:12
+	 * @implNote 인증코드 생성 방법
 	 */
 	public String randomCertCode2(final int size) {
 		final StringBuilder temp = new StringBuilder();

@@ -24,7 +24,7 @@ import java.util.List;
  * Contents Repository Impl
  *
  * @author [이소정]
- * @CreatedOn 2020. 6. 19. 오후 5:54:32
+ * @since 2020. 6. 19. 오후 5:54:32
  */
 @Repository
 public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements ContentsRepositoryCustom {
@@ -35,7 +35,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * Instantiates a new Contents repository.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 6:15:29
+     * @since 2020. 6. 19. 오후 6:15:29
      */
     public ContentsRepositoryImpl() {
         super(Contents.class);
@@ -48,7 +48,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @param pageRequest       the page request
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 5:54:39
+     * @since 2020. 6. 19. 오후 5:54:39
      */
     @Override
     public Page<ContentsResultDTO> findPageContents(final ContentsSearchDTO contentsSearchDTO, final PageRequest pageRequest) {
@@ -96,10 +96,11 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @param pageRequest the page request
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 27. 오후 6:39:10
+     * @since 2020. 7. 27. 오후 6:39:10
      */
+    @Override
     public List<ContentsResultDTO> findRecentContents(final String topMenuCode, final PageRequest pageRequest) {
-        ContentsSearchDTO contentsSearchDTO = new ContentsSearchDTO();
+        final ContentsSearchDTO contentsSearchDTO = new ContentsSearchDTO();
         contentsSearchDTO.setTopMenuCode(topMenuCode);
 
         final QContents qContents = QContents.contents;
@@ -141,19 +142,18 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @return the list
      */
     @Override
-    public List<ContentsUserEmailDTO> findAllContentsMailAuthUser(long contentsSeq) {
+    public List<ContentsUserEmailDTO> findAllContentsMailAuthUser(final long contentsSeq) {
         final QUserContents qUserContents = QUserContents.userContents;
         final QContents qContents = QContents.contents;
         final QUserAuth qUserAuth = QUserAuth.userAuth;
         final QUser qUser = QUser.user;
-
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-
-        List<ContentsUserEmailDTO> userEmailDTOList = queryFactory.select(
-                Projections.bean(
-                    ContentsUserEmailDTO.class
-                        , qUser.userId
-                        , qContents.imageFilePhysicalName
+        return queryFactory
+                .select(
+                    Projections.bean(
+                        ContentsUserEmailDTO.class
+                            , qUser.userId
+                            , qContents.imageFilePhysicalName
                 ))
                 .from(qUserContents)
                 .where(qUserContents.contentsSeq.eq(contentsSeq))
@@ -161,8 +161,6 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                 .innerJoin(qUserAuth).on(qUserContents.authSeq.eq(qUserAuth.authSeq))
                 .innerJoin(qUser).on(qUserAuth.userSeq.eq(qUser.userSeq))
                 .fetch();
-
-        return userEmailDTOList;
     }
 
 }

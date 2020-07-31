@@ -18,8 +18,8 @@ import java.util.List;
  * CodeRepositoryImpl
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 23. 오전 11:51:57
- * @Description Code(공통 코드) Repository interface 작성
+ * @since 2020. 6. 23. 오전 11:51:57
+ * @implNote Code(공통 코드) Repository interface 작성
  */
 @Repository
 public class CodeRepositoryImpl extends QuerydslRepositorySupport implements CodeRepositoryCustom {
@@ -28,8 +28,8 @@ public class CodeRepositoryImpl extends QuerydslRepositorySupport implements Cod
      * Instantiates a new Manager repository.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오전 11:51:57
-     * @Description 생성자 주입
+     * @since 2020. 6. 23. 오전 11:51:57
+     * @implNote 생성자 주입
      */
     public CodeRepositoryImpl() {
         super(Code.class);
@@ -42,8 +42,8 @@ public class CodeRepositoryImpl extends QuerydslRepositorySupport implements Cod
      * @param pageRequest   the page request
      * @return the page
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오전 11:51:53
-     * @Description 조회(페이징)
+     * @since 2020. 6. 23. 오전 11:51:53
+     * @implNote 조회(페이징)
      */
     @Override
     public Page<Code> findPages(final CodeSearchDTO codeSearchDTO, final PageRequest pageRequest) {

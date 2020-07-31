@@ -15,8 +15,8 @@ import javax.persistence.*;
  * GoodsBasket
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 2. 오후 4:19:38
- * @Description
+ * @since 2020. 7. 2. 오후 4:19:38
+ * @implNote
  */
 @Getter
 @Setter
@@ -83,8 +83,8 @@ public class GoodsBasket extends BaseTimeEntity {
      * Pre persist.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 24. 오전 10:05:55
-     * @Description
+     * @since 2020. 7. 24. 오전 10:05:55
+     * @implNote
      */
     @PrePersist
     public void prePersist(){

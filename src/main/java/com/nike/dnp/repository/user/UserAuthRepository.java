@@ -12,8 +12,8 @@ import java.util.Optional;
  * UserAuthRepository
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 3:17:57
- * @Description UserAuth(유저 권한) Repository Interface 작성
+ * @since 2020. 6. 24. 오후 3:17:57
+ * @implNote UserAuth(유저 권한) Repository Interface 작성
  */
 @Repository
 public interface UserAuthRepository extends JpaRepository<UserAuth, Long>, UserAuthRepositoryCustom {
@@ -24,8 +24,8 @@ public interface UserAuthRepository extends JpaRepository<UserAuth, Long>, UserA
      * @param user the user
      * @return the optional
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 14. 오전 10:09:26
-     * @Description 상세 조회
+     * @since 2020. 7. 14. 오전 10:09:26
+     * @implNote 상세 조회
      */
     Optional<UserAuth> findByUser(User user);
 
@@ -35,8 +35,8 @@ public interface UserAuthRepository extends JpaRepository<UserAuth, Long>, UserA
      * @param authSeq the auth seq
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 24. 오후 7:27:44
-     * @Description
+     * @since 2020. 7. 24. 오후 7:27:44
+     * @implNote
      */
     List<UserAuth> findAllByAuthSeq(Long authSeq);
 

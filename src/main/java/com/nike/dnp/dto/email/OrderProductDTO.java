@@ -6,8 +6,8 @@ import lombok.*;
  * The Class Order product dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 3. 오후 5:15:49
- * @Description
+ * @since 2020. 7. 3. 오후 5:15:49
+ * @implNote
  */
 @Getter
 @Setter

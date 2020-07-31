@@ -20,8 +20,8 @@ import java.time.LocalDateTime;
  * PasswordHistory Entity
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:11:14
- * @Description PasswordHistory(비밀번호 이력) Entity 작성
+ * @since 2020. 6. 24. 오후 6:11:14
+ * @implNote PasswordHistory(비밀번호 이력) Entity 작성
  */
 @Getter
 @Setter
@@ -122,8 +122,8 @@ public class PasswordHistory implements Serializable {
      * @param userSeq  the user seq
      * @param password the password
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 6:11:14
-     * @Description 등록
+     * @since 2020. 6. 24. 오후 6:11:14
+     * @implNote 등록
      */
     @Builder
     public PasswordHistory(

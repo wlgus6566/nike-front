@@ -16,8 +16,8 @@ import java.util.List;
  * The Class Contents basket repository.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 15. 오후 12:19:07
- * @Description
+ * @since 2020. 7. 15. 오후 12:19:07
+ * @implNote
  */
 @Repository
 public class ContentsBasketRepositoryImpl extends QuerydslRepositorySupport implements ContentsBasketRepositoryCustom {
@@ -27,8 +27,8 @@ public class ContentsBasketRepositoryImpl extends QuerydslRepositorySupport impl
      * Instantiates a new Contents repository.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 6. 19. 오후 6:15:29
-     * @Description
+     * @since 2020. 6. 19. 오후 6:15:29
+     * @implNote
      */
     public ContentsBasketRepositoryImpl() {
         super(ContentsBasket.class);
@@ -40,16 +40,16 @@ public class ContentsBasketRepositoryImpl extends QuerydslRepositorySupport impl
      * @param userSeq the user seq
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 15. 오후 12:19:14
-     * @Description
+     * @since 2020. 7. 15. 오후 12:19:14
+     * @implNote
      */
     @Override
-    public List<ContentsBasketResultDTO> findAllWithContentsFile(Long userSeq) {
+    public List<ContentsBasketResultDTO> findAllWithContentsFile(final Long userSeq) {
         final QContentsBasket qContentsBasket = QContentsBasket.contentsBasket;
         final QContentsFile qContentsFile = QContentsFile.contentsFile;
 
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-        List<ContentsBasketResultDTO> resultDTOList = queryFactory
+        return queryFactory
                 .select(Projections.bean(
                         ContentsBasketResultDTO.class
                         , qContentsFile.fileName
@@ -63,8 +63,6 @@ public class ContentsBasketRepositoryImpl extends QuerydslRepositorySupport impl
                 .where(qContentsBasket.userSeq.eq(userSeq))
                 .orderBy(qContentsBasket.registrationDt.desc())
                 .fetch();
-
-        return resultDTOList;
     }
 }
 

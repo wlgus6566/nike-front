@@ -4,6 +4,7 @@ import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.entity.report.QReport;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.StringUtils;
 
@@ -11,10 +12,11 @@ import org.springframework.util.StringUtils;
  * The Class Report predicate helper.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 7. 오후 4:40:29
- * @Description
+ * @since 2020. 7. 7. 오후 4:40:29
+ * @implNote
  */
 @UtilityClass
+@NoArgsConstructor
 public class ReportPredicateHelper {
 
     /**
@@ -23,8 +25,8 @@ public class ReportPredicateHelper {
      * @param reportSearchDTO the report search dto
      * @return the predicate
      * @author [이소정]
-     * @CreatedOn 2020. 7. 7. 오후 4:42:16
-     * @Description
+     * @since 2020. 7. 7. 오후 4:42:16
+     * @implNote
      */
     public Predicate compareKeyword(final ReportSearchDTO reportSearchDTO) {
        final BooleanBuilder builder = new BooleanBuilder();
@@ -42,8 +44,8 @@ public class ReportPredicateHelper {
      * @param reportSearchDTO the report search dto
      * @return the predicate
      * @author [이소정]
-     * @CreatedOn 2020. 7. 7. 오후 4:45:54
-     * @Description
+     * @since 2020. 7. 7. 오후 4:45:54
+     * @implNote
      */
     public Predicate eqSectionCode(final ReportSearchDTO reportSearchDTO) {
         final BooleanBuilder builder = new BooleanBuilder();

@@ -21,8 +21,8 @@ import java.util.List;
  * The Class Recent upload repository.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 27. 오후 2:11:58
- * @Description
+ * @since 2020. 7. 27. 오후 2:11:58
+ * @implNote
  */
 @Repository
 public class RecentUploadRepositoryImpl extends QuerydslRepositorySupport implements RecentUploadRepositoryCustom {
@@ -31,15 +31,15 @@ public class RecentUploadRepositoryImpl extends QuerydslRepositorySupport implem
      * Instantiates a new Recent upload repository.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 7. 27. 오후 2:11:55
-     * @Description
+     * @since 2020. 7. 27. 오후 2:11:55
+     * @implNote
      */
     public RecentUploadRepositoryImpl() {
         super(RecentUpload.class);
     }
 
     @Override
-    public Page<HistoryResultDTO> findAllRecentUpload(HistorySearchDTO historySearchDTO, PageRequest pageRequest) {
+    public Page<HistoryResultDTO> findAllRecentUpload(final HistorySearchDTO historySearchDTO, final PageRequest pageRequest) {
         final QRecentUpload qRecentUpload = QRecentUpload.recentUpload;
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
         final JPAQuery<RecentUpload> query = queryFactory
@@ -50,9 +50,9 @@ public class RecentUploadRepositoryImpl extends QuerydslRepositorySupport implem
                         ));
 
         final List<RecentUpload> recentUploadList = ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), RecentUpload.class);
-        List<HistoryResultDTO> recentUploadResultList = new ArrayList<>();
-        for (RecentUpload recentUpload : recentUploadList) {
-            HistoryResultDTO historyResultDTO = new HistoryResultDTO();
+        final List<HistoryResultDTO> recentUploadResultList = new ArrayList<>();
+        for (final RecentUpload recentUpload : recentUploadList) {
+            final HistoryResultDTO historyResultDTO = new HistoryResultDTO();
             historyResultDTO.setHistorySeq(recentUpload.getRecentUploadSeq());
             historyResultDTO.setTypeCd(recentUpload.getTypeCd());
             historyResultDTO.setRegistrationDt(recentUpload.getRegistrationDt());

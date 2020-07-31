@@ -10,8 +10,8 @@ import java.util.List;
  * The Interface Report answer repository.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 10. 오후 6:50:14
- * @Description
+ * @since 2020. 7. 10. 오후 6:50:14
+ * @implNote
  */
 @Repository
 public interface ReportAnswerRepository extends JpaRepository<ReportAnswer, Long> {
@@ -23,8 +23,8 @@ public interface ReportAnswerRepository extends JpaRepository<ReportAnswer, Long
      * @param useYn     the use yn
      * @return the list
      * @author [이소정]
-     * @CreatedOn 2020. 7. 10. 오후 6:50:10
-     * @Description
+     * @since 2020. 7. 10. 오후 6:50:10
+     * @implNote
      */
     List<ReportAnswer> findAllByReportSeqAndUseYn(final Long reportSeq, final String useYn);
 

@@ -6,7 +6,7 @@ import com.nike.dnp.common.variable.SuccessCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.menu.MenuReturnDTO;
 import com.nike.dnp.dto.user.UserCertDTO;
-import com.nike.dnp.dto.user.UserReturnDTO;
+import com.nike.dnp.dto.user.UserResultDTO;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.auth.AuthService;
@@ -30,8 +30,8 @@ import java.util.List;
  * The Class User my page controller.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 6. 오후 2:56:56
- * @Description 마이페이지 User Controller
+ * @since 2020. 7. 6. 오후 2:56:56
+ * @apiNote 마이페이지 User Controller
  */
 @Slf4j
 @RestController
@@ -75,8 +75,8 @@ public class MyPageUserController {
      * @param authUserDTO the auth user dto
      * @return the redis menus
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 16. 오후 5:16:45
-     * @Description GNB 메뉴 목록
+     * @since 2020. 7. 16. 오후 5:16:45
+     * @apiNote GNB 메뉴 목록
      */
     @ApiOperation(value = "GNB 메뉴 목록"
             , notes = OPERATION_CHARACTER)
@@ -95,14 +95,14 @@ public class MyPageUserController {
      * @param authUserDTO the auth user dto
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 5:19:29
-     * @Description MY INFO 상세 조회
+     * @since 2020. 6. 23. 오후 5:19:29
+     * @apiNote MY INFO 상세 조회
      */
     @ApiOperation(value = "MY INFO 상세 조회"
             , notes = OPERATION_CHARACTER)
     @GetMapping(name = "MY INFO 상세 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<UserReturnDTO> getUser (
+    public SingleResult<UserResultDTO> getUser (
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO) {
         log.info("UserMyPageController.getUser");
         return responseService.getSingleResult(userService.getMyPage(authUserDTO.getUserSeq()));
@@ -116,8 +116,8 @@ public class MyPageUserController {
      * @param result      the result
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 2. 오후 4:08:39
-     * @Description MY INFO 비밀번호 변경
+     * @since 2020. 7. 2. 오후 4:08:39
+     * @apiNote MY INFO 비밀번호 변경
      */
     @ApiOperation(value = "MY INFO 비밀번호 변경"
             , notes = OPERATION_CHARACTER)
@@ -125,7 +125,7 @@ public class MyPageUserController {
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
-    public SingleResult<UserReturnDTO> changePassword (
+    public SingleResult<UserResultDTO> changePassword (
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
             , @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody
                 @Validated({ValidationGroups.group1.class, ValidationGroups.group2.class}) final UserCertDTO userCertDTO

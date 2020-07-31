@@ -8,8 +8,8 @@ import lombok.*;
  * The Class Menu role resource return dto.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 13. 오전 11:35:12
- * @Description
+ * @since 2020. 7. 13. 오전 11:35:12
+ * @implNote
  */
 @Getter
 @Setter
