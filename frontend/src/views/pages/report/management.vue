@@ -29,15 +29,15 @@
     </div>
 </template>
 <script>
-	import ReportList from '@/components/report-list';
-	import FilterSelect from '@/components/filter-select';
-	import ListSorting from '@/components/list-sorting';
-	import SearchInput from '@/components/search-input';
-	import NoData from '@/components/no-data';
-	import Loading from '@/components/loading';
-	import {getReportList} from '@/api/report';
+    import ReportList from '@/components/report-list';
+    import FilterSelect from '@/components/filter-select';
+    import ListSorting from '@/components/list-sorting';
+    import SearchInput from '@/components/search-input';
+    import NoData from '@/components/no-data';
+    import Loading from '@/components/loading';
+    import {getReportList} from '@/api/report';
 
-	export default {
+    export default {
     name: 'management',
     data() {
         return {

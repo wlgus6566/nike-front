@@ -82,11 +82,11 @@
     </div>
 </template>
 <script>
-	import {addProductBasket, deleteBasketItem} from '@/utils/basket';
-	import OrderSheet from '@/views/pages/product/order-sheet.vue';
-	import NoData from '@/components/no-data';
+    import {addProductBasket, deleteBasketItem} from '@/utils/basket';
+    import OrderSheet from '@/views/pages/product/order-sheet.vue';
+    import NoData from '@/components/no-data';
 
-	export default {
+    export default {
     name: 'OderItem',
     data() {
         return {
