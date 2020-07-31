@@ -11,6 +11,8 @@ import com.nike.dnp.dto.file.FileResultDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,8 +26,8 @@ import java.util.Date;
  * S3 Util
  *
  * @author [윤태호]
- * @since 2020. 7. 27. 오후 4:09:51
  * @implNote
+ * @since 2020. 7. 27. 오후 4:09:51
  */
 @Slf4j
 @Component
@@ -82,8 +84,8 @@ public class S3Util {
 	 *
 	 * @param root the root
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:09:51
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:09:51
 	 */
 	@Value("${nike.file.root:}")
 	public void setRoot(final String root){
@@ -95,8 +97,8 @@ public class S3Util {
 	 *
 	 * @param accessKey the access key
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:09:51
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:09:51
 	 */
 	@Value("${cloud.aws.credentials.accessKey:}")
 	public void setAccessKey(final String accessKey) {
@@ -108,8 +110,8 @@ public class S3Util {
 	 *
 	 * @param secretKey the secret key
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:09:51
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:09:51
 	 */
 	@Value("${cloud.aws.credentials.secretKey:}")
 	public void setSecretKey(final String secretKey) {
@@ -121,8 +123,8 @@ public class S3Util {
 	 *
 	 * @param bucket the bucket
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:09:52
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
 	@Value("${cloud.aws.s3.bucket:}")
 	public void setBucket(final String bucket) {
@@ -134,8 +136,8 @@ public class S3Util {
 	 *
 	 * @param region the region
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:09:52
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
 	@Value("${cloud.aws.region.static:}")
 	public void setRegion(final String region) {
@@ -147,8 +149,8 @@ public class S3Util {
 	 *
 	 * @return the amazon s 3
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:09:52
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
 	public static void init(){
 		log.debug("S3 Init");
@@ -163,17 +165,49 @@ public class S3Util {
 	 * @param fileResultDTO the file result dto
 	 * @return the url
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:09:52
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
-	public static String upload(final FileResultDTO fileResultDTO) {
+	public static void upload(final FileResultDTO fileResultDTO) {
 		log.info("S3Util.upload");
-		File file = new File(root+ fileResultDTO.getFilePhysicalName());
-		String uploadUrl = awsPathReplace(fileResultDTO.getFilePhysicalName());
+		StopWatch stopWatch = new StopWatch("S3Util.upload");
+		if(!ObjectUtils.isEmpty(fileResultDTO.getFilePhysicalName())){
+			stopWatch.start("original upload");
+			s3upload(fileResultDTO.getFilePhysicalName());
+			stopWatch.stop();
+			log.debug("stopWatch.getLastTaskTimeMillis() {}", stopWatch.getLastTaskTimeMillis());
+		}
+		if(!ObjectUtils.isEmpty(fileResultDTO.getThumbnailPhysicalName())){
+			stopWatch.start("thumbnail upload");
+			s3upload(fileResultDTO.getThumbnailPhysicalName());
+			stopWatch.stop();
+			log.debug("stopWatch.getLastTaskTimeMillis() {}", stopWatch.getLastTaskTimeMillis());
+		}
+		if(!ObjectUtils.isEmpty(fileResultDTO.getDetailThumbnailPhysicalName())){
+			stopWatch.start("detailThumbnail upload");
+			s3upload(fileResultDTO.getDetailThumbnailPhysicalName());
+			stopWatch.stop();
+			log.debug("stopWatch.getLastTaskTimeMillis() {}", stopWatch.getLastTaskTimeMillis());
+		}
+		log.debug("stopWatch.getTotalTimeSeconds() {}", stopWatch.getTotalTimeSeconds());
+		log.debug("stopWatch.shortSummary() {}", stopWatch.shortSummary());
+		log.debug("stopWatch.prettyPrint() {}", stopWatch.prettyPrint());
+	}
+
+	/**
+	 * s3 파일 업로드
+	 *
+	 * @param filePath the file path
+	 * @return the string
+	 * @author [윤태호]
+	 * @since 2020. 7. 31. 오전 11:15:34
+	 */
+	private static void s3upload(String filePath){
+		File file = new File(root + filePath);
+		String uploadUrl = awsPathReplace(filePath);
 		client.putObject(new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.PublicRead));
 		URL url = client.getUrl(bucket, uploadUrl);
-		log.debug("url.toString() {}", url.toString());
-		return url.getPath();
+		log.debug("url.getPath() {}", url.getPath());
 	}
 
 	/**
@@ -184,8 +218,8 @@ public class S3Util {
 	 * @param oldFileDelete 기존 파일 삭제 유무
 	 * @return the url
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:09:52
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
 	public static String fileCopy(final String oldFile, String newFolder,boolean oldFileDelete) {
 		log.info("S3Util.fileCopy");
@@ -211,8 +245,8 @@ public class S3Util {
 	 * @param newFolder 복사할 폴더
 	 * @return the url
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:09:52
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
 	public static String fileCopyAndOldFileDelete(final String oldFile, final String newFolder) {
 		log.info("S3Util.fileCopyAndOldFileDelete");
@@ -230,8 +264,8 @@ public class S3Util {
 	 * @param newFolder 복사할 폴더
 	 * @return the url
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:11:49
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:11:49
 	 */
 	public static String fileCopy(final String oldFile, final String newFolder) {
 		log.info("S3Util.fileCopy");
@@ -243,8 +277,8 @@ public class S3Util {
 	 *
 	 * @param deleteFile the delete file
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:58:52
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:58:52
 	 */
 	public static void tempFileDelete(final String deleteFile){
 		log.info("S3Util.tempFileDelete");
@@ -264,8 +298,8 @@ public class S3Util {
 	 *
 	 * @param deleteFile 삭제 버킷 경로
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:58:52
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:58:52
 	 */
 	public static void fileDelete(final String deleteFile) {
 		log.info("S3Util.fileDelete");
@@ -293,7 +327,7 @@ public class S3Util {
 	 * multipartFile 을 s3 에 저장
 	 *
 	 * @param multipartFile MutipartFile
-	 * @param folder     the folder
+	 * @param folder        the folder
 	 * @return the string
 	 * @throws IOException the io exception
 	 * @author [윤태호]
@@ -317,8 +351,8 @@ public class S3Util {
 	 * @param oldPath the old path
 	 * @return the string
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:09:53
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:09:53
 	 */
 	private static String awsPathReplace(final String oldPath) {
 		log.info("S3Util.awsPathReplace");

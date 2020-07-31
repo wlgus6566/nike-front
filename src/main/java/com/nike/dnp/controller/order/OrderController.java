@@ -3,6 +3,7 @@ package com.nike.dnp.controller.order;
 
 import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.FailCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.order.OrderProductMappingSaveDTO;
 import com.nike.dnp.dto.order.OrderProductSaveDTO;
 import com.nike.dnp.dto.order.OrderSearchDTO;
@@ -105,7 +106,6 @@ public class OrderController {
 		log.info("OrderController.saveOrder");
 		if(orderProductSaveDTO.getGoodsSeqList().size() == orderProductSaveDTO.getOrderQuantityList().size()){
 			final Order order = orderService.saveOrder(orderProductSaveDTO);
-
 			for(int i = 0; i < orderProductSaveDTO.getGoodsSeqList().size(); i++){
 				final Product product = productService.findByGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
 				final OrderProductMappingSaveDTO orderProductMappingSaveDTO = new OrderProductMappingSaveDTO();
@@ -158,7 +158,7 @@ public class OrderController {
 	@GetMapping(value = "/{orderGoodsSeq}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<OrderProductMapping> view(@ApiParam(name = "orderGoodsSeq", value = "주문 상품 시퀀스", defaultValue = "13") @PathVariable final Long orderGoodsSeq) {
 		log.info("OrderController.view");
-		return responseService.getSingleResult(orderProductMappingService.findById(orderGoodsSeq));
+		return responseService.getSingleResult(orderProductMappingService.findByIdAndUseYn(orderGoodsSeq, ServiceCode.YesOrNoEnumCode.Y.name()));
 	}
 
 

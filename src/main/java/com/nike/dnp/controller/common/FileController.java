@@ -85,7 +85,8 @@ public class FileController {
 							   @ApiParam(name = "uploadFile", value = "파일업로드") final MultipartFile uploadFile) throws IOException {
 		log.info("FileController.upload");
 		final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO);
-		String upload = S3Util.upload(fileResultDTO);
+		S3Util.upload(fileResultDTO);
+
 		return responseService.getSingleResult(fileResultDTO);
 
 	}

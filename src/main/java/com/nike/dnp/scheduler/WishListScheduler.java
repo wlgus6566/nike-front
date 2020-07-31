@@ -35,7 +35,7 @@ public class WishListScheduler {
 	 * @since 2020. 7. 6. 오후 4:28:04
 	 * @implNote
 	 */
-	//@Scheduled(cron = "0 * * * * *")
+	//	@Scheduled(cron = "*/10 * * * * *")
 	@Scheduled(cron = "0 0 0 * * *")
 	public void wishListDeleteScheduler() {
 		log.debug("===== 위시리스트 등록 7일 이후 데이터 삭제 ==== ");
