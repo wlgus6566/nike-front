@@ -33,7 +33,7 @@
                 </NoData>
             </template>
         </template>
-        <Loading v-if="loadingData" />
+        <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
     </div>
 </template>
 <script>
@@ -93,6 +93,12 @@ export default {
                 },
             ],
             folderListData: null,
+            loadingStyle: {
+                width: this.width ? `${this.width}px` : '100%',
+                height: this.height ? `${this.height}px` : '100%',
+                overflow: 'hidden',
+                margin: '0 auto',
+            },
         };
     },
     components: {

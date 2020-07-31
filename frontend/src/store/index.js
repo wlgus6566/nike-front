@@ -8,6 +8,7 @@ import { getContentsBasket } from '@/api/contents';
 import {
     deleteCookie,
     getAuthFromCookie,
+    saveUserToCookie,
     saveAuthToCookie,
 } from '@/utils/cookies.js';
 
@@ -65,6 +66,8 @@ export default new Vuex.Store({
     actions: {
         async LOGIN({ commit }, data) {
             const response = await loginUser(data);
+            commit('SET_USER', response.headers.username);
+            saveUserToCookie(response.headers.username);
             commit('SET_TOKEN', response.headers.authorization);
             saveAuthToCookie(response.headers.authorization);
             return response;
