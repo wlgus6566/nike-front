@@ -18,41 +18,63 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class NoticeUpdateDTO extends BasicDTO {
+public class CustomerSaveDTO extends BasicDTO {
 
     /**
      * The Notice article section code
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "noticeArticleSectionCode",
-            value = "게시물 구분 코드", example = "NOTICE", required = true)
     private String noticeArticleSectionCode;
+
+    /**
+     * The Notice article category code
+     *
+     * @author [정주희]
+     */
+    private String noticeArticleCategoryCode;
+
 
     /**
      * The Notice article seq
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "noticeArticleSeq", value = "게시글 시퀀스", example = "23", required = true)
     private Long noticeArticleSeq;
+
     /**
      * The Notice yn
      *
      * @author [정주희]
      */
-    @NotBlank(message = "customer.noticeYn")
-    @ApiModelProperty(name = "noticeYn", value = "[공지사항] 상단 고정 여부", example = "N", required = true)
     private String noticeYn;
 
+    /**
+     * The Thumbnail file name
+     *
+     * @author [정주희]
+     */
+    private String thumbnailFileName;
+
+    /**
+     * The Thumbnail file size
+     *
+     * @author [정주희]
+     */
+    private String thumbnailFileSize;
+
+    /**
+     * The Thumbnail file physical name
+     *
+     * @author [정주희]
+     */
+    private String thumbnailFilePhysicalName;
 
     /**
      * The Title
      *
      * @author [정주희]
      */
-    @NotBlank(message="customer.title")
-    @ApiModelProperty(name = "title", value = "제목", example = "제목입니다.", required = true)
     private String title;
 
     /**
@@ -60,8 +82,6 @@ public class NoticeUpdateDTO extends BasicDTO {
      *
      * @author [정주희]
      */
-    @NotBlank(message="customer.contents")
-    @ApiModelProperty(name = "contents", value = "내용", example = "내용입니다.", required = true)
     private String contents;
 
     /**
@@ -69,7 +89,16 @@ public class NoticeUpdateDTO extends BasicDTO {
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "useYn", value = "게시글 사용 여부", example = "Y", required = true)
     private String useYn;
 
+    /**
+     * The Image base 64
+     *
+     * @author [정주희]
+     */
+    private String imageBase64;
+
+    public void setNoticeArticleCategoryCode(String noticeArticleCategoryCode) {
+        this.noticeArticleCategoryCode = noticeArticleCategoryCode.toUpperCase();
+    }
 }

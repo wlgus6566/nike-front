@@ -47,16 +47,16 @@ public class AlarmRepositoryImpl extends QuerydslRepositorySupport implements Al
      * @implNote
      */
     @Override
-    public Page<AlarmResultDTO> findAllPaging(Long userSeq, PageRequest pageRequest) {
+    public Page<AlarmResultDTO> findAllPaging(final Long userSeq, final PageRequest pageRequest) {
         final QAlarm qAlarm = QAlarm.alarm;
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 
-        final List<Alarm> alarmList =  queryFactory.selectFrom(qAlarm)
+        final List<Alarm> alarmList = queryFactory.selectFrom(qAlarm)
                 .where(qAlarm.userSeq.eq(userSeq)).fetch();
 
         final List<AlarmResultDTO> alarmResultList = new ArrayList<>();
-        for (Alarm alarm : alarmList) {
-            AlarmResultDTO alarmResultDTO = new AlarmResultDTO();
+        for (final Alarm alarm : alarmList) {
+            final AlarmResultDTO alarmResultDTO = new AlarmResultDTO();
             alarmResultDTO.setUserSeq(userSeq);
             alarmResultDTO.setTypeAction(alarm.getTypeAction());
             alarmResultDTO.setTypeCd(alarm.getTypeCd());

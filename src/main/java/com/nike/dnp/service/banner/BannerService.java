@@ -32,6 +32,13 @@ import java.util.Optional;
 public class BannerService {
 
     /**
+     * The constant BANNER_REDIS_KEY
+     *
+     * @author [오지훈]
+     */
+    private final static String BANNER_REDIS_KEY = "cache:visual";
+
+    /**
      * The Redis service
      *
      * @author [오지훈]
@@ -54,7 +61,7 @@ public class BannerService {
      * @implNote 배너 상세(캐시)
      */
     public Banner getBanner() {
-        Banner banner = (Banner) redisService.get("cache:visual");
+        Banner banner = (Banner) redisService.get(BANNER_REDIS_KEY);
 
         if (ObjectUtils.isEmpty(banner)) {
             banner = bannerRepository.findAll().get(0);
@@ -105,8 +112,8 @@ public class BannerService {
     public Banner save (final BannerSaveDTO bannerSaveDTO) {
         bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
         bannerSaveDTO.setMobileImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getMobileImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
-        Banner banner = bannerRepository.save(new Banner().saveOrUpdate(bannerSaveDTO));
-        redisService.set("cache:visual", banner, 0);
+        final Banner banner = bannerRepository.save(new Banner().saveOrUpdate(bannerSaveDTO));
+        redisService.set(BANNER_REDIS_KEY, banner, 0);
         return banner;
     }
 
@@ -122,12 +129,12 @@ public class BannerService {
      */
     @Transactional
     public Banner update (final Long bannerSeq, final BannerSaveDTO bannerSaveDTO) {
-        Banner banner = this.findByBannerSeq(bannerSeq);
+        final Banner banner = this.findByBannerSeq(bannerSeq);
         bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
         bannerSaveDTO.setMobileImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getMobileImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
         banner.saveOrUpdate(bannerSaveDTO);
-        redisService.delete("cache:visual");
-        redisService.set("cache:visual", banner, 0);
+        redisService.delete(BANNER_REDIS_KEY);
+        redisService.set(BANNER_REDIS_KEY, banner, 0);
         return banner;
     }
 

@@ -2,13 +2,16 @@ package com.nike.dnp.service.main;
 
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.main.MainResultDTO;
-import com.nike.dnp.dto.notice.NoticeSearchDTO;
+import com.nike.dnp.dto.notice.CustomerSearchDTO;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import com.nike.dnp.repository.report.ReportRepository;
 import com.nike.dnp.service.banner.BannerService;
+import com.nike.dnp.service.contents.ContentsService;
 import com.nike.dnp.service.notice.NoticeService;
+import com.nike.dnp.service.report.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MainService {
+
+    /**
+     * The constant SORT_BY
+     *
+     * @author [오지훈]
+     */
+    private final static String SORT_BY = "updateDt";
 
     /**
      * 베너 서비스 (메인 비쥬얼 서비스)
@@ -64,7 +74,7 @@ public class MainService {
      * @implNote
      */
     public MainResultDTO findMainInfo() {
-        MainResultDTO mainResultDTO = new MainResultDTO();
+        final MainResultDTO mainResultDTO = new MainResultDTO();
 
         // 메인 비쥬얼(베너)
         mainResultDTO.setMainVisual(bannerService.getBanner());
@@ -72,35 +82,35 @@ public class MainService {
         // 콘텐츠 (ASSET, TOOLKIT, FOUNDATION)
         mainResultDTO.setAssetContentsList(
                 contentsRepository.findRecentContents(ServiceCode.ContentsTopMenuCode.ASSET.toString(),
-                        PageRequest.of(0, 4, Sort.by("updateDt").descending())
+                        PageRequest.of(0, 4, Sort.by(SORT_BY).descending())
                 )
         );
         mainResultDTO.setToolKitContentsList(
                 contentsRepository.findRecentContents(ServiceCode.ContentsTopMenuCode.TOOLKIT.toString(),
-                        PageRequest.of(0, 2, Sort.by("updateDt").descending())
+                        PageRequest.of(0, 2, Sort.by(SORT_BY).descending())
                 )
         );
         mainResultDTO.setFoundationContentsList(
                 contentsRepository.findRecentContents(ServiceCode.ContentsTopMenuCode.FOUNDATION.toString(),
-                        PageRequest.of(0, 2, Sort.by("updateDt").descending())
+                        PageRequest.of(0, 2, Sort.by(SORT_BY).descending())
                 )
         );
 
         // REPORT
         mainResultDTO.setReportList(reportRepository.findRecentReport(
-                PageRequest.of(0, 4, Sort.by("updateDt").descending())
+                PageRequest.of(0, 4, Sort.by(SORT_BY).descending())
         ));
 
         // NOTICE
-        NoticeSearchDTO noticeSearchDTO = new NoticeSearchDTO();
-        noticeSearchDTO.setNoticeArticleSectionCode(ServiceCode.NoticeArticleSectionEnumCode.NOTICE.toString());
-        noticeSearchDTO.setPage(0);
-        noticeSearchDTO.setSize(5);
-        mainResultDTO.setNoticeArticleList(noticeService.findNoticePages(noticeSearchDTO).getContent());
+        CustomerSearchDTO customerSearchDTO = new CustomerSearchDTO();
+        customerSearchDTO.setNoticeArticleSectionCode(ServiceCode.NoticeArticleSectionEnumCode.NOTICE.toString());
+        customerSearchDTO.setPage(0);
+        customerSearchDTO.setSize(5);
+        mainResultDTO.setNoticeArticleList(noticeService.findNoticePages(customerSearchDTO).getContent());
 
 
         // NEWS
-        NoticeSearchDTO newsSearchDTO = new NoticeSearchDTO();
+        CustomerSearchDTO newsSearchDTO = new CustomerSearchDTO();
         newsSearchDTO.setNoticeArticleSectionCode(ServiceCode.NoticeArticleSectionEnumCode.NEWS.toString());
         newsSearchDTO.setPage(0);
         newsSearchDTO.setSize(2);

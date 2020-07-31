@@ -78,6 +78,15 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
     @ApiModelProperty(name = "auth", value = "권한")
     private Auth auth;
 
+    @Builder
+    public UserAuth (
+            final User user
+            , final Auth auth
+    ) {
+        this.user = user;
+        this.auth = auth;
+    }
+
     /**
      * Save user auth.
      *
@@ -88,13 +97,13 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
      * @since 2020. 6. 30. 오후 4:38:13
      * @implNote 유저권한 저장
      */
-    public UserAuth save(final User user, final Auth auth) {
+    /*public UserAuth save(final User user, final Auth auth) {
         log.info("UserAuth.save");
         final UserAuth userAuth = new UserAuth();
         userAuth.setUser(user);
         userAuth.setAuth(auth);
         return userAuth;
-    }
+    }*/
 
     /**
      * Auth update.

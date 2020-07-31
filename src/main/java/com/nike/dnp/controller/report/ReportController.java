@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
-import java.util.Optional;
 
 
 /**
@@ -127,8 +126,7 @@ public class ReportController {
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
     ) {
         log.info("ReportController.saveReport");
-        Report report = reportService.save(authUserDTO, reportSaveDTO);
-        return responseService.getSingleResult(report);
+        return responseService.getSingleResult(reportService.save(authUserDTO, reportSaveDTO));
     }
 
     /**

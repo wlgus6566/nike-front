@@ -33,7 +33,7 @@ public class GoodsBasketScheduler {
 	 * @since 2020. 7. 6. 오후 4:28:04
 	 * @implNote
 	 */
-	//@Scheduled(cron = "0 * * * * *")
+	//	@Scheduled(cron = "*/10 * * * * *")
 	@Scheduled(cron = "0 0 0 * * *")
 	public void goodsBasketDeleteScheduler(){
 		log.debug("===== 장바구니 초기화 ==== ");

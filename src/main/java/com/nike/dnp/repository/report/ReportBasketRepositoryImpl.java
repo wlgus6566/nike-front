@@ -43,12 +43,11 @@ public class ReportBasketRepositoryImpl extends QuerydslRepositorySupport implem
      * @since 2020. 7. 17. 오후 6:45:22
      */
     @Override
-    public List<ReportBasketResultDTO> findAllReportBasket(Long userSeq) {
+    public List<ReportBasketResultDTO> findAllReportBasket(final Long userSeq) {
         final QReportBasket qReportBasket = QReportBasket.reportBasket;
         final QReportFile qReportFile = QReportFile.reportFile;
-
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-        List<ReportBasketResultDTO> resultDTOList = queryFactory
+        return queryFactory
                 .select(Projections.bean(
                         ReportBasketResultDTO.class
                         , qReportFile.fileName
@@ -62,7 +61,5 @@ public class ReportBasketRepositoryImpl extends QuerydslRepositorySupport implem
                 .where(qReportBasket.userSeq.eq(userSeq))
                 .orderBy(qReportBasket.registrationDt.desc())
                 .fetch();
-
-        return resultDTOList;
     }
 }

@@ -18,7 +18,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class NoticeUpdateDTO extends BasicDTO {
+public class QnaUpdateDTO extends BasicDTO {
 
     /**
      * The Notice article section code
@@ -26,33 +26,34 @@ public class NoticeUpdateDTO extends BasicDTO {
      * @author [정주희]
      */
     @ApiModelProperty(name = "noticeArticleSectionCode",
-            value = "게시물 구분 코드", example = "NOTICE", required = true)
+            value = "게시물 구분 코드", example = "QNA", required = true)
     private String noticeArticleSectionCode;
+
+    /**
+     * The Notice article category code
+     *
+     * @author [정주희]
+     */
+    @ApiModelProperty(name = "noticeArticleCategoryCode",
+            value = "[QNA] 게시물 카테고리 코드", example = "ASSET", required = true)
+    private String noticeArticleCategoryCode;
+
 
     /**
      * The Notice article seq
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "noticeArticleSeq", value = "게시글 시퀀스", example = "23", required = true)
+    @ApiModelProperty(name = "noticeArticleSeq", value = "게시글 시퀀스", example = "48", required = true)
     private Long noticeArticleSeq;
-    /**
-     * The Notice yn
-     *
-     * @author [정주희]
-     */
-    @NotBlank(message = "customer.noticeYn")
-    @ApiModelProperty(name = "noticeYn", value = "[공지사항] 상단 고정 여부", example = "N", required = true)
-    private String noticeYn;
-
 
     /**
      * The Title
      *
      * @author [정주희]
      */
-    @NotBlank(message="customer.title")
-    @ApiModelProperty(name = "title", value = "제목", example = "제목입니다.", required = true)
+    @NotBlank(message = "customer.question")
+    @ApiModelProperty(name = "title", value = "질문", example = "질문입니다.", required = true)
     private String title;
 
     /**
@@ -60,7 +61,7 @@ public class NoticeUpdateDTO extends BasicDTO {
      *
      * @author [정주희]
      */
-    @NotBlank(message="customer.contents")
+    @NotBlank(message = "customer.contents")
     @ApiModelProperty(name = "contents", value = "내용", example = "내용입니다.", required = true)
     private String contents;
 
@@ -72,4 +73,15 @@ public class NoticeUpdateDTO extends BasicDTO {
     @ApiModelProperty(name = "useYn", value = "게시글 사용 여부", example = "Y", required = true)
     private String useYn;
 
+    /**
+     * Sets notice article category code.
+     *
+     * @param noticeArticleCategoryCode the notice article category code
+     * @author [정주희]
+     * @CreatedOn 2020. 7. 29. 오후 4:43:45
+     * @Description
+     */
+    public void setNoticeArticleCategoryCode(String noticeArticleCategoryCode) {
+        this.noticeArticleCategoryCode = noticeArticleCategoryCode.toUpperCase();
+    }
 }

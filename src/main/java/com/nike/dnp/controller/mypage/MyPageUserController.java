@@ -6,7 +6,7 @@ import com.nike.dnp.common.variable.SuccessCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.menu.MenuReturnDTO;
 import com.nike.dnp.dto.user.UserCertDTO;
-import com.nike.dnp.dto.user.UserReturnDTO;
+import com.nike.dnp.dto.user.UserResultDTO;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.auth.AuthService;
@@ -102,7 +102,7 @@ public class MyPageUserController {
             , notes = OPERATION_CHARACTER)
     @GetMapping(name = "MY INFO 상세 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<UserReturnDTO> getUser (
+    public SingleResult<UserResultDTO> getUser (
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO) {
         log.info("UserMyPageController.getUser");
         return responseService.getSingleResult(userService.getMyPage(authUserDTO.getUserSeq()));
@@ -125,7 +125,7 @@ public class MyPageUserController {
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
-    public SingleResult<UserReturnDTO> changePassword (
+    public SingleResult<UserResultDTO> changePassword (
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
             , @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody
                 @Validated({ValidationGroups.group1.class, ValidationGroups.group2.class}) final UserCertDTO userCertDTO

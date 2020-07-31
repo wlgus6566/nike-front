@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * ResponseService
@@ -147,7 +148,18 @@ public class ResponseService {
         return result;
     }
 
-    public CommonResult getFailResult(final String code, final String msg, final HashMap<String, Object> payload) {
+    /**
+     * Gets fail result.
+     *
+     * @param code    the code
+     * @param msg     the msg
+     * @param payload the payload
+     * @return the fail result
+     * @author [오지훈]
+     * @implNote [method 설명]
+     * @since 2020. 7. 30. 오후 3:56:43
+     */
+    public CommonResult getFailResult(final String code, final String msg, final Set<HashMap<String, Object>> payload) {
         final CommonResult result = new CommonResult();
         result.setSuccess(false);
         result.setExistMsg(true);
