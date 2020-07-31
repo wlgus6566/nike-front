@@ -43,7 +43,6 @@ import SearchInput from '@/components/search-input';
 import FolderList from '@/components/folder-list';
 import Loading from '@/components/loading';
 import NoData from '@/components/no-data';
-import NoDataSearch from '@/components/no-data/nodata-search';
 
 import { getContents } from '@/api/contents.js';
 
