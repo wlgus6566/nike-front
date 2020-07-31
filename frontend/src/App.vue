@@ -27,7 +27,7 @@ export default {
 
     computed: {
         AppLayout() {
-            return `Layout${this.$route.meta.layout || 'Default'}`;
+            return `Layout${this.$route.meta.layout || 'Clean'}`;
         },
     },
     components: {

@@ -49,7 +49,6 @@ export default new Vuex.Store({
         },
 
         SET_CONT_BASKET(state, data) {
-            console.log(data);
             state.contBasketList = data;
         },
     },
@@ -72,7 +71,6 @@ export default new Vuex.Store({
         // 컨텐츠 장바구니 목록
         async getContBasket({ commit }) {
             const response = await getContentsBasket();
-            console.log(response.data.data);
             commit('SET_CONT_BASKET', response.data.data);
             return response;
         },

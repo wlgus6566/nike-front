@@ -1234,6 +1234,9 @@
     flex-basis: 100px;
     padding-top: 100px;
     overflow: hidden;
+    background: url('../../assets/images/img-asset-none@2x.png') no-repeat
+        center;
+    background-size: 100%;
 }
 .file-item .list .thumbnail img {
     position: absolute;
@@ -1289,6 +1292,7 @@
 }
 
 .file-item .detail {
+	display:none;
     height: 0;
     overflow: hidden;
     transition: all ease-in-out 1s;

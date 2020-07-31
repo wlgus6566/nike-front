@@ -80,22 +80,19 @@ export default {
         async passwordSet() {
             try {
                 const { data: response } = await setPassword({
-                    certCode: this.$route.query.certCode,
+                    certCode: encodeURIComponent(this.$route.query.certCode),
                     newPassword: this.newPassword,
                     confirmPassword: this.confirmPassword,
                 });
                 if (response.existMsg) {
                     alert(response.msg);
                 }
-                if (response.code === 'EXPIRED_PERIOD') {
-                    this.$route.push('/login');
-                }
+                console.log(response);
                 if (response.success) {
-                    this.$route.push('/login');
+                    this.$router.push('/login');
                 }
             } catch (error) {
-                console.log(error.response);
-                alert(error.response.data.msg);
+                console.log('error', error);
             }
         },
     },

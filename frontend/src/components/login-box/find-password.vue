@@ -1,5 +1,5 @@
 <template>
-    <form action="#" @submit.prevent="login">
+    <form action="#" @submit.prevent="findPW">
         <div class="login-box">
             <strong class="title2"> 비밀번호 찾기 </strong>
             <p class="desc">
@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="login-btn-wrap">
-                <button type="button" class="btn-s-lg-orage" @click="findPW">
+                <button type="submit" class="btn-s-lg-orage">
                     <span>E-MAIL 발송</span>
                 </button>
             </div>
@@ -34,12 +34,13 @@
 <script>
 import { sendEmail } from '@/api/login.js';
 export default {
-    name: 'loginForm',
+    name: 'FindPW',
     data() {
         return {
             userId: 'joosung.yeum@emotion.co.kr',
         };
     },
+
     methods: {
         async findPW() {
             if (!this.userId) {
