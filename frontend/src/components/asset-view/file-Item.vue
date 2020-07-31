@@ -177,9 +177,15 @@ export default {
             const left = e.originalEvent.pageX - e.item.offsetLeft - 60;
             const top = e.originalEvent.pageY - e.item.offsetTop - 60;
             thumbnail.style.transform = `translate(${left}px,${top}px)`;
+            this.$store.commit('SET_BASKET_ITEM_DRAG', true);
         },
         onEnd(e) {
             console.log('onEnd', e);
+            console.log();
+            if (this.$store.getters['basketAppendCheck']) {
+                this.$emit('addContBasket');
+            }
+            this.$store.commit('SET_BASKET_ITEM_DRAG', false);
         },
         onAdd(e) {
             console.log('onAdd', e);

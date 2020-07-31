@@ -89,9 +89,11 @@ export default {
     methods: {
         basketEnter() {
             console.log('basketEnter');
+            this.$store.commit('SET_FILE_MOUSEENTER', true);
         },
         basketLeave() {
             console.log('basketLeave');
+            this.$store.commit('SET_FILE_MOUSEENTER', false);
         },
         isLoading(seq) {
             return this.deleteLoading.some((el) => {
@@ -112,16 +114,6 @@ export default {
             this.deleteLoading.push(seq);
             try {
                 await delContentsBasket(seq);
-                await this.$store.dispatch('getContBasket');
-                this.deleteLoading = [];
-            } catch (e) {
-                console.log(e);
-            }
-        },
-        async addContBasket(seq) {
-            this.deleteLoading.push(seq);
-            try {
-                await addContentsBasket(seq);
                 await this.$store.dispatch('getContBasket');
                 this.deleteLoading = [];
             } catch (e) {

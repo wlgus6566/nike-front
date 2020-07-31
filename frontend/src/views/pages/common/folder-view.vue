@@ -19,6 +19,7 @@
             :checkContentsFileList="checkContentsFileList"
             @allCheckFn="allCheckFn"
             @checkContentsFile="checkContentsFile"
+            @addContBasket="addContBasket"
         ></fileItem>
     </div>
 </template>
@@ -27,7 +28,11 @@ import BtnArea from '@/components/asset-view/btn-area.vue';
 import folder from '@/components/asset-view/folder.vue';
 import SortingList from '@/components/asset-view/sorting-list.vue';
 import fileItem from '@/components/asset-view/file-Item.vue';
-import { getContentsView, getContentsViewFile } from '@/api/contents';
+import {
+    addContentsBasket,
+    getContentsView,
+    getContentsViewFile,
+} from '@/api/contents';
 import FilterSelect from '@/components/filter-select';
 
 export default {
@@ -299,6 +304,17 @@ export default {
             } catch (error) {
                 console.log(error);
             }
+        },
+        async addContBasket() {
+            console.log(this.checkContentsFileList);
+            /*this.deleteLoading.push(seq);
+            try {
+                await addContentsBasket(seq);
+                await this.$store.dispatch('getContBasket');
+                this.deleteLoading = [];
+            } catch (e) {
+                console.log(e);
+            }*/
         },
     },
 };

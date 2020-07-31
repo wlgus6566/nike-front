@@ -17,11 +17,15 @@ export default new Vuex.Store({
         user: {},
         token: '',
         basketItemDrag: false,
+        fileMouseenter: false,
         basketListData: null,
         goodsBasketSeq: '',
         contBasketList: null,
     },
     getters: {
+        basketAppendCheck(state) {
+            return state.basketItemDrag && state.fileMouseenter;
+        },
         isLoggedIn(state) {
             return !!state.token || getAuthFromCookie();
         },
@@ -53,6 +57,9 @@ export default new Vuex.Store({
         },
         SET_BASKET_ITEM_DRAG(state, data) {
             state.basketItemDrag = data;
+        },
+        SET_FILE_MOUSEENTER(state, data) {
+            state.fileMouseenter = data;
         },
     },
     actions: {
