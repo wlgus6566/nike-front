@@ -56,6 +56,7 @@ public class FailCode {
         , DUPLICATE_GOODS
         , INVALID_ORDER
         , INVALID_FILE
+        , EXCEED_MAX_NOTICE
     }
 
 }

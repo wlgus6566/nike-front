@@ -29,10 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * 로그인 성공 후 핸들러
@@ -161,13 +158,13 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 			if (isValid) {
 				redisService.set("cert:"+authUserDTO.getUserId(), randomCode, 60);
 
-				final HashMap<String, Object> payload = new HashMap<>();
-				payload.put("certCode", encodeCertCode);
+				final HashMap<String, Object> map = new HashMap<>();
+				map.put("certCode", encodeCertCode);
 				JsonUtil.write(response.getWriter()
 						, responseService.getFailResult(
 								FailCode.ConfigureError.OVERTIME_PASSWORD.name()
 								, MessageUtil.getMessage(FailCode.ConfigureError.OVERTIME_PASSWORD.name())
-								, payload
+								, Collections.singleton(map)
 						));
 				isValid = false;
 			}

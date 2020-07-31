@@ -71,9 +71,9 @@ public class AlarmService {
             , final Long contentsSeq, final Long reportSeq
             , final List<Long> targetUserList
     ) {
-        List<Alarm> savedAlarmList = new ArrayList<>();
-        for (Long userSeq : targetUserList) {
-            Alarm alarm = new Alarm();
+        final List<Alarm> savedAlarmList = new ArrayList<>();
+        for (final Long userSeq : targetUserList) {
+            final Alarm alarm = new Alarm();
             alarm.setUserSeq(userSeq);
             alarm.setTypeAction(actionCode);
             alarm.setTypeCd(typeCd);

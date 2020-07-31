@@ -116,13 +116,13 @@ public class GoodsBasketService {
 	@Transactional
 	public List<GoodsBasket> saveBasketList(final GoodsBasketSaveListDTO goodsBasketSaveListDTO) {
 		log.info("GoodsBasketService.saveBasketList");
-		final List<GoodsBasket> resultList = new ArrayList<>();
 		if(goodsBasketSaveListDTO.getGoodsSeqList().size()!= goodsBasketSaveListDTO.getOrderQuantityList().size()){
 			throw new CodeMessageHandleException(
 					FailCode.ConfigureError.INVALID_ORDER.name()
 					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_ORDER.name()));
 		}
 
+		final List<GoodsBasket> resultList = new ArrayList<>();
 		for(int i = 0; i < goodsBasketSaveListDTO.getGoodsSeqList().size(); i++){
 			final Optional<GoodsBasket> findGoodsBasket = goodsBasketRepository.findByGoodsSeqAndUserSeq(goodsBasketSaveListDTO.getGoodsSeqList().get(i), SecurityUtil.currentUser().getUserSeq());
 			final GoodsBasket goodsBasket = findGoodsBasket.orElse(new GoodsBasket());

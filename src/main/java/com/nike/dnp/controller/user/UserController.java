@@ -7,6 +7,7 @@ import com.nike.dnp.dto.user.*;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.user.UserService;
+import com.nike.dnp.util.MessageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -124,12 +125,11 @@ public class UserController {
             @ApiParam(value = "유저 저장 DTO", required = true) @Valid @RequestBody final UserSaveDTO userSaveDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserController.save");
-        final SingleResult<Integer> singleResult = userService.checkId(userSaveDTO.getUserId());
-        SingleResult<UserReturnDTO> returnz = new SingleResult<>(singleResult.getCode(), singleResult.getMsg(), true, true);
-        if(singleResult.getCode().equals(SuccessCode.ConfigureSuccess.NOT_DUPLICATE.name())) {
-            returnz = responseService.getSingleResult(userService.save(userSaveDTO));
-        }
-        return returnz;
+        return responseService.getSingleResult(userService.save(userSaveDTO)
+                , ServiceCode.ReturnTypeEnumCode.CREATE.name()
+                , MessageUtil.getMessage(ServiceCode.ReturnTypeEnumCode.CREATE.name())
+                , true
+        );
     }
 
     /**
@@ -153,7 +153,11 @@ public class UserController {
             , @ApiParam(value = "유저 수정 DTO", required = true) @Valid @RequestBody final UserUpdateDTO userUpdateDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserController.update");
-        return responseService.getSingleResult(userService.update(userSeq, userUpdateDTO));
+        return responseService.getSingleResult(userService.update(userSeq, userUpdateDTO)
+                , ServiceCode.ReturnTypeEnumCode.UPDATE.name()
+                , MessageUtil.getMessage(ServiceCode.ReturnTypeEnumCode.UPDATE.name())
+                , true
+        );
     }
 
     /**
@@ -220,7 +224,11 @@ public class UserController {
             @ModelAttribute @Valid final UserIdDTO userIdDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserController.checkId");
-        return userService.checkId(userIdDTO.getUserId());
+        return responseService.getSingleResult(userService.checkId(userIdDTO.getUserId())
+                , SuccessCode.ConfigureSuccess.NOT_DUPLICATE.name()
+                , MessageUtil.getMessage(SuccessCode.ConfigureSuccess.NOT_DUPLICATE.name())
+                , true
+        );
     }
 
 }

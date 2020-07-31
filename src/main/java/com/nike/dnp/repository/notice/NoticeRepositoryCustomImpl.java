@@ -1,7 +1,7 @@
 package com.nike.dnp.repository.notice;
 
-import com.nike.dnp.dto.notice.NoticeArticleListDTO;
-import com.nike.dnp.dto.notice.NoticeSearchDTO;
+import com.nike.dnp.dto.notice.CustomerListDTO;
+import com.nike.dnp.dto.notice.CustomerSearchDTO;
 import com.nike.dnp.entity.notice.NoticeArticle;
 import com.nike.dnp.entity.notice.QNoticeArticle;
 import com.nike.dnp.util.ObjectMapperUtil;
@@ -34,7 +34,7 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
     /**
      * Find notice pages page.
      *
-     * @param noticeSearchDTO the notice search dto
+     * @param customerSearchDTO the notice search dto
      * @param pageRequest     the page request
      * @return the page
      * @author [정주희]
@@ -42,7 +42,7 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
      * @implNote Customer Center 목록 조회
      */
     @Override
-    public Page<NoticeArticleListDTO> findNoticePages(NoticeSearchDTO noticeSearchDTO, PageRequest pageRequest) {
+    public Page<CustomerListDTO> findNoticePages(CustomerSearchDTO customerSearchDTO, PageRequest pageRequest) {
         log.info("NoticeRepositoryCustomImpl.findNoticePages");
 
         QNoticeArticle qNoticeArticle = QNoticeArticle.noticeArticle;
@@ -52,19 +52,19 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
         JPAQuery<NoticeArticle> query = queryFactory.selectFrom(qNoticeArticle)
                 .where(
                         qNoticeArticle.useYn.eq("Y"),
-                        qNoticeArticle.noticeArticleSectionCode.eq(noticeSearchDTO.getNoticeArticleSectionCode()),
-                        NoticePredicateHelper.eqCategoryCode(noticeSearchDTO.getNoticeArticleCategoryCode()),
-                        NoticePredicateHelper.containsKeword(noticeSearchDTO.getKeyword())
+                        qNoticeArticle.noticeArticleSectionCode.eq(customerSearchDTO.getNoticeArticleSectionCode()),
+                        NoticePredicateHelper.eqCategoryCode(customerSearchDTO.getNoticeArticleCategoryCode()),
+                        NoticePredicateHelper.containsKeword(customerSearchDTO.getKeyword())
                 );
 
-        if (StringUtils.equalsIgnoreCase(noticeSearchDTO.getNoticeArticleSectionCode() ,"NOTICE")) {
+        if (StringUtils.equalsIgnoreCase(customerSearchDTO.getNoticeArticleSectionCode() ,"NOTICE")) {
             query.orderBy(qNoticeArticle.noticeYn.desc(), qNoticeArticle.registrationDt.desc());
         }
 
-        List<NoticeArticleListDTO> noticeArticleListDTOList = ObjectMapperUtil.mapAll(
-                getQuerydsl().applyPagination(pageRequest, query).fetch(), NoticeArticleListDTO.class);
+        List<CustomerListDTO> customerListDTOList = ObjectMapperUtil.mapAll(
+                getQuerydsl().applyPagination(pageRequest, query).fetch(), CustomerListDTO.class);
 
-        return new PageImpl<>(noticeArticleListDTOList, pageRequest, query.fetchCount());
+        return new PageImpl<>(customerListDTOList, pageRequest, query.fetchCount());
     }
 
     /**
