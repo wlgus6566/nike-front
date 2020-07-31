@@ -34,8 +34,8 @@ public class ContentsMailSendDTO {
      *
      * @author [이소정]
      */
-    @NotNull(message = "contentsMailSend.topMenuCode")
-    @ApiModelProperty(name = "topMenuCode", value = "컨텐츠 url", example = "/contents/detail/4")
+    @NotNull(message = "contentsMailSend.contentsUrl")
+    @ApiModelProperty(name = "contentsUrl", value = "컨텐츠 url", example = "/contents/detail/4")
     private String contentsUrl;
 
 }
