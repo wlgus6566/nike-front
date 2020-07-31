@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +42,21 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AuthService {
+
+    /**
+     * The constant REDIS_ROLES_MENUS
+     *
+     * @author [오지훈]
+     */
+    private final static String REDIS_ROLES_MENUS = "roles:menus:";
+
+    /**
+     * The constant REDIS_ROLES_AUTHS
+     *
+     * @author [오지훈]
+     */
+    private final static String REDIS_ROLES_AUTHS = "roles:auths:";
+
 
     /**
      * The Redis service
@@ -121,10 +135,9 @@ public class AuthService {
             , final String menuCode
             , final String skillCode
     ) {
-        Optional<Auth> auth = this.findById(authSeq);
         return authRepository.findByAuthDepth(
                 authSeq
-                , auth.get().getAuthDepth()
+                ,this.getById(authSeq).getAuthDepth()
                 , menuCode
                 , skillCode
         );
@@ -145,7 +158,7 @@ public class AuthService {
         try {
             return objectMapper.readValue(objectMapper.writeValueAsString(this.findAll()), JSONArray.class);
         } catch (JsonProcessingException exception) {
-            throw new CodeMessageHandleException(
+            throw (CodeMessageHandleException) new CodeMessageHandleException(
                     FailCode.ExceptionError.ERROR.toString()
                     , exception.getMessage()
             );
@@ -170,6 +183,19 @@ public class AuthService {
     }
 
     /**
+     * Gets by role type.
+     *
+     * @param roleType the role type
+     * @return the by role type
+     * @author [오지훈]
+     * @since 2020. 7. 30. 오전 11:57:02
+     * @implNote 권한 상세 조회(role type으로)
+     */
+    public Auth getByRoleType(final String roleType) {
+        return this.findByRoleType(roleType).orElse(new Auth());
+    }
+
+    /**
      * Find cache by role type list.
      *
      * @param roleType the role type
@@ -180,14 +206,12 @@ public class AuthService {
      */
     public List<MenuRoleResourceReturnDTO> getAuthsResourcesByRoleType(final String roleType) {
         log.info("AuthService.getAuthsResourcesByRoleType");
-
-        final List<MenuRoleResourceReturnDTO> redisReources = (List<MenuRoleResourceReturnDTO>) redisService.get("auths:"+roleType);
-        if (!ObjectUtils.isEmpty(redisReources) && redisReources.size() > 0) {
-            return redisReources;
+        List<MenuRoleResourceReturnDTO> redisReources = (List<MenuRoleResourceReturnDTO>) redisService.get(REDIS_ROLES_AUTHS+roleType);
+        if (ObjectUtils.isEmpty(redisReources)) {
+            redisReources = menuRoleResourceRepository.getResources(this.getByRoleType(roleType).getAuthSeq());
+            redisService.set(REDIS_ROLES_AUTHS+roleType, redisReources, 60);
         }
-
-        return menuRoleResourceRepository.getResources(
-                this.findByRoleType(roleType).get().getAuthSeq());
+        return redisReources;
     }
 
     /**
@@ -200,7 +224,7 @@ public class AuthService {
      */
     public void setAuthsResourcesByRoleType(final String roleType) {
         log.info("AuthService.setAuthsResourcesByRoleType");
-        this.findByRoleType(roleType).ifPresent(value -> redisService.set("roles:auths:" + roleType, menuRoleResourceRepository.getResources(value.getAuthSeq()), 60));
+        this.findByRoleType(roleType).ifPresent(value -> redisService.set(REDIS_ROLES_AUTHS + roleType, menuRoleResourceRepository.getResources(value.getAuthSeq()), 60));
     }
 
     /**
@@ -209,25 +233,17 @@ public class AuthService {
      * @param roleType the role type
      * @return the auths menus by role type
      * @author [오지훈]
-     * @since 2020. 7. 13. 오후 1:37:19
      * @implNote 권한별 접근 가능 메뉴 목록 조회
+     * @since 2020. 7. 13. 오후 1:37:19
      */
     public List<MenuReturnDTO> getAuthsMenusByRoleType(final String roleType) {
         log.info("AuthService.getAuthsMenusByRoleType");
-
-        final List<MenuReturnDTO> redisMenus = (List<MenuReturnDTO>) redisService.get("roles:menus:"+roleType);
-        if (!ObjectUtils.isEmpty(redisMenus) && redisMenus.size() > 0) {
-            return redisMenus;
+        List<MenuReturnDTO> redisMenus = (List<MenuReturnDTO>) redisService.get(REDIS_ROLES_MENUS+roleType);
+        if (ObjectUtils.isEmpty(redisMenus)) {
+            redisMenus = menuRepository.getMenus(this.getByRoleType(roleType).getAuthSeq());
+            redisService.set(REDIS_ROLES_MENUS+roleType, redisMenus, 60);
         }
-
-        final Optional<Auth> auth = this.findByRoleType(roleType);
-        List<MenuReturnDTO> menus = new ArrayList<>();
-        if (auth.isPresent()) {
-            menus = menuRepository.getMenus(auth.get().getAuthSeq());
-            redisService.set("roles:menus:"+roleType, menus, 60);
-        }
-
-        return menus;
+        return redisMenus;
     }
 
     /**
@@ -240,7 +256,7 @@ public class AuthService {
      */
     public void setAuthsMenusByRoleType(final String roleType) {
         log.info("AuthService.setAuthsMenusByRoleType");
-        this.findByRoleType(roleType).ifPresent(value -> redisService.set("roles:menus:" + roleType, menuRepository.getMenus(value.getAuthSeq()), 60));
+        this.findByRoleType(roleType).ifPresent(value -> redisService.set(REDIS_ROLES_MENUS + roleType, menuRepository.getMenus(value.getAuthSeq()), 60));
     }
 
 
@@ -394,8 +410,8 @@ public class AuthService {
         auth.delete();
         this.initAuthCache();
         this.remove(authSeq);
-        redisService.delete("roles:auths:"+auth.getRoleType());
-        redisService.delete("roles:menus:"+auth.getRoleType());
+        redisService.delete(REDIS_ROLES_AUTHS+auth.getRoleType());
+        redisService.delete(REDIS_ROLES_MENUS+auth.getRoleType());
         return auth;
     }
 
@@ -413,7 +429,7 @@ public class AuthService {
         try {
             redisService.set("cache:auths::SimpleKey []", objectMapper.readValue(objectMapper.writeValueAsString(this.findAll()), JSONArray.class), 60 * 24 * 30);
         } catch (JsonProcessingException exception) {
-            throw new CodeMessageHandleException(
+            throw (CodeMessageHandleException) new CodeMessageHandleException(
                     FailCode.ExceptionError.ERROR.toString()
                     , exception.getMessage()
             );

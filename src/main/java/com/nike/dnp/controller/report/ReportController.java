@@ -127,8 +127,7 @@ public class ReportController {
             @RequestBody final ReportSaveDTO reportSaveDTO
     ) {
         log.info("ReportController.saveReport");
-        Report report = reportService.save(reportSaveDTO);
-        return responseService.getSingleResult(report);
+        return responseService.getSingleResult(reportService.save(reportSaveDTO));
     }
 
     /**

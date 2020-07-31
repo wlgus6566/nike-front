@@ -23,7 +23,6 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Optional;
 
 /**
  * The Class Contents controller.

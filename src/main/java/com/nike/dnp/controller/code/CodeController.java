@@ -66,8 +66,7 @@ public class CodeController {
      * @since 2020. 6. 22. 오후 5:22:31
      * @apiNote
      */
-    @ApiOperation(value = "하위 코드 목록 조회"
-        , notes = OPERATION_CHARACTER)
+    @ApiOperation(value = "하위 코드 목록 조회", notes = OPERATION_CHARACTER)
     @GetMapping(value = "/{upperCode}", name = "하위 코드 목록 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<List<Code>> getConfCodes(
@@ -85,14 +84,13 @@ public class CodeController {
      * @since 2020. 6. 22. 오후 5:22:31
      * @apiNote
      */
-    @ApiOperation(value = "코드 등록"
-        , notes = OPERATION_CHARACTER)
+    @ApiOperation(value = "코드 등록", notes = OPERATION_CHARACTER)
     @PostMapping(name = "코드 등록"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<Code> saveCode(
-            @ApiParam(value = "코드 저장 DTO") @Valid @RequestBody final CodeSaveDTO codeSaveDTO
+            @ApiParam(value = "코드 저장 DTO", name = "codeSaveDTO") @Valid @RequestBody final CodeSaveDTO codeSaveDTO
             , @ApiIgnore final BindingResult result) {
         return responseService.getSingleResult(codeService.save(codeSaveDTO));
     }
@@ -108,15 +106,14 @@ public class CodeController {
      * @since 2020. 6. 22. 오후 5:22:31
      * @apiNote
      */
-    @ApiOperation(value = "코드 수정"
-            , notes = OPERATION_CHARACTER)
+    @ApiOperation(value = "코드 수정", notes = OPERATION_CHARACTER)
     @PutMapping(value = "/{code}", name = "코드 수정"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<Optional<Code>> updateCode(
             @ApiParam(name = "code", value = "코드", required = true) @PathVariable final String code
-            , @ApiParam(value = "코드 수정 DTO") @Valid @RequestBody final CodeUpdateDTO codeUpdateDTO
+            , @ApiParam(value = "코드 수정 DTO", name = "codeUpdateDTO") @Valid @RequestBody final CodeUpdateDTO codeUpdateDTO
             , @ApiIgnore final BindingResult result) {
         return responseService.getSingleResult(codeService.update(code, codeUpdateDTO));
     }
@@ -130,8 +127,7 @@ public class CodeController {
      * @since 2020. 6. 22. 오후 5:22:31
      * @apiNote
      */
-    @ApiOperation(value = "코드 삭제"
-            , notes = OPERATION_CHARACTER)
+    @ApiOperation(value = "코드 삭제", notes = OPERATION_CHARACTER)
     @DeleteMapping(value = "/{code}", name = "코드 삭제"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})

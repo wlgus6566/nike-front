@@ -7,6 +7,7 @@ import com.nike.dnp.dto.user.*;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.user.UserService;
+import com.nike.dnp.util.MessageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -81,7 +82,7 @@ public class UserController {
             + "size||노출갯수|Integer\n\n\n\n")
     @GetMapping(name = "유저 목록 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Page<UserReturnDTO>> getUsers (final UserSearchDTO userSearchDTO) {
+    public SingleResult<Page<UserResultDTO>> getUsers (final UserSearchDTO userSearchDTO) {
         log.info("UserController.getUsers");
         return responseService.getSingleResult(userService.findPages(userSearchDTO));
     }
@@ -99,7 +100,7 @@ public class UserController {
             , notes = OPERATION_CHARACTER)
     @GetMapping(name = "유저 상세 조회", value = "/{userSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<UserReturnDTO> getUser (
+    public SingleResult<UserResultDTO> getUser (
             @ApiParam(value = "유저 시퀀스", required = true) @PathVariable final Long userSeq) {
         log.info("UserController.getUser");
         return responseService.getSingleResult(userService.getUser(userSeq));
@@ -120,16 +121,15 @@ public class UserController {
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
-    public SingleResult<UserReturnDTO> save (
+    public SingleResult<UserResultDTO> save (
             @ApiParam(value = "유저 저장 DTO", required = true) @Valid @RequestBody final UserSaveDTO userSaveDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserController.save");
-        final SingleResult<Integer> singleResult = userService.checkId(userSaveDTO.getUserId());
-        SingleResult<UserReturnDTO> returnz = new SingleResult<>(singleResult.getCode(), singleResult.getMsg(), true, true);
-        if(singleResult.getCode().equals(SuccessCode.ConfigureSuccess.NOT_DUPLICATE.name())) {
-            returnz = responseService.getSingleResult(userService.save(userSaveDTO));
-        }
-        return returnz;
+        return responseService.getSingleResult(userService.save(userSaveDTO)
+                , ServiceCode.ReturnTypeEnumCode.CREATE.name()
+                , MessageUtil.getMessage(ServiceCode.ReturnTypeEnumCode.CREATE.name())
+                , true
+        );
     }
 
     /**
@@ -148,12 +148,16 @@ public class UserController {
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
-    public SingleResult<UserReturnDTO> update (
+    public SingleResult<UserResultDTO> update (
             @ApiParam(value = "유저 시퀀스", required = true) @PathVariable final Long userSeq
             , @ApiParam(value = "유저 수정 DTO", required = true) @Valid @RequestBody final UserUpdateDTO userUpdateDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserController.update");
-        return responseService.getSingleResult(userService.update(userSeq, userUpdateDTO));
+        return responseService.getSingleResult(userService.update(userSeq, userUpdateDTO)
+                , ServiceCode.ReturnTypeEnumCode.UPDATE.name()
+                , MessageUtil.getMessage(ServiceCode.ReturnTypeEnumCode.UPDATE.name())
+                , true
+        );
     }
 
     /**
@@ -169,7 +173,7 @@ public class UserController {
             , notes = OPERATION_CHARACTER)
     @DeleteMapping(name = "유저 단건 삭제", value = "/{userSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<UserReturnDTO> deleteOne (
+    public SingleResult<UserResultDTO> deleteOne (
             @ApiParam(value = "유저 시퀀스", required = true) @PathVariable final Long userSeq) {
         log.info("UserController.deleteOne");
         return responseService.getSingleResult(userService.deleteOne(userSeq)
@@ -220,7 +224,11 @@ public class UserController {
             @ModelAttribute @Valid final UserIdDTO userIdDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserController.checkId");
-        return userService.checkId(userIdDTO.getUserId());
+        return responseService.getSingleResult(userService.checkId(userIdDTO.getUserId())
+                , SuccessCode.ConfigureSuccess.NOT_DUPLICATE.name()
+                , MessageUtil.getMessage(SuccessCode.ConfigureSuccess.NOT_DUPLICATE.name())
+                , true
+        );
     }
 
 }

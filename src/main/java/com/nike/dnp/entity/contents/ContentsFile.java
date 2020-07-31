@@ -6,7 +6,6 @@ import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
 import com.nike.dnp.dto.contents.ContentsFileUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.exception.CodeMessageHandleException;
-import com.nike.dnp.util.S3Util;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;

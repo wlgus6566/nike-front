@@ -26,7 +26,7 @@ public class NoticePredicateHelper {
      * @since 2020. 7. 13. 오후 10:59:21
      * @implNote 카테고리 검색 helper
      */
-    public static Predicate eqCategoryCode(String categoryCode) {
+    public static Predicate eqCategoryCode(final String categoryCode) {
         final BooleanBuilder builder = new BooleanBuilder();
 
         if (!StringUtils.isEmpty(categoryCode)) {
@@ -45,11 +45,11 @@ public class NoticePredicateHelper {
      * @since 2020. 7. 13. 오후 10:59:49
      * @implNote 제목, 내용 keyword 검색 helper
      */
-    public static Predicate containsKeword(String keyword) {
+    public static Predicate containsKeword(final String keyword) {
         final BooleanBuilder builder = new BooleanBuilder();
 
         if (!StringUtils.isEmpty(keyword)) {
-            builder.and((QNoticeArticle.noticeArticle.contents.contains(keyword))
+            builder.and(QNoticeArticle.noticeArticle.contents.contains(keyword)
                     .or(QNoticeArticle.noticeArticle.title.contains(keyword)));
         }
 

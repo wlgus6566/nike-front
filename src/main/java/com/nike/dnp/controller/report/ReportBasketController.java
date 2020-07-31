@@ -90,8 +90,7 @@ public class ReportBasketController {
             @RequestBody final List<Long> reportFileSeq
     ) {
         log.info("ReportBasketController.saveReportBasket");
-        List<ReportBasket> reportBasketList = reportBasketService.save(reportFileSeq);
-        return responseService.getSingleResult(reportBasketList);
+        return responseService.getSingleResult(reportBasketService.save(reportFileSeq));
     }
 
     /**

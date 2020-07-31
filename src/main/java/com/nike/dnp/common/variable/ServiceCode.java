@@ -246,7 +246,7 @@ public class ServiceCode {
         CONTENTS("contents"),
         REPORT("report"),
         TEMP("temp"),
-        FAQ("faq"),
+        QNA("QNA"),
         BANNER("banner")
         ;
 
@@ -326,7 +326,7 @@ public class ServiceCode {
      */
     @RequiredArgsConstructor
     @Getter
-    public enum FAQEnumCode {
+    public enum QNAEnumCode {
         ASSET("ASSET/TOOLKIT/FOUNDATION"),
         SUBSIDIARY("부자재주문"),
         REPORT("시공보고서"),

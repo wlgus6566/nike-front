@@ -27,7 +27,7 @@ public class FailCode {
         ERROR, NOT_FOUND, INVALID
     }
 
-    /**Invalid.
+    /**
      * The enum Configure error.
      *
      * @implNote Validation 이외의 오류 처리
@@ -61,6 +61,7 @@ public class FailCode {
         , NULL_TITLE
         , NULL_URL
         , SELECT_FILE
+        , EXCEED_MAX_NOTICE
     }
 
 }

@@ -7,6 +7,7 @@ import com.nike.dnp.entity.contents.QRecentUpload;
 import com.nike.dnp.entity.history.QHistory;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.StringUtils;
 
@@ -18,6 +19,7 @@ import org.springframework.util.StringUtils;
  * @implNote
  */
 @UtilityClass
+@NoArgsConstructor
 public class HistoryPredicateHelper {
 
 	/**

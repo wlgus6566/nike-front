@@ -1,5 +1,6 @@
 package com.nike.dnp.repository.order;
 
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.order.OrderProductResultDTO;
 import com.nike.dnp.dto.order.OrderSearchDTO;
 import com.nike.dnp.entity.agency.QAgency;
@@ -94,15 +95,39 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 													final PageRequest pageRequest) {
 		log.info("OrderProductMapperRepositoryImpl.findPagesOrder");
 		final QOrderProductMapping qOrderProductMapping = QOrderProductMapping.orderProductMapping;
+		final QOrder order = QOrder.order;
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 
 		final JPAQuery<OrderProductMapping> query = queryFactory.selectFrom(qOrderProductMapping)
 																.where(
 																		OrderProductMappingPredicateHelper.afterStartDt(orderSearchDTO.getBeginDt()),
-																		OrderProductMappingPredicateHelper.beforeEndDt(orderSearchDTO.getEndDt()),
-																		qOrderProductMapping.registerSeq.eq(orderSearchDTO.getUserSeq()));
+																		OrderProductMappingPredicateHelper.beforeEndDt(orderSearchDTO.getEndDt()))
+																.innerJoin(order).on(qOrderProductMapping.orderSeq.eq(order.orderSeq).and(order.useYn.eq(ServiceCode.YesOrNoEnumCode.Y.name())));
 
 		final List<OrderProductMapping> orderList = getQuerydsl().applyPagination(pageRequest,query).fetch();
 		return new PageImpl<>(orderList,pageRequest,query.fetchCount());
+	}
+
+	/**
+	 * 제품 상세 정보 조회
+	 *
+	 * @param orderGoodsSeq the order goods seq
+	 * @param useYn         the use yn
+	 * @return the order product mapping
+	 * @author [윤태호]
+	 * @since 2020. 7. 31. 오후 12:23:18
+	 */
+	@Override
+	public OrderProductMapping findByIdAndUseYn(Long orderGoodsSeq, String useYn) {
+
+		final QOrderProductMapping qOrderProductMapping = QOrderProductMapping.orderProductMapping;
+		final QOrder order = QOrder.order;
+		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+
+		final OrderProductMapping orderProductMapping = queryFactory.selectFrom(qOrderProductMapping)
+																.where(qOrderProductMapping.orderGoodsSeq.eq(orderGoodsSeq))
+																.innerJoin(order).on(qOrderProductMapping.orderSeq.eq(order.orderSeq).and(order.useYn.eq(useYn))).fetchOne();
+
+		return orderProductMapping;
 	}
 }

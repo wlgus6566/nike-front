@@ -4,10 +4,7 @@ import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.user.UserContentsSaveDTO;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
 import com.nike.dnp.entity.user.UserContents;
-import com.nike.dnp.repository.auth.AuthMenuRoleRepository;
 import com.nike.dnp.repository.auth.AuthRepository;
-import com.nike.dnp.repository.menu.MenuRepository;
-import com.nike.dnp.repository.menu.MenuRoleRepository;
 import com.nike.dnp.repository.user.UserContentsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +19,8 @@ import java.util.List;
  * UserContentsService
  *
  * @author [오지훈]
- * @since 2020. 6. 22. 오후 2:40:43
  * @implNote UserContents(유저 컨텐츠 권한) Service 작성
+ * @since 2020. 6. 22. 오후 2:40:43
  */
 @Slf4j
 @Service
@@ -31,28 +28,37 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserContentsService {
 
+    /**
+     * The User contents repository
+     *
+     * @author [오지훈]
+     */
     private final UserContentsRepository userContentsRepository;
-    private final MenuRepository menuRepository;
-    private final MenuRoleRepository menuRoleRepository;
-    private final AuthMenuRoleRepository authMenuRoleRepository;
+
+    /**
+     * The Auth repository
+     *
+     * @author [오지훈]
+     */
     private final AuthRepository authRepository;
 
     /**
      * Save list.
      *
+     * @param contentsSeq         the contents seq
      * @param userContentsSaveDTO the user contents save dto
      * @return the list
      * @author [오지훈]
-     * @since 2020. 7. 20. 오후 12:30:08
      * @implNote 컨텐츠 권한 저장
+     * @since 2020. 7. 20. 오후 12:30:08
      */
     public List<UserContents> save (final Long contentsSeq, final UserContentsSaveDTO userContentsSaveDTO) {
         log.info("UserContentsService.save");
         userContentsRepository.deleteByContentsSeq(contentsSeq);
 
-        List<UserContents> contents = new ArrayList<>();
-        for (UserContentsSaveDTO.AuthCheckDTO authCheckDTO : userContentsSaveDTO.getChecks()) {
-            UserContents userContents = userContentsRepository.save(
+        final List<UserContents> contents = new ArrayList<>();
+        for (final UserContentsSaveDTO.AuthCheckDTO authCheckDTO : userContentsSaveDTO.getChecks()) {
+            final UserContents userContents = userContentsRepository.save(
                     new UserContents().save(
                         contentsSeq
                         , authCheckDTO.getAuthSeq()
@@ -72,8 +78,8 @@ public class UserContentsService {
      * @param userContentsSearchDTO the user contents search dto
      * @return the auth list
      * @author [오지훈]
-     * @since 2020. 7. 20. 오후 4:25:19
      * @implNote 컨텐츠 권한 목록
+     * @since 2020. 7. 20. 오후 4:25:19
      */
     public List<AuthReturnDTO> getAuthList (final UserContentsSearchDTO userContentsSearchDTO) {
         log.info("UserContentsService.getAuthList");
@@ -90,17 +96,19 @@ public class UserContentsService {
      * @param userContentsSearchDTO the user contents search dto
      * @return the boolean
      * @author [오지훈]
-     * @since 2020. 7. 20. 오후 4:25:14
      * @implNote 권한 존재 여부
+     * @since 2020. 7. 20. 오후 4:25:14
      */
     public boolean isAuth(final Long authSeq, final UserContentsSearchDTO userContentsSearchDTO) {
         log.info("UserContentsService.isAuth");
-        for (AuthReturnDTO authReturnDTO : this.getAuthList(userContentsSearchDTO)) {
+        boolean result = false;
+        for (final AuthReturnDTO authReturnDTO : this.getAuthList(userContentsSearchDTO)) {
             if (authSeq.equals(authReturnDTO.getAuthSeq())) {
-                return true;
+                result = true;
+                break;
             }
         }
-        return false;
+        return result;
     }
 
 }

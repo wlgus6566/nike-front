@@ -17,7 +17,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class NoticeArticleListDTO {
+public class CustomerListDTO {
 
     /**
      * The Notice article seq
@@ -32,7 +32,7 @@ public class NoticeArticleListDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(name = "noticeArticleSectionCode", value = "게시물 구분 코드", defaultValue = "", required = true)
+    @ApiParam(name = "noticeArticleSectionCode", value = "게시물 구분 코드", defaultValue = "NOTICE", required = true)
     private String noticeArticleSectionCode;
 
 
@@ -42,7 +42,7 @@ public class NoticeArticleListDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(name = "noticeArticleCategoryCode", value = "[QNA] 게시물 카테고리 코드", defaultValue = "")
+    @ApiParam(name = "noticeArticleCategoryCode", value = "[QNA] 게시물 카테고리 코드", defaultValue = "ASSET")
     private String noticeArticleCategoryCode;
 
     /**
@@ -50,7 +50,7 @@ public class NoticeArticleListDTO {
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "noticeYn", value = "[공지사항] 공지 여부")
+    @ApiModelProperty(name = "noticeYn", value = "[공지사항] 상단 고정 여부")
     private String noticeYn;
 
     /**
@@ -82,7 +82,7 @@ public class NoticeArticleListDTO {
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "title", value = "제목")
+    @ApiModelProperty(name = "title", value = "제목/질문")
     private String title;
 
     /**
@@ -98,6 +98,6 @@ public class NoticeArticleListDTO {
      *
      * @author [정주희]
      */
-    @ApiModelProperty(name = "useYn", value = "사용 여부")
+    @ApiModelProperty(name = "useYn", value = "게시글 사용 여부")
     private String useYn;
 }

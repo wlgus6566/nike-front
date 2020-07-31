@@ -71,12 +71,11 @@ public class ReportBasketService {
      */
     @Transactional
     public List<ReportBasket> save(final List<Long> reportFileSeqList) {
-        log.info("ReportBasketService.save");
-        List<ReportBasket> reportBasketList = new ArrayList<>();
-        for (Long reportFileSeq : reportFileSeqList) {
-            Optional<ReportFile> reportFile = reportFileRepository.findById(reportFileSeq);
+        final List<ReportBasket> reportBasketList = new ArrayList<>();
+        for (final Long reportFileSeq : reportFileSeqList) {
+            final Optional<ReportFile> reportFile = reportFileRepository.findById(reportFileSeq);
             if (reportFile.isPresent()) {
-                ReportBasket savedReportBasket = reportBasketRepository.save(new ReportBasket().save(reportFileSeq, SecurityUtil.currentUser().getUserSeq()));
+                final ReportBasket savedReportBasket = reportBasketRepository.save(new ReportBasket().save(reportFileSeq, SecurityUtil.currentUser().getUserSeq()));
                 reportBasketList.add(savedReportBasket);
             }
         }

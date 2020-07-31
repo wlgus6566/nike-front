@@ -102,8 +102,9 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @implNote 최근 콘텐츠 목록 조회
      * @since 2020. 7. 27. 오후 6:39:10
      */
+    @Override
     public List<ContentsResultDTO> findRecentContents(final String topMenuCode, final PageRequest pageRequest) {
-        ContentsSearchDTO contentsSearchDTO = new ContentsSearchDTO();
+        final ContentsSearchDTO contentsSearchDTO = new ContentsSearchDTO();
         contentsSearchDTO.setTopMenuCode(topMenuCode);
 
         final QContents qContents = QContents.contents;
@@ -148,19 +149,18 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @since 2020. 7. 30. 오후 3:40:06
      */
     @Override
-    public List<ContentsUserEmailDTO> findAllContentsMailAuthUser(long contentsSeq) {
+    public List<ContentsUserEmailDTO> findAllContentsMailAuthUser(final long contentsSeq) {
         final QUserContents qUserContents = QUserContents.userContents;
         final QContents qContents = QContents.contents;
         final QUserAuth qUserAuth = QUserAuth.userAuth;
         final QUser qUser = QUser.user;
-
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-
-        List<ContentsUserEmailDTO> userEmailDTOList = queryFactory.select(
-                Projections.bean(
-                    ContentsUserEmailDTO.class
-                        , qUser.userId
-                        , qContents.imageFilePhysicalName
+        return queryFactory
+                .select(
+                    Projections.bean(
+                        ContentsUserEmailDTO.class
+                            , qUser.userId
+                            , qContents.imageFilePhysicalName
                 ))
                 .from(qUserContents)
                 .where(qUserContents.contentsSeq.eq(contentsSeq))
@@ -168,8 +168,6 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                 .innerJoin(qUserAuth).on(qUserContents.authSeq.eq(qUserAuth.authSeq))
                 .innerJoin(qUser).on(qUserAuth.userSeq.eq(qUser.userSeq))
                 .fetch();
-
-        return userEmailDTOList;
     }
 
 }

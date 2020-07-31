@@ -14,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 /**
@@ -105,8 +104,7 @@ public class ReportAnswerController {
             @RequestBody final ReportAnswerSaveDTO answerSaveDTO
     ) {
         log.info("ReportAnswerController.saveReportAnswer");
-        ReportAnswer reportAnswer = reportAnswerService.save(answerSaveDTO);
-        return responseService.getSingleResult(reportAnswer);
+        return responseService.getSingleResult(reportAnswerService.save(answerSaveDTO));
     }
 
     /**

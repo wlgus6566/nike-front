@@ -1,7 +1,7 @@
 package com.nike.dnp.repository.notice;
 
-import com.nike.dnp.dto.notice.NoticeArticleListDTO;
-import com.nike.dnp.dto.notice.NoticeSearchDTO;
+import com.nike.dnp.dto.notice.CustomerListDTO;
+import com.nike.dnp.dto.notice.CustomerSearchDTO;
 import com.nike.dnp.entity.notice.NoticeArticle;
 import com.nike.dnp.entity.notice.QNoticeArticle;
 import com.nike.dnp.util.ObjectMapperUtil;
@@ -28,13 +28,20 @@ import java.util.List;
 @Repository
 public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implements NoticeRepositoryCustom{
 
+    /**
+     * Instantiates a new Notice repository custom.
+     *
+     * @author [오지훈]
+     * @implNote 생성자 주입
+     * @since 2020. 7. 31. 오후 4:12:24
+     */
     public NoticeRepositoryCustomImpl() {super(NoticeArticle.class);}
 
 
     /**
      * Find notice pages page.
      *
-     * @param noticeSearchDTO the notice search dto
+     * @param customerSearchDTO the notice search dto
      * @param pageRequest     the page request
      * @return the page
      * @author [정주희]
@@ -42,29 +49,29 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
      * @implNote Customer Center 목록 조회
      */
     @Override
-    public Page<NoticeArticleListDTO> findNoticePages(NoticeSearchDTO noticeSearchDTO, PageRequest pageRequest) {
+    public Page<CustomerListDTO> findNoticePages(final CustomerSearchDTO customerSearchDTO, final PageRequest pageRequest) {
         log.info("NoticeRepositoryCustomImpl.findNoticePages");
 
-        QNoticeArticle qNoticeArticle = QNoticeArticle.noticeArticle;
-        JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        final QNoticeArticle qNoticeArticle = QNoticeArticle.noticeArticle;
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 
         //일반 게시글 조회
-        JPAQuery<NoticeArticle> query = queryFactory.selectFrom(qNoticeArticle)
+        final JPAQuery<NoticeArticle> query = queryFactory.selectFrom(qNoticeArticle)
                 .where(
                         qNoticeArticle.useYn.eq("Y"),
-                        qNoticeArticle.noticeArticleSectionCode.eq(noticeSearchDTO.getNoticeArticleSectionCode()),
-                        NoticePredicateHelper.eqCategoryCode(noticeSearchDTO.getNoticeArticleCategoryCode()),
-                        NoticePredicateHelper.containsKeword(noticeSearchDTO.getKeyword())
+                        qNoticeArticle.noticeArticleSectionCode.eq(customerSearchDTO.getNoticeArticleSectionCode()),
+                        NoticePredicateHelper.eqCategoryCode(customerSearchDTO.getNoticeArticleCategoryCode()),
+                        NoticePredicateHelper.containsKeword(customerSearchDTO.getKeyword())
                 );
 
-        if (StringUtils.equalsIgnoreCase(noticeSearchDTO.getNoticeArticleSectionCode() ,"NOTICE")) {
+        if (StringUtils.equalsIgnoreCase(customerSearchDTO.getNoticeArticleSectionCode() ,"NOTICE")) {
             query.orderBy(qNoticeArticle.noticeYn.desc(), qNoticeArticle.registrationDt.desc());
         }
 
-        List<NoticeArticleListDTO> noticeArticleListDTOList = ObjectMapperUtil.mapAll(
-                getQuerydsl().applyPagination(pageRequest, query).fetch(), NoticeArticleListDTO.class);
+        final List<CustomerListDTO> customerListDTOList = ObjectMapperUtil.mapAll(
+                getQuerydsl().applyPagination(pageRequest, query).fetch(), CustomerListDTO.class);
 
-        return new PageImpl<>(noticeArticleListDTOList, pageRequest, query.fetchCount());
+        return new PageImpl<>(customerListDTOList, pageRequest, query.fetchCount());
     }
 
     /**
@@ -79,9 +86,9 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
     public Long checkNoticeYnCnt() {
         log.info("NoticeRepositoryCustomImpl.checkNoticeYnCnt");
 
-        QNoticeArticle qNoticeArticle = QNoticeArticle.noticeArticle;
-        JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-        JPAQuery<NoticeArticle> query = queryFactory.selectFrom(qNoticeArticle)
+        final QNoticeArticle qNoticeArticle = QNoticeArticle.noticeArticle;
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        final JPAQuery<NoticeArticle> query = queryFactory.selectFrom(qNoticeArticle)
                 .where(
                         qNoticeArticle.useYn.eq("Y"),
                         qNoticeArticle.noticeArticleSectionCode.eq("NOTICE"),

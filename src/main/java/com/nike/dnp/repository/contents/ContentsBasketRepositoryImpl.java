@@ -44,12 +44,12 @@ public class ContentsBasketRepositoryImpl extends QuerydslRepositorySupport impl
      * @since 2020. 7. 15. 오후 12:19:14
      */
     @Override
-    public List<ContentsBasketResultDTO> findAllWithContentsFile(Long userSeq) {
+    public List<ContentsBasketResultDTO> findAllWithContentsFile(final Long userSeq) {
         final QContentsBasket qContentsBasket = QContentsBasket.contentsBasket;
         final QContentsFile qContentsFile = QContentsFile.contentsFile;
 
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-        List<ContentsBasketResultDTO> resultDTOList = queryFactory
+        return queryFactory
                 .select(Projections.bean(
                         ContentsBasketResultDTO.class
                         , qContentsFile.fileName
@@ -63,8 +63,6 @@ public class ContentsBasketRepositoryImpl extends QuerydslRepositorySupport impl
                 .where(qContentsBasket.userSeq.eq(userSeq))
                 .orderBy(qContentsBasket.registrationDt.desc())
                 .fetch();
-
-        return resultDTOList;
     }
 }
 

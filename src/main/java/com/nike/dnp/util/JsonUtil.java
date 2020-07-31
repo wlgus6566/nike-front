@@ -3,6 +3,7 @@ package com.nike.dnp.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,6 +21,7 @@ import java.io.Writer;
  */
 @Slf4j
 @UtilityClass
+@NoArgsConstructor
 public class JsonUtil {
 
 	/**
@@ -35,7 +37,7 @@ public class JsonUtil {
 		try {
 			new ObjectMapper().writeValue(writer, value);
 		} catch (IOException exception) {
-			throw new CodeMessageHandleException(
+			throw (CodeMessageHandleException) new CodeMessageHandleException(
 					FailCode.ExceptionError.ERROR.name()
 					, exception.getMessage());
 		}

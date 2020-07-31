@@ -39,6 +39,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CalendarService {
 
+    /**
+     * The constant DATE_FORMAT
+     *
+     * @author [오지훈]
+     */
+    private final static String DATE_FORMAT = "yyyy.MM.dd HH:mm:ss";
 
     /**
      * The Calendar repository
@@ -71,14 +77,14 @@ public class CalendarService {
      * @implNote
      */
     public Calendar save(final CalendarSaveDTO calendarSaveDTO){
-        log.info("CalendarService.save");   
-        ModelMapper modelMapper = new ModelMapper();
-        Calendar calendar   = modelMapper.map(calendarSaveDTO, Calendar.class);
+        log.info("CalendarService.save");
+        final ModelMapper modelMapper = new ModelMapper();
+        final Calendar calendar = modelMapper.map(calendarSaveDTO, Calendar.class);
 
         calendar.setBeginDt(LocalDateUtil.strToLocalDateTime(
-                calendarSaveDTO.getBeginDt()+" 00:00:00","yyyy.MM.dd HH:mm:ss"));
+                calendarSaveDTO.getBeginDt()+" 00:00:00",DATE_FORMAT));
         calendar.setEndDt(LocalDateUtil.strToLocalDateTime(
-                calendarSaveDTO.getEndDt()+" 23:59:59","yyyy.MM.dd HH:mm:ss"));
+                calendarSaveDTO.getEndDt()+" 23:59:59",DATE_FORMAT));
 
         calendar.setRegisterSeq(SecurityUtil.currentUser().getUserSeq());
         calendar.setUpdaterSeq(SecurityUtil.currentUser().getUserSeq());
@@ -98,13 +104,13 @@ public class CalendarService {
     public List<Calendar> findAll(final CalendarSearchDTO calendarSearchDTO) {
         log.info("CalendarService.findAll");
         //월의 마지막 날짜 구하기
-        YearMonth targetYearMonth = YearMonth.from(LocalDate.parse(calendarSearchDTO.getYyyyMm()+".01", DateTimeFormatter.ofPattern("yyyy.MM.dd")));
+        final YearMonth targetYearMonth = YearMonth.from(LocalDate.parse(calendarSearchDTO.getYyyyMm()+".01", DateTimeFormatter.ofPattern("yyyy.MM.dd")));
 
-        LocalDateTime beginDt = LocalDateUtil.strToLocalDateTime(
-                calendarSearchDTO.getYyyyMm()+".01 00:00:00","yyyy.MM.dd HH:mm:ss");
+        final LocalDateTime beginDt = LocalDateUtil.strToLocalDateTime(
+                calendarSearchDTO.getYyyyMm()+".01 00:00:00",DATE_FORMAT);
 
-        LocalDateTime endDt = LocalDateUtil.strToLocalDateTime(
-                calendarSearchDTO.getYyyyMm()+"."+targetYearMonth.lengthOfMonth()+" 23:59:59","yyyy.MM.dd HH:mm:ss");
+        final LocalDateTime endDt = LocalDateUtil.strToLocalDateTime(
+                calendarSearchDTO.getYyyyMm()+"."+targetYearMonth.lengthOfMonth()+" 23:59:59",DATE_FORMAT);
 
         return calendarRepository.findByBeginDtGreaterThanEqualAndEndDtLessThanEqual(beginDt, endDt);
     }
@@ -121,7 +127,7 @@ public class CalendarService {
     @Transactional
     public Calendar update(final CalendarUpdateDTO calendarUpdateDTO) {
         log.info("CalendarService.update");
-        Optional<Calendar> calendarEntity = calendarRepository.findById(calendarUpdateDTO.getCalendarSeq());
+        final Optional<Calendar> calendarEntity = calendarRepository.findById(calendarUpdateDTO.getCalendarSeq());
 
         if(calendarEntity.isPresent()){
             calendarEntity.ifPresent(
@@ -131,9 +137,9 @@ public class CalendarService {
                         value.setScheduleName(calendarUpdateDTO.getScheduleName());
                         value.setContents(calendarUpdateDTO.getContents());
                         value.setBeginDt(LocalDateUtil.strToLocalDateTime(
-                                calendarUpdateDTO.getBeginDt()+" 00:00:00","yyyy.MM.dd HH:mm:ss"));
+                                calendarUpdateDTO.getBeginDt()+" 00:00:00",DATE_FORMAT));
                         value.setEndDt(LocalDateUtil.strToLocalDateTime(
-                                calendarUpdateDTO.getEndDt()+" 23:59:59","yyyy.MM.dd HH:mm:ss"));
+                                calendarUpdateDTO.getEndDt()+" 23:59:59",DATE_FORMAT));
 
                         value.setRegisterSeq(SecurityUtil.currentUser().getUserSeq());
                         value.setUpdaterSeq(SecurityUtil.currentUser().getUserSeq());

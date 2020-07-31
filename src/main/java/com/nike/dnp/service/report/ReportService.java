@@ -40,6 +40,7 @@ import java.util.Optional;
  * @author [이소정]
  * @implNote 보고서 서비스
  * @since 2020. 7. 7. 오후 2:40:15
+ * @implNote
  */
 @Slf4j
 @Service
@@ -184,7 +185,7 @@ public class ReportService {
      * @param reportSeq the report seq
      * @return the report
      * @author [이소정]
-     * @implNote
+     * @implNote 보고서 seq로 상세 조회
      * @since 2020. 7. 8. 오후 5:52:10
      */
     @Transactional

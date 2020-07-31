@@ -103,8 +103,7 @@ public class ContentsBasketController {
             @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "SP", required = true) @PathVariable final String menuCode,
             @RequestBody final List<Long> contentsBasketSeqList
     ) {
-        List<ContentsBasket> contentsBasketList = contentsBasketService.save(contentsBasketSeqList);
-        return responseService.getSingleResult(contentsBasketList);
+        return responseService.getSingleResult(contentsBasketService.save(contentsBasketSeqList));
     }
 
     /**
