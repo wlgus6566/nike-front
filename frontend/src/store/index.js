@@ -16,6 +16,7 @@ export default new Vuex.Store({
     state: {
         user: {},
         token: '',
+        basketItemDrag: false,
         basketListData: null,
         goodsBasketSeq: '',
         contBasketList: null,
@@ -35,7 +36,6 @@ export default new Vuex.Store({
         SET_TOKEN(state, token) {
             state.token = token;
         },
-
         SET_BASKET(state, basketList) {
             state.basketListData = basketList;
         },
@@ -48,9 +48,11 @@ export default new Vuex.Store({
             deleteCookie('nike_token');
             //deleteCookie('nike_user');
         },
-
         SET_CONT_BASKET(state, data) {
             state.contBasketList = data;
+        },
+        SET_BASKET_ITEM_DRAG(state, data) {
+            state.basketItemDrag = data;
         },
     },
     actions: {
