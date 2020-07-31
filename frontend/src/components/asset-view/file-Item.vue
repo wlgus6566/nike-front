@@ -173,7 +173,7 @@ export default {
         },
         onStart(e) {
             console.log('onStart', e);
-            const thumbnail = document.querySelector('.test .thumbnail');
+            const thumbnail = document.querySelector('.ghost-item .thumbnail');
             const left = e.originalEvent.pageX - e.item.offsetLeft - 60;
             const top = e.originalEvent.pageY - e.item.offsetTop - 60;
             thumbnail.style.transform = `translate(${left}px,${top}px)`;
@@ -219,26 +219,26 @@ export default {
     border-left: 0;
     border-right: 0;
 }
-.test {
+.ghost-item {
     opacity: 1 !important;
     border: none !important;
     background: none !important;
 }
-.test .list {
+.ghost-item .list {
     padding: 0;
 }
-.test .checkbox {
+.ghost-item .checkbox {
     display: none;
 }
-.test .thumbnail {
+.ghost-item .thumbnail {
 }
-.test .info-box {
+.ghost-item .info-box {
     display: none;
 }
-.test .btn-box {
+.ghost-item .btn-box {
     display: none;
 }
-.test .detail {
+.ghost-item .detail {
     display: none !important;
 }
 </style>

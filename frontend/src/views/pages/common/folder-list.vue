@@ -99,12 +99,11 @@ export default {
         FilterSelect,
         FolderList,
         NoData,
-        NoDataSearch,
         SearchInput,
         Loading,
     },
     methods: {
-        handleScroll(event) {
+        handleScroll() {
             if (this.loadingData) return;
             const windowE = document.documentElement;
             if (
@@ -169,14 +168,12 @@ export default {
                 }
                 this.page++;
                 this.loadingData = false;
-                return;
             } catch (error) {
                 console.log(error);
             }
         },
     },
     created() {
-        console.log('folder-list-created');
         this.initFetchData();
         window.addEventListener('scroll', this.handleScroll);
     },
