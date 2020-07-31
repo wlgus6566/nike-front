@@ -7,6 +7,8 @@ import router from './router';
 import store from './store';
 import VueCookies from 'vue-cookies';
 import CKEditor from 'ckeditor4-vue';
+import { setupCalendar } from 'v-calendar';
+import VCalendar from 'v-calendar';
 
 import lineClamp from './utils/lineclamp';
 
@@ -15,6 +17,15 @@ Vue.config.productionTip = false;
 Vue.use(CKEditor);
 Vue.use(VueCookies);
 Vue.use(require('vue-moment'));
+Vue.use(VCalendar, {
+    componentPrefix: 'vc',
+    locales: {
+        masks: {
+            title: 'YYYY.MM',
+            weekdays: 'WWW',
+        },
+    },
+});
 
 Vue.directive('lineClamp', lineClamp);
 
@@ -39,5 +50,9 @@ Vue.filter('formattedNumber', (value, prefix, suffix) => {
 new Vue({
     router,
     store,
-    render: (h) => h(App),
+    render: h => h(App),
 }).$mount('#app');
+
+setupCalendar({
+    componentPrefix: 'vc',
+});
