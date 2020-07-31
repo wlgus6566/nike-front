@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+
 import { loginUser } from '@/api/login';
 import { getBasketList } from '@/api/basket.js';
 import { getContentsBasket } from '@/api/contents';
