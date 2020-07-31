@@ -17,5 +17,5 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 
 
 
-	List<Order> findAllByRegistrationDtBeforeAndUseYn(LocalDateTime localDateTime,String useYn);
+	List<Order> findAllByRegistrationDtBeforeAndUseYn(final LocalDateTime localDateTime,final String useYn);
 }

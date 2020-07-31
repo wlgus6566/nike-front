@@ -202,7 +202,6 @@ public class FileUtil {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start("fileUpload");
 
-
 		final String extension = StringUtils.getFilenameExtension(uploadFile.getOriginalFilename());
 
 		final File toFile = makeNewFile(folder, extension);
