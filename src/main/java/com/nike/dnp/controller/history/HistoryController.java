@@ -18,6 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
+/**
+ * The Class History controller.
+ *
+ * @author [오지훈]
+ * @since 2020. 7. 31. 오전 10:03:18
+ */
 @Slf4j
 @RestController
 @Api(description = "마이페이지", tags = "MYPAGE")
@@ -46,6 +52,16 @@ public class HistoryController {
      */
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
+    /**
+     * Find all upload folder single result.
+     *
+     * @param historySearchDTO the history search dto
+     * @param authUserDTO      the auth user dto
+     * @return the single result
+     * @author [오지훈]
+     * @implNote [method 설명]
+     * @since 2020. 7. 31. 오전 10:03:22
+     */
     @ApiOperation(
             value = "최근 업로드한 폴더 목록"
             , notes = REQUEST_CHARACTER
@@ -74,6 +90,16 @@ public class HistoryController {
         return responseService.getSingleResult(historyService.findAllUploadHistoryPaging(historySearchDTO, authUserDTO));
     }
 
+    /**
+     * Find all view folder single result.
+     *
+     * @param historySearchDTO the history search dto
+     * @param authUserDTO      the auth user dto
+     * @return the single result
+     * @author [오지훈]
+     * @implNote [method 설명]
+     * @since 2020. 7. 31. 오전 10:03:25
+     */
     @ApiOperation(
             value = "최근 본 폴더 목록"
             , notes = REQUEST_CHARACTER

@@ -149,7 +149,7 @@ public class AuthController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<Auth> save(
-            @ApiParam(value = "권한(그룹) 등록 DTO") @Valid @RequestBody final AuthSaveDTO authSaveDTO
+            @ApiParam(value = "권한(그룹) 등록 DTO", name = "authSaveDTO") @Valid @RequestBody final AuthSaveDTO authSaveDTO
             , @ApiIgnore final BindingResult result) {
         log.info("AuthController.save");
         return responseService.getSingleResult(
@@ -178,8 +178,8 @@ public class AuthController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<Auth> update (
-            @ApiParam(value = "권한(그룹) 시퀀스") @PathVariable final Long authSeq
-            , @ApiParam(value = "권한(그룹) 수정 DTO") @Valid @RequestBody final AuthUpdateDTO authUpdateDTO
+            @ApiParam(value = "권한(그룹) 시퀀스", name = "authSeq") @PathVariable final Long authSeq
+            , @ApiParam(value = "권한(그룹) 수정 DTO", name = "authUpdateDTO") @Valid @RequestBody final AuthUpdateDTO authUpdateDTO
             , @ApiIgnore final BindingResult result) {
         log.info("AuthController.update");
         return responseService.getSingleResult(

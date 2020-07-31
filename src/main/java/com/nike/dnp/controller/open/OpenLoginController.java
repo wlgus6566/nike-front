@@ -6,7 +6,7 @@ import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.SuccessCode;
 import com.nike.dnp.dto.user.UserCertDTO;
 import com.nike.dnp.dto.user.UserIdDTO;
-import com.nike.dnp.dto.user.UserReturnDTO;
+import com.nike.dnp.dto.user.UserResultDTO;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
@@ -78,8 +78,7 @@ public class OpenLoginController {
      * @since 2020. 7. 2. 오전 11:30:10
      * @apiNote 인증코드 생성 및 이메일 발송
      */
-    @ApiOperation(value = "ID 확인, 인증코드 생성 및 이메일 발송"
-            , notes = OPERATION_CHARACTER)
+    @ApiOperation(value = "ID 확인, 인증코드 생성 및 이메일 발송", notes = OPERATION_CHARACTER)
     @GetMapping(name = "ID 확인, 인증코드 생성 및 비밀번호 설정 이메일 발송", value = "/send/cert")
     @ValidField
     public SingleResult<String> sendCert (
@@ -111,17 +110,16 @@ public class OpenLoginController {
      * @since 2020. 6. 22. 오후 4:41:44
      * @apiNote 인증코드 검증 및 비밀번호 설정
      */
-    @ApiOperation(value = "인증코드 검증 및 비밀번호 설정"
-            , notes = OPERATION_CHARACTER)
+    @ApiOperation(value = "인증코드 검증 및 비밀번호 설정", notes = OPERATION_CHARACTER)
     @PutMapping(name = "인증코드 검증 및 비밀번호 설정", value = "/set/password"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
-    public SingleResult<UserReturnDTO> setPassword (
+    public SingleResult<UserResultDTO> settingPassword (
             @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody
             @Validated({ValidationGroups.group1.class, ValidationGroups.group3.class}) final UserCertDTO userCertDTO
             , @ApiIgnore final BindingResult result) {
-        log.info("UserOpenController.setPassword");
+        log.info("UserOpenController.settingPassword");
         return responseService.getSingleResult(
                 userService.confirmPassword(userCertDTO)
                 , SuccessCode.ConfigureSuccess.CHANGE_PASSWORD.name()
@@ -139,13 +137,12 @@ public class OpenLoginController {
      * @since 2020. 7. 2. 오후 4:08:39
      * @apiNote 인증코드 검증 및 비밀번호 변경
      */
-    @ApiOperation(value = "인증코드 검증 및 비밀번호 변경"
-            , notes = OPERATION_CHARACTER)
+    @ApiOperation(value = "인증코드 검증 및 비밀번호 변경", notes = OPERATION_CHARACTER)
     @PutMapping(name = "인증코드 검증 및 비밀번호 변경", value = "/change/password"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
-    public SingleResult<UserReturnDTO> changePassword (
+    public SingleResult<UserResultDTO> changePassword (
             @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody
             @Validated({ValidationGroups.class}) final UserCertDTO userCertDTO
             , @ApiIgnore final BindingResult result) {
@@ -168,8 +165,7 @@ public class OpenLoginController {
      * @since 2020. 7. 27. 오후 4:12:52
      * @apiNote 인증코드 검증
      */
-    @ApiOperation(value = "인증코드 검증"
-            , notes = OPERATION_CHARACTER)
+    @ApiOperation(value = "인증코드 검증", notes = OPERATION_CHARACTER)
     @PostMapping(name = "인증코드 검증", value = "/check/cert"
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})

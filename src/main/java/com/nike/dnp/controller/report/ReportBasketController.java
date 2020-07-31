@@ -94,8 +94,7 @@ public class ReportBasketController {
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
     ) {
         log.info("ReportBasketController.saveReportBasket");
-        List<ReportBasket> reportBasketList = reportBasketService.save(reportFileSeq, authUserDTO);
-        return responseService.getSingleResult(reportBasketList);
+        return responseService.getSingleResult(reportBasketService.save(reportFileSeq, authUserDTO));
     }
 
     /**
