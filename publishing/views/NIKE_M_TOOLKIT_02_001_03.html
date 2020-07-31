@@ -12,7 +12,7 @@
 </head>
 <body>
 <div id="app">
-	<div id="wrap" class="main">
+		<div id="wrap">
 		<header class="page-header">
 		<button type="button" class="btn-back">뒤로가기</button>
 			<div class="inner">
@@ -33,24 +33,26 @@
 				</ul>
 			</div>
 		</header>
-		<section class="container">
-			<div class="contents">
-				<div class="sorting-area">
-					<button type="button" class="type-list">
-						<span>컬럼타입</span>
-					</button>
-					<!-- todo select 스크립트 작업 필요  -->
-					<div class="filter-select">
-						<select name="" id="">
-							<option value="최신순">최신순</option>
-						</select>
-					</div>
-					<div class="search-input active"> <!-- active 추가하면 검색 화면 보임 -->
+		<section class="contents">
+			<div class="sorting-area">
+				<button type="button" class="type-list">
+					<span>컬럼타입</span>
+				</button>
+				<!-- todo select 스크립트 작업 필요  -->
+				<div class="filter-select">
+					<select name="" id="">
+						<option value="최신순">최신순</option>
+					</select>
+				</div>
+				<div class="search-input active"> <!-- active 추가하면 검색 화면 보임 -->
+					<div class="input-box">
 						<input type="text" placeholder="검색어를 입력해주세요." />
 						<button type="button" class="search"><span>검색</span></button>
-						<button type="button" class="btn-txt"><span>취소</span></button>
 					</div>
+					<button type="button" class="btn-txt"><span>취소</span></button>
 				</div>
+			</div>
+			<div class="no-data-wrap">
 				<div class="no-data">
 					<i class="icon-search"></i>
 					<p class="desc">검색 결과가 없습니다.</p>

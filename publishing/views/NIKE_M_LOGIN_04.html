@@ -12,82 +12,57 @@
 </head>
 <body>
 <div id="app">
-		<div id="wrap">
+	<div id="wrap" class="sticky-wrap">
 		<header class="page-header">
-			<!--<button type="button" class="btn-back">뒤로가기</button>-->
 			<div class="inner">
-				<h1 class="page-title">REPORT</h1>
-				<ul class="nav-tab">
-					<li class="active">
-						<button type="button"><span>업로드</span></button>
-					</li>
-					<li>
-						<button type="button"><span>관리</span></button>
-					</li>
-				</ul>
+				<h1 class="page-title"><span>비밀번호 변경</span></h1>
 			</div>
 		</header>
-			<section class="contents">
-				<ul class="upload-list">
-					<li class="upload-item thumbnail-file">
-						프론트엔드
-					</li>
-					<li class="upload-item">
-						<div class="form-column">
-							<label class="label-title required">구분</label>
-						</div>
-						<div class="form-column">
-							<div class="radio-box">
-								<label class="check-item">
-									<input type="radio">
-									<span class="txt">SP</span>
-								</label>
-								<label class="check-item">
-									<input type="radio">
-									<span class="txt">SU</span>
-								</label>
-								<label class="check-item">
-									<input type="radio">
-									<span class="txt">FA</span>
-								</label>
-								<label class="check-item auto">
-									<input type="radio">
-									<span class="txt">HO</span>
-								</label>
-							</div>
-						</div>
-					</li>
-					<li class="upload-item">
-						<div class="form-column">
-							<label class="label-title required">보고서 명</label>
-						</div>
-						<div class="form-column">
-							<div class="txtarea">
-								<textarea></textarea>
-							</div>
-						</div>
-					</li>
-				</ul>
-				<div class="btn-area">
-					<button type="button" class="btn-s-sm">취소</button>
-					<button type="button" class="btn-s-black-sm">확인</button>
-				</div>
-			</section>
-		<footer>
-			<ul class="info-list">
-				<li>
-					<a href="#">
-						<span>이용약관</span>
-					</a>
+		<section class="contents">
+			<ul class="desc-list">
+				<li class="desc-item">
+					아이디와 비밀번호는 중복 불가합니다.
 				</li>
-				<li>
-					<a href="#">
-						<span>개인정보처리방침</span>
-					</a>
+				<li class="desc-item">
+					비밀번호에는 간단한 패턴이나 공통 사전 단어<br>
+					(예: NIKE(나이키), JORDAN(조던) 등)를 포함할 수 없습니다.
+				</li>
+				<li class="desc-item">
+					비밀번호는 동일한 글자, 문자, 숫자 등을 2글자이상 반복할 수<br>
+					없습니다. (예: AA1234! / A12345@@ 등)
+				</li>
+				<li class="desc-item">비밀번호 재사용 : 비밀번호 변경 시 현재 사용 중인 비밀번호의 재 사용은 불가능하며, 기존과는 다른 비밀번호로 변경하셔야 합니다.</li>
+			</ul>
+			<ul class="form-list">
+				<li class="form-item">
+					<span class="form-column">
+						<label class="label-title required">기존 비밀번호</label>
+					</span>
+					<span class="form-column">
+						<input type="text" required>
+					</span>
+				</li>
+				<li class="form-item">
+					<span class="form-column">
+						<label class="label-title required">새 비밀번호</label>
+					</span>
+					<span class="form-column">
+						<input type="text" placeholder="(8~16자/대소문자/숫자/특수문자 포함)" required>
+					</span>
+				</li>
+				<li class="form-item">
+					<span class="form-column">
+						<label class="label-title required">새 비밀번호(확인)</label>
+					</span>
+					<span class="form-column">
+						<input type="text" required>
+					</span>
 				</li>
 			</ul>
-			<p class="copy">© 2020 Nike Korea LLC. All Rights Reserved.</p>
-		</footer>
+		</section>
+		<div class="btn-wrap">
+			<button type="submit" class="btn-s-black-lg" disabled>저장</button>
+		</div>
 		<nav class="nav-area">
 			<ul class="tab-bar">
 				<li>

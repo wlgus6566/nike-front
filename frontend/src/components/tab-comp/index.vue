@@ -12,7 +12,9 @@
                 >
             </li>
         </ul>
-        <component v-bind:is="tabContent"></component>
+        <keep-alive>
+            <component v-bind:is="tabContent"></component>
+        </keep-alive>
     </div>
 </template>
 <script>

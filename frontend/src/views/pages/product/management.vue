@@ -1,6 +1,5 @@
 <template>
     <div>
-        {{ checkItem }}
         <h2 class="page-title"><span class="ko">상품관리</span></h2>
         <div class="sorting-area">
             <FilterSelect :listSortSelect="category2Code" />
@@ -20,13 +19,19 @@
                 @checkDel="checkDel"
             />
             <template v-else>
-                <NoData v-if="searchKeyword === ''" />
-                <NoDataSearch v-else />
+                <NoData v-if="searchKeyword === ''">
+                    <i class="icon-file"></i>
+                    <p class="desc">업로드한 폴더가 없습니다.</p>
+                </NoData>
+                <NoData v-else>
+                    <i class="icon-search"></i>
+                    <p class="desc">검색 결과가 없습니다.</p>
+                </NoData>
             </template>
             <el-pagination
                 v-if="productListData.length"
                 @current-change="handleCurrentChange"
-                :current-page.sync="page"
+                :page-size="itemLength"
                 :pager-count="11"
                 layout="prev, pager, next"
                 :total="totalItem"
@@ -39,8 +44,8 @@
     import SearchInput from '@/components/search-input';
     import FilterSelect from '@/components/filter-select';
     import ProductManagement from '@/components/product-management';
-    import NoData from '@/components/product-management/nodata';
-    import NoDataSearch from '@/components/product-management/nodata-search';
+    import NoData from '@/components/no-data';
+    import NoDataSearch from '@/components/no-data/nodata-search';
     import {delProduct, getProductList} from '@/api/product';
 
     export default {
@@ -234,9 +239,7 @@
         NoData,
         NoDataSearch,
     },
-    created() {
-        //console.log(this.productList.content);
-    },
+    created() {},
     computed: {},
     watch: {
         'category2Code.value'() {
@@ -256,17 +259,14 @@
     },
     methods: {
         handleCurrentChange(val) {
-            console.log(val);
+            this.page = val - 1;
             this.getProduct();
         },
         // checkbox
         checked(seq, del) {
-            //배열의 seq의 인덱스 값 반환
             const indexOfChecked = this.checkItem.findIndex((el) => el === seq);
-            //del 아니거나 인데스 값이 -1 이면 checkItem배열에 seq 추가
             if (!del && indexOfChecked === -1) {
                 this.checkItem.push(seq);
-                //인덱스 값이 -1이 아니거니 del이면 false 반환
             } else {
                 this.checkItem = this.checkItem.filter((el) => {
                     return el !== seq;
@@ -309,6 +309,7 @@
                         goodsSeqList: this.checkItem.toString(),
                     });
                     await this.getProduct();
+                    //todo 장바구니 다건 삭제 필요
                     this.loading = false;
                     this.checkItem.forEach((seq) => {
                         this.checked(seq, true);
@@ -329,7 +330,6 @@
             this.searchKeyword = val;
             this.getProduct();
         },
-
         // 상품 리스트 api
         async getProduct() {
             this.loading = true;

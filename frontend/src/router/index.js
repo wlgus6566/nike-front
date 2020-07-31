@@ -26,7 +26,7 @@ const router = new VueRouter({
         {
             path: '/',
             component: pages('main-page'),
-            meta: { layout: 'Default', aside: 'Default' },
+            meta: { layout: 'Default', aside: 'File' },
         },
         ...LoginRoutes,
         ...AssetRoutes,

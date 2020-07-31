@@ -12,7 +12,7 @@
 </head>
 <body>
 <div id="app">
-	<div id="wrap" class="main">
+		<div id="wrap">
 		<header class="page-header">
 			<!--<button type="button" class="btn-back">뒤로가기</button>-->
 			<div class="inner">
@@ -27,8 +27,7 @@
 				</ul>
 			</div>
 		</header>
-		<section class="container">
-			<div class="contents">
+			<section class="contents">
 				<div class="sorting-area">
 					<button type="button" class="type-list">
 						<span>컬럼타입</span>
@@ -45,8 +44,10 @@
 						</select>
 					</div>
 					<div class="search-input"> <!-- active 추가하면 검색 화면 보임 -->
-						<input type="text" placeholder="검색어를 입력해주세요." />
-						<button type="button" class="search"><span>검색</span></button>
+						<div class="input-box">
+							<input type="text" placeholder="검색어를 입력해주세요." />
+							<button type="button" class="search"><span>검색</span></button>
+						</div>
 						<button type="button" class="btn-txt"><span>취소</span></button>
 					</div>
 				</div>
@@ -127,8 +128,7 @@
 						</a>
 					</li>
 				</ul>
-			</div>
-		</section>
+			</section>
 		<footer>
 			<ul class="info-list">
 				<li>

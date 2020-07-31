@@ -30,7 +30,6 @@
                 </span>
             </button>
             <div class="cart-box">
-                <!--  //todo 상품이 카트에 담기면 active   -->
                 <button
                     type="button"
                     class="cart"
@@ -44,7 +43,7 @@
     </ul>
 </template>
 <script>
-    import {addProductBasket, deleteBasketItem} from '@/utils/basket';
+    import {addProductBasket} from '@/utils/basket';
 
     export default {
     name: 'index',
@@ -88,7 +87,7 @@
                 if (findIndex === -1) {
                     addProductBasket(item.goodsSeq, item.minimumOrderQuantity);
                 } else {
-                    deleteBasketItem(this.basketList[findIndex].goodsBasketSeq);
+                    alert('이미 담긴 상품입니다.');
                 }
             }
         },

@@ -68,10 +68,8 @@ export default {
                 if (response.data.code === 'SEND_EMAIL_CERT_CODE') {
                     //this.$router.push('/');
                 } else {
-                    //this.$router.push('/');
+                    //await this.$router.push('/');
                 }
-
-                return;
             } catch (error) {
                 alert(error.response.data.msg);
             }

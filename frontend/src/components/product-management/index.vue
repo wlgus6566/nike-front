@@ -80,7 +80,7 @@
                 <span data-v-1756ba49="">삭제</span>
             </button>
             <div class="right">
-                <router-link to="/order/order-view" class="btn-form-gray">
+                <router-link to="/order/registration" class="btn-form-gray">
                     <span data-v-1756ba49="">등록</span>
                 </router-link>
             </div>

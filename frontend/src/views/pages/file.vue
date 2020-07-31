@@ -1,6 +1,8 @@
 <template>
     <div>
-        <button type="button" class="btn-s-black" @click="getFileDownload">DOWNLOAD</button>
+        <button type="button" class="btn-s-black" @click="getFileDownload">
+            DOWNLOAD
+        </button>
         <hr style="margin: 50px 0;" />
         <div class="upload-file-box">
             <div class="upload-file-list actice">
@@ -22,7 +24,9 @@
                                 <input type="checkbox" />
                                 <span></span>
                             </span>
-                            <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                            <span class="txt"
+                                >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                            >
                         </label>
                     </li>
                     <li>
@@ -31,7 +35,9 @@
                                 <input type="checkbox" />
                                 <span></span>
                             </span>
-                            <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                            <span class="txt"
+                                >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                            >
                         </label>
                     </li>
                     <li>
@@ -40,7 +46,9 @@
                                 <input type="checkbox" />
                                 <span></span>
                             </span>
-                            <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                            <span class="txt"
+                                >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                            >
                         </label>
                     </li>
                     <li>
@@ -49,7 +57,9 @@
                                 <input type="checkbox" />
                                 <span></span>
                             </span>
-                            <span class="txt">P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span>
+                            <span class="txt"
+                                >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                            >
                         </label>
                     </li>
                 </ul>
