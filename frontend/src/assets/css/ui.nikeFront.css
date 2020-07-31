@@ -1292,7 +1292,7 @@
 }
 
 .file-item .detail {
-	display:none;
+    display: none;
     height: 0;
     overflow: hidden;
     transition: all ease-in-out 1s;
@@ -1315,9 +1315,9 @@
     left: 73px;
     content: '';
     display: block;
-    width: 0px;
-    height: 0px;
-    border-top: 15px solid none;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
     border-bottom: 15px solid #f7f7f7;
     border-right: 10px solid transparent;
     border-left: 10px solid transparent;
@@ -3385,4 +3385,28 @@
 .el-pager .btn-quicknext:before,
 .el-pager .btn-quickprev:before {
     display: none;
+}
+
+.sortable-ghost {
+    padding: 0 !important;
+    opacity: 1 !important;
+    border: none !important;
+    background: none !important;
+}
+.sortable-ghost .list {
+    padding: 0;
+}
+.sortable-ghost .checkbox {
+    display: none;
+}
+.sortable-ghost .thumbnail {
+}
+.sortable-ghost .info-box {
+    display: none;
+}
+.sortable-ghost .btn-box {
+    display: none;
+}
+.sortable-ghost .detail {
+    display: none !important;
 }

@@ -30,15 +30,24 @@
         <template v-if="contentsFileList">
             <draggable
                 tag="ul"
+                :sort="false"
                 v-if="contentsFileList.length"
                 :list="contentsFileList"
                 :disabled="!enabled"
                 class="file-item-list"
                 ghost-class="ghost"
                 drag-class="test"
-                @start="testStart"
-                @end="testEnd"
-                :move="checkMove"
+                chosen-class="chosen"
+                @choose="onChoose"
+                @start="onStart"
+                @end="onEnd"
+                @add="onAdd"
+                @move="onMove"
+                @update="onUpdate"
+                @sort="onSort"
+                @remove="onRemove"
+                @change="onChange"
+                @unchoose="onUnchoose"
                 :forceFallback="true"
             >
                 <li
@@ -159,34 +168,41 @@ export default {
     created() {},
     computed: {},
     methods: {
-        mousePosition(event) {
-            //event is your object :)
-            console.log('event', event);
+        onChoose(e) {
+            console.log('onChoose', e);
         },
-        checkMove: function () {
-            console.log(123123);
-        },
-        testStart(e) {
-            const el = document.querySelector('.test');
+        onStart(e) {
+            console.log('onStart', e);
             const thumbnail = document.querySelector('.test .thumbnail');
-            const left = e.originalEvent.offsetX - 60;
-            const top = e.originalEvent.offsetY - 30;
-            console.log(left);
+            const left = e.originalEvent.pageX - e.item.offsetLeft - 60;
+            const top = e.originalEvent.pageY - e.item.offsetTop - 60;
             thumbnail.style.transform = `translate(${left}px,${top}px)`;
         },
-        testEnd(e, t) {
-            document.removeEventListener(
-                'mousemove',
-                this.mousePosition(e),
-                true
-            );
+        onEnd(e) {
+            console.log('onEnd', e);
         },
-        testMove(e, t) {
-            console.log(e, t);
+        onAdd(e) {
+            console.log('onAdd', e);
         },
-        accordion() {
-            console.log(12);
+        onMove(e) {
+            console.log('cart onMove', e);
         },
+        onUpdate(e) {
+            console.log('onUpdate', e);
+        },
+        onSort(e) {
+            console.log('onSort', e);
+        },
+        onRemove(e) {
+            console.log('onRemove', e);
+        },
+        onChange(e) {
+            console.log('onChange', e);
+        },
+        onUnchoose(e) {
+            console.log('onUnchoose', e);
+        },
+        accordion() {},
     },
 };
 </script>
@@ -198,10 +214,9 @@ export default {
     border-right: 0;
 }
 .test {
-    padding: 0;
     opacity: 1 !important;
     border: none !important;
-    background: none;
+    background: none !important;
 }
 .test .list {
     padding: 0;
@@ -216,5 +231,8 @@ export default {
 }
 .test .btn-box {
     display: none;
+}
+.test .detail {
+    display: none !important;
 }
 </style>

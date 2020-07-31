@@ -1,7 +1,11 @@
 <template>
     <div class="aside-file">
         <div class="file-list-wrap">
-            <template v-if="contBasketList">
+            <div
+                v-if="contBasketList"
+                @mouseenter="basketEnter"
+                @mouseleave="basketLeave"
+            >
                 <ul class="file-list" v-if="contBasketList.length">
                     <li
                         v-for="item in contBasketList"
@@ -26,7 +30,7 @@
                         다운받을 수 있어요.
                     </p>
                 </NoData>
-            </template>
+            </div>
             <Loading v-else />
         </div>
         <button type="button" class="btn-download">
@@ -83,6 +87,12 @@ export default {
         this.getContBasket();
     },
     methods: {
+        basketEnter() {
+            console.log('basketEnter');
+        },
+        basketLeave() {
+            console.log('basketLeave');
+        },
         isLoading(seq) {
             return this.deleteLoading.some((el) => {
                 return el === seq;

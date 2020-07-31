@@ -43,7 +43,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.meta.unauthorized) {
+    /*if (to.meta.unauthorized) {
         if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
             next('/');
         } else {
@@ -55,6 +55,7 @@ router.beforeEach((to, from, next) => {
         } else {
             next('/login');
         }
-    }
+    }*/
+    next();
 });
 export default router;
