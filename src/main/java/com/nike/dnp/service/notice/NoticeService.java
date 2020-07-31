@@ -76,7 +76,6 @@ public class NoticeService {
      * @since 2020. 7. 21. 오후 4:07:10
      * @implNote Customer Center 상세 조회
      */
-    @Transactional
     public NoticeArticle findById(final Long noticeSeq) {
         log.info("NoticeService.findById");
         return noticeRepository.findByNoticeArticleSeq(noticeSeq);

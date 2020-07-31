@@ -12,5 +12,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface NoticeRepository extends JpaRepository<NoticeArticle, Long>, NoticeRepositoryCustom {
 
+    /**
+     * Find by notice article seq notice article.
+     *
+     * @param noticeSeq the notice seq
+     * @return the notice article
+     * @author [오지훈]
+     * @implNote [method 설명]
+     * @since 2020. 7. 31. 오후 4:12:17
+     */
     NoticeArticle findByNoticeArticleSeq(Long noticeSeq);
 }

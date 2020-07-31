@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.file.FileResultDTO;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,7 @@ import java.util.Date;
  */
 @Slf4j
 @Component
+@NoArgsConstructor
 public class S3Util {
 
 
@@ -187,7 +189,7 @@ public class S3Util {
 	 * @since 2020. 7. 27. 오후 4:09:52
 	 * @implNote
 	 */
-	public static String fileCopy(final String oldFile, String newFolder,boolean oldFileDelete) {
+	public static String fileCopy(final String oldFile, final String newFolder, final boolean oldFileDelete) {
 		log.info("S3Util.fileCopy");
 		final String awsOldPath = awsPathReplace(oldFile);
 		final String fileName = StringUtils.getFilename(awsOldPath);
@@ -281,7 +283,7 @@ public class S3Util {
 	 * @author [윤태호]
 	 * @since 2020. 7. 28. 오후 2:18:36
 	 */
-	public static S3ObjectInputStream getFile(String path) {
+	public static S3ObjectInputStream getFile(final String path) {
 		log.info("S3Util.getFile");
 		String awsPath = awsPathReplace(path);
 		S3Object object = client.getObject(bucket, awsPath);
@@ -299,7 +301,7 @@ public class S3Util {
 	 * @author [윤태호]
 	 * @since 2020. 7. 29. 오후 2:03:53
 	 */
-	public static String upload(MultipartFile multipartFile,String folder) throws IOException {
+	public static String upload(final MultipartFile multipartFile, final String folder) throws IOException {
 		log.info("S3Util.upload");
 		String ext = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
 		String awsPath =folder+"/"+FileUtil.makeFileName()+"."+ext;

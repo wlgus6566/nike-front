@@ -7,6 +7,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The Interface Agency repository.
+ *
+ * @author [오지훈]
+ * @since 2020. 7. 31. 오후 4:12:03
+ */
 @Repository
 public interface AgencyRepository extends JpaRepository<Agency, Long> {
 

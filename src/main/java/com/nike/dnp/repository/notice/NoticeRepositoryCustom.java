@@ -14,7 +14,25 @@ import org.springframework.data.domain.PageRequest;
  */
 public interface NoticeRepositoryCustom {
 
+    /**
+     * Find notice pages page.
+     *
+     * @param customerSearchDTO the customer search dto
+     * @param pageRequest       the page request
+     * @return the page
+     * @author [오지훈]
+     * @implNote [method 설명]
+     * @since 2020. 7. 31. 오후 4:12:18
+     */
     Page<CustomerListDTO> findNoticePages(CustomerSearchDTO customerSearchDTO, PageRequest pageRequest);
 
+    /**
+     * Check notice yn cnt long.
+     *
+     * @return the long
+     * @author [오지훈]
+     * @implNote [method 설명]
+     * @since 2020. 7. 31. 오후 4:12:22
+     */
     Long checkNoticeYnCnt();
 }

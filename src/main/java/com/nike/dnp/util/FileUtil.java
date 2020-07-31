@@ -6,6 +6,7 @@ import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +39,7 @@ import java.util.TimeZone;
  */
 @Component
 @Slf4j
+@NoArgsConstructor
 public class FileUtil {
 
 	/**
@@ -211,7 +213,7 @@ public class FileUtil {
 		fileResultDTO.setFileExtension(extension);
 		if(resize && (uploadFile.getContentType().toUpperCase(Locale.getDefault()).contains("IMAGE") || extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(
 				Locale.getDefault()).contains("AI"))){
-			String resizeExtension = "";
+			String resizeExtension;
 			if(StringUtils.isEmpty(resizeExt)){
 				resizeExtension = "jpg";
 			}else{
@@ -276,7 +278,6 @@ public class FileUtil {
 			String[] command = new String[]{ffmpeg+File.separator+ffmpegCommand,"-y","-i",toFile.getPath(),"-vf"
 					,"scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
 					,thumbnailPath};
-			log.debug("command.toString() {}", command.toString());
 			ProcessBuilder processBuilder = new ProcessBuilder(command);
 			processBuilder.redirectErrorStream(true);
 			Process process = null;
@@ -404,8 +405,12 @@ public class FileUtil {
 				file.delete();
 				try{
 					S3Util.fileDelete(awsDeleteFile);
-				}catch(Exception e){
+				}catch(Exception exception){
 					// TODO [YTH] 아마존 파일 없음
+					throw (CodeMessageHandleException) new CodeMessageHandleException(
+							FailCode.ExceptionError.ERROR.name()
+							, exception.getMessage()
+					);
 				}
 			}
 		}
@@ -448,7 +453,7 @@ public class FileUtil {
 	 * @author [윤태호]
 	 * @since 2020. 7. 28. 오후 2:19:30
 	 */
-	public static ResponseEntity<Resource> s3FileDownload(String path, String fileName) throws IOException {
+	public static ResponseEntity<Resource> s3FileDownload(final String path, final String fileName) throws IOException {
 		log.info("FileUtil.s3FileDownload");
 		S3ObjectInputStream s3ObjectInputStream = S3Util.getFile(path);
 		final HttpHeaders headers = new HttpHeaders();
@@ -477,8 +482,11 @@ public class FileUtil {
 				while((cmd = br.readLine()) != null){ // 읽을 라인이 없을때까지 계속 반복
 					log.debug("cmd {}", cmd);
 				}
-			}catch(IOException e){
-				e.printStackTrace();
+			}catch(IOException exception){
+				throw (CodeMessageHandleException) new CodeMessageHandleException(
+						FailCode.ExceptionError.ERROR.name()
+						, exception.getMessage()
+				);
 			}
 		}).start();
 

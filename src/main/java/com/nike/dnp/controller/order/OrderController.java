@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 주문 Controller
@@ -103,18 +104,32 @@ public class OrderController {
 	public SingleResult<Order> saveOrder(@RequestBody @Valid final OrderProductSaveDTO orderProductSaveDTO,
 										 @ApiIgnore final BindingResult result) {
 		log.info("OrderController.saveOrder");
-		if(orderProductSaveDTO.getGoodsSeqList().size() == orderProductSaveDTO.getOrderQuantityList().size()){
+		final List<Long> goodsSeqList = orderProductSaveDTO.getGoodsSeqList();
+		final List<Long> orderQuantityList = orderProductSaveDTO.getOrderQuantityList();
+		final int goodsSeqListSize = goodsSeqList.size();
+		final int orderQuantityListSize = orderQuantityList.size();
+		if(goodsSeqListSize == orderQuantityListSize){
 			final Order order = orderService.saveOrder(orderProductSaveDTO);
+			for(int i = 0; i < goodsSeqListSize; i++){
+				final Long goodsSeq = goodsSeqList.get(i);
+				final Long orderQuantity = orderQuantityList.get(i);
+				final Product product = productService.findByGoodsSeq(goodsSeq);
 
-			for(int i = 0; i < orderProductSaveDTO.getGoodsSeqList().size(); i++){
-				final Product product = productService.findByGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
-				final OrderProductMappingSaveDTO orderProductMappingSaveDTO = new OrderProductMappingSaveDTO();
-				orderProductMappingSaveDTO.setGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
-				orderProductMappingSaveDTO.setOrderQuantity(orderProductSaveDTO.getOrderQuantityList().get(i));
+				/*final OrderProductMappingSaveDTO orderProductMappingSaveDTO = new OrderProductMappingSaveDTO();
+				orderProductMappingSaveDTO.setGoodsSeq(goodsSeq);
+				orderProductMappingSaveDTO.setOrderQuantity(orderQuantity);
 				orderProductMappingSaveDTO.setOrderSeq(order.getOrderSeq());
 				orderProductMappingSaveDTO.setAgencySeq(product.getAgencySeq());
+				orderProductMappingService.saveOrderProductMapping(orderProductMappingSaveDTO);*/
 
-				orderProductMappingService.saveOrderProductMapping(orderProductMappingSaveDTO);
+				orderProductMappingService.saveOrderProductMapping(
+						OrderProductMappingSaveDTO.builder()
+								.goodsSeq(goodsSeq)
+								.orderSeq(order.getOrderSeq())
+								.agencySeq(product.getAgencySeq())
+								.orderQuantity(orderQuantity)
+								.build()
+				);
 			}
 			orderProductMappingService.orderSheetSend(order);
 			return responseService.getSingleResult(order);
@@ -123,8 +138,6 @@ public class OrderController {
 					FailCode.ConfigureError.INVALID_ORDER.name()
 					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_ORDER.name()));
 		}
-
-
 	}
 
 

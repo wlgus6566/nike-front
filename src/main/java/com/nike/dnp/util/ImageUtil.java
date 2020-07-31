@@ -3,6 +3,7 @@ package com.nike.dnp.util;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,7 @@ import java.io.IOException;
  */
 @Component
 @Slf4j
+@NoArgsConstructor
 public class ImageUtil {
 
 	/**
@@ -72,7 +74,7 @@ public class ImageUtil {
 		final String base64 = base64Str.split(",")[1];
 		final byte[] imageByte = DatatypeConverter.parseBase64Binary(base64);
 		final ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
-		BufferedImage image = null;
+		BufferedImage image;
 		try{
 			image = ImageIO.read(bis);
 			bis.close();

@@ -27,8 +27,8 @@ import java.io.IOException;
  * The Class Notice controller.
  *
  * @author [정주희]
- * @since 2020. 7. 9. 오후 6:19:28
  * @apiNote
+ * @since 2020. 7. 9. 오후 6:19:28
  */
 @Slf4j
 @RestController
@@ -60,18 +60,20 @@ public class NoticeController {
     /**
      * The constant BASIC_CHARACTER
      *
-     * @author [오지훈]
+     * @author [정주희]
      */
     private static final String BASIC_CHARACTER = "## Request ## \n" + "[하위 Parameters 참조] \n" + "## Request ## \n" + "[하위 Model 참조]\n\n";
 
     /**
      * Find all single result.
      *
+     * @param sectionCode       the section code
      * @param customerSearchDTO the notice search dto
      * @return the single result
      * @author [정주희]
-     * @since 2020. 7. 13. 오후 11:07:03
+     * @implNote [method 설명]
      * @apiNote Customer Center 목록 조회
+     * @since 2020. 7. 13. 오후 11:07:03
      */
     @ApiOperation(
             value = "Customer Center 목록 조회",
@@ -84,8 +86,7 @@ public class NoticeController {
     @GetMapping(value = "/{sectionCode}",
             name = "Customer Center 게시글 목록 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Page<CustomerListDTO>> findAll(
-                                @ApiParam(name = "sectionCode", value = "Customer Center 게시글 종류 코드",
-                                        allowableValues = "NOTICE, NEWS, QNA", required = true)
+            @ApiParam(name = "sectionCode", value = "Customer Center 게시글 종류 코드", allowableValues = "NOTICE, NEWS, QNA", required = true)
                                 @PathVariable final String sectionCode,
                                 @ModelAttribute final CustomerSearchDTO customerSearchDTO) {
         log.info("NoticeController.findAll");
@@ -99,8 +100,9 @@ public class NoticeController {
      * @param noticeSeq the notice seq
      * @return the single result
      * @author [정주희]
-     * @since 2020. 7. 21. 오후 4:16:19
+     * @implNote [method 설명]
      * @apiNote Customer Center 상세 조회
+     * @since 2020. 7. 21. 오후 4:16:19
      */
     @ApiOperation(
             value = "Customer Center 게시글 상세 조회",
@@ -121,10 +123,12 @@ public class NoticeController {
      * Save customer center single result.
      *
      * @param noticeSaveDTO the notice save dto
+     * @param bindingResult the binding result
      * @return the single result
      * @author [정주희]
-     * @since 2020. 7. 20. 오후 9:21:31
+     * @implNote [method 설명]
      * @apiNote Customer Center 등록
+     * @since 2020. 7. 20. 오후 9:21:31
      */
     @ApiOperation(
             value = "Customer Center 공지사항 등록",
@@ -137,11 +141,21 @@ public class NoticeController {
                                                   @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.saveNotice");
 
-        CustomerSaveDTO customerSaveDTO = ObjectMapperUtil.map(noticeSaveDTO, CustomerSaveDTO.class);
+        final CustomerSaveDTO customerSaveDTO = ObjectMapperUtil.map(noticeSaveDTO, CustomerSaveDTO.class);
 
         return responseService.getSingleResult(noticeService.save(customerSaveDTO));
     }
 
+    /**
+     * Save news single result.
+     *
+     * @param newsSaveDTO   the news save dto
+     * @param bindingResult the binding result
+     * @return the single result
+     * @author [정주희]
+     * @implNote [method 설명]
+     * @since 2020. 7. 31. 오후 3:47:54
+     */
     @ApiOperation(
             value = "Customer Center 뉴스 등록",
             notes = BASIC_CHARACTER
@@ -152,11 +166,21 @@ public class NoticeController {
                                                 @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.saveNews");
 
-        CustomerSaveDTO customerSaveDTO = ObjectMapperUtil.map(newsSaveDTO, CustomerSaveDTO.class);
+        final CustomerSaveDTO customerSaveDTO = ObjectMapperUtil.map(newsSaveDTO, CustomerSaveDTO.class);
 
         return responseService.getSingleResult(noticeService.save(customerSaveDTO));
     }
 
+    /**
+     * Save qna single result.
+     *
+     * @param qnaSaveDTO    the qna save dto
+     * @param bindingResult the binding result
+     * @return the single result
+     * @author [정주희]
+     * @implNote [method 설명]
+     * @since 2020. 7. 31. 오후 3:47:55
+     */
     @ApiOperation(
             value = "Customer Center QnA 등록",
             notes = BASIC_CHARACTER
@@ -167,7 +191,7 @@ public class NoticeController {
                                                @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.saveQna");
 
-        CustomerSaveDTO customerSaveDTO = ObjectMapperUtil.map(qnaSaveDTO, CustomerSaveDTO.class);
+        final CustomerSaveDTO customerSaveDTO = ObjectMapperUtil.map(qnaSaveDTO, CustomerSaveDTO.class);
 
         return responseService.getSingleResult(noticeService.save(customerSaveDTO));
     }
@@ -177,10 +201,11 @@ public class NoticeController {
      *
      * @return the single result
      * @author [정주희]
-     * @since 2020. 7. 20. 오후 9:26:05
+     * @implNote [method 설명]
      * @apiNote 공지사항 등록/수정시 상단 고정된 게시글 개수 확인
+     * @since 2020. 7. 20. 오후 9:26:05
      */
-    @ApiOperation(value = "공지사항 고정 게시글 개수 조회")
+    @ApiOperation(value = "공지사항 고정 게시글 개수 조회", notes = BASIC_CHARACTER)
     @GetMapping("/NOTICE/noticeYnCnt")
     public SingleResult<Long> checkNoticeYnCnt() {
         log.info("NoticeController.checkNoticeYnCnt");
@@ -191,12 +216,14 @@ public class NoticeController {
     /**
      * Update notice single result.
      *
-     * @param noticeUpdateDTO the notice update dto
      * @param noticeSeq       the notice seq
+     * @param noticeUpdateDTO the notice update dto
+     * @param bindingResult   the binding result
      * @return the single result
      * @author [정주희]
-     * @since 2020. 7. 25. 오후 6:41:37
+     * @implNote [method 설명]
      * @apiNote Customer Center 게시글 수정
+     * @since 2020. 7. 25. 오후 6:41:37
      */
     @ApiOperation(
             value = "Customer Center 공지사항 게시글 수정",
@@ -213,12 +240,23 @@ public class NoticeController {
                                 @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.updateNotice");
 
-        CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtil.map(noticeUpdateDTO, CustomerUpdateDTO.class);
+        final CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtil.map(noticeUpdateDTO, CustomerUpdateDTO.class);
         customerUpdateDTO.setNoticeArticleSeq(noticeSeq);
 
         return responseService.getSingleResult(noticeService.updateCustomerCenter(customerUpdateDTO));
     }
 
+    /**
+     * Update news single result.
+     *
+     * @param noticeSeq     the notice seq
+     * @param newsUpdateDTO the news update dto
+     * @param bindingResult the binding result
+     * @return the single result
+     * @author [정주희]
+     * @implNote [method 설명]
+     * @since 2020. 7. 31. 오후 3:47:55
+     */
     @ApiOperation(
             value = "Customer Center NEWS 게시글 수정",
             notes = BASIC_CHARACTER
@@ -233,12 +271,23 @@ public class NoticeController {
                                 @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.updateNotice");
 
-        CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtil.map(newsUpdateDTO, CustomerUpdateDTO.class);
+        final CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtil.map(newsUpdateDTO, CustomerUpdateDTO.class);
         customerUpdateDTO.setNoticeArticleSeq(noticeSeq);
 
         return responseService.getSingleResult(noticeService.updateCustomerCenter(customerUpdateDTO));
     }
 
+    /**
+     * Update qna single result.
+     *
+     * @param noticeSeq     the notice seq
+     * @param qnaUpdateDTO  the qna update dto
+     * @param bindingResult the binding result
+     * @return the single result
+     * @author [정주희]
+     * @implNote [method 설명]
+     * @since 2020. 7. 31. 오후 3:47:56
+     */
     @ApiOperation(
             value = "Customer Center QnA 게시글 수정",
             notes = BASIC_CHARACTER
@@ -253,7 +302,7 @@ public class NoticeController {
                                 @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.updateNotice");
 
-        CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtil.map(qnaUpdateDTO, CustomerUpdateDTO.class);
+        final CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtil.map(qnaUpdateDTO, CustomerUpdateDTO.class);
         customerUpdateDTO.setNoticeArticleSeq(noticeSeq);
 
         return responseService.getSingleResult(noticeService.updateCustomerCenter(customerUpdateDTO));
@@ -262,11 +311,12 @@ public class NoticeController {
     /**
      * Delete customer center single result.
      *
-     * @param noticeSeq   the notice seq
+     * @param noticeSeq the notice seq
      * @return the single result
      * @author [정주희]
-     * @since 2020. 7. 20. 오후 9:59:56
+     * @implNote [method 설명]
      * @apiNote Customer Center 게시글 삭제
+     * @since 2020. 7. 20. 오후 9:59:56
      */
     @ApiOperation(value = "Customer Center 게시글 삭제", notes = BASIC_CHARACTER)
     @DeleteMapping({"/{noticeSeq}"})
@@ -283,13 +333,24 @@ public class NoticeController {
         return responseService.getSingleResult(noticeService.deleteCustomerCenter(customerUpdateDTO));
     }
 
+    /**
+     * Upload editor images single result.
+     *
+     * @param sectionCode the section code
+     * @param multiReq    the multi req
+     * @return the single result
+     * @throws IOException the io exception
+     * @author [정주희]
+     * @implNote [method 설명]
+     * @since 2020. 7. 31. 오후 3:47:48
+     */
     @ApiOperation(value = "Customer Center 에디터 이미지 업로드", notes = BASIC_CHARACTER)
     @PostMapping("/{sectionCode}/images")
     public SingleResult<String> uploadEditorImages(
                                 @ApiParam(name = "sectionCode", value = "Customer Center 게시글 종류 코드",
                                         allowableValues = "NOTICE, NEWS, QNA", required = true)
                                 @PathVariable final String sectionCode,
-                                MultipartHttpServletRequest multiReq) throws IOException {
+                                final MultipartHttpServletRequest multiReq) throws IOException {
         log.info("NoticeController.uploadEditorImages");
         return responseService.getSingleResult(noticeService.uploadEditorImages(multiReq, sectionCode));
     }

@@ -28,6 +28,13 @@ import java.util.List;
 @Repository
 public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implements NoticeRepositoryCustom{
 
+    /**
+     * Instantiates a new Notice repository custom.
+     *
+     * @author [오지훈]
+     * @implNote 생성자 주입
+     * @since 2020. 7. 31. 오후 4:12:24
+     */
     public NoticeRepositoryCustomImpl() {super(NoticeArticle.class);}
 
 
@@ -42,14 +49,14 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
      * @implNote Customer Center 목록 조회
      */
     @Override
-    public Page<CustomerListDTO> findNoticePages(CustomerSearchDTO customerSearchDTO, PageRequest pageRequest) {
+    public Page<CustomerListDTO> findNoticePages(final CustomerSearchDTO customerSearchDTO, final PageRequest pageRequest) {
         log.info("NoticeRepositoryCustomImpl.findNoticePages");
 
-        QNoticeArticle qNoticeArticle = QNoticeArticle.noticeArticle;
-        JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        final QNoticeArticle qNoticeArticle = QNoticeArticle.noticeArticle;
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 
         //일반 게시글 조회
-        JPAQuery<NoticeArticle> query = queryFactory.selectFrom(qNoticeArticle)
+        final JPAQuery<NoticeArticle> query = queryFactory.selectFrom(qNoticeArticle)
                 .where(
                         qNoticeArticle.useYn.eq("Y"),
                         qNoticeArticle.noticeArticleSectionCode.eq(customerSearchDTO.getNoticeArticleSectionCode()),
@@ -61,7 +68,7 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
             query.orderBy(qNoticeArticle.noticeYn.desc(), qNoticeArticle.registrationDt.desc());
         }
 
-        List<CustomerListDTO> customerListDTOList = ObjectMapperUtil.mapAll(
+        final List<CustomerListDTO> customerListDTOList = ObjectMapperUtil.mapAll(
                 getQuerydsl().applyPagination(pageRequest, query).fetch(), CustomerListDTO.class);
 
         return new PageImpl<>(customerListDTOList, pageRequest, query.fetchCount());
@@ -79,9 +86,9 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
     public Long checkNoticeYnCnt() {
         log.info("NoticeRepositoryCustomImpl.checkNoticeYnCnt");
 
-        QNoticeArticle qNoticeArticle = QNoticeArticle.noticeArticle;
-        JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-        JPAQuery<NoticeArticle> query = queryFactory.selectFrom(qNoticeArticle)
+        final QNoticeArticle qNoticeArticle = QNoticeArticle.noticeArticle;
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        final JPAQuery<NoticeArticle> query = queryFactory.selectFrom(qNoticeArticle)
                 .where(
                         qNoticeArticle.useYn.eq("Y"),
                         qNoticeArticle.noticeArticleSectionCode.eq("NOTICE"),

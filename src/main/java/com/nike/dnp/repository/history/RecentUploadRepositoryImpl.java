@@ -39,7 +39,7 @@ public class RecentUploadRepositoryImpl extends QuerydslRepositorySupport implem
     }
 
     @Override
-    public Page<HistoryResultDTO> findAllRecentUpload(HistorySearchDTO historySearchDTO, PageRequest pageRequest) {
+    public Page<HistoryResultDTO> findAllRecentUpload(final HistorySearchDTO historySearchDTO, final PageRequest pageRequest) {
         final QRecentUpload qRecentUpload = QRecentUpload.recentUpload;
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
         final JPAQuery<RecentUpload> query = queryFactory
@@ -50,9 +50,9 @@ public class RecentUploadRepositoryImpl extends QuerydslRepositorySupport implem
                         ));
 
         final List<RecentUpload> recentUploadList = ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), RecentUpload.class);
-        List<HistoryResultDTO> recentUploadResultList = new ArrayList<>();
-        for (RecentUpload recentUpload : recentUploadList) {
-            HistoryResultDTO historyResultDTO = new HistoryResultDTO();
+        final List<HistoryResultDTO> recentUploadResultList = new ArrayList<>();
+        for (final RecentUpload recentUpload : recentUploadList) {
+            final HistoryResultDTO historyResultDTO = new HistoryResultDTO();
             historyResultDTO.setHistorySeq(recentUpload.getRecentUploadSeq());
             historyResultDTO.setTypeCd(recentUpload.getTypeCd());
             historyResultDTO.setRegistrationDt(recentUpload.getRegistrationDt());

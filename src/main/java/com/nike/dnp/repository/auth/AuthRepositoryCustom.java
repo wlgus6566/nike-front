@@ -50,7 +50,7 @@ public interface AuthRepositoryCustom {
      * @since 2020. 7. 21. 오후 5:04:25
      * @implNote
      */
-    public List<AuthReturnDTO> findByAuthDepth(
+    List<AuthReturnDTO> findByAuthDepth(
             final Long authSeq
             , final Long authDepth
             , final String menuCode
