@@ -128,7 +128,7 @@ public class UserService implements UserDetailsService {
      * @since 2020. 6. 22. 오후 2:40:43
      * @implNote 페이징 조회(paging)
      */
-    public Page<UserReturnDTO> findPages(final UserSearchDTO userSearchDTO) {
+    public Page<UserResultDTO> findPages(final UserSearchDTO userSearchDTO) {
         log.info("UserService.findPages");
         return userRepository.findPages(
                 userSearchDTO,
@@ -161,22 +161,22 @@ public class UserService implements UserDetailsService {
      * @since 2020. 7. 6. 오후 2:38:47
      * @implNote 상세 부분 조회
      */
-    public UserReturnDTO getUser(final Long userSeq) {
+    public UserResultDTO getUser(final Long userSeq) {
         log.info("UserService.getUser");
         final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
                 () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
 
-        final UserReturnDTO userReturnDTO = new UserReturnDTO();
+        final UserResultDTO userResultDTO = new UserResultDTO();
         if (user.isPresent()) {
             final User getUser = user.get();
-            userReturnDTO.setUserSeq(getUser.getUserSeq());
-            userReturnDTO.setNickname(getUser.getNickname());
-            userReturnDTO.setUserId(getUser.getUserId());
-            userReturnDTO.setUserStatusCode(getUser.getUserStatusCode());
-            userReturnDTO.setAuthName(getUser.getUserAuth().getAuth().getAuthName());
+            userResultDTO.setUserSeq(getUser.getUserSeq());
+            userResultDTO.setNickname(getUser.getNickname());
+            userResultDTO.setUserId(getUser.getUserId());
+            userResultDTO.setUserStatusCode(getUser.getUserStatusCode());
+            userResultDTO.setAuthName(getUser.getUserAuth().getAuth().getAuthName());
         }
 
-        return userReturnDTO;
+        return userResultDTO;
     }
 
     /**
@@ -188,23 +188,23 @@ public class UserService implements UserDetailsService {
      * @since 2020. 7. 14. 오후 12:02:26
      * @implNote
      */
-    public UserReturnDTO getMyPage(final Long userSeq) {
+    public UserResultDTO getMyPage(final Long userSeq) {
         log.info("UserService.getMyPage");
         final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
                 () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
 
-        final UserReturnDTO userReturnDTO = new UserReturnDTO();
+        final UserResultDTO userResultDTO = new UserResultDTO();
         if (user.isPresent()) {
             final User getUser = user.get();
-            userReturnDTO.setUserSeq(getUser.getUserSeq());
-            userReturnDTO.setNickname(getUser.getNickname());
-            userReturnDTO.setUserId(getUser.getUserId());
-            userReturnDTO.setUserStatusCode(getUser.getUserStatusCode());
-            userReturnDTO.setAuthName(getUser.getUserAuth().getAuth().getAuthName());
-            userReturnDTO.setLoginLogs(userLoginLogRepository.findTop5ByUserSeqOrderByRegistrationDtDesc(userSeq));
+            userResultDTO.setUserSeq(getUser.getUserSeq());
+            userResultDTO.setNickname(getUser.getNickname());
+            userResultDTO.setUserId(getUser.getUserId());
+            userResultDTO.setUserStatusCode(getUser.getUserStatusCode());
+            userResultDTO.setAuthName(getUser.getUserAuth().getAuth().getAuthName());
+            userResultDTO.setLoginLogs(userLoginLogRepository.findTop5ByUserSeqOrderByRegistrationDtDesc(userSeq));
         }
 
-        return userReturnDTO;
+        return userResultDTO;
     }
 
     /**
@@ -274,7 +274,7 @@ public class UserService implements UserDetailsService {
      * @implNote 등록
      */
     @Transactional
-    public UserReturnDTO save(final UserSaveDTO userSaveDTO) {
+    public UserResultDTO save(final UserSaveDTO userSaveDTO) {
         log.info("UserService.save");
         this.checkId(userSaveDTO.getUserId());
         final User user = userRepository.save(new User().save(userSaveDTO));
@@ -290,9 +290,9 @@ public class UserService implements UserDetailsService {
         // [계정생성안내] 메일 발송
         userMailService.sendMailForCreateUser(user);
 
-        final UserReturnDTO userReturnDTO = new UserReturnDTO();
-        userReturnDTO.setUserSeq(user.getUserSeq());
-        return userReturnDTO;
+        final UserResultDTO userResultDTO = new UserResultDTO();
+        userResultDTO.setUserSeq(user.getUserSeq());
+        return userResultDTO;
     }
 
     /**
@@ -306,7 +306,7 @@ public class UserService implements UserDetailsService {
      * @implNote 닉네임 /권한 수정
      */
     @Transactional
-    public UserReturnDTO update(
+    public UserResultDTO update(
             final Long userSeq
             , final UserUpdateDTO userUpdateDTO
     ) {
@@ -317,11 +317,11 @@ public class UserService implements UserDetailsService {
         final Optional<UserAuth> userAuth = this.findByUser(user.get());
         userAuth.ifPresent(value -> value.update(userUpdateDTO));
 
-        final UserReturnDTO userReturnDTO = new UserReturnDTO();
-        userReturnDTO.setUserSeq(user.get().getUserSeq());
-        userReturnDTO.setUserId(user.get().getUserId());
-        userReturnDTO.setAuthName(userAuth.get().getAuth().getAuthName());
-        return userReturnDTO;
+        final UserResultDTO userResultDTO = new UserResultDTO();
+        userResultDTO.setUserSeq(user.get().getUserSeq());
+        userResultDTO.setUserId(user.get().getUserId());
+        userResultDTO.setAuthName(userAuth.get().getAuth().getAuthName());
+        return userResultDTO;
     }
 
     /**
@@ -335,7 +335,7 @@ public class UserService implements UserDetailsService {
      * @implNote 상태값 변경
      */
     @Transactional
-    public UserReturnDTO updateStatus(
+    public UserResultDTO updateStatus(
             final Long userSeq
             , final UserUpdateStatusDTO userUpdateStatusDTO
     ) {
@@ -343,9 +343,9 @@ public class UserService implements UserDetailsService {
         final Optional<User> user = this.findById(userSeq);
         user.ifPresent(value -> value.updateStatus(userUpdateStatusDTO.getUserStatusCode()));
 
-        final UserReturnDTO userReturnDTO = new UserReturnDTO();
-        userReturnDTO.setUserSeq(user.get().getUserSeq());
-        return userReturnDTO;
+        final UserResultDTO userResultDTO = new UserResultDTO();
+        userResultDTO.setUserSeq(user.get().getUserSeq());
+        return userResultDTO;
     }
 
     /**
@@ -358,14 +358,14 @@ public class UserService implements UserDetailsService {
      * @implNote 유저 단건 삭제
      */
     @Transactional
-    public UserReturnDTO deleteOne(final Long userSeq) {
+    public UserResultDTO deleteOne(final Long userSeq) {
         log.info("UserService.deleteOne");
         final Optional<User> user = this.findById(userSeq);
         user.ifPresent(value -> value.delete(userSeq));
 
-        final UserReturnDTO userReturnDTO = new UserReturnDTO();
-        userReturnDTO.setUserSeq(user.get().getUserSeq());
-        return userReturnDTO;
+        final UserResultDTO userResultDTO = new UserResultDTO();
+        userResultDTO.setUserSeq(user.get().getUserSeq());
+        return userResultDTO;
     }
 
     /**
@@ -466,7 +466,7 @@ public class UserService implements UserDetailsService {
      * @implNote 인증코드 검증 및 비밀번호 변경
      */
     @Transactional
-    public UserReturnDTO confirmPassword(final UserCertDTO userCertDTO) {
+    public UserResultDTO confirmPassword(final UserCertDTO userCertDTO) {
         log.info("UserService.confirmPassword1");
         final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(userCertDTO.getCertCode()), "Nike DnP");
         if (FailCode.ExceptionError.ERROR.name().equals(decodeCertCode)) {
@@ -505,9 +505,9 @@ public class UserService implements UserDetailsService {
         //인증코드 삭제
         redisService.delete("cert:" + userId);
 
-        final UserReturnDTO userReturnDTO = new UserReturnDTO();
-        userReturnDTO.setUserSeq(user.getUserSeq());
-        return userReturnDTO;
+        final UserResultDTO userResultDTO = new UserResultDTO();
+        userResultDTO.setUserSeq(user.getUserSeq());
+        return userResultDTO;
     }
 
     /**
@@ -521,7 +521,7 @@ public class UserService implements UserDetailsService {
      * @implNote
      */
     @Transactional
-    public UserReturnDTO confirmPassword(final String userId, final UserCertDTO userCertDTO) {
+    public UserResultDTO confirmPassword(final String userId, final UserCertDTO userCertDTO) {
         log.info("UserService.confirmPassword2");
         final String password = userCertDTO.getPassword();
         final String newPassword = userCertDTO.getNewPassword();
@@ -541,9 +541,9 @@ public class UserService implements UserDetailsService {
         user.updatePassword(certPassword);
         passwordHistoryRepository.save(PasswordHistory.builder().userSeq(user.getUserSeq()).password(certPassword).build());
 
-        final UserReturnDTO userReturnDTO = new UserReturnDTO();
-        userReturnDTO.setUserSeq(user.getUserSeq());
-        return userReturnDTO;
+        final UserResultDTO userResultDTO = new UserResultDTO();
+        userResultDTO.setUserSeq(user.getUserSeq());
+        return userResultDTO;
     }
 
     /**

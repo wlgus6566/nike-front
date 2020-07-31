@@ -57,6 +57,11 @@ public class NoticeController {
      */
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
+    /**
+     * The constant BASIC_CHARACTER
+     *
+     * @author [오지훈]
+     */
     private static final String BASIC_CHARACTER = "## Request ## \n" + "[하위 Parameters 참조] \n" + "## Request ## \n" + "[하위 Model 참조]\n\n";
 
     /**
@@ -84,7 +89,6 @@ public class NoticeController {
                                 @PathVariable final String sectionCode,
                                 @ModelAttribute final CustomerSearchDTO customerSearchDTO) {
         log.info("NoticeController.findAll");
-
         customerSearchDTO.setNoticeArticleSectionCode(sectionCode);
         return responseService.getSingleResult(noticeService.findNoticePages(customerSearchDTO));
     }
@@ -110,7 +114,6 @@ public class NoticeController {
                                         defaultValue = "23", required = true)
                                 @PathVariable final Long noticeSeq) {
         log.info("NoticeController.findAll");
-
         return responseService.getSingleResult(noticeService.findById(noticeSeq));
     }
 

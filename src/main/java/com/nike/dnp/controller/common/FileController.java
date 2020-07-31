@@ -85,8 +85,8 @@ public class FileController {
 							   @ApiParam(name = "uploadFile", value = "파일업로드") final MultipartFile uploadFile) throws IOException {
 		log.info("FileController.upload");
 		final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO);
+		//String upload = S3Util.upload(fileResultDTO);
 		S3Util.upload(fileResultDTO);
-
 		return responseService.getSingleResult(fileResultDTO);
 
 	}
@@ -128,9 +128,8 @@ public class FileController {
 	 */
 	private FileResultDTO fileUpload(final FileUploadDTO fileUploadDTO) {
 		log.info("FileController.fileUpload");
-		FileResultDTO fileResultDTO = null;
 		try{
-			fileResultDTO = FileUtil.fileTempSaveAndImageResize(fileUploadDTO.getUploadFile());
+			return FileUtil.fileTempSaveAndImageResize(fileUploadDTO.getUploadFile());
 			//fileResultDTO = FileUtil.fileSave(fileUploadDTO.getUploadFile(),"temp");
 		}catch(IOException e){
 			// 리사이즈 문제
@@ -138,7 +137,6 @@ public class FileController {
 					FailCode.ConfigureError.INVALID_FILE.name()
 					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 		}
-		return fileResultDTO;
 	}
 
 

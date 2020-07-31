@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The Class Contents basket controller.
@@ -106,8 +105,7 @@ public class ContentsBasketController {
             @RequestBody final List<Long> contentsBasketSeqList,
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
     ) {
-        List<ContentsBasket> contentsBasketList = contentsBasketService.save(contentsBasketSeqList, authUserDTO);
-        return responseService.getSingleResult(contentsBasketList);
+        return responseService.getSingleResult(contentsBasketService.save(contentsBasketSeqList, authUserDTO));
     }
 
     /**

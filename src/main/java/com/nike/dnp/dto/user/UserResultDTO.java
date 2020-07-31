@@ -27,7 +27,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserReturnDTO {
+public class UserResultDTO {
 
     /**
      * 유저 시퀀스
