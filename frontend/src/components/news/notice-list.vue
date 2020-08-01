@@ -16,19 +16,17 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td v-if="">
+                        <td>
                             <span class="label-noti">중요</span>
                         </td>
-                        <td v-else>
-                            <span class="num">{{}}</span>
+                        <td>
+                            <span class="num"></span>
                         </td>
                         <td class="agl">
-                            <router-link to="/mypage/view">
-                                {{}}
-                            </router-link>
+                            <router-link to="/mypage/view"> </router-link>
                         </td>
                         <td>
-                            <span class="date">{{}}</span>
+                            <span class="date"></span>
                         </td>
                     </tr>
                 </tbody>

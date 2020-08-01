@@ -4,9 +4,11 @@ import { getAuthFromCookie } from '@/utils/cookies.js';
 function setInterceptors(instance) {
     instance.interceptors.request.use(
         (config) => {
-            config.headers.Authorization = store.getters['userToken'] || getAuthFromCookie();
+            config.headers.Authorization =
+                store.getters['userToken'] || getAuthFromCookie();
             return config;
         },
+
         (error) => Promise.reject(error.response)
     );
     instance.interceptors.response.use(
