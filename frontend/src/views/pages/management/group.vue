@@ -6298,6 +6298,7 @@ export default {
                                     name: '그룹1-1',
                                     seq: '1-1',
                                     depth: '2',
+                                    child: [],
                                 },
                                 {
                                     name: '그룹1-2',
@@ -6308,11 +6309,13 @@ export default {
                                             name: '그룹1-2-1',
                                             seq: '1-2-1',
                                             depth: '3',
+                                            child: [],
                                         },
                                         {
                                             name: '그룹1-2-2',
                                             seq: '1-2-2',
                                             depth: '3',
+                                            child: [],
                                         },
                                     ],
                                 },
@@ -6320,6 +6323,7 @@ export default {
                                     name: '그룹1-3',
                                     seq: '1-3',
                                     depth: '2',
+                                    child: [],
                                 },
                             ],
                         },
@@ -6332,16 +6336,19 @@ export default {
                                     name: '그룹2-1',
                                     seq: '2-1',
                                     depth: '2',
+                                    child: [],
                                 },
                                 {
                                     name: '그룹2-2',
                                     seq: '2-2',
                                     depth: '2',
+                                    child: [],
                                 },
                                 {
                                     name: '그룹2-3',
                                     seq: '2-3',
                                     depth: '2',
+                                    child: [],
                                 },
                             ],
                         },
@@ -6349,36 +6356,43 @@ export default {
                             name: '그룹3',
                             seq: '3',
                             depth: '1',
+                            child: [],
                         },
                         {
                             name: '그룹4',
                             seq: '4',
                             depth: '1',
+                            child: [],
                         },
                         {
                             name: '그룹5',
                             seq: '5',
                             depth: '1',
+                            child: [],
                         },
                         {
                             name: '그룹6',
                             seq: '6',
                             depth: '1',
+                            child: [],
                         },
                         {
                             name: '그룹7',
                             seq: '7',
                             depth: '1',
+                            child: [],
                         },
                         {
                             name: '그룹8',
                             seq: '8',
                             depth: '1',
+                            child: [],
                         },
                         {
                             name: '그룹9',
                             seq: '9',
                             depth: '1',
+                            child: [],
                         },
                     ],
                 },
@@ -6452,6 +6466,7 @@ export default {
     display: flex;
 }
 ::v-deep .group-tree-scroll {
+    overflow-x: hidden;
     box-sizing: border-box;
     max-height: calc(100vh - 300px);
 }

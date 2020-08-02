@@ -135,8 +135,10 @@ export default {
     color: #333;
 }
 ::v-deep .tree-item input {
-    height: 20px;
-    width: 100px;
+    height: 24px;
+    width: 100%;
+    border: 1px solid #fa5400;
+    background: #f7f7f7;
 }
 ::v-deep .tree-item .tree-toggle {
     flex: 0 0 20px;
@@ -160,13 +162,19 @@ export default {
     background: url('../../../assets/images/svg/icon-group-tree-depth-all.svg')
         50% / contain;
 }
+::v-deep .tree-depth0 .tree-item.active .tree-icon {
+    background-image: url('../../../assets/images/svg/icon-group-tree-depth-all-active.svg');
+}
 ::v-deep .tree-depth0 .tree-item .tree-name {
     flex: 1 1 auto;
     line-height: 18px;
     color: #333;
 }
-::v-deep .tree-depth1 {
+::v-deep ul.tree-depth1 {
     margin-top: 10px;
+}
+::v-deep .tree-depth1 {
+    overflow: hidden;
 }
 ::v-deep .tree-depth1 .tree-item {
     padding: 8px 0;
@@ -175,6 +183,9 @@ export default {
     width: 30px;
     background: url('../../../assets/images/svg/icon-group-tree-depth1.svg') 50% /
         contain;
+}
+::v-deep .tree-depth1 .tree-item.active .tree-icon {
+    background-image: url('../../../assets/images/svg/icon-group-tree-depth1-active.svg');
 }
 ::v-deep .tree-depth2 {
     overflow: hidden;
@@ -186,6 +197,9 @@ export default {
 ::v-deep .tree-depth2 .tree-item .tree-icon {
     background: url('../../../assets/images/svg/icon-group-tree-depth2.svg') 50% /
         contain;
+}
+::v-deep .tree-depth2 .tree-item.active .tree-icon {
+    background-image: url('../../../assets/images/svg/icon-group-tree-depth2-active.svg');
 }
 ::v-deep .tree-depth2 .tree-item .tree-name {
     font-weight: 300;
@@ -201,6 +215,9 @@ export default {
     width: 3px;
     height: 3px;
     background: #333;
+}
+::v-deep .tree-depth3 .tree-item.active .tree-icon {
+    background: #fa5400;
 }
 ::v-deep .tree-depth3 .tree-item .tree-name {
     font-weight: 300;
