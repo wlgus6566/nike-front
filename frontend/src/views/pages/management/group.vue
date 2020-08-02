@@ -6417,32 +6417,6 @@ export default {
             this.groupTreeAddItem = this.groupTreeActive.seq;
             this.groupTreeOpen.push(this.groupTreeActive.seq);
             this.groupTreeActive = {};
-            console.log(1);
-
-            /*this.groupTreeOpen.push(this.groupTreeActive.seq);
-            const depth = this.groupTreeActive.depth * 1 + 1;
-            const addItem = {
-                name: '',
-                seq: 'addItem',
-                depth: depth,
-            };
-            const test = arr => {
-                arr.forEach(el => {
-                    if (el.seq === this.groupTreeActive.seq) {
-                        if (el.child) {
-                            el.child.push(addItem);
-                        } else {
-                            el.child = [addItem];
-                        }
-                        return false;
-                    }
-                    if (el.child) {
-                        test(el.child);
-                    }
-                });
-            };
-            test(this.groupTreeData);
-            this.groupTreeActive = addItem;*/
         });
         bus.$on('groupTreeDel', () => {
             console.log(this.groupTreeActive);
@@ -6457,6 +6431,19 @@ export default {
                 this.groupTreeOpen.push(seq);
             }
         });
+        window.onbeforeunload = function() {
+            return '진짜?';
+        };
+    },
+    beforeRouteLeave(to, from, next) {
+        const answer = window.confirm(
+            '이 페이지에서 나가시겠습니까?\n변경사항이 저장되지 않을 수 있습니다.'
+        );
+        if (answer) {
+            next();
+        } else {
+            next(false);
+        }
     },
 };
 </script>
