@@ -17,7 +17,11 @@
                                 <span class="label-title">주문자</span>
                             </div>
                             <div class="form-column">
-                                <span class="form-val">홍대 SNKRS</span>
+                                <span class="form-val">
+                                    {{
+                                        basketList[0].product.agency.agencyName
+                                    }}
+                                </span>
                             </div>
                         </li>
                         <li class="form-row">
@@ -25,7 +29,9 @@
                                 <span class="label-title">주문일시</span>
                             </div>
                             <div class="form-column">
-                                <span class="form-val">2020.01.01 00:00</span>
+                                <span class="form-val">
+                                    {{ orderData }}
+                                </span>
                             </div>
                         </li>
                         <li class="form-row">
@@ -45,45 +51,48 @@
                         * VAT 및 운송비,기타,운용비는 제외된 금액입니다. (실제
                         세금계산서의 금액은 다를 수 있습니다.)
                     </p>
-                    <ul class="sheet-list">
-                        <li
-                            class="sheet-item"
-                            v-for="(item, index) in basketList"
-                            :key="index"
-                        >
-                            <span class="thumbnail">
-                                <img
-                                    :src="item.product.imageFilePhysicalName"
-                                    :alt="item.product.imageFileName"
-                                />
-                            </span>
-                            <span class="info-box">
-                                <strong class="title">
-                                    {{ item.product.goodsName }}
-                                </strong>
-                                <p class="txt">
-                                    {{ item.product.goodsDescription }}
-                                </p>
-                                <span class="desc-txt-box">
-                                    <p class="desc">
-                                        {{ item.product.goodsName }}
-                                    </p>
+                    <el-scrollbar class="sheet-list-wrap" :native="false">
+                        <ul class="sheet-list">
+                            <li
+                                class="sheet-item"
+                                v-for="(item, index) in basketList"
+                                :key="index"
+                            >
+                                <span class="thumbnail">
+                                    <img
+                                        :src="
+                                            item.product.imageFilePhysicalName
+                                        "
+                                        :alt="item.product.imageFileName"
+                                    />
                                 </span>
-                            </span>
-                            <span class="quantity-txt">
-                                <em>{{ item.orderQuantity }}</em>
-                                개
-                            </span>
-                        </li>
-                    </ul>
+                                <span class="info-box">
+                                    <strong class="title">
+                                        {{ item.product.goodsName }}
+                                    </strong>
+                                    <p class="txt">
+                                        {{ item.product.goodsDescription }}
+                                    </p>
+                                    <span class="desc-txt-box">
+                                        <p class="desc">
+                                            {{ item.product.goodsName }}
+                                        </p>
+                                    </span>
+                                </span>
+                                <span class="quantity-txt">
+                                    <em>{{ item.orderQuantity }}</em>
+                                    개
+                                </span>
+                            </li>
+                        </ul>
+                    </el-scrollbar>
                     <h3 class="sub-title">COMMENT</h3>
                     <div class="mt10">
                         <span class="textarea">
                             <textarea
-                                cols="100"
-                                rows="2"
                                 style="height: 80px;"
-                            ></textarea>
+                                v-model="orderComment"
+                            />
                         </span>
                     </div>
                     <p class="form-desc-red">
@@ -91,7 +100,11 @@
                         않도록 주의하시기 바랍니다.
                     </p>
                     <div class="btn-area">
-                        <button type="button" class="btn-s-black">
+                        <button
+                            type="button"
+                            class="btn-s-black"
+                            @click="$emit('orderSave')"
+                        >
                             <span>주문서 발송</span>
                         </button>
                     </div>
@@ -109,7 +122,15 @@
 
 <script>
 export default {
-    props: ['visible', 'receipt', 'basketList', 'totalPrice'],
+    props: [
+        'visible',
+        'receipt',
+        'basketList',
+        'orderComment',
+        'orderData',
+        'totalPrice',
+    ],
+    mounted() {},
     methods: {},
 };
 </script>

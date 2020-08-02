@@ -1,6 +1,8 @@
 <template>
     <div>
-        <h2 class="page-title">REPORT</h2>
+        <h2 class="page-title">
+            {{ this.$route.meta.title }}
+        </h2>
         <div class="sorting-area">
             <ListSorting :listTypes="listTypes" />
             <FilterSelect :listSortSelect="listSortSelect" />

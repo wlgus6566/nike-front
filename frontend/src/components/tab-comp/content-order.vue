@@ -1,6 +1,6 @@
 <template>
     <div class="aside-order">
-        <div class="cart-item-wrap">
+        <el-scrollbar class="cart-item-wrap" :native="false">
             <template v-if="basketList">
                 <transition-group
                     tag="ul"
@@ -49,7 +49,7 @@
                     </p>
                 </NoData>
             </template>
-        </div>
+        </el-scrollbar>
         <button
             type="button"
             class="btn-order"
@@ -75,6 +75,9 @@
             :visible.sync="visible.orderSheet"
             :basketList="basketList"
             :totalPrice="totalPrice"
+            :orderComment="orderComment"
+            :orderData="orderData"
+            @orderSave="orderSave"
         />
     </div>
 </template>
@@ -122,9 +125,7 @@
             }
         },
     },
-    mounted() {
-        console.log(this.$store.state.basketListData);
-    },
+    mounted() {},
     methods: {
         showOrderSheet() {
             this.visible.orderSheet = true;
@@ -134,12 +135,34 @@
         deleteClick(goodsBasketSeq) {
             deleteBasketItem(goodsBasketSeq);
         },
+
         // 최소수량
         async changeQuantity(item) {
             if (!this.test) {
                 this.test = true;
                 await addProductBasket(item.goodsSeq, item.orderQuantity);
                 this.test = false;
+            }
+        },
+
+        // 주문서 발송
+        async orderSave() {
+            try {
+                const { data: response } = await postOrderSave({
+                    goodsSeqList: this.orderSeq,
+                    orderDescription: this.orderComment,
+                    orderQuantityList: this.orderQuan,
+                    totalAmount: this.totalPrice,
+                });
+                if (response.existMsg) {
+                    await getExistMsg(response);
+                } else {
+                    this.visible.orderSheet = false;
+                    //todo 장바구니 다건 삭제 추가
+                    await this.$router.push('/order/complete');
+                }
+            } catch (error) {
+                console.log(error);
             }
         },
     },
@@ -154,9 +177,8 @@
 .cart-item-wrap {
     box-sizing: border-box;
     height: 360px;
-    padding: 8px 18px;
     background: #eee;
-    overflow: auto;
+    overflow: hidden;
 }
 .cart-item {
     position: relative;

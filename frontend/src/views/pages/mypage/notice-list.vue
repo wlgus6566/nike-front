@@ -29,7 +29,6 @@
 <script>
 import NoticeList from '@/components/news/notice-list';
 import SearchInput from '@/components/search-input/index';
-import bottomArea from '@/components/bottom-area/pagination';
 
 //import {  } from '@/api/.js';
 
