@@ -71,7 +71,6 @@ export default {
         ProductList,
         Loading,
         NoData,
-        NoDataSearch,
         detailView,
     },
     mounted() {
@@ -107,7 +106,7 @@ export default {
         showDetailView(goodsSeq) {
             this.visible.detailView = true;
             const findIndex = this.userProductListData.findIndex(
-                (el) => el.goodsSeq === goodsSeq
+                el => el.goodsSeq === goodsSeq
             );
             this.productDetailData = this.userProductListData[findIndex];
         },
@@ -131,7 +130,7 @@ export default {
         async addWishList(goodsSeq) {
             try {
                 const findIndex = this.wishListData.findIndex(
-                    (el) => el.goodsSeq === goodsSeq.goodsSeq
+                    el => el.goodsSeq === goodsSeq.goodsSeq
                 );
                 if (findIndex == -1) {
                     await postWishList({
