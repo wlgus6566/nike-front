@@ -96,8 +96,26 @@ export default {
     background: #f7f7f7;
     flex: 1 1 50%;
 }
+.group-tree .btn-group button:before {
+    content: '';
+    vertical-align: -2px;
+    height: 14px;
+    width: 14px;
+    display: inline-block;
+}
+.group-tree .btn-group button.del:before {
+    background: url('../../../assets/images/svg/icon-common-deleted.svg') 50% /
+        contain;
+}
+.group-tree .btn-group button.add:before {
+    background: url('../../../assets/images/svg/icon-management-plus.svg') 50% /
+        contain;
+}
 .group-tree .btn-group button[disabled] {
     color: #ccc;
+}
+.group-tree .btn-group button[disabled]:before {
+    opacity: 0.3;
 }
 .group-tree .btn-group button + button {
     border-left: 1px solid #ddd;
