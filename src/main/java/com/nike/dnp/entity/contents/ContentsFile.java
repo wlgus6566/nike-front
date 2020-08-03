@@ -13,6 +13,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
+import java.util.Locale;
 
 /**
  * The Class Contents file Entity.
@@ -358,7 +359,7 @@ public class ContentsFile extends BaseTimeEntity {
         contentsFile.setFileOrder(fileOrder);
 
         contentsFile.setFileContentType(isFile ? fileContentType : null);
-        contentsFile.setFileExtension(isFile ? fileExtension.toUpperCase() : null);
+        contentsFile.setFileExtension(isFile ? fileExtension.toUpperCase(Locale.KOREA) : null);
 
         contentsFile.setFileName(isFile ? fileName : null);
         contentsFile.setFileSize(isFile ? fileSize : null);
@@ -394,7 +395,7 @@ public class ContentsFile extends BaseTimeEntity {
         this.fileOrder = contentsFileUpdateDTO.getFileOrder();
 
         this.fileContentType = isFile ? contentsFileUpdateDTO.getFileContentType() : null;
-        this.fileExtension = isFile ? contentsFileUpdateDTO.getFileExtension().toUpperCase() : null;
+        this.fileExtension = isFile ? contentsFileUpdateDTO.getFileExtension().toUpperCase(Locale.KOREA) : null;
 
         this.fileName = isFile ? contentsFileUpdateDTO.getFileName() : null;
         this.fileSize = isFile ? contentsFileUpdateDTO.getFileSize() : null;

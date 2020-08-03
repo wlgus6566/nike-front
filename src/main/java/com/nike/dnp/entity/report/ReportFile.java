@@ -10,13 +10,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
+import java.util.Locale;
 
 /**
  * The Class Report file.
  *
  * @author [오지훈]
- * @since 2020. 7. 24. 오전 10:06:05
  * @implNote
+ * @since 2020. 7. 24. 오전 10:06:05
  */
 @Slf4j
 @Getter
@@ -29,6 +30,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * The Report file seq
+     *
      * @author [이소정]
      */
     @Id
@@ -39,6 +41,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 보고서 시퀀스
+     *
      * @author [이소정]
      */
     @Column(name = "REPORT_SEQ")
@@ -47,6 +50,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * The File name
+     *
      * @author [이소정]
      */
     @Column(name = "FILE_NAME")
@@ -55,6 +59,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * The File size
+     *
      * @author [이소정]
      */
     @Column(name = "FILE_SIZE")
@@ -63,6 +68,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * The File physical name
+     *
      * @author [이소정]
      */
     @Column(name = "FILE_PHYSICAL_NAME")
@@ -89,6 +95,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 다운로드 수
+     *
      * @author [이소정]
      */
     @Column(name = "DOWNLOAD_COUNT")
@@ -98,6 +105,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 사용 여부
+     *
      * @author [이소정]
      */
     @Column(name = "USE_YN")
@@ -106,6 +114,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 썸네일 파일 물리 명
+     *
      * @author [이소정]
      */
     @Column(name = "THUMBNAIL_FILE_NAME")
@@ -114,6 +123,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 썸네일 파일 물리 명
+     *
      * @author [이소정]
      */
     @Column(name = "THUMBNAIL_FILE_SIZE")
@@ -122,6 +132,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 썸네일 파일 물리 명
+     *
      * @author [이소정]
      */
     @Column(name = "THUMBNAIL_FILE_PHYSICAL_NAME")
@@ -131,6 +142,8 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 상세 썸네일 명
+     *
+     * @author [오지훈]
      */
     @Column(name = "DETAIL_THUMBNAIL_FILE_NAME")
     @ApiModelProperty(name = "detailThumbnailFileName", value ="상세 썸네일 명", example = "graphic_file_name_detail_thumbnail.jpg")
@@ -138,6 +151,8 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 상세 썸네일 사이즈
+     *
+     * @author [오지훈]
      */
     @Column(name = "DETAIL_THUMBNAIL_FILE_SIZE")
     @ApiModelProperty(name = "detailThumbnailFileSize", value ="상세 썸네일 사이즈", example = "700")
@@ -145,6 +160,8 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 상세 썸네일 물리 경로
+     *
+     * @author [오지훈]
      */
     @Column(name = "DETAIL_THUMBNAIL_FILE_PHYSICAL_NAME")
     @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg")
@@ -152,6 +169,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * The Report
+     *
      * @author [이소정]
      */
     @JsonBackReference
@@ -162,6 +180,8 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * The constant cdnUrl.
+     *
+     * @author [오지훈]
      */
     @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
     private static String cdnUrl;
@@ -170,20 +190,47 @@ public class ReportFile extends BaseTimeEntity {
      * Sets cdn url.
      *
      * @param cdnUrl the cdn url
+     * @author [오지훈]
+     * @implNote [method 설명]
+     * @since 2020. 8. 3. 오전 10:32:10
      */
     @Value("${nike.file.cdnUrl:}")
     public void setCdnUrl(final String cdnUrl) {
         this.cdnUrl = cdnUrl;
     }
 
+    /**
+     * Gets file physical name.
+     *
+     * @return the file physical name
+     * @author [오지훈]
+     * @implNote [method 설명]
+     * @since 2020. 8. 3. 오전 10:32:10
+     */
     public String getFilePhysicalName() {
         return this.cdnUrl + filePhysicalName;
     }
 
+    /**
+     * Gets thumbnail file physical name.
+     *
+     * @return the thumbnail file physical name
+     * @author [오지훈]
+     * @implNote [method 설명]
+     * @since 2020. 8. 3. 오전 10:32:11
+     */
     public String getThumbnailFilePhysicalName() {
         return this.cdnUrl + thumbnailFilePhysicalName;
     }
 
+    /**
+     * Gets detail thumbnail file physical name.
+     *
+     * @return the detail thumbnail file physical name
+     * @author [오지훈]
+     * @implNote [method 설명]
+     * @since 2020. 8. 3. 오전 10:32:11
+     */
     public String getDetailThumbnailFilePhysicalName() {
         return this.cdnUrl + detailThumbnailFilePhysicalName;
     }
@@ -196,8 +243,8 @@ public class ReportFile extends BaseTimeEntity {
      * @param reportFileSaveDTO the report file save dto
      * @return the report file
      * @author [이소정]
+     * @implNote 설명]
      * @since 2020. 7. 8. 오후 5:47:08
-     * @implNote
      */
     public ReportFile save(final Long reportSeq, final ReportFileSaveDTO reportFileSaveDTO) {
         return newReportFile(
@@ -219,11 +266,12 @@ public class ReportFile extends BaseTimeEntity {
     /**
      * New report file report file.
      *
+     * @param reportSeq           the report seq
      * @param reportFileUpdateDTO the report file update dto
      * @return the report file
      * @author [이소정]
+     * @implNote 설명]
      * @since 2020. 7. 9. 오후 6:47:01
-     * @implNote
      */
     public ReportFile updateNewFile(final Long reportSeq, final ReportFileUpdateDTO reportFileUpdateDTO) {
         return newReportFile(
@@ -245,14 +293,22 @@ public class ReportFile extends BaseTimeEntity {
     /**
      * New report file report file.
      *
-     * @param reportSeq        the report seq
-     * @param fileName         the file name
-     * @param fileSize         the file size
-     * @param filePhysicalName the file physical name
+     * @param reportSeq                       the report seq
+     * @param fileName                        the file name
+     * @param fileSize                        the file size
+     * @param filePhysicalName                the file physical name
+     * @param fileContentType                 the file content type
+     * @param fileExtension                   the file extension
+     * @param thumbnailFileName               the thumbnail file name
+     * @param thumbnailFileSize               the thumbnail file size
+     * @param thumbnailFilePhysicalName       the thumbnail file physical name
+     * @param detailThumbnailFileName         the detail thumbnail file name
+     * @param detailThumbnailFileSize         the detail thumbnail file size
+     * @param detailThumbnailFilePhysicalName the detail thumbnail file physical name
      * @return the report file
      * @author [이소정]
+     * @implNote 설명]
      * @since 2020. 7. 10. 오후 5:39:30
-     * @implNote
      */
     private ReportFile newReportFile(
             final Long reportSeq
@@ -276,7 +332,7 @@ public class ReportFile extends BaseTimeEntity {
         saveReportFile.setFilePhysicalName(filePhysicalName);
 
         saveReportFile.setFileContentType(fileContentType);
-        saveReportFile.setFileExtension(fileExtension.toUpperCase());
+        saveReportFile.setFileExtension(fileExtension.toUpperCase(Locale.KOREA));
 
         saveReportFile.setThumbnailFileName(thumbnailFileName);
         saveReportFile.setThumbnailFileSize(thumbnailFileSize);
@@ -297,8 +353,8 @@ public class ReportFile extends BaseTimeEntity {
      *
      * @param reportFileUpdateDTO the report file update dto
      * @author [이소정]
+     * @implNote 설명]
      * @since 2020. 7. 9. 오후 6:50:26
-     * @implNote
      */
     public void update(final ReportFileUpdateDTO reportFileUpdateDTO) {
         this.fileName = reportFileUpdateDTO.getFileName();
@@ -311,8 +367,8 @@ public class ReportFile extends BaseTimeEntity {
      *
      * @param useYn the use yn
      * @author [이소정]
+     * @implNote 설명]
      * @since 2020. 7. 9. 오후 6:50:24
-     * @implNote
      */
     public void updateUseYn(final String useYn) {
         log.info("Report.updateUseYn");

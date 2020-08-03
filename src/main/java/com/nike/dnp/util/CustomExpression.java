@@ -5,7 +5,6 @@ import com.querydsl.core.types.dsl.DateTemplate;
 import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
-import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 import java.time.LocalDateTime;
@@ -19,7 +18,6 @@ import java.time.LocalDateTime;
  * @implNote
  */
 @UtilityClass
-@NoArgsConstructor
 public class CustomExpression {
 
     /**

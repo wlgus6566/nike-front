@@ -1,7 +1,6 @@
 package com.nike.dnp.util;
 
 import com.nike.dnp.common.variable.FailCode;
-import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +28,6 @@ import java.util.Base64;
  */
 @Slf4j
 @UtilityClass
-@NoArgsConstructor
 public class CryptoUtil {
 
     /**

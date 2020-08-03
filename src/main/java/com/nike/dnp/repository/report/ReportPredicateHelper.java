@@ -4,7 +4,6 @@ import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.entity.report.QReport;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.StringUtils;
 
@@ -16,7 +15,6 @@ import org.springframework.util.StringUtils;
  * @implNote
  */
 @UtilityClass
-@NoArgsConstructor
 public class ReportPredicateHelper {
 
     /**

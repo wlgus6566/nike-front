@@ -4,7 +4,6 @@ import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.notice.CustomerSaveDTO;
 import com.nike.dnp.dto.notice.CustomerUpdateDTO;
-import com.nike.dnp.dto.notice.NoticeSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.util.ImageUtil;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,14 +13,13 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 /**
  * The Class Notice article.
  *
  * @author [정주희]
- * @since 2020. 7. 13. 오후 6:02:22
  * @implNote
+ * @since 2020. 7. 13. 오후 6:02:22
  */
 @Slf4j
 @Getter
@@ -124,6 +122,13 @@ public class NoticeArticle extends BaseTimeEntity {
     @ApiModelProperty(name = "useYn", value ="사용 여부", example = "N")
     private String useYn;
 
+    /**
+     * Pre persist.
+     *
+     * @author [오지훈]
+     * @implNote [method 설명]
+     * @since 2020. 8. 3. 오전 10:41:05
+     */
     @PrePersist
     public void prePersist() {
         this.useYn = this.useYn == null ? "Y" : this.useYn;
@@ -136,8 +141,10 @@ public class NoticeArticle extends BaseTimeEntity {
      * @param customerSaveDTO the customer save dto
      * @return the notice article
      * @author [정주희]
+     * @implNote [method 설명]
      * @CreatedOn 2020. 7. 30. 오후 10:35:21
      * @Description
+     * @since 2020. 8. 3. 오전 10:41:05
      */
     public NoticeArticle save(final CustomerSaveDTO customerSaveDTO) {
         log.info("NoticeArticle.save");
@@ -168,6 +175,15 @@ public class NoticeArticle extends BaseTimeEntity {
         return noticeArticle;
     }
 
+    /**
+     * Update notice article.
+     *
+     * @param customerUpdateDTO the customer update dto
+     * @return the notice article
+     * @author [오지훈]
+     * @implNote [method 설명]
+     * @since 2020. 8. 3. 오전 10:41:05
+     */
     public NoticeArticle update(final CustomerUpdateDTO customerUpdateDTO) {
         log.info("NoticeArticle.update");
 
