@@ -10,8 +10,8 @@ import javax.persistence.*;
  * The Class Report basket.
  *
  * @author [이소정]
+ * @implNote 보고서 장바구니 entity
  * @since 2020. 7. 17. 오후 5:53:48
- * @implNote
  */
 @Getter
 @Setter
@@ -23,6 +23,7 @@ public class ReportBasket extends BaseTimeEntity {
 
     /**
      * The Report basket seq
+     *
      * @author [이소정]
      */
     @Id
@@ -33,6 +34,7 @@ public class ReportBasket extends BaseTimeEntity {
 
     /**
      * The User seq
+     *
      * @author [이소정]
      */
     @Column(name = "USER_SEQ")
@@ -41,6 +43,7 @@ public class ReportBasket extends BaseTimeEntity {
 
     /**
      * The Report file seq
+     *
      * @author [이소정]
      */
     @Column(name = "REPORT_FILE_SEQ")
@@ -54,8 +57,8 @@ public class ReportBasket extends BaseTimeEntity {
      * @param userSeq       the user seq
      * @return the report basket
      * @author [이소정]
+     * @implNote 보고서 장바구니 저장
      * @since 2020. 7. 17. 오후 7:04:39
-     * @implNote
      */
     public ReportBasket save(final Long reportFileSeq, final Long userSeq) {
         final ReportBasket reportBasket = new ReportBasket();

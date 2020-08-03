@@ -12,8 +12,8 @@ import javax.persistence.*;
  * The Class Report answer.
  *
  * @author [이소정]
+ * @implNote 보고서 feedback entity
  * @since 2020. 7. 10. 오전 11:05:42
- * @implNote
  */
 @Slf4j
 @Getter
@@ -26,6 +26,7 @@ public class ReportAnswer extends BaseTimeEntity {
 
     /**
      * The Answer seq
+     *
      * @author [이소정]
      */
     @Id
@@ -36,6 +37,7 @@ public class ReportAnswer extends BaseTimeEntity {
 
     /**
      * The Report seq
+     *
      * @author [이소정]
      */
     @Column(name = "REPORT_SEQ")
@@ -44,6 +46,7 @@ public class ReportAnswer extends BaseTimeEntity {
 
     /**
      * The Answer contents
+     *
      * @author [이소정]
      */
     @Column(name = "ANSWER_CONTENTS")
@@ -52,21 +55,12 @@ public class ReportAnswer extends BaseTimeEntity {
 
     /**
      * The Use yn
+     *
      * @author [이소정]
      */
     @Column(name = "USE_YN")
     @ApiModelProperty(name = "useYn", value = "사용 여부")
     private String useYn;
-
-//    /**
-//     * The Report
-//     * @author [이소정]
-//     */
-//    @JsonBackReference
-//    @ManyToOne
-//    @JoinColumn(name = "REPORT_SEQ", insertable = false, updatable = false)
-//    @ApiModelProperty(name = "report", value = "The Report", hidden = true)
-//    private Report report;
 
     /**
      * Save report answer.
@@ -74,8 +68,8 @@ public class ReportAnswer extends BaseTimeEntity {
      * @param reportAnswerSaveDTO the report answer save dto
      * @return the report answer
      * @author [이소정]
+     * @implNote 보고서 feedback 저장
      * @since 2020. 7. 10. 오전 11:20:05
-     * @implNote
      */
     public ReportAnswer save(final ReportAnswerSaveDTO reportAnswerSaveDTO) {
         log.info("ReportAnswer.save");
@@ -91,8 +85,8 @@ public class ReportAnswer extends BaseTimeEntity {
      *
      * @param useYn the use yn
      * @author [이소정]
+     * @implNote 보고서 feedback 사용여부 수정
      * @since 2020. 7. 10. 오후 5:47:03
-     * @implNote
      */
     public void updateUseYn(final String useYn) {
         log.info("ReportAnswer.updateUseYn");

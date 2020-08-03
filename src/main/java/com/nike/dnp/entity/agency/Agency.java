@@ -1,7 +1,6 @@
 package com.nike.dnp.entity.agency;
 
 import com.nike.dnp.dto.agency.AgencySaveDTO;
-import com.nike.dnp.dto.agency.AgencyUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -12,8 +11,8 @@ import javax.persistence.*;
  * The Class Agency.
  *
  * @author [윤태호]
+ * @implNote 에이전시 entity
  * @since 2020. 6. 26. 오후 4:16:34
- * @implNote
  */
 @Getter
 @Setter
@@ -85,8 +84,8 @@ public class Agency extends BaseTimeEntity {
      * @param agencySaveDTO the agency save dto
      * @return the agency
      * @author [이소정]
+     * @implNote 에이전시 저장
      * @since 2020. 7. 20. 오후 12:15:31
-     * @implNote
      */
     public Agency save(final AgencySaveDTO agencySaveDTO) {
         final Agency agency = new Agency();
@@ -101,16 +100,16 @@ public class Agency extends BaseTimeEntity {
     /**
      * Update.
      *
-     * @param agencyUpdateDTO the agency update dto
+     * @param agencySaveDTO the agency save dto
      * @author [이소정]
+     * @implNote 에이전시 수정
      * @since 2020. 7. 20. 오후 12:19:53
-     * @implNote
      */
-    public void update(final AgencyUpdateDTO agencyUpdateDTO) {
-        this.agencyName = agencyUpdateDTO.getAgencyName();
-        this.agencyDescription = agencyUpdateDTO.getAgencyDescription();
-        this.telephoneNumber = agencyUpdateDTO.getTelephoneNumber();
-        this.email = agencyUpdateDTO.getEmail();
+    public void update(final AgencySaveDTO agencySaveDTO) {
+        this.agencyName = agencySaveDTO.getAgencyName();
+        this.agencyDescription = agencySaveDTO.getAgencyDescription();
+        this.telephoneNumber = agencySaveDTO.getTelephoneNumber();
+        this.email = agencySaveDTO.getEmail();
     }
 
 
@@ -119,8 +118,8 @@ public class Agency extends BaseTimeEntity {
      *
      * @param useYn the use yn
      * @author [이소정]
+     * @implNote 에이전시 사용여부 수정
      * @since 2020. 7. 20. 오후 2:20:00
-     * @implNote
      */
     public void updateUseYn(final String useYn ) {
         this.useYn = useYn;

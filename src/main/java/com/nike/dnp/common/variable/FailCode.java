@@ -56,6 +56,11 @@ public class FailCode {
         , DUPLICATE_GOODS
         , INVALID_ORDER
         , INVALID_FILE
+        , SELECT_CAMPAIGN_BEGIN_DT
+        , SELECT_CAMPAIGN_END_DT
+        , NULL_TITLE
+        , NULL_URL
+        , SELECT_FILE
         , EXCEED_MAX_NOTICE
         , NOT_FOUND_PRODUCT
         , MINIMUM_ORDER_QUANTITY

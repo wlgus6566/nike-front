@@ -12,8 +12,8 @@ import org.springframework.util.StringUtils;
  * The Class Contents predicate helper.
  *
  * @author [이소정]
+ * @implNote 콘텐츠 검색 조건
  * @since 2020. 7. 1. 오후 5:56:06
- * @implNote
  */
 @UtilityClass
 public class ContentsPredicateHelper {
@@ -24,8 +24,8 @@ public class ContentsPredicateHelper {
 	 * @param contentsSearchDTO the contents search dto
 	 * @return the predicate
 	 * @author [이소정]
+	 * @implNote 콘텐츠 폴더명 비교
 	 * @since 2020. 7. 2. 오전 11:14:36
-	 * @implNote
 	 */
 	public Predicate compareKeyword(final ContentsSearchDTO contentsSearchDTO) {
 		final BooleanBuilder builder = new BooleanBuilder();
@@ -44,8 +44,8 @@ public class ContentsPredicateHelper {
 	 * @param contentsSearchDTO the contents search dto
 	 * @return the predicate
 	 * @author [이소정]
+	 * @implNote 콘텐츠 메뉴 코드 비교
 	 * @since 2020. 7. 2. 오전 11:14:34
-	 * @implNote
 	 */
 	public Predicate eqMenuCode(final ContentsSearchDTO contentsSearchDTO) {
 		final BooleanBuilder builder = new BooleanBuilder();
@@ -66,8 +66,8 @@ public class ContentsPredicateHelper {
 	 * @param exposureYn the exposure yn
 	 * @return the predicate
 	 * @author [이소정]
+	 * @implNote 콘텐츠 노출 여부 조회
 	 * @since 2020. 7. 1. 오후 5:57:47
-	 * @implNote
 	 */
 	public static Predicate eqExposureYn(final String exposureYn) {
 		final BooleanBuilder builder = new BooleanBuilder();
