@@ -99,6 +99,13 @@ public class ReportService {
     private final UserAuthRepository userAuthRepository;
 
     /**
+     * The Report basket service
+     *
+     * @author [이소정]
+     */
+    private final ReportBasketService reportBasketService;
+
+    /**
      * Find all paging page.
      *
      * @param reportSearchDTO the report search dto
@@ -270,11 +277,8 @@ public class ReportService {
             }
         }
 
-        if (!lastBeforeFileList.isEmpty()) {
-            for (ReportFile reportFile : lastBeforeFileList) {
-                reportFile.updateUseYn("N");
-            }
-        }
+        // 사용하지 않는 파일목록 삭제
+        this.deleteReportFile(lastBeforeFileList);
 
         // 알림 저장
         alarmService.sendAlarmTargetList(
@@ -303,11 +307,7 @@ public class ReportService {
         Report savedReport = report.get();
         report.ifPresent(value -> value.updateUseYn("N"));
 
-        if (!savedReport.getReportFileList().isEmpty()) {
-            for (ReportFile reportFile : savedReport.getReportFileList()) {
-                reportFile.updateUseYn("N");
-            }
-        }
+        this.deleteReportFile(savedReport.getReportFileList());
 
         return savedReport;
     }
@@ -346,6 +346,24 @@ public class ReportService {
             return FileUtil.fileDownload(reportFile.get().getFilePhysicalName());
         } else {
             return null;
+        }
+    }
+
+    /**
+     * Delete report file.
+     *
+     * @param reportFileList the report file list
+     * @author [이소정]
+     * @implNote 보고서 파일 삭제
+     * @since 2020. 8. 3. 오후 6:02:16
+     */
+    public void deleteReportFile(final List<ReportFile> reportFileList) {
+        if (!reportFileList.isEmpty()) {
+            for (ReportFile reportFile : reportFileList) {
+                reportFile.updateUseYn("N");
+                // 관련 보고서 장바구니 삭제
+                reportBasketService.deleteByReportFileSeq(reportFile.getReportFileSeq());
+            }
         }
     }
 
@@ -421,23 +439,6 @@ public class ReportService {
         reportFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getThumbnailFilePhysicalName()));
         return reportFileSaveDTO;
     }
-
-//    /**
-//     * S 3 file copy update contents file save dto.
-//     *
-//     * @param reportFileUpdateDTO the report file update dto
-//     * @return the contents file save dto
-//     * @author [이소정]
-//     * @implNote 보고서 수정 > 파일 경로(temp -> report) 변경 후 set
-//     * @since 2020. 7. 28. 오후 4:05:42
-//     */
-//    public ReportFileUpdateDTO s3FileCopyUpdate(final ReportFileUpdateDTO reportFileUpdateDTO) {
-//        log.info("ReportService.s3FileCopyUpdate");
-//        reportFileUpdateDTO.setFilePhysicalName(this.fileMoveTempToRealPath(reportFileUpdateDTO.getFilePhysicalName()));
-//        reportFileUpdateDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileUpdateDTO.getThumbnailFilePhysicalName()));
-//        reportFileUpdateDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileUpdateDTO.getThumbnailFilePhysicalName()));
-//        return reportFileUpdateDTO;
-//    }
 
     /**
      * Temp to real path file move string.

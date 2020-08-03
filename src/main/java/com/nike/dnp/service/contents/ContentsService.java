@@ -94,6 +94,13 @@ public class ContentsService {
     private final AlarmService alarmService;
 
     /**
+     * The Contents basket service
+     *
+     * @author [이소정]
+     */
+    private final ContentsBasketService contentsBasketService;
+
+    /**
      * The User auth repository
      *
      * @author [이소정]
@@ -290,6 +297,17 @@ public class ContentsService {
         if (!notUseFileList.isEmpty()) {
             for (ContentsFile contentsFile : notUseFileList) {
                 contentsFile.updateUseYn("N");
+                // 관련 콘텐츠 장바구니 삭제
+                contentsBasketService.deleteByContentsFileSeq(contentsFile.getContentsFileSeq());
+            }
+        }
+
+        // 콘텐츠 미 노출 선택 한 경우  -> 장바구니 삭제처리
+        if ("N".equals(contentsSaveDTO.getExposureYn())) {
+            List<ContentsFile> contentsFileList = contentsFileRepository.findByContentsSeq(contentsSaveDTO.getContentsSeq());
+            for (ContentsFile contentsFile : contentsFileList) {
+                // 관련 콘텐츠 장바구니 삭제
+                contentsBasketService.deleteByContentsFileSeq(contentsFile.getContentsFileSeq());
             }
         }
 
@@ -341,12 +359,19 @@ public class ContentsService {
         Optional<Contents> contents = this.findById(contentsSeq);
         contents.ifPresent(value -> value.delete());
 
+
+        // 관련 콘텐츠 파일 삭제
         List<ContentsFile> contentsFileList = contents.get().getContentsFileList();
         if (!contentsFileList.isEmpty()) {
             for (ContentsFile contentsFile : contentsFileList) {
                 contentsFile.updateUseYn("N");
+                // 관련 콘텐츠 장바구니 삭제
+                contentsBasketService.deleteByContentsFileSeq(contentsFile.getContentsFileSeq());
             }
         }
+
+        // TODO[lsj] 관련 최근 업로드 폴더 삭제 : useYn 컬럼 or 물리삭제 확인 필요 2020.08.03
+        // TODO[lsj] 관련 최근 본 폴더 삭데 : useYn 컬럼 or 물리삭제 확인 필요 2020.08.03
 
         return contents.get();
     }

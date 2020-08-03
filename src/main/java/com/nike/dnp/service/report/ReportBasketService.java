@@ -131,4 +131,19 @@ public class ReportBasketService {
         reportBasketRepository.deleteAll();
     }
 
+    /**
+     * Delete by report file seq.
+     *
+     * @param reportFileSeq the report file seq
+     * @author [이소정]
+     * @implNote 보고서 파일 seq 연관 장바구니 삭제
+     * @since 2020. 8. 3. 오후 5:56:20
+     */
+    public void deleteByReportFileSeq(final Long reportFileSeq) {
+        List<ReportBasket> reportBasketList = reportBasketRepository.findAllByReportFileSeq(reportFileSeq);
+        reportBasketRepository.deleteAll(reportBasketList);
+    }
+
+
+
 }

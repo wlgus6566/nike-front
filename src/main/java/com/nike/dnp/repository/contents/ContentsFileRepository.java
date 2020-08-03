@@ -28,4 +28,15 @@ public interface ContentsFileRepository extends JpaRepository<ContentsFile, Long
      */
     List<ContentsFile> findByContentsSeqAndUseYn(Long contentsSeq, String useYn);
 
+    /**
+     * Find by contents seq list.
+     *
+     * @param contentsSeq the contents seq
+     * @return the list
+     * @author [이소정]
+     * @implNote 콘텐츠 seq 파일 목록 조회
+     * @since 2020. 8. 3. 오후 6:09:30
+     */
+    List<ContentsFile> findByContentsSeq(Long contentsSeq);
+
 }

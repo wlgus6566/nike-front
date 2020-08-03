@@ -128,4 +128,17 @@ public class ContentsBasketService {
         log.info("ContentsBasketService.deleteAll");
         contentsBasketRepository.deleteAll();
     }
+
+    /**
+     * Delete contents seq.
+     *
+     * @param contentFileSeq the content file seq
+     * @author [이소정]
+     * @implNote 콘텐츠 일련번호로 관련 장바구니 삭제
+     * @since 2020. 8. 3. 오후 3:56:42
+     */
+    public void deleteByContentsFileSeq(final Long contentFileSeq) {
+        final List<ContentsBasket> contentsBasketList = contentsBasketRepository.findAllByContentsFileSeq(contentFileSeq);
+        contentsBasketRepository.deleteAll(contentsBasketList);
+    }
 }

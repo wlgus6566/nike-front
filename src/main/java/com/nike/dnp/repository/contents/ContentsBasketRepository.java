@@ -4,6 +4,8 @@ import com.nike.dnp.entity.contents.ContentsBasket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * The Interface Contents basket repository.
  *
@@ -13,5 +15,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ContentsBasketRepository extends JpaRepository<ContentsBasket, Long>, ContentsBasketRepositoryCustom {
+
+    List<ContentsBasket> findAllByContentsFileSeq(Long contensFileSeq);
 
 }
