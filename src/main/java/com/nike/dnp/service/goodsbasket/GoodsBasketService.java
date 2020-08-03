@@ -4,14 +4,17 @@ import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.goodsbasket.GoodsBasketSaveDTO;
 import com.nike.dnp.dto.goodsbasket.GoodsBasketSaveListDTO;
 import com.nike.dnp.entity.goodsbasket.GoodsBasket;
+import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.goodsbasket.GoodsBasketRepository;
+import com.nike.dnp.repository.product.ProductRepository;
 import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +24,8 @@ import java.util.Optional;
  * The Class Goods basket service.
  *
  * @author [윤태호]
- * @since 2020. 7. 2. 오후 4:30:52
  * @implNote
+ * @since 2020. 7. 2. 오후 4:30:52
  */
 @Slf4j
 @Service
@@ -38,6 +41,14 @@ public class GoodsBasketService {
 	 */
 	private final GoodsBasketRepository goodsBasketRepository;
 
+
+	/**
+	 * The Product repository
+	 *
+	 * @author [윤태호]
+	 */
+	private final ProductRepository productRepository;
+
 	/**
 	 * 장바구니 저장
 	 *
@@ -50,13 +61,10 @@ public class GoodsBasketService {
 	@Transactional
 	public GoodsBasket saveBasket(final GoodsBasketSaveDTO goodsBasketSaveDTO) {
 		log.info("GoodsBasketService.saveBasket");
-		final Optional<GoodsBasket> goodsBasket = goodsBasketRepository.findByGoodsSeqAndUserSeq(goodsBasketSaveDTO.getGoodsSeq(), SecurityUtil.currentUser().getUserSeq());
-		final GoodsBasket saveGoodsBasket = goodsBasket.orElse(new GoodsBasket());
-		saveGoodsBasket.setGoodsSeq(goodsBasketSaveDTO.getGoodsSeq());
-		saveGoodsBasket.setOrderQuantity(goodsBasketSaveDTO.getOrderQuantity());
-		return goodsBasketRepository.save(saveGoodsBasket);
-
+		return goodsBasketSave(goodsBasketSaveDTO);
 	}
+
+
 
 	/**
 	 * 장바구니 조회
@@ -124,12 +132,40 @@ public class GoodsBasketService {
 
 		final List<GoodsBasket> resultList = new ArrayList<>();
 		for(int i = 0; i < goodsBasketSaveListDTO.getGoodsSeqList().size(); i++){
-			final Optional<GoodsBasket> findGoodsBasket = goodsBasketRepository.findByGoodsSeqAndUserSeq(goodsBasketSaveListDTO.getGoodsSeqList().get(i), SecurityUtil.currentUser().getUserSeq());
-			final GoodsBasket goodsBasket = findGoodsBasket.orElse(new GoodsBasket());
-			goodsBasket.setGoodsSeq(goodsBasketSaveListDTO.getGoodsSeqList().get(i));
-			goodsBasket.setOrderQuantity(goodsBasketSaveListDTO.getOrderQuantityList().get(i));
-			resultList.add(goodsBasketRepository.save(goodsBasket));
+
+			GoodsBasketSaveDTO goodsBasketSaveDTO = new GoodsBasketSaveDTO();
+			goodsBasketSaveDTO.setGoodsSeq(goodsBasketSaveListDTO.getGoodsSeqList().get(i));
+			goodsBasketSaveDTO.setOrderQuantity(goodsBasketSaveListDTO.getOrderQuantityList().get(i));
+			resultList.add(goodsBasketSave(goodsBasketSaveDTO));
 		}
 		return resultList;
 	}
+
+	/**
+	 * 장바구니 저장
+	 *
+	 * @param goodsBasketSaveDTO the goods basket save dto
+	 * @return the goods basket
+	 * @author [윤태호]
+	 * @since 2020. 8. 3. 오전 11:54:43
+	 */
+	final private GoodsBasket goodsBasketSave(GoodsBasketSaveDTO goodsBasketSaveDTO) {
+		log.info("GoodsBasketService.goodsBasketSave");
+		final Product product = productRepository.findById(goodsBasketSaveDTO.getGoodsSeq()).orElse(null);
+		if(ObjectUtils.isEmpty(product)){
+			throw new CodeMessageHandleException(FailCode.ConfigureError.NOT_FOUND_PRODUCT.name(), MessageUtil.getMessage(FailCode.ConfigureError.NOT_FOUND_PRODUCT.name()));
+		}else{
+			if(product.getMinimumOrderQuantity() > goodsBasketSaveDTO.getOrderQuantity()){
+				throw new CodeMessageHandleException(FailCode.ConfigureError.MINIMUM_ORDER_QUANTITY.name(), MessageUtil.getMessage(FailCode.ConfigureError.MINIMUM_ORDER_QUANTITY.name()));
+			}else{
+				final Optional<GoodsBasket> goodsBasket = goodsBasketRepository.findByGoodsSeqAndUserSeq(goodsBasketSaveDTO.getGoodsSeq(), SecurityUtil.currentUser().getUserSeq());
+				final GoodsBasket saveGoodsBasket = goodsBasket.orElse(new GoodsBasket());
+				saveGoodsBasket.setGoodsSeq(goodsBasketSaveDTO.getGoodsSeq());
+				saveGoodsBasket.setOrderQuantity(goodsBasketSaveDTO.getOrderQuantity());
+				return goodsBasketRepository.save(saveGoodsBasket);
+			}
+		}
+	}
+
+
 }
