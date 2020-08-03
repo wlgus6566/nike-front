@@ -81,19 +81,19 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
     /**
      * Instantiates a new User auth.
      *
-     * @param user the user
-     * @param auth the auth
+     * @param userSeq the user seq
+     * @param authSeq the auth seq
      * @author [오지훈]
      * @implNote 생성자 주입 *
      * @since 2020. 8. 3. 오전 10:41:09
      */
     @Builder
     public UserAuth (
-            final User user
-            , final Auth auth
+            final Long userSeq
+            , final Long authSeq
     ) {
-        this.user = user;
-        this.auth = auth;
+        this.userSeq = userSeq;
+        this.authSeq = authSeq;
     }
 
     /**

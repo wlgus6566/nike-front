@@ -230,7 +230,7 @@ public class UserMailService {
     public String createEncodeCertCode(final String userId) {
         final String certCode = RandomUtil.randomCertCode2(10);
         redisService.set("cert:"+userId, certCode, 60);
-        return CryptoUtil.urlEncode(CryptoUtil.encryptAES256(userId + "|" + certCode, "Nike DnP"));
+        return CryptoUtil.urlEncode(CryptoUtil.encryptAES256(userId + "NIKESPACE" + certCode, "Nike DnP"));
     }
 
     /**
