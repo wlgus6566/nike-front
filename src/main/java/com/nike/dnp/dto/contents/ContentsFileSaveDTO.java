@@ -26,7 +26,7 @@ public class ContentsFileSaveDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "contentsFileSeq", value = "컨텐츠 파일 시퀀스(기존파일이 있는 경우 필수)", example = "7")
+    @ApiModelProperty(name = "contentsFileSeq", value = "컨텐츠 파일 시퀀스(수정시:기존파일이 있는 경우 필수)", example = "7")
     private Long contentsFileSeq;
 
     /**
@@ -34,7 +34,7 @@ public class ContentsFileSaveDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스", example = "10")
+    @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스(수정시)", example = "10", hidden = true)
     private Long contentsSeq;
 
     /**
