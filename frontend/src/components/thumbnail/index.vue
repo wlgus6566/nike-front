@@ -1,6 +1,6 @@
 <template>
     <div>
-        <span class="thumb-file file-upload">
+        <span class="thumb-file" :class="{ 'file-upload': cropImg }">
             <input
                 ref="input"
                 id="test"
@@ -10,9 +10,12 @@
                 @change="setImage"
             />
             <span class="thumb">
-                <img v-if="cropImg" :src="cropImg" alt="Cropped Image" />
+                <img v-if="" :src="cropImg" alt="Cropped Image" />
             </span>
-            <span class="txt" @click="inputReset">썸네일 이미지 재등록</span>
+            <span class="txt" @click="inputReset" v-if="cropImg">
+                썸네일 이미지 재등록
+            </span>
+            <span class="txt" v-else>썸네일 이미지 등록</span>
         </span>
 
         <el-dialog
@@ -43,20 +46,25 @@
 </template>
 
 <script>
-import VueCropper from 'vue-cropperjs';
-import 'cropperjs/dist/cropper.css';
+    import VueCropper from 'vue-cropperjs';
+    import 'cropperjs/dist/cropper.css';
 
-export default {
+    export default {
     name: 'index',
     data() {
         return {
             dialogVisible: false,
             imgSrc: require('@/assets/images/@test1.jpg'),
+            //cropImg: require('@/assets/images/@test1.jpg'),
             cropImg: null, //require('@/assets/images/@test1.jpg')
             data: null,
         };
     },
+    props: ['imageFilePhysicalName'],
     components: { VueCropper },
+    created() {},
+    mounted() {},
+    computed: {},
     methods: {
         inputReset() {
             console.log(this.$refs.input);
@@ -74,6 +82,7 @@ export default {
         cropImage() {
             // get image data for post processing, e.g. upload or setting image src
             this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
+            console.log(this.imageFilePhysicalName.toDataURL());
             this.dialogVisible = false;
         },
         flipX() {
@@ -91,7 +100,11 @@ export default {
             dom.setAttribute('data-scale', scale);
         },
         getCropBoxData() {
-            this.data = JSON.stringify(this.$refs.cropper.getCropBoxData(), null, 4);
+            this.data = JSON.stringify(
+                this.$refs.cropper.getCropBoxData(),
+                null,
+                4
+            );
         },
         getData() {
             this.data = JSON.stringify(this.$refs.cropper.getData(), null, 4);

@@ -1,6 +1,8 @@
 <template>
     <div>
-        <h2 class="page-title"><span class="ko">상품관리</span></h2>
+        <h2 class="page-title">
+            <span class="ko">{{ this.$route.meta.title }}</span>
+        </h2>
         <div class="sorting-area">
             <FilterSelect :listSortSelect="category2Code" />
             <FilterSelect :listSortSelect="category3Code" />
@@ -28,15 +30,13 @@
                     <p class="desc">검색 결과가 없습니다.</p>
                 </NoData>
             </template>
-            <el-pagination
+            <Pagination
                 v-if="productListData.length"
-                @current-change="handleCurrentChange"
-                :page-size="itemLength"
-                :pager-count="11"
-                layout="prev, pager, next"
-                :total="totalItem"
-            >
-            </el-pagination>
+                :itemLength="itemLength"
+                :pageCount="pageCount"
+                :totalItem="totalItem"
+                @handleCurrentChange="handleCurrentChange"
+            />
         </template>
     </div>
 </template>
@@ -44,17 +44,19 @@
     import SearchInput from '@/components/search-input';
     import FilterSelect from '@/components/filter-select';
     import ProductManagement from '@/components/product-management';
+    import Pagination from '@/components/pagination';
     import NoData from '@/components/no-data';
-    import NoDataSearch from '@/components/no-data/nodata-search';
     import {delProduct, getProductList} from '@/api/product';
+    import {getAgencyContact} from '@/api/agency';
 
     export default {
     name: 'management',
     data() {
         return {
-            totalItem: 0,
             productList: null,
             productListData: null,
+            pageCount: 11,
+            totalItem: 0,
             page: 0,
             itemLength: 20,
             searchKeyword: '',
@@ -236,8 +238,8 @@
         SearchInput,
         FilterSelect,
         ProductManagement,
+        Pagination,
         NoData,
-        NoDataSearch,
     },
     created() {},
     computed: {},
@@ -253,13 +255,39 @@
         'category3Code.value'() {
             this.getProduct();
         },
+        'agency.value'() {
+            return 'dfdsf';
+        },
     },
     mounted() {
         this.getProduct();
+        this.getAgency();
     },
     methods: {
+        //에이전시 리스트
+        async getAgency() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getAgencyContact({});
+                const agencyData = response;
+                agencyData.forEach((item, index) => {
+                    const agencyList = {
+                        value: item.agencySeq,
+                        label: item.agencyName,
+                    };
+                    this.agency.listSortOptions.push(agencyList);
+                });
+
+                console.log('1');
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        // Pagination fn
         handleCurrentChange(val) {
-            this.page = val - 1;
+            this.page = val;
             this.getProduct();
         },
         // checkbox
@@ -309,7 +337,7 @@
                         goodsSeqList: this.checkItem.toString(),
                     });
                     await this.getProduct();
-                    //todo 장바구니 다건 삭제 필요
+                    //todo 장바구니 다건 삭제 추가
                     this.loading = false;
                     this.checkItem.forEach((seq) => {
                         this.checked(seq, true);

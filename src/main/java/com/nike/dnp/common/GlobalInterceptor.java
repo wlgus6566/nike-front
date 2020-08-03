@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
  * Interceptor
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:06:55
- * @Description Interceptor 작성
+ * @since 2020. 6. 24. 오후 6:06:55
+ * @implNote Interceptor 작성
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -27,8 +27,8 @@ public class GlobalInterceptor extends HandlerInterceptorAdapter {
 	 * @param handler  the handler
 	 * @return the boolean
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:06:55
-	 * @Description 컨트롤러 실행 직전에 동작
+	 * @since 2020. 6. 24. 오후 6:06:55
+	 * @implNote 컨트롤러 실행 직전에 동작
 	 */
 	@Override
 	public boolean preHandle(
@@ -47,8 +47,8 @@ public class GlobalInterceptor extends HandlerInterceptorAdapter {
 	 * @param handler  the handler
 	 * @param mav      the mav
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:06:55
-	 * @Description 컨트롤러 진입 후 view가 랜더링 되기 전 동작
+	 * @since 2020. 6. 24. 오후 6:06:55
+	 * @implNote 컨트롤러 진입 후 view가 랜더링 되기 전 동작
 	 */
 	@Override
 	public void postHandle(
@@ -67,8 +67,8 @@ public class GlobalInterceptor extends HandlerInterceptorAdapter {
 	 * @param handler   the handler
 	 * @param exception the exception
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:06:55
-	 * @Description 컨트롤러 진입 후 view가 랜더링 된 후 동작
+	 * @since 2020. 6. 24. 오후 6:06:55
+	 * @implNote 컨트롤러 진입 후 view가 랜더링 된 후 동작
 	 */
 	@Override
 	public void afterCompletion(
@@ -86,8 +86,8 @@ public class GlobalInterceptor extends HandlerInterceptorAdapter {
 	 * @param response the response
 	 * @param handler  the handler
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:06:55
-	 * @Description 비동기 요청 시 PostHandle와 afterCompletion메서드를 수행하지 않고 이 메서드를 수행
+	 * @since 2020. 6. 24. 오후 6:06:55
+	 * @implNote 비동기 요청 시 PostHandle와 afterCompletion메서드를 수행하지 않고 이 메서드를 수행
 	 */
 	@Override
 	public void afterConcurrentHandlingStarted(

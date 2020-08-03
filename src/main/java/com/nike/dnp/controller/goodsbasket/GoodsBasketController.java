@@ -22,11 +22,11 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * The Class Basket controller.
+ * 장바구니 컨트롤러
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 2. 오후 4:22:03
- * @Description
+ * @since 2020. 7. 2. 오후 4:22:03
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -66,68 +66,72 @@ public class GoodsBasketController {
 
 
 	/**
-	 * Save basket single result.
+	 * 장바구니 등록 및 수정
 	 *
 	 * @param goodsBasketSaveDTO the goods basket save dto
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 2. 오후 4:31:14
-	 * @Description
+	 * @since 2020. 7. 2. 오후 4:31:14
+	 * @apiNote
 	 */
 	@ApiOperation(value = "장바구니 등록 및 수정", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ValidField
 	public SingleResult<GoodsBasket> saveBasket(@RequestBody @Valid final GoodsBasketSaveDTO goodsBasketSaveDTO,
 												@ApiIgnore final BindingResult result) {
+		log.info("GoodsBasketController.saveBasket");
 		final GoodsBasket goodsBasket = goodsBasketService.saveBasket(goodsBasketSaveDTO);
 		return responseService.getSingleResult(goodsBasket);
 	}
 
 	/**
-	 * Save basket list single result.
+	 * 장바구니 다건 등록 및 수정
 	 *
 	 * @param goodsBasketSaveListDTO the goods basket save list dto
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 6. 오전 11:38:25
-	 * @Description
+	 * @since 2020. 7. 6. 오전 11:38:25
+	 * @apiNote
 	 */
 	@ApiOperation(value = "장바구니 다건 등록 및 수정", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/saveList", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ValidField
 	public SingleResult<List<GoodsBasket>> saveBasketList(@RequestBody @Valid final GoodsBasketSaveListDTO goodsBasketSaveListDTO,
 														  @ApiIgnore final BindingResult result) {
+		log.info("GoodsBasketController.saveBasketList");
 		return responseService.getSingleResult(goodsBasketService.saveBasketList(goodsBasketSaveListDTO));
 	}
 
 
 	/**
-	 * Find all single result.
+	 * 장바구니 조회
 	 *
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 2. 오후 6:20:53
-	 * @Description
+	 * @since 2020. 7. 2. 오후 6:20:53
+	 * @apiNote
 	 */
 	@ApiOperation(value = "장바구니 조회", notes = BASIC_CHARACTER)
 	@GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<List<GoodsBasket>> findAll(){
+		log.info("GoodsBasketController.findAll");
 		return responseService.getSingleResult(goodsBasketService.findByAll());
 	}
 
 
 	/**
-	 * Delete basket common result.
+	 * 장바구니 삭제
 	 *
 	 * @param goodsBasketSeq the goods basket seq
 	 * @return the common result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 3. 오후 12:09:20
-	 * @Description
+	 * @since 2020. 7. 3. 오후 12:09:20
+	 * @apiNote
 	 */
 	@ApiOperation(value = "장바구니 삭제", notes = BASIC_CHARACTER)
 	@DeleteMapping(value = "/{goodsBasketSeq}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public CommonResult deleteBasket(final @ApiParam(name = "goodsBasketSeq", value = "장바구니 시퀀스", defaultValue = "6") @PathVariable Long goodsBasketSeq) {
+		log.info("GoodsBasketController.deleteBasket");
 		goodsBasketService.deleteBasket(goodsBasketSeq);
 		return responseService.getSuccessResult();
 	}

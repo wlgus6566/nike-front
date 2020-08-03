@@ -9,7 +9,11 @@ const routes = [
             {
                 path: 'visual',
                 component: pages('management/visual'),
-                meta: { layout: 'Default', aside: 'Order', title: '메인 비쥬얼 관리' },
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    title: '메인 비쥬얼 관리',
+                },
             },
             {
                 path: 'account',
@@ -19,7 +23,11 @@ const routes = [
             {
                 path: 'group',
                 component: pages('management/group'),
-                meta: { layout: 'Default', aside: 'Order', title: '권한 그룹관리' },
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    title: '권한 그룹관리',
+                },
             },
         ],
     },

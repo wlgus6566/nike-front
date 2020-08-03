@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
  * ErrorLogService
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 5:58:41
- * @Description ErrorLog(오류 로그) Service 작성
+ * @since 2020. 6. 24. 오후 5:58:41
+ * @implNote ErrorLog(오류 로그) Service 작성
  */
 @Slf4j
 @Service
@@ -34,8 +34,8 @@ public class ErrorLogService {
      * @param saveDTO the save dto
      * @return error log
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:58:41
-     * @Description 오류 로그 등록
+     * @since 2020. 6. 24. 오후 5:58:41
+     * @implNote 오류 로그 등록
      */
     @Transactional
     public ErrorLog save(final ErrorLogSaveDTO saveDTO) {

@@ -20,8 +20,8 @@ import java.util.List;
  * The Class Menu controller.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 23. 오후 5:22:25
- * @Description
+ * @since 2020. 6. 23. 오후 5:22:25
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -57,8 +57,8 @@ public class MenuController {
      *
      * @return the basic menus
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 8. 오후 6:14:49
-     * @Description 메뉴 전체 목록 조회
+     * @since 2020. 7. 8. 오후 6:14:49
+     * @apiNote 메뉴 전체 목록 조회
      */
     @ApiOperation(value = "메뉴 전체 목록 조회"
             , notes = OPERATION_CHARACTER)
@@ -74,8 +74,8 @@ public class MenuController {
      *
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 16. 오후 4:43:52
-     * @Description 메뉴 관리 목록 조회
+     * @since 2020. 7. 16. 오후 4:43:52
+     * @apiNote 메뉴 관리 목록 조회
      */
     @ApiOperation(value = "메뉴 관리 목록 조회"
             , notes = OPERATION_CHARACTER)

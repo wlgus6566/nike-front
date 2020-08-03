@@ -11,8 +11,8 @@ import javax.persistence.*;
  * EmailSendingLog Entity
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:10:18
- * @Description EmailSendingLog(메일_발송_로그) Entity 작성
+ * @since 2020. 6. 24. 오후 6:10:18
+ * @implNote EmailSendingLog(메일_발송_로그) Entity 작성
  */
 @Getter
 @Setter
@@ -65,8 +65,8 @@ public class EmailSendingLog extends BaseTimeEntity {
      *
      * @param emailSendingLogSaveDTO the email sending log save dto
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 28. 오후 4:06:35
-     * @Description
+     * @since 2020. 7. 28. 오후 4:06:35
+     * @implNote
      */
     @Builder
     public EmailSendingLog (final EmailSendingLogSaveDTO emailSendingLogSaveDTO) {

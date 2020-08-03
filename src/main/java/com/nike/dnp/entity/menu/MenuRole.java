@@ -12,8 +12,8 @@ import java.io.Serializable;
  * MenuRole Entity
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:10:44
- * @Description MenuRole(메뉴 역할) Entity 작성
+ * @since 2020. 6. 24. 오후 6:10:44
+ * @implNote MenuRole(메뉴 역할) Entity 작성
  */
 @Getter
 @Setter

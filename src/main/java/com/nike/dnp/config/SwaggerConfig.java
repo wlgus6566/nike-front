@@ -1,5 +1,6 @@
 package com.nike.dnp.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -19,13 +20,14 @@ import java.util.Arrays;
  * Swagger Config
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:08:28
- * @Description Swagger Config 작성
+ * @since 2020. 6. 24. 오후 6:08:28
+ * @implNote Swagger Config 작성
  * @history [오지훈] [2020.05.21] [최초 작성]
  * @since 2020.05.21
  */
 @Configuration
 @EnableSwagger2
+@RequiredArgsConstructor
 public class SwaggerConfig implements WebMvcConfigurer {
 
 	/**
@@ -33,8 +35,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	 *
 	 * @return Swagger 설정값
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:08:28
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:08:28
+	 * @implNote
 	 */
 	@Bean
 	public Docket api() {
@@ -57,8 +59,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	 *
 	 * @return the api info
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:08:28
-	 * @Description Swagger Info 작성
+	 * @since 2020. 6. 24. 오후 6:08:28
+	 * @implNote Swagger Info 작성
 	 */
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder().title("이 문서는 NIKE D&P Project API 문서 입니다.")

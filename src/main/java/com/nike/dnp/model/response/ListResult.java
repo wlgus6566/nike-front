@@ -9,8 +9,8 @@ import java.util.List;
  *
  * @param <T> the type parameter
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:11:39
- * @Description ListResult 작성
+ * @since 2020. 6. 24. 오후 6:11:39
+ * @implNote ListResult 작성
  */
 @Getter
 @Setter

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
  * The Class Error enum code.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 1. 오후 5:01:17
- * @Description
+ * @since 2020. 7. 1. 오후 5:01:17
+ * @implNote
  */
 @Component
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class FailCode {
     /**
      * The enum Exception error.
      *
-     * @Description 공통 오류 처리
+     * @implNote 공통 오류 처리
      */
     @RequiredArgsConstructor
     @Getter
@@ -30,7 +30,7 @@ public class FailCode {
     /**
      * The enum Configure error.
      *
-     * @Description Validation 이외의 오류 처리
+     * @implNote Validation 이외의 오류 처리
      */
     @RequiredArgsConstructor
     @Getter
@@ -56,6 +56,7 @@ public class FailCode {
         , DUPLICATE_GOODS
         , INVALID_ORDER
         , INVALID_FILE
+        , EXCEED_MAX_NOTICE
     }
 
 }

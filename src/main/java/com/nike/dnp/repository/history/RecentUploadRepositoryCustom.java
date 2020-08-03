@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
  * The Interface Recent upload repository custom.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 27. 오후 2:13:46
- * @Description
+ * @since 2020. 7. 27. 오후 2:13:46
+ * @implNote
  */
 @Repository
 public interface RecentUploadRepositoryCustom {
@@ -23,8 +23,8 @@ public interface RecentUploadRepositoryCustom {
      * @param pageRequest      the page request
      * @return the page
      * @author [이소정]
-     * @CreatedOn 2020. 7. 27. 오후 2:13:43
-     * @Description
+     * @since 2020. 7. 27. 오후 2:13:43
+     * @implNote
      */
     Page<HistoryResultDTO> findAllRecentUpload(final HistorySearchDTO historySearchDTO, final PageRequest pageRequest);
 }

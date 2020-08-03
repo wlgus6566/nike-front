@@ -1,6 +1,6 @@
 <template>
     <div class="aside-order">
-        <div class="cart-item-wrap">
+        <el-scrollbar class="cart-item-wrap" :native="false">
             <template v-if="basketList">
                 <transition-group
                     tag="ul"
@@ -49,7 +49,7 @@
                     </p>
                 </NoData>
             </template>
-        </div>
+        </el-scrollbar>
         <button
             type="button"
             class="btn-order"
@@ -75,11 +75,15 @@
             :visible.sync="visible.orderSheet"
             :basketList="basketList"
             :totalPrice="totalPrice"
+            :orderData="orderData"
+            @orderSave="orderSave"
         />
     </div>
 </template>
 <script>
     import {addProductBasket, deleteBasketItem} from '@/utils/basket';
+    import {postOrderSave} from '@/api/my-order';
+    import {getExistMsg} from '@/utils/common';
     import OrderSheet from '@/views/pages/product/order-sheet.vue';
     import NoData from '@/components/no-data';
 
@@ -91,6 +95,9 @@
             visible: {
                 orderSheet: false,
             },
+            orderData: '',
+            orderSeq: '',
+            orderQuan: '',
         };
     },
     components: {
@@ -122,24 +129,67 @@
             }
         },
     },
-    mounted() {
-        console.log(this.$store.state.basketListData);
-    },
+    mounted() {},
     methods: {
         showOrderSheet() {
             this.visible.orderSheet = true;
+            let today = new Date();
+            let yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1; //January is 0!
+            let dd = today.getDate();
+            let hor = today.getHours();
+            let min = today.getMinutes();
+            let sec = today.getSeconds();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            this.orderData =
+                yyyy + '.' + mm + '.' + dd + ' ' + hor + ':' + min + ':' + sec;
+
+            this.orderSeq = this.basketList.map((el) => {
+                return el.goodsSeq;
+            });
+            this.orderQuan = this.basketList.map((el) => {
+                return el.orderQuantity;
+            });
         },
 
         // 장바구니 삭제 api
         deleteClick(goodsBasketSeq) {
             deleteBasketItem(goodsBasketSeq);
         },
+
         // 최소수량
         async changeQuantity(item) {
             if (!this.test) {
                 this.test = true;
                 await addProductBasket(item.goodsSeq, item.orderQuantity);
                 this.test = false;
+            }
+        },
+
+        // 주문서 발송
+        async orderSave(orderComment) {
+            try {
+                const { data: response } = await postOrderSave({
+                    goodsSeqList: this.orderSeq,
+                    orderDescription: orderComment,
+                    orderQuantityList: this.orderQuan,
+                    totalAmount: this.totalPrice,
+                });
+                if (response.existMsg) {
+                    console.log('asdasd');
+                    await getExistMsg(response);
+                } else {
+                    this.visible.orderSheet = false;
+                    //todo 장바구니 다건 삭제 추가
+                    await this.$router.push('/order/complete');
+                }
+            } catch (error) {
+                console.log(error);
             }
         },
     },
@@ -154,10 +204,10 @@
 .cart-item-wrap {
     box-sizing: border-box;
     height: 360px;
-    padding: 8px 18px;
     background: #eee;
-    overflow: auto;
+    overflow: hidden;
 }
+
 .cart-item {
     position: relative;
     box-sizing: border-box;
@@ -170,6 +220,7 @@
     border-top: 1px solid #e5e5e5;
 }
 .cart-item .thumbnail {
+    flex: 0 0 50px;
     width: 50px;
     height: 50px;
     margin-right: 10px;
@@ -194,12 +245,21 @@
     overflow: hidden;
     text-indent: -99999px;
 }
+.info-box {
+    max-width: calc(100% - 60px);
+    box-sizing: border-box;
+}
 .info-box .title {
     display: block;
+    box-sizing: border-box;
+    padding-right: 20px;
     line-height: 18px;
     font-size: 12px;
     letter-spacing: -0.05px;
     color: #000;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .btn-order {
     position: relative;

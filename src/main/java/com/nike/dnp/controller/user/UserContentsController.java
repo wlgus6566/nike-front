@@ -26,8 +26,8 @@ import java.util.List;
  * UserContentsController
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 6. 오후 2:56:56
- * @Description 유저 컨텐츠 권한 Controller
+ * @since 2020. 7. 6. 오후 2:56:56
+ * @apiNote 유저 컨텐츠 권한 Controller
  */
 @Slf4j
 @RestController
@@ -64,8 +64,8 @@ public class UserContentsController {
      * @param userContentsSearchDTO the user contents search dto
      * @return the single result
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오후 4:25:57
-     * @Description 유저 컨텐츠 그룹 권한 목록
+     * @since 2020. 7. 20. 오후 4:25:57
+     * @apiNote 유저 컨텐츠 그룹 권한 목록
      */
     @ApiOperation(value = "유저 컨텐츠 권한 목록"
             , notes = OPERATION_CHARACTER)
@@ -85,8 +85,8 @@ public class UserContentsController {
 //     * @param userContentsSaveDTO the user contents save dto
 //     * @return the single result
 //     * @author [오지훈]
-//     * @CreatedOn 2020. 7. 20. 오후 2:38:11
-//     * @Description 유저 컨텐츠 권한 등록/수정
+//     * @since 2020. 7. 20. 오후 2:38:11
+//     * @apiNote 유저 컨텐츠 권한 등록/수정
 //     */
 //    @ApiOperation(value = "유저 컨텐츠 권한 등록/수정"
 //            , notes = OPERATION_CHARACTER)

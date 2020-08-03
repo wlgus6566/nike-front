@@ -3,6 +3,7 @@ package com.nike.dnp.controller.order;
 
 import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.FailCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.order.OrderProductMappingSaveDTO;
 import com.nike.dnp.dto.order.OrderProductSaveDTO;
 import com.nike.dnp.dto.order.OrderSearchDTO;
@@ -29,13 +30,14 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
- * Order Controller
+ * 주문 Controller
  *
  * @author [윤태호]
- * @CreatedOn 2020. 6. 26. 오후 3:27:34
- * @Description
+ * @since 2020. 6. 26. 오후 3:27:34
+ * @apiNote
  */
 @Slf4j
 @RestController
@@ -88,13 +90,13 @@ public class OrderController {
 	private static final String BASIC_CHARACTER = "## Request ## \n" + "[하위 Parameters 참조] \n" + "## Request ## \n" + "[하위 Model 참조]\n\n";
 
 	/**
-	 * Save order single result.
+	 * 주문 등록
 	 *
 	 * @param orderProductSaveDTO the order product save dto
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 1. 오후 2:48:06
-	 * @Description
+	 * @since 2020. 7. 1. 오후 2:48:06
+	 * @apiNote
 	 */
 	@ApiOperation(value = "주문 등록", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/save", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -102,61 +104,75 @@ public class OrderController {
 	@ValidField
 	public SingleResult<Order> saveOrder(@RequestBody @Valid final OrderProductSaveDTO orderProductSaveDTO,
 										 @ApiIgnore final BindingResult result) {
-
-		if(orderProductSaveDTO.getGoodsSeqList().size()!=orderProductSaveDTO.getOrderQuantityList().size()){
-			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.INVALID_ORDER.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_ORDER.name()));
-		}else{
+		log.info("OrderController.saveOrder");
+		final List<Long> goodsSeqList = orderProductSaveDTO.getGoodsSeqList();
+		final List<Long> orderQuantityList = orderProductSaveDTO.getOrderQuantityList();
+		final int goodsSeqListSize = goodsSeqList.size();
+		final int orderQuantityListSize = orderQuantityList.size();
+		if(goodsSeqListSize == orderQuantityListSize){
 			final Order order = orderService.saveOrder(orderProductSaveDTO);
+			for(int i = 0; i < goodsSeqListSize; i++){
+				final Long goodsSeq = goodsSeqList.get(i);
+				final Long orderQuantity = orderQuantityList.get(i);
+				final Product product = productService.findByGoodsSeq(goodsSeq);
 
-			for(int i = 0; i < orderProductSaveDTO.getGoodsSeqList().size(); i++){
-				final Product product = productService.findByGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
-				OrderProductMappingSaveDTO orderProductMappingSaveDTO = new OrderProductMappingSaveDTO();
-				orderProductMappingSaveDTO.setGoodsSeq(orderProductSaveDTO.getGoodsSeqList().get(i));
-				orderProductMappingSaveDTO.setOrderQuantity(orderProductSaveDTO.getOrderQuantityList().get(i));
+				/*final OrderProductMappingSaveDTO orderProductMappingSaveDTO = new OrderProductMappingSaveDTO();
+				orderProductMappingSaveDTO.setGoodsSeq(goodsSeq);
+				orderProductMappingSaveDTO.setOrderQuantity(orderQuantity);
 				orderProductMappingSaveDTO.setOrderSeq(order.getOrderSeq());
 				orderProductMappingSaveDTO.setAgencySeq(product.getAgencySeq());
+				orderProductMappingService.saveOrderProductMapping(orderProductMappingSaveDTO);*/
 
-				orderProductMappingService.saveOrderProductMapping(orderProductMappingSaveDTO);
+				orderProductMappingService.saveOrderProductMapping(
+						OrderProductMappingSaveDTO.builder()
+								.goodsSeq(goodsSeq)
+								.orderSeq(order.getOrderSeq())
+								.agencySeq(product.getAgencySeq())
+								.orderQuantity(orderQuantity)
+								.build()
+				);
 			}
 			orderProductMappingService.orderSheetSend(order);
 			return responseService.getSingleResult(order);
+		}else{
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.INVALID_ORDER.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_ORDER.name()));
 		}
-
-
 	}
 
 
 	/**
-	 * List single result.
+	 * 주문내역 조회
 	 *
 	 * @param orderSearchDTO the order search dto
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 7. 오전 11:25:09
-	 * @Description
+	 * @since 2020. 7. 7. 오전 11:25:09
+	 * @apiNote
 	 */
 	@ApiOperation(value = "주문내역", notes = REQUEST_CHARACTER + "beginDt|시작일|false|String\n" + "endDt|종료일|false|String\n")
 	@GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<Page<OrderProductMapping>> list(final OrderSearchDTO orderSearchDTO) {
+		log.info("OrderController.list");
 		return responseService.getSingleResult(orderProductMappingService.findPageOrder(orderSearchDTO));
 	}
 
 
 	/**
-	 * View single result.
+	 * 주문 상세 내역
 	 *
 	 * @param orderGoodsSeq the order goods seq
 	 * @return the single result
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 7. 오후 2:43:50
-	 * @Description
+	 * @since 2020. 7. 7. 오후 2:43:50
+	 * @apiNote
 	 */
 	@ApiOperation(value = "주문 상세 내역", notes = BASIC_CHARACTER)
 	@GetMapping(value = "/{orderGoodsSeq}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<OrderProductMapping> view(@ApiParam(name = "orderGoodsSeq", value = "주문 상품 시퀀스", defaultValue = "13") @PathVariable final Long orderGoodsSeq) {
-		return responseService.getSingleResult(orderProductMappingService.findById(orderGoodsSeq));
+		log.info("OrderController.view");
+		return responseService.getSingleResult(orderProductMappingService.findByIdAndUseYn(orderGoodsSeq, ServiceCode.YesOrNoEnumCode.Y.name()));
 	}
 
 

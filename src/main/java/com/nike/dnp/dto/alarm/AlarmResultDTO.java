@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
  * The Class Alarm result dto.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 24. 오후 8:08:11
- * @Description
+ * @since 2020. 7. 24. 오후 8:08:11
+ * @implNote
  */
 @Getter
 @Setter

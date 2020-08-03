@@ -10,8 +10,8 @@ import java.util.Optional;
  * UserRepository
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 5:53:42
- * @Description User(유저) Repository Interface 작성
+ * @since 2020. 6. 24. 오후 5:53:42
+ * @implNote User(유저) Repository Interface 작성
  */
 public interface UserRepository extends JpaRepository<User, Long>, UserRepositoryCustom {
 
@@ -21,8 +21,8 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
      * @param userId 유저 ID
      * @return the optional
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 24. 오후 5:53:42
-     * @Description 상세 조회
+     * @since 2020. 6. 24. 오후 5:53:42
+     * @implNote 상세 조회
      */
     Optional<User> findByUserId(String userId);
 
@@ -32,8 +32,8 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
      * @param userSeqArray the user seq array
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오후 6:15:21
-     * @Description 목록 조회(배열)
+     * @since 2020. 6. 23. 오후 6:15:21
+     * @implNote 목록 조회(배열)
      */
     List<User> findAllByUserSeqIn(Long... userSeqArray);
 
@@ -43,8 +43,8 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
      * @param userId the user id
      * @return the int
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 1. 오후 2:14:56
-     * @Description 유저 아이디 존재 유무
+     * @since 2020. 7. 1. 오후 2:14:56
+     * @implNote 유저 아이디 존재 유무
      */
     int countByUserId(String userId);
 

@@ -6,8 +6,8 @@ import lombok.experimental.UtilityClass;
  * JWT 기본 프로퍼티 정보
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 28. 오후 4:38:52
- * @Description
+ * @since 2020. 7. 28. 오후 4:38:52
+ * @implNote
  */
 @UtilityClass
 public class JwtHelper {

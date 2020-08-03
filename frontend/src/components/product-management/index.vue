@@ -51,11 +51,11 @@
                             {{ item.category3Name }}
                         </td>
                         <td>
-                            <a href="#" class="under-link">
+                            <router-link :to="setUrl(item)">
                                 <span>
                                     {{ item.goodsName }}
                                 </span>
-                            </a>
+                            </router-link>
                         </td>
                         <td>
                             {{ item.minimumOrderQuantity }}
@@ -100,6 +100,9 @@
     },
     props: ['productListData', 'checkItem', 'checkAll', 'loading'],
     methods: {
+        setUrl(item) {
+            return `/order/registration/${item.goodsSeq}`.toLocaleLowerCase();
+        },
         allCheckFn(check) {
             this.$emit('allCheckFn', check);
         },

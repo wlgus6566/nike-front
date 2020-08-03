@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
  * GoodsBasketScheduler
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 6. 오후 4:28:04
- * @Description
+ * @since 2020. 7. 6. 오후 4:28:04
+ * @implNote
  */
 @Slf4j
 @Component
@@ -30,10 +30,10 @@ public class GoodsBasketScheduler {
 	 * [00초], [00분], [00시], [매일], [매월], [매년]
 	 *
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 6. 오후 4:28:04
-	 * @Description
+	 * @since 2020. 7. 6. 오후 4:28:04
+	 * @implNote
 	 */
-	//@Scheduled(cron = "0 * * * * *")
+	//	@Scheduled(cron = "*/10 * * * * *")
 	@Scheduled(cron = "0 0 0 * * *")
 	public void goodsBasketDeleteScheduler(){
 		log.debug("===== 장바구니 초기화 ==== ");

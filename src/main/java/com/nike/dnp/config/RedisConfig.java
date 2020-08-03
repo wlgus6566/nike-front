@@ -22,8 +22,8 @@ import java.time.Duration;
  * Redis Config
  *
  * @author 오지훈
- * @CreatedOn 2020. 6. 24. 오후 6:08:07
- * @Description Redis Config
+ * @since 2020. 6. 24. 오후 6:08:07
+ * @implNote Redis Config
  * @history [오지훈] [2020.05.21] [최초 작성]
  * @since 2020.05.21
  */
@@ -50,8 +50,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 *
 	 * @param redisHost the redis host
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:08:07
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:08:07
+	 * @implNote
 	 */
 	@Value("${spring.redis.host:}")
 	public void setRedisHost(final String redisHost) {
@@ -63,8 +63,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 *
 	 * @param redisPort the redis port
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:08:07
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:08:07
+	 * @implNote
 	 */
 	@Value("${spring.redis.port:}")
 	public void setRedisPort(final int redisPort) {
@@ -76,8 +76,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 *
 	 * @return JedisPoolConfig jedis pool config
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:08:07
-	 * @Description JedisPoolConfig 빈
+	 * @since 2020. 6. 24. 오후 6:08:07
+	 * @implNote JedisPoolConfig 빈
 	 */
 	@Bean
 	public JedisPoolConfig jedisPoolConfig() {
@@ -94,8 +94,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 *
 	 * @return JedisConnectionFactory redis connection factory
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:08:07
-	 * @Description JedisConnectionFactory 빈
+	 * @since 2020. 6. 24. 오후 6:08:07
+	 * @implNote JedisConnectionFactory 빈
 	 */
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
@@ -111,8 +111,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 *
 	 * @return RedisTemplate redis template
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:08:07
-	 * @Description RedisTemplate 빈
+	 * @since 2020. 6. 24. 오후 6:08:07
+	 * @implNote RedisTemplate 빈
 	 */
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate() {
@@ -132,8 +132,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 *
 	 * @return RedisCacheManager cache manager
 	 * @author [오지훈]
-	 * @CreatedOn 2020. 6. 24. 오후 6:08:07
-	 * @Description
+	 * @since 2020. 6. 24. 오후 6:08:07
+	 * @implNote
 	 */
 	@Bean
 	@Override

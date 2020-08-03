@@ -12,8 +12,8 @@ import java.util.List;
  * The Class Order product save dto.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 6. 30. 오후 5:21:31
- * @Description
+ * @since 2020. 6. 30. 오후 5:21:31
+ * @implNote
  */
 @Getter
 @Setter

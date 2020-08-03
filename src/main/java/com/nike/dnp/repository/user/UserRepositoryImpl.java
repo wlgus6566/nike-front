@@ -1,7 +1,7 @@
 package com.nike.dnp.repository.user;
 
 import com.nike.dnp.common.variable.ServiceCode;
-import com.nike.dnp.dto.user.UserReturnDTO;
+import com.nike.dnp.dto.user.UserResultDTO;
 import com.nike.dnp.dto.user.UserSearchDTO;
 import com.nike.dnp.entity.auth.QAuth;
 import com.nike.dnp.entity.user.QUser;
@@ -24,8 +24,8 @@ import java.util.Objects;
  * UserRepositoryImpl
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 22. 오전 11:47:54
- * @Description User(유저) Repository interface 작성
+ * @since 2020. 6. 22. 오전 11:47:54
+ * @implNote User(유저) Repository interface 작성
  */
 @Slf4j
 @Repository
@@ -35,8 +35,8 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
      * Instantiates a new User repository.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오전 11:47:54
-     * @Description
+     * @since 2020. 6. 22. 오전 11:47:54
+     * @implNote
      */
     public UserRepositoryImpl() {
         super(User.class);
@@ -49,18 +49,18 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
      * @param pageRequest   the page request
      * @return the page
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 22. 오전 11:47:54
-     * @Description 조회(페이징)
+     * @since 2020. 6. 22. 오전 11:47:54
+     * @implNote 조회(페이징)
      */
     @Override
-    public Page<UserReturnDTO> findPages(final UserSearchDTO userSearchDTO, final PageRequest pageRequest) {
+    public Page<UserResultDTO> findPages(final UserSearchDTO userSearchDTO, final PageRequest pageRequest) {
         log.info("UserRepositoryImpl.findPages");
         final QUser qUser = QUser.user;
         final QUserAuth qUserAuth = QUserAuth.userAuth;
         final QAuth qAuth = QAuth.auth;
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-        final JPAQuery<UserReturnDTO> jpaQuery = queryFactory
-                .select(Projections.bean(UserReturnDTO.class
+        final JPAQuery<UserResultDTO> jpaQuery = queryFactory
+                .select(Projections.bean(UserResultDTO.class
                         , qUser.userSeq
                         , qUser.nickname
                         , qUser.userId
@@ -78,7 +78,7 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
                     , UserPredicateHelper.compareAuth(userSearchDTO)
                     , qUser.userStatusCode.ne(ServiceCode.UserStatusEnumCode.DELETE.toString())
                 );
-        final List<UserReturnDTO> users = Objects.requireNonNull(getQuerydsl()).applyPagination(pageRequest, jpaQuery).fetch();
+        final List<UserResultDTO> users = Objects.requireNonNull(getQuerydsl()).applyPagination(pageRequest, jpaQuery).fetch();
         return new PageImpl<>(users, pageRequest, jpaQuery.fetchCount());
     }
 
@@ -88,8 +88,8 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
      * @param userSeq the user seq
      * @return the int
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 2. 오후 12:18:05
-     * @Description 90일 지난 패스워드 체크
+     * @since 2020. 7. 2. 오후 12:18:05
+     * @implNote 90일 지난 패스워드 체크
      */
     @Override
     public long countByPaswordChangePeriod(final Long userSeq) {

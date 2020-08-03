@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
  * BannerRepository
  *
  * @author [오지훈]
- * @CreatedOn 2020. 7. 7. 오후 5:02:48
- * @Description Banner(메인 비주얼) Repository Interface 작성
+ * @since 2020. 7. 7. 오후 5:02:48
+ * @implNote Banner(메인 비주얼) Repository Interface 작성
  */
 @Repository
 public interface BannerRepository extends JpaRepository<Banner, Long> {

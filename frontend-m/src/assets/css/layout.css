@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+:root {
+    font-size: 14px;
+    --safeTop: env(safe-area-inset-top);
+    --safeBtm: env(safe-area-inset-bottom);
+}
+html,
+body {
+    box-sizing: border-box;
+}
+body {
+    padding: var(--safeTop) 0 var(--safeBtm);
+}

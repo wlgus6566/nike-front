@@ -7,8 +7,8 @@ import lombok.*;
  * UserLoginLogSaveDTO
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:09:11
- * @Description UserLoginLog(유저_로그인_로그) Save DTO 작성
+ * @since 2020. 6. 24. 오후 6:09:11
+ * @implNote UserLoginLog(유저_로그인_로그) Save DTO 작성
  */
 @Getter
 @Setter

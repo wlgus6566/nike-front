@@ -30,8 +30,8 @@ import java.util.Optional;
  * CalendarService
  *
  * @author [김형욱]
- * @CreatedOn 2020. 6. 29. 오후 8:58:21
- * @Description 달력 Service
+ * @since 2020. 6. 29. 오후 8:58:21
+ * @implNote 달력 Service
  */
 @Slf4j
 @Service
@@ -39,6 +39,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CalendarService {
 
+    /**
+     * The constant DATE_FORMAT
+     *
+     * @author [오지훈]
+     */
+    private final static String DATE_FORMAT = "yyyy.MM.dd HH:mm:ss";
 
     /**
      * The Calendar repository
@@ -53,10 +59,11 @@ public class CalendarService {
      * @param calendarSeq the calendar seq
      * @return the optional
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 4:45:45
-     * @Description
+     * @since 2020. 7. 22. 오후 4:45:45
+     * @implNote
      */
     public Optional<Calendar> findById(final Long calendarSeq) {
+        log.info("CalendarService.findById");
         return calendarRepository.findById(calendarSeq);
     }
 
@@ -66,18 +73,18 @@ public class CalendarService {
      * @param calendarSaveDTO the calendar save dto
      * @return the calendar
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 4:45:45
-     * @Description
+     * @since 2020. 7. 22. 오후 4:45:45
+     * @implNote
      */
     public Calendar save(final CalendarSaveDTO calendarSaveDTO){
-
-        ModelMapper modelMapper = new ModelMapper();
-        Calendar calendar   = modelMapper.map(calendarSaveDTO, Calendar.class);
+        log.info("CalendarService.save");
+        final ModelMapper modelMapper = new ModelMapper();
+        final Calendar calendar = modelMapper.map(calendarSaveDTO, Calendar.class);
 
         calendar.setBeginDt(LocalDateUtil.strToLocalDateTime(
-                calendarSaveDTO.getBeginDt()+" 00:00:00","yyyy.MM.dd HH:mm:ss"));
+                calendarSaveDTO.getBeginDt()+" 00:00:00",DATE_FORMAT));
         calendar.setEndDt(LocalDateUtil.strToLocalDateTime(
-                calendarSaveDTO.getEndDt()+" 23:59:59","yyyy.MM.dd HH:mm:ss"));
+                calendarSaveDTO.getEndDt()+" 23:59:59",DATE_FORMAT));
 
         calendar.setRegisterSeq(SecurityUtil.currentUser().getUserSeq());
         calendar.setUpdaterSeq(SecurityUtil.currentUser().getUserSeq());
@@ -91,18 +98,19 @@ public class CalendarService {
      * @param calendarSearchDTO the calendar search dto
      * @return the page
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 4:45:45
-     * @Description
+     * @since 2020. 7. 22. 오후 4:45:45
+     * @implNote
      */
     public List<Calendar> findAll(final CalendarSearchDTO calendarSearchDTO) {
+        log.info("CalendarService.findAll");
         //월의 마지막 날짜 구하기
-        YearMonth targetYearMonth = YearMonth.from(LocalDate.parse(calendarSearchDTO.getYyyyMm()+".01", DateTimeFormatter.ofPattern("yyyy.MM.dd")));
+        final YearMonth targetYearMonth = YearMonth.from(LocalDate.parse(calendarSearchDTO.getYyyyMm()+".01", DateTimeFormatter.ofPattern("yyyy.MM.dd")));
 
-        LocalDateTime beginDt = LocalDateUtil.strToLocalDateTime(
-                calendarSearchDTO.getYyyyMm()+".01 00:00:00","yyyy.MM.dd HH:mm:ss");
+        final LocalDateTime beginDt = LocalDateUtil.strToLocalDateTime(
+                calendarSearchDTO.getYyyyMm()+".01 00:00:00",DATE_FORMAT);
 
-        LocalDateTime endDt = LocalDateUtil.strToLocalDateTime(
-                calendarSearchDTO.getYyyyMm()+"."+targetYearMonth.lengthOfMonth()+" 23:59:59","yyyy.MM.dd HH:mm:ss");
+        final LocalDateTime endDt = LocalDateUtil.strToLocalDateTime(
+                calendarSearchDTO.getYyyyMm()+"."+targetYearMonth.lengthOfMonth()+" 23:59:59",DATE_FORMAT);
 
         return calendarRepository.findByBeginDtGreaterThanEqualAndEndDtLessThanEqual(beginDt, endDt);
     }
@@ -113,12 +121,13 @@ public class CalendarService {
      * @param calendarUpdateDTO the calendar update dto
      * @return the optional
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 3:58:34
-     * @Description
+     * @since 2020. 7. 22. 오후 3:58:34
+     * @implNote
      */
     @Transactional
     public Calendar update(final CalendarUpdateDTO calendarUpdateDTO) {
-        Optional<Calendar> calendarEntity = calendarRepository.findById(calendarUpdateDTO.getCalendarSeq());
+        log.info("CalendarService.update");
+        final Optional<Calendar> calendarEntity = calendarRepository.findById(calendarUpdateDTO.getCalendarSeq());
 
         if(calendarEntity.isPresent()){
             calendarEntity.ifPresent(
@@ -128,9 +137,9 @@ public class CalendarService {
                         value.setScheduleName(calendarUpdateDTO.getScheduleName());
                         value.setContents(calendarUpdateDTO.getContents());
                         value.setBeginDt(LocalDateUtil.strToLocalDateTime(
-                                calendarUpdateDTO.getBeginDt()+" 00:00:00","yyyy.MM.dd HH:mm:ss"));
+                                calendarUpdateDTO.getBeginDt()+" 00:00:00",DATE_FORMAT));
                         value.setEndDt(LocalDateUtil.strToLocalDateTime(
-                                calendarUpdateDTO.getEndDt()+" 23:59:59","yyyy.MM.dd HH:mm:ss"));
+                                calendarUpdateDTO.getEndDt()+" 23:59:59",DATE_FORMAT));
 
                         value.setRegisterSeq(SecurityUtil.currentUser().getUserSeq());
                         value.setUpdaterSeq(SecurityUtil.currentUser().getUserSeq());
@@ -149,25 +158,27 @@ public class CalendarService {
      * @param calendarSeq the calendar seq
      * @return the optional
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 4:45:45
-     * @Description
+     * @since 2020. 7. 22. 오후 4:45:45
+     * @implNote
      */
     @Transactional
     public Long delete(final Long calendarSeq) {
+        log.info("CalendarService.delete");
         calendarRepository.deleteById(calendarSeq);
         return calendarSeq;
     }
 
     /**
-     * Find all day list.
+     * calendar 날짜 조회
      *
      * @param calendarDaySearchDTO the calendar day search dto
      * @return the list
      * @author [윤태호]
-     * @CreatedOn 2020. 7. 22. 오후 4:45:45
-     * @Description
+     * @since 2020. 7. 22. 오후 4:45:45
+     * @implNote
      */
     public List<Calendar> findAllToday(final CalendarDaySearchDTO calendarDaySearchDTO) {
+        log.info("CalendarService.findAllToday");
         LocalDateTime searchDt = LocalDateTime.now();
         if(!ObjectUtils.isEmpty(calendarDaySearchDTO.getSearchDt())){
             searchDt = LocalDateTime.of(

@@ -20,11 +20,11 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * The type Auth access decision voter.
+ * 시큐리티 권한 체크
  *
  * @author [윤태호]
- * @CreatedOn 2020. 7. 14. 오후 5:54:43
- * @Description
+ * @since 2020. 7. 14. 오후 5:54:43
+ * @implNote
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -57,8 +57,8 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 	 * @param attribute the attribute
 	 * @return the boolean
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 14. 오후 5:54:43
-	 * @Description
+	 * @since 2020. 7. 14. 오후 5:54:43
+	 * @implNote
 	 */
 	@Override
 	public boolean supports(final ConfigAttribute attribute) {
@@ -71,8 +71,8 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 	 * @param clazz the clazz
 	 * @return the boolean
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 14. 오후 5:54:43
-	 * @Description
+	 * @since 2020. 7. 14. 오후 5:54:43
+	 * @implNote
 	 */
 	@Override
 	public boolean supports(final Class<?> clazz) {
@@ -87,8 +87,8 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 	 * @param attributes     the attributes
 	 * @return the int
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 14. 오후 5:54:44
-	 * @Description
+	 * @since 2020. 7. 14. 오후 5:54:44
+	 * @implNote
 	 */
 	@Override
 	public int vote(final Authentication authentication,
@@ -116,8 +116,8 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 	 * @param object the object
 	 * @return int
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 14. 오후 5:54:44
-	 * @Description
+	 * @since 2020. 7. 14. 오후 5:54:44
+	 * @implNote
 	 */
 	private int ipExpression(final Object object) {
 
@@ -141,8 +141,8 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 	 * @param object         the object
 	 * @return int
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 7. 14. 오후 5:54:44
-	 * @Description
+	 * @since 2020. 7. 14. 오후 5:54:44
+	 * @implNote
 	 */
 	private int urlExpression(final Authentication authentication,final Object object) {
 
@@ -168,37 +168,27 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 				resourceUrl.append('*');
 			}
 			//url 매칭 되는것이 있는지 체크
-			if(antPathMatcher.match(resourceUrl.toString(),url)){
-				// http 메소드 확인
-				if(String.valueOf(resourceMethod).isEmpty() || resourceMethod.contains(method)){
-					result = ACCESS_GRANTED;
-					break;
+			if(antPathMatcher.match(resourceUrl.toString(),url) &&
+					(String.valueOf(resourceMethod).isEmpty() || resourceMethod.contains(method))){
+				result = ACCESS_GRANTED;
+				break;
 
-					/* role 이 여러개일 경우 */
-					/*final String[] roleArray = urlFilterMata.getExpression().split(",");
-					for(final String role : roleArray){
-						if(role.equalsIgnoreCase(permitAll)){
-							result = ACCESS_GRANTED;
-						}else{
-							for(final GrantedAuthority authority : authentication.getAuthorities()){
-								if(authority.getAuthority().equalsIgnoreCase(role)){
-									result = ACCESS_GRANTED;
-									break;
-								}
+				/* role 이 여러개일 경우 */
+				/*final String[] roleArray = urlFilterMata.getExpression().split(",");
+				for(final String role : roleArray){
+					if(role.equalsIgnoreCase(permitAll)){
+						result = ACCESS_GRANTED;
+					}else{
+						for(final GrantedAuthority authority : authentication.getAuthorities()){
+							if(authority.getAuthority().equalsIgnoreCase(role)){
+								result = ACCESS_GRANTED;
+								break;
 							}
 						}
-					}*/
-				}
+					}
+				}*/
 			}
 		}
 		return result;
 	}
-
-
-	public static void main(String[] args) {
-		final AntPathMatcher antPathMatcher = new AntPathMatcher();
-		System.out.println(antPathMatcher.match("/api/user/*", "/api/user/view"));
-	}
-
-
 }

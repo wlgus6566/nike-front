@@ -33,7 +33,7 @@
                 </NoData>
             </template>
         </template>
-        <Loading v-if="loadingData" />
+        <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
     </div>
 </template>
 <script>
@@ -43,7 +43,6 @@ import SearchInput from '@/components/search-input';
 import FolderList from '@/components/folder-list';
 import Loading from '@/components/loading';
 import NoData from '@/components/no-data';
-import NoDataSearch from '@/components/no-data/nodata-search';
 
 import { getContents } from '@/api/contents.js';
 
@@ -93,6 +92,12 @@ export default {
                 },
             ],
             folderListData: null,
+            loadingStyle: {
+                width: this.width ? `${this.width}px` : '100%',
+                height: this.height ? `${this.height}px` : '100%',
+                overflow: 'hidden',
+                margin: '0 auto',
+            },
         };
     },
     components: {
@@ -100,12 +105,11 @@ export default {
         FilterSelect,
         FolderList,
         NoData,
-        NoDataSearch,
         SearchInput,
         Loading,
     },
     methods: {
-        handleScroll(event) {
+        handleScroll() {
             if (this.loadingData) return;
             const windowE = document.documentElement;
             if (
@@ -170,14 +174,12 @@ export default {
                 }
                 this.page++;
                 this.loadingData = false;
-                return;
             } catch (error) {
                 console.log(error);
             }
         },
     },
     created() {
-        console.log('folder-list-created');
         this.initFetchData();
         window.addEventListener('scroll', this.handleScroll);
     },

@@ -17,6 +17,12 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class History repository.
+ *
+ * @author [오지훈]
+ * @since 2020. 7. 31. 오후 4:12:12
+ */
 @Repository
 public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements HistoryRepositoryCustom {
 
@@ -24,15 +30,15 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
      * Instantiates a new History repository.
      *
      * @author [이소정]
-     * @CreatedOn 2020. 7. 23. 오전 11:37:32
-     * @Description
+     * @since 2020. 7. 23. 오전 11:37:32
+     * @implNote
      */
     public HistoryRepositoryImpl() {
         super(History.class);
     }
 
     @Override
-    public Page<HistoryResultDTO> findAllHistoryPage(HistorySearchDTO historySearchDTO, PageRequest pageRequest) {
+    public Page<HistoryResultDTO> findAllHistoryPage(final HistorySearchDTO historySearchDTO, final PageRequest pageRequest) {
         final QHistory qHistory = QHistory.history;
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
         final JPAQuery<History> query = queryFactory
@@ -43,9 +49,9 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
                         ));
 
         final List<History> historyList = ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), History.class);
-        List<HistoryResultDTO> historyResultList = new ArrayList<>();
-        for (History history : historyList) {
-            HistoryResultDTO historyResultDTO = new HistoryResultDTO();
+        final List<HistoryResultDTO> historyResultList = new ArrayList<>();
+        for (final History history : historyList) {
+            final HistoryResultDTO historyResultDTO = new HistoryResultDTO();
             historyResultDTO.setHistorySeq(history.getHistorySeq());
             historyResultDTO.setTypeCd(history.getTypeCd());
             historyResultDTO.setRegistrationDt(history.getRegistrationDt());

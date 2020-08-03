@@ -12,8 +12,8 @@ import javax.persistence.*;
  * The Class Alarm.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 24. 오후 7:13:34
- * @Description
+ * @since 2020. 7. 24. 오후 7:13:34
+ * @implNote
  */
 @Getter
 @Setter

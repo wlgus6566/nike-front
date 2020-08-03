@@ -12,8 +12,8 @@ import org.springframework.util.StringUtils;
  * predicate helper.
  *
  * @author [윤태호]
- * @CreatedOn 2020. 6. 19. 오후 4:05:23
- * @Description ProductPredicate 작성
+ * @since 2020. 6. 19. 오후 4:05:23
+ * @implNote ProductPredicate 작성
  * @history [윤태호] [2020.06.17] [최초 작성]
  * @since 2020.06.17
  */
@@ -28,8 +28,8 @@ public class ProductPredicateHelper {
 	 * @param category2Code the category 2 code
 	 * @return the predicate
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 23. 오후 5:05:02
-	 * @Description
+	 * @since 2020. 6. 23. 오후 5:05:02
+	 * @implNote
 	 */
 	public static Predicate eqCate2gory(final String category2Code) {
 		final BooleanBuilder builder = new BooleanBuilder();
@@ -45,8 +45,8 @@ public class ProductPredicateHelper {
 	 * @param category3Code the category 3 code
 	 * @return the predicate
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 23. 오후 5:05:02
-	 * @Description
+	 * @since 2020. 6. 23. 오후 5:05:02
+	 * @implNote
 	 */
 	public static Predicate eqCate3gory(final String category3Code) {
 		final BooleanBuilder builder = new BooleanBuilder();
@@ -62,8 +62,8 @@ public class ProductPredicateHelper {
 	 * @param keyword the keyword
 	 * @return the predicate
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 23. 오후 5:05:02
-	 * @Description
+	 * @since 2020. 6. 23. 오후 5:05:02
+	 * @implNote
 	 */
 	public static Predicate likeGoodName(final String keyword) {
 		final BooleanBuilder builder = new BooleanBuilder();
@@ -80,8 +80,8 @@ public class ProductPredicateHelper {
 	 * @param agencySeq the agency seq
 	 * @return the predicate
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 23. 오후 5:07:20
-	 * @Description
+	 * @since 2020. 6. 23. 오후 5:07:20
+	 * @implNote
 	 */
 	public static Predicate eqAgentSeq(final Long agencySeq) {
 		final BooleanBuilder builder = new BooleanBuilder();
@@ -97,8 +97,8 @@ public class ProductPredicateHelper {
 	 * @param exposureYn the exposure yn
 	 * @return the predicate
 	 * @author [윤태호]
-	 * @CreatedOn 2020. 6. 23. 오후 5:25:34
-	 * @Description
+	 * @since 2020. 6. 23. 오후 5:25:34
+	 * @implNote
 	 */
 	public static Predicate eqExposureYn(final String exposureYn) {
 		final BooleanBuilder builder = new BooleanBuilder();

@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
  * UserLoginLog Entity
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 24. 오후 6:10:27
- * @Description UserLoginLog(유저_로그인_로그) Entity 작성
+ * @since 2020. 6. 24. 오후 6:10:27
+ * @implNote UserLoginLog(유저_로그인_로그) Entity 작성
  */
 @Getter
 @Setter

@@ -7,6 +7,7 @@ import com.nike.dnp.entity.contents.QRecentUpload;
 import com.nike.dnp.entity.history.QHistory;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.StringUtils;
 
@@ -14,10 +15,11 @@ import org.springframework.util.StringUtils;
  * The Class History predicate helper.
  *
  * @author [이소정]
- * @CreatedOn 2020. 7. 24. 오후 4:02:15
- * @Description
+ * @since 2020. 7. 24. 오후 4:02:15
+ * @implNote
  */
 @UtilityClass
+@NoArgsConstructor
 public class HistoryPredicateHelper {
 
 	/**
@@ -26,8 +28,8 @@ public class HistoryPredicateHelper {
 	 * @param historySearchDTO the history search dto
 	 * @return the predicate
 	 * @author [이소정]
-	 * @CreatedOn 2020. 7. 24. 오후 4:03:57
-	 * @Description
+	 * @since 2020. 7. 24. 오후 4:03:57
+	 * @implNote
 	 */
 	public Predicate eqTypeCdViewHistory(final HistorySearchDTO historySearchDTO) {
 		final BooleanBuilder builder = new BooleanBuilder();
@@ -46,8 +48,8 @@ public class HistoryPredicateHelper {
 	 * @param historySearchDTO the history search dto
 	 * @return the predicate
 	 * @author [이소정]
-	 * @CreatedOn 2020. 7. 24. 오후 4:03:57
-	 * @Description
+	 * @since 2020. 7. 24. 오후 4:03:57
+	 * @implNote
 	 */
 	public Predicate eqTypeCdUploadHistory(final HistorySearchDTO historySearchDTO) {
 		final BooleanBuilder builder = new BooleanBuilder();

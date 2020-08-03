@@ -19,8 +19,8 @@ import java.util.List;
  * The Class Auth repository.
  *
  * @author [오지훈]
- * @CreatedOn 2020. 6. 23. 오전 11:51:57
- * @Description Auth(권한) Repository interface 작성
+ * @since 2020. 6. 23. 오전 11:51:57
+ * @implNote Auth(권한) Repository interface 작성
  */
 @Repository
 public class AuthRepositoryImpl extends QuerydslRepositorySupport implements AuthRepositoryCustom {
@@ -29,8 +29,8 @@ public class AuthRepositoryImpl extends QuerydslRepositorySupport implements Aut
      * Instantiates a new Auth repository.
      *
      * @author [오지훈]
-     * @CreatedOn 2020. 6. 23. 오전 11:51:57
-     * @Description 생성자 주입
+     * @since 2020. 6. 23. 오전 11:51:57
+     * @implNote 생성자 주입
      */
     public AuthRepositoryImpl() {
         super(Auth.class);
@@ -43,8 +43,8 @@ public class AuthRepositoryImpl extends QuerydslRepositorySupport implements Aut
      * @param skillCode the skill code
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오후 4:27:00
-     * @Description 컨텐츠 권한 목록
+     * @since 2020. 7. 20. 오후 4:27:00
+     * @implNote 컨텐츠 권한 목록
      */
     @Override
     public List<AuthReturnDTO> findByConfig(final String menuCode, final String skillCode) {
@@ -88,8 +88,8 @@ public class AuthRepositoryImpl extends QuerydslRepositorySupport implements Aut
      * @param authSeqArray the auth seq array
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 20. 오후 2:50:03
-     * @Description 컨텐츠 권한 목록
+     * @since 2020. 7. 20. 오후 2:50:03
+     * @implNote 컨텐츠 권한 목록
      */
     @Override
     public List<AuthReturnDTO> findByAuthSeqArray(final Long... authSeqArray) {
@@ -123,8 +123,8 @@ public class AuthRepositoryImpl extends QuerydslRepositorySupport implements Aut
      * @param skillCode the skill code
      * @return the list
      * @author [오지훈]
-     * @CreatedOn 2020. 7. 21. 오후 5:04:25
-     * @Description
+     * @since 2020. 7. 21. 오후 5:04:25
+     * @implNote
      */
     @Override
     public List<AuthReturnDTO> findByAuthDepth(

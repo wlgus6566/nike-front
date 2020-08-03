@@ -1,5 +1,8 @@
 <template>
     <div>
+        <h2 class="page-title">
+            <span class="ko">{{ this.$route.meta.title }}</span>
+        </h2>
         <div class="sorting-area">
             <SearchInput @searchSubmit="searchSubmit" />
         </div>
@@ -29,17 +32,16 @@
     </div>
 </template>
 <script>
-    import SearchInput from '@/components/search-input';
-    import ProductList from '@/components/product-list';
-    import Loading from '@/components/loading';
-    import NoData from '@/components/no-data';
-    import NoDataSearch from '@/components/no-data/nodata-search';
-    import detailView from '@/views/pages/product/detail-view';
+import SearchInput from '@/components/search-input';
+import ProductList from '@/components/product-list';
+import Loading from '@/components/loading';
+import NoData from '@/components/no-data';
+import detailView from '@/views/pages/product/detail-view';
 
-    import {getUserProductList} from '@/api/product.js';
-    import {getWishList, postWishList} from '@/api/wish-list';
+import { getUserProductList } from '@/api/product.js';
+import { getWishList, postWishList } from '@/api/wish-list';
 
-    export default {
+export default {
     name: 'product-list',
     data() {
         return {
@@ -63,15 +65,12 @@
             },
         };
     },
-    created() {
-        this.getUserProduct();
-    },
+    created() {},
     components: {
         SearchInput,
         ProductList,
         Loading,
         NoData,
-        NoDataSearch,
         detailView,
     },
     mounted() {
@@ -107,7 +106,7 @@
         showDetailView(goodsSeq) {
             this.visible.detailView = true;
             const findIndex = this.userProductListData.findIndex(
-                (el) => el.goodsSeq === goodsSeq
+                el => el.goodsSeq === goodsSeq
             );
             this.productDetailData = this.userProductListData[findIndex];
         },
@@ -131,7 +130,7 @@
         async addWishList(goodsSeq) {
             try {
                 const findIndex = this.wishListData.findIndex(
-                    (el) => el.goodsSeq === goodsSeq.goodsSeq
+                    el => el.goodsSeq === goodsSeq.goodsSeq
                 );
                 if (findIndex == -1) {
                     await postWishList({

@@ -11,8 +11,8 @@ import org.apache.commons.lang.StringUtils;
  * The Class Notice predicate helper.
  *
  * @author [정주희]
- * @CreatedOn 2020. 7. 13. 오후 10:01:52
- * @Description 목록 조회시 where 조건 helper
+ * @since 2020. 7. 13. 오후 10:01:52
+ * @implNote 목록 조회시 where 조건 helper
  */
 @UtilityClass
 public class NoticePredicateHelper {
@@ -23,10 +23,10 @@ public class NoticePredicateHelper {
      * @param categoryCode the category code
      * @return the predicate
      * @author [정주희]
-     * @CreatedOn 2020. 7. 13. 오후 10:59:21
-     * @Description 카테고리 검색 helper
+     * @since 2020. 7. 13. 오후 10:59:21
+     * @implNote 카테고리 검색 helper
      */
-    public static Predicate eqCategoryCode(String categoryCode) {
+    public static Predicate eqCategoryCode(final String categoryCode) {
         final BooleanBuilder builder = new BooleanBuilder();
 
         if (!StringUtils.isEmpty(categoryCode)) {
@@ -42,14 +42,14 @@ public class NoticePredicateHelper {
      * @param keyword the keyword
      * @return the predicate
      * @author [정주희]
-     * @CreatedOn 2020. 7. 13. 오후 10:59:49
-     * @Description 제목, 내용 keyword 검색 helper
+     * @since 2020. 7. 13. 오후 10:59:49
+     * @implNote 제목, 내용 keyword 검색 helper
      */
-    public static Predicate containsKeword(String keyword) {
+    public static Predicate containsKeword(final String keyword) {
         final BooleanBuilder builder = new BooleanBuilder();
 
         if (!StringUtils.isEmpty(keyword)) {
-            builder.and((QNoticeArticle.noticeArticle.contents.contains(keyword))
+            builder.and(QNoticeArticle.noticeArticle.contents.contains(keyword)
                     .or(QNoticeArticle.noticeArticle.title.contains(keyword)));
         }
 
