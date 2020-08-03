@@ -3,6 +3,7 @@ package com.nike.dnp.dto.report;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 
@@ -25,6 +26,7 @@ public class ReportSaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "report.reportSectionCode")
     @ApiModelProperty(name = "reportSectionCode", value = "구분 코드", required = true, example = "SP")
     private String reportSectionCode;
 
@@ -33,6 +35,7 @@ public class ReportSaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "report.reportName")
     @ApiModelProperty(name = "reportName", value = "보고서 명", example = "FA20 RN NIKE DIRECT PEGASUS 37 시공보고서", required = true)
     private String reportName;
 
@@ -41,6 +44,7 @@ public class ReportSaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "report.imageBase64")
     @ApiModelProperty(name = "imageBase64", value = "이미지 base64 문자", example = "data:image/jpeg;base64," + "/9j/4AAQSkZJRgABAQEAYABgAAD" +
             "/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUF" +
             "BQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAD0AacDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhB" +
@@ -192,6 +196,7 @@ public class ReportSaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "report.reportFileSaveDTOList")
     @ApiModelProperty(name = "reportFileSaveDTOList", value = "보고서 파일 목록")
     private List<ReportFileSaveDTO> reportFileSaveDTOList;
 

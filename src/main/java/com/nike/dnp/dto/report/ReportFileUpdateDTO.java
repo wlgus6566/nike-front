@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 
 /**
  * The Class Report file update dto.
@@ -21,6 +22,7 @@ public class ReportFileUpdateDTO {
 
     /**
      * The Report file seq
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "reportFileSeq", value = "보고서 파일 시퀀스", required = true, example = "1")
@@ -28,6 +30,7 @@ public class ReportFileUpdateDTO {
 
     /**
      * 보고서 시퀀스
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "reportSeq", value = "보고서 시퀀스", example = "2")
@@ -35,23 +38,29 @@ public class ReportFileUpdateDTO {
 
     /**
      * The File name
+     *
      * @author [이소정]
      */
-    @Column(name = "FILE_NAME")
+    @NotBlank(message = "report.file")
+    @ApiModelProperty(name = "fileName", value = "파일명", example = "file.jpg", required = true)
     private String fileName;
 
     /**
      * The File size
+     *
      * @author [이소정]
      */
-    @Column(name = "FILE_SIZE")
+    @NotBlank(message = "report.file")
+    @ApiModelProperty(name = "fileSize", value = "파일 사이즈", example = "150", required = true)
     private String fileSize;
 
     /**
      * The File physical name
+     *
      * @author [이소정]
      */
-    @Column(name = "FILE_PHYSICAL_NAME")
+    @NotBlank(message = "report.file")
+    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리명", example = "/upload/report/path", required = true)
     private String filePhysicalName;
 
     /**
@@ -59,6 +68,7 @@ public class ReportFileUpdateDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "report.file")
     @ApiModelProperty(name = "fileContentType", value = "파일 컨텐츠 타입", example = "image/jpeg")
     private String fileContentType;
 
@@ -67,6 +77,7 @@ public class ReportFileUpdateDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "report.file")
     @ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "JPG")
     private String fileExtension;
 

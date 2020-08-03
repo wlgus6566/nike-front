@@ -3,6 +3,9 @@ package com.nike.dnp.dto.agency;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 /**
  * The Class Agency save dto.
  *
@@ -22,6 +25,7 @@ public class AgencySaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "agency.agencyName")
     @ApiModelProperty(name = "agencyName", value = "에이젼시 이름", example = "AGENCY1")
     private String agencyName;
 
@@ -46,6 +50,8 @@ public class AgencySaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "agency.email")
+    @Email(message = "agency.emailPattern")
     @ApiModelProperty(name = "email", value = "이메일", example = "example@example.co.kr")
     private String email;
 

@@ -3,6 +3,8 @@ package com.nike.dnp.dto.report;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * The Class Report file save dto.
  *
@@ -22,6 +24,7 @@ public class ReportFileSaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "report.file")
     @ApiModelProperty(name = "fileName", value = "파일명", example = "file.jpg", required = true)
     private String fileName;
 
@@ -30,6 +33,7 @@ public class ReportFileSaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "report.file")
     @ApiModelProperty(name = "fileSize", value = "파일 사이즈", example = "150", required = true)
     private String fileSize;
 
@@ -38,6 +42,7 @@ public class ReportFileSaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "report.file")
     @ApiModelProperty(name = "filePhysicalName", value = "파일 물리명", example = "/upload/report/path", required = true)
     private String filePhysicalName;
 
@@ -46,6 +51,7 @@ public class ReportFileSaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "report.file")
     @ApiModelProperty(name = "fileContentType", value = "파일 컨텐츠 타입", example = "image/jpeg")
     private String fileContentType;
 
@@ -54,6 +60,7 @@ public class ReportFileSaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "report.file")
     @ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "JPG")
     private String fileExtension;
 
