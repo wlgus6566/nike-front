@@ -21,12 +21,11 @@ Vue.use(VCalendar, {
     masks: {
         title: 'YYYY.MM',
         weekdays: 'WWW',
-        navMonths: 'MMM',
-        input: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD'],
+        data: ['YYYY-MM-DD'],
+        input: ['YYYY.MM.DD'],
         dayPopover: 'WWW, MMM D, YYYY',
-        data: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD'],
+        // navMonths: 'MMM',
     },
-    dayNamesShort: 'WWW',
 });
 
 Vue.directive('lineClamp', lineClamp);

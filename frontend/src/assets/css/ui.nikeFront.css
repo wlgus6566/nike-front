@@ -639,7 +639,7 @@
 .date-picker .vc-leading-tight {
     height:39px;
     line-height:16px;
-    padding:0 36px 0 0;
+    padding:0 24px 0 0;
     box-sizing:border-box;
     background:url('../images/svg/icon-input-calender.svg') right 10px no-repeat;
     font-size:14px;
@@ -662,8 +662,22 @@
 }
 .vc-day-content {
     font-family: 'Roboto', sans-serif;
-    font-size: 12px;
+    font-size: 12px !important;
     color: #333;
+    font-weight: 400 !important;
+}
+.vc-day-content.vc-text-gray-400 {
+    color:rgba(0,0,0,.2);
+}
+.vc-bg-gray-600 {
+    background-color: #000 !important;
+}
+.vc-weekday {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing:.5px;
+    font-size:14px !important;
+    color:#888 !important;
+    font-weight:100 !important;
 }
 .vc-rounded-full {
     width: 26px;
@@ -677,6 +691,7 @@
     background-color: #fa5400 !important;
     color: #fff !important;
 }
+.vc-text-gray-400.vc-text-white {color:#fff;}
 .vc-border,
 .vc-border-2,
 .vc-border-3 {

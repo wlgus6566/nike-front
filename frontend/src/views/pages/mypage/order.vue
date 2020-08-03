@@ -3,20 +3,33 @@
         <h2 class="page-title">
             <span class="ko">주문내역확인</span>
         </h2>
-
-        {{ range.beginDt }}<br />
-        {{ range.endDt }}
         <div class="period-check">
             <strong class="title">기간조회</strong>
             <div class="date-picker-group">
                 <div class="date-picker">
-                    <v-date-picker color="orange" v-model="range.beginDt" />
+                    <v-date-picker
+                        v-model="range.beginDt"
+                        locale="en-us"
+                        color="orange"
+                        :input-props="{
+                            placeholder: 'YYYY.MM.DD',
+                        }"
+                        :attributes="attrs"
+                        :min-date="minDate()"
+                        :max-date="new Date()"
+                    />
                 </div>
                 <div class="date-picker">
                     <v-date-picker
-                        color="orange"
-                        :masks="{ title: 'YYYY.MM' }"
                         v-model="range.endDt"
+                        locale="en-us"
+                        color="orange"
+                        :input-props="{
+                            placeholder: 'YYYY.MM.DD',
+                        }"
+                        :attributes="attrs"
+                        :min-date="minDate()"
+                        :max-date="new Date()"
                     />
                 </div>
             </div>
@@ -49,6 +62,16 @@ export default {
                 beginDt: null,
                 endDt: null,
             },
+            placeholder: 'abc',
+            attrs: [
+                {
+                    key: 'today',
+                    highlight: 'gray',
+                    dates: new Date(),
+                    class: 'vc-today',
+                    contentClass: 'vc-today',
+                },
+            ],
         };
     },
     activated() {
@@ -70,44 +93,6 @@ export default {
                 }
             },
         },
-        // range: {
-        //     deep: true,
-        //     handler() {
-        //         console.log(data);
-        //         console.log(data2);
-        //         // if (data !== this.range.beginDt) {
-        //         //     data = this.range.beginDt;
-        //         // } else {
-        //         //     data = this.range.endDt;
-        //         // }
-        //         // console.log(data);
-        //     },
-        // },
-
-        // dateRefine(date) {
-        //     // beginDate = this.range.beginDt;
-        //     // endDate = this.range.endDt;
-        //     let year = date.getFullYear();
-        //     let month = date.getMonth() + 1;
-        //     let day = date.getDate();
-        //     if (month < 10) {
-        //         month = `0${month}`;
-        //     }
-        //     if (day < 10) {
-        //         day = `0${day}`;
-        //     }
-        //     this.make.endDt = `${year}-${month}-${day}`; //2020-07-08
-        //     if (
-        //         Number(this.make.beginDt.replace(/-/gi, '')) >
-        //         Number(this.make.endDt.replace(/-/gi, ''))
-        //     ) {
-        //         alert('시작일이 종료일보다 클 수 없습니다.');
-        //         date = null;
-        //         return false;
-        //     } else {
-        //         date = `${year}-${month}-${day}`;
-        //     }
-        // },
         'range.beginDt'(val) {
             let year = val.getFullYear();
             let month = val.getMonth() + 1;
@@ -119,23 +104,16 @@ export default {
                 day = `0${day}`;
             }
             this.make.beginDt = `${year}-${month}-${day}`;
-            //  = this.make.beginDt  // 그냥 들어가도됨
-            // this.make.endDt < this.make.beginDt this.make.endDt 알럿이 들어가고 'this.make.endDt' 빈값을 넣어
-            // this.make.endDt > this.make.beginDt  // this.make.beginDt 그냥 들어가도됨
-
-            // this.make.endDt null이거나 this.make.endDt 시작일보다 작으면
             if (
-                this.make.endDt === null ||
-                Number(this.make.beginDt.replace(/-/gi, '')) <
-                    Number(this.make.endDt.replace(/-/gi, ''))
+                Number(this.make.beginDt.replace(/-/gi, '')) >
+                Number(this.make.endDt.replace(/-/gi, ''))
             ) {
-                this.make.beginDt = `${year}-${month}-${day}`;
-            } else {
                 alert('시작일이 종료일보다 클 수 없습니다.');
-                this.range.endDt = null;
+                this.range.beginDt = this.range.endDt;
+            } else {
+                this.make.beginDt = `${year}-${month}-${day}`;
             }
         },
-
         'range.endDt'(val) {
             let year = val.getFullYear();
             let month = val.getMonth() + 1;
@@ -147,22 +125,29 @@ export default {
                 day = `0${day}`;
             }
             this.make.endDt = `${year}-${month}-${day}`; //2020-07-08
-            // this.make.endDt < this.make.beginDt this.make.endDt 알럿이 들어가고 'this.make.endDt' 빈값을 넣어
-            // this.make.endDt > this.make.beginDt  // this.make.beginDt 그냥 들어가도됨
-
-            //
             if (
                 Number(this.make.beginDt.replace(/-/gi, '')) >
                 Number(this.make.endDt.replace(/-/gi, ''))
             ) {
                 alert('시작일이 종료일보다 클 수 없습니다.');
-                this.range.endDt = null;
+                this.range.endDt = this.range.beginDt;
             } else {
                 this.make.endDt = `${year}-${month}-${day}`;
             }
         },
     },
     methods: {
+        dates() {
+            console.log('aa');
+            // date = new Date();
+            // date.setMonth(date.getMonth() - 1);
+            // document.write('1달 전 : ' + date + '<br>');
+        },
+        minDate() {
+            const date = new Date();
+            date.setMonth(date.getMonth() - 3);
+            return date;
+        },
         dateRefine(date) {
             let year = date.getFullYear();
             let month = date.getMonth() + 1;
@@ -189,7 +174,7 @@ export default {
         },
         async fetchData() {
             this.loadingData = true;
-            console.log('타나요');
+            console.log();
             try {
                 const {
                     data: { data: response },
