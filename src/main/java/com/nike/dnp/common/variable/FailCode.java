@@ -62,6 +62,8 @@ public class FailCode {
         , NULL_URL
         , SELECT_FILE
         , EXCEED_MAX_NOTICE
+        , NOT_FOUND_PRODUCT
+        , MINIMUM_ORDER_QUANTITY
     }
 
 }

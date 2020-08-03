@@ -174,7 +174,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		if (isValid && user.get().getPasswordChangeYn().equals("Y")) {
 			if (certCode.isEmpty()) {
 				// [인증코드] 메일 발송
-				userMailService.createCertCode(authUserDTO.getUserId());
+				userMailService.sendMailForAuthEmail(user.get());
 
 				JsonUtil.write(response.getWriter()
 						, responseService.getFailResult(

@@ -51,6 +51,7 @@ public class UserMailService {
      * @since 2020. 7. 3. 오전 11:06:21
      * @implNote 계정 생성 안내 메일 발송
      */
+    @Transactional
     public String sendMailForCreateUser(final User user) {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
@@ -76,6 +77,7 @@ public class UserMailService {
      * @since 2020. 7. 3. 오전 11:18:48
      * @implNote 비밀번호 설정 안내 메일
      */
+    @Transactional
     public String sendMailForSetPassword(final User user) {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
@@ -103,6 +105,7 @@ public class UserMailService {
      * @since 2020. 7. 3. 오전 11:18:50
      * @implNote 비밀번호 변경 안내 메일
      */
+    @Transactional
     public void sendMailForChangePassword(final User user) {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
@@ -126,6 +129,7 @@ public class UserMailService {
      * @since 2020. 7. 3. 오전 11:18:51
      * @implNote email인증 안내 메일(인증코드)
      */
+    @Transactional
     public void sendMailForAuthEmail(final User user) {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
@@ -147,6 +151,7 @@ public class UserMailService {
      * @since 2020. 7. 3. 오전 11:18:53
      * @implNote 휴면계정 전환 사전 안내 메일
      */
+    @Transactional
     public void sendMailForChangeDormant(final User user) {
 
         final SendDTO sendDTO = new SendDTO();
@@ -172,6 +177,7 @@ public class UserMailService {
      * @since 2020. 7. 3. 오전 11:19:34
      * @implNote 휴면계정 처리 안내 메일
      */
+    @Transactional
     public void sendMailForProcessingDormant(final User user) {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
@@ -196,6 +202,7 @@ public class UserMailService {
      * @since 2020. 7. 3. 오전 11:19:34
      * @implNote 휴면계정 해제 안내 메일
      */
+    @Transactional
     public void sendMailForReleaseDormant(final User user) {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
@@ -223,7 +230,7 @@ public class UserMailService {
     public String createEncodeCertCode(final String userId) {
         final String certCode = RandomUtil.randomCertCode2(10);
         redisService.set("cert:"+userId, certCode, 60);
-        return CryptoUtil.urlEncode(CryptoUtil.encryptAES256(userId + "|" + certCode, "Nike DnP"));
+        return CryptoUtil.urlEncode(CryptoUtil.encryptAES256(userId + "NIKESPACE" + certCode, "Nike DnP"));
     }
 
     /**

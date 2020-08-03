@@ -24,10 +24,9 @@ public class OrderScheduler {
 	 */
 	//@Scheduled(cron = "*/10 * * * * *")
 	@Scheduled(cron = "0 0 0 * * *")
-	public void goodsBasketDeleteScheduler() {
-		log.info("OrderScheduler.goodsBasketDeleteScheduler");
+	public void after1yearDeleteScheduler() {
+		log.info("OrderScheduler.after1yearDeleteScheduler");
 		log.debug("==== 1년 지난 주문 삭제 처리 ====");
 		orderService.after1yearDelete();
 	}
-
 }
