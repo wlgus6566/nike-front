@@ -1,15 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { loginUser } from '@/api/login';
-import { getBasketList } from '@/api/basket.js';
-import { getContentsBasket } from '@/api/contents';
+import {loginUser} from '@/api/login';
+import {getBasketList} from '@/api/basket.js';
+import {getContentsBasket} from '@/api/contents';
 
-import {
-    deleteCookie,
-    getAuthFromCookie,
-    saveAuthToCookie,
-} from '@/utils/cookies.js';
+import {deleteCookie, getAuthFromCookie, saveAuthToCookie,} from '@/utils/cookies.js';
 
 Vue.use(Vuex);
 export default new Vuex.Store({

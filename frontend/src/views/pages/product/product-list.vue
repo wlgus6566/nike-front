@@ -32,16 +32,16 @@
     </div>
 </template>
 <script>
-import SearchInput from '@/components/search-input';
-import ProductList from '@/components/product-list';
-import Loading from '@/components/loading';
-import NoData from '@/components/no-data';
-import detailView from '@/views/pages/product/detail-view';
+    import SearchInput from '@/components/search-input';
+    import ProductList from '@/components/product-list';
+    import Loading from '@/components/loading';
+    import NoData from '@/components/no-data';
+    import detailView from '@/views/pages/product/detail-view';
 
-import { getUserProductList } from '@/api/product.js';
-import { getWishList, postWishList } from '@/api/wish-list';
+    import {getUserProductList} from '@/api/product.js';
+    import {getWishList, postWishList} from '@/api/wish-list';
 
-export default {
+    export default {
     name: 'product-list',
     data() {
         return {
@@ -65,7 +65,9 @@ export default {
             },
         };
     },
-    created() {},
+    created() {
+        this.getUserProduct();
+    },
     components: {
         SearchInput,
         ProductList,
@@ -106,7 +108,7 @@ export default {
         showDetailView(goodsSeq) {
             this.visible.detailView = true;
             const findIndex = this.userProductListData.findIndex(
-                el => el.goodsSeq === goodsSeq
+                (el) => el.goodsSeq === goodsSeq
             );
             this.productDetailData = this.userProductListData[findIndex];
         },
@@ -130,7 +132,7 @@ export default {
         async addWishList(goodsSeq) {
             try {
                 const findIndex = this.wishListData.findIndex(
-                    el => el.goodsSeq === goodsSeq.goodsSeq
+                    (el) => el.goodsSeq === goodsSeq.goodsSeq
                 );
                 if (findIndex == -1) {
                     await postWishList({

@@ -58,7 +58,7 @@
             pageCount: 11,
             totalItem: 0,
             page: 0,
-            itemLength: 20,
+            itemLength: 2,
             searchKeyword: '',
             checkAll: false,
             checkItem: [],
@@ -242,7 +242,15 @@
         NoData,
     },
     created() {},
-    computed: {},
+    computed: {
+        basketList() {
+            if (!!this.$store.state.basketListData) {
+                return this.$store.state.basketListData;
+            } else {
+                return [];
+            }
+        },
+    },
     watch: {
         'category2Code.value'() {
             this.category2Code.listSortOptions.forEach((item) => {
@@ -263,6 +271,9 @@
         this.getProduct();
         this.getAgency();
     },
+    activated() {
+        this.getProduct();
+    },
     methods: {
         //에이전시 리스트
         async getAgency() {
@@ -278,8 +289,6 @@
                     };
                     this.agency.listSortOptions.push(agencyList);
                 });
-
-                console.log('1');
             } catch (error) {
                 console.log(error);
             }

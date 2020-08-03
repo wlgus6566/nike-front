@@ -1086,6 +1086,7 @@
     display: inline-block;
     text-align: center;
     width: 190px;
+    vertical-align: top;
 }
 .thumb-file input {
     z-index: 2;

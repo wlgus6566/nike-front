@@ -10,7 +10,7 @@
                 @change="setImage"
             />
             <span class="thumb">
-                <img v-if="" :src="cropImg" alt="Cropped Image" />
+                <img v-if="cropImg" :src="cropImg" :alt="imgName" />
             </span>
             <span class="txt" @click="inputReset" v-if="cropImg">
                 썸네일 이미지 재등록
@@ -55,15 +55,23 @@
         return {
             dialogVisible: false,
             imgSrc: require('@/assets/images/@test1.jpg'),
-            //cropImg: require('@/assets/images/@test1.jpg'),
-            cropImg: null, //require('@/assets/images/@test1.jpg')
+            cropImg: null,
+            imgName: null,
+            //cropImg: null, //require('@/assets/images/@test1.jpg')
             data: null,
         };
     },
-    props: ['imageFilePhysicalName'],
+    props: ['imageFilePhysicalName', 'imageFileName'],
     components: { VueCropper },
-    created() {},
     mounted() {},
+    watch: {
+        imageFilePhysicalName() {
+            this.cropImg = this.imageFilePhysicalName;
+        },
+        imageFileName() {
+            this.imgName = this.imageFileName;
+        },
+    },
     computed: {},
     methods: {
         inputReset() {
@@ -82,8 +90,8 @@
         cropImage() {
             // get image data for post processing, e.g. upload or setting image src
             this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
-            console.log(this.imageFilePhysicalName.toDataURL());
             this.dialogVisible = false;
+            this.$emit('cropImage', this.cropImg, this.imgName);
         },
         flipX() {
             const dom = this.$refs.flipX;
@@ -135,6 +143,9 @@
 
             if (typeof FileReader === 'function') {
                 const reader = new FileReader();
+                this.imgName = this.imgSrc.substring(
+                    this.imgSrc.lastIndexOf('/') + 1
+                );
                 reader.onload = (event) => {
                     this.imgSrc = event.target.result;
                     // rebuild cropperjs with the updated source

@@ -13,6 +13,7 @@
                         :imageFilePhysicalName="
                             detailData.imageFilePhysicalName
                         "
+                        :imageFileName="detailData.imageFileName"
                     ></Thumbnail>
                 </li>
                 <li class="form-row">
@@ -172,11 +173,11 @@
     </div>
 </template>
 <script>
-    import {getProductDetail, postProduct} from '@/api/product';
-    import {getExistMsg} from '@/utils/common';
+    import {getProductDetail, postProduct, putProduct} from '@/api/product';
 
     import Thumbnail from '@/components/thumbnail/index';
     import {getAgencyContact} from '@/api/agency';
+    import store from '@/store';
 
     export default {
     name: 'registration',
@@ -199,7 +200,7 @@
                 unitPrice: '',
                 minimumOrderQuantity: '',
                 imageBase64: '',
-                imageFileName: 'text.jpg',
+                imageFileName: '',
                 exposureYn: '',
             },
             category2Code: {
@@ -375,6 +376,15 @@
     created() {
         this.detailProduct();
     },
+    computed: {
+        basketList() {
+            if (!!this.$store.state.basketListData) {
+                return this.$store.state.basketListData;
+            } else {
+                return [];
+            }
+        },
+    },
     watch: {
         'category2Code.value'() {
             this.select3CodeFn();
@@ -382,6 +392,7 @@
     },
     mounted() {
         this.getAgency();
+        this.detailProduct();
     },
     methods: {
         //에이전시 리스트
@@ -398,14 +409,14 @@
                     };
                     this.agency.listSortOptions.push(agencyList);
                 });
-
-                console.log('1');
             } catch (error) {
                 console.log(error);
             }
         },
-        cropImage(imageBase64) {
+        //이미지 받아오기
+        cropImage(imageBase64, imgName) {
             this.detailData.imageBase64 = imageBase64;
+            this.detailData.imageFileName = imgName;
         },
         select3CodeFn() {
             this.category2Code.listSortOptions.forEach((item) => {
@@ -424,6 +435,7 @@
                 }
             });
         },
+        // 상품 상세 불러오기
         async detailProduct() {
             if (this.$route.params.id) {
                 try {
@@ -440,31 +452,64 @@
                     this.category2Code.value = this.detailData.category2Code;
                     this.select3CodeFn();
                     this.category3Code.value = this.detailData.category3Code;
-
-                    //await getExistMsg(response);
                 } catch (error) {
                     console.log(error);
                 }
             }
         },
+        //상품 등록
         async addProduct() {
-            try {
-                const { data: response } = await postProduct({
-                    agencySeq: 1,
-                    category2Code: this.category2Code.value,
-                    category3Code: this.category3Code.value,
-                    exposureYn: this.exposure.value,
-                    goodsDescription: this.detailData.goodsDescription,
-                    goodsName: this.detailData.goodsName,
-                    imageBase64: this.detailData.imageBase64,
-                    imageFileName: this.detailData.imageFileName,
-                    minimumOrderQuantity: this.detailData.minimumOrderQuantity,
-                    unitPrice: this.detailData.unitPrice,
-                });
-                await getExistMsg(response);
-                console.log(response);
-            } catch (error) {
-                console.log(error);
+            if (this.$route.params.id) {
+                let addAlert = confirm('수정하시겠습니까');
+                if (addAlert) {
+                    try {
+                        const { data: response } = await putProduct(
+                            this.$route.params.id,
+                            {
+                                agencySeq: 1,
+                                category2Code: this.category2Code.value,
+                                category3Code: this.category3Code.value,
+                                exposureYn: this.exposure.value,
+                                goodsDescription: this.detailData
+                                    .goodsDescription,
+                                goodsName: this.detailData.goodsName,
+                                imageBase64: this.detailData.imageBase64,
+                                imageFileName: this.detailData.imageFileName,
+                                minimumOrderQuantity: this.detailData
+                                    .minimumOrderQuantity,
+                                unitPrice: this.detailData.unitPrice,
+                            }
+                        );
+                        // await getExistMsg(response);
+                        await this.$router.push('/order/management');
+                        await store.dispatch('basketList');
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+            } else {
+                let addAlert = confirm('저장하시겠습니까');
+                if (addAlert) {
+                    try {
+                        const { data: response } = await postProduct({
+                            agencySeq: 1,
+                            category2Code: this.category2Code.value,
+                            category3Code: this.category3Code.value,
+                            exposureYn: this.exposure.value,
+                            goodsDescription: this.detailData.goodsDescription,
+                            goodsName: this.detailData.goodsName,
+                            imageBase64: this.detailData.imageBase64,
+                            imageFileName: this.detailData.imageFileName,
+                            minimumOrderQuantity: this.detailData
+                                .minimumOrderQuantity,
+                            unitPrice: this.detailData.unitPrice,
+                        });
+                        // await getExistMsg(response);
+                        await this.$router.push('/order/management');
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
             }
         },
     },
