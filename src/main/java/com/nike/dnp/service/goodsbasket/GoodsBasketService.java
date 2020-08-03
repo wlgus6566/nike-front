@@ -149,7 +149,7 @@ public class GoodsBasketService {
 	 * @author [윤태호]
 	 * @since 2020. 8. 3. 오전 11:54:43
 	 */
-	final private GoodsBasket goodsBasketSave(GoodsBasketSaveDTO goodsBasketSaveDTO) {
+	final private GoodsBasket goodsBasketSave(final GoodsBasketSaveDTO goodsBasketSaveDTO) {
 		log.info("GoodsBasketService.goodsBasketSave");
 		final Product product = productRepository.findById(goodsBasketSaveDTO.getGoodsSeq()).orElse(null);
 		if(ObjectUtils.isEmpty(product)){
