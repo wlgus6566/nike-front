@@ -176,6 +176,7 @@
     import {getExistMsg} from '@/utils/common';
 
     import Thumbnail from '@/components/thumbnail/index';
+    import {getAgencyContact} from '@/api/agency';
 
     export default {
     name: 'registration',
@@ -364,11 +365,7 @@
                 listSortOptions: [
                     {
                         value: '',
-                        label: '에이전시테스트',
-                    },
-                    {
-                        value: '2',
-                        label: '에이전시테스트2',
+                        label: '에이전시',
                     },
                 ],
                 value: '',
@@ -383,7 +380,30 @@
             this.select3CodeFn();
         },
     },
+    mounted() {
+        this.getAgency();
+    },
     methods: {
+        //에이전시 리스트
+        async getAgency() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getAgencyContact({});
+                const agencyData = response;
+                agencyData.forEach((item, index) => {
+                    const agencyList = {
+                        value: item.agencySeq,
+                        label: item.agencyName,
+                    };
+                    this.agency.listSortOptions.push(agencyList);
+                });
+
+                console.log('1');
+            } catch (error) {
+                console.log(error);
+            }
+        },
         cropImage(imageBase64) {
             this.detailData.imageBase64 = imageBase64;
         },

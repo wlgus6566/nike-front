@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { setInterceptors } from '@/api/config/interceptors';
+import {setInterceptors} from '@/api/config/interceptors';
 
 const apiMyOrder = axios.create({ baseURL: '/api/order', timeout: 3000 });
 setInterceptors(apiMyOrder);
@@ -14,4 +14,10 @@ function getMyOrder(params) {
 function getMyOrderDetail(orderGoodsSeq) {
     return apiMyOrder.get(`/${orderGoodsSeq}`);
 }
-export { getMyOrder, getMyOrderDetail };
+
+//MYPAGE 주문내역 등록
+function postOrderSave(data) {
+    return apiMyOrder.post(`/save`, data);
+}
+
+export { getMyOrder, getMyOrderDetail, postOrderSave };

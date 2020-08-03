@@ -47,6 +47,7 @@
     import Pagination from '@/components/pagination';
     import NoData from '@/components/no-data';
     import {delProduct, getProductList} from '@/api/product';
+    import {getAgencyContact} from '@/api/agency';
 
     export default {
     name: 'management',
@@ -254,11 +255,36 @@
         'category3Code.value'() {
             this.getProduct();
         },
+        'agency.value'() {
+            return 'dfdsf';
+        },
     },
     mounted() {
         this.getProduct();
+        this.getAgency();
     },
     methods: {
+        //에이전시 리스트
+        async getAgency() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getAgencyContact({});
+                const agencyData = response;
+                agencyData.forEach((item, index) => {
+                    const agencyList = {
+                        value: item.agencySeq,
+                        label: item.agencyName,
+                    };
+                    this.agency.listSortOptions.push(agencyList);
+                });
+
+                console.log('1');
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
         // Pagination fn
         handleCurrentChange(val) {
             this.page = val;

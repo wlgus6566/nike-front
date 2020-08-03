@@ -103,7 +103,7 @@
                         <button
                             type="button"
                             class="btn-s-black"
-                            @click="$emit('orderSave')"
+                            @click="$emit('orderSave', orderComment)"
                         >
                             <span>주문서 발송</span>
                         </button>
@@ -122,14 +122,12 @@
 
 <script>
 export default {
-    props: [
-        'visible',
-        'receipt',
-        'basketList',
-        'orderComment',
-        'orderData',
-        'totalPrice',
-    ],
+    data() {
+        return {
+            orderComment: '',
+        };
+    },
+    props: ['visible', 'receipt', 'basketList', 'orderData', 'totalPrice'],
     mounted() {},
     methods: {},
 };

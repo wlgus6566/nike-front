@@ -75,7 +75,6 @@
             :visible.sync="visible.orderSheet"
             :basketList="basketList"
             :totalPrice="totalPrice"
-            :orderComment="orderComment"
             :orderData="orderData"
             @orderSave="orderSave"
         />
@@ -83,6 +82,8 @@
 </template>
 <script>
     import {addProductBasket, deleteBasketItem} from '@/utils/basket';
+    import {postOrderSave} from '@/api/my-order';
+    import {getExistMsg} from '@/utils/common';
     import OrderSheet from '@/views/pages/product/order-sheet.vue';
     import NoData from '@/components/no-data';
 
@@ -94,6 +95,9 @@
             visible: {
                 orderSheet: false,
             },
+            orderData: '',
+            orderSeq: '',
+            orderQuan: '',
         };
     },
     components: {
@@ -129,6 +133,28 @@
     methods: {
         showOrderSheet() {
             this.visible.orderSheet = true;
+            let today = new Date();
+            let yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1; //January is 0!
+            let dd = today.getDate();
+            let hor = today.getHours();
+            let min = today.getMinutes();
+            let sec = today.getSeconds();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            this.orderData =
+                yyyy + '.' + mm + '.' + dd + ' ' + hor + ':' + min + ':' + sec;
+
+            this.orderSeq = this.basketList.map((el) => {
+                return el.goodsSeq;
+            });
+            this.orderQuan = this.basketList.map((el) => {
+                return el.orderQuantity;
+            });
         },
 
         // 장바구니 삭제 api
@@ -146,15 +172,16 @@
         },
 
         // 주문서 발송
-        async orderSave() {
+        async orderSave(orderComment) {
             try {
                 const { data: response } = await postOrderSave({
                     goodsSeqList: this.orderSeq,
-                    orderDescription: this.orderComment,
+                    orderDescription: orderComment,
                     orderQuantityList: this.orderQuan,
                     totalAmount: this.totalPrice,
                 });
                 if (response.existMsg) {
+                    console.log('asdasd');
                     await getExistMsg(response);
                 } else {
                     this.visible.orderSheet = false;
