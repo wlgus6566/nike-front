@@ -3,7 +3,6 @@ package com.nike.dnp.repository.auth;
 import com.nike.dnp.entity.auth.QAuth;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 
@@ -14,7 +13,6 @@ import lombok.experimental.UtilityClass;
  * @implNote Auth(권한) 검색 조건
  */
 @UtilityClass
-@NoArgsConstructor
 public class AuthPredicateHelper {
 
     /**

@@ -1,5 +1,5 @@
 import store from '@/store';
-import { postBasketSave, postBasketSaveList } from '@/api/basket';
+import {deleteBasket, postBasketSave, postBasketSaveList} from '@/api/basket';
 
 /**
  * 장바구니 상품 단건 추가
@@ -43,8 +43,9 @@ const addBasketList = async (goodsSeqList, orderQuantityList) => {
  * @returns {Promise<void>}
  */
 const deleteBasketItem = async (goodsBasketSeq) => {
+    console.log('asd');
     try {
-        await store.dispatch('deleteBasketItem', goodsBasketSeq);
+        await deleteBasket(goodsBasketSeq);
         await store.dispatch('basketList');
     } catch (error) {
         console.log(error);

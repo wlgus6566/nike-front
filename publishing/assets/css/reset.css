@@ -148,21 +148,51 @@ iframe {
 [tabindex] {
   outline: none;
 }
-/*input[type='checkbox']:after,
-input[type='radio']:after {content:''; display:block; width:100%; height:100%; font-size:0; line-height:0; background:url("/resources/images/checkbox_off.svg") no-repeat 0 / cover;}
-input[type='checkbox'],
-input[type='radio'] {display:inline-block; overflow:hidden; width:20px; height:20px; margin:0 10px 0 0; cursor:pointer; vertical-align:middle; border:0; border-radius:50%; background:url("/resources/images/checkbox_off.svg") no-repeat 0 / cover; -webkit-appearance:none;}
-input[type='radio'],
-input[type='radio']:after {background-image:url("/resources/images/radio_off.svg") !important;}
-input[type='checkbox']:checked,
-input[type='checkbox']:checked:after {background-image:url("/resources/images/checkbox_on.svg") !important;}
-input[type='radio']:checked,
-input[type='radio']:checked:after {background-image:url("/resources/images/radio_on.svg") !important;}
-input[type='checkbox']:disabled,
-input[type='checkbox']:disabled:after {background-image:url("/resources/images/checkbox_disabled.svg") !important;}
-input[type='radio']:disabled {}
-input[type='checkbox']:disabled:checked,
-input[type='radio']:disabled:checked {}*/
+input[type="checkbox"]:after,
+input[type="radio"]:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 0;
+  line-height: 0;
+  background: url("../images/svg/icon-checkbox-off.svg") no-repeat 0 / cover;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline-block;
+  overflow: hidden;
+  width: 20px;
+  height: 20px;
+  margin: 0 5px 0 0;
+  cursor: pointer;
+  vertical-align: middle;
+  border: 0;
+  border-radius: 0;
+  background: url("../images/svg/icon-checkbox-off.svg") no-repeat 0 / cover;
+  -webkit-appearance: none;
+}
+input[type="radio"],
+input[type="radio"]:after {
+  background-image: url("../images/svg/icon-radio-off.svg") !important;
+}
+input[type="checkbox"]:checked,
+input[type="checkbox"]:checked:after {
+  background-image: url("../images/svg/icon-checkbox-on.svg") !important;
+}
+input[type="radio"]:checked,
+input[type="radio"]:checked:after {
+  background-image: url("../images/svg/icon-radio-on.svg") !important;
+}
+/*input[type="checkbox"]:disabled,*/
+/*input[type="checkbox"]:disabled:after {*/
+/*  background-image: url("../images/svg/checkbox-disabled.svg") !important;*/
+/*}*/
+/*input[type="radio"]:disabled {*/
+/*}*/
+/*input[type="checkbox"]:disabled:checked,*/
+/*input[type="radio"]:disabled:checked {*/
+/*}*/
 input[type="text"] {
   ime-mode: active;
 }
@@ -211,17 +241,17 @@ textarea {
   overflow: hidden;
   overflow-y: auto;
   width: 100%;
-  height: 100px;
-  padding: 0;
+  height: 84px;
+  padding: 10px;
   resize: none;
   font-size: 14px;
+  line-height: 16px;
   font-weight: normal;
   vertical-align: top;
   white-space: pre-line;
   word-wrap: break-word;
   word-break: break-all;
-  border: none;
-  background: #fff;
+  border: 1px solid #ddd;
 }
 input:focus,
 select:focus {

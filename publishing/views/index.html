@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+	<title>나이키 모바일 index</title>
+	<style>
+		body, body * {margin:0; padding:0; font-family:'Noto Sans KR', sans-serif;}
+		a {color:inherit; text-decoration:none;}
+		.wrap {min-width:1280px;}
+		header {display:flex; height:60px; border-bottom:2px solid #00a1e0; box-sizing:border-box; align-items:center;}
+		h1 {margin-left:20px;}
+		h1 img {width:120px;}
+		.tab {display:flex; height:40px; margin-top:20px; margin-left:100px; align-items:center;}
+		.tab li {height:100%; list-style:none;}
+		.tab li.active a {color:#fff; background:#00a1e0; border-radius:5px 5px 0 0;}
+		.tab li a {display:flex; height:100%; padding:0 40px; align-items:center;}
+		.contents {padding:15px 20px;}
+		.list {width:100%; border-top:2px solid #888; table-layout:fixed; font-size:12px; border-spacing:0; border-collapse:collapse;}
+		.list th {height:30px; padding:5px 10px; box-sizing:border-box; border:1px solid #ddd; vertical-align:middle; text-align:center; background:#f7f7f7;}
+		.list td {height:30px; padding:5px 10px; box-sizing:border-box; border:1px solid #ddd; vertical-align:top; text-align:left;}
+		.list td a {color:#00a1e0}
+		.active {display:block !important;}
+		.list tbody tr {counter-increment:num;}
+		.list tbody .num {text-align:center;}
+		.list tbody .num span:before {content:counter(num);}
+		.al-c{text-align:center !important;}
+	</style>
+</head>
+<body>
+<div class="wrap">
+	<div class="contents">
+		<!-- mobile// -->
+		<h2>mobile</h2>
+		<table class="list">
+			<colgroup>
+				<col style="width:70px;">
+				<col style="width:auto;">
+				<col style="width:auto;">
+				<col style="width:auto;">
+				<col style="width:auto;">
+				<col style="width:auto;">
+				<col style="width:120px;">
+				<col style="width:auto;">
+				<col style="width:100px;">
+				<col style="width:100px;">
+				<col style="width:auto;">
+			</colgroup>
+			<thead>
+			<tr>
+				<th rowspan="2">NO</th>
+				<th colspan="5">메뉴구조
+				</th>
+				<th rowspan="2">화면 ID</th>
+				<th rowspan="2">경로</th>
+				<th rowspan="2">완료예정일</th>
+				<th rowspan="2">완료일</th>
+				<th rowspan="2">비고</th>
+			</tr>
+			<tr>
+				<th>1Depth</th>
+				<th>2Depth</th>
+				<th>3Depth</th>
+				<th>4Depth</th>
+				<th>5Depth (tab)</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td>로그인</td>
+				<td>로그인</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_LOGIN_01.html" target="_blank">/NIKE_M_LOGIN_01</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td>이메일 인증</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_LOGIN_01_01.html" target="_blank">/NIKE_M_LOGIN_01_01</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td>휴면해제</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_LOGIN_07.html" target="_blank">/NIKE_M_LOGIN_07</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td>비밀번호 찾기<td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_LOGIN_01p" target="_blank">/NIKE_M_LOGIN_01p</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td>약관동의</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_LOGIN_02.html" target="_blank">NIKE_M_LOGIN_02</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td>약관안내팝업</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					프론트엔드
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td>비밀번호 설정</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_LOGIN_03.html" target="_blank">/NIKE_M_LOGIN_03</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td>비밀번호 변경</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_LOGIN_04.html" target="_blank">/NIKE_M_LOGIN_04</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td>HOME</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_MAIN_01.html" target="_blank">/NIKE_M_MAIN_01</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td>GNB</td>
+				<td>TOOLKIT</td>
+				<td>목록</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_TOOLKIT_02_001.html" target="_blank">/NIKE_M_TOOLKIT_02_001</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td>상세</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_TOOLKIT_02_1.html" target="_blank">/NIKE_M_TOOLKIT_02_1</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>팝업</td>
+				<td>이미지</td>
+				<td></td>
+				<td>
+					프론트엔드
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>영상</td>
+				<td></td>
+				<td>
+					프론트엔드
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>링크</td>
+				<td></td>
+				<td>
+					프론트엔드
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td>REPORT 시공보고서</td>
+				<td>업로드</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_REPORT_01.html" target="_blank">/NIKE_M_REPORT_01</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>이미지 등록</td>
+				<td></td>
+				<td></td>
+				<td>
+					프론트 엔드
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td>관리</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_REPORT_02.html" target="_blank">/NIKE_M_REPORT_02</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td>상세</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_REPORT_03.html" target="_blank">/NIKE_M_REPORT_03</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>팝업</td>
+				<td></td>
+				<td></td>
+				<td>
+					프론트엔드
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td>INFORMATION</td>
+				<td>AGENCY CONTACT</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_INFO_01_001.html" target="_blank">/NIKE_M_INFO_01_001</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td>CALENDAR</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					프론트엔드
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td>UTIL</td>
+				<td>MY PAGE</td>
+				<td>메인</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_MAIN_01_02.html" target="_blank">/NIKE_M_MAIN_01_02</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td>알림</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					프론트엔드
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td>HISTORY</td>
+				<td>내가 업로드한 폴더</td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_MY_01_001.html" target="_blank">/NIKE_M_MY_01_001</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>최근 본 폴더</td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_MY_01_001.html" target="_blank">/NIKE_M_MY_01_001.html</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td>MY INFO</td>
+				<td>회원정보 관리</td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_MY_03_001_03.html" target="_blank">/NIKE_M_MY_03_001_03</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>비밀번호 변경</td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_MY_03_002.html" target="_blank">/NIKE_M_MY_03_002</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td>CUSTOMER CENTER</td>
+				<td>공지사항</td>
+				<td>목록</td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_MY_04_001.html" target="_blank">/NIKE_M_MY_04_001</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>상세</td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_MY_04_002.html" target="_blank">/NIKE_M_MY_04_002</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>NEWS</td>
+				<td>목록</td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_MY_04_004.html" target="_blank">/NIKE_M_MY_04_004</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>상세</td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_MY_04_005.html" target="_blank">/NIKE_M_MY_04_005</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>자주 묻는 질문</td>
+				<td>목록</td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_MY_04_007.html" target="_blank">/NIKE_M_MY_04_007</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td>ECT</td>
+				<td>페이지오류</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_ERROR_01.html" target="_blank">/NIKE_M_ERROR_01</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td>시스템점검중</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_ERROR_02.html" target="_blank">/NIKE_M_ERROR_01</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td>검색 결과 없음</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_TOOLKIT_02_001_03.html" target="_blank">/NIKE_M_TOOLKIT_02_001_03</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td>최근 본 폴더 없음</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_MY_01_001_02.html" target="_blank">/NIKE_M_MY_01_001_02</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="num">
+					<span></span>
+				</td>
+				<td></td>
+				<td>업로드한 폴더 없음</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="/nike-front/publishing/views/NIKE_M_MY_01_001_06.html" target="_blank">/NIKE_M_MY_01_001_06</a>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			</tbody>
+		</table>
+		<!-- //mobile -->
+	</div>
+</div>
+</body>
+</html>

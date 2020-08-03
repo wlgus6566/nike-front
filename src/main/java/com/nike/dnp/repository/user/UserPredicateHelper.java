@@ -6,7 +6,6 @@ import com.nike.dnp.entity.user.QUserAuth;
 import com.nike.dnp.util.CustomExpression;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang.StringUtils;
 
@@ -19,7 +18,6 @@ import org.apache.commons.lang.StringUtils;
  * @since 2020. 6. 23. 오후 2:55:42
  */
 @UtilityClass
-@NoArgsConstructor
 public class UserPredicateHelper {
 
     /**

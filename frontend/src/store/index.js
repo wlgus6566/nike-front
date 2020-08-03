@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+
 import { loginUser } from '@/api/login';
 import { getBasketList } from '@/api/basket.js';
 import { getContentsBasket } from '@/api/contents';
@@ -15,11 +16,16 @@ export default new Vuex.Store({
     state: {
         user: {},
         token: '',
+        basketItemDrag: false,
+        fileMouseenter: false,
         basketListData: null,
         goodsBasketSeq: '',
         contBasketList: null,
     },
     getters: {
+        basketAppendCheck(state) {
+            return state.basketItemDrag && state.fileMouseenter;
+        },
         isLoggedIn(state) {
             return !!state.token || getAuthFromCookie();
         },
@@ -34,7 +40,6 @@ export default new Vuex.Store({
         SET_TOKEN(state, token) {
             state.token = token;
         },
-
         SET_BASKET(state, basketList) {
             state.basketListData = basketList;
         },
@@ -47,10 +52,14 @@ export default new Vuex.Store({
             deleteCookie('nike_token');
             //deleteCookie('nike_user');
         },
-
         SET_CONT_BASKET(state, data) {
-            console.log(data);
             state.contBasketList = data;
+        },
+        SET_BASKET_ITEM_DRAG(state, data) {
+            state.basketItemDrag = data;
+        },
+        SET_FILE_MOUSEENTER(state, data) {
+            state.fileMouseenter = data;
         },
     },
     actions: {
@@ -72,7 +81,6 @@ export default new Vuex.Store({
         // 컨텐츠 장바구니 목록
         async getContBasket({ commit }) {
             const response = await getContentsBasket();
-            console.log(response.data.data);
             commit('SET_CONT_BASKET', response.data.data);
             return response;
         },

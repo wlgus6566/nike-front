@@ -1,6 +1,7 @@
 package com.nike.dnp.common;
 
 import com.nike.dnp.util.S3Util;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -15,19 +16,8 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
+@NoArgsConstructor
 public class StartRunner implements ApplicationRunner {
-
-
-    /**
-     * Instantiates a new Start runner.
-     *
-     * @author [오지훈]
-     * @since 2020. 6. 22. 오후 5:05:10
-     * @implNote
-     */
-    public StartRunner() {
-        super();
-    }
 
     /**
      * Run.

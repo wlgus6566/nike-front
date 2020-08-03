@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 500px;">
+    <div style="height: 500px;" class="loading">
         loading
     </div>
 </template>
@@ -8,4 +8,8 @@ export default {
     name: 'loading',
 };
 </script>
-<style scoped></style>
+<style scoped>
+.loading {
+    background: rgba(255, 255, 255, 0.5);
+}
+</style>

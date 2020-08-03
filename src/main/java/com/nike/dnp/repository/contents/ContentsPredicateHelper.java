@@ -5,7 +5,6 @@ import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.entity.contents.QContents;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.StringUtils;
 
@@ -17,7 +16,6 @@ import org.springframework.util.StringUtils;
  * @since 2020. 7. 1. 오후 5:56:06
  */
 @UtilityClass
-@NoArgsConstructor
 public class ContentsPredicateHelper {
 
 	/**

@@ -2,10 +2,10 @@ package com.nike.dnp.dto.notice;
 
 import com.nike.dnp.dto.BasicDTO;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiParam;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Locale;
 
 /**
  * The Class Notice save dto.
@@ -82,6 +82,6 @@ public class QnaUpdateDTO extends BasicDTO {
      * @Description
      */
     public void setNoticeArticleCategoryCode(String noticeArticleCategoryCode) {
-        this.noticeArticleCategoryCode = noticeArticleCategoryCode.toUpperCase();
+        this.noticeArticleCategoryCode = noticeArticleCategoryCode.toUpperCase(Locale.KOREA);
     }
 }

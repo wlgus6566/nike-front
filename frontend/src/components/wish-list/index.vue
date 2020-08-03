@@ -1,6 +1,10 @@
 <template>
     <transition-group tag="ul" class="wish-list" name="list" mode="out-in">
-        <li class="wish-list-item" v-for="item in listData" :key="item.wishListSeq">
+        <li
+            class="wish-list-item"
+            v-for="item in listData"
+            :key="item.wishListSeq"
+        >
             <span class="checkbox">
                 <input
                     type="checkbox"
@@ -17,15 +21,16 @@
                         :alt="item.product.imageFileName"
                     />
                 </span>
+
                 <span class="info-box">
                     <strong class="title">{{ item.product.goodsName }}</strong>
                     <span class="txt">{{ item.product.goodsDescription }}</span>
                     <span class="desc-txt-box">
-                        <span class="desc-txt">{{ item.product.unitPrice }} 원</span>
+                        <span class="desc-txt"
+                            >{{ item.product.unitPrice }} 원</span
+                        >
                         <span class="desc-txt">
-                            {{
-                            item.product.agency.agencyName
-                            }}
+                            {{ item.product.agency.agencyName }}
                         </span>
                     </span>
                 </span>
@@ -33,11 +38,16 @@
             <div class="quantity-box">
                 <span class="title">최소주문수량</span>
                 <span class="num">
-                    <em>{{ item.product.minimumOrderQuantity }}</em>개
+                    <em>{{ item.product.minimumOrderQuantity }}</em
+                    >개
                 </span>
             </div>
             <div class="btn-box">
-                <button type="button" class="btn-s-black-sm" @click="$emit('addBasket', item)">
+                <button
+                    type="button"
+                    class="btn-s-black-sm"
+                    @click="$emit('addBasket', item)"
+                >
                     <span>CART</span>
                 </button>
                 <button
@@ -48,7 +58,9 @@
                     <span>삭제</span>
                 </button>
             </div>
-            <div class="loading" v-if="isLoading(item.wishListSeq)">loading</div>
+            <div class="loading" v-if="isLoading(item.wishListSeq)">
+                loading
+            </div>
         </li>
     </transition-group>
 </template>
@@ -59,7 +71,7 @@ export default {
     props: ['listData', 'checkWishItem', 'deleteLoading'],
     methods: {
         isLoading(seq) {
-            const indexFind = this.deleteLoading.findIndex(el => {
+            const indexFind = this.deleteLoading.findIndex((el) => {
                 return el === seq;
             });
             return indexFind !== -1;

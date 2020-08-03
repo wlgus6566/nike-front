@@ -617,12 +617,74 @@
     border-color: #000;
 }
 /* data-picker */
+.data-picker {
+    border-bottom:1px solid black;
+}
+.data-picker-group {
+    display:flex;
+}
+.data-picker-group .data-picker {
+    flex-basis: 107px;
+    width:107px;
+}
+.data-picker .focus\:vc-shadow:focus {box-shadow:none;}
+.data-picker-group .data-picker + .data-picker {
+    margin-left:46px;
+}
+.data-picker .vc-leading-tight {
+    height:40px;
+    line-height:16px;
+    padding:0;
+    box-sizing:border-box;
+}
 .data-picker .el-range-editor.el-input__inner {
     border-color: #ddd;
     border-radius: 0;
 }
 .data-picker .el-date-editor .el-range__icon {
     display: none;
+}
+.vc-popover-content-wrapper {
+    -webkit-box-shadow: 0px 2px 5px 0 rgba(0,0,0,0.08);
+    box-shadow: 0px 2px 5px 0 rgba(0,0,0,0.08);
+}
+.vc-title {
+    font-size: 20px !important;
+    font-family: 'Bebas Neue', sans-serif;
+    color: #000 !important;
+    letter-spacing: 0;
+    font-weight: 400 !important;
+}
+.vc-day-content {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    color: #333;
+}
+.vc-rounded-full {
+    width: 26px;
+    height: 26px;
+    box-sizing: border-box;
+}
+
+.vc-border-orange-900,
+.vc-border-orange-700,
+.vc-bg-orange-600 {
+    background-color: #fa5400 !important;
+    color: #fff !important;
+}
+.vc-border,
+.vc-border-2,
+.vc-border-3 {
+    border: none !important;
+}
+.vc-bg-orange-200 {
+    background-color: #ffe3d4 !important;
+}
+.vc-text-orange-900 {
+    color: #fff;
+}
+.vc-day-content:hover {
+    background-color: #f5f5f5;
 }
 /* sorting-area */
 .sorting-area {
@@ -1234,6 +1296,9 @@
     flex-basis: 100px;
     padding-top: 100px;
     overflow: hidden;
+    background: url('../../assets/images/img-asset-none@2x.png') no-repeat
+        center;
+    background-size: 100%;
 }
 .file-item .list .thumbnail img {
     position: absolute;
@@ -1289,6 +1354,7 @@
 }
 
 .file-item .detail {
+    display: none;
     height: 0;
     overflow: hidden;
     transition: all ease-in-out 1s;
@@ -1311,9 +1377,9 @@
     left: 73px;
     content: '';
     display: block;
-    width: 0px;
-    height: 0px;
-    border-top: 15px solid none;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
     border-bottom: 15px solid #f7f7f7;
     border-right: 10px solid transparent;
     border-left: 10px solid transparent;
@@ -3381,4 +3447,28 @@
 .el-pager .btn-quicknext:before,
 .el-pager .btn-quickprev:before {
     display: none;
+}
+
+.sortable-ghost {
+    padding: 0 !important;
+    opacity: 1 !important;
+    border: none !important;
+    background: none !important;
+}
+.sortable-ghost .list {
+    padding: 0;
+}
+.sortable-ghost .checkbox {
+    display: none;
+}
+.sortable-ghost .thumbnail {
+}
+.sortable-ghost .info-box {
+    display: none;
+}
+.sortable-ghost .btn-box {
+    display: none;
+}
+.sortable-ghost .detail {
+    display: none !important;
 }

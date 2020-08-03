@@ -91,13 +91,14 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	 * @since 2020. 7. 27. 오전 11:33:10
 	 */
 	private BindingResult extractBindingResult(final Throwable error) {
+		BindingResult result = null;
 		if(error instanceof BindingResult){
-			return (BindingResult) error;
+			result = (BindingResult) error;
 		}
-		if(error instanceof MethodArgumentNotValidException){
-			return ((MethodArgumentNotValidException) error).getBindingResult();
+		else if(error instanceof MethodArgumentNotValidException){
+			result = ((MethodArgumentNotValidException) error).getBindingResult();
 		}
-		return null;
+		return result;
 	}
 
 	/**
