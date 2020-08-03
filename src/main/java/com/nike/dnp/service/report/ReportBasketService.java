@@ -1,8 +1,6 @@
 package com.nike.dnp.service.report;
 
-import com.google.firebase.database.core.Repo;
 import com.nike.dnp.common.variable.FailCode;
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.report.ReportBasketResultDTO;
 import com.nike.dnp.entity.report.ReportBasket;
 import com.nike.dnp.entity.report.ReportFile;

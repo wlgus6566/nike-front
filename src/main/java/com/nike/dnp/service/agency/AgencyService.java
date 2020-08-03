@@ -84,7 +84,7 @@ public class AgencyService {
      */
     @Transactional
     public Agency update(final AgencySaveDTO agencySaveDTO) {
-        Optional<Agency> savedAgency = this.findById(agencySaveDTO.getAgencySeq());
+        final Optional<Agency> savedAgency = this.findById(agencySaveDTO.getAgencySeq());
         savedAgency.ifPresent(value -> value.update(agencySaveDTO));
         return savedAgency.get();
     }
@@ -100,7 +100,7 @@ public class AgencyService {
      */
     @Transactional
     public Agency delete(final long agencySeq) {
-        Optional<Agency> findAgency = this.findById(agencySeq);
+        final Optional<Agency> findAgency = this.findById(agencySeq);
         findAgency.ifPresent(value -> value.updateUseYn("N"));
         return findAgency.get();
     }

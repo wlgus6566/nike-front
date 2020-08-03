@@ -1,6 +1,5 @@
 package com.nike.dnp.controller.contents;
 
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.ContentsBasketResultDTO;
 import com.nike.dnp.entity.contents.ContentsBasket;
 import com.nike.dnp.model.response.SingleResult;
@@ -12,12 +11,9 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The Class Contents basket controller.
@@ -101,9 +97,9 @@ public class ContentsBasketController {
     public SingleResult<List<ContentsBasket>> saveContentsBasket(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @RequestBody final List<Long> contentsBasketSeqList
+            @RequestBody final List<Long> basketSeqList
     ) {
-        return responseService.getSingleResult(contentsBasketService.save(contentsBasketSeqList));
+        return responseService.getSingleResult(contentsBasketService.save(basketSeqList));
     }
 
     /**

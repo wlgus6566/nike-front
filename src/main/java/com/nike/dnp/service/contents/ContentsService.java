@@ -120,10 +120,10 @@ public class ContentsService {
      */
     public Page<ContentsResultDTO> findAllPaging(final ContentsSearchDTO contentsSearchDTO, final String topMenuCode, final String menuCode) {
         log.info("ContentsService.findAllPaging");
-        Long authSeq = SecurityUtil.currentUser().getAuthSeq();
+        final Long authSeq = SecurityUtil.currentUser().getAuthSeq();
         // 권한 검사
-        String searchMenuCode = menuCode.equals(ServiceCode.ContentsMenuCode.ALL.toString()) ? topMenuCode : topMenuCode + "_" + menuCode;
-        UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
+        final String searchMenuCode = menuCode.equals(ServiceCode.ContentsMenuCode.ALL.toString()) ? topMenuCode : topMenuCode + "_" + menuCode;
+        final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
         userContentsSearchDTO.setMenuCode(searchMenuCode);
         userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.CREATE.toString());
 
@@ -162,11 +162,11 @@ public class ContentsService {
         final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
 
         // 컨텐츠 파일 저장
-        List<ContentsFile> savedContentsFileList = new ArrayList<>();
+        final List<ContentsFile> savedContentsFileList = new ArrayList<>();
         if (!contentsSaveDTO.getContentsFileList().isEmpty()) {
-            for (ContentsFileSaveDTO contentsFileSaveDTO : contentsSaveDTO.getContentsFileList()) {
+            for (final ContentsFileSaveDTO contentsFileSaveDTO : contentsSaveDTO.getContentsFileList()) {
                 this.checkContentsFileValidation(contentsFileSaveDTO);
-                ContentsFile savedContentsFile = contentsFileRepository.save(
+                final ContentsFile savedContentsFile = contentsFileRepository.save(
                         new ContentsFile().save(savedContents.getContentsSeq(), this.s3FileCopySave(contentsFileSaveDTO))
                 );
                 savedContentsFileList.add(savedContentsFile);
@@ -223,7 +223,7 @@ public class ContentsService {
     @Transactional
     public ContentsResultDTO findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
         log.info("ContentsService.findByContentsSeq");
-        Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
+        final Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
         final Contents findContents = contents.orElseThrow(
                 () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
         findContents.updateReadCount(findContents.getReadCount());
@@ -250,7 +250,7 @@ public class ContentsService {
         // validation check
         this.checkContentsValidation(contentsSaveDTO);
 
-        Optional<Contents> contents = this.findById(contentsSaveDTO.getContentsSeq());
+        final Optional<Contents> contents = this.findById(contentsSaveDTO.getContentsSeq());
 
         // 썸네일 base64 -> file 정보로 변환
         this.base64ToFile(contentsSaveDTO);
@@ -260,15 +260,15 @@ public class ContentsService {
         // contents File
         final List<ContentsFile> beforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contentsSaveDTO.getContentsSeq(), "Y");
         final List<ContentsFile> notUseFileList = beforeFileList;
-        List<ContentsFileSaveDTO> newFileList = contentsSaveDTO.getContentsFileList();
+        final List<ContentsFileSaveDTO> newFileList = contentsSaveDTO.getContentsFileList();
 
         // 기존에 있는 파일 목록과 DTO받은 파일 목록 비교해서
         // case1.기본목록O, 새로운목록X : useYn = 'N' update
         // case2.기존목록X, 새로운목록O : save
         // case3.기존목록O, 새로운목록O : update
         if (!beforeFileList.isEmpty() && !newFileList.isEmpty()) {
-            for (ContentsFile beforeFile : beforeFileList) {
-                for (ContentsFileSaveDTO newFile : newFileList) {
+            for (final ContentsFile beforeFile : beforeFileList) {
+                for (final ContentsFileSaveDTO newFile : newFileList) {
                     if (beforeFile.getContentsFileSeq() == newFile.getContentsFileSeq()) {
                         notUseFileList.remove(beforeFile);
                     }
@@ -277,13 +277,13 @@ public class ContentsService {
         }
 
         if (!newFileList.isEmpty()) {
-            for (ContentsFileSaveDTO contentsFileSaveDTO : newFileList) {
-                Long contentsFileSeq = null != contentsFileSaveDTO.getContentsFileSeq() ? contentsFileSaveDTO.getContentsFileSeq() : 0l;
+            for (final ContentsFileSaveDTO contentsFileSaveDTO : newFileList) {
+                final Long contentsFileSeq = null != contentsFileSaveDTO.getContentsFileSeq() ? contentsFileSaveDTO.getContentsFileSeq() : 0l;
                 final Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
 
                 this.checkContentsFileValidation(contentsFileSaveDTO);
                 this.s3FileCopySave(contentsFileSaveDTO);
-                ContentsFile saveContentsFile = contentsFile.orElse(
+                final ContentsFile saveContentsFile = contentsFile.orElse(
                         new ContentsFile().save(contents.get().getContentsSeq(), contentsFileSaveDTO));
 
                 if (0l != contentsFileSeq) {
@@ -295,7 +295,7 @@ public class ContentsService {
         }
 
         if (!notUseFileList.isEmpty()) {
-            for (ContentsFile contentsFile : notUseFileList) {
+            for (final ContentsFile contentsFile : notUseFileList) {
                 contentsFile.updateUseYn("N");
                 // 관련 콘텐츠 장바구니 삭제
                 contentsBasketService.deleteByContentsFileSeq(contentsFile.getContentsFileSeq());
@@ -304,8 +304,8 @@ public class ContentsService {
 
         // 콘텐츠 미 노출 선택 한 경우  -> 장바구니 삭제처리
         if ("N".equals(contentsSaveDTO.getExposureYn())) {
-            List<ContentsFile> contentsFileList = contentsFileRepository.findByContentsSeq(contentsSaveDTO.getContentsSeq());
-            for (ContentsFile contentsFile : contentsFileList) {
+            final List<ContentsFile> contentsFileList = contentsFileRepository.findByContentsSeq(contentsSaveDTO.getContentsSeq());
+            for (final ContentsFile contentsFile : contentsFileList) {
                 // 관련 콘텐츠 장바구니 삭제
                 contentsBasketService.deleteByContentsFileSeq(contentsFile.getContentsFileSeq());
             }
@@ -329,11 +329,11 @@ public class ContentsService {
      * @implNote base64 -> 파일 정보로 변환
      * @since 2020. 8. 3. 오후 2:57:11
      */
-    public ContentsSaveDTO base64ToFile(ContentsSaveDTO contentsSaveDTO) {
+    public ContentsSaveDTO base64ToFile(final ContentsSaveDTO contentsSaveDTO) {
         log.info("ContentsService.base64ToFile");
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
-            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
+            final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
                     ServiceCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsSaveDTO.getImageBase64());
 
             contentsSaveDTO.setImageFileName(fileResultDTO.getFileName());
@@ -356,14 +356,14 @@ public class ContentsService {
     public Contents delete(final Long contentsSeq) {
         log.info("ContentsService.delete");
 
-        Optional<Contents> contents = this.findById(contentsSeq);
+        final Optional<Contents> contents = this.findById(contentsSeq);
         contents.ifPresent(value -> value.delete());
 
 
         // 관련 콘텐츠 파일 삭제
-        List<ContentsFile> contentsFileList = contents.get().getContentsFileList();
+        final List<ContentsFile> contentsFileList = contents.get().getContentsFileList();
         if (!contentsFileList.isEmpty()) {
-            for (ContentsFile contentsFile : contentsFileList) {
+            for (final ContentsFile contentsFile : contentsFileList) {
                 contentsFile.updateUseYn("N");
                 // 관련 콘텐츠 장바구니 삭제
                 contentsBasketService.deleteByContentsFileSeq(contentsFile.getContentsFileSeq());
@@ -388,7 +388,7 @@ public class ContentsService {
     @Transactional
     public ResponseEntity<Resource> downloadFile(final Long contentsFileSeq) {
         log.info("ContentsService.downloadFile");
-        Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
+        final Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
         if (contentsFile.isPresent()) {
             contentsFile.ifPresent(value -> value.updateDownloadCount(contentsFile.get().getDownloadCount()));
             return FileUtil.fileDownload(contentsFile.get().getFilePhysicalName());
@@ -426,7 +426,7 @@ public class ContentsService {
             final Long contentsSeq, final List<UserContentsSaveDTO.AuthCheckDTO> checks
     ) {
         log.info("ContentsService.saveUserContentsAuth");
-        UserContentsSaveDTO userContentsSaveDTO = new UserContentsSaveDTO();
+        final UserContentsSaveDTO userContentsSaveDTO = new UserContentsSaveDTO();
         userContentsSaveDTO.setChecks(checks);
         return userContentsService.save(contentsSeq, userContentsSaveDTO);
     }
@@ -442,15 +442,15 @@ public class ContentsService {
     public void sendEmail(final ContentsMailSendDTO contentsMailSendDTO) {
         log.info("ContentsService.sendEmail");
         // 컨텐츠 조회
-        Optional<Contents> contents = this.findById(contentsMailSendDTO.getContentsSeq());
+        final Optional<Contents> contents = this.findById(contentsMailSendDTO.getContentsSeq());
 
         // 수신자 목록 조회
         List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsMailSendDTO.getContentsSeq());
 
         // 이메일 발송
         if (!emailAuthUserList.isEmpty()) {
-            for (ContentsUserEmailDTO userEmailDTO : emailAuthUserList) {
-                SendDTO sendDTO = new SendDTO();
+            for (final ContentsUserEmailDTO userEmailDTO : emailAuthUserList) {
+                final SendDTO sendDTO = new SendDTO();
                 sendDTO.setEmail(userEmailDTO.getUserId());
                 sendDTO.setContentsUrl(contentsMailSendDTO.getContentsUrl());
                 sendDTO.setContentsImg(userEmailDTO.getImageFilePhysicalName());
@@ -583,12 +583,12 @@ public class ContentsService {
      */
     public List<Long> findAllAuthUser(final List<UserContentsSaveDTO.AuthCheckDTO> authCheckList) {
         log.info("ContentsService.findAllAuthUser");
-        List<Long> userSeqList = new ArrayList<>();
-        for (UserContentsSaveDTO.AuthCheckDTO authCheckDTO : authCheckList) {
+        final List<Long> userSeqList = new ArrayList<>();
+        for (final UserContentsSaveDTO.AuthCheckDTO authCheckDTO : authCheckList) {
             if ("Y".equals(authCheckDTO.getDetailAuthYn())) {
                 // authSeq 를 가지고 userSeq 목록 가져오기
-                List<UserAuth> userAuthList = userAuthRepository.findAllByAuthSeq(authCheckDTO.getAuthSeq());
-                for (UserAuth userAuth : userAuthList) {
+                final List<UserAuth> userAuthList = userAuthRepository.findAllByAuthSeq(authCheckDTO.getAuthSeq());
+                for (final UserAuth userAuth : userAuthList) {
                     userSeqList.add(userAuth.getUserSeq());
                 }
             }

@@ -1,7 +1,6 @@
 package com.nike.dnp.service.contents;
 
 import com.nike.dnp.common.variable.FailCode;
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.ContentsBasketResultDTO;
 import com.nike.dnp.entity.contents.ContentsBasket;
 import com.nike.dnp.entity.contents.ContentsFile;

@@ -117,12 +117,12 @@ public class ReportService {
     public Page<Report> findAllPaging(final ReportSearchDTO reportSearchDTO) {
         log.info("ReportService.findAllPaging");
         // 권한 검색 조건
-        List<Long> authSeqList = new ArrayList<>();
+        final List<Long> authSeqList = new ArrayList<>();
         if (null != reportSearchDTO.getGroupSeq()) {
             authSeqList.add(reportSearchDTO.getGroupSeq());
         } else {
-            List<AuthReturnDTO> authList = authService.findByAuthDepth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString());
-            for (AuthReturnDTO authReturnDTO : authList) {
+            final List<AuthReturnDTO> authList = authService.findByAuthDepth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString());
+            for (final AuthReturnDTO authReturnDTO : authList) {
                 authSeqList.add(authReturnDTO.getAuthSeq());
             }
         }
@@ -154,11 +154,11 @@ public class ReportService {
         this.base64ToFile(reportSaveDTO);
 
         final Report savedReport = reportRepository.save(new Report().save(reportSaveDTO));
-        List<ReportFile> reportFileList = new ArrayList<>();
+        final List<ReportFile> reportFileList = new ArrayList<>();
 
         if (!reportSaveDTO.getReportFileSaveDTOList().isEmpty()) {
-            for (ReportFileSaveDTO reportFileSaveDTO : reportSaveDTO.getReportFileSaveDTOList()) {
-                ReportFile savedReportFile = reportFileRepository.save(
+            for (final ReportFileSaveDTO reportFileSaveDTO : reportSaveDTO.getReportFileSaveDTOList()) {
+                final ReportFile savedReportFile = reportFileRepository.save(
                         new ReportFile().save(savedReport.getReportSeq(), this.s3FileCopySave(reportFileSaveDTO))
                 );
                 reportFileList.add(savedReportFile);
@@ -193,7 +193,7 @@ public class ReportService {
     @Transactional
     public Report findByReportSeq(final Long reportSeq) {
         log.info("ReportService.findByReportSeq");
-        Report findReport = reportRepository.findByReportSeq(reportSeq);
+        final Report findReport = reportRepository.findByReportSeq(reportSeq);
         findReport.updateReadCount(findReport.getReadCount());
 
         // history 저장
@@ -211,11 +211,11 @@ public class ReportService {
      * @implNote base64 -> 파일 형식으로 변환
      * @since 2020. 8. 3. 오후 3:30:09
      */
-    public ReportSaveDTO base64ToFile(ReportSaveDTO reportSaveDTO) {
+    public ReportSaveDTO base64ToFile(final ReportSaveDTO reportSaveDTO) {
         log.info("reportService.base64ToFile");
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(reportSaveDTO.getImageBase64())) {
-            FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.REPORT.getFolder(), reportSaveDTO.getImageBase64());
+            final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.REPORT.getFolder(), reportSaveDTO.getImageBase64());
 
             reportSaveDTO.setImageFileName(fileResultDTO.getFileName());
             reportSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
@@ -247,11 +247,11 @@ public class ReportService {
 
         final List<ReportFile> beforeFileList = reportFileRepository.findByReportSeqAndUseYn(reportSaveDTO.getReportSeq(), "Y");
         final List<ReportFile> lastBeforeFileList = reportFileRepository.findByReportSeqAndUseYn(reportSaveDTO.getReportSeq(), "Y");
-        List<ReportFileSaveDTO> newFileList = reportSaveDTO.getReportFileSaveDTOList();
+        final List<ReportFileSaveDTO> newFileList = reportSaveDTO.getReportFileSaveDTOList();
 
         if (!beforeFileList.isEmpty() && !newFileList.isEmpty()) {
-            for (ReportFile beforeFile : beforeFileList) {
-                for (ReportFileSaveDTO newFile : newFileList) {
+            for (final ReportFile beforeFile : beforeFileList) {
+                for (final ReportFileSaveDTO newFile : newFileList) {
                     if (beforeFile.getReportFileSeq() == newFile.getReportFileSeq()) {
                         lastBeforeFileList.remove(beforeFile);
                     }
@@ -260,12 +260,12 @@ public class ReportService {
         }
 
         if (!newFileList.isEmpty()) {
-            for (ReportFileSaveDTO reportFileSaveDTO : newFileList) {
-                Long reportFileSeq = null != reportFileSaveDTO.getReportFileSeq() ? reportFileSaveDTO.getReportFileSeq() : 0l;
+            for (final ReportFileSaveDTO reportFileSaveDTO : newFileList) {
+                final Long reportFileSeq = null != reportFileSaveDTO.getReportFileSeq() ? reportFileSaveDTO.getReportFileSeq() : 0l;
                 final Optional<ReportFile> reportFile = reportFileRepository.findById(reportFileSeq);
 
                 this.s3FileCopySave(reportFileSaveDTO);
-                ReportFile saveReportFile = reportFile.orElse(
+                final ReportFile saveReportFile = reportFile.orElse(
                         new ReportFile().save(report.get().getReportSeq(), reportFileSaveDTO)
                 );
 
@@ -303,8 +303,8 @@ public class ReportService {
     @Transactional
     public Report delete(final Long reportSeq) {
         log.info("ReportService.delete");
-        Optional<Report> report = this.findById(reportSeq);
-        Report savedReport = report.get();
+        final Optional<Report> report = this.findById(reportSeq);
+        final Report savedReport = report.get();
         report.ifPresent(value -> value.updateUseYn("N"));
 
         this.deleteReportFile(savedReport.getReportFileList());
@@ -340,7 +340,7 @@ public class ReportService {
     @Transactional
     public ResponseEntity<Resource> downloadFile(final Long reportFileSeq) {
         log.info("ReportService.downloadFile");
-        Optional<ReportFile> reportFile = this.findByFileId(reportFileSeq);
+        final Optional<ReportFile> reportFile = this.findByFileId(reportFileSeq);
         if (reportFile.isPresent()) {
             reportFile.ifPresent(value -> value.updateDownloadCount(reportFile.get().getDownloadCount()));
             return FileUtil.fileDownload(reportFile.get().getFilePhysicalName());
@@ -359,7 +359,7 @@ public class ReportService {
      */
     public void deleteReportFile(final List<ReportFile> reportFileList) {
         if (!reportFileList.isEmpty()) {
-            for (ReportFile reportFile : reportFileList) {
+            for (final ReportFile reportFile : reportFileList) {
                 reportFile.updateUseYn("N");
                 // 관련 보고서 장바구니 삭제
                 reportBasketService.deleteByReportFileSeq(reportFile.getReportFileSeq());
@@ -377,16 +377,16 @@ public class ReportService {
      */
     public List<Long> findAllAuthUser() {
         log.info("ReportService.findAllAuthUser");
-        UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
+        final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
         userContentsSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
         userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
-        List<AuthReturnDTO> authList = userContentsService.getAuthList(userContentsSearchDTO);
+        final List<AuthReturnDTO> authList = userContentsService.getAuthList(userContentsSearchDTO);
 
-        List<Long> userSeqList  = new ArrayList<>();
-        for (AuthReturnDTO authReturnDTO : authList) {
+        final List<Long> userSeqList  = new ArrayList<>();
+        for (final AuthReturnDTO authReturnDTO : authList) {
             // authSeq 를 가지고 userSeq 목록 가져오기
-            List<UserAuth> userAuthList = userAuthRepository.findAllByAuthSeq(authReturnDTO.getAuthSeq());
-            for (UserAuth userAuth : userAuthList) {
+            final List<UserAuth> userAuthList = userAuthRepository.findAllByAuthSeq(authReturnDTO.getAuthSeq());
+            for (final UserAuth userAuth : userAuthList) {
                 userSeqList.add(userAuth.getUserSeq());
             }
         }

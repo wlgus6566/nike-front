@@ -77,7 +77,7 @@ public class ReportAnswerService {
     @Transactional
     public ReportAnswer delete(final Long answerSeq) {
         log.info("ReportAnswerService.delete");
-        Optional<ReportAnswer> reportAnswer = this.findById(answerSeq);
+        final Optional<ReportAnswer> reportAnswer = this.findById(answerSeq);
         reportAnswer.ifPresent(value -> value.updateUseYn("Y"));
         return reportAnswer.get();
 

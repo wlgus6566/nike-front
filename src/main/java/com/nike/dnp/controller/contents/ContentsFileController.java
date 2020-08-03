@@ -56,10 +56,10 @@ public class ContentsFileController {
     /**
      * Gets all contents file.
      *
-     * @param topMenuCode           the top menu code
-     * @param menuCode              the menu code
-     * @param contentsSeq           the contents seq
-     * @param contentsFileSearchDTO the contents file search dto
+     * @param topMenuCode   the top menu code
+     * @param menuCode      the menu code
+     * @param contentsSeq   the contents seq
+     * @param fileSearchDTO the file search dto
      * @return the all contents file
      * @author [이소정]
      * @implNote 컨텐츠 파일 목록 조회
@@ -93,10 +93,10 @@ public class ContentsFileController {
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
             @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "SP", required = true) @PathVariable final String menuCode,
             @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq,
-            final ContentsFileSearchDTO contentsFileSearchDTO
+            final ContentsFileSearchDTO fileSearchDTO
     ) {
-        contentsFileSearchDTO.setContentsSeq(contentsSeq);
-        return responseService.getSingleResult(contentsFileService.findAllContentsFilePaging(contentsFileSearchDTO));
+        fileSearchDTO.setContentsSeq(contentsSeq);
+        return responseService.getSingleResult(contentsFileService.findAllContentsFilePaging(fileSearchDTO));
     }
 
 }

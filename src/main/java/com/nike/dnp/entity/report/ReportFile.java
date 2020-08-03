@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
+import java.util.Locale;
 
 /**
  * The Class Report file.
@@ -253,7 +254,7 @@ public class ReportFile extends BaseTimeEntity {
         saveReportFile.setFilePhysicalName(reportFileSaveDTO.getFilePhysicalName());
 
         saveReportFile.setFileContentType(reportFileSaveDTO.getFileContentType());
-        saveReportFile.setFileExtension(reportFileSaveDTO.getFileExtension().toUpperCase());
+        saveReportFile.setFileExtension(reportFileSaveDTO.getFileExtension().toUpperCase(Locale.KOREA));
 
         saveReportFile.setThumbnailFileName(reportFileSaveDTO.getThumbnailFileName());
         saveReportFile.setThumbnailFileSize(reportFileSaveDTO.getThumbnailFileSize());

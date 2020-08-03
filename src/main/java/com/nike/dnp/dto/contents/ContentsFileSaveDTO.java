@@ -1,11 +1,8 @@
 package com.nike.dnp.dto.contents;
 
-import com.nike.dnp.common.validation.ValidationGroups;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
