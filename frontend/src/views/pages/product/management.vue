@@ -41,14 +41,14 @@
     </div>
 </template>
 <script>
-import SearchInput from '@/components/search-input';
-import FilterSelect from '@/components/filter-select';
-import ProductManagement from '@/components/product-management';
-import Pagination from '@/components/pagination';
-import NoData from '@/components/no-data';
-import { delProduct, getProductList } from '@/api/product';
+    import SearchInput from '@/components/search-input';
+    import FilterSelect from '@/components/filter-select';
+    import ProductManagement from '@/components/product-management';
+    import Pagination from '@/components/pagination';
+    import NoData from '@/components/no-data';
+    import {delProduct, getProductList} from '@/api/product';
 
-export default {
+    export default {
     name: 'management',
     data() {
         return {
@@ -239,7 +239,6 @@ export default {
         ProductManagement,
         Pagination,
         NoData,
-        NoDataSearch,
     },
     created() {},
     computed: {},

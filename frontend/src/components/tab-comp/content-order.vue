@@ -180,6 +180,7 @@
     background: #eee;
     overflow: hidden;
 }
+
 .cart-item {
     position: relative;
     box-sizing: border-box;
@@ -192,6 +193,7 @@
     border-top: 1px solid #e5e5e5;
 }
 .cart-item .thumbnail {
+    flex: 0 0 50px;
     width: 50px;
     height: 50px;
     margin-right: 10px;
@@ -216,12 +218,21 @@
     overflow: hidden;
     text-indent: -99999px;
 }
+.info-box {
+    max-width: calc(100% - 60px);
+    box-sizing: border-box;
+}
 .info-box .title {
     display: block;
+    box-sizing: border-box;
+    padding-right: 20px;
     line-height: 18px;
     font-size: 12px;
     letter-spacing: -0.05px;
     color: #000;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .btn-order {
     position: relative;

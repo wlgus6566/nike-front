@@ -1,6 +1,6 @@
 <template>
     <div>
-        <span class="thumb-file file-upload active">
+        <span class="thumb-file" :class="{ 'file-upload': cropImg }">
             <input
                 ref="input"
                 id="test"
@@ -10,13 +10,12 @@
                 @change="setImage"
             />
             <span class="thumb">
-                <img
-                    v-if="imageFilePhysicalName"
-                    :src="imageFilePhysicalName"
-                    alt="Cropped Image"
-                />
+                <img v-if="" :src="cropImg" alt="Cropped Image" />
             </span>
-            <span class="txt" @click="inputReset">썸네일 이미지 재등록</span>
+            <span class="txt" @click="inputReset" v-if="cropImg">
+                썸네일 이미지 재등록
+            </span>
+            <span class="txt" v-else>썸네일 이미지 등록</span>
         </span>
 
         <el-dialog
@@ -52,21 +51,24 @@
 
     export default {
     name: 'index',
-    props: ['imageFilePhysicalName'],
     data() {
         return {
             dialogVisible: false,
             imgSrc: require('@/assets/images/@test1.jpg'),
-            cropImg: null,
+            //cropImg: require('@/assets/images/@test1.jpg'),
+            cropImg: null, //require('@/assets/images/@test1.jpg')
             data: null,
         };
     },
-    created() {},
+    props: ['imageFilePhysicalName'],
     components: { VueCropper },
+    created() {},
+    mounted() {},
+    computed: {},
     methods: {
         inputReset() {
             console.log(this.$refs.input);
-            this.imageFilePhysicalName = null;
+            this.cropImg = null;
             this.$refs.input.value = null;
         },
         handleClose(done) {
@@ -79,11 +81,9 @@
         },
         cropImage() {
             // get image data for post processing, e.g. upload or setting image src
-            this.imageFilePhysicalName = this.$refs.cropper
-                .getCroppedCanvas()
-                .toDataURL();
+            this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
+            console.log(this.imageFilePhysicalName.toDataURL());
             this.dialogVisible = false;
-            this.$emit('cropImage', this.cropImg);
         },
         flipX() {
             const dom = this.$refs.flipX;
