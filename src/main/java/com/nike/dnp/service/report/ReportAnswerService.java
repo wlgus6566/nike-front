@@ -93,6 +93,7 @@ public class ReportAnswerService {
      * @since 2020. 7. 30. 오후 2:52:41
      */
     public Optional<ReportAnswer> findById(final Long answerSeq) {
+        log.info("ReportAnswerService.findById");
         return Optional.ofNullable(reportAnswerRepository.findById(answerSeq).orElseThrow((
                 () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())))));
     }

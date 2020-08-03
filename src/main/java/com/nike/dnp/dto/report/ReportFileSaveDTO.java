@@ -20,6 +20,22 @@ import javax.validation.constraints.NotBlank;
 public class ReportFileSaveDTO {
 
     /**
+     * The Report file seq
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "reportFileSeq", value = "보고서 파일 시퀀스", example = "1")
+    private Long reportFileSeq;
+
+    /**
+     * 보고서 시퀀스
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "reportSeq", value = "보고서 시퀀스", example = "2", hidden = true)
+    private Long reportSeq;
+
+    /**
      * The File name
      *
      * @author [이소정]

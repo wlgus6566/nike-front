@@ -1,7 +1,7 @@
 package com.nike.dnp.controller.agency;
 
+import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.dto.agency.AgencySaveDTO;
-import com.nike.dnp.dto.agency.AgencyUpdateDTO;
 import com.nike.dnp.entity.agency.Agency;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -12,8 +12,11 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -84,8 +87,10 @@ public class AgencyController {
             , notes = REQUEST_CHARACTER
     )
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "에이전시 등록")
+    @ValidField
     public SingleResult<Agency> saveContents(
-            @RequestBody final AgencySaveDTO agencySaveDTO
+            @RequestBody @Valid  final AgencySaveDTO agencySaveDTO
+            , @ApiIgnore final BindingResult result
     ) {
         return responseService.getSingleResult(agencyService.save(agencySaveDTO));
     }
@@ -114,8 +119,9 @@ public class AgencyController {
     /**
      * Update agency single result.
      *
-     * @param agencySeq       the agency seq
-     * @param agencyUpdateDTO the agency update dto
+     * @param agencySeq     the agency seq
+     * @param agencySaveDTO the agency save dto
+     * @param result        the result
      * @return the single result
      * @author [이소정]
      * @implNote 에이전시 수정
@@ -124,12 +130,14 @@ public class AgencyController {
     @ApiOperation(value = "에이전시 수정", notes = REQUEST_CHARACTER)
     @PutMapping(name = "에이전시 수정", value = "/{agencySeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public SingleResult<Agency> updateAgency(
             @ApiParam(name = "agencySeq", value = "에이전시 시퀀스", defaultValue = "1", required = true) @PathVariable final Long agencySeq,
-            @RequestBody final AgencyUpdateDTO agencyUpdateDTO
+            @RequestBody @Valid final AgencySaveDTO agencySaveDTO
+            , @ApiIgnore final BindingResult result
     ) {
-        agencyUpdateDTO.setAgencySeq(agencySeq);
-        return responseService.getSingleResult(agencyService.update(agencyUpdateDTO));
+        agencySaveDTO.setAgencySeq(agencySeq);
+        return responseService.getSingleResult(agencyService.update(agencySaveDTO));
     }
 
     /**

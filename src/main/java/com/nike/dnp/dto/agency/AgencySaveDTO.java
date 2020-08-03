@@ -21,6 +21,14 @@ import javax.validation.constraints.NotBlank;
 public class AgencySaveDTO {
 
     /**
+     * The Agency seq
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "agencySeq", value = "에이전시 시퀀스", example = "3", hidden = true)
+    private long agencySeq;
+
+    /**
      * The Agency name
      *
      * @author [이소정]

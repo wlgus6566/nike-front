@@ -22,6 +22,13 @@ import java.util.List;
 public class ReportSaveDTO {
 
     /**
+     * 보고서 시퀀스
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "reportName", value = "보고서 시퀀스", hidden = true, example = "1")
+    private Long reportSeq;
+
+    /**
      * 구분 코드
      *
      * @author [이소정]

@@ -1,8 +1,12 @@
 package com.nike.dnp.dto.contents;
 
+import com.nike.dnp.common.validation.ValidationGroups;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 
@@ -21,11 +25,27 @@ import javax.validation.constraints.NotNull;
 public class ContentsFileSaveDTO {
 
     /**
+     * 컨텐츠 파일 시퀀스
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "contentsFileSeq", value = "컨텐츠 파일 시퀀스(기존파일이 있는 경우 필수)", example = "7")
+    private Long contentsFileSeq;
+
+    /**
+     * 컨텐츠 시퀀스
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스", example = "10")
+    private Long contentsSeq;
+
+    /**
      * 파일 구분 공통코드
      *
      * @author [이소정]
      */
-    @NotNull(message = "contentsFile.fileSectionCode")
+    @NotEmpty(message = "contentsFile.fileSectionCode")
     @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드(ASSET/GUIDE/VIDEO)", required = true, example = "GUIDE")
     private String fileSectionCode;
 
@@ -34,7 +54,7 @@ public class ContentsFileSaveDTO {
      *
      * @author [이소정]
      */
-    @NotNull(message = "contentsFile.fileKindCode")
+    @NotEmpty(message = "contentsFile.fileKindCode")
     @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드(FILE/VIDEO/VR)", required = true, example = "FILE")
     private String fileKindCode;
 

@@ -55,6 +55,7 @@ public class ContentsBasketService {
      * @since 2020. 7. 14. 오후 6:24:19
      */
     public List<ContentsBasketResultDTO> findAllContentsBasket() {
+        log.info("contentsBasketService.findAllContentsBasket");
         return contentsBasketRepository.findAllWithContentsFile(SecurityUtil.currentUser().getUserSeq());
     }
 
@@ -91,6 +92,7 @@ public class ContentsBasketService {
      * @since 2020. 7. 30. 오후 2:51:30
      */
     public Optional<ContentsBasket> findById(final Long contentsBasketSeq) {
+        log.info("contentsBasketService.findById");
         return Optional.ofNullable(contentsBasketRepository.findById(contentsBasketSeq).orElseThrow(
                 () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())))
         );

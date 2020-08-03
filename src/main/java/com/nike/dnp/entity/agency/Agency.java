@@ -1,7 +1,6 @@
 package com.nike.dnp.entity.agency;
 
 import com.nike.dnp.dto.agency.AgencySaveDTO;
-import com.nike.dnp.dto.agency.AgencyUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -101,16 +100,16 @@ public class Agency extends BaseTimeEntity {
     /**
      * Update.
      *
-     * @param agencyUpdateDTO the agency update dto
+     * @param agencySaveDTO the agency save dto
      * @author [이소정]
      * @implNote 에이전시 수정
      * @since 2020. 7. 20. 오후 12:19:53
      */
-    public void update(final AgencyUpdateDTO agencyUpdateDTO) {
-        this.agencyName = agencyUpdateDTO.getAgencyName();
-        this.agencyDescription = agencyUpdateDTO.getAgencyDescription();
-        this.telephoneNumber = agencyUpdateDTO.getTelephoneNumber();
-        this.email = agencyUpdateDTO.getEmail();
+    public void update(final AgencySaveDTO agencySaveDTO) {
+        this.agencyName = agencySaveDTO.getAgencyName();
+        this.agencyDescription = agencySaveDTO.getAgencyDescription();
+        this.telephoneNumber = agencySaveDTO.getTelephoneNumber();
+        this.email = agencySaveDTO.getEmail();
     }
 
 

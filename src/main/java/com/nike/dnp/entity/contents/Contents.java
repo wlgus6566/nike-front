@@ -3,7 +3,6 @@ package com.nike.dnp.entity.contents;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
-import com.nike.dnp.dto.contents.ContentsUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.util.LocalDateUtil;
 import io.swagger.annotations.ApiModelProperty;
@@ -191,7 +190,19 @@ public class Contents extends BaseTimeEntity {
     public Contents save(final ContentsSaveDTO contentsSaveDTO) {
         log.info("Contents.save");
         final Contents saveContents = new Contents();
-        this.saveContentsBasic(contentsSaveDTO, saveContents);
+        saveContents.setTopMenuCode(contentsSaveDTO.getTopMenuCode());
+        saveContents.setMenuCode(contentsSaveDTO.getMenuCode());
+        saveContents.setImageFileName(contentsSaveDTO.getImageFileName());
+        saveContents.setImageFileSize(contentsSaveDTO.getImageFileSize());
+        saveContents.setImageFilePhysicalName(contentsSaveDTO.getImageFilePhysicalName());
+        saveContents.setFolderName(contentsSaveDTO.getFolderName());
+        saveContents.setFolderContents(contentsSaveDTO.getFolderContents());
+        saveContents.setCampaignPeriodSectionCode(contentsSaveDTO.getCampaignPeriodSectionCode());
+        saveContents.setExposureYn(contentsSaveDTO.getExposureYn());
+
+        saveContents.setUseYn("Y");
+        saveContents.setReadCount(0l);
+
         // 캠페인기간 > 날짜선택 인 경우
         if (ServiceCode.ContentsCampaignPeriodCode.SELECT.toString().equals(contentsSaveDTO.getCampaignPeriodSectionCode())) {
             saveContents.setCampaignBeginDt(LocalDateUtil.strToLocalDateTime(contentsSaveDTO.getCampaignBeginDt()+" 00:00:00","yyyy.MM.dd HH:mm:ss"));
@@ -205,50 +216,25 @@ public class Contents extends BaseTimeEntity {
         return saveContents;
     }
 
-    /**
-     * Save contents basic.
-     *
-     * @param contentsSaveDTO the contents save dto
-     * @param saveContents    the save contents
-     * @author [이소정]
-     * @implNote 콘텐츠 저장
-     * @since 2020. 7. 1. \오전 9:59:37
-     */
-    public static void saveContentsBasic(final ContentsSaveDTO contentsSaveDTO, final Contents saveContents) {
-        log.info("Contents.saveContentsBasic");
-        saveContents.setTopMenuCode(contentsSaveDTO.getTopMenuCode());
-        saveContents.setMenuCode(contentsSaveDTO.getMenuCode());
-        saveContents.setImageFileName(contentsSaveDTO.getImageFileName());
-        saveContents.setImageFileSize(contentsSaveDTO.getImageFileSize());
-        saveContents.setImageFilePhysicalName(contentsSaveDTO.getImageFilePhysicalName());
-        saveContents.setFolderName(contentsSaveDTO.getFolderName());
-        saveContents.setFolderContents(contentsSaveDTO.getFolderContents());
-        saveContents.setCampaignPeriodSectionCode(contentsSaveDTO.getCampaignPeriodSectionCode());
-        saveContents.setExposureYn(contentsSaveDTO.getExposureYn());
-
-        saveContents.setUseYn("Y");
-        saveContents.setReadCount(0l);
-    }
-
 
     /**
      * Update.
      *
-     * @param contentsUpdateDTO the contents update dto
+     * @param contentsSaveDTO the contents save dto
      * @author [이소정]
      * @implNote 콘텐츠 수정
      * @since 2020. 7. 3. 오후 4:01:36
      */
-    public void update(final ContentsUpdateDTO contentsUpdateDTO) {
+    public void update(final ContentsSaveDTO contentsSaveDTO) {
         log.info("Contents.update");
-        this.menuCode = contentsUpdateDTO.getMenuCode();
-        this.imageFileName = contentsUpdateDTO.getImageFileName();
-        this.imageFileSize = contentsUpdateDTO.getImageFileSize();
-        this.imageFilePhysicalName = contentsUpdateDTO.getImageFilePhysicalName();
-        this.folderName = contentsUpdateDTO.getFolderName();
-        this.folderContents = contentsUpdateDTO.getFolderContents();
-        this.campaignPeriodSectionCode = contentsUpdateDTO.getCampaignPeriodSectionCode();
-        this.exposureYn = contentsUpdateDTO.getExposureYn();
+        this.menuCode = contentsSaveDTO.getMenuCode();
+        this.imageFileName = contentsSaveDTO.getImageFileName();
+        this.imageFileSize = contentsSaveDTO.getImageFileSize();
+        this.imageFilePhysicalName = contentsSaveDTO.getImageFilePhysicalName();
+        this.folderName = contentsSaveDTO.getFolderName();
+        this.folderContents = contentsSaveDTO.getFolderContents();
+        this.campaignPeriodSectionCode = contentsSaveDTO.getCampaignPeriodSectionCode();
+        this.exposureYn = contentsSaveDTO.getExposureYn();
     }
 
     /**

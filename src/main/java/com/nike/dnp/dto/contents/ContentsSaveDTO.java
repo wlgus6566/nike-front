@@ -5,6 +5,11 @@ import com.nike.dnp.dto.user.UserContentsSaveDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -24,6 +29,16 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class ContentsSaveDTO {
+
+    /**
+     * 컨텐츠 시퀀스
+     *
+     * @author [이소정]
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스", example = "10", hidden = true)
+    private Long contentsSeq;
 
     /**
      * 최고 메뉴 공통코드
@@ -240,15 +255,6 @@ public class ContentsSaveDTO {
     private String memo;
 
     /**
-     * 콘텐트 파일 리스트
-     *
-     * @author [이소정]
-     */
-    @NotBlank(message = "contents.contentsFileList")
-    @ApiModelProperty(name = "contentsFileList", value = "컨텐츠 파일 리스트")
-    private List<ContentsFileSaveDTO> contentsFileList;
-
-    /**
      * 노출 여부
      *
      * @author [이소정]
@@ -256,6 +262,15 @@ public class ContentsSaveDTO {
     @NotBlank(message = "contents.exposureYn")
     @ApiModelProperty(name = "exposureYn", value = "폴더 상태(노출 여부 Y/N)", example = "Y")
     private String exposureYn;
+
+    /**
+     * 콘텐트 파일 리스트
+     *
+     * @author [이소정]
+     */
+    @Valid
+    @ApiModelProperty(name = "contentsFileList", value = "컨텐츠 파일 리스트")
+    private List<ContentsFileSaveDTO> contentsFileList;
 
 //    권한 관련 DTO
     /**

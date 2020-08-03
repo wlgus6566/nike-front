@@ -2,7 +2,6 @@ package com.nike.dnp.service.agency;
 
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.agency.AgencySaveDTO;
-import com.nike.dnp.dto.agency.AgencyUpdateDTO;
 import com.nike.dnp.entity.agency.Agency;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.agency.AgencyRepository;
@@ -77,16 +76,16 @@ public class AgencyService {
     /**
      * Update optional.
      *
-     * @param agencyUpdateDTO the agency update dto
+     * @param agencySaveDTO the agency save dto
      * @return the agency
      * @author [이소정]
      * @implNote 에이전시 수정
      * @since 2020. 7. 20. 오후 2:05:32
      */
     @Transactional
-    public Agency update(final AgencyUpdateDTO agencyUpdateDTO) {
-        Optional<Agency> savedAgency = this.findById(agencyUpdateDTO.getAgencySeq());
-        savedAgency.ifPresent(value -> value.update(agencyUpdateDTO));
+    public Agency update(final AgencySaveDTO agencySaveDTO) {
+        Optional<Agency> savedAgency = this.findById(agencySaveDTO.getAgencySeq());
+        savedAgency.ifPresent(value -> value.update(agencySaveDTO));
         return savedAgency.get();
     }
 

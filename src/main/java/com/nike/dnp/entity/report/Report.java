@@ -2,7 +2,6 @@ package com.nike.dnp.entity.report;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.dto.report.ReportSaveDTO;
-import com.nike.dnp.dto.report.ReportUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -180,18 +179,18 @@ public class Report extends BaseTimeEntity {
     /**
      * Update.
      *
-     * @param reportUpdateDTO the report update dto
+     * @param reportSaveDTO the report save dto
      * @author [이소정]
      * @implNote 보고서 수정
      * @since 2020. 7. 9. 오후 6:30:48
      */
-    public void update(final ReportUpdateDTO reportUpdateDTO) {
+    public void update(final ReportSaveDTO reportSaveDTO) {
         log.info("Report.update");
-        this.reportSectionCode = reportUpdateDTO.getReportSectionCode();
-        this.reportName = reportUpdateDTO.getReportName();
-        this.imageFileName = reportUpdateDTO.getImageFileName();
-        this.imageFileSize = reportUpdateDTO.getImageFileSize();
-        this.imageFilePhysicalName = reportUpdateDTO.getImageFilePhysicalName();
+        this.reportSectionCode = reportSaveDTO.getReportSectionCode();
+        this.reportName = reportSaveDTO.getReportName();
+        this.imageFileName = reportSaveDTO.getImageFileName();
+        this.imageFileSize = reportSaveDTO.getImageFileSize();
+        this.imageFilePhysicalName = reportSaveDTO.getImageFilePhysicalName();
     }
 
     /**

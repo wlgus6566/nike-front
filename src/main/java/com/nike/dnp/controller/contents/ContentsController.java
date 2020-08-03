@@ -1,6 +1,7 @@
 package com.nike.dnp.controller.contents;
 
 import com.nike.dnp.common.aspect.ValidField;
+import com.nike.dnp.common.validation.ValidationGroups;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.*;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -174,12 +176,14 @@ public class ContentsController {
     /**
      * Update contents single result.
      *
-     * @param topMenuCode       the top menu code
-     * @param menuCode          the menu code
-     * @param contentsSeq       the contents seq
-     * @param contentsUpdateDTO the contents update dto
+     * @param topMenuCode     the top menu code
+     * @param menuCode        the menu code
+     * @param contentsSeq     the contents seq
+     * @param contentsSaveDTO the contents save dto
+     * @param result          the result
      * @return the single result
      * @author [이소정]
+     * @implNote
      * @apiNote 콘텐츠 수정
      * @since 2020. 7. 13. 오전 11:59:45
      */
@@ -195,13 +199,13 @@ public class ContentsController {
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode
             , @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode
             , @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq
-            , @ApiParam(name="contentsUpdateDTO", value = "Contents 수정 Json") @RequestBody @Valid final ContentsUpdateDTO contentsUpdateDTO
+            , @ApiParam(name="contentsUpdateDTO", value = "Contents 수정 Json") @RequestBody @Valid final ContentsSaveDTO contentsSaveDTO
             , @ApiIgnore final BindingResult result
     ) {
-        contentsUpdateDTO.setTopMenuCode(topMenuCode);
-        contentsUpdateDTO.setMenuCode(menuCode);
-        contentsUpdateDTO.setContentsSeq(contentsSeq);
-        return responseService.getSingleResult(contentsService.update(contentsUpdateDTO));
+        contentsSaveDTO.setTopMenuCode(topMenuCode);
+        contentsSaveDTO.setMenuCode(menuCode);
+        contentsSaveDTO.setContentsSeq(contentsSeq);
+        return responseService.getSingleResult(contentsService.update(contentsSaveDTO));
     }
 
 

@@ -1,11 +1,10 @@
 package com.nike.dnp.controller.report;
 
+import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
-import com.nike.dnp.dto.report.ReportUpdateDTO;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
@@ -20,12 +19,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 
 /**
@@ -123,8 +122,10 @@ public class ReportController {
             , notes = REQUEST_CHARACTER
     )
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 등록")
+    @ValidField
     public SingleResult<Report> saveReport(
-            @RequestBody final ReportSaveDTO reportSaveDTO
+            @RequestBody @Valid final ReportSaveDTO reportSaveDTO
+            , @ApiIgnore final BindingResult result
     ) {
         log.info("ReportController.saveReport");
         return responseService.getSingleResult(reportService.save(reportSaveDTO));
@@ -155,8 +156,9 @@ public class ReportController {
     /**
      * Update report single result.
      *
-     * @param reportUpdateDTO the report update dto
-     * @param reportSeq       the report seq
+     * @param reportSaveDTO the report save dto
+     * @param reportSeq     the report seq
+     * @param result        the result
      * @return the single result
      * @author [이소정]
      * @implNote 보고서 수정
@@ -165,12 +167,14 @@ public class ReportController {
     @ApiOperation(value = "보고서 수정", notes = REQUEST_CHARACTER)
     @PutMapping(name = "보고서 수정", value = "/{reportSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public SingleResult<Report> updateReport(
-            @ApiParam(name="reportUpdateDTO", value = "보고서 수정 Json") @RequestBody final ReportUpdateDTO reportUpdateDTO,
+            @ApiParam(name="reportUpdateDTO", value = "보고서 수정 Json") @RequestBody @Valid final ReportSaveDTO reportSaveDTO,
             @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq
+            , @ApiIgnore final BindingResult result
     ) {
-        reportUpdateDTO.setReportSeq(reportSeq);
-        return responseService.getSingleResult(reportService.update(reportUpdateDTO));
+        reportSaveDTO.setReportSeq(reportSeq);
+        return responseService.getSingleResult(reportService.update(reportSaveDTO));
     }
 
     /**

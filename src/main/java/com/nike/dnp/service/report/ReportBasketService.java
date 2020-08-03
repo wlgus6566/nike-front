@@ -71,6 +71,7 @@ public class ReportBasketService {
      */
     @Transactional
     public List<ReportBasket> save(final List<Long> reportFileSeqList) {
+        log.info("ReportBasketService.save");
         final List<ReportBasket> reportBasketList = new ArrayList<>();
         for (final Long reportFileSeq : reportFileSeqList) {
             final Optional<ReportFile> reportFile = reportFileRepository.findById(reportFileSeq);

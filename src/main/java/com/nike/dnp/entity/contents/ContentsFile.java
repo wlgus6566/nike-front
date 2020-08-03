@@ -288,14 +288,14 @@ public class ContentsFile extends BaseTimeEntity {
     /**
      * Save contents file.
      *
-     * @param savedContents       the saved contents
+     * @param contentsSeq         the contents seq
      * @param contentsFileSaveDTO the contents file save dto
      * @return the contents file
      * @author [이소정]
      * @implNote 콘텐츠 파일 저장
      * @since 2020. 7. 1. 오전 11:24:43
      */
-    public ContentsFile save(Contents savedContents, ContentsFileSaveDTO contentsFileSaveDTO) {
+    public ContentsFile save(Long contentsSeq, ContentsFileSaveDTO contentsFileSaveDTO) {
         log.info("ContentsFile.save");
         ContentsFile contentsFile = new ContentsFile();
 
@@ -305,126 +305,29 @@ public class ContentsFile extends BaseTimeEntity {
 
         contentsFile.setDownloadCount(0l);
         contentsFile.setUseYn("Y");
-        contentsFile.setContentsSeq(savedContents.getContentsSeq());
-        return applyContentsFile(contentsFile
-                , contentsFileSaveDTO.getFileSectionCode()
-                , contentsFileSaveDTO.getFileKindCode()
-                , contentsFileSaveDTO.getFileName()
-                , contentsFileSaveDTO.getFileSize()
-                , contentsFileSaveDTO.getFilePhysicalName()
-                , contentsFileSaveDTO.getFileContentType()
-                , contentsFileSaveDTO.getFileExtension()
-                , contentsFileSaveDTO.getTitle()
-                , contentsFileSaveDTO.getUrl()
-                , contentsFileSaveDTO.getThumbnailFileName()
-                , contentsFileSaveDTO.getThumbnailFileSize()
-                , contentsFileSaveDTO.getThumbnailFilePhysicalName()
-                , contentsFileSaveDTO.getDetailThumbnailFileName()
-                , contentsFileSaveDTO.getDetailThumbnailFileSize()
-                , contentsFileSaveDTO.getDetailThumbnailFilePhysicalName()
-                , contentsFileSaveDTO.getFileOrder());
-    }
-
-    /**
-     * New contents file contents file.
-     *
-     * @param contentsSeq           the contents seq
-     * @param contentsFileUpdateDTO the contents file update dto
-     * @return the contents file
-     * @author [이소정]
-     * @implNote 새로운 콘텐츠 파일 저장
-     * @since 2020. 7. 6. 오후 5:52:49
-     */
-    public ContentsFile newContentsFile(Long contentsSeq, ContentsFileUpdateDTO contentsFileUpdateDTO) {
-        log.info("ContentsFile.newContentsFile");
-        ContentsFile contentsFile = new ContentsFile();
-
-        contentsFile.setDownloadCount(0l);
-        contentsFile.setUseYn("Y");
         contentsFile.setContentsSeq(contentsSeq);
-        return applyContentsFile(contentsFile
-                , contentsFileUpdateDTO.getFileSectionCode()
-                , contentsFileUpdateDTO.getFileKindCode()
-                , contentsFileUpdateDTO.getFileName()
-                , contentsFileUpdateDTO.getFileSize()
-                , contentsFileUpdateDTO.getFilePhysicalName()
-                , contentsFileUpdateDTO.getFileContentType()
-                , contentsFileUpdateDTO.getFileExtension()
-                , contentsFileUpdateDTO.getTitle()
-                , contentsFileUpdateDTO.getUrl()
-                , contentsFileUpdateDTO.getThumbnailFileName()
-                , contentsFileUpdateDTO.getThumbnailFileSize()
-                , contentsFileUpdateDTO.getThumbnailFilePhysicalName()
-                , contentsFileUpdateDTO.getDetailThumbnailFileName()
-                , contentsFileUpdateDTO.getDetailThumbnailFileSize()
-                , contentsFileUpdateDTO.getDetailThumbnailFilePhysicalName()
-                , contentsFileUpdateDTO.getFileOrder());
-    }
 
-    /**
-     * Apply contents file contents file.
-     *
-     * @param contentsFile                    the contents file
-     * @param fileSectionCode                 the file section code
-     * @param fileKindCode                    the file kind code
-     * @param fileName                        the file name
-     * @param fileSize                        the file size
-     * @param filePhysicalName                the file physical name
-     * @param fileContentType                 the file content type
-     * @param fileExtension                   the file extension
-     * @param title                           the title
-     * @param url                             the url
-     * @param thumbnailFileName               the thumbnail file name
-     * @param thumbnailFileSize               the thumbnail file size
-     * @param thumbnailFilePhysicalName       the thumbnail file physical name
-     * @param detailThumbnailFileName         the detail thumbnail file name
-     * @param detailThumbnailFileSize         the detail thumbnail file size
-     * @param detailThumbnailFilePhysicalName the detail thumbnail file physical name
-     * @param fileOrder                       the file order
-     * @return the contents file
-     * @author [이소정]
-     * @implNote 콘텐츠 파일 셋팅
-     * @since 2020. 7. 7. 오전 10:41:43
-     */
-    private ContentsFile applyContentsFile(ContentsFile contentsFile
-            , String fileSectionCode
-            , String fileKindCode
-            , String fileName
-            , Long fileSize
-            , String filePhysicalName
-            , String fileContentType
-            , String fileExtension
-            , String title
-            , String url
-            , String thumbnailFileName
-            , String thumbnailFileSize
-            , String thumbnailFilePhysicalName
-            , String detailThumbnailFileName
-            , String detailThumbnailFileSize
-            , String detailThumbnailFilePhysicalName
-            , Long fileOrder
-    ) {
         boolean isFile = ServiceCode.ContentsFileKindCode.FILE.toString().equals(fileKindCode);
 
-        contentsFile.setFileSectionCode(fileSectionCode);
-        contentsFile.setFileKindCode(fileKindCode);
-        contentsFile.setFileOrder(fileOrder);
+        contentsFile.setFileSectionCode(contentsFileSaveDTO.getFileSectionCode());
+        contentsFile.setFileKindCode(contentsFileSaveDTO.getFileKindCode());
+        contentsFile.setFileOrder(contentsFileSaveDTO.getFileOrder());
 
-        contentsFile.setFileContentType(isFile ? fileContentType : null);
-        contentsFile.setFileExtension(isFile ? fileExtension.toUpperCase(Locale.KOREA) : null);
+        contentsFile.setFileContentType(isFile ? contentsFileSaveDTO.getFileContentType() : null);
+        contentsFile.setFileExtension(isFile ? contentsFileSaveDTO.getFileExtension().toUpperCase(Locale.KOREA) : null);
 
-        contentsFile.setFileName(isFile ? fileName : null);
-        contentsFile.setFileSize(isFile ? fileSize : null);
-        contentsFile.setFilePhysicalName(isFile ? filePhysicalName : null);
-        contentsFile.setThumbnailFileName(isFile ? thumbnailFileName : null);
-        contentsFile.setThumbnailFileSize(isFile ? thumbnailFileSize : null);
-        contentsFile.setThumbnailFilePhysicalName(isFile ? thumbnailFilePhysicalName : null);
-        contentsFile.setDetailThumbnailFileName(isFile ? detailThumbnailFileName : null);
-        contentsFile.setDetailThumbnailFileSize(isFile ? detailThumbnailFileSize : null);
-        contentsFile.setDetailThumbnailFilePhysicalName(isFile ? detailThumbnailFilePhysicalName : null);
+        contentsFile.setFileName(isFile ? contentsFileSaveDTO.getFileName() : null);
+        contentsFile.setFileSize(isFile ? contentsFileSaveDTO.getFileSize() : null);
+        contentsFile.setFilePhysicalName(isFile ? contentsFileSaveDTO.getFilePhysicalName() : null);
+        contentsFile.setThumbnailFileName(isFile ? contentsFileSaveDTO.getThumbnailFileName() : null);
+        contentsFile.setThumbnailFileSize(isFile ? contentsFileSaveDTO.getThumbnailFileSize() : null);
+        contentsFile.setThumbnailFilePhysicalName(isFile ? contentsFileSaveDTO.getThumbnailFilePhysicalName() : null);
+        contentsFile.setDetailThumbnailFileName(isFile ? contentsFileSaveDTO.getDetailThumbnailFileName() : null);
+        contentsFile.setDetailThumbnailFileSize(isFile ? contentsFileSaveDTO.getDetailThumbnailFileSize() : null);
+        contentsFile.setDetailThumbnailFilePhysicalName(isFile ? contentsFileSaveDTO.getDetailThumbnailFilePhysicalName() : null);
 
-        contentsFile.setTitle(!isFile ? title : null);
-        contentsFile.setUrl(!isFile ? url : null);
+        contentsFile.setTitle(!isFile ? contentsFileSaveDTO.getTitle() : null);
+        contentsFile.setUrl(!isFile ? contentsFileSaveDTO.getUrl() : null);
 
         return contentsFile;
     }
@@ -432,35 +335,35 @@ public class ContentsFile extends BaseTimeEntity {
     /**
      * Update.
      *
-     * @param contentsFileUpdateDTO the contents file update dto
+     * @param contentsFileSaveDTO the contents file save dto
      * @author [이소정]
      * @implNote 콘텐츠 파일 수정
      * @since 2020. 7. 3. 오후 5:27:06
      */
-    public void update(final ContentsFileUpdateDTO contentsFileUpdateDTO) {
+    public void update(final ContentsFileSaveDTO contentsFileSaveDTO) {
         log.info("ContentsFile.update");
 
-        boolean isFile = ServiceCode.ContentsFileKindCode.FILE.toString().equals(contentsFileUpdateDTO.getFileKindCode());
+        boolean isFile = ServiceCode.ContentsFileKindCode.FILE.toString().equals(contentsFileSaveDTO.getFileKindCode());
 
-        this.fileSectionCode = contentsFileUpdateDTO.getFileSectionCode();
-        this.fileKindCode = contentsFileUpdateDTO.getFileKindCode();
-        this.fileOrder = contentsFileUpdateDTO.getFileOrder();
+        this.fileSectionCode = contentsFileSaveDTO.getFileSectionCode();
+        this.fileKindCode = contentsFileSaveDTO.getFileKindCode();
+        this.fileOrder = contentsFileSaveDTO.getFileOrder();
 
-        this.fileContentType = isFile ? contentsFileUpdateDTO.getFileContentType() : null;
-        this.fileExtension = isFile ? contentsFileUpdateDTO.getFileExtension().toUpperCase(Locale.KOREA) : null;
+        this.fileContentType = isFile ? contentsFileSaveDTO.getFileContentType() : null;
+        this.fileExtension = isFile ? contentsFileSaveDTO.getFileExtension().toUpperCase(Locale.KOREA) : null;
 
-        this.fileName = isFile ? contentsFileUpdateDTO.getFileName() : null;
-        this.fileSize = isFile ? contentsFileUpdateDTO.getFileSize() : null;
-        this.filePhysicalName = isFile ? contentsFileUpdateDTO.getFilePhysicalName() : null;
-        this.thumbnailFileName = isFile ? contentsFileUpdateDTO.getThumbnailFileName() : null;
-        this.thumbnailFileSize = isFile ? contentsFileUpdateDTO.getThumbnailFileSize() : null;
-        this.thumbnailFilePhysicalName = isFile ? contentsFileUpdateDTO.getThumbnailFilePhysicalName() : null;
-        this.detailThumbnailFileName = isFile ? contentsFileUpdateDTO.getDetailThumbnailFileName() : null;
-        this.detailThumbnailFileSize = isFile ? contentsFileUpdateDTO.getDetailThumbnailFileSize() : null;
-        this.detailThumbnailFilePhysicalName = isFile ? contentsFileUpdateDTO.getDetailThumbnailFilePhysicalName() : null;
+        this.fileName = isFile ? contentsFileSaveDTO.getFileName() : null;
+        this.fileSize = isFile ? contentsFileSaveDTO.getFileSize() : null;
+        this.filePhysicalName = isFile ? contentsFileSaveDTO.getFilePhysicalName() : null;
+        this.thumbnailFileName = isFile ? contentsFileSaveDTO.getThumbnailFileName() : null;
+        this.thumbnailFileSize = isFile ? contentsFileSaveDTO.getThumbnailFileSize() : null;
+        this.thumbnailFilePhysicalName = isFile ? contentsFileSaveDTO.getThumbnailFilePhysicalName() : null;
+        this.detailThumbnailFileName = isFile ? contentsFileSaveDTO.getDetailThumbnailFileName() : null;
+        this.detailThumbnailFileSize = isFile ? contentsFileSaveDTO.getDetailThumbnailFileSize() : null;
+        this.detailThumbnailFilePhysicalName = isFile ? contentsFileSaveDTO.getDetailThumbnailFilePhysicalName() : null;
 
-        this.title = !isFile ? contentsFileUpdateDTO.getTitle() : null;
-        this.url = isFile ? null : contentsFileUpdateDTO.getUrl();
+        this.title = !isFile ? contentsFileSaveDTO.getTitle() : null;
+        this.url = isFile ? null : contentsFileSaveDTO.getUrl();
     }
 
     /**

@@ -43,7 +43,7 @@ public class ContentsFileService {
      * @since 2020. 7. 13. 오후 6:01:00
      */
     public Page<ContentsFileResultDTO> findAllContentsFilePaging(final ContentsFileSearchDTO contentsFileSearchDTO) {
-
+        log.info("ContentsFileService.findAllContentsFilePaging");
         // QueryDsl 기능 이용
         return contentsFileRepository.findAllContentsFilePaging(
                 contentsFileSearchDTO,
