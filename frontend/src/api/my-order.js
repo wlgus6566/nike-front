@@ -10,4 +10,10 @@ function getMyOrder(params) {
 function getMyOrderDetail(orderGoodsSeq) {
     return myOrder.get(`/${orderGoodsSeq}`);
 }
-export { getMyOrder, getMyOrderDetail };
+
+//MYPAGE 주문내역 등록
+function postOrderSave(data) {
+    return myOrder.post(`/save`, data);
+}
+
+export { getMyOrder, getMyOrderDetail, postOrderSave };

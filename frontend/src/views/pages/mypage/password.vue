@@ -18,69 +18,68 @@
         </div>
         <div class="table-form">
             <form action="#" @submit.prevent="passwordChange">
-                <fieldset>
-                    <legend>비밀번호 변경</legend>
-                    <div class="table-col">
-                        <label for="change-pw1">
-                            <span class="tit">기존 비밀번호</span>
+                <div class="table">
+                    <div class="table-row">
+                        <label for="change-pw1" class="table-th">
+                            <span class="required">기존 비밀번호</span>
+                        </label>
+                        <div class="table-td">
                             <input
                                 type="password"
                                 id="change-pw1"
-                                class="pw"
+                                class="input-box"
                                 maxlength="16"
                                 v-model="password"
                             />
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <label for="change-pw2" class="table-th">
+                            <span class="required">새 비밀번호</span>
                         </label>
-                        <label for="change-pw2">
-                            <span class="tit"
-                                ><span class="required">새 비밀번호</span></span
-                            >
+                        <div class="table-td">
                             <input
                                 type="password"
                                 id="change-pw2"
-                                class="pw"
+                                class="input-box"
                                 maxlength="16"
                                 placeholder="(8~16자/대소문자/숫자/특수문자 포함)"
                                 v-model="newPassword"
                             />
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <label for="change-pw3" class="table-th">
+                            <span class="required">새 비밀번호(확인)</span>
                         </label>
-                        <label for="change-pw3">
-                            <span class="tit"
-                                ><span class="required"
-                                    >새 비밀번호(확인)</span
-                                ></span
-                            >
+                        <div class="table-td">
                             <input
                                 type="password"
                                 id="change-pw3"
-                                class="pw"
+                                class="input-box"
                                 maxlength="16"
                                 placeholder=""
                                 v-model="confirmPassword"
                             />
-                        </label>
+                        </div>
                     </div>
-                    <div class="btn-area">
-                        <button
-                            type="button"
-                            class="btn-s"
-                            @click="$router.go(-1)"
-                        >
-                            <span>취소</span>
-                        </button>
-                        <button
-                            type="submit"
-                            class="btn-s-black"
-                            :disabled="
-                                password.length < 1 ||
-                                newPassword.length < 1 ||
-                                confirmPassword.length < 1
-                            "
-                        >
-                            <span>저장</span>
-                        </button>
-                    </div>
-                </fieldset>
+                </div>
+                <div class="btn-area">
+                    <button type="button" class="btn-s" @click="$router.go(-1)">
+                        <span>취소</span>
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn-s-black"
+                        :disabled="
+                            password.length < 1 ||
+                            newPassword.length < 1 ||
+                            confirmPassword.length < 1
+                        "
+                    >
+                        <span>저장</span>
+                    </button>
+                </div>
             </form>
         </div>
     </div>

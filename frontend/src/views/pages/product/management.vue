@@ -6,7 +6,7 @@
         <div class="sorting-area">
             <FilterSelect :listSortSelect="category2Code" />
             <FilterSelect :listSortSelect="category3Code" />
-            <FilterSelect :listSortSelect="agency" />
+            <FilterSelect :listSortSelect="agencySeq" />
             <SearchInput @searchSubmit="searchSubmit" />
         </div>
         <template v-if="productListData">
@@ -41,14 +41,15 @@
     </div>
 </template>
 <script>
-import SearchInput from '@/components/search-input';
-import FilterSelect from '@/components/filter-select';
-import ProductManagement from '@/components/product-management';
-import Pagination from '@/components/pagination';
-import NoData from '@/components/no-data';
-import { delProduct, getProductList } from '@/api/product';
+    import SearchInput from '@/components/search-input';
+    import FilterSelect from '@/components/filter-select';
+    import ProductManagement from '@/components/product-management';
+    import Pagination from '@/components/pagination';
+    import NoData from '@/components/no-data';
+    import {delProduct, getProductList} from '@/api/product';
+    import {getAgencyContact} from '@/api/agency';
 
-export default {
+    export default {
     name: 'management',
     data() {
         return {
@@ -222,7 +223,7 @@ export default {
                 ],
                 value: '',
             },
-            agency: {
+            agencySeq: {
                 listSortOptions: [
                     {
                         value: '',
@@ -239,10 +240,17 @@ export default {
         ProductManagement,
         Pagination,
         NoData,
-        NoDataSearch,
     },
     created() {},
-    computed: {},
+    computed: {
+        basketList() {
+            if (!!this.$store.state.basketListData) {
+                return this.$store.state.basketListData;
+            } else {
+                return [];
+            }
+        },
+    },
     watch: {
         'category2Code.value'() {
             this.category2Code.listSortOptions.forEach((item) => {
@@ -255,11 +263,37 @@ export default {
         'category3Code.value'() {
             this.getProduct();
         },
+        'agencySeq.value'() {
+            this.getProduct();
+        },
     },
     mounted() {
         this.getProduct();
+        this.getAgency();
+    },
+    activated() {
+        this.getProduct();
     },
     methods: {
+        //에이전시 리스트
+        async getAgency() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getAgencyContact({});
+                const agencyData = response;
+                agencyData.forEach((item, index) => {
+                    const agencyList = {
+                        value: item.agencySeq,
+                        label: item.agencyName,
+                    };
+                    this.agencySeq.listSortOptions.push(agencyList);
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
         // Pagination fn
         handleCurrentChange(val) {
             this.page = val;
@@ -312,7 +346,7 @@ export default {
                         goodsSeqList: this.checkItem.toString(),
                     });
                     await this.getProduct();
-                    //todo 장바구니 다건 삭제 추가
+                    await this.$store.dispatch('basketList');
                     this.loading = false;
                     this.checkItem.forEach((seq) => {
                         this.checked(seq, true);
@@ -345,7 +379,7 @@ export default {
                     category2Code: this.category2Code.value,
                     category3Code: this.category3Code.value,
                     keyword: this.searchKeyword,
-                    agencySeq: this.agency.value,
+                    agencySeq: this.agencySeq.value,
                 });
                 this.productList = response;
                 this.productListData = response.content;

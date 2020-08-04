@@ -26,6 +26,12 @@ function postProduct(data) {
     return product.post(`/`, data);
 }
 
+// PRODUCT 수정
+function putProduct(goodsSeq, data) {
+    console.log(data);
+    return apiProduct.put(`/${goodsSeq}`, data);
+}
+
 // PRODUCT 상품 삭제[배열]
 function delProduct(params) {
     return product.delete(`/`, {
@@ -37,5 +43,6 @@ export {
     getUserProductList,
     getProductDetail,
     postProduct,
+    putProduct,
     delProduct,
 };

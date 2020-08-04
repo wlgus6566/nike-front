@@ -32,16 +32,16 @@
     </div>
 </template>
 <script>
-import SearchInput from '@/components/search-input';
-import ProductList from '@/components/product-list';
-import Loading from '@/components/loading';
-import NoData from '@/components/no-data';
-import detailView from '@/views/pages/product/detail-view';
+    import SearchInput from '@/components/search-input';
+    import ProductList from '@/components/product-list';
+    import Loading from '@/components/loading';
+    import NoData from '@/components/no-data';
+    import detailView from '@/views/pages/product/detail-view';
 
-import { getUserProductList } from '@/api/product.js';
-import { getWishList, postWishList } from '@/api/wish-list';
+    import {getUserProductList} from '@/api/product.js';
+    import {getWishList, postWishList} from '@/api/wish-list';
 
-export default {
+    export default {
     name: 'product-list',
     data() {
         return {
@@ -56,6 +56,7 @@ export default {
                 exposureYn: '',
             },
             loadingData: false,
+            totalPage: null,
             page: 0,
             itemLength: 20,
             searchKeyword: '',
@@ -65,7 +66,19 @@ export default {
             },
         };
     },
-    created() {},
+    created() {
+        this.initGetUserProduct();
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    activated() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    deactivated() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
     components: {
         SearchInput,
         ProductList,
@@ -74,19 +87,47 @@ export default {
         detailView,
     },
     mounted() {
-        this.getUserProduct();
+        //this.initGetUserProduct();
         this.getWishiList();
     },
-    activated() {},
     methods: {
+        handleScroll() {
+            if (this.loadingData) return;
+            const windowE = document.documentElement;
+            if (
+                windowE.clientHeight + windowE.scrollTop >=
+                windowE.scrollHeight
+            ) {
+                this.infiniteScroll();
+            }
+        },
+        infiniteScroll() {
+            if (
+                !this.loadingData &&
+                this.totalPage > this.page - 1 &&
+                this.userProductListData.length >= this.itemLength &&
+                this.userProductListData.length !== 0
+            ) {
+                console.log('infiniteScroll');
+                this.getUserProduct(true);
+            }
+        },
         // 상품 검색 api
         searchSubmit(val) {
             this.searchKeyword = val;
+            this.initGetUserProduct();
+        },
+        initGetUserProduct() {
+            console.log('initGetUserProduct');
+            this.totalPage = null;
+            this.page = 0;
+            this.userProductListData = null;
             this.getUserProduct();
         },
 
         // 상품 리스트 api
-        async getUserProduct() {
+        async getUserProduct(infinite) {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -96,17 +137,34 @@ export default {
                     category3Code: this.$route.meta.category3Code,
                     keyword: this.searchKeyword,
                 });
-                this.userProductListData = response.content;
+                this.totalPage = response.totalPages - 1;
+                if (infinite) {
+                    if (this.totalPage > this.page - 1) {
+                        this.userProductListData = this.userProductListData.concat(
+                            response.content
+                        );
+                    } else if (this.totalPage === this.page - 1) {
+                        this.endPage();
+                    }
+                } else {
+                    this.userProductListData = response.content;
+                }
+                this.page++;
+                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }
+        },
+
+        endPage() {
+            alert('마지막 페이지');
         },
 
         // 상세 팝업
         showDetailView(goodsSeq) {
             this.visible.detailView = true;
             const findIndex = this.userProductListData.findIndex(
-                el => el.goodsSeq === goodsSeq
+                (el) => el.goodsSeq === goodsSeq
             );
             this.productDetailData = this.userProductListData[findIndex];
         },
@@ -130,7 +188,7 @@ export default {
         async addWishList(goodsSeq) {
             try {
                 const findIndex = this.wishListData.findIndex(
-                    el => el.goodsSeq === goodsSeq.goodsSeq
+                    (el) => el.goodsSeq === goodsSeq.goodsSeq
                 );
                 if (findIndex == -1) {
                     await postWishList({
@@ -138,7 +196,7 @@ export default {
                     });
                     await this.getWishiList();
                     alert(
-                        '위시리스트에 추가 되었습니다.\n 위시리스트는 마이페이지에서 확인가능합니다.'
+                        '위시리스트에 추가 되었습니다.\n위시리스트는 마이페이지에서 확인가능합니다.'
                     );
                 } else {
                     alert('이미 담긴 상품입니다.');

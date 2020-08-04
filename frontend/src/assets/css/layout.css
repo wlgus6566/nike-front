@@ -228,6 +228,7 @@ footer {
     opacity: 0;
     transform: translateY(10px);
 }
+
 /* modal open css */
 .el-popup-parent--hidden {
     padding-right: 0 !important;
@@ -251,4 +252,14 @@ footer {
     line-height: 17px;
     text-align: center;
     color: #888;
+}
+.cart-item-wrap .el-scrollbar__wrap {
+    padding: 8px 18px;
+}
+.cart-item-wrap .el-scrollbar__bar {
+    right: 8px;
+}
+
+.cart-item-wrap .el-scrollbar__view {
+    height: 100%;
 }

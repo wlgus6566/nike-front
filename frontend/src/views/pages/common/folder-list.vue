@@ -40,16 +40,16 @@
     </div>
 </template>
 <script>
-import FilterSelect from '@/components/filter-select';
-import ListSorting from '@/components/list-sorting/index';
-import SearchInput from '@/components/search-input';
-import FolderList from '@/components/folder-list';
-import Loading from '@/components/loading';
-import NoData from '@/components/no-data';
+    import FilterSelect from '@/components/filter-select';
+    import ListSorting from '@/components/list-sorting/index';
+    import SearchInput from '@/components/search-input';
+    import FolderList from '@/components/folder-list';
+    import Loading from '@/components/loading';
+    import NoData from '@/components/no-data';
 
-import { getContents } from '@/api/contents.js';
+    import {getContents} from '@/api/contents.js';
 
-export default {
+    export default {
     name: 'folder-list',
     watch: {
         'listSortSelect.value'() {
@@ -162,7 +162,6 @@ export default {
                         orderType: this.listSortSelect.value,
                     }
                 );
-
                 this.totalPage = response.totalPages - 1;
                 if (infinite) {
                     if (this.totalPage > this.page - 1) {

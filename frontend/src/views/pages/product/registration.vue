@@ -13,6 +13,7 @@
                         :imageFilePhysicalName="
                             detailData.imageFilePhysicalName
                         "
+                        :imageFileName="detailData.imageFileName"
                     ></Thumbnail>
                 </li>
                 <li class="form-row">
@@ -31,7 +32,6 @@
                                     v-model="exposure.value"
                                     :name="exposure.name"
                                     :value="radio.value"
-                                    required
                                 />
                                 <span></span>
                             </span>
@@ -90,11 +90,11 @@
                     <div class="form-column">
                         <span class="select" style="width: 100%;">
                             <el-select
-                                v-model="agency.value"
+                                v-model="agencySeq.value"
                                 placeholder="Select"
                             >
                                 <el-option
-                                    v-for="item in agency.listSortOptions"
+                                    v-for="item in agencySeq.listSortOptions"
                                     :key="item.value"
                                     :label="item.label"
                                     :value="item.value"
@@ -110,7 +110,7 @@
                     </div>
                     <div class="form-column">
                         <span class="textarea">
-                            <textarea v-model="detailData.goodsName" required />
+                            <textarea v-model="detailData.goodsName" />
                         </span>
                     </div>
                 </li>
@@ -121,8 +121,8 @@
                     <div class="form-column">
                         <input
                             type="text"
+                            ref="goodsDescription"
                             v-model="detailData.goodsDescription"
-                            required
                         />
                     </div>
                 </li>
@@ -135,7 +135,7 @@
                             <input
                                 type="text"
                                 v-model="detailData.unitPrice"
-                                required
+                                @input="unitPriceVal"
                             />
                             <span class="txt">원</span>
                         </span>
@@ -152,7 +152,7 @@
                             <input
                                 type="text"
                                 v-model="detailData.minimumOrderQuantity"
-                                required
+                                @input="quantityVal"
                             />
                             <span class="txt">개</span>
                         </span>
@@ -172,10 +172,11 @@
     </div>
 </template>
 <script>
-    import {getProductDetail, postProduct} from '@/api/product';
-    import {getExistMsg} from '@/utils/common';
+    import {getProductDetail, postProduct, putProduct} from '@/api/product';
 
     import Thumbnail from '@/components/thumbnail/index';
+    import {getAgencyContact} from '@/api/agency';
+    import store from '@/store';
 
     export default {
     name: 'registration',
@@ -193,13 +194,13 @@
                 value: 'Y',
             },
             detailData: {
-                goodsName: '',
-                goodsDescription: '',
-                unitPrice: '',
-                minimumOrderQuantity: '',
-                imageBase64: '',
-                imageFileName: 'text.jpg',
-                exposureYn: '',
+                goodsName: null,
+                goodsDescription: null,
+                unitPrice: null,
+                minimumOrderQuantity: null,
+                imageBase64: null,
+                imageFileName: null,
+                exposureYn: null,
             },
             category2Code: {
                 listSortOptions: [
@@ -360,15 +361,11 @@
                 ],
                 value: '',
             },
-            agency: {
+            agencySeq: {
                 listSortOptions: [
                     {
                         value: '',
-                        label: '에이전시테스트',
-                    },
-                    {
-                        value: '2',
-                        label: '에이전시테스트2',
+                        label: '에이전시',
                     },
                 ],
                 value: '',
@@ -378,14 +375,68 @@
     created() {
         this.detailProduct();
     },
+    activated() {},
+    computed: {
+        basketList() {
+            if (!!this.$store.state.basketListData) {
+                return this.$store.state.basketListData;
+            } else {
+                return [];
+            }
+        },
+    },
     watch: {
         'category2Code.value'() {
             this.select3CodeFn();
         },
     },
+    mounted() {
+        this.getAgency();
+        this.detailProduct();
+    },
     methods: {
-        cropImage(imageBase64) {
+        // 단가 입력 val
+        unitPriceVal() {
+            const numbers = /^[0-9]+$/;
+            if (this.detailData.unitPrice.match(numbers) === null) {
+                alert('숫자만 입력 가능합니다');
+                this.detailData.unitPrice = '1';
+            } else if (this.detailData.unitPrice == 0) {
+                this.detailData.unitPrice = '1';
+            }
+        },
+        //수량 입력 val
+        quantityVal() {
+            const numbers = /^[0-9]+$/;
+            if (this.detailData.minimumOrderQuantity.match(numbers) === null) {
+                alert('숫자만 입력 가능합니다');
+                this.detailData.minimumOrderQuantity = '1';
+            } else if (this.detailData.minimumOrderQuantity == 0) {
+                this.detailData.minimumOrderQuantity = '1';
+            }
+        },
+        //에이전시 리스트
+        async getAgency() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getAgencyContact({});
+                const agencyData = response;
+                agencyData.forEach((item, index) => {
+                    const agencyList = {
+                        value: item.agencySeq,
+                        label: item.agencyName,
+                    };
+                    this.agencySeq.listSortOptions.push(agencyList);
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        //이미지 받아오기
+        cropImage(imageBase64, imgName) {
             this.detailData.imageBase64 = imageBase64;
+            this.detailData.imageFileName = imgName;
         },
         select3CodeFn() {
             this.category2Code.listSortOptions.forEach((item) => {
@@ -404,6 +455,7 @@
                 }
             });
         },
+        // 상품 상세 불러오기
         async detailProduct() {
             if (this.$route.params.id) {
                 try {
@@ -420,32 +472,74 @@
                     this.category2Code.value = this.detailData.category2Code;
                     this.select3CodeFn();
                     this.category3Code.value = this.detailData.category3Code;
-
-                    //await getExistMsg(response);
+                    this.agencySeq.value = this.detailData.agencySeq;
                 } catch (error) {
                     console.log(error);
                 }
             }
         },
+        //상품 등록
         async addProduct() {
-            try {
-                const { data: response } = await postProduct({
-                    agencySeq: 1,
-                    category2Code: this.category2Code.value,
-                    category3Code: this.category3Code.value,
-                    exposureYn: this.exposure.value,
-                    goodsDescription: this.detailData.goodsDescription,
-                    goodsName: this.detailData.goodsName,
-                    imageBase64: this.detailData.imageBase64,
-                    imageFileName: this.detailData.imageFileName,
-                    minimumOrderQuantity: this.detailData.minimumOrderQuantity,
-                    unitPrice: this.detailData.unitPrice,
-                });
-                await getExistMsg(response);
-                console.log(response);
-            } catch (error) {
-                console.log(error);
+            const data = {
+                agencySeq: this.agencySeq.value,
+                category2Code: this.category2Code.value,
+                category3Code: this.category3Code.value,
+                exposureYn: this.exposure.value,
+                goodsDescription: this.detailData.goodsDescription,
+                goodsName: this.detailData.goodsName,
+                imageBase64: this.detailData.imageBase64,
+                imageFileName: this.detailData.imageFileName,
+                minimumOrderQuantity: this.detailData.minimumOrderQuantity,
+                unitPrice: this.detailData.unitPrice,
+            };
+            if (Object.values(data).some((el) => el === '' || el === null)) {
+                alert('필수 입력 값이 누락 되었습니다.');
+                return;
             }
+            if (this.$route.params.id) {
+                let addAlert = confirm('수정하시겠습니까');
+                if (addAlert) {
+                    try {
+                        const { data: response } = await putProduct(
+                            this.$route.params.id,
+                            data
+                        );
+                        // await getExistMsg(response);
+                        console.log(response);
+                        await this.$router.push('/order/management');
+                        await store.dispatch('basketList');
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+            } else {
+                let addAlert = confirm('저장하시겠습니까');
+                if (addAlert) {
+                    try {
+                        const { data: response } = await postProduct(data);
+                        // await getExistMsg(response);
+                        this.productDataReset();
+                        await this.$router.push('/order/management');
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+            }
+        },
+
+        //데이터 초기화
+        productDataReset() {
+            this.agencySeq.value = '';
+            this.category2Code.value = '';
+            this.category3Code.value = '';
+            this.exposure.value = 'Y';
+            this.detailData.goodsDescription = '';
+            this.detailData.goodsName = '';
+            this.detailData.imageBase64 = '';
+            this.detailData.imageFileName = '';
+            this.detailData.minimumOrderQuantity = '';
+            this.detailData.unitPrice = '';
+            this.imageFilePhysicalName = '';
         },
     },
 };
