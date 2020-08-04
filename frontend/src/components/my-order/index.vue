@@ -1,8 +1,14 @@
 <template>
     <ul class="period-list">
-        <li class="period-list-item" v-for="item in orderList" :key="item.orderGoodsSeq">
+        <li
+            class="period-list-item"
+            v-for="item in orderList"
+            :key="item.orderGoodsSeq"
+        >
             <a href="#" class="top">
-                <strong class="num">주문일 : {{ item.order.registrationDt }}</strong>
+                <strong class="num"
+                    >주문일 : {{ item.order.registrationDt }}</strong
+                >
                 <span class="link-txt">주문상세보기</span>
             </a>
             <div class="cont">
@@ -13,7 +19,9 @@
                     />
                 </span>
                 <span class="info-box">
-                    <strong class="title">{{ item.product.goodsName }}외 4개</strong>
+                    <strong class="title"
+                        >{{ item.product.goodsName }}외 4개</strong
+                    >
                 </span>
             </div>
         </li>
