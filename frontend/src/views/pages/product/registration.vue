@@ -18,7 +18,7 @@
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <span class="label-title required">상태</span>
+                        <span class="label-title">상태</span>
                     </div>
                     <div class="form-column">
                         <label
@@ -32,7 +32,6 @@
                                     v-model="exposure.value"
                                     :name="exposure.name"
                                     :value="radio.value"
-                                    required
                                 />
                                 <span></span>
                             </span>
@@ -45,7 +44,7 @@
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <label class="label-title required">구분</label>
+                        <label class="label-title">구분</label>
                     </div>
                     <div class="form-column">
                         <div class="column-box">
@@ -86,7 +85,7 @@
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <label class="label-title required">에이전시</label>
+                        <label class="label-title">에이전시</label>
                     </div>
                     <div class="form-column">
                         <span class="select" style="width: 100%;">
@@ -107,36 +106,36 @@
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <label class="label-title required">상품 명</label>
+                        <label class="label-title">상품 명</label>
                     </div>
                     <div class="form-column">
                         <span class="textarea">
-                            <textarea v-model="detailData.goodsName" required />
+                            <textarea v-model="detailData.goodsName" />
                         </span>
                     </div>
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <label class="label-title required">추가설명</label>
+                        <label class="label-title">추가설명</label>
                     </div>
                     <div class="form-column">
                         <input
                             type="text"
+                            ref="goodsDescription"
                             v-model="detailData.goodsDescription"
-                            required
                         />
                     </div>
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <label class="label-title required">단가 입력</label>
+                        <label class="label-title">단가 입력</label>
                     </div>
                     <div class="form-column">
                         <span class="input-txt">
                             <input
                                 type="text"
                                 v-model="detailData.unitPrice"
-                                required
+                                @input="numValue"
                             />
                             <span class="txt">원</span>
                         </span>
@@ -144,16 +143,13 @@
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <label class="label-title required"
-                            >최소 주문 수량</label
-                        >
+                        <label class="label-title">최소 주문 수량</label>
                     </div>
                     <div class="form-column">
                         <span class="input-txt">
                             <input
-                                type="text"
+                                type="number"
                                 v-model="detailData.minimumOrderQuantity"
-                                required
                             />
                             <span class="txt">개</span>
                         </span>
@@ -195,13 +191,13 @@
                 value: 'Y',
             },
             detailData: {
-                goodsName: '',
-                goodsDescription: '',
-                unitPrice: '',
-                minimumOrderQuantity: '',
-                imageBase64: '',
-                imageFileName: '',
-                exposureYn: '',
+                goodsName: null,
+                goodsDescription: null,
+                unitPrice: null,
+                minimumOrderQuantity: null,
+                imageBase64: null,
+                imageFileName: null,
+                exposureYn: null,
             },
             category2Code: {
                 listSortOptions: [
@@ -395,6 +391,19 @@
         this.detailProduct();
     },
     methods: {
+        // 숫자입력
+
+        numValue() {
+            const numbers = /^[0-9]+$/;
+            if (!this.detailData.unitPrice.match(numbers)) {
+                alert('숫자만');
+                this.detailData.unitPrice = !isNaN(
+                    parseInt(this.detailData.unitPrice)
+                )
+                    ? 0
+                    : parseInt(this.detailData.unitPrice);
+            }
+        },
         //에이전시 리스트
         async getAgency() {
             try {
@@ -459,26 +468,29 @@
         },
         //상품 등록
         async addProduct() {
+            const data = {
+                agencySeq: this.category2Code.value,
+                category2Code: this.category2Code.value,
+                category3Code: this.category3Code.value,
+                exposureYn: this.exposure.value,
+                goodsDescription: this.detailData.goodsDescription,
+                goodsName: this.detailData.goodsName,
+                imageBase64: this.detailData.imageBase64,
+                imageFileName: this.detailData.imageFileName,
+                minimumOrderQuantity: this.detailData.minimumOrderQuantity,
+                unitPrice: this.detailData.unitPrice,
+            };
+            if (Object.values(data).some((el) => el === '' || el === null)) {
+                alert('필수 입력');
+                return;
+            }
             if (this.$route.params.id) {
                 let addAlert = confirm('수정하시겠습니까');
                 if (addAlert) {
                     try {
                         const { data: response } = await putProduct(
                             this.$route.params.id,
-                            {
-                                agencySeq: 1,
-                                category2Code: this.category2Code.value,
-                                category3Code: this.category3Code.value,
-                                exposureYn: this.exposure.value,
-                                goodsDescription: this.detailData
-                                    .goodsDescription,
-                                goodsName: this.detailData.goodsName,
-                                imageBase64: this.detailData.imageBase64,
-                                imageFileName: this.detailData.imageFileName,
-                                minimumOrderQuantity: this.detailData
-                                    .minimumOrderQuantity,
-                                unitPrice: this.detailData.unitPrice,
-                            }
+                            data
                         );
                         // await getExistMsg(response);
                         await this.$router.push('/order/management');
@@ -491,19 +503,7 @@
                 let addAlert = confirm('저장하시겠습니까');
                 if (addAlert) {
                     try {
-                        const { data: response } = await postProduct({
-                            agencySeq: 1,
-                            category2Code: this.category2Code.value,
-                            category3Code: this.category3Code.value,
-                            exposureYn: this.exposure.value,
-                            goodsDescription: this.detailData.goodsDescription,
-                            goodsName: this.detailData.goodsName,
-                            imageBase64: this.detailData.imageBase64,
-                            imageFileName: this.detailData.imageFileName,
-                            minimumOrderQuantity: this.detailData
-                                .minimumOrderQuantity,
-                            unitPrice: this.detailData.unitPrice,
-                        });
+                        const { data: response } = await postProduct(data);
                         // await getExistMsg(response);
                         await this.$router.push('/order/management');
                     } catch (error) {

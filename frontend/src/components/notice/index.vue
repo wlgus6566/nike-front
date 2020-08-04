@@ -15,18 +15,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
+                    <tr v-for="item in noticeData" :key="item.noticeArticleSeq">
+                        <td v-if="item.noticeYn === 'Y'">
                             <span class="label-noti">중요</span>
                         </td>
-                        <td>
-                            <span class="num"></span>
+                        <td v-else>
+                            <span class="num">
+                                숫자가 있어야하는군
+                            </span>
                         </td>
                         <td class="agl">
-                            <router-link to="/mypage/view"> </router-link>
+                            <router-link :to="setUrl(item.noticeArticleSeq)">
+                                {{ item.title }}
+                            </router-link>
                         </td>
                         <td>
-                            <span class="date"></span>
+                            <span class="date">등록일이 없습니다</span>
                         </td>
                     </tr>
                 </tbody>
@@ -40,9 +44,14 @@ export default {
     data() {
         return {};
     },
+    props: ['noticeData'],
     mounted() {},
     computed: {},
-    methods: {},
+    methods: {
+        setUrl(item) {
+            return `/mypage/notice/${item}`.toLocaleLowerCase();
+        },
+    },
 };
 </script>
 <style scoped></style>

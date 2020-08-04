@@ -6,59 +6,105 @@
         <div class="sorting-area">
             <SearchInput @:searchSubmit="searchSubmit" />
         </div>
-        <NoticeList />
-        <bottomArea>
-            <template slot="btn-bottom-area">
-                <div class="btn-tbl-box">
-                    <button type="button" class="btn-form">
-                        <span data-v-1756ba49="">삭제</span>
-                    </button>
-                    <div class="right">
-                        <router-link to="/mypage/edit/notice">
-                            <button type="button" class="btn-form-gray">
-                                <span data-v-1756ba49="">등록</span>
-                            </button>
-                        </router-link>
-                    </div>
-                </div>
+        <template v-if="noticeDataContent">
+            <NoticeList
+                v-if="noticeDataContent.length"
+                :noticeData="noticeDataContent"
+            />
+            <template v-else>
+                <NoData v-if="searchKeyword === ''">
+                    <i class="icon-file"></i>
+                    <p class="desc">등록한 공지사항이 없습니다</p>
+                </NoData>
+                <NoData v-else>
+                    <i class="icon-search"></i>
+                    <p class="desc">검색 결과가 없습니다.</p>
+                </NoData>
             </template>
-        </bottomArea>
+        </template>
+        <Loading v-if="loadingData" />
+        <div class="btn-tbl-box">
+            <div class="right">
+                <router-link to="/mypage/edit/notice">
+                    <button type="button" class="btn-form-gray">
+                        <span>등록</span>
+                    </button>
+                </router-link>
+            </div>
+        </div>
+        <Pagination
+            v-if="noticeDataContent.length"
+            :itemLength="itemLength"
+            :pageCount="pageCount"
+            :totalItem="totalItem"
+            @handleCurrentChange="handleCurrentChange"
+        />
     </div>
 </template>
 
 <script>
-import NoticeList from '@/components/news/notice-list';
-import SearchInput from '@/components/search-input/index';
+    import NoticeList from '@/components/notice/';
+    import Pagination from '@/components/pagination/';
+    import SearchInput from '@/components/search-input/index';
+    import NoData from '@/components/no-data';
+    import Loading from '@/components/loading';
+    import {getCustomerList} from '@/api/customer';
 
-//import {  } from '@/api/.js';
+    //import {  } from '@/api/.js';
 
 export default {
-    name: 'news-list',
+    name: 'notice-list',
     data() {
-        return {};
+        return {
+            noticeData: null,
+            noticeDataContent: [],
+            page: 0,
+            pageCount: 11,
+            totalItem: 0,
+            itemLength: 10,
+            searchKeyword: '',
+            loadingData: false,
+        };
     },
     components: {
-        bottomArea,
         NoticeList,
+        Pagination,
         SearchInput,
+        NoData,
+        Loading,
+    },
+    created() {},
+    mounted() {
+        this.getNoticeList();
     },
     methods: {
-        initFetchData() {
-            this.totalPage = null;
-            this.page = 0;
-            this.folderListData = null;
-            this.fetchData();
-        },
         searchSubmit(val) {
+            console.log(val);
             this.searchKeyword = val;
-            this.initFetchData();
+            this.getNoticeList();
         },
-    },
-    async fetchData() {
-        try {
-        } catch (error) {
-            console.log(error);
-        }
+        // 페이징
+        handleCurrentChange(val) {
+            this.page = val;
+            this.getNoticeList();
+        },
+        //공지사항 리스트
+        async getNoticeList() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getCustomerList(this.$route.meta.sectionCode, {
+                    page: this.page,
+                    size: this.itemLength,
+                    keyword: this.searchKeyword,
+                });
+                this.noticeData = response;
+                this.noticeDataContent = response.content;
+                this.totalItem = this.noticeData.totalElements;
+            } catch (error) {
+                console.log(error);
+            }
+        },
     },
 };
 </script>

@@ -58,7 +58,7 @@
             pageCount: 11,
             totalItem: 0,
             page: 0,
-            itemLength: 2,
+            itemLength: 20,
             searchKeyword: '',
             checkAll: false,
             checkItem: [],

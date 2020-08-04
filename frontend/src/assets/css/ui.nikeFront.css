@@ -975,7 +975,8 @@
 }
 .form-column input[type='text'],
 .form-column input[type='email'],
-.form-column input[type='tel'] {
+.form-column input[type='tel'],
+.form-column input[type='number'] {
     width: 100%;
 }
 .form-column .data-picker {
