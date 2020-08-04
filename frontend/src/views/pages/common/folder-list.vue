@@ -110,14 +110,12 @@
     },
     methods: {
         handleScroll() {
-            console.log(1);
             if (this.loadingData) return;
             const windowE = document.documentElement;
             if (
                 windowE.clientHeight + windowE.scrollTop >=
                 windowE.scrollHeight
             ) {
-                console.log(2);
                 this.infiniteScroll();
             }
         },
@@ -161,7 +159,6 @@
                         orderType: this.listSortSelect.value,
                     }
                 );
-
                 this.totalPage = response.totalPages - 1;
                 if (infinite) {
                     if (this.totalPage > this.page - 1) {

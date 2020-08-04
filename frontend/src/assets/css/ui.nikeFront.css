@@ -1501,6 +1501,9 @@
     margin-top: 55px;
     border-bottom: 1px solid #eee;
 }
+.sorting-list + .folder-list-row {
+    margin-top: 0 !important;
+}
 .sorting-list li {
     position: relative;
 }

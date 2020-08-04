@@ -41,7 +41,7 @@
             @showOrderDetail="showOrderDetail"
         />
         <OrderSheet
-            v-if="orderList"
+            v-if="orderDetailData"
             :visible.sync="visible.orderSheet"
             :orderDetailData="orderDetailData"
         />

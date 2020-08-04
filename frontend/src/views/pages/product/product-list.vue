@@ -87,7 +87,7 @@
         detailView,
     },
     mounted() {
-        this.initGetUserProduct();
+        //this.initGetUserProduct();
         this.getWishiList();
     },
     methods: {
@@ -98,7 +98,6 @@
                 windowE.clientHeight + windowE.scrollTop >=
                 windowE.scrollHeight
             ) {
-                console.log(2);
                 this.infiniteScroll();
             }
         },
@@ -128,6 +127,7 @@
 
         // 상품 리스트 api
         async getUserProduct(infinite) {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },

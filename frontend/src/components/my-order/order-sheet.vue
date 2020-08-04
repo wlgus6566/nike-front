@@ -41,9 +41,9 @@
                             </div>
                             <div class="form-column">
                                 <span class="form-val">
-                                    <em>{{
-                                        orderDetailData.order.totalAmount
-                                    }}</em>
+                                    <em>
+                                        {{ orderDetailData.order.totalAmount }}
+                                    </em>
                                     원
                                 </span>
                             </div>
@@ -55,32 +55,57 @@
                         세금계산서의 금액은 다를 수 있습니다.)
                     </p>
                     <el-scrollbar class="sheet-list-wrap" :native="false">
-                        <ul class="sheet-list">
-                            <li
-                                class="sheet-item"
-                                v-for="(item, index) in orderDetail"
-                                :key="index"
-                            >
+                        <ul class="sheet-list" v-if="orderDetailData.product">
+                            <li class="sheet-item">
                                 <span class="thumbnail">
-                                    <img src=" " alt="" />
+                                    <img
+                                        :src="
+                                            orderDetailData.product
+                                                .imageFilePhysicalName
+                                        "
+                                        :alt="
+                                            orderDetailData.product
+                                                .imageFileName
+                                        "
+                                    />
                                 </span>
                                 <span class="info-box">
-                                    <strong class="title"> </strong>
-                                    <p class="txt"></p>
+                                    <strong class="title">
+                                        {{ orderDetailData.product.goodsName }}
+                                    </strong>
+                                    <p class="txt">
+                                        {{
+                                            orderDetailData.product
+                                                .goodsDescription
+                                        }}
+                                    </p>
                                     <span class="desc-txt-box">
-                                        <p class="desc"></p>
+                                        <p class="desc">
+                                            {{
+                                                orderDetailData.product.agency
+                                                    .agencyName
+                                            }}
+                                        </p>
                                     </span>
                                 </span>
                                 <span class="quantity-txt">
-                                    <em></em>
+                                    <!-- 주문수량  -->
+                                    <em>
+                                        {{
+                                            orderDetailData.product
+                                                .minimumOrderQuantity
+                                        }}
+                                    </em>
                                     개
                                 </span>
                             </li>
                         </ul>
                     </el-scrollbar>
-                    <h3 class="sub-title">COMMENT</h3>
-                    <div class="mt10">
-                        {{ orderDetailData.orderDescription }}
+                    <div v-if="orderDetailData.order.orderDescription">
+                        <h3 class="sub-title">COMMENT</h3>
+                        <div class="mt10">
+                            {{ orderDetailData.order.orderDescription }}
+                        </div>
                     </div>
                     <p class="form-desc-red">
                         * 업무상 필요한 정보 외의 개인 연락처 정보를 기재하지
@@ -101,11 +126,12 @@
 <script>
 export default {
     data() {
-        return {
-            orderComment: '',
-        };
+        return {};
     },
-    props: ['visible', 'orderDetailData', 'totalPrice'],
+    props: ['visible', 'orderDetailData'],
+    created() {
+        console.log(this.orderDetailData);
+    },
     mounted() {},
     methods: {},
 };
