@@ -14,13 +14,13 @@
                 :folderListData="historyFolderData"
             />
             <template v-else>
-                <NoData>
+                <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
+                <NoData v-else>
                     <i class="icon-file"></i>
                     <p class="desc">최근 본 폴더가 없습니다.</p>
                 </NoData>
             </template>
         </template>
-        <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
     </div>
 </template>
 
@@ -34,6 +34,7 @@
     export default {
     data() {
         return {
+            historyFolderDataList: [],
             listTypes: [
                 {
                     title: '컬럼타입',
@@ -72,9 +73,7 @@
                 ],
                 value: 'ALL',
             },
-
-            typeCd: '',
-            totalPage: '',
+            totalPage: null,
             loadingData: false,
             loadingStyle: {
                 width: this.width ? `${this.width}px` : '100%',
@@ -86,6 +85,7 @@
     },
     watch: {
         'sectionCode.value'() {
+            this.page = 0;
             this.historyViewDataList();
         },
     },
@@ -115,14 +115,12 @@
         },
         //클릭시 최근 본 폴더 리스트 다시 불러오기
         handleScroll() {
-            console.log(1);
             if (this.loadingData) return;
             const windowE = document.documentElement;
             if (
                 windowE.clientHeight + windowE.scrollTop >=
                 windowE.scrollHeight
             ) {
-                console.log(2);
                 this.infiniteScroll();
             }
         },
@@ -150,7 +148,6 @@
         //최근 본 폴더 리스트
         async historyViewDataList(infinite) {
             this.loadingData = true;
-            console.log(this.typeCd);
             try {
                 const {
                     data: { data: response },
@@ -159,7 +156,7 @@
                     size: this.itemLength,
                     typeCd: this.sectionCode.value,
                 });
-                this.totalPage = response.totalPages - 1;
+                this.totalPage = response.totalPages;
                 if (infinite) {
                     if (this.totalPage > this.page - 1) {
                         this.historyFolderData = this.historyFolderData.concat(
@@ -171,6 +168,7 @@
                 } else {
                     this.historyFolderData = response.content;
                 }
+                this.historyFolderDataList = response;
                 this.page++;
                 this.loadingData = false;
             } catch (error) {
