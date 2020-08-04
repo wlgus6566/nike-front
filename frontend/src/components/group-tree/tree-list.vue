@@ -5,28 +5,18 @@
         v-if="groupTreeData"
         :list="groupTreeData"
         :class="[`tree-depth${depth}`]"
-        @choose="onChoose"
-        @start="onStart"
-        @end="onEnd"
-        @add="onAdd"
-        @move="onMove"
-        @update="onUpdate"
-        @sort="onSort"
-        @remove="onRemove"
-        @change="onChange"
-        @unchoose="onUnchoose"
     >
-        <li v-for="item in groupTreeData" :key="item.seq">
-            <div :class="treeItemClass(item.seq)">
+        <li v-for="item in groupTreeData" :key="item.authSeq">
+            <div :class="treeItemClass(item.authSeq)">
                 <a href="#" @click.prevent="selectActive(item)">
                     <i class="tree-icon"></i>
-                    <span class="tree-name">{{ item.name }}</span>
+                    <span class="tree-name">{{ item.authName }}</span>
                 </a>
                 <button
-                    v-if="depth !== 0 && item.child && item.child.length"
+                    v-if="depth !== 0 && item.subAuths && item.subAuths.length"
                     type="button"
                     class="tree-toggle"
-                    @click="toggle(item.seq)"
+                    @click="toggle(item.authSeq)"
                 >
                     toggle
                 </button>
@@ -34,10 +24,11 @@
             <transition @enter="itemOpen" @leave="itemClose" :css="false">
                 <GroupTreeList
                     v-show="
-                        depth === 0 || groupTreeOpen.some(el => el === item.seq)
+                        depth === 0 ||
+                        groupTreeOpen.some((el) => el === item.authSeq)
                     "
-                    v-if="item.child"
-                    :groupTreeData="item.child"
+                    v-if="item.subAuths"
+                    :groupTreeData="item.subAuths"
                     :groupTreeActive="groupTreeActive"
                     :groupTreeOpen="groupTreeOpen"
                     :groupTreeAddItem="groupTreeAddItem"
@@ -48,8 +39,8 @@
                 <div
                     :class="[`tree-depth${depth + 1}`]"
                     v-if="
-                        groupTreeAddItem === item.seq &&
-                            groupTreeOpen.some(el => el === item.seq)
+                        groupTreeAddItem === item.authSeq &&
+                        groupTreeOpen.some((el) => el === item.authSeq)
                     "
                 >
                     <div class="tree-item active">
@@ -70,12 +61,11 @@ export default {
     data() {
         return {};
     },
-    mounted() {
-        console.log(this.groupTreeOpen);
-    },
+    mounted() {},
     computed: {
         dragOptions() {
             return {
+                touchStartThreshold: 5,
                 animation: 100,
                 disabled: false,
                 ghostClass: 'ghost',
@@ -94,11 +84,11 @@ export default {
         'depth',
     ],
     methods: {
-        treeItemClass(seq) {
+        treeItemClass(authSeq) {
             return {
                 'tree-item': true,
-                active: this.groupTreeActive.seq === seq,
-                open: this.groupTreeOpen.some(el => el === seq),
+                active: this.groupTreeActive.authSeq === authSeq,
+                open: this.groupTreeOpen.some((el) => el === authSeq),
             };
         },
         selectActive(item) {
@@ -114,7 +104,7 @@ export default {
             gsap.from(el, 0.3, {
                 height: 0,
                 ease: Cubic.easeInOut,
-                onComplete: function() {
+                onComplete: function () {
                     el.style.height = 'auto';
                     done();
                 },
@@ -126,37 +116,6 @@ export default {
                 ease: Cubic.easeInOut,
                 onComplete: done,
             });
-        },
-
-        onChoose(e) {
-            console.log('onChoose', e);
-        },
-        onStart(e) {
-            console.log('onStart', e);
-        },
-        onEnd(e) {
-            console.log('onEnd', e);
-        },
-        onAdd(e) {
-            console.log('onAdd', e);
-        },
-        onMove(e) {
-            console.log('onMove', e);
-        },
-        onUpdate(e) {
-            console.log('onUpdate', e);
-        },
-        onSort(e) {
-            console.log('onSort', e);
-        },
-        onRemove(e) {
-            console.log('onRemove', e);
-        },
-        onChange(e) {
-            console.log('onChange', e);
-        },
-        onUnchoose(e) {
-            console.log('onUnchoose', e);
         },
     },
 };

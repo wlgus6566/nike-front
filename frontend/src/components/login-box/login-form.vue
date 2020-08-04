@@ -66,11 +66,13 @@ export default {
                     alert(response.data.msg);
                 }
                 if (response.data.code === 'SEND_EMAIL_CERT_CODE') {
-                    //this.$router.push('/');
+                    this.$emit('changeLoginBox', 'certCode');
                 } else {
                     //await this.$router.push('/');
                 }
+                console.log(response);
             } catch (error) {
+                console.log(error.response);
                 alert(error.response.data.msg);
             }
         },

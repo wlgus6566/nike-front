@@ -22,7 +22,7 @@
                 <button
                     type="button"
                     class="del"
-                    :disabled="!groupTreeActive.depth"
+                    :disabled="!groupTreeActive.authDepth"
                     @click="groupTreeDel"
                 >
                     삭제
@@ -31,7 +31,8 @@
                     type="button"
                     class="add"
                     :disabled="
-                        groupTreeActive.depth === '3' || !groupTreeActive.depth
+                        groupTreeActive.authDepth === '3' ||
+                        !groupTreeActive.authDepth
                     "
                     @click="groupTreeAdd"
                 >
@@ -43,7 +44,7 @@
 </template>
 <script>
 import Sticky from 'vue-sticky-directive';
-import GroupTreeList from '@/views/pages/management/GroupTreeList';
+import GroupTreeList from '@/components/group-tree/tree-list';
 import bus from '@/utils/bus';
 export default {
     name: 'GroupTree',
@@ -104,11 +105,11 @@ export default {
     display: inline-block;
 }
 .group-tree .btn-group button.del:before {
-    background: url('../../../assets/images/svg/icon-common-deleted.svg') 50% /
+    background: url('../../assets/images/svg/icon-common-deleted.svg') 50% /
         contain;
 }
 .group-tree .btn-group button.add:before {
-    background: url('../../../assets/images/svg/icon-management-plus.svg') 50% /
+    background: url('../../assets/images/svg/icon-management-plus.svg') 50% /
         contain;
 }
 .group-tree .btn-group button[disabled] {
@@ -164,7 +165,7 @@ export default {
     width: 20px;
     margin-left: 5px;
     text-indent: -9999px;
-    background: url('../../../assets/images/svg/icon-group-tree-depth-toggle.svg')
+    background: url('../../assets/images/svg/icon-group-tree-depth-toggle.svg')
         50% / contain;
     transform-origin: 50% 50%;
     transition: transform 300ms ease-in-out 0s;
@@ -177,11 +178,11 @@ export default {
 }
 ::v-deep .tree-depth0 .tree-item .tree-icon {
     width: 20px;
-    background: url('../../../assets/images/svg/icon-group-tree-depth-all.svg')
-        50% / contain;
+    background: url('../../assets/images/svg/icon-group-tree-depth-all.svg') 50% /
+        contain;
 }
 ::v-deep .tree-depth0 .tree-item.active .tree-icon {
-    background-image: url('../../../assets/images/svg/icon-group-tree-depth-all-active.svg');
+    background-image: url('../../assets/images/svg/icon-group-tree-depth-all-active.svg');
 }
 ::v-deep .tree-depth0 .tree-item .tree-name {
     flex: 1 1 auto;
@@ -199,11 +200,11 @@ export default {
 }
 ::v-deep .tree-depth1 .tree-item .tree-icon {
     width: 30px;
-    background: url('../../../assets/images/svg/icon-group-tree-depth1.svg') 50% /
+    background: url('../../assets/images/svg/icon-group-tree-depth1.svg') 50% /
         contain;
 }
 ::v-deep .tree-depth1 .tree-item.active .tree-icon {
-    background-image: url('../../../assets/images/svg/icon-group-tree-depth1-active.svg');
+    background-image: url('../../assets/images/svg/icon-group-tree-depth1-active.svg');
 }
 ::v-deep .tree-depth2 {
     overflow: hidden;
@@ -213,11 +214,11 @@ export default {
     padding: 6px 0;
 }
 ::v-deep .tree-depth2 .tree-item .tree-icon {
-    background: url('../../../assets/images/svg/icon-group-tree-depth2.svg') 50% /
+    background: url('../../assets/images/svg/icon-group-tree-depth2.svg') 50% /
         contain;
 }
 ::v-deep .tree-depth2 .tree-item.active .tree-icon {
-    background-image: url('../../../assets/images/svg/icon-group-tree-depth2-active.svg');
+    background-image: url('../../assets/images/svg/icon-group-tree-depth2-active.svg');
 }
 ::v-deep .tree-depth2 .tree-item .tree-name {
     font-weight: 300;

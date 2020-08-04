@@ -35,7 +35,6 @@ export default {
             animationData: this.options.animationData,
             rendererSettings: this.options.rendererSettings,
         });
-        console.log(this.anim);
         this.$emit('animCreated', this.anim);
     },
 };

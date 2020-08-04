@@ -1,12 +1,8 @@
-import axios from 'axios';
-import {setInterceptors} from '@/api/config/interceptors';
-
-const apiCustomer = axios.create({ baseURL: '/api/customer/', timeout: 3000 });
-setInterceptors(apiCustomer);
+import { customer } from './index';
 
 //목록 조회
 function getCustomerList(sectionCode, params) {
-    return apiCustomer.get(`/${sectionCode}`, {
+    return customer.get(`/${sectionCode}`, {
         params: params,
     });
 }

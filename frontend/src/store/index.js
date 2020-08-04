@@ -21,7 +21,7 @@ export default new Vuex.Store({
         fileMouseenter: false,
         basketListData: null,
         goodsBasketSeq: '',
-        contBasketList: null,
+        contBasketList: [],
     },
     getters: {
         basketAppendCheck(state) {

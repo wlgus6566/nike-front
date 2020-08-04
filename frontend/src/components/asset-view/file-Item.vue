@@ -30,29 +30,16 @@
         <template v-if="contentsFileList">
             <draggable
                 tag="ul"
-                :sort="false"
+                v-bind="dragOptions"
                 v-if="contentsFileList.length"
                 :list="contentsFileList"
-                :disabled="!enabled"
                 class="file-item-list"
-                ghost-class="ghost"
-                drag-class="test"
-                chosen-class="chosen"
-                @choose="onChoose"
                 @start="onStart"
                 @end="onEnd"
-                @add="onAdd"
-                @move="onMove"
-                @update="onUpdate"
-                @sort="onSort"
-                @remove="onRemove"
-                @change="onChange"
-                @unchoose="onUnchoose"
-                :forceFallback="true"
             >
                 <li
-                    class="file-item"
-                    v-for="(item, index) in contentsFileList"
+                    :class="fileItemClass(item.contentsFileSeq)"
+                    v-for="item in contentsFileList"
                     :key="item.contentsFileSeq"
                 >
                     <div class="list">
@@ -96,13 +83,19 @@
                                 <button
                                     type="button"
                                     class="btn-s-sm-white"
-                                    v-if="item.state"
+                                    disabled="disabled"
+                                    v-if="test(item.contentsFileSeq)"
                                 >
                                     <i class="icon-check"></i><span>ADDED</span>
                                 </button>
                                 <button
                                     type="button"
                                     class="btn-s-sm-black"
+                                    @click="
+                                        $emit('addContBasket', [
+                                            item.contentsFileSeq,
+                                        ])
+                                    "
                                     v-else
                                 >
                                     <span>ADD</span>
@@ -110,28 +103,38 @@
                             </template>
                             <button
                                 type="button"
-                                class="btn-more"
-                                :class="{ active: item.acd }"
+                                :class="buttonClass(item.contentsFileSeq)"
                                 :disabled="item.fileKindCode === 'VR'"
-                                @click="accordion"
+                                @click="accordion(item.contentsFileSeq)"
                             >
                                 <span>더보기</span>
                             </button>
                         </div>
                     </div>
-                    <div class="detail" :class="{ active: item.acd }">
-                        <div class="inner">
-                            <div class="thumbnail">
-                                <img :src="item.imageFileName" alt="" />
-                            </div>
-                            <div class="down-info">
-                                <span class="key">다운로드 횟수</span>
-                                <span class="val">
-                                    <strong>{{ item.downloadCount }}</strong>
-                                </span>
+                    <transition
+                        @enter="itemOpen"
+                        @leave="itemClose"
+                        :css="false"
+                    >
+                        <div
+                            class="detail"
+                            v-if="openFile === item.contentsFileSeq"
+                        >
+                            <div class="inner">
+                                <div class="thumbnail">
+                                    <img :src="item.imageFileName" alt="" />
+                                </div>
+                                <div class="down-info">
+                                    <span class="key">다운로드 횟수</span>
+                                    <span class="val">
+                                        <strong>{{
+                                            item.downloadCount
+                                        }}</strong>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </transition>
                 </li>
             </draggable>
             <NoData class="no-data" v-else>
@@ -146,11 +149,11 @@ import draggable from 'vuedraggable';
 import FilterSelect from '@/components/filter-select';
 import Loading from '@/components/loading';
 import NoData from '@/components/no-data';
-
+import { Cubic, gsap } from 'gsap/all';
 export default {
     name: 'fileItem',
     data() {
-        return { enabled: true, dragging: false };
+        return { openFile: null, enabled: true, dragging: false };
     },
     components: {
         Loading,
@@ -166,79 +169,117 @@ export default {
         'checkContentsFileList',
     ],
     created() {},
-    computed: {},
+    computed: {
+        dragOptions() {
+            return {
+                touchStartThreshold: 5,
+                animation: 100,
+                disabled: false,
+                ghostClass: 'ghost-item',
+                dragClass: 'drag-item',
+                chosenClass: 'chosen',
+                forceFallback: true,
+                filter: '.ignore-elements',
+                sort: false,
+            };
+        },
+        storeContBasketList: {
+            get() {
+                return this.$store.state.contBasketList.map(
+                    (el) => el.contentsFileSeq
+                );
+            },
+            set(value) {
+                this.$store.commit('SET_CONT_BASKET', value);
+            },
+        },
+    },
     methods: {
-        onChoose(e) {
-            console.log('onChoose', e);
+        test(seq) {
+            return this.storeContBasketList.some((el) => el === seq);
+        },
+
+        buttonClass(seq) {
+            return {
+                'btn-more': true,
+                active: this.openFile === seq,
+            };
+        },
+        fileItemClass(seq) {
+            const ignore = this.checkContentsFileList.every((el) => el !== seq);
+            const added = this.storeContBasketList.some((el) => el === seq);
+            return {
+                'file-item': true,
+                'ignore-elements': ignore || added,
+            };
         },
         onStart(e) {
-            console.log('onStart', e);
-            const thumbnail = document.querySelector('.ghost-item .thumbnail');
+            const thumbnail = document.querySelector('.drag-item .thumbnail');
             const left = e.originalEvent.pageX - e.item.offsetLeft - 60;
             const top = e.originalEvent.pageY - e.item.offsetTop - 60;
             thumbnail.style.transform = `translate(${left}px,${top}px)`;
             this.$store.commit('SET_BASKET_ITEM_DRAG', true);
         },
         onEnd(e) {
-            console.log('onEnd', e);
-            console.log();
             if (this.$store.getters['basketAppendCheck']) {
-                this.$emit('addContBasket');
+                this.$emit('addContBasket', this.checkContentsFileList);
             }
             this.$store.commit('SET_BASKET_ITEM_DRAG', false);
         },
-        onAdd(e) {
-            console.log('onAdd', e);
+        accordion(seq) {
+            this.openFile = this.openFile === seq ? null : seq;
         },
-        onMove(e) {
-            console.log('cart onMove', e);
+        itemOpen(el, done) {
+            gsap.set(el, {
+                height: 'auto',
+            });
+            gsap.from(el, 0.3, {
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: function () {
+                    el.style.height = 'auto';
+                    done();
+                },
+            });
         },
-        onUpdate(e) {
-            console.log('onUpdate', e);
+        itemClose(el, done) {
+            gsap.to(el, 0.3, {
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: done,
+            });
         },
-        onSort(e) {
-            console.log('onSort', e);
-        },
-        onRemove(e) {
-            console.log('onRemove', e);
-        },
-        onChange(e) {
-            console.log('onChange', e);
-        },
-        onUnchoose(e) {
-            console.log('onUnchoose', e);
-        },
-        accordion() {},
     },
 };
 </script>
-<style>
+<style scoped>
 .no-data {
     height: 140px;
     margin-top: 0;
     border-left: 0;
     border-right: 0;
 }
-.ghost-item {
+.drag-item {
     opacity: 1 !important;
     border: none !important;
     background: none !important;
 }
-.ghost-item .list {
+.drag-item .list {
     padding: 0;
 }
-.ghost-item .checkbox {
+.drag-item .checkbox {
     display: none;
 }
-.ghost-item .thumbnail {
+.drag-item .thumbnail {
+    border: 1px solid #ddd;
 }
-.ghost-item .info-box {
+.drag-item .info-box {
     display: none;
 }
-.ghost-item .btn-box {
+.drag-item .btn-box {
     display: none;
 }
-.ghost-item .detail {
+.drag-item .detail {
     display: none !important;
 }
 </style>

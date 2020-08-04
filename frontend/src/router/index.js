@@ -40,10 +40,25 @@ const router = new VueRouter({
         ...ErrorRoutes,
         ...PubRoutes,
     ],
+    scrollBehavior(to, from, savedPosition) {
+        let position = { x: 0, y: 0 };
+        // Keep scroll position when using browser buttons
+        if (savedPosition) {
+            position = savedPosition;
+        }
+
+        // Workaround for transitions scrolling to the top of the page
+        // However, there are still some problems being fixed by the vue team
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(position);
+            }, 300);
+        });
+    },
 });
 
 router.beforeEach((to, from, next) => {
-    /*if (to.meta.unauthorized) {
+    if (to.meta.unauthorized) {
         if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
             next('/');
         } else {
@@ -55,7 +70,7 @@ router.beforeEach((to, from, next) => {
         } else {
             next('/login');
         }
-    }*/
+    }
     next();
 });
 export default router;

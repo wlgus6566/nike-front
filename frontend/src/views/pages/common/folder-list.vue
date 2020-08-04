@@ -23,11 +23,14 @@
                 :folderListData="folderListData"
             />
             <template v-else>
-                <NoData v-if="searchKeyword === ''">
+                <NoData
+                    :style="{ height: '500px' }"
+                    v-if="searchKeyword === ''"
+                >
                     <i class="icon-file"></i>
                     <p class="desc">업로드한 폴더가 없습니다.</p>
                 </NoData>
-                <NoData v-else>
+                <NoData v-else :style="{ height: '500px' }">
                     <i class="icon-search"></i>
                     <p class="desc">검색 결과가 없습니다.</p>
                 </NoData>

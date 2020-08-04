@@ -16,7 +16,6 @@ function certCode(data) {
 function changePassword(data) {
     return apiLogin.put('/open/login/change/password', data);
 }
-
 function sendEmail(params) {
     return apiLogin.get('/open/login/send/cert', {
         params: params,
