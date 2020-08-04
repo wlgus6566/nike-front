@@ -685,6 +685,7 @@
     font-size: 14px !important;
     color: #888 !important;
     font-weight: 100 !important;
+}
 .vc-weeks {
 }
 .vc-reset,
@@ -720,8 +721,8 @@
     font-weight: 100 !important;
 }
 .vc-rounded-full {
-    width:26px;
-    height:26px;
+    width: 26px;
+    height: 26px;
 }
 .vc-highlight {
     width: 26px !important;
