@@ -4,9 +4,15 @@ import {setInterceptors} from '@/api/config/interceptors';
 const apiMyPage = axios.create({ baseURL: '/api/mypage', timeout: 3000 });
 setInterceptors(apiMyPage);
 
+// MYPAGE 최근 업로드 한 폴더 목록
+function uploadFolderViewList(params) {
+    return apiMyPage.get(`/history/uploadList`, {
+        params: params,
+    });
+}
+
 // MYPAGE 최근 본 폴더 목록
 function historyFolderViewList(params) {
-    //console.log(data);
     return apiMyPage.get(`/history/viewList`, {
         params: params,
     });
@@ -23,4 +29,9 @@ function changePassword(data) {
     return apiMyPage.put(`/user/change/password`, data);
     //console.log(params);
 }
-export { historyFolderViewList, getMyInfo, changePassword };
+export {
+    uploadFolderViewList,
+    historyFolderViewList,
+    getMyInfo,
+    changePassword,
+};
