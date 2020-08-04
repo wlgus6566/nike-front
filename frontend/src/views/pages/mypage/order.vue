@@ -34,19 +34,29 @@
                 </div>
             </div>
         </div>
-        <MyOrder :orderList="orderList" v-if="orderList" />
         <MyOrderNodata v-if="orderList && orderList.length === 0" />
+        <MyOrder
+            :orderList="orderList"
+            @orderDetail="orderDetail"
+            v-if="orderList"
+        />
+        <OrderSheet
+            v-if="orderList"
+            :visible.sync="visible.orderSheet"
+            :orderDetail="orderDetail"
+        />
     </div>
 </template>
 
 <script>
-import { getMyOrder } from '@/api/my-order';
+import { getMyOrder, getMyOrderDetail } from '@/api/my-order';
 
 export default {
     name: 'my-order',
     components: {
         MyOrder: () => import('@/components/my-order/index'),
         MyOrderNodata: () => import('@/components/my-order/nodata'),
+        OrderSheet: () => import('@/components/my-order/order-sheet'),
     },
     data() {
         return {
@@ -55,6 +65,7 @@ export default {
                 endDt: null,
             },
             orderList: null,
+            // orderDetail: null,
             page: 0,
             itemLength: 20,
             selectedDate: null,
@@ -72,6 +83,9 @@ export default {
                     contentClass: 'vc-today',
                 },
             ],
+            visible: {
+                orderSheet: false,
+            },
         };
     },
     activated() {
@@ -139,38 +153,14 @@ export default {
     methods: {
         dates() {
             console.log('aa');
-            // date = new Date();
-            // date.setMonth(date.getMonth() - 1);
-            // document.write('1달 전 : ' + date + '<br>');
         },
+        // showOrderSheet() {
+        //     this.visible.orderSheet = true;
+        // },
         minDate() {
             const date = new Date();
             date.setMonth(date.getMonth() - 3);
             return date;
-        },
-        dateRefine(date) {
-            let year = date.getFullYear();
-            let month = date.getMonth() + 1;
-            let day = date.getDate();
-            if (month < 10) {
-                month = `0${month}`;
-            }
-            if (day < 10) {
-                day = `0${day}`;
-            }
-            return (date = `${year}-${month}-${day}`);
-
-            // this.make.endDt = `${year}-${month}-${day}`; //2020-07-08
-            // if (
-            //     Number(this.make.beginDt.replace(/-/gi, '')) >
-            //     Number(this.make.endDt.replace(/-/gi, ''))
-            // ) {
-            //     alert('시작일이 종료일보다 클 수 없습니다.');
-            //     date = null;
-            //     return false;
-            // } else {
-            //     date = `${year}-${month}-${day}`;
-            // }
         },
         async fetchData() {
             this.loadingData = true;
@@ -186,6 +176,19 @@ export default {
                 });
                 this.orderList = response.content;
                 this.loadingData = false;
+                return;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async orderDetail(seq) {
+            console.log(seq);
+            this.visible.orderSheet = true;
+            try {
+                const {
+                    data: { data: response },
+                } = await getMyOrderDetail(seq);
+                console.log(response);
                 return;
             } catch (error) {
                 console.log(error);
