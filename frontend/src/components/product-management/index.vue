@@ -51,7 +51,7 @@
                             {{ item.category3Name }}
                         </td>
                         <td>
-                            <router-link :to="setUrl(item)">
+                            <router-link :to="setUrl(item)" class="under-link">
                                 <span>
                                     {{ item.goodsName }}
                                 </span>
@@ -61,7 +61,7 @@
                             {{ item.minimumOrderQuantity }}
                         </td>
                         <td>{{ item.agencyName }}</td>
-                        <td>데이터 없음</td>
+                        <td>{{ item.nickname }}</td>
                         <td>{{ item.updateDt }}</td>
                         <td>{{ item.exposureYn }}</td>
                     </tr>

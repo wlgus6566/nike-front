@@ -36,22 +36,22 @@
         </div>
         <MyOrderNodata v-if="orderList && orderList.length === 0" />
         <MyOrder
-            :orderList="orderList"
-            @orderDetail="orderDetail"
             v-if="orderList"
+            :orderList="orderList"
+            @showOrderDetail="showOrderDetail"
         />
         <OrderSheet
             v-if="orderList"
             :visible.sync="visible.orderSheet"
-            :orderDetail="orderDetail"
+            :orderDetailData="orderDetailData"
         />
     </div>
 </template>
 
 <script>
-import { getMyOrder, getMyOrderDetail } from '@/api/my-order';
+    import {getMyOrder, getMyOrderDetail} from '@/api/my-order';
 
-export default {
+    export default {
     name: 'my-order',
     components: {
         MyOrder: () => import('@/components/my-order/index'),
@@ -65,7 +65,7 @@ export default {
                 endDt: null,
             },
             orderList: null,
-            // orderDetail: null,
+            orderDetailData: null,
             page: 0,
             itemLength: 20,
             selectedDate: null,
@@ -151,9 +151,7 @@ export default {
         },
     },
     methods: {
-        dates() {
-            console.log('aa');
-        },
+        dates() {},
         // showOrderSheet() {
         //     this.visible.orderSheet = true;
         // },
@@ -176,12 +174,11 @@ export default {
                 });
                 this.orderList = response.content;
                 this.loadingData = false;
-                return;
             } catch (error) {
                 console.log(error);
             }
         },
-        async orderDetail(seq) {
+        async showOrderDetail(seq) {
             console.log(seq);
             this.visible.orderSheet = true;
             try {
@@ -189,7 +186,7 @@ export default {
                     data: { data: response },
                 } = await getMyOrderDetail(seq);
                 console.log(response);
-                return;
+                this.orderDetailData = response;
             } catch (error) {
                 console.log(error);
             }

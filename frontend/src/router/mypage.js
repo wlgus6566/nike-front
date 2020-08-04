@@ -82,10 +82,11 @@ const routes = [
             title: 'NEWS',
         },
     },
+
     {
-        path: '/mypage/notice',
+        path: '/mypage/notice/',
         name: 'notice',
-        component: pages('mypage/notice-list.vue'),
+        component: pages('mypage/notice-list'),
         meta: {
             layout: 'Default',
             aside: 'Default',
@@ -94,13 +95,14 @@ const routes = [
         },
     },
     {
-        path: '/mypage/view',
+        path: '/mypage/notice/:id',
         name: 'notice',
-        component: pages('mypage/detail-view.vue'),
+        component: pages('mypage/notice-view'),
         meta: {
             layout: 'Default',
             aside: 'Default',
-            //title: '공지사항',
+            sectionCode: 'NOTICE',
+            title: '공지사항',
         },
     },
     {

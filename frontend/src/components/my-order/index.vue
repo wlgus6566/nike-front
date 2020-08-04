@@ -2,13 +2,13 @@
     <ul class="period-list">
         <li
             class="period-list-item"
-            v-for="item in orderList"
-            :key="item.orderGoodsSeq"
+            v-for="(item, index) in orderList"
+            :key="index"
         >
-            <a
-                href="#"
+            <button
+                type="button"
                 class="top"
-                @click="$emit('orderDetail', item.orderGoodsSeq)"
+                @click="$emit('showOrderDetail', item.orderGoodsSeq)"
             >
                 <strong class="num">
                     주문일 : {{ item.registrationDt }}
@@ -16,7 +16,7 @@
                 <span class="link-txt">
                     주문상세보기
                 </span>
-            </a>
+            </button>
             <div class="cont">
                 <span class="thumbnail">
                     <!-- <img

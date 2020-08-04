@@ -685,6 +685,11 @@
     font-size: 14px !important;
     color: #888 !important;
     font-weight: 100 !important;
+.vc-weeks {
+}
+.vc-reset,
+.vc-reset * {
+    line-height: 2.1;
 }
 .vc-title {
     font-size: 20px !important;
@@ -706,6 +711,17 @@
 }
 .vc-bg-gray-600 {
     background-color: #000 !important;
+}
+.vc-weekday {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.5px;
+    font-size: 14px !important;
+    color: #888 !important;
+    font-weight: 100 !important;
+}
+.vc-rounded-full {
+    width:26px;
+    height:26px;
 }
 .vc-highlight {
     width: 26px !important;
@@ -1022,7 +1038,8 @@
 }
 .form-column input[type='text'],
 .form-column input[type='email'],
-.form-column input[type='tel'] {
+.form-column input[type='tel'],
+.form-column input[type='number'] {
     width: 100%;
 }
 .form-column .data-picker {
@@ -1133,6 +1150,7 @@
     display: inline-block;
     text-align: center;
     width: 190px;
+    vertical-align: top;
 }
 .thumb-file input {
     z-index: 2;
@@ -2923,6 +2941,7 @@
 }
 .period-list-item .top {
     display: flex;
+    width: 100%;
     height: 50px;
     padding: 0 28px;
     align-items: center;

@@ -18,7 +18,10 @@
                             </div>
                             <div class="form-column">
                                 <span class="form-val">
-                                    {{ orderDetail.orderGoodsSeq }}
+                                    {{
+                                        orderDetailData.product.agency
+                                            .agencyName
+                                    }}
                                 </span>
                             </div>
                         </li>
@@ -28,7 +31,7 @@
                             </div>
                             <div class="form-column">
                                 <span class="form-val">
-                                    {{ orderDetail.orderGoodsSeq }}
+                                    {{ orderDetailData.order.updateDt }}
                                 </span>
                             </div>
                         </li>
@@ -38,7 +41,9 @@
                             </div>
                             <div class="form-column">
                                 <span class="form-val">
-                                    <em>{{ totalPrice }}</em>
+                                    <em>{{
+                                        orderDetailData.order.totalAmount
+                                    }}</em>
                                     원
                                 </span>
                             </div>
@@ -57,29 +62,17 @@
                                 :key="index"
                             >
                                 <span class="thumbnail">
-                                    <img
-                                        :src="
-                                            item.orderDetail
-                                                .imageFilePhysicalName
-                                        "
-                                        :alt="item.orderDetail.imageFileName"
-                                    />
+                                    <img src=" " alt="" />
                                 </span>
                                 <span class="info-box">
-                                    <strong class="title">
-                                        {{ item.orderDetail.goodsName }}
-                                    </strong>
-                                    <p class="txt">
-                                        {{ item.orderDetail.goodsDescription }}
-                                    </p>
+                                    <strong class="title"> </strong>
+                                    <p class="txt"></p>
                                     <span class="desc-txt-box">
-                                        <p class="desc">
-                                            {{ item.orderDetail.goodsName }}
-                                        </p>
+                                        <p class="desc"></p>
                                     </span>
                                 </span>
                                 <span class="quantity-txt">
-                                    <em>{{ item.orderQuantity }}</em>
+                                    <em></em>
                                     개
                                 </span>
                             </li>
@@ -87,26 +80,12 @@
                     </el-scrollbar>
                     <h3 class="sub-title">COMMENT</h3>
                     <div class="mt10">
-                        <span class="textarea">
-                            <textarea
-                                style="height: 80px;"
-                                v-model="orderComment"
-                            />
-                        </span>
+                        {{ orderDetailData.orderDescription }}
                     </div>
                     <p class="form-desc-red">
                         * 업무상 필요한 정보 외의 개인 연락처 정보를 기재하지
                         않도록 주의하시기 바랍니다.
                     </p>
-                    <!-- <div class="btn-area">
-                        <button
-                            type="button"
-                            class="btn-s-black"
-                            @click="$emit('orderSave', orderComment)"
-                        >
-                            <span>주문서 발송</span>
-                        </button>
-                    </div> -->
                 </div>
             </div>
         </el-scrollbar>
@@ -126,7 +105,7 @@ export default {
             orderComment: '',
         };
     },
-    props: ['visible', 'orderDetail', 'totalPrice'],
+    props: ['visible', 'orderDetailData', 'totalPrice'],
     mounted() {},
     methods: {},
 };

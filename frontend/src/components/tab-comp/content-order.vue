@@ -72,6 +72,7 @@
             </p>
         </div>
         <OrderSheet
+            v-if="basketList.length"
             :visible.sync="visible.orderSheet"
             :basketList="basketList"
             :totalPrice="totalPrice"
@@ -181,7 +182,6 @@
                     totalAmount: this.totalPrice,
                 });
                 if (response.existMsg) {
-                    console.log('asdasd');
                     await getExistMsg(response);
                 } else {
                     this.visible.orderSheet = false;

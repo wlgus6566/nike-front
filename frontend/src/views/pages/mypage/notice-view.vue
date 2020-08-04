@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import BtnArea from '@/components/asset-view/btn-area.vue';
-import mypageView from '@/components/news/view.vue';
+    import BtnArea from '@/components/asset-view/btn-area.vue';
+    import mypageView from '@/components/news/view.vue';
 
-export default {
-    name: 'news-view',
+    export default {
+    name: 'notice-view',
     data() {
         return {};
     },
