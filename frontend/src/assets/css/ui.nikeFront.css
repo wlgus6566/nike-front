@@ -656,6 +656,14 @@
 .date-picker .el-date-editor .el-range__icon {
     display: none;
 }
+.vc-container {
+    width:320px !important;
+    height:310px;
+}
+.vc-weeks {}
+.vc-reset, .vc-reset * {
+    line-height:2.1;
+}
 .vc-title {
     font-size: 20px !important;
     font-family: 'Bebas Neue', sans-serif;
@@ -664,6 +672,7 @@
     font-weight: 400 !important;
 }
 .vc-day-content {
+    margin-top:3px;
     font-family: 'Roboto', sans-serif;
     font-size: 12px !important;
     color: #333;
