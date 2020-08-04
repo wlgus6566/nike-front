@@ -12,6 +12,7 @@ import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -94,6 +95,11 @@ public class NoticeService {
     public NoticeArticle save(final CustomerSaveDTO customerSaveDTO) {
         log.info("NoticeService.save");
 
+        if (StringUtils.equalsIgnoreCase(customerSaveDTO.getNoticeArticleSectionCode(), "NOTICE")
+                && StringUtils.equalsIgnoreCase(customerSaveDTO.getNoticeYn(), "Y")) {
+            checkNoticeYnCnt();
+        }
+
         return noticeRepository.save(new NoticeArticle().customerSave(customerSaveDTO));
     }
 
@@ -132,6 +138,11 @@ public class NoticeService {
     @Transactional
     public NoticeArticle updateCustomerCenter(Long noticeSeq, final CustomerUpdateDTO customerUpdateDTO) {
         log.info("NoticeService.updateCustomerCenter");
+
+        if (StringUtils.equalsIgnoreCase(customerUpdateDTO.getNoticeArticleSectionCode(), "NOTICE")
+                && StringUtils.equalsIgnoreCase(customerUpdateDTO.getNoticeYn(), "Y")) {
+            checkNoticeYnCnt();
+        }
 
         final Optional<NoticeArticle> updateNotice = noticeRepository.findById(noticeSeq);
         updateNotice.ifPresent(value -> value.update(customerUpdateDTO));
