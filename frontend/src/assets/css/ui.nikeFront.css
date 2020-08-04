@@ -679,15 +679,6 @@
 .vc-weeks {
     padding: 10px 20px 25px !important;
 }
-.vc-weekday {
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 0.5px;
-    font-size: 14px !important;
-    color: #888 !important;
-    font-weight: 100 !important;
-}
-.vc-weeks {
-}
 .vc-reset,
 .vc-reset * {
     line-height: 2.1;
