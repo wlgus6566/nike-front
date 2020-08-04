@@ -64,6 +64,9 @@
     props: ['imageFilePhysicalName', 'imageFileName'],
     components: { VueCropper },
     mounted() {},
+    activated() {
+        this.imgDataReset();
+    },
     watch: {
         imageFilePhysicalName() {
             this.cropImg = this.imageFilePhysicalName;
@@ -74,6 +77,9 @@
     },
     computed: {},
     methods: {
+        imgDataReset() {
+            this.cropImg = null;
+        },
         inputReset() {
             console.log(this.$refs.input);
             this.cropImg = null;

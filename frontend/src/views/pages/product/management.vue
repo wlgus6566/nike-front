@@ -6,7 +6,7 @@
         <div class="sorting-area">
             <FilterSelect :listSortSelect="category2Code" />
             <FilterSelect :listSortSelect="category3Code" />
-            <FilterSelect :listSortSelect="agency" />
+            <FilterSelect :listSortSelect="agencySeq" />
             <SearchInput @searchSubmit="searchSubmit" />
         </div>
         <template v-if="productListData">
@@ -223,7 +223,7 @@
                 ],
                 value: '',
             },
-            agency: {
+            agencySeq: {
                 listSortOptions: [
                     {
                         value: '',
@@ -263,8 +263,8 @@
         'category3Code.value'() {
             this.getProduct();
         },
-        'agency.value'() {
-            return 'dfdsf';
+        'agencySeq.value'() {
+            this.getProduct();
         },
     },
     mounted() {
@@ -287,7 +287,7 @@
                         value: item.agencySeq,
                         label: item.agencyName,
                     };
-                    this.agency.listSortOptions.push(agencyList);
+                    this.agencySeq.listSortOptions.push(agencyList);
                 });
             } catch (error) {
                 console.log(error);
@@ -346,7 +346,7 @@
                         goodsSeqList: this.checkItem.toString(),
                     });
                     await this.getProduct();
-                    //todo 장바구니 다건 삭제 추가
+                    await this.$store.dispatch('basketList');
                     this.loading = false;
                     this.checkItem.forEach((seq) => {
                         this.checked(seq, true);
@@ -379,7 +379,7 @@
                     category2Code: this.category2Code.value,
                     category3Code: this.category3Code.value,
                     keyword: this.searchKeyword,
-                    agencySeq: this.agency.value,
+                    agencySeq: this.agencySeq.value,
                 });
                 this.productList = response;
                 this.productListData = response.content;

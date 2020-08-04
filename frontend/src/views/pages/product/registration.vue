@@ -18,7 +18,7 @@
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <span class="label-title">상태</span>
+                        <span class="label-title required">상태</span>
                     </div>
                     <div class="form-column">
                         <label
@@ -44,7 +44,7 @@
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <label class="label-title">구분</label>
+                        <label class="label-title required">구분</label>
                     </div>
                     <div class="form-column">
                         <div class="column-box">
@@ -85,16 +85,16 @@
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <label class="label-title">에이전시</label>
+                        <label class="label-title required">에이전시</label>
                     </div>
                     <div class="form-column">
                         <span class="select" style="width: 100%;">
                             <el-select
-                                v-model="agency.value"
+                                v-model="agencySeq.value"
                                 placeholder="Select"
                             >
                                 <el-option
-                                    v-for="item in agency.listSortOptions"
+                                    v-for="item in agencySeq.listSortOptions"
                                     :key="item.value"
                                     :label="item.label"
                                     :value="item.value"
@@ -106,7 +106,7 @@
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <label class="label-title">상품 명</label>
+                        <label class="label-title required">상품 명</label>
                     </div>
                     <div class="form-column">
                         <span class="textarea">
@@ -116,7 +116,7 @@
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <label class="label-title">추가설명</label>
+                        <label class="label-title required">추가설명</label>
                     </div>
                     <div class="form-column">
                         <input
@@ -128,14 +128,14 @@
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <label class="label-title">단가 입력</label>
+                        <label class="label-title required">단가 입력</label>
                     </div>
                     <div class="form-column">
                         <span class="input-txt">
                             <input
                                 type="text"
                                 v-model="detailData.unitPrice"
-                                @input="numValue"
+                                @input="unitPriceVal"
                             />
                             <span class="txt">원</span>
                         </span>
@@ -143,13 +143,16 @@
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <label class="label-title">최소 주문 수량</label>
+                        <label class="label-title required"
+                            >최소 주문 수량</label
+                        >
                     </div>
                     <div class="form-column">
                         <span class="input-txt">
                             <input
-                                type="number"
+                                type="text"
                                 v-model="detailData.minimumOrderQuantity"
+                                @input="quantityVal"
                             />
                             <span class="txt">개</span>
                         </span>
@@ -358,7 +361,7 @@
                 ],
                 value: '',
             },
-            agency: {
+            agencySeq: {
                 listSortOptions: [
                     {
                         value: '',
@@ -372,6 +375,7 @@
     created() {
         this.detailProduct();
     },
+    activated() {},
     computed: {
         basketList() {
             if (!!this.$store.state.basketListData) {
@@ -391,17 +395,24 @@
         this.detailProduct();
     },
     methods: {
-        // 숫자입력
-
-        numValue() {
+        // 단가 입력 val
+        unitPriceVal() {
             const numbers = /^[0-9]+$/;
-            if (!this.detailData.unitPrice.match(numbers)) {
-                alert('숫자만');
-                this.detailData.unitPrice = !isNaN(
-                    parseInt(this.detailData.unitPrice)
-                )
-                    ? 0
-                    : parseInt(this.detailData.unitPrice);
+            if (this.detailData.unitPrice.match(numbers) === null) {
+                alert('숫자만 입력 가능합니다');
+                this.detailData.unitPrice = '1';
+            } else if (this.detailData.unitPrice == 0) {
+                this.detailData.unitPrice = '1';
+            }
+        },
+        //수량 입력 val
+        quantityVal() {
+            const numbers = /^[0-9]+$/;
+            if (this.detailData.minimumOrderQuantity.match(numbers) === null) {
+                alert('숫자만 입력 가능합니다');
+                this.detailData.minimumOrderQuantity = '1';
+            } else if (this.detailData.minimumOrderQuantity == 0) {
+                this.detailData.minimumOrderQuantity = '1';
             }
         },
         //에이전시 리스트
@@ -416,7 +427,7 @@
                         value: item.agencySeq,
                         label: item.agencyName,
                     };
-                    this.agency.listSortOptions.push(agencyList);
+                    this.agencySeq.listSortOptions.push(agencyList);
                 });
             } catch (error) {
                 console.log(error);
@@ -461,6 +472,7 @@
                     this.category2Code.value = this.detailData.category2Code;
                     this.select3CodeFn();
                     this.category3Code.value = this.detailData.category3Code;
+                    this.agencySeq.value = this.detailData.agencySeq;
                 } catch (error) {
                     console.log(error);
                 }
@@ -469,7 +481,7 @@
         //상품 등록
         async addProduct() {
             const data = {
-                agencySeq: this.category2Code.value,
+                agencySeq: this.agencySeq.value,
                 category2Code: this.category2Code.value,
                 category3Code: this.category3Code.value,
                 exposureYn: this.exposure.value,
@@ -481,7 +493,7 @@
                 unitPrice: this.detailData.unitPrice,
             };
             if (Object.values(data).some((el) => el === '' || el === null)) {
-                alert('필수 입력');
+                alert('필수 입력 값이 누락 되었습니다.');
                 return;
             }
             if (this.$route.params.id) {
@@ -493,6 +505,7 @@
                             data
                         );
                         // await getExistMsg(response);
+                        console.log(response);
                         await this.$router.push('/order/management');
                         await store.dispatch('basketList');
                     } catch (error) {
@@ -505,12 +518,28 @@
                     try {
                         const { data: response } = await postProduct(data);
                         // await getExistMsg(response);
+                        this.productDataReset();
                         await this.$router.push('/order/management');
                     } catch (error) {
                         console.log(error);
                     }
                 }
             }
+        },
+
+        //데이터 초기화
+        productDataReset() {
+            this.agencySeq.value = '';
+            this.category2Code.value = '';
+            this.category3Code.value = '';
+            this.exposure.value = 'Y';
+            this.detailData.goodsDescription = '';
+            this.detailData.goodsName = '';
+            this.detailData.imageBase64 = '';
+            this.detailData.imageFileName = '';
+            this.detailData.minimumOrderQuantity = '';
+            this.detailData.unitPrice = '';
+            this.imageFilePhysicalName = '';
         },
     },
 };
