@@ -618,10 +618,10 @@
 }
 /* date-picker */
 .date-picker {
-    border-bottom:1px solid black;
+    border-bottom: 1px solid black;
 }
 .date-picker-group {
-    display:flex;
+    display: flex;
 }
 .date-picker-group .date-picker {
     flex-basis: 107px;
@@ -631,22 +631,25 @@
     box-shadow: none;
 }
 .vc-popover-content-wrapper {
-    -webkit-box-shadow: 0px 2px 5px 0 rgba(0,0,0,0.08);
-    box-shadow: 0px 2px 5px 0 rgba(0,0,0,0.08);
-    z-index:30 !important;
+    -webkit-box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.08);
+    z-index: 30 !important;
 }
-.date-picker .focus\:vc-shadow:focus {box-shadow:none;}
+.date-picker .focus\:vc-shadow:focus {
+    box-shadow: none;
+}
 .date-picker-group .date-picker + .date-picker {
-    margin-left:46px;
+    margin-left: 46px;
 }
 .date-picker .vc-leading-tight {
-    height:39px;
-    line-height:16px;
-    padding:0 24px 0 0;
-    box-sizing:border-box;
-    background:url('../images/svg/icon-input-calender.svg') right 10px no-repeat;
-    font-size:14px;
-    color:#888;
+    height: 39px;
+    line-height: 16px;
+    padding: 0 24px 0 0;
+    box-sizing: border-box;
+    background: url('../images/svg/icon-input-calender.svg') right 10px
+        no-repeat;
+    font-size: 14px;
+    color: #888;
     letter-spacing: 0;
 }
 .date-picker .el-range-editor.el-input__inner {
@@ -657,12 +660,14 @@
     display: none;
 }
 .vc-container {
-    width:320px !important;
-    height:310px;
+    width: 320px !important;
+    height: 310px;
 }
-.vc-weeks {}
-.vc-reset, .vc-reset * {
-    line-height:2.1;
+.vc-weeks {
+}
+.vc-reset,
+.vc-reset * {
+    line-height: 2.1;
 }
 .vc-title {
     font-size: 20px !important;
@@ -672,24 +677,24 @@
     font-weight: 400 !important;
 }
 .vc-day-content {
-    margin-top:3px;
+    margin-top: 3px;
     font-family: 'Roboto', sans-serif;
     font-size: 12px !important;
     color: #333;
     font-weight: 400 !important;
 }
 .vc-day-content.vc-text-gray-400 {
-    color:rgba(0,0,0,.2);
+    color: rgba(0, 0, 0, 0.2);
 }
 .vc-bg-gray-600 {
     background-color: #000 !important;
 }
 .vc-weekday {
     font-family: 'Bebas Neue', sans-serif;
-    letter-spacing:.5px;
-    font-size:14px !important;
-    color:#888 !important;
-    font-weight:100 !important;
+    letter-spacing: 0.5px;
+    font-size: 14px !important;
+    color: #888 !important;
+    font-weight: 100 !important;
 }
 .vc-rounded-full {
     width: 26px;
@@ -703,7 +708,9 @@
     background-color: #fa5400 !important;
     color: #fff !important;
 }
-.vc-text-gray-400.vc-text-white {color:#fff;}
+.vc-text-gray-400.vc-text-white {
+    color: #fff;
+}
 .vc-border,
 .vc-border-2,
 .vc-border-3 {
@@ -2908,6 +2915,7 @@
 }
 .period-list-item .top {
     display: flex;
+    width: 100%;
     height: 50px;
     padding: 0 28px;
     align-items: center;
