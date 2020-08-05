@@ -15,22 +15,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in noticeData" :key="item.noticeArticleSeq">
+                    <tr v-for="(item, index) in noticeData" :key="index">
                         <td v-if="item.noticeYn === 'Y'">
                             <span class="label-noti">중요</span>
                         </td>
                         <td v-else>
-                            <span class="num">
-                                숫자가 있어야하는군
-                            </span>
+                            <span class="num">{{ item.number }}</span>
                         </td>
                         <td class="agl">
-                            <router-link :to="setUrl(item.noticeArticleSeq)">
-                                {{ item.title }}
-                            </router-link>
+                            <router-link :to="setUrl(item.noticeArticleSeq)">{{
+                                item.title
+                            }}</router-link>
                         </td>
                         <td>
-                            <span class="date">등록일이 없습니다</span>
+                            <span class="date"> 등록일 필요</span>
                         </td>
                     </tr>
                 </tbody>
