@@ -6,16 +6,12 @@ import com.nike.dnp.dto.email.OrderProductDTO;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.order.OrderProductMappingSaveDTO;
 import com.nike.dnp.dto.order.OrderProductResultDTO;
-import com.nike.dnp.dto.order.OrderSearchDTO;
-import com.nike.dnp.entity.order.Order;
+import com.nike.dnp.entity.order.OrderEntity;
 import com.nike.dnp.entity.order.OrderProductMapping;
 import com.nike.dnp.repository.order.OrderProductMapperRepository;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -76,15 +72,15 @@ public class OrderProductMappingService {
 	/**
 	 * 주문내역 이메일 발송
 	 *
-	 * @param order the order
+	 * @param orderEntity the order
 	 * @return the boolean
 	 * @author [윤태호]
 	 * @since 2020. 7. 2. 오후 3:07:14
 	 * @implNote
 	 */
-	public void orderSheetSend(final Order order) {
+	public void orderSheetSend(final OrderEntity orderEntity) {
 		log.info("OrderProductMappingService.orderSheetSend");
-		final List<OrderProductResultDTO> emailList = orderProductMapperRepository.findSearchEmailValue(order.getOrderSeq());
+		final List<OrderProductResultDTO> emailList = orderProductMapperRepository.findSearchEmailValue(orderEntity.getOrderSeq());
 
 		final List<Long> agencyList = new ArrayList<>();
 		Long compareAgencySeq = null;
@@ -141,43 +137,6 @@ public class OrderProductMappingService {
 					sendDTO);
 
 		}
-	}
-
-	/**
-	 * 주문 페이징
-	 *
-	 * @param orderSearchDTO the order search dto
-	 * @return the page
-	 * @author [윤태호]
-	 * @since 2020. 7. 7. 오후 2:44:07
-	 * @implNote
-	 */
-	public Page<OrderProductMapping> findPageOrder(final OrderSearchDTO orderSearchDTO) {
-		log.info("OrderProductMappingService.findPageOrder");
-		orderSearchDTO.setUserSeq(SecurityUtil.currentUser()
-											  .getUserSeq());
-
-		return orderProductMapperRepository.findPagesOrder(
-				orderSearchDTO,
-				PageRequest.of(
-						orderSearchDTO.getPage(),
-						orderSearchDTO.getSize(),
-						Sort.by("registrationDt").descending()));
-
-	}
-
-	/**
-	 * 주문 제품 맴핑 조회
-	 *
-	 * @param orderGoodsSeq the order goods seq
-	 * @return the order product mapping
-	 * @author [윤태호]
-	 * @since 2020. 7. 7. 오후 2:44:07
-	 * @implNote
-	 */
-	public OrderProductMapping findByIdAndUseYn(final Long orderGoodsSeq,String useYn) {
-		log.info("OrderProductMappingService.findByIdAndUseYn");
-		return orderProductMapperRepository.findByIdAndUseYn(orderGoodsSeq,useYn);
 	}
 
 }
