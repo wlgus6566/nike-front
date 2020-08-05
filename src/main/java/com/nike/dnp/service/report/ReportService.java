@@ -277,7 +277,7 @@ public class ReportService {
             }
         }
 
-        // 사용하지 않는 파일목록 삭제
+        // 사용하지 않는 파일목록, 장바구니 삭제
         this.deleteReportFile(lastBeforeFileList);
 
         // 알림 저장
@@ -308,6 +308,10 @@ public class ReportService {
         report.ifPresent(value -> value.updateUseYn("N"));
 
         this.deleteReportFile(savedReport.getReportFileList());
+
+        // 최근 본, 업로드 폴더 삭제
+        historyService.deleteViewHistory(savedReport.getReportSeq(), ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
+        historyService.deleteUploadHistory(savedReport.getReportSeq(), ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
 
         return savedReport;
     }
@@ -354,7 +358,7 @@ public class ReportService {
      *
      * @param reportFileList the report file list
      * @author [이소정]
-     * @implNote 보고서 파일 삭제
+     * @implNote 보고서 파일, 장바구니 삭제
      * @since 2020. 8. 3. 오후 6:02:16
      */
     public void deleteReportFile(final List<ReportFile> reportFileList) {
