@@ -17,7 +17,7 @@ function getCustomerDetail(noticeSeq) {
     return apiCustomer.get(`/detail/${noticeSeq}`);
 }
 
-공지사항 등록
+//공지사항 등록
 function postCustomerNotice(params) {
     return apiCustomer.post(`/notice`, {
         params: params,
