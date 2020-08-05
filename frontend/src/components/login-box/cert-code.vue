@@ -1,5 +1,5 @@
 <template>
-    <form action="#" @submit.prevent="login">
+    <form action="#" @submit.prevent="certCodeFn">
         <div class="login-box">
             <strong class="title2"> E-MAIL 인증 </strong>
             <p class="desc">
@@ -9,18 +9,11 @@
             </p>
             <div class="form-box">
                 <div class="certified-box">
-                    <input type="txt" max="1" />
-                    <input type="txt" max="1" />
-                    <input type="txt" max="1" />
-                    <input type="txt" max="1" />
-                    <input type="txt" max="1" />
-                    <input type="txt" max="1" />
-                    <input type="txt" max="1" />
-                    <input type="txt" max="1" />
+                    <input type="txt" v-model="certCode" max="10" />
                 </div>
             </div>
             <div class="login-btn-wrap">
-                <button type="button" class="btn-s-lg-orage">
+                <button type="submit" class="btn-s-lg-orage">
                     <span>인증하기</span>
                 </button>
             </div>
@@ -28,47 +21,22 @@
     </form>
 </template>
 <script>
+import { certCode } from '@/api/login';
 export default {
-    name: 'loginForm',
+    name: 'certCode',
     data() {
         return {
-            username: 'yth',
-            password: 'Qdlthauts!235',
+            certCode: 'zt3]x@NI:8',
         };
     },
     methods: {
-        async login() {
-            if (!this.username) {
-                alert('아이디를 입력해 주세요.');
-                return;
-            }
-            if (!this.password) {
-                alert('비밀번호를 입력해 주세요.');
-                return;
-            }
+        async certCodeFn() {
             try {
-                const bodyFormData = new FormData();
-                bodyFormData.set('username', this.username);
-                bodyFormData.set('password', this.password);
-                const response = await this.$store.dispatch(
-                    'LOGIN',
-                    bodyFormData
-                );
+                const response = await certCode(this.certCode);
                 if (response.data.existMsg) {
                     alert(response.data.msg);
                 }
-                if (response.data.code === 'SEND_EMAIL_CERT_CODE') {
-                    // 인증코드 입력
-                    this.$emit('changeLoginBox', 'certCode');
-                    //this.$router.push('/');
-                } else if (response.data.code === 'PASSWORD') {
-                    // 페스워드 변경 페이지 이동
-                    this.$router.push('/password-change');
-                } else {
-                    this.$router.push('/');
-                }
-
-                return;
+                console.log(response);
             } catch (error) {
                 alert(error.response.data.msg);
             }

@@ -31,6 +31,7 @@
                         ><span>비밀번호 찾기</span></a
                     >
                 </div>
+                KDf\p*jkyP
             </div>
         </div>
     </form>
@@ -68,7 +69,7 @@ export default {
                 if (response.data.code === 'SEND_EMAIL_CERT_CODE') {
                     this.$emit('changeLoginBox', 'certCode');
                 } else {
-                    //await this.$router.push('/');
+                    // await this.$router.push('/');
                 }
                 console.log(response);
             } catch (error) {

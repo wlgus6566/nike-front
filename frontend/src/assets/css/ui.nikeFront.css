@@ -1461,14 +1461,13 @@
     height: 394px;
 }
 .file-item .detail .thumbnail {
-    height: 700px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .file-item .detail .thumbnail img {
     max-width: 100%;
-    max-height: 100%;
+    max-height: 700px;
     vertical-align: top;
 }
 .file-item .detail .down-info {

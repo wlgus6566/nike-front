@@ -217,7 +217,7 @@ footer {
 /*    transform: translateX(100%);*/
 /*}*/
 
-.page-change-enter-active {
+/*.page-change-enter-active {
     transition: all 0.3s ease-in-out;
 }
 .page-change-leave-active {
@@ -227,7 +227,7 @@ footer {
 .page-change-leave-to {
     opacity: 0;
     transform: translateY(10px);
-}
+}*/
 
 /* modal open css */
 .el-popup-parent--hidden {

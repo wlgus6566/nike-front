@@ -49,6 +49,7 @@
                                     type="checkbox"
                                     :value="item.contentsFileSeq"
                                     v-model="checkContentsFileList"
+                                    :disabled="item.url"
                                     @click="
                                         $emit(
                                             'checkContentsFile',
@@ -101,10 +102,13 @@
                                     <span>ADD</span>
                                 </button>
                             </template>
+                            {{ item.url }}
                             <button
                                 type="button"
                                 :class="buttonClass(item.contentsFileSeq)"
-                                :disabled="item.fileKindCode === 'VR'"
+                                :disabled="
+                                    item.fileKindCode === 'VR' || item.url
+                                "
                                 @click="accordion(item.contentsFileSeq)"
                             >
                                 <span>더보기</span>
