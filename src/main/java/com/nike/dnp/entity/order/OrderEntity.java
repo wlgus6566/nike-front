@@ -1,10 +1,12 @@
 package com.nike.dnp.entity.order;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * The Class Order.
@@ -19,7 +21,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_ORDER")
-public class Order extends BaseTimeEntity {
+public class OrderEntity extends BaseTimeEntity {
 
 
     /**
@@ -60,5 +62,9 @@ public class Order extends BaseTimeEntity {
     @ApiModelProperty(name = "useYn", value = "사용여부")
     private String useYn;
 
+
+    @OneToMany(mappedBy = "orderEntity")
+    @JsonManagedReference
+    private List<OrderProductMapping> orderProductMapping;
 
 }
