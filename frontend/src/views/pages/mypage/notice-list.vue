@@ -56,7 +56,7 @@ export default {
             page: 0,
             pageCount: 11,
             totalItem: 0,
-            itemLength: 10,
+            itemLength: 20,
             searchKeyword: '',
             loadingData: false,
         };
@@ -97,8 +97,7 @@ export default {
                 this.totalItem = this.noticeData.totalElements;
 
                 //게시물 번호 //총게시물 - (현재 페이지 * 한 페이지 게시물 수) -  index = number
-                this.noticeDataContent.forEach((el, index, array) => {
-                    console.log(array.length);
+                this.noticeDataContent.forEach((el, index) => {
                     el.number =
                         this.totalItem - this.page * this.itemLength - index;
                 });
