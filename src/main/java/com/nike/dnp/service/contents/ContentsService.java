@@ -107,6 +107,7 @@ public class ContentsService {
      */
     private final UserAuthRepository userAuthRepository;
 
+
     /**
      * Find all paging page.
      *
@@ -370,8 +371,9 @@ public class ContentsService {
             }
         }
 
-        // TODO[lsj] 관련 최근 업로드 폴더 삭제 : useYn 컬럼 or 물리삭제 확인 필요 2020.08.03
-        // TODO[lsj] 관련 최근 본 폴더 삭데 : useYn 컬럼 or 물리삭제 확인 필요 2020.08.03
+        // 최근 본, 업로드 폴더 삭제
+        historyService.deleteViewHistory(contents.get().getContentsSeq(), contents.get().getTopMenuCode());
+        historyService.deleteUploadHistory(contents.get().getContentsSeq(), contents.get().getTopMenuCode());
 
         return contents.get();
     }
@@ -467,24 +469,6 @@ public class ContentsService {
     }
 
     /**
-     * Delete contents.
-     * 수정일 기준 일정기간 이전 콘텐츠 삭제 - 배치용
-     *
-     * @param beforeDate  the before date
-     * @param topMenuCode the top menu code
-     * @author [이소정]
-     * @implNote 수정일 기준 일정기간 이전 콘텐츠 삭제 - 배치용
-     * @since 2020. 7. 30. 오후 6:29:17
-     */
-    @Transactional
-    public void deleteContents(final LocalDateTime beforeDate, final String topMenuCode) {
-        log.info("ContentsService.deleteContents");
-        final List<Contents> contentsList
-                = contentsRepository.findByUpdateDtBeforeAndTopMenuCode(beforeDate, topMenuCode);
-        contentsRepository.deleteAll(contentsList);
-    }
-
-    /**
      * Check contents validation.
      *
      * @param contentsSaveDTO the contents save dto
@@ -571,7 +555,6 @@ public class ContentsService {
         return imgPath;
     }
 
-
     /**
      * Find all auth user list.
      *
@@ -594,6 +577,24 @@ public class ContentsService {
             }
         }
         return userSeqList;
+    }
+
+    /**
+     * Delete contents.
+     * 수정일 기준 일정기간 이전 콘텐츠 삭제 - 배치용
+     *
+     * @param beforeDate  the before date
+     * @param topMenuCode the top menu code
+     * @author [이소정]
+     * @implNote 수정일 기준 일정기간 이전 콘텐츠 삭제 - 배치용
+     * @since 2020. 7. 30. 오후 6:29:17
+     */
+    @Transactional
+    public void deleteContents(final LocalDateTime beforeDate, final String topMenuCode) {
+        log.info("ContentsService.deleteContents");
+        final List<Contents> contentsList
+                = contentsRepository.findByUpdateDtBeforeAndTopMenuCode(beforeDate, topMenuCode);
+        contentsRepository.deleteAll(contentsList);
     }
 
 }
