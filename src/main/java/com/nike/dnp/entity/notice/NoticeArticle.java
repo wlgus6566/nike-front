@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
@@ -122,10 +123,22 @@ public class NoticeArticle extends BaseTimeEntity {
     @ApiModelProperty(name = "useYn", value ="사용 여부", example = "N")
     private String useYn;
 
+    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    private static String cdnUrl;
+
+    @Value("${nike.file.cdnUrl:}")
+    public void setCdnUrl(final String cdnUrl) {
+        this.cdnUrl = cdnUrl;
+    }
+
+    public String getThumbnailFilePhysicalName() {
+        return this.cdnUrl + thumbnailFilePhysicalName;
+    }
+
     /**
      * Pre persist.
      *
-     * @author [오지훈]
+     * @author [정주희]
      * @implNote [method 설명]
      * @since 2020. 8. 3. 오전 10:41:05
      */
@@ -146,7 +159,7 @@ public class NoticeArticle extends BaseTimeEntity {
      * @Description
      * @since 2020. 8. 3. 오전 10:41:05
      */
-    public NoticeArticle save(final CustomerSaveDTO customerSaveDTO) {
+    public NoticeArticle customerSave(final CustomerSaveDTO customerSaveDTO) {
         log.info("NoticeArticle.save");
         final NoticeArticle noticeArticle = new NoticeArticle();
 
@@ -162,7 +175,7 @@ public class NoticeArticle extends BaseTimeEntity {
         } else if (StringUtils.equals(customerSaveDTO.getNoticeArticleSectionCode(), "NEWS")) {
             if (!ObjectUtils.isEmpty(customerSaveDTO.getImageBase64())) {
                 FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
-                        ServiceCode.FileFolderEnumCode.QNA.getFolder(), customerSaveDTO.getImageBase64());
+                        ServiceCode.FileFolderEnumCode.NEWS.getFolder(), customerSaveDTO.getImageBase64());
 
                 noticeArticle.setThumbnailFileName(fileResultDTO.getFileName());
                 noticeArticle.setThumbnailFilePhysicalName(fileResultDTO.getFilePhysicalName());
@@ -180,36 +193,34 @@ public class NoticeArticle extends BaseTimeEntity {
      *
      * @param customerUpdateDTO the customer update dto
      * @return the notice article
-     * @author [오지훈]
-     * @implNote [method 설명]
+     * @author [정주희]
+     * @implNote [update 엔티티 삽입]
      * @since 2020. 8. 3. 오전 10:41:05
      */
-    public NoticeArticle update(final CustomerUpdateDTO customerUpdateDTO) {
+    public void update(final CustomerUpdateDTO customerUpdateDTO) {
         log.info("NoticeArticle.update");
 
-        // TODO [jjh] 업데이트 수정
-        final NoticeArticle noticeArticle = new NoticeArticle();
-
-        noticeArticle.setNoticeArticleSectionCode(customerUpdateDTO.getNoticeArticleSectionCode());
-        noticeArticle.setTitle(customerUpdateDTO.getTitle());
-        noticeArticle.setContents(customerUpdateDTO.getContents());
-        noticeArticle.setUseYn(customerUpdateDTO.getUseYn());
+        this.noticeArticleSectionCode = customerUpdateDTO.getNoticeArticleSectionCode();
+        this.title = customerUpdateDTO.getTitle();
+        this.contents = customerUpdateDTO.getContents();
 
         if (StringUtils.equals(customerUpdateDTO.getNoticeArticleSectionCode(), "NOTICE")) {
-            noticeArticle.setNoticeYn(customerUpdateDTO.getNoticeYn());
+            this.noticeYn = customerUpdateDTO.getNoticeYn();
         } else if (StringUtils.equals(customerUpdateDTO.getNoticeArticleSectionCode(), "NEWS")) {
             if (!ObjectUtils.isEmpty(customerUpdateDTO.getImageBase64())) {
                 FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
-                        ServiceCode.FileFolderEnumCode.QNA.getFolder(), customerUpdateDTO.getImageBase64());
+                        ServiceCode.FileFolderEnumCode.NEWS.getFolder(), customerUpdateDTO.getImageBase64());
 
-                noticeArticle.setThumbnailFileName(fileResultDTO.getFileName());
-                noticeArticle.setThumbnailFilePhysicalName(fileResultDTO.getFilePhysicalName());
-                noticeArticle.setThumbnailFileSize(String.valueOf(fileResultDTO.getFileSize()));
+                this.thumbnailFileName = fileResultDTO.getFileName();
+                this.thumbnailFilePhysicalName = fileResultDTO.getFilePhysicalName();
+                this.thumbnailFileSize = String.valueOf(fileResultDTO.getFileSize());
             }
         } else if (StringUtils.equals(customerUpdateDTO.getNoticeArticleSectionCode(), "QNA")) {
-            noticeArticle.setNoticeArticleCategoryCode(customerUpdateDTO.getNoticeArticleCategoryCode());
+            this.noticeArticleCategoryCode = customerUpdateDTO.getNoticeArticleCategoryCode();
         }
+    }
 
-        return noticeArticle;
+    public void delete() {
+        this.useYn = "N";
     }
 }

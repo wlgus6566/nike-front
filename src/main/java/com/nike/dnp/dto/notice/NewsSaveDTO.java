@@ -84,7 +84,7 @@ public class NewsSaveDTO extends BasicDTO {
      * @author [정주희]
      */
     @NotBlank(message = "customer.thumbnail")
-    @ApiModelProperty(name = "imageBase64", value = "[NEWS] 이미지 base64 문자", example = "data:image/jpeg;base64," + "/9j/4AAQSkZJRgABAQEAYABgAAD" +
+    @ApiModelProperty(name = "imageBase64", value = "이미지 base64 문자", required = true, example = "data:image/jpeg;base64," + "/9j/4AAQSkZJRgABAQEAYABgAAD" +
             "/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUF" +
             "BQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAD0AacDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhB" +
             "yJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19" +

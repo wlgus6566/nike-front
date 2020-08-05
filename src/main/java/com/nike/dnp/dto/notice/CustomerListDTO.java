@@ -1,9 +1,12 @@
 package com.nike.dnp.dto.notice;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 /**
  * The Class Notice list dto.
@@ -100,4 +103,13 @@ public class CustomerListDTO {
      */
     @ApiModelProperty(name = "useYn", value = "게시글 사용 여부")
     private String useYn;
+
+    /**
+     * 최종 수정일
+     *
+     * @author [오지훈]
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+    @ApiModelProperty(name = "updateDt", value = "최종 수정일")
+    private LocalDateTime updateDt;
 }

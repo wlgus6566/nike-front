@@ -246,7 +246,7 @@ public class ServiceCode {
         CONTENTS("contents"),
         REPORT("report"),
         TEMP("temp"),
-        QNA("QNA"),
+        NEWS("NEWS"),
         BANNER("banner")
         ;
 

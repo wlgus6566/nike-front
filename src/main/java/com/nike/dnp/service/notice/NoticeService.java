@@ -12,6 +12,7 @@ import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -94,9 +95,12 @@ public class NoticeService {
     public NoticeArticle save(final CustomerSaveDTO customerSaveDTO) {
         log.info("NoticeService.save");
 
-        final NoticeArticle noticeArticle = noticeRepository.save(new NoticeArticle().save(customerSaveDTO));
+        if (StringUtils.equalsIgnoreCase(customerSaveDTO.getNoticeArticleSectionCode(), "NOTICE")
+                && StringUtils.equalsIgnoreCase(customerSaveDTO.getNoticeYn(), "Y")) {
+            checkNoticeYnCnt();
+        }
 
-        return noticeArticle;
+        return noticeRepository.save(new NoticeArticle().customerSave(customerSaveDTO));
     }
 
     /**
@@ -123,6 +127,8 @@ public class NoticeService {
     /**
      * Update customer center notice article.
      *
+     *
+     * @param noticeSeq
      * @param customerUpdateDTO the notice update dto
      * @return the notice article
      * @author [정주희]
@@ -130,42 +136,45 @@ public class NoticeService {
      * @implNote Customer Center 게시글 수정
      */
     @Transactional
-    public NoticeArticle updateCustomerCenter(final CustomerUpdateDTO customerUpdateDTO) {
+    public NoticeArticle updateCustomerCenter(Long noticeSeq, final CustomerUpdateDTO customerUpdateDTO) {
         log.info("NoticeService.updateCustomerCenter");
 
-        final Optional<NoticeArticle> updateNotice = noticeRepository.findById(customerUpdateDTO.getNoticeArticleSeq());
-        updateNotice.ifPresent(value -> value.update(customerUpdateDTO));
-        NoticeArticle noticeArticle = updateNotice.get();
+        if (StringUtils.equalsIgnoreCase(customerUpdateDTO.getNoticeArticleSectionCode(), "NOTICE")
+                && StringUtils.equalsIgnoreCase(customerUpdateDTO.getNoticeYn(), "Y")) {
+            checkNoticeYnCnt();
+        }
 
-        return noticeArticle;
+        final Optional<NoticeArticle> updateNotice = noticeRepository.findById(noticeSeq);
+        updateNotice.ifPresent(value -> value.update(customerUpdateDTO));
+
+        return updateNotice.get();
     }
 
     /**
      * Delete customer center optional.
      *
-     * @param customerUpdateDTO the notice update dto
+     *
+     * @param noticeSeq
      * @return the optional
      * @author [정주희]
      * @since 2020. 7. 20. 오후 10:06:54
      * @implNote customer center 삭제 (사용 여부 == 'N')
      */
     @Transactional
-    public NoticeArticle deleteCustomerCenter(final CustomerUpdateDTO customerUpdateDTO) {
+    public NoticeArticle deleteCustomerCenter(Long noticeSeq) {
         log.info("NoticeService.deleteCustomerCenter");
 
-        final Optional<NoticeArticle> deleteNotice = noticeRepository.findById(customerUpdateDTO.getNoticeArticleSeq());
-        final NoticeArticle noticeArticle = deleteNotice.orElse(new NoticeArticle());
+        final Optional<NoticeArticle> deleteNotice = noticeRepository.findById(noticeSeq);
+        deleteNotice.ifPresent(value -> value.delete());
 
-        noticeArticle.setUseYn(customerUpdateDTO.getUseYn());
-
-        return noticeRepository.save(noticeArticle);
+        return deleteNotice.get();
     }
 
-    public String uploadEditorImages(MultipartHttpServletRequest multiReq, String sectionCode) throws IOException {
+    public String uploadEditorImages(MultipartHttpServletRequest multiReq, String noticeArticleSectionCode) throws IOException {
         log.info("NoticeService.uploadEditorImages");
 
         MultipartFile mf = multiReq.getFile("editor");
-        final String uploadUrl = S3Util.upload(mf, sectionCode);
+        final String uploadUrl = S3Util.upload(mf, noticeArticleSectionCode);
 
         return uploadUrl;
     }
