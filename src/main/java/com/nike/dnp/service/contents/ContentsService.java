@@ -138,7 +138,7 @@ public class ContentsService {
                 PageRequest.of(contentsSearchDTO.getPage()
                         , contentsSearchDTO.getSize()
                         , contentsSearchDTO.equals(ServiceCode.SearchEnumCode.START_DATE.toString())
-                                ? Sort.by("campaignBeginDt").ascending() : Sort.by("updateDt").descending()));
+                                ? Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).ascending() : Sort.by(ServiceCode.SearchEnumCode.LATEST.getValue()).descending()));
     }
 
     /**

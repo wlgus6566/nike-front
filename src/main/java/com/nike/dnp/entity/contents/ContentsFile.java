@@ -56,7 +56,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @author [이소정]
      */
     @Column(name = "FILE_SECTION_CODE")
-    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드 (ASSET/GUIDE/VIDEO)", required = true)
+    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드(ASSET/GUIDE/VIDEO)", required = true)
     private String fileSectionCode;
 
     /**

@@ -2,10 +2,7 @@ package com.nike.dnp.controller.contents;
 
 import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.ServiceCode;
-import com.nike.dnp.dto.contents.ContentsMailSendDTO;
-import com.nike.dnp.dto.contents.ContentsResultDTO;
-import com.nike.dnp.dto.contents.ContentsSaveDTO;
-import com.nike.dnp.dto.contents.ContentsSearchDTO;
+import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
@@ -101,7 +98,7 @@ public class ContentsController {
      */
     private static final String REQUEST_MENU_DESC =
             TOP_MENU_CODE+"|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
-            + MENU_CODE+"|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
+            + MENU_CODE+"|파일구분(2depth menu, 업로드 위치)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
             + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
             + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n";
 
@@ -123,7 +120,6 @@ public class ContentsController {
         + "page|페이지|false|Integer|0부터 시작\n"
         + "size|사이즈|false|Integer\n"
         + "keyword|검색어|false|Strin|ASSET/TOOLKIT/FOUNDATION\n"
-
         + "orderType|정렬 타입|false|String|최신순:LATEST/시작일 순:START_DATE\n"
         + "[하위 Parameters 참조]\n\n\n\n"
         + "## Public/Paging Response ## \n"
