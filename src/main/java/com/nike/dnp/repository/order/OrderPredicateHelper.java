@@ -57,7 +57,7 @@ public class OrderPredicateHelper {
 			builder.and(QOrderEntity.orderEntity.registrationDt.before(
 					LocalDateTime.of(
 							LocalDate.parse(endDt, DateTimeFormatter.ISO_DATE),
-							LocalTime.of(0, 0, 0))));
+							LocalTime.of(23, 59, 59))));
 		}
 		return builder;
 	}
