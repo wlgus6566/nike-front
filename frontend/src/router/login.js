@@ -15,6 +15,7 @@ const routes = [
         component: pages('login/agree'),
         meta: {
             layout: 'Clean',
+            unauthorized: true,
         },
     },
     {

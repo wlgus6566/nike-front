@@ -1,7 +1,13 @@
 <template>
     <section class="login">
         <div class="login-inner">
-            <component :is="LoginBox" @changeLoginBox="changeLoginBox" />
+            <component
+                :is="LoginBox"
+                :username="username"
+                :password="password"
+                @updateValue="updateValue"
+                @changeLoginBox="changeLoginBox"
+            />
             <p class="f-desc">
                 사용자는 NIKE SPACE에 로그인함으로써,<br />
                 개인정보 처리방침 및 이용약관에 동의합니다.
@@ -18,10 +24,15 @@ export default {
     data: function () {
         return {
             LoginBox: 'LoginForm',
+            username: 'yth',
+            password: 'Emotion1!@',
         };
     },
     components: { LoginForm, CertCode, FindPW },
     methods: {
+        updateValue(target, value) {
+            this[target] = value;
+        },
         changeLoginBox(compName) {
             this.LoginBox = compName;
         },

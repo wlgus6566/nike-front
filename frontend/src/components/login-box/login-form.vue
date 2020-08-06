@@ -9,12 +9,26 @@
                 <div class="input-box">
                     <input
                         type="text"
-                        v-model="username"
+                        :value="username"
+                        @input="
+                            $emit(
+                                'updateValue',
+                                'username',
+                                $event.target.value
+                            )
+                        "
                         placeholder="ID(E-MAIL)"
                     />
                     <input
                         type="password"
-                        v-model="password"
+                        :value="password"
+                        @input="
+                            $emit(
+                                'updateValue',
+                                'password',
+                                $event.target.value
+                            )
+                        "
                         placeholder="PW"
                     />
                 </div>
@@ -39,11 +53,9 @@
 <script>
 export default {
     name: 'loginForm',
+    props: ['username', 'password'],
     data() {
-        return {
-            username: 'yth',
-            password: 'Emotion1!@',
-        };
+        return {};
     },
     methods: {
         async login() {
@@ -73,7 +85,7 @@ export default {
                 }
                 console.log(response);
             } catch (error) {
-                console.log(error.response);
+                console.log(error);
                 alert(error.response.data.msg);
             }
         },

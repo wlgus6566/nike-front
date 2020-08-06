@@ -29,15 +29,35 @@ export default {
             certCode: 'zt3]x@NI:8',
         };
     },
+    props: ['username', 'password'],
     methods: {
         async certCodeFn() {
+            if (!this.certCode) {
+                alert('인증코드를 입력해 주세요.');
+                return;
+            }
             try {
-                const response = await certCode(this.certCode);
-                if (response.data.existMsg) {
+                const bodyFormData = new FormData();
+                bodyFormData.append('username', this.username);
+                bodyFormData.append('password', this.password);
+                bodyFormData.append('certCode', this.certCode);
+                const { data: response } = await this.$store.dispatch(
+                    'LOGIN',
+                    bodyFormData
+                );
+                if (response.existMsg) {
                     alert(response.data.msg);
+                }
+                if (response.code === 'SEND_EMAIL_CERT_CODE') {
+                    this.$emit('changeLoginBox', 'certCode');
+                } else if (response.code === 'TERMS_AGREEMENT') {
+                    await this.$router.push('/agree');
+                } else {
+                    await this.$router.push('/');
                 }
                 console.log(response);
             } catch (error) {
+                console.log(error.response);
                 alert(error.response.data.msg);
             }
         },
