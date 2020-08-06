@@ -1514,6 +1514,10 @@
     align-items: center;
     padding: 10px 0;
 }
+.all-box.type2 {
+    margin-top: 20px;
+    padding: 5px 0;
+}
 .all-box .check-label {
     min-width: auto;
     padding-right: 15px;
@@ -1560,6 +1564,7 @@
     display: flex;
 }
 .all-box .btn-box {
+    display: flex;
     margin-left: auto;
 }
 .all-box .btn-box [class^='btn-'] {

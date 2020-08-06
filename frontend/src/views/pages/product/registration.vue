@@ -64,11 +64,12 @@
                                     </el-select>
                                 </span>
                             </div>
-                            <div class="column">
+                            <div class="column" ref="test" tabindex="0">
                                 <span class="select">
                                     <el-select
                                         v-model="category3Code.value"
                                         placeholder="Select"
+                                        @focus="selectFocus"
                                     >
                                         <el-option
                                             v-for="item in category3Code.listSortOptions"
@@ -249,7 +250,19 @@
     },
     watch: {
         'category2Code.value'(val) {
-            getCategoryList(val, this.category3Code.listSortOptions);
+            if (val === '') {
+                this.category3Code = {
+                    listSortOptions: [
+                        {
+                            value: '',
+                            label: '소구분',
+                        },
+                    ],
+                    value: '',
+                };
+            } else {
+                getCategoryList(val, this.category3Code.listSortOptions);
+            }
         },
     },
     mounted() {
@@ -257,6 +270,13 @@
         this.detailProduct();
     },
     methods: {
+        selectFocus() {
+            console.log(this.category2Code.value);
+            if (this.category2Code.value === '') {
+                alert('대구분을 선택해 주세요 ');
+                this.$refs.test.focus();
+            }
+        },
         // 단가 입력 val
         unitPriceVal() {
             const numbers = /^[0-9]+$/;
@@ -412,4 +432,8 @@
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+::v-deep .column {
+    outline: transparent !important;
+}
+</style>
