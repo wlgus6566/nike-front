@@ -14,24 +14,25 @@
                 :folderListData="historyFolderData"
             />
             <template v-else>
-                <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
                 <NoData v-else>
                     <i class="icon-file"></i>
                     <p class="desc">최근 본 폴더가 없습니다.</p>
                 </NoData>
+                <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
             </template>
         </template>
     </div>
 </template>
 
 <script>
-    import {historyFolderViewList} from '@/api/mypage';
-    import SortingList from '@/components/asset-view/sorting-list.vue';
-    import FolderList from '@/components/folder-list';
-    import Loading from '@/components/loading';
-    import NoData from '@/components/no-data';
+	import {historyFolderViewList} from '@/api/mypage';
+	import SortingList from '@/components/asset-view/sorting-list.vue';
+	import FolderList from '@/components/folder-list';
+	import Loading from '@/components/loading';
+	import NoData from '@/components/no-data';
 
-    export default {
+	export default {
+    name: 'latest',
     data() {
         return {
             historyFolderDataList: [],
@@ -113,7 +114,6 @@
         sectionCodeChange(value) {
             this.sectionCode.value = value;
         },
-        //클릭시 최근 본 폴더 리스트 다시 불러오기
         handleScroll() {
             if (this.loadingData) return;
             const windowE = document.documentElement;

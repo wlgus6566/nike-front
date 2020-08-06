@@ -23,7 +23,7 @@
                 </NoData>
             </template>
         </template>
-        <Loading v-if="loadingData" />
+        <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
         <detailView
             :visible.sync="visible.detailView"
             :productDetailData="productDetailData"
@@ -56,6 +56,12 @@
                 exposureYn: '',
             },
             loadingData: false,
+            loadingStyle: {
+                width: this.width ? `${this.width}px` : '100%',
+                height: this.height ? `${this.height}px` : '100%',
+                overflow: 'hidden',
+                margin: '0 auto',
+            },
             totalPage: null,
             page: 0,
             itemLength: 20,

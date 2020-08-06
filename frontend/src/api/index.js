@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { setInterceptors } from './config/interceptors';
+import {setInterceptors} from './config/interceptors';
 
 function createWithAuth(url, options) {
     const instance = axios.create(Object.assign({ baseURL: url }, options));
@@ -17,3 +17,4 @@ export const myPage = createWithAuth(`/api/mypage`, { timeout: 3000 });
 export const product = createWithAuth(`/api/product`, { timeout: 3000 });
 export const report = createWithAuth(`/api/report`, { timeout: 3000 });
 export const wishList = createWithAuth(`/api/wishlist`, { timeout: 3000 });
+export const code = createWithAuth(`/api/open/code`, { timeout: 3000 });

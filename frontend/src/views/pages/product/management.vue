@@ -48,6 +48,7 @@
     import NoData from '@/components/no-data';
     import {delProduct, getProductList} from '@/api/product';
     import {getAgencyContact} from '@/api/agency';
+    import {getCategoryList} from '@/utils/code';
 
     export default {
     name: 'management',
@@ -69,147 +70,6 @@
                     {
                         value: '',
                         label: '대구분',
-                        category3Code: {
-                            listSortOptions: [
-                                {
-                                    value: '',
-                                    label: '소구분',
-                                },
-                            ],
-                            value: '',
-                        },
-                    },
-                    {
-                        value: 'SUBSIDIARY',
-                        label: '부자재',
-                        category3Code: {
-                            listSortOptions: [
-                                {
-                                    value: '',
-                                    label: '소구분',
-                                },
-                                {
-                                    value: 'SUBSIDIARY21',
-                                    label: '운영 비품',
-                                },
-                                {
-                                    value: 'SUBSIDIARY22',
-                                    label: '스태프 비품',
-                                },
-                                {
-                                    value: 'SUBSIDIARY23',
-                                    label: '운영 사이니지',
-                                },
-                                {
-                                    value: 'SUBSIDIARY24',
-                                    label: '세일 사이니지',
-                                },
-                                {
-                                    value: 'SUBSIDIARY25',
-                                    label: '오픈 패키지',
-                                },
-                                {
-                                    value: 'SUBSIDIARY26',
-                                    label: '나이키 골프',
-                                },
-                            ],
-                            value: '',
-                        },
-                    },
-                    {
-                        value: 'NIKE_BY_YOU',
-                        label: 'NIKE BY YOU',
-                        category3Code: {
-                            listSortOptions: [
-                                {
-                                    value: '',
-                                    label: '소구분',
-                                },
-                                {
-                                    value: 'NIKE_BY_YOU27',
-                                    label: '신발 커스텀(단품)',
-                                },
-                                {
-                                    value: 'NIKE_BY_YOU28',
-                                    label: '신발 커스텀(패키지)',
-                                },
-                                {
-                                    value: 'NIKE_BY_YOU29',
-                                    label: '의류 커스텀(단품)',
-                                },
-                                {
-                                    value: 'NIKE_BY_YOU30',
-                                    label: '의류 커스텀(패키지)',
-                                },
-                                {
-                                    value: 'NIKE_BY_YOU31',
-                                    label: 'OTHERS',
-                                },
-                            ],
-                            value: '',
-                        },
-                    },
-                    {
-                        value: 'CUSTOM23',
-                        label: 'CUSTOM23(JORDAN ONLY)',
-                        category3Code: {
-                            listSortOptions: [
-                                {
-                                    value: '',
-                                    label: '소구분',
-                                },
-                                {
-                                    value: 'CUSTOM2332',
-                                    label: '신발 커스텀(단품)',
-                                },
-                                {
-                                    value: 'CUSTOM2333',
-                                    label: '신발 커스텀(패키지)',
-                                },
-                                {
-                                    value: 'CUSTOM2334',
-                                    label: '의류 커스텀(단품)',
-                                },
-                                {
-                                    value: 'CUSTOM2335',
-                                    label: '의류 커스텀(패키지)',
-                                },
-                                {
-                                    value: 'CUSTOM2336',
-                                    label: 'OTHERS',
-                                },
-                            ],
-                            value: '',
-                        },
-                    },
-                    {
-                        value: 'MNQ',
-                        label: 'MNQ',
-                        category3Code: {
-                            listSortOptions: [
-                                {
-                                    value: '',
-                                    label: '소구분',
-                                },
-                                {
-                                    value: 'MNQ37',
-                                    label: '남성',
-                                },
-                                {
-                                    value: 'MNQ38',
-                                    label: '여성',
-                                },
-                                {
-                                    value: 'MNQ39',
-                                    label: '유아동',
-                                },
-                                {
-                                    value: 'MNQ40',
-                                    label: '수리/보수',
-                                },
-                            ],
-                            value: '',
-                        },
                     },
                 ],
                 value: '',
@@ -252,12 +112,8 @@
         },
     },
     watch: {
-        'category2Code.value'() {
-            this.category2Code.listSortOptions.forEach((item) => {
-                if (item.value === this.category2Code.value) {
-                    this.category3Code = item.category3Code;
-                }
-            });
+        'category2Code.value'(val) {
+            getCategoryList(val, this.category3Code.listSortOptions);
             this.getProduct();
         },
         'category3Code.value'() {
@@ -268,8 +124,8 @@
         },
     },
     mounted() {
-        this.getProduct();
         this.getAgency();
+        getCategoryList('CATEGORY', this.category2Code.listSortOptions);
     },
     activated() {
         this.getProduct();
