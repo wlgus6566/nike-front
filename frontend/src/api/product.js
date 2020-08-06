@@ -1,4 +1,4 @@
-import { product } from './index';
+import {product} from './index';
 
 // PRODUCT 목록 조회
 function getProductList(params) {
@@ -29,7 +29,7 @@ function postProduct(data) {
 // PRODUCT 수정
 function putProduct(goodsSeq, data) {
     console.log(data);
-    return apiProduct.put(`/${goodsSeq}`, data);
+    return product.put(`/${goodsSeq}`, data);
 }
 
 // PRODUCT 상품 삭제[배열]

@@ -18,10 +18,8 @@
                             </div>
                             <div class="form-column">
                                 <span class="form-val">
-                                    {{
-                                        orderDetailData.orderProductMapping[0]
-                                            .product.agency.agencyName
-                                    }}
+                                    <!-- //todo  유저정보 필요해욥 -->
+                                    유저정보 필요해욥
                                 </span>
                             </div>
                         </li>
@@ -52,7 +50,11 @@
                         * VAT 및 운송비,기타,운용비는 제외된 금액입니다. (실제
                         세금계산서의 금액은 다를 수 있습니다.)
                     </p>
-                    <el-scrollbar class="sheet-list-wrap" :native="false">
+                    <el-scrollbar
+                        class="sheet-list-scroll"
+                        wrap-class="sheet-list-wrap"
+                        :native="false"
+                    >
                         <ul class="sheet-list">
                             <li
                                 class="sheet-item"
@@ -88,10 +90,16 @@
                             </li>
                         </ul>
                     </el-scrollbar>
-                    <div>
+                    <div v-if="orderDetailData.orderDescription">
                         <h3 class="sub-title">COMMENT</h3>
                         <div class="mt10">
-                            {{ orderDetailData.orderDescription }}
+                            <span class="textarea">
+                                <textarea
+                                    style="height: 80px;"
+                                    readonly
+                                    :value="orderDetailData.orderDescription"
+                                />
+                            </span>
                         </div>
                     </div>
                     <p class="form-desc-red">

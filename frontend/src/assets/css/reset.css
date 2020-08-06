@@ -54,7 +54,8 @@ textarea,
 select,
 button,
 table {
-    font-family: 'Roboto', 'Noto Sans KR', 'Arial', 'Apple SD Gothic Neo', sans-serif;
+    font-family: 'Roboto', 'Noto Sans KR', 'Arial', 'Apple SD Gothic Neo',
+        sans-serif;
     font-size: inherit;
     font-weight: normal;
     line-height: 1.6;
@@ -233,12 +234,16 @@ textarea[disabled] {
     color: #888 !important;
 }
 input[readonly],
-select[readonly],
-textarea[readonly] {
+select[readonly] {
     cursor: default;
     color: #bbb;
     background-color: #fff !important;
 }
+textarea[readonly] {
+    cursor: default;
+    background-color: #f4f4f4;
+}
+
 input::placeholder,
 input::-webkit-input-placeholder {
     font-size: 14px;

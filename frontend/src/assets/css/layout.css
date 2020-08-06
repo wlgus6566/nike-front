@@ -156,6 +156,8 @@ header .sticky-content {
     min-height: calc(100vh);
 }
 .contents {
+    z-index: 30;
+    position: relative;
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: calc(100% - 300px);
@@ -252,14 +254,4 @@ footer {
     line-height: 17px;
     text-align: center;
     color: #888;
-}
-.cart-item-wrap .el-scrollbar__wrap {
-    padding: 8px 18px;
-}
-.cart-item-wrap .el-scrollbar__bar {
-    right: 8px;
-}
-
-.cart-item-wrap .el-scrollbar__view {
-    height: 100%;
 }

@@ -1075,27 +1075,38 @@
 .form-list-thumb .form-column:first-child {
     padding: 0 20px;
 }
-.form-list-colunm {
+
+.el-dialog__body .form-row {
+    padding: 6px 0;
+}
+.el-dialog__body .form-column {
+    align-items: center;
+}
+.el-dialog__body .label-title {
+    font-size: 12px;
+    color: #333;
+    line-height: 18px;
+}
+.el-dialog__body .form-val {
+    line-height: 18px;
+}
+.el-dialog__body .form-list-colunm {
     padding: 0 !important;
     display: flex;
     flex-wrap: wrap;
 }
-.form-list-colunm li {
+.el-dialog__body .form-list-colunm .form-row {
     flex-shrink: 1;
     flex-grow: 1;
     flex-basis: 50%;
 }
-.form-list-colunm li .form-column:first-child {
+.el-dialog__body .form-list-colunm .form-column:first-child {
     flex-basis: 100px;
     padding: 0 10px;
 }
-.form-list-colunm li .form-column {
+.el-dialog__body .form-list-colunm .form-column {
     padding: 0;
     flex-basis: calc(100% - 100px);
-}
-.form-list-colunm li .label-title {
-    font-size: 12px;
-    color: #333;
 }
 .label-title {
     display: block;
@@ -3303,6 +3314,7 @@
 .sheet-item .thumbnail {
     position: relative;
     display: block;
+    flex: 0 0 50px;
     width: 50px;
     height: 50px;
     overflow: hidden;
@@ -3351,14 +3363,18 @@
 .sheet-item .quantity-txt em {
     font-weight: bold;
 }
-.sheet-list-wrap {
+.sheet-list-scroll {
     box-sizing: border-box;
     overflow: hidden;
-    max-height: 255px;
+    height: 255px;
     margin-top: 20px;
     border: 1px solid #ddd;
     background: #f7f7f7;
 }
+.cart-item-list {
+    padding: 8px 18px;
+}
+
 .el-scrollbar .el-scrollbar__wrap {
     height: calc(100% + 17px);
 }

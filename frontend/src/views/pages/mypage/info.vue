@@ -8,6 +8,7 @@
                 <span class="desc">HELLO!</span>
                 <strong class="name">
                     <em>
+                        <!-- //todo login 정보  nickname null ->
                         {{ userData.nickname }}
                     </em>
                     님
@@ -45,7 +46,7 @@ export default {
             num: 0,
         };
     },
-    mounted() {
+    created() {
         this.fetchData();
     },
     computed: {

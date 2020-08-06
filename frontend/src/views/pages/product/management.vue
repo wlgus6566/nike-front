@@ -113,6 +113,17 @@
     },
     watch: {
         'category2Code.value'(val) {
+            if (val === '') {
+                this.category3Code = {
+                    listSortOptions: [
+                        {
+                            value: '',
+                            label: '소구분',
+                        },
+                    ],
+                    value: '',
+                };
+            }
             getCategoryList(val, this.category3Code.listSortOptions);
             this.getProduct();
         },
@@ -225,6 +236,7 @@
         },
         // 상품 리스트 api
         async getProduct() {
+            this.checkAll = false;
             this.loading = true;
             try {
                 const {
