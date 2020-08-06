@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
  * The Class Contents list dto.
  *
  * @author [이소정]
- * @since 2020. 7. 13. 오후 2:52:03
  * @implNote 컨텐츠 결과 DTO
+ * @since 2020. 7. 13. 오후 2:52:03
  */
 @Getter
 @Setter
@@ -28,6 +28,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 컨텐츠 시퀀스
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스")
@@ -35,6 +36,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 최고 메뉴 공통코드
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 공통코드")
@@ -42,12 +44,15 @@ public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 2depth 메뉴 코드
+     *
+     * @author [이소정]
      */
     @ApiModelProperty(name = "menuCode", value = "2depth 메뉴 코드")
     private String menuCode;
 
     /**
      * 이미지 파일명
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "imageFileName", value = "이미지 파일명", example = "main_img.jpg")
@@ -55,6 +60,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 이미지 파일 사이즈
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "imageFileSize", value = "이미지 파일 사이즈",  example = "500")
@@ -62,6 +68,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 이미지 파일 물리명
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "imageFilePhysicalName", value = "이미지 파일 물리명", example = "8080/cdn/contnets/")
@@ -69,6 +76,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 폴더명
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "folderName", value = "폴더명", example = "SP20 NSW NIKE DIRECT AM90")
@@ -76,6 +84,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 폴더 내용
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "folderContents", value = "폴더 내용", required = true, example = "SP20 나이키 다이렉트 NSW 캠페인 시공 에셋 자료")
@@ -83,6 +92,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 캠페인 기간 구분 공통코드
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "campaignPeriodSectionCode", value = "캠페인 기간 구분 공통코드(날짜선택:SELECT/365:EVERY)", required = true, example = "EVERY")
@@ -90,6 +100,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 캠페인 시작 일시
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020.06.01 00:00:00")
@@ -98,6 +109,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 캠페인 종료 일시
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020.09.01 23:59:59")
@@ -106,6 +118,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 메모
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "memo", value = "메모")
@@ -113,6 +126,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 조회수
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "readCount", value = "조회수")
@@ -120,6 +134,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 상세 권한 여부
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "detailAuthYn", value = "상세 권한 여부(N : 권한없음)", example = "Y")
@@ -127,6 +142,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * 노출 여부
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "exposureYn", value = "노출 여부(N : 진행중)", example = "Y")
@@ -134,6 +150,8 @@ public class ContentsResultDTO extends BaseTimeEntity {
 
     /**
      * The constant cdnUrl.
+     *
+     * @author [이소정]
      */
     @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
     private static String cdnUrl;
@@ -142,12 +160,23 @@ public class ContentsResultDTO extends BaseTimeEntity {
      * Sets cdn url.
      *
      * @param cdnUrl the cdn url
+     * @author [이소정]
+     * @implNote cdnUrl 셋팅
+     * @since 2020. 7. 30. 오후 3:44:43
      */
     @Value("${nike.file.cdnUrl:}")
     public void setCdnUrl(final String cdnUrl) {
         this.cdnUrl = cdnUrl;
     }
 
+    /**
+     * Gets image file physical name.
+     *
+     * @return the image file physical name
+     * @author [이소정]
+     * @implNote cndUrl + imageFilePhysicalName
+     * @since 2020. 7. 30. 오후 3:44:43
+     */
     public String getImageFilePhysicalName() {
         return this.cdnUrl + imageFilePhysicalName;
     }

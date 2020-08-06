@@ -31,7 +31,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @Api(description = "코드 정보", tags = "CODE")
-@RequestMapping(value = "/api/code", name = "코드")
+@RequestMapping(value = "/api/open/code", name = "코드")
 @RequiredArgsConstructor
 public class CodeController {
 
@@ -118,21 +118,4 @@ public class CodeController {
         return responseService.getSingleResult(codeService.update(code, codeUpdateDTO));
     }
 
-    /**
-     * 코드 삭제
-     *
-     * @param code the code
-     * @return the response entity
-     * @author [오지훈]
-     * @since 2020. 6. 22. 오후 5:22:31
-     * @apiNote
-     */
-    @ApiOperation(value = "코드 삭제", notes = OPERATION_CHARACTER)
-    @DeleteMapping(value = "/{code}", name = "코드 삭제"
-            , consumes = {MediaType.APPLICATION_JSON_VALUE}
-            , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Optional<Code>> deleteCode(
-            @ApiParam(name = "code", value = "코드", required = true) @PathVariable final String code) {
-        return responseService.getSingleResult(codeService.delete(code));
-    }
 }

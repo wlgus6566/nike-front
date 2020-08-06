@@ -43,6 +43,13 @@ import java.util.*;
 public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 	/**
+	 * The constant REGEX
+	 *
+	 * @author [오지훈]
+	 */
+	private final static String REGEX = "NIKESPACE";
+
+	/**
 	 * The Response service
 	 *
 	 * @author [오지훈]
@@ -125,7 +132,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 						));
 				isValid = false;
 			} else {
-				final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(certCode), "Nike DnP").split("\\|")[1];
+				final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(certCode), "Nike DnP").split(REGEX)[1];
 				if (FailCode.ExceptionError.ERROR.name().equals(decodeCertCode)) {
 					JsonUtil.write(response.getWriter()
 							, responseService.getFailResult(
@@ -145,7 +152,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		// PW 90일 체크
 		if (isValid && userRepository.countByPaswordChangePeriod(authUserDTO.getUserSeq()) > 0) {
 			final String randomCode = RandomUtil.randomCertCode2(10);
-			final String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(authUserDTO.getUserId() + "|" + randomCode, "Nike DnP"));
+			final String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(authUserDTO.getUserId() + REGEX + randomCode, "Nike DnP"));
 			if (FailCode.ExceptionError.ERROR.name().equals(encodeCertCode)) {
 				JsonUtil.write(response.getWriter()
 						, responseService.getFailResult(
@@ -172,9 +179,9 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 
 		// 비밀번호가 변경되었을 경우
 		if (isValid && user.get().getPasswordChangeYn().equals("Y")) {
-			if (certCode.isEmpty()) {
+			if (ObjectUtils.isEmpty(certCode)) {
 				// [인증코드] 메일 발송
-				userMailService.createCertCode(authUserDTO.getUserId());
+				userMailService.sendMailForAuthEmail(user.get());
 
 				JsonUtil.write(response.getWriter()
 						, responseService.getFailResult(
@@ -184,17 +191,6 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 				isValid = false;
 			} else  {
 				final String redisCertCode = (String) redisService.get("cert:"+authUserDTO.getUserId());
-				final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(certCode), "Nike DnP");
-
-				if (FailCode.ExceptionError.ERROR.name().equals(decodeCertCode)) {
-					JsonUtil.write(response.getWriter()
-							, responseService.getFailResult(
-									FailCode.ConfigureError.EXPIRED_CERT_CODE.name()
-									, MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
-							));
-					isValid = false;
-				}
-
 				if(ObjectUtils.isEmpty(redisCertCode)) {
 					JsonUtil.write(response.getWriter()
 							, responseService.getFailResult(
@@ -202,7 +198,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 									, MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
 							));
 					isValid = false;
-				} else if(!redisCertCode.equals(decodeCertCode.split("\\|")[1])) {
+				} else if(!redisCertCode.equals(certCode)) {
 					JsonUtil.write(response.getWriter()
 							, responseService.getFailResult(
 									FailCode.ConfigureError.NOT_MATCH_CERT_CODE.name()

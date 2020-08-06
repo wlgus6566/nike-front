@@ -7,8 +7,7 @@ import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.order.OrderProductMappingSaveDTO;
 import com.nike.dnp.dto.order.OrderProductSaveDTO;
 import com.nike.dnp.dto.order.OrderSearchDTO;
-import com.nike.dnp.entity.order.Order;
-import com.nike.dnp.entity.order.OrderProductMapping;
+import com.nike.dnp.entity.order.OrderEntity;
 import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
@@ -102,15 +101,15 @@ public class OrderController {
 	@PostMapping(value = "/save", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Transactional
 	@ValidField
-	public SingleResult<Order> saveOrder(@RequestBody @Valid final OrderProductSaveDTO orderProductSaveDTO,
-										 @ApiIgnore final BindingResult result) {
+	public SingleResult<OrderEntity> saveOrder(@RequestBody @Valid final OrderProductSaveDTO orderProductSaveDTO,
+											   @ApiIgnore final BindingResult result) {
 		log.info("OrderController.saveOrder");
 		final List<Long> goodsSeqList = orderProductSaveDTO.getGoodsSeqList();
 		final List<Long> orderQuantityList = orderProductSaveDTO.getOrderQuantityList();
 		final int goodsSeqListSize = goodsSeqList.size();
 		final int orderQuantityListSize = orderQuantityList.size();
 		if(goodsSeqListSize == orderQuantityListSize){
-			final Order order = orderService.saveOrder(orderProductSaveDTO);
+			final OrderEntity orderEntity = orderService.saveOrder(orderProductSaveDTO);
 			for(int i = 0; i < goodsSeqListSize; i++){
 				final Long goodsSeq = goodsSeqList.get(i);
 				final Long orderQuantity = orderQuantityList.get(i);
@@ -126,14 +125,14 @@ public class OrderController {
 				orderProductMappingService.saveOrderProductMapping(
 						OrderProductMappingSaveDTO.builder()
 								.goodsSeq(goodsSeq)
-								.orderSeq(order.getOrderSeq())
+								.orderSeq(orderEntity.getOrderSeq())
 								.agencySeq(product.getAgencySeq())
 								.orderQuantity(orderQuantity)
 								.build()
 				);
 			}
-			orderProductMappingService.orderSheetSend(order);
-			return responseService.getSingleResult(order);
+			orderProductMappingService.orderSheetSend(orderEntity);
+			return responseService.getSingleResult(orderEntity);
 		}else{
 			throw new CodeMessageHandleException(
 					FailCode.ConfigureError.INVALID_ORDER.name()
@@ -153,26 +152,26 @@ public class OrderController {
 	 */
 	@ApiOperation(value = "주문내역", notes = REQUEST_CHARACTER + "beginDt|시작일|false|String\n" + "endDt|종료일|false|String\n")
 	@GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
-	public SingleResult<Page<OrderProductMapping>> list(final OrderSearchDTO orderSearchDTO) {
+	public SingleResult<Page<OrderEntity>> list(final OrderSearchDTO orderSearchDTO) {
 		log.info("OrderController.list");
-		return responseService.getSingleResult(orderProductMappingService.findPageOrder(orderSearchDTO));
+		return responseService.getSingleResult(orderService.findPageOrder(orderSearchDTO));
 	}
 
 
 	/**
 	 * 주문 상세 내역
 	 *
-	 * @param orderGoodsSeq the order goods seq
+	 * @param orderSeq the order seq
 	 * @return the single result
 	 * @author [윤태호]
-	 * @since 2020. 7. 7. 오후 2:43:50
 	 * @apiNote
+	 * @since 2020. 7. 7. 오후 2:43:50
 	 */
 	@ApiOperation(value = "주문 상세 내역", notes = BASIC_CHARACTER)
-	@GetMapping(value = "/{orderGoodsSeq}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public SingleResult<OrderProductMapping> view(@ApiParam(name = "orderGoodsSeq", value = "주문 상품 시퀀스", defaultValue = "13") @PathVariable final Long orderGoodsSeq) {
+	@GetMapping(value = "/{orderSeq}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public SingleResult<OrderEntity> view(@ApiParam(name = "orderSeq", value = "주문 시퀀스", defaultValue = "48") @PathVariable final Long orderSeq) {
 		log.info("OrderController.view");
-		return responseService.getSingleResult(orderProductMappingService.findByIdAndUseYn(orderGoodsSeq, ServiceCode.YesOrNoEnumCode.Y.name()));
+		return responseService.getSingleResult(orderService.findByOrderSeqAndUseYn(orderSeq, ServiceCode.YesOrNoEnumCode.Y.name()));
 	}
 
 

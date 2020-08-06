@@ -2,7 +2,6 @@ package com.nike.dnp.dto.notice;
 
 import com.nike.dnp.dto.BasicDTO;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiParam;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;

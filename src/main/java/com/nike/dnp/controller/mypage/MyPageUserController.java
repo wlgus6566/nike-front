@@ -128,7 +128,7 @@ public class MyPageUserController {
     public SingleResult<UserResultDTO> changePassword (
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
             , @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody
-                @Validated({ValidationGroups.group1.class, ValidationGroups.group2.class}) final UserCertDTO userCertDTO
+                @Validated({ValidationGroups.Group1.class, ValidationGroups.Group2.class}) final UserCertDTO userCertDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserMyPageController.changePassword");
         return responseService.getSingleResult(

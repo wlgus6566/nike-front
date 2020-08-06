@@ -6,22 +6,20 @@ import com.nike.dnp.dto.notice.CustomerSearchDTO;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import com.nike.dnp.repository.report.ReportRepository;
 import com.nike.dnp.service.banner.BannerService;
-import com.nike.dnp.service.contents.ContentsService;
 import com.nike.dnp.service.notice.NoticeService;
-import com.nike.dnp.service.report.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 메인 화면(HOME 화면)관련 Service 입니다.
+ * The Class Agency service.
  *
  * @author [이소정]
- * @since 2020. 7. 27. 오후 5:39:29
+ * @implNote 메인 서비스
+ * @since 2020. 7. 20. 오후 12:08:45
  */
 @Slf4j
 @Service
@@ -38,7 +36,6 @@ public class MainService {
 
     /**
      * 베너 서비스 (메인 비쥬얼 서비스)
-     * 
      *
      * @author [이소정]
      */
@@ -70,8 +67,8 @@ public class MainService {
      *
      * @return the main result dto
      * @author [이소정]
+     * @implNote 메인 정보 조회 (메인비쥬얼, ASSET, TOOLKIT, FOUNDATION, REPORT, NOTICE, NEWS)
      * @since 2020. 7. 27. 오후 6:53:07
-     * @implNote
      */
     public MainResultDTO findMainInfo() {
         final MainResultDTO mainResultDTO = new MainResultDTO();

@@ -1,7 +1,7 @@
 package com.nike.dnp.controller.agency;
 
+import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.dto.agency.AgencySaveDTO;
-import com.nike.dnp.dto.agency.AgencyUpdateDTO;
 import com.nike.dnp.entity.agency.Agency;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
@@ -12,8 +12,11 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -21,8 +24,8 @@ import java.util.List;
  * The Class Agency controller.
  *
  * @author [이소정]
- * @since 2020. 7. 20. 오후 12:00:36
  * @apiNote 메이전시 관리 컨트롤러
+ * @since 2020. 7. 20. 오후 12:00:36
  */
 @Slf4j
 @RestController
@@ -58,8 +61,8 @@ public class AgencyController {
      *
      * @return the single result
      * @author [이소정]
+     * @implNote 에이전시 목록 조회
      * @since 2020. 7. 20. 오후 12:09:11
-     * @apiNote 에이전시 목록 조회
      */
     @ApiOperation(
         value = "에이전시 목록 조회"
@@ -76,16 +79,18 @@ public class AgencyController {
      * @param agencySaveDTO the agency save dto
      * @return the single result
      * @author [이소정]
+     * @implNote 에이전시 등록
      * @since 2020. 7. 20. 오후 12:12:19
-     * @apiNote 에이전시 등록
      */
     @ApiOperation(
             value = "에이전시 등록"
             , notes = REQUEST_CHARACTER
     )
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "에이전시 등록")
+    @ValidField
     public SingleResult<Agency> saveContents(
-            @RequestBody final AgencySaveDTO agencySaveDTO
+            @RequestBody @Valid  final AgencySaveDTO agencySaveDTO
+            , @ApiIgnore final BindingResult result
     ) {
         return responseService.getSingleResult(agencyService.save(agencySaveDTO));
     }
@@ -96,8 +101,8 @@ public class AgencyController {
      * @param agencySeq the agency seq
      * @return the single result
      * @author [이소정]
+     * @implNote 에이전시 상세조회
      * @since 2020. 7. 20. 오후 12:10:50
-     * @apiNote 에이전시 상세조회
      */
     @ApiOperation(
             value = "에이전시 상세조회"
@@ -106,28 +111,33 @@ public class AgencyController {
     @GetMapping(name = " 에이전시 상세조회", value = "/{agencySeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Agency> findAgency(
-            @ApiParam(name = "agencySeq", value = "에이전시 시퀀스", defaultValue = "1", required = true) @PathVariable final Long agencySeq) {
+            @ApiParam(name = "agencySeq", value = "에이전시 시퀀스", defaultValue = "1", required = true) @PathVariable final Long agencySeq
+    ) {
         return  responseService.getSingleResult(agencyService.findByAgencySeq(agencySeq));
     }
 
     /**
      * Update agency single result.
      *
-     * @param agencyUpdateDTO the agency update dto
+     * @param agencySeq     the agency seq
+     * @param agencySaveDTO the agency save dto
+     * @param result        the result
      * @return the single result
      * @author [이소정]
+     * @implNote 에이전시 수정
      * @since 2020. 7. 20. 오후 2:16:42
-     * @apiNote 에이전시 수정
      */
     @ApiOperation(value = "에이전시 수정", notes = REQUEST_CHARACTER)
     @PutMapping(name = "에이전시 수정", value = "/{agencySeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public SingleResult<Agency> updateAgency(
             @ApiParam(name = "agencySeq", value = "에이전시 시퀀스", defaultValue = "1", required = true) @PathVariable final Long agencySeq,
-            @RequestBody final AgencyUpdateDTO agencyUpdateDTO
+            @RequestBody @Valid final AgencySaveDTO agencySaveDTO
+            , @ApiIgnore final BindingResult result
     ) {
-        agencyUpdateDTO.setAgencySeq(agencySeq);
-        return responseService.getSingleResult(agencyService.update(agencyUpdateDTO));
+        agencySaveDTO.setAgencySeq(agencySeq);
+        return responseService.getSingleResult(agencyService.update(agencySaveDTO));
     }
 
     /**
@@ -136,8 +146,8 @@ public class AgencyController {
      * @param agencySeq the agency seq
      * @return the single result
      * @author [이소정]
+     * @implNote 에이전시 삭제
      * @since 2020. 7. 20. 오후 2:21:32
-     * @apiNote 에이전시 삭제
      */
     @ApiOperation(value="에이전시 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "에이전시 삭제", value = "/{agencySeq}"

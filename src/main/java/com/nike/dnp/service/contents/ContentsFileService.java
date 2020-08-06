@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author [이소정]
  * @since 2020. 7. 13. 오후 5:42:58
- * @implNote
+ * @implNote 컨텐츠 파일 서비스
  */
 @Slf4j
 @Service
@@ -39,17 +39,17 @@ public class ContentsFileService {
      * @param contentsFileSearchDTO the contents file search dto
      * @return the list
      * @author [이소정]
+     * @implNote 콘텐츠 파일 페이징 처리 한 목록
      * @since 2020. 7. 13. 오후 6:01:00
-     * @implNote
      */
     public Page<ContentsFileResultDTO> findAllContentsFilePaging(final ContentsFileSearchDTO contentsFileSearchDTO) {
-
+        log.info("ContentsFileService.findAllContentsFilePaging");
         // QueryDsl 기능 이용
         return contentsFileRepository.findAllContentsFilePaging(
                 contentsFileSearchDTO,
                 PageRequest.of(contentsFileSearchDTO.getPage()
                 , contentsFileSearchDTO.getSize()
-                , contentsFileSearchDTO.getOrderType().equals(ServiceCode.SearchEnumCode.ORDER.toString())
-                        ? Sort.by("fileOrder").ascending() : Sort.by("fileName").ascending()));
+                , contentsFileSearchDTO.getOrderType().equals(ServiceCode.ContentsFileSearchCode.ORDER.toString())
+                        ? Sort.by(ServiceCode.ContentsFileSearchCode.ORDER.getValue()).ascending() : Sort.by(ServiceCode.ContentsFileSearchCode.FILE_NAME.getValue()).ascending()));
     }
 }

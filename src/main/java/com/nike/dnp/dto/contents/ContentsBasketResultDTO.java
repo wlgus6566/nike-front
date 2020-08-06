@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
  * The Class Contents basket result dto.
  *
  * @author [이소정]
+ * @implNote 콘텐츠 장바구니 결과 DTO
  * @since 2020. 7. 14. 오후 5:23:51
- * @implNote
  */
 @Getter
 @Setter
@@ -47,6 +47,7 @@ public class ContentsBasketResultDTO {
 
     /**
      * 파일 명
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "fileName", value = "파일 명", example = "graphic_file_name.jpg")
@@ -54,6 +55,7 @@ public class ContentsBasketResultDTO {
 
     /**
      * 파일 사이즈
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "fileSize", value = "파일 사이즈", example = "600")
@@ -61,6 +63,7 @@ public class ContentsBasketResultDTO {
 
     /**
      * 파일 물리 명
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명", example = "http://cdnUrl/file/contents/graphic_img.jpg")
@@ -68,6 +71,8 @@ public class ContentsBasketResultDTO {
 
     /**
      * The constant cdnUrl.
+     *
+     * @author [이소정]
      */
     @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
     private static String cdnUrl;

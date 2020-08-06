@@ -14,8 +14,7 @@ import java.util.List;
  *
  * @author [이소정]
  * @implNote Contents Repository Custom 작성
- * @history [이소정] [2020.06.11] [최초 작성]
- * @since 2020.06.11
+ * @since 2020.06.11 7. 30. 오후 3:22:29
  */
 @Repository
 public interface ReportRepositoryCustom {
@@ -23,12 +22,12 @@ public interface ReportRepositoryCustom {
     /**
      * Find page contents page.
      *
-     * @param reportSearchDTO the report search dto
+     * @param reportSearchDTO 보고서 검색 DTO
      * @param pageRequest     the page request
      * @return the page
      * @author [이소정]
+     * @implNote 보고서 페이지 처리 된 목록 조회
      * @since 2020. 6. 19. 오후 5:57:50
-     * @implNote
      */
     Page<Report> findPageReport(final ReportSearchDTO reportSearchDTO, final PageRequest pageRequest);
 
@@ -38,8 +37,8 @@ public interface ReportRepositoryCustom {
      * @param pageRequest the page request
      * @return the list
      * @author [이소정]
+     * @implNote 최근 보고서 조회
      * @since 2020. 7. 27. 오후 6:19:35
-     * @implNote
      */
     List<ReportResultDTO> findRecentReport(final PageRequest pageRequest);
 

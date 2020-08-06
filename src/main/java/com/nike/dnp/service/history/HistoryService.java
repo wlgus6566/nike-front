@@ -16,6 +16,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The Class History service.
  *
@@ -116,5 +119,50 @@ public class HistoryService {
             history.setContentsSeq(folderSeq);
         }
         return historyRepository.save(history);
+    }
+
+    /**
+     * Delete view history.
+     *
+     * @param folderSeq the folder seq
+     * @param typeCd    the type cd
+     * @author [이소정]
+     * @implNote 최근 본 목록 삭제
+     * @since 2020. 8. 5. 오후 3:14:15
+     */
+    public void deleteViewHistory(final Long folderSeq, final String typeCd) {
+        List<History> historyList;
+        if (ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(typeCd)) {
+            // 보고서 일 경우
+            historyList = historyRepository.findAllByReportSeq(folderSeq);
+        } else {
+            // 콘텐츠 일 경우
+            historyList = historyRepository.findAllByContentsSeq(folderSeq);
+        }
+
+        historyRepository.deleteAll(historyList);
+    }
+
+    /**
+     * Delete upload history.
+     *
+     * @param folderSeq the folder seq
+     * @param typeCd    the type cd
+     * @author [이소정]
+     * @implNote 최근 업로드 목록 삭제
+     * @since 2020. 8. 5. 오후 3:25:02
+     */
+    public void deleteUploadHistory(final Long folderSeq, final String typeCd) {
+        List<RecentUpload> recentUploadList;
+        if (ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(typeCd)) {
+            // 보고서 일 경우
+            recentUploadList = recentUploadRepository.findAllByReportSeq(folderSeq);
+        } else {
+            // 콘텐츠 일 경우
+            recentUploadList = recentUploadRepository.findAllByContentsSeq(folderSeq);
+        }
+
+        recentUploadRepository.deleteAll(recentUploadList);
+
     }
 }

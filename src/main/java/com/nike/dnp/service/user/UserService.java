@@ -54,7 +54,7 @@ public class UserService implements UserDetailsService {
      *
      * @author [오지훈]
      */
-    private final static String REGEX = "\\|";
+    private final static String REGEX = "NIKESPACE";
 
     /**
      * RedisService
@@ -279,11 +279,10 @@ public class UserService implements UserDetailsService {
         this.checkId(userSaveDTO.getUserId());
         final User user = userRepository.save(new User().save(userSaveDTO));
         if(user.getUserSeq() > 0) {
-            //userAuthRepository.save(new UserAuth().save(user, auth));
             userAuthRepository.save(UserAuth
                     .builder()
-                    .user(user)
-                    .auth(authService.getById(userSaveDTO.getAuthSeq()))
+                    .userSeq(user.getUserSeq())
+                    .authSeq(userSaveDTO.getAuthSeq())
                     .build());
         }
 
@@ -453,6 +452,13 @@ public class UserService implements UserDetailsService {
         final String userId = decodeCertCode.split(REGEX)[0];
         final String certKey = decodeCertCode.split(REGEX)[1];
         final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));
+
+        System.out.println("======================================================");
+        System.out.println("userId = " + userId);
+        System.out.println("certKey = " + certKey);
+        System.out.println("certCode = " + certCode);
+        System.out.println("======================================================");
+
         return this.checkCertCode(certCode, certKey);
     }
 
@@ -475,6 +481,11 @@ public class UserService implements UserDetailsService {
                     , MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
             );
         }
+
+        System.out.println("======================================================");
+        System.out.println("decodeCertCode = " + decodeCertCode);
+        System.out.println("======================================================");
+
         final String userId = decodeCertCode.split(REGEX)[0];
         final String certKey = decodeCertCode.split(REGEX)[1];
         final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));
@@ -493,6 +504,11 @@ public class UserService implements UserDetailsService {
                         .newPassword(newPassword)
                         .confirmPassword(confirmPassword)
                         .build());
+
+        System.out.println("======================================================");
+        System.out.println("newPassword = " + newPassword);
+        System.out.println("certPassword = " + certPassword);
+        System.out.println("======================================================");
 
         //비밀번호 업데이트
         user.updatePassword(certPassword);

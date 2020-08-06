@@ -1,6 +1,7 @@
 package com.nike.dnp.common.mail;
 
 import com.nike.dnp.dto.email.SendDTO;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
@@ -102,7 +103,7 @@ public class MailService {
             try {
                 field.setAccessible(true);
                 if (!ObjectUtils.isEmpty(field.get(sendDTO))
-                        && BasicVariable.String.name().equals(field.getType().getSimpleName())
+                        && BasicVariable.STRING.getValue().equals(field.getType().getSimpleName())
                         && file.contains("["+ field.getName() +"]")
                 ) {
                     result = result.replace("["+ field.getName() +"]", (String) field.get(sendDTO));
@@ -119,7 +120,16 @@ public class MailService {
      *
      * @author [오지훈]
      */
+    @Getter
+    @RequiredArgsConstructor
     public enum BasicVariable {
-        String
+        STRING("String");
+
+        /**
+         * The Value
+         *
+         * @author [오지훈]
+         */
+        private final String value;
     }
 }

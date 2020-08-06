@@ -162,12 +162,12 @@ public class FileUtil {
 		final String newFilepath = root + File.separator + folder;
 		final String newFileName = makeFileName() + "." + extension;
 		final File result = new File(newFilepath+File.separator+ newFileName);
-		if(result.isFile()){
+		new File(newFilepath).mkdirs();
+		return result;
+		/*if(result.isFile()){
 			return makeNewFile(folder,extension);
 		}else{
-			new File(newFilepath).mkdirs();
-			return result;
-		}
+		}*/
 	}
 
 	/**
