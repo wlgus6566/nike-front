@@ -52,6 +52,7 @@ export default {
                 const { data: response } = await sendEmail({
                     userId: this.userId,
                 });
+                console.log(response);
                 if (response.existMsg) {
                     alert(response.msg);
                 }

@@ -1,5 +1,5 @@
 <template>
-    <form action="#" @submit.prevent="certCodeFn">
+    <form action="#" @submit.prevent="$emit('login')">
         <div class="login-box">
             <strong class="title2"> E-MAIL 인증 </strong>
             <p class="desc">
@@ -9,7 +9,7 @@
             </p>
             <div class="form-box">
                 <div class="certified-box">
-                    <input type="txt" v-model="certCode" max="10" />
+                    <input type="txt" v-model="loginData.certCode" max="10" />
                 </div>
             </div>
             <div class="login-btn-wrap">
@@ -21,47 +21,12 @@
     </form>
 </template>
 <script>
-import { certCode } from '@/api/login';
 export default {
     name: 'certCode',
     data() {
-        return {
-            certCode: 'zt3]x@NI:8',
-        };
+        return {};
     },
-    props: ['username', 'password'],
-    methods: {
-        async certCodeFn() {
-            if (!this.certCode) {
-                alert('인증코드를 입력해 주세요.');
-                return;
-            }
-            try {
-                const bodyFormData = new FormData();
-                bodyFormData.append('username', this.username);
-                bodyFormData.append('password', this.password);
-                bodyFormData.append('certCode', this.certCode);
-                const { data: response } = await this.$store.dispatch(
-                    'LOGIN',
-                    bodyFormData
-                );
-                if (response.existMsg) {
-                    alert(response.data.msg);
-                }
-                if (response.code === 'SEND_EMAIL_CERT_CODE') {
-                    this.$emit('changeLoginBox', 'certCode');
-                } else if (response.code === 'TERMS_AGREEMENT') {
-                    await this.$router.push('/agree');
-                } else {
-                    await this.$router.push('/');
-                }
-                console.log(response);
-            } catch (error) {
-                console.log(error.response);
-                alert(error.response.data.msg);
-            }
-        },
-    },
+    props: ['loginData'],
 };
 </script>
 <style scoped>

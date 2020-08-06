@@ -1,5 +1,5 @@
 <template>
-    <form action="#" @submit.prevent="login">
+    <form action="#" @submit.prevent="$emit('login')">
         <div class="login-box">
             <strong class="title">
                 <em>WELCOM TO</em>
@@ -9,7 +9,7 @@
                 <div class="input-box">
                     <input
                         type="text"
-                        :value="username"
+                        :value="loginData.username"
                         @input="
                             $emit(
                                 'updateValue',
@@ -21,7 +21,7 @@
                     />
                     <input
                         type="password"
-                        :value="password"
+                        :value="loginData.password"
                         @input="
                             $emit(
                                 'updateValue',
@@ -53,43 +53,11 @@
 <script>
 export default {
     name: 'loginForm',
-    props: ['username', 'password'],
+    props: ['loginData'],
     data() {
         return {};
     },
-    methods: {
-        async login() {
-            if (!this.username) {
-                alert('아이디를 입력해 주세요.');
-                return;
-            }
-            if (!this.password) {
-                alert('비밀번호를 입력해 주세요.');
-                return;
-            }
-            try {
-                const bodyFormData = new FormData();
-                bodyFormData.append('username', this.username);
-                bodyFormData.append('password', this.password);
-                const response = await this.$store.dispatch(
-                    'LOGIN',
-                    bodyFormData
-                );
-                if (response.data.existMsg) {
-                    alert(response.data.msg);
-                }
-                if (response.data.code === 'SEND_EMAIL_CERT_CODE') {
-                    this.$emit('changeLoginBox', 'certCode');
-                } else {
-                    // await this.$router.push('/');
-                }
-                console.log(response);
-            } catch (error) {
-                console.log(error);
-                alert(error.response.data.msg);
-            }
-        },
-    },
+    methods: {},
 };
 </script>
 <style scoped>
