@@ -3,7 +3,9 @@
         <strong class="title">HISTORY</strong>
         <ul class="menu">
             <li>
-                <router-link to="/mypage/upload">내가 업로드한 폴더</router-link>
+                <router-link to="/mypage/upload"
+                    >내가 업로드한 폴더</router-link
+                >
             </li>
             <li>
                 <router-link to="/mypage/latest">최근 본 폴더</router-link>
@@ -27,7 +29,7 @@
                 <router-link to="/mypage/password">비밀번호 변경</router-link>
             </li>
             <li>
-                <router-link to="/mypage/logout">로그아웃</router-link>
+                <a href="#" @click.prevent="logout">로그아웃</a>
             </li>
         </ul>
         <strong class="title">CUSTOMER CENTER</strong>
@@ -46,9 +48,16 @@
 </template>
 <script>
 export default {
-    name: 'MypageMenu.vue',
+    name: 'MypageMenu',
+    methods: {
+        logout() {
+            this.$store.commit('LOGOUT');
+            this.$router.push('/login');
+        },
+    },
 };
 </script>
+
 <style scoped>
 .aside-menu {
     margin-top: 19px;

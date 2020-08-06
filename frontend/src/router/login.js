@@ -12,6 +12,7 @@ const routes = [
     },
     {
         path: '/agree',
+        name: 'agree',
         component: pages('login/agree'),
         meta: {
             layout: 'Clean',
