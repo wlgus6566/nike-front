@@ -144,7 +144,7 @@ public class OpenLoginController {
     @ValidField
     public SingleResult<UserResultDTO> changePassword (
             @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody
-            @Validated({ValidationGroups.class}) final UserCertDTO userCertDTO
+            @Validated({ValidationGroups.Group1.class, ValidationGroups.Group2.class, ValidationGroups.Group3.class}) final UserCertDTO userCertDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserOpenController.changePassword");
         return responseService.getSingleResult(

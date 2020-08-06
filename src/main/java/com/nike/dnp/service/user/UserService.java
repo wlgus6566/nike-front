@@ -481,6 +481,11 @@ public class UserService implements UserDetailsService {
                     , MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
             );
         }
+
+        System.out.println("======================================================");
+        System.out.println("decodeCertCode = " + decodeCertCode);
+        System.out.println("======================================================");
+
         final String userId = decodeCertCode.split(REGEX)[0];
         final String certKey = decodeCertCode.split(REGEX)[1];
         final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));

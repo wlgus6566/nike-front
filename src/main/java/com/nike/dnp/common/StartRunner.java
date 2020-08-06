@@ -33,6 +33,7 @@ public class StartRunner implements ApplicationRunner {
 
         //S3 init
         S3Util.init();
+        S3Util.GeneratePresignedURL();
     }
 
 }
