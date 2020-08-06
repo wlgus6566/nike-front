@@ -19,8 +19,8 @@
                             <div class="form-column">
                                 <span class="form-val">
                                     {{
-                                        orderDetailData.product.agency
-                                            .agencyName
+                                        orderDetailData.orderProductMapping[0]
+                                            .product.agency.agencyName
                                     }}
                                 </span>
                             </div>
@@ -31,7 +31,7 @@
                             </div>
                             <div class="form-column">
                                 <span class="form-val">
-                                    {{ orderDetailData.order.updateDt }}
+                                    {{ orderDetailData.registrationDt }}
                                 </span>
                             </div>
                         </li>
@@ -41,9 +41,7 @@
                             </div>
                             <div class="form-column">
                                 <span class="form-val">
-                                    <em>
-                                        {{ orderDetailData.order.totalAmount }}
-                                    </em>
+                                    <em>{{ orderDetailData.totalAmount }}</em>
                                     원
                                 </span>
                             </div>
@@ -55,56 +53,45 @@
                         세금계산서의 금액은 다를 수 있습니다.)
                     </p>
                     <el-scrollbar class="sheet-list-wrap" :native="false">
-                        <ul class="sheet-list" v-if="orderDetailData.product">
-                            <li class="sheet-item">
+                        <ul class="sheet-list">
+                            <li
+                                class="sheet-item"
+                                v-for="item in orderDetailData.orderProductMapping"
+                                :key="item.goodsSeq"
+                            >
                                 <span class="thumbnail">
                                     <img
                                         :src="
-                                            orderDetailData.product
-                                                .imageFilePhysicalName
+                                            item.product.imageFilePhysicalName
                                         "
-                                        :alt="
-                                            orderDetailData.product
-                                                .imageFileName
-                                        "
+                                        :alt="item.product.imageFileName"
                                     />
                                 </span>
                                 <span class="info-box">
                                     <strong class="title">
-                                        {{ orderDetailData.product.goodsName }}
+                                        {{ item.product.goodsName }}
                                     </strong>
                                     <p class="txt">
-                                        {{
-                                            orderDetailData.product
-                                                .goodsDescription
-                                        }}
+                                        {{ item.product.goodsDescription }}
                                     </p>
                                     <span class="desc-txt-box">
                                         <p class="desc">
-                                            {{
-                                                orderDetailData.product.agency
-                                                    .agencyName
-                                            }}
+                                            {{ item.product.agency.agencyName }}
                                         </p>
                                     </span>
                                 </span>
                                 <span class="quantity-txt">
                                     <!-- 주문수량  -->
-                                    <em>
-                                        {{
-                                            orderDetailData.product
-                                                .minimumOrderQuantity
-                                        }}
-                                    </em>
+                                    <em> {{ item.orderQuantity }}</em>
                                     개
                                 </span>
                             </li>
                         </ul>
                     </el-scrollbar>
-                    <div v-if="orderDetailData.order.orderDescription">
+                    <div>
                         <h3 class="sub-title">COMMENT</h3>
                         <div class="mt10">
-                            {{ orderDetailData.order.orderDescription }}
+                            {{ orderDetailData.orderDescription }}
                         </div>
                     </div>
                     <p class="form-desc-red">

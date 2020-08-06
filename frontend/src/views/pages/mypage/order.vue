@@ -185,7 +185,6 @@
                 const {
                     data: { data: response },
                 } = await getMyOrderDetail(seq);
-                console.log(response);
                 this.orderDetailData = response;
             } catch (error) {
                 console.log(error);

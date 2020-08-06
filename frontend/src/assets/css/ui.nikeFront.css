@@ -3355,7 +3355,7 @@
 .sheet-list-wrap {
     box-sizing: border-box;
     overflow: hidden;
-    height: 255px;
+    max-height: 255px;
     margin-top: 20px;
     border: 1px solid #ddd;
     background: #f7f7f7;

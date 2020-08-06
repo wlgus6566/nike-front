@@ -1,4 +1,4 @@
-import { myOrder } from './index';
+import {myOrder} from './index';
 
 // MYPAGE 주문내역
 function getMyOrder(params) {
@@ -7,8 +7,8 @@ function getMyOrder(params) {
     });
 }
 // MYPAGE 주문 상세 내역
-function getMyOrderDetail(orderGoodsSeq) {
-    return myOrder.get(`/${orderGoodsSeq}`);
+function getMyOrderDetail(orderSeq) {
+    return myOrder.get(`/${orderSeq}`);
 }
 
 //MYPAGE 주문내역 등록

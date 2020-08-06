@@ -8,7 +8,7 @@
             <button
                 type="button"
                 class="top"
-                @click="$emit('showOrderDetail', item.orderGoodsSeq)"
+                @click="$emit('showOrderDetail', item.orderSeq)"
             >
                 <strong class="num">
                     주문일 : {{ item.registrationDt }}
@@ -26,7 +26,10 @@
                 </span>
                 <span class="info-box">
                     <strong class="title">
-                        {{ item.product.goodsName }}외 4개
+                        {{ item.orderProductMapping[0].product.goodsName }}
+                        <span v-if="item.orderProductMapping.length - 1 !== 0">
+                            외 {{ item.orderProductMapping.length - 1 }}개
+                        </span>
                     </strong>
                 </span>
             </div>
@@ -36,7 +39,10 @@
 
 <script>
 export default {
+    name: 'order-list',
     props: ['orderList', 'orderDetail'],
+    mounted() {},
+    computed: {},
     methods: {},
 };
 </script>

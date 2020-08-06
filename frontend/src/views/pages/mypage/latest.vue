@@ -14,11 +14,11 @@
                 :folderListData="historyFolderData"
             />
             <template v-else>
+                <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
                 <NoData v-else>
                     <i class="icon-file"></i>
                     <p class="desc">최근 본 폴더가 없습니다.</p>
                 </NoData>
-                <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
             </template>
         </template>
     </div>

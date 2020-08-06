@@ -181,6 +181,7 @@
                     orderQuantityList: this.orderQuan,
                     totalAmount: this.totalPrice,
                 });
+                console.log(response);
                 if (response.existMsg) {
                     await getExistMsg(response);
                 } else {
