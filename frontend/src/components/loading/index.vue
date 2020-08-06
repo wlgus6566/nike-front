@@ -1,27 +1,9 @@
 <template>
-    <div class="loading">
-        <lottie
-            :options="defaultOptions"
-            :height="400"
-            :width="400"
-            @animCreated="handleAnimation"
-        />
-        <div>
-            <p>Speed: x{{ animationSpeed }}</p>
-            <input
-                type="range"
-                value="1"
-                min="0"
-                max="3"
-                step="0.5"
-                v-on:change="onSpeedChange"
-                v-model="animationSpeed"
-            />
-        </div>
-        <button v-on:click="stop">stop</button>
-        <button v-on:click="pause">pause</button>
-        <button v-on:click="play">play</button>
-    </div>
+    <lottie
+        class="loading"
+        :options="defaultOptions"
+        @animCreated="handleAnimation"
+    />
 </template>
 <script>
 import Lottie from '@/components/lottie';

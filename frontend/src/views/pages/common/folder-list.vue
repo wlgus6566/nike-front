@@ -23,11 +23,14 @@
                 :folderListData="folderListData"
             />
             <template v-else>
-                <NoData v-if="searchKeyword === ''">
+                <NoData
+                    :style="{ height: '500px' }"
+                    v-if="searchKeyword === ''"
+                >
                     <i class="icon-file"></i>
                     <p class="desc">업로드한 폴더가 없습니다.</p>
                 </NoData>
-                <NoData v-else>
+                <NoData v-else :style="{ height: '500px' }">
                     <i class="icon-search"></i>
                     <p class="desc">검색 결과가 없습니다.</p>
                 </NoData>
@@ -37,16 +40,16 @@
     </div>
 </template>
 <script>
-    import FilterSelect from '@/components/filter-select';
-    import ListSorting from '@/components/list-sorting/index';
-    import SearchInput from '@/components/search-input';
-    import FolderList from '@/components/folder-list';
-    import Loading from '@/components/loading';
-    import NoData from '@/components/no-data';
+import FilterSelect from '@/components/filter-select';
+import ListSorting from '@/components/list-sorting/index';
+import SearchInput from '@/components/search-input';
+import FolderList from '@/components/folder-list';
+import Loading from '@/components/loading';
+import NoData from '@/components/no-data';
 
-    import {getContents} from '@/api/contents.js';
+import { getContents } from '@/api/contents.js';
 
-    export default {
+export default {
     name: 'folder-list',
     watch: {
         'listSortSelect.value'() {
@@ -110,14 +113,12 @@
     },
     methods: {
         handleScroll() {
-            console.log(1);
             if (this.loadingData) return;
             const windowE = document.documentElement;
             if (
                 windowE.clientHeight + windowE.scrollTop >=
                 windowE.scrollHeight
             ) {
-                console.log(2);
                 this.infiniteScroll();
             }
         },
@@ -161,7 +162,6 @@
                         orderType: this.listSortSelect.value,
                     }
                 );
-
                 this.totalPage = response.totalPages - 1;
                 if (infinite) {
                     if (this.totalPage > this.page - 1) {
@@ -186,6 +186,11 @@
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
+        if (this.$store.state.reload) {
+            console.log(123);
+            this.initFetchData();
+            this.$store.commit('SET_RELOAD', false);
+        }
         window.addEventListener('scroll', this.handleScroll);
     },
     deactivated() {

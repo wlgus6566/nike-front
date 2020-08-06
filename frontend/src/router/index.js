@@ -40,22 +40,37 @@ const router = new VueRouter({
         ...ErrorRoutes,
         ...PubRoutes,
     ],
+    scrollBehavior(to, from, savedPosition) {
+        let position = { x: 0, y: 0 };
+
+        if (savedPosition) {
+            position = savedPosition;
+        }
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(position);
+                console.log(position);
+            }, 310);
+        });
+    },
 });
 
 router.beforeEach((to, from, next) => {
-    /*if (to.meta.unauthorized) {
-        if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
+    if (to.meta.unauthorized) {
+        next();
+        /*if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
             next('/');
         } else {
             next();
-        }
+        }*/
     } else {
         if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
             next();
         } else {
             next('/login');
         }
-    }*/
+    }
     next();
 });
 export default router;

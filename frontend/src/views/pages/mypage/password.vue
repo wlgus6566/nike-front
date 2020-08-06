@@ -86,9 +86,9 @@
 </template>
 
 <script>
-    import {changePassword} from '@/api/mypage';
+import { changePassword } from '@/api/my-page';
 
-    export default {
+export default {
     data() {
         return {
             password: '',

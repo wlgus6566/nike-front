@@ -8,20 +8,22 @@ import { getContentsBasket } from '@/api/contents';
 import {
     deleteCookie,
     getAuthFromCookie,
-    saveUserToCookie,
     saveAuthToCookie,
+    saveUserNickToCookie,
+    saveUserIdToCookie,
 } from '@/utils/cookies.js';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
-        user: {},
+        user: '',
+        nick: '',
         token: '',
         basketItemDrag: false,
         fileMouseenter: false,
         basketListData: null,
         goodsBasketSeq: '',
-        contBasketList: null,
+        contBasketList: [],
     },
     getters: {
         basketAppendCheck(state) {
@@ -38,9 +40,13 @@ export default new Vuex.Store({
         SET_USER(state, user) {
             state.user = user;
         },
+        SET_NICK(state, nick) {
+            state.nick = nick;
+        },
         SET_TOKEN(state, token) {
             state.token = token;
         },
+
         SET_BASKET(state, basketList) {
             state.basketListData = basketList;
         },
@@ -48,10 +54,17 @@ export default new Vuex.Store({
             state.goodsBasketSeq = goodsBasketSeq;
         },
         LOGOUT(state) {
-            state.user = null;
-            state.token = null;
-            deleteCookie('nike_token');
-            //deleteCookie('nike_user');
+            state.user = '';
+            state.nick = '';
+            state.token = '';
+            state.basketItemDrag = false;
+            state.fileMouseenter = false;
+            state.basketListData = null;
+            state.goodsBasketSeq = '';
+            state.contBasketList = [];
+            deleteCookie('user_id');
+            deleteCookie('user_nick');
+            deleteCookie('user_token');
         },
         SET_CONT_BASKET(state, data) {
             state.contBasketList = data;
@@ -66,10 +79,15 @@ export default new Vuex.Store({
     actions: {
         async LOGIN({ commit }, data) {
             const response = await loginUser(data);
-            commit('SET_USER', response.headers.username);
-            saveUserToCookie(response.headers.username);
-            commit('SET_TOKEN', response.headers.authorization);
-            saveAuthToCookie(response.headers.authorization);
+            console.log(response);
+            if (response.data.code === 'SUCCESS') {
+                commit('SET_USER', response.data.data.userId);
+                commit('SET_NICK', response.data.data.nickname);
+                commit('SET_TOKEN', response.headers.authorization);
+                saveUserIdToCookie(response.data.data.userId);
+                saveUserNickToCookie(response.data.data.nickname);
+                saveAuthToCookie(response.headers.authorization);
+            }
             return response;
         },
 

@@ -23,7 +23,7 @@
                 </NoData>
             </template>
         </template>
-        <Loading v-if="loadingData" />
+        <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
         <detailView
             :visible.sync="visible.detailView"
             :productDetailData="productDetailData"
@@ -56,6 +56,12 @@
                 exposureYn: '',
             },
             loadingData: false,
+            loadingStyle: {
+                width: this.width ? `${this.width}px` : '100%',
+                height: this.height ? `${this.height}px` : '100%',
+                overflow: 'hidden',
+                margin: '0 auto',
+            },
             totalPage: null,
             page: 0,
             itemLength: 20,
@@ -87,7 +93,7 @@
         detailView,
     },
     mounted() {
-        this.initGetUserProduct();
+        //this.initGetUserProduct();
         this.getWishiList();
     },
     methods: {
@@ -98,7 +104,6 @@
                 windowE.clientHeight + windowE.scrollTop >=
                 windowE.scrollHeight
             ) {
-                console.log(2);
                 this.infiniteScroll();
             }
         },
@@ -128,6 +133,7 @@
 
         // 상품 리스트 api
         async getUserProduct(infinite) {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },

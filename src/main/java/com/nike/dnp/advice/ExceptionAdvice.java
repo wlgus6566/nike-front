@@ -25,8 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author [이소정]
  * @implNote Global Exception Handler 작성
- * @history [이소정] [2020.06.03] [최초 작성]
- * @since 2020.06.03
+ * @since 2020.06.03 7. 30. 오후 4:00:37
  */
 @Slf4j
 @RestControllerAdvice
@@ -35,6 +34,7 @@ public class ExceptionAdvice {
 
     /**
      * ResponseService
+     *
      * @author [이소정]
      */
     private final ResponseService responseService;
@@ -52,6 +52,8 @@ public class ExceptionAdvice {
      * @param exception the exception
      * @return 상태값 : 200, 코드, 메세지
      * @author [이소정]
+     * @implNote CodeMessageHandleException 에 대한 response셋팅
+     * @since 2020. 7. 30. 오후 4:00:37
      */
     @ExceptionHandler(CodeMessageHandleException.class)
     @ResponseBody
@@ -79,6 +81,8 @@ public class ExceptionAdvice {
      * @param exception the e
      * @return the common result
      * @author [이소정]
+     * @implNote 정의 된 오류 외의 excpetion
+     * @since 2020. 7. 30. 오후 4:00:38
      */
     @ExceptionHandler({Exception.class})
     @ResponseBody

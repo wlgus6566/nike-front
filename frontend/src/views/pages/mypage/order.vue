@@ -41,7 +41,7 @@
             @showOrderDetail="showOrderDetail"
         />
         <OrderSheet
-            v-if="orderList"
+            v-if="orderDetailData"
             :visible.sync="visible.orderSheet"
             :orderDetailData="orderDetailData"
         />
@@ -86,6 +86,7 @@
             visible: {
                 orderSheet: false,
             },
+            today: new Date(),
         };
     },
     activated() {
@@ -100,9 +101,7 @@
             deep: true,
             handler(val) {
                 if (val.beginDt && val.endDt) {
-                    console.log(val.beginDt);
-                    console.log(val.endDt);
-                    console.log('실행');
+                    // console.log('실행');
                     this.fetchData();
                 }
             },
@@ -118,14 +117,13 @@
                 day = `0${day}`;
             }
             this.make.beginDt = `${year}-${month}-${day}`;
-            if (
-                Number(this.make.beginDt.replace(/-/gi, '')) >
-                Number(this.make.endDt.replace(/-/gi, ''))
-            ) {
-                alert('시작일이 종료일보다 클 수 없습니다.');
-                this.range.beginDt = this.range.endDt;
-            } else {
-                this.make.beginDt = `${year}-${month}-${day}`;
+            if (this.make.endDt !== null) {
+                const begin = Number(this.make.beginDt.replace(/-/gi, ''));
+                const end = Number(this.make.endDt.replace(/-/gi, ''));
+                if (begin > end) {
+                    alert('시작일이 종료일보다 클 수 없습니다.');
+                    this.range.endDt = this.today;
+                }
             }
         },
         'range.endDt'(val) {
@@ -138,15 +136,14 @@
             if (day < 10) {
                 day = `0${day}`;
             }
-            this.make.endDt = `${year}-${month}-${day}`; //2020-07-08
-            if (
-                Number(this.make.beginDt.replace(/-/gi, '')) >
-                Number(this.make.endDt.replace(/-/gi, ''))
-            ) {
-                alert('시작일이 종료일보다 클 수 없습니다.');
-                this.range.endDt = this.range.beginDt;
-            } else {
-                this.make.endDt = `${year}-${month}-${day}`;
+            this.make.endDt = `${year}-${month}-${day}`;
+            if (this.make.beginDt !== null) {
+                const begin = Number(this.make.beginDt.replace(/-/gi, ''));
+                const end = Number(this.make.endDt.replace(/-/gi, ''));
+                if (begin > end) {
+                    alert('시작일이 종료일보다 클 수 없습니다.');
+                    this.range.endDt = this.today;
+                }
             }
         },
     },
@@ -185,7 +182,6 @@
                 const {
                     data: { data: response },
                 } = await getMyOrderDetail(seq);
-                console.log(response);
                 this.orderDetailData = response;
             } catch (error) {
                 console.log(error);

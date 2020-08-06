@@ -1,24 +1,20 @@
-import axios from 'axios';
-import {setInterceptors} from '@/api/config/interceptors';
-
-const apiWishList = axios.create({ baseURL: '/api/wishlist', timeout: 3000 });
-setInterceptors(apiWishList);
+import { wishList } from './index';
 
 function getWishList(params) {
-    return apiWishList.get(`/list`, {
+    return wishList.get(`/list`, {
         params: params,
     });
 }
 function postWishList(params) {
-    return apiWishList.post(`/save`, null, {
+    return wishList.post(`/save`, null, {
         params: params,
     });
 }
 function deleteWishList(seq) {
-    return apiWishList.delete(`/delete/${seq}`);
+    return wishList.delete(`/delete/${seq}`);
 }
 function deleteWishListCheck(data) {
-    return apiWishList.delete(`/delete/`, { data });
+    return wishList.delete(`/delete/`, { data });
 }
 
 export { getWishList, postWishList, deleteWishList, deleteWishListCheck };

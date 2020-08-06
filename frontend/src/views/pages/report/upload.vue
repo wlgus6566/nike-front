@@ -3,7 +3,7 @@
         <h2 class="page-title">
             {{ this.$route.meta.title }}
         </h2>
-        <h3 class="form-title">폴더 설정</h3>
+        <h3 class="form-title mt20">폴더 설정</h3>
         <hr class="hr-black" />
         <ul class="form-list-thumb">
             <li class="form-row thumb-row">

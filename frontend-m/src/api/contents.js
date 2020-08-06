@@ -1,4 +1,4 @@
-import { apiContents } from './index';
+import { contents } from './index';
 
 /**
  * 컨텐츠 목록 조회
@@ -8,7 +8,7 @@ import { apiContents } from './index';
  * @returns {Promise<AxiosResponse<any>>}
  */
 function getContents(topMenuCode, menuCode, params) {
-    return apiContents.get(`/${topMenuCode}/${menuCode}/`, {
+    return contents.get(`/${topMenuCode}/${menuCode}/`, {
         params: params,
     });
 }
@@ -20,35 +20,35 @@ function getContents(topMenuCode, menuCode, params) {
  * @param {number} contentsSeq 컨텐츠 시컨스
  */
 function getContentsView(topMenuCode, menuCode, contentsSeq) {
-    return apiContents.get(`/${topMenuCode}/${menuCode}/${contentsSeq}`);
+    return contents.get(`/${topMenuCode}/${menuCode}/${contentsSeq}`);
 }
 function getContentsViewFile(topMenuCode, menuCode, contentsSeq, params) {
-    return apiContents.get(`/${topMenuCode}/${menuCode}/${contentsSeq}/file`, {
+    return contents.get(`/${topMenuCode}/${menuCode}/${contentsSeq}/file`, {
         params: params,
     });
 }
 
 function postContents(topMenuCode, menuCode, data) {
-    return apiContents.post(`/${topMenuCode}/${menuCode}`, data);
+    return contents.post(`/${topMenuCode}/${menuCode}`, data);
 }
 function putContents(topMenuCode, menuCode, data) {
-    return apiContents.post(`/${topMenuCode}/${menuCode}`, data);
+    return contents.post(`/${topMenuCode}/${menuCode}`, data);
 }
 function deleteContents(topMenuCode, menuCode, contentsSeq) {
-    return apiContents.delete(`/${topMenuCode}/${menuCode}/${contentsSeq}`);
+    return contents.delete(`/${topMenuCode}/${menuCode}/${contentsSeq}`);
 }
 
 // 컨텐츠 장바구니 목록 조회
 function getContentsBasket() {
-    return apiContents.get('/basket/');
+    return contents.get('/basket/');
 }
 // 컨텐츠 장바구니 등록
 function addContentsBasket(topMenuCode, menuCode, data) {
-    return apiContents.post(`/basket/${topMenuCode}/${menuCode}`, data);
+    return contents.post(`/basket/${topMenuCode}/${menuCode}`, data);
 }
 // 컨텐츠 장바구니 삭제
 function delContentsBasket(contentsBasketSeq) {
-    return apiContents.delete(`/basket/${contentsBasketSeq}`);
+    return contents.delete(`/basket/${contentsBasketSeq}`);
 }
 
 export {

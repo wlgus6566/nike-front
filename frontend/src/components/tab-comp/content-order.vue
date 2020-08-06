@@ -1,6 +1,10 @@
 <template>
     <div class="aside-order">
-        <el-scrollbar class="cart-item-wrap" :native="false">
+        <el-scrollbar
+            class="cart-list-scroll"
+            wrap-class="cart-list-wrap"
+            :native="false"
+        >
             <template v-if="basketList">
                 <transition-group
                     tag="ul"
@@ -76,7 +80,6 @@
             :visible.sync="visible.orderSheet"
             :basketList="basketList"
             :totalPrice="totalPrice"
-            :orderData="orderData"
             @orderSave="orderSave"
         />
     </div>
@@ -96,9 +99,8 @@
             visible: {
                 orderSheet: false,
             },
-            orderData: '',
-            orderSeq: '',
-            orderQuan: '',
+            orderSeq: [],
+            orderQuan: [],
         };
     },
     components: {
@@ -134,22 +136,6 @@
     methods: {
         showOrderSheet() {
             this.visible.orderSheet = true;
-            let today = new Date();
-            let yyyy = today.getFullYear();
-            let mm = today.getMonth() + 1; //January is 0!
-            let dd = today.getDate();
-            let hor = today.getHours();
-            let min = today.getMinutes();
-            let sec = today.getSeconds();
-            if (dd < 10) {
-                dd = '0' + dd;
-            }
-            if (mm < 10) {
-                mm = '0' + mm;
-            }
-            this.orderData =
-                yyyy + '.' + mm + '.' + dd + ' ' + hor + ':' + min + ':' + sec;
-
             this.orderSeq = this.basketList.map((el) => {
                 return el.goodsSeq;
             });
@@ -174,6 +160,14 @@
 
         // 주문서 발송
         async orderSave(orderComment) {
+            console.log(this.orderSeq);
+            console.log(this.orderQuan);
+            console.log({
+                goodsSeqList: this.orderSeq,
+                orderDescription: orderComment,
+                orderQuantityList: this.orderQuan,
+                totalAmount: this.totalPrice,
+            });
             try {
                 const { data: response } = await postOrderSave({
                     goodsSeqList: this.orderSeq,
@@ -181,11 +175,11 @@
                     orderQuantityList: this.orderQuan,
                     totalAmount: this.totalPrice,
                 });
+                console.log(response);
                 if (response.existMsg) {
                     await getExistMsg(response);
                 } else {
                     this.visible.orderSheet = false;
-                    //todo 장바구니 다건 삭제 추가
                     await this.$router.push('/order/complete');
                 }
             } catch (error) {
@@ -200,14 +194,16 @@
     margin-top: 15px;
     overflow: hidden;
 }
-
-.cart-item-wrap {
-    box-sizing: border-box;
+.cart-list-scroll {
     height: 360px;
-    background: #eee;
-    overflow: hidden;
 }
-
+::v-deep .cart-list-wrap {
+    box-sizing: border-box;
+    background: #eee;
+}
+.cart-item-list {
+    padding: 8px 18px;
+}
 .cart-item {
     position: relative;
     box-sizing: border-box;

@@ -1,6 +1,5 @@
 package com.nike.dnp.util;
 
-import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 import java.util.regex.Matcher;
@@ -14,7 +13,6 @@ import java.util.regex.Pattern;
  * @implNote 이메일 정규식
  */
 @UtilityClass
-@NoArgsConstructor
 public class EmailPatternUtil {
 
     /**

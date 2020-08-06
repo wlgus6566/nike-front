@@ -1,16 +1,17 @@
 package com.nike.dnp.controller.report;
 
+import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
-import com.nike.dnp.dto.report.ReportUpdateDTO;
 import com.nike.dnp.entity.report.Report;
+import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.report.ReportService;
+import com.nike.dnp.util.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -18,10 +19,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -29,8 +31,8 @@ import java.util.List;
  * The Class Report controller.
  *
  * @author [이소정]
+ * @implNote 보고서 컨트롤러
  * @since 2020. 7. 7. 오후 2:37:43
- * @apiNote 보고서 컨트롤러
  */
 @Slf4j
 @RestController
@@ -41,6 +43,7 @@ public class ReportController {
 
     /**
      * 응답 서비스
+     *
      * @author [이소정]
      */
     private final ResponseService responseService;
@@ -48,6 +51,7 @@ public class ReportController {
 
     /**
      * The Report service
+     *
      * @author [이소정]
      */
     private final ReportService reportService;
@@ -70,12 +74,10 @@ public class ReportController {
      * Find all reports single result.
      *
      * @param reportSearchDTO the report search dto
-     * @param authUserDTO     the auth user dto
      * @return the single result
      * @author [이소정]
-     * @implNote [method 설명]
+     * @implNote 보고서 목록 조회
      * @since 2020. 7. 29. 오후 6:47:30
-     * @apiNote 보고서 목록 조회
      */
     @ApiOperation(
         value = "보고서 목록 조회"
@@ -99,11 +101,10 @@ public class ReportController {
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 목록 조회")
     public SingleResult<Page<Report>> findAllReports(
-            final ReportSearchDTO reportSearchDTO,
-            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
+            final ReportSearchDTO reportSearchDTO
     ) {
         log.info("ReportController.findAllReports");
-        return responseService.getSingleResult(reportService.findAllPaging(authUserDTO, reportSearchDTO));
+        return responseService.getSingleResult(reportService.findAllPaging(reportSearchDTO));
     }
 
 
@@ -113,20 +114,21 @@ public class ReportController {
      * @param reportSaveDTO the report save dto
      * @return the single result
      * @author [이소정]
+     * @implNote 보고서 등록
      * @since 2020. 7. 8. 오후 5:48:17
-     * @apiNote 보고서 등록
      */
     @ApiOperation(
             value = "보고서 등록"
             , notes = REQUEST_CHARACTER
     )
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 등록")
+    @ValidField
     public SingleResult<Report> saveReport(
-            @RequestBody final ReportSaveDTO reportSaveDTO,
-            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
+            @RequestBody @Valid final ReportSaveDTO reportSaveDTO
+            , @ApiIgnore final BindingResult result
     ) {
         log.info("ReportController.saveReport");
-        return responseService.getSingleResult(reportService.save(authUserDTO, reportSaveDTO));
+        return responseService.getSingleResult(reportService.save(reportSaveDTO));
     }
 
     /**
@@ -135,8 +137,7 @@ public class ReportController {
      * @param reportSeq the report seq
      * @return the single result
      * @author [이소정]
-     * @implNote [method 설명]
-     * @apiNote 보고서 등록
+     * @implNote 보고서 상세조회
      * @since 2020. 7. 29. 오후 6:47:56
      */
     @ApiOperation(
@@ -146,7 +147,8 @@ public class ReportController {
     @GetMapping(name = " 보고서 상세조회", value = "/{reportSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Report> findReport(
-            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq) {
+            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq
+    ) {
         log.info("ReportController.findReport");
         return responseService.getSingleResult(reportService.findByReportSeq(reportSeq));
     }
@@ -154,21 +156,25 @@ public class ReportController {
     /**
      * Update report single result.
      *
-     * @param reportUpdateDTO the report update dto
+     * @param reportSaveDTO the report save dto
+     * @param reportSeq     the report seq
+     * @param result        the result
      * @return the single result
      * @author [이소정]
+     * @implNote 보고서 수정
      * @since 2020. 7. 9. 오후 6:18:36
-     * @apiNote 보고서 수정
      */
     @ApiOperation(value = "보고서 수정", notes = REQUEST_CHARACTER)
     @PutMapping(name = "보고서 수정", value = "/{reportSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public SingleResult<Report> updateReport(
-            @ApiParam(name="reportUpdateDTO", value = "보고서 수정 Json") @RequestBody final ReportUpdateDTO reportUpdateDTO,
+            @ApiParam(name="reportUpdateDTO", value = "보고서 수정 Json") @RequestBody @Valid final ReportSaveDTO reportSaveDTO,
             @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq
+            , @ApiIgnore final BindingResult result
     ) {
-        reportUpdateDTO.setReportSeq(reportSeq);
-        return responseService.getSingleResult(reportService.update(reportUpdateDTO));
+        reportSaveDTO.setReportSeq(reportSeq);
+        return responseService.getSingleResult(reportService.update(reportSaveDTO));
     }
 
     /**
@@ -177,14 +183,15 @@ public class ReportController {
      * @param reportSeq the report seq
      * @return the single result
      * @author [이소정]
+     * @implNote 보고서 삭제
      * @since 2020. 7. 9. 오후 6:18:40
-     * @apiNote 보고서 삭제
      */
     @ApiOperation(value="보고서 삭제", notes = REQUEST_CHARACTER)
     @DeleteMapping(name = "보고서 삭제", value = "/{reportSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Report> deleteReport(
-            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq) {
+            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq
+    ) {
         log.info("ReportController.deleteReport");
         return responseService.getSingleResult(reportService.delete(reportSeq));
     }
@@ -192,11 +199,10 @@ public class ReportController {
     /**
      * Find by auth depth single result.
      *
-     * @param authUserDTO the auth user dto
      * @return the single result
      * @author [오지훈]
+     * @implNote 그룹(권한) depth별 목록 조회
      * @since 2020. 7. 21. 오후 5:14:14
-     * @apiNote 그룹(권한) depth별 목록 조회
      */
     @ApiOperation(
             value = "보고서 그룹(권한) depth별 목록 조회"
@@ -204,12 +210,27 @@ public class ReportController {
     )
     @GetMapping(name = "그룹 목록 조회", value = "/groupList"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<AuthReturnDTO>> findByAuthDepth(
-            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
-    ) {
+    public SingleResult<List<AuthReturnDTO>> findByAuthDepth() {
         log.info("AuthController.findByAuthDepth");
         return responseService.getSingleResult(
-                authService.findByAuthDepth(authUserDTO.getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString()));
+                authService.findByAuthDepth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString()));
+    }
+
+    /**
+     * 보고서 파일 다운로드
+     *
+     * @return the string
+     * @author [이소정]
+     * @implNote 보고서 파일 다운로드
+     * @since 2020. 7. 15. 오후 6:30:45
+     */
+    @ApiOperation(value = "보고서 파일 다운로드", notes = REQUEST_CHARACTER)
+    @PostMapping(name = "보고서 파일 다운로드", value = "/download/{reportFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public CommonResult downloadFile(
+            @ApiParam(name="reportFileSeq", value = "보고서 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long reportFileSeq
+    ) {
+        responseService.getSingleResult(reportService.downloadFile(reportFileSeq));
+        return responseService.getSuccessResult();
     }
 }
 

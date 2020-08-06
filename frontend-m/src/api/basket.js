@@ -1,26 +1,26 @@
 import axios from 'axios';
 import { setInterceptors } from '@/api/config/interceptors';
 
-const apiBasket = axios.create({ baseURL: '/api/goodsBasket', timeout: 3000 });
-setInterceptors(apiBasket);
+const basket = axios.create({ baseURL: '/api/goodsBasket', timeout: 3000 });
+setInterceptors(basket);
 
 // 장바구니 리스트
 function getBasketList(params) {
-    return apiBasket.get(`/list`, {
+    return basket.get(`/list`, {
         params: params,
     });
 }
 // 장바구니 등록 및 수정
 function postBasketSave(data) {
-    return apiBasket.post(`/save`, data);
+    return basket.post(`/save`, data);
 }
 // 장바구니 다건 등록 및 수정
 function postBasketSaveList(data) {
-    return apiBasket.post(`/saveList`, data);
+    return basket.post(`/saveList`, data);
 }
 // 장바구니 삭제
 function deleteBasket(goodsBasketSeq) {
-    return apiBasket.delete(`/${goodsBasketSeq}`);
+    return basket.delete(`/${goodsBasketSeq}`);
 }
 
 export { getBasketList, postBasketSave, postBasketSaveList, deleteBasket };

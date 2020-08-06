@@ -8,6 +8,7 @@
                 <span class="desc">HELLO!</span>
                 <strong class="name">
                     <em>
+                        <!-- //todo login 정보  nickname null ->
                         {{ userData.nickname }}
                     </em>
                     님
@@ -35,9 +36,9 @@
 </template>
 
 <script>
-    import {getMyInfo} from '@/api/mypage';
+import { getMyInfo } from '@/api/my-page';
 
-    export default {
+export default {
     data() {
         return {
             userData: null,
@@ -45,7 +46,7 @@
             num: 0,
         };
     },
-    mounted() {
+    created() {
         this.fetchData();
     },
     computed: {

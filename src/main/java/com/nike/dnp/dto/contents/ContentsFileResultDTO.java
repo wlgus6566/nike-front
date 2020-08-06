@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
  * The Class Contents list dto.
  *
  * @author [이소정]
- * @since 2020. 7. 13. 오후 2:52:03
  * @implNote 컨텐츠 파일 결과 DTO
+ * @since 2020. 7. 13. 오후 2:52:03
  */
 @Getter
 @Setter
@@ -22,6 +22,7 @@ public class ContentsFileResultDTO {
 
     /**
      * 컨텐츠 파일 시퀀스
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "contentsFileSeq", value = "컨텐츠 파일 시퀀스")
@@ -29,6 +30,7 @@ public class ContentsFileResultDTO {
 
     /**
      * 컨텐츠 시퀀스
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스")
@@ -36,6 +38,7 @@ public class ContentsFileResultDTO {
 
     /**
      * 파일 구분 공통코드
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드 (ASSET/GUIDE/VIDEO)", required = true)
@@ -43,6 +46,7 @@ public class ContentsFileResultDTO {
 
     /**
      * 파일 종류 공통코드
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드(FILE/VIDEO/VR)", required = true)
@@ -50,13 +54,15 @@ public class ContentsFileResultDTO {
 
     /**
      * 타이틀
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "title", value = "타이틀")
     private String title;
 
-    /**e
+    /**
      * url
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "url", value = "url")
@@ -64,6 +70,7 @@ public class ContentsFileResultDTO {
 
     /**
      * 파일 순서
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "fileOrder", value = "파일 순서", example = "1", required = true)
@@ -71,6 +78,7 @@ public class ContentsFileResultDTO {
 
     /**
      * 썸네일 파일 물리 명
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "thumbnailFileName", value = "썸네일 명", example = "graphic_file_name_thumbnail.jpg")
@@ -78,6 +86,7 @@ public class ContentsFileResultDTO {
 
     /**
      * 썸네일 파일 물리 명
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "thumbnailFileSize", value = "썸네일 파일 사이즈", example = "300")
@@ -85,6 +94,7 @@ public class ContentsFileResultDTO {
 
     /**
      * 썸네일 파일 물리 명
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_thumbnail.jpg")
@@ -108,6 +118,8 @@ public class ContentsFileResultDTO {
 
     /**
      * The constant cdnUrl.
+     *
+     * @author [이소정]
      */
     @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
     private static String cdnUrl;
@@ -116,12 +128,23 @@ public class ContentsFileResultDTO {
      * Sets cdn url.
      *
      * @param cdnUrl the cdn url
+     * @author [이소정]
+     * @implNote cdnUrl 셋팅
+     * @since 2020. 7. 30. 오후 3:43:38
      */
     @Value("${nike.file.cdnUrl:}")
     public void setCdnUrl(final String cdnUrl) {
         this.cdnUrl = cdnUrl;
     }
 
+    /**
+     * Gets thumbnail file physical name.
+     *
+     * @return the thumbnail file physical name
+     * @author [이소정]
+     * @implNote cndUrl + thumbnailFilePhysicalName
+     * @since 2020. 7. 30. 오후 3:43:38
+     */
     public String getThumbnailFilePhysicalName() {
         return this.cdnUrl + thumbnailFilePhysicalName;
     }

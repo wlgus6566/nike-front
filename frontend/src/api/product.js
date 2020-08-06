@@ -1,25 +1,21 @@
-import axios from 'axios';
-import {setInterceptors} from '@/api/config/interceptors';
-
-const apiProduct = axios.create({ baseURL: '/api/product', timeout: 3000 });
-setInterceptors(apiProduct);
+import {product} from './index';
 
 // PRODUCT 목록 조회
 function getProductList(params) {
-    return apiProduct.get(`/list`, {
+    return product.get(`/list`, {
         params: params,
     });
 }
 
 // PRODUCT 목록 유저 조회
 function getUserProductList(category2Code, params) {
-    return apiProduct.get(`/${category2Code}/list`, {
+    return product.get(`/${category2Code}/list`, {
         params: params,
     });
 }
 // PRODUCT 상세 조회
 function getProductDetail(goodsSeq, params) {
-    return apiProduct.get(`/${goodsSeq}`, {
+    return product.get(`/${goodsSeq}`, {
         params: params,
     });
 }
@@ -27,18 +23,18 @@ function getProductDetail(goodsSeq, params) {
 // PRODUCT 등록
 function postProduct(data) {
     console.log(data);
-    return apiProduct.post(`/`, data);
+    return product.post(`/`, data);
 }
 
 // PRODUCT 수정
 function putProduct(goodsSeq, data) {
     console.log(data);
-    return apiProduct.put(`/${goodsSeq}`, data);
+    return product.put(`/${goodsSeq}`, data);
 }
 
 // PRODUCT 상품 삭제[배열]
 function delProduct(params) {
-    return apiProduct.delete(`/`, {
+    return product.delete(`/`, {
         params: params,
     });
 }

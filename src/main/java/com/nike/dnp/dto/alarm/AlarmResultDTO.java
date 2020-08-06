@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
  * The Class Alarm result dto.
  *
  * @author [이소정]
+ * @implNote 알림 결과 DTO
  * @since 2020. 7. 24. 오후 8:08:11
- * @implNote
  */
 @Getter
 @Setter
@@ -30,6 +30,7 @@ public class AlarmResultDTO {
 
     /**
      * 알림 시퀀스
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "alarmSeq", value ="알림 시퀀스", example = "1")
@@ -37,12 +38,15 @@ public class AlarmResultDTO {
 
     /**
      * The Folder seq.
+     *
+     * @author [이소정]
      */
     @ApiModelProperty(name = "folderSeq", value ="폴더 시퀀스(콘텐츠, 리포트 시퀀스)", example = "4")
     private Long folderSeq;
 
     /**
      * 폴더명
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "folderName", value = "폴더명", example = "SP20 NSW NIKE DIRECT AM90")
@@ -50,6 +54,7 @@ public class AlarmResultDTO {
 
     /**
      * 유저 시퀀스
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "userSeq", value ="유저 시퀀스", example = "example")
@@ -57,6 +62,7 @@ public class AlarmResultDTO {
 
     /**
      * 상태 타입(NEW, UPDATE, FEEDBACK)
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "typeAction", value ="상태 타입(NEW, UPDATE, FEEDBACK)", example = "example")
@@ -64,6 +70,7 @@ public class AlarmResultDTO {
 
     /**
      * 메뉴 타입 코드(ASSET, TOOLKIT, FOUNDATION, REPORT)
+     *
      * @author [이소정]
      */
     @ApiModelProperty(name = "typeCd", value ="메뉴 타입 코드(ASSET, TOOLKIT, FOUNDATION, REPORT)", example = "example")

@@ -9,8 +9,8 @@ import lombok.*;
  * Contents Search DTO
  *
  * @author [이소정]
- * @since 2020. 6. 19. 오후 5:57:26
  * @implNote 컨텐츠 조회 DTO
+ * @since 2020. 6. 19. 오후 5:57:26
  */
 @Getter
 @Setter
@@ -52,12 +52,16 @@ public class ContentsSearchDTO extends SearchDTO {
 
     /**
      * 노출 여부
+     *
+     * @author [이소정]
      */
     @ApiParam(value = "노출 여부", name = "exposureYn", hidden = true)
     private String exposureYn;
 
     /**
      * The User auth seq.
+     *
+     * @author [이소정]
      */
     @ApiModelProperty(name = "userAuthSeq", value = "유저 권한 시퀀스", hidden = true)
     private Long userAuthSeq;
@@ -67,6 +71,7 @@ public class ContentsSearchDTO extends SearchDTO {
      *
      * @return String string
      * @author [이소정]
+     * @implNote
      * @since 2020. 6. 19. 오후 5:57:26
      */
     @Override

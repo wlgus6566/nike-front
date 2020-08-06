@@ -64,11 +64,12 @@
                                     </el-select>
                                 </span>
                             </div>
-                            <div class="column">
+                            <div class="column" ref="test" tabindex="0">
                                 <span class="select">
                                     <el-select
                                         v-model="category3Code.value"
                                         placeholder="Select"
+                                        @focus="selectFocus"
                                     >
                                         <el-option
                                             v-for="item in category3Code.listSortOptions"
@@ -177,6 +178,8 @@
     import Thumbnail from '@/components/thumbnail/index';
     import {getAgencyContact} from '@/api/agency';
     import store from '@/store';
+    import {getCode} from '@/api/code';
+    import {getCategoryList} from '@/utils/code';
 
     export default {
     name: 'registration',
@@ -207,147 +210,6 @@
                     {
                         value: '',
                         label: '대구분',
-                        category3Code: {
-                            listSortOptions: [
-                                {
-                                    value: '',
-                                    label: '소구분',
-                                },
-                            ],
-                            value: '',
-                        },
-                    },
-                    {
-                        value: 'SUBSIDIARY',
-                        label: '부자재',
-                        category3Code: {
-                            listSortOptions: [
-                                {
-                                    value: '',
-                                    label: '소구분',
-                                },
-                                {
-                                    value: 'SUBSIDIARY21',
-                                    label: '운영 비품',
-                                },
-                                {
-                                    value: 'SUBSIDIARY22',
-                                    label: '스태프 비품',
-                                },
-                                {
-                                    value: 'SUBSIDIARY23',
-                                    label: '운영 사이니지',
-                                },
-                                {
-                                    value: 'SUBSIDIARY24',
-                                    label: '세일 사이니지',
-                                },
-                                {
-                                    value: 'SUBSIDIARY25',
-                                    label: '오픈 패키지',
-                                },
-                                {
-                                    value: 'SUBSIDIARY26',
-                                    label: '나이키 골프',
-                                },
-                            ],
-                            value: '',
-                        },
-                    },
-                    {
-                        value: 'NIKE_BY_YOU',
-                        label: 'NIKE BY YOU',
-                        category3Code: {
-                            listSortOptions: [
-                                {
-                                    value: '',
-                                    label: '소구분',
-                                },
-                                {
-                                    value: 'NIKE_BY_YOU27',
-                                    label: '신발 커스텀(단품)',
-                                },
-                                {
-                                    value: 'NIKE_BY_YOU28',
-                                    label: '신발 커스텀(패키지)',
-                                },
-                                {
-                                    value: 'NIKE_BY_YOU29',
-                                    label: '의류 커스텀(단품)',
-                                },
-                                {
-                                    value: 'NIKE_BY_YOU30',
-                                    label: '의류 커스텀(패키지)',
-                                },
-                                {
-                                    value: 'NIKE_BY_YOU31',
-                                    label: 'OTHERS',
-                                },
-                            ],
-                            value: '',
-                        },
-                    },
-                    {
-                        value: 'CUSTOM23',
-                        label: 'CUSTOM23(JORDAN ONLY)',
-                        category3Code: {
-                            listSortOptions: [
-                                {
-                                    value: '',
-                                    label: '소구분',
-                                },
-                                {
-                                    value: 'CUSTOM2332',
-                                    label: '신발 커스텀(단품)',
-                                },
-                                {
-                                    value: 'CUSTOM2333',
-                                    label: '신발 커스텀(패키지)',
-                                },
-                                {
-                                    value: 'CUSTOM2334',
-                                    label: '의류 커스텀(단품)',
-                                },
-                                {
-                                    value: 'CUSTOM2335',
-                                    label: '의류 커스텀(패키지)',
-                                },
-                                {
-                                    value: 'CUSTOM2336',
-                                    label: 'OTHERS',
-                                },
-                            ],
-                            value: '',
-                        },
-                    },
-                    {
-                        value: 'MNQ',
-                        label: 'MNQ',
-                        category3Code: {
-                            listSortOptions: [
-                                {
-                                    value: '',
-                                    label: '소구분',
-                                },
-                                {
-                                    value: 'MNQ37',
-                                    label: '남성',
-                                },
-                                {
-                                    value: 'MNQ38',
-                                    label: '여성',
-                                },
-                                {
-                                    value: 'MNQ39',
-                                    label: '유아동',
-                                },
-                                {
-                                    value: 'MNQ40',
-                                    label: '수리/보수',
-                                },
-                            ],
-                            value: '',
-                        },
                     },
                 ],
                 value: '',
@@ -374,6 +236,7 @@
     },
     created() {
         this.detailProduct();
+        getCategoryList('CATEGORY', this.category2Code.listSortOptions);
     },
     activated() {},
     computed: {
@@ -386,8 +249,20 @@
         },
     },
     watch: {
-        'category2Code.value'() {
-            this.select3CodeFn();
+        'category2Code.value'(val) {
+            if (val === '') {
+                this.category3Code = {
+                    listSortOptions: [
+                        {
+                            value: '',
+                            label: '소구분',
+                        },
+                    ],
+                    value: '',
+                };
+            } else {
+                getCategoryList(val, this.category3Code.listSortOptions);
+            }
         },
     },
     mounted() {
@@ -395,6 +270,13 @@
         this.detailProduct();
     },
     methods: {
+        selectFocus() {
+            console.log(this.category2Code.value);
+            if (this.category2Code.value === '') {
+                alert('대구분을 선택해 주세요 ');
+                this.$refs.test.focus();
+            }
+        },
         // 단가 입력 val
         unitPriceVal() {
             const numbers = /^[0-9]+$/;
@@ -438,13 +320,6 @@
             this.detailData.imageBase64 = imageBase64;
             this.detailData.imageFileName = imgName;
         },
-        select3CodeFn() {
-            this.category2Code.listSortOptions.forEach((item) => {
-                if (item.value === this.category2Code.value) {
-                    this.category3Code = item.category3Code;
-                }
-            });
-        },
         validateSelect(e, prop) {
             this.$refs.form.validateField(prop, (error) => {
                 if (!error) {
@@ -470,7 +345,6 @@
                         this.exposure.value = 'N';
                     }
                     this.category2Code.value = this.detailData.category2Code;
-                    this.select3CodeFn();
                     this.category3Code.value = this.detailData.category3Code;
                     this.agencySeq.value = this.detailData.agencySeq;
                 } catch (error) {
@@ -526,7 +400,21 @@
                 }
             }
         },
+        // category data
+        async getCategoryList(codeName, array) {
+            try {
+                const {
+                    data: { data: response },
+                } = await getCode(codeName);
 
+                response.forEach((el) => {
+                    array.push({
+                        value: el.code,
+                        label: el.codeName,
+                    });
+                });
+            } catch {}
+        },
         //데이터 초기화
         productDataReset() {
             this.agencySeq.value = '';
@@ -544,4 +432,8 @@
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+::v-deep .column {
+    outline: transparent !important;
+}
+</style>

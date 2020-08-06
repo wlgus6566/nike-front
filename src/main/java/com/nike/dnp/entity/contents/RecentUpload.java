@@ -11,8 +11,8 @@ import javax.persistence.*;
  * The Class Recent upload.
  *
  * @author [이소정]
+ * @implNote 최근 업로드 폴더 entity
  * @since 2020. 7. 27. 오후 2:07:16
- * @implNote
  */
 @Getter
 @Setter
@@ -63,6 +63,8 @@ public class RecentUpload extends BaseTimeEntity {
 
     /**
      * The Contents.
+     *
+     * @author [이소정]
      */
     @ManyToOne
     @JoinColumn(name = "CONTENTS_SEQ", insertable = false, updatable = false)
@@ -71,6 +73,8 @@ public class RecentUpload extends BaseTimeEntity {
 
     /**
      * The Report.
+     *
+     * @author [이소정]
      */
     @ManyToOne
     @JoinColumn(name = "REPORT_SEQ", insertable = false, updatable = false)

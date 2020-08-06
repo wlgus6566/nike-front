@@ -2,8 +2,10 @@ package com.nike.dnp.dto.notice;
 
 import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiParam;
-import lombok.*;
-import org.apache.commons.lang.StringUtils;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * The Class Notice search dto.
@@ -23,7 +25,6 @@ public class CustomerSearchDTO extends SearchDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(value = "게시물 구분 코드", name = "noticeArticleSectionCode", defaultValue = "", required = false)
     private String noticeArticleSectionCode;
 
     /**
