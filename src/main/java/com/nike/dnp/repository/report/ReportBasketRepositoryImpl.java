@@ -16,6 +16,7 @@ import java.util.List;
  * The Class Report repository.
  *
  * @author [이소정]
+ * @implNote 보고서 장바구니 repository
  * @since 2020. 7. 7. 오후 2:46:09
  */
 @Repository
@@ -27,6 +28,7 @@ public class ReportBasketRepositoryImpl extends QuerydslRepositorySupport implem
      * Instantiates a new Contents repository.
      *
      * @author [이소정]
+     * @implNote 생성자 주입
      * @since 2020. 6. 19. 오후 6:15:29
      */
     public ReportBasketRepositoryImpl() {
@@ -40,6 +42,7 @@ public class ReportBasketRepositoryImpl extends QuerydslRepositorySupport implem
      * @param userSeq the user seq
      * @return the list
      * @author [이소정]
+     * @implNote 사용자에 따른 보고서 장바구니 목록 조회
      * @since 2020. 7. 17. 오후 6:45:22
      */
     @Override

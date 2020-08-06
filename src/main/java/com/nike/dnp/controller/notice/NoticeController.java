@@ -67,7 +67,7 @@ public class NoticeController {
     /**
      * Find all single result.
      *
-     * @param sectionCode       the section code
+     * @param noticeArticleSectionCode       the section code
      * @param customerSearchDTO the notice search dto
      * @return the single result
      * @author [정주희]
@@ -83,14 +83,14 @@ public class NoticeController {
                     "size|사이즈|false|Integer| \n" +
                     "noticeArticleCategoryCode|QNA 카테고리 코드|false|String|ASSET/SUBSIDIARY/REPORT/INFO/USED/ETC"
     )
-    @GetMapping(value = "/{sectionCode}",
+    @GetMapping(value = "/{noticeArticleSectionCode}",
             name = "Customer Center 게시글 목록 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Page<CustomerListDTO>> findAll(
-            @ApiParam(name = "sectionCode", value = "Customer Center 게시글 종류 코드", allowableValues = "NOTICE, NEWS, QNA", required = true)
-                                @PathVariable final String sectionCode,
-                                @ModelAttribute final CustomerSearchDTO customerSearchDTO) {
+            @ApiParam(name = "noticeArticleSectionCode", value = "Customer Center 게시글 종류 코드",
+                    allowableValues = "NOTICE, NEWS, QNA", required = true)
+            @PathVariable final String noticeArticleSectionCode,
+            @ModelAttribute final CustomerSearchDTO customerSearchDTO) {
         log.info("NoticeController.findAll");
-        customerSearchDTO.setNoticeArticleSectionCode(sectionCode);
         return responseService.getSingleResult(noticeService.findNoticePages(customerSearchDTO));
     }
 
@@ -111,10 +111,8 @@ public class NoticeController {
     )
     @GetMapping(value = "/detail/{noticeSeq}",
             name = "Customer Center 게시글 상세 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<NoticeArticle> findById(
-                                @ApiParam(name = "noticeSeq", value = "Customer Center 게시글 시퀀스",
-                                        defaultValue = "23", required = true)
-                                @PathVariable final Long noticeSeq) {
+    public SingleResult<NoticeArticle> findById(@ApiParam(name = "noticeSeq", value = "Customer Center 게시글 시퀀스",
+            defaultValue = "23", required = true) @PathVariable final Long noticeSeq) {
         log.info("NoticeController.findAll");
         return responseService.getSingleResult(noticeService.findById(noticeSeq));
     }
@@ -162,6 +160,7 @@ public class NoticeController {
     )
     @PostMapping(value = "/NEWS",
             name = "Customer Center 뉴스 등록", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public SingleResult<NoticeArticle> saveNews(@Valid @RequestBody final NewsSaveDTO newsSaveDTO,
                                                 @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.saveNews");
@@ -187,6 +186,7 @@ public class NoticeController {
     )
     @PostMapping(value = "/QnA",
             name = "Customer Center QnA 등록", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public SingleResult<NoticeArticle> saveQna(@Valid @RequestBody final QnaSaveDTO qnaSaveDTO,
                                                @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.saveQna");
@@ -209,7 +209,6 @@ public class NoticeController {
     @GetMapping("/NOTICE/noticeYnCnt")
     public SingleResult<Long> checkNoticeYnCnt() {
         log.info("NoticeController.checkNoticeYnCnt");
-
         return responseService.getSingleResult(noticeService.checkNoticeYnCnt());
     }
 
@@ -233,17 +232,14 @@ public class NoticeController {
             name = "Customer Center 공지사항 게시글 수정", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<NoticeArticle> updateNotice(
-                                @ApiParam(name = "noticeSeq", value = "Customer Center 공지사항 게시글 시퀀스",
-                                        defaultValue = "23", required = true)
-                                @PathVariable final Long noticeSeq,
-                                @Valid @RequestBody final NoticeUpdateDTO noticeUpdateDTO,
-                                @ApiIgnore final BindingResult bindingResult) {
+            @ApiParam(name = "noticeSeq", value = "Customer Center 공지사항 게시글 시퀀스",
+                    defaultValue = "23", required = true) @PathVariable final Long noticeSeq,
+            @Valid @RequestBody final NoticeUpdateDTO noticeUpdateDTO, @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.updateNotice");
 
         final CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtil.map(noticeUpdateDTO, CustomerUpdateDTO.class);
-        customerUpdateDTO.setNoticeArticleSeq(noticeSeq);
 
-        return responseService.getSingleResult(noticeService.updateCustomerCenter(customerUpdateDTO));
+        return responseService.getSingleResult(noticeService.updateCustomerCenter(noticeSeq, customerUpdateDTO));
     }
 
     /**
@@ -263,18 +259,16 @@ public class NoticeController {
     )
     @PutMapping(value = "/NEWS/{noticeSeq}",
             name = "Customer Center NEWS 게시글 수정", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public SingleResult<NoticeArticle> updateNews(
-                                @ApiParam(name = "noticeSeq", value = "Customer Center NEWS 게시글 시퀀스",
-                                        defaultValue = "23", required = true)
-                                @PathVariable final Long noticeSeq,
-                                @RequestBody final NewsUpdateDTO newsUpdateDTO,
-                                @ApiIgnore final BindingResult bindingResult) {
+            @ApiParam(name = "noticeSeq", value = "Customer Center NEWS 게시글 시퀀스",
+                    defaultValue = "23", required = true) @PathVariable final Long noticeSeq,
+            @Valid @RequestBody final NewsUpdateDTO newsUpdateDTO, @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.updateNotice");
 
         final CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtil.map(newsUpdateDTO, CustomerUpdateDTO.class);
-        customerUpdateDTO.setNoticeArticleSeq(noticeSeq);
 
-        return responseService.getSingleResult(noticeService.updateCustomerCenter(customerUpdateDTO));
+        return responseService.getSingleResult(noticeService.updateCustomerCenter(noticeSeq, customerUpdateDTO));
     }
 
     /**
@@ -294,18 +288,16 @@ public class NoticeController {
     )
     @PutMapping(value = "/QNA/{noticeSeq}",
             name = "Customer Center QnA 게시글 수정", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public SingleResult<NoticeArticle> updateQna(
-                                @ApiParam(name = "noticeSeq", value = "Customer Center QnA 게시글 시퀀스",
-                                        defaultValue = "23", required = true)
-                                @PathVariable final Long noticeSeq,
-                                @RequestBody final QnaUpdateDTO qnaUpdateDTO,
-                                @ApiIgnore final BindingResult bindingResult) {
+            @ApiParam(name = "noticeSeq", value = "Customer Center QnA 게시글 시퀀스",
+                    defaultValue = "23", required = true) @PathVariable final Long noticeSeq,
+            @Valid @RequestBody final QnaUpdateDTO qnaUpdateDTO, @ApiIgnore final BindingResult bindingResult) {
         log.info("NoticeController.updateNotice");
 
         final CustomerUpdateDTO customerUpdateDTO = ObjectMapperUtil.map(qnaUpdateDTO, CustomerUpdateDTO.class);
-        customerUpdateDTO.setNoticeArticleSeq(noticeSeq);
 
-        return responseService.getSingleResult(noticeService.updateCustomerCenter(customerUpdateDTO));
+        return responseService.getSingleResult(noticeService.updateCustomerCenter(noticeSeq, customerUpdateDTO));
     }
 
     /**
@@ -321,22 +313,16 @@ public class NoticeController {
     @ApiOperation(value = "Customer Center 게시글 삭제", notes = BASIC_CHARACTER)
     @DeleteMapping({"/{noticeSeq}"})
     public SingleResult<NoticeArticle> deleteCustomerCenter(
-                                @ApiParam(name = "noticeSeq", value = "Customer Center 게시글 시퀀스",
-                                        defaultValue = "23", required = true)
-                                @PathVariable final Long noticeSeq){
+            @ApiParam(name = "noticeSeq", value = "Customer Center 게시글 시퀀스",
+                    defaultValue = "23", required = true) @PathVariable final Long noticeSeq) {
         log.info("NoticeController.deleteCustomerCenter");
-
-        final CustomerUpdateDTO customerUpdateDTO = new CustomerUpdateDTO();
-        customerUpdateDTO.setNoticeArticleSeq(noticeSeq);
-        customerUpdateDTO.setUseYn("N");
-
-        return responseService.getSingleResult(noticeService.deleteCustomerCenter(customerUpdateDTO));
+        return responseService.getSingleResult(noticeService.deleteCustomerCenter(noticeSeq));
     }
 
     /**
      * Upload editor images single result.
      *
-     * @param sectionCode the section code
+     * @param noticeArticleSectionCode the section code
      * @param multiReq    the multi req
      * @return the single result
      * @throws IOException the io exception
@@ -345,13 +331,21 @@ public class NoticeController {
      * @since 2020. 7. 31. 오후 3:47:48
      */
     @ApiOperation(value = "Customer Center 에디터 이미지 업로드", notes = BASIC_CHARACTER)
-    @PostMapping("/{sectionCode}/images")
+    @PostMapping("/{noticeArticleSectionCode}/images")
     public SingleResult<String> uploadEditorImages(
-                                @ApiParam(name = "sectionCode", value = "Customer Center 게시글 종류 코드",
-                                        allowableValues = "NOTICE, NEWS, QNA", required = true)
-                                @PathVariable final String sectionCode,
-                                final MultipartHttpServletRequest multiReq) throws IOException {
+            @ApiParam(name = "noticeArticleSectionCode", value = "Customer Center 게시글 종류 코드",
+                    allowableValues = "NOTICE, NEWS, QNA", required = true)
+            @PathVariable final String noticeArticleSectionCode,
+            final MultipartHttpServletRequest multiReq) {
         log.info("NoticeController.uploadEditorImages");
-        return responseService.getSingleResult(noticeService.uploadEditorImages(multiReq, sectionCode));
+
+        String uploadUrl = null;
+
+        try {
+            uploadUrl = noticeService.uploadEditorImages(multiReq, noticeArticleSectionCode);
+        } catch (IOException e) {
+            //TODO [jjh] IOException 처리
+        }
+        return responseService.getSingleResult(uploadUrl);
     }
 }

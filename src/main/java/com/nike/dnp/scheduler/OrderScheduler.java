@@ -6,11 +6,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+/**
+ * The Class Order scheduler.
+ *
+ * @author [윤태호]
+ * @since 2020. 8. 3. 오후 2:57:53
+ */
 @Slf4j
 @Component
 @AllArgsConstructor
 public class OrderScheduler {
 
+	/**
+	 * The Order service
+	 *
+	 * @author [윤태호]
+	 */
 	final private OrderService orderService;
 
 
@@ -24,10 +35,9 @@ public class OrderScheduler {
 	 */
 	//@Scheduled(cron = "*/10 * * * * *")
 	@Scheduled(cron = "0 0 0 * * *")
-	public void goodsBasketDeleteScheduler() {
-		log.info("OrderScheduler.goodsBasketDeleteScheduler");
+	public void after1yearDeleteScheduler() {
+		log.info("OrderScheduler.after1yearDeleteScheduler");
 		log.debug("==== 1년 지난 주문 삭제 처리 ====");
 		orderService.after1yearDelete();
 	}
-
 }

@@ -2,7 +2,6 @@ package com.nike.dnp.entity.report;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.dto.report.ReportFileSaveDTO;
-import com.nike.dnp.dto.report.ReportFileUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -10,13 +9,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
+import java.util.Locale;
 
 /**
  * The Class Report file.
  *
- * @author [오지훈]
+ * @author [이소정]
+ * @implNote 보고서 파일 entity
  * @since 2020. 7. 24. 오전 10:06:05
- * @implNote
  */
 @Slf4j
 @Getter
@@ -29,6 +29,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * The Report file seq
+     *
      * @author [이소정]
      */
     @Id
@@ -39,6 +40,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 보고서 시퀀스
+     *
      * @author [이소정]
      */
     @Column(name = "REPORT_SEQ")
@@ -47,6 +49,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * The File name
+     *
      * @author [이소정]
      */
     @Column(name = "FILE_NAME")
@@ -55,6 +58,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * The File size
+     *
      * @author [이소정]
      */
     @Column(name = "FILE_SIZE")
@@ -63,6 +67,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * The File physical name
+     *
      * @author [이소정]
      */
     @Column(name = "FILE_PHYSICAL_NAME")
@@ -89,6 +94,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 다운로드 수
+     *
      * @author [이소정]
      */
     @Column(name = "DOWNLOAD_COUNT")
@@ -98,6 +104,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 사용 여부
+     *
      * @author [이소정]
      */
     @Column(name = "USE_YN")
@@ -106,6 +113,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 썸네일 파일 물리 명
+     *
      * @author [이소정]
      */
     @Column(name = "THUMBNAIL_FILE_NAME")
@@ -114,6 +122,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 썸네일 파일 물리 명
+     *
      * @author [이소정]
      */
     @Column(name = "THUMBNAIL_FILE_SIZE")
@@ -122,6 +131,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 썸네일 파일 물리 명
+     *
      * @author [이소정]
      */
     @Column(name = "THUMBNAIL_FILE_PHYSICAL_NAME")
@@ -131,6 +141,8 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 상세 썸네일 명
+     *
+     * @author [이소정]
      */
     @Column(name = "DETAIL_THUMBNAIL_FILE_NAME")
     @ApiModelProperty(name = "detailThumbnailFileName", value ="상세 썸네일 명", example = "graphic_file_name_detail_thumbnail.jpg")
@@ -138,6 +150,8 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 상세 썸네일 사이즈
+     *
+     * @author [이소정]
      */
     @Column(name = "DETAIL_THUMBNAIL_FILE_SIZE")
     @ApiModelProperty(name = "detailThumbnailFileSize", value ="상세 썸네일 사이즈", example = "700")
@@ -145,6 +159,8 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * 상세 썸네일 물리 경로
+     *
+     * @author [이소정]
      */
     @Column(name = "DETAIL_THUMBNAIL_FILE_PHYSICAL_NAME")
     @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg")
@@ -152,6 +168,7 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * The Report
+     *
      * @author [이소정]
      */
     @JsonBackReference
@@ -162,6 +179,8 @@ public class ReportFile extends BaseTimeEntity {
 
     /**
      * The constant cdnUrl.
+     *
+     * @author [이소정]
      */
     @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
     private static String cdnUrl;
@@ -170,20 +189,47 @@ public class ReportFile extends BaseTimeEntity {
      * Sets cdn url.
      *
      * @param cdnUrl the cdn url
+     * @author [이소정]
+     * @implNote cdnUtl 셋팅
+     * @since 2020. 7. 30. 오후 3:53:23
      */
     @Value("${nike.file.cdnUrl:}")
     public void setCdnUrl(final String cdnUrl) {
         this.cdnUrl = cdnUrl;
     }
 
+    /**
+     * Gets file physical name.
+     *
+     * @return the file physical name
+     * @author [이소정]
+     * @implNote cdnUrl + filePhysicalName
+     * @since 2020. 7. 30. 오후 3:53:23
+     */
     public String getFilePhysicalName() {
         return this.cdnUrl + filePhysicalName;
     }
 
+    /**
+     * Gets thumbnail file physical name.
+     *
+     * @return the thumbnail file physical name
+     * @author [이소정]
+     * @implNote cdnUrl + thumbnailFilePhysicalName
+     * @since 2020. 7. 30. 오후 3:53:23
+     */
     public String getThumbnailFilePhysicalName() {
         return this.cdnUrl + thumbnailFilePhysicalName;
     }
 
+    /**
+     * Gets detail thumbnail file physical name.
+     *
+     * @return the detail thumbnail file physical name
+     * @author [이소정]
+     * @implNote cdnUrl + detailThumbnailFilePhysicalName
+     * @since 2020. 7. 30. 오후 3:53:23
+     */
     public String getDetailThumbnailFilePhysicalName() {
         return this.cdnUrl + detailThumbnailFilePhysicalName;
     }
@@ -196,95 +242,27 @@ public class ReportFile extends BaseTimeEntity {
      * @param reportFileSaveDTO the report file save dto
      * @return the report file
      * @author [이소정]
+     * @implNote 보고서 파일 저장
      * @since 2020. 7. 8. 오후 5:47:08
-     * @implNote
      */
     public ReportFile save(final Long reportSeq, final ReportFileSaveDTO reportFileSaveDTO) {
-        return newReportFile(
-                reportSeq
-                , reportFileSaveDTO.getFileName()
-                , reportFileSaveDTO.getFileSize()
-                , reportFileSaveDTO.getFilePhysicalName()
-                , reportFileSaveDTO.getFileContentType()
-                , reportFileSaveDTO.getFileExtension()
-                , reportFileSaveDTO.getThumbnailFileName()
-                , reportFileSaveDTO.getThumbnailFileSize()
-                , reportFileSaveDTO.getThumbnailFilePhysicalName()
-                , reportFileSaveDTO.getDetailThumbnailFileName()
-                , reportFileSaveDTO.getDetailThumbnailFileSize()
-                , reportFileSaveDTO.getDetailThumbnailFilePhysicalName()
-        );
-    }
-
-    /**
-     * New report file report file.
-     *
-     * @param reportFileUpdateDTO the report file update dto
-     * @return the report file
-     * @author [이소정]
-     * @since 2020. 7. 9. 오후 6:47:01
-     * @implNote
-     */
-    public ReportFile updateNewFile(final Long reportSeq, final ReportFileUpdateDTO reportFileUpdateDTO) {
-        return newReportFile(
-                reportSeq
-                , reportFileUpdateDTO.getFileName()
-                , reportFileUpdateDTO.getFileSize()
-                , reportFileUpdateDTO.getFilePhysicalName()
-                , reportFileUpdateDTO.getFileContentType()
-                , reportFileUpdateDTO.getFileExtension()
-                , reportFileUpdateDTO.getThumbnailFileName()
-                , reportFileUpdateDTO.getThumbnailFileSize()
-                , reportFileUpdateDTO.getThumbnailFilePhysicalName()
-                , reportFileUpdateDTO.getDetailThumbnailFileName()
-                , reportFileUpdateDTO.getDetailThumbnailFileSize()
-                , reportFileUpdateDTO.getDetailThumbnailFilePhysicalName()
-        );
-    }
-
-    /**
-     * New report file report file.
-     *
-     * @param reportSeq        the report seq
-     * @param fileName         the file name
-     * @param fileSize         the file size
-     * @param filePhysicalName the file physical name
-     * @return the report file
-     * @author [이소정]
-     * @since 2020. 7. 10. 오후 5:39:30
-     * @implNote
-     */
-    private ReportFile newReportFile(
-            final Long reportSeq
-            , final String fileName
-            , final String fileSize
-            , final String filePhysicalName
-            , final String fileContentType
-            , final String fileExtension
-            , final String thumbnailFileName
-            , final String thumbnailFileSize
-            , final String thumbnailFilePhysicalName
-            , final String detailThumbnailFileName
-            , final String detailThumbnailFileSize
-            , final String detailThumbnailFilePhysicalName
-    ) {
-
+        log.info("ReportFile.save");
         final ReportFile saveReportFile = new ReportFile();
         saveReportFile.setReportSeq(reportSeq);
-        saveReportFile.setFileName(fileName);
-        saveReportFile.setFileSize(fileSize);
-        saveReportFile.setFilePhysicalName(filePhysicalName);
+        saveReportFile.setFileName(reportFileSaveDTO.getFileName());
+        saveReportFile.setFileSize(reportFileSaveDTO.getFileSize());
+        saveReportFile.setFilePhysicalName(reportFileSaveDTO.getFilePhysicalName());
 
-        saveReportFile.setFileContentType(fileContentType);
-        saveReportFile.setFileExtension(fileExtension.toUpperCase());
+        saveReportFile.setFileContentType(reportFileSaveDTO.getFileContentType());
+        saveReportFile.setFileExtension(reportFileSaveDTO.getFileExtension().toUpperCase(Locale.KOREA));
 
-        saveReportFile.setThumbnailFileName(thumbnailFileName);
-        saveReportFile.setThumbnailFileSize(thumbnailFileSize);
-        saveReportFile.setThumbnailFilePhysicalName(thumbnailFilePhysicalName);
+        saveReportFile.setThumbnailFileName(reportFileSaveDTO.getThumbnailFileName());
+        saveReportFile.setThumbnailFileSize(reportFileSaveDTO.getThumbnailFileSize());
+        saveReportFile.setThumbnailFilePhysicalName(reportFileSaveDTO.getThumbnailFilePhysicalName());
 
-        saveReportFile.setDetailThumbnailFileName(detailThumbnailFileName);
-        saveReportFile.setDetailThumbnailFileSize(detailThumbnailFileSize);
-        saveReportFile.setDetailThumbnailFilePhysicalName(detailThumbnailFilePhysicalName);
+        saveReportFile.setDetailThumbnailFileName(reportFileSaveDTO.getDetailThumbnailFileName());
+        saveReportFile.setDetailThumbnailFileSize(reportFileSaveDTO.getDetailThumbnailFileSize());
+        saveReportFile.setDetailThumbnailFilePhysicalName(reportFileSaveDTO.getDetailThumbnailFilePhysicalName());
 
 
         saveReportFile.setDownloadCount(0l);
@@ -295,15 +273,16 @@ public class ReportFile extends BaseTimeEntity {
     /**
      * Update.
      *
-     * @param reportFileUpdateDTO the report file update dto
+     * @param reportFileSaveDTO the report file save dto
      * @author [이소정]
+     * @implNote 보고서 파일 수정
      * @since 2020. 7. 9. 오후 6:50:26
-     * @implNote
      */
-    public void update(final ReportFileUpdateDTO reportFileUpdateDTO) {
-        this.fileName = reportFileUpdateDTO.getFileName();
-        this.fileSize = reportFileUpdateDTO.getFileSize();
-        this.filePhysicalName = reportFileUpdateDTO.getFilePhysicalName();
+    public void update(final ReportFileSaveDTO reportFileSaveDTO) {
+        log.info("ReportFile.update");
+        this.fileName = reportFileSaveDTO.getFileName();
+        this.fileSize = reportFileSaveDTO.getFileSize();
+        this.filePhysicalName = reportFileSaveDTO.getFilePhysicalName();
     }
 
     /**
@@ -311,24 +290,24 @@ public class ReportFile extends BaseTimeEntity {
      *
      * @param useYn the use yn
      * @author [이소정]
+     * @implNote 보고서 파일 사용여부 수정
      * @since 2020. 7. 9. 오후 6:50:24
-     * @implNote
      */
     public void updateUseYn(final String useYn) {
-        log.info("Report.updateUseYn");
+        log.info("ReportFile.updateUseYn");
         this.useYn = useYn;
     }
-//
-//    보고서파일은 다운로드수 조회 X by.sojeong.lee 2020.07.20
-//    /**
-//     * Update download count.
-//     *
-//     * @param downloadCount the download count
-//     * @author [이소정]
-//     * @since 2020. 7. 8. 오후 5:47:39
-//     * @implNote
-//     */
-//    public void updateDownloadCount(final Long downloadCount) {
-//        this.downloadCount = downloadCount + 1;
-//    }
+
+    /**
+     * Update download count.
+     *
+     * @param downloadCount the download count
+     * @author [이소정]
+     * @implNote 보고서 다운로드 수 1 더하기
+     * @since 2020. 7. 8. 오후 5:47:39
+     */
+    public void updateDownloadCount(final Long downloadCount) {
+        log.info("ReportFile.updateDownloadCount");
+        this.downloadCount = downloadCount + 1;
+    }
 }

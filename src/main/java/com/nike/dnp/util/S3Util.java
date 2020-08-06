@@ -1,5 +1,8 @@
 package com.nike.dnp.util;
 
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.HttpMethod;
+import com.amazonaws.SdkClientException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -365,7 +368,35 @@ public class S3Util {
 		return awsPath;
 	}
 
+	public static void GeneratePresignedURL() {
+		String bucketName = "nike-test-bucket-dnp";
+		String objectKey = "contents/20200728114000An3vskGapg.jpg";
+		try {
+			// Set the presigned URL to expire after one hour.
+			java.util.Date expiration = new java.util.Date();
+			long expTimeMillis = expiration.getTime();
+			expTimeMillis += 1000 * 60;
+//			expTimeMillis += 1000 * 60 * 60;
+			expiration.setTime(expTimeMillis);
+			// Generate the presigned URL.
+			System.out.println("Generating pre-signed URL.");
 
+			GeneratePresignedUrlRequest generatePresignedUrlRequest =
+					new GeneratePresignedUrlRequest(bucketName, objectKey)
+							.withMethod(HttpMethod.GET)
+							.withExpiration(expiration);
+			URL url = client.generatePresignedUrl(generatePresignedUrlRequest);
+			System.out.println("Pre-Signed URL: " + url.toString());
+		} catch (AmazonServiceException e) {
+			// The call was transmitted successfully, but Amazon S3 couldn't process
+			// it, so it returned an error response.
+			e.printStackTrace();
+		} catch (SdkClientException e) {
+			// Amazon S3 couldn't be contacted for a response, or the client
+			// couldn't parse the response from Amazon S3.
+			e.printStackTrace();
+		}
+	}
 
 
 }

@@ -127,7 +127,7 @@ public class UserController {
         log.info("UserController.save");
         return responseService.getSingleResult(userService.save(userSaveDTO)
                 , ServiceCode.ReturnTypeEnumCode.CREATE.name()
-                , MessageUtil.getMessage(ServiceCode.ReturnTypeEnumCode.CREATE.name())
+                , ServiceCode.ReturnTypeEnumCode.CREATE.getMessage()
                 , true
         );
     }
@@ -155,7 +155,7 @@ public class UserController {
         log.info("UserController.update");
         return responseService.getSingleResult(userService.update(userSeq, userUpdateDTO)
                 , ServiceCode.ReturnTypeEnumCode.UPDATE.name()
-                , MessageUtil.getMessage(ServiceCode.ReturnTypeEnumCode.UPDATE.name())
+                , ServiceCode.ReturnTypeEnumCode.UPDATE.getMessage()
                 , true
         );
     }

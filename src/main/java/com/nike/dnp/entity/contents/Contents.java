@@ -3,7 +3,6 @@ package com.nike.dnp.entity.contents;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
-import com.nike.dnp.dto.contents.ContentsUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.util.LocalDateUtil;
 import io.swagger.annotations.ApiModelProperty;
@@ -32,6 +31,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 컨텐츠 시퀀스
+     *
      * @author [이소정]
      */
     @Id
@@ -42,6 +42,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 최고 메뉴 공통코드
+     *
      * @author [이소정]
      */
     @Column(name = "TOP_MENU_CODE")
@@ -50,6 +51,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 메뉴 공통코드
+     *
      * @author [이소정]
      */
     @Column(name = "MENU_CODE")
@@ -58,6 +60,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 이미지 파일명
+     *
      * @author [이소정]
      */
     @Column(name = "IMAGE_FILE_NAME")
@@ -66,6 +69,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 이미지 파일 사이즈
+     *
      * @author [이소정]
      */
     @Column(name = "IMAGE_FILE_SIZE")
@@ -74,6 +78,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 이미지 파일 물리명
+     *
      * @author [이소정]
      */
     @Column(name = "IMAGE_FILE_PHYSICAL_NAME")
@@ -82,6 +87,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 폴더명
+     *
      * @author [이소정]
      */
     @Column(name = "FOLDER_NAME")
@@ -90,6 +96,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 폴더 내용
+     *
      * @author [이소정]
      */
     @Column(name = "FOLDER_CONTENTS")
@@ -98,6 +105,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 캠페인 기간 구분 공통코드
+     *
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_PERIOD_SECTION_CODE")
@@ -106,6 +114,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 캠페인 시작 일시
+     *
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_BEGIN_DT")
@@ -115,6 +124,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 캠페인 종료 일시
+     *
      * @author [이소정]
      */
     @Column(name = "CAMPAIGN_END_DT")
@@ -124,6 +134,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 메모
+     *
      * @author [이소정]
      */
     @Column(name = "MEMO")
@@ -132,6 +143,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 조회수
+     *
      * @author [이소정]
      */
     @Column(name = "READ_COUNT")
@@ -140,6 +152,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 노출 여부
+     *
      * @author [이소정]
      */
     @Column(name = "EXPOSURE_YN")
@@ -148,6 +161,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * 사용 여부
+     *
      * @author [이소정]
      */
     @Column(name = "USE_YN")
@@ -156,6 +170,7 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * The Contents files
+     *
      * @author [이소정]
      */
     @JsonManagedReference
@@ -169,12 +184,25 @@ public class Contents extends BaseTimeEntity {
      * @param contentsSaveDTO the contents save dto
      * @return the contents
      * @author [이소정]
+     * @implNote 콘텐츠 저장
      * @since 2020. 7. 1. 오전 9:59:51
      */
     public Contents save(final ContentsSaveDTO contentsSaveDTO) {
         log.info("Contents.save");
         final Contents saveContents = new Contents();
-        this.saveContentsBasic(contentsSaveDTO, saveContents);
+        saveContents.setTopMenuCode(contentsSaveDTO.getTopMenuCode());
+        saveContents.setMenuCode(contentsSaveDTO.getMenuCode());
+        saveContents.setImageFileName(contentsSaveDTO.getImageFileName());
+        saveContents.setImageFileSize(contentsSaveDTO.getImageFileSize());
+        saveContents.setImageFilePhysicalName(contentsSaveDTO.getImageFilePhysicalName());
+        saveContents.setFolderName(contentsSaveDTO.getFolderName());
+        saveContents.setFolderContents(contentsSaveDTO.getFolderContents());
+        saveContents.setCampaignPeriodSectionCode(contentsSaveDTO.getCampaignPeriodSectionCode());
+        saveContents.setExposureYn(contentsSaveDTO.getExposureYn());
+
+        saveContents.setUseYn("Y");
+        saveContents.setReadCount(0l);
+
         // 캠페인기간 > 날짜선택 인 경우
         if (ServiceCode.ContentsCampaignPeriodCode.SELECT.toString().equals(contentsSaveDTO.getCampaignPeriodSectionCode())) {
             saveContents.setCampaignBeginDt(LocalDateUtil.strToLocalDateTime(contentsSaveDTO.getCampaignBeginDt()+" 00:00:00","yyyy.MM.dd HH:mm:ss"));
@@ -188,48 +216,25 @@ public class Contents extends BaseTimeEntity {
         return saveContents;
     }
 
-    /**
-     * Save contents basic.
-     *
-     * @param contentsSaveDTO the contents save dto
-     * @param saveContents    the save contents
-     * @author [이소정]
-     * @since 2020. 7. 1. \오전 9:59:37
-     */
-    public static void saveContentsBasic(final ContentsSaveDTO contentsSaveDTO, final Contents saveContents) {
-        log.info("Contents.saveContentsBasic");
-        saveContents.setTopMenuCode(contentsSaveDTO.getTopMenuCode());
-        saveContents.setMenuCode(contentsSaveDTO.getMenuCode());
-        saveContents.setImageFileName(contentsSaveDTO.getImageFileName());
-        saveContents.setImageFileSize(contentsSaveDTO.getImageFileSize());
-        saveContents.setImageFilePhysicalName(contentsSaveDTO.getImageFilePhysicalName());
-        saveContents.setFolderName(contentsSaveDTO.getFolderName());
-        saveContents.setFolderContents(contentsSaveDTO.getFolderContents());
-        saveContents.setCampaignPeriodSectionCode(contentsSaveDTO.getCampaignPeriodSectionCode());
-        saveContents.setExposureYn(contentsSaveDTO.getExposureYn());
-
-        saveContents.setUseYn("Y");
-        saveContents.setReadCount(0l);
-    }
-
 
     /**
      * Update.
      *
-     * @param contentsUpdateDTO the contents update dto
+     * @param contentsSaveDTO the contents save dto
      * @author [이소정]
+     * @implNote 콘텐츠 수정
      * @since 2020. 7. 3. 오후 4:01:36
      */
-    public void update(final ContentsUpdateDTO contentsUpdateDTO) {
+    public void update(final ContentsSaveDTO contentsSaveDTO) {
         log.info("Contents.update");
-        this.menuCode = contentsUpdateDTO.getMenuCode();
-        this.imageFileName = contentsUpdateDTO.getImageFileName();
-        this.imageFileSize = contentsUpdateDTO.getImageFileSize();
-        this.imageFilePhysicalName = contentsUpdateDTO.getImageFilePhysicalName();
-        this.folderName = contentsUpdateDTO.getFolderName();
-        this.folderContents = contentsUpdateDTO.getFolderContents();
-        this.campaignPeriodSectionCode = contentsUpdateDTO.getCampaignPeriodSectionCode();
-        this.exposureYn = contentsUpdateDTO.getExposureYn();
+        this.menuCode = contentsSaveDTO.getMenuCode();
+        this.imageFileName = contentsSaveDTO.getImageFileName();
+        this.imageFileSize = contentsSaveDTO.getImageFileSize();
+        this.imageFilePhysicalName = contentsSaveDTO.getImageFilePhysicalName();
+        this.folderName = contentsSaveDTO.getFolderName();
+        this.folderContents = contentsSaveDTO.getFolderContents();
+        this.campaignPeriodSectionCode = contentsSaveDTO.getCampaignPeriodSectionCode();
+        this.exposureYn = contentsSaveDTO.getExposureYn();
     }
 
     /**
@@ -237,6 +242,7 @@ public class Contents extends BaseTimeEntity {
      *
      * @param readCount the read count
      * @author [이소정]
+     * @implNote 콘텐츠 조회수 1 더하기
      * @since 2020. 7. 3. 오후 5:22:59
      */
     public void updateReadCount(final Long readCount) {
@@ -249,6 +255,7 @@ public class Contents extends BaseTimeEntity {
      * Delete.
      *
      * @author [이소정]
+     * @implNote 콘텐츠 삭제
      * @since 2020. 7. 7. 오후 2:06:34
      */
     public void delete() {
@@ -257,6 +264,8 @@ public class Contents extends BaseTimeEntity {
 
     /**
      * The constant cdnUrl.
+     *
+     * @author [이소정]
      */
     @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
     private static String cdnUrl;
@@ -265,12 +274,23 @@ public class Contents extends BaseTimeEntity {
      * Sets cdn url.
      *
      * @param cdnUrl the cdn url
+     * @author [이소정]
+     * @implNote cdnUrl 설정
+     * @since 2020. 7. 30. 오후 3:47:29
      */
     @Value("${nike.file.cdnUrl:}")
     public void setCdnUrl(final String cdnUrl) {
         this.cdnUrl = cdnUrl;
     }
 
+    /**
+     * Gets image file physical name.
+     *
+     * @return the image file physical name
+     * @author [이소정]
+     * @implNote cdnUrl + imageFilePhysicalName
+     * @since 2020. 7. 30. 오후 3:47:29
+     */
     public String getImageFilePhysicalName() {
         return this.cdnUrl + imageFilePhysicalName;
     }

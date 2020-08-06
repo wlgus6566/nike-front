@@ -29,11 +29,37 @@ public class ServiceCode {
      *
      * @author [이소정]
      */
+    @RequiredArgsConstructor
+    @Getter
     public enum SearchEnumCode {
-        LATEST //최신순
-        , START_DATE //시작일순
-        , ORDER // 정렬번호 순
-        , FILE_NAME // 파일명
+        LATEST("updateDt") //최신순
+        , START_DATE("campaignBeginDt"); //시작일순
+
+        /**
+         * 코드값
+         *
+         * @author [이소정]
+         */
+        private final String value;
+    }
+
+    /**
+     * The enum Contents file search code.
+     *
+     * @author [이소정]
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum ContentsFileSearchCode {
+        ORDER("fileOrder") // 정렬번호 순
+        , FILE_NAME("fileName"); // 파일명
+
+        /**
+         * 코드값
+         *
+         * @author [이소정]
+         */
+        private final String value;
     }
 
     /**
@@ -76,15 +102,36 @@ public class ServiceCode {
      */
     public enum ContentsMenuCode {
         ALL
-        , SP // Asset > SP
+    }
+
+    /**
+     * Asset 메뉴 코드
+     */
+    public enum AssetMenuCode {
+        SP // Asset > SP
         , SU // Asset > SU
         , FA // Asset > FA
         , HO // Asset > HO
-        , VMS // TOOLKIT, FOUNDATION > VMS
-        , EKIN // TOOLKIT, FOUNDATION > EKIN
+    }
+
+    /**
+     * Toolkit 메뉴 코드
+     */
+    public enum ToolkitMenuCode {
+        VMS // TOOLKIT > VMS
+        , EKIN // TOOLKIT > EKIN
         , SOCIAL // TOOLKIT > SOCIAL
-        , RB // TOOLKIT, FOUNDATION > RB
+        , RB // TOOLKIT > RB
+    }
+
+    /**
+     * Foundation 메뉴 코드
+     */
+    public enum FoundationMenuCode {
+        VMS // FOUNDATION > VMS
+        , EKIN // FOUNDATION > EKIN
         , DIGITAL // FOUNDATION > DIGITAL
+        , RB // FOUNDATION > RB
     }
 
     /**
@@ -246,7 +293,7 @@ public class ServiceCode {
         CONTENTS("contents"),
         REPORT("report"),
         TEMP("temp"),
-        QNA("QNA"),
+        NEWS("NEWS"),
         BANNER("banner")
         ;
 

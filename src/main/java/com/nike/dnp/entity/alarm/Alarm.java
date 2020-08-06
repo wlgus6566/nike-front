@@ -12,8 +12,8 @@ import javax.persistence.*;
  * The Class Alarm.
  *
  * @author [이소정]
- * @since 2020. 7. 24. 오후 7:13:34
  * @implNote
+ * @since 2020. 7. 24. 오후 7:13:34
  */
 @Getter
 @Setter
@@ -25,6 +25,7 @@ public class Alarm extends BaseTimeEntity {
 
     /**
      * 알림 시퀀스
+     *
      * @author [이소정]
      */
     @Id
@@ -35,6 +36,7 @@ public class Alarm extends BaseTimeEntity {
 
     /**
      * 컨텐츠 시퀀스
+     *
      * @author [이소정]
      */
     @Column(name = "CONTENTS_SEQ")
@@ -43,6 +45,7 @@ public class Alarm extends BaseTimeEntity {
 
     /**
      * 보고서 시퀀스
+     *
      * @author [이소정]
      */
     @Column(name = "REPORT_SEQ")
@@ -51,6 +54,7 @@ public class Alarm extends BaseTimeEntity {
 
     /**
      * 유저 시퀀스
+     *
      * @author [이소정]
      */
     @Column(name = "USER_SEQ")
@@ -59,6 +63,7 @@ public class Alarm extends BaseTimeEntity {
 
     /**
      * 상태 타입(NEW, UPDATE, FEEDBACK)
+     *
      * @author [이소정]
      */
     @Column(name = "TYPE_ACTION")
@@ -67,6 +72,7 @@ public class Alarm extends BaseTimeEntity {
 
     /**
      * 메뉴 타입 코드(ASSET, TOOLKIT, FOUNDATION, REPORT)
+     *
      * @author [이소정]
      */
     @Column(name = "TYPE_CD")
@@ -75,6 +81,8 @@ public class Alarm extends BaseTimeEntity {
 
     /**
      * The Contents.
+     *
+     * @author [이소정]
      */
     @ManyToOne
     @JoinColumn(name = "CONTENTS_SEQ", insertable = false, updatable = false)
@@ -83,6 +91,8 @@ public class Alarm extends BaseTimeEntity {
 
     /**
      * The Report.
+     *
+     * @author [이소정]
      */
     @ManyToOne
     @JoinColumn(name = "REPORT_SEQ", insertable = false, updatable = false)

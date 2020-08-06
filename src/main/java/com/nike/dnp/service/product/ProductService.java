@@ -143,6 +143,12 @@ public class ProductService {
 			product.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
 			product.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
 		}
+
+		if(productUpdateDTO.getExposureYn().equals(ServiceCode.YesOrNoEnumCode.N.name())){
+			goodsBasketRepository.deleteByGoodsSeq(product.getGoodsSeq());
+			wishListRepository.deleteByGoodsSeq(product.getGoodsSeq());
+		}
+
 		return productRepository.save(product);
 	}
 

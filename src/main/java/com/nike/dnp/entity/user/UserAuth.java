@@ -15,8 +15,8 @@ import java.io.Serializable;
  * UserAuth Entity
  *
  * @author [오지훈]
- * @since 2020. 6. 24. 오후 6:11:14
  * @implNote UserAuth(유저 권한) Entity 작성
+ * @since 2020. 6. 24. 오후 6:11:14
  */
 @Slf4j
 @Getter
@@ -78,13 +78,22 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
     @ApiModelProperty(name = "auth", value = "권한")
     private Auth auth;
 
+    /**
+     * Instantiates a new User auth.
+     *
+     * @param userSeq the user seq
+     * @param authSeq the auth seq
+     * @author [오지훈]
+     * @implNote 생성자 주입 *
+     * @since 2020. 8. 3. 오전 10:41:09
+     */
     @Builder
     public UserAuth (
-            final User user
-            , final Auth auth
+            final Long userSeq
+            , final Long authSeq
     ) {
-        this.user = user;
-        this.auth = auth;
+        this.userSeq = userSeq;
+        this.authSeq = authSeq;
     }
 
     /**
@@ -110,8 +119,8 @@ public class UserAuth extends BaseTimeEntity implements Serializable {
      *
      * @param userUpdateDTO the user update dto
      * @author [오지훈]
-     * @since 2020. 6. 30. 오후 4:38:14
      * @implNote 유저권한 업데이트
+     * @since 2020. 6. 30. 오후 4:38:14
      */
     public void update(final UserUpdateDTO userUpdateDTO) {
         log.info("UserAuth.authUpdate");

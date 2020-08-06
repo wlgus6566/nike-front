@@ -21,6 +21,8 @@ public class ContentsUserEmailDTO {
 
     /**
      * The User id.
+     *
+     * @author [이소정]
      */
     @Column(name = "USER_ID")
     @ApiModelProperty(name = "userId", value = "유저 ID", required = true, example = "test@nike.co.kr")
@@ -28,6 +30,7 @@ public class ContentsUserEmailDTO {
 
     /**
      * 이미지 파일 물리명
+     *
      * @author [이소정]
      */
     @Column(name = "IMAGE_FILE_PHYSICAL_NAME")

@@ -5,7 +5,6 @@ import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.entity.contents.QContents;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.StringUtils;
 
@@ -13,11 +12,10 @@ import org.springframework.util.StringUtils;
  * The Class Contents predicate helper.
  *
  * @author [이소정]
+ * @implNote 콘텐츠 검색 조건
  * @since 2020. 7. 1. 오후 5:56:06
- * @implNote
  */
 @UtilityClass
-@NoArgsConstructor
 public class ContentsPredicateHelper {
 
 	/**
@@ -26,8 +24,8 @@ public class ContentsPredicateHelper {
 	 * @param contentsSearchDTO the contents search dto
 	 * @return the predicate
 	 * @author [이소정]
+	 * @implNote 콘텐츠 폴더명 비교
 	 * @since 2020. 7. 2. 오전 11:14:36
-	 * @implNote
 	 */
 	public Predicate compareKeyword(final ContentsSearchDTO contentsSearchDTO) {
 		final BooleanBuilder builder = new BooleanBuilder();
@@ -46,8 +44,8 @@ public class ContentsPredicateHelper {
 	 * @param contentsSearchDTO the contents search dto
 	 * @return the predicate
 	 * @author [이소정]
+	 * @implNote 콘텐츠 메뉴 코드 비교
 	 * @since 2020. 7. 2. 오전 11:14:34
-	 * @implNote
 	 */
 	public Predicate eqMenuCode(final ContentsSearchDTO contentsSearchDTO) {
 		final BooleanBuilder builder = new BooleanBuilder();
@@ -68,8 +66,8 @@ public class ContentsPredicateHelper {
 	 * @param exposureYn the exposure yn
 	 * @return the predicate
 	 * @author [이소정]
+	 * @implNote 콘텐츠 노출 여부 조회
 	 * @since 2020. 7. 1. 오후 5:57:47
-	 * @implNote
 	 */
 	public static Predicate eqExposureYn(final String exposureYn) {
 		final BooleanBuilder builder = new BooleanBuilder();

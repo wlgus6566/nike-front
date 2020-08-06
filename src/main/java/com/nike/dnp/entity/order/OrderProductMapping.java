@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.order;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.entity.product.Product;
 import io.swagger.annotations.ApiModelProperty;
@@ -83,7 +84,8 @@ public class OrderProductMapping extends BaseTimeEntity {
      */
     @ManyToOne
     @JoinColumn(name="ORDER_SEQ",insertable = false,updatable = false)
-    @ApiModelProperty(name = "product", value = "주문 정보")
-    private Order order;
+    @JsonBackReference
+    @ApiModelProperty(name = "order", value = "주문 정보")
+    private OrderEntity orderEntity;
 
 }

@@ -1,7 +1,7 @@
 package com.nike.dnp.controller.contents;
 
+import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.ServiceCode;
-import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.model.response.CommonResult;
@@ -15,18 +15,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
-import java.io.IOException;
+import javax.validation.Valid;
 
 /**
  * The Class Contents controller.
  *
  * @author [이소정]
+ * @implNote 컨텐츠 컨트롤러
  * @since 2020. 7. 13. 오전 11:52:57
- * @apiNote 컨텐츠 컨트롤러
  */
 @Slf4j
 @RestController
@@ -57,13 +57,62 @@ public class ContentsController {
     private static final String REQUEST_CHARACTER = "## Reqeust ## \n" + "필드명|설명|필수여부|데이터 타입(길이)|추가\n" + "-|-|-|-|-|-\n";
 
     /**
+     * The constant TOP_MENU_CODE
+     *
+     * @author [이소정]
+     */
+    private static final String TOP_MENU_CODE = "topMenuCode";
+
+    /**
+     * The constant MENU_CODE
+     *
+     * @author [이소정]
+     */
+    private static final String MENU_CODE = "menuCode";
+
+    /**
+     * The constant TOP_MENU_VALUE
+     *
+     * @author [이소정]
+     */
+    private static final String TOP_MENU_VALUE = "상위 메뉴";
+
+    /**
+     * The constant TOP_MENU_EXAMPLE
+     *
+     * @author [이소정]
+     */
+    private static final String TOP_MENU_EXAMPLE = "ASSET";
+
+    /**
+     * The constant MENU_CODE_VALUE
+     *
+     * @author [이소정]
+     */
+    private static final String MENU_CODE_VALUE = "2depth 메뉴코드";
+
+    /**
+     * The constant REQUEST_MENU_DESC
+     *
+     * @author [이소정]
+     */
+    private static final String REQUEST_MENU_DESC =
+            TOP_MENU_CODE+"|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
+            + MENU_CODE+"|파일구분(2depth menu, 업로드 위치)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
+            + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
+            + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n";
+
+
+    /**
      * 컨텐츠 전체목록 조회
      *
+     * @param topMenuCode       the top menu code
+     * @param menuCode          the menu code
      * @param contentsSearchDTO the contents search dto
      * @return all managers
      * @author [이소정]
+     * @implNote 컨텐츠 목록 조회
      * @since 2020. 6. 19. 오후 5:56:03
-     * @apiNote 컨텐츠 목록 조회
      */
     @ApiOperation(
         value = "컨텐츠 목록 조회"
@@ -71,10 +120,6 @@ public class ContentsController {
         + "page|페이지|false|Integer|0부터 시작\n"
         + "size|사이즈|false|Integer\n"
         + "keyword|검색어|false|Strin|ASSET/TOOLKIT/FOUNDATION\n"
-        + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
-        + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
-        + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
-        + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n"
         + "orderType|정렬 타입|false|String|최신순:LATEST/시작일 순:START_DATE\n"
         + "[하위 Parameters 참조]\n\n\n\n"
         + "## Public/Paging Response ## \n"
@@ -90,15 +135,14 @@ public class ContentsController {
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 목록 조회", value = "/{topMenuCode}/{menuCode}")
     public SingleResult<Page<ContentsResultDTO>> findAllContents(
-            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
-            @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "ALL", required = true) @PathVariable final String menuCode,
-            final ContentsSearchDTO contentsSearchDTO,
-            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
+            @ApiParam(name = TOP_MENU_CODE, value = TOP_MENU_VALUE, defaultValue = TOP_MENU_EXAMPLE, required = true) @PathVariable final String topMenuCode,
+            @ApiParam(name = MENU_CODE, value = "파일구분(2depth menu)", defaultValue = "ALL", required = true) @PathVariable final String menuCode,
+            final ContentsSearchDTO contentsSearchDTO
 
     ) {
         contentsSearchDTO.setTopMenuCode(topMenuCode);
         contentsSearchDTO.setMenuCode(menuCode);
-        return responseService.getSingleResult(contentsService.findAllPaging(contentsSearchDTO, authUserDTO, topMenuCode, menuCode));
+        return responseService.getSingleResult(contentsService.findAllPaging(contentsSearchDTO, topMenuCode, menuCode));
     }
 
 
@@ -110,22 +154,20 @@ public class ContentsController {
      * @param contentsSaveDTO the contents save dto
      * @return the single result
      * @author [이소정]
+     * @implNote 컨텐츠 등록
      * @since 2020. 7. 13. 오전 11:58:47
-     * @apiNote 컨텐츠 등록
      */
     @ApiOperation(
             value = "컨텐츠 등록"
-            , notes = REQUEST_CHARACTER
-            + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
-            + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
-            + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
-            + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n"
+            , notes = REQUEST_CHARACTER + REQUEST_MENU_DESC
     )
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 등록", value = "/{topMenuCode}/{menuCode}")
+    @ValidField
     public SingleResult<Contents> saveContents(
-            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
-            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @RequestBody final ContentsSaveDTO contentsSaveDTO
+            @ApiParam(name = TOP_MENU_CODE, value = TOP_MENU_VALUE, defaultValue = TOP_MENU_EXAMPLE, required = true) @PathVariable final String topMenuCode
+            , @ApiParam(name = MENU_CODE, value = MENU_CODE_VALUE, defaultValue = "SP", required = true) @PathVariable final String menuCode
+            , @RequestBody @Valid final ContentsSaveDTO contentsSaveDTO
+            , @ApiIgnore final BindingResult result
     ) {
         contentsSaveDTO.setTopMenuCode(topMenuCode);
         contentsSaveDTO.setMenuCode(menuCode);
@@ -145,22 +187,19 @@ public class ContentsController {
      * @param contentsSeq the contents seq
      * @return the single result
      * @author [이소정]
+     * @implNote 컨텐츠 상세조회
      * @since 2020. 7. 13. 오전 11:58:42
-     * @apiNote 컨텐츠 상세조회
      */
     @ApiOperation(
             value = "컨텐츠 상세조회"
             , notes = REQUEST_CHARACTER
-            + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
-            + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
-            + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
-            + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n"
+            + REQUEST_MENU_DESC
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = " 컨텐츠 상세조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}")
     public SingleResult<ContentsResultDTO> findContents(
-            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
-            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
+            @ApiParam(name = TOP_MENU_CODE, value = TOP_MENU_VALUE, defaultValue = TOP_MENU_EXAMPLE, required = true) @PathVariable final String topMenuCode
+            , @ApiParam(name = MENU_CODE, value = MENU_CODE_VALUE, defaultValue = "SP", required = true) @PathVariable final String menuCode
+            , @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
         return responseService.getSingleResult(contentsService.findByContentsSeq(contentsSeq, topMenuCode, menuCode));
     }
 
@@ -168,95 +207,100 @@ public class ContentsController {
     /**
      * Update contents single result.
      *
-     * @param topMenuCode       the top menu code
-     * @param menuCode          the menu code
-     * @param contentsUpdateDTO the contents update dto
+     * @param topMenuCode     the top menu code
+     * @param menuCode        the menu code
+     * @param contentsSeq     the contents seq
+     * @param contentsSaveDTO the contents save dto
+     * @param result          the result
      * @return the single result
      * @author [이소정]
+     * @implNote
+     * @apiNote 콘텐츠 수정
      * @since 2020. 7. 13. 오전 11:59:45
-     * @apiNote
      */
-    @ApiOperation(value = "컨텐츠 수정", notes = REQUEST_CHARACTER
-            + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
-            + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
-            + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
-            + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n")
+    @ApiOperation(value = "컨텐츠 수정", notes = REQUEST_CHARACTER + REQUEST_MENU_DESC)
     @PutMapping(name = "컨텐츠 수정", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public SingleResult<Contents> updateContents(
-            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
-            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq,
-            @ApiParam(name="contentsUpdateDTO", value = "Contents 수정 Json") @RequestBody final ContentsUpdateDTO contentsUpdateDTO
+            @ApiParam(name = TOP_MENU_CODE, value = TOP_MENU_VALUE, defaultValue = TOP_MENU_EXAMPLE, required = true) @PathVariable final String topMenuCode
+            , @ApiParam(name = MENU_CODE, value = MENU_CODE_VALUE, defaultValue = "SP", required = true) @PathVariable final String menuCode
+            , @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq
+            , @ApiParam(name="contentsUpdateDTO", value = "Contents 수정 Json") @RequestBody @Valid final ContentsSaveDTO contentsSaveDTO
+            , @ApiIgnore final BindingResult result
     ) {
-        contentsUpdateDTO.setTopMenuCode(topMenuCode);
-        contentsUpdateDTO.setMenuCode(menuCode);
-        contentsUpdateDTO.setContentsSeq(contentsSeq);
-        return responseService.getSingleResult(contentsService.update(contentsUpdateDTO));
+        contentsSaveDTO.setTopMenuCode(topMenuCode);
+        contentsSaveDTO.setMenuCode(menuCode);
+        contentsSaveDTO.setContentsSeq(contentsSeq);
+        return responseService.getSingleResult(contentsService.update(contentsSaveDTO));
     }
 
 
     /**
      * Delete contents single result.
      *
+     * @param topMenuCode the top menu code
+     * @param menuCode    the menu code
      * @param contentsSeq the contents seq
      * @return the single result
      * @author [이소정]
-     * @since 2020. 7. 7. 오후 2:06:55
+     * @implNote
      * @apiNote
+     * @since 2020. 7. 7. 오후 2:06:55
      */
-    @ApiOperation(value="컨텐츠 삭제", notes = REQUEST_CHARACTER
-            + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
-            + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
-            + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
-            + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n")
+    @ApiOperation(value="컨텐츠 삭제", notes = REQUEST_CHARACTER + REQUEST_MENU_DESC)
     @DeleteMapping(name = "컨텐츠 삭제", value = "/{topMenuCode}/{menuCode}/{contentsSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Contents> deleteContents(
-            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
-            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
-            @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq) {
+            @ApiParam(name = TOP_MENU_CODE, value = TOP_MENU_VALUE, defaultValue = TOP_MENU_EXAMPLE, required = true) @PathVariable final String topMenuCode
+            , @ApiParam(name = MENU_CODE, value = MENU_CODE_VALUE, defaultValue = "SP", required = true) @PathVariable final String menuCode
+            , @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq
+    ) {
         log.info("ContentsController.delete");
         return responseService.getSingleResult(contentsService.delete(contentsSeq));
     }
 
     /**
-     * 컨텐츠 다운로드
+     * 콘텐츠 파일 다운로드
      *
-     * @param topMenuCode the top menu code
-     * @param menuCode    the menu code
+     * @param contentsFileSeq the contents file seq
      * @return the string
      * @author [이소정]
+     * @implNote 콘텐츠 파일 다운로드
      * @since 2020. 7. 15. 오후 6:30:45
-     * @apiNote
      */
-    @ApiOperation(value = "컨텐츠 다운로드", notes = REQUEST_CHARACTER)
-    @PostMapping(name = "컨텐츠 다운로드", value = "/{topMenuCode}/{menuCode}/download/{contentsFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiOperation(value = "컨텐츠 파일 다운로드", notes = REQUEST_CHARACTER)
+    @GetMapping(name = "컨텐츠 파일 다운로드", value = "/download/{contentsFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public CommonResult downloadContents(
-            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
-            @ApiParam(name = "menuCode", value = "2depth 메뉴코드", defaultValue = "SP", required = true) @PathVariable final String menuCode,
             @ApiParam(name="contentsFileSeq", value = "컨텐츠 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long contentsFileSeq
-        ) throws IOException {
-        responseService.getSingleResult(contentsService.downloadContentsFile(contentsFileSeq));
+    ) {
+        responseService.getSingleResult(contentsService.downloadFile(contentsFileSeq));
         return responseService.getSuccessResult();
     }
 
     /**
      * Send email common result.
      *
-     * @param contentsMailSendDTO the contents mail send dto
+     * @param mailSendDTO the mail send dto
+     * @param result      the result
      * @return the common result
+     * @author [이소정]
+     * @implNote
+     * @since 2020. 7. 30. 오후 3:58:41
      */
     @ApiOperation(value = "컨텐츠 알림메일전송", notes = REQUEST_CHARACTER)
     @PostMapping(name = "컨텐츠 알림메일전송", value = "/sendMail", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
     public CommonResult sendEmail(
-            @RequestBody final ContentsMailSendDTO contentsMailSendDTO
+            @RequestBody @Valid final ContentsMailSendDTO mailSendDTO
+            , @ApiIgnore final BindingResult result
     ) {
-        contentsService.sendEmail(contentsMailSendDTO);
+        contentsService.sendEmail(mailSendDTO);
         return responseService.getSuccessResult();
     }
 
 
 
 }
+
 
