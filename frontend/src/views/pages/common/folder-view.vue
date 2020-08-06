@@ -41,6 +41,7 @@ import SortingList from '@/components/asset-view/sorting-list.vue';
 import fileItem from '@/components/asset-view/file-Item.vue';
 import {
     addContentsBasket,
+    deleteContents,
     getContentsView,
     getContentsViewFile,
 } from '@/api/contents';
@@ -60,7 +61,20 @@ export default {
             contentsFileList: null,
             checkContentsFileList: [],
             sectionCode: {
-                listSortOptions: ['ALL', 'ASSET', 'GUIDE'],
+                listSortOptions: [
+                    {
+                        value: 'ALL',
+                        title: 'ALL',
+                    },
+                    {
+                        value: 'ASSET',
+                        title: 'ASSET',
+                    },
+                    {
+                        value: 'GUIDE',
+                        title: 'GUIDE',
+                    },
+                ],
                 value: 'ALL',
             },
             orderType: {
@@ -207,7 +221,29 @@ export default {
         },
     },
     methods: {
-        deleteFolder() {},
+        async deleteFolder() {
+            if (
+                !confirm(
+                    '삭제 시 등록한 내용이 전부 삭제 됩니다. 삭제하시겠습니까?'
+                )
+            )
+                return;
+            if (!confirm('정말 삭제하시겠습니까?')) return;
+            try {
+                const response = await deleteContents(
+                    this.$route.meta.topMenuCode,
+                    this.$route.meta.menuCode,
+                    this.$route.params.id
+                );
+                this.$store.commit('SET_RELOAD', true);
+                if (response.data.success) {
+                    this.$router.go(-1);
+                }
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+            }
+        },
         editFolder() {},
         initFetchData() {
             this.totalPage = null;

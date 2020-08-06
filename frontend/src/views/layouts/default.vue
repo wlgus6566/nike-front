@@ -21,9 +21,11 @@
             <div class="contents">
                 <transition
                     name="page-change"
+                    :css="false"
                     mode="out-in"
                     appear
-                    v-on:leave="pageLeave"
+                    @enter="pageEnter"
+                    @leave="pageLeave"
                 >
                     <keep-alive max="2">
                         <router-view :key="$route.fullPath" />
@@ -106,7 +108,7 @@ export default {
         this.headerAni();
         this.toggleHeader(this.headerActiveNav, this.tw._dur);
         const target = [document.querySelector('header .inner')];
-        this.layoutAnimation(target, '-100%', '0%');
+        this.asideAnimation(target, '-100%', '0%');
     },
 
     methods: {
@@ -237,7 +239,21 @@ export default {
                     0.4
                 );
         },
-        pageLeave() {
+        pageEnter(el, done) {
+            this.pageAnimation(
+                el,
+                { translateY: '30px', opacity: 0 },
+                { translateY: '0', opacity: 1 },
+                done
+            );
+        },
+        pageLeave(el, done) {
+            this.pageAnimation(
+                el,
+                { translateY: '0', opacity: 1 },
+                { translateY: '30px', opacity: 0 },
+                done
+            );
             if (
                 this.newRoutePath.split('/')[1] !==
                 this.oldRoutePath.split('/')[1]
@@ -248,6 +264,26 @@ export default {
                 this.toggleHeader(this.headerActiveNav);
             }
         },
+        pageAnimation(el, fromVal, toVal, done) {
+            gsap.fromTo(
+                el,
+                0.3,
+                {
+                    ...fromVal,
+                    ease: Cubic.easeInOut,
+                },
+                {
+                    ...toVal,
+                    ease: Cubic.easeInOut,
+                    onComplete: () => {
+                        if (done) {
+                            done();
+                        }
+                    },
+                }
+            );
+        },
+
         toggleHeader(status, duration) {
             if (status) {
                 this.tw.play(duration);
@@ -265,17 +301,17 @@ export default {
         // Aside
         asideAppear(el, done) {
             const elements = [document.querySelector('aside .aside-bg'), el];
-            this.layoutAnimation(elements, '100%', '0%', done);
+            this.asideAnimation(elements, '100%', '0%', done);
         },
         asideEnter(el, done) {
             const elements = [document.querySelector('aside .aside-bg'), el];
-            this.layoutAnimation(elements, '100%', '0%', done);
+            this.asideAnimation(elements, '100%', '0%', done);
         },
         asideLeave(el, done) {
             const elements = [document.querySelector('aside .aside-bg'), el];
-            this.layoutAnimation(elements, '0%', '100%', done);
+            this.asideAnimation(elements, '0%', '100%', done);
         },
-        layoutAnimation(el, fromVal, toVal, done) {
+        asideAnimation(el, fromVal, toVal, done) {
             gsap.fromTo(
                 el,
                 0.3,

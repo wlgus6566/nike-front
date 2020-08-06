@@ -9,12 +9,26 @@
                 <div class="input-box">
                     <input
                         type="text"
-                        v-model="username"
+                        :value="username"
+                        @input="
+                            $emit(
+                                'updateValue',
+                                'username',
+                                $event.target.value
+                            )
+                        "
                         placeholder="ID(E-MAIL)"
                     />
                     <input
                         type="password"
-                        v-model="password"
+                        :value="password"
+                        @input="
+                            $emit(
+                                'updateValue',
+                                'password',
+                                $event.target.value
+                            )
+                        "
                         placeholder="PW"
                     />
                 </div>
@@ -31,6 +45,7 @@
                         ><span>비밀번호 찾기</span></a
                     >
                 </div>
+                KDf\p*jkyP
             </div>
         </div>
     </form>
@@ -38,11 +53,9 @@
 <script>
 export default {
     name: 'loginForm',
+    props: ['username', 'password'],
     data() {
-        return {
-            username: 'yth',
-            password: 'Emotion1!@',
-        };
+        return {};
     },
     methods: {
         async login() {
@@ -68,11 +81,11 @@ export default {
                 if (response.data.code === 'SEND_EMAIL_CERT_CODE') {
                     this.$emit('changeLoginBox', 'certCode');
                 } else {
-                    //await this.$router.push('/');
+                    // await this.$router.push('/');
                 }
                 console.log(response);
             } catch (error) {
-                console.log(error.response);
+                console.log(error);
                 alert(error.response.data.msg);
             }
         },
