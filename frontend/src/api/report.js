@@ -1,10 +1,15 @@
-import { report } from './index';
+import {report} from './index';
 
-// 목록 조회
+//REPORT 목록 조회
 function getReportList(params) {
     return report.get(`/`, {
         params: params,
     });
 }
 
-export { getReportList };
+//REPORT 등록
+function postReport(data) {
+    return report.post(`/`, data);
+}
+
+export { getReportList, postReport };
