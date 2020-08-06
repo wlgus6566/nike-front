@@ -24,6 +24,7 @@ export default new Vuex.Store({
         basketListData: null,
         goodsBasketSeq: '',
         contBasketList: [],
+        reload: false,
     },
     getters: {
         basketAppendCheck(state) {
@@ -74,6 +75,9 @@ export default new Vuex.Store({
         },
         SET_FILE_MOUSEENTER(state, data) {
             state.fileMouseenter = data;
+        },
+        SET_RELOAD(state, data) {
+            state.reload = data;
         },
     },
     actions: {
