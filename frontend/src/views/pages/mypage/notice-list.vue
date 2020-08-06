@@ -25,10 +25,8 @@
         <Loading v-if="loadingData" />
         <div class="btn-tbl-box">
             <div class="right">
-                <router-link to="/mypage/edit/notice">
-                    <button type="button" class="btn-form-gray">
-                        <span>등록</span>
-                    </button>
+                <router-link to="/mypage/notice/form" class="btn-form-gray">
+                    <span>등록</span>
                 </router-link>
             </div>
         </div>

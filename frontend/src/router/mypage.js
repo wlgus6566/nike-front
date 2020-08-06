@@ -1,4 +1,4 @@
-import {pages} from '@/utils/global-methods';
+import { pages } from '@/utils/global-methods';
 
 const routes = [
     {
@@ -82,6 +82,17 @@ const routes = [
             title: 'NEWS',
         },
     },
+    {
+        path: '/mypage/faq',
+        name: 'faq',
+        component: pages('mypage/faq.vue'),
+        meta: {
+            layout: 'Default',
+            aside: 'Default',
+            sectionCode: 'QNA',
+            title: '자주 묻는 질문',
+        },
+    },
 
     {
         path: '/mypage/notice/',
@@ -95,7 +106,7 @@ const routes = [
         },
     },
     {
-        path: '/mypage/notice/:id',
+        path: '/mypage/notice/view/:id',
         name: 'notice',
         component: pages('mypage/notice-view'),
         meta: {
@@ -106,44 +117,34 @@ const routes = [
         },
     },
     {
-        path: '/mypage/edit',
+        path: '/mypage/notice/form',
         name: 'notice',
-        component: pages('mypage/edit.vue'),
+        component: pages('mypage/notice-form'),
         meta: {
             layout: 'Default',
             aside: 'Default',
+            sectionCode: 'NOTICE',
             title: '공지사항',
         },
-
-        children: [
-            {
-                path: 'news',
-                component: pages('mypage/edit.vue'),
-                meta: { layout: 'Default', aside: 'Default', title: 'NEWS' },
-            },
-            {
-                path: 'notice',
-                component: pages('mypage/edit.vue'),
-                meta: {
-                    layout: 'Default',
-                    aside: 'Default',
-                    title: '공지사항',
-                },
-            },
-        ],
     },
-
-    {
-        path: '/mypage/faq',
-        name: 'faq',
-        component: pages('mypage/faq.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            sectionCode: 'QNA',
-            title: '자주 묻는 질문',
-        },
-    },
+    // {
+    //     path: '/mypage/news/form',
+    //     component: pages('mypage/news-form'),
+    //     meta: {
+    //         layout: 'Default',
+    //         aside: 'Default',
+    //         dtitle: 'NEWS',
+    //     },
+    // },
+    // {
+    //     path: '/mypage/faq/form',
+    //     component: pages('mypage/faq-form'),
+    //     meta: {
+    //         layout: 'Default',
+    //         aside: 'Default',
+    //         title: '자주 묻는 질문',
+    //     },
+    // },
 ];
 
 export default routes;

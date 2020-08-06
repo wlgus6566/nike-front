@@ -47,7 +47,7 @@ export default {
     computed: {},
     methods: {
         setUrl(item) {
-            return `/mypage/notice/${item}`.toLocaleLowerCase();
+            return `/mypage/notice/view/${item}`.toLocaleLowerCase();
         },
     },
 };
