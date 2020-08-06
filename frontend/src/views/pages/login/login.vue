@@ -5,6 +5,7 @@
                 :is="LoginBox"
                 :loginData="loginData"
                 @login="login"
+                @updateValue="updateValue"
                 @changeLoginBox="changeLoginBox"
             />
             <p class="f-desc">
@@ -15,17 +16,18 @@
     </section>
 </template>
 <script>
-import LoginForm from '@/components/login-box/login-form';
-import CertCode from '@/components/login-box/cert-code';
-import FindPW from '@/components/login-box/find-password';
-export default {
+    import LoginForm from '@/components/login-box/login-form';
+    import CertCode from '@/components/login-box/cert-code';
+    import FindPW from '@/components/login-box/find-password';
+
+    export default {
     name: 'login',
     data() {
         return {
             LoginBox: 'LoginForm',
             loginData: {
-                username: 'joosung.yeum@emotion.co.kr',
-                password: 'Dlahtus!1',
+                username: '',
+                password: '',
                 certCode: '',
             },
         };
@@ -36,7 +38,7 @@ export default {
             this.LoginBox = compName;
         },
         updateValue(target, value) {
-            this[target] = value;
+            this.loginData[target] = value;
         },
         async login() {
             if (!this.loginData.username) {
