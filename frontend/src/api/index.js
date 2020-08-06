@@ -18,3 +18,4 @@ export const product = createWithAuth(`/api/product`, { timeout: 3000 });
 export const report = createWithAuth(`/api/report`, { timeout: 3000 });
 export const wishList = createWithAuth(`/api/wishlist`, { timeout: 3000 });
 export const code = createWithAuth(`/api/open/code`, { timeout: 3000 });
+export const user = createWithAuth(`/api/user`, { timeout: 3000 });

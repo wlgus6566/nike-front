@@ -1065,6 +1065,9 @@
     min-height: 220px;
     padding-left: 250px;
 }
+.form-list-thumb.min-height {
+    height: 263px;
+}
 .form-list-thumb .thumb-row {
     position: absolute;
     top: 0;
@@ -3530,4 +3533,7 @@
 }
 .sortable-ghost .detail {
     display: none !important;
+}
+.el-dialog {
+    z-index: 2000 !important;
 }
