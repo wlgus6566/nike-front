@@ -62,16 +62,6 @@ const routes = [
         },
     },
     {
-        path: '/mypage/logout',
-        name: 'logout',
-        component: pages('mypage/logout.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            title: '로그아웃',
-        },
-    },
-    {
         path: '/mypage/news',
         name: 'news',
         component: pages('mypage/news-list.vue'),
