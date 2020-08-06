@@ -183,7 +183,7 @@ public class CalendarService {
         if(!ObjectUtils.isEmpty(calendarDaySearchDTO.getSearchDt())){
             searchDt = LocalDateTime.of(
                     LocalDate.parse(calendarDaySearchDTO.getSearchDt() ,DateTimeFormatter.ofPattern("yyyy.MM.dd")),
-                    LocalTime.of(0,0,0));
+                    LocalTime.of(1,0,0));
         }
         return calendarRepository.findAllByBeginDtBeforeAndEndDtAfter(searchDt, searchDt);
     }
