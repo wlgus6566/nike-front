@@ -58,11 +58,12 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.meta.unauthorized) {
-        if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
+        next();
+        /*if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
             next('/');
         } else {
             next();
-        }
+        }*/
     } else {
         if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
             next();
