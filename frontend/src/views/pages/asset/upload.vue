@@ -6,7 +6,7 @@
             <hr class="hr-black" />
             <ul class="form-list-thumb">
                 <li class="form-row thumb-row">
-                    <thumbnail />
+                    <thumbnail :imgSrc2="imageFilePhysicalName" :size="1 / 1" />
                 </li>
                 <li class="form-row">
                     <div class="form-column">
@@ -53,7 +53,12 @@
                         <label class="label-title required">캠페인 상세</label>
                     </div>
                     <div class="form-column">
-                        <el-input type="textarea" :rows="2" v-model="campaignDesc"> </el-input>
+                        <el-input
+                            type="textarea"
+                            :rows="2"
+                            v-model="campaignDesc"
+                        >
+                        </el-input>
                     </div>
                 </li>
                 <li class="form-row">
@@ -62,7 +67,10 @@
                     </div>
                     <div class="form-column">
                         <div>
-                            <el-radio v-model="campaignPeriodRadio" label="selectDate">
+                            <el-radio
+                                v-model="campaignPeriodRadio"
+                                label="selectDate"
+                            >
                                 기간선택
                             </el-radio>
                             <el-radio v-model="campaignPeriodRadio" label="365">
@@ -92,7 +100,9 @@
                             <textarea cols="100" rows="2" style="height: 80px;">
 나이키 다이렉트 캠페인 자료와 동영상, 스타일가이드, 기타 그래픽자료가 업데이트 되었습니다. SP20 나이키 다이렉트 NSW 캠페인 시공 에셋 자료가 업데이트 되었습니다.</textarea
                             >
-                            <span class="count"><strong>100</strong> / <em>150</em>byte</span>
+                            <span class="count"
+                                ><strong>100</strong> / <em>150</em>byte</span
+                            >
                         </span>
                     </div>
                 </li>
@@ -111,8 +121,12 @@
 
             <FileSettings></FileSettings>
             <div class="btn-area">
-                <button type="button" class="btn-s-white"><span>취소</span></button>
-                <button type="submit" class="btn-s-black"><span>저장</span></button>
+                <button type="button" class="btn-s-white">
+                    <span>취소</span>
+                </button>
+                <button type="submit" class="btn-s-black">
+                    <span>저장</span>
+                </button>
             </div>
         </form>
     </div>
@@ -131,6 +145,8 @@ export default {
             campaignDesc: '',
             campaignPeriodRadio: 'selectDate',
             campaignDate: '',
+            imageFilePhysicalName: require('@/assets/images/@test1.jpg'),
+            imageFileName: 'test',
         };
     },
     components: {

@@ -1,146 +1,61 @@
 <template>
     <div>
+        <button type="button" @click="popupOpen">열기</button>
         <span class="thumb-file" :class="{ 'file-upload': cropImg }">
             <input
                 ref="input"
-                id="test"
                 type="file"
                 name="image"
                 accept="image/*"
-                @change="setImage"
+                @change="inputChangeEvent"
             />
             <span class="thumb">
                 <img v-if="cropImg" :src="cropImg" :alt="imgName" />
             </span>
-            <span class="txt" @click="inputReset" v-if="cropImg">
+            <span class="txt" v-if="cropImg">
                 썸네일 이미지 재등록
             </span>
             <span class="txt" v-else>썸네일 이미지 등록</span>
         </span>
-
-        <el-dialog
-            title="Tips"
-            :visible.sync="dialogVisible"
-            width="800px"
-            :before-close="handleClose"
-        >
-            <div>
-                <vue-cropper
-                    ref="cropper"
-                    :aspect-ratio="1 / 1"
-                    :aspectRatio="1 / 1"
-                    :viewMode="1"
-                    :responsive="false"
-                    :guides="false"
-                    :center="false"
-                    :src="imgSrc"
-                    :minContainerWidth="700"
-                    :minContainerHeight="700"
-                />
-            </div>
-            <a href="#" role="button" @click.prevent="cropImage">
-                Crop
-            </a>
-        </el-dialog>
     </div>
 </template>
 
 <script>
-    import VueCropper from 'vue-cropperjs';
-    import 'cropperjs/dist/cropper.css';
+import ModalCropper from './modal-cropper';
+import bus from '@/utils/bus';
 
-    export default {
+export default {
     name: 'index',
     data() {
         return {
-            dialogVisible: false,
-            imgSrc: require('@/assets/images/@test1.jpg'),
-            cropImg: null,
+            imgSrc: '',
+            cropImg: '',
             imgName: null,
-            //cropImg: null, //require('@/assets/images/@test1.jpg')
-            data: null,
         };
     },
-    props: ['imageFilePhysicalName', 'imageFileName'],
-    components: { VueCropper },
-    mounted() {},
+    props: ['imgSrc2', 'size'],
+
+    mounted() {
+        this.imgSrc = this.imgSrc2;
+        this.cropImg = this.imgSrc;
+    },
     activated() {
-        this.imgDataReset();
+        //this.imgDataReset();
     },
     watch: {
-        imageFilePhysicalName() {
-            this.cropImg = this.imageFilePhysicalName;
-        },
-        imageFileName() {
-            this.imgName = this.imageFileName;
+        imgSrc() {
+            //this.cropImg = this.imgSrc;
         },
     },
     computed: {},
     methods: {
-        imgDataReset() {
-            this.cropImg = null;
+        cropImgUpdate(img) {
+            this.cropImg = img;
+
+            this.$modal.close('test');
+            console.log(this.cropImg);
         },
-        inputReset() {
-            console.log(this.$refs.input);
-            this.cropImg = null;
-            this.$refs.input.value = null;
-        },
-        handleClose(done) {
-            this.dialogVisible = false;
-            /*this.$confirm('Are you sure to close this dialog?')
-                .then((_) => {
-                    done();
-                })
-                .catch((_) => {});*/
-        },
-        cropImage() {
-            // get image data for post processing, e.g. upload or setting image src
-            this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
-            this.dialogVisible = false;
-            this.$emit('cropImage', this.cropImg, this.imgName);
-        },
-        flipX() {
-            const dom = this.$refs.flipX;
-            let scale = dom.getAttribute('data-scale');
-            scale = scale ? -scale : -1;
-            this.$refs.cropper.scaleX(scale);
-            dom.setAttribute('data-scale', scale);
-        },
-        flipY() {
-            const dom = this.$refs.flipY;
-            let scale = dom.getAttribute('data-scale');
-            scale = scale ? -scale : -1;
-            this.$refs.cropper.scaleY(scale);
-            dom.setAttribute('data-scale', scale);
-        },
-        getCropBoxData() {
-            this.data = JSON.stringify(
-                this.$refs.cropper.getCropBoxData(),
-                null,
-                4
-            );
-        },
-        getData() {
-            this.data = JSON.stringify(this.$refs.cropper.getData(), null, 4);
-        },
-        move(offsetX, offsetY) {
-            this.$refs.cropper.move(offsetX, offsetY);
-        },
-        reset() {
-            this.$refs.cropper.reset();
-        },
-        rotate(deg) {
-            this.$refs.cropper.rotate(deg);
-        },
-        setCropBoxData() {
-            if (!this.data) return;
-            this.$refs.cropper.setCropBoxData(JSON.parse(this.data));
-        },
-        setData() {
-            if (!this.data) return;
-            this.$refs.cropper.setData(JSON.parse(this.data));
-        },
-        setImage(e) {
+        inputChangeEvent(e) {
             const file = e.target.files[0];
             if (file.type.indexOf('image/') === -1) {
                 alert('Please select an image file');
@@ -149,25 +64,29 @@
 
             if (typeof FileReader === 'function') {
                 const reader = new FileReader();
-                this.imgName = this.imgSrc.substring(
-                    this.imgSrc.lastIndexOf('/') + 1
-                );
-                reader.onload = (event) => {
+                reader.onload = event => {
                     this.imgSrc = event.target.result;
-                    // rebuild cropperjs with the updated source
-                    this.$refs.cropper.replace(event.target.result);
+                    bus.$emit('cropperReplace', event.target.result);
+                    this.popupOpen();
                 };
                 reader.readAsDataURL(file);
             } else {
                 alert('Sorry, FileReader API not supported');
             }
-            this.dialogVisible = true;
         },
-        showFileChooser() {
-            this.$refs.input.click();
-        },
-        zoom(percent) {
-            this.$refs.cropper.relativeZoom(percent);
+        popupOpen() {
+            this.$modal.show(
+                ModalCropper,
+                {
+                    name: 'test',
+                    modal: this.$modal,
+                    imgSrc: this.imgSrc,
+                    size: this.size,
+                },
+                {
+                    width: '800px',
+                }
+            );
         },
     },
 };

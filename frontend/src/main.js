@@ -8,6 +8,7 @@ import store from './store';
 import VueCookies from 'vue-cookies';
 import CKEditor from 'ckeditor4-vue';
 import VCalendar from 'v-calendar';
+import VModal from 'vue-js-modal';
 
 import lineClamp from './utils/lineclamp';
 
@@ -15,6 +16,18 @@ Vue.config.productionTip = false;
 
 Vue.use(CKEditor);
 Vue.use(VueCookies);
+Vue.use(VModal, {
+    dynamicDefaults: {
+        name: 'modal',
+        width: '800px',
+        height: 'auto',
+        adaptive: false,
+        draggable: true,
+        scrollable: true,
+        reset: true,
+        dynamic: true,
+    },
+});
 Vue.use(require('vue-moment'));
 Vue.use(VCalendar, {
     locale: 'en-US',
