@@ -1,7 +1,7 @@
 <template>
     <div>
-        <BtnArea @delete="deleteBoard" @edit="editBoard" />
-        <mypageView :noticeDetail="noticeDetail" />
+        <BtnArea @delete="deleteBoard" @edit="modifyRoute" />
+        <cumtomerView :noticeDetail="noticeDetail" />
     </div>
 </template>
 
@@ -12,22 +12,22 @@ export default {
     name: 'notice-view',
     data() {
         return {
-            noticeDetail: null,
+            noticeDetail: {
+                title: '',
+                registrationDt: '',
+                contents: '',
+            },
         };
     },
     mounted() {
         this.getNoticeDetail();
     },
     components: {
-        mypageView: () => import('@/components/customer/view.vue'),
+        cumtomerView: () => import('@/components/customer/view.vue'),
         BtnArea: () => import('@/components/asset-view/btn-area.vue'),
     },
     methods: {
-        async editBoard() {
-            console.log('editBoard');
-        },
-
-        //공지사항 리스트
+        //공지사항 상세
         async getNoticeDetail() {
             console.log(this.$route.params.id);
             try {
@@ -35,10 +35,14 @@ export default {
                     data: { data: response },
                 } = await getCustomerDetail(this.$route.params.id);
                 this.noticeDetail = response;
-                // console.log(this.noticeDetail);
             } catch (error) {
                 console.log(error);
             }
+        },
+
+        //게시판 수정페이지 이동
+        modifyRoute() {
+            this.$router.push(`/mypage/notice/modify/${this.$route.params.id}`);
         },
 
         //게시판 삭제
@@ -47,12 +51,11 @@ export default {
                 return false;
             }
             try {
-                console.log('ㅁㅁ');
-                const {
-                    data: { data: response },
-                } = await deleteCustomer(this.$route.params.id);
-                console.log(response);
-                this.$router.go(-1);
+                const response = await deleteCustomer(this.$route.params.id);
+                this.$store.commit('SET_RELOAD', true);
+                if (response.data.success) {
+                    this.$router.go(-1);
+                }
             } catch (error) {
                 console.log(error);
             }

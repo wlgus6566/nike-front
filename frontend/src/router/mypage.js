@@ -96,6 +96,7 @@ const routes = [
         },
     },
     {
+        //TODO view 삭제
         path: '/mypage/notice/view/:id',
         name: 'notice',
         component: pages('mypage/notice-view'),
@@ -115,6 +116,18 @@ const routes = [
             aside: 'Default',
             sectionCode: 'NOTICE',
             title: '공지사항',
+        },
+    },
+    {
+        path: '/mypage/notice/modify/:id',
+        name: 'notice',
+        component: pages('mypage/notice-form'),
+        meta: {
+            layout: 'Default',
+            aside: 'Default',
+            sectionCode: 'NOTICE',
+            title: '공지사항',
+            modify: true,
         },
     },
     // {

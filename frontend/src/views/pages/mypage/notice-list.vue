@@ -4,7 +4,7 @@
             <span class="ko">{{ this.$route.meta.title }}</span>
         </h2>
         <div class="sorting-area">
-            <SearchInput @:searchSubmit="searchSubmit" />
+            <SearchInput @searchSubmit="searchSubmit" />
         </div>
         <template v-if="noticeDataContent">
             <NoticeList
@@ -44,6 +44,7 @@
 
 <script>
 import { getCustomerList } from '@/api/customer';
+import SearchInput from '@/components/search-input';
 
 export default {
     name: 'notice-list',
@@ -60,9 +61,10 @@ export default {
         };
     },
     components: {
+        SearchInput,
         NoticeList: () => import('@/components/notice/'),
         Pagination: () => import('@/components/pagination/'),
-        SearchInput: () => import('@/components/search-input/index'),
+
         NoData: () => import('@/components/no-data'),
         Loading: () => import('@/components/loading'),
     },
@@ -70,8 +72,16 @@ export default {
     mounted() {
         this.getNoticeList();
     },
+    activated() {
+        if (this.$store.state.reload) {
+            this.getNoticeList();
+            this.$store.commit('SET_RELOAD', false);
+        }
+    },
     methods: {
+        //검색
         searchSubmit(val) {
+            console.log(val);
             this.searchKeyword = val;
             this.getNoticeList();
         },
