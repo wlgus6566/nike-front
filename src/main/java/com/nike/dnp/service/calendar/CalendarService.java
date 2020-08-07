@@ -76,6 +76,7 @@ public class CalendarService {
      * @since 2020. 7. 22. 오후 4:45:45
      * @implNote
      */
+    @Transactional
     public Calendar save(final CalendarSaveDTO calendarSaveDTO){
         log.info("CalendarService.save");
         final ModelMapper modelMapper = new ModelMapper();
