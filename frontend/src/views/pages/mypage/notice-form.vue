@@ -42,6 +42,12 @@
                             <span>비고정</span>
                         </label>
                     </div>
+                    <div class="form-column agr">
+                        <span class="form-desc"
+                            >* 목록 상단에 고정되며 [중요] 항목으로
+                            표시됩니다.</span
+                        >
+                    </div>
                 </li>
                 <li class="form-row">
                     <div class="form-column">
