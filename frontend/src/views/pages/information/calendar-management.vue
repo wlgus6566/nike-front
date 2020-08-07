@@ -78,7 +78,12 @@
                             </div>
                             <div class="form-column">
                                 <span class="textarea">
-                                    <textarea cols="100" rows="2"> </textarea>
+                                    <textarea
+                                            cols="100"
+                                            rows="2"
+                                            v-model="aa"
+                                            required
+                                    ></textarea>
                                 </span>
                             </div>
                         </li>
@@ -105,8 +110,23 @@ export default {
     props: {
         visible: Boolean,
         receipt: Object,
+        calendarDetail: Object
     },
-
+    data() {
+        return {
+            detailData: JSON.parse(JSON.stringify(this.calendarDetail)),
+            value1: null,
+            aa: this.calendarDetail.contents
+        }
+    },
+    mounted() {
+        this.aa = this.calendarDetail.contents
+    },
+    watch:{
+        calendarDetail(){
+            this.aa=this.calendarDetail.contents
+        }
+    },
     methods: {
         removeBodyClass(className) {
             const body = document.body;

@@ -9,6 +9,10 @@
     },
     "dependencies": {
         "@babel/polyfill": "^7.10.1",
+        "@fullcalendar/core": "^5.2.1",
+        "@fullcalendar/daygrid": "^5.2.0",
+        "@fullcalendar/interaction": "^5.2.0",
+        "@fullcalendar/vue": "^5.2.0",
         "axios": "^0.19.2",
         "ckeditor4-vue": "^1.0.1",
         "core-js": "^3.6.5",
@@ -27,6 +31,7 @@
         "vue-cookies": "^1.7.2",
         "vue-cropperjs": "^4.1.0",
         "vue-custom-scrollbar": "^1.2.0",
+        "vue-fullcalendar": "^1.0.9",
         "vue-lottie": "^0.2.1",
         "vue-meta": "^2.3.4",
         "vue-moment": "^4.1.0",
