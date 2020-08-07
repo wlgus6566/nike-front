@@ -1,43 +1,4 @@
-<template>
-    <section class="modal">
-        <div class="modal-header">
-            <h1>이얍</h1>
-        </div>
-        <el-scrollbar
-            class="modal-content"
-            wrap-class="modal-scroll"
-            :native="false"
-        >
-            {{ imgSrc }}
-            <vue-cropper
-                id="cropper2"
-                ref="cropper"
-                :aspect-ratio="size"
-                :viewMode="1"
-                :responsive="false"
-                :guides="false"
-                :center="false"
-                :src="imgSrc"
-                :minContainerWidth="300"
-                :minContainerHeight="200"
-                preview=".preview"
-            />
-            <div
-                class="preview"
-                style="height:100px; width:100px; overflow:hidden"
-            />
-            <a href="#" role="button" @click.prevent="cropImage">
-                Crop
-            </a>
-        </el-scrollbar>
-        <div class="modal-footer">
-            footer
-        </div>
-        <button class="modal-close" @click="$emit('close')">
-            Close
-        </button>
-    </section>
-</template>
+<template> </template>
 <script>
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';

@@ -9,7 +9,6 @@ import VueCookies from 'vue-cookies';
 import CKEditor from 'ckeditor4-vue';
 import VCalendar from 'v-calendar';
 import VModal from 'vue-js-modal';
-
 import lineClamp from './utils/lineclamp';
 
 Vue.config.productionTip = false;

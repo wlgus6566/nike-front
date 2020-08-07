@@ -17,12 +17,52 @@
             </span>
             <span class="txt" v-else>썸네일 이미지 등록</span>
         </span>
+
+        <modal name="ModalCropper" width="800px" height="auto">
+            <section class="modal">
+                <div class="modal-header">
+                    <h1>이얍</h1>
+                </div>
+                <el-scrollbar
+                    class="modal-content"
+                    wrap-class="modal-scroll"
+                    :native="false"
+                >
+                    <vue-cropper
+                        ref="cropper"
+                        :aspect-ratio="size"
+                        :viewMode="1"
+                        :responsive="false"
+                        :guides="false"
+                        :center="false"
+                        :src="imgSrc"
+                        :minContainerWidth="300"
+                        :minContainerHeight="200"
+                        preview=".preview"
+                    />
+                    <div
+                        class="preview"
+                        style="height:100px; width:100px; overflow:hidden"
+                    />
+                    <a href="#" role="button" @click.prevent="cropImage">
+                        Crop
+                    </a>
+                </el-scrollbar>
+                <div class="modal-footer">
+                    footer
+                </div>
+                <button class="modal-close" @click="$emit('close')">
+                    Close
+                </button>
+            </section>
+        </modal>
     </div>
 </template>
 
 <script>
-import ModalCropper from './modal-cropper';
-import bus from '@/utils/bus';
+import VueCropper from 'vue-cropperjs';
+import 'cropperjs/dist/cropper.css';
+const Compress = require('compress.js');
 
 export default {
     name: 'index',
@@ -34,8 +74,9 @@ export default {
         };
     },
     props: ['imgSrc2', 'size'],
-
+    components: { VueCropper },
     mounted() {
+        console.log(this.$refs);
         this.imgSrc = this.imgSrc2;
         this.cropImg = this.imgSrc;
     },
@@ -49,6 +90,10 @@ export default {
     },
     computed: {},
     methods: {
+        cropImage() {
+            // get image data for post processing, e.g. upload or setting image src
+            this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
+        },
         cropImgUpdate(img) {
             this.cropImg = img;
 
@@ -62,31 +107,26 @@ export default {
                 return;
             }
 
-            if (typeof FileReader === 'function') {
-                const reader = new FileReader();
-                reader.onload = event => {
-                    this.imgSrc = event.target.result;
-                    bus.$emit('cropperReplace', event.target.result);
+            const compress = new Compress();
+            compress
+                .compress([file], {
+                    size: 3, // the max size in MB, defaults to 2MB
+                    quality: 1, // the quality of the image, max is 1,
+                    maxWidth: 1000, // the max width of the output image, defaults to 1920px
+                    maxHeight: 1000, // the max height of the output image, defaults to 1920px
+                    resize: true, // defaults to true, set false if you do not want to resize the image width and height
+                })
+                .then(data => {
+                    const url = `${data[0].prefix}${data[0].data}`;
                     this.popupOpen();
-                };
-                reader.readAsDataURL(file);
-            } else {
-                alert('Sorry, FileReader API not supported');
-            }
+                    this.imgSrc = url;
+                })
+                .catch(e => {
+                    console.log(e);
+                });
         },
         popupOpen() {
-            this.$modal.show(
-                ModalCropper,
-                {
-                    name: 'test',
-                    modal: this.$modal,
-                    imgSrc: this.imgSrc,
-                    size: this.size,
-                },
-                {
-                    width: '800px',
-                }
-            );
+            this.$modal.show('ModalCropper');
         },
     },
 };
