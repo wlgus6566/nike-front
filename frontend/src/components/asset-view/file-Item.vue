@@ -102,7 +102,6 @@
                                     <span>ADD</span>
                                 </button>
                             </template>
-                            {{ item.url }}
                             <button
                                 type="button"
                                 :class="buttonClass(item.contentsFileSeq)"

@@ -1,8 +1,6 @@
 @charset "UTF-8";
 
 html {
-    overflow-x: auto;
-    overflow-y: scroll; /* scroll-behavior:smooth;*/
 }
 body {
     font-size: 14px;

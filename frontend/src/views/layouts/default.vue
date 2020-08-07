@@ -276,6 +276,7 @@ export default {
                     ...toVal,
                     ease: Cubic.easeInOut,
                     onComplete: () => {
+                        el.style.transform = 'none';
                         if (done) {
                             done();
                         }

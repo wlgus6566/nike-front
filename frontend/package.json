@@ -27,6 +27,7 @@
         "vue-cookies": "^1.7.2",
         "vue-cropperjs": "^4.1.0",
         "vue-custom-scrollbar": "^1.2.0",
+        "vue-js-modal": "^2.0.0-rc.6",
         "vue-lottie": "^0.2.1",
         "vue-meta": "^2.3.4",
         "vue-moment": "^4.1.0",
