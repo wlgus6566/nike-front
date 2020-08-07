@@ -64,6 +64,7 @@ public class FailCode {
         , EXCEED_MAX_NOTICE
         , NOT_FOUND_PRODUCT
         , MINIMUM_ORDER_QUANTITY
+        , MAX_INSERT_CALENDAR
     }
 
 }

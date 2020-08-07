@@ -1,10 +1,7 @@
 package com.nike.dnp.service.calendar;
 
 import com.nike.dnp.common.variable.FailCode;
-import com.nike.dnp.dto.calendar.CalendarDaySearchDTO;
-import com.nike.dnp.dto.calendar.CalendarSaveDTO;
-import com.nike.dnp.dto.calendar.CalendarSearchDTO;
-import com.nike.dnp.dto.calendar.CalendarUpdateDTO;
+import com.nike.dnp.dto.calendar.*;
 import com.nike.dnp.entity.calendar.Calendar;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.calendar.CalendarRepository;
@@ -89,6 +86,17 @@ public class CalendarService {
         calendar.setRegisterSeq(SecurityUtil.currentUser().getUserSeq());
         calendar.setUpdaterSeq(SecurityUtil.currentUser().getUserSeq());
 
+
+        List<CalendarCheckDTO> checkDTOList =  calendarRepository.findDayListCount(calendar);
+
+        log.debug("checkDTOList.toString() {}", checkDTOList.toString());
+        for(CalendarCheckDTO calendarCheckDTO : checkDTOList){
+            if(calendarCheckDTO.getCount()>3){
+                throw new CodeMessageHandleException(FailCode.ConfigureError.MAX_INSERT_CALENDAR.name(),
+                                                     MessageUtil.getMessage(FailCode.ConfigureError.MAX_INSERT_CALENDAR.name()
+                                                             ,new String [] {calendarCheckDTO.getBeginDt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))}));
+            }
+        }
         return calendarRepository.save(calendar);
     }
 
@@ -187,4 +195,5 @@ public class CalendarService {
         }
         return calendarRepository.findAllByBeginDtBeforeAndEndDtAfter(searchDt, searchDt);
     }
+
 }

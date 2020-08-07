@@ -82,6 +82,7 @@ public class CalendarController {
     @ValidField
     public SingleResult<List<Calendar>> findAllContents(@Valid @ModelAttribute final CalendarSearchDTO calendarSearchDTO,@ApiIgnore final BindingResult result) {
         log.info("CalendarController.findAllContents");
+
         return responseService.getSingleResult(calendarService.findAll(calendarSearchDTO));
     }
 
