@@ -210,7 +210,8 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		}
 
 		// 최초접속여부/약관동의여부
-		if (isValid && ServiceCode.YesOrNoEnumCode.N.toString().equals(termsAgreeYn)
+		if (isValid
+				&& !ServiceCode.YesOrNoEnumCode.Y.toString().equals(termsAgreeYn)
 				&& ServiceCode.YesOrNoEnumCode.N.toString().equals(user.get().getTermsAgreeYn())) {
 			JsonUtil.write(response.getWriter()
 					, responseService.getSuccessResult(

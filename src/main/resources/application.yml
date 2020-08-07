@@ -62,3 +62,4 @@ cloud:
       static: 'ap-northeast-2'
     stack:
       auto:  false
+    keyPairId: 'APKAJNYFE4SZH6RSWVMA'
