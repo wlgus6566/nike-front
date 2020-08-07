@@ -104,6 +104,7 @@
         props: {
             visible: Boolean,
             statusCode: String,
+            calendarSeq: Number,
             calendarDetail: Object,
             calenderSectionCodeList: Array
         },
@@ -138,12 +139,14 @@
             onClickToSave() {
                 if (this.validationData() && confirm('일정을 등록하시겠습니까?')) {
                     this.detailData = {
-                        ...this.detailData,
+                        calendarSectionCode: this.detailData.calendarSectionCode,
+                        scheduleName: this.detailData.scheduleName,
+                        contents: this.detailData.contents,
                         beginDt: this.dataPeriod[0],
                         endDt: this.dataPeriod[1]
                     }
                     if (this.statusCode === 'EDIT') {
-                        this.$emit('modifyCalendar', this.detailData.calendarSeq, this.detailData);
+                        this.$emit('modifyCalendar', this.calendarSeq, this.detailData);
                     } else {
                         this.$emit('createCalendar', this.detailData);
                     }
@@ -151,7 +154,7 @@
             },
             onClickToDelete() {
                 if (confirm('선택한 일정을 삭제하시겠습니까?')) {
-                    this.$emit('delCalendar', this.detailData.calendarSeq);
+                    this.$emit('delCalendar', this.calendarSeq);
                 }
             },
             closeDialog() {

@@ -8,11 +8,13 @@
             </span>
         </div>
 
-        <FullCalendar :options="calendarOptions"/>
+<!--        <FullCalendar :options="calendarOptions" ref="fullCalendar"/>-->
+        <FullCalendar ref="fullCalendar" :options="calendarOptions" defaultView="month" :editable="false"></FullCalendar>
         <calendarManagement
             :visible.sync="visible.calendarManagement"
             :statusCode="statusCode"
             :calendarDetail="calendarDetail"
+            :calendarSeq="calendarSeq"
             :calenderSectionCodeList="calenderSectionCodeList"
 
             @createCalendar="createCalendar"
@@ -89,14 +91,16 @@
                     calendarManagement: false,
                 },
                 calendarDialogInitData: {
-                    calendarSeq: null,
                     calendarSectionCode: 'EDUCATION',
                     scheduleName: null,
                     beginDt: null,
                     endDt: null,
                     contents: null
                 },
-                loadingData: false
+                calendarSeq: null,
+                calendarApi: null,
+                loadingData: false,
+                cal: null
             }
         },
         components: {
@@ -162,6 +166,7 @@
             onClickToEdit(item) {
                 this.statusCode = "EDIT"
                 this.calendarDetail = item;
+                this.calendarSeq = item.calendarSeq;
                 this.visible.calendarManagement = true;
             },
             // 캘린더 코드 목록 조회
@@ -174,7 +179,6 @@
             // calendar-management 관련 메소드
             async createCalendar(data) {
                 try {
-                    console.log('create', data)
                     const { data: response } = await postCalendar(data);
                     if (response.existMsg) {
                         alert(response.msg);
@@ -187,37 +191,44 @@
                 }
             },
             async modifyCalendar(calendarSeq, data) {
+                let success = null;
                 try {
                     const { data: response } = await putCalendar(calendarSeq, data);
+                    success = response.success;
                     if (response.existMsg) {
                         alert(response.msg);
                     }
-                    if (response.success) {
-                        await this.processAfterSuccess(data.beginDt);
-                    }
                 } catch (error) {
                     alert(error.response.data.msg);
+                }
+                if (success) {
+                    // this.closeDialog();
+                    alert('수정완료');
+                    await this.processAfterSuccess(data.beginDt);
                 }
             },
             async delCalendar(calendarSeq) {
+                let success = null;
                 try {
                     const { data: response } = await delCalendar(calendarSeq);
+                    success = response.success;
                     if (response.existMsg) {
                         alert(response.msg);
-                    }
-                    if (response.success) {
-                        this.closeDialog();
-                        // await this.processAfterSuccess();
                     }
                 } catch (error) {
                     alert(error.response.data.msg);
                 }
+
+                if (success) {
+                    alert('삭제완료');
+                    this.closeDialog();
+                }
             },
             async processAfterSuccess(beginDt) {
-                FullCalendar.gotoDate(moment(beginDt).format('YYYY.MM.DD'));
                 await this.getTodayCalendar(moment(beginDt).format('YYYY.MM.DD'));
                 await this.getCalendarList(moment(beginDt).format('YYYY.MM'));
-                // TODO 수정/등록 한 달로 가게 끔.
+                // TODO 수정/등록 한 달로 가게 끔. 구현 필요
+                // this.$refs.fullCalendar.$emit('gotoDate', '2020.08.06');
                 this.closeDialog();
             },
             // 다이얼로드 닫기
