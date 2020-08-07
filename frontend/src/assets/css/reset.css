@@ -88,6 +88,7 @@ i {
 }
 a {
     text-decoration: none;
+    cursor: pointer;
 }
 button {
     margin: 0;

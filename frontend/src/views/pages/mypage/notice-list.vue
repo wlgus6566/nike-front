@@ -4,7 +4,7 @@
             <span class="ko">{{ this.$route.meta.title }}</span>
         </h2>
         <div class="sorting-area">
-            <SearchInput @:searchSubmit="searchSubmit" />
+            <SearchInput @searchSubmit="searchSubmit" />
         </div>
         <template v-if="noticeDataContent">
             <NoticeList
@@ -25,10 +25,8 @@
         <Loading v-if="loadingData" />
         <div class="btn-tbl-box">
             <div class="right">
-                <router-link to="/mypage/edit/notice">
-                    <button type="button" class="btn-form-gray">
-                        <span>등록</span>
-                    </button>
+                <router-link to="/mypage/notice/form" class="btn-form-gray">
+                    <span>등록</span>
                 </router-link>
             </div>
         </div>
@@ -42,15 +40,10 @@
     </div>
 </template>
 
-<script>
-    import NoticeList from '@/components/notice/';
-    import Pagination from '@/components/pagination/';
-    import SearchInput from '@/components/search-input/index';
-    import NoData from '@/components/no-data';
-    import Loading from '@/components/loading';
-    import {getCustomerList} from '@/api/customer';
+<style scoped></style>
 
-    //import {  } from '@/api/.js';
+<script>
+import { getCustomerList } from '@/api/customer';
 
 export default {
     name: 'notice-list',
@@ -61,23 +54,30 @@ export default {
             page: 0,
             pageCount: 11,
             totalItem: 0,
-            itemLength: 10,
+            itemLength: 20,
             searchKeyword: '',
             loadingData: false,
         };
     },
     components: {
-        NoticeList,
-        Pagination,
-        SearchInput,
-        NoData,
-        Loading,
+        NoticeList: () => import('@/components/notice/'),
+        Pagination: () => import('@/components/pagination/'),
+        SearchInput: () => '@/components/search-input',
+        NoData: () => import('@/components/no-data'),
+        Loading: () => import('@/components/loading'),
     },
     created() {},
     mounted() {
         this.getNoticeList();
     },
+    activated() {
+        if (this.$store.state.reload) {
+            this.getNoticeList();
+            this.$store.commit('SET_RELOAD', false);
+        }
+    },
     methods: {
+        //검색
         searchSubmit(val) {
             console.log(val);
             this.searchKeyword = val;
@@ -101,6 +101,12 @@ export default {
                 this.noticeData = response;
                 this.noticeDataContent = response.content;
                 this.totalItem = this.noticeData.totalElements;
+
+                //게시물 번호 //총게시물 - (현재 페이지 * 한 페이지 게시물 수) -  index = number
+                this.noticeDataContent.forEach((el, index) => {
+                    el.number =
+                        this.totalItem - this.page * this.itemLength - index;
+                });
             } catch (error) {
                 console.log(error);
             }
@@ -108,4 +114,3 @@ export default {
     },
 };
 </script>
-<style scoped></style>

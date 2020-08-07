@@ -12,7 +12,7 @@
                     <div class="title-wrap">
                         <h3 class="form-title mt0">CALENDAR 관리</h3>
                         <div class="right">
-                            <button type="button" class="txt-btn-orange">
+                            <button type="button" class="txt-btn-orange" @click="onClickToDelete">
                                 <span>일정 삭제</span>
                             </button>
                         </div>
@@ -21,29 +21,23 @@
                     <ul class="form-list">
                         <li class="form-row">
                             <div class="form-column">
-                                <label class="label-title required">AGENCY 명</label>
+                                <label class="label-title required">구분</label>
                             </div>
                             <div class="form-column">
-                                <label class="check-label">
+                                <label
+                                    class="check-label"
+                                    v-for="item in calenderSectionCodeList"
+                                    :key="item.code"
+                                >
                                     <span class="radio">
-                                        <input type="radio" name="sortation" checked />
+                                        <input type="radio"
+                                           v-model="detailData.calendarSectionCode"
+                                           :name="detailData.calendarSectionCode"
+                                           :value="item.code"
+                                        />
                                         <span></span>
                                     </span>
-                                    <span>교육</span>
-                                </label>
-                                <label class="check-label">
-                                    <span class="radio">
-                                        <input type="radio" name="sortation" />
-                                        <span></span>
-                                    </span>
-                                    <span>캠페인</span>
-                                </label>
-                                <label class="check-label">
-                                    <span class="radio">
-                                        <input type="radio" name="sortation" />
-                                        <span></span>
-                                    </span>
-                                    <span>기타 공개일정</span>
+                                    <span>{{ item.codeName }}</span>
                                 </label>
                             </div>
                         </li>
@@ -52,7 +46,11 @@
                                 <label class="label-title required">일정 명</label>
                             </div>
                             <div class="form-column">
-                                <input type="text" />
+                                <input
+                                    ref="scheduleName"
+                                    type="text"
+                                    v-model="detailData.scheduleName"
+                                />
                             </div>
                         </li>
                         <li class="form-row">
@@ -62,8 +60,10 @@
                             <div class="form-column">
                                 <div class="data-picker">
                                     <el-date-picker
-                                        v-model="value1"
+                                        ref="dataPeriod"
+                                        v-model="dataPeriod"
                                         type="daterange"
+                                        value-format="yyyy.MM.dd"
                                         range-separator="-"
                                         start-placeholder="Start date"
                                         end-placeholder="End date"
@@ -74,50 +74,102 @@
                         </li>
                         <li class="form-row">
                             <div class="form-column">
-                                <label class="label-title required">메모</label>
+                                <label class="label-title">메모</label>
                             </div>
                             <div class="form-column">
                                 <span class="textarea">
-                                    <textarea cols="100" rows="2"> </textarea>
+                                    <textarea
+                                            cols="100"
+                                            rows="2"
+                                            v-model="detailData.contents"
+                                    ></textarea>
                                 </span>
                             </div>
                         </li>
                     </ul>
                     <hr class="hr-gray" />
                     <div class="btn-area">
-                        <button type="button" class="btn-s"><span>취소</span></button>
-                        <button type="button" class="btn-s-black"><span>저장</span></button>
+                        <button type="button" class="btn-s" @click="closeDialog"><span>취소</span></button>
+                        <button type="button" class="btn-s-black" @click="onClickToSave"><span>저장</span></button>
                     </div>
                 </div>
             </div>
         </el-scrollbar>
-
-        <!--        <div slot="footer" class="dialog-footer">-->
-        <!--            <el-button @click="$emit('update:visible', false)" type="info" round>-->
-        <!--                확인-->
-        <!--            </el-button>-->
-        <!--        </div>-->
     </el-dialog>
 </template>
 
 <script>
-export default {
-    props: {
-        visible: Boolean,
-        receipt: Object,
-    },
 
-    methods: {
-        removeBodyClass(className) {
-            const body = document.body;
-            body.classList.remove(className);
+    export default {
+        props: {
+            visible: Boolean,
+            statusCode: String,
+            calendarSeq: Number,
+            calendarDetail: Object,
+            calenderSectionCodeList: Array
         },
-        print() {
-            this.removeBodyClass('print-detail');
-            window.print();
+        data() {
+            return {
+                detailData: {},
+                dataPeriod: []
+            }
         },
-    },
-};
+        watch:{
+            calendarDetail() {
+                this.detailData = {...this.calendarDetail};
+                if (this.calendarDetail.beginDt && this.calendarDetail.endDt) {
+                    this.dataPeriod.push(this.calendarDetail.beginDt);
+                    this.dataPeriod.push(this.calendarDetail.endDt);
+                }
+            }
+        },
+        methods: {
+            validationData() {
+                if (!this.detailData.scheduleName) {
+                    alert('일정 명을 입력해 주세요.');
+                    this.$refs.scheduleName.focus();
+                    return false;
+                } else if (!this.dataPeriod || this.dataPeriod.length !== 2) {
+                    alert('기간을 선택해 주세요.');
+                    this.$refs.dataPeriod.focus();
+                    return false;
+                }
+                return true;
+            },
+            onClickToSave() {
+                if (this.validationData() && confirm('일정을 등록하시겠습니까?')) {
+                    this.detailData = {
+                        calendarSectionCode: this.detailData.calendarSectionCode,
+                        scheduleName: this.detailData.scheduleName,
+                        contents: this.detailData.contents,
+                        beginDt: this.dataPeriod[0],
+                        endDt: this.dataPeriod[1]
+                    }
+                    if (this.statusCode === 'EDIT') {
+                        this.$emit('modifyCalendar', this.calendarSeq, this.detailData);
+                    } else {
+                        this.$emit('createCalendar', this.detailData);
+                    }
+                }
+            },
+            onClickToDelete() {
+                if (confirm('선택한 일정을 삭제하시겠습니까?')) {
+                    this.$emit('delCalendar', this.calendarSeq);
+                }
+            },
+            closeDialog() {
+                this.$emit('closeDialog');
+            },
+            removeBodyClass(className) {
+                const body = document.body;
+                body.classList.remove(className);
+            },
+            print() {
+                this.removeBodyClass('print-detail');
+                window.print();
+            }
+        },
+    };
 </script>
 <style>
 .modal-wrap {

@@ -1,4 +1,4 @@
-import {pages} from '@/utils/global-methods';
+import { pages } from '@/utils/global-methods';
 
 const routes = [
     {
@@ -71,15 +71,15 @@ const routes = [
             title: '로그아웃',
         },
     },
+    // customer 상세 공통
     {
-        path: '/mypage/news',
-        name: 'news',
-        component: pages('mypage/news-list.vue'),
+        path: '/mypage/view',
+        name: 'notice',
+        component: pages('mypage/detail-view.vue'),
         meta: {
             layout: 'Default',
             aside: 'Default',
-            sectionCode: 'NEWS',
-            title: 'NEWS',
+            //title: '공지사항',
         },
     },
     {
@@ -94,41 +94,25 @@ const routes = [
         },
     },
     {
-        path: '/mypage/view',
-        name: 'notice',
-        component: pages('mypage/detail-view.vue'),
+        path: '/mypage/news',
+        name: 'news',
+        component: pages('mypage/news.vue'),
         meta: {
             layout: 'Default',
             aside: 'Default',
-            //title: '공지사항',
+            sectionCode: 'NEWS',
+            title: 'NEWS',
         },
     },
     {
-        path: '/mypage/edit',
+        path: '/mypage/form',
         name: 'notice',
-        component: pages('mypage/edit.vue'),
+        component: pages('mypage/notice-form.vue'),
         meta: {
             layout: 'Default',
             aside: 'Default',
             title: '공지사항',
         },
-
-        children: [
-            {
-                path: 'news',
-                component: pages('mypage/edit.vue'),
-                meta: { layout: 'Default', aside: 'Default', title: 'NEWS' },
-            },
-            {
-                path: 'notice',
-                component: pages('mypage/edit.vue'),
-                meta: {
-                    layout: 'Default',
-                    aside: 'Default',
-                    title: '공지사항',
-                },
-            },
-        ],
     },
 
     {
