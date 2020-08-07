@@ -8,6 +8,7 @@
                 <span class="desc">HELLO!</span>
                 <strong class="name">
                     <em>
+                        <!-- //todo login 정보  nickname null -->
                         {{ userData.nickname }}
                     </em>
                     님
@@ -35,17 +36,22 @@
 </template>
 
 <script>
-import { getMyInfo } from '@/api/my-page';
+    import {getMyInfo} from '@/api/my-page';
 
-export default {
+    export default {
     data() {
         return {
-            userData: null,
+            userData: {
+                authName: '',
+                loginLogs: '',
+                nickname: '',
+                userId: '',
+            },
             lognLength: 5,
             num: 0,
         };
     },
-    mounted() {
+    created() {
         this.fetchData();
     },
     computed: {
@@ -69,6 +75,7 @@ export default {
                 const {
                     data: { data: response },
                 } = await getMyInfo({});
+                console.log(response);
                 this.userData = response;
             } catch (error) {
                 console.log(error);

@@ -3,9 +3,12 @@
         <h2 class="page-title">
             <span class="ko">{{ this.$route.meta.title }}</span>
         </h2>
-        <div class="sorting-area">
+        <div class="sorting-area" ref="test" tabindex="0">
             <FilterSelect :listSortSelect="category2Code" />
-            <FilterSelect :listSortSelect="category3Code" />
+            <FilterSelect
+                :listSortSelect="category3Code"
+                @selectFocus="selectFocus"
+            />
             <FilterSelect :listSortSelect="agencySeq" />
             <SearchInput @searchSubmit="searchSubmit" />
         </div>
@@ -113,7 +116,20 @@
     },
     watch: {
         'category2Code.value'(val) {
-            getCategoryList(val, this.category3Code.listSortOptions);
+            if (val === '') {
+                this.category3Code = {
+                    listSortOptions: [
+                        {
+                            value: '',
+                            label: '소구분',
+                        },
+                    ],
+                    value: '',
+                };
+            } else {
+                getCategoryList(val, this.category3Code.listSortOptions);
+            }
+
             this.getProduct();
         },
         'category3Code.value'() {
@@ -131,6 +147,13 @@
         this.getProduct();
     },
     methods: {
+        selectFocus() {
+            console.log(this.category2Code.value);
+            if (this.category2Code.value === '') {
+                alert('대구분을 선택해 주세요 ');
+                this.$refs.test.focus();
+            }
+        },
         //에이전시 리스트
         async getAgency() {
             try {
@@ -225,6 +248,7 @@
         },
         // 상품 리스트 api
         async getProduct() {
+            this.checkAll = false;
             this.loading = true;
             try {
                 const {
@@ -248,4 +272,8 @@
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+::v-deep .sorting-area {
+    outline: transparent !important;
+}
+</style>

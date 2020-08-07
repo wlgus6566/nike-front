@@ -11,26 +11,15 @@
                 <div>
                     <h3 class="form-title mt0">ORDER</h3>
                     <hr class="hr-black mt10" />
-                    <ul class="form-list-colunm">
+                    <ul class="form-list">
                         <li class="form-row">
                             <div class="form-column">
                                 <span class="label-title">주문자</span>
                             </div>
                             <div class="form-column">
                                 <span class="form-val">
-                                    {{
-                                        basketList[0].product.agency.agencyName
-                                    }}
-                                </span>
-                            </div>
-                        </li>
-                        <li class="form-row">
-                            <div class="form-column">
-                                <span class="label-title">주문일시</span>
-                            </div>
-                            <div class="form-column">
-                                <span class="form-val">
-                                    {{ orderData }}
+                                    <!-- //todo  유저정보 필요해욥 -->
+                                    유저정보 필요해욥
                                 </span>
                             </div>
                         </li>
@@ -51,7 +40,11 @@
                         * VAT 및 운송비,기타,운용비는 제외된 금액입니다. (실제
                         세금계산서의 금액은 다를 수 있습니다.)
                     </p>
-                    <el-scrollbar class="sheet-list-wrap" :native="false">
+                    <el-scrollbar
+                        class="sheet-list-scroll"
+                        wrap-class="sheet-list-wrap"
+                        :native="false"
+                    >
                         <ul class="sheet-list">
                             <li
                                 class="sheet-item"
@@ -127,7 +120,7 @@ export default {
             orderComment: '',
         };
     },
-    props: ['visible', 'receipt', 'basketList', 'orderData', 'totalPrice'],
+    props: ['visible', 'receipt', 'basketList', 'totalPrice'],
     mounted() {},
     methods: {},
 };
