@@ -17,15 +17,15 @@ function getTodayCalendar(params) {
     });
 }
 //CALENDAR 상세조회
-function getDetailCalendar(agencySeq) {
+function getDetailCalendar(calendarSeq) {
     return calendar.get(`/view/${calendarSeq}`);
 }
 //CALENDAR 삭제
-function delCalendar(agencySeq) {
+function delCalendar(calendarSeq) {
     return calendar.delete(`/${calendarSeq}`);
 }
 //CALENDAR 수정
-function putCalendar(agencySeq, data) {
+function putCalendar(calendarSeq, data) {
     return calendar.put(`/${calendarSeq}`, data);
 }
 export {

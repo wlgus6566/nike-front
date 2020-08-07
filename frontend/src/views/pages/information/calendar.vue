@@ -1,10 +1,24 @@
 <template>
     <div>
+        <div>
+            <span>
+                <el-button type="white" size="small" @click="onClickToCreate">
+                    등록
+                </el-button>
+            </span>
+        </div>
+
         <FullCalendar :options="calendarOptions"/>
         <calendarManagement
             :visible.sync="visible.calendarManagement"
             :statusCode="statusCode"
             :calendarDetail="calendarDetail"
+            :calenderSectionCodeList="calenderSectionCodeList"
+
+            @createCalendar="createCalendar"
+            @modifyCalendar="modifyCalendar"
+            @delCalendar="delCalendar"
+            @closeDialog="closeDialog"
         />
 
         <ul class="item-list">
@@ -35,7 +49,11 @@
         , getDetailCalendar  // CALENDAR 상세조회
         , delCalendar  // CALENDAR 삭제
         , putCalendar // CALENDAR 수정
-    } from '@/api/calendar';
+    } from '@/api/calendar'
+
+    import {
+        getCode
+    } from '@/api/code'
 
     import moment from 'moment'
     import FullCalendar from '@fullcalendar/vue'
@@ -48,29 +66,37 @@
         name: 'calendar',
         data () {
             return {
-                searchInfo: {
-                    // TODO[lsj]
-                    //  달력은 해당 월의 모든데이터를 노출해야 하기 때문에
-                    //  페이징 처리 필요 없을 듯 api 문의 필요 2020.08.06 by. sojeong.lee
-                    page: 0,
-                    itemLength: 20,
-                    yyyyMm: moment(new Date()).format('YYYY.MM')
-                },
+                yyyyMm: moment(new Date()).format('YYYY.MM'),
                 searchDt: moment(new Date()).format('YYYY.MM.DD'),
                 statusCode: null,
                 calendarDetail: {},
-                visible: {
-                    calendarManagement: false,
-                },
-                loadingData: false,
+                calenderSectionCodeList: [],
                 calendarData: [],
                 todayData: [],
                 calendarOptions: {
                     plugins: [ dayGridPlugin, interactionPlugin ],
                     initialView: 'dayGridMonth',
                     dateClick: this.handleDateClick,
-                    events: []
-                }
+                    events: [],
+                    eventClick: this.handleEventClick,
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth'
+                    }
+                },
+                visible: {
+                    calendarManagement: false,
+                },
+                calendarDialogInitData: {
+                    calendarSeq: null,
+                    calendarSectionCode: 'EDUCATION',
+                    scheduleName: null,
+                    beginDt: null,
+                    endDt: null,
+                    contents: null
+                },
+                loadingData: false
             }
         },
         components: {
@@ -85,17 +111,18 @@
             async fetchData() {
                 this.loadingData = true;
                 try {
-                    await this.getCalendarList(this.searchInfo);
+                    await this.getCalendarList(this.yyyyMm);
                     await this.getTodayCalendar(this.searchDt);
                 } catch (error) {
                     console.log(error);
                 }
                 this.loadingData = false;
+                await this.loadCalendarCode();
             },
             // 한달 일정 조회
-            async getCalendarList(calendarSearchInfo) {
+            async getCalendarList(yyyyMm) {
                 const { data: { data: response } }
-                    = await getCalendarList(calendarSearchInfo);
+                    = await getCalendarList({ yyyyMm: yyyyMm });
                 this.calendarData = response;
                 this.transformData();
             },
@@ -104,7 +131,6 @@
                 const { data: { data: response } }
                     = await getTodayCalendar({searchDt: searchDt});
                 this.todayData = response;
-                console.log('todayData : ', this.todayData);
             },
             // 달력에 맞게 변수명 변경
             transformData() {
@@ -121,12 +147,15 @@
             },
             // 달력에 일자 클릭시
             handleDateClick(arg) {
-                this.searchDt = moment(arg.dateStr).format('YYYY.MM.DD');
-                this.getTodayCalendar(this.searchDt)
+                this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
+            },
+            handleEventClick(clickInfo) {
+                console.log('handleEventClick', clickInfo);
             },
             // 일정 등록 클릭시
             onClickToCreate() {
                 this.statusCode = "CREATE"
+                this.calendarDetail = this.calendarDialogInitData;
                 this.visible.calendarManagement = true;
             },
             // 일정 수정 클릭시
@@ -134,6 +163,66 @@
                 this.statusCode = "EDIT"
                 this.calendarDetail = item;
                 this.visible.calendarManagement = true;
+            },
+            // 캘린더 코드 목록 조회
+            async loadCalendarCode() {
+                const { data: { data: response } }
+                    = await getCode("CALANDAR_TYPE");
+                this.calenderSectionCodeList = response;
+            },
+
+            // calendar-management 관련 메소드
+            async createCalendar(data) {
+                try {
+                    console.log('create', data)
+                    const { data: response } = await postCalendar(data);
+                    if (response.existMsg) {
+                        alert(response.msg);
+                    }
+                    if (response.success) {
+                        await this.processAfterSuccess(data.beginDt);
+                    }
+                } catch (error) {
+                    alert(error.response.data.msg);
+                }
+            },
+            async modifyCalendar(calendarSeq, data) {
+                try {
+                    const { data: response } = await putCalendar(calendarSeq, data);
+                    if (response.existMsg) {
+                        alert(response.msg);
+                    }
+                    if (response.success) {
+                        await this.processAfterSuccess(data.beginDt);
+                    }
+                } catch (error) {
+                    alert(error.response.data.msg);
+                }
+            },
+            async delCalendar(calendarSeq) {
+                try {
+                    const { data: response } = await delCalendar(calendarSeq);
+                    if (response.existMsg) {
+                        alert(response.msg);
+                    }
+                    if (response.success) {
+                        this.closeDialog();
+                        // await this.processAfterSuccess();
+                    }
+                } catch (error) {
+                    alert(error.response.data.msg);
+                }
+            },
+            async processAfterSuccess(beginDt) {
+                FullCalendar.gotoDate(moment(beginDt).format('YYYY.MM.DD'));
+                await this.getTodayCalendar(moment(beginDt).format('YYYY.MM.DD'));
+                await this.getCalendarList(moment(beginDt).format('YYYY.MM'));
+                // TODO 수정/등록 한 달로 가게 끔.
+                this.closeDialog();
+            },
+            // 다이얼로드 닫기
+            closeDialog() {
+                this.visible.calendarManagement = false;
             }
         }
     }
