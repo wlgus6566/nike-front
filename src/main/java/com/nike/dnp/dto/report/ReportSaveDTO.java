@@ -203,7 +203,6 @@ public class ReportSaveDTO {
      *
      * @author [이소정]
      */
-    @NotBlank(message = "report.reportFileSaveDTOList")
     @ApiModelProperty(name = "reportFileSaveDTOList", value = "보고서 파일 목록")
     private List<ReportFileSaveDTO> reportFileSaveDTOList;
 
