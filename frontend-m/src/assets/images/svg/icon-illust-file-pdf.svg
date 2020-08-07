@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+    <g fill="none" fill-rule="evenodd">
+        <path fill="#F7F7F7" d="M0 0H80V80H0z"/>
+        <g transform="translate(20 17)">
+            <path fill="#FFF" stroke="#BBB" stroke-width="1.2" d="M29.306.6L39.4 10.116V45.4H3.6V.715L29.306.6z"/>
+            <path stroke="#BBB" stroke-linejoin="round" stroke-width="1.2" d="M29.6 0.8L29.6 10.4 39.2 10.4"/>
+            <path fill="#AAA" d="M15 16.4v1.2H9v-1.2h6zm8-3.2v1.2H9v-1.2h14zm0-3.2v1.2H9V10h14z"/>
+            <rect width="32" height="13" y="28" fill="#BE1767" rx=".8"/>
+            <text fill="#FFF" font-family="Roboto-Bold, Roboto" font-size="9" font-weight="bold">
+                <tspan x="7.708" y="37.5">PDF</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
