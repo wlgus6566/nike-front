@@ -44,7 +44,6 @@
 
 <script>
 import { getCustomerList } from '@/api/customer';
-import SearchInput from '@/components/search-input';
 
 export default {
     name: 'notice-list',
@@ -61,10 +60,9 @@ export default {
         };
     },
     components: {
-        SearchInput,
         NoticeList: () => import('@/components/notice/'),
         Pagination: () => import('@/components/pagination/'),
-
+        SearchInput: () => '@/components/search-input',
         NoData: () => import('@/components/no-data'),
         Loading: () => import('@/components/loading'),
     },

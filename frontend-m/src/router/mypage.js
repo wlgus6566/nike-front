@@ -96,7 +96,7 @@ const routes = [
     {
         path: '/mypage/news',
         name: 'news',
-        component: pages('mypage/news-list.vue'),
+        component: pages('mypage/news.vue'),
         meta: {
             layout: 'Default',
             aside: 'Default',

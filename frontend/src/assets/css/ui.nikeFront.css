@@ -1060,6 +1060,8 @@
     top: 50%;
     transform: translateY(-50%);
 }
+.form-list.news .form-column {
+}
 .form-list-thumb {
     position: relative;
     min-height: 220px;
@@ -1239,10 +1241,10 @@
 .thumb-file.file-upload .txt .sub {
     display: none;
 }
-.thumb-file.new-upload {
-    width: 100%;
+.new-upload .thumb-file {
+    width: 660px;
 }
-.thumb-file.new-upload .thumb {
+.new-upload .thumb-file .thumb {
     padding-top: 50%;
 }
 .btn-detail {

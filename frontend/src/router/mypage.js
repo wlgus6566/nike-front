@@ -61,29 +61,7 @@ const routes = [
             title: '비밀번호 변경',
         },
     },
-    {
-        path: '/mypage/news',
-        name: 'news',
-        component: pages('mypage/news-list.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            sectionCode: 'NEWS',
-            title: 'NEWS',
-        },
-    },
-    {
-        path: '/mypage/faq',
-        name: 'faq',
-        component: pages('mypage/faq.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            sectionCode: 'QNA',
-            title: '자주 묻는 질문',
-        },
-    },
-
+    //공지사항
     {
         path: '/mypage/notice/',
         name: 'notice',
@@ -96,10 +74,10 @@ const routes = [
         },
     },
     {
-        //TODO view 삭제
-        path: '/mypage/notice/view/:id',
+        //TODO detail 삭제
+        path: '/mypage/notice/detail/:id',
         name: 'notice',
-        component: pages('mypage/notice-view'),
+        component: pages('mypage/detail'),
         meta: {
             layout: 'Default',
             aside: 'Default',
@@ -128,6 +106,51 @@ const routes = [
             sectionCode: 'NOTICE',
             title: '공지사항',
             modify: true,
+        },
+    },
+    //NEWS
+    {
+        path: '/mypage/news/',
+        name: 'news',
+        component: pages('mypage/news.vue'),
+        meta: {
+            layout: 'Default',
+            aside: 'Default',
+            sectionCode: 'NEWS',
+            title: 'NEWS',
+        },
+    },
+    {
+        path: '/mypage/news/detail/:id',
+        name: 'news',
+        component: pages('mypage/detail'),
+        meta: {
+            layout: 'Default',
+            aside: 'Default',
+            sectionCode: 'NEWS',
+            title: 'NEWS',
+        },
+    },
+    {
+        path: '/mypage/news/form',
+        name: 'news',
+        component: pages('mypage/news-form'),
+        meta: {
+            layout: 'Default',
+            aside: 'Default',
+            sectionCode: 'NEWS',
+            title: 'NEWS',
+        },
+    },
+    {
+        path: '/mypage/faq',
+        name: 'faq',
+        component: pages('mypage/faq.vue'),
+        meta: {
+            layout: 'Default',
+            aside: 'Default',
+            sectionCode: 'QNA',
+            title: '자주 묻는 질문',
         },
     },
     // {

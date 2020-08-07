@@ -23,9 +23,9 @@
                             <span class="num">{{ item.number }}</span>
                         </td>
                         <td class="agl">
-                            <router-link :to="setUrl(item.noticeArticleSeq)">{{
-                                item.title
-                            }}</router-link>
+                            <router-link :to="setUrl(item.noticeArticleSeq)">
+                                {{ item.title }}
+                            </router-link>
                         </td>
                         <td>
                             <span class="date"> 등록일 필요</span>
@@ -47,7 +47,7 @@ export default {
     computed: {},
     methods: {
         setUrl(item) {
-            return `/mypage/notice/view/${item}`.toLocaleLowerCase();
+            return `/mypage/notice/detail/${item}`.toLocaleLowerCase();
         },
     },
 };

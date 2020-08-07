@@ -32,10 +32,22 @@ function putNotice(noticeSeq, data) {
     return apiCustomer.put(`/NOTICE/${noticeSeq}`, data);
 }
 
+//뉴스 등록
+function postNews(data) {
+    return apiCustomer.post(`/NEWS`, data);
+}
+
+//뉴스 수정
+function putNews(noticeSeq, data) {
+    return apiCustomer.put(`/NEWS/${noticeSeq}`, data);
+}
+
 export {
     getCustomerList,
     getCustomerDetail,
     postNotice,
     putNotice,
     deleteCustomer,
+    postNews,
+    putNews,
 };
