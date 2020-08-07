@@ -62,12 +62,12 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         qNoticeArticle.noticeArticleSectionCode.eq(customerSearchDTO.getNoticeArticleSectionCode()),
                         NoticePredicateHelper.eqCategoryCode(customerSearchDTO.getNoticeArticleCategoryCode()),
                         NoticePredicateHelper.containsKeword(customerSearchDTO.getKeyword())
-                ).orderBy(
-                        qNoticeArticle.updateDt.desc()
                 );
 
         if (StringUtils.equalsIgnoreCase(customerSearchDTO.getNoticeArticleSectionCode() ,"NOTICE")) {
             query.orderBy(qNoticeArticle.noticeYn.desc(), qNoticeArticle.updateDt.desc());
+        } else {
+            query.orderBy(qNoticeArticle.updateDt.desc());
         }
 
         final List<CustomerListDTO> customerListDTOList = ObjectMapperUtil.mapAll(

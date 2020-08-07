@@ -123,18 +123,6 @@ public class NoticeArticle extends BaseTimeEntity {
     @ApiModelProperty(name = "useYn", value ="사용 여부", example = "N")
     private String useYn;
 
-    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
-    private static String cdnUrl;
-
-    @Value("${nike.file.cdnUrl:}")
-    public void setCdnUrl(final String cdnUrl) {
-        this.cdnUrl = cdnUrl;
-    }
-
-    public String getThumbnailFilePhysicalName() {
-        return this.cdnUrl + thumbnailFilePhysicalName;
-    }
-
     /**
      * Pre persist.
      *
