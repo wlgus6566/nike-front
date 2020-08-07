@@ -168,4 +168,15 @@ public class GoodsBasketService {
 	}
 
 
+	/**
+	 * 유저 장바구니 해당 제품 시퀀스값 삭제
+	 *
+	 * @param goodsSeq the goods seq
+	 * @param userSeq  the user seq
+	 * @author [윤태호]
+	 * @since 2020. 8. 7. 오후 3:14:13
+	 */
+	public void deleteByGoodsSeqAndUserSeq(Long goodsSeq, long userSeq) {
+		goodsBasketRepository.deleteByGoodsSeqAndUserSeq(goodsSeq,userSeq);
+	}
 }

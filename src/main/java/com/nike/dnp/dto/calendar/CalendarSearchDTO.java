@@ -1,6 +1,5 @@
 package com.nike.dnp.dto.calendar;
 
-import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
 
@@ -18,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class CalendarSearchDTO extends SearchDTO {
+public class CalendarSearchDTO {
 
     /**
      * 종료 일시

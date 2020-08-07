@@ -12,10 +12,12 @@ import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
+import com.nike.dnp.service.goodsbasket.GoodsBasketService;
 import com.nike.dnp.service.order.OrderProductMappingService;
 import com.nike.dnp.service.order.OrderService;
 import com.nike.dnp.service.product.ProductService;
 import com.nike.dnp.util.MessageUtil;
+import com.nike.dnp.util.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -75,6 +77,13 @@ public class OrderController {
 	private final OrderProductMappingService orderProductMappingService;
 
 	/**
+	 * The Goods basket service
+	 *
+	 * @author [윤태호]
+	 */
+	private final GoodsBasketService goodsBasketService;
+
+	/**
 	 * The constant REQUEST_CHARACTER
 	 *
 	 * @author [윤태호]
@@ -115,13 +124,6 @@ public class OrderController {
 				final Long orderQuantity = orderQuantityList.get(i);
 				final Product product = productService.findByGoodsSeq(goodsSeq);
 
-				/*final OrderProductMappingSaveDTO orderProductMappingSaveDTO = new OrderProductMappingSaveDTO();
-				orderProductMappingSaveDTO.setGoodsSeq(goodsSeq);
-				orderProductMappingSaveDTO.setOrderQuantity(orderQuantity);
-				orderProductMappingSaveDTO.setOrderSeq(order.getOrderSeq());
-				orderProductMappingSaveDTO.setAgencySeq(product.getAgencySeq());
-				orderProductMappingService.saveOrderProductMapping(orderProductMappingSaveDTO);*/
-
 				orderProductMappingService.saveOrderProductMapping(
 						OrderProductMappingSaveDTO.builder()
 								.goodsSeq(goodsSeq)
@@ -130,6 +132,7 @@ public class OrderController {
 								.orderQuantity(orderQuantity)
 								.build()
 				);
+				goodsBasketService.deleteByGoodsSeqAndUserSeq(goodsSeq, SecurityUtil.currentUser().getUserSeq());
 			}
 			orderProductMappingService.orderSheetSend(orderEntity);
 			return responseService.getSingleResult(orderEntity);
