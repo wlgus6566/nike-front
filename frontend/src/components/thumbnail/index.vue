@@ -1,7 +1,6 @@
 <template>
     <div>
-        <button type="button" @click="popupOpen">열기</button>
-        <span class="thumb-file" :class="{ 'file-upload': cropImg }">
+        <span :class="{ 'thumb-file': true, 'file-upload': cropImg }">
             <input
                 ref="input"
                 type="file"
@@ -51,9 +50,15 @@
                 <div class="modal-footer">
                     footer
                 </div>
-                <button class="modal-close" @click="$emit('close')">
-                    Close
-                </button>
+                <div slot="top-right">
+                    <button
+                        type="button "
+                        class="modal-close"
+                        @click.prevent="modalClose"
+                    >
+                        close modal
+                    </button>
+                </div>
             </section>
         </modal>
     </div>
@@ -90,15 +95,12 @@ export default {
     },
     computed: {},
     methods: {
-        cropImage() {
-            // get image data for post processing, e.g. upload or setting image src
-            this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
+        modalClose() {
+            this.$modal.hide('ModalCropper');
         },
-        cropImgUpdate(img) {
-            this.cropImg = img;
-
-            this.$modal.close('test');
-            console.log(this.cropImg);
+        cropImage() {
+            this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
+            this.modalClose();
         },
         inputChangeEvent(e) {
             const file = e.target.files[0];
@@ -106,7 +108,6 @@ export default {
                 alert('Please select an image file');
                 return;
             }
-
             const compress = new Compress();
             compress
                 .compress([file], {
@@ -118,14 +119,14 @@ export default {
                 })
                 .then(data => {
                     const url = `${data[0].prefix}${data[0].data}`;
-                    this.popupOpen();
+                    this.modalOpen();
                     this.imgSrc = url;
                 })
                 .catch(e => {
                     console.log(e);
                 });
         },
-        popupOpen() {
+        modalOpen() {
             this.$modal.show('ModalCropper');
         },
     },

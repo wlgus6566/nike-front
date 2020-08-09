@@ -132,8 +132,8 @@
     </div>
 </template>
 <script>
-//import CampaignSettings from '@/components/campaign-settings/index.vue';
-import thumbnail from '@/components/thumbnail/index';
+impo
+rt thumbnail from '@/components/thumbnail/index';
 import FileSettings from '@/components/file-settings/index.vue';
 export default {
     name: 'upload',
@@ -145,7 +145,7 @@ export default {
             campaignDesc: '',
             campaignPeriodRadio: 'selectDate',
             campaignDate: '',
-            imageFilePhysicalName: require('@/assets/images/@test1.jpg'),
+            imageFilePhysicalName: '',
             imageFileName: 'test',
         };
     },

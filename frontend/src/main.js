@@ -17,7 +17,6 @@ Vue.use(CKEditor);
 Vue.use(VueCookies);
 Vue.use(VModal, {
     dynamicDefaults: {
-        name: 'modal',
         width: '800px',
         height: 'auto',
         adaptive: false,

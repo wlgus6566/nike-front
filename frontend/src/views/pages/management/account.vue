@@ -91,11 +91,11 @@
     </div>
 </template>
 <script>
-    import {getUser} from '@/api/user';
-    import SearchInput from '@/components/search-input';
-    import Pagination from '@/components/pagination';
+import { getUser } from '@/api/user';
+import SearchInput from '@/components/search-input';
+import Pagination from '@/components/pagination';
 
-    export default {
+export default {
     name: 'account',
     data() {
         return {
@@ -115,35 +115,38 @@
             checkItem: [],
             authority: {
                 value: [],
-                options: [{
-                    value: 'guide',
-                    label: 'Guide',
-                    children: [{
-                        value: 'disciplines',
-                        label: 'Disciplines',
+                options: [
+                    {
+                        value: 'guide',
+                        label: 'Guide',
                         children: [
                             {
-                                value: 'consistency',
-                                label: 'Consistency'
+                                value: 'disciplines',
+                                label: 'Disciplines',
+                                children: [
+                                    {
+                                        value: 'consistency',
+                                        label: 'Consistency',
+                                    },
+                                    {
+                                        value: 'feedback',
+                                        label: 'Feedback',
+                                    },
+                                    {
+                                        value: 'efficiency',
+                                        label: 'Efficiency',
+                                    },
+                                    {
+                                        value: 'controllability',
+                                        label: 'Controllability',
+                                    },
+                                ],
                             },
-                            {
-                                value: 'feedback',
-                                label: 'Feedback'
-                            },
-                            {
-                                value: 'efficiency',
-                                label: 'Efficiency'
-                            },
-                            {
-                                value: 'controllability',
-                                label: 'Controllability'
-                            }
                         ],
                     },
-                 ]
-                };
+                ],
             },
-        }
+        };
     },
     components: {
         SearchInput,
@@ -158,11 +161,11 @@
         },
         // checkbox
         checked(seq, del) {
-            const indexOfChecked = this.checkItem.findIndex((el) => el === seq);
+            const indexOfChecked = this.checkItem.findIndex(el => el === seq);
             if (!del && indexOfChecked === -1) {
                 this.checkItem.push(seq);
             } else {
-                this.checkItem = this.checkItem.filter((el) => {
+                this.checkItem = this.checkItem.filter(el => {
                     return el !== seq;
                 });
             }
@@ -173,9 +176,9 @@
             console.log(21);
             this.checkAll = !this.checkAll;
             if (this.checkAll) {
-                this.userData.forEach((el) => {
+                this.userData.forEach(el => {
                     const indexOfChecked = this.checkItem.findIndex(
-                        (elChecked) => elChecked === el.userSeq
+                        elChecked => elChecked === el.userSeq
                     );
                     if (indexOfChecked === -1) {
                         this.checkItem.push(el.userSeq);
