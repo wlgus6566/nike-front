@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+    <g fill="none" fill-rule="evenodd">
+        <path fill="#F7F7F7" d="M0 0H80V80H0z"/>
+        <g transform="translate(20 17)">
+            <rect width="35.8" height="44.8" x="3.6" y=".6" fill="#FFF" stroke="#BBB" stroke-width="1.2" rx=".4"/>
+            <g>
+                <text fill="#AAA" font-family="Roboto-Bold, Roboto" font-size="12" font-weight="bold" transform="translate(12 5)">
+                    <tspan x="5.683" y="13.383">T</tspan>
+                </text>
+                <path fill="#BBB" d="M4.954.516v.844h-2.89V.516h2.89zm5.78 0v.844h-2.89V.516h2.89zm5.78 0v.844h-2.89V.516h2.89zM4.954 17.03v.844h-2.89v-.844h2.89zm5.78 0v.844h-2.89v-.844h2.89zm5.78 0v.844h-2.89v-.844h2.89zM.61 13.692h.844v3.096H.61v-3.096zm0-6.193h.844v3.097H.61V7.499zm0-6.192h.844v3.096H.61V1.307zM17.123 13.323h.845v3.097h-.845v-3.097zm0-6.192h.845v3.096h-.845V7.131zm0-6.193h.845v3.097h-.845V.938z" transform="translate(12 5)"/>
+                <path fill="#BBB" d="M2.132 16.446v2.132H0v-2.132h2.132zm16.446 0v2.132h-2.132v-2.132h2.132zM2.132 0v2.132H0V0h2.132zm16.446 0v2.132h-2.132V0h2.132z" transform="translate(12 5)"/>
+            </g>
+            <g transform="translate(0 28)">
+                <rect width="32" height="12.8" fill="#2C0FB4" rx=".4"/>
+                <text fill="#FFF" font-family="Roboto-Bold, Roboto" font-size="9" font-weight="bold">
+                    <tspan x="7.967" y="9.4">TTF</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

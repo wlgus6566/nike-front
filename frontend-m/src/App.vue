@@ -1,19 +1,46 @@
 <template>
     <div id="app">
-        <div id="nav">
-            <router-link to="/">Home</router-link>
-        </div>
-        <router-view />
+        <transition name="layout-change" mode="out-in">
+            <component :is="AppLayout" :key="$route.meta.layout" />
+        </transition>
     </div>
 </template>
+<script>
+require('es6-promise/auto');
+import Vue from 'vue';
+import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/lib/locale/lang/en';
+import App from './App.vue';
+import { layouts } from '@/utils/global-methods';
 
+Vue.use({ locale });
+
+export default {
+    name: 'App',
+    render: h => h(App),
+    watch: {
+        $route() {},
+    },
+    data() {
+        return {};
+    },
+
+    computed: {
+        AppLayout() {
+            return `Layout${this.$route.meta.layout || 'Default'}`;
+        },
+    },
+    components: {
+        LayoutDefault: layouts('default'),
+        LayoutClean: layouts('clean'),
+        LayoutPub: layouts('pub'),
+        LayoutIndex: layouts('index'),
+    },
+};
+</script>
 <style>
-#app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-}
+@import url('assets/css/fonts.css');
+@import url('assets/css/layout.css');
+@import url('assets/css/reset.css');
+@import url('assets/css/ui.nikeFront.css');
 </style>
