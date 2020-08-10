@@ -4,7 +4,7 @@ spring:
     #driverClassName: com.mysql.jdbc.Driver
     #url: jdbc:mysql://localhost:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
     driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mariadb://10.80.1.212:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
+    url: jdbc:log4jdbc:mariadb://localhost:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
     username: nikemanager
     password: 'emotion!@'
   devtools:
