@@ -116,9 +116,7 @@
         },
         watch:{
             calendarDetail() {
-                console.log('기존 값', this.detailData, this.calendarDetail);
-                this.detailData = {...this.calendarDetail};
-                console.log('휴 값', this.detailData);
+                this.detailData = this.calendarDetail;
                 this.dataPeriod = [];
                 if (this.calendarDetail.beginDt && this.calendarDetail.endDt) {
                     this.dataPeriod.push(this.calendarDetail.beginDt);
