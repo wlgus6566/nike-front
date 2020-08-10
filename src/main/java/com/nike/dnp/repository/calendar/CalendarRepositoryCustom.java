@@ -1,6 +1,7 @@
 package com.nike.dnp.repository.calendar;
 
 import com.nike.dnp.dto.calendar.CalendarCheckDTO;
+import com.nike.dnp.dto.calendar.CalendarSearchDTO;
 import com.nike.dnp.entity.calendar.Calendar;
 
 import java.util.List;
@@ -22,4 +23,16 @@ public interface CalendarRepositoryCustom {
 	 * @since 2020. 8. 7. 오후 6:11:38
 	 */
 	List<CalendarCheckDTO> findDayListCount(final Calendar calendar);
+
+
+	/**
+	 * Find by month search list.
+	 *
+	 * @param calendarSearchDTO the calendar search dto
+	 * @return the list
+	 * @author [윤태호]
+	 * @since 2020. 8. 10. 오후 4:52:28
+	 */
+	List<Calendar> findByMonthSearch(CalendarSearchDTO calendarSearchDTO);
+
 }

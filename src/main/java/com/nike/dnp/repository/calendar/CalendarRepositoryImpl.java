@@ -1,6 +1,7 @@
 package com.nike.dnp.repository.calendar;
 
 import com.nike.dnp.dto.calendar.CalendarCheckDTO;
+import com.nike.dnp.dto.calendar.CalendarSearchDTO;
 import com.nike.dnp.entity.calendar.Calendar;
 import com.nike.dnp.entity.calendar.QCalendar;
 import com.querydsl.core.types.Projections;
@@ -54,4 +55,23 @@ public class CalendarRepositoryImpl extends QuerydslRepositorySupport implements
 																			  .and(calendar.endDt.loe(paramCalendar.getEndDt())))
 													   .groupBy(calendar.beginDt).fetch();
 	}
+
+	/**
+	 * Find by month search list.
+	 *
+	 * @param calendarSearchDTO the calendar search dto
+	 * @return the list
+	 * @author [윤태호]
+	 * @since 2020. 8. 10. 오후 5:07:47
+	 */
+	@Override
+	public List<Calendar> findByMonthSearch(final CalendarSearchDTO calendarSearchDTO) {
+		final QCalendar calendar = QCalendar.calendar;
+		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+		final int searchYearMonth =Integer.parseInt(calendarSearchDTO.getYyyyMm());
+		return queryFactory.selectFrom(calendar)
+					.where(calendar.beginDt.yearMonth().eq(searchYearMonth)
+										   .or(calendar.endDt.yearMonth().eq(searchYearMonth))).fetch();
+	}
+
 }

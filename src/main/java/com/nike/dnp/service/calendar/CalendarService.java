@@ -18,7 +18,6 @@ import org.springframework.util.ObjectUtils;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -112,16 +111,8 @@ public class CalendarService {
      */
     public List<Calendar> findAll(final CalendarSearchDTO calendarSearchDTO) {
         log.info("CalendarService.findAll");
-        //월의 마지막 날짜 구하기
-        final YearMonth targetYearMonth = YearMonth.from(LocalDate.parse(calendarSearchDTO.getYyyyMm()+".01", DateTimeFormatter.ofPattern("yyyy.MM.dd")));
-
-        final LocalDateTime beginDt = LocalDateUtil.strToLocalDateTime(
-                calendarSearchDTO.getYyyyMm()+".01 00:00:00",DATE_FORMAT);
-
-        final LocalDateTime endDt = LocalDateUtil.strToLocalDateTime(
-                calendarSearchDTO.getYyyyMm()+"."+targetYearMonth.lengthOfMonth()+" 23:59:59",DATE_FORMAT);
-
-        return calendarRepository.findByBeginDtGreaterThanEqualAndEndDtLessThanEqual(beginDt, endDt);
+        calendarSearchDTO.setYyyyMm(calendarSearchDTO.getYyyyMm().replace(".", ""));
+        return calendarRepository.findByMonthSearch(calendarSearchDTO);
     }
 
     /**
