@@ -63,6 +63,7 @@ public class CalendarRepositoryImpl extends QuerydslRepositorySupport implements
 	 * @return the list
 	 * @author [윤태호]
 	 * @since 2020. 8. 10. 오후 5:07:47
+	 * @Description  년월로 일정 조회
 	 */
 	@Override
 	public List<Calendar> findByMonthSearch(final CalendarSearchDTO calendarSearchDTO) {

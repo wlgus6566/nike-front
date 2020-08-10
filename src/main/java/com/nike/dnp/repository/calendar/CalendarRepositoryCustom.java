@@ -32,6 +32,7 @@ public interface CalendarRepositoryCustom {
 	 * @return the list
 	 * @author [윤태호]
 	 * @since 2020. 8. 10. 오후 4:52:28
+	 * @Description  년월로 켈린더 조회
 	 */
 	List<Calendar> findByMonthSearch(CalendarSearchDTO calendarSearchDTO);
 
