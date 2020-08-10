@@ -12,6 +12,7 @@ import ManagementRoutes from './management';
 import MyPageRoutes from './mypage';
 import ErrorRoutes from './error';
 import PubRoutes from './pub';
+import testRoutes from './test';
 
 // Import methods
 import store from '@/store';
@@ -39,6 +40,7 @@ const router = new VueRouter({
         ...MyPageRoutes,
         ...ErrorRoutes,
         ...PubRoutes,
+        ...testRoutes,
     ],
     scrollBehavior(to, from, savedPosition) {
         let position = { x: 0, y: 0 };

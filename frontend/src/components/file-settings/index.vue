@@ -1,5 +1,5 @@
 <template>
-    <li>
+    <div>
         <h3 class="form-title">파일 설정</h3>
         <hr class="hr-black" />
         <div class="btn-area-file">
@@ -39,7 +39,7 @@
                 <span>파일 추가하기</span>
             </button>
         </div>
-    </li>
+    </div>
 </template>
 <script>
 import draggable from 'vuedraggable';
@@ -90,7 +90,7 @@ export default {
                 return;
             }
 
-            postFiles.forEach((rawFile) => {
+            postFiles.forEach(rawFile => {
                 this.upload(rawFile);
             });
         },

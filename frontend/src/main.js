@@ -37,6 +37,12 @@ Vue.use(VCalendar, {
         dayPopover: 'WWW, MMM D, YYYY',
         // navMonths: 'MMM',
     },
+    datePicker: {
+        mode: 'multiple',
+        popover: {
+            visibility: 'focus',
+        },
+    },
 });
 
 Vue.directive('lineClamp', lineClamp);
