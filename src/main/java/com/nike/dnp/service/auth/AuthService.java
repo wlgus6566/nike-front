@@ -252,39 +252,49 @@ public class AuthService {
      */
     public List<MenuReturnDTO> getAuthsMenusByRoleType(final String roleType) {
         log.info("AuthService.getAuthsMenusByRoleType");
-        List<MenuReturnDTO> menus = new ArrayList<>();
-        final List<MenuReturnDTO> redisMenus = (List<MenuReturnDTO>) redisService.get(REDIS_ROLES_MENUS+roleType);
+        List<MenuReturnDTO> redisMenus = (List<MenuReturnDTO>) redisService.get(REDIS_ROLES_MENUS+roleType);
         if (ObjectUtils.isEmpty(redisMenus)) {
-            final Long authSeq = this.getByRoleType(roleType).getAuthSeq();
-            final List<MenuReturnDTO> upperMenus = menuRepository.getUpperMenus(authSeq);
+            redisMenus = this.getAuthsMenusByRoleType(this.getByRoleType(roleType).getAuthSeq());
+            redisService.set(REDIS_ROLES_MENUS+roleType, redisMenus, 60);
+        }
+        return redisMenus;
+    }
 
-            for (final MenuReturnDTO upperMenu : upperMenus) {
-                if ("HOME".equals(upperMenu.getMenuCode())) {
+    /**
+     * Gets auths menus by role type.
+     *
+     * @param authSeq the auth seq
+     * @return the auths menus by role type
+     * @author [오지훈]
+     * @implNote 권한별 접근 가능 메뉴 목록 조회
+     * @since 2020. 8. 10. 오후 6:26:08
+     */
+    public List<MenuReturnDTO> getAuthsMenusByRoleType(final Long authSeq) {
+        final List<MenuReturnDTO> menus = new ArrayList<>();
+        final List<MenuReturnDTO> upperMenus = menuRepository.getUpperMenus(authSeq);
+
+        for (final MenuReturnDTO upperMenu : upperMenus) {
+            if ("HOME".equals(upperMenu.getMenuCode())) {
+                menus.add(upperMenu);
+            } else if ("N".equals(upperMenu.getManagementYn())) {
+                final List<MenuReturnDTO> lowerMenus = menuRepository.getSubMenus(upperMenu.getMenuSeq(), 2L);
+                if (!lowerMenus.isEmpty()) {
+                    for (final MenuReturnDTO lowerMenu : lowerMenus) {
+                        lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
+                    }
+                    upperMenu.setMenus(lowerMenus);
                     menus.add(upperMenu);
-                } else if ("N".equals(upperMenu.getManagementYn())) {
-                    final List<MenuReturnDTO> lowerMenus = menuRepository.getSubMenus(upperMenu.getMenuSeq(), 2L);
-                    if (!lowerMenus.isEmpty()) {
-                        for (final MenuReturnDTO lowerMenu : lowerMenus) {
-                            lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
-                        }
-                        upperMenu.setMenus(lowerMenus);
-                        menus.add(upperMenu);
+                }
+            } else if ("Y".equals(upperMenu.getManagementYn())) {
+                final List<MenuReturnDTO> lowerMenus = menuRepository.getLowerMenus(authSeq, upperMenu.getMenuSeq(), 2L);
+                if (!lowerMenus.isEmpty()) {
+                    for (final MenuReturnDTO lowerMenu : lowerMenus) {
+                        lowerMenu.setMenus(menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L));
                     }
-                } else if ("Y".equals(upperMenu.getManagementYn())) {
-                    final List<MenuReturnDTO> lowerMenus = menuRepository.getLowerMenus(authSeq, upperMenu.getMenuSeq(), 2L);
-                    if (!lowerMenus.isEmpty()) {
-                        for (final MenuReturnDTO lowerMenu : lowerMenus) {
-                            lowerMenu.setMenus(menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L));
-                        }
-                        upperMenu.setMenus(lowerMenus);
-                        menus.add(upperMenu);
-                    }
+                    upperMenu.setMenus(lowerMenus);
+                    menus.add(upperMenu);
                 }
             }
-
-            redisService.set(REDIS_ROLES_MENUS+roleType, menus, 60);
-        } else {
-            menus = redisMenus;
         }
 
         return menus;
@@ -300,7 +310,7 @@ public class AuthService {
      */
     public void setAuthsMenusByRoleType(final String roleType) {
         log.info("AuthService.setAuthsMenusByRoleType");
-        this.findByRoleType(roleType).ifPresent(value -> redisService.set(REDIS_ROLES_MENUS + roleType, menuRepository.getMenus(value.getAuthSeq()), 60));
+        this.findByRoleType(roleType).ifPresent(value -> redisService.set(REDIS_ROLES_MENUS + roleType, this.getAuthsMenusByRoleType(value.getAuthSeq()), 60));
     }
 
 
