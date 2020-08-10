@@ -1,5 +1,5 @@
 <template>
-    <header :class="{ 'page-header': $route.meta.pageTitle }">
+    <header :class="{ 'page-header': tabMenuData.menuName }">
         <h1 class="logo" v-if="this.$route.path === '/'">
             <a href="#"><span>나이키</span></a>
         </h1>
@@ -11,177 +11,57 @@
             >
                 뒤로가기
             </button>
-            <div class="inner" v-if="$route.meta.pageTitle">
-                <h1 class="page-title">{{ $route.meta.pageTitle }}</h1>
-                <NabItem :menuItem="menuItem" />
+            <div class="inner" v-if="tabMenuData.menuName">
+                <h1 class="page-title">{{ tabMenuData.menuName }}</h1>
+                <NavItem :tabMenuData="tabMenuData.menus" />
             </div>
         </template>
     </header>
 </template>
 <script>
-import NabItem from '@/components/app-header/nav-item';
+import NavItem from '@/components/app-header/nav-item';
 export default {
     name: 'headerIndex',
     data() {
         return {
-            navItems: [
-                {
-                    pageTitle: 'HOME',
-                    titleKo: '메인',
-                    to: '/',
-                    exact: true,
-                    menuUse: 'Y',
-                    navUse: 'N',
-                },
-                {
-                    pageTitle: 'TOOLKIT',
-                    to: '/toolkit/vms',
-                    exact: false,
-                    menuUse: 'N',
-                    navUse: 'Y',
-                    children: [
-                        {
-                            title: `VMS`,
-                            to: '/toolkit/vms',
-                            exact: false,
-                        },
-                        {
-                            title: `EKIN`,
-                            to: '/toolkit/ekin',
-                            exact: false,
-                        },
-                        {
-                            title: `SOCIAL`,
-                            to: '/toolkit/social',
-                            exact: false,
-                        },
-                        {
-                            title: `RB`,
-                            to: '/toolkit/rb',
-                            exact: false,
-                        },
-                    ],
-                },
-                {
-                    pageTitle: 'FOUNDATION',
-                    to: '/foundation/vms',
-                    exact: false,
-                    menuUse: 'N',
-                    navUse: 'Y',
-                    children: [
-                        {
-                            title: `VMS`,
-                            to: '/foundation/vms',
-                            exact: false,
-                        },
-                        {
-                            title: `EKIN`,
-                            to: '/foundation/ekin',
-                            exact: false,
-                        },
-                        {
-                            title: `DIGITAL`,
-                            to: '/foundation/digital',
-                            exact: false,
-                        },
-                        {
-                            title: `RB`,
-                            to: '/foundation/rb',
-                            exact: false,
-                        },
-                    ],
-                },
-                {
-                    pageTitle: 'REPORT',
-                    to: '/report/report',
-                    exact: false,
-                    menuUse: 'Y',
-                    navUse: 'Y',
-                    children: [
-                        {
-                            title: `업로드`,
-                            to: '/report/report',
-                            exact: false,
-                        },
-                        {
-                            title: `관리`,
-                            to: '/report/management',
-                            exact: false,
-                        },
-                    ],
-                },
-                {
-                    pageTitle: 'INFORMATION',
-                    to: '/information/agency',
-                    exact: false,
-                    navUse: 'Y',
-                    myPage: 'N',
-                    children: [
-                        {
-                            title: `AGENCY`,
-                            to: '/information/agency',
-                            exact: false,
-                        },
-                        {
-                            title: `CALENDAR`,
-                            to: '/information/calendar',
-                            exact: false,
-                        },
-                    ],
-                },
-                {
-                    pageTitle: 'MYPAGE',
-                    to: '/mypage',
-                    exact: false,
-                    menuUse: 'Y',
-                    navUse: 'N',
-                },
-                {
-                    pageTitle: `CUSTOMER CENTER`,
-                    to: '/mypage/notice',
-                    exact: false,
-                    menuUse: 'N',
-                    navUse: 'N',
-                    children: [
-                        {
-                            title: `공지사항`,
-                            to: '/mypage/notice',
-                            exact: false,
-                        },
-                        {
-                            title: `news`,
-                            to: '/mypage/news',
-                            exact: false,
-                        },
-                        {
-                            title: `자주묻는질문`,
-                            to: '/mypage/faq',
-                            exact: false,
-                        },
-                    ],
-                },
-            ],
+            tabMenuData: [],
         };
     },
     created() {
-        //console.log(this.menuItem);
+        this.tabMenuFn();
+        console.log(this.tabMenuData);
     },
-    computed: {
-        menuItem() {
-            const path = this.$route.path.split('/').slice(0)[1];
-            //const path = this.$route.path;
-            //console.log(path);
-            const index = this.navItems.findIndex(
-                el => el.to.split('/').slice(0)[1] === path
-            );
-            return this.navItems[index];
-        },
-    },
+    computed: {},
     watch: {},
     components: {
-        NabItem,
+        NavItem,
     },
-    methods: {},
+    methods: {
+        tabMenuFn() {
+            const titleValue = this.$route.path.split('/')[1];
+            const menu = this.$store.state.menuData.filter(el => {
+                if (el.menuCode !== 'MYPAGE') {
+                    return (
+                        el.menuCode !== 'HOME' &&
+                        el.menuPathUrl === '/' + titleValue
+                    );
+                } else {
+                    return el.menuCode;
+                }
+            });
+            if (titleValue === 'mypage') {
+                const pathSplit = this.$route.path.split('/');
+                const myPath = '/' + pathSplit[1] + '/' + pathSplit[2];
+                const myMenu = menu[0].menus.filter(
+                    el => el.menuPathUrl === myPath
+                );
+
+                this.tabMenuData = myMenu[0];
+            } else {
+                this.tabMenuData = menu[0];
+            }
+        },
+    },
 };
 </script>
 <style scoped></style>

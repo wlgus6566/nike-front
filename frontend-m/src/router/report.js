@@ -1,19 +1,9 @@
 import { pages } from '@/utils/global-methods';
 
 const routes = [
-    // {
-    //     path: '/mypage',
-    //     name: 'mypage',
-    //     component: pages('mypage/index.vue'),
-    //     meta: {
-    //         layout: 'Clean',
-    //         pageTitle: '',
-    //         title: '마이페이지 메인',
-    //     },
-    // },
     {
         path: '/report',
-        component: pages('root'),
+        component: pages('report/index.vue'),
         children: [
             {
                 path: 'upload',
@@ -35,7 +25,7 @@ const routes = [
                 },
             },
             {
-                path: 'management',
+                path: 'manage',
                 component: pages('report/management.vue'),
                 meta: {
                     layout: 'Default',

@@ -1,12 +1,12 @@
 <template>
-    <ul class="nav-tab" v-if="$route.meta.tab">
+    <ul class="nav-tab">
         <li
-            :class="tabItemClass(item.value)"
-            v-for="(item, index) in $route.meta.tab"
+            v-for="(menu, index) in tabMenuData"
             :key="index"
+            :class="tabItemClass(menu.menuPathUrl)"
         >
-            <router-link :to="item.value">
-                <span>{{ item.title }}</span>
+            <router-link :to="menu.menuPathUrl">
+                <span>{{ menu.menuName }}</span>
             </router-link>
         </li>
     </ul>
@@ -14,22 +14,13 @@
 <script>
 export default {
     name: 'nav-item',
-    props: ['menuItem'],
-    created() {
-        console.log(this.menuItem);
-    },
-    computed: {
-        menu() {
-            // if (this.menuItem.length > 1) {
-            //     console.log(1);
-            // } else {
-            //     console.log(2);
-            // }
-        },
-    },
+    props: ['tabMenuData'],
+    created() {},
+    computed: {},
     methods: {
         tabItemClass(val) {
-            const titleValue = this.$route.path.split('/').slice(-1)[0];
+            const titleValue = this.$route.path;
+            console.log(titleValue);
             return {
                 active: titleValue === val,
             };

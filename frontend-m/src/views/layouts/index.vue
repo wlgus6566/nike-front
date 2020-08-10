@@ -1,10 +1,8 @@
 <template>
     <div id="wrap">
-        <section class="contents">
-            <transition mode="out-in" name="page-change">
-                <router-view></router-view>
-            </transition>
-        </section>
+        <transition mode="out-in" name="page-change">
+            <router-view></router-view>
+        </transition>
         <Navigation></Navigation>
     </div>
 </template>
