@@ -2,6 +2,7 @@ package com.nike.dnp.dto.contents;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * The Class Contents list dto.
@@ -131,6 +133,14 @@ public class ContentsResultDTO extends BaseTimeEntity {
      */
     @ApiModelProperty(name = "exposureYn", value = "노출 여부(N : 진행중)", example = "Y")
     private String exposureYn;
+
+    /**
+     * The Checks
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "checks", value = "컨텐츠 권한 목록")
+    private List<AuthReturnDTO> checks;
 
     /**
      * The constant cdnUrl.

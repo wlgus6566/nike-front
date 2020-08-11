@@ -232,7 +232,13 @@ public class ContentsService {
         // history 저장
         historyService.saveViewHistory(contentsSeq, topMenuCode);
 
-        return ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
+        // 권한 목록 조회
+        UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
+        userContentsSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
+        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+        ContentsResultDTO contentsResultDTO = ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
+        contentsResultDTO.setChecks(userContentsService.getAuthList(userContentsSearchDTO));
+        return contentsResultDTO;
     }
 
     /**

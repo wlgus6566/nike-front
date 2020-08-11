@@ -27,30 +27,6 @@ public class AuthReturnDTO {
     private Long authSeq;
 
     /**
-     * 상위 권한 시퀀스
-     *
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "upperAuthSeq", value = "상위 권한 시퀀스", required = true)
-    private Long upperAuthSeq;
-
-    /**
-     * 권한명
-     *
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "authName", value = "권한 명", required = true)
-    private String authName;
-
-    /**
-     * 상위 권한 명
-     *
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "upperAuthName", value = "상위 권한 명", required = true)
-    private String upperAuthName;
-
-    /**
      * 상세_권한_여부
      *
      * @author [오지훈]
