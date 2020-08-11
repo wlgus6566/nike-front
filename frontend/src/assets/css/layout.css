@@ -249,7 +249,6 @@ footer {
     display: flex;
 }
 .modal {
-    padding: 50px;
     flex: 1 1 auto;
     position: relative;
     background: #fff;
@@ -259,12 +258,20 @@ footer {
     flex-direction: column;
     display: flex;
 }
+.modal-scroll {
+    max-height: calc(100vh - 400px);
+}
+.modal-container {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+}
 .modal-header {
     flex: 0 0 40px;
 }
 .modal-content {
+    flex-direction: column;
     flex: 1 1 auto;
-    max-height: calc(100vh - 400px);
     position: relative;
 }
 .modal-footer {
@@ -323,6 +330,7 @@ footer {
     text-align: center;
     color: #888;
 }
+/*
 
 .modal-wrap.modal-overlay {
     display: flex;
@@ -397,3 +405,4 @@ footer {
     opacity: 0;
     transform: translateY(-20px);
 }
+*/

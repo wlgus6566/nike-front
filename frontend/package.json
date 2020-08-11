@@ -16,6 +16,7 @@
         "axios": "^0.19.2",
         "ckeditor4-vue": "^1.0.1",
         "compress.js": "^1.1.2",
+        "compressorjs": "^1.0.6",
         "core-js": "^3.6.5",
         "cors": "^2.8.5",
         "cropperjs": "^1.5.7",

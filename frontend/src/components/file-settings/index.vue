@@ -79,7 +79,6 @@ export default {
                     fileKindCode: 'FILE',
                     fileName: el.name,
                     fileSectionCode: 'GUIDE', //파일구분
-
                     fileExtension: el.type,
                     filePhysicalName: '',
                     fileSize: el.size,
@@ -110,7 +109,7 @@ export default {
             this.fileList.push({
                 fileKindCode: 'FILE',
                 fileName: '',
-                file fileSectionCode: 'ASSET',
+                fileSectionCode: 'ASSET',
                 fileSize: 600,
                 title: '',
                 url: '',
@@ -120,9 +119,9 @@ export default {
             this.fileList.splice(idx, 1);
         },
         fileSelect() {
-            this.$refs.uploadIpt.value = null;
+            /*this.$refs.uploadIpt.value = null;
             this.PhysicalName: '/cdn/file/path',
-                $refs.uploadIpt.click();
+                this.$refs.uploadIpt.click();*/
         },
     },
 };
