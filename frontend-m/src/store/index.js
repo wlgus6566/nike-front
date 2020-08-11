@@ -1,6 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+
+import { getGnbList } from '@/api/my-page';
+
 Vue.use(Vuex);
+
 export default new Vuex.Store({
     state: {
         menuData: [
@@ -204,7 +208,7 @@ export default new Vuex.Store({
                         upperMenuSeq: 19,
                         menuName: '상품관리',
                         upperMenuName: 'ORDER',
-                        menuPathUrl: '/order/product',
+                        menuPathUrl: '/order/management',
                         pcYn: 'Y',
                         mobileYn: 'N',
                         managementYn: 'N',
@@ -305,7 +309,7 @@ export default new Vuex.Store({
                         upperMenuSeq: 20,
                         menuName: 'REPORT 관리',
                         upperMenuName: 'REPORT',
-                        menuPathUrl: '/report/manage',
+                        menuPathUrl: '/report/management',
                         pcYn: 'Y',
                         mobileYn: 'Y',
                         managementYn: 'N',
@@ -359,8 +363,8 @@ export default new Vuex.Store({
             {
                 menuSeq: 40,
                 menuCode: 'INFO',
-                menuName: 'INFO',
-                menuPathUrl: '/info',
+                menuName: 'INFORMATION',
+                menuPathUrl: '/information',
                 pcYn: 'Y',
                 mobileYn: 'Y',
                 managementYn: 'Y',
@@ -370,8 +374,8 @@ export default new Vuex.Store({
                         menuCode: 'INFO_CONTACT',
                         upperMenuSeq: 40,
                         menuName: 'AGENCY CONTACT',
-                        upperMenuName: 'INFO',
-                        menuPathUrl: '/info/contact',
+                        upperMenuName: 'information',
+                        menuPathUrl: '/information/agency',
                         pcYn: 'Y',
                         mobileYn: 'Y',
                         managementYn: 'N',
@@ -381,8 +385,8 @@ export default new Vuex.Store({
                         menuCode: 'INFO_CALENDAR',
                         upperMenuSeq: 40,
                         menuName: 'CALENDAR',
-                        upperMenuName: 'INFO',
-                        menuPathUrl: '/info/calendar',
+                        upperMenuName: 'information',
+                        menuPathUrl: '/information/calendar',
                         pcYn: 'Y',
                         mobileYn: 'Y',
                         managementYn: 'N',
@@ -415,7 +419,7 @@ export default new Vuex.Store({
                                 upperMenuSeq: 76,
                                 menuName: '내가 업로드한 폴더',
                                 upperMenuName: 'HISTORY',
-                                menuPathUrl: '/mypage/history/upload',
+                                menuPathUrl: '/mypage/upload',
                                 pcYn: 'Y',
                                 mobileYn: 'Y',
                                 managementYn: 'N',
@@ -426,7 +430,7 @@ export default new Vuex.Store({
                                 upperMenuSeq: 76,
                                 menuName: '최근 본 폴더',
                                 upperMenuName: 'HISTORY',
-                                menuPathUrl: '/mypage/history/folder',
+                                menuPathUrl: '/mypage/latest',
                                 pcYn: 'Y',
                                 mobileYn: 'Y',
                                 managementYn: 'N',
@@ -441,7 +445,7 @@ export default new Vuex.Store({
                         upperMenuName: 'MYPAGE',
                         menuPathUrl: '/mypage/order',
                         pcYn: 'Y',
-                        mobileYn: 'Y',
+                        mobileYn: 'N',
                         managementYn: 'N',
                         menus: [
                             {
@@ -450,9 +454,9 @@ export default new Vuex.Store({
                                 upperMenuSeq: 77,
                                 menuName: '주문내역확인',
                                 upperMenuName: 'ORDER',
-                                menuPathUrl: '/mypage/order/list',
+                                menuPathUrl: '/mypage/order',
                                 pcYn: 'Y',
-                                mobileYn: 'Y',
+                                mobileYn: 'N',
                                 managementYn: 'N',
                             },
                             {
@@ -461,9 +465,9 @@ export default new Vuex.Store({
                                 upperMenuSeq: 77,
                                 menuName: '위시리스트',
                                 upperMenuName: 'ORDER',
-                                menuPathUrl: '/mypage/order/wishlist',
+                                menuPathUrl: '/mypage/wish-list',
                                 pcYn: 'Y',
-                                mobileYn: 'Y',
+                                mobileYn: 'N',
                                 managementYn: 'N',
                             },
                         ],
@@ -485,7 +489,7 @@ export default new Vuex.Store({
                                 upperMenuSeq: 78,
                                 menuName: '회원정보 조회',
                                 upperMenuName: 'MY INFO',
-                                menuPathUrl: '/mypage/myinfo/info',
+                                menuPathUrl: '/mypage/info',
                                 pcYn: 'Y',
                                 mobileYn: 'Y',
                                 managementYn: 'N',
@@ -496,7 +500,7 @@ export default new Vuex.Store({
                                 upperMenuSeq: 78,
                                 menuName: '비밀번호 변경',
                                 upperMenuName: 'MY INFO',
-                                menuPathUrl: '/mypage/myinfo/password',
+                                menuPathUrl: '/mypage/password',
                                 pcYn: 'Y',
                                 mobileYn: 'Y',
                                 managementYn: 'N',
@@ -520,7 +524,7 @@ export default new Vuex.Store({
                                 upperMenuSeq: 22,
                                 menuName: '공지사항',
                                 upperMenuName: 'CUSTOMER CENTER',
-                                menuPathUrl: '/customer/notice',
+                                menuPathUrl: '/mypage/notice',
                                 pcYn: 'Y',
                                 mobileYn: 'Y',
                                 managementYn: 'N',
@@ -531,7 +535,7 @@ export default new Vuex.Store({
                                 upperMenuSeq: 22,
                                 menuName: 'NEWS',
                                 upperMenuName: 'CUSTOMER CENTER',
-                                menuPathUrl: '/customer/news',
+                                menuPathUrl: '/mypage/news',
                                 pcYn: 'Y',
                                 mobileYn: 'Y',
                                 managementYn: 'N',
@@ -542,7 +546,7 @@ export default new Vuex.Store({
                                 upperMenuSeq: 22,
                                 menuName: 'FAQ',
                                 upperMenuName: 'CUSTOMER CENTER',
-                                menuPathUrl: '/customer/faq',
+                                menuPathUrl: '/mypage/faq',
                                 pcYn: 'Y',
                                 mobileYn: 'Y',
                                 managementYn: 'N',
@@ -554,6 +558,19 @@ export default new Vuex.Store({
         ],
     },
     getters: {},
-    mutations: {},
-    actions: {},
+    mutations: {
+        SET_GNB(state, menuData) {
+            state.menuData = menuData;
+        },
+    },
+    actions: {
+        //gnbMenu api
+        async gnbDataList({ commit }, params) {
+            const {
+                data: { data: response },
+            } = await getGnbList(params);
+            console.log('1');
+            commit('SET_GNB', response);
+        },
+    },
 });

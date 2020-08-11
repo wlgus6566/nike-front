@@ -2,9 +2,9 @@ import { pages } from '@/utils/global-methods';
 
 const routes = [
     {
-        path: '/toolkit',
+        path: '/foundation',
         component: pages('report/index.vue'),
-        redirect: '/toolkit/vms',
+        redirect: '/foundation/vms',
         children: [
             {
                 path: 'vms',
@@ -21,7 +21,14 @@ const routes = [
                 },
             },
             {
-                path: 'social',
+                path: 'digital',
+                component: pages('common/folder-list.vue'),
+                meta: {
+                    layout: 'Default',
+                },
+            },
+            {
+                path: 'rb',
                 component: pages('common/folder-list.vue'),
                 meta: {
                     layout: 'Default',

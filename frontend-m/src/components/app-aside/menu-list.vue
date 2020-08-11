@@ -1,16 +1,18 @@
 <template>
-    <ul class="menu-list">
+    <ul class="menu-list" v-if="menuData">
         <li
-            v-for="(menu, index) in menuData"
-            :key="index"
+            v-for="menu in menuData"
+            :key="menu.menuSeq"
             v-if="menu.mobileYn === 'Y'"
         >
-            <a href="#">
+            <button type="button">
                 <span>{{ menu.menuName }}</span>
-            </a>
+            </button>
             <ul class="depth">
-                <li v-for="(depth, index) in menu.menus" :key="index">
-                    <a href="#">{{ depth.menuName }}</a>
+                <li v-for="depth in menu.menus" :key="depth.menuSeq">
+                    <router-link :to="menu.menuPathUrl">{{
+                        depth.menuName
+                    }}</router-link>
                 </li>
             </ul>
         </li>

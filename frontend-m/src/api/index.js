@@ -7,4 +7,4 @@ function createWithAuth(url, options) {
     return instance;
 }
 
-export const contents = createWithAuth('/api/contents', { timeout: 3000 });
+export const myPage = createWithAuth(`/api/mypage`, { timeout: 3000 });

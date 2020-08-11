@@ -30,6 +30,7 @@ export default {
             return `Layout${this.$route.meta.layout || 'Default'}`;
         },
     },
+    mounted() {},
     components: {
         LayoutDefault: layouts('default'),
         LayoutClean: layouts('clean'),
