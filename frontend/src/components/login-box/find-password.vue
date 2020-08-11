@@ -32,12 +32,13 @@
     </form>
 </template>
 <script>
-import { sendEmail } from '@/api/login.js';
-export default {
+    import {sendEmail} from '@/api/login.js';
+
+    export default {
     name: 'FindPW',
     data() {
         return {
-            userId: 'joosung.yeum@emotion.co.kr',
+            userId: '',
         };
     },
 
@@ -52,6 +53,7 @@ export default {
                 const { data: response } = await sendEmail({
                     userId: this.userId,
                 });
+                console.log(response);
                 if (response.existMsg) {
                     alert(response.msg);
                 }

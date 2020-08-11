@@ -1,10 +1,15 @@
 <template>
     <div>
-        <h2 class="page-title"><span class="ko">상품관리</span></h2>
-        <div class="sorting-area">
+        <h2 class="page-title">
+            <span class="ko">{{ this.$route.meta.title }}</span>
+        </h2>
+        <div class="sorting-area" ref="test" tabindex="0">
             <FilterSelect :listSortSelect="category2Code" />
-            <FilterSelect :listSortSelect="category3Code" />
-            <FilterSelect :listSortSelect="agency" />
+            <FilterSelect
+                :listSortSelect="category3Code"
+                @selectFocus="selectFocus"
+            />
+            <FilterSelect :listSortSelect="agencySeq" />
             <SearchInput @searchSubmit="searchSubmit" />
         </div>
         <template v-if="productListData">
@@ -28,15 +33,13 @@
                     <p class="desc">검색 결과가 없습니다.</p>
                 </NoData>
             </template>
-            <el-pagination
+            <Pagination
                 v-if="productListData.length"
-                @current-change="handleCurrentChange"
-                :page-size="itemLength"
-                :pager-count="11"
-                layout="prev, pager, next"
-                :total="totalItem"
-            >
-            </el-pagination>
+                :itemLength="itemLength"
+                :pageCount="pageCount"
+                :totalItem="totalItem"
+                @handleCurrentChange="handleCurrentChange"
+            />
         </template>
     </div>
 </template>
@@ -44,17 +47,20 @@
     import SearchInput from '@/components/search-input';
     import FilterSelect from '@/components/filter-select';
     import ProductManagement from '@/components/product-management';
+    import Pagination from '@/components/pagination';
     import NoData from '@/components/no-data';
-    import NoDataSearch from '@/components/no-data/nodata-search';
     import {delProduct, getProductList} from '@/api/product';
+    import {getAgencyContact} from '@/api/agency';
+    import {getCategoryList} from '@/utils/code';
 
     export default {
     name: 'management',
     data() {
         return {
-            totalItem: 0,
             productList: null,
             productListData: null,
+            pageCount: 11,
+            totalItem: 0,
             page: 0,
             itemLength: 20,
             searchKeyword: '',
@@ -67,147 +73,6 @@
                     {
                         value: '',
                         label: '대구분',
-                        category3Code: {
-                            listSortOptions: [
-                                {
-                                    value: '',
-                                    label: '소구분',
-                                },
-                            ],
-                            value: '',
-                        },
-                    },
-                    {
-                        value: 'SUBSIDIARY',
-                        label: '부자재',
-                        category3Code: {
-                            listSortOptions: [
-                                {
-                                    value: '',
-                                    label: '소구분',
-                                },
-                                {
-                                    value: 'SUBSIDIARY21',
-                                    label: '운영 비품',
-                                },
-                                {
-                                    value: 'SUBSIDIARY22',
-                                    label: '스태프 비품',
-                                },
-                                {
-                                    value: 'SUBSIDIARY23',
-                                    label: '운영 사이니지',
-                                },
-                                {
-                                    value: 'SUBSIDIARY24',
-                                    label: '세일 사이니지',
-                                },
-                                {
-                                    value: 'SUBSIDIARY25',
-                                    label: '오픈 패키지',
-                                },
-                                {
-                                    value: 'SUBSIDIARY26',
-                                    label: '나이키 골프',
-                                },
-                            ],
-                            value: '',
-                        },
-                    },
-                    {
-                        value: 'NIKE_BY_YOU',
-                        label: 'NIKE BY YOU',
-                        category3Code: {
-                            listSortOptions: [
-                                {
-                                    value: '',
-                                    label: '소구분',
-                                },
-                                {
-                                    value: 'NIKE_BY_YOU27',
-                                    label: '신발 커스텀(단품)',
-                                },
-                                {
-                                    value: 'NIKE_BY_YOU28',
-                                    label: '신발 커스텀(패키지)',
-                                },
-                                {
-                                    value: 'NIKE_BY_YOU29',
-                                    label: '의류 커스텀(단품)',
-                                },
-                                {
-                                    value: 'NIKE_BY_YOU30',
-                                    label: '의류 커스텀(패키지)',
-                                },
-                                {
-                                    value: 'NIKE_BY_YOU31',
-                                    label: 'OTHERS',
-                                },
-                            ],
-                            value: '',
-                        },
-                    },
-                    {
-                        value: 'CUSTOM23',
-                        label: 'CUSTOM23(JORDAN ONLY)',
-                        category3Code: {
-                            listSortOptions: [
-                                {
-                                    value: '',
-                                    label: '소구분',
-                                },
-                                {
-                                    value: 'CUSTOM2332',
-                                    label: '신발 커스텀(단품)',
-                                },
-                                {
-                                    value: 'CUSTOM2333',
-                                    label: '신발 커스텀(패키지)',
-                                },
-                                {
-                                    value: 'CUSTOM2334',
-                                    label: '의류 커스텀(단품)',
-                                },
-                                {
-                                    value: 'CUSTOM2335',
-                                    label: '의류 커스텀(패키지)',
-                                },
-                                {
-                                    value: 'CUSTOM2336',
-                                    label: 'OTHERS',
-                                },
-                            ],
-                            value: '',
-                        },
-                    },
-                    {
-                        value: 'MNQ',
-                        label: 'MNQ',
-                        category3Code: {
-                            listSortOptions: [
-                                {
-                                    value: '',
-                                    label: '소구분',
-                                },
-                                {
-                                    value: 'MNQ37',
-                                    label: '남성',
-                                },
-                                {
-                                    value: 'MNQ38',
-                                    label: '여성',
-                                },
-                                {
-                                    value: 'MNQ39',
-                                    label: '유아동',
-                                },
-                                {
-                                    value: 'MNQ40',
-                                    label: '수리/보수',
-                                },
-                            ],
-                            value: '',
-                        },
                     },
                 ],
                 value: '',
@@ -221,7 +86,7 @@
                 ],
                 value: '',
             },
-            agency: {
+            agencySeq: {
                 listSortOptions: [
                     {
                         value: '',
@@ -236,30 +101,81 @@
         SearchInput,
         FilterSelect,
         ProductManagement,
+        Pagination,
         NoData,
-        NoDataSearch,
     },
     created() {},
-    computed: {},
+    computed: {
+        basketList() {
+            if (!!this.$store.state.basketListData) {
+                return this.$store.state.basketListData;
+            } else {
+                return [];
+            }
+        },
+    },
     watch: {
-        'category2Code.value'() {
-            this.category2Code.listSortOptions.forEach((item) => {
-                if (item.value === this.category2Code.value) {
-                    this.category3Code = item.category3Code;
-                }
-            });
+        'category2Code.value'(val) {
+            if (val === '') {
+                this.category3Code = {
+                    listSortOptions: [
+                        {
+                            value: '',
+                            label: '소구분',
+                        },
+                    ],
+                    value: '',
+                };
+            } else {
+                getCategoryList(val, this.category3Code.listSortOptions);
+            }
+
             this.getProduct();
         },
         'category3Code.value'() {
             this.getProduct();
         },
+        'agencySeq.value'() {
+            this.getProduct();
+        },
     },
     mounted() {
+        this.getAgency();
+        getCategoryList('CATEGORY', this.category2Code.listSortOptions);
+    },
+    activated() {
         this.getProduct();
     },
     methods: {
+        selectFocus() {
+            console.log(this.category2Code.value);
+            if (this.category2Code.value === '') {
+                alert('대구분을 선택해 주세요 ');
+                this.$refs.test.focus();
+            }
+        },
+        //에이전시 리스트
+        async getAgency() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getAgencyContact({});
+                const agencyData = response;
+                agencyData.forEach((item, index) => {
+                    const agencyList = {
+                        value: item.agencySeq,
+                        label: item.agencyName,
+                    };
+                    this.agencySeq.listSortOptions.push(agencyList);
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        // Pagination fn
         handleCurrentChange(val) {
-            this.page = val - 1;
+            this.page = val;
             this.getProduct();
         },
         // checkbox
@@ -309,7 +225,7 @@
                         goodsSeqList: this.checkItem.toString(),
                     });
                     await this.getProduct();
-                    //todo 장바구니 다건 삭제 필요
+                    await this.$store.dispatch('basketList');
                     this.loading = false;
                     this.checkItem.forEach((seq) => {
                         this.checked(seq, true);
@@ -332,6 +248,7 @@
         },
         // 상품 리스트 api
         async getProduct() {
+            this.checkAll = false;
             this.loading = true;
             try {
                 const {
@@ -342,7 +259,7 @@
                     category2Code: this.category2Code.value,
                     category3Code: this.category3Code.value,
                     keyword: this.searchKeyword,
-                    agencySeq: this.agency.value,
+                    agencySeq: this.agencySeq.value,
                 });
                 this.productList = response;
                 this.productListData = response.content;
@@ -355,4 +272,8 @@
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+::v-deep .sorting-area {
+    outline: transparent !important;
+}
+</style>

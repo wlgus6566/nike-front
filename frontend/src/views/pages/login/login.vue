@@ -1,7 +1,13 @@
 <template>
     <section class="login">
         <div class="login-inner">
-            <component :is="LoginBox" @changeLoginBox="changeLoginBox" />
+            <component
+                :is="LoginBox"
+                :loginData="loginData"
+                @login="login"
+                @updateValue="updateValue"
+                @changeLoginBox="changeLoginBox"
+            />
             <p class="f-desc">
                 사용자는 NIKE SPACE에 로그인함으로써,<br />
                 개인정보 처리방침 및 이용약관에 동의합니다.
@@ -10,20 +16,68 @@
     </section>
 </template>
 <script>
-import LoginForm from '@/components/login-box/login-form';
-import CertCode from '@/components/login-box/cert-code';
-import FindPW from '@/components/login-box/find-password';
-export default {
+    import LoginForm from '@/components/login-box/login-form';
+    import CertCode from '@/components/login-box/cert-code';
+    import FindPW from '@/components/login-box/find-password';
+
+    export default {
     name: 'login',
-    data: function () {
+    data() {
         return {
             LoginBox: 'LoginForm',
+            loginData: {
+                username: '',
+                password: '',
+                certCode: '',
+            },
         };
     },
     components: { LoginForm, CertCode, FindPW },
     methods: {
         changeLoginBox(compName) {
             this.LoginBox = compName;
+        },
+        updateValue(target, value) {
+            this.loginData[target] = value;
+        },
+        async login() {
+            if (!this.loginData.username) {
+                alert('아이디를 입력해 주세요.');
+                return;
+            }
+            if (!this.loginData.password) {
+                alert('비밀번호를 입력해 주세요.');
+                return;
+            }
+            try {
+                const bodyFormData = new FormData();
+                bodyFormData.append('username', this.loginData.username);
+                bodyFormData.append('password', this.loginData.password);
+                bodyFormData.append('certCode', this.loginData.certCode);
+                const response = await this.$store.dispatch(
+                    'LOGIN',
+                    bodyFormData
+                );
+                if (response.data.existMsg) {
+                    alert(response.data.msg);
+                }
+                if (response.data.code === 'SEND_EMAIL') {
+                    console.log('SEND_EMAIL');
+                } else if (response.data.code === 'SEND_EMAIL_CERT_CODE') {
+                    this.changeLoginBox('certCode');
+                } else if (response.data.code === 'TERMS_AGREEMENT') {
+                    await this.$router.push({
+                        name: 'agree',
+                        params: this.loginData,
+                    });
+                } else if (response.data.code === 'SUCCESS') {
+                    // await this.$router.push('/');
+                }
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+                alert(error.response.data.msg);
+            }
         },
     },
 };

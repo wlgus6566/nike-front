@@ -52,7 +52,7 @@
         Loading,
     },
     mounted() {
-        this.fetchData();
+        this.getAgencyData();
     },
     computed: {},
     methods: {
@@ -66,7 +66,7 @@
             this.agencySeq = '';
             this.visible.agencyManagement = true;
         },
-        async fetchData() {
+        async getAgencyData() {
             this.loadingData = true;
             try {
                 const {
@@ -79,20 +79,20 @@
             }
         },
         async addAgencyManagement() {
-            //todo 필수값 체크
+            const addData = {
+                agencyDescription: this.addAgencyData.agencyDescription,
+                agencyName: this.addAgencyData.agencyName,
+                email: this.addAgencyData.email,
+                telephoneNumber: this.addAgencyData.telephoneNumber,
+            };
             let addAlert = confirm('AGENCY를 등록하시겠습니까?');
             if (addAlert) {
                 try {
                     const {
                         data: { data: response },
-                    } = await postAgencyContact({
-                        agencyDescription: this.addAgencyData.agencyDescription,
-                        agencyName: this.addAgencyData.agencyName,
-                        email: this.addAgencyData.email,
-                        telephoneNumber: this.addAgencyData.telephoneNumber,
-                    });
+                    } = await postAgencyContact(addData);
                     this.visible.agencyManagement = false;
-                    this.fetchData();
+                    await this.getAgencyData();
                 } catch (error) {
                     console.log(error.response);
                 }
@@ -119,7 +119,7 @@
                         data: { data: response },
                     } = await delAgencyContact(agencySeq);
                     this.visible.agencyManagement = false;
-                    this.fetchData();
+                    await this.getAgencyData();
                 } catch (error) {
                     console.log(error);
                 }
@@ -138,7 +138,7 @@
                 });
                 this.addAgencyData = response;
                 this.visible.agencyManagement = false;
-                this.fetchData();
+                await this.getAgencyData();
             } catch (error) {
                 console.log(error);
             }

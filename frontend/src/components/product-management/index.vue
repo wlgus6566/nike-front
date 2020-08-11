@@ -51,17 +51,17 @@
                             {{ item.category3Name }}
                         </td>
                         <td>
-                            <a href="#" class="under-link">
+                            <router-link :to="setUrl(item)" class="under-link">
                                 <span>
                                     {{ item.goodsName }}
                                 </span>
-                            </a>
+                            </router-link>
                         </td>
                         <td>
                             {{ item.minimumOrderQuantity }}
                         </td>
                         <td>{{ item.agencyName }}</td>
-                        <td>데이터 없음</td>
+                        <td>{{ item.nickname }}</td>
                         <td>{{ item.updateDt }}</td>
                         <td>{{ item.exposureYn }}</td>
                     </tr>
@@ -88,9 +88,9 @@
     </div>
 </template>
 <script>
-    import Loading from '@/components/loading';
+import Loading from '@/components/loading';
 
-    export default {
+export default {
     name: 'index',
     data() {
         return {};
@@ -100,6 +100,9 @@
     },
     props: ['productListData', 'checkItem', 'checkAll', 'loading'],
     methods: {
+        setUrl(item) {
+            return `/order/${item.goodsSeq}`.toLocaleLowerCase();
+        },
         allCheckFn(check) {
             this.$emit('allCheckFn', check);
         },

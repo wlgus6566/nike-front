@@ -73,9 +73,7 @@ export default {
             confirmPassword: '',
         };
     },
-    created() {
-        console.log(this.$route.query.test);
-    },
+    created() {},
     methods: {
         async passwordSet() {
             try {
@@ -89,7 +87,7 @@ export default {
                 }
                 console.log(response);
                 if (response.success) {
-                    this.$router.push('/login');
+                    await this.$router.push('/login');
                 }
             } catch (error) {
                 console.log('error', error);

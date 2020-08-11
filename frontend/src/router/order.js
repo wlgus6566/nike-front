@@ -1,4 +1,4 @@
-import {pages} from '@/utils/global-methods';
+import { pages } from '@/utils/global-methods';
 
 const routes = [
     {
@@ -11,6 +11,11 @@ const routes = [
                 path: 'registration',
                 component: pages('product/registration'),
                 meta: { layout: 'Default', aside: 'Order', title: '상품 등록' },
+            },
+            {
+                path: '/:id',
+                component: pages('product/registration'),
+                meta: { layout: 'Default', aside: 'Order', title: '상품 수정' },
             },
             {
                 path: 'management',
