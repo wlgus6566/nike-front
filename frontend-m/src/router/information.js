@@ -2,23 +2,21 @@ import { pages } from '@/utils/global-methods';
 
 const routes = [
     {
-        path: '/report',
+        path: '/information',
         component: pages('report/index.vue'),
         children: [
             {
-                path: 'upload',
-                component: pages('report/upload.vue'),
+                path: 'agency',
+                component: pages('information/agency.vue'),
                 meta: {
                     layout: 'Default',
-                    historyBack: null,
                 },
             },
             {
-                path: 'management',
-                component: pages('report/management.vue'),
+                path: 'calendar',
+                component: pages('information/calendar.vue'),
                 meta: {
                     layout: 'Default',
-                    historyBack: null,
                 },
             },
         ],

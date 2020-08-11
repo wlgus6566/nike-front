@@ -88,9 +88,9 @@
     </div>
 </template>
 <script>
-    import Loading from '@/components/loading';
+import Loading from '@/components/loading';
 
-    export default {
+export default {
     name: 'index',
     data() {
         return {};
@@ -101,7 +101,7 @@
     props: ['productListData', 'checkItem', 'checkAll', 'loading'],
     methods: {
         setUrl(item) {
-            return `/order/registration/${item.goodsSeq}`.toLocaleLowerCase();
+            return `/order/${item.goodsSeq}`.toLocaleLowerCase();
         },
         allCheckFn(check) {
             this.$emit('allCheckFn', check);

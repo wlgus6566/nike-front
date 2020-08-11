@@ -47,7 +47,6 @@ export default new Vuex.Store({
         SET_TOKEN(state, token) {
             state.token = token;
         },
-
         SET_BASKET(state, basketList) {
             state.basketListData = basketList;
         },
