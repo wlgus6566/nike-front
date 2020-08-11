@@ -23,17 +23,20 @@
                 :folderListData="folderListData"
             />
             <template v-else>
-                <NoData v-if="searchKeyword === ''">
+                <NoData
+                    :style="{ height: '500px' }"
+                    v-if="searchKeyword === ''"
+                >
                     <i class="icon-file"></i>
                     <p class="desc">업로드한 폴더가 없습니다.</p>
                 </NoData>
-                <NoData v-else>
+                <NoData v-else :style="{ height: '500px' }">
                     <i class="icon-search"></i>
                     <p class="desc">검색 결과가 없습니다.</p>
                 </NoData>
             </template>
         </template>
-        <Loading v-if="loadingData" />
+        <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
     </div>
 </template>
 <script>
@@ -43,7 +46,6 @@ import SearchInput from '@/components/search-input';
 import FolderList from '@/components/folder-list';
 import Loading from '@/components/loading';
 import NoData from '@/components/no-data';
-import NoDataSearch from '@/components/no-data/nodata-search';
 
 import { getContents } from '@/api/contents.js';
 
@@ -93,6 +95,12 @@ export default {
                 },
             ],
             folderListData: null,
+            loadingStyle: {
+                width: this.width ? `${this.width}px` : '100%',
+                height: this.height ? `${this.height}px` : '100%',
+                overflow: 'hidden',
+                margin: '0 auto',
+            },
         };
     },
     components: {
@@ -100,12 +108,11 @@ export default {
         FilterSelect,
         FolderList,
         NoData,
-        NoDataSearch,
         SearchInput,
         Loading,
     },
     methods: {
-        handleScroll(event) {
+        handleScroll() {
             if (this.loadingData) return;
             const windowE = document.documentElement;
             if (
@@ -155,7 +162,6 @@ export default {
                         orderType: this.listSortSelect.value,
                     }
                 );
-
                 this.totalPage = response.totalPages - 1;
                 if (infinite) {
                     if (this.totalPage > this.page - 1) {
@@ -170,18 +176,21 @@ export default {
                 }
                 this.page++;
                 this.loadingData = false;
-                return;
             } catch (error) {
                 console.log(error);
             }
         },
     },
     created() {
-        console.log('folder-list-created');
         this.initFetchData();
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
+        if (this.$store.state.reload) {
+            console.log(123);
+            this.initFetchData();
+            this.$store.commit('SET_RELOAD', false);
+        }
         window.addEventListener('scroll', this.handleScroll);
     },
     deactivated() {

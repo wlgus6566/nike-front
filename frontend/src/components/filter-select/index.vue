@@ -1,6 +1,11 @@
 <template>
     <div class="filter-select">
-        <el-select ref="select" v-model="listSortSelect.value" placeholder="Select">
+        <el-select
+            ref="select"
+            v-model="listSortSelect.value"
+            placeholder="Select"
+            @focus="$emit('selectFocus')"
+        >
             <el-option
                 v-for="item in listSortSelect.listSortOptions"
                 :key="item.value"
@@ -32,12 +37,20 @@ export default {
         },
     },
     methods: {
+        focus() {
+            console.log(1);
+        },
         selectWidthSet() {
             const selectDiv = this.$refs.select.$el;
             const input = selectDiv.querySelector('input');
-            input.insertAdjacentHTML('afterend', `<div id="select-width">${this.cloneTxt}</div>`);
+            input.insertAdjacentHTML(
+                'afterend',
+                `<div id="select-width">${this.cloneTxt}</div>`
+            );
             const widthGuideTxt = selectDiv.querySelector('#select-width');
-            input.style.width = `${Math.ceil(widthGuideTxt.offsetWidth) + 30}px`;
+            input.style.width = `${
+                Math.ceil(widthGuideTxt.offsetWidth) + 30
+            }px`;
             widthGuideTxt.remove();
         },
     },

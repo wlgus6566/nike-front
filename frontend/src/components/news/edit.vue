@@ -15,15 +15,14 @@
     </div>
 </template>
 <script>
-import EditInner from '@/components/news/edit-inner.vue';
-
+import { getCustomerList } from '@/api/customer';
 export default {
     name: 'Edit',
     data() {
         return {};
     },
     components: {
-        EditInner,
+        EditInner: () => import('@/components/news/edit-inner.vue'),
     },
     methods: {},
 };

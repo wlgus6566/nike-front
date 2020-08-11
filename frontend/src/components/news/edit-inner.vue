@@ -7,14 +7,14 @@
                 </div>
                 <div class="form-column">
                     <label class="check-label">
-                        <span class="radio">
+                        <span class="
                             <input type="radio" name="show" checked />
                             <span></span>
                         </span>
                         <span>고정</span>
                     </label>
                     <label class="check-label">
-                        <span class="radio">
+                        <span class="
                             <input type="radio" name="show" />
                             <span></span>
                         </span>

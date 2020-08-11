@@ -1,5 +1,8 @@
 <template>
     <div>
+        <h2 class="page-title">
+            <span class="ko">{{ this.$route.meta.title }}</span>
+        </h2>
         <div class="sorting-area">
             <SearchInput @searchSubmit="searchSubmit" />
         </div>
@@ -20,7 +23,7 @@
                 </NoData>
             </template>
         </template>
-        <Loading v-if="loadingData" />
+        <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
         <detailView
             :visible.sync="visible.detailView"
             :productDetailData="productDetailData"
@@ -33,7 +36,6 @@
     import ProductList from '@/components/product-list';
     import Loading from '@/components/loading';
     import NoData from '@/components/no-data';
-    import NoDataSearch from '@/components/no-data/nodata-search';
     import detailView from '@/views/pages/product/detail-view';
 
     import {getUserProductList} from '@/api/product.js';
@@ -54,6 +56,13 @@
                 exposureYn: '',
             },
             loadingData: false,
+            loadingStyle: {
+                width: this.width ? `${this.width}px` : '100%',
+                height: this.height ? `${this.height}px` : '100%',
+                overflow: 'hidden',
+                margin: '0 auto',
+            },
+            totalPage: null,
             page: 0,
             itemLength: 20,
             searchKeyword: '',
@@ -64,30 +73,67 @@
         };
     },
     created() {
-        this.getUserProduct();
+        this.initGetUserProduct();
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    activated() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    deactivated() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
     },
     components: {
         SearchInput,
         ProductList,
         Loading,
         NoData,
-        NoDataSearch,
         detailView,
     },
     mounted() {
-        this.getUserProduct();
+        //this.initGetUserProduct();
         this.getWishiList();
     },
-    activated() {},
     methods: {
+        handleScroll() {
+            if (this.loadingData) return;
+            const windowE = document.documentElement;
+            if (
+                windowE.clientHeight + windowE.scrollTop >=
+                windowE.scrollHeight
+            ) {
+                this.infiniteScroll();
+            }
+        },
+        infiniteScroll() {
+            if (
+                !this.loadingData &&
+                this.totalPage > this.page - 1 &&
+                this.userProductListData.length >= this.itemLength &&
+                this.userProductListData.length !== 0
+            ) {
+                console.log('infiniteScroll');
+                this.getUserProduct(true);
+            }
+        },
         // 상품 검색 api
         searchSubmit(val) {
             this.searchKeyword = val;
+            this.initGetUserProduct();
+        },
+        initGetUserProduct() {
+            console.log('initGetUserProduct');
+            this.totalPage = null;
+            this.page = 0;
+            this.userProductListData = null;
             this.getUserProduct();
         },
 
         // 상품 리스트 api
-        async getUserProduct() {
+        async getUserProduct(infinite) {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -97,10 +143,27 @@
                     category3Code: this.$route.meta.category3Code,
                     keyword: this.searchKeyword,
                 });
-                this.userProductListData = response.content;
+                this.totalPage = response.totalPages - 1;
+                if (infinite) {
+                    if (this.totalPage > this.page - 1) {
+                        this.userProductListData = this.userProductListData.concat(
+                            response.content
+                        );
+                    } else if (this.totalPage === this.page - 1) {
+                        this.endPage();
+                    }
+                } else {
+                    this.userProductListData = response.content;
+                }
+                this.page++;
+                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }
+        },
+
+        endPage() {
+            alert('마지막 페이지');
         },
 
         // 상세 팝업
@@ -139,7 +202,7 @@
                     });
                     await this.getWishiList();
                     alert(
-                        '위시리스트에 추가 되었습니다.\n 위시리스트는 마이페이지에서 확인가능합니다.'
+                        '위시리스트에 추가 되었습니다.\n위시리스트는 마이페이지에서 확인가능합니다.'
                     );
                 } else {
                     alert('이미 담긴 상품입니다.');

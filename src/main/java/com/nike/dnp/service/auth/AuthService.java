@@ -17,6 +17,7 @@ import com.nike.dnp.repository.menu.MenuRepository;
 import com.nike.dnp.repository.menu.MenuRoleResourceRepository;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.util.MessageUtil;
+import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -34,8 +36,8 @@ import java.util.Optional;
  * AuthService
  *
  * @author [오지훈]
- * @since 2020. 6. 22. 오후 2:40:43
  * @implNote Auth(권한) Service 작성
+ * @since 2020. 6. 22. 오후 2:40:43
  */
 @Slf4j
 @Service
@@ -196,6 +198,18 @@ public class AuthService {
     }
 
     /**
+     * Gets menus.
+     *
+     * @return the menus
+     * @author [오지훈]
+     * @implNote 접근 가능 메뉴 조회
+     * @since 2020. 8. 10. 오후 5:31:38
+     */
+    public List<MenuReturnDTO> getMenus() {
+        return this.getAuthsMenusByRoleType(SecurityUtil.currentUser().getRole());
+    }
+
+    /**
      * Find cache by role type list.
      *
      * @param roleType the role type
@@ -240,10 +254,50 @@ public class AuthService {
         log.info("AuthService.getAuthsMenusByRoleType");
         List<MenuReturnDTO> redisMenus = (List<MenuReturnDTO>) redisService.get(REDIS_ROLES_MENUS+roleType);
         if (ObjectUtils.isEmpty(redisMenus)) {
-            redisMenus = menuRepository.getMenus(this.getByRoleType(roleType).getAuthSeq());
+            redisMenus = this.getAuthsMenusByRoleType(this.getByRoleType(roleType).getAuthSeq());
             redisService.set(REDIS_ROLES_MENUS+roleType, redisMenus, 60);
         }
         return redisMenus;
+    }
+
+    /**
+     * Gets auths menus by role type.
+     *
+     * @param authSeq the auth seq
+     * @return the auths menus by role type
+     * @author [오지훈]
+     * @implNote 권한별 접근 가능 메뉴 목록 조회
+     * @since 2020. 8. 10. 오후 6:26:08
+     */
+    public List<MenuReturnDTO> getAuthsMenusByRoleType(final Long authSeq) {
+        final List<MenuReturnDTO> menus = new ArrayList<>();
+        final List<MenuReturnDTO> upperMenus = menuRepository.getUpperMenus(authSeq);
+
+        for (final MenuReturnDTO upperMenu : upperMenus) {
+            if ("HOME".equals(upperMenu.getMenuCode())) {
+                menus.add(upperMenu);
+            } else if ("N".equals(upperMenu.getManagementYn())) {
+                final List<MenuReturnDTO> lowerMenus = menuRepository.getSubMenus(upperMenu.getMenuSeq(), 2L);
+                if (!lowerMenus.isEmpty()) {
+                    for (final MenuReturnDTO lowerMenu : lowerMenus) {
+                        lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
+                    }
+                    upperMenu.setMenus(lowerMenus);
+                    menus.add(upperMenu);
+                }
+            } else if ("Y".equals(upperMenu.getManagementYn())) {
+                final List<MenuReturnDTO> lowerMenus = menuRepository.getLowerMenus(authSeq, upperMenu.getMenuSeq(), 2L);
+                if (!lowerMenus.isEmpty()) {
+                    for (final MenuReturnDTO lowerMenu : lowerMenus) {
+                        lowerMenu.setMenus(menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L));
+                    }
+                    upperMenu.setMenus(lowerMenus);
+                    menus.add(upperMenu);
+                }
+            }
+        }
+
+        return menus;
     }
 
     /**
@@ -256,7 +310,7 @@ public class AuthService {
      */
     public void setAuthsMenusByRoleType(final String roleType) {
         log.info("AuthService.setAuthsMenusByRoleType");
-        this.findByRoleType(roleType).ifPresent(value -> redisService.set(REDIS_ROLES_MENUS + roleType, menuRepository.getMenus(value.getAuthSeq()), 60));
+        this.findByRoleType(roleType).ifPresent(value -> redisService.set(REDIS_ROLES_MENUS + roleType, this.getAuthsMenusByRoleType(value.getAuthSeq()), 60));
     }
 
 
