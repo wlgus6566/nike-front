@@ -101,7 +101,7 @@ export default {
     props: ['productListData', 'checkItem', 'checkAll', 'loading'],
     methods: {
         setUrl(item) {
-            return `/order/${item.goodsSeq}`.toLocaleLowerCase();
+            return `modify/${item.goodsSeq}`.toLocaleLowerCase();
         },
         allCheckFn(check) {
             this.$emit('allCheckFn', check);
