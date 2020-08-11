@@ -2,129 +2,159 @@ import { pages } from '@/utils/global-methods';
 
 const routes = [
     {
-        path: '/mypage/upload',
-        name: 'upload',
-        component: pages('mypage/upload.vue'),
+        path: '/mypage',
+        name: 'mypage',
+        component: pages('mypage/index.vue'),
         meta: {
-            layout: 'Default',
-            aside: 'Default',
-            title: '내가 업로드한 폴더',
+            layout: 'Index',
+            pageTitle: '',
+            title: '마이페이지 메인',
         },
     },
     {
-        path: '/mypage/latest',
-        name: 'latest',
-        component: pages('mypage/latest.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            title: '최근 본 폴더',
-        },
-    },
-    {
-        path: '/mypage/order',
-        name: 'order',
-        component: pages('mypage/order.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            title: '주문내역확인',
-        },
-    },
-    {
-        path: '/mypage/wish-list',
-        name: 'wish-list',
-        component: pages('mypage/wish-list.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            title: '위시리스트',
-        },
-    },
-    {
-        path: '/mypage/info',
-        name: 'info',
-        component: pages('mypage/info.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            title: '회원정보 조회',
-        },
-    },
-    {
-        path: '/mypage/password',
-        name: 'password',
-        component: pages('mypage/password.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            title: '비밀번호 변경',
-        },
-    },
-    {
-        path: '/mypage/logout',
-        name: 'logout',
-        component: pages('mypage/logout.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            title: '로그아웃',
-        },
-    },
-    // customer 상세 공통
-    {
-        path: '/mypage/view',
-        name: 'notice',
-        component: pages('mypage/detail-view.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            //title: '공지사항',
-        },
-    },
-    {
-        path: '/mypage/notice',
-        name: 'notice',
-        component: pages('mypage/notice-list.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            sectionCode: 'NOTICE',
-            title: '공지사항',
-        },
-    },
-    {
-        path: '/mypage/news',
-        name: 'news',
-        component: pages('mypage/news.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            sectionCode: 'NEWS',
-            title: 'NEWS',
-        },
-    },
-    {
-        path: '/mypage/form',
-        name: 'notice',
-        component: pages('mypage/notice-form.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            title: '공지사항',
-        },
-    },
-
-    {
-        path: '/mypage/faq',
-        name: 'faq',
-        component: pages('mypage/faq.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            sectionCode: 'QNA',
-            title: '자주 묻는 질문',
-        },
+        path: '/mypage',
+        component: pages('root'),
+        children: [
+            {
+                path: 'history/upload',
+                component: pages('mypage/upload.vue'),
+                meta: {
+                    layout: 'Default',
+                    pageTitle: 'HISTORY',
+                    tab: [
+                        {
+                            title: '최근 업로드한 폴더',
+                            value: 'upload',
+                        },
+                        {
+                            title: '최근 본 폴더',
+                            value: 'latest',
+                        },
+                    ],
+                },
+            },
+            {
+                path: 'history/folder',
+                component: pages('mypage/latest.vue'),
+                meta: {
+                    layout: 'Default',
+                    pageTitle: 'HISTORY',
+                    tab: [
+                        {
+                            title: '최근 업로드한 폴더',
+                            value: 'upload',
+                        },
+                        {
+                            title: '최근 본 폴더',
+                            value: 'latest',
+                        },
+                    ],
+                },
+            },
+            {
+                path: 'myinfo/info',
+                component: pages('mypage/info.vue'),
+                meta: {
+                    layout: 'Default',
+                    pageTitle: 'MY INFO',
+                    tab: [
+                        {
+                            title: '회원정보 조회',
+                            value: 'info',
+                        },
+                        {
+                            title: '비밀번호 변경',
+                            value: 'password',
+                        },
+                    ],
+                },
+            },
+            {
+                path: 'myinfo/password',
+                component: pages('mypage/password.vue'),
+                meta: {
+                    layout: 'Default',
+                    pageTitle: 'MY INFO',
+                    tab: [
+                        {
+                            title: '회원정보 조회',
+                            value: 'info',
+                        },
+                        {
+                            title: '비밀번호 변경',
+                            value: 'password',
+                        },
+                    ],
+                },
+            },
+            {
+                path: 'customer/notice',
+                component: pages('mypage/notice-list.vue'),
+                meta: {
+                    layout: 'Default',
+                    pageTitle: 'CUSTOMER CENTER',
+                    tab: [
+                        {
+                            title: '공지사항',
+                            value: 'notice',
+                        },
+                        {
+                            title: 'NEWS',
+                            value: 'news',
+                        },
+                        {
+                            title: '자주묻는질문',
+                            value: 'faq',
+                        },
+                    ],
+                },
+            },
+            {
+                path: 'customer/news',
+                component: pages('mypage/news-list.vue'),
+                meta: {
+                    layout: 'Default',
+                    pageTitle: 'CUSTOMER CENTER',
+                    historyBack: true,
+                    tab: [
+                        {
+                            title: '공지사항',
+                            value: 'notice',
+                        },
+                        {
+                            title: 'NEWS',
+                            value: 'news',
+                        },
+                        {
+                            title: '자주묻는질문',
+                            value: 'faq',
+                        },
+                    ],
+                },
+            },
+            {
+                path: 'customer/faq',
+                component: pages('mypage/faq-list.vue'),
+                meta: {
+                    layout: 'Default',
+                    pageTitle: 'CUSTOMER CENTER',
+                    tab: [
+                        {
+                            title: '공지사항',
+                            value: 'notice',
+                        },
+                        {
+                            title: 'NEWS',
+                            value: 'news',
+                        },
+                        {
+                            title: '자주묻는질문',
+                            value: 'faq',
+                        },
+                    ],
+                },
+            },
+        ],
     },
 ];
 

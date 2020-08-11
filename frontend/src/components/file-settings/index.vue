@@ -43,21 +43,12 @@
 </template>
 <script>
 import draggable from 'vuedraggable';
+import { fileUpLoad } from '@/api/file';
 export default {
     name: 'FileSettings',
     data() {
         return {
-            fileList: [
-                {
-                    fileKindCode: 'FILE',
-                    fileName: 'graphic_file_name.jpg',
-                    filePhysicalName: '/cdn/file/path',
-                    fileSectionCode: 'GUIDE',
-                    fileSize: 600,
-                    title: 'Attract window graphic 1',
-                    url: 'www.nike.co.kr',
-                },
-            ],
+            fileList: null,
         };
     },
     computed: {
@@ -78,64 +69,48 @@ export default {
         draggable,
     },
     methods: {
-        uploadIptChange(ev) {
-            const files = ev.target.files;
-            if (!files) return;
+        uploadIptChange(e) {
+            const files = e.target.files || e.dataTransfer.files;
+            if (!files.length) return;
+            this.inputFileValue = files;
+            console.log(files);
+            files.forEach((el) => {
+                this.fileList.push({
+                    fileKindCode: 'FILE',
+                    fileName: el.name,
+                    fileSectionCode: 'GUIDE', //파일구분
+
+                    fileExtension: el.type,
+                    filePhysicalName: '',
+                    fileSize: el.size,
+                });
+            });
             this.uploadFiles(files);
         },
-        uploadFiles(files) {
-            let postFiles = Array.prototype.slice.call(files);
-
-            if (postFiles.length === 0) {
-                return;
-            }
-
-            postFiles.forEach(rawFile => {
-                this.upload(rawFile);
-            });
-        },
-        upload(rawFile) {
-            this.$refs.uploadIpt.value = null;
-            this.post(rawFile);
-            /*const before = this.beforeUpload(rawFile);
-            if (before && before.then) {
-                before.then(
-                    (processedFile) => {
-                        const fileType = Object.prototype.toString.call(processedFile);
-                        console.log(fileType);
-
-                        if (fileType === '[object File]' || fileType === '[object Blob]') {
-                            if (fileType === '[object Blob]') {
-                                processedFile = new File([processedFile], rawFile.name, {
-                                    type: rawFile.type,
-                                });
-                            }
-                            for (const p in rawFile) {
-                                if (rawFile.hasOwnProperty(p)) {
-                                    processedFile[p] = rawFile[p];
-                                }
-                            }
-                            this.post(processedFile);
-                        } else {
-                            this.post(rawFile);
-                        }
+        uploadFiles() {
+            this.inputFileValue.forEach(async (el) => {
+                const data = new FormData();
+                data.append('uploadFile', el);
+                const config = {
+                    onUploadProgress: (progressEvent) => {
+                        const percentCompleted = Math.round(
+                            (progressEvent.loaded * 100) / progressEvent.total
+                        );
+                        el.test = percentCompleted;
+                        //return percentCompleted;
+                        console.log(el.test);
                     },
-                    () => {
-                        this.onRemove(null, rawFile);
-                    }
-                );
-            } else if (before !== false) {
-                this.post(rawFile);
-            } else {
-                this.onRemove(null, rawFile);
-            }*/
+                };
+                const response = await fileUpLoad(data, config);
+                console.log(response);
+                console.log(response.data);
+            });
         },
         fileAdd() {
             this.fileList.push({
                 fileKindCode: 'FILE',
                 fileName: '',
-                filePhysicalName: '/cdn/file/path',
-                fileSectionCode: 'ASSET',
+                file fileSectionCode: 'ASSET',
                 fileSize: 600,
                 title: '',
                 url: '',
@@ -146,7 +121,8 @@ export default {
         },
         fileSelect() {
             this.$refs.uploadIpt.value = null;
-            this.$refs.uploadIpt.click();
+            this.PhysicalName: '/cdn/file/path',
+                $refs.uploadIpt.click();
         },
     },
 };

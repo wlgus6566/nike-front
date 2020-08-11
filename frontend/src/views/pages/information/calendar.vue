@@ -8,8 +8,12 @@
             </span>
         </div>
 
-<!--        <FullCalendar :options="calendarOptions" ref="fullCalendar"/>-->
-        <FullCalendar ref="fullCalendar" :options="calendarOptions" defaultView="month" :editable="false"></FullCalendar>
+        <FullCalendar ref="fullCalendar"
+                      :options="calendarOptions"
+                      defaultView="month"
+                      :editable="false"
+        />
+
         <calendarManagement
             :visible.sync="visible.calendarManagement"
             :statusCode="statusCode"
@@ -24,7 +28,7 @@
         />
 
         <ul class="item-list">
-            <span>{{this.searchDt}}</span>
+            <span>{{searchDt}}</span>
             <li class="item"
                 v-for="item in todayData"
                 :key="item.calendarSeq"
@@ -68,25 +72,6 @@
         name: 'calendar',
         data () {
             return {
-                yyyyMm: moment(new Date()).format('YYYY.MM'),
-                searchDt: moment(new Date()).format('YYYY.MM.DD'),
-                statusCode: null,
-                calendarDetail: {},
-                calenderSectionCodeList: [],
-                calendarData: [],
-                todayData: [],
-                calendarOptions: {
-                    plugins: [ dayGridPlugin, interactionPlugin ],
-                    initialView: 'dayGridMonth',
-                    dateClick: this.handleDateClick,
-                    events: [],
-                    eventClick: this.handleEventClick,
-                    headerToolbar: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'dayGridMonth'
-                    }
-                },
                 visible: {
                     calendarManagement: false,
                 },
@@ -98,9 +83,44 @@
                     contents: null
                 },
                 calendarSeq: null,
-                calendarApi: null,
                 loadingData: false,
-                cal: null
+                yyyyMm: moment(new Date()).format('YYYY.MM'),
+                searchDt: moment(new Date()).format('YYYY.MM.DD'),
+                currentDate: moment(new Date()).format('YYYY.MM.DD'),
+                statusCode: null,
+                calendarDetail: {},
+                calenderSectionCodeList: [],
+                calendarData: [],
+                todayData: [],
+                calendarOptions: {
+                    plugins: [ dayGridPlugin, interactionPlugin ],
+                    initialView: 'dayGridMonth',
+                    dateClick: this.handleDateClick,
+                    events: [],
+                    header: {
+                        left: "prev,next today",
+                        center: "title",
+                        right: "dayGridMonth"
+                    },
+                    customButtons: {
+                        prev: { // this overrides the prev button
+                            click: () => {
+                                let calendarApi = this.$refs.fullCalendar.getApi();
+                                calendarApi.prev();
+                                console.log(moment(calendarApi.getDate()).format('YYYY.MM'));
+                                this.getCalendarList(moment(calendarApi.getDate()).format('YYYY.MM'));
+                            }
+                        },
+                        next: { // this overrides the next button
+                            click: () => {
+                                let calendarApi = this.$refs.fullCalendar.getApi();
+                                calendarApi.next();
+                                console.log(moment(calendarApi.getDate()).format('YYYY.MM'));
+                                this.getCalendarList(moment(calendarApi.getDate()).format('YYYY.MM'));
+                            }
+                        }
+                    }
+                }
             }
         },
         components: {
@@ -117,23 +137,26 @@
                 try {
                     await this.getCalendarList(this.yyyyMm);
                     await this.getTodayCalendar(this.searchDt);
+                    this.loadingData = false;
+                    await this.loadCalendarCode();
                 } catch (error) {
-                    console.log(error);
+                    alert(error.response.data.msg);
                 }
-                this.loadingData = false;
-                await this.loadCalendarCode();
             },
             // 한달 일정 조회
             async getCalendarList(yyyyMm) {
+                console.log(yyyyMm);
+                this.yyyyMm = !!yyyyMm ? yyyyMm : this.yyyyMm;
                 const { data: { data: response } }
-                    = await getCalendarList({ yyyyMm: yyyyMm });
+                    = await getCalendarList({ yyyyMm: this.yyyyMm });
                 this.calendarData = response;
                 this.transformData();
             },
             // 해당 날짜 일정 조회
             async getTodayCalendar(searchDt) {
+                this.searchDt = !!searchDt ? searchDt : this.searchDt;
                 const { data: { data: response } }
-                    = await getTodayCalendar({searchDt: searchDt});
+                    = await getTodayCalendar({ searchDt: this.searchDt });
                 this.todayData = response;
             },
             // 달력에 맞게 변수명 변경
@@ -153,13 +176,12 @@
             handleDateClick(arg) {
                 this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
             },
-            handleEventClick(clickInfo) {
-                console.log('handleEventClick', clickInfo);
-            },
             // 일정 등록 클릭시
             onClickToCreate() {
                 this.statusCode = "CREATE"
-                this.calendarDetail = this.calendarDialogInitData;
+                this.calendarDetail = {
+                    ...this.calendarDialogInitData
+                };
                 this.visible.calendarManagement = true;
             },
             // 일정 수정 클릭시
@@ -176,7 +198,9 @@
                 this.calenderSectionCodeList = response;
             },
 
-            // calendar-management 관련 메소드
+            /*
+                calendar-management 관련 메소드
+             */
             async createCalendar(data) {
                 try {
                     const { data: response } = await postCalendar(data);
@@ -184,51 +208,43 @@
                         alert(response.msg);
                     }
                     if (response.success) {
-                        await this.processAfterSuccess(data.beginDt);
+                        this.processAfterSuccess();
                     }
                 } catch (error) {
                     alert(error.response.data.msg);
                 }
             },
             async modifyCalendar(calendarSeq, data) {
-                let success = null;
                 try {
                     const { data: response } = await putCalendar(calendarSeq, data);
-                    success = response.success;
                     if (response.existMsg) {
                         alert(response.msg);
                     }
+
+                    if (response.success) {
+                        this.processAfterSuccess();
+                    }
                 } catch (error) {
                     alert(error.response.data.msg);
-                }
-                if (success) {
-                    // this.closeDialog();
-                    alert('수정완료');
-                    await this.processAfterSuccess(data.beginDt);
                 }
             },
             async delCalendar(calendarSeq) {
-                let success = null;
                 try {
                     const { data: response } = await delCalendar(calendarSeq);
-                    success = response.success;
                     if (response.existMsg) {
                         alert(response.msg);
+                    }
+
+                    if (response.success) {
+                        this.processAfterSuccess();
                     }
                 } catch (error) {
                     alert(error.response.data.msg);
                 }
-
-                if (success) {
-                    alert('삭제완료');
-                    this.closeDialog();
-                }
             },
-            async processAfterSuccess(beginDt) {
-                await this.getTodayCalendar(moment(beginDt).format('YYYY.MM.DD'));
-                await this.getCalendarList(moment(beginDt).format('YYYY.MM'));
-                // TODO 수정/등록 한 달로 가게 끔. 구현 필요
-                // this.$refs.fullCalendar.$emit('gotoDate', '2020.08.06');
+            async processAfterSuccess() {
+                await this.getCalendarList();
+                await this.getTodayCalendar();
                 this.closeDialog();
             },
             // 다이얼로드 닫기

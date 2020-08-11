@@ -41,6 +41,9 @@
 .fc-black {
     color: #000 !important;
 }
+.img-cropper > div {
+    max-height: 500px;
+}
 .page-title {
     display: block;
     font-size: 40px;

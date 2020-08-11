@@ -1,10 +1,10 @@
 <template>
     <div>
-        <h2 class="page-title">UPLOAD</h2>
+        <h2 class="page-title">{{ this.title }}</h2>
         <form action="">
-            <h3 class="form-title mt20">캠페인 설정</h3>
+            <h3 class="form-title mt20">폴더 설정</h3>
             <hr class="hr-black" />
-            <ul class="form-list-thumb">
+            <ul class="form-list-thumb" v-if="folderDetail">
                 <li class="form-row thumb-row">
                     <thumbnail :imgSrc2="imageFilePhysicalName" :size="1 / 1" />
                 </li>
@@ -13,12 +13,28 @@
                         <span class="label-title required">캠페인 상태</span>
                     </div>
                     <div class="form-column">
-                        <el-radio v-model="exposure" label="Y">
-                            노출
-                        </el-radio>
-                        <el-radio v-model="exposure" label="N">
-                            미노출
-                        </el-radio>
+                        <label class="check-label">
+                            <span class="radio">
+                                <input
+                                    type="radio"
+                                    v-model="folderDetail.exposureYn"
+                                    value="Y"
+                                />
+                                <span></span>
+                            </span>
+                            <span>노출</span>
+                        </label>
+                        <label class="check-label">
+                            <span class="radio">
+                                <input
+                                    type="radio"
+                                    v-model="folderDetail.exposureYn"
+                                    value="N"
+                                />
+                                <span></span>
+                            </span>
+                            <span>미노출</span>
+                        </label>
                     </div>
                 </li>
                 <li class="form-row">
@@ -26,37 +42,69 @@
                         <span class="label-title required">업로드 위치</span>
                     </div>
                     <div class="form-column">
-                        <el-radio v-model="uploadFolder" label="SP">
-                            SP
-                        </el-radio>
-                        <el-radio v-model="uploadFolder" label="SU">
-                            SU
-                        </el-radio>
-                        <el-radio v-model="uploadFolder" label="FA">
-                            FA
-                        </el-radio>
-                        <el-radio v-model="uploadFolder" label="HO">
-                            HO
-                        </el-radio>
+                        <label class="check-label">
+                            <span class="radio">
+                                <input
+                                    type="radio"
+                                    v-model="folderDetail.menuCode"
+                                    value="SP"
+                                />
+                                <span></span>
+                            </span>
+                            <span>SP</span>
+                        </label>
+                        <label class="check-label">
+                            <span class="radio">
+                                <input
+                                    type="radio"
+                                    v-model="folderDetail.menuCode"
+                                    value="SU"
+                                />
+                                <span></span>
+                            </span>
+                            <span>SU</span>
+                        </label>
+                        <label class="check-label">
+                            <span class="radio">
+                                <input
+                                    type="radio"
+                                    v-model="folderDetail.menuCode"
+                                    value="FA"
+                                />
+                                <span></span>
+                            </span>
+                            <span>FA</span>
+                        </label>
+                        <label class="check-label">
+                            <span class="radio">
+                                <input
+                                    type="radio"
+                                    v-model="folderDetail.menuCode"
+                                    value="HO"
+                                />
+                                <span></span>
+                            </span>
+                            <span>HO</span>
+                        </label>
                     </div>
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <label class="label-title required">캠페인 명</label>
+                        <label class="label-title required">폴더 명</label>
                     </div>
                     <div class="form-column">
-                        <el-input v-model="campaignTitle"></el-input>
+                        <el-input v-model="folderDetail.folderName"></el-input>
                     </div>
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <label class="label-title required">캠페인 상세</label>
+                        <label class="label-title required">폴더 상세</label>
                     </div>
                     <div class="form-column">
                         <el-input
                             type="textarea"
                             :rows="2"
-                            v-model="campaignDesc"
+                            v-model="folderDetail.folderContents"
                         >
                         </el-input>
                     </div>
@@ -67,15 +115,32 @@
                     </div>
                     <div class="form-column">
                         <div>
-                            <el-radio
-                                v-model="campaignPeriodRadio"
-                                label="selectDate"
-                            >
-                                기간선택
-                            </el-radio>
-                            <el-radio v-model="campaignPeriodRadio" label="365">
-                                365
-                            </el-radio>
+                            <label class="check-label">
+                                <span class="radio">
+                                    <input
+                                        type="radio"
+                                        v-model="
+                                            folderDetail.campaignPeriodSectionCode
+                                        "
+                                        value="EVERY"
+                                    />
+                                    <span></span>
+                                </span>
+                                <span>날짜선택</span>
+                            </label>
+                            <label class="check-label">
+                                <span class="radio">
+                                    <input
+                                        type="radio"
+                                        v-model="
+                                            folderDetail.campaignPeriodSectionCode
+                                        "
+                                        value="365"
+                                    />
+                                    <span></span>
+                                </span>
+                                <span>365</span>
+                            </label>
                         </div>
                         <!-- todo 추가 스크립트 작업 필요  -->
                         <div
@@ -116,7 +181,6 @@
                         <label class="label-title">메모</label>
                     </div>
                     <div class="form-column">
-                        <!-- todo 추가 스크립트 작업 필요  -->
                         <span class="textarea">
                             <textarea
                                 cols="100"
@@ -158,6 +222,7 @@
 <script>
 import thumbnail from '@/components/thumbnail/index';
 import FileSettings from '@/components/file-settings/index.vue';
+import { getContentsView, getContentsViewFile } from '@/api/contents';
 export default {
     name: 'upload',
     data() {
@@ -248,6 +313,90 @@ export default {
                     new Date().getTime()
                 );
                 return date;
+            }
+        },
+    },
+    created() {
+        console.log(this.$route.params.id);
+        if (this.$route.params.id) {
+            this.getFolderDetail();
+            this.initFetchData();
+        }
+
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    activated() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    deactivated() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    methods: {
+        initFetchData() {
+            this.totalPage = null;
+            this.page = 0;
+            this.contentsFileList = null;
+            this.getFolderDetailFile();
+        },
+        handleScroll() {
+            if (this.loadingData) return;
+            const windowE = document.documentElement;
+            if (
+                windowE.clientHeight + windowE.scrollTop >=
+                windowE.scrollHeight
+            ) {
+                this.infiniteScroll();
+            }
+        },
+        async getFolderDetail() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getContentsView(
+                    this.$route.meta.topMenuCode,
+                    this.$route.params.pathMatch,
+                    this.$route.params.id
+                );
+                console.log(response);
+                this.folderDetail = response;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async getFolderDetailFile(infinite) {
+            this.loadingData = true;
+            this.checkAll = false;
+            this.checkContentsFileList = [];
+            try {
+                const {
+                    data: { data: response },
+                } = await getContentsViewFile(
+                    this.$route.meta.topMenuCode,
+                    this.$route.meta.menuCode,
+                    this.$route.params.id,
+                    {
+                        page: this.page,
+                        size: this.itemLength,
+                        sectionCode: this.sectionCode.value,
+                        orderType: this.orderType.value,
+                        fileExtension: this.fileExtension.value,
+                    }
+                );
+                this.totalPage = response.totalPages - 1;
+                if (infinite) {
+                    this.contentsFileList = this.contentsFileList.concat(
+                        response.content
+                    );
+                } else {
+                    this.contentsFileList = response.content;
+                }
+                this.page++;
+                this.loadingData = false;
+            } catch (error) {
+                console.log(error);
             }
         },
     },

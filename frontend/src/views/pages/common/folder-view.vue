@@ -1,6 +1,6 @@
 <template>
     <div>
-        <BtnArea @delete="deleteFolder" @edit="editFolder">
+        <BtnArea @delete="deleteFolder" @edit="modifyFolder">
             <button type="button" class="btn-o-gray">
                 <i class="icon-mail"></i>
                 <span>알림메일전송</span>
@@ -45,7 +45,6 @@ import {
     getContentsView,
     getContentsViewFile,
 } from '@/api/contents';
-import FilterSelect from '@/components/filter-select';
 
 export default {
     name: 'folder-view',
@@ -56,10 +55,13 @@ export default {
 
             page: 0,
             itemLength: 10,
+
             checkAll: false,
+
             folderDetail: null,
             contentsFileList: null,
             checkContentsFileList: [],
+
             sectionCode: {
                 listSortOptions: [
                     {
@@ -195,7 +197,6 @@ export default {
         folder,
         SortingList,
         fileItem,
-        FilterSelect,
     },
     computed: {
         storeContBasketList: {
@@ -237,14 +238,21 @@ export default {
                 );
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
-                    this.$router.go(-1);
+                    await this.$router.go(-1);
                 }
                 console.log(response);
             } catch (error) {
                 console.log(error);
             }
         },
-        editFolder() {},
+        modifyFolder() {
+            console.log(this.$route.meta.topMenuCode);
+            this.$router.push(
+                `/${this.$route.meta.topMenuCode.toLowerCase()}/${
+                    this.$route.meta.menuCode
+                }/modify/${this.$route.params.id}`
+            );
+        },
         initFetchData() {
             this.totalPage = null;
             this.page = 0;
@@ -311,12 +319,13 @@ export default {
                 this.contentsFileList.length;
         },
         async getFolderDetail() {
+            console.log(this.$route);
             try {
                 const {
                     data: { data: response },
                 } = await getContentsView(
                     this.$route.meta.topMenuCode,
-                    this.$route.meta.menuCode,
+                    this.$route.params.pathMatch,
                     this.$route.params.id
                 );
                 this.folderDetail = response;

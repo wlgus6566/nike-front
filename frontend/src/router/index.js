@@ -44,15 +44,12 @@ const router = new VueRouter({
     ],
     scrollBehavior(to, from, savedPosition) {
         let position = { x: 0, y: 0 };
-
         if (savedPosition) {
             position = savedPosition;
         }
-
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(position);
-                console.log(position);
             }, 310);
         });
     },
