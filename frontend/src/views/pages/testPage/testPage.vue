@@ -1,22 +1,14 @@
 <template>
-    <div></div>
+    <div><button type="button" @click="openPop">123</button></div>
 </template>
 <script>
-export default {};
+import testmodal from '@/components/modal-comp/testmodal';
+export default {
+    methods: {
+        openPop() {
+            this.$modal.show(testmodal);
+        },
+    },
+};
 </script>
-<style scoped>
-.component-fade-enter-active,
-.component-fade-leave-active {
-    transition: opacity 0.3s ease;
-}
-.component-fade-enter,
-.component-fade-enter-active,
-.component-fade-leave-active {
-    transition: opacity 0.3s ease;
-}
-.component-fade-enter,
-.component-fade-leave-to
-	/* .component-fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
-}
-</style>
+<style scoped></style>

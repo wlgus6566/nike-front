@@ -6,7 +6,7 @@
                 type="file"
                 name="image"
                 accept="image/*"
-                @change="setImage"
+                @change="inputChangeEvent"
             />
             <span class="thumb">
                 <img v-if="cropImg" :src="cropImg" :alt="imgName" />
@@ -48,7 +48,7 @@
                         type="button"
                         class="btn-s"
                         role="button"
-                        @click.prevent="cropImage"
+                        @click="popupClose"
                     >
                         취소
                     </button>
@@ -62,7 +62,13 @@
                     </button>
                 </div>
             </div>
-            <button class="modal-close" @click="this.closeModal">Close</button>
+            <button
+                class="modal-close"
+                type="button"
+                @click.prevent="popupClose"
+            >
+                Close
+            </button>
         </modal>
     </div>
 </template>
@@ -70,6 +76,7 @@
 <script>
 import 'cropperjs/dist/cropper.css';
 import VueCropper from 'vue-cropperjs';
+const Compress = require('compress.js');
 
 export default {
     name: 'index',
@@ -99,39 +106,41 @@ export default {
     },
     computed: {},
     methods: {
-        setImage(e) {
+        inputChangeEvent(e) {
+            console.log(this.$refs);
+            console.log(e);
             const file = e.target.files[0];
             if (file.type.indexOf('image/') === -1) {
                 alert('Please select an image file');
                 return;
             }
-
-            if (typeof FileReader === 'function') {
-                const reader = new FileReader();
-                this.imgName = this.imgSrc.substring(
-                    this.imgSrc.lastIndexOf('/') + 1
-                );
-                reader.onload = (event) => {
-                    this.imgSrc = event.target.result;
-                    // rebuild cropperjs with the updated source
-                    this.$refs.cropper.replace(event.target.result);
-                };
-                reader.readAsDataURL(file);
-
-                // modal open
-                this.$modal.show('modal-cropper', {
-                    imageFilePhysicalName: this.imageFilePhysicalName,
-                    imageFileName: this.imageFileName,
-                    size: this.size,
+            const compress = new Compress();
+            compress
+                .compress([file], {
+                    size: 4, // the max size in MB, defaults to 2MB
+                    quality: 0.75, // the quality of the image, max is 1,
+                    maxWidth: 1000, // the max width of the output image, defaults to 1920px
+                    maxHeight: 1000, // the max height of the output image, defaults to 1920px
+                    resize: true, // defaults to true, set false if you do not want to resize the image width and height
+                })
+                .then((data) => {
+                    const url = `${data[0].prefix}${data[0].data}`;
+                    this.imgSrc = url;
+                    this.popupOpen();
+                })
+                .catch((e) => {
+                    console.log(e);
                 });
-            } else {
-                alert('Sorry, FileReader API not supported');
-            }
+        },
+        popupOpen() {
+            this.$modal.show('modal-cropper');
+        },
+        popupClose() {
+            this.$modal.hide('modal-cropper');
         },
         cropImage() {
             this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
-            this.dialogVisible = false;
-            this.$emit('cropImage', this.cropImg, this.imgName);
+            this.popupClose();
         },
         flipX() {
             const dom = this.$refs.flipX;

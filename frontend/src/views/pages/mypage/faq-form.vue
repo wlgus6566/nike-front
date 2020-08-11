@@ -1,4 +1,8 @@
-<template> faq 등록</template>
+<template>
+    <div>
+        faq 등록
+    </div>
+</template>
 <script>
 export default {
     name: 'faq-form',

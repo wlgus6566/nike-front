@@ -44,16 +44,16 @@
     </div>
 </template>
 <script>
-    import SearchInput from '@/components/search-input';
-    import FilterSelect from '@/components/filter-select';
-    import ProductManagement from '@/components/product-management';
-    import Pagination from '@/components/pagination';
-    import NoData from '@/components/no-data';
-    import {delProduct, getProductList} from '@/api/product';
-    import {getAgencyContact} from '@/api/agency';
-    import {getCategoryList} from '@/utils/code';
+import SearchInput from '@/components/search-input';
+import FilterSelect from '@/components/filter-select';
+import ProductManagement from '@/components/product-management';
+import Pagination from '@/components/pagination';
+import NoData from '@/components/no-data';
+import { delProduct, getProductList } from '@/api/product';
+import { getAgencyContact } from '@/api/agency';
+import { getCategoryList } from '@/utils/code';
 
-    export default {
+export default {
     name: 'management',
     data() {
         return {
@@ -159,9 +159,10 @@
             try {
                 const {
                     data: { data: response },
-                } = await getAgencyContact({});
+                } = await getAgencyContact();
                 const agencyData = response;
-                agencyData.forEach((item, index) => {
+                console.log(response);
+                agencyData.forEach((item) => {
                     const agencyList = {
                         value: item.agencySeq,
                         label: item.agencyName,

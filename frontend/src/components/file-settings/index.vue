@@ -1,5 +1,5 @@
 <template>
-    <li>
+    <div>
         <h3 class="form-title">파일 설정</h3>
         <hr class="hr-black" />
         <div class="btn-area-file">
@@ -39,7 +39,7 @@
                 <span>파일 추가하기</span>
             </button>
         </div>
-    </li>
+    </div>
 </template>
 <script>
 import draggable from 'vuedraggable';
@@ -79,7 +79,6 @@ export default {
                     fileKindCode: 'FILE',
                     fileName: el.name,
                     fileSectionCode: 'GUIDE', //파일구분
-
                     fileExtension: el.type,
                     filePhysicalName: '',
                     fileSize: el.size,
@@ -110,7 +109,6 @@ export default {
             this.fileList.push({
                 fileKindCode: 'FILE',
                 fileName: '',
-                filePhysicalName: '/cdn/file/path',
                 fileSectionCode: 'ASSET',
                 fileSize: 600,
                 title: '',
@@ -121,8 +119,9 @@ export default {
             this.fileList.splice(idx, 1);
         },
         fileSelect() {
-            this.$refs.uploadIpt.value = null;
-            this.$refs.uploadIpt.click();
+            /*this.$refs.uploadIpt.value = null;
+            this.PhysicalName: '/cdn/file/path',
+                this.$refs.uploadIpt.click();*/
         },
     },
 };

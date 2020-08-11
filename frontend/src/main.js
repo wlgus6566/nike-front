@@ -8,16 +8,24 @@ import store from './store';
 import VueCookies from 'vue-cookies';
 import CKEditor from 'ckeditor4-vue';
 import VCalendar from 'v-calendar';
-import VueJsModal from 'vue-js-modal';
-
+import VModal from 'vue-js-modal';
 import lineClamp from './utils/lineclamp';
 
 Vue.config.productionTip = false;
 
 Vue.use(CKEditor);
 Vue.use(VueCookies);
-Vue.use(VueJsModal, {});
-
+Vue.use(VModal, {
+    dynamicDefaults: {
+        width: '800px',
+        height: 'auto',
+        adaptive: false,
+        draggable: true,
+        scrollable: true,
+        reset: true,
+        dynamic: true,
+    },
+});
 Vue.use(require('vue-moment'));
 Vue.use(VCalendar, {
     locale: 'en-US',
@@ -28,6 +36,12 @@ Vue.use(VCalendar, {
         input: ['YYYY.MM.DD'],
         dayPopover: 'WWW, MMM D, YYYY',
         // navMonths: 'MMM',
+    },
+    datePicker: {
+        mode: 'multiple',
+        popover: {
+            visibility: 'focus',
+        },
     },
 });
 
@@ -54,7 +68,7 @@ Vue.filter('formattedNumber', (value, prefix, suffix) => {
 new Vue({
     router,
     store,
-    render: (h) => h(App),
+    render: h => h(App),
 }).$mount('#app');
 
 // setupCalendar({
