@@ -2,6 +2,7 @@ package com.nike.dnp.dto.contents;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * The Class Contents list dto.
@@ -51,22 +53,6 @@ public class ContentsResultDTO extends BaseTimeEntity {
     private String menuCode;
 
     /**
-     * 이미지 파일명
-     *
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "imageFileName", value = "이미지 파일명", example = "main_img.jpg")
-    private String imageFileName;
-
-    /**
-     * 이미지 파일 사이즈
-     *
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "imageFileSize", value = "이미지 파일 사이즈",  example = "500")
-    private String imageFileSize;
-
-    /**
      * 이미지 파일 물리명
      *
      * @author [이소정]
@@ -104,7 +90,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
      * @author [이소정]
      */
     @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020.06.01 00:00:00")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
     private LocalDateTime campaignBeginDt;
 
     /**
@@ -113,7 +99,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
      * @author [이소정]
      */
     @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020.09.01 23:59:59")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
     private LocalDateTime campaignEndDt;
 
     /**
@@ -147,6 +133,14 @@ public class ContentsResultDTO extends BaseTimeEntity {
      */
     @ApiModelProperty(name = "exposureYn", value = "노출 여부(N : 진행중)", example = "Y")
     private String exposureYn;
+
+    /**
+     * The Checks
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "checks", value = "컨텐츠 권한 목록")
+    private List<AuthReturnDTO> checks;
 
     /**
      * The constant cdnUrl.
