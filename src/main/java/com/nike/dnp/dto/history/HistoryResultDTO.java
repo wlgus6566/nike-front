@@ -9,6 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import java.time.LocalDateTime;
@@ -153,4 +154,17 @@ public class HistoryResultDTO {
     @CreationTimestamp
     @ApiModelProperty(name = "registrationDt", value = "최초 작성일", hidden = true)
     private LocalDateTime registrationDt;
+
+    /**
+     * 최종 수정일
+     *
+     * @author [오지훈]
+     */
+    @Column(name = "UPDATE_DT")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    @UpdateTimestamp
+    @ApiModelProperty(name = "updateDt", value = "최종 수정일", hidden = true)
+    private LocalDateTime updateDt;
 }
