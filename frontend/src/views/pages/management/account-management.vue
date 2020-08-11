@@ -22,45 +22,78 @@
                     <ul class="form-list">
                         <li class="form-row">
                             <div class="form-column">
-                                <label class="label-title required">계정명</label>
+                                <label class="label-title required"
+                                    >계정명</label
+                                >
                             </div>
                             <div class="form-column">
-                                <input type="text" />
+                                <input
+                                    type="text"
+                                    v-model="addUserData.nickname"
+                                />
                             </div>
                         </li>
                         <li class="form-row">
                             <div class="form-column">
-                                <label class="label-title required">ID(E-MAIL)</label>
+                                <label class="label-title required"
+                                    >ID(E-MAIL)</label
+                                >
                             </div>
                             <div class="form-column">
                                 <div class="id-check">
-                                    <input type="text" />
-                                    <button class="btn-form-gray"><span>ID 중복체크</span></button>
+                                    <input
+                                        type="text"
+                                        v-model="addUserData.userId"
+                                    />
+                                    <button
+                                        class="btn-form-gray"
+                                        @click="
+                                            $emit(
+                                                'userIdCheck',
+                                                addUserData.userId
+                                            )
+                                        "
+                                    >
+                                        <span>ID 중복체크</span>
+                                    </button>
                                 </div>
                             </div>
                         </li>
                         <li class="form-row">
                             <div class="form-column">
-                                <label class="label-title required">권한그룹</label>
+                                <label class="label-title required"
+                                    >권한그룹</label
+                                >
                             </div>
                             <div class="form-column">
-                                <!-- //todo 권환그룹 작업 -->
-                                <el-select v-model="value" placeholder="Select">
-                                    <el-option
-                                        v-for="item in options"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value"
-                                    >
-                                    </el-option>
-                                </el-select>
+                                <div class="select-cascader">
+                                    <el-cascader
+                                        v-model="addAuthority.value"
+                                        :options="addAuthority.options"
+                                        :props="{ checkStrictly: true }"
+                                    />
+                                </div>
                             </div>
                         </li>
                     </ul>
                     <hr class="hr-gray" />
                     <div class="btn-area">
-                        <button type="button" class="btn-s"><span>취소</span></button>
-                        <button type="button" class="btn-s-black"><span>저장</span></button>
+                        <button type="button" class="btn-s">
+                            <span>취소</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-s-black"
+                            @click="
+                                $emit(
+                                    'addAuthData',
+                                    addAuthority.value,
+                                    addUserData
+                                )
+                            "
+                        >
+                            <span>저장</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -71,25 +104,14 @@
 <script>
 export default {
     data() {
-        return {
-            options: [
-                {
-                    value: '최신순',
-                    label: '최신순',
-                },
-                {
-                    value: '시작일 순',
-                    label: '시작일 순',
-                },
-            ],
-            value: '최신순',
-        };
+        return {};
     },
     props: {
         visible: Boolean,
         receipt: Object,
+        addUserData: Object,
+        addAuthority: Object,
     },
-
     methods: {
         removeBodyClass(className) {
             const body = document.body;

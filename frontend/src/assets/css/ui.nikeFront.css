@@ -749,6 +749,55 @@
 .vc-day-content:hover {
     background-color: #f5f5f5;
 }
+/* date-picker-wrap */
+.date-picker-wrap {
+    position: relative;
+}
+.btn-date-picker {
+    position: relative;
+    display: inline-flex;
+    height: 40px;
+    align-items: center;
+    padding: 0 25px 0 0;
+    font-size: 12px;
+    color: #000;
+    font-weight: bold;
+}
+.btn-date-picker:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    background: url(../images/svg/icon-filter-arrow-down.svg) no-repeat center;
+}
+.select-cascader + .date-picker-wrap,
+.date-picker-wrap + .filter-select {
+    margin-left: 20px;
+}
+.date-picker-wrap > .inner {
+    position: absolute;
+    top: 40px;
+    left: -18px;
+    display: none;
+    padding: 11px 20px 19px;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+.date-picker-wrap.active > .inner {
+    display: block;
+}
+.date-picker-wrap > .inner .title {
+    display: block;
+    font-size: 12px;
+    color: #000;
+}
+.date-picker-wrap > .inner .date-picker-group {
+    margin-top: 11px;
+}
 /* sorting-area */
 .sorting-area {
     display: flex;
@@ -911,6 +960,52 @@
 .select .el-select .el-input.is-focus .el-input__inner {
     border-color: #000 !important;
 }
+/* select-cascader */
+.select-cascader {
+    position: relative;
+}
+.select-cascader select {
+    height: 40px;
+    padding: 0 20px;
+    line-height: 40px;
+    border: none;
+    font-size: 12px;
+    font-weight: bold;
+}
+.select-cascader .el-cascader {
+    min-width: 50px;
+    width: auto;
+}
+
+.select-cascader .el-input--suffix .el-input__inner {
+    width: 100%;
+    min-width: 50px;
+    padding: 0 25px 0 0;
+    border-color: transparent;
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.select-cascader .el-input--suffix .el-input__inner::placeholder,
+.select-cascader .el-input--suffix .el-input__inner::-webkit-input-placeholder {
+    border: 1px solid transparent;
+    font-size: 12px !important;
+    color: #000 !important;
+}
+.select-cascader .el-cascader:not(.is-disabled):hover .el-input__inner,
+.select-cascader .el-cascader .el-input.is-focus .el-input__inner {
+    border-color: transparent;
+}
+.select-cascader .el-cascader .el-input__suffix {
+    width: 20px;
+    color: transparent;
+    background: url(../images/svg/icon-filter-arrow-down.svg) no-repeat center;
+    transform: rotateZ(0deg) !important;
+}
+
 /* upload-file-box */
 .upload-file-box {
     display: flex;
@@ -2596,11 +2691,15 @@
     box-sizing: border-box;
     word-break: keep-all;
 }
-.tbl-list table td a {
+.tbl-list table td button {
     display: block;
 }
 .tbl-list table td .under-link {
     display: block;
+    width: 100%;
+    font-size: 12px;
+    color: #000;
+    text-align: center;
 }
 .tbl-list table td .under-link span {
     text-decoration: underline;

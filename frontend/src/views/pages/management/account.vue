@@ -4,39 +4,55 @@
             <span class="ko">{{ this.$route.meta.title }}</span>
         </h2>
         <div class="sorting-area">
-            <el-cascader
-                v-model="authority.value"
-                :options="authority.options"
-                :props="{ checkStrictly: true }"
-                @change="handleChange"
-            />
-            <button type="button">기간조회</button>
-            <div class="date-picker-group">
-                <div class="date-picker">
-                    <v-date-picker
-                        v-model="range.beginDt"
-                        locale="en-us"
-                        color="orange"
-                        :input-props="{
-                            placeholder: 'YYYY.MM.DD',
-                        }"
-                        :attributes="attrs"
-                        :min-date="minDate()"
-                        :max-date="new Date()"
-                    />
-                </div>
-                <div class="date-picker">
-                    <v-date-picker
-                        v-model="range.endDt"
-                        locale="en-us"
-                        color="orange"
-                        :input-props="{
-                            placeholder: 'YYYY.MM.DD',
-                        }"
-                        :attributes="attrs"
-                        :min-date="minDate()"
-                        :max-date="new Date()"
-                    />
+            <div class="select-cascader">
+                <el-cascader
+                    v-model="authority.value"
+                    :options="authority.options"
+                    :props="{ checkStrictly: true }"
+                    @change="handleChange"
+                />
+            </div>
+            <div
+                class="date-picker-wrap"
+                :class="{ active: dataPickerShowData.visible }"
+            >
+                <button
+                    type="button"
+                    class="btn-date-picker"
+                    @click="dataPickerShow"
+                >
+                    <span>기간조회</span>
+                </button>
+                <div class="inner">
+                    <strong class="title">최종로그인</strong>
+                    <div class="date-picker-group">
+                        <div class="date-picker">
+                            <v-date-picker
+                                v-model="range.beginDt"
+                                locale="en-us"
+                                color="orange"
+                                :input-props="{
+                                    placeholder: 'YYYY.MM.DD',
+                                }"
+                                :attributes="attrs"
+                                :min-date="minDate()"
+                                :max-date="new Date()"
+                            />
+                        </div>
+                        <div class="date-picker">
+                            <v-date-picker
+                                v-model="range.endDt"
+                                locale="en-us"
+                                color="orange"
+                                :input-props="{
+                                    placeholder: 'YYYY.MM.DD',
+                                }"
+                                :attributes="attrs"
+                                :min-date="minDate()"
+                                :max-date="new Date()"
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
             <FilterSelect :listSortSelect="listSortSelect" />
@@ -85,9 +101,9 @@
                             </span>
                         </td>
                         <td>
-                            <a href="#" class="under-link">
+                            <button class="under-link">
                                 <span>{{ item.nickname }}</span>
-                            </a>
+                            </button>
                         </td>
                         <td>{{ item.userId }}</td>
                         <td>{{ item.authName }}</td>
@@ -105,7 +121,11 @@
                 <span>삭제</span>
             </button>
             <div class="right">
-                <button type="button" class="btn-form-gray">
+                <button
+                    type="button"
+                    class="btn-form-gray"
+                    @click="showDetailView"
+                >
                     <span>등록</span>
                 </button>
             </div>
@@ -118,16 +138,24 @@
             :totalItem="totalItem"
             @handleCurrentChange="handleCurrentChange"
         />
+        <AccountManagement
+            :visible.sync="visible.detailView"
+            :addUserData="addUserData"
+            :addAuthority="addAuthority"
+            @userIdCheck="userIdCheck"
+            @addAuthData="addAuthData"
+        />
     </div>
 </template>
 <script>
-    import {deleteUser, getUser} from '@/api/user';
-    import {getAuthCacheList} from '@/api/auth';
-    import FilterSelect from '@/components/filter-select';
-    import SearchInput from '@/components/search-input';
-    import Pagination from '@/components/pagination';
+import { getUser, postUser, getDuplicate, deleteUser } from '@/api/user';
+import { getAuthCacheList } from '@/api/auth';
+import FilterSelect from '@/components/filter-select';
+import SearchInput from '@/components/search-input';
+import Pagination from '@/components/pagination';
+import AccountManagement from '@/views/pages/management/account-management.vue';
 
-    export default {
+export default {
     name: 'account',
     data() {
         return {
@@ -189,12 +217,33 @@
             ],
             today: new Date(),
             userSeqArray: [],
+            visible: {
+                detailView: false,
+            },
+            dataPickerShowData: {
+                visible: false,
+            },
+            addAuthority: {
+                value: [null],
+                options: [
+                    {
+                        value: null,
+                        label: '권한그룹을 선택해 주세요.\n',
+                    },
+                ],
+            },
+            addUserData: {
+                authSeq: null,
+                nickname: null,
+                userId: null,
+            },
         };
     },
     components: {
         FilterSelect,
         SearchInput,
         Pagination,
+        AccountManagement,
     },
     created() {
         this.getUserList();
@@ -212,7 +261,7 @@
             deep: true,
             handler(val) {
                 if (val.beginDt && val.endDt) {
-                    // console.log('실행');
+                    this.dataPickerShowData.visible = false;
                     this.getUserList();
                 }
             },
@@ -259,6 +308,18 @@
         },
     },
     methods: {
+        //dataPicker show
+        dataPickerShow() {
+            if (this.dataPickerShowData.visible) {
+                this.dataPickerShowData.visible = false;
+            } else {
+                this.dataPickerShowData.visible = true;
+            }
+        },
+        // 상세 팝업
+        showDetailView() {
+            this.visible.detailView = true;
+        },
         dates() {},
         minDate() {
             const date = new Date();
@@ -357,15 +418,13 @@
 
         // 권한 조회
         async authCacheList() {
-            //this.loadingData = true;
             try {
                 const {
                     data: { data: response },
                 } = await getAuthCacheList();
                 this.userDataList = response;
                 this.recursionFn(response, this.authority.options, 1);
-                //this.loading = false;
-                //this.totalItem = this.userDataList.totalElements;
+                this.recursionFn(response, this.addAuthority.options, 1);
             } catch (error) {
                 console.log(error);
             }
@@ -380,6 +439,38 @@
                 } = await deleteUser({
                     userSeqArray: [4],
                 });
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        // 유저 추가
+        async addAuthData(Seq, userData) {
+            console.log(Seq.slice(-1)[0]);
+            console.log(userData);
+            try {
+                const response = await postUser({
+                    authSeq: Seq.slice(-1)[0],
+                    nickname: userData.nickname,
+                    userId: userData.userId,
+                });
+                if (response.data.existMsg) {
+                    alert(response.data.msg);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        // 유저 id 체크
+        async userIdCheck(id) {
+            console.log(id);
+            try {
+                const response = await getDuplicate({ userId: id });
+                if (response.data.existMsg) {
+                    alert(response.data.msg);
+                }
             } catch (error) {
                 console.log(error);
             }
