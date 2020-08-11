@@ -164,7 +164,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/api/download" // 임시
 				, "/error" // 에러
 				// ,"/swagger-ui/**","/v3/**" //swagger 3.0 임시
-				,"/api/open/**", "/api/main/**", "/api/alarm/**"
+				,"/api/open/**"
 		};
 		web.ignoring().antMatchers(staticPatterns);
 	}
@@ -180,7 +180,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 						.accessDecisionManager(accessDecisionManager())
 						.antMatchers(HttpMethod.POST,"/api/login").permitAll()
-						.antMatchers("/api/mypage/**").authenticated()
+						.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**").authenticated()
 						.anyRequest().authenticated();
 
 		http.addFilter(authenticationFilter()) // 인증 필터
