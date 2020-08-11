@@ -7,4 +7,9 @@ function getUser(params) {
     });
 }
 
-export { getUser };
+// user 배열 삭제
+function deleteUser(data) {
+    return user.delete(`/`, data);
+}
+
+export { getUser, deleteUser };
