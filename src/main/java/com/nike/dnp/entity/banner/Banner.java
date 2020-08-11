@@ -1,6 +1,7 @@
 package com.nike.dnp.entity.banner;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.banner.BannerSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
@@ -131,13 +132,22 @@ public class Banner extends BaseTimeEntity implements Serializable {
     private String linkUrl;
 
     /**
+     * 사용 여부
+     *
+     * @author [오지훈]
+     */
+    @Column(name = "USE_YN")
+    @ApiModelProperty(name = "useYn", value = "사용_여부", required = true)
+    private String useYn;
+
+    /**
      * Save or update banner.
      *
      * @param bannerSaveDTO the banner save dto
      * @return the banner
      * @author [오지훈]
      * @since 2020. 7. 24. 오전 10:05:40
-     * @implNote
+     * @implNote제 메인비주얼 등록 및 수정
      */
     public Banner saveOrUpdate (final BannerSaveDTO bannerSaveDTO) {
         this.title = bannerSaveDTO.getTitle();
@@ -150,6 +160,19 @@ public class Banner extends BaseTimeEntity implements Serializable {
         this.mobileImageFilePhysicalName = bannerSaveDTO.getMobileImageFilePhysicalName();
         this.linkUrlTypeCode = bannerSaveDTO.getLinkUrlTypeCode();
         this.linkUrl = bannerSaveDTO.getLinkUrl();
+        return this;
+    }
+
+    /**
+     * Delete banner.
+     *
+     * @return the banner
+     * @author [오지훈]
+     * @implNote 메인비주얼 삭
+     * @since 2020. 8. 11. 오후 12:01:07
+     */
+    public Banner delete () {
+        this.useYn = ServiceCode.YesOrNoEnumCode.N.name();
         return this;
     }
 }
