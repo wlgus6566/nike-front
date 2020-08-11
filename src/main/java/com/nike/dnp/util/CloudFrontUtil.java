@@ -9,8 +9,9 @@ import org.jets3t.service.utils.ServiceUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.Security;
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -161,8 +162,8 @@ public class CloudFrontUtil {
         try {
             Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
             final String policyResourcePath = "https://" + DISTRIBUTION_DOMAIN + "/" + objectKey;
-            final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(new FileInputStream(PRIVATE_KEY_FILE_PATH));
-
+            //final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(new FileInputStream(PRIVATE_KEY_FILE_PATH));
+            final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(Files.newInputStream(Paths.get(PRIVATE_KEY_FILE_PATH)));
 
             return CloudFrontService.signUrlCanned(
                     policyResourcePath, // Resource URL or Path
@@ -193,7 +194,8 @@ public class CloudFrontUtil {
         try {
             Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
             final String policyResourcePath = "https://" + DISTRIBUTION_DOMAIN + "/" + objectKey;
-            final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(new FileInputStream(PRIVATE_KEY_FILE_PATH));
+            //final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(new FileInputStream(PRIVATE_KEY_FILE_PATH));
+            final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(Files.newInputStream(Paths.get(PRIVATE_KEY_FILE_PATH)));
 
             final String policy = CloudFrontService.buildPolicyForSignedUrl(
                     // Resource path (optional, can include '*' and '?' wildcards)

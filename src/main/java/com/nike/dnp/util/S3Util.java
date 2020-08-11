@@ -160,7 +160,9 @@ public class S3Util {
 	public static void init(){
 		log.debug("S3 Init");
 		final AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
-		client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(awsCredentials)).withRegion(region).build();
+		client = AmazonS3ClientBuilder.standard()
+				.withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
+				.withRegion(region).build();
 
 	}
 
@@ -210,7 +212,7 @@ public class S3Util {
 	private static void s3upload(final String filePath){
 		final File file = new File(root + filePath);
 		final String uploadUrl = awsPathReplace(filePath);
-		client.putObject(new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.PublicRead));
+		client.putObject(new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.AuthenticatedRead));
 		final URL url = client.getUrl(bucket, uploadUrl);
 		log.debug("url.getPath() {}", url.getPath());
 	}
@@ -368,9 +370,16 @@ public class S3Util {
 		return awsPath;
 	}
 
-	public static void GeneratePresignedURL() {
+	/**
+	 * Generate presigned url.
+	 *
+	 * @param objectKey the object key
+	 * @author [오지훈]
+	 * @implNote S3 Signed URL 적용
+	 * @since 2020. 8. 10. 오전 9:42:48
+	 */
+	public static void GeneratePresignedURL(final String objectKey) {
 		String bucketName = "nike-test-bucket-dnp";
-		String objectKey = "contents/20200728114000An3vskGapg.jpg";
 		try {
 			// Set the presigned URL to expire after one hour.
 			java.util.Date expiration = new java.util.Date();
