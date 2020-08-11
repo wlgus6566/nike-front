@@ -480,7 +480,6 @@ public class FileUtil {
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 
-
 	/**
 	 * Exhaust input stream.
 	 *
@@ -503,6 +502,5 @@ public class FileUtil {
 				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 		}).start();
-
 	}
 }

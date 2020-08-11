@@ -31,19 +31,19 @@ public class ProductResultDTO {
 	private Long goodsSeq;
 
 	/**
-	 * 카테고리 2 코드
+	 * 대분류 코드
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "category2Code", value = "카테고리2 공통코드")
+	@ApiModelProperty(name = "category2Code", value = "대분류 공통코드")
 	private String category2Code;
 
 	/**
-	 * 카테고리 3 코드
+	 * 소분류 코드
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "category3Code", value = "카테고리3 공통코드")
+	@ApiModelProperty(name = "category3Code", value = "소분류 공통코드")
 	private String category3Code;
 
 	/**
@@ -153,14 +153,14 @@ public class ProductResultDTO {
 	private String nickname;
 
 	/**
-	 * 카테고리 2 코드명
+	 * 대분류 코드명
 	 *
 	 * @return the string
 	 * @author [오지훈]
 	 * @since 2020. 7. 21. 오후 4:03:46
 	 * @implNote
 	 */
-	@ApiModelProperty(name = "category2Name", value = "카테고리 2 명")
+	@ApiModelProperty(name = "category2Name", value = "대분류 명")
 	public String getCategory2Name(){
 		for(final ServiceCode.ProductCategory2EnumCode value : ServiceCode.ProductCategory2EnumCode.values()){
 			if(value.name().equalsIgnoreCase(this.category2Code)){
@@ -171,14 +171,14 @@ public class ProductResultDTO {
 	}
 
 	/**
-	 * 카테고리 3 코드명
+	 * 소구분 코드명
 	 *
 	 * @return the category 3 name
 	 * @author [오지훈]
 	 * @since 2020. 7. 21. 오후 4:03:46
-	 * @implNote
+	 * @implNote 소구분 코드명
 	 */
-	@ApiModelProperty(name = "category3Name", value = "카테고리 3 명")
+	@ApiModelProperty(name = "category3Name", value = "소구분 명")
 	public String getCategory3Name() {
 		for(final ServiceCode.ProductCategory3EnumCode value : ServiceCode.ProductCategory3EnumCode.values()){
 			if(value.name().equalsIgnoreCase(this.category3Code)){

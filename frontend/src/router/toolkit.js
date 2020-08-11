@@ -11,7 +11,7 @@ const routes = [
                 component: pages('common/folder-list'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'TOOLKIT',
                     menuCode: 'VMS',
                     title: 'VMS',
@@ -22,7 +22,7 @@ const routes = [
                 component: pages('common/folder-list'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'TOOLKIT',
                     menuCode: 'EKIN',
                     title: 'EKIN',
@@ -33,7 +33,7 @@ const routes = [
                 component: pages('common/folder-list'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'TOOLKIT',
                     menuCode: 'SOCIAL',
                     title: 'SOCIAL',
@@ -44,7 +44,7 @@ const routes = [
                 component: pages('common/folder-list'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'TOOLKIT',
                     menuCode: 'RB',
                     title: 'RB',
@@ -55,7 +55,7 @@ const routes = [
                 component: pages('toolkit/upload'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'TOOLKIT',
                     title: 'UPLOAD',
                 },
@@ -65,7 +65,7 @@ const routes = [
                 component: pages('common/folder-view'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'TOOLKIT',
                 },
                 beforeEnter: (to, from, next) => {

@@ -72,6 +72,16 @@ const routes = [
                 },
             },
             {
+                path: '*/modify/:id',
+                component: pages('asset/upload'),
+                meta: {
+                    layout: 'Default',
+                    aside: 'File',
+                    topMenuCode: 'ASSET',
+                    title: 'MODIFY',
+                },
+            },
+            {
                 path: '*/:id',
                 component: pages('common/folder-view'),
                 meta: {

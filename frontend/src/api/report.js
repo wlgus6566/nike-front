@@ -1,14 +1,15 @@
-import axios from 'axios';
-import {setInterceptors} from '@/api/config/interceptors';
+import {report} from './index';
 
-const apiReport = axios.create({ baseURL: '/api/report', timeout: 3000 });
-setInterceptors(apiReport);
-
-// 목록 조회
+//REPORT 목록 조회
 function getReportList(params) {
-    return apiReport.get(`/`, {
+    return report.get(`/`, {
         params: params,
     });
 }
 
-export { getReportList };
+//REPORT 등록
+function postReport(data) {
+    return report.post(`/`, data);
+}
+
+export { getReportList, postReport };

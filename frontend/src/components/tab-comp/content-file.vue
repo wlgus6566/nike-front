@@ -1,43 +1,47 @@
 <template>
     <div class="aside-file">
-        <div class="file-list-wrap">
-            <div
-                v-if="contBasketList"
-                @mouseenter="basketEnter"
-                @mouseleave="basketLeave"
+        <div>
+            <el-scrollbar
+                class="file-list-scroll"
+                wrap-class="file-list-wrap"
+                :native="false"
             >
-                <ul class="file-list" v-if="contBasketList.length">
-                    <li
-                        v-for="item in contBasketList"
-                        :key="item.contentsBasketSeq"
-                    >
-                        <img :src="item.filePhysicalName" alt="" />
-                        <button
-                            type="button"
-                            class="btn-del"
-                            @click="delContBasket(item.contentsBasketSeq)"
+                <div @mouseenter="basketEnter" @mouseleave="basketLeave">
+                    <ul class="file-list" v-if="contBasketList.length">
+                        <li
+                            v-for="item in contBasketList"
+                            :key="item.contentsBasketSeq"
                         >
-                            <span>삭제</span>
-                        </button>
-                        <Loading v-if="isLoading(item.contentsBasketSeq)" />
-                    </li>
-                </ul>
-                <NoData v-else>
-                    <i class="icon-file"></i>
-                    <p class="txt">더욱 빠르게 파일 받기</p>
-                    <p class="desc">
-                        이곳에 끌어다 놓으면 파일을 바로<br />
-                        다운받을 수 있어요.
-                    </p>
-                </NoData>
-            </div>
-            <Loading v-else />
+                            <img :src="item.filePhysicalName" alt="" />
+                            <button
+                                type="button"
+                                class="btn-del"
+                                @click="delContBasket(item.contentsBasketSeq)"
+                            >
+                                <span>삭제</span>
+                            </button>
+                            <Loading
+                                :style="{ height: '100px', width: '100px' }"
+                                v-if="isLoading(item.contentsBasketSeq)"
+                            />
+                        </li>
+                    </ul>
+                    <NoData v-else>
+                        <i class="icon-file"></i>
+                        <p class="txt">더욱 빠르게 파일 받기</p>
+                        <p class="desc">
+                            이곳에 끌어다 놓으면 파일을 바로<br />
+                            다운받을 수 있어요.
+                        </p>
+                    </NoData>
+                </div>
+            </el-scrollbar>
+            <button type="button" class="btn-download">
+                <span class="gage" style="width: 50%;"></span>
+                <span class="txt" style="display: none;">DOWNLOAD</span>
+                <span class="txt">DOWNLOAD...</span>
+            </button>
         </div>
-        <button type="button" class="btn-download">
-            <span class="gage" style="width: 50%;"></span>
-            <span class="txt" style="display: none;">DOWNLOAD</span>
-            <span class="txt">DOWNLOAD...</span>
-        </button>
 
         <strong class="tab-title">HISTORY</strong>
         <TabComponent v-bind:tabMenus="historyTab"></TabComponent>
@@ -48,6 +52,7 @@ import TabComponent from '@/components/tab-comp';
 import NoData from '@/components/no-data';
 import Loading from '@/components/loading';
 import { addContentsBasket, delContentsBasket } from '@/api/contents';
+import bus from '@/utils/bus';
 
 export default {
     name: 'FileItem',
@@ -86,13 +91,16 @@ export default {
     mounted() {
         this.getContBasket();
     },
+    created() {
+        bus.$on('addContBasket', (seq) => {
+            this.addContBasket(seq);
+        });
+    },
     methods: {
         basketEnter() {
-            console.log('basketEnter');
             this.$store.commit('SET_FILE_MOUSEENTER', true);
         },
         basketLeave() {
-            console.log('basketLeave');
             this.$store.commit('SET_FILE_MOUSEENTER', false);
         },
         isLoading(seq) {
@@ -106,6 +114,18 @@ export default {
                     data: { data: response },
                 } = await this.$store.dispatch('getContBasket');
                 this.contBasketList = response;
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        async addContBasket(seqArr) {
+            try {
+                await addContentsBasket(
+                    this.$route.meta.topMenuCode,
+                    this.$route.meta.menuCode,
+                    seqArr
+                );
+                await this.$store.dispatch('getContBasket');
             } catch (e) {
                 console.log(e);
             }
@@ -139,11 +159,16 @@ export default {
     letter-spacing: 0.5px;
     color: #000;
 }
-.file-list-wrap {
+.file-list-scroll {
     margin-top: 15px;
+    height: 360px;
+}
+::v-deep .file-list-wrap {
+    box-sizing: border-box;
     background: #eee;
 }
-.file-list-wrap .no-data {
+::v-deep .file-list-wrap .no-data {
+    background: #eee;
     height: 360px;
 }
 .file-list {
@@ -151,12 +176,9 @@ export default {
     flex-wrap: wrap;
     align-content: flex-start;
     box-sizing: border-box;
-    height: 360px;
     padding: 18px 0 18px 18px;
     overflow: auto;
-}
-.file-list .no-data {
-    height: 100%;
+    background: #eee;
 }
 .file-list li {
     position: relative;

@@ -7,8 +7,8 @@ import router from './router';
 import store from './store';
 import VueCookies from 'vue-cookies';
 import CKEditor from 'ckeditor4-vue';
-import { setupCalendar } from 'v-calendar';
 import VCalendar from 'v-calendar';
+import VueJsModal from 'vue-js-modal';
 
 import lineClamp from './utils/lineclamp';
 
@@ -16,14 +16,18 @@ Vue.config.productionTip = false;
 
 Vue.use(CKEditor);
 Vue.use(VueCookies);
+Vue.use(VueJsModal, {});
+
 Vue.use(require('vue-moment'));
 Vue.use(VCalendar, {
-    componentPrefix: 'vc',
-    locales: {
-        masks: {
-            title: 'YYYY.MM',
-            weekdays: 'WWW',
-        },
+    locale: 'en-US',
+    masks: {
+        title: 'YYYY.MM',
+        weekdays: 'WWW',
+        data: ['YYYY-MM-DD'],
+        input: ['YYYY.MM.DD'],
+        dayPopover: 'WWW, MMM D, YYYY',
+        // navMonths: 'MMM',
     },
 });
 
@@ -50,9 +54,9 @@ Vue.filter('formattedNumber', (value, prefix, suffix) => {
 new Vue({
     router,
     store,
-    render: h => h(App),
+    render: (h) => h(App),
 }).$mount('#app');
 
-setupCalendar({
-    componentPrefix: 'vc',
-});
+// setupCalendar({
+//     componentPrefix: 'vc',
+// });

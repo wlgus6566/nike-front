@@ -26,6 +26,7 @@ public class CalendarRepositoryImpl extends QuerydslRepositorySupport implements
 	 *
 	 * @param domainClass must not be {@literal null}.
 	 * @author [윤태호]
+	 * @implNote 생성자 주입
 	 * @since 2020. 8. 7. 오후 5:24:26
 	 */
 	public CalendarRepositoryImpl() {
@@ -33,11 +34,12 @@ public class CalendarRepositoryImpl extends QuerydslRepositorySupport implements
 	}
 
 	/**
-	 * Find day list count list.
+	 * 선택된 날짜 일정 갯수 조회
 	 *
 	 * @param paramCalendar the param calendar
 	 * @return the list
 	 * @author [윤태호]
+	 * @implNote 선택된 날짜 일정 갯수 조회
 	 * @since 2020. 8. 7. 오후 6:11:48
 	 */
 	@Override
@@ -46,8 +48,7 @@ public class CalendarRepositoryImpl extends QuerydslRepositorySupport implements
 		final QCalendar calendar = QCalendar.calendar;
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 
-		return queryFactory.select(Projections.bean(
-															CalendarCheckDTO.class
+		return queryFactory.select(Projections.bean(CalendarCheckDTO.class
 															, calendar.beginDt
 															, calendar.beginDt.count().as("count")))
 													   .from(calendar)
@@ -57,13 +58,14 @@ public class CalendarRepositoryImpl extends QuerydslRepositorySupport implements
 	}
 
 	/**
-	 * Find by month search list.
+	 * 년월로 일정 조회
 	 *
 	 * @param calendarSearchDTO the calendar search dto
 	 * @return the list
 	 * @author [윤태호]
+	 * @implNote
+	 * @Description 년월로 일정 조회
 	 * @since 2020. 8. 10. 오후 5:07:47
-	 * @Description  년월로 일정 조회
 	 */
 	@Override
 	public List<Calendar> findByMonthSearch(final CalendarSearchDTO calendarSearchDTO) {

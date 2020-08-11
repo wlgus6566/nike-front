@@ -1,5 +1,5 @@
 <template>
-    <form action="#" @submit.prevent="login">
+    <form action="#" @submit.prevent="$emit('login')">
         <div class="login-box">
             <strong class="title">
                 <em>WELCOM TO</em>
@@ -9,12 +9,26 @@
                 <div class="input-box">
                     <input
                         type="text"
-                        v-model="username"
+                        :value="loginData.username"
+                        @input="
+                            $emit(
+                                'updateValue',
+                                'username',
+                                $event.target.value
+                            )
+                        "
                         placeholder="ID(E-MAIL)"
                     />
                     <input
                         type="password"
-                        v-model="password"
+                        :value="loginData.password"
+                        @input="
+                            $emit(
+                                'updateValue',
+                                'password',
+                                $event.target.value
+                            )
+                        "
                         placeholder="PW"
                     />
                 </div>
@@ -31,6 +45,7 @@
                         ><span>비밀번호 찾기</span></a
                     >
                 </div>
+                KDf\p*jkyP
             </div>
         </div>
     </form>
@@ -38,43 +53,11 @@
 <script>
 export default {
     name: 'loginForm',
+    props: ['loginData'],
     data() {
-        return {
-            username: 'yth',
-            password: 'Emotion1!@',
-        };
+        return {};
     },
-    methods: {
-        async login() {
-            if (!this.username) {
-                alert('아이디를 입력해 주세요.');
-                return;
-            }
-            if (!this.password) {
-                alert('비밀번호를 입력해 주세요.');
-                return;
-            }
-            try {
-                const bodyFormData = new FormData();
-                bodyFormData.append('username', this.username);
-                bodyFormData.append('password', this.password);
-                const response = await this.$store.dispatch(
-                    'LOGIN',
-                    bodyFormData
-                );
-                if (response.data.existMsg) {
-                    alert(response.data.msg);
-                }
-                if (response.data.code === 'SEND_EMAIL_CERT_CODE') {
-                    //this.$router.push('/');
-                } else {
-                    //await this.$router.push('/');
-                }
-            } catch (error) {
-                alert(error.response.data.msg);
-            }
-        },
-    },
+    methods: {},
 };
 </script>
 <style scoped>

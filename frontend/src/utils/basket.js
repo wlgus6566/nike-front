@@ -43,7 +43,6 @@ const addBasketList = async (goodsSeqList, orderQuantityList) => {
  * @returns {Promise<void>}
  */
 const deleteBasketItem = async (goodsBasketSeq) => {
-    console.log('asd');
     try {
         await deleteBasket(goodsBasketSeq);
         await store.dispatch('basketList');

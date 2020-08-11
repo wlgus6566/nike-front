@@ -225,7 +225,7 @@ public class ReportController {
      * @since 2020. 7. 15. 오후 6:30:45
      */
     @ApiOperation(value = "보고서 파일 다운로드", notes = REQUEST_CHARACTER)
-    @PostMapping(name = "보고서 파일 다운로드", value = "/download/{reportFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(name = "보고서 파일 다운로드", value = "/download/{reportFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public CommonResult downloadFile(
             @ApiParam(name="reportFileSeq", value = "보고서 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long reportFileSeq
     ) {
