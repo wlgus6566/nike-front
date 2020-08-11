@@ -10,9 +10,7 @@
             </button>
             <ul class="depth">
                 <li v-for="depth in menu.menus" :key="depth.menuSeq">
-                    <router-link :to="menu.menuPathUrl">{{
-                        depth.menuName
-                    }}</router-link>
+                    <a :href="depth.menuPathUrl">{{ depth.menuName }}</a>
                 </li>
             </ul>
         </li>
