@@ -254,7 +254,9 @@ public class ContentsService {
         final Optional<Contents> contents = this.findById(contentsSaveDTO.getContentsSeq());
 
         // 썸네일 base64 -> file 정보로 변환
-        this.base64ToFile(contentsSaveDTO);
+        if(!ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64()) && contentsSaveDTO.getImageBase64().contains("base64")){
+            this.base64ToFile(contentsSaveDTO);
+        }
 
         contents.ifPresent(value -> value.update(contentsSaveDTO));
 
