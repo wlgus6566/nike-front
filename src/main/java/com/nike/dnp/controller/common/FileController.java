@@ -60,6 +60,7 @@ public class FileController {
 	 * @return the response entity
 	 * @throws IOException the io exception
 	 * @author [윤태호]
+	 * @implNote
 	 * @since 2020. 7. 28. 오전 11:08:35
 	 */
 	@ApiIgnore
@@ -77,6 +78,7 @@ public class FileController {
 	 * @return the single result
 	 * @throws IOException the io exception
 	 * @author [윤태호]
+	 * @implNote 단일 파일 업로드
 	 * @since 2020. 7. 28. 오전 11:08:35
 	 */
 	@ApiOperation(value = "파일 업로드", notes = BASIC_CHARACTER)
@@ -85,12 +87,9 @@ public class FileController {
 							   @ApiParam(name = "uploadFile", value = "파일업로드") final MultipartFile uploadFile) throws IOException {
 		log.info("FileController.upload");
 		final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO);
-		//String upload = S3Util.upload(fileResultDTO);
 		S3Util.upload(fileResultDTO);
 		return responseService.getSingleResult(fileResultDTO);
-
 	}
-
 
 	/**
 	 * 리스트 파일 업로드
@@ -99,6 +98,7 @@ public class FileController {
 	 * @param uploadFileList the upload file list
 	 * @return the single result
 	 * @author [윤태호]
+	 * @implNote 리스트 파일 업로드
 	 * @since 2020. 7. 28. 오전 11:08:35
 	 */
 	@ApiOperation(value = "파일 업로드 리스트", notes = BASIC_CHARACTER)
@@ -106,7 +106,6 @@ public class FileController {
 	public SingleResult<List<FileResultDTO>> uploadList(final FileUploadDTO fileUploadDTO, @ApiParam(name = "uploadFileList", value = "파일업로드") final List<MultipartFile> uploadFileList) {
 		log.info("FileController.uploadList");
 		final List<FileResultDTO> resultList = new ArrayList<>();
-
 		fileUploadDTO.getUploadFileList().forEach(multipartFile -> {
 			final FileUploadDTO fileParam = new FileUploadDTO();
 			fileParam.setUploadFile(multipartFile);
@@ -124,6 +123,7 @@ public class FileController {
 	 * @param fileUploadDTO the file upload dto
 	 * @return the file result dto
 	 * @author [윤태호]
+	 * @implNote
 	 * @since 2020. 7. 28. 오전 11:08:35
 	 */
 	private FileResultDTO fileUpload(final FileUploadDTO fileUploadDTO) {

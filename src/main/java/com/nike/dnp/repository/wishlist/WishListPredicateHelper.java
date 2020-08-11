@@ -24,7 +24,7 @@ public class WishListPredicateHelper {
 	 * @return the predicate
 	 * @author [윤태호]
 	 * @since 2020. 7. 3. 오후 3:54:34
-	 * @implNote
+	 * @implNote 유저 시퀀스 조건
 	 */
 	public static Predicate eqUserSeq(final Long userSeq) {
 		final BooleanBuilder builder = new BooleanBuilder();

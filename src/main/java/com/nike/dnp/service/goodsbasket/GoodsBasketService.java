@@ -56,7 +56,7 @@ public class GoodsBasketService {
 	 * @return goods basket
 	 * @author [윤태호]
 	 * @since 2020. 7. 2. 오후 4:34:23
-	 * @implNote
+	 * @implNote 장바구니 저장
 	 */
 	@Transactional
 	public GoodsBasket saveBasket(final GoodsBasketSaveDTO goodsBasketSaveDTO) {
@@ -64,15 +64,13 @@ public class GoodsBasketService {
 		return goodsBasketSave(goodsBasketSaveDTO);
 	}
 
-
-
 	/**
 	 * 장바구니 조회
 	 *
 	 * @return the list
 	 * @author [윤태호]
 	 * @since 2020. 7. 3. 오후 12:05:29
-	 * @implNote
+	 * @implNote 장바구니 조회
 	 */
 	public List<GoodsBasket> findByAll() {
 		log.info("GoodsBasketService.findByAll");
@@ -85,7 +83,7 @@ public class GoodsBasketService {
 	 * @param goodsBasketSeq the goods basket seq
 	 * @author [윤태호]
 	 * @since 2020. 7. 3. 오후 12:05:29
-	 * @implNote
+	 * @implNote 장바구니 삭제
 	 */
 	@Transactional
 	public void deleteBasket(final Long goodsBasketSeq) {
@@ -103,13 +101,12 @@ public class GoodsBasketService {
 	 *
 	 * @author [윤태호]
 	 * @since 2020. 7. 3. 오후 12:05:29
-	 * @implNote
+	 * @implNote 장바구니 전체 삭제 - 스케쥴용
 	 */
 	@Transactional
 	public void deleteAll() {
 		log.info("GoodsBasketService.deleteAll");
 		goodsBasketRepository.deleteAll();
-
 	}
 
 	/**
@@ -119,7 +116,7 @@ public class GoodsBasketService {
 	 * @return the list
 	 * @author [윤태호]
 	 * @since 2020. 7. 6. 오전 11:37:09
-	 * @implNote
+	 * @implNote 장바구니 다건 저장
 	 */
 	@Transactional
 	public List<GoodsBasket> saveBasketList(final GoodsBasketSaveListDTO goodsBasketSaveListDTO) {
@@ -147,6 +144,7 @@ public class GoodsBasketService {
 	 * @param goodsBasketSaveDTO the goods basket save dto
 	 * @return the goods basket
 	 * @author [윤태호]
+	 * @implNote 장바구니 저장
 	 * @since 2020. 8. 3. 오전 11:54:43
 	 */
 	final private GoodsBasket goodsBasketSave(final GoodsBasketSaveDTO goodsBasketSaveDTO) {
@@ -174,6 +172,7 @@ public class GoodsBasketService {
 	 * @param goodsSeq the goods seq
 	 * @param userSeq  the user seq
 	 * @author [윤태호]
+	 * @implNote 유저 장바구니 해당 제품 시퀀스값 삭제
 	 * @since 2020. 8. 7. 오후 3:14:13
 	 */
 	public void deleteByGoodsSeqAndUserSeq(Long goodsSeq, long userSeq) {

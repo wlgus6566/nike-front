@@ -15,24 +15,26 @@ import java.util.List;
 public interface CalendarRepositoryCustom {
 
 	/**
-	 * Find day list count list.
+	 * 선택된 날짜 일정 갯수 조회
 	 *
 	 * @param calendar the calendar
 	 * @return the list
 	 * @author [윤태호]
+	 * @implNote 선택된 날짜 일정 갯수 조회
 	 * @since 2020. 8. 7. 오후 6:11:38
 	 */
 	List<CalendarCheckDTO> findDayListCount(final Calendar calendar);
 
 
 	/**
-	 * Find by month search list.
+	 * 년월로 켈린더 조회
 	 *
 	 * @param calendarSearchDTO the calendar search dto
 	 * @return the list
 	 * @author [윤태호]
+	 * @implNote
+	 * @Description 년월로 켈린더 조회
 	 * @since 2020. 8. 10. 오후 4:52:28
-	 * @Description  년월로 켈린더 조회
 	 */
 	List<Calendar> findByMonthSearch(CalendarSearchDTO calendarSearchDTO);
 

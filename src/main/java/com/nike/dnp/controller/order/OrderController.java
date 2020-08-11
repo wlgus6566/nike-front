@@ -37,13 +37,13 @@ import java.util.List;
  * 주문 Controller
  *
  * @author [윤태호]
- * @since 2020. 6. 26. 오후 3:27:34
  * @apiNote
+ * @since 2020. 6. 26. 오후 3:27:34
  */
 @Slf4j
 @RestController
 @Api(description = "주문", tags = "ORDER")
-@RequestMapping(value = "/api/order/", name = "주문")
+@RequestMapping(value = "/api", name = "주문")
 @AllArgsConstructor
 public class OrderController {
 
@@ -101,13 +101,14 @@ public class OrderController {
 	 * 주문 등록
 	 *
 	 * @param orderProductSaveDTO the order product save dto
+	 * @param result              the result
 	 * @return the single result
 	 * @author [윤태호]
+	 * @apiNote 주문 등록
 	 * @since 2020. 7. 1. 오후 2:48:06
-	 * @apiNote
 	 */
 	@ApiOperation(value = "주문 등록", notes = BASIC_CHARACTER)
-	@PostMapping(value = "/save", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/order/save", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Transactional
 	@ValidField
 	public SingleResult<OrderEntity> saveOrder(@RequestBody @Valid final OrderProductSaveDTO orderProductSaveDTO,
@@ -143,23 +144,21 @@ public class OrderController {
 		}
 	}
 
-
 	/**
 	 * 주문내역 조회
 	 *
 	 * @param orderSearchDTO the order search dto
 	 * @return the single result
 	 * @author [윤태호]
+	 * @apiNote 주문내역 조회
 	 * @since 2020. 7. 7. 오전 11:25:09
-	 * @apiNote
 	 */
 	@ApiOperation(value = "주문내역", notes = REQUEST_CHARACTER + "beginDt|시작일|false|String\n" + "endDt|종료일|false|String\n")
-	@GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/mypage/order/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<Page<OrderEntity>> list(final OrderSearchDTO orderSearchDTO) {
 		log.info("OrderController.list");
 		return responseService.getSingleResult(orderService.findPageOrder(orderSearchDTO));
 	}
-
 
 	/**
 	 * 주문 상세 내역
@@ -167,16 +166,13 @@ public class OrderController {
 	 * @param orderSeq the order seq
 	 * @return the single result
 	 * @author [윤태호]
-	 * @apiNote
+	 * @apiNote 주문 상세 내역
 	 * @since 2020. 7. 7. 오후 2:43:50
 	 */
 	@ApiOperation(value = "주문 상세 내역", notes = BASIC_CHARACTER)
-	@GetMapping(value = "/{orderSeq}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/mypage/order/{orderSeq}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<OrderEntity> view(@ApiParam(name = "orderSeq", value = "주문 시퀀스", defaultValue = "48") @PathVariable final Long orderSeq) {
 		log.info("OrderController.view");
 		return responseService.getSingleResult(orderService.findByOrderSeqAndUseYn(orderSeq, ServiceCode.YesOrNoEnumCode.Y.name()));
 	}
-
-
 }
-

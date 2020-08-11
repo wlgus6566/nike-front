@@ -24,7 +24,7 @@ public interface GoodsBasketRepository extends JpaRepository<GoodsBasket,Long> {
 	 * @return the optional
 	 * @author [윤태호]
 	 * @since 2020. 7. 14. 오후 3:37:34
-	 * @implNote
+	 * @implNote 제품 시퀀스와 유저 시퀀스 장바구니 조회
 	 */
 	Optional<GoodsBasket> findByGoodsSeqAndUserSeq(Long goodsSeq,Long userSeq);
 
@@ -35,7 +35,7 @@ public interface GoodsBasketRepository extends JpaRepository<GoodsBasket,Long> {
 	 * @return the list
 	 * @author [윤태호]
 	 * @since 2020. 7. 14. 오후 3:37:34
-	 * @implNote
+	 * @implNote 유저 시퀀스로 장바구니 조회
 	 */
 	List<GoodsBasket> findByUserSeqOrderByGoodsBasketSeqDesc(Long userSeq);
 
@@ -45,6 +45,7 @@ public interface GoodsBasketRepository extends JpaRepository<GoodsBasket,Long> {
 	 *
 	 * @param goodsSeq the goods seq
 	 * @author [윤태호]
+	 * @implNote 상품 시퀀스로 장바구니 삭제
 	 * @since 2020. 7. 30. 오전 11:59:29
 	 */
 	void deleteByGoodsSeq(Long goodsSeq);
@@ -55,6 +56,7 @@ public interface GoodsBasketRepository extends JpaRepository<GoodsBasket,Long> {
 	 * @param goodsSeq the goods seq
 	 * @param userSeq  the user seq
 	 * @author [윤태호]
+	 * @implNote 유저 장바구니 제품 삭제
 	 * @since 2020. 8. 7. 오후 2:52:28
 	 */
 	void deleteByGoodsSeqAndUserSeq(Long goodsSeq,Long userSeq);

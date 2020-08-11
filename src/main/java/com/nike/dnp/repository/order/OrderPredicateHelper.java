@@ -27,7 +27,7 @@ public class OrderPredicateHelper {
 	 * @param beginDt the begin dt
 	 * @return the predicate
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote where 시작 날짜 이후
 	 * @since 2020. 7. 7. 오후 12:13:36
 	 */
 	public static Predicate afterStartDt(final String beginDt) {
@@ -48,7 +48,7 @@ public class OrderPredicateHelper {
 	 * @param endDt the end dt
 	 * @return the predicate
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 종료 날짜 이전
 	 * @since 2020. 7. 7. 오후 12:13:36
 	 */
 	public static Predicate beforeEndDt(final String endDt) {
@@ -68,6 +68,7 @@ public class OrderPredicateHelper {
 	 * @param userSeq the user seq
 	 * @return the predicate
 	 * @author [윤태호]
+	 * @implNote eq 작성자
 	 * @since 2020. 8. 5. 오후 3:48:37
 	 */
 	public static Predicate eqRegisterSeq(Long userSeq) {
@@ -84,6 +85,7 @@ public class OrderPredicateHelper {
 	 * @param useYn the use yn
 	 * @return the predicate
 	 * @author [윤태호]
+	 * @implNote eq useYn
 	 * @since 2020. 8. 5. 오후 3:48:37
 	 */
 	public static Predicate eqUseYn(String useYn) {
