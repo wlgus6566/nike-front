@@ -28,7 +28,7 @@
                             </router-link>
                         </td>
                         <td>
-                            <span class="date"> 등록일 필요</span>
+                            <span class="date">{{ item.updateDt }}</span>
                         </td>
                     </tr>
                 </tbody>
