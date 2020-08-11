@@ -61,10 +61,10 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         qNoticeArticle.useYn.eq("Y"),
                         qNoticeArticle.noticeArticleSectionCode.eq(customerSearchDTO.getNoticeArticleSectionCode()),
                         NoticePredicateHelper.eqCategoryCode(customerSearchDTO.getNoticeArticleCategoryCode()),
-                        NoticePredicateHelper.containsKeword(customerSearchDTO.getKeyword())
+                        NoticePredicateHelper.containsKeyword(customerSearchDTO.getKeyword())
                 );
 
-        if (StringUtils.equalsIgnoreCase(customerSearchDTO.getNoticeArticleSectionCode() ,"NOTICE")) {
+        if (StringUtils.equalsIgnoreCase(customerSearchDTO.getNoticeArticleSectionCode() ,"NOTICE")) {  //equalsIgnoreCase 지양 //확인필요
             query.orderBy(qNoticeArticle.noticeYn.desc(), qNoticeArticle.updateDt.desc());
         } else {
             query.orderBy(qNoticeArticle.updateDt.desc());

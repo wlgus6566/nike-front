@@ -185,30 +185,35 @@ public class NoticeArticle extends BaseTimeEntity {
      * @implNote [update 엔티티 삽입]
      * @since 2020. 8. 3. 오전 10:41:05
      */
-    public void update(final CustomerUpdateDTO customerUpdateDTO) {
+    public NoticeArticle update(final CustomerUpdateDTO customerUpdateDTO) {
         log.info("NoticeArticle.update");
 
-        this.noticeArticleSectionCode = customerUpdateDTO.getNoticeArticleSectionCode();
-        this.title = customerUpdateDTO.getTitle();
-        this.contents = customerUpdateDTO.getContents();
+        this.setNoticeArticleSectionCode(customerUpdateDTO.getNoticeArticleSectionCode());
 
-        if (StringUtils.equals(customerUpdateDTO.getNoticeArticleSectionCode(), "NOTICE")) {
-            this.noticeYn = customerUpdateDTO.getNoticeYn();
+        this.setTitle(customerUpdateDTO.getTitle());
+        this.setContents(customerUpdateDTO.getContents());
+
+        if (StringUtils.equals(customerUpdateDTO.getNoticeArticleSectionCode(), "NOTICE")) { //switch
+            this.setNoticeYn(customerUpdateDTO.getNoticeYn());
         } else if (StringUtils.equals(customerUpdateDTO.getNoticeArticleSectionCode(), "NEWS")) {
-            if (!ObjectUtils.isEmpty(customerUpdateDTO.getImageBase64())) {
+            if (!ObjectUtils.isEmpty(customerUpdateDTO.getImageBase64()) && customerUpdateDTO.getImageBase64().contains("base64")) {
                 FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
                         ServiceCode.FileFolderEnumCode.NEWS.getFolder(), customerUpdateDTO.getImageBase64());
 
-                this.thumbnailFileName = fileResultDTO.getFileName();
-                this.thumbnailFilePhysicalName = fileResultDTO.getFilePhysicalName();
-                this.thumbnailFileSize = String.valueOf(fileResultDTO.getFileSize());
+                this.setThumbnailFileName(fileResultDTO.getFileName());
+                this.setThumbnailFilePhysicalName(fileResultDTO.getFilePhysicalName());
+                this.setThumbnailFileSize(String.valueOf(fileResultDTO.getFileSize()));
             }
         } else if (StringUtils.equals(customerUpdateDTO.getNoticeArticleSectionCode(), "QNA")) {
-            this.noticeArticleCategoryCode = customerUpdateDTO.getNoticeArticleCategoryCode();
+            this.setNoticeArticleCategoryCode(customerUpdateDTO.getNoticeArticleCategoryCode());
         }
+
+        return this;
     }
 
-    public void delete() {
+    public NoticeArticle delete() {
         this.useYn = "N";
+
+        return this;
     }
 }

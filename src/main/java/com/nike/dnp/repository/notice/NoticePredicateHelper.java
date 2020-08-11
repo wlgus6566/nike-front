@@ -45,12 +45,14 @@ public class NoticePredicateHelper {
      * @since 2020. 7. 13. 오후 10:59:49
      * @implNote 제목, 내용 keyword 검색 helper
      */
-    public static Predicate containsKeword(final String keyword) {
+    public Predicate containsKeyword(final String keyword) {
         final BooleanBuilder builder = new BooleanBuilder();
 
         if (!StringUtils.isEmpty(keyword)) {
-            builder.and(QNoticeArticle.noticeArticle.contents.contains(keyword)
-                    .or(QNoticeArticle.noticeArticle.title.contains(keyword)));
+            builder.and(
+                    QNoticeArticle.noticeArticle.contents.contains(keyword)
+                    .or(QNoticeArticle.noticeArticle.title.contains(keyword))
+            );
         }
 
         return builder;
