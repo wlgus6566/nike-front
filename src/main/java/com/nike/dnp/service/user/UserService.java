@@ -14,10 +14,7 @@ import com.nike.dnp.repository.user.UserAuthRepository;
 import com.nike.dnp.repository.user.UserRepository;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.service.auth.AuthService;
-import com.nike.dnp.util.CryptoUtil;
-import com.nike.dnp.util.EmailPatternUtil;
-import com.nike.dnp.util.MessageUtil;
-import com.nike.dnp.util.PasswordPatternUtil;
+import com.nike.dnp.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -182,14 +179,14 @@ public class UserService implements UserDetailsService {
     /**
      * Gets my page.
      *
-     * @param userSeq the user seq
      * @return the my page
      * @author [오지훈]
+     * @implNote 작성]
      * @since 2020. 7. 14. 오후 12:02:26
-     * @implNote
      */
-    public UserResultDTO getMyPage(final Long userSeq) {
+    public UserResultDTO getMyPage() {
         log.info("UserService.getMyPage");
+        final Long userSeq = SecurityUtil.currentUser().getUserSeq();
         final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
                 () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
 

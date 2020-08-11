@@ -1,6 +1,10 @@
 <template>
     <div class="aside-order">
-        <div class="cart-item-wrap">
+        <el-scrollbar
+            class="cart-list-scroll"
+            wrap-class="cart-list-wrap"
+            :native="false"
+        >
             <template v-if="basketList">
                 <transition-group
                     tag="ul"
@@ -49,7 +53,7 @@
                     </p>
                 </NoData>
             </template>
-        </div>
+        </el-scrollbar>
         <button
             type="button"
             class="btn-order"
@@ -72,14 +76,18 @@
             </p>
         </div>
         <OrderSheet
+            v-if="basketList.length"
             :visible.sync="visible.orderSheet"
             :basketList="basketList"
             :totalPrice="totalPrice"
+            @orderSave="orderSave"
         />
     </div>
 </template>
 <script>
     import {addProductBasket, deleteBasketItem} from '@/utils/basket';
+    import {postOrderSave} from '@/api/my-order';
+    import {getExistMsg} from '@/utils/common';
     import OrderSheet from '@/views/pages/product/order-sheet.vue';
     import NoData from '@/components/no-data';
 
@@ -91,6 +99,8 @@
             visible: {
                 orderSheet: false,
             },
+            orderSeq: [],
+            orderQuan: [],
         };
     },
     components: {
@@ -122,24 +132,58 @@
             }
         },
     },
-    mounted() {
-        console.log(this.$store.state.basketListData);
-    },
+    mounted() {},
     methods: {
         showOrderSheet() {
             this.visible.orderSheet = true;
+            this.orderSeq = this.basketList.map((el) => {
+                return el.goodsSeq;
+            });
+            this.orderQuan = this.basketList.map((el) => {
+                return el.orderQuantity;
+            });
         },
 
         // 장바구니 삭제 api
         deleteClick(goodsBasketSeq) {
             deleteBasketItem(goodsBasketSeq);
         },
+
         // 최소수량
         async changeQuantity(item) {
             if (!this.test) {
                 this.test = true;
                 await addProductBasket(item.goodsSeq, item.orderQuantity);
                 this.test = false;
+            }
+        },
+
+        // 주문서 발송
+        async orderSave(orderComment) {
+            console.log(this.orderSeq);
+            console.log(this.orderQuan);
+            console.log({
+                goodsSeqList: this.orderSeq,
+                orderDescription: orderComment,
+                orderQuantityList: this.orderQuan,
+                totalAmount: this.totalPrice,
+            });
+            try {
+                const { data: response } = await postOrderSave({
+                    goodsSeqList: this.orderSeq,
+                    orderDescription: orderComment,
+                    orderQuantityList: this.orderQuan,
+                    totalAmount: this.totalPrice,
+                });
+                console.log(response);
+                if (response.existMsg) {
+                    await getExistMsg(response);
+                } else {
+                    this.visible.orderSheet = false;
+                    await this.$router.push('/order/complete');
+                }
+            } catch (error) {
+                console.log(error);
             }
         },
     },
@@ -150,13 +194,15 @@
     margin-top: 15px;
     overflow: hidden;
 }
-
-.cart-item-wrap {
-    box-sizing: border-box;
+.cart-list-scroll {
     height: 360px;
-    padding: 8px 18px;
+}
+::v-deep .cart-list-wrap {
+    box-sizing: border-box;
     background: #eee;
-    overflow: auto;
+}
+.cart-item-list {
+    padding: 8px 18px;
 }
 .cart-item {
     position: relative;
@@ -170,6 +216,7 @@
     border-top: 1px solid #e5e5e5;
 }
 .cart-item .thumbnail {
+    flex: 0 0 50px;
     width: 50px;
     height: 50px;
     margin-right: 10px;
@@ -194,12 +241,21 @@
     overflow: hidden;
     text-indent: -99999px;
 }
+.info-box {
+    max-width: calc(100% - 60px);
+    box-sizing: border-box;
+}
 .info-box .title {
     display: block;
+    box-sizing: border-box;
+    padding-right: 20px;
     line-height: 18px;
     font-size: 12px;
     letter-spacing: -0.05px;
     color: #000;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .btn-order {
     position: relative;

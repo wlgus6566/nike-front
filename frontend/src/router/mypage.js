@@ -1,4 +1,5 @@
 import { pages } from '@/utils/global-methods';
+
 const routes = [
     {
         path: '/mypage/upload',
@@ -60,70 +61,87 @@ const routes = [
             title: '비밀번호 변경',
         },
     },
+    //공지사항
     {
-        path: '/mypage/logout',
-        name: 'logout',
-        component: pages('mypage/logout.vue'),
+        path: '/mypage/notice/',
+        name: 'notice',
+        component: pages('mypage/notice-list'),
         meta: {
             layout: 'Default',
             aside: 'Default',
-            title: '로그아웃',
+            sectionCode: 'NOTICE',
+            title: '공지사항',
         },
     },
     {
-        path: '/mypage/news',
-        name: 'news',
-        component: pages('mypage/news-list.vue'),
+        //TODO detail 삭제
+        path: '/mypage/notice/detail/:id',
+        name: 'notice',
+        component: pages('mypage/detail'),
         meta: {
             layout: 'Default',
             aside: 'Default',
+            sectionCode: 'NOTICE',
+            title: '공지사항',
+        },
+    },
+    {
+        path: '/mypage/notice/form',
+        name: 'notice',
+        component: pages('mypage/notice-form'),
+        meta: {
+            layout: 'Default',
+            aside: 'Default',
+            sectionCode: 'NOTICE',
+            title: '공지사항',
+        },
+    },
+    {
+        path: '/mypage/notice/modify/:id',
+        name: 'notice',
+        component: pages('mypage/notice-form'),
+        meta: {
+            layout: 'Default',
+            aside: 'Default',
+            sectionCode: 'NOTICE',
+            title: '공지사항',
+            modify: true,
+        },
+    },
+    //NEWS
+    {
+        path: '/mypage/news/',
+        name: 'news',
+        component: pages('mypage/news.vue'),
+        meta: {
+            layout: 'Default',
+            aside: 'Default',
+            sectionCode: 'NEWS',
             title: 'NEWS',
         },
     },
     {
-        path: '/mypage/notice',
-        name: 'notice',
-        component: pages('mypage/notice-list.vue'),
+        path: '/mypage/news/detail/:id',
+        name: 'news',
+        component: pages('mypage/detail'),
         meta: {
             layout: 'Default',
             aside: 'Default',
-            title: '공지사항',
+            sectionCode: 'NEWS',
+            title: 'NEWS',
         },
     },
     {
-        path: '/mypage/view',
-        name: 'notice',
-        component: pages('mypage/detail-view.vue'),
+        path: '/mypage/news/form',
+        name: 'news',
+        component: pages('mypage/news-form'),
         meta: {
             layout: 'Default',
             aside: 'Default',
-            //title: '공지사항',
+            sectionCode: 'NEWS',
+            title: 'NEWS',
         },
     },
-    {
-        path: '/mypage/edit',
-        name: 'notice',
-        component: pages('mypage/edit.vue'),
-        meta: {
-            layout: 'Default',
-            aside: 'Default',
-            title: '공지사항',
-        },
-
-        children: [
-            {
-                path: 'news',
-                component: pages('mypage/edit.vue'),
-                meta: { layout: 'Default', aside: 'Default', title: 'NEWS' },
-            },
-            {
-                path: 'notice',
-                component: pages('mypage/edit.vue'),
-                meta: { layout: 'Default', aside: 'Default', title: '공지사항' },
-            },
-        ],
-    },
-
     {
         path: '/mypage/faq',
         name: 'faq',
@@ -131,9 +149,28 @@ const routes = [
         meta: {
             layout: 'Default',
             aside: 'Default',
+            sectionCode: 'QNA',
             title: '자주 묻는 질문',
         },
     },
+    // {
+    //     path: '/mypage/news/form',
+    //     component: pages('mypage/news-form'),
+    //     meta: {
+    //         layout: 'Default',
+    //         aside: 'Default',
+    //         dtitle: 'NEWS',
+    //     },
+    // },
+    // {
+    //     path: '/mypage/faq/form',
+    //     component: pages('mypage/faq-form'),
+    //     meta: {
+    //         layout: 'Default',
+    //         aside: 'Default',
+    //         title: '자주 묻는 질문',
+    //     },
+    // },
 ];
 
 export default routes;

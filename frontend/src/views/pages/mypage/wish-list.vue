@@ -3,7 +3,7 @@
         <h2 class="page-title">
             <span class="ko">위시리스트</span>
         </h2>
-        <div class="all-box" v-if="wishListData">
+        <div class="all-box type2" v-if="wishListData">
             <!-- todo 전체선택 스크립트 작업 필요  -->
             <label class="check-label">
                 <span class="checkbox">
@@ -16,9 +16,15 @@
                 </span>
                 <strong class="txt">전체선택</strong>
             </label>
+
             <p class="desc">
-                <em>{{ checkWishItem.length }}</em
-                >개의 파일이 선택됨
+                <span class="fc-black" v-if="checkAll">
+                    전체 파일이 선택됨
+                </span>
+                <span v-else :class="{ 'fc-black': checkWishItem.length > 0 }">
+                    <em>{{ checkWishItem.length }}</em>
+                    개의 파일이 선택됨
+                </span>
             </p>
             <div class="btn-box">
                 <button
@@ -56,15 +62,11 @@
 </template>
 
 <script>
-import {
-    deleteWishList,
-    deleteWishListCheck,
-    getWishList,
-} from '@/api/wish-list';
-// import { postBasketSaveList } from '@/api/basket';
-import { addProductBasket, addBasketList } from '@/utils/basket';
+    import {deleteWishList, deleteWishListCheck, getWishList,} from '@/api/wish-list';
+    // import { postBasketSaveList } from '@/api/basket';
+    import {addBasketList, addProductBasket} from '@/utils/basket';
 
-export default {
+    export default {
     name: 'wish-list',
     components: {
         WishList: () => import('@/components/wish-list/index'),
@@ -90,12 +92,12 @@ export default {
     methods: {
         checkedWish(seq, del) {
             const indexOfChecked = this.checkWishItem.findIndex(
-                el => el === seq
+                (el) => el === seq
             );
             if (!del && indexOfChecked === -1) {
                 this.checkWishItem.push(seq);
             } else {
-                this.checkWishItem = this.checkWishItem.filter(el => {
+                this.checkWishItem = this.checkWishItem.filter((el) => {
                     return el !== seq;
                 });
             }
@@ -104,9 +106,9 @@ export default {
         },
         allCheckFn() {
             if (this.checkAll) {
-                this.wishListData.forEach(el => {
+                this.wishListData.forEach((el) => {
                     const indexOfChecked = this.checkWishItem.findIndex(
-                        elChecked => elChecked === el.wishListSeq
+                        (elChecked) => elChecked === el.wishListSeq
                     );
                     if (indexOfChecked === -1) {
                         this.checkWishItem.push(el.wishListSeq);
@@ -126,7 +128,7 @@ export default {
                     wishListSeqList: this.checkWishItem,
                 });
                 await this.fetchData();
-                this.checkWishItem.forEach(seq => {
+                this.checkWishItem.forEach((seq) => {
                     this.checkedWish(seq, true);
                 });
                 this.deleteLoading = [];
@@ -185,9 +187,9 @@ export default {
             if (confirm('CART에 담으시겠습니까?')) {
                 const goodsSeq = [];
                 const minimumOrder = [];
-                this.wishListData.forEach(el => {
+                this.wishListData.forEach((el) => {
                     const indexOfChecked = this.checkWishItem.findIndex(
-                        item => {
+                        (item) => {
                             return item === el.wishListSeq;
                         }
                     );

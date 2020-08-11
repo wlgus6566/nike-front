@@ -213,7 +213,7 @@ public class S3Util {
 		log.info("S3Util.s3upload");
 		final File file = new File(root + filePath);
 		final String uploadUrl = awsPathReplace(filePath);
-		client.putObject(new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.AuthenticatedRead));
+		client.putObject(new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.PublicRead));
 		final URL url = client.getUrl(bucket, uploadUrl);
 		log.debug("url.getPath() {}", url.getPath());
 	}

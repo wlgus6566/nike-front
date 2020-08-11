@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-    <g fill="none" fill-rule="evenodd" stroke="#FFF" stroke-width="1.2">
+    <g fill="none" fill-rule="evenodd" stroke="#FFF">
         <path d="M0 0L8.485 8.485" transform="translate(6 6)"/>
         <path d="M0 0L8.485 8.485" transform="translate(6 6) matrix(-1 0 0 1 8.485 0)"/>
     </g>

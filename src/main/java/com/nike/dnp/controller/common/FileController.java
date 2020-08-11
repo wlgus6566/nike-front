@@ -6,6 +6,7 @@ import com.nike.dnp.dto.file.FileUploadDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
+import com.nike.dnp.util.CloudFrontUtil;
 import com.nike.dnp.util.FileUtil;
 import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.S3Util;
@@ -88,6 +89,11 @@ public class FileController {
 		log.info("FileController.upload");
 		final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO);
 		S3Util.upload(fileResultDTO);
+
+		System.out.println("======================================================");
+		System.out.println(CloudFrontUtil.getCustomSignedUrl(fileResultDTO.getFilePhysicalName(), 100));
+		System.out.println("======================================================");
+
 		return responseService.getSingleResult(fileResultDTO);
 	}
 
