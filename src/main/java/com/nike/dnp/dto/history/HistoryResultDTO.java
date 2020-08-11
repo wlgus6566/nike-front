@@ -143,19 +143,6 @@ public class HistoryResultDTO {
     private Long readCount;
 
     /**
-     * 최초 작성일
-     *
-     * @author [오지훈]
-     */
-    @Column(name = "REGISTRATION_DT")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
-    @CreationTimestamp
-    @ApiModelProperty(name = "registrationDt", value = "최초 작성일", hidden = true)
-    private LocalDateTime registrationDt;
-
-    /**
      * 최종 수정일
      *
      * @author [오지훈]
