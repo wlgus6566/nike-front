@@ -32,7 +32,7 @@ public class CustomerSearchDTO extends SearchDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(value = "[QNA] 게시물 카테고리 코드", name = "noticeArticleCategoryCode", defaultValue = "")
+    @ApiParam(value = "[QNA] 게시물 카테고리 코드 (상위 코드 : NOTICE_CATEGORY_CODE)", name = "noticeArticleCategoryCode", defaultValue = "")
     private String noticeArticleCategoryCode;
 
     /**
