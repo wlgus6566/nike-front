@@ -48,7 +48,7 @@ public class NoticeService {
      *
      * @author [정주희]
      */
-    private final Integer NOTICE_MAX_COUNT = 3;
+    private final long NOTICE_MAX_COUNT = 3L;
 
     /**
      * Find notice pages page.
@@ -62,10 +62,8 @@ public class NoticeService {
     public Page<CustomerListDTO> findNoticePages(final CustomerSearchDTO customerSearchDTO) {
         log.info("NoticeService.findNoticePages");
 
-        Page<CustomerListDTO> noticeArticles = noticeRepository.findNoticePages(
+        return noticeRepository.findNoticePages(
                 customerSearchDTO, PageRequest.of(customerSearchDTO.getPage(), customerSearchDTO.getSize()));
-
-        return noticeArticles;
     }
 
     /**
@@ -95,10 +93,7 @@ public class NoticeService {
     public NoticeArticle save(final CustomerSaveDTO customerSaveDTO) {
         log.info("NoticeService.save");
 
-        if (StringUtils.equalsIgnoreCase(customerSaveDTO.getNoticeArticleSectionCode(), "NOTICE")
-                && StringUtils.equalsIgnoreCase(customerSaveDTO.getNoticeYn(), "Y")) {
-            checkNoticeYnCnt();
-        }
+        this.checkNoticeYn(customerSaveDTO.getNoticeArticleSectionCode(), customerSaveDTO.getNoticeYn());
 
         return noticeRepository.save(new NoticeArticle().customerSave(customerSaveDTO));
     }
@@ -114,7 +109,7 @@ public class NoticeService {
     public Long checkNoticeYnCnt() {
         log.info("NoticeService.checkNoticeYnCnt");
 
-        final Integer count = Math.toIntExact(noticeRepository.checkNoticeYnCnt());
+        final long count = Math.toIntExact(noticeRepository.checkNoticeYnCnt());
 
         if (count >= NOTICE_MAX_COUNT) {
             throw new CodeMessageHandleException(FailCode.ConfigureError.EXCEED_MAX_NOTICE.name(),
@@ -139,15 +134,12 @@ public class NoticeService {
     public NoticeArticle updateCustomerCenter(Long noticeSeq, final CustomerUpdateDTO customerUpdateDTO) {
         log.info("NoticeService.updateCustomerCenter");
 
-        if (StringUtils.equalsIgnoreCase(customerUpdateDTO.getNoticeArticleSectionCode(), "NOTICE")
-                && StringUtils.equalsIgnoreCase(customerUpdateDTO.getNoticeYn(), "Y")) {
-            checkNoticeYnCnt();
-        }
+        this.checkNoticeYn(customerUpdateDTO.getNoticeArticleSectionCode(), customerUpdateDTO.getNoticeYn());
 
-        final Optional<NoticeArticle> updateNotice = noticeRepository.findById(noticeSeq);
-        updateNotice.ifPresent(value -> value.update(customerUpdateDTO));
-
-        return updateNotice.get();
+        return noticeRepository
+                .findById(noticeSeq)
+                .map(i -> i.update(customerUpdateDTO))
+                .orElseThrow(IllegalArgumentException::new); //error code : NotFoundException
     }
 
     /**
@@ -164,18 +156,29 @@ public class NoticeService {
     public NoticeArticle deleteCustomerCenter(Long noticeSeq) {
         log.info("NoticeService.deleteCustomerCenter");
 
-        final Optional<NoticeArticle> deleteNotice = noticeRepository.findById(noticeSeq);
-        deleteNotice.ifPresent(value -> value.delete());
-
-        return deleteNotice.get();
+        return noticeRepository
+                .findById(noticeSeq)
+                .map(NoticeArticle::delete)
+                .orElseThrow(IllegalArgumentException::new);
     }
 
-    public String uploadEditorImages(MultipartHttpServletRequest multiReq, String noticeArticleSectionCode) throws IOException {
+    public String uploadEditorImages(MultipartHttpServletRequest multiReq, String noticeArticleSectionCode) {
         log.info("NoticeService.uploadEditorImages");
 
         MultipartFile mf = multiReq.getFile("editor");
-        final String uploadUrl = S3Util.upload(mf, noticeArticleSectionCode);
+        String uploadUrl = null;
+        try {
+            uploadUrl = S3Util.upload(mf, noticeArticleSectionCode);
+        } catch (IOException e) {
+            e.printStackTrace(); //code exception
+        }
 
         return uploadUrl;
+    }
+
+    private void checkNoticeYn(final String code, final String isYn){
+        if(StringUtils.equalsIgnoreCase(code, "NOTICE") && StringUtils.equalsIgnoreCase(isYn, "Y")){
+            this.checkNoticeYnCnt();
+        }
     }
 }
