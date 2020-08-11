@@ -1,8 +1,8 @@
 <template>
-    <ul class="nav-tab">
+    <ul class="nav-tab" v-if="tabMenuData">
         <li
-            v-for="(menu, index) in tabMenuData"
-            :key="index"
+            v-for="menu in tabMenuData"
+            :key="menu.menuSeq"
             :class="tabItemClass(menu.menuPathUrl)"
         >
             <router-link :to="menu.menuPathUrl">

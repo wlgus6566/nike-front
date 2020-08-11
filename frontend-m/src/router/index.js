@@ -2,8 +2,10 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 // Routes
+import FoundationRoutes from './foundation';
 import TookitRoutes from './tookit';
 import RepotRoutes from './report';
+import InformationRoutes from './information';
 import MyPageRoutes from './mypage';
 
 // Import methods
@@ -20,7 +22,9 @@ const router = new VueRouter({
             meta: { layout: 'Default' },
         },
         ...TookitRoutes,
+        ...FoundationRoutes,
         ...RepotRoutes,
+        ...InformationRoutes,
         ...MyPageRoutes,
     ],
 });

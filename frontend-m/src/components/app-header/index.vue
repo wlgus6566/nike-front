@@ -1,5 +1,5 @@
 <template>
-    <header :class="{ 'page-header': tabMenuData.menuName }">
+    <header :class="{ 'page-header': tabMenuData !== null }">
         <h1 class="logo" v-if="this.$route.path === '/'">
             <a href="#"><span>나이키</span></a>
         </h1>
@@ -11,7 +11,7 @@
             >
                 뒤로가기
             </button>
-            <div class="inner" v-if="tabMenuData.menuName">
+            <div class="inner" v-if="tabMenuData !== null">
                 <h1 class="page-title">{{ tabMenuData.menuName }}</h1>
                 <NavItem :tabMenuData="tabMenuData.menus" />
             </div>
@@ -24,12 +24,11 @@ export default {
     name: 'headerIndex',
     data() {
         return {
-            tabMenuData: [],
+            tabMenuData: null,
         };
     },
     created() {
         this.tabMenuFn();
-        console.log(this.tabMenuData);
     },
     computed: {},
     watch: {},
@@ -37,28 +36,23 @@ export default {
         NavItem,
     },
     methods: {
-        tabMenuFn() {
+        async tabMenuFn() {
             const titleValue = this.$route.path.split('/')[1];
-            const menu = this.$store.state.menuData.filter(el => {
-                if (el.menuCode !== 'MYPAGE') {
-                    return (
-                        el.menuCode !== 'HOME' &&
-                        el.menuPathUrl === '/' + titleValue
-                    );
+            this.tabMenuData = this.$store.state.menuData.filter(el => {
+                if (titleValue.toUpperCase() === el.menuName) {
+                    return el.menuPathUrl === '/' + titleValue;
                 } else {
-                    return el.menuCode;
+                    return null;
                 }
             });
-            if (titleValue === 'mypage') {
-                const pathSplit = this.$route.path.split('/');
-                const myPath = '/' + pathSplit[1] + '/' + pathSplit[2];
-                const myMenu = menu[0].menus.filter(
-                    el => el.menuPathUrl === myPath
-                );
 
-                this.tabMenuData = myMenu[0];
-            } else {
-                this.tabMenuData = menu[0];
+            this.tabMenuData =
+                this.tabMenuData.length === 0 ? null : this.tabMenuData[0];
+            if (this.$route.meta.depth) {
+                const menu = this.tabMenuData.menus.filter(el => {
+                    return el.menuPathUrl === this.$route.meta.depth;
+                });
+                this.tabMenuData = menu.length === 0 ? null : menu[0];
             }
         },
     },
