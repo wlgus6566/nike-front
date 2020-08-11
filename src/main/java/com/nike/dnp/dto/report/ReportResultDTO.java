@@ -42,20 +42,6 @@ public class ReportResultDTO {
     private String reportName;
 
     /**
-     * 이미지 파일 명
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "fileName", value = "파일 명")
-    private String imageFileName;
-
-    /**
-     * 이미지 파일 사이즈
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "fileSize", value = "이미지 파일 사이즈")
-    private String imageFileSize;
-
-    /**
      * 이미지 파일 물리명
      * @author [이소정]
      */
