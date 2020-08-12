@@ -55,7 +55,6 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
         final QNoticeArticle qNoticeArticle = QNoticeArticle.noticeArticle;
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 
-        //일반 게시글 조회
         final JPAQuery<NoticeArticle> query = queryFactory.selectFrom(qNoticeArticle)
                 .where(
                         qNoticeArticle.useYn.eq("Y"),
