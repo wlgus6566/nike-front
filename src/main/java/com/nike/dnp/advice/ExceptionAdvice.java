@@ -1,10 +1,13 @@
 package com.nike.dnp.advice;
 
+import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.log.ErrorLogSaveDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.log.ErrorLogService;
+import com.nike.dnp.util.MessageUtil;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -73,6 +76,34 @@ public class ExceptionAdvice {
         log.error("========================= End End =========================");
 
         return responseService.getFailResult(exception.getCode(), exception.getMessage());
+    }
+
+    /**
+     * status 200 Exception
+     *
+     * @param exception the exception
+     * @return 상태값 : 200, 코드, 메세지
+     * @author [이소정]
+     * @implNote NotFoundException 에 대한 response셋팅
+     */
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    protected CommonResult notFoundException(final CodeMessageHandleException exception) {
+        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        log.error("==================ERROR===================");
+        log.error("Exception notFoundException", exception);
+        log.error("========================= ErrorLog Start =========================");
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {
+            final ErrorLogSaveDTO errorLog = new ErrorLogSaveDTO();
+            errorLog.setUrl(request.getRequestURI());
+            errorLog.setErrorContents(exception.getMessage());
+            errorLogService.save(errorLog);
+        }
+        log.error("========================= End End =========================");
+
+        return responseService.getFailResult(FailCode.ExceptionError.NOT_FOUND.toString(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.toString()));
     }
 
     /**

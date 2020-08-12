@@ -113,7 +113,6 @@ export default {
         };
     },
     mounted() {
-        console.log('dddd')
         this.fetchData();
     },
     methods: {
