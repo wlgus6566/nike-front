@@ -6,7 +6,6 @@ function getUser(params) {
         params: params,
     });
 }
-
 // user 추가
 function postUser(data) {
     return user.post(`/`, data);
@@ -19,9 +18,31 @@ function getDuplicate(params) {
     });
 }
 
-// user 배열 삭제
-function deleteUser(data) {
-    return user.delete(`/`, data);
+// user 상세조회
+function getUserDetail(userSeq, params) {
+    return user.get(`/${userSeq}`, {
+        params: params,
+    });
 }
 
-export { getUser, postUser, getDuplicate, deleteUser };
+// user 배열 삭제
+function deleteArrayUser(data) {
+    console.log(data);
+    return user.delete(`/`, { data });
+}
+
+// user 단건 삭제
+function deleteUser(userSeq, params) {
+    return user.delete(`/${userSeq}`, {
+        params: params,
+    });
+}
+
+export {
+    getUser,
+    postUser,
+    getDuplicate,
+    getUserDetail,
+    deleteArrayUser,
+    deleteUser,
+};

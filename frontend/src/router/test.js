@@ -2,7 +2,7 @@ import { pages } from '@/utils/global-methods';
 
 const routes = [
     {
-        path: '/testtest',
+        path: '/test',
         component: pages('testPage/testPage'),
         meta: { layout: 'Default', aside: 'Order', title: 'ALL' },
     },

@@ -253,6 +253,7 @@ footer {
     position: relative;
     background: #fff;
     border-radius: 4px;
+    padding: 50px;
     overflow: hidden;
     box-sizing: border-box;
     flex-direction: column;

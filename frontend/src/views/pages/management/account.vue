@@ -3,15 +3,8 @@
         <h2 class="page-title">
             <span class="ko">{{ this.$route.meta.title }}</span>
         </h2>
-        <div class="sorting-area">
-            <div class="select-cascader">
-                <el-cascader
-                    v-model="authority.value"
-                    :options="authority.options"
-                    :props="{ checkStrictly: true }"
-                    @change="handleChange"
-                />
-            </div>
+        <div class="sorting-area" ref="test" tabindex="0">
+            <CascaderSelect :listCascader="authority" />
             <div
                 class="date-picker-wrap"
                 :class="{ active: dataPickerShowData.visible }"
@@ -23,7 +16,7 @@
                 >
                     <span>기간조회</span>
                 </button>
-                <div class="inner">
+                <div class="date-picker-group-box">
                     <strong class="title">최종로그인</strong>
                     <div class="date-picker-group">
                         <div class="date-picker">
@@ -58,74 +51,86 @@
             <FilterSelect :listSortSelect="listSortSelect" />
             <SearchInput @searchSubmit="searchSubmit" />
         </div>
-        <div class="tbl-list">
-            <table>
-                <colgroup>
-                    <col style="width: 60px;" />
-                    <col style="width: auto;" />
-                    <col style="width: auto;" />
-                    <col style="width: 150px;" />
-                    <col style="width: 100px;" />
-                    <col style="width: 160px;" />
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>
-                            <span class="checkbox">
-                                <input
-                                    type="checkbox"
-                                    v-model="checkAll"
-                                    @click="allCheckFn()"
-                                />
-                                <span></span>
-                            </span>
-                        </th>
-                        <th>계정명</th>
-                        <th>ID (E-MAIL)</th>
-                        <th>권한그룹</th>
-                        <th>상태</th>
-                        <th>최종로그인</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in userData" :key="item.userSeq">
-                        <td>
-                            <span class="checkbox">
-                                <input
-                                    type="checkbox"
-                                    :value="item.userSeq"
-                                    v-model="checkItem"
-                                    @click="checked(item.userSeq)"
-                                />
-                                <span></span>
-                            </span>
-                        </td>
-                        <td>
-                            <button class="under-link">
-                                <span>{{ item.nickname }}</span>
-                            </button>
-                        </td>
-                        <td>{{ item.userId }}</td>
-                        <td>{{ item.authName }}</td>
-                        <td>
-                            <span>{{ item.userStatusCodeName }}</span>
-                        </td>
-                        <td>{{ item.loginDt }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <template v-if="userData">
+            <div class="tbl-list" v-if="userData.length">
+                <table>
+                    <colgroup>
+                        <col style="width: 60px;" />
+                        <col style="width: auto;" />
+                        <col style="width: auto;" />
+                        <col style="width: 150px;" />
+                        <col style="width: 100px;" />
+                        <col style="width: 160px;" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="checkbox">
+                                    <input
+                                        type="checkbox"
+                                        v-model="checkAll"
+                                        @click="allCheckFn()"
+                                    />
+                                    <span></span>
+                                </span>
+                            </th>
+                            <th>계정명</th>
+                            <th>ID (E-MAIL)</th>
+                            <th>권한그룹</th>
+                            <th>상태</th>
+                            <th>최종로그인</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in userData" :key="item.userSeq">
+                            <td>
+                                <span class="checkbox">
+                                    <input
+                                        type="checkbox"
+                                        :value="item.userSeq"
+                                        v-model="checkItem"
+                                        @click="checked(item.userSeq)"
+                                    />
+                                    <span></span>
+                                </span>
+                            </td>
+                            <td>
+                                <button
+                                    class="under-link"
+                                    @click="userDetailView(item.userSeq)"
+                                >
+                                    <span>{{ item.nickname }}</span>
+                                </button>
+                            </td>
+                            <td>{{ item.userId }}</td>
+                            <td>{{ item.authName }}</td>
+                            <td>
+                                <span>{{ item.userStatusCodeName }}</span>
+                            </td>
+                            <td>{{ item.loginDt }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <template v-else>
+                <NoData v-if="searchKeyword === ''">
+                    <i class="icon-file"></i>
+                    <p class="desc">계정 관리 목록이 없습니다.</p>
+                </NoData>
+                <NoData v-else>
+                    <i class="icon-search"></i>
+                    <p class="desc">검색 결과가 없습니다.</p>
+                </NoData>
+            </template>
+        </template>
+        <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
 
-        <div class="btn-tbl-box">
-            <button type="button" class="btn-form" @click="authDelete">
+        <div class="btn-tbl-box" v-if="searchKeyword === ''">
+            <button type="button" class="btn-form" @click="userArrayDelete">
                 <span>삭제</span>
             </button>
             <div class="right">
-                <button
-                    type="button"
-                    class="btn-form-gray"
-                    @click="showDetailView"
-                >
+                <button type="button" class="btn-form-gray" @click="openPop">
                     <span>등록</span>
                 </button>
             </div>
@@ -138,27 +143,33 @@
             :totalItem="totalItem"
             @handleCurrentChange="handleCurrentChange"
         />
-        <AccountManagement
-            :visible.sync="visible.detailView"
-            :addUserData="addUserData"
-            :addAuthority="addAuthority"
-            @userIdCheck="userIdCheck"
-            @addAuthData="addAuthData"
-        />
     </div>
 </template>
 <script>
-import { getUser, postUser, getDuplicate, deleteUser } from '@/api/user';
+import {
+    getUser,
+    postUser,
+    getDuplicate,
+    getUserDetail,
+    deleteArrayUser,
+    deleteUser,
+} from '@/api/user';
 import { getAuthCacheList } from '@/api/auth';
+import { getCategoryList } from '@/utils/code';
+import CascaderSelect from '@/components/cascader-select';
 import FilterSelect from '@/components/filter-select';
 import SearchInput from '@/components/search-input';
+import Loading from '@/components/loading';
+import NoData from '@/components/no-data';
 import Pagination from '@/components/pagination';
 import AccountManagement from '@/views/pages/management/account-management.vue';
-
+import bus from '@/utils/bus';
 export default {
     name: 'account',
     data() {
         return {
+            idCheck: false,
+            loading: false,
             itemLength: 20,
             pageCount: 11,
             totalItem: 0,
@@ -176,14 +187,6 @@ export default {
                     {
                         value: null,
                         label: '계정 상태',
-                    },
-                    {
-                        value: '휴면',
-                        label: '휴면',
-                    },
-                    {
-                        value: '정상',
-                        label: '정상',
                     },
                 ],
                 value: null,
@@ -217,9 +220,6 @@ export default {
             ],
             today: new Date(),
             userSeqArray: [],
-            visible: {
-                detailView: false,
-            },
             dataPickerShowData: {
                 visible: false,
             },
@@ -228,7 +228,7 @@ export default {
                 options: [
                     {
                         value: null,
-                        label: '권한그룹을 선택해 주세요.\n',
+                        label: '권한그룹을 선택해 주세요.',
                     },
                 ],
             },
@@ -237,17 +237,38 @@ export default {
                 nickname: null,
                 userId: null,
             },
+            loadingData: false,
+            loadingStyle: {
+                width: this.width ? `${this.width}px` : '100%',
+                height: this.height ? `${this.height}px` : '100%',
+                overflow: 'hidden',
+                margin: '0 auto',
+            },
         };
     },
     components: {
+        CascaderSelect,
         FilterSelect,
         SearchInput,
+        Loading,
+        NoData,
         Pagination,
-        AccountManagement,
     },
     created() {
         this.getUserList();
         this.authCacheList();
+        bus.$on('userIdCheck', (id) => {
+            this.userIdCheck(id);
+        });
+        bus.$on('addAuthData', (val, data) => {
+            this.addAuthData(val, data);
+        });
+        bus.$on('userDelete', (seq) => {
+            this.userDelete(seq);
+        });
+    },
+    mounted() {
+        getCategoryList('USER_STATUS', this.listSortSelect.listSortOptions);
     },
     computed: {},
     watch: {
@@ -308,6 +329,13 @@ export default {
         },
     },
     methods: {
+        //등록 팝업 오픈
+        openPop() {
+            this.$modal.show(AccountManagement, {
+                addUserData: this.addUserData,
+                addAuthority: this.addAuthority,
+            });
+        },
         //dataPicker show
         dataPickerShow() {
             if (this.dataPickerShowData.visible) {
@@ -316,22 +344,14 @@ export default {
                 this.dataPickerShowData.visible = true;
             }
         },
-        // 상세 팝업
-        showDetailView() {
-            this.visible.detailView = true;
-        },
         dates() {},
         minDate() {
             const date = new Date();
             date.setMonth(date.getMonth() - 3);
             return date;
         },
-        handleChange(value) {
-            console.log(value);
-        },
         // checkbox
         checked(seq, del) {
-            console.log(seq);
             const indexOfChecked = this.checkItem.findIndex((el) => el === seq);
             if (!del && indexOfChecked === -1) {
                 this.checkItem.push(seq);
@@ -370,10 +390,7 @@ export default {
         },
         // USER 목록 조회
         async getUserList() {
-            //this.loadingData = true;
-            console.log(this.listSortSelect.value);
-            //console.log(this.authority.value.slice(-1)[0]);
-
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -387,10 +404,9 @@ export default {
                     beginDt: this.make.beginDt,
                     endDt: this.make.endDt,
                 });
-                //this.userDataList = response;
                 this.userData = response.content;
-                //this.loading = false;
-                //this.totalItem = this.userDataList.totalElements;
+                this.totalItem = response.totalElements;
+                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }
@@ -416,7 +432,7 @@ export default {
             });
         },
 
-        // 권한 조회
+        //권한 조회
         async authCacheList() {
             try {
                 const {
@@ -430,14 +446,57 @@ export default {
             }
         },
 
-        // 유저 삭제
-        async authDelete() {
-            console.log(this.checkItem);
+        // 유저 다건 삭제
+        async userArrayDelete() {
+            let deleteAlert = confirm('선택한 계정을 삭제하시겠습니까?');
+            if (deleteAlert) {
+                console.log(this.checkItem);
+                try {
+                    const response = await deleteArrayUser({
+                        userSeqArray: this.checkItem,
+                    });
+                    if (response.data.existMsg) {
+                        alert(response.data.msg);
+                    }
+                    if (response.data.success) {
+                        this.getUserList();
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        },
+        // 유저 단건 삭제
+        async userDelete(seq) {
+            let deleteAlert = confirm('선택한 계정을 삭제하시겠습니까?');
+            if (deleteAlert) {
+                if (this.loading) return;
+                this.loading = true;
+                try {
+                    const response = await deleteUser(seq);
+                    if (response.data.existMsg) {
+                        alert(response.data.msg);
+                    }
+                    if (response.data.success) {
+                        this.$modal.hideAll();
+                        await this.getUserList();
+                        this.loading = false;
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        },
+        // 유저 상세 조회
+        async userDetailView(seq) {
             try {
                 const {
                     data: { data: response },
-                } = await deleteUser({
-                    userSeqArray: [4],
+                } = await getUserDetail(seq);
+                this.addUserData = response;
+                this.$modal.show(AccountManagement, {
+                    addUserData: this.addUserData,
+                    addAuthority: this.addAuthority,
                 });
                 console.log(response);
             } catch (error) {
@@ -447,25 +506,45 @@ export default {
 
         // 유저 추가
         async addAuthData(Seq, userData) {
-            console.log(Seq.slice(-1)[0]);
-            console.log(userData);
-            try {
-                const response = await postUser({
-                    authSeq: Seq.slice(-1)[0],
-                    nickname: userData.nickname,
-                    userId: userData.userId,
-                });
-                if (response.data.existMsg) {
-                    alert(response.data.msg);
+            if (this.idCheck === false) {
+                alert('아이디 중복 체크를 해주세요');
+            } else {
+                let addAlert = confirm('계정을 등록하시겠습니까?');
+                if (addAlert) {
+                    if (this.loading) return;
+                    this.loading = true;
+                    try {
+                        const response = await postUser({
+                            authSeq: Seq.slice(-1)[0],
+                            nickname: userData.nickname,
+                            userId: userData.userId,
+                        });
+                        if (response.data.existMsg) {
+                            alert(response.data.msg);
+                        }
+                        if (response.data.success) {
+                            this.$modal.hideAll();
+                            await this.getUserList();
+                            this.loading = false;
+                            this.idCheck = false;
+                            this.addUserData = {
+                                authSeq: null,
+                                nickname: null,
+                                userId: null,
+                            };
+                            this.addAuthority.value = [null];
+                        }
+                    } catch (error) {
+                        console.log(error);
+                    }
                 }
-            } catch (error) {
-                console.log(error);
             }
         },
 
         // 유저 id 체크
         async userIdCheck(id) {
-            console.log(id);
+            this.idCheck = true;
+
             try {
                 const response = await getDuplicate({ userId: id });
                 if (response.data.existMsg) {

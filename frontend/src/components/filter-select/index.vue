@@ -33,6 +33,7 @@ export default {
             const cloneTxt = this.listSortSelect.listSortOptions.find(
                 (element) => element.value === this.listSortSelect.value
             );
+            //console.log(cloneTxt);
             return cloneTxt.label;
         },
     },
