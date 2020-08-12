@@ -110,7 +110,7 @@ public class ProductService {
 		product.setSize(productSaveDTO.getSize());
 		product.setUnitPrice(productSaveDTO.getUnitPrice());
 		product.setMinimumOrderQuantity(productSaveDTO.getMinimumOrderQuantity());
-
+		// TODO [YTH] 테스트!!!
 		if(!ObjectUtils.isEmpty(productSaveDTO.getImageBase64()) &&
 			productSaveDTO.getImageBase64().contains("base64")){
 			final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.PRODUCT.getFolder(), productSaveDTO.getImageBase64());
