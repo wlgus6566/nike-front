@@ -3,20 +3,25 @@
         <h2 class="page-title">
             <span class="ko">{{ this.$route.meta.title }}</span>
         </h2>
-        <div class="sorting-area" ref="test" tabindex="0">
+        <div class="sorting-area">
             <CascaderSelect :listCascader="authority" />
             <div
                 class="date-picker-wrap"
                 :class="{ active: dataPickerShowData.visible }"
             >
-                <button
-                    type="button"
-                    class="btn-date-picker"
-                    @click="dataPickerShow"
-                >
-                    <span>기간조회</span>
-                </button>
-                <div class="date-picker-group-box">
+                <span class="btn-box">
+                    <button
+                        type="button"
+                        class="btn-txt"
+                        @click="dataPickerShow"
+                        ref="datePickerBtn"
+                    >
+                        <span>기간조회</span>
+                    </button>
+                    <i class="icon-close" @click="dataPickerReset"></i>
+                    <i class="icon-look"></i>
+                </span>
+                <div class="date-picker-group-box" ref="datePicker">
                     <strong class="title">최종로그인</strong>
                     <div class="date-picker-group">
                         <div class="date-picker">
@@ -126,7 +131,12 @@
         <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
 
         <div class="btn-tbl-box" v-if="searchKeyword === ''">
-            <button type="button" class="btn-form" @click="userArrayDelete">
+            <button
+                type="button"
+                class="btn-form"
+                @click="userArrayDelete"
+                v-if="userData.length"
+            >
                 <span>삭제</span>
             </button>
             <div class="right">
@@ -185,11 +195,11 @@ export default {
             listSortSelect: {
                 listSortOptions: [
                     {
-                        value: null,
+                        value: '',
                         label: '계정 상태',
                     },
                 ],
-                value: null,
+                value: '',
             },
             authority: {
                 value: [null],
@@ -269,6 +279,21 @@ export default {
     },
     mounted() {
         getCategoryList('USER_STATUS', this.listSortSelect.listSortOptions);
+        document.querySelector('html').addEventListener('click', (e) => {
+            const target = e.target;
+            console.log(e.target);
+            if (
+                target.closest('.date-picker-group-box') !==
+                    this.$refs.datePicker &&
+                !target.closest('.btn-box')
+            ) {
+                console.log(3);
+                this.dataPickerShowData.visible = false;
+            }
+        });
+        document.querySelector('.el-select').addEventListener('click', () => {
+            this.dataPickerShowData.visible = false;
+        });
     },
     computed: {},
     watch: {
@@ -288,47 +313,64 @@ export default {
             },
         },
         'range.beginDt'(val) {
-            let year = val.getFullYear();
-            let month = val.getMonth() + 1;
-            let day = val.getDate();
-            if (month < 10) {
-                month = `0${month}`;
-            }
-            if (day < 10) {
-                day = `0${day}`;
-            }
-            this.make.beginDt = `${year}-${month}-${day}`;
-            if (this.make.endDt !== null) {
-                const begin = Number(this.make.beginDt.replace(/-/gi, ''));
-                const end = Number(this.make.endDt.replace(/-/gi, ''));
-                if (begin > end) {
-                    alert('시작일이 종료일보다 클 수 없습니다.');
-                    this.range.endDt = this.today;
+            if (val !== null) {
+                let year = val.getFullYear();
+                let month = val.getMonth() + 1;
+                let day = val.getDate();
+                if (month < 10) {
+                    month = `0${month}`;
+                }
+                if (day < 10) {
+                    day = `0${day}`;
+                }
+                this.make.beginDt = `${year}-${month}-${day}`;
+                if (this.make.endDt !== null) {
+                    const begin = Number(this.make.beginDt.replace(/-/gi, ''));
+                    const end = Number(this.make.endDt.replace(/-/gi, ''));
+                    if (begin > end) {
+                        alert('시작일이 종료일보다 클 수 없습니다.');
+                        this.range.endDt = this.today;
+                    }
                 }
             }
         },
         'range.endDt'(val) {
-            let year = val.getFullYear();
-            let month = val.getMonth() + 1;
-            let day = val.getDate();
-            if (month < 10) {
-                month = `0${month}`;
-            }
-            if (day < 10) {
-                day = `0${day}`;
-            }
-            this.make.endDt = `${year}-${month}-${day}`;
-            if (this.make.beginDt !== null) {
-                const begin = Number(this.make.beginDt.replace(/-/gi, ''));
-                const end = Number(this.make.endDt.replace(/-/gi, ''));
-                if (begin > end) {
-                    alert('시작일이 종료일보다 클 수 없습니다.');
-                    this.range.endDt = this.today;
+            if (val !== null) {
+                let year = val.getFullYear();
+                let month = val.getMonth() + 1;
+                let day = val.getDate();
+                if (month < 10) {
+                    month = `0${month}`;
+                }
+                if (day < 10) {
+                    day = `0${day}`;
+                }
+                this.make.endDt = `${year}-${month}-${day}`;
+                if (this.make.beginDt !== null) {
+                    const begin = Number(this.make.beginDt.replace(/-/gi, ''));
+                    const end = Number(this.make.endDt.replace(/-/gi, ''));
+                    if (begin > end) {
+                        alert('시작일이 종료일보다 클 수 없습니다.');
+                        this.range.endDt = this.today;
+                    }
                 }
             }
         },
     },
     methods: {
+        //데이터 피커 리켓
+        dataPickerReset() {
+            this.range = {
+                beginDt: null,
+                endDt: null,
+            };
+            this.make = {
+                beginDt: null,
+                endDt: null,
+            };
+            this.dataPickerShowData.visible = false;
+            this.getUserList();
+        },
         //등록 팝업 오픈
         openPop() {
             this.$modal.show(AccountManagement, {
@@ -338,11 +380,7 @@ export default {
         },
         //dataPicker show
         dataPickerShow() {
-            if (this.dataPickerShowData.visible) {
-                this.dataPickerShowData.visible = false;
-            } else {
-                this.dataPickerShowData.visible = true;
-            }
+            this.dataPickerShowData.visible = !this.dataPickerShowData.visible;
         },
         dates() {},
         minDate() {

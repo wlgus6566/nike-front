@@ -753,9 +753,13 @@
 .date-picker-wrap {
     position: relative;
 }
-.btn-date-picker {
+.date-picker-wrap .btn-box {
     position: relative;
     display: inline-flex;
+}
+.date-picker-wrap .btn-box .btn-txt {
+    z-index: 2;
+    position: relative;
     height: 40px;
     align-items: center;
     padding: 0 25px 0 0;
@@ -763,8 +767,8 @@
     color: #000;
     font-weight: bold;
 }
-.btn-date-picker:before {
-    content: '';
+.date-picker-wrap .btn-box [class^='icon-'] {
+    z-index: 1;
     position: absolute;
     top: 50%;
     right: 0;
@@ -773,6 +777,11 @@
     height: 20px;
     margin-top: -10px;
     background: url(../images/svg/icon-filter-arrow-down.svg) no-repeat center;
+}
+.date-picker-wrap .btn-box .icon-close {
+    z-index: 3;
+    display: none;
+    background-image: url('../images/svg/icon-filter-deleted.svg');
 }
 .cascader-select + .date-picker-wrap,
 .date-picker-wrap + .filter-select {
@@ -791,14 +800,6 @@
     opacity: 0;
     transition: all ease-in-out 0.2s;
 }
-.date-picker-wrap.active .date-picker-group-box {
-    padding: 11px 20px 19px;
-    height: 102px;
-    border-color: #ddd;
-    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
-    transition: all ease-in-out 0.2s;
-    opacity: 1;
-}
 .date-picker-wrap .date-picker-group-box .title {
     display: block;
     font-size: 12px;
@@ -806,6 +807,22 @@
 }
 .date-picker-wrap .date-picker-group-box .date-picker-group {
     margin-top: 11px;
+}
+.date-picker-wrap.active .date-picker-group-box {
+    padding: 11px 20px 19px;
+    height: 102px;
+    border-color: #ddd;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+    transition: all ease-in-out 0.2s;
+    opacity: 1;
+    outline: transparent;
+}
+.date-picker-wrap.active:hover .btn-box [class^='icon-'] {
+    display: none;
+}
+.date-picker-wrap.active:hover .btn-box .icon-close {
+    display: block;
+    cursor: pointer;
 }
 /* sorting-area */
 .sorting-area {
@@ -915,6 +932,11 @@
     color: transparent;
     background: url(../images/svg/icon-filter-arrow-down.svg) no-repeat center;
     transform: rotateZ(0deg) !important;
+}
+.filter-select .el-select .el-input .el-icon-circle-close {
+    width: 20px;
+    color: transparent;
+    background: url('../images/svg/icon-filter-deleted.svg') no-repeat center;
 }
 
 .filter-list + .filter-select {
@@ -1050,6 +1072,7 @@
 }
 .cascader-select .el-input--suffix .el-input__inner {
     width: 100%;
+    max-width: 194px;
     min-width: 50px;
     padding: 0 25px 0 0;
     border-color: transparent;
