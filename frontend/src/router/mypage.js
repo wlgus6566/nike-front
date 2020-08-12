@@ -143,6 +143,19 @@ const routes = [
         },
     },
     {
+        path: '/mypage/news/modify/:id',
+        name: 'notice',
+        component: pages('mypage/news-form'),
+        meta: {
+            layout: 'Default',
+            aside: 'Default',
+            sectionCode: 'NOTICE',
+            title: 'NEWS',
+            modify: true,
+        },
+    },
+    //FAQ
+    {
         path: '/mypage/faq',
         name: 'faq',
         component: pages('mypage/faq.vue'),
@@ -151,6 +164,29 @@ const routes = [
             aside: 'Default',
             sectionCode: 'QNA',
             title: '자주 묻는 질문',
+        },
+    },
+    {
+        path: '/mypage/faq/form',
+        name: 'notice',
+        component: pages('mypage/faq-form'),
+        meta: {
+            layout: 'Default',
+            aside: 'Default',
+            sectionCode: 'QNA',
+            title: '자주 묻는 질문',
+        },
+    },
+    {
+        path: '/mypage/faq/modify/:id',
+        name: 'notice',
+        component: pages('mypage/faq-form'),
+        meta: {
+            layout: 'Default',
+            aside: 'Default',
+            sectionCode: 'QNA',
+            title: '자주 묻는 질문',
+            modify: true,
         },
     },
     // {
