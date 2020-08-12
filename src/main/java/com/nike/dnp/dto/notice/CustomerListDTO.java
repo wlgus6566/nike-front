@@ -41,8 +41,6 @@ public class CustomerListDTO {
     @ApiParam(name = "noticeArticleSectionCode", value = "게시물 구분 코드", defaultValue = "NOTICE", required = true)
     private String noticeArticleSectionCode;
 
-
-
     /**
      * The Notice article category code
      *
@@ -50,6 +48,14 @@ public class CustomerListDTO {
      */
     @ApiParam(name = "noticeArticleCategoryCode", value = "[QNA] 게시물 카테고리 코드 (상위 코드 : NOTICE_CATEGORY_CODE)", defaultValue = "ASSET")
     private String noticeArticleCategoryCode;
+
+    /**
+     * The Notice article category value
+     *
+     * @author [정주희]
+     */
+    @ApiParam(name = "noticeArticleCategoryCode", value = "[QNA] 게시물 카테고리 코드 값", defaultValue = "ASSET/TOOLKIT/FOUNDATION", hidden = true)
+    private String noticeArticleCategoryValue;
 
     /**
      * The Notice yn

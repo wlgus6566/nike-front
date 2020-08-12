@@ -65,10 +65,12 @@ public class NoticeService {
         final Page<CustomerListDTO> noticePages = noticeRepository.findNoticePages(
                 customerSearchDTO, PageRequest.of(customerSearchDTO.getPage(), customerSearchDTO.getSize()));
 
-        for (int i=0; i < noticePages.getContent().size(); i++) {
-            noticePages.getContent().get(i).setNoticeArticleCategoryCode(
-                    Enum.valueOf(ServiceCode.QNAEnumCode.class,
-                            noticePages.getContent().get(i).getNoticeArticleCategoryCode()).getMessage());
+        if (StringUtils.equalsIgnoreCase(customerSearchDTO.getNoticeArticleSectionCode(), "QNA")) {
+            for (int i=0; i < noticePages.getContent().size(); i++) {
+                noticePages.getContent().get(i).setNoticeArticleCategoryValue(
+                        Enum.valueOf(ServiceCode.QNAEnumCode.class,
+                                noticePages.getContent().get(i).getNoticeArticleCategoryCode()).getMessage());
+            }
         }
 
         return noticePages;
