@@ -1,5 +1,8 @@
 <template>
     <div>
+        <h2 class="page-title">
+            {{ this.$route.meta.title }}
+        </h2>
         <FullCalendar
             ref="fullCalendar"
             :options="calendarOptions"
