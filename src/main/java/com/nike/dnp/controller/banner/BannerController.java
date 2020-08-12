@@ -69,7 +69,7 @@ public class BannerController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Banner> getBanner () {
         log.info("BannerController.getBanner");
-        return responseService.getSingleResult(bannerService.getBanner());
+        return responseService.getSingleResult(bannerService.findBanner());
     }
 
     /**

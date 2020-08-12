@@ -35,7 +35,7 @@ public class QnaUpdateDTO extends BasicDTO {
      * @author [정주희]
      */
     @ApiModelProperty(name = "noticeArticleCategoryCode",
-            value = "[QNA] 게시물 카테고리 코드", example = "ASSET", required = true)
+            value = "[QNA] 게시물 카테고리 코드 (상위 코드 : NOTICE_CATEGORY_CODE)", example = "ASSET", required = true)
     private String noticeArticleCategoryCode;
 
 
@@ -73,15 +73,4 @@ public class QnaUpdateDTO extends BasicDTO {
     @ApiModelProperty(name = "useYn", value = "게시글 사용 여부", example = "Y", required = true)
     private String useYn;
 
-    /**
-     * Sets notice article category code.
-     *
-     * @param noticeArticleCategoryCode the notice article category code
-     * @author [정주희]
-     * @CreatedOn 2020. 7. 29. 오후 4:43:45
-     * @Description
-     */
-    public void setNoticeArticleCategoryCode(String noticeArticleCategoryCode) {
-        this.noticeArticleCategoryCode = noticeArticleCategoryCode.toUpperCase(Locale.KOREA);
-    }
 }
