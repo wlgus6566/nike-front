@@ -81,7 +81,7 @@ public class ProductResultDTO {
 
 	@ApiModelProperty(name = "imageFilePhysicalName", value = "이미지 파일 물리 파일명")
 	public String getImageFilePhysicalName() {
-		return CloudFrontUtil.getSignedUrl(imageFilePhysicalName);
+		return CloudFrontUtil.getSignedUrl(imageFilePhysicalName,10);
 	}
 
 	/**
