@@ -5,9 +5,34 @@
 </template>
 <script>
 import testmodal from '@/components/modal-comp/testmodal';
+import deepmerge from 'deepmerge';
 export default {
     data() {
         return {
+            x: [
+                {
+                    txt: '가',
+                    tit: '가',
+                },
+                {
+                    txt: '나',
+                    tit: '가',
+                },
+            ],
+            y: [
+                {
+                    txt: '가',
+                    tit: '가',
+                },
+                {
+                    txt: '나',
+                    tit: '가',
+                },
+                {
+                    txt: '다',
+                    tit: '가',
+                },
+            ],
             test: {
                 options: [
                     { value: null, label: '전체 권한그룹' },
@@ -48,6 +73,19 @@ export default {
         this.test.value.forEach((el) => {
             this.testArr(this.test.options, el);
         });
+
+        let concatArray = this.x.concat(this.y);
+
+        console.log(concatArray);
+
+        let testArray = this.x.filter((item) => {
+            return this.y.every((el) => {
+                console.log(item.tit !== el.tit || item.txt !== el.txt);
+                return item.tit !== el.tit || item.txt !== el.txt;
+            });
+        });
+
+        console.log(this.y.concat(testArray));
     },
     methods: {
         openPop() {

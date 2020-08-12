@@ -218,8 +218,12 @@ export default {
         },
         onStart(e) {
             const thumbnail = document.querySelector('.drag-item .thumbnail');
-            const left = e.originalEvent.pageX - e.item.offsetLeft - 60;
-            const top = e.originalEvent.pageY - e.item.offsetTop - 60;
+            const absoluteLeft =
+                window.pageXOffset + thumbnail.getBoundingClientRect().left;
+            const absoluteTop =
+                window.pageYOffset + thumbnail.getBoundingClientRect().top;
+            const left = e.originalEvent.pageX - absoluteLeft - 50;
+            const top = e.originalEvent.pageY - absoluteTop - 50;
             thumbnail.style.transform = `translate(${left}px,${top}px)`;
             this.$store.commit('SET_BASKET_ITEM_DRAG', true);
         },
@@ -265,7 +269,7 @@ export default {
 .drag-item {
     opacity: 1 !important;
     border: none !important;
-    background: none !important;
+    background: transparent !important;
 }
 .drag-item .list {
     padding: 0;

@@ -36,7 +36,13 @@
                     <span class="label-title">업로드 된 파일</span>
                 </div>
                 <div class="form-column">
-                    <button type="button" class="btn-form-gray" v-on:click="$emit('fileSelect')">
+                    {{ file.progress }} ///
+                    {{ file.fileName }}
+                    <button
+                        type="button"
+                        class="btn-form-gray"
+                        v-on:click="$emit('fileSelect')"
+                    >
                         찾기
                     </button>
                     <!--<UploadFile />-->
@@ -61,7 +67,13 @@
                 </li>
             </template>
         </ul>
-        <button class="btn-del" v-on:click.prevent="$emit('fileDelete')"><span>삭제</span></button>
+        <button
+            v-if="listLength > 1"
+            class="btn-del"
+            v-on:click.prevent="$emit('fileDelete')"
+        >
+            <span>삭제</span>
+        </button>
     </div>
 </template>
 <script>
@@ -81,6 +93,7 @@ export default {
     },
     props: {
         file: Object,
+        listLength: Number,
     },
     components: { UploadFile },
 };

@@ -82,13 +82,12 @@ export default new Vuex.Store({
     actions: {
         async LOGIN({ commit }, data) {
             const response = await loginUser(data);
-            console.log(response);
-            if (code === 'SUCCESS') {
-                commit('SET_USER', data.userId);
-                commit('SET_NICK', data.nickname);
+            if (response.data.code === 'SUCCESS') {
+                commit('SET_USER', response.data.data.userId);
+                commit('SET_NICK', response.data.data.nickname);
                 commit('SET_TOKEN', response.headers.authorization);
-                saveUserIdToCookie(data.userId);
-                saveUserNickToCookie(data.nickname);
+                saveUserIdToCookie(response.data.data.userId);
+                saveUserNickToCookie(response.data.data.nickname);
                 saveAuthToCookie(response.headers.authorization);
             }
             return response;
@@ -105,7 +104,7 @@ export default new Vuex.Store({
         // 컨텐츠 장바구니 목록
         async getContBasket({ commit }) {
             const response = await getContentsBasket();
-            commit('SET_CONT_BASKET', data);
+            commit('SET_CONT_BASKET', response.data.data);
             return response;
         },
     },
