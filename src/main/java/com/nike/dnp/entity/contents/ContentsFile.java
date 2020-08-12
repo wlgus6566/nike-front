@@ -10,6 +10,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 import java.util.Locale;
@@ -235,7 +236,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @since 2020. 7. 30. 오후 3:49:08
      */
     public String getFilePhysicalName() {
-        return CloudFrontUtil.getCustomSignedUrl(filePhysicalName);
+        return ObjectUtils.isEmpty(filePhysicalName) ? filePhysicalName : CloudFrontUtil.getCustomSignedUrl(filePhysicalName);
     }
 
     /**
@@ -247,7 +248,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @since 2020. 7. 30. 오후 3:49:08
      */
     public String getThumbnailFilePhysicalName() {
-        return CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
+        return ObjectUtils.isEmpty(thumbnailFilePhysicalName) ? thumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
     }
 
     /**
@@ -259,7 +260,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @since 2020. 7. 30. 오후 3:49:08
      */
     public String getDetailThumbnailFilePhysicalName() {
-        return CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName);
+        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName) ? detailThumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName);
     }
 
 
@@ -285,7 +286,7 @@ public class ContentsFile extends BaseTimeEntity {
         contentsFile.setUseYn("Y");
         contentsFile.setContentsSeq(contentsSeq);
 
-        boolean isFile = ServiceCode.ContentsFileKindCode.FILE.toString().equals(fileKindCode);
+        boolean isFile = ServiceCode.ContentsFileKindCode.FILE.toString().equals(contentsFileSaveDTO.getFileKindCode());
 
         contentsFile.setFileSectionCode(contentsFileSaveDTO.getFileSectionCode());
         contentsFile.setFileKindCode(contentsFileSaveDTO.getFileKindCode());

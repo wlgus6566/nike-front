@@ -5,6 +5,7 @@ import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.ObjectUtils;
 
 /**
  * The Class Contents list dto.
@@ -126,13 +127,8 @@ public class ContentsFileResultDTO {
      * @since 2020. 7. 30. 오후 3:43:38
      */
     public String getThumbnailFilePhysicalName() {
-        return CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
+        return ObjectUtils.isEmpty(thumbnailFilePhysicalName) ? thumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
     }
-
-    public void setThumbnailFilePhysicalName(String thumbnailFilePhysicalName) {
-        this.thumbnailFilePhysicalName = CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
-    }
-
 
 
 //    TODO[lsj] 상세페이지에서 필요 없어서 주석 추후 삭제 예정
