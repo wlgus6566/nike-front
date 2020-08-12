@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -143,27 +144,6 @@ public class ContentsResultDTO extends BaseTimeEntity {
     private List<AuthReturnDTO> checks;
 
     /**
-     * The constant cdnUrl.
-     *
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
-    private static String cdnUrl;
-
-    /**
-     * Sets cdn url.
-     *
-     * @param cdnUrl the cdn url
-     * @author [이소정]
-     * @implNote cdnUrl 셋팅
-     * @since 2020. 7. 30. 오후 3:44:43
-     */
-    @Value("${nike.file.cdnUrl:}")
-    public void setCdnUrl(final String cdnUrl) {
-        this.cdnUrl = cdnUrl;
-    }
-
-    /**
      * Gets image file physical name.
      *
      * @return the image file physical name
@@ -172,7 +152,7 @@ public class ContentsResultDTO extends BaseTimeEntity {
      * @since 2020. 7. 30. 오후 3:44:43
      */
     public String getImageFilePhysicalName() {
-        return this.cdnUrl + imageFilePhysicalName;
+        return CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
     }
 
 
