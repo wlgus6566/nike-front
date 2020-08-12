@@ -362,7 +362,7 @@ public class S3Util {
 	 * @implNote
 	 * @since 2020. 7. 27. 오후 4:09:53
 	 */
-	private static String awsPathReplace(final String oldPath) {
+	public static String awsPathReplace(final String oldPath) {
 		log.info("S3Util.awsPathReplace");
 		String awsPath = oldPath.replace(File.separator, "/");
 		if(awsPath.indexOf('/') == 0){
