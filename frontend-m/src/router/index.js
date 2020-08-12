@@ -1,17 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+
 // Routes
-/*import LoginRoutes from './login';
-import AssetRoutes from './asset';
-import ToolkitRoutes from './toolkit';
 import FoundationRoutes from './foundation';
-import OrderRoutes from './order';
-import ReportRoutes from './report';
+import TookitRoutes from './tookit';
+import RepotRoutes from './report';
 import InformationRoutes from './information';
-import ManagementRoutes from './management';
 import MyPageRoutes from './mypage';
-import ErrorRoutes from './error';
-import PubRoutes from './pub';*/
 
 // Import methods
 import { pages } from '@/utils/global-methods';
@@ -24,19 +19,13 @@ const router = new VueRouter({
         {
             path: '/',
             component: pages('main-page'),
-            meta: { layout: 'Default', aside: 'File' },
+            meta: { layout: 'Default' },
         },
-        /* ...LoginRoutes,
-        ...AssetRoutes,
-        ...ToolkitRoutes,
+        ...TookitRoutes,
         ...FoundationRoutes,
-        ...OrderRoutes,
-        ...ReportRoutes,
-        ...ManagementRoutes,
+        ...RepotRoutes,
         ...InformationRoutes,
         ...MyPageRoutes,
-        ...ErrorRoutes,
-        ...PubRoutes,*/
     ],
 });
 

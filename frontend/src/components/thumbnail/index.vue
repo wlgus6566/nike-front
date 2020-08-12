@@ -1,71 +1,100 @@
 <template>
     <div>
-        <span class="thumb-file" :class="{ 'file-upload': cropImg }">
+        <label class="thumb-file" :class="{ 'file-upload': cropImg }">
             <input
                 ref="input"
-                id="test"
                 type="file"
                 name="image"
                 accept="image/*"
-                @change="setImage"
+                @change="inputChangeEvent"
             />
             <span class="thumb">
                 <img v-if="cropImg" :src="cropImg" :alt="imgName" />
             </span>
-            <span class="txt" @click="inputReset" v-if="cropImg">
+            <span class="txt" v-if="cropImg">
                 썸네일 이미지 재등록
             </span>
             <span class="txt" v-else>썸네일 이미지 등록</span>
-        </span>
+        </label>
 
-        <el-dialog
-            title="Tips"
-            :visible.sync="dialogVisible"
-            width="800px"
-            :before-close="handleClose"
+        <modal
+            classes="modal"
+            name="modal-cropper"
+            height="auto"
+            width="800"
+            :reset="true"
+            :scrollable="true"
         >
-            <div>
-                <vue-cropper
-                    ref="cropper"
-                    :aspect-ratio="1 / 1"
-                    :aspectRatio="1 / 1"
-                    :viewMode="1"
-                    :responsive="false"
-                    :guides="false"
-                    :center="false"
-                    :src="imgSrc"
-                    :minContainerWidth="700"
-                    :minContainerHeight="700"
-                />
+            <div class="modal-container">
+                <div class="modal-header">
+                    이미지 등록
+                </div>
+                <div class="modal-content">
+                    <!--<div style="height: 900px;"></div>-->
+                    <el-scrollbar wrap-class="modal-scroll" :native="false">
+                        <div class="img-cropper">
+                            <VueCropper
+                                ref="cropper"
+                                :aspect-ratio="size"
+                                :src="imgSrc"
+                                preview=".preview"
+                            />
+                        </div>
+                        <div class="preview" />
+                    </el-scrollbar>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn-s"
+                        role="button"
+                        @click="popupClose"
+                    >
+                        취소
+                    </button>
+                    <button
+                        type="button"
+                        class="btn-s-black"
+                        role="button"
+                        @click.prevent="cropImage"
+                    >
+                        확인
+                    </button>
+                </div>
             </div>
-            <a href="#" role="button" @click.prevent="cropImage">
-                Crop
-            </a>
-        </el-dialog>
+            <button
+                class="modal-close"
+                type="button"
+                @click.prevent="popupClose"
+            >
+                Close
+            </button>
+        </modal>
     </div>
 </template>
 
 <script>
-    import VueCropper from 'vue-cropperjs';
-    import 'cropperjs/dist/cropper.css';
+import 'cropperjs/dist/cropper.css';
+import VueCropper from 'vue-cropperjs';
+const Compress = require('compress.js');
 
-    export default {
+export default {
     name: 'index',
     data() {
         return {
-            dialogVisible: false,
             imgSrc: require('@/assets/images/@test1.jpg'),
             cropImg: null,
             imgName: null,
-            //cropImg: null, //require('@/assets/images/@test1.jpg')
             data: null,
         };
     },
-    props: ['imageFilePhysicalName', 'imageFileName'],
     components: { VueCropper },
-    mounted() {},
+    props: ['imageFilePhysicalName', 'imageFileName', 'size'],
+    mounted() {
+        this.cropImg = this.imageFilePhysicalName;
+    },
     activated() {
-        this.imgDataReset();
+        this.cropImg = this.imageFilePhysicalName;
     },
     watch: {
         imageFilePhysicalName() {
@@ -77,27 +106,41 @@
     },
     computed: {},
     methods: {
-        imgDataReset() {
-            this.cropImg = null;
-        },
-        inputReset() {
-            console.log(this.$refs.input);
-            this.cropImg = null;
-            this.$refs.input.value = null;
-        },
-        handleClose(done) {
-            this.dialogVisible = false;
-            /*this.$confirm('Are you sure to close this dialog?')
-                .then((_) => {
-                    done();
+        inputChangeEvent(e) {
+            console.log(this.$refs);
+            console.log(e);
+            const file = e.target.files[0];
+            if (file.type.indexOf('image/') === -1) {
+                alert('Please select an image file');
+                return;
+            }
+            const compress = new Compress();
+            compress
+                .compress([file], {
+                    size: 4, // the max size in MB, defaults to 2MB
+                    quality: 0.75, // the quality of the image, max is 1,
+                    maxWidth: 1000, // the max width of the output image, defaults to 1920px
+                    maxHeight: 1000, // the max height of the output image, defaults to 1920px
+                    resize: true, // defaults to true, set false if you do not want to resize the image width and height
                 })
-                .catch((_) => {});*/
+                .then((data) => {
+                    const url = `${data[0].prefix}${data[0].data}`;
+                    this.imgSrc = url;
+                    this.popupOpen();
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+        },
+        popupOpen() {
+            this.$modal.show('modal-cropper');
+        },
+        popupClose() {
+            this.$modal.hide('modal-cropper');
         },
         cropImage() {
-            // get image data for post processing, e.g. upload or setting image src
             this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
-            this.dialogVisible = false;
-            this.$emit('cropImage', this.cropImg, this.imgName);
+            this.popupClose();
         },
         flipX() {
             const dom = this.$refs.flipX;
@@ -140,29 +183,7 @@
             if (!this.data) return;
             this.$refs.cropper.setData(JSON.parse(this.data));
         },
-        setImage(e) {
-            const file = e.target.files[0];
-            if (file.type.indexOf('image/') === -1) {
-                alert('Please select an image file');
-                return;
-            }
 
-            if (typeof FileReader === 'function') {
-                const reader = new FileReader();
-                this.imgName = this.imgSrc.substring(
-                    this.imgSrc.lastIndexOf('/') + 1
-                );
-                reader.onload = (event) => {
-                    this.imgSrc = event.target.result;
-                    // rebuild cropperjs with the updated source
-                    this.$refs.cropper.replace(event.target.result);
-                };
-                reader.readAsDataURL(file);
-            } else {
-                alert('Sorry, FileReader API not supported');
-            }
-            this.dialogVisible = true;
-        },
         showFileChooser() {
             this.$refs.input.click();
         },

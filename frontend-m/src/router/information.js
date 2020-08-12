@@ -3,20 +3,24 @@ import { pages } from '@/utils/global-methods';
 const routes = [
     {
         path: '/information',
-        component: pages('information/index.vue'),
-        redirect: '/information/agency',
+        component: pages('report/index.vue'),
         children: [
             {
                 path: 'agency',
                 component: pages('information/agency.vue'),
-                meta: { layout: 'Default', aside: 'Order', title: 'AGENCY CONTACT' },
+                meta: {
+                    layout: 'Default',
+                },
             },
             {
                 path: 'calendar',
                 component: pages('information/calendar.vue'),
-                meta: { layout: 'Default', aside: 'Order', title: 'CALENDAR' },
+                meta: {
+                    layout: 'Default',
+                },
             },
         ],
     },
 ];
+
 export default routes;

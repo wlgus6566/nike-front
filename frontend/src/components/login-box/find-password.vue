@@ -32,9 +32,9 @@
     </form>
 </template>
 <script>
-    import {sendEmail} from '@/api/login.js';
+import { sendEmail } from '@/api/login.js';
 
-    export default {
+export default {
     name: 'FindPW',
     data() {
         return {

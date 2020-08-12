@@ -2,8 +2,8 @@ import { pages } from '@/utils/global-methods';
 
 const routes = [
     {
-        path: '/sampleBoardList',
-        component: pages('sampleBoard/sampleBoardList'),
+        path: '/test',
+        component: pages('testPage/testPage'),
         meta: { layout: 'Default', aside: 'Order', title: 'ALL' },
     },
     {

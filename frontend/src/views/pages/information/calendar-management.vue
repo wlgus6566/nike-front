@@ -116,11 +116,13 @@
         },
         watch:{
             calendarDetail() {
-                this.detailData = {...this.calendarDetail};
+                this.detailData = this.calendarDetail;
+                this.dataPeriod = [];
                 if (this.calendarDetail.beginDt && this.calendarDetail.endDt) {
                     this.dataPeriod.push(this.calendarDetail.beginDt);
                     this.dataPeriod.push(this.calendarDetail.endDt);
                 }
+                console.log('calendarDetail')
             }
         },
         methods: {

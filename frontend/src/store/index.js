@@ -47,7 +47,6 @@ export default new Vuex.Store({
         SET_TOKEN(state, token) {
             state.token = token;
         },
-
         SET_BASKET(state, basketList) {
             state.basketListData = basketList;
         },
@@ -84,12 +83,12 @@ export default new Vuex.Store({
         async LOGIN({ commit }, data) {
             const response = await loginUser(data);
             console.log(response);
-            if (response.data.code === 'SUCCESS') {
-                commit('SET_USER', response.data.data.userId);
-                commit('SET_NICK', response.data.data.nickname);
+            if (code === 'SUCCESS') {
+                commit('SET_USER', data.userId);
+                commit('SET_NICK', data.nickname);
                 commit('SET_TOKEN', response.headers.authorization);
-                saveUserIdToCookie(response.data.data.userId);
-                saveUserNickToCookie(response.data.data.nickname);
+                saveUserIdToCookie(data.userId);
+                saveUserNickToCookie(data.nickname);
                 saveAuthToCookie(response.headers.authorization);
             }
             return response;
@@ -106,7 +105,7 @@ export default new Vuex.Store({
         // 컨텐츠 장바구니 목록
         async getContBasket({ commit }) {
             const response = await getContentsBasket();
-            commit('SET_CONT_BASKET', response.data.data);
+            commit('SET_CONT_BASKET', data);
             return response;
         },
     },
