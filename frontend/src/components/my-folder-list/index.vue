@@ -9,21 +9,24 @@
     >
         <li
             :class="classBind(item)"
-            v-for="(item, index) in reportListData"
+            v-for="(item, index) in folderListData"
             :key="index"
         >
             <router-link :to="setUrl(item)">
                 <div class="thumbnail">
-                    <img
-                        :src="item.imageFilePhysicalName"
-                        :alt="item.imageFileName"
-                    />
+                    <img :src="item.imageFilePhysicalName" alt="" />
                 </div>
                 <div class="info-box">
-                    <strong class="title">{{ item.reportName }}</strong>
-                    <p class="txt">계정명 api없음</p>
+                    <strong class="title">{{ item.folderName }}</strong>
+                    <p class="txt">{{ item.folderContents }}</p>
+                    <ul class="location">
+                        <li>{{ item.topMenuCode }}</li>
+                        <li>{{ item.menuCode }}</li>
+                    </ul>
                     <p class="date">
-                        {{ $moment(item.updateDt).format('YYYY.MM.DD') }}
+                        {{ $moment(item.campaignBeginDt).format('YYYY.MM.DD') }}
+                        ~
+                        {{ $moment(item.campaignEndDt).format('YYYY.MM.DD') }}
                     </p>
                 </div>
                 <div class="view-area">
@@ -35,8 +38,8 @@
 </template>
 <script>
 export default {
-    name: 'report-list',
-    props: ['listTypes', 'reportListData'],
+    name: 'my-folder-list',
+    props: ['listTypes', 'folderListData'],
     mounted() {},
     methods: {
         classBind(el) {
@@ -46,7 +49,7 @@ export default {
             return `${defaultClass}${detailAuth}${exposure}`;
         },
         setUrl(item) {
-            return `/report/${item.reportSectionCode}/${item.reportSeq}`.toLocaleLowerCase();
+            return `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase();
         },
     },
 };
