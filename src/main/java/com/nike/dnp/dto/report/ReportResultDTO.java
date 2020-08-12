@@ -1,5 +1,6 @@
 package com.nike.dnp.dto.report;
 
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,22 +57,14 @@ public class ReportResultDTO {
     private Long readCount;
 
     /**
-     * The constant cdnUrl.
-     */
-    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
-    private static String cdnUrl;
-
-    /**
-     * Sets cdn url.
+     * Gets image file physical name.
      *
-     * @param cdnUrl the cdn url
+     * @return the image file physical name
+     * @author [이소정]
+     * @implNote url 추가
+     * @since 2020. 8. 12. 오후 4:43:34
      */
-    @Value("${nike.file.cdnUrl:}")
-    public void setCdnUrl(final String cdnUrl) {
-        this.cdnUrl = cdnUrl;
-    }
-
     public String getImageFilePhysicalName() {
-        return this.cdnUrl + imageFilePhysicalName;
+        return CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
     }
 }

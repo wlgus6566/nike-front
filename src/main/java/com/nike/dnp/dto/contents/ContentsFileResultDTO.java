@@ -1,6 +1,7 @@
 package com.nike.dnp.dto.contents;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -117,27 +118,6 @@ public class ContentsFileResultDTO {
     private String fileExtension;
 
     /**
-     * The constant cdnUrl.
-     *
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
-    private static String cdnUrl;
-
-    /**
-     * Sets cdn url.
-     *
-     * @param cdnUrl the cdn url
-     * @author [이소정]
-     * @implNote cdnUrl 셋팅
-     * @since 2020. 7. 30. 오후 3:43:38
-     */
-    @Value("${nike.file.cdnUrl:}")
-    public void setCdnUrl(final String cdnUrl) {
-        this.cdnUrl = cdnUrl;
-    }
-
-    /**
      * Gets thumbnail file physical name.
      *
      * @return the thumbnail file physical name
@@ -146,7 +126,11 @@ public class ContentsFileResultDTO {
      * @since 2020. 7. 30. 오후 3:43:38
      */
     public String getThumbnailFilePhysicalName() {
-        return this.cdnUrl + thumbnailFilePhysicalName;
+        return CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
+    }
+
+    public void setThumbnailFilePhysicalName(String thumbnailFilePhysicalName) {
+        this.thumbnailFilePhysicalName = CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
     }
 
 
