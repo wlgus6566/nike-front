@@ -46,10 +46,9 @@
                 </transition-group>
                 <NoData v-else>
                     <i class="icon-drop"></i>
-                    <p class="txt">더욱 빠르게 파일 받기</p>
+                    <p class="txt">필요한 부자재를 주문하세요</p>
                     <p class="desc">
-                        이곳에 끌어다 놓으면 파일을 바로<br />
-                        다운받을 수 있어요.
+                        CART에 담긴 상품이 없습니다.
                     </p>
                 </NoData>
             </template>
@@ -200,6 +199,10 @@
 ::v-deep .cart-list-wrap {
     box-sizing: border-box;
     background: #eee;
+}
+::v-deep .cart-list-wrap .no-data {
+    background: #eee;
+    height: 360px;
 }
 .cart-item-list {
     padding: 8px 18px;
