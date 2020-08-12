@@ -108,10 +108,14 @@ public class NoticeController {
             notes = REQUEST_CHARACTER +
                     "noticeSeq|게시글 시퀀스|true|Long\n"
     )
-    @GetMapping(value = "/detail/{noticeSeq}",
+    @GetMapping(value = "/{noticeArticleSectionCode}/{noticeSeq}",
             name = "Customer Center 게시글 상세 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<NoticeArticle> findById(@ApiParam(name = "noticeSeq", value = "Customer Center 게시글 시퀀스",
-            defaultValue = "23", required = true) @PathVariable final Long noticeSeq) {
+    public SingleResult<CustomerResultDTO> findById(
+            @ApiParam(name = "noticeArticleSectionCode", value = "Customer Center 게시글 종류 코드",
+                    allowableValues = "NOTICE, NEWS, QNA", required = true)
+            @PathVariable final String noticeArticleSectionCode,
+            @ApiParam(name = "noticeSeq", value = "Customer Center 게시글 시퀀스", defaultValue = "23", required = true)
+            @PathVariable final Long noticeSeq) {
         log.info("NoticeController.findAll");
         return responseService.getSingleResult(noticeService.findById(noticeSeq));
     }
@@ -309,9 +313,12 @@ public class NoticeController {
      * @since 2020. 7. 20. 오후 9:59:56
      */
     @ApiOperation(value = "Customer Center 게시글 삭제", notes = BASIC_CHARACTER)
-    @DeleteMapping(value = "/{noticeSeq}",
+    @DeleteMapping(value = "/{noticeArticleSectionCode}/{noticeSeq}",
             name = "Customer Center 게시글 삭제", produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<NoticeArticle> deleteCustomerCenter(
+            @ApiParam(name = "noticeArticleSectionCode", value = "Customer Center 게시글 종류 코드",
+                    allowableValues = "NOTICE, NEWS, QNA", required = true)
+            @PathVariable final String noticeArticleSectionCode,
             @ApiParam(name = "noticeSeq", value = "Customer Center 게시글 시퀀스",
                     defaultValue = "23", required = true) @PathVariable final Long noticeSeq) {
         log.info("NoticeController.deleteCustomerCenter");
