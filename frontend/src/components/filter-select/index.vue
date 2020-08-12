@@ -1,6 +1,7 @@
 <template>
     <div class="filter-select">
         <el-select
+            clearable
             ref="select"
             v-model="listSortSelect.value"
             placeholder="Select"
