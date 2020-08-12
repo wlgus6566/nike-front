@@ -3,6 +3,7 @@ package com.nike.dnp.entity.product;
 import com.nike.dnp.dto.product.ProductUpdateDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.entity.agency.Agency;
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -192,5 +193,8 @@ public class Product extends BaseTimeEntity {
 		setUpdaterSeq(productUpdateDTO.getUpdaterSeq());
 	}
 
-
+	@Transient
+	public String getImageFilePhysicalName() {
+		return CloudFrontUtil.getSignedUrl(imageFilePhysicalName,10);
+	}
 }

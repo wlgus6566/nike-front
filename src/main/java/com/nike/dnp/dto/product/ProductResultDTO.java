@@ -3,6 +3,7 @@ package com.nike.dnp.dto.product;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -75,9 +76,13 @@ public class ProductResultDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "imageFilePhysicalName", value = "이미지 파일 물리 파일명")
 	private String imageFilePhysicalName;
 
+
+	@ApiModelProperty(name = "imageFilePhysicalName", value = "이미지 파일 물리 파일명")
+	public String getImageFilePhysicalName() {
+		return CloudFrontUtil.getSignedUrl(imageFilePhysicalName,10);
+	}
 
 	/**
 	 * 상품명
@@ -187,6 +192,8 @@ public class ProductResultDTO {
 		}
 		return this.category3Code;
 	}
+
+
 
 
 }
