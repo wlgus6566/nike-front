@@ -241,7 +241,10 @@ public class ReportService {
         final Optional<Report> report = this.findById(reportSaveDTO.getReportSeq());
 
         // 썸네일 base64 -> file 정보로 변환
-        this.base64ToFile(reportSaveDTO);
+        // 썸네일 base64 -> file 정보로 변환
+        if(!ObjectUtils.isEmpty(reportSaveDTO.getImageBase64()) && reportSaveDTO.getImageBase64().contains("base64")){
+            this.base64ToFile(reportSaveDTO);
+        }
 
         report.ifPresent(value -> value.update(reportSaveDTO));
 

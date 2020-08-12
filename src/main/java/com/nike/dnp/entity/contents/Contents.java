@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.util.CloudFrontUtil;
 import com.nike.dnp.util.LocalDateUtil;
+import com.nike.dnp.util.S3Util;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -250,7 +252,6 @@ public class Contents extends BaseTimeEntity {
         this.readCount = readCount + 1;
     }
 
-
     /**
      * Delete.
      *
@@ -263,27 +264,6 @@ public class Contents extends BaseTimeEntity {
     }
 
     /**
-     * The constant cdnUrl.
-     *
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
-    private static String cdnUrl;
-
-    /**
-     * Sets cdn url.
-     *
-     * @param cdnUrl the cdn url
-     * @author [이소정]
-     * @implNote cdnUrl 설정
-     * @since 2020. 7. 30. 오후 3:47:29
-     */
-    @Value("${nike.file.cdnUrl:}")
-    public void setCdnUrl(final String cdnUrl) {
-        this.cdnUrl = cdnUrl;
-    }
-
-    /**
      * Gets image file physical name.
      *
      * @return the image file physical name
@@ -292,6 +272,6 @@ public class Contents extends BaseTimeEntity {
      * @since 2020. 7. 30. 오후 3:47:29
      */
     public String getImageFilePhysicalName() {
-        return this.cdnUrl + imageFilePhysicalName;
+        return CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
     }
 }
