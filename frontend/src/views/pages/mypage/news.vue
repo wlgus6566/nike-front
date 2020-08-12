@@ -24,8 +24,6 @@
 </template>
 
 <script>
-//import {  } from '@/api/.js';
-
 import { getCustomerList } from '@/api/customer';
 
 export default {
@@ -84,7 +82,7 @@ export default {
         //검색
         searchSubmit(val) {
             this.searchKeyword = val;
-            this.initFetchData();
+            this.getNewsList();
         },
         // 페이징
         handleCurrentChange(val) {

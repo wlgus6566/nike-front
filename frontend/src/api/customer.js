@@ -42,6 +42,16 @@ function putNews(noticeSeq, data) {
     return apiCustomer.put(`/NEWS/${noticeSeq}`, data);
 }
 
+//FAQ 등록
+function postFaq(data) {
+    return apiCustomer.post(`/QnA`, data);
+}
+
+//FAQ 수정
+function putFaq(noticeSeq, data) {
+    return apiCustomer.put(`/QNA/${noticeSeq}`, data);
+}
+
 export {
     getCustomerList,
     getCustomerDetail,
@@ -50,4 +60,6 @@ export {
     deleteCustomer,
     postNews,
     putNews,
+    postFaq,
+    putFaq,
 };

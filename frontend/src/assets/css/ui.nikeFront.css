@@ -753,9 +753,13 @@
 .date-picker-wrap {
     position: relative;
 }
-.btn-date-picker {
+.date-picker-wrap .btn-box {
     position: relative;
     display: inline-flex;
+}
+.date-picker-wrap .btn-box .btn-txt {
+    z-index: 2;
+    position: relative;
     height: 40px;
     align-items: center;
     padding: 0 25px 0 0;
@@ -763,8 +767,8 @@
     color: #000;
     font-weight: bold;
 }
-.btn-date-picker:before {
-    content: '';
+.date-picker-wrap .btn-box [class^='icon-'] {
+    z-index: 1;
     position: absolute;
     top: 50%;
     right: 0;
@@ -773,6 +777,11 @@
     height: 20px;
     margin-top: -10px;
     background: url(../images/svg/icon-filter-arrow-down.svg) no-repeat center;
+}
+.date-picker-wrap .btn-box .icon-close {
+    z-index: 3;
+    display: none;
+    background-image: url('../images/svg/icon-filter-deleted.svg');
 }
 .cascader-select + .date-picker-wrap,
 .date-picker-wrap + .filter-select {
@@ -791,14 +800,6 @@
     opacity: 0;
     transition: all ease-in-out 0.2s;
 }
-.date-picker-wrap.active .date-picker-group-box {
-    padding: 11px 20px 19px;
-    height: 102px;
-    border-color: #ddd;
-    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
-    transition: all ease-in-out 0.2s;
-    opacity: 1;
-}
 .date-picker-wrap .date-picker-group-box .title {
     display: block;
     font-size: 12px;
@@ -806,6 +807,22 @@
 }
 .date-picker-wrap .date-picker-group-box .date-picker-group {
     margin-top: 11px;
+}
+.date-picker-wrap.active .date-picker-group-box {
+    padding: 11px 20px 19px;
+    height: 102px;
+    border-color: #ddd;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+    transition: all ease-in-out 0.2s;
+    opacity: 1;
+    outline: transparent;
+}
+.date-picker-wrap.active:hover .btn-box [class^='icon-'] {
+    display: none;
+}
+.date-picker-wrap.active:hover .btn-box .icon-close {
+    display: block;
+    cursor: pointer;
 }
 /* sorting-area */
 .sorting-area {
@@ -915,6 +932,11 @@
     color: transparent;
     background: url(../images/svg/icon-filter-arrow-down.svg) no-repeat center;
     transform: rotateZ(0deg) !important;
+}
+.filter-select .el-select .el-input .el-icon-circle-close {
+    width: 20px;
+    color: transparent;
+    background: url('../images/svg/icon-filter-deleted.svg') no-repeat center;
 }
 
 .filter-list + .filter-select {
@@ -1050,6 +1072,7 @@
 }
 .cascader-select .el-input--suffix .el-input__inner {
     width: 100%;
+    max-width: 194px;
     min-width: 50px;
     padding: 0 25px 0 0;
     border-color: transparent;
@@ -2942,7 +2965,7 @@
     font-size: 12px;
     color: #555;
     text-align: center;
-    word-break: keep-all;
+    word-break: break-all;
 }
 .faq-list .sbj .title {
     display: block;
@@ -3719,4 +3742,103 @@
 }
 .el-dialog {
     z-index: 2000 !important;
+}
+
+/* calendar */
+.schedule-title {
+    margin-top: 56px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+.schedule-list {
+}
+.schedule-item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding: 19px 30px;
+    background-color: #f5f5f5;
+}
+.schedule-item .title {
+    font-size: 14px;
+    font-weight: 600;
+    max-width: 500px;
+}
+.schedule-item .title:before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 1px;
+    margin-right: 5px;
+    background-color: #aaa;
+    vertical-align: 2px;
+}
+.schedule-item .desc {
+    margin-top: 5px;
+    padding-left: 11px;
+    font-size: 11px;
+    color: #555;
+    max-width: 500px;
+}
+.schedule-item .date {
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 0;
+}
+.schedule-item .btn-edit {
+    margin-right: 32px;
+    padding: 0;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #333;
+    border-radius: 0;
+    font-size: 10px;
+    color: #333;
+    font-weight: 600;
+}
+/*.fc .fc-toolbar.fc-header-toolbar {*/
+/*    position: relative;*/
+/*    display: block;*/
+/*    text-align: center;*/
+/*}*/
+/*.fc-header-toolbar .fc-button-group {*/
+/*    position: absolute !important;*/
+/*    border: 1px solid red;*/
+/*    height: 20px;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    top: 0;*/
+/*}*/
+/*.fc-header-toolbar .fc-button-group .fc-button {*/
+/*    position: absolute !important;*/
+/*    color: #000;*/
+/*    background: none;*/
+/*    border: none;*/
+/*}*/
+/*.fc-header-toolbar .fc-prev-button {*/
+/*    left: 50%;*/
+/*    transform: translateX(-115px);*/
+/*}*/
+/*.fc-header-toolbar .fc-next-button {*/
+/*    right: 50%;*/
+/*    transform: translateX(101px);*/
+/*}*/
+
+.fc .fc-day-other .fc-daygrid-day-top {
+    opacity: 1;
+    color: #ccc;
+}
+.fc .fc-daygrid-day.fc-day-today {
+    background: none;
+}
+.fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    white-space: nowrap;
+    background: #000;
+    color: #fff;
 }

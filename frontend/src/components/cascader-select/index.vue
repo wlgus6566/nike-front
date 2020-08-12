@@ -12,31 +12,41 @@
 <script>
 export default {
     name: 'cascader-select',
-    props: ['listCascader'],
-    watch: {
-        'listCascader.value'(value) {
-            if (value.length === 0) {
-                this.listCascader.value = [null];
-            }
-            //console.log(value.slice(-1)[0]);
-            if (value.length === 1) {
-                this.testArr(this.listCascader.options, value);
-            }
-        },
-    },
-    mounted() {},
     data() {
         return {
             cloneTxt: '',
         };
     },
+    props: ['listCascader'],
+    watch: {
+        'listCascader.value'(val) {
+            if (val.length === 0) {
+                this.listCascader.value = [null];
+            }
+            this.cloneTxt = '';
+            val.forEach((el) => {
+                this.testArr(this.listCascader.options, el);
+            });
+            this.selectWidthSet();
+        },
+    },
+    mounted() {
+        const FontFaceObserver = require('fontfaceobserver');
+        const NotoSans = new FontFaceObserver('Noto Sans KR', { weight: 700 });
+        const Roboto = new FontFaceObserver('Roboto', { weight: 700 });
+        Promise.all([NotoSans.load(), Roboto.load()]).then(() => {
+            this.selectWidthSet();
+            this.listCascader.value = [null];
+        });
+    },
     methods: {
-        testArr(arr, value) {
-            let aa = ''
-            if(value.length > 1){}
+        testArr(arr, sep) {
             arr.forEach((el) => {
-                if (el.value === value) {
-                    this.cloneTxt = this.cloneTxt + el.label;
+                if (el.value === sep) {
+                    this.cloneTxt = this.cloneTxt + ' / ' + el.label;
+                }
+                if (el.children) {
+                    this.testArr(el.children, sep);
                 }
             });
         },
