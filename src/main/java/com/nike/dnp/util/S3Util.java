@@ -213,7 +213,7 @@ public class S3Util {
 		log.info("S3Util.s3upload");
 		final File file = new File(root + filePath);
 		final String uploadUrl = awsPathReplace(filePath);
-		client.putObject(new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.PublicRead));
+		client.putObject(new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.Private));
 		final URL url = client.getUrl(bucket, uploadUrl);
 		log.debug("url.getPath() {}", url.getPath());
 	}
@@ -234,7 +234,7 @@ public class S3Util {
 		final String awsOldPath = awsPathReplace(oldFile);
 		final String fileName = StringUtils.getFilename(awsOldPath);
 		final String awsNewPath = newFolder+"/"+fileName;
-		final CopyObjectRequest copyObjectRequest = new CopyObjectRequest(bucket, awsOldPath, bucket, awsNewPath).withCannedAccessControlList(CannedAccessControlList.AuthenticatedRead);
+		final CopyObjectRequest copyObjectRequest = new CopyObjectRequest(bucket, awsOldPath, bucket, awsNewPath).withCannedAccessControlList(CannedAccessControlList.Private);
 		client.copyObject(copyObjectRequest);
 		final URL url = client.getUrl(bucket, awsNewPath);
 		// 기존 파일 삭제
@@ -346,7 +346,7 @@ public class S3Util {
 		final String ext = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
 		final String awsPath =folder+"/"+FileUtil.makeFileName()+"."+ext;
 		final ObjectMetadata objectMetadata = new ObjectMetadata();
-		client.putObject(new PutObjectRequest(bucket,awsPath,multipartFile.getInputStream(),objectMetadata).withCannedAcl(CannedAccessControlList.AuthenticatedRead));
+		client.putObject(new PutObjectRequest(bucket,awsPath,multipartFile.getInputStream(),objectMetadata).withCannedAcl(CannedAccessControlList.Private));
 		final URL url = client.getUrl(bucket, awsPath);
 		log.debug("url.toString() {}", url.toString());
 		return url.getPath();
