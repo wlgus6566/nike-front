@@ -66,6 +66,18 @@ public class BannerService {
     }
 
     /**
+     * Find banner banner.
+     *
+     * @return the banner
+     * @author [오지훈]
+     * @implNote 배너 상세(DB)
+     * @since 2020. 8. 12. 오후 2:12:13
+     */
+    public Banner findBanner() {
+        return bannerRepository.findAllByUseYn(ServiceCode.YesOrNoEnumCode.Y.name()).get(0);
+    }
+
+    /**
      * Find by id optional.
      *
      * @param bannerSeq the banner seq

@@ -55,7 +55,7 @@ public class RecentUploadRepositoryImpl extends QuerydslRepositorySupport implem
             final HistoryResultDTO historyResultDTO = new HistoryResultDTO();
             historyResultDTO.setHistorySeq(recentUpload.getRecentUploadSeq());
             historyResultDTO.setTypeCd(recentUpload.getTypeCd());
-            historyResultDTO.setRegistrationDt(recentUpload.getRegistrationDt());
+            historyResultDTO.setUpdateDt(recentUpload.getUpdateDt());
 //            report인 경우
             if (recentUpload.getTypeCd().equals(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString())) {
                 historyResultDTO.setFolderSeq(recentUpload.getReportSeq());

@@ -159,9 +159,11 @@ public class CloudFrontUtil {
      * @since 2020. 8. 7. 오후 3:07:14
      */
     public static String createSignedUrlCanned(final String objectKey, final int minute) {
+        final String newObjectKey = S3Util.awsPathReplace(objectKey);
+
         try {
             Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-            final String policyResourcePath = "https://" + DISTRIBUTION_DOMAIN + objectKey;
+            final String policyResourcePath = "https://" + DISTRIBUTION_DOMAIN + "/" + newObjectKey;
             //final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(new FileInputStream(PRIVATE_KEY_FILE_PATH));
             final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(Files.newInputStream(Paths.get(PRIVATE_KEY_FILE_PATH)));
 
@@ -191,9 +193,11 @@ public class CloudFrontUtil {
      * @since 2020. 8. 7. 오후 4:32:57
      */
     public static String createCustomSingedUrl(final String objectKey, final int minute) {
+        final String newObjectKey = S3Util.awsPathReplace(objectKey);
+
         try {
             Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-            final String policyResourcePath = "https://" + DISTRIBUTION_DOMAIN + objectKey;
+            final String policyResourcePath = "https://" + DISTRIBUTION_DOMAIN + "/" +  newObjectKey;
             //final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(new FileInputStream(PRIVATE_KEY_FILE_PATH));
             final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(Files.newInputStream(Paths.get(PRIVATE_KEY_FILE_PATH)));
 

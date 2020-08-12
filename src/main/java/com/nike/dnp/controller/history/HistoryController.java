@@ -58,8 +58,8 @@ public class HistoryController {
      * @param historySearchDTO the history search dto
      * @param authUserDTO      the auth user dto
      * @return the single result
-     * @author [오지훈]
-     * @implNote [method 설명]
+     * @author [이소정]
+     * @implNote 최근 업로드한 폴더 목록
      * @since 2020. 7. 31. 오전 10:03:22
      */
     @ApiOperation(
@@ -96,8 +96,8 @@ public class HistoryController {
      * @param historySearchDTO the history search dto
      * @param authUserDTO      the auth user dto
      * @return the single result
-     * @author [오지훈]
-     * @implNote [method 설명]
+     * @author [이소정]
+     * @implNote 최근 본 폴더 목록
      * @since 2020. 7. 31. 오전 10:03:25
      */
     @ApiOperation(

@@ -54,7 +54,7 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
             final HistoryResultDTO historyResultDTO = new HistoryResultDTO();
             historyResultDTO.setHistorySeq(history.getHistorySeq());
             historyResultDTO.setTypeCd(history.getTypeCd());
-            historyResultDTO.setRegistrationDt(history.getRegistrationDt());
+            historyResultDTO.setUpdateDt(history.getUpdateDt());
 //            report인 경우
             if (history.getTypeCd().equals(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString())) {
                 historyResultDTO.setFolderSeq(history.getReportSeq());

@@ -122,7 +122,7 @@ public class HistoryResultDTO {
      */
     @Column(name = "CAMPAIGN_BEGIN_DT")
     @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020.06.01 00:00:00")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
     private LocalDateTime campaignBeginDt;
 
     /**
@@ -131,7 +131,7 @@ public class HistoryResultDTO {
      */
     @Column(name = "CAMPAIGN_END_DT")
     @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020.09.01 23:59:59")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
     private LocalDateTime campaignEndDt;
 
     /**
@@ -141,19 +141,6 @@ public class HistoryResultDTO {
     @Column(name = "READ_COUNT")
     @ApiModelProperty(name = "readCount", value = "조회수")
     private Long readCount;
-
-    /**
-     * 최초 작성일
-     *
-     * @author [오지훈]
-     */
-    @Column(name = "REGISTRATION_DT")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
-    @CreationTimestamp
-    @ApiModelProperty(name = "registrationDt", value = "최초 작성일", hidden = true)
-    private LocalDateTime registrationDt;
 
     /**
      * 최종 수정일
