@@ -2,8 +2,6 @@ import '@babel/polyfill';
 require('es6-promise/auto');
 
 import Vue from 'vue';
-import VueLodash from 'vue-lodash';
-import lodash from 'lodash';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -17,7 +15,6 @@ Vue.config.productionTip = false;
 
 Vue.use(CKEditor);
 Vue.use(VueCookies);
-Vue.use(VueLodash, { name: 'custom', lodash: lodash });
 Vue.use(VModal, {
     dynamicDefaults: {
         width: '800px',
