@@ -81,9 +81,6 @@ export default {
     name: 'faq-form',
     data() {
         return {
-            // title: '',
-            // contents: '',
-            // noticeArticleCategoryCode: null,
             noticeArticleSeq: null,
             useYn: this.useYn,
             categoryCodeList: {
@@ -98,7 +95,6 @@ export default {
         };
     },
     mounted() {
-        console.log(this.$route.params.id);
         this.getCategoryCode();
         if (this.$route.meta.modify) {
             this.getFaqDetail();
@@ -125,10 +121,9 @@ export default {
                     title: this.faqDetail.title,
                     useYn: this.useYn,
                 });
-                console.log(response);
+                //console.log(response);
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
-                    console.log('저장');
                     this.detailDataReset();
                     this.$router.push('/mypage/faq');
                 }
@@ -139,7 +134,6 @@ export default {
 
         //FAQ 수정
         async modifyData() {
-            console.log(this.categoryCodeList.value);
             if (!confirm('수정하시겠습니까?')) {
                 return false;
             }
@@ -153,10 +147,8 @@ export default {
                         noticeArticleSeq: this.$route.params.id,
                         useYn: this.useYn,
                     });
-                    console.log(response.data.success);
                     this.$store.commit('SET_RELOAD', true);
                     if (response.data.success) {
-                        console.log('수정');
                         this.detailDataReset();
                         this.$router.push('/mypage/faq');
                     }
@@ -187,7 +179,6 @@ export default {
 
         //FAQ 상세
         async getFaqDetail() {
-            console.log(this.$route.params.id);
             try {
                 const {
                     data: { data: response },
@@ -195,7 +186,7 @@ export default {
                 this.faqDetail = response;
                 this.categoryCodeList.value =
                     response.noticeArticleCategoryCode;
-                console.log(response);
+                //console.log(response);
             } catch (error) {
                 console.log(error);
             }
@@ -206,7 +197,7 @@ export default {
             if (!confirm('작성을 취소하시겠습니까?')) {
                 return false;
             }
-            //this.detailDataReset();
+            this.detailDataReset();
             this.$router.go(-1);
         },
         detailDataReset() {

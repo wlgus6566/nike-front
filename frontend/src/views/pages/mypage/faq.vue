@@ -4,7 +4,11 @@
             <span class="ko">{{ this.$route.meta.title }}</span>
         </h2>
 
-        <faqTab :faqTabData="faqTabData" :categoryCodeList="categoryCodeList" />
+        <faqTab
+            :faqTabData="faqTabData"
+            :categoryCodeList="categoryCodeList"
+            @tabFnc="tabFnc"
+        />
         <faqList
             :faqData="faqDataContent"
             :isActive="isActive"
@@ -49,9 +53,10 @@ export default {
             loadingData: false,
             isActive: null,
             categoryCodeList: {
-                listSortOptions: [],
+                listSortOptions: [{ value: '', label: 'ALL' }],
                 value: '',
             },
+            noticeArticleCategoryCode: null,
         };
     },
     components: {
@@ -69,7 +74,11 @@ export default {
             this.$store.commit('SET_RELOAD', false);
         }
     },
-    watch: {},
+    watch: {
+        'categoryCodeList.value'() {
+            this.getFaqList();
+        },
+    },
     methods: {
         //FAQ 리스트
         async getFaqList() {
@@ -79,11 +88,12 @@ export default {
                 } = await getCustomerList(this.$route.meta.sectionCode, {
                     page: this.page,
                     size: this.itemLength,
-                    keyword: this.searchKeyword,
+                    noticeArticleCategoryCode: this.categoryCodeList.value,
                 });
                 this.faqData = response;
                 this.faqDataContent = response.content;
                 this.totalItem = this.faqData.totalElements;
+                //console.log(response);
 
                 //게시물 번호 //총게시물 - (현재 페이지 * 한 페이지 게시물 수) -  index = number
                 this.faqDataContent.forEach((el, index) => {
@@ -119,6 +129,11 @@ export default {
             } else {
                 this.isActive = seq;
             }
+        },
+
+        //Tab
+        tabFnc(val) {
+            this.categoryCodeList.value = val;
         },
 
         // 페이징
