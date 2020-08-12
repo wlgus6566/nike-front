@@ -3720,3 +3720,102 @@
 .el-dialog {
     z-index: 2000 !important;
 }
+
+/* calendar */
+.schedule-title {
+    margin-top: 56px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+.schedule-list {
+}
+.schedule-item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding: 19px 30px;
+    background-color: #f5f5f5;
+}
+.schedule-item .title {
+    font-size: 14px;
+    font-weight: 600;
+    max-width: 500px;
+}
+.schedule-item .title:before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 1px;
+    margin-right: 5px;
+    background-color: #aaa;
+    vertical-align: 2px;
+}
+.schedule-item .desc {
+    margin-top: 5px;
+    padding-left: 11px;
+    font-size: 11px;
+    color: #555;
+    max-width: 500px;
+}
+.schedule-item .date {
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 0;
+}
+.schedule-item .btn-edit {
+    margin-right: 32px;
+    padding: 0;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #333;
+    border-radius: 0;
+    font-size: 10px;
+    color: #333;
+    font-weight: 600;
+}
+/*.fc .fc-toolbar.fc-header-toolbar {*/
+/*    position: relative;*/
+/*    display: block;*/
+/*    text-align: center;*/
+/*}*/
+/*.fc-header-toolbar .fc-button-group {*/
+/*    position: absolute !important;*/
+/*    border: 1px solid red;*/
+/*    height: 20px;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    top: 0;*/
+/*}*/
+/*.fc-header-toolbar .fc-button-group .fc-button {*/
+/*    position: absolute !important;*/
+/*    color: #000;*/
+/*    background: none;*/
+/*    border: none;*/
+/*}*/
+/*.fc-header-toolbar .fc-prev-button {*/
+/*    left: 50%;*/
+/*    transform: translateX(-115px);*/
+/*}*/
+/*.fc-header-toolbar .fc-next-button {*/
+/*    right: 50%;*/
+/*    transform: translateX(101px);*/
+/*}*/
+
+.fc .fc-day-other .fc-daygrid-day-top {
+    opacity: 1;
+    color: #ccc;
+}
+.fc .fc-daygrid-day.fc-day-today {
+    background: none;
+}
+.fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    white-space: nowrap;
+    background: #000;
+    color: #fff;
+}
