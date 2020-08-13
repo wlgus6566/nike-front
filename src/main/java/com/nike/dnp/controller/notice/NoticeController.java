@@ -87,6 +87,7 @@ public class NoticeController {
     public SingleResult<Page<CustomerListDTO>> findAll(
             @ApiParam(name = "noticeArticleSectionCode", value = "Customer Center 게시글 종류 코드",
                     allowableValues = "NOTICE, NEWS, QNA", required = true)
+            @PathVariable final String noticeArticleSectionCode,
             @ModelAttribute final CustomerSearchDTO customerSearchDTO) {
         log.info("NoticeController.findAll");
         return responseService.getSingleResult(noticeService.findNoticePages(customerSearchDTO));

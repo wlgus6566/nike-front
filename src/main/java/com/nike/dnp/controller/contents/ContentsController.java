@@ -214,8 +214,7 @@ public class ContentsController {
      * @param result          the result
      * @return the single result
      * @author [이소정]
-     * @implNote
-     * @apiNote 콘텐츠 수정
+     * @implNote 콘텐츠 수정
      * @since 2020. 7. 13. 오전 11:59:45
      */
     @ApiOperation(value = "컨텐츠 수정", notes = REQUEST_CHARACTER + REQUEST_MENU_DESC)

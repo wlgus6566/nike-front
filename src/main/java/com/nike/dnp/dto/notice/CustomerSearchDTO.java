@@ -25,6 +25,7 @@ public class CustomerSearchDTO extends SearchDTO {
      *
      * @author [정주희]
      */
+    @ApiParam(hidden = true)
     private String noticeArticleSectionCode;
 
     /**
