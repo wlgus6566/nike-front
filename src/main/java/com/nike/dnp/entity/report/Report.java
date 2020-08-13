@@ -171,7 +171,7 @@ public class Report extends BaseTimeEntity {
         this.reportSectionCode = reportSaveDTO.getReportSectionCode();
         this.reportName = reportSaveDTO.getReportName();
 
-        if (!ObjectUtils.isEmpty(reportSaveDTO.getImageFilePhysicalName()) && reportSaveDTO.getImageFilePhysicalName().contains("/temp/")) {
+        if (!ObjectUtils.isEmpty(reportSaveDTO.getImageFilePhysicalName()) && !ObjectUtils.isEmpty(reportSaveDTO.getImageBase64())) {
             this.imageFileName = reportSaveDTO.getImageFileName();
             this.imageFileSize = reportSaveDTO.getImageFileSize();
             this.imageFilePhysicalName = reportSaveDTO.getImageFilePhysicalName();

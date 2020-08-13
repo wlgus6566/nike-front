@@ -231,7 +231,7 @@ public class Contents extends BaseTimeEntity {
     public void update(final ContentsSaveDTO contentsSaveDTO) {
         log.info("Contents.update");
         this.menuCode = contentsSaveDTO.getMenuCode();
-        if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageFilePhysicalName()) && contentsSaveDTO.getImageFilePhysicalName().contains("/temp/")) {
+        if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageFilePhysicalName()) && !ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
             this.imageFileName = contentsSaveDTO.getImageFileName();
             this.imageFileSize = contentsSaveDTO.getImageFileSize();
             this.imageFilePhysicalName = contentsSaveDTO.getImageFilePhysicalName();
