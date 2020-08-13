@@ -2,6 +2,7 @@ package com.nike.dnp.controller.auth;
 
 import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.auth.AuthSaveDTO;
 import com.nike.dnp.dto.auth.AuthUpdateDTO;
 import com.nike.dnp.entity.auth.Auth;
@@ -14,7 +15,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONArray;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -65,14 +65,15 @@ public class AuthController {
      *
      * @return the single result
      * @author [오지훈]
-     * @since 2020. 6. 23. 오후 3:37:10
+     * @implNote [Description 작성]
      * @apiNote 그룹(권한) 목록 조회(캐시)
+     * @since 2020. 6. 23. 오후 3:37:10
      */
     @ApiOperation(value = "그룹(권한) 목록 조회(캐시)"
             , notes = OPERATION_CHARACTER)
     @GetMapping(name = "그룹(권한) 목록 조회(캐시)", value = "/list"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<JSONArray> findAllByCache () {
+    public SingleResult<List<AuthReturnDTO>> findAllByCache () {
         log.info("AuthController.findAllByCache");
         return responseService.getSingleResult(authService.findAllByCache());
     }

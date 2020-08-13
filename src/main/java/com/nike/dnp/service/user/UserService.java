@@ -3,6 +3,7 @@ package com.nike.dnp.service.user;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.user.*;
+import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.user.PasswordHistory;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.entity.user.UserAuth;
@@ -171,6 +172,21 @@ public class UserService implements UserDetailsService {
             userResultDTO.setUserId(getUser.getUserId());
             userResultDTO.setUserStatusCode(getUser.getUserStatusCode());
             userResultDTO.setAuthName(getUser.getUserAuth().getAuth().getAuthName());
+
+            Auth auth = getUser.getUserAuth().getAuth();
+            Long[] authSeqArray = new Long[0];
+            if (auth.getAuthDepth().equals(2L)) {
+                authSeqArray = new Long[2];
+                authSeqArray[0] = auth.getUpperAuthSeq();
+                authSeqArray[1] = auth.getAuthSeq();
+            } else if(auth.getAuthDepth().equals(3L)) {
+                final Auth upperAuth = authService.getById(auth.getUpperAuthSeq());
+                authSeqArray = new Long[3];
+                authSeqArray[0] = upperAuth.getUpperAuthSeq();
+                authSeqArray[1] = auth.getUpperAuthSeq();
+                authSeqArray[2] = auth.getAuthSeq();
+            }
+            userResultDTO.setAuthSeqArray(authSeqArray);
         }
 
         return userResultDTO;

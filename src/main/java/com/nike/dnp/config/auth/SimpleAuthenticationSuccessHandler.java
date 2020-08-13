@@ -29,7 +29,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * 로그인 성공 후 핸들러
@@ -246,14 +249,14 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 			redisService.set(redisKey.toString(), token, Integer.parseInt(String.valueOf(BeanUtil.getBean("userSessionTime"))));
 
 			// 로그인일자 / header정보 업데이트
-			final HashMap<String, String> header = new HashMap<>();
+			/*final HashMap<String, String> header = new HashMap<>();
 			final Enumeration<String> eHeader = request.getHeaderNames();
 			while (eHeader.hasMoreElements()) {
 				final String headerName = eHeader.nextElement();
 				final String headerValue = request.getHeader(headerName);
 				header.put(headerName, headerValue);
-			}
-			user.ifPresent(value -> value.updateLoginDt(header.toString()));
+			}*/
+			user.ifPresent(value -> value.updateLoginDt(request.getHeader("user-agent")));
 
 			// 약관동의 업데이트
 			if (ServiceCode.YesOrNoEnumCode.Y.toString().equals(termsAgreeYn)
