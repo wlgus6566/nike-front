@@ -15,8 +15,7 @@
             :editable="false"
         />
 
-        <calendarManagement
-            :visible.sync="visible.calendarManagement"
+        <calendarModal
             :statusCode="statusCode"
             :calendarDetail="calendarDetail"
             :calendarSeq="calendarSeq"
@@ -72,10 +71,7 @@
 import {
     getCalendarList, // CALENDAR 목록 조회
     postCalendar, // CALENDAR 등록
-    getTodayCalendar, // CALENDAR 오늘 조회
-    getDetailCalendar, // CALENDAR 상세조회
-    delCalendar, // CALENDAR 삭제
-    putCalendar, // CALENDAR 수정
+    getTodayCalendar, // CALENDAR
 } from '@/api/calendar';
 
 import { getCode } from '@/api/code';
@@ -85,15 +81,13 @@ import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
-import calendarManagement from '@/views/pages/information/calendar-management';
+import calendarModal from '@/views/pages/information/calendar-management';
+import testmodal from '@/components/modal-comp/testmodal';
 
 export default {
     name: 'calendar',
     data() {
         return {
-            visible: {
-                calendarManagement: false,
-            },
             calendarDialogInitData: {
                 calendarSectionCode: 'EDUCATION',
                 scheduleName: null,
@@ -154,7 +148,7 @@ export default {
     },
     components: {
         FullCalendar,
-        calendarManagement,
+        calendarModal,
     },
     mounted() {
         this.fetchData();
@@ -209,14 +203,14 @@ export default {
         },
         // 일정 등록 클릭시
         onClickToCreate() {
-            this.statusCode = 'CREATE';
-            this.calendarDetail = {
-                ...this.calendarDialogInitData,
-            };
-            this.visible.calendarManagement = true;
+            this.statusCode = null;
+            this.calendarDetail = {};
+            this.calendarSeq = null;
+            this.$modal.show('calendarModal');
         },
         // 일정 수정 클릭시
         onClickToEdit(item) {
+            this.$modal.show('calendarModal');
             this.statusCode = 'EDIT';
             this.calendarDetail = item;
             this.calendarSeq = item.calendarSeq;

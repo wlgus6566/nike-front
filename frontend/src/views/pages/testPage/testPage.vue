@@ -1,10 +1,12 @@
 <template>
     <div>
         <button type="button" @click="openPop">123</button> {{ cloneTxt }}
+
+        <testModal />
     </div>
 </template>
 <script>
-import testmodal from '@/components/modal-comp/testmodal';
+import testModal from '@/components/modal-comp/testmodal';
 import deepmerge from 'deepmerge';
 export default {
     data() {
@@ -87,9 +89,10 @@ export default {
 
         console.log(this.y.concat(testArray));
     },
+    components: { testModal },
     methods: {
         openPop() {
-            this.$modal.show(testmodal);
+            this.$modal.show('testModal');
         },
 
         testArr(arr, sep) {
