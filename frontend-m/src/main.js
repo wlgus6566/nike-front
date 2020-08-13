@@ -9,7 +9,7 @@ Vue.config.productionTip = false;
 Vue.use(require('vue-moment'));
 Vue.use(VModal, {
     dynamicDefaults: {
-        width: '800px',
+        width: '100%',
         height: 'auto',
         adaptive: false,
         draggable: false,
