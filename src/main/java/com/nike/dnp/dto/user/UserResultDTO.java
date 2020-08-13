@@ -152,6 +152,14 @@ public class UserResultDTO {
     private List<UserLoginLog> loginLogs = new ArrayList<>();
 
     /**
+     * 권한 시퀀스 배열
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "authSeqArray", value = "권한 시퀀스 배열")
+    private Long[] authSeqArray;
+
+    /**
      * Gets user status code name.
      *
      * @return the user status code name

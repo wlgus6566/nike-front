@@ -342,7 +342,7 @@ public class AuthService {
      */
     public Auth getById(final Long authSeq) {
         log.info("AuthService.getById");
-        return this.findById(authSeq).orElse(new Auth());
+        return this.findById(authSeq).orElseGet(Auth::new);
     }
 
     /**
