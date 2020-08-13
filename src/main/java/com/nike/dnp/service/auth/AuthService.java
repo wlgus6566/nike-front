@@ -8,6 +8,7 @@ import com.nike.dnp.dto.auth.AuthSaveDTO;
 import com.nike.dnp.dto.auth.AuthUpdateDTO;
 import com.nike.dnp.dto.menu.MenuReturnDTO;
 import com.nike.dnp.dto.menu.MenuRoleResourceReturnDTO;
+import com.nike.dnp.dto.user.UserContentsSearchDTO;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.auth.AuthMenuRole;
 import com.nike.dnp.exception.CodeMessageHandleException;
@@ -17,6 +18,7 @@ import com.nike.dnp.repository.menu.MenuRepository;
 import com.nike.dnp.repository.menu.MenuRoleResourceRepository;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.util.MessageUtil;
+import com.nike.dnp.util.ObjectMapperUtil;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -145,6 +147,29 @@ public class AuthService {
         );
     }
 
+    public List<AuthReturnDTO> findAuths() {
+        log.info("AuthService.findAuths");
+        final List<AuthReturnDTO> firstAuths = new ArrayList<>();
+        for (Auth auth : this.findAll()) {
+            final AuthReturnDTO topAuthDTO = ObjectMapperUtil.map(auth, AuthReturnDTO.class);
+
+            if (auth.getSubAuths().size() > 0) {
+                final List<AuthReturnDTO> secondAuths = new ArrayList<>();
+                for (Auth secondDepth : auth.getSubAuths()) {
+                    final AuthReturnDTO bottomAuthDTO = ObjectMapperUtil.map(secondDepth, AuthReturnDTO.class);
+                    if (secondDepth.getSubAuths().size() > 0) {
+                        bottomAuthDTO.setSubAuths(ObjectMapperUtil.mapAll(secondDepth.getSubAuths(), AuthReturnDTO.class));
+                    }
+                    secondAuths.add(bottomAuthDTO);
+                }
+                topAuthDTO.setSubAuths(secondAuths);
+            }
+            firstAuths.add(topAuthDTO);
+        }
+
+        return firstAuths;
+    }
+
     /**
      * Find all json array.
      *
@@ -154,7 +179,11 @@ public class AuthService {
      * @implNote 그룹(권한) 목록 조회(캐시)
      */
     @Cacheable(value = "cache:auths", cacheManager = "cacheManager")
-    public JSONArray findAllByCache() {
+    public List<AuthReturnDTO> findAllByCache() {
+        log.info("AuthService.findAllByCache");
+        return this.findAuths();
+    }
+    /*public JSONArray findAllByCache() {
         log.info("AuthService.findAllByCache");
         final ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -165,7 +194,7 @@ public class AuthService {
                     , exception.getMessage()
             );
         }
-    }
+    }*/
 
     /**
      * Find by role type optional.
@@ -342,7 +371,7 @@ public class AuthService {
      */
     public Auth getById(final Long authSeq) {
         log.info("AuthService.getById");
-        return this.findById(authSeq).orElse(new Auth());
+        return this.findById(authSeq).orElseGet(Auth::new);
     }
 
     /**
@@ -490,5 +519,97 @@ public class AuthService {
         }
     }
 
+    /**
+     * Gets auth list.
+     *
+     * @param userContentsSearchDTO the user contents search dto
+     * @return the auth list
+     * @author [오지훈]
+     * @implNote 컨텐츠 권한 목록
+     * @since 2020. 7. 20. 오후 4:25:19
+     */
+    public List<AuthReturnDTO> getAuthList (final UserContentsSearchDTO userContentsSearchDTO) {
+        log.info("AuthService.getAuthList");
+        List<AuthReturnDTO> findByConfig = authRepository.findByConfig(
+                userContentsSearchDTO.getMenuCode()
+                , userContentsSearchDTO.getSkillCode());
 
+        List<AuthReturnDTO> auths = this.findAuths();
+
+        /*for (AuthReturnDTO authReturnDTO : auths) {
+            for (AuthReturnDTO config : findByConfig) {
+                if (authReturnDTO.getAuthSeq().equals(config.getAuthSeq())) {
+                    authReturnDTO.setDetailAuthYn(config.getDetailAuthYn());
+                    authReturnDTO.setEmailReceptionYn(config.getEmailReceptionYn());
+                    authReturnDTO.setViewYn("Y");
+                }
+                else {
+                    for (AuthReturnDTO dto2 : authReturnDTO.getSubAuths()) {
+                        if (dto2.getAuthSeq().equals(config.getAuthSeq())) {
+                            dto2.setDetailAuthYn(config.getDetailAuthYn());
+                            dto2.setEmailReceptionYn(config.getEmailReceptionYn());
+                            dto2.setViewYn("Y");
+                        }
+                        else {
+                            for (AuthReturnDTO dto3 : dto2.getSubAuths()) {
+                                if (dto3.getAuthSeq().equals(config.getAuthSeq())) {
+                                    dto3.setDetailAuthYn(config.getDetailAuthYn());
+                                    dto3.setEmailReceptionYn(config.getEmailReceptionYn());
+                                    dto3.setViewYn("Y");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }*/
+        for (AuthReturnDTO authReturnDTO : auths) {
+            for (AuthReturnDTO config : findByConfig) {
+                this.authConfig(authReturnDTO, config);
+
+                for (AuthReturnDTO dto2 : authReturnDTO.getSubAuths()) {
+                    this.authConfig(dto2, config);
+
+                    for (AuthReturnDTO dto3 : dto2.getSubAuths()) {
+                        this.authConfig(dto3, config);
+                    }
+                }
+            }
+        }
+
+        for (AuthReturnDTO authReturnDTO : auths) {
+            boolean check = true;
+            for (AuthReturnDTO dto2 : authReturnDTO.getSubAuths()) {
+                boolean check1 = true;
+                for (AuthReturnDTO dto3 : dto2.getSubAuths()) {
+                    if (check1 && dto3.getViewYn().equals("Y")) {
+                        check1 = false;
+                        if (!dto2.getViewYn().equals("Y")) {
+                            dto2.setViewYn("Y");
+                            dto2.setCheckBoxYn("N");
+                        }
+                    }
+                }
+
+                if (check && dto2.getViewYn().equals("Y")) {
+                    check = false;
+                    if (!authReturnDTO.getViewYn().equals("Y")) {
+                        authReturnDTO.setViewYn("Y");
+                        authReturnDTO.setCheckBoxYn("N");
+                    }
+                }
+            }
+        }
+
+        return auths;
+    }
+
+    private void authConfig(AuthReturnDTO target, AuthReturnDTO config) {
+        if (target.getAuthSeq().equals(config.getAuthSeq())) {
+            target.setDetailAuthYn(config.getDetailAuthYn());
+            target.setEmailReceptionYn(config.getEmailReceptionYn());
+            target.setViewYn("Y");
+            target.setCheckBoxYn("Y");
+        }
+    }
 }
