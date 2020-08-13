@@ -1,116 +1,127 @@
 <template>
-    <modal name="calendarModal" width="800" height="auto" :adaptive="true">
-        <ModalComp @close="thisClose">
-            <template v-slot:modal-header>
-                <div class="title-wrap">
-                    <h3 class="form-title mt0">CALENDAR 관리</h3>
-                    <div class="right">
+    <el-dialog
+        title=""
+        class="modal-wrap"
+        :visible="visible"
+        :append-to-body="true"
+        @close="$emit('update:visible', false)"
+    >
+        <el-scrollbar view-class="view-box" :native="false">
+            <div class="el-dialog__inner">
+                <div>
+                    <div class="title-wrap">
+                        <h3 class="form-title mt0">CALENDAR 관리</h3>
+                        <div class="right">
+                            <button
+                                type="button"
+                                class="txt-btn-orange"
+                                @click="onClickToDelete"
+                            >
+                                <span>일정 삭제</span>
+                            </button>
+                        </div>
+                    </div>
+                    <hr class="hr-black mt10" />
+                    <ul class="form-list">
+                        <li class="form-row">
+                            <div class="form-column">
+                                <label class="label-title required">구분</label>
+                            </div>
+                            <div class="form-column">
+                                <label
+                                    class="check-label"
+                                    v-for="item in calenderSectionCodeList"
+                                    :key="item.code"
+                                >
+                                    <span class="radio">
+                                        <input
+                                            type="radio"
+                                            v-model="
+                                                detailData.calendarSectionCode
+                                            "
+                                            :name="
+                                                detailData.calendarSectionCode
+                                            "
+                                            :value="item.code"
+                                        />
+                                        <span></span>
+                                    </span>
+                                    <span>{{ item.codeName }}</span>
+                                </label>
+                            </div>
+                        </li>
+                        <li class="form-row">
+                            <div class="form-column">
+                                <label class="label-title required"
+                                    >일정 명</label
+                                >
+                            </div>
+                            <div class="form-column">
+                                <input
+                                    ref="scheduleName"
+                                    type="text"
+                                    v-model="detailData.scheduleName"
+                                />
+                            </div>
+                        </li>
+                        <li class="form-row">
+                            <div class="form-column">
+                                <label class="label-title required">기간</label>
+                            </div>
+                            <div class="form-column">
+                                <div class="data-picker">
+                                    <el-date-picker
+                                        ref="dataPeriod"
+                                        v-model="dataPeriod"
+                                        type="daterange"
+                                        value-format="yyyy.MM.dd"
+                                        range-separator="-"
+                                        start-placeholder="Start date"
+                                        end-placeholder="End date"
+                                    >
+                                    </el-date-picker>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="form-row">
+                            <div class="form-column">
+                                <label class="label-title">메모</label>
+                            </div>
+                            <div class="form-column">
+                                <span class="textarea">
+                                    <textarea
+                                        cols="100"
+                                        rows="2"
+                                        v-model="detailData.contents"
+                                    ></textarea>
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                    <hr class="hr-gray" />
+                    <div class="btn-area">
                         <button
                             type="button"
-                            class="txt-btn-orange"
-                            @click="onClickToDelete"
+                            class="btn-s"
+                            @click="closeDialog"
                         >
-                            <span>일정 삭제</span>
+                            <span>취소</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-s-black"
+                            @click="onClickToSave"
+                        >
+                            <span>저장</span>
                         </button>
                     </div>
                 </div>
-            </template>
-            <template v-slot:modal-content>
-                <hr class="hr-black mt10" />
-                <ul class="form-list">
-                    <li class="form-row">
-                        <div class="form-column">
-                            <label class="label-title required">구분</label>
-                        </div>
-
-                        <div class="form-column">
-                            <label
-                                class="check-label"
-                                v-for="item in calenderSectionCodeList"
-                                :key="item.code"
-                            >
-                                <span class="radio">
-                                    <input
-                                        type="radio"
-                                        v-model="detailData.calendarSectionCode"
-                                        :name="detailData.calendarSectionCode"
-                                        :value="item.code"
-                                    />
-                                    <span></span>
-                                </span>
-                                <span>{{ item.codeName }}</span>
-                            </label>
-                        </div>
-                    </li>
-                    <li class="form-row">
-                        <div class="form-column">
-                            <label class="label-title required">일정 명</label>
-                        </div>
-                        <div class="form-column">
-                            <input
-                                ref="scheduleName"
-                                type="text"
-                                v-model="detailData.scheduleName"
-                            />
-                        </div>
-                    </li>
-                    <li class="form-row">
-                        <div class="form-column">
-                            <label class="label-title required">기간</label>
-                        </div>
-                        <div class="form-column">
-                            <div class="data-picker">
-                                <el-date-picker
-                                    ref="dataPeriod"
-                                    v-model="dataPeriod"
-                                    type="daterange"
-                                    value-format="yyyy.MM.dd"
-                                    range-separator="-"
-                                    start-placeholder="Start date"
-                                    end-placeholder="End date"
-                                >
-                                </el-date-picker>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="form-row">
-                        <div class="form-column">
-                            <label class="label-title">메모</label>
-                        </div>
-                        <div class="form-column">
-                            <span class="textarea">
-                                <textarea
-                                    cols="100"
-                                    rows="2"
-                                    v-model="detailData.contents"
-                                ></textarea>
-                            </span>
-                        </div>
-                    </li>
-                </ul>
-                <hr class="hr-gray" />
-            </template>
-            <template v-slot:modal-footer>
-                <div class="btn-area">
-                    <button type="button" class="btn-s" @click="closeDialog">
-                        <span>취소</span>
-                    </button>
-                    <button
-                        type="button"
-                        class="btn-s-black"
-                        @click="onClickToSave"
-                    >
-                        <span>저장</span>
-                    </button>
-                </div>
-            </template>
-        </ModalComp>
-    </modal>
+            </div>
+        </el-scrollbar>
+    </el-dialog>
 </template>
 
 <script>
-import ModalComp from '@/components/modal-comp/index';
-
 export default {
     props: {
         visible: Boolean,
@@ -125,7 +136,6 @@ export default {
             dataPeriod: [],
         };
     },
-    components: { ModalComp },
     watch: {
         calendarDetail() {
             this.detailData = this.calendarDetail;
@@ -176,7 +186,7 @@ export default {
             }
         },
         closeDialog() {
-            this.$emit('close');
+            this.$emit('closeDialog');
         },
         removeBodyClass(className) {
             const body = document.body;
@@ -185,9 +195,6 @@ export default {
         print() {
             this.removeBodyClass('print-detail');
             window.print();
-        },
-        thisClose() {
-            this.$emit('close');
         },
     },
 };
