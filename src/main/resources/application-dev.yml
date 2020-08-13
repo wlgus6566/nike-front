@@ -3,6 +3,8 @@ spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
+    #driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    #url: jdbc:log4jdbc:mariadb://localhost:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
     username: nikemanager
     password: 'emotion!@'
   devtools:
@@ -16,7 +18,6 @@ spring:
   redis:
     host: 10.80.1.212
     port: 6379
-    #password: 2motion1!!
     cache:
       redis:
         cache-null-values: false
@@ -37,7 +38,7 @@ security:
     url: false
     ip : false
 
-#임시경로
+## 임시경로
 nike:
   file:
     root: '/home/emotion/file_temp'
@@ -45,3 +46,18 @@ nike:
     imageMagickCommand: 'convert'
     ffmpeg: '/usr/bin'
     ffmpegCommand: 'ffmpeg'
+
+## AWS
+cloud:
+  aws:
+    distributionDomain: 'd3a4mwwf905xos.cloudfront.net'
+    privateKeyFilePath: '/home/emotion/tomcat8/der/nikecdn.der'
+    credentials:
+      accessKey: 'AKIA4FO4XQUFNEBRAZU4'
+      secretKey: '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'
+    s3:
+      bucket: 'nike-test-bucket-dnp'
+    region:
+      static: 'ap-northeast-2'
+    stack:
+      auto:  false

@@ -157,6 +157,33 @@ public class Menu extends BaseTimeEntity implements Serializable {
     private String useYn;
 
     /**
+     * PC 노출 여부
+     *
+     * @author [오지훈]
+     */
+    @Column(name = "PC_YN")
+    @ApiModelProperty(name = "pcYn", value = "PC 노출 여부", required = true)
+    private String pcYn;
+
+    /**
+     * MOBILE 노출 여부
+     *
+     * @author [오지훈]
+     */
+    @Column(name = "MOBILE_YN")
+    @ApiModelProperty(name = "mobileYn", value = "MOBILE 노출 여부", required = true)
+    private String mobileYn;
+
+    /**
+     * 권한 관리 여부
+     *
+     * @author [오지훈]
+     */
+    @Column(name = "MANAGEMENT_YN")
+    @ApiModelProperty(name = "managementYn", value = "권한 관리 여부", required = true)
+    private String managementYn;
+
+    /**
      * 하위 메뉴 목록
      *
      * @author [오지훈]

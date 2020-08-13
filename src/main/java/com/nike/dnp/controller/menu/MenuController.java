@@ -83,7 +83,7 @@ public class MenuController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<List<Menu>> findMenus () {
         log.info("MenuController.findMenus");
-        return responseService.getSingleResult(menuService.findMenus());
+        return responseService.getSingleResult(menuService.findManageMenus());
     }
 
 }

@@ -56,7 +56,7 @@ public class OrderProductMappingService {
 	 * @return the order product mapping
 	 * @author [윤태호]
 	 * @since 2020. 7. 2. 오후 3:07:14
-	 * @implNote
+	 * @implNote 주문 제품 맴핑 저장
 	 */
 	@Transactional
 	public OrderProductMapping saveOrderProductMapping(final OrderProductMappingSaveDTO orderProductMappingSaveDTO) {
@@ -68,7 +68,6 @@ public class OrderProductMappingService {
 		return orderProductMapperRepository.save(orderProductMapping);
 	}
 
-
 	/**
 	 * 주문내역 이메일 발송
 	 *
@@ -76,7 +75,7 @@ public class OrderProductMappingService {
 	 * @return the boolean
 	 * @author [윤태호]
 	 * @since 2020. 7. 2. 오후 3:07:14
-	 * @implNote
+	 * @implNote 주문내역 이메일 발송
 	 */
 	public void orderSheetSend(final OrderEntity orderEntity) {
 		log.info("OrderProductMappingService.orderSheetSend");
@@ -91,7 +90,6 @@ public class OrderProductMappingService {
 				compareAgencySeq = agencySeq;
 			}
 		}
-
 
 		final List<SendDTO> sendDTOList = new ArrayList<>();
 		for(final Long tempAgencySeq : agencyList){
@@ -117,7 +115,6 @@ public class OrderProductMappingService {
 			sendDTOList.add(sendDTO);
 		}
 
-
 		for(final SendDTO sendDTO : sendDTOList){
 			final DecimalFormat format = new DecimalFormat("###,###");
 			final StringBuilder builder = new StringBuilder();
@@ -135,10 +132,6 @@ public class OrderProductMappingService {
 					ServiceCode.EmailTypeEnumCode.ORDER.toString(),
 					ServiceCode.EmailTypeEnumCode.ORDER.getMessage(),
 					sendDTO);
-
 		}
 	}
-
 }
-
-

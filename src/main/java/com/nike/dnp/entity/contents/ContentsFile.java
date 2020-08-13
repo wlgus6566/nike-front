@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 import java.util.Locale;
@@ -226,27 +228,6 @@ public class ContentsFile extends BaseTimeEntity {
     private Contents contents;
 
     /**
-     * The constant cdnUrl.
-     *
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
-    private static String cdnUrl;
-
-    /**
-     * Sets cdn url.
-     *
-     * @param cdnUrl the cdn url
-     * @author [이소정]
-     * @implNote cdnUrl 셋팅
-     * @since 2020. 7. 30. 오후 3:49:08
-     */
-    @Value("${nike.file.cdnUrl:}")
-    public void setCdnUrl(final String cdnUrl) {
-        this.cdnUrl = cdnUrl;
-    }
-
-    /**
      * Gets file physical name.
      *
      * @return the file physical name
@@ -255,7 +236,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @since 2020. 7. 30. 오후 3:49:08
      */
     public String getFilePhysicalName() {
-        return this.cdnUrl + filePhysicalName;
+        return ObjectUtils.isEmpty(filePhysicalName) ? filePhysicalName : CloudFrontUtil.getCustomSignedUrl(filePhysicalName);
     }
 
     /**
@@ -267,7 +248,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @since 2020. 7. 30. 오후 3:49:08
      */
     public String getThumbnailFilePhysicalName() {
-        return this.cdnUrl + thumbnailFilePhysicalName;
+        return ObjectUtils.isEmpty(thumbnailFilePhysicalName) ? thumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
     }
 
     /**
@@ -279,7 +260,7 @@ public class ContentsFile extends BaseTimeEntity {
      * @since 2020. 7. 30. 오후 3:49:08
      */
     public String getDetailThumbnailFilePhysicalName() {
-        return this.cdnUrl + detailThumbnailFilePhysicalName;
+        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName) ? detailThumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName);
     }
 
 
@@ -305,7 +286,7 @@ public class ContentsFile extends BaseTimeEntity {
         contentsFile.setUseYn("Y");
         contentsFile.setContentsSeq(contentsSeq);
 
-        boolean isFile = ServiceCode.ContentsFileKindCode.FILE.toString().equals(fileKindCode);
+        boolean isFile = ServiceCode.ContentsFileKindCode.FILE.toString().equals(contentsFileSaveDTO.getFileKindCode());
 
         contentsFile.setFileSectionCode(contentsFileSaveDTO.getFileSectionCode());
         contentsFile.setFileKindCode(contentsFileSaveDTO.getFileKindCode());

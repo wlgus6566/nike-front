@@ -44,7 +44,7 @@ public class WishListRepositoryImpl  extends QuerydslRepositorySupport implement
 	 * @return the page
 	 * @author [윤태호]
 	 * @since 2020. 7. 3. 오후 3:55:37
-	 * @implNote
+	 * @implNote 위시리스트 페이징
 	 */
 	@Override
 	public Page<WishList> findPagesWishList(final WishListSearchDTO wishListSearchDTO,

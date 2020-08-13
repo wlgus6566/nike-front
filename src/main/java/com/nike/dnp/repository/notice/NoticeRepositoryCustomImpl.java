@@ -55,19 +55,18 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
         final QNoticeArticle qNoticeArticle = QNoticeArticle.noticeArticle;
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 
-        //일반 게시글 조회
         final JPAQuery<NoticeArticle> query = queryFactory.selectFrom(qNoticeArticle)
                 .where(
                         qNoticeArticle.useYn.eq("Y"),
                         qNoticeArticle.noticeArticleSectionCode.eq(customerSearchDTO.getNoticeArticleSectionCode()),
                         NoticePredicateHelper.eqCategoryCode(customerSearchDTO.getNoticeArticleCategoryCode()),
-                        NoticePredicateHelper.containsKeword(customerSearchDTO.getKeyword())
-                ).orderBy(
-                        qNoticeArticle.updateDt.desc()
+                        NoticePredicateHelper.containsKeyword(customerSearchDTO.getKeyword())
                 );
 
-        if (StringUtils.equalsIgnoreCase(customerSearchDTO.getNoticeArticleSectionCode() ,"NOTICE")) {
+        if (StringUtils.equalsIgnoreCase(customerSearchDTO.getNoticeArticleSectionCode() ,"NOTICE")) {  //equalsIgnoreCase 지양 //확인필요
             query.orderBy(qNoticeArticle.noticeYn.desc(), qNoticeArticle.updateDt.desc());
+        } else {
+            query.orderBy(qNoticeArticle.updateDt.desc());
         }
 
         final List<CustomerListDTO> customerListDTOList = ObjectMapperUtil.mapAll(

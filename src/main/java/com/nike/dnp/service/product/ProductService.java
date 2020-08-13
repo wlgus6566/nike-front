@@ -28,8 +28,8 @@ import java.util.Optional;
  * The Class Product service.
  *
  * @author [윤태호]
- * @since 2020. 6. 23. 오후 3:24:39
  * @implNote
+ * @since 2020. 6. 23. 오후 3:24:39
  */
 @Slf4j
 @Service
@@ -44,8 +44,18 @@ public class ProductService {
 	 */
 	public final ProductRepository productRepository;
 
+	/**
+	 * The Wish list repository
+	 *
+	 * @author [윤태호]
+	 */
 	public final WishListRepository wishListRepository;
 
+	/**
+	 * The Goods basket repository
+	 *
+	 * @author [윤태호]
+	 */
 	public final GoodsBasketRepository goodsBasketRepository;
 
 	/**
@@ -54,8 +64,8 @@ public class ProductService {
 	 * @param productSearchDTO the product search dto
 	 * @return the page
 	 * @author [윤태호]
+	 * @implNote 제품 관리 리스트 페이징
 	 * @since 2020. 6. 23. 오후 3:24:30
-	 * @implNote
 	 */
 	public Page<ProductResultDTO> findPagesProduct(final ProductSearchDTO productSearchDTO) {
 		log.info("ProductService.findPagesProduct");
@@ -71,8 +81,8 @@ public class ProductService {
 	 * @param goodsSeq the goods seq
 	 * @return the optional
 	 * @author [윤태호]
+	 * @implNote 상품 상세 조회
 	 * @since 2020. 6. 24. 오전 11:39:06
-	 * @implNote
 	 */
 	public Product findByGoodsSeq(final Long goodsSeq) {
 		log.info("ProductService.findByGoodsSeq");
@@ -82,10 +92,10 @@ public class ProductService {
 	 * 제품 등록
 	 *
 	 * @param productSaveDTO the product save dto
-	 * @return product
-	 * @author [윤태호]`
+	 * @return product product
+	 * @author [윤태호]
+	 * @implNote 제품 등록
 	 * @since 2020. 6. 23. 오후 3:24:48
-	 * @implNote
 	 */
 	@Transactional
 	public Product save(final ProductSaveDTO productSaveDTO) {
@@ -100,7 +110,6 @@ public class ProductService {
 		product.setSize(productSaveDTO.getSize());
 		product.setUnitPrice(productSaveDTO.getUnitPrice());
 		product.setMinimumOrderQuantity(productSaveDTO.getMinimumOrderQuantity());
-
 		if(!ObjectUtils.isEmpty(productSaveDTO.getImageBase64()) &&
 			productSaveDTO.getImageBase64().contains("base64")){
 			final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.PRODUCT.getFolder(), productSaveDTO.getImageBase64());
@@ -121,8 +130,8 @@ public class ProductService {
 	 * @param productUpdateDTO the product update dto
 	 * @return the product
 	 * @author [윤태호]
+	 * @implNote 상품 수정
 	 * @since 2020. 6. 24. 오후 4:42:09
-	 * @implNote
 	 */
 	@Transactional
 	public Product update(final ProductUpdateDTO productUpdateDTO) {
@@ -159,8 +168,8 @@ public class ProductService {
 	 * @param productUpdateDTO the product update dto
 	 * @return the product
 	 * @author [윤태호]
+	 * @implNote 상품 삭제
 	 * @since 2020. 6. 24. 오후 5:23:04
-	 * @implNote
 	 */
 	@Transactional
 	public Optional<Product> delete(final ProductUpdateDTO productUpdateDTO) {
@@ -181,8 +190,8 @@ public class ProductService {
 	 * @param goodsSeqList the goods seq list
 	 * @return the list
 	 * @author [윤태호]
+	 * @implNote 다수 상품 조회
 	 * @since 2020. 6. 25. 오후 2:37:34
-	 * @implNote
 	 */
 	@Transactional
 	public List<Product> findBySearchId(final List<Long> goodsSeqList){
@@ -197,8 +206,8 @@ public class ProductService {
 	 * @param productUpdateDTO the product update dto
 	 * @return the optional
 	 * @author [윤태호]
+	 * @implNote 다수 상품 삭제
 	 * @since 2020. 6. 26. 오후 3:14:32
-	 * @implNote
 	 */
 	@Transactional
 	public boolean deleteArray(final List<Product> productList,

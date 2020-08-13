@@ -42,20 +42,20 @@ public class ProductUpdateDTO extends BasicDTO {
 	private String exposureYn;
 
 	/**
-	 * 카테고리 2 코드
+	 * 대분류 코드
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name="category2Code",value="구분 2 단계", required = true,example = "NIKE_BY_YOU")
+	@ApiModelProperty(name="category2Code",value="대분류 코드", required = true,example = "NIKE_BY_YOU")
 	@NotBlank(message = "product.category2Code")
 	private String category2Code;
 
 	/**
-	 * 카테고리 3 코드
+	 * 소분류 코드
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "category3Code", value = "구분 3 단계", required = true,example = "NIKE_BY_YOU27")
+	@ApiModelProperty(name = "category3Code", value = "소분류 코드", required = true,example = "NIKE_BY_YOU27")
 	@NotBlank(message = "product.category3Code")
 	private String category3Code;
 
