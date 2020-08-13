@@ -10,12 +10,14 @@
             @tabFnc="tabFnc"
         />
         <faqList
+            v-if="faqDataContent.length"
             :faqData="faqDataContent"
             :isActive="isActive"
             @edit="modifyRoute"
             @faqToggle="faqToggle"
             @delete="deleteBoard"
         />
+        <NoData v-else />
         <Loading v-if="loadingData" />
         <div class="btn-tbl-box">
             <div class="right">
@@ -62,6 +64,7 @@ export default {
     components: {
         faqList: () => import('@/components/faq/list'),
         faqTab: () => import('@/components/faq/tab'),
+        NoData: () => import('@/components/faq/nodata'),
         Pagination: () => import('@/components/pagination/'),
     },
     mounted() {
