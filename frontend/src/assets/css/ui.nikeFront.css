@@ -3884,6 +3884,7 @@
 
 .fc .fc-daygrid-day-top {
     padding: 9px 9px 0;
+    flex-direction: row !important;
 }
 .fc .fc-day-other .fc-daygrid-day-top {
     opacity: 1;
@@ -3912,7 +3913,7 @@
     line-height: 16px;
     border-radius: 50%;
     white-space: nowrap;
-    background: #000;
+    background: #fa5400;
     color: #fff;
     font-size: 11px;
     text-align: center;
@@ -3931,7 +3932,7 @@
 }
 
 .fc .fc-daygrid-event {
-    margin-top: 0 !important;
+    margin-top: 2px !important;
 }
 .fc-direction-ltr .fc-daygrid-event {
     border-radius: 0;
