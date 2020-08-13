@@ -6,7 +6,7 @@
                     <input
                         type="checkbox"
                         v-model="checkAll"
-                        :disabled="contentsFileList && !contentsFileList.length"
+                        :disabled="reportFileList && !reportFileList.length"
                         @click="$emit('allCheckFn')"
                     />
                     <span></span>
@@ -14,14 +14,14 @@
                 <strong class="txt" :class="{ 'fc-black': checkAll }">
                     전체선택 (
                     <em>{{ checkContentsFileList.length }}</em> /
-                    <em>{{ contentsFileListTotal }}</em>
+                    <em>{{ reportFileListTotal }}</em>
                     )
                 </strong>
             </label>
             <button
                 type="button"
                 class="txt-btn"
-                @click="$emit('addContBasket', checkContentsFileList)"
+                @click="$emit('addReportBasket', checkContentsFileList)"
             >
                 <span>선택 담기</span>
             </button>
@@ -30,33 +30,33 @@
                 <FilterSelect :listSortSelect="fileExtension" />
             </div>
         </div>
-        <template v-if="contentsFileList">
+        <template v-if="reportFileList">
             <draggable
                 tag="ul"
                 v-bind="dragOptions"
-                v-if="contentsFileList.length"
-                :list="contentsFileList"
+                v-if="reportFileList.length"
+                :list="reportFileList"
                 class="file-item-list"
                 @start="onStart"
                 @end="onEnd"
             >
                 <li
-                    :class="fileItemClass(item.contentsFileSeq)"
-                    v-for="item in contentsFileList"
-                    :key="item.contentsFileSeq"
+                    :class="fileItemClass(item.reportFileSeq)"
+                    v-for="item in reportFileList"
+                    :key="item.reportFileSeq"
                 >
                     <div class="list">
                         <label>
                             <span class="checkbox">
                                 <input
                                     type="checkbox"
-                                    :value="item.contentsFileSeq"
+                                    :value="item.reportFileSeq"
                                     v-model="checkContentsFileList"
                                     :disabled="item.url"
                                     @click="
                                         $emit(
                                             'checkContentsFile',
-                                            item.contentsFileSeq
+                                            item.reportFileSeq
                                         )
                                     "
                                 />
@@ -88,7 +88,7 @@
                                     type="button"
                                     class="btn-s-sm-white"
                                     disabled="disabled"
-                                    v-if="test(item.contentsFileSeq)"
+                                    v-if="test(item.reportFileSeq)"
                                 >
                                     <i class="icon-check"></i><span>ADDED</span>
                                 </button>
@@ -96,8 +96,8 @@
                                     type="button"
                                     class="btn-s-sm-black"
                                     @click="
-                                        $emit('addContBasket', [
-                                            item.contentsFileSeq,
+                                        $emit('addReportBasket', [
+                                            item.reportFileSeq,
                                         ])
                                     "
                                     v-else
@@ -107,11 +107,11 @@
                             </template>
                             <button
                                 type="button"
-                                :class="buttonClass(item.contentsFileSeq)"
+                                :class="buttonClass(item.reportFileSeq)"
                                 :disabled="
                                     item.fileKindCode === 'VR' || item.url
                                 "
-                                @click="accordion(item.contentsFileSeq)"
+                                @click="accordion(item.reportFileSeq)"
                             >
                                 <span>더보기</span>
                             </button>
@@ -124,7 +124,7 @@
                     >
                         <div
                             class="detail"
-                            v-if="openFile === item.contentsFileSeq"
+                            v-if="openFile === item.reportFileSeq"
                         >
                             <div class="inner">
                                 <div class="thumbnail">
@@ -157,7 +157,7 @@ import Loading from '@/components/loading';
 import NoData from '@/components/no-data';
 import { Cubic, gsap } from 'gsap/all';
 export default {
-    name: 'fileItem',
+    name: 'reportItem',
     data() {
         return { openFile: null, enabled: true, dragging: false };
     },
@@ -168,12 +168,12 @@ export default {
         draggable,
     },
     props: [
-        'contentsFileList',
+        'reportFileList',
         'checkAll',
         'orderType',
         'fileExtension',
         'checkContentsFileList',
-        'contentsFileListTotal',
+        'reportFileListTotal',
     ],
     created() {},
     computed: {
@@ -192,8 +192,8 @@ export default {
         },
         storeContBasketList: {
             get() {
-                return this.$store.state.contBasketList.map(
-                    (el) => el.contentsFileSeq
+                return this.$store.state.reportBasketList.map(
+                    (el) => el.reportFileSeq
                 );
             },
             set(value) {
@@ -233,7 +233,7 @@ export default {
         },
         onEnd(e) {
             if (this.$store.getters['basketAppendCheck']) {
-                this.$emit('addContBasket', this.checkContentsFileList);
+                this.$emit('addReportBasket', this.checkContentsFileList);
             }
             this.$store.commit('SET_BASKET_ITEM_DRAG', false);
         },

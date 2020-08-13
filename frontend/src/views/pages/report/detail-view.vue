@@ -65,19 +65,27 @@
                 :sectionCode="sectionCode"
                 @sectionCodeChange="sectionCodeChange"
             />
-            <div class="btn-box">
-                <button type="button" class="btn-s-lightgray-sm">
-                    <span>선택 담기</span>
-                </button>
-            </div>
         </div>
-        <fileItem
-            :contentsFileList="reportDetailData.reportFileList"
+        <ReportItem
+            :reportFileList="reportDetailData.reportFileList"
             :checkAll="checkAll"
             :checkContentsFileList="checkContentsFileList"
             @allCheckFn="allCheckFn"
             @checkContentsFile="checkContentsFile"
+            @addReportBasket="addReportBasket"
         />
+        <!--
+   <fileItem
+            :contentsFileList="contentsFileList"
+            :contentsFileListTotal="contentsFileListTotal"
+            :checkAll="checkAll"
+            :orderType="orderType"
+            :fileExtension="fileExtension"
+            :checkContentsFileList="checkContentsFileList"
+            @allCheckFn="allCheckFn"
+            @checkContentsFile="checkContentsFile"
+            @addReportBasket="addReportBasket"
+        ></fileItem>-->
     </div>
 </template>
 <script>
@@ -86,12 +94,13 @@ import {
     getAnswerList,
     postAnswerData,
     deleteAnswerList,
+    postReportBasket,
 } from '@/api/report';
 import Loading from '@/components/loading';
 import NoData from '@/components/no-data';
 import FeedbackList from '@/components/feedback-list';
 import SortingList from '@/components/asset-view/sorting-list.vue';
-import fileItem from '@/components/asset-view/file-Item.vue';
+import ReportItem from '@/components/report-view/report-Item.vue';
 export default {
     name: 'detail-view',
     data() {
@@ -127,22 +136,32 @@ export default {
         Loading,
         NoData,
         SortingList,
-        fileItem,
+        ReportItem,
     },
     created() {
         this.reportDetailView();
         this.reportAnswerList();
     },
     methods: {
+        // 파일 선택 담기
+        async addReportBasket(seq) {
+            console.log(seq);
+            try {
+                await postReportBasket(seq);
+                await this.$store.dispatch('getReportListBasket');
+            } catch (e) {
+                console.log(e);
+            }
+        },
         allCheckFn() {
             this.checkAll = !this.checkAll;
             if (this.checkAll) {
                 this.reportDetailData.reportFileList.forEach((el) => {
                     const indexOfChecked = this.checkContentsFileList.findIndex(
-                        (elChecked) => elChecked === el.contentsFileSeq
+                        (elChecked) => elChecked === el.reportFileSeq
                     );
                     if (indexOfChecked === -1) {
-                        this.checkContentsFileList.push(el.contentsFileSeq);
+                        this.checkContentsFileList.push(el.reportFileSeq);
                     }
                 });
             } else {

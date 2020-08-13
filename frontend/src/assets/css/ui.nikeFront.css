@@ -1727,8 +1727,7 @@
     min-width: auto;
     padding-right: 15px;
 }
-.all-box .el-checkbox__label {
-    padding: 0 0 0 10px;
+.all-box .txt {
     font-size: 12px;
     font-weight: bold;
 }
@@ -1739,6 +1738,21 @@
 .all-box .el-checkbox {
     min-width: auto;
     padding-right: 15px;
+}
+.all-box .check-label + .txt-btn {
+    position: relative;
+    margin: 0 0 0 15px;
+}
+.all-box .check-label + .txt-btn:before {
+    position: absolute;
+    top: 50%;
+    left: -15px;
+    content: '';
+    display: block;
+    width: 1px;
+    height: 10px;
+    margin-top: -5px;
+    background: #ddd;
 }
 .all-box .el-checkbox + .desc {
     padding: 0 0 0 15px;

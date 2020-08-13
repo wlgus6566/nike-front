@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import { loginUser } from '@/api/login';
 import { getBasketList } from '@/api/basket.js';
 import { getContentsBasket } from '@/api/contents';
+import { getReportBasket } from '@/api/report';
 
 import {
     deleteCookie,
@@ -24,6 +25,7 @@ export default new Vuex.Store({
         basketListData: null,
         goodsBasketSeq: '',
         contBasketList: [],
+        reportBasketList: [],
         reload: false,
     },
     getters: {
@@ -62,6 +64,7 @@ export default new Vuex.Store({
             state.basketListData = null;
             state.goodsBasketSeq = '';
             state.contBasketList = [];
+            state.reportBasketList = [];
             deleteCookie('user_id');
             deleteCookie('user_nick');
             deleteCookie('user_token');
@@ -77,6 +80,9 @@ export default new Vuex.Store({
         },
         SET_RELOAD(state, data) {
             state.reload = data;
+        },
+        SET_REPORT_BASKET(state, data) {
+            state.reportBasketList = data;
         },
     },
     actions: {
@@ -105,6 +111,13 @@ export default new Vuex.Store({
         async getContBasket({ commit }) {
             const response = await getContentsBasket();
             commit('SET_CONT_BASKET', response.data.data);
+            return response;
+        },
+
+        // report 장바구니 목록
+        async getReportListBasket({ commit }) {
+            const response = await getReportBasket();
+            commit('SET_REPORT_BASKET', response.data.data);
             return response;
         },
     },

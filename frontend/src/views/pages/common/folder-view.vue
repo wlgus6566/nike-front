@@ -12,18 +12,10 @@
                 :sectionCode="sectionCode"
                 @sectionCodeChange="sectionCodeChange"
             />
-            <div class="btn-box">
-                <button
-                    type="button"
-                    class="btn-s-lightgray-sm"
-                    @click="addContBasket(checkContentsFileList)"
-                >
-                    <span>선택 담기</span>
-                </button>
-            </div>
         </div>
         <fileItem
             :contentsFileList="contentsFileList"
+            :contentsFileListTotal="contentsFileListTotal"
             :checkAll="checkAll"
             :orderType="orderType"
             :fileExtension="fileExtension"
@@ -60,6 +52,7 @@ export default {
 
             folderDetail: null,
             contentsFileList: null,
+            contentsFileListTotal: 0,
             checkContentsFileList: [],
 
             sectionCode: {
@@ -214,7 +207,10 @@ export default {
         'sectionCode.value'() {
             this.initFetchData();
         },
-        'orderType.value'() {
+        'orderType.value'(val) {
+            if (val === '') {
+                this.orderType.value = 'ORDER';
+            }
             this.initFetchData();
         },
         'fileExtension.value'() {
@@ -359,6 +355,7 @@ export default {
                     );
                 } else {
                     this.contentsFileList = response.content;
+                    this.contentsFileListTotal = response.totalElements;
                 }
                 this.page++;
                 this.loadingData = false;

@@ -32,6 +32,21 @@ function deleteAnswerList(answerSeq) {
     return report.delete(`/answer/${answerSeq}`);
 }
 
+//REPORT 장바구니 목록
+function getReportBasket() {
+    return report.get(`/basket`);
+}
+
+//REPORT 장바구니 등록
+function postReportBasket(data) {
+    return report.post(`/basket`, data);
+}
+
+//REPORT 장바구니 삭제
+function deleteReportBasket(reportBasketSeq, data) {
+    return report.delete(`/basket/${reportBasketSeq}`, data);
+}
+
 export {
     getReportList,
     postReport,
@@ -39,4 +54,7 @@ export {
     getAnswerList,
     postAnswerData,
     deleteAnswerList,
+    getReportBasket,
+    postReportBasket,
+    deleteReportBasket,
 };
