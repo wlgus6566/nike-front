@@ -2,6 +2,7 @@ package com.nike.dnp.dto.notice;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nike.dnp.util.CloudFrontUtil;
 import io.netty.util.internal.StringUtil;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
@@ -124,18 +125,15 @@ public class CustomerResultDTO {
     @ApiModelProperty(name = "updateDt", value = "최종 수정일")
     private LocalDateTime updateDt;
 
-    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    /*@ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
     private static String cdnUrl;
 
     @Value("${nike.file.cdnUrl:}")
     public void setCdnUrl(final String cdnUrl) {
         this.cdnUrl = cdnUrl;
     }
-
+*/
     public String getThumbnailFilePhysicalName() {
-        if (StringUtils.equalsIgnoreCase(this.noticeArticleSectionCode, "NEWS")) {
-            return this.cdnUrl + thumbnailFilePhysicalName;
-        }
-        return null;
+        return StringUtils.isEmpty(thumbnailFilePhysicalName) ? null : CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
     }
 }
