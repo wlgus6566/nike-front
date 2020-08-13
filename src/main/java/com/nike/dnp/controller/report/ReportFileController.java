@@ -7,11 +7,13 @@ import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.report.ReportFileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -71,8 +73,9 @@ public class ReportFileController {
         + "number||현재페이지|Integer\n"
         + "size||노출갯수|Integer\n\n\n\n"
     )
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 파일 목록 조회")
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 파일 목록 조회", value = "/{reportSeq}")
     public SingleResult<Page<ReportFileResultDTO>> findAllContentsFile(
+            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "4", required = true) @PathVariable final Long reportSeq,
             final ReportFileSearchDTO reportFileSearchDTO
     ) {
         return responseService.getSingleResult(reportFileService.findAllReportFilePaging(reportFileSearchDTO));

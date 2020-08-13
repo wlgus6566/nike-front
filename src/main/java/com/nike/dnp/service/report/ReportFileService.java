@@ -55,7 +55,7 @@ public class ReportFileService {
      *
      * @author [이소정]
      */
-    private ReportFileRepository reportFileRepository;
+    private final ReportFileRepository reportFileRepository;
 
     /**
      * Find all report file paging page.
