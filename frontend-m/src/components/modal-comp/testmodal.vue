@@ -6,9 +6,9 @@
             </div>
         </template>
         <template v-slot:modal-content>컨텐츠영역</template>
-        <template v-slot:modal-footer
-            >footer 영역 없으면 안써도 됩니다</template
-        >
+        <template v-slot:modal-footer>
+            footer 영역 없으면 안써도 됩니다
+        </template>
     </ModalComp>
 </template>
 <script>
