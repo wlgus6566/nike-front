@@ -17,6 +17,7 @@ import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
 import com.nike.dnp.service.alarm.AlarmService;
+import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.history.HistoryService;
 import com.nike.dnp.service.user.UserContentsService;
 import com.nike.dnp.util.*;
@@ -106,6 +107,8 @@ public class ContentsService {
      * @author [이소정]
      */
     private final UserAuthRepository userAuthRepository;
+
+    private final AuthService authService;
 
 
     /**
@@ -237,7 +240,7 @@ public class ContentsService {
         userContentsSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
         userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
         ContentsResultDTO contentsResultDTO = ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
-        contentsResultDTO.setChecks(userContentsService.getAuthList(userContentsSearchDTO));
+        contentsResultDTO.setChecks(authService.getAuthList(userContentsSearchDTO));
         return contentsResultDTO;
     }
 
