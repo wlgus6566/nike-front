@@ -39,9 +39,7 @@ export default {
         },
     },
     methods: {
-        focus() {
-            console.log(1);
-        },
+        focus() {},
         selectWidthSet() {
             const selectDiv = this.$refs.select.$el;
             const input = selectDiv.querySelector('input');

@@ -25,10 +25,6 @@
             >
                 <span>선택 담기</span>
             </button>
-            <div class="right">
-                <FilterSelect :listSortSelect="orderType" />
-                <FilterSelect :listSortSelect="fileExtension" />
-            </div>
         </div>
         <template v-if="reportFileList">
             <draggable
@@ -152,7 +148,6 @@
 </template>
 <script>
 import draggable from 'vuedraggable';
-import FilterSelect from '@/components/filter-select';
 import Loading from '@/components/loading';
 import NoData from '@/components/no-data';
 import { Cubic, gsap } from 'gsap/all';
@@ -164,7 +159,6 @@ export default {
     components: {
         Loading,
         NoData,
-        FilterSelect,
         draggable,
     },
     props: [

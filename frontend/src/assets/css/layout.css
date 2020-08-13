@@ -152,6 +152,7 @@ header .sticky-content {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: calc(100% - 200px);
+    max-width: calc(100% - 200px);
     box-sizing: border-box;
     min-height: calc(100vh);
 }
@@ -161,6 +162,7 @@ header .sticky-content {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: calc(100% - 300px);
+    max-width: calc(100% - 300px);
     padding: 80px 60px 130px;
     box-sizing: border-box;
 }

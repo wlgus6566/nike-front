@@ -89,16 +89,16 @@ export default {
         };
     },
     components: { VueCropper },
-    props: ['imageFilePhysicalName', 'imageFileName', 'size'],
+    props: ['imageBase64', 'imageFileName', 'size'],
     mounted() {
-        this.cropImg = this.imageFilePhysicalName;
+        this.cropImg = this.imageBase64;
     },
     activated() {
-        this.cropImg = this.imageFilePhysicalName;
+        this.cropImg = this.imageBase64;
     },
     watch: {
-        imageFilePhysicalName() {
-            this.cropImg = this.imageFilePhysicalName;
+        imageBase64() {
+            this.cropImg = this.imageBase64;
         },
         imageFileName() {
             this.imgName = this.imageFileName;
@@ -107,8 +107,6 @@ export default {
     computed: {},
     methods: {
         inputChangeEvent(e) {
-            console.log(this.$refs);
-            console.log(e);
             const file = e.target.files[0];
             if (file.type.indexOf('image/') === -1) {
                 alert('Please select an image file');
@@ -126,6 +124,7 @@ export default {
                 .then((data) => {
                     const url = `${data[0].prefix}${data[0].data}`;
                     this.imgSrc = url;
+                    this.imgName = file.name;
                     this.popupOpen();
                 })
                 .catch((e) => {
@@ -139,7 +138,9 @@ export default {
             this.$modal.hide('modal-cropper');
         },
         cropImage() {
+            console.log(123);
             this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
+            this.$emit('cropImage', this.cropImg, this.imgName);
             this.popupClose();
         },
         flipX() {

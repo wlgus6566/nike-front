@@ -1,19 +1,6 @@
 <template>
     <div>
-        <div class="btn-detail">
-            <router-link to="/report/management" class="btn-list">
-                <span>목록으로 가기</span>
-            </router-link>
-            <div class="btn-box">
-                <button type="button" class="btn-o-white">
-                    <span>삭제</span>
-                </button>
-                <button type="button" class="btn-o-white">
-                    <span>수정</span>
-                </button>
-            </div>
-        </div>
-
+        <BtnArea @delete="deleteReport" @edit="modifyFolder" />
         <div class="folder-wrap">
             <h2 class="folder-title">계정명 없음</h2>
             <div class="inner">
@@ -32,18 +19,12 @@
 
         <div class="feedback-wrap">
             <strong class="title">FEEDBACK</strong>
-            <template>
+            <template v-if="answerList">
                 <FeedbackList
                     :answerList="answerList"
                     v-if="answerList.length"
                     @reportAnswerDelete="reportAnswerDelete"
                 />
-                <template v-else>
-                    <NoData>
-                        <i class="icon-file"></i>
-                        <p class="desc">등록된 댓글이 없습니다.</p>
-                    </NoData>
-                </template>
             </template>
             <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
             <div class="textarea">
@@ -91,13 +72,14 @@
 <script>
 import {
     getReportDetail,
+    delReport,
     getAnswerList,
     postAnswerData,
     deleteAnswerList,
     postReportBasket,
 } from '@/api/report';
+import BtnArea from '@/components/asset-view/btn-area.vue';
 import Loading from '@/components/loading';
-import NoData from '@/components/no-data';
 import FeedbackList from '@/components/feedback-list';
 import SortingList from '@/components/asset-view/sorting-list.vue';
 import ReportItem from '@/components/report-view/report-Item.vue';
@@ -132,9 +114,9 @@ export default {
         };
     },
     components: {
+        BtnArea,
         FeedbackList,
         Loading,
-        NoData,
         SortingList,
         ReportItem,
     },
@@ -143,6 +125,34 @@ export default {
         this.reportAnswerList();
     },
     methods: {
+        //리포트 삭제
+        async deleteReport() {
+            console.log(this.$route.params.id);
+            if (
+                !confirm(
+                    '삭제 시 등록한 내용이 전부 삭제 됩니다. 삭제하시겠습니까?'
+                )
+            )
+                return;
+            if (!confirm('정말 삭제하시겠습니까?')) return;
+            try {
+                const response = await delReport(this.$route.params.id);
+                this.$store.commit('SET_RELOAD', true);
+                await this.$store.dispatch('getReportListBasket');
+                if (response.data.success) {
+                    await this.$router.go(-1);
+                }
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        //리포트 수정
+        modifyFolder() {
+            this.$router.push(
+                `/report/${this.$route.meta.menuCode}/modify/${this.$route.params.id}`
+            );
+        },
         // 파일 선택 담기
         async addReportBasket(seq) {
             console.log(seq);
