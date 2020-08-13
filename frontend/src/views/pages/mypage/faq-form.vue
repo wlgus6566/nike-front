@@ -182,7 +182,10 @@ export default {
             try {
                 const {
                     data: { data: response },
-                } = await getCustomerDetail(this.$route.params.id);
+                } = await getCustomerDetail(
+                    this.noticeArticleSectionCode,
+                    this.$route.params.id
+                );
                 this.faqDetail = response;
                 this.categoryCodeList.value =
                     response.noticeArticleCategoryCode;

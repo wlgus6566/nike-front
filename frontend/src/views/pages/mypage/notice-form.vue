@@ -206,7 +206,10 @@ export default {
             try {
                 const {
                     data: { data: response },
-                } = await getCustomerDetail(this.$route.params.id);
+                } = await getCustomerDetail(
+                    this.noticeArticleSectionCode,
+                    this.$route.params.id
+                );
                 this.noticeDetail = response;
             } catch (error) {
                 console.log(error);

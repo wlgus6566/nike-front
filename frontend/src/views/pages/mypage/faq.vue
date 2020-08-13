@@ -113,7 +113,7 @@ export default {
                 return false;
             }
             try {
-                await deleteCustomer(id);
+                await deleteCustomer(this.noticeArticleSectionCode, id);
                 await this.getFaqList();
             } catch (error) {
                 console.log(error);

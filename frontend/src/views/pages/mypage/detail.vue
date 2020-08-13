@@ -23,6 +23,7 @@ export default {
     name: 'notice-view',
     data() {
         return {
+            noticeArticleSectionCode: null,
             noticeDetail: {
                 title: '',
                 registrationDt: '',
@@ -32,7 +33,6 @@ export default {
     },
     mounted() {
         this.getNoticeDetail();
-        console.log(this.$route.meta.sectionCode);
     },
     components: {
         BtnArea: () => import('@/components/asset-view/btn-area.vue'),
@@ -40,12 +40,17 @@ export default {
     methods: {
         //공지사항 상세
         async getNoticeDetail() {
-            console.log(this.$route.params.id);
             try {
                 const {
                     data: { data: response },
-                } = await getCustomerDetail(this.$route.params.id);
+                } = await getCustomerDetail(
+                    this.noticeArticleSectionCode,
+                    this.$route.params.id
+                );
+                //console.log(response);
                 this.noticeDetail = response;
+                this.noticeArticleSectionCode =
+                    response.noticeArticleSectionCode;
             } catch (error) {
                 console.log(error);
             }
@@ -53,11 +58,11 @@ export default {
 
         //게시판 수정페이지 이동
         modifyRoute() {
-            if (this.$route.meta.sectionCode === 'NOTICE') {
+            if (this.noticeArticleSectionCode === 'NOTICE') {
                 this.$router.push(
                     `/mypage/notice/modify/${this.$route.params.id}`
                 );
-            } else if (this.$route.meta.sectionCode === 'NEWS') {
+            } else if (this.noticeArticleSectionCode === 'NEWS') {
                 this.$router.push(
                     `/mypage/news/modify/${this.$route.params.id}`
                 );
@@ -70,7 +75,10 @@ export default {
                 return false;
             }
             try {
-                const response = await deleteCustomer(this.$route.params.id);
+                const response = await deleteCustomer(
+                    this.noticeArticleSectionCode,
+                    this.$route.params.id
+                );
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
                     this.$router.go(-1);
