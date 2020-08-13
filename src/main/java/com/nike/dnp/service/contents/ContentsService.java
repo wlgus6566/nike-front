@@ -3,6 +3,7 @@ package com.nike.dnp.service.contents;
 import com.nike.dnp.common.mail.MailService;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
@@ -615,6 +616,25 @@ public class ContentsService {
         final List<Contents> contentsList
                 = contentsRepository.findByUpdateDtBeforeAndTopMenuCode(beforeDate, topMenuCode);
         contentsRepository.deleteAll(contentsList);
+    }
+
+    /**
+     * Load auth list list.
+     *
+     * @param topMenuCode the top menu code
+     * @param menuCode    the menu code
+     * @return the list
+     * @author [이소정]
+     * @implNote 콘텐츠 권한 목록 조회
+     * @since 2020. 8. 13. 오후 9:26:08
+     */
+    public List<AuthReturnDTO> loadAuthList(final String topMenuCode, final String menuCode) {
+        // 권한 목록 조회
+        UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
+        userContentsSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
+        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+        return authService.getAuthList(userContentsSearchDTO);
+        
     }
 
 }
