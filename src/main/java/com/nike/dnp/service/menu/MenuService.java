@@ -44,16 +44,16 @@ public class MenuService {
     }
 
     /**
-     * Find menus list.
+     * Find manage menus list.
      *
      * @return the list
      * @author [오지훈]
-     * @since 2020. 7. 16. 오후 4:40:39
-     * @implNote 메뉴 목록(1depth)
+     * @implNote 권한 관리 대상 메뉴 목록 조회
+     * @since 2020. 8. 10. 오후 3:54:16
      */
-    public List<Menu> findMenus() {
-        log.info("MenuService.findMenus");
-        return menuRepository.findAllByUseYnAndMenuDepth("Y", 1L);
+    public List<Menu> findManageMenus() {
+        log.info("MenuService.findManageMenus");
+        return menuRepository.findAllByUseYnAndManagementYnOrderByMenuDepthAscMenuOrderAsc("Y", "Y");
     }
 
 }

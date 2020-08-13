@@ -27,19 +27,19 @@ public class ProductUserSearchDTO extends SearchDTO {
 	private String keyword = "";
 
 	/**
-	 * 카테고리 2 코드
+	 * 대분류 코드
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiParam(value = "카테고리 2 코드",name = "category2Code", defaultValue = "",hidden = true)
+	@ApiParam(value = "대분류 코드",name = "category2Code", defaultValue = "",hidden = true)
 	private String category2Code;
 
 	/**
-	 * 카테고리 3 코드
+	 * 소분류 코드
 	 *
 	 * @author [오지훈]
 	 */
-	@ApiParam(value = "카테고리 3 코드", name = "category3Code", allowableValues = "SUBSIDIARY21,SUBSIDIARY22,SUBSIDIARY23,SUBSIDIARY24,SUBSIDIARY25,SUBSIDIARY26",required = true)
+	@ApiParam(value = "소분류 코드", name = "category3Code", allowableValues = "SUBSIDIARY21,SUBSIDIARY22,SUBSIDIARY23,SUBSIDIARY24,SUBSIDIARY25,SUBSIDIARY26",required = true)
 	private String category3Code;
 	/**
 	 * 노출 여부

@@ -1,8 +1,11 @@
 package com.nike.dnp.dto.auth;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.common.variable.ServiceCode;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+
+import java.util.List;
 
 /**
  * The Class Auth return dto.
@@ -16,6 +19,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class AuthReturnDTO {
 
     /**
@@ -35,7 +39,7 @@ public class AuthReturnDTO {
     private Long upperAuthSeq;
 
     /**
-     * 권한명
+     * 권한 명
      *
      * @author [오지훈]
      */
@@ -43,12 +47,28 @@ public class AuthReturnDTO {
     private String authName;
 
     /**
-     * 상위 권한 명
+     * 권한 역
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "upperAuthName", value = "상위 권한 명", required = true)
-    private String upperAuthName;
+    @ApiModelProperty(name = "roleType", value = "권한 역", required = true)
+    private String roleType;
+
+    /**
+     * 권한 depth
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "authDepth", value = "권한 depth", required = true)
+    private Long authDepth;
+
+    /**
+     * 하위 권한
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "subAuths", value = "하위 권한", required = true)
+    private List<AuthReturnDTO> subAuths;
 
     /**
      * 상세_권한_여부
@@ -56,7 +76,7 @@ public class AuthReturnDTO {
      * @author [오지훈]
      */
     @ApiModelProperty(name = "detailAuthYn", value = "상세_권한_여부", required = true, example = "N")
-    private String detailAuthYn = ServiceCode.YesOrNoEnumCode.N.toString();
+    private String detailAuthYn = ServiceCode.YesOrNoEnumCode.N.name();
 
     /**
      * 메일_수신_여부
@@ -64,6 +84,22 @@ public class AuthReturnDTO {
      * @author [오지훈]
      */
     @ApiModelProperty(name = "emailReceptionYn", value = "메일_수신_여부", required = true, example = "N")
-    private String emailReceptionYn = ServiceCode.YesOrNoEnumCode.N.toString();
+    private String emailReceptionYn = ServiceCode.YesOrNoEnumCode.N.name();
+
+    /**
+     * 컨텐츠 권한 목록 노출 여부
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "viewYn", value = "컨텐츠 권한 목록 노출 여부", required = true, example = "N")
+    private String viewYn = ServiceCode.YesOrNoEnumCode.N.name();
+
+    /**
+     * 컨텐츠 권한 목록 체크박스 노출 여부
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "checkBoxYn", value = "컨텐츠 권한 목록 체크박스 노출 여부", required = true, example = "N")
+    private String checkBoxYn = ServiceCode.YesOrNoEnumCode.N.name();
 
 }

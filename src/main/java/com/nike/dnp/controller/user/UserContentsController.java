@@ -5,6 +5,7 @@ import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
+import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.user.UserContentsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -49,6 +50,7 @@ public class UserContentsController {
      * @author [오지훈]
      */
     private final UserContentsService userContentsService;
+    private final AuthService authService;
 
     /**
      * OPERATION_CHARACTER
@@ -76,7 +78,7 @@ public class UserContentsController {
             @ApiParam(value = "유저 컨텐츠 권한 검색 DTO", required = true) @Valid @RequestBody final UserContentsSearchDTO userContentsSearchDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserContentsController.list");
-        return responseService.getSingleResult(userContentsService.getAuthList(userContentsSearchDTO));
+        return responseService.getSingleResult(authService.getAuthList(userContentsSearchDTO));
     }
 
 //    /**

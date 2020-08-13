@@ -19,8 +19,8 @@ import java.util.List;
  * The Class Order product mapper repository.
  *
  * @author [윤태호]
- * @since 2020. 7. 1. 오후 4:11:28
  * @implNote
+ * @since 2020. 7. 1. 오후 4:11:28
  */
 @Slf4j
 @Repository
@@ -30,8 +30,8 @@ public class OrderRepositoryImpl extends QuerydslRepositorySupport implements Or
 	 * Creates a new {@link QuerydslRepositorySupport} instance for the given domain type.
 	 *
 	 * @author [윤태호]
+	 * @implNote 주입
 	 * @since 2020. 7. 1. 오후 4:17:41
-	 * @implNote
 	 */
 	public OrderRepositoryImpl() {
 		super(OrderEntity.class);
@@ -44,6 +44,7 @@ public class OrderRepositoryImpl extends QuerydslRepositorySupport implements Or
 	 * @param useYn    the use yn
 	 * @return the order product mapping
 	 * @author [윤태호]
+	 * @implNote 제품 상세 정보 조회
 	 * @since 2020. 7. 31. 오후 12:23:18
 	 */
 	@Override
@@ -65,7 +66,7 @@ public class OrderRepositoryImpl extends QuerydslRepositorySupport implements Or
 	 * @param pageRequest    the page request
 	 * @return the page
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 주문 내역 리스트 조회
 	 * @since 2020. 7. 7. 오후 12:14:28
 	 */
 	@Override

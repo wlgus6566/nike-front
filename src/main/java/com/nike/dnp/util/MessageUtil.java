@@ -32,4 +32,19 @@ public class MessageUtil {
         return messageSource.getMessage(Objects.requireNonNull(enumCode), null, Locale.KOREA);
     }
 
+
+    /**
+     * Gets message.
+     *
+     * @param enumCode the enum code
+     * @param args     the args
+     * @return the message
+     * @author [윤태호]
+     * @since 2020. 8. 7. 오후 6:04:07
+     */
+    public String getMessage(final String enumCode,final Object [] args)  {
+        MessageSource messageSource = (MessageSource) BeanUtil.getBean("messageSource");
+        return messageSource.getMessage(Objects.requireNonNull(enumCode), args, Locale.KOREA);
+    }
+
 }

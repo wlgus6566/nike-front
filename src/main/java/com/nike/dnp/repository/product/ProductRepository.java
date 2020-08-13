@@ -23,7 +23,7 @@ public interface ProductRepository extends JpaRepository<Product,Long>,ProductRe
 	 * @return the product
 	 * @author [윤태호]
 	 * @since 2020. 6. 24. 오후 4:41:35
-	 * @implNote
+	 * @implNote 제품 조회
 	 */
 	Product findByGoodsSeq(Long goodsSeq);
 }

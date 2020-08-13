@@ -1,10 +1,7 @@
 package com.nike.dnp.service.calendar;
 
 import com.nike.dnp.common.variable.FailCode;
-import com.nike.dnp.dto.calendar.CalendarDaySearchDTO;
-import com.nike.dnp.dto.calendar.CalendarSaveDTO;
-import com.nike.dnp.dto.calendar.CalendarSearchDTO;
-import com.nike.dnp.dto.calendar.CalendarUpdateDTO;
+import com.nike.dnp.dto.calendar.*;
 import com.nike.dnp.entity.calendar.Calendar;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.calendar.CalendarRepository;
@@ -21,7 +18,6 @@ import org.springframework.util.ObjectUtils;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -60,7 +56,7 @@ public class CalendarService {
      * @return the optional
      * @author [윤태호]
      * @since 2020. 7. 22. 오후 4:45:45
-     * @implNote
+     * @implNote Calendar 단건 조회.
      */
     public Optional<Calendar> findById(final Long calendarSeq) {
         log.info("CalendarService.findById");
@@ -74,8 +70,9 @@ public class CalendarService {
      * @return the calendar
      * @author [윤태호]
      * @since 2020. 7. 22. 오후 4:45:45
-     * @implNote
+     * @implNote Calendar 등록
      */
+    @Transactional
     public Calendar save(final CalendarSaveDTO calendarSaveDTO){
         log.info("CalendarService.save");
         final ModelMapper modelMapper = new ModelMapper();
@@ -89,6 +86,16 @@ public class CalendarService {
         calendar.setRegisterSeq(SecurityUtil.currentUser().getUserSeq());
         calendar.setUpdaterSeq(SecurityUtil.currentUser().getUserSeq());
 
+        List<CalendarCheckDTO> checkDTOList =  calendarRepository.findDayListCount(calendar);
+
+        log.debug("checkDTOList.toString() {}", checkDTOList.toString());
+        for(CalendarCheckDTO calendarCheckDTO : checkDTOList){
+            if(calendarCheckDTO.getCount()>3){
+                throw new CodeMessageHandleException(FailCode.ConfigureError.MAX_INSERT_CALENDAR.name(),
+                                                     MessageUtil.getMessage(FailCode.ConfigureError.MAX_INSERT_CALENDAR.name()
+                                                             ,new String [] {calendarCheckDTO.getBeginDt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))}));
+            }
+        }
         return calendarRepository.save(calendar);
     }
 
@@ -99,20 +106,12 @@ public class CalendarService {
      * @return the page
      * @author [윤태호]
      * @since 2020. 7. 22. 오후 4:45:45
-     * @implNote
+     * @implNote Calendar 목록 조회
      */
     public List<Calendar> findAll(final CalendarSearchDTO calendarSearchDTO) {
         log.info("CalendarService.findAll");
-        //월의 마지막 날짜 구하기
-        final YearMonth targetYearMonth = YearMonth.from(LocalDate.parse(calendarSearchDTO.getYyyyMm()+".01", DateTimeFormatter.ofPattern("yyyy.MM.dd")));
-
-        final LocalDateTime beginDt = LocalDateUtil.strToLocalDateTime(
-                calendarSearchDTO.getYyyyMm()+".01 00:00:00",DATE_FORMAT);
-
-        final LocalDateTime endDt = LocalDateUtil.strToLocalDateTime(
-                calendarSearchDTO.getYyyyMm()+"."+targetYearMonth.lengthOfMonth()+" 23:59:59",DATE_FORMAT);
-
-        return calendarRepository.findByBeginDtGreaterThanEqualAndEndDtLessThanEqual(beginDt, endDt);
+        calendarSearchDTO.setYyyyMm(calendarSearchDTO.getYyyyMm().replace(".", ""));
+        return calendarRepository.findByMonthSearch(calendarSearchDTO);
     }
 
     /**
@@ -122,7 +121,7 @@ public class CalendarService {
      * @return the optional
      * @author [윤태호]
      * @since 2020. 7. 22. 오후 3:58:34
-     * @implNote
+     * @implNote Calendar 수정
      */
     @Transactional
     public Calendar update(final CalendarUpdateDTO calendarUpdateDTO) {
@@ -132,7 +131,6 @@ public class CalendarService {
         if(calendarEntity.isPresent()){
             calendarEntity.ifPresent(
                     value -> {
-
                         value.setCalendarSectionCode(calendarUpdateDTO.getCalendarSectionCode());
                         value.setScheduleName(calendarUpdateDTO.getScheduleName());
                         value.setContents(calendarUpdateDTO.getContents());
@@ -148,7 +146,6 @@ public class CalendarService {
         }else{
             throw new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()));
         }
-
         return calendarEntity.get();
     }
 
@@ -159,7 +156,7 @@ public class CalendarService {
      * @return the optional
      * @author [윤태호]
      * @since 2020. 7. 22. 오후 4:45:45
-     * @implNote
+     * @implNote Calendar 삭제
      */
     @Transactional
     public Long delete(final Long calendarSeq) {
@@ -175,7 +172,7 @@ public class CalendarService {
      * @return the list
      * @author [윤태호]
      * @since 2020. 7. 22. 오후 4:45:45
-     * @implNote
+     * @implNote calendar 날짜 조회
      */
     public List<Calendar> findAllToday(final CalendarDaySearchDTO calendarDaySearchDTO) {
         log.info("CalendarService.findAllToday");
@@ -183,7 +180,7 @@ public class CalendarService {
         if(!ObjectUtils.isEmpty(calendarDaySearchDTO.getSearchDt())){
             searchDt = LocalDateTime.of(
                     LocalDate.parse(calendarDaySearchDTO.getSearchDt() ,DateTimeFormatter.ofPattern("yyyy.MM.dd")),
-                    LocalTime.of(0,0,0));
+                    LocalTime.of(1,0,0));
         }
         return calendarRepository.findAllByBeginDtBeforeAndEndDtAfter(searchDt, searchDt);
     }

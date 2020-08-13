@@ -61,13 +61,20 @@ public class BannerService {
      * @implNote 배너 상세(캐시)
      */
     public Banner getBanner() {
-        Banner banner = (Banner) redisService.get(BANNER_REDIS_KEY);
+        final Banner banner = (Banner) redisService.get(BANNER_REDIS_KEY);
+        return ObjectUtils.isEmpty(banner) ? bannerRepository.findAllByUseYn(ServiceCode.YesOrNoEnumCode.Y.name()).get(0) : banner;
+    }
 
-        if (ObjectUtils.isEmpty(banner)) {
-            banner = bannerRepository.findAll().get(0);
-        }
-
-        return banner;
+    /**
+     * Find banner banner.
+     *
+     * @return the banner
+     * @author [오지훈]
+     * @implNote 배너 상세(DB)
+     * @since 2020. 8. 12. 오후 2:12:13
+     */
+    public Banner findBanner() {
+        return bannerRepository.findAllByUseYn(ServiceCode.YesOrNoEnumCode.Y.name()).get(0);
     }
 
     /**
@@ -80,7 +87,7 @@ public class BannerService {
      * @implNote
      */
     public Optional<Banner> findById(final Long bannerSeq) {
-        return bannerRepository.findById(bannerSeq);
+        return bannerRepository.findByBannerSeqAndUseYn(bannerSeq, ServiceCode.YesOrNoEnumCode.Y.name());
     }
 
     /**
@@ -136,6 +143,21 @@ public class BannerService {
         redisService.delete(BANNER_REDIS_KEY);
         redisService.set(BANNER_REDIS_KEY, banner, 0);
         return banner;
+    }
+
+    /**
+     * Delete banner.
+     *
+     * @param bannerSeq the banner seq
+     * @return the banner
+     * @author [오지훈]
+     * @implNoe 배너 삭제
+     * @since 2020. 8. 11. 오후 12:01:46
+     */
+    @Transactional
+    public Banner delete (final Long bannerSeq) {
+        redisService.delete(BANNER_REDIS_KEY);
+        return this.findByBannerSeq(bannerSeq).delete();
     }
 
 }

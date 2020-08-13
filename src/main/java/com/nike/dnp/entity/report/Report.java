@@ -3,6 +3,7 @@ package com.nike.dnp.entity.report;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -121,27 +122,6 @@ public class Report extends BaseTimeEntity {
     private List<ReportFile> reportFileList;
 
     /**
-     * The constant cdnUrl.
-     *
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
-    private static String cdnUrl;
-
-    /**
-     * Sets cdn url.
-     *
-     * @param cdnUrl the cdn url
-     * @author [이소정]
-     * @implNote cndUrl 셋팅
-     * @since 2020. 7. 30. 오후 3:51:40
-     */
-    @Value("${nike.file.cdnUrl:}")
-    public void setCdnUrl(final String cdnUrl) {
-        this.cdnUrl = cdnUrl;
-    }
-
-    /**
      * Gets image file physical name.
      *
      * @return the image file physical name
@@ -150,7 +130,7 @@ public class Report extends BaseTimeEntity {
      * @since 2020. 7. 30. 오후 3:51:40
      */
     public String getImageFilePhysicalName() {
-        return this.cdnUrl + imageFilePhysicalName;
+        return CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
     }
 
     /**
