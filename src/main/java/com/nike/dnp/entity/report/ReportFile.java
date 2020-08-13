@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 import java.util.Locale;
@@ -236,9 +237,11 @@ public class ReportFile extends BaseTimeEntity {
      */
     public void update(final ReportFileSaveDTO reportFileSaveDTO) {
         log.info("ReportFile.update");
-        this.fileName = reportFileSaveDTO.getFileName();
-        this.fileSize = reportFileSaveDTO.getFileSize();
-        this.filePhysicalName = reportFileSaveDTO.getFilePhysicalName();
+        if (!ObjectUtils.isEmpty(reportFileSaveDTO.getFilePhysicalName()) && reportFileSaveDTO.getFilePhysicalName().contains("/temp/")) {
+            this.fileName = reportFileSaveDTO.getFileName();
+            this.fileSize = reportFileSaveDTO.getFileSize();
+            this.filePhysicalName = reportFileSaveDTO.getFilePhysicalName();
+        }
     }
 
     /**

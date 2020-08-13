@@ -5,19 +5,19 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
+
 /**
- * The Class Report file save dto.
+ * The Class Report file result dto.
  *
  * @author [이소정]
- * @since 2020. 7. 10. 오전 11:10:48
- * @implNote 보고서 파일 저장 DTO
+ * @since 2020. 8. 13. 오후 7:38:24
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class ReportFileSaveDTO {
+public class ReportFileResultDTO {
 
     /**
      * The Report file seq
@@ -59,7 +59,7 @@ public class ReportFileSaveDTO {
      * @author [이소정]
      */
     @NotBlank(message = "report.file")
-    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리명", example = "/temp/report/path", required = true)
+    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리명", example = "/upload/report/path", required = true)
     private String filePhysicalName;
 
     /**
@@ -101,7 +101,7 @@ public class ReportFileSaveDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "/temp/graphic_file_name_detail_thumbnail.jpg")
+    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg")
     private String detailThumbnailFilePhysicalName;
 
 
@@ -124,7 +124,7 @@ public class ReportFileSaveDTO {
      * 썸네일 파일 물리 명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "/temp/graphic_file_name_thumbnail.jpg")
+    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_thumbnail.jpg")
     private String thumbnailFilePhysicalName;
 
 

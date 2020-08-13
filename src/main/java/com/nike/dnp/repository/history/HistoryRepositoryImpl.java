@@ -59,6 +59,7 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
             if (history.getTypeCd().equals(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString())) {
                 historyResultDTO.setFolderSeq(history.getReportSeq());
                 historyResultDTO.setImageFileName(history.getReport().getImageFileName());
+                historyResultDTO.setReportSectionCode(history.getReport().getReportSectionCode());
                 historyResultDTO.setImageFileSize(history.getReport().getImageFileSize());
                 historyResultDTO.setImageFilePhysicalName(history.getReport().getImageFilePhysicalName());
                 historyResultDTO.setFolderName(history.getReport().getReportName());
