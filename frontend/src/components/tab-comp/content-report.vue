@@ -7,22 +7,22 @@
                 :native="false"
             >
                 <div @mouseenter="basketEnter" @mouseleave="basketLeave">
-                    <ul class="file-list" v-if="contBasketList.length">
+                    <ul class="file-list" v-if="reportBasketList.length">
                         <li
-                            v-for="item in contBasketList"
-                            :key="item.contentsBasketSeq"
+                            v-for="item in reportBasketList"
+                            :key="item.reportBasketSeq"
                         >
                             <img :src="item.filePhysicalName" alt="" />
                             <button
                                 type="button"
                                 class="btn-del"
-                                @click="delContBasket(item.contentsBasketSeq)"
+                                @click="delReportBasket(item.reportBasketSeq)"
                             >
                                 <span>삭제</span>
                             </button>
                             <Loading
                                 :style="{ height: '100px', width: '100px' }"
-                                v-if="isLoading(item.contentsBasketSeq)"
+                                v-if="isLoading(item.reportBasketSeq)"
                             />
                         </li>
                     </ul>
@@ -47,7 +47,7 @@
 <script>
 import NoData from '@/components/no-data';
 import Loading from '@/components/loading';
-import { addContentsBasket, delContentsBasket } from '@/api/contents';
+import { postReportBasket, deleteReportBasket } from '@/api/report';
 import bus from '@/utils/bus';
 
 export default {
@@ -75,9 +75,9 @@ export default {
         };
     },
     computed: {
-        contBasketList: {
+        reportBasketList: {
             get() {
-                return this.$store.state.contBasketList;
+                return this.$store.state.reportBasketList;
             },
             set(value) {
                 this.$store.commit('SET_CONT_BASKET', value);
@@ -108,29 +108,28 @@ export default {
             try {
                 const {
                     data: { data: response },
-                } = await this.$store.dispatch('getContBasket');
-                this.contBasketList = response;
+                } = await this.$store.dispatch('getReportListBasket');
+                this.reportBasketList = response;
             } catch (e) {
                 console.log(e);
             }
         },
-        async addContBasket(seqArr) {
+        async addContBasket(seq) {
+            console.log(seq);
             try {
-                await addContentsBasket(
-                    this.$route.meta.topMenuCode,
-                    this.$route.meta.menuCode,
-                    seqArr
-                );
-                await this.$store.dispatch('getContBasket');
+                await postReportBasket();
+                await this.$store.dispatch('getReportListBasket');
             } catch (e) {
                 console.log(e);
             }
         },
-        async delContBasket(seq) {
+        async delReportBasket(seq) {
+            console.log(seq);
             this.deleteLoading.push(seq);
             try {
-                await delContentsBasket(seq);
+                await deleteReportBasket(seq);
                 await this.$store.dispatch('getContBasket');
+                await this.getContBasket();
                 this.deleteLoading = [];
             } catch (e) {
                 console.log(e);

@@ -12,9 +12,9 @@
                 -
                 <em>{{ folderDetail.campaignEndDt }}</em>
             </span>
-            <p class="folder-name">나이키 담당자 정보 : <em>홍길동</em></p>
+            <p class="folder-name">{{ folderDetail.memo }}</p>
         </div>
-        {{ folderDetail.memo }}
+
         <div class="noti-box">
             <ul class="noti-item-list">
                 <li class="noti-item">
