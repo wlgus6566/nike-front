@@ -1,6 +1,5 @@
 package com.nike.dnp.repository.report;
 
-import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.report.ReportResultDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.entity.report.QReport;
@@ -77,14 +76,7 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
                         , qReport.useYn.eq("Y")
                         , qReport.authSeq.in(reportSearchDTO.getAuthSeqList())
                 );
-//        final JPAQuery<Report> query = queryFactory.selectFrom(qReport)
-//                .where(
-//                        ReportPredicateHelper.compareKeyword(reportSearchDTO)
-//                        , ReportPredicateHelper.eqSectionCode(reportSearchDTO)
-//                        , qReport.useYn.eq("Y")
-//                        , qReport.authSeq.in(reportSearchDTO.getAuthSeqList())
-//                ).leftJoin(qUser).on(qReport.registerSeq.eq(qUser.userSeq));
-//        final List<Report> reportList = getQuerydsl().applyPagination(pageRequest, query).fetch();
+
         final List<ReportResultDTO> reportList = ObjectMapperUtil.mapAll(
                 getQuerydsl().applyPagination(pageRequest, query).fetch(), ReportResultDTO.class
         );
@@ -107,4 +99,36 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
                 .where(QReport.report.useYn.eq("Y"));
         return ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ReportResultDTO.class);
     }
+
+    /**
+     * Find report with user name report result dto.
+     *
+     * @param reportSeq the report seq
+     * @return the report result dto
+     * @author [이소정]
+     * @implNote 보고서 상세 조회 with 계정명
+     * @since 2020. 8. 13. 오후 7:29:29
+     */
+    @Override
+    public ReportResultDTO findReportWithUserName(Long reportSeq) {
+        final QReport qReport = QReport.report;
+        final QUser qUser = QUser.user;
+
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        return queryFactory
+                .select(Projections.bean(
+                        ReportResultDTO.class
+                        , qReport.reportSeq
+                        , qReport.reportSectionCode
+                        , qReport.reportName
+                        , qReport.imageFilePhysicalName
+                        , qReport.readCount
+                        , qUser.nickname
+                        )
+                )
+                .from(qReport)
+                .leftJoin(qUser).on(qReport.registerSeq.eq(qUser.userSeq))
+                .where( qReport.reportSeq.eq(reportSeq) ).fetchOne();
+    }
+
 }

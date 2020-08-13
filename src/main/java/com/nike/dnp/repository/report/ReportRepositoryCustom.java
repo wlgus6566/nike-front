@@ -42,4 +42,15 @@ public interface ReportRepositoryCustom {
      */
     List<ReportResultDTO> findRecentReport(final PageRequest pageRequest);
 
+    /**
+     * Find report with user name report result dto.
+     *
+     * @param reportSeq the report seq
+     * @return the report result dto
+     * @author [이소정]
+     * @implNote
+     * @since 2020. 8. 13. 오후 7:12:59
+     */
+    ReportResultDTO findReportWithUserName(final Long reportSeq);
+
 }

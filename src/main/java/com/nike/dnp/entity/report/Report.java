@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 import java.util.List;
@@ -169,9 +170,12 @@ public class Report extends BaseTimeEntity {
         log.info("Report.update");
         this.reportSectionCode = reportSaveDTO.getReportSectionCode();
         this.reportName = reportSaveDTO.getReportName();
-        this.imageFileName = reportSaveDTO.getImageFileName();
-        this.imageFileSize = reportSaveDTO.getImageFileSize();
-        this.imageFilePhysicalName = reportSaveDTO.getImageFilePhysicalName();
+
+        if (!ObjectUtils.isEmpty(reportSaveDTO.getImageFilePhysicalName()) && reportSaveDTO.getImageFilePhysicalName().contains("/temp/")) {
+            this.imageFileName = reportSaveDTO.getImageFileName();
+            this.imageFileSize = reportSaveDTO.getImageFileSize();
+            this.imageFilePhysicalName = reportSaveDTO.getImageFilePhysicalName();
+        }
     }
 
     /**

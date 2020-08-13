@@ -138,7 +138,7 @@ public class ContentsService {
                 PageRequest.of(contentsSearchDTO.getPage()
                         , contentsSearchDTO.getSize()
                         , contentsSearchDTO.equals(ServiceCode.SearchEnumCode.START_DATE.toString())
-                                ? Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).ascending() : Sort.by(ServiceCode.SearchEnumCode.LATEST.getValue()).descending()));
+                                ? Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).ascending() : Sort.by(ServiceCode.SearchEnumCode.UPDATE_DT.getValue()).descending()));
     }
 
     /**
@@ -549,7 +549,7 @@ public class ContentsService {
         if (!ObjectUtils.isEmpty(contentsFileSaveDTO.getFilePhysicalName()) && contentsFileSaveDTO.getFilePhysicalName().contains("/temp/")) {
             contentsFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getFilePhysicalName()));
             contentsFileSaveDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getThumbnailFilePhysicalName()));
-            contentsFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getThumbnailFilePhysicalName()));
+            contentsFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getDetailThumbnailFilePhysicalName()));
         }
         return contentsFileSaveDTO;
     }

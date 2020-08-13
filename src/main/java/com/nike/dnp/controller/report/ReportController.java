@@ -108,7 +108,6 @@ public class ReportController {
         return responseService.getSingleResult(reportService.findAllPaging(reportSearchDTO));
     }
 
-
     /**
      * Save report single result.
      *
@@ -147,7 +146,7 @@ public class ReportController {
     )
     @GetMapping(name = " 보고서 상세조회", value = "/{reportSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Report> findReport(
+    public SingleResult<ReportResultDTO> findReport(
             @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq
     ) {
         log.info("ReportController.findReport");
