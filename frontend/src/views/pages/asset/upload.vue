@@ -1,12 +1,16 @@
 <template>
     <div>
         <h2 class="page-title">{{ this.title }}</h2>
-        <form action="">
+        <form action="" @submit.prevent="submitForm">
             <h3 class="form-title mt20">폴더 설정</h3>
             <hr class="hr-black" />
             <ul class="form-list-thumb" v-if="folderDetail">
                 <li class="form-row thumb-row">
-                    <thumbnail :imgSrc2="imageFilePhysicalName" :size="1 / 1" />
+                    <thumbnail
+                        :size="1 / 1"
+                        @cropImage="cropImage"
+                        :imageBase64="folderDetail.imageFilePhysicalName"
+                    />
                 </li>
                 <li class="form-row">
                     <div class="form-column">
@@ -214,7 +218,10 @@
             </ul>
             <hr class="hr-gray" />
 
-            <FileSettings :folderDetail="folderDetail" />
+            <FileSettings
+                :contentsFileList="folderDetail.contentsFileList"
+                @FileListUpdate="FileListUpdate"
+            />
             <div class="btn-area">
                 <button type="button" class="btn-s-white">
                     <span>취소</span>
@@ -230,7 +237,11 @@
 import thumbnail from '@/components/thumbnail/index';
 import FileSettings from '@/components/file-settings/index.vue';
 import ModalAuth from '@/views/pages/common/modal-auth';
-import { getContentsView, getContentsViewFile } from '@/api/contents';
+import {
+    getContentsView,
+    getContentsViewFile,
+    postContents,
+} from '@/api/contents';
 import bus from '@/utils/bus';
 export default {
     name: 'upload',
@@ -255,7 +266,43 @@ export default {
                 },
             ],
 
-            folderDetail: {},
+            folderDetail: {
+                campaignBeginDt: '',
+                campaignEndDt: '',
+                campaignPeriodSectionCode: 'EVERY',
+                checks: [
+                    {
+                        authSeq: 0,
+                        detailAuthYn: 'N',
+                        emailReceptionYn: 'N',
+                    },
+                ],
+                contentsFileList: [
+                    {
+                        detailThumbnailFileName: '',
+                        detailThumbnailFilePhysicalName: '',
+                        detailThumbnailFileSize: '',
+                        fileContentType: '',
+                        fileExtension: '',
+                        fileKindCode: 'FILE',
+                        fileName: '',
+                        fileOrder: 1,
+                        filePhysicalName: '',
+                        fileSectionCode: 'GUIDE',
+                        fileSize: 0,
+                        thumbnailFileName: '',
+                        thumbnailFilePhysicalName: '',
+                        thumbnailFileSize: '',
+                        title: '',
+                        url: '',
+                    },
+                ],
+                exposureYn: 'Y',
+                folderContents: '',
+                folderName: '',
+                imageBase64: '',
+                memo: '',
+            },
         };
     },
     components: {
@@ -265,14 +312,12 @@ export default {
     created() {
         if (this.$route.params.id) {
             this.getFolderDetail();
-
             this.initFetchData();
         }
         bus.$on('detailAuthYnUpdate', (seq) => {
             const idx = this.folderDetail.checks.findIndex((el) => {
                 return el.authSeq === seq;
             });
-            console.log(idx);
             const value = this.checks[idx].detailAuthYn === 'Y' ? 'N' : 'Y';
             this.checks[idx].detailAuthYn = value;
         });
@@ -290,6 +335,35 @@ export default {
         window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
+        FileListUpdate(fileList) {
+            this.folderDetail.contentsFileList = fileList;
+        },
+        //이미지 받아오기
+        cropImage(imageBase64) {
+            this.folderDetail.imageBase64 = imageBase64;
+        },
+        async submitForm() {
+            this.folderDetail.campaignBeginDt = this.$moment(
+                this.folderDetail.campaignBeginDt
+            ).format('YYYY.MM.DD');
+            this.folderDetail.campaignEndDt = this.$moment(
+                this.folderDetail.campaignEndDt
+            ).format('YYYY.MM.DD');
+            console.log(this.folderDetail);
+            try {
+                const { data: response } = await postContents(
+                    this.$route.meta.topMenuCode,
+                    this.folderDetail.menuCode,
+                    this.folderDetail
+                );
+                if (response.existMsg) {
+                    alert(response.msg);
+                }
+                console.log(response);
+            } catch (e) {
+                console.log(e);
+            }
+        },
         ModalAuthOpen() {
             this.$modal.show(ModalAuth, {
                 groupTreeData: this.groupTreeData,
@@ -371,6 +445,7 @@ export default {
                         response.content
                     );
                 } else {
+                    console.log(response.content[0]);
                     this.folderDetail.contentsFileList = response.content;
                 }
                 this.page++;

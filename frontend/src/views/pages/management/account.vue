@@ -153,12 +153,22 @@
             :totalItem="totalItem"
             @handleCurrentChange="handleCurrentChange"
         />
+        <AccountManagement
+            :visible.sync="visible.AccountManagement"
+            :addUserData="this.addUserData"
+            :addAuthority="this.addAuthority"
+            @userIdCheck="userIdCheck"
+            @addAuthData="addAuthData"
+            @modifyAuthData="modifyAuthData"
+            @userDelete="userDelete"
+        />
     </div>
 </template>
 <script>
 import {
     getUser,
     postUser,
+    putUser,
     getDuplicate,
     getUserDetail,
     deleteArrayUser,
@@ -178,6 +188,9 @@ export default {
     name: 'account',
     data() {
         return {
+            visible: {
+                AccountManagement: false,
+            },
             idCheck: false,
             loading: false,
             itemLength: 20,
@@ -257,6 +270,7 @@ export default {
         };
     },
     components: {
+        AccountManagement,
         CascaderSelect,
         FilterSelect,
         SearchInput,
@@ -267,15 +281,6 @@ export default {
     created() {
         this.getUserList();
         this.authCacheList();
-        bus.$on('userIdCheck', (id) => {
-            this.userIdCheck(id);
-        });
-        bus.$on('addAuthData', (val, data) => {
-            this.addAuthData(val, data);
-        });
-        bus.$on('userDelete', (seq) => {
-            this.userDelete(seq);
-        });
     },
     mounted() {
         getCategoryList('USER_STATUS', this.listSortSelect.listSortOptions);
@@ -373,10 +378,13 @@ export default {
         },
         //등록 팝업 오픈
         openPop() {
-            this.$modal.show(AccountManagement, {
-                addUserData: this.addUserData,
-                addAuthority: this.addAuthority,
-            });
+            this.addUserData = {
+                authSeq: null,
+                nickname: null,
+                userId: null,
+            };
+            this.addAuthority.value = [null];
+            this.visible.AccountManagement = true;
         },
         //dataPicker show
         dataPickerShow() {
@@ -517,7 +525,7 @@ export default {
                         alert(response.data.msg);
                     }
                     if (response.data.success) {
-                        this.$modal.hideAll();
+                        this.visible.AccountManagement = false;
                         await this.getUserList();
                         this.loading = false;
                     }
@@ -533,10 +541,7 @@ export default {
                     data: { data: response },
                 } = await getUserDetail(seq);
                 this.addUserData = response;
-                this.$modal.show(AccountManagement, {
-                    addUserData: this.addUserData,
-                    addAuthority: this.addAuthority,
-                });
+                this.visible.AccountManagement = true;
                 console.log(response);
             } catch (error) {
                 console.log(error);
@@ -561,8 +566,9 @@ export default {
                         if (response.data.existMsg) {
                             alert(response.data.msg);
                         }
+                        console.log(response);
                         if (response.data.success) {
-                            this.$modal.hideAll();
+                            this.visible.AccountManagement = false;
                             await this.getUserList();
                             this.loading = false;
                             this.idCheck = false;
@@ -580,6 +586,37 @@ export default {
             }
         },
 
+        // 유저 수정
+        async modifyAuthData(userSeq, Seq, userData) {
+            let addAlert = confirm('계정을 수정하시겠습니까?');
+            if (addAlert) {
+                if (this.loading) return;
+                this.loading = true;
+                try {
+                    const response = await putUser(userSeq, {
+                        authSeq: Seq.slice(-1)[0],
+                        nickname: userData.nickname,
+                    });
+                    if (response.data.existMsg) {
+                        alert(response.data.msg);
+                    }
+                    if (response.data.success) {
+                        this.visible.AccountManagement = false;
+                        await this.getUserList();
+                        this.loading = false;
+                        this.idCheck = false;
+                        this.addUserData = {
+                            authSeq: null,
+                            nickname: null,
+                            userId: null,
+                        };
+                        this.addAuthority.value = [null];
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        },
         // 유저 id 체크
         async userIdCheck(id) {
             this.idCheck = true;

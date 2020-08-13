@@ -41,8 +41,13 @@
 .fc-black {
     color: #000 !important;
 }
+.img-cropper {
+    width: 398px;
+    height: 298px;
+}
 .img-cropper > div {
-    max-height: 500px;
+    height: 298px;
+    max-height: 298px;
 }
 .page-title {
     display: block;
@@ -1103,6 +1108,20 @@
 
 .cascader-select .el-cascader .el-input__suffix .el-icon-circle-close {
     background-image: url('../images/svg/icon-filter-deleted.svg');
+}
+.form-column .cascader-select {
+    width: 100%;
+}
+.form-column .cascader-select .el-cascader {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 10px 0 15px;
+    border: 1px solid #ddd;
+}
+.form-column .cascader-select .el-input--suffix .el-input__inner {
+    max-width: 100%;
+    font-size: 14px;
+    width: 100% !important;
 }
 
 /* upload-file-box */

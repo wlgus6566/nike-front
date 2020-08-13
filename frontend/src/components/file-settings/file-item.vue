@@ -1,5 +1,6 @@
 <template>
     <div class="file-setting">
+        {{ file.progress }}
         <ul class="form-list">
             <li class="form-row">
                 <div class="form-column">
@@ -36,15 +37,16 @@
                     <span class="label-title">업로드 된 파일</span>
                 </div>
                 <div class="form-column">
-                    {{ file.progress }} ///
-                    {{ file.fileName }}
-                    <button
-                        type="button"
-                        class="btn-form-gray"
-                        v-on:click="$emit('fileSelect')"
-                    >
-                        찾기
-                    </button>
+                    <div class="form-file-wrap">
+                        <span class="txt">{{ file.fileName }}</span>
+                        <button
+                            type="button"
+                            class="btn-form-gray"
+                            v-on:click="$emit('fileSelect')"
+                        >
+                            찾기
+                        </button>
+                    </div>
                     <!--<UploadFile />-->
                 </div>
             </li>
@@ -81,15 +83,7 @@ import UploadFile from './upload-file';
 export default {
     name: 'file-item',
     data() {
-        return {
-            fileKindCode: 'VIDEO',
-            fileName: 'graphic_file_name.jpg',
-            filePhysicalName: '/cdn/file/path',
-            fileSectionCode: 'GUIDE',
-            fileSize: 600,
-            title: 'Attract window graphic 1',
-            url: 'www.nike.co.kr',
-        };
+        return {};
     },
     props: {
         file: Object,
@@ -98,4 +92,21 @@ export default {
     components: { UploadFile },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.form-file-wrap.has-file {
+    background: #ddd;
+}
+.form-file-wrap {
+    padding: 4px;
+    display: flex;
+    border: 1px solid #ddd;
+    width: 100%;
+}
+.form-file-wrap .txt {
+    color: #000;
+    padding-left: 10px;
+    font-size: 14px;
+    line-height: 30px;
+    flex: 1 1 auto;
+}
+</style>
