@@ -11,6 +11,10 @@ function getReportList(params) {
 function postReport(data) {
     return report.post(`/`, data);
 }
+//REPORT 삭제
+function delReport(reportSeq) {
+    return report.delete(`/${reportSeq}`);
+}
 
 //REPORT 상세
 function getReportDetail(reportSeq) {
@@ -50,6 +54,7 @@ function deleteReportBasket(reportBasketSeq, data) {
 export {
     getReportList,
     postReport,
+    delReport,
     getReportDetail,
     getAnswerList,
     postAnswerData,

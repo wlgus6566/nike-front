@@ -18,15 +18,21 @@
                 </div>
                 <div class="info-box">
                     <strong class="title">{{ item.folderName }}</strong>
-                    <p class="txt">{{ item.folderContents }}</p>
-                    <ul class="location">
+                    <p class="txt" v-if="item.folderContents">
+                        {{ item.folderContents }}
+                    </p>
+                    <p class="txt" v-else>보고서명</p>
+                    <ul class="location" v-if="item.topMenuCode">
                         <li>{{ item.topMenuCode }}</li>
                         <li>{{ item.menuCode }}</li>
                     </ul>
-                    <p class="date">
+                    <p class="date" v-if="item.topMenuCode">
                         {{ $moment(item.campaignBeginDt).format('YYYY.MM.DD') }}
                         ~
                         {{ $moment(item.campaignEndDt).format('YYYY.MM.DD') }}
+                    </p>
+                    <p class="date" v-else>
+                        {{ $moment(item.updateDt).format('YYYY.MM.DD') }}
                     </p>
                 </div>
                 <div class="view-area">
@@ -49,7 +55,11 @@ export default {
             return `${defaultClass}${detailAuth}${exposure}`;
         },
         setUrl(item) {
-            return `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase();
+            if (item.topMenuCode) {
+                return `/${item.topMenuCode}/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
+            } else {
+                return `/report/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
+            }
         },
     },
 };

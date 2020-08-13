@@ -783,6 +783,7 @@
     display: none;
     background-image: url('../images/svg/icon-filter-deleted.svg');
 }
+.filter-select + .cascader-select,
 .cascader-select + .date-picker-wrap,
 .date-picker-wrap + .filter-select {
     margin-left: 20px;
@@ -1129,13 +1130,14 @@
     font-size: 14px;
     color: #000;
 }
-.upload-file-list li label .el-checkbox__input {
+.upload-file-list li label .checkbox {
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: 20px;
 }
-.upload-file-list li label .el-checkbox__input + .el-checkbox__label {
+.upload-file-list li label .txt {
     display: block;
+    max-width: 100%;
     padding-left: 10px;
     overflow: hidden;
     white-space: nowrap;

@@ -128,7 +128,7 @@ export default {
             this.deleteLoading.push(seq);
             try {
                 await deleteReportBasket(seq);
-                await this.$store.dispatch('getContBasket');
+                await this.$store.dispatch('getReportListBasket');
                 await this.getContBasket();
                 this.deleteLoading = [];
             } catch (e) {

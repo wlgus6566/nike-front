@@ -426,6 +426,7 @@ export default {
             this.page = val;
             this.getUserList();
         },
+
         // USER 목록 조회
         async getUserList() {
             this.loadingData = true;

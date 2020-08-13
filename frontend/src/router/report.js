@@ -12,7 +12,28 @@ const routes = [
                 meta: {
                     layout: 'Default',
                     aside: 'Report',
-                    title: 'REPORT UPLOAD',
+                    title: 'REPORT <span class="ko">업로드</span>',
+                },
+            },
+            {
+                path: '*/modify/:id',
+                component: pages('report/upload'),
+                meta: {
+                    layout: 'Default',
+                    aside: 'Report',
+                    topMenuCode: 'REPORT <span class="ko">업로드 수정</span>',
+                },
+                beforeEnter: (to, from, next) => {
+                    const menuCodeArr = ['sp', 'su', 'fa', 'ho'];
+                    const findMenuCode = menuCodeArr.findIndex(
+                        (el) => el === to.params.pathMatch
+                    );
+                    if (findMenuCode !== -1) {
+                        to.meta.menuCode = menuCodeArr[findMenuCode];
+                        next();
+                    } else {
+                        next('404'); //todo 404 만들기
+                    }
                 },
             },
             {
@@ -21,7 +42,7 @@ const routes = [
                 meta: {
                     layout: 'Default',
                     aside: 'Report',
-                    title: 'REPORT 관리',
+                    title: 'REPORT <span class="ko">관리</span>',
                 },
             },
             {
