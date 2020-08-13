@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.notice;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.notice.CustomerSaveDTO;

@@ -1,15 +1,14 @@
 package com.nike.dnp.service.notice;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
-import com.nike.dnp.dto.notice.CustomerListDTO;
-import com.nike.dnp.dto.notice.CustomerSaveDTO;
-import com.nike.dnp.dto.notice.CustomerSearchDTO;
-import com.nike.dnp.dto.notice.CustomerUpdateDTO;
+import com.nike.dnp.dto.notice.*;
 import com.nike.dnp.entity.notice.NoticeArticle;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.repository.notice.NoticeRepository;
 import com.nike.dnp.util.MessageUtil;
+import com.nike.dnp.util.ObjectMapperUtil;
 import com.nike.dnp.util.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -85,9 +84,10 @@ public class NoticeService {
      * @since 2020. 7. 21. 오후 4:07:10
      * @implNote Customer Center 상세 조회
      */
-    public NoticeArticle findById(final Long noticeSeq) {
+    public CustomerResultDTO findById(final Long noticeSeq) {
         log.info("NoticeService.findById");
-        return noticeRepository.findByNoticeArticleSeq(noticeSeq);
+
+        return ObjectMapperUtil.map(noticeRepository.findByNoticeArticleSeq(noticeSeq), CustomerResultDTO.class);
     }
 
     /**

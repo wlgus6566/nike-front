@@ -3,6 +3,7 @@ package com.nike.dnp.dto.notice;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.util.CloudFrontUtil;
+import io.netty.util.internal.StringUtil;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
@@ -25,7 +26,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Component
-public class CustomerListDTO {
+public class CustomerResultDTO {
 
     /**
      * The Notice article seq
@@ -40,7 +41,7 @@ public class CustomerListDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(name = "noticeArticleSectionCode", value = "게시물 구분 코드", defaultValue = "NOTICE", required = true)
+    @ApiModelProperty(name = "noticeArticleSectionCode", value = "게시물 구분 코드", required = true)
     private String noticeArticleSectionCode;
 
     /**
@@ -48,7 +49,7 @@ public class CustomerListDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(name = "noticeArticleCategoryCode", value = "[QNA] 게시물 카테고리 코드 (상위 코드 : NOTICE_CATEGORY_CODE)", defaultValue = "ASSET")
+    @ApiModelProperty(name = "noticeArticleCategoryCode", value = "[QNA] 게시물 카테고리 코드 (상위 코드 : NOTICE_CATEGORY_CODE)")
     private String noticeArticleCategoryCode;
 
     /**
@@ -56,7 +57,7 @@ public class CustomerListDTO {
      *
      * @author [정주희]
      */
-    @ApiParam(name = "noticeArticleCategoryCode", value = "[QNA] 게시물 카테고리 코드 값", defaultValue = "ASSET/TOOLKIT/FOUNDATION", hidden = true)
+    @ApiModelProperty(name = "noticeArticleCategoryCode", value = "[QNA] 게시물 카테고리 코드 값", hidden = true)
     private String noticeArticleCategoryValue;
 
     /**
@@ -124,14 +125,14 @@ public class CustomerListDTO {
     @ApiModelProperty(name = "updateDt", value = "최종 수정일")
     private LocalDateTime updateDt;
 
-/*    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    /*@ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
     private static String cdnUrl;
 
     @Value("${nike.file.cdnUrl:}")
     public void setCdnUrl(final String cdnUrl) {
         this.cdnUrl = cdnUrl;
-    }*/
-
+    }
+*/
     public String getThumbnailFilePhysicalName() {
         return StringUtils.isEmpty(thumbnailFilePhysicalName) ? null : CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
     }
