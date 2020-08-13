@@ -16,7 +16,8 @@
                 @change="uploadIptChange"
             />
             <draggable
-                v-model="fileList"
+                ref="fileListUl"
+                v-model="folderDetail.contentsFileList"
                 v-bind="dragOptions"
                 tag="ul"
                 @start="isDragging = true"
@@ -24,11 +25,12 @@
             >
                 <transition-group type="transition" name="flip-list">
                     <FileItem
-                        v-for="(file, index) in fileList"
+                        v-for="(file, index) in folderDetail.contentsFileList"
+                        :listLength="folderDetail.contentsFileList.length"
                         :file="file"
                         :key="index"
-                        v-on:fileSelect="fileSelect"
-                        v-on:fileDelete="fileDelete(index)"
+                        @fileSelect="fileSelect"
+                        @fileDelete="fileDelete(file)"
                     />
                 </transition-group>
             </draggable>
@@ -48,7 +50,7 @@ export default {
     name: 'FileSettings',
     data() {
         return {
-            fileList: null,
+            inputFileValue: [],
         };
     },
     computed: {
@@ -61,52 +63,101 @@ export default {
             };
         },
     },
-    props: {
-        beforeUpload: Function,
-    },
+    props: ['folderDetail'],
     components: {
         FileItem: () => import('@/components/file-settings/file-item.vue'),
         draggable,
     },
     methods: {
+        progress(file) {
+            return file;
+        },
         uploadIptChange(e) {
             const files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
-            this.inputFileValue = files;
-            console.log(files);
-            files.forEach((el) => {
-                this.fileList.push({
-                    fileKindCode: 'FILE',
-                    fileName: el.name,
-                    fileSectionCode: 'GUIDE', //파일구분
-                    fileExtension: el.type,
-                    filePhysicalName: '',
-                    fileSize: el.size,
+
+            /*let mergeArray = Array.from(files).filter((item) => {
+                return this.inputFileValue.every((el) => {
+                    return (
+                        item.name !== el.name ||
+                        item.type !== el.type ||
+                        item.size !== el.size
+                    );
                 });
             });
-            this.uploadFiles(files);
+
+            this.inputFileValue = this.inputFileValue.concat(mergeArray);*/
+
+            let mergeArray = Array.from(files).filter((item) => {
+                return this.folderDetail.contentsFileList.every((el) => {
+                    return (
+                        item.name !== el.fileName ||
+                        item.type !== el.fileExtension ||
+                        item.size !== el.fileSize
+                    );
+                });
+            });
+
+            mergeArray.forEach((el) => {
+                this.folderDetail.contentsFileList.push({
+                    fileContentType: el.type,
+                    fileName: el.name,
+                    fileSize: el.size,
+                    fileKindCode: 'FILE',
+                    fileSectionCode: 'GUIDE',
+                    progress: 0,
+                });
+            });
+            this.uploadFiles(mergeArray);
         },
-        uploadFiles() {
-            this.inputFileValue.forEach(async (el) => {
-                const data = new FormData();
-                data.append('uploadFile', el);
+        uploadFiles(arr) {
+            arr.forEach(async (el) => {
+                const formData = new FormData();
+                formData.append('uploadFile', el);
                 const config = {
                     onUploadProgress: (progressEvent) => {
                         const percentCompleted = Math.round(
                             (progressEvent.loaded * 100) / progressEvent.total
                         );
-                        el.test = percentCompleted;
-                        //return percentCompleted;
-                        console.log(el.test);
+                        this.folderDetail.contentsFileList.forEach((item) => {
+                            if (
+                                item.fileName === el.name &&
+                                item.fileContentType === el.type &&
+                                item.fileSize === el.size
+                            ) {
+                                item.progress = percentCompleted;
+                                console.log(percentCompleted);
+                            }
+                        });
                     },
                 };
-                const response = await fileUpLoad(data, config);
+                const {
+                    data: { data: response },
+                } = await fileUpLoad(formData, config);
+
                 console.log(response);
-                console.log(response.data);
+                /* this.folderDetail.contentsFileList.forEach((item) => {
+                    if (
+                        item.fileName === response.fileName &&
+                        item.fileContentType === response.fileContentType &&
+                        item.fileSize === response.fileSize
+                    ) {
+                        console.log(123123);
+                        item = {
+                            ...response,
+                            fileKindCode: 'FILE',
+                            fileOrder: 1,
+                            fileSectionCode: 'GUIDE',
+                            title: '',
+                            url: '',
+                        };
+                        console.log(item);
+                    }
+                });*/
             });
         },
         fileAdd() {
-            this.fileList.push({
+            this.folderDetail.contentsFileList.push({
                 fileKindCode: 'FILE',
                 fileName: '',
                 fileSectionCode: 'ASSET',
@@ -115,13 +166,24 @@ export default {
                 url: '',
             });
         },
-        fileDelete(idx) {
-            this.fileList.splice(idx, 1);
+        fileDelete(file) {
+            const idx = this.folderDetail.contentsFileList.findIndex((el) => {
+                return (
+                    el.fileName === file.fileName &&
+                    el.fileExtension === file.fileExtension &&
+                    el.fileSize === file.fileSize
+                );
+            });
+            this.folderDetail.contentsFileList.splice(idx, 1);
         },
         fileSelect() {
-            /*this.$refs.uploadIpt.value = null;
-            this.PhysicalName: '/cdn/file/path',
-                this.$refs.uploadIpt.click();*/
+            /*const fileListUl = this.$refs.fileListUl;
+            fileListUl.insertAdjacentHTML(
+                'afterend',
+                `<div id="select-width">${this.cloneTxt}</div>`
+            );*/
+            this.$refs.uploadIpt.value = null;
+            this.$refs.uploadIpt.click();
         },
     },
 };

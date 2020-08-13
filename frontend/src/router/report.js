@@ -1,4 +1,4 @@
-import {pages} from '@/utils/global-methods';
+import { pages } from '@/utils/global-methods';
 
 const routes = [
     {
@@ -11,7 +11,7 @@ const routes = [
                 component: pages('report/upload.vue'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'Report',
                     title: 'REPORT UPLOAD',
                 },
             },
@@ -20,7 +20,7 @@ const routes = [
                 component: pages('report/management.vue'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'Report',
                     title: 'REPORT 관리',
                 },
             },
@@ -29,7 +29,7 @@ const routes = [
                 component: pages('report/detail-view'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'Report',
                     topMenuCode: 'REPORT 상세',
                 },
                 beforeEnter: (to, from, next) => {
