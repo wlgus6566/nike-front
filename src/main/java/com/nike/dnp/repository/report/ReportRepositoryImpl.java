@@ -4,6 +4,7 @@ import com.nike.dnp.dto.report.ReportResultDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.entity.report.QReport;
 import com.nike.dnp.entity.report.Report;
+import com.nike.dnp.entity.user.QUser;
 import com.nike.dnp.util.ObjectMapperUtil;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -52,6 +53,8 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
     @Override
     public Page<Report> findPageReport(final ReportSearchDTO reportSearchDTO, final PageRequest pageRequest) {
         final QReport qReport = QReport.report;
+        final QUser qUser = QUser.user;
+
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
         final JPAQuery<Report> query = queryFactory.selectFrom(qReport)
                 .where(
@@ -59,7 +62,7 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
                         , ReportPredicateHelper.eqSectionCode(reportSearchDTO)
                         , qReport.useYn.eq("Y")
                         , qReport.authSeq.in(reportSearchDTO.getAuthSeqList())
-                );
+                ).leftJoin(qUser).on(qReport.registerSeq.eq(qUser.userSeq));
 
 
         final List<Report> reportList = getQuerydsl().applyPagination(pageRequest, query).fetch();

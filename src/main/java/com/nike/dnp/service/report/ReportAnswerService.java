@@ -78,7 +78,7 @@ public class ReportAnswerService {
     public ReportAnswer delete(final Long answerSeq) {
         log.info("ReportAnswerService.delete");
         final Optional<ReportAnswer> reportAnswer = this.findById(answerSeq);
-        reportAnswer.ifPresent(value -> value.updateUseYn("Y"));
+        reportAnswer.ifPresent(value -> value.updateUseYn("N"));
         return reportAnswer.get();
 
     }

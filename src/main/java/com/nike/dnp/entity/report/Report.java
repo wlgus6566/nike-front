@@ -3,6 +3,7 @@ package com.nike.dnp.entity.report;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.entity.user.User;
 import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -198,5 +199,11 @@ public class Report extends BaseTimeEntity {
         log.info("Report.updateReadCount");
         this.readCount = readCount + 1;
     }
+
+
+    // TODO[lsj]
+    @ManyToOne
+    @JoinColumn(name="userSeq", foreignKey = @ForeignKey(name = "registerSeq"))
+    private User user;
 
 }
