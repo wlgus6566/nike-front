@@ -1,91 +1,112 @@
 <template>
-    <div class="login-wrap">
-        <div class="inner">
-            <div class="title">비밀번호 설정</div>
-            <div class="bullet-list">
-                <p class="bullet-item">아이디와 비밀번호는 중복 불가합니다.</p>
-                <p class="bullet-item">
-                    비밀번호에는 공통 사전 단어(예: NIKE(나이키), JORDAN(조던)
-                    등)를 포함할 수 없습니다.
-                </p>
-                <p class="bullet-item">
-                    비밀번호는 동일한 글자, 문자, 숫자 등을 2글자이상 반복할 수
-                    없습니다. (예: AA1234! / A12345@@ 등)
-                </p>
-                <p class="bullet-item">
-                    비밀번호 재사용: 비밀번호 변경 시 현재 사용 중인 비밀번호의
-                    재사용은 불가능하며, 기존과는 다른 비밀번호로 변경하셔야
-                    합니다.
-                </p>
+    <div id="wrap" class="sticky-wrap">
+        <header class="page-header">
+            <div class="inner">
+                <h1 class="page-title"><span>비밀번호 변경</span></h1>
             </div>
-            <div class="table-form">
-                <form action="" class="">
-                    <fieldset>
-                        <legend>비밀번호 설정</legend>
-                        <div class="table">
-                            <div class="table-row">
-                                <label for="change-pw0" class="table-th">
-                                    <span class="required">기존 비밀번호</span>
-                                </label>
-                                <div class="table-td">
-                                    <input
-                                        type="password"
-                                        id="change-pw0"
-                                        class="input-box"
-                                        maxlength="16"
-                                        placeholder=""
-                                    />
-                                </div>
-                            </div>
-                            <div class="table-row">
-                                <label for="change-pw1" class="table-th">
-                                    <span class="required">새 비밀번호</span>
-                                </label>
-                                <div class="table-td">
-                                    <input
-                                        type="password"
-                                        id="change-pw1"
-                                        class="input-box"
-                                        maxlength="16"
-                                        placeholder="(8~16자/대소문자/숫자/특수문자 포함)"
-                                    />
-                                </div>
-                            </div>
-                            <div class="table-row">
-                                <label for="change-pw2" class="table-th">
-                                    <span class="required"
-                                        >새 비밀번호(확인)</span
-                                    >
-                                </label>
-                                <div class="table-td">
-                                    <input
-                                        type="password"
-                                        id="change-pw2"
-                                        class="input-box"
-                                        maxlength="16"
-                                        placeholder=""
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="btn-area">
-                            <button type="button" class="btn-s-black">
-                                <span>저장</span>
-                            </button>
-                        </div>
-                    </fieldset>
-                </form>
+        </header>
+        <form action="" @submit.prevent="passwordChange">
+            <section class="contents">
+                <ul class="desc-list">
+                    <li class="desc-item">
+                        아이디와 비밀번호는 중복 불가합니다.
+                    </li>
+                    <li class="desc-item">
+                        비밀번호에는 간단한 패턴이나 공통 사전 단어<br>
+                        (예: NIKE(나이키), JORDAN(조던) 등)를 포함할 수 없습니다.
+                    </li>
+                    <li class="desc-item">
+                        비밀번호는 동일한 글자, 문자, 숫자 등을 2글자이상 반복할 수<br>
+                        없습니다. (예: AA1234! / A12345@@ 등)
+                    </li>
+                    <li class="desc-item">비밀번호 재사용 : 비밀번호 변경 시 현재 사용 중인 비밀번호의 재 사용은 불가능하며, 기존과는 다른 비밀번호로 변경하셔야 합니다.</li>
+                </ul>
+                <ul class="form-list">
+                    <li class="form-item">
+                        <span class="form-column">
+                            <label class="label-title required">기존 비밀번호</label>
+                        </span>
+                        <span class="form-column">
+                            <input
+                                type="password"
+                                id="change-pw0"
+                                class="input-box"
+                                maxlength="16"
+                                placeholder=""
+                                v-model="password"
+                            />
+                        </span>
+                    </li>
+                    <li class="form-item">
+                        <span class="form-column">
+                            <label class="label-title required">새 비밀번호</label>
+                        </span>
+                        <span class="form-column">
+                            <input
+                                type="password"
+                                id="change-pw1"
+                                class="input-box"
+                                maxlength="16"
+                                placeholder="(8~16자/대소문자/숫자/특수문자 포함)"
+                                v-model="newPassword"
+                            />
+                        </span>
+                    </li>
+                    <li class="form-item">
+                        <span class="form-column">
+                            <label class="label-title required">새 비밀번호(확인)</label>
+                        </span>
+                        <span class="form-column">
+                            <input
+                                type="password"
+                                id="change-pw2"
+                                class="input-box"
+                                maxlength="16"
+                                placeholder=""
+                                v-model="confirmPassword"
+                            />
+                        </span>
+                    </li>
+                </ul>
+            </section>
+            <div class="btn-wrap">
+                <button type="submit" class="btn-s-black-lg">저장</button>
             </div>
-        </div>
+        </form>
     </div>
 </template>
 <script>
-export default {
-    name: 'PasswordChange',
-    data() {
-        return {};
-    },
-    methods: {},
-};
+    import {changePassword} from '@/api/login';
+
+    export default {
+        name: 'PasswordChange',
+        data() {
+            return {
+                password: '',
+                newPassword: '',
+                confirmPassword: '',
+            };
+        },
+        methods: {
+            async passwordChange() {
+                try {
+                    const { data: response } = await changePassword({
+                        certCode: this.$route.params.certCode,
+                        password: this.password,
+                        newPassword: this.newPassword,
+                        confirmPassword: this.confirmPassword,
+                    });
+                    if (response.existMsg) {
+                        alert(response.msg);
+                    }
+                    console.log(response);
+                    if (response.success) {
+                        await this.$router.push('/login');
+                    }
+                } catch (error) {
+                    console.log('error', error);
+                }
+            },
+        },
+    };
 </script>
-<style scoped></style>
