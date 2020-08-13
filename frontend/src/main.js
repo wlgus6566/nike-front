@@ -20,7 +20,7 @@ Vue.use(VModal, {
         width: '800px',
         height: 'auto',
         adaptive: false,
-        draggable: true,
+        draggable: false,
         scrollable: true,
         reset: true,
         dynamic: true,
