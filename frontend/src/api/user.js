@@ -11,6 +11,11 @@ function postUser(data) {
     return user.post(`/`, data);
 }
 
+// user 수정
+function putUser(userSeq, data) {
+    return user.put(`/${userSeq}`, data);
+}
+
 // user id 중복체크
 function getDuplicate(params) {
     return user.get(`/duplicate`, {
@@ -41,6 +46,7 @@ function deleteUser(userSeq, params) {
 export {
     getUser,
     postUser,
+    putUser,
     getDuplicate,
     getUserDetail,
     deleteArrayUser,
