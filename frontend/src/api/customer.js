@@ -13,13 +13,13 @@ function getCustomerList(sectionCode, params) {
 }
 
 //상세 공통
-function getCustomerDetail(noticeSeq) {
-    return apiCustomer.get(`/detail/${noticeSeq}`);
+function getCustomerDetail(noticeArticleSectionCode, noticeSeq) {
+    return apiCustomer.get(`/${noticeArticleSectionCode}/${noticeSeq}`);
 }
 
 //삭제 공통
-function deleteCustomer(noticeSeq) {
-    return apiCustomer.delete(`/${noticeSeq}`);
+function deleteCustomer(noticeArticleSectionCode, noticeSeq) {
+    return apiCustomer.delete(`/${noticeArticleSectionCode}/${noticeSeq}`);
 }
 
 //공지사항 등록

@@ -51,14 +51,7 @@ nike:
     ffmpegCommand: 'ffmpeg'
     cdnUrl: 'https://nike-test-bucket-dnp.s3.ap-northeast-2.amazonaws.com'
 
+## AWS
 cloud:
   aws:
-    credentials:
-      accessKey: 'AKIA4FO4XQUFNEBRAZU4'
-      secretKey: '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'
-    s3:
-      bucket: 'nike-test-bucket-dnp'
-    region:
-      static: 'ap-northeast-2'
-    stack:
-      auto:  false
+    keyPairId: 'APKAJNYFE4SZH6RSWVMA'

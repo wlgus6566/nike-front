@@ -67,7 +67,6 @@ public class NoticeController {
     /**
      * Find all single result.
      *
-     * @param noticeArticleSectionCode       the section code
      * @param customerSearchDTO the notice search dto
      * @return the single result
      * @author [정주희]
@@ -106,13 +105,17 @@ public class NoticeController {
      */
     @ApiOperation(
             value = "Customer Center 게시글 상세 조회",
-            notes = REQUEST_CHARACTER + 
+            notes = REQUEST_CHARACTER +
                     "noticeSeq|게시글 시퀀스|true|Long\n"
     )
-    @GetMapping(value = "/detail/{noticeSeq}",
+    @GetMapping(value = "/{noticeArticleSectionCode}/{noticeSeq}",
             name = "Customer Center 게시글 상세 조회", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<NoticeArticle> findById(@ApiParam(name = "noticeSeq", value = "Customer Center 게시글 시퀀스",
-            defaultValue = "23", required = true) @PathVariable final Long noticeSeq) {
+    public SingleResult<CustomerResultDTO> findById(
+            @ApiParam(name = "noticeArticleSectionCode", value = "Customer Center 게시글 종류 코드",
+                    allowableValues = "NOTICE, NEWS, QNA", required = true)
+            @PathVariable final String noticeArticleSectionCode,
+            @ApiParam(name = "noticeSeq", value = "Customer Center 게시글 시퀀스", defaultValue = "23", required = true)
+            @PathVariable final Long noticeSeq) {
         log.info("NoticeController.findAll");
         return responseService.getSingleResult(noticeService.findById(noticeSeq));
     }
@@ -306,13 +309,16 @@ public class NoticeController {
      * @param noticeSeq the notice seq
      * @return the single result
      * @author [정주희]
-     * @implNote [method 설명]
-     * @apiNote Customer Center 게시글 삭제
+     * @implNote Customer Center 게시글 삭제
      * @since 2020. 7. 20. 오후 9:59:56
      */
     @ApiOperation(value = "Customer Center 게시글 삭제", notes = BASIC_CHARACTER)
-    @DeleteMapping({"/{noticeSeq}"})
+    @DeleteMapping(value = "/{noticeArticleSectionCode}/{noticeSeq}",
+            name = "Customer Center 게시글 삭제", produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<NoticeArticle> deleteCustomerCenter(
+            @ApiParam(name = "noticeArticleSectionCode", value = "Customer Center 게시글 종류 코드",
+                    allowableValues = "NOTICE, NEWS, QNA", required = true)
+            @PathVariable final String noticeArticleSectionCode,
             @ApiParam(name = "noticeSeq", value = "Customer Center 게시글 시퀀스",
                     defaultValue = "23", required = true) @PathVariable final Long noticeSeq) {
         log.info("NoticeController.deleteCustomerCenter");
@@ -339,13 +345,7 @@ public class NoticeController {
             final MultipartHttpServletRequest multiReq) {
         log.info("NoticeController.uploadEditorImages");
 
-        String uploadUrl = null;
-
-        try {
-            uploadUrl = noticeService.uploadEditorImages(multiReq, noticeArticleSectionCode);
-        } catch (IOException e) {
-            //TODO [jjh] IOException 처리
-        }
+        String uploadUrl = noticeService.uploadEditorImages(multiReq, noticeArticleSectionCode);
         return responseService.getSingleResult(uploadUrl);
     }
 }

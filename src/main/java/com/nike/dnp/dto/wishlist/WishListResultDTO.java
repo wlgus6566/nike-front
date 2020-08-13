@@ -58,7 +58,7 @@ public class WishListResultDTO {
 	 * @return the wish list result dto
 	 * @author [윤태호]
 	 * @since 2020. 7. 6. 오후 3:40:56
-	 * @implNote
+	 * @implNote 위시리스트 엔티티를 dto로 변경
 	 */
 	public static WishListResultDTO ofSave(final WishList wishList) {
 		final WishListResultDTO result = new WishListResultDTO();

@@ -54,7 +54,6 @@ export default {
     props: ['faqData', 'isActive'],
     methods: {
         itemOpen(el, done) {
-            console.log('open');
             gsap.set(el, {
                 height: 'auto',
                 paddingTop: 30,
@@ -74,7 +73,6 @@ export default {
             });
         },
         itemClose(el, done) {
-            console.log('close');
             gsap.to(el, 0.3, {
                 height: 0,
                 paddingTop: 0,

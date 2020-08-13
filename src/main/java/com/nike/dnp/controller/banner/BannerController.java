@@ -69,7 +69,7 @@ public class BannerController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<Banner> getBanner () {
         log.info("BannerController.getBanner");
-        return responseService.getSingleResult(bannerService.getBanner());
+        return responseService.getSingleResult(bannerService.findBanner());
     }
 
     /**
@@ -121,6 +121,29 @@ public class BannerController {
         log.info("BannerController.update");
         return responseService.getSingleResult(
                 bannerService.update(bannerSeq, bannerSaveDTO)
+                , ServiceCode.ReturnTypeEnumCode.UPDATE.toString()
+                , ServiceCode.ReturnTypeEnumCode.UPDATE.getMessage()
+                , true
+        );
+    }
+
+    /**
+     * Delete single result.
+     *
+     * @param bannerSeq the banner seq
+     * @return the single result
+     * @author [오지훈]
+     * @implNote 메인 비주얼 삭제
+     * @since 2020. 8. 11. 오후 12:01:56
+     */
+    @ApiOperation(value = "메인 비주얼 삭제", notes = OPERATION_CHARACTER)
+    @DeleteMapping(name = "메인 비주얼 삭제"
+            , value = "/{bannerSeq}"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<Banner> delete(@ApiParam(value = "배너 시퀀스", required = true) @PathVariable final Long bannerSeq) {
+        log.info("BannerController.delete");
+        return responseService.getSingleResult(
+                bannerService.delete(bannerSeq)
                 , ServiceCode.ReturnTypeEnumCode.UPDATE.toString()
                 , ServiceCode.ReturnTypeEnumCode.UPDATE.getMessage()
                 , true

@@ -81,7 +81,6 @@ const routes = [
         meta: {
             layout: 'Default',
             aside: 'Default',
-            sectionCode: 'NOTICE',
             title: '공지사항',
         },
     },
@@ -127,7 +126,6 @@ const routes = [
         meta: {
             layout: 'Default',
             aside: 'Default',
-            sectionCode: 'NEWS',
             title: 'NEWS',
         },
     },
@@ -189,24 +187,6 @@ const routes = [
             modify: true,
         },
     },
-    // {
-    //     path: '/mypage/news/form',
-    //     component: pages('mypage/news-form'),
-    //     meta: {
-    //         layout: 'Default',
-    //         aside: 'Default',
-    //         dtitle: 'NEWS',
-    //     },
-    // },
-    // {
-    //     path: '/mypage/faq/form',
-    //     component: pages('mypage/faq-form'),
-    //     meta: {
-    //         layout: 'Default',
-    //         aside: 'Default',
-    //         title: '자주 묻는 질문',
-    //     },
-    // },
 ];
 
 export default routes;

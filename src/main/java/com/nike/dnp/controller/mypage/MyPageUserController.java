@@ -72,40 +72,37 @@ public class MyPageUserController {
     /**
      * Gets redis menus.
      *
-     * @param authUserDTO the auth user dto
      * @return the redis menus
      * @author [오지훈]
-     * @since 2020. 7. 16. 오후 5:16:45
+     * @implNote [Description 작성]
      * @apiNote GNB 메뉴 목록
+     * @since 2020. 7. 16. 오후 5:16:45
      */
     @ApiOperation(value = "GNB 메뉴 목록"
             , notes = OPERATION_CHARACTER)
     @GetMapping(name = "GNB 메뉴", value = "/gnb"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<MenuReturnDTO>> getRedisMenus (
-            final @ApiIgnore @AuthenticationPrincipal AuthUserDTO authUserDTO
-    ) {
+    public SingleResult<List<MenuReturnDTO>> getRedisMenus () {
         log.info("MenuController.getRedisMenus");
-        return responseService.getSingleResult(authService.getAuthsMenusByRoleType(authUserDTO.getRole()));
+        return responseService.getSingleResult(authService.getMenus());
     }
 
     /**
      * Find user single result.
      *
-     * @param authUserDTO the auth user dto
      * @return the single result
      * @author [오지훈]
-     * @since 2020. 6. 23. 오후 5:19:29
+     * @implNote [Description 작성]
      * @apiNote MY INFO 상세 조회
+     * @since 2020. 6. 23. 오후 5:19:29
      */
     @ApiOperation(value = "MY INFO 상세 조회"
             , notes = OPERATION_CHARACTER)
     @GetMapping(name = "MY INFO 상세 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<UserResultDTO> getUser (
-            @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO) {
+    public SingleResult<UserResultDTO> getUser () {
         log.info("UserMyPageController.getUser");
-        return responseService.getSingleResult(userService.getMyPage(authUserDTO.getUserSeq()));
+        return responseService.getSingleResult(userService.getMyPage());
     }
 
     /**

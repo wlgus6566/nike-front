@@ -30,7 +30,6 @@ public interface WishListRepository extends JpaRepository<WishList, Long> ,WishL
 	 */
 	Optional<WishList> findByWishListSeqAndUserSeq(Long wishListSeq,Long userSeq);
 
-
 	/**
 	 * 검색일 전 조회
 	 *

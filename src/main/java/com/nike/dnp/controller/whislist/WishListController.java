@@ -36,7 +36,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @Api(description = "위시리스트", tags = "WISHLIST")
-@RequestMapping(value = "/api/wishlist", name = "위시리스트")
+@RequestMapping(value = "/api", name = "위시리스트")
 @AllArgsConstructor
 public class WishListController {
 
@@ -78,10 +78,10 @@ public class WishListController {
 	 * @return the single result
 	 * @author [윤태호]
 	 * @since 2020. 7. 3. 오후 3:38:34
-	 * @apiNote
+	 * @apiNote 위시리스트 등록
 	 */
 	@ApiOperation(value = "위시리스트 등록", notes = BASIC_CHARACTER)
-	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/wishlist/save", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ValidField
 	public SingleResult<WishListResultDTO> saveWishList(@Valid @ModelAttribute final WishListSaveDTO wishListSaveDTO,
 														@ApiIgnore final BindingResult result) {
@@ -96,12 +96,12 @@ public class WishListController {
 	 * @return the single result
 	 * @author [윤태호]
 	 * @since 2020. 7. 3. 오후 3:59:10
-	 * @apiNote
+	 * @apiNote 위시 리스트 조회
 	 */
 	@ApiOperation(value = "위시리스트 조회", notes = REQUEST_CHARACTER
 			+ "page|페이지 번호|true|int\n"
 			+ "size|페이지 사이즈|true|int\n")
-	@GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/mypage/wishlist/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SingleResult<Page<WishList>> findByPagesWishList(@ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO,
 															final WishListSearchDTO wishListSearchDTO) {
 		log.info("WishListController.findByPagesWishList");
@@ -116,16 +116,15 @@ public class WishListController {
 	 * @return the common result
 	 * @author [윤태호]
 	 * @since 2020. 7. 6. 오후 2:22:31
-	 * @apiNote
+	 * @apiNote 위시 리스트 삭제
 	 */
 	@ApiOperation(value = "위시리스트 삭제", notes = BASIC_CHARACTER)
-	@DeleteMapping(value = "/delete/{wishListSeq}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value = "/mypage/wishlist/delete/{wishListSeq}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public CommonResult deleteWishList(@ApiParam(name = "wishListSeq", value = "위시리스트 시퀀스", defaultValue = "20") @PathVariable final Long wishListSeq) {
 		log.info("WishListController.deleteWishList");
 		wishListService.delete(wishListSeq);
 		return responseService.getSuccessResult();
 	}
-
 
 	/**
 	 * 위시 리스트 다건 삭제
@@ -134,10 +133,10 @@ public class WishListController {
 	 * @return the common result
 	 * @author [윤태호]
 	 * @since 2020. 7. 6. 오후 3:46:42
-	 * @apiNote
+	 * @apiNote 위시 리스트 다건 삭제
 	 */
 	@ApiOperation(value = "위시리스트 다건 삭제", notes = BASIC_CHARACTER)
-	@DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value = "/mypage/wishlist/delete", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ValidField
 	public CommonResult deleteWishListList(@RequestBody @Valid final WishListDeleteDTO wishListDeleteDTO, @ApiIgnore final BindingResult result) {
 		log.info("WishListController.deleteWishListList");
@@ -145,4 +144,3 @@ public class WishListController {
 		return responseService.getSuccessResult();
 	}
 }
-

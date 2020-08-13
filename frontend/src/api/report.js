@@ -6,11 +6,15 @@ function getReportList(params) {
         params: params,
     });
 }
-
 //REPORT 등록
 function postReport(data) {
     return report.post(`/`, data);
 }
+//REPORT 수정
+function putReport(reportSeq, data) {
+    return report.put(`/${reportSeq}`, data);
+}
+
 //REPORT 삭제
 function delReport(reportSeq) {
     return report.delete(`/${reportSeq}`);
@@ -54,6 +58,7 @@ function deleteReportBasket(reportBasketSeq, data) {
 export {
     getReportList,
     postReport,
+    putReport,
     delReport,
     getReportDetail,
     getAnswerList,

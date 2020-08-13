@@ -1,9 +1,7 @@
 <template>
-    <div id="wrap">
-        <transition mode="out-in" name="page-change">
-            <router-view></router-view>
-        </transition>
-    </div>
+    <transition mode="out-in" name="page-change">
+        <router-view></router-view>
+    </transition>
 </template>
 <script>
 export default {

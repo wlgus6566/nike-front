@@ -31,7 +31,7 @@ public class GoodsBasketScheduler {
 	 *
 	 * @author [윤태호]
 	 * @since 2020. 7. 6. 오후 4:28:04
-	 * @implNote
+	 * @implNote 장바구니 초기화
 	 */
 	//	@Scheduled(cron = "*/10 * * * * *")
 	@Scheduled(cron = "0 0 0 * * *")

@@ -160,7 +160,9 @@ public class S3Util {
 	public static void init(){
 		log.debug("S3 Init");
 		final AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
-		client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(awsCredentials)).withRegion(region).build();
+		client = AmazonS3ClientBuilder.standard()
+				.withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
+				.withRegion(region).build();
 
 	}
 
@@ -180,21 +182,21 @@ public class S3Util {
 			stopWatch.start("original upload");
 			s3upload(fileResultDTO.getFilePhysicalName());
 			stopWatch.stop();
-			log.debug("stopWatch.getLastTaskTimeMillis() {}", stopWatch.getLastTaskTimeMillis());
+			log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms",stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 		}
 		if(!ObjectUtils.isEmpty(fileResultDTO.getThumbnailPhysicalName())){
 			stopWatch.start("thumbnail upload");
 			s3upload(fileResultDTO.getThumbnailPhysicalName());
 			stopWatch.stop();
-			log.debug("stopWatch.getLastTaskTimeMillis() {}", stopWatch.getLastTaskTimeMillis());
+			log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 		}
 		if(!ObjectUtils.isEmpty(fileResultDTO.getDetailThumbnailPhysicalName())){
 			stopWatch.start("detailThumbnail upload");
 			s3upload(fileResultDTO.getDetailThumbnailPhysicalName());
 			stopWatch.stop();
-			log.debug("stopWatch.getLastTaskTimeMillis() {}", stopWatch.getLastTaskTimeMillis());
+			log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 		}
-		log.debug("stopWatch.getTotalTimeSeconds() {}", stopWatch.getTotalTimeSeconds());
+		log.debug("stopWatch.getTotalTimeSeconds()  s3upload : {} s", stopWatch.getTotalTimeSeconds());
 		log.debug("stopWatch.shortSummary() {}", stopWatch.shortSummary());
 		log.debug("stopWatch.prettyPrint() {}", stopWatch.prettyPrint());
 	}
@@ -208,9 +210,10 @@ public class S3Util {
 	 * @since 2020. 7. 31. 오전 11:15:34
 	 */
 	private static void s3upload(final String filePath){
+		log.info("S3Util.s3upload");
 		final File file = new File(root + filePath);
 		final String uploadUrl = awsPathReplace(filePath);
-		client.putObject(new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.PublicRead));
+		client.putObject(new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.Private));
 		final URL url = client.getUrl(bucket, uploadUrl);
 		log.debug("url.getPath() {}", url.getPath());
 	}
@@ -231,7 +234,7 @@ public class S3Util {
 		final String awsOldPath = awsPathReplace(oldFile);
 		final String fileName = StringUtils.getFilename(awsOldPath);
 		final String awsNewPath = newFolder+"/"+fileName;
-		final CopyObjectRequest copyObjectRequest = new CopyObjectRequest(bucket, awsOldPath, bucket, awsNewPath).withCannedAccessControlList(CannedAccessControlList.PublicRead);
+		final CopyObjectRequest copyObjectRequest = new CopyObjectRequest(bucket, awsOldPath, bucket, awsNewPath).withCannedAccessControlList(CannedAccessControlList.Private);
 		client.copyObject(copyObjectRequest);
 		final URL url = client.getUrl(bucket, awsNewPath);
 		// 기존 파일 삭제
@@ -343,7 +346,7 @@ public class S3Util {
 		final String ext = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
 		final String awsPath =folder+"/"+FileUtil.makeFileName()+"."+ext;
 		final ObjectMetadata objectMetadata = new ObjectMetadata();
-		client.putObject(new PutObjectRequest(bucket,awsPath,multipartFile.getInputStream(),objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead));
+		client.putObject(new PutObjectRequest(bucket,awsPath,multipartFile.getInputStream(),objectMetadata).withCannedAcl(CannedAccessControlList.Private));
 		final URL url = client.getUrl(bucket, awsPath);
 		log.debug("url.toString() {}", url.toString());
 		return url.getPath();
@@ -359,7 +362,7 @@ public class S3Util {
 	 * @implNote
 	 * @since 2020. 7. 27. 오후 4:09:53
 	 */
-	private static String awsPathReplace(final String oldPath) {
+	public static String awsPathReplace(final String oldPath) {
 		log.info("S3Util.awsPathReplace");
 		String awsPath = oldPath.replace(File.separator, "/");
 		if(awsPath.indexOf('/') == 0){
@@ -368,9 +371,16 @@ public class S3Util {
 		return awsPath;
 	}
 
-	public static void GeneratePresignedURL() {
+	/**
+	 * Generate presigned url.
+	 *
+	 * @param objectKey the object key
+	 * @author [오지훈]
+	 * @implNote S3 Signed URL 적용
+	 * @since 2020. 8. 10. 오전 9:42:48
+	 */
+	public static void GeneratePresignedURL(final String objectKey) {
 		String bucketName = "nike-test-bucket-dnp";
-		String objectKey = "contents/20200728114000An3vskGapg.jpg";
 		try {
 			// Set the presigned URL to expire after one hour.
 			java.util.Date expiration = new java.util.Date();
@@ -397,6 +407,5 @@ public class S3Util {
 			e.printStackTrace();
 		}
 	}
-
 
 }

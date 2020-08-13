@@ -33,7 +33,7 @@ public class WishListScheduler {
 	 *
 	 * @author [윤태호]
 	 * @since 2020. 7. 6. 오후 4:28:04
-	 * @implNote
+	 * @implNote 위시리스트 7일 이전 데이터 삭제
 	 */
 	//	@Scheduled(cron = "*/10 * * * * *")
 	@Scheduled(cron = "0 0 0 * * *")

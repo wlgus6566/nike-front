@@ -3,9 +3,10 @@ package com.nike.dnp.service.report;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
-import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
-import com.nike.dnp.dto.report.*;
+import com.nike.dnp.dto.report.ReportFileSaveDTO;
+import com.nike.dnp.dto.report.ReportSaveDTO;
+import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportFile;
@@ -241,7 +242,10 @@ public class ReportService {
         final Optional<Report> report = this.findById(reportSaveDTO.getReportSeq());
 
         // 썸네일 base64 -> file 정보로 변환
-        this.base64ToFile(reportSaveDTO);
+        // 썸네일 base64 -> file 정보로 변환
+        if(!ObjectUtils.isEmpty(reportSaveDTO.getImageBase64()) && reportSaveDTO.getImageBase64().contains("base64")){
+            this.base64ToFile(reportSaveDTO);
+        }
 
         report.ifPresent(value -> value.update(reportSaveDTO));
 
@@ -384,7 +388,7 @@ public class ReportService {
         final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
         userContentsSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
         userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
-        final List<AuthReturnDTO> authList = userContentsService.getAuthList(userContentsSearchDTO);
+        final List<AuthReturnDTO> authList = authService.getAuthList(userContentsSearchDTO);
 
         final List<Long> userSeqList  = new ArrayList<>();
         for (final AuthReturnDTO authReturnDTO : authList) {

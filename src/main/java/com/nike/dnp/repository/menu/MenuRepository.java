@@ -30,14 +30,15 @@ public interface MenuRepository extends JpaRepository<Menu, Long>, MenuRepositor
     List<Menu> findAllByUseYnAndMenuDepth(final String useYn, final Long menuDepth);
 
     /**
-     * Find by menu path url menu.
+     * Find all by use yn and management yn order by menu depth asc menu order asc list.
      *
-     * @param menuCode the menu code
-     * @return the menu
+     * @param useYn        the use yn
+     * @param managementYn the management yn
+     * @return the list
      * @author [오지훈]
-     * @since 2020. 7. 20. 오후 2:44:02
-     * @implNote
+     * @implNote [Description 작성]
+     * @since 2020. 8. 10. 오후 3:48:36
      */
-    Menu findByMenuCode(final String menuCode);
+    List<Menu> findAllByUseYnAndManagementYnOrderByMenuDepthAscMenuOrderAsc(final String useYn, final String managementYn);
 
 }
