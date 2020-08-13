@@ -91,6 +91,9 @@ export default {
         this.getReport();
         this.authCacheList();
     },
+    activated() {
+        this.getReport();
+    },
     mounted() {
         getCategoryList(
             'REPORT_SECTION_CODE',
