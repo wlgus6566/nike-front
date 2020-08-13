@@ -17,79 +17,34 @@
             <span class="txt" v-else>썸네일 이미지 등록</span>
         </label>
 
-        <modal
-            classes="modal"
-            name="modal-cropper"
-            height="auto"
-            width="800"
-            :reset="true"
-            :scrollable="true"
-        >
-            <div class="modal-container">
-                <div class="modal-header">
-                    이미지 등록
-                </div>
-                <div class="modal-content">
-                    <!--<div style="height: 900px;"></div>-->
-                    <el-scrollbar wrap-class="modal-scroll" :native="false">
-                        <div class="img-cropper">
-                            <VueCropper
-                                ref="cropper"
-                                :aspect-ratio="size"
-                                :src="imgSrc"
-                                preview=".preview"
-                            />
-                        </div>
-                        <div class="preview" />
-                    </el-scrollbar>
-                </div>
-                <div class="modal-footer">
-                    <button
-                        type="button"
-                        class="btn-s"
-                        role="button"
-                        @click="popupClose"
-                    >
-                        취소
-                    </button>
-                    <button
-                        type="button"
-                        class="btn-s-black"
-                        role="button"
-                        @click.prevent="cropImage"
-                    >
-                        확인
-                    </button>
-                </div>
-            </div>
-            <button
-                class="modal-close"
-                type="button"
-                @click.prevent="popupClose"
-            >
-                Close
-            </button>
-        </modal>
+        <cropperModal
+            :visible.sync="visible.cropperModal"
+            :imgSrc="this.imgSrc"
+            :cropImg="this.cropImg"
+            :imgName="this.imgName"
+            :size="this.size"
+            @cropImage="cropImage"
+        />
     </div>
 </template>
 
 <script>
 import 'cropperjs/dist/cropper.css';
-import VueCropper from 'vue-cropperjs';
 const Compress = require('compress.js');
+import cropperModal from './cropperModal';
 
 export default {
-    name: 'index',
+    name: 'thumbnailCropper',
     data() {
         return {
-            imgSrc: require('@/assets/images/@test1.jpg'),
+            visible: {
+                cropperModal: false,
+            },
+            imgSrc: null,
             cropImg: null,
             imgName: null,
-            data: null,
         };
     },
-    components: { VueCropper },
-    props: ['imageBase64', 'imageFileName', 'size'],
     mounted() {
         this.cropImg = this.imageBase64;
     },
@@ -104,8 +59,16 @@ export default {
             this.imgName = this.imageFileName;
         },
     },
+    components: { cropperModal },
+    props: ['imageBase64', 'imageFileName', 'size'],
+
     computed: {},
     methods: {
+        cropImage(cropperUrl) {
+            this.cropImg = cropperUrl;
+            this.$emit('cropImage', this.cropImg, this.imgName);
+            this.visible.cropperModal = false;
+        },
         inputChangeEvent(e) {
             const file = e.target.files[0];
             if (file.type.indexOf('image/') === -1) {
@@ -132,64 +95,7 @@ export default {
                 });
         },
         popupOpen() {
-            this.$modal.show('modal-cropper');
-        },
-        popupClose() {
-            this.$modal.hide('modal-cropper');
-        },
-        cropImage() {
-            console.log(123);
-            this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
-            this.$emit('cropImage', this.cropImg, this.imgName);
-            this.popupClose();
-        },
-        flipX() {
-            const dom = this.$refs.flipX;
-            let scale = dom.getAttribute('data-scale');
-            scale = scale ? -scale : -1;
-            this.$refs.cropper.scaleX(scale);
-            dom.setAttribute('data-scale', scale);
-        },
-        flipY() {
-            const dom = this.$refs.flipY;
-            let scale = dom.getAttribute('data-scale');
-            scale = scale ? -scale : -1;
-            this.$refs.cropper.scaleY(scale);
-            dom.setAttribute('data-scale', scale);
-        },
-        getCropBoxData() {
-            this.data = JSON.stringify(
-                this.$refs.cropper.getCropBoxData(),
-                null,
-                4
-            );
-        },
-        getData() {
-            this.data = JSON.stringify(this.$refs.cropper.getData(), null, 4);
-        },
-        move(offsetX, offsetY) {
-            this.$refs.cropper.move(offsetX, offsetY);
-        },
-        reset() {
-            this.$refs.cropper.reset();
-        },
-        rotate(deg) {
-            this.$refs.cropper.rotate(deg);
-        },
-        setCropBoxData() {
-            if (!this.data) return;
-            this.$refs.cropper.setCropBoxData(JSON.parse(this.data));
-        },
-        setData() {
-            if (!this.data) return;
-            this.$refs.cropper.setData(JSON.parse(this.data));
-        },
-
-        showFileChooser() {
-            this.$refs.input.click();
-        },
-        zoom(percent) {
-            this.$refs.cropper.relativeZoom(percent);
+            this.visible.cropperModal = true;
         },
     },
 };

@@ -50,7 +50,7 @@
                             <span class="radio">
                                 <input
                                     type="radio"
-                                    v-model="folderDetail.menuCode"
+                                    v-model="menuCode"
                                     value="SP"
                                 />
                                 <span></span>
@@ -61,7 +61,7 @@
                             <span class="radio">
                                 <input
                                     type="radio"
-                                    v-model="folderDetail.menuCode"
+                                    v-model="menuCode"
                                     value="SU"
                                 />
                                 <span></span>
@@ -72,7 +72,7 @@
                             <span class="radio">
                                 <input
                                     type="radio"
-                                    v-model="folderDetail.menuCode"
+                                    v-model="menuCode"
                                     value="FA"
                                 />
                                 <span></span>
@@ -83,7 +83,7 @@
                             <span class="radio">
                                 <input
                                     type="radio"
-                                    v-model="folderDetail.menuCode"
+                                    v-model="menuCode"
                                     value="HO"
                                 />
                                 <span></span>
@@ -126,7 +126,7 @@
                                         v-model="
                                             folderDetail.campaignPeriodSectionCode
                                         "
-                                        value="EVERY"
+                                        value="selectDate"
                                     />
                                     <span></span>
                                 </span>
@@ -139,7 +139,7 @@
                                         v-model="
                                             folderDetail.campaignPeriodSectionCode
                                         "
-                                        value="selectDate"
+                                        value="EVERY"
                                     />
                                     <span></span>
                                 </span>
@@ -241,6 +241,7 @@ import {
     getContentsView,
     getContentsViewFile,
     postContents,
+    putContents,
 } from '@/api/contents';
 import bus from '@/utils/bus';
 export default {
@@ -248,14 +249,7 @@ export default {
     data() {
         return {
             title: this.$route.meta.title,
-            exposure: 'Y',
-            uploadFolder: 'SP',
-            campaignTitle: '',
-            campaignDesc: '',
-            campaignPeriodRadio: 'selectDate',
-            campaignDate: '',
-            imageFilePhysicalName: '',
-            imageFileName: 'test',
+            menuCode: 'SP',
             attrs: [
                 {
                     key: 'today',
@@ -269,7 +263,7 @@ export default {
             folderDetail: {
                 campaignBeginDt: '',
                 campaignEndDt: '',
-                campaignPeriodSectionCode: 'EVERY',
+                campaignPeriodSectionCode: 'selectDate',
                 checks: [
                     {
                         authSeq: 0,
@@ -349,9 +343,9 @@ export default {
             this.folderDetail.campaignEndDt = this.$moment(
                 this.folderDetail.campaignEndDt
             ).format('YYYY.MM.DD');
-            console.log(this.folderDetail);
+            const uploadFn = this.$route.params.id ? putContents : postContents;
             try {
-                const { data: response } = await postContents(
+                const { data: response } = await uploadFn(
                     this.$route.meta.topMenuCode,
                     this.folderDetail.menuCode,
                     this.folderDetail
@@ -412,6 +406,7 @@ export default {
                 if (response.existMsg) {
                     alert(response.msg);
                 }
+                this.menuCode = response.data.menuCode;
                 this.folderDetail = {
                     ...response.data,
                     imageBase64: response.data.imageFilePhysicalName,
