@@ -48,14 +48,14 @@ public class ReportAnswerRepositoryImpl extends QuerydslRepositorySupport implem
     /**
      * Find all report answer list list.
      *
-     * @param ReportSeq the report seq
+     * @param reportSeq the report seq
      * @return the list
      * @author [이소정]
      * @implNote 보고서 댓글 목록 조회
      * @since 2020. 8. 13. 오후 8:07:58
      */
     @Override
-    public List<ReportAnswerResultDTO> findAllReportAnswerList(Long ReportSeq) {
+    public List<ReportAnswerResultDTO> findAllReportAnswerList(Long reportSeq) {
         final QReportAnswer qReportAnswer = QReportAnswer.reportAnswer;
         final QUser qUser = QUser.user;
 
@@ -72,7 +72,8 @@ public class ReportAnswerRepositoryImpl extends QuerydslRepositorySupport implem
                 )
                 .from(qReportAnswer)
                 .leftJoin(qUser).on(qReportAnswer.registerSeq.eq(qUser.userSeq))
-                .where(qReportAnswer.useYn.eq("Y"))
+                .where(qReportAnswer.useYn.eq("Y")
+                , qReportAnswer.reportSeq.eq(reportSeq))
                 .fetch();
     }
 }
