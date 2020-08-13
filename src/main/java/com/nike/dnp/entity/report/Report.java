@@ -201,9 +201,9 @@ public class Report extends BaseTimeEntity {
     }
 
 
-    // TODO[lsj]
-    @ManyToOne
-    @JoinColumn(name="userSeq", foreignKey = @ForeignKey(name = "registerSeq"))
-    private User user;
+//     TODO[lsj]
+//    @ManyToOne
+//    @JoinColumn(name="userSeq", foreignKey = @ForeignKey(name = "registerSeq"))
+//    private User user;
 
 }

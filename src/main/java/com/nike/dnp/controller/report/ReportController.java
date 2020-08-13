@@ -3,6 +3,7 @@ package com.nike.dnp.controller.report;
 import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
+import com.nike.dnp.dto.report.ReportResultDTO;
 import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.entity.report.Report;
@@ -100,7 +101,7 @@ public class ReportController {
         + "size||노출갯수|Integer\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 목록 조회")
-    public SingleResult<Page<Report>> findAllReports(
+    public SingleResult<Page<ReportResultDTO>> findAllReports(
             final ReportSearchDTO reportSearchDTO
     ) {
         log.info("ReportController.findAllReports");

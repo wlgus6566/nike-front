@@ -268,7 +268,11 @@ public class ContentsService {
 
         // contents File
         final List<ContentsFile> beforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contentsSaveDTO.getContentsSeq(), "Y");
-        final List<ContentsFile> notUseFileList = beforeFileList;
+
+        final List<ContentsFile> notUseFileList = new ArrayList<>();
+        for (ContentsFile contentsFile : beforeFileList) {
+            notUseFileList.add(contentsFile);
+        }
         final List<ContentsFileSaveDTO> newFileList = contentsSaveDTO.getContentsFileList();
 
         // 기존에 있는 파일 목록과 DTO받은 파일 목록 비교해서
@@ -509,19 +513,22 @@ public class ContentsService {
     public void checkContentsFileValidation(final ContentsFileSaveDTO contentsFileSaveDTO) {
         log.info("ContentsService.checkContentsFileValidation");
         // 파일 종류가 FILE인 경우 파일 정보 필수
-        if (ServiceCode.ContentsFileKindCode.FILE.equals(contentsFileSaveDTO.getFileKindCode())) {
-            if (StringUtils.isBlank(contentsFileSaveDTO.getFileName())
-                    || Objects.isNull(contentsFileSaveDTO.getFileSize())
-                    || StringUtils.isBlank(contentsFileSaveDTO.getFilePhysicalName())) {
-                throw new CodeMessageHandleException(FailCode.ConfigureError.SELECT_FILE.name(),
-                        MessageUtil.getMessage(FailCode.ConfigureError.SELECT_FILE.name()));
+        if (ServiceCode.ContentsFileKindCode.FILE.toString().equals(contentsFileSaveDTO.getFileKindCode())) {
+            // 새로 등록한 파일 인 경우에만 validation check
+            if (!ObjectUtils.isEmpty(contentsFileSaveDTO.getFilePhysicalName()) && contentsFileSaveDTO.getFilePhysicalName().contains("/temp/")) {
+                if (ObjectUtils.isEmpty(contentsFileSaveDTO.getFileName())
+                        || Objects.isNull(contentsFileSaveDTO.getFileSize())
+                        || ObjectUtils.isEmpty(contentsFileSaveDTO.getFilePhysicalName())) {
+                    throw new CodeMessageHandleException(FailCode.ConfigureError.SELECT_FILE.name(),
+                            MessageUtil.getMessage(FailCode.ConfigureError.SELECT_FILE.name()));
+                }
             }
         } else {
             // 파일 종류가 VIDEO/VR 인 경우 타이틀, url 필수
-            if (StringUtils.isBlank(contentsFileSaveDTO.getTitle())) {
+            if (ObjectUtils.isEmpty(contentsFileSaveDTO.getTitle())) {
                 throw new CodeMessageHandleException(FailCode.ConfigureError.NULL_TITLE.name(),
                         MessageUtil.getMessage(FailCode.ConfigureError.NULL_TITLE.name()));
-            } else if (StringUtils.isBlank(contentsFileSaveDTO.getUrl())) {
+            } else if (ObjectUtils.isEmpty(contentsFileSaveDTO.getUrl())) {
                 throw new CodeMessageHandleException(FailCode.ConfigureError.NULL_URL.name(),
                         MessageUtil.getMessage(FailCode.ConfigureError.NULL_URL.name()));
             }
@@ -539,9 +546,11 @@ public class ContentsService {
      */
     public ContentsFileSaveDTO s3FileCopySave(final ContentsFileSaveDTO contentsFileSaveDTO) {
         log.info("ContentsService.s3FileCopySave");
-        contentsFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getFilePhysicalName()));
-        contentsFileSaveDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getThumbnailFilePhysicalName()));
-        contentsFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getThumbnailFilePhysicalName()));
+        if (!ObjectUtils.isEmpty(contentsFileSaveDTO.getFilePhysicalName()) && contentsFileSaveDTO.getFilePhysicalName().contains("/temp/")) {
+            contentsFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getFilePhysicalName()));
+            contentsFileSaveDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getThumbnailFilePhysicalName()));
+            contentsFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getThumbnailFilePhysicalName()));
+        }
         return contentsFileSaveDTO;
     }
 

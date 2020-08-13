@@ -331,18 +331,43 @@ public class ContentsFile extends BaseTimeEntity {
         this.fileContentType = isFile ? contentsFileSaveDTO.getFileContentType() : null;
         this.fileExtension = isFile ? contentsFileSaveDTO.getFileExtension().toUpperCase(Locale.KOREA) : null;
 
-        this.fileName = isFile ? contentsFileSaveDTO.getFileName() : null;
-        this.fileSize = isFile ? contentsFileSaveDTO.getFileSize() : null;
-        this.filePhysicalName = isFile ? contentsFileSaveDTO.getFilePhysicalName() : null;
-        this.thumbnailFileName = isFile ? contentsFileSaveDTO.getThumbnailFileName() : null;
-        this.thumbnailFileSize = isFile ? contentsFileSaveDTO.getThumbnailFileSize() : null;
-        this.thumbnailFilePhysicalName = isFile ? contentsFileSaveDTO.getThumbnailFilePhysicalName() : null;
-        this.detailThumbnailFileName = isFile ? contentsFileSaveDTO.getDetailThumbnailFileName() : null;
-        this.detailThumbnailFileSize = isFile ? contentsFileSaveDTO.getDetailThumbnailFileSize() : null;
-        this.detailThumbnailFilePhysicalName = isFile ? contentsFileSaveDTO.getDetailThumbnailFilePhysicalName() : null;
+        if (this.checkTempFile(contentsFileSaveDTO.getFilePhysicalName())) {
+            this.fileName = isFile ? contentsFileSaveDTO.getFileName() : null;
+            this.fileSize = isFile ? contentsFileSaveDTO.getFileSize() : null;
+            this.filePhysicalName = isFile ? contentsFileSaveDTO.getFilePhysicalName() : null;
+        }
+
+        if (this.checkTempFile(contentsFileSaveDTO.getThumbnailFilePhysicalName())) {
+            this.thumbnailFileName = isFile ? contentsFileSaveDTO.getThumbnailFileName() : null;
+            this.thumbnailFileSize = isFile ? contentsFileSaveDTO.getThumbnailFileSize() : null;
+            this.thumbnailFilePhysicalName = isFile ? contentsFileSaveDTO.getThumbnailFilePhysicalName() : null;
+        }
+
+        if (this.checkTempFile(contentsFileSaveDTO.getDetailThumbnailFilePhysicalName())) {
+            this.detailThumbnailFileName = isFile ? contentsFileSaveDTO.getDetailThumbnailFileName() : null;
+            this.detailThumbnailFileSize = isFile ? contentsFileSaveDTO.getDetailThumbnailFileSize() : null;
+            this.detailThumbnailFilePhysicalName = isFile ? contentsFileSaveDTO.getDetailThumbnailFilePhysicalName() : null;
+        }
 
         this.title = !isFile ? contentsFileSaveDTO.getTitle() : null;
         this.url = isFile ? null : contentsFileSaveDTO.getUrl();
+    }
+
+    /**
+     * Check temp file boolean.
+     *
+     * @param physicalName the physical name
+     * @return the boolean
+     * @author [이소정]
+     * @implNote temp 파일 여부 확인
+     * @since 2020. 8. 13. 오후 6:06:44
+     */
+    public boolean checkTempFile(final String physicalName) {
+        if (!ObjectUtils.isEmpty(physicalName) && physicalName.contains("/temp/")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

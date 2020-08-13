@@ -29,7 +29,7 @@ public interface ReportRepositoryCustom {
      * @implNote 보고서 페이지 처리 된 목록 조회
      * @since 2020. 6. 19. 오후 5:57:50
      */
-    Page<Report> findPageReport(final ReportSearchDTO reportSearchDTO, final PageRequest pageRequest);
+    Page<ReportResultDTO> findPageReport(final ReportSearchDTO reportSearchDTO, final PageRequest pageRequest);
 
     /**
      * Find recent report list.

@@ -1,11 +1,13 @@
 package com.nike.dnp.repository.report;
 
+import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.report.ReportResultDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.entity.report.QReport;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.user.QUser;
 import com.nike.dnp.util.ObjectMapperUtil;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
@@ -51,21 +53,41 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
      * @since 2020. 7. 7. 오후 4:49:05
      */
     @Override
-    public Page<Report> findPageReport(final ReportSearchDTO reportSearchDTO, final PageRequest pageRequest) {
+    public Page<ReportResultDTO> findPageReport(final ReportSearchDTO reportSearchDTO, final PageRequest pageRequest) {
         final QReport qReport = QReport.report;
         final QUser qUser = QUser.user;
 
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
-        final JPAQuery<Report> query = queryFactory.selectFrom(qReport)
+        final JPAQuery<ReportResultDTO> query = queryFactory
+                .select(Projections.bean(
+                        ReportResultDTO.class
+                        , qReport.reportSeq
+                        , qReport.reportSectionCode
+                        , qReport.reportName
+                        , qReport.imageFilePhysicalName
+                        , qReport.readCount
+                        , qUser.nickname
+                    )
+                )
+                .from(qReport)
+                .leftJoin(qUser).on(qReport.registerSeq.eq(qUser.userSeq))
                 .where(
                         ReportPredicateHelper.compareKeyword(reportSearchDTO)
                         , ReportPredicateHelper.eqSectionCode(reportSearchDTO)
                         , qReport.useYn.eq("Y")
                         , qReport.authSeq.in(reportSearchDTO.getAuthSeqList())
-                ).leftJoin(qUser).on(qReport.registerSeq.eq(qUser.userSeq));
-
-
-        final List<Report> reportList = getQuerydsl().applyPagination(pageRequest, query).fetch();
+                );
+//        final JPAQuery<Report> query = queryFactory.selectFrom(qReport)
+//                .where(
+//                        ReportPredicateHelper.compareKeyword(reportSearchDTO)
+//                        , ReportPredicateHelper.eqSectionCode(reportSearchDTO)
+//                        , qReport.useYn.eq("Y")
+//                        , qReport.authSeq.in(reportSearchDTO.getAuthSeqList())
+//                ).leftJoin(qUser).on(qReport.registerSeq.eq(qUser.userSeq));
+//        final List<Report> reportList = getQuerydsl().applyPagination(pageRequest, query).fetch();
+        final List<ReportResultDTO> reportList = ObjectMapperUtil.mapAll(
+                getQuerydsl().applyPagination(pageRequest, query).fetch(), ReportResultDTO.class
+        );
         return new PageImpl<>(reportList, pageRequest, query.fetchCount());
     }
 

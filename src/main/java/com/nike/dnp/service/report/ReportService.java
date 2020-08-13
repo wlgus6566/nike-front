@@ -114,7 +114,7 @@ public class ReportService {
      * @implNote 보고서 페이징 처리 된 목록 조회
      * @since 2020. 7. 8. 오후 5:28:17
      */
-    public Page<Report> findAllPaging(final ReportSearchDTO reportSearchDTO) {
+    public Page<ReportResultDTO> findAllPaging(final ReportSearchDTO reportSearchDTO) {
         log.info("ReportService.findAllPaging");
         // 권한 검색 조건
         final List<Long> authSeqList = new ArrayList<>();
@@ -441,9 +441,11 @@ public class ReportService {
      */
     public ReportFileSaveDTO s3FileCopySave(final ReportFileSaveDTO reportFileSaveDTO) {
         log.info("ReportService.s3FileCopySave");
-        reportFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getFilePhysicalName()));
-        reportFileSaveDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getThumbnailFilePhysicalName()));
-        reportFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getThumbnailFilePhysicalName()));
+        if (!ObjectUtils.isEmpty(reportFileSaveDTO.getFilePhysicalName()) && reportFileSaveDTO.getFilePhysicalName().contains("/temp/")) {
+            reportFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getFilePhysicalName()));
+            reportFileSaveDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getThumbnailFilePhysicalName()));
+            reportFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getThumbnailFilePhysicalName()));
+        }
         return reportFileSaveDTO;
     }
 
