@@ -3,6 +3,11 @@
         <h2 class="page-title">
             {{ this.$route.meta.title }}
         </h2>
+        <ul class="schedule-type">
+            <li class="edu">교육</li>
+            <li class="campaign">캠페인</li>
+            <li class="official">기타 공개일정</li>
+        </ul>
         <FullCalendar
             ref="fullCalendar"
             :options="calendarOptions"
