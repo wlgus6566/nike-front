@@ -1,6 +1,8 @@
 <template>
     <div>
-        <h2 class="page-title"><span class="ko">메인 비주얼 관리</span></h2>
+        <h2 class="page-title">
+            <span class="ko">{{ $route.meta.title }}</span>
+        </h2>
         <h3 class="form-title mt20">메인 비주얼 등록</h3>
         <hr class="hr-black" />
         <ul class="form-list">

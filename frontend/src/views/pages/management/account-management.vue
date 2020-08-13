@@ -15,7 +15,9 @@
                                 <button
                                     type="button"
                                     class="txt-btn-orange"
-                                    @click="userDelete"
+                                    @click="
+                                        $emit('userDelete', addUserData.userSeq)
+                                    "
                                 >
                                     <span>계정 삭제</span>
                                 </button>
@@ -42,7 +44,19 @@
                                         >ID(E-MAIL)</label
                                     >
                                 </div>
-                                <div class="form-column">
+                                <div
+                                    class="form-column"
+                                    v-if="addUserData.userSeq"
+                                >
+                                    <div class="id-check">
+                                        <input
+                                            type="text"
+                                            v-model="addUserData.userId"
+                                            disabled
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-column" v-else>
                                     <div class="id-check">
                                         <input
                                             type="text"
@@ -50,7 +64,12 @@
                                         />
                                         <button
                                             class="btn-form-gray"
-                                            @click="userIdCheck"
+                                            @click="
+                                                $emit(
+                                                    'userIdCheck',
+                                                    addUserData.userId
+                                                )
+                                            "
                                         >
                                             <span>ID 중복체크</span>
                                         </button>
@@ -85,7 +104,29 @@
                 >
                     <span>취소</span>
                 </button>
-                <button type="button" class="btn-s-black" @click="addAuthData">
+                <button
+                    type="button"
+                    class="btn-s-black"
+                    @click="
+                        $emit(
+                            'modifyAuthData',
+                            addUserData.userSeq,
+                            addAuthority.value,
+                            addUserData
+                        )
+                    "
+                    v-if="addUserData.userSeq"
+                >
+                    <span>수정</span>
+                </button>
+                <button
+                    type="button"
+                    class="btn-s-black"
+                    @click="
+                        $emit('addAuthData', addAuthority.value, addUserData)
+                    "
+                    v-else
+                >
                     <span>저장</span>
                 </button>
             </div>
@@ -105,20 +146,11 @@ export default {
     },
     watch: {
         'addUserData.authName'() {
-            this.addAuthority.value = [7];
+            //this.addAuthority.value = null;
         },
     },
     props: ['visible', 'receipt', 'addUserData', 'addAuthority'],
     methods: {
-        userIdCheck() {
-            bus.$emit('userIdCheck', this.addUserData.userId);
-        },
-        addAuthData() {
-            bus.$emit('addAuthData', this.addAuthority.value, this.addUserData);
-        },
-        userDelete() {
-            bus.$emit('userDelete', this.addUserData.userSeq);
-        },
         thisClose() {
             this.$emit('close');
         },
