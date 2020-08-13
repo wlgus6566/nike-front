@@ -153,6 +153,12 @@
             :totalItem="totalItem"
             @handleCurrentChange="handleCurrentChange"
         />
+
+        <AccountManagement
+            :visible.sync="visible.AccountManagement"
+            :addUserData="this.addUserData"
+            :addAuthority="this.addAuthority"
+        />
     </div>
 </template>
 <script>
@@ -178,6 +184,9 @@ export default {
     name: 'account',
     data() {
         return {
+            visible: {
+                AccountManagement: false,
+            },
             idCheck: false,
             loading: false,
             itemLength: 20,
@@ -257,6 +266,7 @@ export default {
         };
     },
     components: {
+        AccountManagement,
         CascaderSelect,
         FilterSelect,
         SearchInput,
@@ -373,10 +383,13 @@ export default {
         },
         //등록 팝업 오픈
         openPop() {
-            this.$modal.show(AccountManagement, {
-                addUserData: this.addUserData,
-                addAuthority: this.addAuthority,
-            });
+            this.addUserData = {
+                authSeq: null,
+                nickname: null,
+                userId: null,
+            };
+            this.addAuthority.value = [null];
+            this.visible.AccountManagement = true;
         },
         //dataPicker show
         dataPickerShow() {
@@ -517,7 +530,7 @@ export default {
                         alert(response.data.msg);
                     }
                     if (response.data.success) {
-                        this.$modal.hideAll();
+                        this.visible.AccountManagement = false;
                         await this.getUserList();
                         this.loading = false;
                     }
@@ -533,10 +546,7 @@ export default {
                     data: { data: response },
                 } = await getUserDetail(seq);
                 this.addUserData = response;
-                this.$modal.show(AccountManagement, {
-                    addUserData: this.addUserData,
-                    addAuthority: this.addAuthority,
-                });
+                this.visible.AccountManagement = true;
                 console.log(response);
             } catch (error) {
                 console.log(error);
@@ -561,8 +571,9 @@ export default {
                         if (response.data.existMsg) {
                             alert(response.data.msg);
                         }
+                        console.log(response);
                         if (response.data.success) {
-                            this.$modal.hideAll();
+                            this.visible.AccountManagement = false;
                             await this.getUserList();
                             this.loading = false;
                             this.idCheck = false;

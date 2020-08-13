@@ -41,8 +41,13 @@
 .fc-black {
     color: #000 !important;
 }
+.img-cropper {
+    width: 398px;
+    height: 298px;
+}
 .img-cropper > div {
-    max-height: 500px;
+    height: 298px;
+    max-height: 298px;
 }
 .page-title {
     display: block;
