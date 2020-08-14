@@ -1,10 +1,10 @@
 <template>
     <form action="#" @submit.prevent="$emit('login')">
         <div class="login-box">
-            <strong class="title">
-                <em>WELCOM TO</em>
-                <span>NIKE SPACE</span>
-            </strong>
+            <h1 class="title">
+                NIKE ND<span>&amp;</span>P<br />
+                DIGITAL PLATFORM
+            </h1>
             <div class="form-box">
                 <div class="input-box">
                     <input
@@ -75,20 +75,17 @@ export default {
     display: block;
     font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
     color: #fff;
+    font-size: 40px;
     font-weight: normal;
+    letter-spacing: 0.5px;
+    line-height: 46px;
 }
-.login-box .title em {
-    display: block;
-    font-size: 30px;
-    letter-spacing: 0.38px;
-    line-height: 36px;
-}
+
 .login-box .title span {
-    display: block;
-    vertical-align: top;
-    font-size: 46px;
-    line-height: 55px;
-    letter-spacing: 0.58px;
+    display: inline-block;
+    margin-right: 5px;
+    font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+    font-weight: 600;
 }
 .login-box .title2 {
     display: block;
