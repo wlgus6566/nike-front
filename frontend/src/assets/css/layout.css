@@ -156,6 +156,14 @@ header .sticky-content {
     box-sizing: border-box;
     min-height: calc(100vh);
 }
+#container-clean {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: calc(100% - 200px);
+    box-sizing: border-box;
+    min-height: calc(100vh);
+}
 .contents {
     z-index: 30;
     position: relative;
