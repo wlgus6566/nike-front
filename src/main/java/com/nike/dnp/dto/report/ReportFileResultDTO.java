@@ -59,7 +59,7 @@ public class ReportFileResultDTO {
      * @author [이소정]
      */
     @NotBlank(message = "report.file")
-    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리명", example = "/upload/report/path", required = true)
+    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리명", example = "http://cdnUrl/file/report/graphic_file_name.jpg", required = true)
     private String filePhysicalName;
 
     /**
@@ -101,7 +101,7 @@ public class ReportFileResultDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg")
+    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/report/graphic_file_name_detail_thumbnail.jpg")
     private String detailThumbnailFilePhysicalName;
 
 
@@ -124,7 +124,7 @@ public class ReportFileResultDTO {
      * 썸네일 파일 물리 명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_thumbnail.jpg")
+    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/report/graphic_file_name_thumbnail.jpg")
     private String thumbnailFilePhysicalName;
 
 

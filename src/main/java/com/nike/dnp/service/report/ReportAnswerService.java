@@ -5,6 +5,7 @@ import com.nike.dnp.dto.report.ReportAnswerResultDTO;
 import com.nike.dnp.dto.report.ReportAnswerSaveDTO;
 import com.nike.dnp.entity.report.ReportAnswer;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.report.ReportAnswerRepository;
 import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
@@ -96,6 +97,6 @@ public class ReportAnswerService {
     public Optional<ReportAnswer> findById(final Long answerSeq) {
         log.info("ReportAnswerService.findById");
         return Optional.ofNullable(reportAnswerRepository.findById(answerSeq).orElseThrow((
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())))));
+                () -> new NotFoundHandleException())));
     }
 }

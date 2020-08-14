@@ -4,6 +4,7 @@ import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.calendar.*;
 import com.nike.dnp.entity.calendar.Calendar;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.calendar.CalendarRepository;
 import com.nike.dnp.util.LocalDateUtil;
 import com.nike.dnp.util.MessageUtil;
@@ -144,7 +145,7 @@ public class CalendarService {
                     }
             );
         }else{
-            throw new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()));
+            throw new NotFoundHandleException();
         }
         return calendarEntity.get();
     }
