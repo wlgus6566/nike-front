@@ -80,8 +80,8 @@ public class FileResultDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "thumbnailPhysicalName", value = "썸네일 파일 물리 경로")
-	private String thumbnailPhysicalName;
+	@ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 경로")
+	private String thumbnailFilePhysicalName;
 
 
 	/**
@@ -107,8 +107,8 @@ public class FileResultDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "detailThumbnailPhysicalName", value = "디테일 썸네일 파일 물리 경로")
-	private String detailThumbnailPhysicalName;
+	@ApiModelProperty(name = "detailThumbnailFileSize", value = "디테일 썸네일 파일 물리 경로")
+	private String detailThumbnailFileSize;
 
 
 	/**
@@ -116,8 +116,8 @@ public class FileResultDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "detailThumbnailSize", value = "디테일 썸네일 파일 사이즈")
-	private Long detailThumbnailSize;
+	@ApiModelProperty(name = "detailThumbnailFilePhysicalName", value = "디테일 썸네일 파일 사이즈")
+	private Long detailThumbnailFilePhysicalName;
 
 
 }
