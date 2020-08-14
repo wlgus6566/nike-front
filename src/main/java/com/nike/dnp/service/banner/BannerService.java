@@ -5,6 +5,7 @@ import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.banner.BannerSaveDTO;
 import com.nike.dnp.entity.banner.Banner;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.banner.BannerRepository;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.util.MessageUtil;
@@ -101,9 +102,7 @@ public class BannerService {
      */
     public Banner findByBannerSeq(final Long bannerSeq) {
         return this.findById(bannerSeq).orElseThrow(
-                () -> new CodeMessageHandleException(
-                        FailCode.ExceptionError.NOT_FOUND.name()
-                        , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
+                () -> new NotFoundHandleException());
     }
 
     /**

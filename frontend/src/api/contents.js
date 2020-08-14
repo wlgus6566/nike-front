@@ -26,7 +26,7 @@ function postContents(topMenuCode, menuCode, data) {
     return contents.post(`/${topMenuCode}/${menuCode}`, data);
 }
 function putContents(topMenuCode, menuCode, data) {
-    return contents.post(`/${topMenuCode}/${menuCode}`, data);
+    return contents.put(`/${topMenuCode}/${menuCode}`, data);
 }
 function deleteContents(topMenuCode, menuCode, contentsSeq) {
     return contents.delete(`/${topMenuCode}/${menuCode}/${contentsSeq}`);

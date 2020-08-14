@@ -12,6 +12,7 @@ import ManagementRoutes from './management';
 import MyPageRoutes from './mypage';
 import ErrorRoutes from './error';
 import PubRoutes from './pub';
+import testRoutes from './test';
 
 // Import methods
 import store from '@/store';
@@ -39,6 +40,7 @@ const router = new VueRouter({
         ...MyPageRoutes,
         ...ErrorRoutes,
         ...PubRoutes,
+        ...testRoutes,
     ],
     scrollBehavior(to, from, savedPosition) {
         let position = { x: 0, y: 0 };
@@ -54,20 +56,20 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.meta.unauthorized) {
+    /*if (to.meta.unauthorized) {
         next();
-        /*if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
+        /!*if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
             next('/');
         } else {
             next();
-        }*/
+        }*!/
     } else {
         if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
             next();
         } else {
             next('/login');
         }
-    }
+    }*/
     next();
 });
 export default router;

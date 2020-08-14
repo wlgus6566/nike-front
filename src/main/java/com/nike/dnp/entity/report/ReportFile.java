@@ -188,7 +188,7 @@ public class ReportFile extends BaseTimeEntity {
      * @since 2020. 7. 30. 오후 3:53:23
      */
     public String getDetailThumbnailFilePhysicalName() {
-        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName) ? detailThumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName);
+        return CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName);
     }
 
 

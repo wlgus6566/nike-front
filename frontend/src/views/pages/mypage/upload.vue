@@ -8,7 +8,7 @@
             @sectionCodeChange="sectionCodeChange"
         />
         <template v-if="uploadFolderData">
-            <FolderList
+            <MyFolderList
                 v-if="uploadFolderData.length"
                 :listTypes="listTypes"
                 :folderListData="uploadFolderData"
@@ -25,13 +25,13 @@
 </template>
 
 <script>
-    import {uploadFolderViewList} from '@/api/mypage';
-    import SortingList from '@/components/asset-view/sorting-list.vue';
-    import FolderList from '@/components/folder-list';
-    import Loading from '@/components/loading';
-    import NoData from '@/components/no-data';
+import { uploadFolderViewList } from '@/api/mypage';
+import SortingList from '@/components/asset-view/sorting-list.vue';
+import MyFolderList from '@/components/my-folder-list';
+import Loading from '@/components/loading';
+import NoData from '@/components/no-data';
 
-    export default {
+export default {
     data() {
         return {
             uploadFolderDataList: [],
@@ -92,7 +92,7 @@
     mounted() {},
     components: {
         SortingList,
-        FolderList,
+        MyFolderList,
         Loading,
         NoData,
     },

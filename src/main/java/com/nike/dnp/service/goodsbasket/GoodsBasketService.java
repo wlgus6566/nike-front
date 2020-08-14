@@ -6,6 +6,7 @@ import com.nike.dnp.dto.goodsbasket.GoodsBasketSaveListDTO;
 import com.nike.dnp.entity.goodsbasket.GoodsBasket;
 import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.goodsbasket.GoodsBasketRepository;
 import com.nike.dnp.repository.product.ProductRepository;
 import com.nike.dnp.util.MessageUtil;
@@ -90,9 +91,7 @@ public class GoodsBasketService {
 		log.info("GoodsBasketService.deleteBasket");
 		final Optional<GoodsBasket> optionalGoodsBasket = goodsBasketRepository.findById(goodsBasketSeq);
 		final GoodsBasket goodsBasket = optionalGoodsBasket.orElseThrow(
-				() -> new CodeMessageHandleException(
-						FailCode.ExceptionError.NOT_FOUND.name()
-						, MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
+				() -> new NotFoundHandleException());
 		goodsBasketRepository.delete(goodsBasket);
 	}
 
