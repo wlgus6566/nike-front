@@ -2,6 +2,33 @@
     <li :class="[`depth${this.depth}`]">
         <router-link
             @click.native.prevent="toggle()"
+            :to="item.menuPathUrl"
+            :exact="item.menuPathUrl === '/'"
+            :event="clickable ? '' : 'click'"
+            :class="[
+                { active: activeIndex === navIdx },
+                { hasDepth: clickable },
+                'nav-link',
+            ]"
+            v-html="item.menuName"
+        />
+        <transition @enter="enter" @leave="leave" :css="false">
+            <ul v-show="activeIndex === navIdx" v-if="isFolder">
+                <navItem
+                    @update="update"
+                    v-for="(child, index) in item.menus"
+                    :key="index"
+                    :navIdx="index"
+                    :item="child"
+                    :depth="depth + 1"
+                    :activeIndex="myActiveIndex"
+                />
+            </ul>
+        </transition>
+    </li>
+    <!-- <li :class="[`depth${this.depth}`]">
+        <router-link
+            @click.native.prevent="toggle()"
             :to="item.to"
             :exact="item.exact"
             :event="clickable ? '' : 'click'"
@@ -21,7 +48,7 @@
                 />
             </ul>
         </transition>
-    </li>
+    </li>-->
 </template>
 <script>
 import { gsap, Cubic } from 'gsap/all';
@@ -44,7 +71,7 @@ export default {
             return this.isFolder && this.depth === 2;
         },
         isFolder: function () {
-            return this.item.children && this.item.children.length;
+            return this.item.menus && this.item.menus.length;
         },
     },
     methods: {
@@ -69,7 +96,9 @@ export default {
             });
         },
         init(routeArray) {
-            const linkPath = this.$el.querySelector(':scope > .nav-link').getAttribute('href');
+            const linkPath = this.$el
+                .querySelector(':scope > .nav-link')
+                .getAttribute('href');
             for (let item in routeArray) {
                 const path = routeArray[item].path;
                 if (path === linkPath) {
@@ -83,7 +112,11 @@ export default {
             }
         },
         update(index, initState) {
-            this.myActiveIndex = !!initState ? index : this.myActiveIndex === index ? null : index;
+            this.myActiveIndex = !!initState
+                ? index
+                : this.myActiveIndex === index
+                ? null
+                : index;
         },
     },
     mounted() {

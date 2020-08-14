@@ -3,6 +3,9 @@
         <div class="user-info">
             <span class="store-name">홍대 SKNRS</span>
             <div class="side">
+                <button type="button" class="btn-out" @click="logout">
+                    <span>로그아웃</span>
+                </button>
                 <button type="button" class="btn-alram active">
                     <span>알람</span>
                 </button>
@@ -10,7 +13,8 @@
                     <strong class="title">NEW</strong>
                     <div class="alram-item">
                         <p class="txt">
-                            에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
+                            에어맥스 2090 신제품 런칭 그래픽 자료가
+                            업데이트되었습니다.
                         </p>
                     </div>
                     <button type="button" class="btn-close">
@@ -22,37 +26,43 @@
                     <ul class="alram-list">
                         <li class="alram-item active">
                             <p class="txt">
-                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
+                                에어맥스 2090 신제품 런칭 그래픽 자료가
+                                업데이트되었습니다.
                             </p>
                             <span class="date">Now</span>
                         </li>
                         <li class="alram-item active">
                             <p class="txt">
-                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
+                                에어맥스 2090 신제품 런칭 그래픽 자료가
+                                업데이트되었습니다.
                             </p>
                             <span class="date">Now</span>
                         </li>
                         <li class="alram-item active">
                             <p class="txt">
-                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
+                                에어맥스 2090 신제품 런칭 그래픽 자료가
+                                업데이트되었습니다.
                             </p>
                             <span class="date">Now</span>
                         </li>
                         <li class="alram-item active">
                             <p class="txt">
-                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
+                                에어맥스 2090 신제품 런칭 그래픽 자료가
+                                업데이트되었습니다.
                             </p>
                             <span class="date">Now</span>
                         </li>
                         <li class="alram-item active">
                             <p class="txt">
-                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
+                                에어맥스 2090 신제품 런칭 그래픽 자료가
+                                업데이트되었습니다.
                             </p>
                             <span class="date">Now</span>
                         </li>
                         <li class="alram-item active">
                             <p class="txt">
-                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
+                                에어맥스 2090 신제품 런칭 그래픽 자료가
+                                업데이트되었습니다.
                             </p>
                             <span class="date">Now</span>
                         </li>
@@ -65,13 +75,21 @@
         </div>
         <div class="space-info">
             <p class="store">WINWIN OFFICE</p>
-            <a href="mailto:nike@win-win.co.kr" class="mail">nike@win-win.co.kr</a>
+            <a href="mailto:nike@win-win.co.kr" class="mail"
+                >nike@win-win.co.kr</a
+            >
         </div>
     </div>
 </template>
 <script>
 export default {
     name: 'UserInfo.vue',
+    methods: {
+        logout() {
+            this.$store.commit('LOGOUT');
+            this.$router.push('/login');
+        },
+    },
 };
 </script>
 <style scoped>
@@ -130,6 +148,10 @@ export default {
 }
 .user-info .side [class^='btn-'] + [class^='btn-'] {
     margin-right: -2px;
+    margin-left: 10px;
+}
+.user-info .side .btn-out {
+    background-image: url('../../assets/images/svg/icon-logout.svg');
 }
 .user-info .side .btn-alram {
     background-image: url('../../assets/images/svg/icon-alarm-off.svg');
@@ -199,8 +221,8 @@ export default {
     margin-top: 10px;
     overflow: auto;
 }
-.alram-list .alram-item:first-child:before{
-    top:5px;
+.alram-list .alram-item:first-child:before {
+    top: 5px;
 }
 .alram-list .alram-item {
     margin-top: 0;
