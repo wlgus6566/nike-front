@@ -14,6 +14,7 @@ import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.entity.user.UserContents;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
@@ -272,7 +273,7 @@ public class ContentsService {
         log.info("ContentsService.findByContentsSeq");
         final Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
         final Contents findContents = contents.orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
+                () -> new NotFoundHandleException());
         findContents.updateReadCount(findContents.getReadCount());
 
         // history 저장
@@ -472,7 +473,7 @@ public class ContentsService {
     public Optional<Contents> findById(final Long contentsSeq) {
         log.info("ContentsService.findById");
         return Optional.ofNullable(contentsRepository.findById(contentsSeq).orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+                () -> new NotFoundHandleException()));
     }
 
     /**

@@ -12,6 +12,7 @@ import com.nike.dnp.dto.user.UserContentsSearchDTO;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.auth.AuthMenuRole;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.auth.AuthMenuRoleRepository;
 import com.nike.dnp.repository.auth.AuthRepository;
 import com.nike.dnp.repository.menu.MenuRepository;
@@ -208,9 +209,7 @@ public class AuthService {
     public Optional<Auth> findByRoleType(final String roleType) {
         log.info("AuthService.findByRoleType");
         return Optional.ofNullable(authRepository.findByRoleType(roleType).orElseThrow(() ->
-                new CodeMessageHandleException(
-                        FailCode.ExceptionError.NOT_FOUND.toString()
-                        , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.toString()))));
+                new NotFoundHandleException()));
     }
 
     /**
@@ -355,9 +354,7 @@ public class AuthService {
     public Optional<Auth> findById(final Long authSeq) {
         log.info("AuthService.findById");
         return Optional.ofNullable(authRepository.findById(authSeq).orElseThrow(
-                () -> new CodeMessageHandleException(
-                        FailCode.ExceptionError.NOT_FOUND.toString()
-                        , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.toString()))));
+                () -> new NotFoundHandleException()));
     }
 
     /**

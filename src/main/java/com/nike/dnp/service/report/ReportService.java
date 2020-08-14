@@ -14,6 +14,7 @@ import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.report.ReportFileRepository;
 import com.nike.dnp.repository.report.ReportRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
@@ -200,7 +201,7 @@ public class ReportService {
         log.info("ReportService.findByReportSeq");
         final Optional<Report> report = reportRepository.findByReportSeq(reportSeq);
         final Report findReport = report.orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
+                () -> new NotFoundHandleException());
 
         findReport.updateReadCount(findReport.getReadCount());
 
@@ -465,7 +466,7 @@ public class ReportService {
     public Optional<Report> findById(final Long reportSeq) {
         log.info("ReportService.findById");
         return Optional.ofNullable(reportRepository.findById(reportSeq).orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+                () -> new NotFoundHandleException()));
     }
 
     /**
@@ -480,7 +481,7 @@ public class ReportService {
     public Optional<ReportFile> findByFileId(final Long reportFileSeq) {
         log.info("ReportService.findByFileId");
         return Optional.ofNullable(reportFileRepository.findById(reportFileSeq).orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+                () -> new NotFoundHandleException()));
     }
 
     /**
