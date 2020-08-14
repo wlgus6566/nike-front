@@ -40,6 +40,11 @@ function deleteAnswerList(answerSeq) {
     return report.delete(`/answer/${answerSeq}`);
 }
 
+//REPORT 파일 목록
+function getReportFile(reportSeq, data) {
+    return report.get(`/file/${reportSeq}`, data);
+}
+
 //REPORT 장바구니 목록
 function getReportBasket() {
     return report.get(`/basket`);
@@ -67,4 +72,5 @@ export {
     getReportBasket,
     postReportBasket,
     deleteReportBasket,
+    getReportFile,
 };

@@ -1655,6 +1655,10 @@
     flex-shrink: 0;
     flex-basis: auto;
 }
+.file-item .btn-s-sm-white:disabled {
+    background: #fff !important;
+    color: #000 !important;
+}
 .file-item .btn-box .btn-more {
     display: block;
     width: 30px;

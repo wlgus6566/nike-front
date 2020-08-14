@@ -20,8 +20,8 @@
                     />
                 </div>
                 <div class="info-box">
-                    <strong class="title">{{ item.reportName }}</strong>
-                    <p class="txt">계정명 api없음</p>
+                    <strong class="title">{{ item.nickname }}</strong>
+                    <p class="txt">{{ item.reportName }}</p>
                     <p class="date">
                         {{ $moment(item.updateDt).format('YYYY.MM.DD') }}
                     </p>
