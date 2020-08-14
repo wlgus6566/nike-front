@@ -9,3 +9,4 @@ function createWithAuth(url, options) {
 
 export const myPage = createWithAuth(`/api/mypage`, { timeout: 3000 });
 export const agency = createWithAuth(`/api/agency`, { timeout: 3000 });
+export const customer = createWithAuth(`/api/customer`, { timeout: 3000 });
