@@ -581,7 +581,7 @@ public class ContentsService {
 
             for (ContentsFileSaveDTO contentsFile : contentsFileList) {
                 if (ObjectUtils.isEmpty(contentsFile.getFileName())
-                        && ObjectUtils.isEmpty(contentsFile.getFileSize())
+                        && 0 == contentsFile.getFileSize()
                         && ObjectUtils.isEmpty(contentsFile.getFilePhysicalName())
                         && ObjectUtils.isEmpty(contentsFile.getTitle())
                         && ObjectUtils.isEmpty(contentsFile.getUrl())) {
