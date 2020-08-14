@@ -24,7 +24,6 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 @Component
 public class ContentsResultDTO extends BaseTimeEntity {

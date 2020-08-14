@@ -9,18 +9,18 @@
                 @changeLoginBox="changeLoginBox"
             />
             <p class="f-desc">
-                사용자는 NIKE SPACE에 로그인함으로써,<br />
+                사용자는 NIKE D&P Plarform에 로그인함으로써, <br />
                 개인정보 처리방침 및 이용약관에 동의합니다.
             </p>
         </div>
     </section>
 </template>
 <script>
-    import LoginForm from '@/components/login-box/login-form';
-    import CertCode from '@/components/login-box/cert-code';
-    import FindPW from '@/components/login-box/find-password';
+import LoginForm from '@/components/login-box/login-form';
+import CertCode from '@/components/login-box/cert-code';
+import FindPW from '@/components/login-box/find-password';
 
-    export default {
+export default {
     name: 'login',
     data() {
         return {

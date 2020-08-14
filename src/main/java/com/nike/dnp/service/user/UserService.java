@@ -590,8 +590,8 @@ public class UserService implements UserDetailsService {
         //기존비밀번호확인
         if (!ObjectUtils.isEmpty(userPasswordDTO.getPassword()) && !passwordEncoder.matches(userPasswordDTO.getPassword(), userPasswordDTO.getUserPassword())) {
             throw new CodeMessageHandleException(
-                    FailCode.ConfigureError.CHECK_ID_PASSWORD.name()
-                    , MessageUtil.getMessage(FailCode.ConfigureError.CHECK_ID_PASSWORD.name()));
+                    FailCode.ConfigureError.NOT_MATCH_PASSWORD.name()
+                    , MessageUtil.getMessage(FailCode.ConfigureError.NOT_MATCH_PASSWORD.name()));
         }
 
         //비밀번호 미입력 시

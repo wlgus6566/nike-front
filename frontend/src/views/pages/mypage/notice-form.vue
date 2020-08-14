@@ -1,9 +1,8 @@
 <template>
     <div>
-        <!--        <h2 class="page-title">-->
-        <!--            <span class="ko">{{ this.$route.meta.title }}</span>-->
-        <!--        </h2>-->
-        <h2 class="page-title"><span class="ko">공지사항</span></h2>
+        <h2 class="page-title">
+            <span class="ko">{{ this.$route.meta.title }}</span>
+        </h2>
         <form @submit.prevent="submitData">
             <h3 class="form-title mt20">등록/수정</h3>
             <hr class="hr-black" />
@@ -17,29 +16,26 @@
                             <span class="radio">
                                 <input
                                     type="radio"
-                                    name="noti"
-                                    id="notiY"
                                     value="Y"
                                     checked
-                                    v-model="noticeYn"
+                                    v-model="noticeDetail.noticeYn"
                                     @click="noticeCheck($event)"
                                 />
-                                <span></span>
+                                <i></i>
+                                <span class="txt">고정</span>
                             </span>
-                            <span>고정</span>
                         </label>
                         <label class="check-label">
                             <span class="radio">
                                 <input
                                     type="radio"
-                                    name="noti"
-                                    id="notiN"
                                     value="N"
-                                    v-model="noticeYn"
+                                    v-model="noticeDetail.noticeYn"
+                                    @click="noticeCheck($event)"
                                 />
-                                <span></span>
+                                <i></i>
+                                <span class="txt">비고정</span>
                             </span>
-                            <span>비고정</span>
                         </label>
                     </div>
                     <div class="form-column agr">
@@ -103,13 +99,14 @@ export default {
     name: 'notice-form',
     data() {
         return {
-            noticeArticleSectionCode: 'NOTICE',
-            noticeYn: 'N',
+            //noticeArticleSectionCode: 'NOTICE',
+            //noticeYn: null,
             useYn: 'Y',
             noticeYnLength: [],
             noticeDetail: {
                 title: '',
                 contents: '',
+                noticeYn: null,
             },
         };
     },
@@ -137,16 +134,14 @@ export default {
             try {
                 const response = await postNotice({
                     contents: this.noticeDetail.contents,
-                    noticeArticleSectionCode: this.noticeArticleSectionCode,
-                    noticeYn: this.noticeYn,
+                    noticeArticleSectionCode: 'NOTICE',
+                    noticeYn: this.noticeDetail.noticeYn,
                     title: this.noticeDetail.title,
                     useYn: this.useYn,
                 });
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
-                    this.noticeDetail.title = '';
-                    this.noticeDetail.contents = '';
-                    this.noticeYn = 'N';
+                    this.detailDataReset();
                     this.$router.push('/mypage/notice');
                 }
             } catch (error) {
@@ -163,17 +158,15 @@ export default {
                 try {
                     const response = await putNotice(this.$route.params.id, {
                         contents: this.noticeDetail.contents,
-                        noticeArticleSectionCode: this.noticeArticleSectionCode,
-                        noticeYn: this.noticeYn,
+                        noticeArticleSectionCode: 'NOTICE',
+                        noticeYn: this.noticeDetail.noticeYn,
                         title: this.noticeDetail.title,
                         useYn: this.useYn,
                     });
 
                     this.$store.commit('SET_RELOAD', true);
                     if (response.data.success) {
-                        this.noticeDetail.title = '';
-                        this.noticeDetail.contents = '';
-                        this.noticeYn = 'N';
+                        this.detailDataReset();
                         this.$router.push('/mypage/notice');
                     }
                 } catch (error) {
@@ -206,7 +199,10 @@ export default {
             try {
                 const {
                     data: { data: response },
-                } = await getCustomerDetail(this.$route.params.id);
+                } = await getCustomerDetail(
+                    this.noticeArticleSectionCode,
+                    this.$route.params.id
+                );
                 this.noticeDetail = response;
             } catch (error) {
                 console.log(error);
@@ -215,7 +211,10 @@ export default {
 
         //중요공지 체크
         noticeCheck(e) {
-            if (this.noticeYn === 'N' && this.noticeYnLength.length >= 3) {
+            if (
+                this.noticeDetail.noticeYn === 'N' &&
+                this.noticeYnLength.length >= 3
+            ) {
                 e.preventDefault();
                 alert('상단 고정은 최대 3개까지만 설정가능합니다.');
             }
@@ -226,10 +225,13 @@ export default {
             if (!confirm('작성을 취소하시겠습니까?')) {
                 return false;
             }
+            this.detailDataReset();
+            this.$router.go(-1);
+        },
+        detailDataReset() {
             this.noticeDetail.title = '';
             this.noticeDetail.contents = '';
-            this.noticeYn = 'N';
-            this.$router.go(-1);
+            this.noticeDetail.noticeYn = null;
         },
     },
 };

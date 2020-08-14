@@ -3,7 +3,7 @@
         <h2 class="page-title">
             <span class="ko">{{ this.$route.meta.title }}</span>
         </h2>
-        <div class="sorting-area" ref="test" tabindex="0">
+        <div class="sorting-area" ref="focusOut" tabindex="0">
             <FilterSelect :listSortSelect="category2Code" />
             <FilterSelect
                 :listSortSelect="category3Code"
@@ -44,16 +44,16 @@
     </div>
 </template>
 <script>
-    import SearchInput from '@/components/search-input';
-    import FilterSelect from '@/components/filter-select';
-    import ProductManagement from '@/components/product-management';
-    import Pagination from '@/components/pagination';
-    import NoData from '@/components/no-data';
-    import {delProduct, getProductList} from '@/api/product';
-    import {getAgencyContact} from '@/api/agency';
-    import {getCategoryList} from '@/utils/code';
+import SearchInput from '@/components/search-input';
+import FilterSelect from '@/components/filter-select';
+import ProductManagement from '@/components/product-management';
+import Pagination from '@/components/pagination';
+import NoData from '@/components/no-data';
+import { delProduct, getProductList } from '@/api/product';
+import { getAgencyContact } from '@/api/agency';
+import { getCategoryList } from '@/utils/code';
 
-    export default {
+export default {
     name: 'management',
     data() {
         return {
@@ -151,7 +151,7 @@
             console.log(this.category2Code.value);
             if (this.category2Code.value === '') {
                 alert('대구분을 선택해 주세요 ');
-                this.$refs.test.focus();
+                this.$refs.focusOut.focus();
             }
         },
         //에이전시 리스트
@@ -159,9 +159,10 @@
             try {
                 const {
                     data: { data: response },
-                } = await getAgencyContact({});
+                } = await getAgencyContact();
                 const agencyData = response;
-                agencyData.forEach((item, index) => {
+                console.log(response);
+                agencyData.forEach((item) => {
                     const agencyList = {
                         value: item.agencySeq,
                         label: item.agencyName,

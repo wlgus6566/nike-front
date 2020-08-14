@@ -3,7 +3,9 @@
         <header>
             <div class="inner">
                 <h1>
-                    <a href="#"><img alt="" src="@/assets/images/logo-nike.svg" /></a>
+                    <a href="#"
+                        ><img alt="" src="@/assets/images/logo-nike.svg"
+                    /></a>
                 </h1>
                 <nav>
                     <ul>
@@ -29,16 +31,16 @@
                             <label class="check-label">
                                 <span class="radio">
                                     <input type="radio" name="show" checked />
-                                    <span></span>
+                                    <i></i>
+                                    <span class="txt">고정</span>
                                 </span>
-                                <span>고정</span>
                             </label>
                             <label class="check-label">
                                 <span class="radio">
                                     <input type="radio" name="show" />
-                                    <span></span>
+                                    <i></i>
+                                    <span class="txt">비고정</span>
                                 </span>
-                                <span>비고정</span>
                             </label>
                         </div>
                     </li>
@@ -56,15 +58,23 @@
                         </div>
                         <div class="form-column">
                             <span class="textarea">
-                                <textarea cols="100" rows="2" style="height: 300px;"></textarea>
+                                <textarea
+                                    cols="100"
+                                    rows="2"
+                                    style="height: 300px;"
+                                ></textarea>
                             </span>
                         </div>
                     </li>
                 </ul>
                 <hr class="hr-gray" />
                 <div class="btn-area">
-                    <button type="button" class="btn-s-white"><span>취소</span></button>
-                    <button type="button" class="btn-s-black"><span>저장</span></button>
+                    <button type="button" class="btn-s-white">
+                        <span>취소</span>
+                    </button>
+                    <button type="button" class="btn-s-black">
+                        <span>저장</span>
+                    </button>
                 </div>
             </div>
             <aside>

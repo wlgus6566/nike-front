@@ -1,23 +1,22 @@
 <template>
     <div>
-        <h2 class="page-title">
-            {{ this.$route.meta.title }}
-        </h2>
-        <form action="" @submit.prevent="addProduct">
+        <h2 class="page-title" v-html="$route.meta.title" />
+        <form action="" @submit.prevent="addReport">
             <h3 class="form-title mt20">폴더 설정</h3>
             <hr class="hr-black" />
             <ul
                 class="form-list-thumb"
-                :class="{ 'min-height': this.detailData.imageBase64 !== null }"
+                :class="{
+                    'min-height': this.reportDetailData.imageBase64 !== null,
+                }"
             >
                 <li class="form-row thumb-row">
-                    <Thumbnail
+                    <thumbnail
+                        :size="1 / 1"
                         @cropImage="cropImage"
-                        :imageFilePhysicalName="
-                            detailData.imageFilePhysicalName
-                        "
-                        :imageFileName="detailData.imageFileName"
-                    ></Thumbnail>
+                        :imageBase64="reportDetailData.imageFilePhysicalName"
+                        :imageFileName="reportDetailData.imageFileName"
+                    />
                 </li>
                 <li class="form-row">
                     <div class="form-column">
@@ -36,11 +35,10 @@
                                     :name="reportSection.name"
                                     :value="radio.value"
                                 />
-                                <span></span>
-                            </span>
-                            <span>
-                                {{ radio.title }}
-                                {{ reportSection.value }}
+                                <i></i>
+                                <span class="txt">
+                                    {{ radio.title }}
+                                </span>
                             </span>
                         </label>
                     </div>
@@ -52,7 +50,7 @@
                     <div class="form-column">
                         <span class="textarea">
                             <textarea
-                                v-model="detailData.reportName"
+                                v-model="reportDetailData.reportName"
                             ></textarea>
                         </span>
                     </div>
@@ -78,20 +76,12 @@
                                                     <input type="checkbox" />
                                                     <span></span>
                                                 </span>
-                                                <span class="txt"
-                                                    >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpgP20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpg</span
-                                                >
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label>
-                                                <span class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <span></span>
+                                                <span class="txt">
+                                                    P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg
+                                                    sw_Nike_Gallery_graphic_1_700x1000.jpgsw_Nike_Gallery_graphic_1_700x1000.jpg
+                                                    sw_Nike_Gallery_graphic_1_700x1000.jpgsw_Nike_Gallery_graphic_1_700x1000.jpg
+                                                    sw_Nike_Gallery_graphic_1_700x1000.jpgsw_Nike_Gallery_graphic_1_700x1000.jpg
                                                 </span>
-                                                <span class="txt"
-                                                    >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                                >
                                             </label>
                                         </li>
                                         <li>
@@ -154,15 +144,14 @@
     </div>
 </template>
 <script>
-    import Thumbnail from '@/components/thumbnail/index';
-    import {postReport} from '@/api/report';
-    import store from '@/store';
+import thumbnail from '@/components/thumbnail/index';
+import { getReportDetail, postReport, putReport } from '@/api/report';
 
-    export default {
+export default {
     name: 'upload',
     data() {
         return {
-            detailData: {
+            reportDetailData: {
                 reportName: null,
                 imageBase64: null,
                 imageFileName: null,
@@ -181,51 +170,69 @@
         };
     },
     components: {
-        Thumbnail,
+        thumbnail,
+    },
+    created() {
+        this.reportDetailView();
     },
     methods: {
         cropImage(imageBase64, imgName) {
-            this.detailData.imageBase64 = imageBase64;
-            this.detailData.imageFileName = imgName;
+            this.reportDetailData.imageBase64 = imageBase64;
+            this.reportDetailData.imageFileName = imgName;
         },
-        //상품 등록
-        async addProduct() {
+        // 리포트 상세 데이터
+        async reportDetailView() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getReportDetail(this.$route.params.id);
+                this.reportDetailData = response;
+                this.reportSection.value = this.reportDetailData.reportSectionCode;
+                console.log(this.reportDetailData);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        // 리포트 등록
+        async addReport() {
             const data = {
-                imageBase64: this.detailData.imageBase64,
+                imageBase64: this.reportDetailData.imageBase64,
                 reportFileSaveDTOList: [
                     {
-                        detailThumbnailFileName:
-                            'graphic_file_name_detail_thumbnail.jpg',
-                        detailThumbnailFilePhysicalName:
-                            'http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg',
-                        detailThumbnailFileSize: '700',
-                        fileContentType: 'image/jpeg',
-                        fileExtension: 'JPG',
-                        fileName: 'file.jpg',
-                        filePhysicalName: '/upload/report/path',
-                        fileSize: '150',
-                        reportFileSeq: 1,
-                        thumbnailFileName: 'graphic_file_name_thumbnail.jpg',
+                        fileName: 'K-062.png',
+                        filePhysicalName: '/temp/20200814586000aMilVgOPwc.png',
+                        fileSize: 613642,
+                        fileContentType: 'image/png',
+                        fileExtension: 'png',
+                        thumbnailFileName: 'K-062_thumbnail.jpg',
                         thumbnailFilePhysicalName:
-                            'http://cdnUrl/file/contents/graphic_file_name_thumbnail.jpg',
-                        thumbnailFileSize: '100',
+                            '/temp/20200814586000aMilVgOPwc_thumbnail.jpg',
+                        thumbnailSize: 3379,
+                        detailThumbnailFileName: 'K-062_detail.jpg',
+                        detailThumbnailFileSize: 66211,
+                        detailThumbnailFilePhysicalName:
+                            '/temp/20200814586000aMilVgOPwc_detail.jpg',
                     },
                 ],
-                reportName: this.detailData.reportName,
-                reportSectionCode: this.reportSectionCode.value,
+                reportName: this.reportDetailData.reportName,
+                reportSectionCode: this.reportSection.value,
             };
+            if (Object.values(data).some((el) => el === '' || el === null)) {
+                alert('필수 입력 값이 누락 되었습니다.');
+                return;
+            }
             if (this.$route.params.id) {
                 let addAlert = confirm('수정하시겠습니까');
+                console.log(data);
                 if (addAlert) {
                     try {
-                        const { data: response } = await putProduct(
+                        const { data: response } = await putReport(
                             this.$route.params.id,
                             data
                         );
-                        // await getExistMsg(response);
-                        console.log(response);
-                        await this.$router.push('/order/management');
-                        await store.dispatch('basketList');
+                        await this.$router.push('/report/management');
+                        await this.$store.dispatch('getReportListBasket');
+                        this.reportDetailData.imageBase64 = null;
                     } catch (error) {
                         console.log(error);
                     }
@@ -234,15 +241,24 @@
                 let addAlert = confirm('저장하시겠습니까');
                 if (addAlert) {
                     try {
-                        const { data: response } = await postReport(data);
-                        // await getExistMsg(response);
-                        //RESET
+                        const {
+                            data: { data: response },
+                        } = await postReport(data);
+                        this.reportDataReset();
                         await this.$router.push('/report/management');
                     } catch (error) {
                         console.log(error);
                     }
                 }
             }
+        },
+        reportDataReset() {
+            this.reportDetailData = {
+                reportName: null,
+                imageBase64: null,
+                imageFileName: null,
+                reportSectionCode: null,
+            };
         },
     },
 };

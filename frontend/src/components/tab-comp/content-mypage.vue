@@ -79,4 +79,8 @@ export default {
     font-size: 12px;
     color: #000;
 }
+.aside-menu .menu li .router-link-active {
+    font-weight: bold;
+    color: #ef6926;
+}
 </style>

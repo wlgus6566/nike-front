@@ -1,397 +1,319 @@
 <template>
     <div>
-        <div class="btn-detail">
-            <router-link to="/report/management" class="btn-list">
-                <span>목록으로 가기</span>
-            </router-link>
-            <div class="btn-box">
-                <button type="button" class="btn-o-white">
-                    <span>삭제</span>
-                </button>
-                <button type="button" class="btn-o-white">
-                    <span>수정</span>
-                </button>
+        <BtnArea @delete="deleteReport" @edit="modifyFolder" />
+        <div class="folder-wrap">
+            <h2 class="folder-title">
+                {{ reportDetailData.reportName }}
+            </h2>
+            <div class="inner">
+                <p class="folder-desc">
+                    {{ reportDetailData.nickname }}
+                </p>
+                <span class="folder-date">
+                    {{
+                        $moment(reportDetailData.registrationDt).format(
+                            'YYYY.MM.DD'
+                        )
+                    }}
+                </span>
             </div>
         </div>
 
-        <div class="folder-wrap">
-            <h2 class="folder-title">일산라페스타</h2>
-            <div class="inner">
-                <p class="folder-desc">
-                    나이키 다이렉트 캠페인 자료와 동영상, 스타일가이드, 기타
-                    그래픽자료가 업데이트 되었습니다. SP20 나이키 다이렉트 NSW
-                    캠페인 시공 에셋 자료가 업데이트 되었습니다.
-                </p>
-                <span class="folder-date">2020.01.01 - 2020.01.03</span>
-            </div>
-        </div>
         <div class="feedback-wrap">
             <strong class="title">FEEDBACK</strong>
-            <ul class="feedback-list">
-                <li class="feedback-item">
-                    <p class="txt">
-                        일산 라페스타점 점장님, 시공보고서 확인완료 했습니다.
-                    </p>
-                    <div class="info">
-                        <span class="name">NIKE MKT 01</span>
-                        <span class="date">2020. 06. 04.</span>
-                    </div>
-                    <button type="button" class="del"><span>삭제</span></button>
-                </li>
-                <li class="feedback-item">
-                    <p class="txt">
-                        일 산 라페스타점 점장님, 시공보고서 확인완료 했습니다.산
-                        라페스타점 점장님, 시공보고서 확인완료 했습니다.산
-                        라페스타점 점장님, 시공보고서 확인완료 했습니다.산
-                        라페스타점 점장님, 시공보고서 확인완료 했습니다.산
-                        라페스타점 점장님, 시공보고서 확인완료 했습니다.산
-                        라페스타점 점장님, 시공보고서 확인완료 했습니다.산
-                        라페스타점 점장님, 시공보고서 확인완료 했습니다.산
-                        라페스타점 점장님, 시공보고서 확인완료 했습니다.
-                    </p>
-                    <div class="info">
-                        <span class="name">NIKE MKT 01</span>
-                        <span class="date">2020. 06. 04.</span>
-                    </div>
-                    <button type="button" class="del"><span>삭제</span></button>
-                </li>
-            </ul>
-            <!--                    <div class="more-box">-->
-            <!--                        <button type="button" class="txt-btn"><span>더보기</span></button>-->
-            <!--                    </div>-->
+            <template v-if="answerList">
+                <FeedbackList
+                    :answerList="answerList"
+                    v-if="answerList.length"
+                    @reportAnswerDelete="reportAnswerDelete"
+                />
+            </template>
+            <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
             <div class="textarea">
-                <textarea></textarea>
-                <button type="button" class="btn-form-gray">댓글등록</button>
+                <textarea
+                    v-model="answerData.answerContents"
+                    placeholder="댓글을 입력해주세요."
+                ></textarea>
+                <button
+                    type="button"
+                    class="btn-form-gray"
+                    @click="addReportAnswerData"
+                >
+                    댓글등록
+                </button>
             </div>
         </div>
-        <ul class="sorting-list">
-            <li class="active">
-                <button type="button"><span>FILE</span></button>
-            </li>
-        </ul>
-        <div class="all-box">
-            <!-- todo 전체선택 스크립트 작업 필요  -->
-            <label class="check-label">
-                <span class="checkbox">
-                    <input type="checkbox" />
-                    <span></span>
-                </span>
-                <strong class="txt">전체선택</strong>
-            </label>
-            <p class="desc"><em>1</em>개의 파일이 선택됨</p>
-            <!-- todo select 스크립트 작업 필요  -->
-            <div class="filter-select">
-                <select>
-                    <option value="필터">필터</option>
-                </select>
-            </div>
+        <div class="sorting-list-wrap">
+            <SortingList
+                :sectionCode="sectionCode"
+                @sectionCodeChange="sectionCodeChange"
+            />
         </div>
-        <!-- todo 추가 스크립트 작업 필요  -->
-        <ul class="file-item-list">
-            <li class="file-item">
-                <div class="list">
-                    <label>
-                        <span class="checkbox">
-                            <input type="checkbox" checked />
-                            <span></span>
-                        </span>
-                        <span class="thumbnail">
-                            <img
-                                src="@/assets/images/img-asset-none@2x.png"
-                                alt=""
-                            />
-                        </span>
-                        <span class="info-box">
-                            <strong class="title"
-                                >타이틀입니다 타이틀입니다 타이틀입니다
-                                타이틀입니다 타이틀입니다 타이틀입니다
-                                타이틀입니다 타이틀입니다 타이틀입니다
-                                타이틀입니다타이틀입니다 타이틀입니다
-                                타이틀입니다 타이틀입니다
-                                타이틀입니다타이틀입니다 타이틀입니다
-                                타이틀입니다 타이틀입니다
-                                타이틀입니다타이틀입니다 타이틀입니다
-                                타이틀입니다 타이틀입니다 타이틀입니다</strong
-                            >
-                        </span>
-                    </label>
-                    <div class="btn-box">
-                        <button type="button" class="btn-s-sm-white">
-                            <i class="icon-check"></i><span>ADDED</span>
-                        </button>
-                        <button type="button" class="btn-more active">
-                            <span>더보기</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="detail active">
-                    <div class="thumbnail">
-                        <img
-                            src="@/assets/images/img-asset-none@2x.png"
-                            alt=""
-                        />
-                    </div>
-                    <div class="down-info">
-                        <span class="key">다운로드 횟수</span>
-                        <span class="val"><strong>100,300</strong> 회</span>
-                    </div>
-                </div>
-            </li>
-            <li class="file-item video">
-                <div class="list">
-                    <label>
-                        <span class="checkbox">
-                            <input type="checkbox" checked />
-                            <span></span>
-                        </span>
-                        <span class="thumbnail">
-                            <img
-                                src="@/assets/images/img-asset-none@2x.png"
-                                alt=""
-                            />
-                        </span>
-                        <span class="info-box">
-                            <strong class="title"
-                                >타이틀입니다 타이틀입니다 타이틀입니다
-                                타이틀입니다 타이틀입니다 타이틀입니다
-                                타이틀입니다 타이틀입니다 타이틀입니다
-                                타이틀입니다타이틀입니다 타이틀입니다
-                                타이틀입니다 타이틀입니다
-                                타이틀입니다타이틀입니다 타이틀입니다
-                                타이틀입니다 타이틀입니다
-                                타이틀입니다타이틀입니다 타이틀입니다
-                                타이틀입니다 타이틀입니다 타이틀입니다</strong
-                            >
-                        </span>
-                    </label>
-                    <div class="btn-box">
-                        <button type="button" class="btn-s-sm-white">
-                            <i class="icon-check"></i><span>ADDED</span>
-                        </button>
-                        <button type="button" class="btn-more active">
-                            <span>더보기</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="detail active">
-                    <div class="video">
-                        <iframe
-                            src="https://www.youtube.com/embed/i_IrO7R78Ro"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen
-                        ></iframe>
-                    </div>
-                    <div class="down-info">
-                        <span class="key">다운로드 횟수</span>
-                        <span class="val"><strong>100,300</strong> 회</span>
-                    </div>
-                </div>
-            </li>
-            <li class="file-item">
-                <div class="list">
-                    <label>
-                        <span class="checkbox">
-                            <input type="checkbox" />
-                            <span></span>
-                        </span>
-                        <span class="thumbnail">
-                            <img
-                                src="@/assets/images/svg/icon-illust-file-doc.svg"
-                                alt=""
-                            />
-                        </span>
-                        <span class="info-box">
-                            <strong class="title"
-                                >타이틀입니다 타이틀입니다 타이틀입니다
-                                타이틀입니다
-                            </strong>
-                        </span>
-                    </label>
-                    <div class="btn-box">
-                        <button type="button" class="btn-s-sm-black">
-                            <span>ADD</span>
-                        </button>
-                        <button type="button" class="btn-more">
-                            <span>더보기</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="detail">
-                    <div class="thumbnail">
-                        <img
-                            src="@/assets/images/img-asset-none@2x.png"
-                            alt=""
-                        />
-                    </div>
-                    <div class="down-info">
-                        <span class="key">다운로드 횟수</span>
-                        <span class="val"><strong>100,300</strong> 회</span>
-                    </div>
-                </div>
-            </li>
-            <li class="file-item">
-                <div class="list">
-                    <label>
-                        <span class="checkbox">
-                            <input type="checkbox" disabled />
-                            <span></span>
-                        </span>
-                        <span class="thumbnail">
-                            <img
-                                src="@/assets/images/svg/icon-illust-file-ar.svg"
-                                alt=""
-                            />
-                        </span>
-                        <span class="info-box">
-                            <strong class="title"
-                                >타이틀입니다 타이틀입니다 타이틀입니다
-                                타이틀입니다
-                            </strong>
-                        </span>
-                    </label>
-                    <div class="btn-box">
-                        <a href="#" class="btn-s-sm-white"
-                            ><i class="icon-link"></i><span>LINK</span></a
-                        >
-                        <button type="button" class="btn-more" disabled>
-                            <span>더보기</span>
-                        </button>
-                    </div>
-                </div>
-            </li>
-            <li class="file-item">
-                <div class="list">
-                    <label>
-                        <span class="checkbox">
-                            <input type="checkbox" />
-                            <span></span>
-                        </span>
-                        <span class="thumbnail">
-                            <img
-                                src="@/assets/images/img-asset-none@2x.png"
-                                alt=""
-                            />
-                        </span>
-                        <span class="info-box">
-                            <strong class="title"
-                                >타이틀입니다 타이틀입니다 타이틀입니다
-                                타이틀입니다
-                            </strong>
-                        </span>
-                    </label>
-                    <div class="btn-box">
-                        <button type="button" class="btn-s-sm-black">
-                            <span>ADD</span>
-                        </button>
-                        <button type="button" class="btn-more">
-                            <span>더보기</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="detail">
-                    <div class="thumbnail">
-                        <img
-                            src="@/assets/images/img-asset-none@2x.png"
-                            alt=""
-                        />
-                    </div>
-                    <div class="down-info">
-                        <span class="key">다운로드 횟수</span>
-                        <span class="val"><strong>100,300</strong> 회</span>
-                    </div>
-                </div>
-            </li>
-            <li class="file-item">
-                <div class="list">
-                    <label>
-                        <span class="checkbox">
-                            <input type="checkbox" />
-                            <span></span>
-                        </span>
-                        <span class="thumbnail">
-                            <img
-                                src="@/assets/images/img-asset-none@2x.png"
-                                alt=""
-                            />
-                        </span>
-                        <span class="info-box">
-                            <strong class="title"
-                                >타이틀입니다 타이틀입니다 타이틀입니다
-                                타이틀입니다
-                            </strong>
-                        </span>
-                    </label>
-                    <div class="btn-box">
-                        <button type="button" class="btn-s-sm-black">
-                            <span>ADD</span>
-                        </button>
-                        <button type="button" class="btn-more">
-                            <span>더보기</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="detail">
-                    <div class="thumbnail">
-                        <img
-                            src="@/assets/images/img-asset-none@2x.png"
-                            alt=""
-                        />
-                    </div>
-                    <div class="down-info">
-                        <span class="key">다운로드 횟수</span>
-                        <span class="val"><strong>100,300</strong> 회</span>
-                    </div>
-                </div>
-            </li>
-            <li class="file-item">
-                <div class="list">
-                    <label>
-                        <span class="checkbox">
-                            <input type="checkbox" />
-                            <span></span>
-                        </span>
-                        <span class="thumbnail">
-                            <img
-                                src="@/assets/images/img-asset-none@2x.png"
-                                alt=""
-                            />
-                        </span>
-                        <span class="info-box">
-                            <strong class="title"
-                                >타이틀입니다 타이틀입니다 타이틀입니다
-                                타이틀입니다
-                            </strong>
-                        </span>
-                    </label>
-                    <div class="btn-box">
-                        <button type="button" class="btn-s-sm-black">
-                            <span>ADD</span>
-                        </button>
-                        <button type="button" class="btn-more">
-                            <span>더보기</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="detail">
-                    <div class="thumbnail">
-                        <img
-                            src="@/assets/images/img-asset-none@2x.png"
-                            alt=""
-                        />
-                    </div>
-                    <div class="down-info">
-                        <span class="key">다운로드 횟수</span>
-                        <span class="val"><strong>100,300</strong> 회</span>
-                    </div>
-                </div>
-            </li>
-        </ul>
+        <ReportItem
+            :reportFileData="reportFileData"
+            :checkAll="checkAll"
+            :reportFileListTotal="reportFileListTotal"
+            :checkContentsFileList="checkContentsFileList"
+            @allCheckFn="allCheckFn"
+            @checkContentsFile="checkContentsFile"
+            @addReportBasket="addReportBasket"
+        />
     </div>
 </template>
 <script>
+import {
+    getReportDetail,
+    delReport,
+    getAnswerList,
+    postAnswerData,
+    deleteAnswerList,
+    postReportBasket,
+    getReportFile,
+} from '@/api/report';
+import BtnArea from '@/components/asset-view/btn-area.vue';
+import Loading from '@/components/loading';
+import FeedbackList from '@/components/feedback-list';
+import SortingList from '@/components/asset-view/sorting-list.vue';
+import ReportItem from '@/components/report-view/report-Item.vue';
 export default {
     name: 'detail-view',
+    data() {
+        return {
+            totalPage: null,
+            loadingData: false,
+            page: 0,
+            itemLength: 10,
+            size: 9999,
+            checkAll: false,
+            reportFileListTotal: 0,
+            checkContentsFileList: [],
+            reportDetailData: {},
+            answerList: {},
+            answerData: {
+                answerContents: null,
+                reportSeq: null,
+            },
+            reportFileData: {},
+            loadingStyle: {
+                width: this.width ? `${this.width}px` : '100%',
+                height: this.height ? `${this.height}px` : '100%',
+                overflow: 'hidden',
+                margin: '0 auto',
+            },
+            sectionCode: {
+                listSortOptions: [
+                    {
+                        value: 'FILE',
+                        title: 'FILE',
+                    },
+                ],
+                value: 'FILE',
+            },
+        };
+    },
+    components: {
+        BtnArea,
+        FeedbackList,
+        Loading,
+        SortingList,
+        ReportItem,
+    },
+    created() {
+        this.reportDetailView();
+        this.reportAnswerList();
+        this.initFetchData();
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    activated() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    deactivated() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    methods: {
+        //리포트 삭제
+        async deleteReport() {
+            console.log(this.$route.params.id);
+            if (
+                !confirm(
+                    '삭제 시 등록한 내용이 전부 삭제 됩니다. 삭제하시겠습니까?'
+                )
+            )
+                return;
+            if (!confirm('정말 삭제하시겠습니까?')) return;
+            try {
+                const response = await delReport(this.$route.params.id);
+                this.$store.commit('SET_RELOAD', true);
+                await this.$store.dispatch('getReportListBasket');
+                if (response.data.success) {
+                    await this.$router.go(-1);
+                }
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        //리포트 수정
+        modifyFolder() {
+            this.$router.push(
+                `/report/${this.$route.meta.menuCode}/modify/${this.$route.params.id}`
+            );
+        },
+        // 파일 선택 담기
+        async addReportBasket(seq) {
+            console.log(seq);
+            try {
+                await postReportBasket(seq);
+                await this.$store.dispatch('getReportListBasket');
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        allCheckFn() {
+            this.checkAll = !this.checkAll;
+            if (this.checkAll) {
+                this.reportFileData.forEach((el) => {
+                    const indexOfChecked = this.checkContentsFileList.findIndex(
+                        (elChecked) => elChecked === el.reportFileSeq
+                    );
+                    if (indexOfChecked === -1) {
+                        this.checkContentsFileList.push(el.reportFileSeq);
+                    }
+                });
+            } else {
+                this.checkContentsFileList = [];
+            }
+        },
+        checkContentsFile(seq) {
+            const indexOfChecked = this.checkContentsFileList.findIndex(
+                (el) => el === seq
+            );
+            if (indexOfChecked === -1) {
+                this.checkContentsFileList.push(seq);
+            } else {
+                this.checkContentsFileList = this.checkContentsFileList.filter(
+                    (el) => {
+                        return el !== seq;
+                    }
+                );
+            }
+            this.checkAll =
+                this.checkContentsFileList.length ===
+                this.reportFileData.length;
+        },
+        sectionCodeChange(value) {
+            this.sectionCode.value = value;
+        },
+        // 리포트 상세 데이터
+        async reportDetailView() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getReportDetail(this.$route.params.id);
+                this.reportDetailData = response;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        handleScroll() {
+            if (this.loadingData) return;
+            const windowE = document.documentElement;
+            if (
+                windowE.clientHeight + windowE.scrollTop >=
+                windowE.scrollHeight
+            ) {
+                this.infiniteScroll();
+            }
+        },
+        infiniteScroll() {
+            if (
+                !this.loadingData &&
+                this.totalPage > this.page - 1 &&
+                this.reportFileData.length >= this.itemLength &&
+                this.reportFileData.length !== 0
+            ) {
+                this.reportFileList(true);
+            }
+        },
+        initFetchData() {
+            this.totalPage = null;
+            this.page = 0;
+            this.contentsFileList = null;
+            this.reportFileList();
+        },
+        // 리포트 파일 리스트
+        async reportFileList(infinite) {
+            this.loadingData = true;
+            this.checkAll = false;
+            this.checkContentsFileList = [];
+            try {
+                const {
+                    data: { data: response },
+                } = await getReportFile(this.$route.params.id, {
+                    page: this.page,
+                    size: this.size,
+                });
+                this.totalPage = response.totalPages - 1;
+                if (infinite) {
+                    this.reportFileData = this.reportFileData.concat(
+                        response.content
+                    );
+                } else {
+                    this.reportFileData = response.content;
+                    this.reportFileListTotal = response.totalElements;
+                }
+                this.page++;
+                this.loadingData = false;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        // 리포트 댓글 목록 리스트
+        async reportAnswerList() {
+            this.loadingData = true;
+            try {
+                const {
+                    data: { data: response },
+                } = await getAnswerList(this.$route.params.id);
+                this.answerList = response;
+                this.loadingData = false;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        // 리포트 댓글 등록
+        async addReportAnswerData() {
+            console.log(1);
+            try {
+                await postAnswerData({
+                    answerContents: this.answerData.answerContents,
+                    reportSeq: this.reportDetailData.reportSeq,
+                });
+                alert('등록 되었습니다');
+                await this.reportAnswerList();
+                this.answerData.answerContents = null;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        // 리포트 댓글 단건 삭제
+        async reportAnswerDelete(seq) {
+            const delAnswer = confirm('FEEDBACK을 삭제 하시겠습니까?');
+            if (delAnswer) {
+                try {
+                    const response = await deleteAnswerList(seq);
+                    console.log(response);
+                    await this.reportAnswerList();
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        },
+    },
 };
 </script>
-<style scoped></style>

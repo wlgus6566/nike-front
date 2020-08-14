@@ -21,6 +21,14 @@ const routes = [
                     historyBack: null,
                 },
             },
+            {
+                path: 'detail-view/:id',
+                component: pages('report/detail-view.vue'),
+                meta: {
+                    layout: 'Default',
+                    historyBack: null,
+                },
+            },
         ],
     },
 ];
