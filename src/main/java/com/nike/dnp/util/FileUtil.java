@@ -250,8 +250,8 @@ public class FileUtil {
 				String detailThumbnail = uploadFile.getOriginalFilename();
 				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail." + resizeExtension;
 				fileResultDTO.setDetailThumbnailFileName(detailThumbnail);
-				fileResultDTO.setDetailThumbnailPhysicalName(detailFile.getPath().replace(root, ""));
-				fileResultDTO.setDetailThumbnailSize(detailFile.length());
+				fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getPath().replace(root, ""));
+				fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
 			}
 
 			stopWatch.start("100resize_" + uploadFile.getOriginalFilename());
@@ -280,7 +280,7 @@ public class FileUtil {
 				String thumbnail = uploadFile.getOriginalFilename();
 				thumbnail = thumbnail.replace("." + StringUtils.getFilenameExtension(thumbnail), "") + "_thumbnail." + resizeExtension;
 				fileResultDTO.setThumbnailFileName(thumbnail);
-				fileResultDTO.setThumbnailPhysicalName(thumbnailFile.getPath().replace(root, ""));
+				fileResultDTO.setThumbnailFilePhysicalName(thumbnailFile.getPath().replace(root, ""));
 				fileResultDTO.setThumbnailSize(thumbnailFile.length());
 			}
 
@@ -324,8 +324,8 @@ public class FileUtil {
 				String detailThumbnail = uploadFile.getOriginalFilename();
 				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail.mp4";
 				fileResultDTO.setDetailThumbnailFileName(detailThumbnail);
-				fileResultDTO.setDetailThumbnailPhysicalName(detailFile.getPath().replace(root, ""));
-				fileResultDTO.setDetailThumbnailSize(detailFile.length());
+				fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getPath().replace(root, ""));
+				fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
 			}
 		}
 		log.debug("stopWatch.getTotalTimeSeconds() {} :  {} s", uploadFile.getOriginalFilename(),stopWatch.getTotalTimeSeconds());
