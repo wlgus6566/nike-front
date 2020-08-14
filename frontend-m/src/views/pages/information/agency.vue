@@ -10,30 +10,38 @@
                 </div>
             </div>
         </div>
+        <Loading v-if="loadingData" />
     </div>
 </template>
 <script>
 import {
     getAgencyContact
 } from '@/api/agency';
+import Loading from '@/components/loading';
 
 export default {
     name: 'agency',
     data() {
         return {
-            agencyData: {}
+            agencyData: {},
+            loadingData: false
         }
+    },
+    components: {
+        Loading
     },
     mounted() {
         this.getAgencyData();
     },
     methods: {
         async getAgencyData() {
+            this.loadingData = true;
             try {
                 const {
                     data: {data: response},
                 } = await getAgencyContact({});
                 this.agencyData = response;
+                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }
