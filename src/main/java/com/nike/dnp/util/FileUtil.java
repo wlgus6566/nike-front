@@ -250,8 +250,8 @@ public class FileUtil {
 				String detailThumbnail = uploadFile.getOriginalFilename();
 				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail." + resizeExtension;
 				fileResultDTO.setDetailThumbnailFileName(detailThumbnail);
-				fileResultDTO.setDetailThumbnailPhysicalName(detailFile.getPath().replace(root, ""));
-				fileResultDTO.setDetailThumbnailSize(detailFile.length());
+				fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getPath().replace(root, ""));
+				fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
 			}
 
 			stopWatch.start("100resize_" + uploadFile.getOriginalFilename());
@@ -280,8 +280,8 @@ public class FileUtil {
 				String thumbnail = uploadFile.getOriginalFilename();
 				thumbnail = thumbnail.replace("." + StringUtils.getFilenameExtension(thumbnail), "") + "_thumbnail." + resizeExtension;
 				fileResultDTO.setThumbnailFileName(thumbnail);
-				fileResultDTO.setThumbnailPhysicalName(thumbnailFile.getPath().replace(root, ""));
-				fileResultDTO.setThumbnailSize(thumbnailFile.length());
+				fileResultDTO.setThumbnailFilePhysicalName(thumbnailFile.getPath().replace(root, ""));
+				fileResultDTO.setThumbnailFileSize(thumbnailFile.length());
 			}
 
 		}else if(resize && (uploadFile.getContentType().toUpperCase(Locale.getDefault()).contains("VIDEO"))){
@@ -324,8 +324,8 @@ public class FileUtil {
 				String detailThumbnail = uploadFile.getOriginalFilename();
 				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail.mp4";
 				fileResultDTO.setDetailThumbnailFileName(detailThumbnail);
-				fileResultDTO.setDetailThumbnailPhysicalName(detailFile.getPath().replace(root, ""));
-				fileResultDTO.setDetailThumbnailSize(detailFile.length());
+				fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getPath().replace(root, ""));
+				fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
 			}
 		}
 		log.debug("stopWatch.getTotalTimeSeconds() {} :  {} s", uploadFile.getOriginalFilename(),stopWatch.getTotalTimeSeconds());
@@ -379,7 +379,7 @@ public class FileUtil {
 	 * @since 2020. 7. 13. 오후 4:55:25
 	 * @implNote
 	 */
-	public static FileResultDTO fileSave(final MultipartFile uploadFile, final String folder) throws IOException {		
+	public static FileResultDTO fileSave(final MultipartFile uploadFile, final String folder) throws IOException {
 		log.info("FileUtil.fileSave");
 		return fileSave(uploadFile, folder, false, null);
 	}
@@ -395,7 +395,7 @@ public class FileUtil {
 	 * @since 2020. 7. 13. 오후 4:55:25
 	 * @implNote
 	 */
-	public static FileResultDTO fileTempSave(final MultipartFile uploadFile) throws IOException {		
+	public static FileResultDTO fileTempSave(final MultipartFile uploadFile) throws IOException {
 		log.info("FileUtil.fileTempSave");
 		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder());
 	}

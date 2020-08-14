@@ -15,7 +15,7 @@ import java.util.List;
  * @since 2020. 7. 8. 오후 5:55:07
  */
 @Repository
-public interface ReportFileRepository extends JpaRepository<ReportFile, Long> {
+public interface ReportFileRepository extends JpaRepository<ReportFile, Long>, ReportFileRepositoryCustom {
 
     /**
      * Find by report seq and use yn list.
@@ -28,5 +28,7 @@ public interface ReportFileRepository extends JpaRepository<ReportFile, Long> {
      * @since 2020. 7. 8. 오후 5:57:26
      */
     List<ReportFile> findByReportSeqAndUseYn(Long reportSeq, String useYn);
+
+
 
 }

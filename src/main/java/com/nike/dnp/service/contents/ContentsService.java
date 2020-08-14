@@ -3,6 +3,7 @@ package com.nike.dnp.service.contents;
 import com.nike.dnp.common.mail.MailService;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
@@ -141,7 +142,7 @@ public class ContentsService {
                 PageRequest.of(contentsSearchDTO.getPage()
                         , contentsSearchDTO.getSize()
                         , contentsSearchDTO.equals(ServiceCode.SearchEnumCode.START_DATE.toString())
-                                ? Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).ascending() : Sort.by(ServiceCode.SearchEnumCode.LATEST.getValue()).descending()));
+                                ? Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).ascending() : Sort.by(ServiceCode.SearchEnumCode.UPDATE_DT.getValue()).descending()));
     }
 
     /**
@@ -271,7 +272,11 @@ public class ContentsService {
 
         // contents File
         final List<ContentsFile> beforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contentsSaveDTO.getContentsSeq(), "Y");
-        final List<ContentsFile> notUseFileList = beforeFileList;
+
+        final List<ContentsFile> notUseFileList = new ArrayList<>();
+        for (ContentsFile contentsFile : beforeFileList) {
+            notUseFileList.add(contentsFile);
+        }
         final List<ContentsFileSaveDTO> newFileList = contentsSaveDTO.getContentsFileList();
 
         // 기존에 있는 파일 목록과 DTO받은 파일 목록 비교해서
@@ -512,19 +517,22 @@ public class ContentsService {
     public void checkContentsFileValidation(final ContentsFileSaveDTO contentsFileSaveDTO) {
         log.info("ContentsService.checkContentsFileValidation");
         // 파일 종류가 FILE인 경우 파일 정보 필수
-        if (ServiceCode.ContentsFileKindCode.FILE.equals(contentsFileSaveDTO.getFileKindCode())) {
-            if (StringUtils.isBlank(contentsFileSaveDTO.getFileName())
-                    || Objects.isNull(contentsFileSaveDTO.getFileSize())
-                    || StringUtils.isBlank(contentsFileSaveDTO.getFilePhysicalName())) {
-                throw new CodeMessageHandleException(FailCode.ConfigureError.SELECT_FILE.name(),
-                        MessageUtil.getMessage(FailCode.ConfigureError.SELECT_FILE.name()));
+        if (ServiceCode.ContentsFileKindCode.FILE.toString().equals(contentsFileSaveDTO.getFileKindCode())) {
+            // 새로 등록한 파일 인 경우에만 validation check
+            if (!ObjectUtils.isEmpty(contentsFileSaveDTO.getFilePhysicalName()) && contentsFileSaveDTO.getFilePhysicalName().contains("/temp/")) {
+                if (ObjectUtils.isEmpty(contentsFileSaveDTO.getFileName())
+                        || Objects.isNull(contentsFileSaveDTO.getFileSize())
+                        || ObjectUtils.isEmpty(contentsFileSaveDTO.getFilePhysicalName())) {
+                    throw new CodeMessageHandleException(FailCode.ConfigureError.SELECT_FILE.name(),
+                            MessageUtil.getMessage(FailCode.ConfigureError.SELECT_FILE.name()));
+                }
             }
         } else {
             // 파일 종류가 VIDEO/VR 인 경우 타이틀, url 필수
-            if (StringUtils.isBlank(contentsFileSaveDTO.getTitle())) {
+            if (ObjectUtils.isEmpty(contentsFileSaveDTO.getTitle())) {
                 throw new CodeMessageHandleException(FailCode.ConfigureError.NULL_TITLE.name(),
                         MessageUtil.getMessage(FailCode.ConfigureError.NULL_TITLE.name()));
-            } else if (StringUtils.isBlank(contentsFileSaveDTO.getUrl())) {
+            } else if (ObjectUtils.isEmpty(contentsFileSaveDTO.getUrl())) {
                 throw new CodeMessageHandleException(FailCode.ConfigureError.NULL_URL.name(),
                         MessageUtil.getMessage(FailCode.ConfigureError.NULL_URL.name()));
             }
@@ -542,9 +550,11 @@ public class ContentsService {
      */
     public ContentsFileSaveDTO s3FileCopySave(final ContentsFileSaveDTO contentsFileSaveDTO) {
         log.info("ContentsService.s3FileCopySave");
-        contentsFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getFilePhysicalName()));
-        contentsFileSaveDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getThumbnailFilePhysicalName()));
-        contentsFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getThumbnailFilePhysicalName()));
+        if (!ObjectUtils.isEmpty(contentsFileSaveDTO.getFilePhysicalName()) && contentsFileSaveDTO.getFilePhysicalName().contains("/temp/")) {
+            contentsFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getFilePhysicalName()));
+            contentsFileSaveDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getThumbnailFilePhysicalName()));
+            contentsFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getDetailThumbnailFilePhysicalName()));
+        }
         return contentsFileSaveDTO;
     }
 
@@ -606,6 +616,25 @@ public class ContentsService {
         final List<Contents> contentsList
                 = contentsRepository.findByUpdateDtBeforeAndTopMenuCode(beforeDate, topMenuCode);
         contentsRepository.deleteAll(contentsList);
+    }
+
+    /**
+     * Load auth list list.
+     *
+     * @param topMenuCode the top menu code
+     * @param menuCode    the menu code
+     * @return the list
+     * @author [이소정]
+     * @implNote 콘텐츠 권한 목록 조회
+     * @since 2020. 8. 13. 오후 9:26:08
+     */
+    public List<AuthReturnDTO> loadAuthList(final String topMenuCode, final String menuCode) {
+        // 권한 목록 조회
+        UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
+        userContentsSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
+        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+        return authService.getAuthList(userContentsSearchDTO);
+        
     }
 
 }
