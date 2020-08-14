@@ -21,7 +21,7 @@
                                     v-model="checkAll"
                                     @click="allCheckFn()"
                                 />
-                                <span></span>
+                                <i></i>
                             </span>
                         </th>
                         <th>구분</th>
@@ -43,7 +43,7 @@
                                     v-model="checkItem"
                                     @click="$emit('checked', item.goodsSeq)"
                                 />
-                                <span></span>
+                                <i></i>
                             </span>
                         </td>
                         <td>

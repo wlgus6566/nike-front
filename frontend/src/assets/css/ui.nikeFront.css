@@ -365,8 +365,6 @@
     z-index: 3;
     position: relative;
     display: inline-block;
-    width: 20px;
-    height: 20px;
 }
 .checkbox input {
     position: absolute;
@@ -376,16 +374,16 @@
     height: 100%;
     opacity: 0;
 }
-.checkbox span {
-    display: block;
-    width: 100%;
-    height: 100%;
+.checkbox i {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
     background: url('../images/svg/icon-checkbox-off.svg') no-repeat center;
 }
-.checkbox input:checked + span {
+.checkbox input:checked + i {
     background-image: url('../images/svg/icon-checkbox-on.svg');
 }
-.checkbox input:disabled + span {
+.checkbox input:disabled + i {
     background-image: url('../images/svg/icon-checkbox-disabled.svg');
 }
 /* radio */
@@ -410,11 +408,14 @@
 .radio input:checked + i {
     background-image: url('../images/svg/icon-radio-on.svg');
 }
+.checkbox .txt,
 .radio .txt {
     display: inline-block;
     margin-left: 5px;
+    line-height: 20px;
     vertical-align: top;
 }
+.checkbox input:checked ~ .txt,
 .radio input:checked ~ .txt {
     color: #000;
 }
@@ -1774,8 +1775,8 @@
     font-weight: bold;
 }
 .all-box .check-label .checkbox {
+    height: 20px;
     font-size: 12px;
-    margin-right: 10px;
 }
 .all-box .el-checkbox {
     min-width: auto;
@@ -1816,6 +1817,14 @@
     font-size: 12px;
     color: #888;
     font-weight: bold;
+}
+.all-box .desc:before {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 10px;
+    margin-right: 15px;
+    background-color: #d8d8d8;
 }
 .all-box .desc em {
     font-size: 14px;

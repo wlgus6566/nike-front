@@ -74,7 +74,7 @@
                                             <label>
                                                 <span class="checkbox">
                                                     <input type="checkbox" />
-                                                    <span></span>
+                                                    <i></i>
                                                 </span>
                                                 <span class="txt">
                                                     P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg
@@ -88,7 +88,7 @@
                                             <label>
                                                 <span class="checkbox">
                                                     <input type="checkbox" />
-                                                    <span></span>
+                                                    <i></i>
                                                 </span>
                                                 <span class="txt"
                                                     >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
@@ -99,7 +99,7 @@
                                             <label>
                                                 <span class="checkbox">
                                                     <input type="checkbox" />
-                                                    <span></span>
+                                                    <i></i>
                                                 </span>
                                                 <span class="txt"
                                                     >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
@@ -110,7 +110,7 @@
                                             <label>
                                                 <span class="checkbox">
                                                     <input type="checkbox" />
-                                                    <span></span>
+                                                    <i></i>
                                                 </span>
                                                 <span class="txt"
                                                     >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span

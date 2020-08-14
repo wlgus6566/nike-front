@@ -104,7 +104,7 @@
                                                         <input
                                                             type="checkbox"
                                                         />
-                                                        <span></span>
+                                                        <i></i>
                                                     </span>
                                                     <span class="txt"
                                                         >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpgP20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpg</span
@@ -117,7 +117,7 @@
                                                         <input
                                                             type="checkbox"
                                                         />
-                                                        <span></span>
+                                                        <i></i>
                                                     </span>
                                                     <span class="txt"
                                                         >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
@@ -130,7 +130,7 @@
                                                         <input
                                                             type="checkbox"
                                                         />
-                                                        <span></span>
+                                                        <i></i>
                                                     </span>
                                                     <span class="txt"
                                                         >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
@@ -143,7 +143,7 @@
                                                         <input
                                                             type="checkbox"
                                                         />
-                                                        <span></span>
+                                                        <i></i>
                                                     </span>
                                                     <span class="txt"
                                                         >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
@@ -156,7 +156,7 @@
                                                         <input
                                                             type="checkbox"
                                                         />
-                                                        <span></span>
+                                                        <i></i>
                                                     </span>
                                                     <span class="txt"
                                                         >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
