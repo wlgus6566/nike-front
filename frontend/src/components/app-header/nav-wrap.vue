@@ -324,7 +324,6 @@ export default {
         lnb() {
             const menu = this.$store.state.gnbMenuListData;
             return menu.filter((item) => {
-                console.log(item.menuCode);
                 if (item.menuCode !== 'MYPAGE' && item.pcYn === 'Y')
                     return item;
             });

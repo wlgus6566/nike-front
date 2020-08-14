@@ -1207,11 +1207,17 @@
 }
 
 /* file-setting */
+.file-setting-list {
+    margin-top: 15px;
+    padding: 0 20px;
+}
 .file-setting {
     position: relative;
-    margin: 20px 20px 0;
     padding: 0 40px;
     border: 1px solid #ccc;
+}
+.file-setting + .file-setting {
+    margin-top: 15px;
 }
 .file-setting .form-column {
     padding-left: 0;

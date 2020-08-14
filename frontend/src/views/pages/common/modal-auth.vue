@@ -1,5 +1,5 @@
 <template>
-    <ModalComp @close="thisClose">
+    <div @close="thisClose">
         <template v-slot:modal-header>
             <div class="modal-header">
                 <h1>권한 설정</h1>
@@ -15,7 +15,7 @@
             />
         </template>
         <template v-slot:modal-footer>123</template>
-    </ModalComp>
+    </div>
 </template>
 <script>
 import GroupTreeListTable from '@/components/group-tree/tree-list-table';
@@ -79,7 +79,7 @@ export default {
             }
         },
     },
-    components: { ModalComp, GroupTreeListTable },
+    components: { GroupTreeListTable },
 };
 </script>
 <style scoped></style>
