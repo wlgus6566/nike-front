@@ -62,7 +62,7 @@ public class BannerService {
      */
     public Banner getBanner() {
         final Banner banner = (Banner) redisService.get(BANNER_REDIS_KEY);
-        return ObjectUtils.isEmpty(banner) ? bannerRepository.findAllByUseYn(ServiceCode.YesOrNoEnumCode.Y.name()).get(0) : banner;
+        return ObjectUtils.isEmpty(banner) ? bannerRepository.findAllByUseYnOrderByUpdateDt(ServiceCode.YesOrNoEnumCode.Y.name()).get(0) : banner;
     }
 
     /**
@@ -74,7 +74,7 @@ public class BannerService {
      * @since 2020. 8. 12. 오후 2:12:13
      */
     public Banner findBanner() {
-        return bannerRepository.findAllByUseYn(ServiceCode.YesOrNoEnumCode.Y.name()).get(0);
+        return bannerRepository.findAllByUseYnOrderByUpdateDt(ServiceCode.YesOrNoEnumCode.Y.name()).get(0);
     }
 
     /**

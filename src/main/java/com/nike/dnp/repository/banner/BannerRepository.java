@@ -26,7 +26,7 @@ public interface BannerRepository extends JpaRepository<Banner, Long> {
      * @implNote 사용 여부 : Y > 조건 목록 조회
      * @since 2020. 8. 11. 오후 12:03:55
      */
-    List<Banner> findAllByUseYn(final String useYn);
+    List<Banner> findAllByUseYnOrderByUpdateDt(final String useYn);
 
     /**
      * Find by banner seq and use yn optional.
