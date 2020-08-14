@@ -3,7 +3,9 @@
         <header>
             <div class="inner">
                 <h1>
-                    <a href="#"><img alt="" src="@/assets/images/logo-nike.svg"/></a>
+                    <a href="#"
+                        ><img alt="" src="@/assets/images/logo-nike.svg"
+                    /></a>
                 </h1>
                 <nav>
                     <ul>
@@ -60,7 +62,10 @@
                         </el-select>
                     </div>
                     <div class="search-input">
-                        <input type="text" placeholder="검색어를 입력해주세요." />
+                        <input
+                            type="text"
+                            placeholder="검색어를 입력해주세요."
+                        />
                         <button type="button"><span>검색</span></button>
                     </div>
                 </div>
@@ -78,8 +83,11 @@
                             <tr>
                                 <th>
                                     <span class="checkbox">
-                                        <input type="checkbox" v-model="checked" />
-                                        <span></span>
+                                        <input
+                                            type="checkbox"
+                                            v-model="checked"
+                                        />
+                                        <i></i>
                                     </span>
                                 </th>
                                 <th>계정명</th>
@@ -93,12 +101,17 @@
                             <tr>
                                 <td>
                                     <span class="checkbox">
-                                        <input type="checkbox" v-model="checked" />
-                                        <span></span>
+                                        <input
+                                            type="checkbox"
+                                            v-model="checked"
+                                        />
+                                        <i></i>
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="#" class="under-link"><span>포스터 600X800</span></a>
+                                    <a href="#" class="under-link"
+                                        ><span>포스터 600X800</span></a
+                                    >
                                 </td>
                                 <td>Da****y6jae@naver.com</td>
                                 <td>NIKE DIRECT</td>
@@ -108,12 +121,17 @@
                             <tr>
                                 <td>
                                     <span class="checkbox">
-                                        <input type="checkbox" v-model="checked" />
-                                        <span></span>
+                                        <input
+                                            type="checkbox"
+                                            v-model="checked"
+                                        />
+                                        <i></i>
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="#" class="under-link"><span>포스터 600X800</span></a>
+                                    <a href="#" class="under-link"
+                                        ><span>포스터 600X800</span></a
+                                    >
                                 </td>
                                 <td>Da****y6jae@naver.com</td>
                                 <td>NIKE DIRECT</td>
@@ -136,7 +154,9 @@
                 </div>
 
                 <div class="pagination">
-                    <button type="button" class="prev"><span>이전</span></button>
+                    <button type="button" class="prev">
+                        <span>이전</span>
+                    </button>
                     <ul>
                         <li><em>1</em></li>
                         <li>
@@ -167,7 +187,9 @@
                             <button type="button"><span>10</span></button>
                         </li>
                     </ul>
-                    <button type="button" class="next"><span>다음</span></button>
+                    <button type="button" class="next">
+                        <span>다음</span>
+                    </button>
                 </div>
             </div>
             <aside>

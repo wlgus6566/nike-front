@@ -6,10 +6,10 @@
                     <input
                         type="checkbox"
                         v-model="checkAll"
-                        :disabled="reportFileList && !reportFileList.length"
+                        :disabled="reportFileData && !reportFileData.length"
                         @click="$emit('allCheckFn')"
                     />
-                    <span></span>
+                    <i></i>
                 </span>
                 <strong class="txt" :class="{ 'fc-black': checkAll }">
                     전체선택 (
@@ -26,19 +26,19 @@
                 <span>선택 담기</span>
             </button>
         </div>
-        <template v-if="reportFileList">
+        <template v-if="reportFileData">
             <draggable
                 tag="ul"
                 v-bind="dragOptions"
-                v-if="reportFileList.length"
-                :list="reportFileList"
+                v-if="reportFileData.length"
+                :list="reportFileData"
                 class="file-item-list"
                 @start="onStart"
                 @end="onEnd"
             >
                 <li
                     :class="fileItemClass(item.reportFileSeq)"
-                    v-for="item in reportFileList"
+                    v-for="item in reportFileData"
                     :key="item.reportFileSeq"
                 >
                     <div class="list">
@@ -56,7 +56,7 @@
                                         )
                                     "
                                 />
-                                <span></span>
+                                <i></i>
                             </span>
                             <span class="thumbnail">
                                 <img
@@ -162,7 +162,7 @@ export default {
         draggable,
     },
     props: [
-        'reportFileList',
+        'reportFileData',
         'checkAll',
         'orderType',
         'fileExtension',

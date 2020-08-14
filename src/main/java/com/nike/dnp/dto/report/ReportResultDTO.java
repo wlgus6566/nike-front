@@ -1,9 +1,26 @@
 package com.nike.dnp.dto.report;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.util.ObjectUtils;
+
+import javax.persistence.Column;
+import javax.persistence.OneToMany;
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -18,6 +35,7 @@ import org.springframework.beans.factory.annotation.Value;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ReportResultDTO {
 
     /**
@@ -55,6 +73,41 @@ public class ReportResultDTO {
      */
     @ApiModelProperty(name = "readCount", value = "조회 수")
     private Long readCount;
+
+    /**
+     * 닉네임
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "nickname", value = "닉네임", required = true, example = "Nike이모션점")
+    private String nickname;
+
+    /**
+     * 최초 작성자
+     *
+     * @author [김형욱]
+     */
+    @ApiModelProperty(name = "registerSeq", value = "최초 작성자 시퀀스", hidden = true, required = true)
+    private Long registerSeq;
+
+    /**
+     * 최종 수정일
+     *
+     * @author [오지훈]
+     */
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+    @ApiModelProperty(name = "updateDt", value = "최종 수정일", hidden = true)
+    private LocalDateTime updateDt;
+
+    /**
+     * The Report file list
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name="reportFileList", value = "보고서 파일 목록", required = true)
+    private List<ReportFile> reportFileList;
 
     /**
      * Gets image file physical name.

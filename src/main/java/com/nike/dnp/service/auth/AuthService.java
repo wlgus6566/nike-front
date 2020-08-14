@@ -12,6 +12,7 @@ import com.nike.dnp.dto.user.UserContentsSearchDTO;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.auth.AuthMenuRole;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.auth.AuthMenuRoleRepository;
 import com.nike.dnp.repository.auth.AuthRepository;
 import com.nike.dnp.repository.menu.MenuRepository;
@@ -208,9 +209,7 @@ public class AuthService {
     public Optional<Auth> findByRoleType(final String roleType) {
         log.info("AuthService.findByRoleType");
         return Optional.ofNullable(authRepository.findByRoleType(roleType).orElseThrow(() ->
-                new CodeMessageHandleException(
-                        FailCode.ExceptionError.NOT_FOUND.toString()
-                        , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.toString()))));
+                new NotFoundHandleException()));
     }
 
     /**
@@ -355,9 +354,7 @@ public class AuthService {
     public Optional<Auth> findById(final Long authSeq) {
         log.info("AuthService.findById");
         return Optional.ofNullable(authRepository.findById(authSeq).orElseThrow(
-                () -> new CodeMessageHandleException(
-                        FailCode.ExceptionError.NOT_FOUND.toString()
-                        , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.toString()))));
+                () -> new NotFoundHandleException()));
     }
 
     /**
@@ -519,6 +516,15 @@ public class AuthService {
         }
     }
 
+//    TODO[lsj] 보고서 권한 목록 재가공 필요
+//    public List<AuthReturnDTO> getAuthList2 (final UserContentsSearchDTO userContentsSearchDTO, final Long authDepth) {
+//        List<AuthReturnDTO> asd = this.getAuthList(userContentsSearchDTO);
+//
+//
+//
+//
+//    }
+
     /**
      * Gets auth list.
      *
@@ -604,6 +610,15 @@ public class AuthService {
         return auths;
     }
 
+    /**
+     * Auth config.
+     *
+     * @param target the target
+     * @param config the config
+     * @author [오지훈]
+     * @implNote authConfig
+     * @since 2020. 8. 14. 오후 5:23:07
+     */
     private void authConfig(AuthReturnDTO target, AuthReturnDTO config) {
         if (target.getAuthSeq().equals(config.getAuthSeq())) {
             target.setDetailAuthYn(config.getDetailAuthYn());

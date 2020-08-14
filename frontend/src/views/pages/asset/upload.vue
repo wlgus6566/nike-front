@@ -24,9 +24,9 @@
                                     v-model="folderDetail.exposureYn"
                                     value="Y"
                                 />
-                                <span></span>
+                                <i></i>
+                                <span class="txt">노출</span>
                             </span>
-                            <span>노출</span>
                         </label>
                         <label class="check-label">
                             <span class="radio">
@@ -35,9 +35,9 @@
                                     v-model="folderDetail.exposureYn"
                                     value="N"
                                 />
-                                <span></span>
+                                <i></i>
+                                <span class="txt">미노출</span>
                             </span>
-                            <span>미노출</span>
                         </label>
                     </div>
                 </li>
@@ -53,9 +53,9 @@
                                     v-model="menuCode"
                                     value="SP"
                                 />
-                                <span></span>
+                                <i></i>
+                                <span class="txt">SP</span>
                             </span>
-                            <span>SP</span>
                         </label>
                         <label class="check-label">
                             <span class="radio">
@@ -64,9 +64,9 @@
                                     v-model="menuCode"
                                     value="SU"
                                 />
-                                <span></span>
+                                <i></i>
+                                <span class="txt">SU</span>
                             </span>
-                            <span>SU</span>
                         </label>
                         <label class="check-label">
                             <span class="radio">
@@ -75,9 +75,9 @@
                                     v-model="menuCode"
                                     value="FA"
                                 />
-                                <span></span>
+                                <i></i>
+                                <span class="txt">FA</span>
                             </span>
-                            <span>FA</span>
                         </label>
                         <label class="check-label">
                             <span class="radio">
@@ -86,9 +86,9 @@
                                     v-model="menuCode"
                                     value="HO"
                                 />
-                                <span></span>
+                                <i></i>
+                                <span class="txt">HO</span>
                             </span>
-                            <span>HO</span>
                         </label>
                     </div>
                 </li>
@@ -128,9 +128,9 @@
                                         "
                                         value="SELECT"
                                     />
-                                    <span></span>
+                                    <i></i>
+                                    <span class="txt">날짜선택</span>
                                 </span>
-                                <span>날짜선택</span>
                             </label>
                             <label class="check-label">
                                 <span class="radio">
@@ -141,9 +141,9 @@
                                         "
                                         value="EVERY"
                                     />
-                                    <span></span>
+                                    <i></i>
+                                    <span class="txt">365</span>
                                 </span>
-                                <span>365</span>
                             </label>
                         </div>
                         <!-- todo 추가 스크립트 작업 필요  -->

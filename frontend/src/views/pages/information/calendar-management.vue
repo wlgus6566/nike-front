@@ -44,9 +44,11 @@
                                             "
                                             :value="item.code"
                                         />
-                                        <span></span>
+                                        <i></i>
+                                        <span class="txt">{{
+                                            item.codeName
+                                        }}</span>
                                     </span>
-                                    <span>{{ item.codeName }}</span>
                                 </label>
                             </div>
                         </li>

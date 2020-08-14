@@ -5,6 +5,7 @@ import com.nike.dnp.dto.report.ReportBasketResultDTO;
 import com.nike.dnp.entity.report.ReportBasket;
 import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.report.ReportBasketRepository;
 import com.nike.dnp.repository.report.ReportFileRepository;
 import com.nike.dnp.util.MessageUtil;
@@ -111,9 +112,7 @@ public class ReportBasketService {
      */
     public Optional<ReportBasket> findById(final Long reportBasketSeq) {
         log.info("ReportBasketService.findById");
-        return Optional.ofNullable(reportBasketRepository.findById(reportBasketSeq).orElseThrow(() -> new CodeMessageHandleException(
-                        FailCode.ExceptionError.NOT_FOUND.name() , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()
-        ))));
+        return Optional.ofNullable(reportBasketRepository.findById(reportBasketSeq).orElseThrow(() -> new NotFoundHandleException()));
     }
 
     /**

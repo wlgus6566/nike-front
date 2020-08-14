@@ -365,8 +365,6 @@
     z-index: 3;
     position: relative;
     display: inline-block;
-    width: 20px;
-    height: 20px;
 }
 .checkbox input {
     position: absolute;
@@ -376,24 +374,22 @@
     height: 100%;
     opacity: 0;
 }
-.checkbox span {
-    display: block;
-    width: 100%;
-    height: 100%;
+.checkbox i {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
     background: url('../images/svg/icon-checkbox-off.svg') no-repeat center;
 }
-.checkbox input:checked + span {
+.checkbox input:checked + i {
     background-image: url('../images/svg/icon-checkbox-on.svg');
 }
-.checkbox input:disabled + span {
+.checkbox input:disabled + i {
     background-image: url('../images/svg/icon-checkbox-disabled.svg');
 }
 /* radio */
 .radio {
     position: relative;
     display: inline-block;
-    width: 20px;
-    height: 20px;
 }
 .radio input {
     position: absolute;
@@ -403,14 +399,25 @@
     height: 100%;
     opacity: 0;
 }
-.radio span {
-    display: block;
-    width: 100%;
-    height: 100%;
+.radio i {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
     background: url('../images/svg/icon-radio-off.svg') no-repeat center;
 }
-.radio input:checked + span {
+.radio input:checked + i {
     background-image: url('../images/svg/icon-radio-on.svg');
+}
+.checkbox .txt,
+.radio .txt {
+    display: inline-block;
+    margin-left: 5px;
+    line-height: 20px;
+    vertical-align: top;
+}
+.checkbox input:checked ~ .txt,
+.radio input:checked ~ .txt {
+    color: #000;
 }
 .el-radio {
     display: inline-block;
@@ -629,14 +636,14 @@
 }
 /* date-picker */
 .date-picker {
+    position: relative;
     border-bottom: 1px solid black;
 }
 .date-picker-group {
     display: flex;
 }
 .date-picker-group .date-picker {
-    flex-basis: 107px;
-    width: 107px;
+    flex-basis: 180px;
 }
 .data-picker .focus\:vc-shadow:focus {
     box-shadow: none;
@@ -652,6 +659,16 @@
 .date-picker-group .date-picker + .date-picker {
     margin-left: 46px;
 }
+.date-picker-group .date-picker + .date-picker:before {
+    position: absolute;
+    left: -25px;
+    top: 19px;
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 1px;
+    background: #000;
+}
 .date-picker .vc-leading-tight {
     height: 39px;
     line-height: 16px;
@@ -660,7 +677,7 @@
     background: url('../images/svg/icon-input-calender.svg') right 10px
         no-repeat;
     font-size: 14px;
-    color: #888;
+    color: #000;
     letter-spacing: 0;
 }
 .date-picker .el-range-editor.el-input__inner {
@@ -1243,7 +1260,7 @@
     align-items: center;
 }
 .form-column .check-label {
-    min-width: 95px;
+    /*min-width: 95px;*/
 }
 .form-column .check-label.type2 {
     min-width: 115px;
@@ -1524,6 +1541,7 @@
     line-height: 14px;
     color: #888;
     font-weight: 300;
+    letter-spacing: 0;
 }
 .folder-name {
     display: block;
@@ -1644,6 +1662,10 @@
     flex-shrink: 0;
     flex-basis: auto;
 }
+.file-item .btn-s-sm-white:disabled {
+    background: #fff !important;
+    color: #000 !important;
+}
 .file-item .btn-box .btn-more {
     display: block;
     width: 30px;
@@ -1753,8 +1775,8 @@
     font-weight: bold;
 }
 .all-box .check-label .checkbox {
+    height: 20px;
     font-size: 12px;
-    margin-right: 10px;
 }
 .all-box .el-checkbox {
     min-width: auto;
@@ -1795,6 +1817,14 @@
     font-size: 12px;
     color: #888;
     font-weight: bold;
+}
+.all-box .desc:before {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 10px;
+    margin-right: 15px;
+    background-color: #d8d8d8;
 }
 .all-box .desc em {
     font-size: 14px;
@@ -2843,6 +2873,15 @@
 .tbl-list table td .under-link span {
     text-decoration: underline;
 }
+.tbl-list a {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.tbl-list a:hover {
+    opacity: 0.8;
+}
 .tbl-list .noti a {
     font-weight: bold;
 }
@@ -2851,6 +2890,7 @@
 }
 .tbl-list .date {
     color: #888;
+    letter-spacing: 0;
 }
 .label-noti {
     display: inline-block;
@@ -2925,7 +2965,6 @@
     right: 0;
     display: inline-block;
     font-size: 12px;
-    line-height: 52px;
     color: #888;
     letter-spacing: 0px;
 }
@@ -3340,6 +3379,7 @@
     font-size: 16px;
     color: #fff;
     font-weight: 300;
+    letter-spacing: 0;
 }
 .member-inquiry .name {
     display: block;
@@ -3360,6 +3400,7 @@
     opacity: 0.5;
     color: #fff;
     font-size: 12px;
+    letter-spacing: 0;
 }
 .member-inquiry .info-list dd {
     display: flex;
@@ -3368,6 +3409,7 @@
     line-height: 21px;
     color: #fff;
     font-size: 18px;
+    letter-spacing: 0;
 }
 .member-inquiry .info-list dd + dt {
     margin-top: 25px;
@@ -4043,6 +4085,7 @@
     font-size: 10px;
     color: #555;
     line-height: 11px;
+    letter-spacing: 0;
 }
 .folder-item .info-box .location li + li {
     margin-left: 2px;
@@ -4067,6 +4110,8 @@
     font-size: 12px;
     height: 14px;
     color: #888;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 0;
 }
 .folder-item .view-area {
     position: absolute;
@@ -4149,6 +4194,7 @@
     right: 0;
     margin: 0;
     transform: translateY(-50%);
+    letter-spacing: 0;
 }
 .folder-list-row li .view-area {
     position: relative;
@@ -4165,6 +4211,8 @@
     width: auto;
     padding: 0 10px;
     color: #000;
+    font-size: 12px;
+    letter-spacing: 0;
     background: transparent;
 }
 .folder-list-row li .view-area .view:before {

@@ -5,6 +5,7 @@ import com.nike.dnp.dto.wishlist.WishListDeleteDTO;
 import com.nike.dnp.dto.wishlist.WishListSearchDTO;
 import com.nike.dnp.entity.wishlist.WishList;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.wishlist.WishListRepository;
 import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.SecurityUtil;
@@ -95,9 +96,7 @@ public class WishListService {
 		log.info("WishListService.delete");
 		final Optional<WishList> userWishList = wishListRepository.findByWishListSeqAndUserSeq(wishListSeq, SecurityUtil.currentUser().getUserSeq());
 		final WishList wishList = userWishList.orElseThrow(
-				() -> new CodeMessageHandleException(
-						FailCode.ExceptionError.NOT_FOUND.name()
-						, MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
+				() -> new NotFoundHandleException());
 		wishListRepository.delete(wishList);
 	}
 

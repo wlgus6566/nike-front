@@ -177,7 +177,6 @@ export default {
         },
         async fetchData() {
             this.loadingData = true;
-            console.log();
             try {
                 const {
                     data: { data: response },
@@ -187,6 +186,7 @@ export default {
                     beginDt: this.make.beginDt,
                     endDt: this.make.endDt,
                 });
+                console.log(response);
                 this.orderList = response.content;
                 this.loadingData = false;
             } catch (error) {

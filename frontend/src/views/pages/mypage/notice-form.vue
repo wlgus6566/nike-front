@@ -16,30 +16,26 @@
                             <span class="radio">
                                 <input
                                     type="radio"
-                                    name="noti"
-                                    id="notiY"
                                     value="Y"
                                     checked
                                     v-model="noticeDetail.noticeYn"
                                     @click="noticeCheck($event)"
                                 />
-                                <span></span>
+                                <i></i>
+                                <span class="txt">고정</span>
                             </span>
-                            <span>고정</span>
                         </label>
                         <label class="check-label">
                             <span class="radio">
                                 <input
                                     type="radio"
-                                    name="noti"
-                                    id="notiN"
                                     value="N"
                                     v-model="noticeDetail.noticeYn"
                                     @click="noticeCheck($event)"
                                 />
-                                <span></span>
+                                <i></i>
+                                <span class="txt">비고정</span>
                             </span>
-                            <span>비고정</span>
                         </label>
                     </div>
                     <div class="form-column agr">

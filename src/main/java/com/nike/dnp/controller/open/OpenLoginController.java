@@ -1,7 +1,6 @@
 package com.nike.dnp.controller.open;
 
 import com.nike.dnp.common.aspect.ValidField;
-import com.nike.dnp.common.validation.ValidationGroups;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.SuccessCode;
 import com.nike.dnp.dto.user.UserCertDTO;
@@ -117,7 +116,7 @@ public class OpenLoginController {
     @ValidField
     public SingleResult<UserResultDTO> settingPassword (
             @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody
-            @Validated({ValidationGroups.Group1.class, ValidationGroups.Group3.class}) final UserCertDTO userCertDTO
+            @Validated({UserCertDTO.SetPassword.class}) final UserCertDTO userCertDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserOpenController.settingPassword");
         return responseService.getSingleResult(
@@ -144,7 +143,7 @@ public class OpenLoginController {
     @ValidField
     public SingleResult<UserResultDTO> changePassword (
             @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody
-            @Validated({ValidationGroups.Group1.class, ValidationGroups.Group2.class, ValidationGroups.Group3.class}) final UserCertDTO userCertDTO
+            @Validated({UserCertDTO.ChangePassword.class}) final UserCertDTO userCertDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserOpenController.changePassword");
         return responseService.getSingleResult(
@@ -172,7 +171,7 @@ public class OpenLoginController {
     @ValidField
     public SingleResult<Boolean> checkCert (
             @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody
-            @Validated({ValidationGroups.Group3.class}) final UserCertDTO userCertDTO
+            @Validated({UserCertDTO.CheckCert.class}) final UserCertDTO userCertDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserOpenController.checkCert");
         return responseService.getSingleResult(

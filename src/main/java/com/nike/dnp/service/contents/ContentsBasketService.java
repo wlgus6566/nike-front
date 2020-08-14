@@ -5,6 +5,7 @@ import com.nike.dnp.dto.contents.ContentsBasketResultDTO;
 import com.nike.dnp.entity.contents.ContentsBasket;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.contents.ContentsBasketRepository;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.util.MessageUtil;
@@ -93,7 +94,7 @@ public class ContentsBasketService {
     public Optional<ContentsBasket> findById(final Long contentsBasketSeq) {
         log.info("contentsBasketService.findById");
         return Optional.ofNullable(contentsBasketRepository.findById(contentsBasketSeq).orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())))
+                () -> new NotFoundHandleException())
         );
     }
 
