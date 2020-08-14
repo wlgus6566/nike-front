@@ -24,7 +24,6 @@ import com.nike.dnp.service.user.UserContentsService;
 import com.nike.dnp.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -142,8 +141,10 @@ public class ContentsService {
                 PageRequest.of(contentsSearchDTO.getPage()
                         , contentsSearchDTO.getSize()
                         , contentsSearchDTO.equals(ServiceCode.SearchEnumCode.START_DATE.toString())
-                                ? Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).ascending() : Sort.by(ServiceCode.SearchEnumCode.UPDATE_DT.getValue()).descending()));
+                                ? Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).ascending() : Sort.by(ServiceCode.SearchEnumCode.LATEST.getValue()).descending()));
     }
+
+
 
     /**
      * Save contents.
@@ -168,7 +169,7 @@ public class ContentsService {
 
         // 컨텐츠 파일 저장
         final List<ContentsFile> savedContentsFileList = new ArrayList<>();
-        if (!contentsSaveDTO.getContentsFileList().isEmpty()) {
+        if (!ObjectUtils.isEmpty(contentsSaveDTO.getContentsFileList()) && !contentsSaveDTO.getContentsFileList().isEmpty()) {
             for (final ContentsFileSaveDTO contentsFileSaveDTO : contentsSaveDTO.getContentsFileList()) {
                 this.checkContentsFileValidation(contentsFileSaveDTO);
                 final ContentsFile savedContentsFile = contentsFileRepository.save(
@@ -180,10 +181,12 @@ public class ContentsService {
         savedContents.setContentsFileList(savedContentsFileList);
 
         // 사용자 컨텐츠 권한 저장
-        this.saveUserContentsAuth(savedContents.getContentsSeq(), contentsSaveDTO.getChecks());
+        List<UserContentsSaveDTO.AuthCheckDTO> saveCheckList = new ArrayList<>();
+        List<UserContentsSaveDTO.AuthCheckDTO> transformAuthDTOList = this.transformAuthList(saveCheckList, contentsSaveDTO.getChecks());
+        this.saveUserContentsAuth(savedContents.getContentsSeq(), transformAuthDTOList);
 
         // 권한 그룹에 알림 전송
-        this.sendAlarm(savedContents.getContentsSeq(), contentsSaveDTO, ServiceCode.AlarmActionEnumCode.NEW.toString());
+        this.sendAlarm(savedContents.getContentsSeq(), contentsSaveDTO, transformAuthDTOList, ServiceCode.AlarmActionEnumCode.NEW.toString());
 
         // 최근 업로드 목록 추가
         historyService.saveRecentUploadHistory(savedContents.getContentsSeq(), contentsSaveDTO.getTopMenuCode());
@@ -191,17 +194,56 @@ public class ContentsService {
         return savedContents;
     }
 
+
+    /**
+     * Transform auth list list.
+     *
+     * @param saveCheckList the save check list
+     * @param checkList     the check list
+     * @return the list
+     * @author [이소정]
+     * @implNote 권한 목록 형식 변환
+     * @since 2020. 8. 14. 오후 2:59:37
+     */
+    public List<UserContentsSaveDTO.AuthCheckDTO> transformAuthList(
+            final List<UserContentsSaveDTO.AuthCheckDTO> saveCheckList, final List<AuthReturnDTO> checkList
+    ) {
+        if (!ObjectUtils.isEmpty(checkList) && !checkList.isEmpty()) {
+            for (AuthReturnDTO authReturnDTO : checkList) {
+                if ("Y".equals(authReturnDTO.getViewYn()) && "Y".equals(authReturnDTO.getCheckBoxYn())) {
+                    UserContentsSaveDTO.AuthCheckDTO checkDTO = new UserContentsSaveDTO.AuthCheckDTO();
+                    checkDTO.setAuthSeq(authReturnDTO.getAuthSeq());
+                    checkDTO.setDetailAuthYn(authReturnDTO.getDetailAuthYn());
+                    checkDTO.setEmailReceptionYn(authReturnDTO.getEmailReceptionYn());
+                    saveCheckList.add(checkDTO);
+                }
+
+                if (!ObjectUtils.isEmpty(authReturnDTO.getSubAuths()) && !authReturnDTO.getSubAuths().isEmpty()) {
+                    this.transformAuthList(saveCheckList, authReturnDTO.getSubAuths());
+                }
+            }
+        }
+
+        return saveCheckList;
+    }
+
     /**
      * Send alarm.
      *
-     * @param contentSeq      the content seq
-     * @param contentsSaveDTO the contents save dto
-     * @param actionEnumCode  the action enum code
+     * @param contentSeq           the content seq
+     * @param contentsSaveDTO      the contents save dto
+     * @param transformAuthDTOList the transform auth dto list
+     * @param actionEnumCode       the action enum code
      * @author [이소정]
      * @implNote 노출인 경우 > 권한 그룹에 알림 전송
      * @since 2020. 8. 3. 오후 2:52:57
      */
-    public void sendAlarm(final Long contentSeq, final ContentsSaveDTO contentsSaveDTO, final String actionEnumCode) {
+    public void sendAlarm(
+            final Long contentSeq
+            , final ContentsSaveDTO contentsSaveDTO
+            , final List<UserContentsSaveDTO.AuthCheckDTO> transformAuthDTOList
+            , final String actionEnumCode
+    ) {
         log.info("ContentsService.sendAlarm");
         if ("Y".equals(contentsSaveDTO.getExposureYn())) {
             alarmService.sendAlarmTargetList(
@@ -209,7 +251,7 @@ public class ContentsService {
                     , contentsSaveDTO.getTopMenuCode()
                     , contentSeq
                     , null
-                    , this.findAllAuthUser(contentsSaveDTO.getChecks()));
+                    , this.findAllAuthUser(transformAuthDTOList));
         }
 
     }
@@ -283,7 +325,8 @@ public class ContentsService {
         // case1.기본목록O, 새로운목록X : useYn = 'N' update
         // case2.기존목록X, 새로운목록O : save
         // case3.기존목록O, 새로운목록O : update
-        if (!beforeFileList.isEmpty() && !newFileList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(beforeFileList) && !beforeFileList.isEmpty()
+                && !ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
             for (final ContentsFile beforeFile : beforeFileList) {
                 for (final ContentsFileSaveDTO newFile : newFileList) {
                     if (beforeFile.getContentsFileSeq() == newFile.getContentsFileSeq()) {
@@ -293,7 +336,7 @@ public class ContentsService {
             }
         }
 
-        if (!newFileList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
             for (final ContentsFileSaveDTO contentsFileSaveDTO : newFileList) {
                 final Long contentsFileSeq = null != contentsFileSaveDTO.getContentsFileSeq() ? contentsFileSaveDTO.getContentsFileSeq() : 0l;
                 final Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
@@ -311,7 +354,7 @@ public class ContentsService {
             }
         }
 
-        if (!notUseFileList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(notUseFileList) && !notUseFileList.isEmpty()) {
             for (final ContentsFile contentsFile : notUseFileList) {
                 contentsFile.updateUseYn("N");
                 // 관련 콘텐츠 장바구니 삭제
@@ -329,9 +372,11 @@ public class ContentsService {
         }
 
         // 사용자 컨텐츠 권한 저장
-        this.saveUserContentsAuth(contentsSaveDTO.getContentsSeq(), contentsSaveDTO.getChecks());
+        List<UserContentsSaveDTO.AuthCheckDTO> saveCheckList = new ArrayList<>();
+        List<UserContentsSaveDTO.AuthCheckDTO> transformAuthDTOList = this.transformAuthList(saveCheckList, contentsSaveDTO.getChecks());
+        this.saveUserContentsAuth(contentsSaveDTO.getContentsSeq(), transformAuthDTOList);
         // 권한 그룹에 알림 전송
-        this.sendAlarm(contentsSaveDTO.getContentsSeq(), contentsSaveDTO, ServiceCode.AlarmActionEnumCode.UPDATE.toString());
+        this.sendAlarm(contentsSaveDTO.getContentsSeq(), contentsSaveDTO, transformAuthDTOList, ServiceCode.AlarmActionEnumCode.UPDATE.toString());
 
         return contents.get();
     }
@@ -379,7 +424,7 @@ public class ContentsService {
 
         // 관련 콘텐츠 파일 삭제
         final List<ContentsFile> contentsFileList = contents.get().getContentsFileList();
-        if (!contentsFileList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(contentsFileList) && !contentsFileList.isEmpty()) {
             for (final ContentsFile contentsFile : contentsFileList) {
                 contentsFile.updateUseYn("N");
                 // 관련 콘텐츠 장바구니 삭제
@@ -466,7 +511,7 @@ public class ContentsService {
         List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsMailSendDTO.getContentsSeq());
 
         // 이메일 발송
-        if (!emailAuthUserList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(emailAuthUserList) && !emailAuthUserList.isEmpty()) {
             for (final ContentsUserEmailDTO userEmailDTO : emailAuthUserList) {
                 final SendDTO sendDTO = new SendDTO();
                 sendDTO.setEmail(userEmailDTO.getUserId());
@@ -494,12 +539,18 @@ public class ContentsService {
      */
     public void checkContentsValidation(final ContentsSaveDTO contentsSaveDTO) {
         log.info("ContentsService.checkContentsValidation");
+        // 등록인 경우, base64 필수
+        if (ObjectUtils.isEmpty(contentsSaveDTO.getContentsSeq()) && ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
+            throw new CodeMessageHandleException(FailCode.ConfigureError.NULL_FOLDER_IMAGE.name(),
+                    MessageUtil.getMessage(FailCode.ConfigureError.NULL_FOLDER_IMAGE.name()));
+        }
+
         // 날짜 선택(CampaignPeriodSectionCode = SELECT) 인 경우 시작, 종료 날짜 필수
         if (contentsSaveDTO.getCampaignPeriodSectionCode().equals(ServiceCode.ContentsCampaignPeriodCode.SELECT.toString())) {
-            if (StringUtils.isBlank(contentsSaveDTO.getCampaignBeginDt())) {
+            if (ObjectUtils.isEmpty(contentsSaveDTO.getCampaignBeginDt())) {
                 throw new CodeMessageHandleException(FailCode.ConfigureError.SELECT_CAMPAIGN_BEGIN_DT.name(),
                         MessageUtil.getMessage(FailCode.ConfigureError.SELECT_CAMPAIGN_BEGIN_DT.name()));
-            } else if (StringUtils.isBlank(contentsSaveDTO.getCampaignEndDt())) {
+            } else if (ObjectUtils.isEmpty(contentsSaveDTO.getCampaignEndDt())) {
                 throw new CodeMessageHandleException(FailCode.ConfigureError.SELECT_CAMPAIGN_END_DT.name(),
                         MessageUtil.getMessage(FailCode.ConfigureError.SELECT_CAMPAIGN_END_DT.name()));
             }
@@ -634,7 +685,7 @@ public class ContentsService {
         userContentsSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
         userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
         return authService.getAuthList(userContentsSearchDTO);
-        
+
     }
 
 }

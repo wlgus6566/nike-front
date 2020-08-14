@@ -3,6 +3,7 @@ package com.nike.dnp.service.report;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
+import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.report.ReportFileSaveDTO;
 import com.nike.dnp.dto.report.ReportResultDTO;
@@ -152,13 +153,14 @@ public class ReportService {
         log.info("ReportService.save");
         reportSaveDTO.setAuthSeq(SecurityUtil.currentUser().getAuthSeq());
 
+        this.checkReportValidation(reportSaveDTO);
         // 썸네일 base64 -> file 정보로 변환
         this.base64ToFile(reportSaveDTO);
 
         final Report savedReport = reportRepository.save(new Report().save(reportSaveDTO));
         final List<ReportFile> reportFileList = new ArrayList<>();
 
-        if (!reportSaveDTO.getReportFileSaveDTOList().isEmpty()) {
+        if (!ObjectUtils.isEmpty(reportSaveDTO.getReportFileSaveDTOList()) && !reportSaveDTO.getReportFileSaveDTOList().isEmpty()) {
             for (final ReportFileSaveDTO reportFileSaveDTO : reportSaveDTO.getReportFileSaveDTOList()) {
                 this.checkReportFileValidation(reportFileSaveDTO);
                 final ReportFile savedReportFile = reportFileRepository.save(
@@ -256,12 +258,15 @@ public class ReportService {
         final List<ReportFile> beforeFileList = reportFileRepository.findByReportSeqAndUseYn(reportSaveDTO.getReportSeq(), "Y");
 
         final List<ReportFile> lastBeforeFileList  = new ArrayList<>();
-        for (ReportFile reportFile : beforeFileList) {
-            lastBeforeFileList.add(reportFile);
+        if (!ObjectUtils.isEmpty(beforeFileList) && !beforeFileList.isEmpty()) {
+            for (ReportFile reportFile : beforeFileList) {
+                lastBeforeFileList.add(reportFile);
+            }
         }
         final List<ReportFileSaveDTO> newFileList = reportSaveDTO.getReportFileSaveDTOList();
 
-        if (!beforeFileList.isEmpty() && !newFileList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(beforeFileList) && !beforeFileList.isEmpty()
+                && !ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
             for (final ReportFile beforeFile : beforeFileList) {
                 for (final ReportFileSaveDTO newFile : newFileList) {
                     if (beforeFile.getReportFileSeq() == newFile.getReportFileSeq()) {
@@ -271,7 +276,7 @@ public class ReportService {
             }
         }
 
-        if (!newFileList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
             for (final ReportFileSaveDTO reportFileSaveDTO : newFileList) {
                 final Long reportFileSeq = null != reportFileSaveDTO.getReportFileSeq() ? reportFileSaveDTO.getReportFileSeq() : 0l;
                 final Optional<ReportFile> reportFile = reportFileRepository.findById(reportFileSeq);
@@ -367,6 +372,23 @@ public class ReportService {
     }
 
     /**
+     * Check report validation.
+     *
+     * @param reportSaveDTO the report save dto
+     * @author [이소정]
+     * @implNote 보고서 유효성 체크
+     * @since 2020. 8. 14. 오후 1:56:40
+     */
+    public void checkReportValidation(final ReportSaveDTO reportSaveDTO) {
+        log.info("ContentsService.checkContentsValidation");
+        // 등록인 경우, base64 필수
+        if (ObjectUtils.isEmpty(reportSaveDTO.getImageBase64())) {
+            throw new CodeMessageHandleException(FailCode.ConfigureError.NULL_FOLDER_IMAGE.name(),
+                    MessageUtil.getMessage(FailCode.ConfigureError.NULL_FOLDER_IMAGE.name()));
+        }
+    }
+
+    /**
      * Check report file validation.
      *
      * @param reportFileSaveDTO the report file save dto
@@ -396,7 +418,7 @@ public class ReportService {
      * @since 2020. 8. 3. 오후 6:02:16
      */
     public void deleteReportFile(final List<ReportFile> reportFileList) {
-        if (!reportFileList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(reportFileList) && !reportFileList.isEmpty()) {
             for (final ReportFile reportFile : reportFileList) {
                 reportFile.updateUseYn("N");
                 // 관련 보고서 장바구니 삭제

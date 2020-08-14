@@ -519,6 +519,15 @@ public class AuthService {
         }
     }
 
+//    TODO[lsj] 보고서 권한 목록 재가공 필요
+//    public List<AuthReturnDTO> getAuthList2 (final UserContentsSearchDTO userContentsSearchDTO, final Long authDepth) {
+//        List<AuthReturnDTO> asd = this.getAuthList(userContentsSearchDTO);
+//
+//
+//
+//
+//    }
+
     /**
      * Gets auth list.
      *
@@ -604,6 +613,15 @@ public class AuthService {
         return auths;
     }
 
+    /**
+     * Auth config.
+     *
+     * @param target the target
+     * @param config the config
+     * @author [오지훈]
+     * @implNote authConfig
+     * @since 2020. 8. 14. 오후 5:23:07
+     */
     private void authConfig(AuthReturnDTO target, AuthReturnDTO config) {
         if (target.getAuthSeq().equals(config.getAuthSeq())) {
             target.setDetailAuthYn(config.getDetailAuthYn());

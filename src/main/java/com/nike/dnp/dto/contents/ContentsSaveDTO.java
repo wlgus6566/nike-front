@@ -1,6 +1,7 @@
 package com.nike.dnp.dto.contents;
 
 import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.user.UserContentsSaveDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -59,7 +60,6 @@ public class ContentsSaveDTO {
      *
      * @author [이소정]
      */
-    @NotBlank(message = "contents.imageBase64")
     @ApiModelProperty(name = "imageBase64", value = "이미지 base64 문자", required = true, example = "data:image/jpeg;base64," + "/9j/4AAQSkZJRgABAQEAYABgAAD" +
             "/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUF" +
             "BQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAD0AacDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhB" +
@@ -272,12 +272,20 @@ public class ContentsSaveDTO {
 
 //    권한 관련 DTO
     /**
+     * The Checks
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "checks", value = "컨텐츠 권한 목록")
+    private List<AuthReturnDTO> checks;
+
+    /**
      * 권한 체크 목록
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "authChecks", value = "권한 체크 목록")
-    private List<UserContentsSaveDTO.AuthCheckDTO> checks = new ArrayList<>();
+    @ApiModelProperty(name = "authChecks", value = "권한 체크 목록", hidden = true)
+    private List<UserContentsSaveDTO.AuthCheckDTO> dddddddddd = new ArrayList<>();
 
     /**
      * The Class Auth check.

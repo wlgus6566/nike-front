@@ -3,6 +3,7 @@ package com.nike.dnp.advice;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.log.ErrorLogSaveDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.log.ErrorLogService;
@@ -86,13 +87,13 @@ public class ExceptionAdvice {
      * @author [이소정]
      * @implNote NotFoundException 에 대한 response셋팅
      */
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler(NotFoundHandleException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    protected CommonResult notFoundException(final CodeMessageHandleException exception) {
+    protected CommonResult notFoundException(final NotFoundHandleException exception) {
         final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         log.error("==================ERROR===================");
-        log.error("Exception notFoundException", exception);
+        log.error("Exception NotFoundHandleException", exception);
         log.error("========================= ErrorLog Start =========================");
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {
@@ -103,7 +104,7 @@ public class ExceptionAdvice {
         }
         log.error("========================= End End =========================");
 
-        return responseService.getFailResult(FailCode.ExceptionError.NOT_FOUND.toString(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.toString()));
+        return responseService.getFailResult(exception.getCode(), exception.getMessage());
     }
 
     /**
