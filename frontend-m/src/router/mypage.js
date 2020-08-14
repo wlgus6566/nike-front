@@ -49,7 +49,7 @@ const routes = [
             },
             {
                 path: 'notice',
-                component: pages('mypage/notice-list.vue'),
+                component: pages('mypage/notice.vue'),
                 meta: {
                     layout: 'Default',
                     depth: '/mypage/customer',

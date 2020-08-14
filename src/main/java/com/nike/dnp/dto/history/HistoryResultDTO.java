@@ -162,4 +162,12 @@ public class HistoryResultDTO {
     @UpdateTimestamp
     @ApiModelProperty(name = "updateDt", value = "최종 수정일", hidden = true)
     private LocalDateTime updateDt;
+
+    /**
+     * 닉네임
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "nickname", value = "닉네임")
+    private String nickname;
 }

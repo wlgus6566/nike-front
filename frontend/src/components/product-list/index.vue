@@ -2,7 +2,7 @@
     <ul class="product-list">
         <li
             class="product-list-item"
-            v-for="(item, index) in userProductListData"
+            v-for="item in userProductListData"
             :key="item.goodsSeq"
         >
             <button
@@ -43,9 +43,9 @@
     </ul>
 </template>
 <script>
-    import {addProductBasket} from '@/utils/basket';
+import { addProductBasket } from '@/utils/basket';
 
-    export default {
+export default {
     name: 'index',
     data() {
         return {};

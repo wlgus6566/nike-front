@@ -19,10 +19,13 @@
             </button>
             <div class="cont">
                 <span class="thumbnail">
-                    <!-- <img
-                        :src="item.product.imageFileName"
-                        :alt="item.product.imageFilePhysicalName"
-                    /> -->
+                    <img
+                        :src="
+                            item.orderProductMapping[0].product
+                                .imageFilePhysicalName
+                        "
+                        :alt="item.orderProductMapping[0].product.imageFileName"
+                    />
                 </span>
                 <span class="info-box">
                     <strong class="title">
