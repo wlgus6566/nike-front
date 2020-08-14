@@ -6,7 +6,7 @@ setInterceptors(apiCustomer);
 
 //목록 조회 공통
 function getCustomerList(sectionCode, params) {
-    //console.log(params);
+    console.log("getCustomerList : " + params);
     return apiCustomer.get(`/${sectionCode}`, {
         params: params,
     });
@@ -16,7 +16,6 @@ function getCustomerList(sectionCode, params) {
 function getCustomerDetail(noticeArticleSectionCode, noticeSeq) {
     return apiCustomer.get(`/${noticeArticleSectionCode}/${noticeSeq}`);
 }
-
 
 export {
     getCustomerList,
