@@ -64,16 +64,18 @@
                         <label class="check-label">
                             <span class="radio">
                                 <input type="radio" name="url" checked />
-                                <span></span>
+                                <i></i>
+                                <span class="txt"
+                                    >기본(ASSET > ALL 메뉴로 연결)</span
+                                >
                             </span>
-                            <span>기본(ASSET > ALL 메뉴로 연결)</span>
                         </label>
                         <label class="check-label">
                             <span class="radio">
                                 <input type="radio" name="url" />
-                                <span></span>
+                                <i></i>
+                                <span class="txt">URL 입력</span>
                             </span>
-                            <span>URL 입력</span>
                         </label>
                     </div>
                 </div>

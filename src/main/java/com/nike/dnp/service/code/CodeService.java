@@ -5,6 +5,7 @@ import com.nike.dnp.dto.code.CodeSaveDTO;
 import com.nike.dnp.dto.code.CodeUpdateDTO;
 import com.nike.dnp.entity.code.Code;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.code.CodeRepository;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.util.MessageUtil;
@@ -115,9 +116,7 @@ public class CodeService {
             , final CodeUpdateDTO codeUpdateDTO
     ) {
         final Optional<Code> codeEntity = Optional.ofNullable(codeRepository.findByCode(code).orElseThrow(
-                () -> new CodeMessageHandleException(
-                        FailCode.ExceptionError.NOT_FOUND.name()
-                        , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))
+                () -> new NotFoundHandleException()
         ));
 
         if (codeEntity.isPresent()) {

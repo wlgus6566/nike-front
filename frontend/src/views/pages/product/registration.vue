@@ -32,11 +32,11 @@
                                     :name="exposure.name"
                                     :value="radio.value"
                                 />
-                                <span></span>
-                            </span>
-                            <span>
-                                {{ radio.title }}
-                                {{ exposure.value }}
+                                <i></i>
+                                <span class="txt">
+                                    {{ radio.title }}
+                                    {{ exposure.value }}
+                                </span>
                             </span>
                         </label>
                     </div>

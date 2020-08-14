@@ -1,5 +1,6 @@
 package com.nike.dnp.controller.report;
 
+import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.dto.report.ReportAnswerResultDTO;
 import com.nike.dnp.dto.report.ReportAnswerSaveDTO;
 import com.nike.dnp.entity.report.ReportAnswer;
@@ -12,8 +13,11 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -101,8 +105,10 @@ public class ReportAnswerController {
             , notes = REQUEST_CHARACTER
     )
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 댓글 등록")
+    @ValidField
     public SingleResult<ReportAnswer> saveReportAnswer(
-            @RequestBody final ReportAnswerSaveDTO answerSaveDTO
+            @RequestBody @Valid final ReportAnswerSaveDTO answerSaveDTO
+            , @ApiIgnore final BindingResult result
     ) {
         log.info("ReportAnswerController.saveReportAnswer");
         return responseService.getSingleResult(reportAnswerService.save(answerSaveDTO));

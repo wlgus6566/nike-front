@@ -8,6 +8,7 @@ import com.nike.dnp.entity.user.PasswordHistory;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.log.UserLoginLogRepository;
 import com.nike.dnp.repository.slang.SlangRepository;
 import com.nike.dnp.repository.user.PasswordHistoryRepository;
@@ -147,7 +148,7 @@ public class UserService implements UserDetailsService {
     public Optional<User> findById(final Long userSeq) {
         log.info("UserService.findById");
         return Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+                () -> new NotFoundHandleException()));
     }
 
     /**
@@ -162,7 +163,7 @@ public class UserService implements UserDetailsService {
     public UserResultDTO getUser(final Long userSeq) {
         log.info("UserService.getUser");
         final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+                () -> new NotFoundHandleException()));
 
         final UserResultDTO userResultDTO = new UserResultDTO();
         if (user.isPresent()) {
@@ -204,7 +205,7 @@ public class UserService implements UserDetailsService {
         log.info("UserService.getMyPage");
         final Long userSeq = SecurityUtil.currentUser().getUserSeq();
         final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+                () -> new NotFoundHandleException()));
 
         final UserResultDTO userResultDTO = new UserResultDTO();
         if (user.isPresent()) {
@@ -232,7 +233,7 @@ public class UserService implements UserDetailsService {
     public User findByUserId(final String userId) {
         log.info("UserService.findByUserId");
         return userRepository.findByUserId(userId).orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
+                () -> new NotFoundHandleException());
     }
 
     /**
@@ -260,7 +261,7 @@ public class UserService implements UserDetailsService {
      */
     public Optional<UserAuth> findByUser(final User user) {
         return Optional.ofNullable(userAuthRepository.findByUser(user).orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+                () -> new NotFoundHandleException()));
     }
 
     /**
@@ -589,8 +590,8 @@ public class UserService implements UserDetailsService {
         //기존비밀번호확인
         if (!ObjectUtils.isEmpty(userPasswordDTO.getPassword()) && !passwordEncoder.matches(userPasswordDTO.getPassword(), userPasswordDTO.getUserPassword())) {
             throw new CodeMessageHandleException(
-                    FailCode.ConfigureError.CHECK_ID_PASSWORD.name()
-                    , MessageUtil.getMessage(FailCode.ConfigureError.CHECK_ID_PASSWORD.name()));
+                    FailCode.ConfigureError.NOT_MATCH_PASSWORD.name()
+                    , MessageUtil.getMessage(FailCode.ConfigureError.NOT_MATCH_PASSWORD.name()));
         }
 
         //비밀번호 미입력 시
