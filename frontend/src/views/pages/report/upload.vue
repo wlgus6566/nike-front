@@ -16,7 +16,14 @@
                         @cropImage="cropImage"
                         :imageBase64="reportDetailData.imageFilePhysicalName"
                         :imageFileName="reportDetailData.imageFileName"
-                    />
+                    >
+                        <template slot="txt-up">
+                            썸네일 이미지 등록
+                        </template>
+                        <template slot="txt">
+                            썸네일 이미지 재등록
+                        </template>
+                    </thumbnail>
                 </li>
                 <li class="form-row">
                     <div class="form-column">

@@ -247,9 +247,9 @@
     height: 20px;
     background: no-repeat center;
 }
-[class^='btn-'] .icon-mail {
-    background-image: url('../images/svg/icon-alram-mail.svg');
-}
+/*[class^='btn-'] .icon-mail {*/
+/*    background-image: url('../images/svg/icon-alarm-mail.svg');*/
+/*}*/
 [class^='btn-'] .icon-check {
     background-image: url('../images/svg/icon-btn-check.svg');
 }
@@ -2754,6 +2754,10 @@
     flex-shrink: 1;
     flex-basis: 65.15151515152%;
 }
+.main-visual-upload .pc-upload .thumb-file {
+    width: 100%;
+    height: 100%;
+}
 .main-visual-upload .pc-upload .thumb {
     padding-top: 50%;
 }
@@ -2763,7 +2767,10 @@
     flex-shrink: 1;
     flex-basis: 32.57575757576%;
 }
-
+.main-visual-upload .mobile-upload .thumb-file {
+    width: 100%;
+    height: 100%;
+}
 .upload-summury {
     position: relative;
     margin-top: 20px;
