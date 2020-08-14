@@ -4,7 +4,7 @@
         <div class="detail-view">
             <div class="title-box">
                 <h2 class="title">{{ noticeDetail.title }}</h2>
-                <span class="date">{{ noticeDetail.registrationDt }}</span>
+                <span class="date">{{ noticeDetail.updateDt }}</span>
             </div>
             <div class="detail-cont">{{ noticeDetail.contents }}</div>
         </div>
@@ -47,7 +47,7 @@ export default {
                     this.noticeArticleSectionCode,
                     this.$route.params.id
                 );
-                //console.log(response);
+                console.log(response);
                 this.noticeDetail = response;
                 this.noticeArticleSectionCode =
                     response.noticeArticleSectionCode;

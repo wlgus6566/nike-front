@@ -2843,6 +2843,15 @@
 .tbl-list table td .under-link span {
     text-decoration: underline;
 }
+.tbl-list a {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.tbl-list a:hover {
+    opacity: 0.8;
+}
 .tbl-list .noti a {
     font-weight: bold;
 }
@@ -2851,6 +2860,7 @@
 }
 .tbl-list .date {
     color: #888;
+    letter-spacing: 0;
 }
 .label-noti {
     display: inline-block;
@@ -2925,7 +2935,6 @@
     right: 0;
     display: inline-block;
     font-size: 12px;
-    line-height: 52px;
     color: #888;
     letter-spacing: 0px;
 }

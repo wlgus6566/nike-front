@@ -62,7 +62,7 @@ export default {
     components: {
         NoticeList: () => import('@/components/notice/'),
         Pagination: () => import('@/components/pagination/'),
-        SearchInput: () => '@/components/search-input',
+        SearchInput: () => import('@/components/search-input'),
         NoData: () => import('@/components/no-data'),
         Loading: () => import('@/components/loading'),
     },
