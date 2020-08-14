@@ -12,7 +12,13 @@
                 뒤로가기
             </button>
             <div class="inner" v-if="tabMenuData !== null">
-                <h1 class="page-title">{{ tabMenuData.menuName }}</h1>
+                <h1 class="page-title" v-if="$route.meta.detail">
+                    {{ tabMenuData.menuName }}
+                </h1>
+                <div class="btn-box" v-if="$route.meta.detail">
+                    <button type="button" class="btn-txt">삭제</button>
+                    <button type="button" class="btn-txt">수정</button>
+                </div>
                 <NavItem :tabMenuData="tabMenuData.menus" />
             </div>
         </template>

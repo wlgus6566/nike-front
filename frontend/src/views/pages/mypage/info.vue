@@ -36,9 +36,9 @@
 </template>
 
 <script>
-    import {getMyInfo} from '@/api/my-page';
+import { getMyInfo } from '@/api/mypage';
 
-    export default {
+export default {
     data() {
         return {
             userData: {
