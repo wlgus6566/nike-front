@@ -128,14 +128,14 @@ const routes = [
                 ],
             },
             {
-                path: 'niki-by-you',
+                path: 'nike-by-you',
                 component: pages('root'),
                 meta: {
                     layout: 'Default',
                     aside: 'Order',
                     title: 'Niki By You',
                 },
-                redirect: '/order/niki-by-you/shoes',
+                redirect: '/order/nike-by-you/shoes',
                 children: [
                     {
                         path: 'shoes',
