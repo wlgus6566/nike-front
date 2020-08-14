@@ -196,24 +196,22 @@ export default {
         // 리포트 등록
         async addReport() {
             const data = {
-                imageBase64: this.reportDetailData.imageFilePhysicalName,
+                imageBase64: this.reportDetailData.imageBase64,
                 reportFileSaveDTOList: [
                     {
-                        detailThumbnailFileName:
-                            'graphic_file_name_detail_thumbnail.jpg',
-                        detailThumbnailFilePhysicalName:
-                            'http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg',
-                        detailThumbnailFileSize: '700',
-                        fileContentType: 'image/jpeg',
-                        fileExtension: 'JPG',
-                        fileName: 'file.jpg',
-                        filePhysicalName: '/upload/report/path',
-                        fileSize: '150',
-                        reportFileSeq: 1,
-                        thumbnailFileName: 'graphic_file_name_thumbnail.jpg',
+                        fileName: 'K-062.png',
+                        filePhysicalName: '/temp/20200814586000aMilVgOPwc.png',
+                        fileSize: 613642,
+                        fileContentType: 'image/png',
+                        fileExtension: 'png',
+                        thumbnailFileName: 'K-062_thumbnail.jpg',
                         thumbnailFilePhysicalName:
-                            'http://cdnUrl/file/contents/graphic_file_name_thumbnail.jpg',
-                        thumbnailFileSize: '100',
+                            '/temp/20200814586000aMilVgOPwc_thumbnail.jpg',
+                        thumbnailSize: 3379,
+                        detailThumbnailFileName: 'K-062_detail.jpg',
+                        detailThumbnailFileSize: 66211,
+                        detailThumbnailFilePhysicalName:
+                            '/temp/20200814586000aMilVgOPwc_detail.jpg',
                     },
                 ],
                 reportName: this.reportDetailData.reportName,

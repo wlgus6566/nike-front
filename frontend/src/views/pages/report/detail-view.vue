@@ -2,10 +2,12 @@
     <div>
         <BtnArea @delete="deleteReport" @edit="modifyFolder" />
         <div class="folder-wrap">
-            <h2 class="folder-title">계정명 없음</h2>
+            <h2 class="folder-title">
+                {{ reportDetailData.reportName }}
+            </h2>
             <div class="inner">
                 <p class="folder-desc">
-                    {{ reportDetailData.reportName }}
+                    {{ reportDetailData.nickname }}
                 </p>
                 <span class="folder-date">
                     {{
@@ -48,25 +50,14 @@
             />
         </div>
         <ReportItem
-            :reportFileList="reportDetailData.reportFileList"
+            :reportFileData="reportFileData"
             :checkAll="checkAll"
+            :reportFileListTotal="reportFileListTotal"
             :checkContentsFileList="checkContentsFileList"
             @allCheckFn="allCheckFn"
             @checkContentsFile="checkContentsFile"
             @addReportBasket="addReportBasket"
         />
-        <!--
-   <fileItem
-            :contentsFileList="contentsFileList"
-            :contentsFileListTotal="contentsFileListTotal"
-            :checkAll="checkAll"
-            :orderType="orderType"
-            :fileExtension="fileExtension"
-            :checkContentsFileList="checkContentsFileList"
-            @allCheckFn="allCheckFn"
-            @checkContentsFile="checkContentsFile"
-            @addReportBasket="addReportBasket"
-        ></fileItem>-->
     </div>
 </template>
 <script>
@@ -77,6 +68,7 @@ import {
     postAnswerData,
     deleteAnswerList,
     postReportBasket,
+    getReportFile,
 } from '@/api/report';
 import BtnArea from '@/components/asset-view/btn-area.vue';
 import Loading from '@/components/loading';
@@ -87,7 +79,13 @@ export default {
     name: 'detail-view',
     data() {
         return {
+            totalPage: null,
+            loadingData: false,
+            page: 0,
+            itemLength: 10,
+            size: 9999,
             checkAll: false,
+            reportFileListTotal: 0,
             checkContentsFileList: [],
             reportDetailData: {},
             answerList: {},
@@ -95,7 +93,7 @@ export default {
                 answerContents: null,
                 reportSeq: null,
             },
-            loadingData: false,
+            reportFileData: {},
             loadingStyle: {
                 width: this.width ? `${this.width}px` : '100%',
                 height: this.height ? `${this.height}px` : '100%',
@@ -123,6 +121,17 @@ export default {
     created() {
         this.reportDetailView();
         this.reportAnswerList();
+        this.initFetchData();
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    activated() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    deactivated() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
         //리포트 삭제
@@ -166,7 +175,7 @@ export default {
         allCheckFn() {
             this.checkAll = !this.checkAll;
             if (this.checkAll) {
-                this.reportDetailData.reportFileList.forEach((el) => {
+                this.reportFileData.forEach((el) => {
                     const indexOfChecked = this.checkContentsFileList.findIndex(
                         (elChecked) => elChecked === el.reportFileSeq
                     );
@@ -193,7 +202,7 @@ export default {
             }
             this.checkAll =
                 this.checkContentsFileList.length ===
-                this.reportDetailData.reportFileList.length;
+                this.reportFileData.length;
         },
         sectionCodeChange(value) {
             this.sectionCode.value = value;
@@ -205,6 +214,59 @@ export default {
                     data: { data: response },
                 } = await getReportDetail(this.$route.params.id);
                 this.reportDetailData = response;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        handleScroll() {
+            if (this.loadingData) return;
+            const windowE = document.documentElement;
+            if (
+                windowE.clientHeight + windowE.scrollTop >=
+                windowE.scrollHeight
+            ) {
+                this.infiniteScroll();
+            }
+        },
+        infiniteScroll() {
+            if (
+                !this.loadingData &&
+                this.totalPage > this.page - 1 &&
+                this.reportFileData.length >= this.itemLength &&
+                this.reportFileData.length !== 0
+            ) {
+                this.reportFileList(true);
+            }
+        },
+        initFetchData() {
+            this.totalPage = null;
+            this.page = 0;
+            this.contentsFileList = null;
+            this.reportFileList();
+        },
+        // 리포트 파일 리스트
+        async reportFileList(infinite) {
+            this.loadingData = true;
+            this.checkAll = false;
+            this.checkContentsFileList = [];
+            try {
+                const {
+                    data: { data: response },
+                } = await getReportFile(this.$route.params.id, {
+                    page: this.page,
+                    size: this.size,
+                });
+                this.totalPage = response.totalPages - 1;
+                if (infinite) {
+                    this.reportFileData = this.reportFileData.concat(
+                        response.content
+                    );
+                } else {
+                    this.reportFileData = response.content;
+                    this.reportFileListTotal = response.totalElements;
+                }
+                this.page++;
+                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }
@@ -239,14 +301,17 @@ export default {
             }
         },
 
-        // 리포트 댓글 단건삭제
+        // 리포트 댓글 단건 삭제
         async reportAnswerDelete(seq) {
-            console.log(seq);
-            try {
-                const response = await deleteAnswerList(seq);
-                console.log(response);
-            } catch (error) {
-                console.log(error);
+            const delAnswer = confirm('FEEDBACK을 삭제 하시겠습니까?');
+            if (delAnswer) {
+                try {
+                    const response = await deleteAnswerList(seq);
+                    console.log(response);
+                    await this.reportAnswerList();
+                } catch (error) {
+                    console.log(error);
+                }
             }
         },
     },

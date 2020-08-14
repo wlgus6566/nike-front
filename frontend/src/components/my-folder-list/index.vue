@@ -17,11 +17,18 @@
                     <img :src="item.imageFilePhysicalName" alt="" />
                 </div>
                 <div class="info-box">
-                    <strong class="title">{{ item.folderName }}</strong>
-                    <p class="txt" v-if="item.folderContents">
-                        {{ item.folderContents }}
-                    </p>
-                    <p class="txt" v-else>보고서명</p>
+                    <div v-if="item.folderContents">
+                        <strong class="title">{{ item.folderName }}</strong>
+                        <p class="txt">
+                            {{ item.folderContents }}
+                        </p>
+                    </div>
+                    <div v-else>
+                        <strong class="title">계정명</strong>
+                        <p class="txt">
+                            {{ item.folderName }}
+                        </p>
+                    </div>
                     <ul class="location" v-if="item.topMenuCode">
                         <li>{{ item.topMenuCode }}</li>
                         <li>{{ item.menuCode }}</li>
@@ -55,6 +62,7 @@ export default {
             return `${defaultClass}${detailAuth}${exposure}`;
         },
         setUrl(item) {
+            console.log(item.topMenuCode);
             if (item.topMenuCode) {
                 return `/${item.topMenuCode}/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
             } else {
