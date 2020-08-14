@@ -62,6 +62,14 @@ public class HistoryResultDTO {
     private String topMenuCode;
 
     /**
+     * 보고서 구분 코드
+     * @author [이소정]
+     */
+    @Column(name = "TOP_MENU_CODE")
+    @ApiModelProperty(name = "reportName", value = "보고서 구분 코드")
+    private String reportSectionCode;
+
+    /**
      * 2depth 메뉴 코드
      */
     @Column(name = "MENU_CODE")
@@ -154,4 +162,12 @@ public class HistoryResultDTO {
     @UpdateTimestamp
     @ApiModelProperty(name = "updateDt", value = "최종 수정일", hidden = true)
     private LocalDateTime updateDt;
+
+    /**
+     * 닉네임
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "nickname", value = "닉네임")
+    private String nickname;
 }

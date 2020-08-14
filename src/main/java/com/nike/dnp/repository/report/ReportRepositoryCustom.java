@@ -29,7 +29,7 @@ public interface ReportRepositoryCustom {
      * @implNote 보고서 페이지 처리 된 목록 조회
      * @since 2020. 6. 19. 오후 5:57:50
      */
-    Page<Report> findPageReport(final ReportSearchDTO reportSearchDTO, final PageRequest pageRequest);
+    Page<ReportResultDTO> findPageReport(final ReportSearchDTO reportSearchDTO, final PageRequest pageRequest);
 
     /**
      * Find recent report list.
@@ -41,5 +41,16 @@ public interface ReportRepositoryCustom {
      * @since 2020. 7. 27. 오후 6:19:35
      */
     List<ReportResultDTO> findRecentReport(final PageRequest pageRequest);
+
+    /**
+     * Find report with user name report result dto.
+     *
+     * @param reportSeq the report seq
+     * @return the report result dto
+     * @author [이소정]
+     * @implNote
+     * @since 2020. 8. 13. 오후 7:12:59
+     */
+    ReportResultDTO findReportWithUserName(final Long reportSeq);
 
 }

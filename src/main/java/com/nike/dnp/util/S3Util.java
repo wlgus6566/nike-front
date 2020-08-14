@@ -184,15 +184,15 @@ public class S3Util {
 			stopWatch.stop();
 			log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms",stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 		}
-		if(!ObjectUtils.isEmpty(fileResultDTO.getThumbnailPhysicalName())){
+		if(!ObjectUtils.isEmpty(fileResultDTO.getThumbnailFilePhysicalName())){
 			stopWatch.start("thumbnail upload");
-			s3upload(fileResultDTO.getThumbnailPhysicalName());
+			s3upload(fileResultDTO.getThumbnailFilePhysicalName());
 			stopWatch.stop();
 			log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 		}
-		if(!ObjectUtils.isEmpty(fileResultDTO.getDetailThumbnailPhysicalName())){
+		if(!ObjectUtils.isEmpty(fileResultDTO.getDetailThumbnailFilePhysicalName())){
 			stopWatch.start("detailThumbnail upload");
-			s3upload(fileResultDTO.getDetailThumbnailPhysicalName());
+			s3upload(fileResultDTO.getDetailThumbnailFilePhysicalName());
 			stopWatch.stop();
 			log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 		}

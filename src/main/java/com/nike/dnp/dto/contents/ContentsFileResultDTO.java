@@ -79,6 +79,30 @@ public class ContentsFileResultDTO {
     private long fileOrder;
 
     /**
+     * 상세 썸네일 명
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailThumbnailFileName", value ="상세 썸네일 명", example = "graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFileName;
+
+    /**
+     * 상세 썸네일 사이즈
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailThumbnailFileSize", value ="상세 썸네일 사이즈", example = "700")
+    private String detailThumbnailFileSize;
+
+    /**
+     * 상세 썸네일 물리 경로
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFilePhysicalName;
+
+    /**
      * 썸네일 파일 물리 명
      *
      * @author [이소정]
@@ -119,6 +143,34 @@ public class ContentsFileResultDTO {
     private String fileExtension;
 
     /**
+     * 파일 명
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileName", value = "파일 명")
+    private String fileName;
+
+    /**
+     * 파일 사이즈
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileSize", value = "파일 사이즈")
+    private Long fileSize;
+
+    /**
+     * 파일 물리 명
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명")
+    private String filePhysicalName;
+
+    /**
+     * 다운로드 수
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "downloadCount", value = "다운로드 수")
+    private long downloadCount;
+
+    /**
      * Gets thumbnail file physical name.
      *
      * @return the thumbnail file physical name
@@ -130,35 +182,12 @@ public class ContentsFileResultDTO {
         return ObjectUtils.isEmpty(thumbnailFilePhysicalName) ? thumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
     }
 
+    public String getFilePhysicalName() {
+        return ObjectUtils.isEmpty(filePhysicalName) ? filePhysicalName : CloudFrontUtil.getCustomSignedUrl(filePhysicalName);
+    }
 
-//    TODO[lsj] 상세페이지에서 필요 없어서 주석 추후 삭제 예정
-//     by.2020.07.17 sojeong.lee
-//    /**
-//     * 파일 명
-//     * @author [이소정]
-//     */
-//    @ApiModelProperty(name = "fileName", value = "파일 명")
-//    private String fileName;
-//
-//    /**
-//     * 파일 사이즈
-//     * @author [이소정]
-//     */
-//    @ApiModelProperty(name = "fileSize", value = "파일 사이즈")
-//    private Long fileSize;
-//
-//    /**
-//     * 파일 물리 명
-//     * @author [이소정]
-//     */
-//    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명")
-//    private String filePhysicalName;
-//
-//    /**
-//     * 다운로드 수
-//     * @author [이소정]
-//     */
-//    @ApiModelProperty(name = "downloadCount", value = "다운로드 수")
-//    private long downloadCount;
+    public String getDetailThumbnailFilePhysicalName() {
+        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName) ? detailThumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName);
+    }
 
 }

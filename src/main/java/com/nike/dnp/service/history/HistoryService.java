@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class HistoryService {
 
@@ -92,6 +92,7 @@ public class HistoryService {
      * @param typeCd    the type cd
      * @return the history
      */
+    @Transactional
     public RecentUpload saveRecentUploadHistory(final Long folderSeq, final String typeCd) {
         final RecentUpload recentUpload = new RecentUpload();
         recentUpload.setTypeCd(typeCd);
@@ -110,6 +111,7 @@ public class HistoryService {
      * @param typeCd    the type cd
      * @return the history
      */
+    @Transactional
     public History saveViewHistory(final Long folderSeq, final String typeCd) {
         final History history = new History();
         history.setTypeCd(typeCd);
@@ -130,6 +132,7 @@ public class HistoryService {
      * @implNote 최근 본 목록 삭제
      * @since 2020. 8. 5. 오후 3:14:15
      */
+    @Transactional
     public void deleteViewHistory(final Long folderSeq, final String typeCd) {
         List<History> historyList;
         if (ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(typeCd)) {
@@ -152,6 +155,7 @@ public class HistoryService {
      * @implNote 최근 업로드 목록 삭제
      * @since 2020. 8. 5. 오후 3:25:02
      */
+    @Transactional
     public void deleteUploadHistory(final Long folderSeq, final String typeCd) {
         List<RecentUpload> recentUploadList;
         if (ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(typeCd)) {

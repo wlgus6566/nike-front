@@ -1,9 +1,17 @@
 package com.nike.dnp.dto.report;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.ObjectUtils;
+
+import javax.persistence.Column;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 
 /**
@@ -18,6 +26,7 @@ import org.springframework.beans.factory.annotation.Value;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ReportResultDTO {
 
     /**
@@ -57,6 +66,22 @@ public class ReportResultDTO {
     private Long readCount;
 
     /**
+     * 닉네임
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "nickname", value = "닉네임", required = true, example = "Nike이모션점")
+    private String nickname;
+
+    /**
+     * The Report file list
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name="reportFileList", value = "보고서 파일 목록", required = true)
+    private List<ReportFile> reportFileList;
+
+    /**
      * Gets image file physical name.
      *
      * @return the image file physical name
@@ -65,6 +90,6 @@ public class ReportResultDTO {
      * @since 2020. 8. 12. 오후 4:43:34
      */
     public String getImageFilePhysicalName() {
-        return CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
+        return ObjectUtils.isEmpty(imageFilePhysicalName) ? imageFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
     }
 }

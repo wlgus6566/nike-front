@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -230,9 +231,11 @@ public class Contents extends BaseTimeEntity {
     public void update(final ContentsSaveDTO contentsSaveDTO) {
         log.info("Contents.update");
         this.menuCode = contentsSaveDTO.getMenuCode();
-        this.imageFileName = contentsSaveDTO.getImageFileName();
-        this.imageFileSize = contentsSaveDTO.getImageFileSize();
-        this.imageFilePhysicalName = contentsSaveDTO.getImageFilePhysicalName();
+        if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageFilePhysicalName()) && !ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
+            this.imageFileName = contentsSaveDTO.getImageFileName();
+            this.imageFileSize = contentsSaveDTO.getImageFileSize();
+            this.imageFilePhysicalName = contentsSaveDTO.getImageFilePhysicalName();
+        }
         this.folderName = contentsSaveDTO.getFolderName();
         this.folderContents = contentsSaveDTO.getFolderContents();
         this.campaignPeriodSectionCode = contentsSaveDTO.getCampaignPeriodSectionCode();

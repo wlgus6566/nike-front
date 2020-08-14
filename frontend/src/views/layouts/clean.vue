@@ -1,8 +1,10 @@
 <template>
     <div id="wrap">
-        <transition mode="out-in" name="page-change">
-            <router-view></router-view>
-        </transition>
+        <section id="container-clean">
+            <transition mode="out-in" name="page-change">
+                <router-view></router-view>
+            </transition>
+        </section>
     </div>
 </template>
 <script>
