@@ -64,6 +64,7 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
                 historyResultDTO.setImageFilePhysicalName(history.getReport().getImageFilePhysicalName());
                 historyResultDTO.setFolderName(history.getReport().getReportName());
                 historyResultDTO.setReadCount(history.getReport().getReadCount());
+                historyResultDTO.setNickname(history.getReport().getUser().getNickname());
             } else {
                 historyResultDTO.setFolderSeq(history.getContentsSeq());
                 historyResultDTO.setImageFileName(history.getContents().getImageFileName());

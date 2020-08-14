@@ -89,8 +89,8 @@ public class FileResultDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "thumbnailSize", value = "썸네일 파일 사이즈")
-	private Long thumbnailSize;
+	@ApiModelProperty(name = "thumbnailFileSize", value = "썸네일 파일 사이즈")
+	private Long thumbnailFileSize;
 
 
 	/**

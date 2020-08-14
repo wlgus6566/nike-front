@@ -124,6 +124,16 @@ public class Report extends BaseTimeEntity {
     private List<ReportFile> reportFileList;
 
     /**
+     * The user.
+     *
+     * @author [이소정]
+     */
+    @ManyToOne
+    @JoinColumn(name = "REGISTER_SEQ", insertable = false, updatable = false)
+    @ApiModelProperty(name = "userSeq", value = "유저 시퀀스", hidden = true)
+    private User user;
+
+    /**
      * Gets image file physical name.
      *
      * @return the image file physical name
