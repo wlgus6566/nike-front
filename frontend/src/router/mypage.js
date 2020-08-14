@@ -65,7 +65,7 @@ const routes = [
     {
         path: '/mypage/notice/',
         name: 'notice',
-        component: pages('mypage/notice-list'),
+        component: pages('mypage/notice'),
         meta: {
             layout: 'Default',
             aside: 'Default',
