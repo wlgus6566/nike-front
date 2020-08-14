@@ -73,7 +73,7 @@ public class ReportFileService {
                 reportFileSearchDTO,
                 PageRequest.of(reportFileSearchDTO.getPage()
                         , reportFileSearchDTO.getSize()
-                        , Sort.by(ServiceCode.SearchEnumCode.UPDATE_DT.getValue()).ascending()));
+                        , Sort.by(ServiceCode.SearchEnumCode.LATEST.getValue()).ascending()));
     }
 
 }

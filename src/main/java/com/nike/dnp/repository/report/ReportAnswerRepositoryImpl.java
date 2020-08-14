@@ -68,7 +68,9 @@ public class ReportAnswerRepositoryImpl extends QuerydslRepositorySupport implem
                         , qReportAnswer.reportSeq
                         , qReportAnswer.answerContents
                         , qUser.nickname
-                        )
+                        , qUser.userId
+                        , qReportAnswer.updateDt
+                    )
                 )
                 .from(qReportAnswer)
                 .leftJoin(qUser).on(qReportAnswer.registerSeq.eq(qUser.userSeq))

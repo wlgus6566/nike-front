@@ -66,6 +66,7 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
                         , qReport.imageFilePhysicalName
                         , qReport.readCount
                         , qUser.nickname
+                        , qReport.updateDt
                     )
                 )
                 .from(qReport)
@@ -124,6 +125,7 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
                         , qReport.imageFilePhysicalName
                         , qReport.readCount
                         , qUser.nickname
+                        , qReport.updateDt
                         )
                 )
                 .from(qReport)
