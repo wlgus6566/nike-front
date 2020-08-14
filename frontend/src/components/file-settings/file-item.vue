@@ -1,6 +1,5 @@
 <template>
-    <div class="file-setting">
-        {{ file.progress }}
+    <li class="file-setting">
         <ul class="form-list">
             <li class="form-row">
                 <div class="form-column">
@@ -76,20 +75,15 @@
         >
             <span>삭제</span>
         </button>
-    </div>
+    </li>
 </template>
 <script>
-import UploadFile from './upload-file';
 export default {
     name: 'file-item',
-    data() {
-        return {};
-    },
     props: {
         file: Object,
         listLength: Number,
     },
-    components: { UploadFile },
 };
 </script>
 <style scoped>

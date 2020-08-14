@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">{{ this.title }}</h2>
-        <form action="" @submit.prevent="submitForm">
+        <form action="" @submit.prevent="uploadFiles">
             <h3 class="form-title mt20">폴더 설정</h3>
             <hr class="hr-black" />
             <ul class="form-list-thumb" v-if="folderDetail">
@@ -126,7 +126,7 @@
                                         v-model="
                                             folderDetail.campaignPeriodSectionCode
                                         "
-                                        value="selectDate"
+                                        value="SELECT"
                                     />
                                     <span></span>
                                 </span>
@@ -151,7 +151,7 @@
                             class="date-picker-group"
                             v-if="
                                 folderDetail.campaignPeriodSectionCode ===
-                                'selectDate'
+                                'SELECT'
                             "
                         >
                             <div class="date-picker">
@@ -217,10 +217,10 @@
                 </li>
             </ul>
             <hr class="hr-gray" />
-
             <FileSettings
-                :contentsFileList="folderDetail.contentsFileList"
+                ref="fileSet"
                 @FileListUpdate="FileListUpdate"
+                @submitForm="submitForm"
             />
             <div class="btn-area">
                 <button type="button" class="btn-s-white">
@@ -243,12 +243,15 @@ import {
     postContents,
     putContents,
 } from '@/api/contents';
-import bus from '@/utils/bus';
 export default {
     name: 'upload',
     data() {
         return {
             title: this.$route.meta.title,
+            itemLength: 20,
+            totalPage: null,
+            page: 0,
+            loadingData: false,
             menuCode: 'SP',
             attrs: [
                 {
@@ -259,11 +262,10 @@ export default {
                     contentClass: 'vc-today',
                 },
             ],
-
             folderDetail: {
                 campaignBeginDt: '',
                 campaignEndDt: '',
-                campaignPeriodSectionCode: 'selectDate',
+                campaignPeriodSectionCode: 'SELECT',
                 checks: [
                     {
                         authSeq: 0,
@@ -271,26 +273,7 @@ export default {
                         emailReceptionYn: 'N',
                     },
                 ],
-                contentsFileList: [
-                    {
-                        detailThumbnailFileName: '',
-                        detailThumbnailFilePhysicalName: '',
-                        detailThumbnailFileSize: '',
-                        fileContentType: '',
-                        fileExtension: '',
-                        fileKindCode: 'FILE',
-                        fileName: '',
-                        fileOrder: 1,
-                        filePhysicalName: '',
-                        fileSectionCode: 'GUIDE',
-                        fileSize: 0,
-                        thumbnailFileName: '',
-                        thumbnailFilePhysicalName: '',
-                        thumbnailFileSize: '',
-                        title: '',
-                        url: '',
-                    },
-                ],
+                contentsFileList: [],
                 exposureYn: 'Y',
                 folderContents: '',
                 folderName: '',
@@ -306,16 +289,15 @@ export default {
     created() {
         if (this.$route.params.id) {
             this.getFolderDetail();
-            this.initFetchData();
         }
-        bus.$on('detailAuthYnUpdate', (seq) => {
+        /*bus.$on('detailAuthYnUpdate', (seq) => {
             const idx = this.folderDetail.checks.findIndex((el) => {
                 return el.authSeq === seq;
             });
             const value = this.checks[idx].detailAuthYn === 'Y' ? 'N' : 'Y';
             this.checks[idx].detailAuthYn = value;
         });
-        bus.$on('emailReceptionYnUpdate', (seq) => {});
+        bus.$on('emailReceptionYnUpdate', (seq) => {});*/
 
         window.addEventListener('scroll', this.handleScroll);
     },
@@ -335,28 +317,6 @@ export default {
         //이미지 받아오기
         cropImage(imageBase64) {
             this.folderDetail.imageBase64 = imageBase64;
-        },
-        async submitForm() {
-            this.folderDetail.campaignBeginDt = this.$moment(
-                this.folderDetail.campaignBeginDt
-            ).format('YYYY.MM.DD');
-            this.folderDetail.campaignEndDt = this.$moment(
-                this.folderDetail.campaignEndDt
-            ).format('YYYY.MM.DD');
-            const uploadFn = this.$route.params.id ? putContents : postContents;
-            try {
-                const { data: response } = await uploadFn(
-                    this.$route.meta.topMenuCode,
-                    this.folderDetail.menuCode,
-                    this.folderDetail
-                );
-                if (response.existMsg) {
-                    alert(response.msg);
-                }
-                console.log(response);
-            } catch (e) {
-                console.log(e);
-            }
         },
         ModalAuthOpen() {
             this.$modal.show(ModalAuth, {
@@ -380,12 +340,6 @@ export default {
                 return this.folderDetail.campaignEndDt;
             }
         },
-        initFetchData() {
-            this.totalPage = null;
-            this.page = 0;
-            this.contentsFileList = null;
-            //this.getFolderDetailFile();
-        },
         handleScroll() {
             if (this.loadingData) return;
             const windowE = document.documentElement;
@@ -394,6 +348,32 @@ export default {
                 windowE.scrollHeight
             ) {
                 this.infiniteScroll();
+            }
+        },
+        uploadFiles() {
+            this.$refs.fileSet.uploadFiles();
+        },
+        async submitForm() {
+            this.folderDetail.campaignBeginDt = this.$moment(
+                this.folderDetail.campaignBeginDt
+            ).format('YYYY.MM.DD');
+            this.folderDetail.campaignEndDt = this.$moment(
+                this.folderDetail.campaignEndDt
+            ).format('YYYY.MM.DD');
+            const uploadFn = this.$route.params.id ? putContents : postContents;
+
+            try {
+                const { data: response } = await uploadFn(
+                    this.$route.meta.topMenuCode,
+                    this.folderDetail.menuCode,
+                    this.folderDetail
+                );
+                if (response.existMsg) {
+                    alert(response.msg);
+                }
+                console.log(response);
+            } catch (e) {
+                console.log(e);
             }
         },
         async getFolderDetail() {
@@ -406,6 +386,7 @@ export default {
                 if (response.existMsg) {
                     alert(response.msg);
                 }
+                //console.log(response.data);
                 this.menuCode = response.data.menuCode;
                 this.folderDetail = {
                     ...response.data,
@@ -415,36 +396,6 @@ export default {
                     contentsFileList: [],
                 };
                 await this.getFolderDetailFile();
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        async getFolderDetailFile(infinite) {
-            this.loadingData = true;
-            this.checkAll = false;
-            try {
-                const {
-                    data: { data: response },
-                } = await getContentsViewFile(
-                    this.$route.meta.topMenuCode,
-                    this.$route.meta.menuCode,
-                    this.$route.params.id,
-                    {
-                        page: this.page,
-                        size: this.itemLength,
-                    }
-                );
-                this.totalPage = response.totalPages - 1;
-                if (infinite) {
-                    this.folderDetail.contentsFileList = this.folderDetail.contentsFileList.concat(
-                        response.content
-                    );
-                } else {
-                    console.log(response.content[0]);
-                    this.folderDetail.contentsFileList = response.content;
-                }
-                this.page++;
-                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }

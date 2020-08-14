@@ -18,7 +18,6 @@
     </ModalComp>
 </template>
 <script>
-import ModalComp from '@/components/modal-comp/index';
 import GroupTreeListTable from '@/components/group-tree/tree-list-table';
 import { getAuthList } from '@/api/auth';
 import bus from '@/utils/bus';
