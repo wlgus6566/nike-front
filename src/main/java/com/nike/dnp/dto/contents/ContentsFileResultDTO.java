@@ -191,7 +191,7 @@ public class ContentsFileResultDTO {
      * @since 2020. 8. 14. 오후 7:50:43
      */
     public String getFilePhysicalName() {
-        return CloudFrontUtil.getCustomSignedUrl(filePhysicalName);
+        return ObjectUtils.isEmpty(filePhysicalName) ? filePhysicalName : CloudFrontUtil.getCustomSignedUrl(filePhysicalName);
     }
 
     /**
