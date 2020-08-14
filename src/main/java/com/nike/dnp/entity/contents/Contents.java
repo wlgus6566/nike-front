@@ -257,7 +257,7 @@ public class Contents extends BaseTimeWithoutUpdateDtEntity {
     public void update(final ContentsSaveDTO contentsSaveDTO) {
         log.info("Contents.update");
         this.menuCode = contentsSaveDTO.getMenuCode();
-        if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageFilePhysicalName()) && !ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
+        if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageFilePhysicalName()) && !contentsSaveDTO.getImageFilePhysicalName().contains("/contents/")) {
             this.imageFileName = contentsSaveDTO.getImageFileName();
             this.imageFileSize = contentsSaveDTO.getImageFileSize();
             this.imageFilePhysicalName = contentsSaveDTO.getImageFilePhysicalName();
@@ -294,15 +294,15 @@ public class Contents extends BaseTimeWithoutUpdateDtEntity {
         this.useYn = "N";
     }
 
-    /**
-     * Gets image file physical name.
-     *
-     * @return the image file physical name
-     * @author [이소정]
-     * @implNote cdnUrl + imageFilePhysicalName
-     * @since 2020. 7. 30. 오후 3:47:29
-     */
-    public String getImageFilePhysicalName() {
-        return CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
-    }
+//    /**
+//     * Gets image file physical name.
+//     *
+//     * @return the image file physical name
+//     * @author [이소정]
+//     * @implNote cdnUrl + imageFilePhysicalName
+//     * @since 2020. 7. 30. 오후 3:47:29
+//     */
+//    public String getImageFilePhysicalName() {
+//        return CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
+//    }
 }
