@@ -13,7 +13,7 @@ const routes = [
                 meta: { layout: 'Default', aside: 'Order', title: '상품 등록' },
             },
             {
-                path: '/:id',
+                path: 'modify/:id',
                 component: pages('product/registration'),
                 meta: { layout: 'Default', aside: 'Order', title: '상품 수정' },
             },

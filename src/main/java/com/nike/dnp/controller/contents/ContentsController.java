@@ -286,7 +286,7 @@ public class ContentsController {
      * @param result      the result
      * @return the common result
      * @author [이소정]
-     * @implNote
+     * @implNote 컨텐츠 알림메일전송
      * @since 2020. 7. 30. 오후 3:58:41
      */
     @ApiOperation(value = "컨텐츠 알림메일전송", notes = REQUEST_CHARACTER)
@@ -307,7 +307,7 @@ public class ContentsController {
      * @param menuCode    the menu code
      * @return the common result
      * @author [이소정]
-     * @implNote
+     * @implNote 컨텐츠 권한 목록 조회
      * @since 2020. 7. 30. 오후 3:58:41
      */
     @ApiOperation(value = "컨텐츠 권한 목록 조회", notes = REQUEST_CHARACTER)

@@ -8,13 +8,12 @@
         <form action="" @submit.prevent="addProduct">
             <ul class="form-list-thumb">
                 <li class="form-row thumb-row">
-                    <Thumbnail
+                    <thumbnail
+                        :size="1 / 1"
                         @cropImage="cropImage"
-                        :imageFilePhysicalName="
-                            detailData.imageFilePhysicalName
-                        "
+                        :imageBase64="detailData.imageFilePhysicalName"
                         :imageFileName="detailData.imageFileName"
-                    ></Thumbnail>
+                    />
                 </li>
                 <li class="form-row">
                     <div class="form-column">
@@ -33,11 +32,11 @@
                                     :name="exposure.name"
                                     :value="radio.value"
                                 />
-                                <span></span>
-                            </span>
-                            <span>
-                                {{ radio.title }}
-                                {{ exposure.value }}
+                                <i></i>
+                                <span class="txt">
+                                    {{ radio.title }}
+                                    {{ exposure.value }}
+                                </span>
                             </span>
                         </label>
                     </div>
@@ -173,18 +172,18 @@
     </div>
 </template>
 <script>
-    import {getProductDetail, postProduct, putProduct} from '@/api/product';
+import { getProductDetail, postProduct, putProduct } from '@/api/product';
 
-    import Thumbnail from '@/components/thumbnail/index';
-    import {getAgencyContact} from '@/api/agency';
-    import store from '@/store';
-    import {getCode} from '@/api/code';
-    import {getCategoryList} from '@/utils/code';
+import thumbnail from '@/components/thumbnail/index';
+import { getAgencyContact } from '@/api/agency';
+import store from '@/store';
+import { getCode } from '@/api/code';
+import { getCategoryList } from '@/utils/code';
 
-    export default {
+export default {
     name: 'registration',
     components: {
-        Thumbnail,
+        thumbnail,
     },
     data() {
         return {
@@ -235,13 +234,16 @@
         };
     },
     created() {
+        this.getAgency();
         this.detailProduct();
         getCategoryList('CATEGORY', this.category2Code.listSortOptions);
     },
-    activated() {},
+    activated() {
+        this.detailProduct();
+    },
     computed: {
         basketList() {
-            if (!!this.$store.state.basketListData) {
+            if (!this.$store.state.basketListData) {
                 return this.$store.state.basketListData;
             } else {
                 return [];
@@ -265,10 +267,7 @@
             }
         },
     },
-    mounted() {
-        this.getAgency();
-        this.detailProduct();
-    },
+
     methods: {
         selectFocus() {
             console.log(this.category2Code.value);
@@ -341,6 +340,7 @@
                         }
                     );
                     this.detailData = response.data;
+                    console.log(this.detailData);
                     if (this.detailData.exposureYn === 'N') {
                         this.exposure.value = 'N';
                     }
@@ -382,6 +382,7 @@
                         console.log(response);
                         await this.$router.push('/order/management');
                         await store.dispatch('basketList');
+                        this.detailData.imageBase64 = null;
                     } catch (error) {
                         console.log(error);
                     }

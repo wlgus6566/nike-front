@@ -1,6 +1,6 @@
 <template>
     <div id="wrap">
-        <section id="container">
+        <section id="container-clean">
             <transition mode="out-in" name="page-change">
                 <router-view></router-view>
             </transition>

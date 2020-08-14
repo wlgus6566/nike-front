@@ -1,4 +1,4 @@
-import {getCode} from '@/api/code';
+import { getCode } from '@/api/code';
 
 const getCategoryList = async (codeName, array) => {
     try {
@@ -12,6 +12,8 @@ const getCategoryList = async (codeName, array) => {
                 label: el.codeName,
             });
         });
-    } catch {}
+    } catch (e) {
+        console.log(e);
+    }
 };
 export { getCategoryList };

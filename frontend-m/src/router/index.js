@@ -7,6 +7,8 @@ import TookitRoutes from './tookit';
 import RepotRoutes from './report';
 import InformationRoutes from './information';
 import MyPageRoutes from './mypage';
+import testRoutes from './test';
+
 // Import methods
 import {pages} from '@/utils/global-methods';
 
@@ -26,6 +28,7 @@ const router = new VueRouter({
         ...RepotRoutes,
         ...InformationRoutes,
         ...MyPageRoutes,
+        ...testRoutes,
     ],
 });
 

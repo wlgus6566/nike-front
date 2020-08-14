@@ -102,6 +102,7 @@ export default {
         AsideDefault: () => import('@/components/app-aside/default.vue'),
         AsideFile: () => import('@/components/app-aside/file.vue'),
         AsideOrder: () => import('@/components/app-aside/order.vue'),
+        AsideReport: () => import('@/components/app-aside/report.vue'),
     },
     mounted() {
         this.activeSet();

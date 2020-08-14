@@ -3,7 +3,9 @@
         <header>
             <div class="inner">
                 <h1>
-                    <a href="#"><img alt="" src="@/assets/images/logo-nike.svg" /></a>
+                    <a href="#"
+                        ><img alt="" src="@/assets/images/logo-nike.svg"
+                    /></a>
                 </h1>
                 <nav>
                     <ul>
@@ -17,7 +19,9 @@
         </header>
         <section id="container">
             <div class="contents">
-                <h2 class="page-title"><span class="ko">메인 비주얼 관리</span></h2>
+                <h2 class="page-title">
+                    <span class="ko">메인 비주얼 관리</span>
+                </h2>
                 <h3 class="form-title mt20">메인 비주얼 등록</h3>
                 <hr class="hr-black" />
                 <ul class="form-list">
@@ -31,7 +35,9 @@
                     </li>
                     <li class="form-row">
                         <div class="form-column">
-                            <label class="label-title required">DESCRIPTION</label>
+                            <label class="label-title required"
+                                >DESCRIPTION</label
+                            >
                         </div>
                         <div class="form-column">
                             <span class="textarea">
@@ -41,7 +47,9 @@
                     </li>
                     <li class="form-row">
                         <div class="form-column">
-                            <label class="label-title required">이미지 등록</label>
+                            <label class="label-title required"
+                                >이미지 등록</label
+                            >
                         </div>
                         <div class="form-column">
                             <div class="main-visual-upload">
@@ -72,23 +80,31 @@
                     </li>
                     <li class="form-row">
                         <div class="form-column">
-                            <label class="label-title required">연결 URL (PC)</label>
+                            <label class="label-title required"
+                                >연결 URL (PC)</label
+                            >
                         </div>
                         <div class="form-column">
                             <div class="main-visual-upload">
                                 <label class="check-label">
                                     <span class="radio">
-                                        <input type="radio" name="url" checked />
-                                        <span></span>
+                                        <input
+                                            type="radio"
+                                            name="url"
+                                            checked
+                                        />
+                                        <i></i>
+                                        <span class="txt"
+                                            >기본(ASSET > ALL 메뉴로 연결)</span
+                                        >
                                     </span>
-                                    <span>기본(ASSET > ALL 메뉴로 연결)</span>
                                 </label>
                                 <label class="check-label">
                                     <span class="radio">
                                         <input type="radio" name="url" />
-                                        <span></span>
+                                        <i></i>
+                                        <span class="txt">URL 입력</span>
                                     </span>
-                                    <span>URL 입력</span>
                                 </label>
                             </div>
                         </div>
@@ -96,8 +112,12 @@
                 </ul>
                 <hr class="hr-gray" />
                 <div class="btn-area">
-                    <button type="button" class="btn-s-white"><span>취소</span></button>
-                    <button type="button" class="btn-s-black"><span>저장</span></button>
+                    <button type="button" class="btn-s-white">
+                        <span>취소</span>
+                    </button>
+                    <button type="button" class="btn-s-black">
+                        <span>저장</span>
+                    </button>
                 </div>
             </div>
             <aside>

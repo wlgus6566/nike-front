@@ -15,7 +15,7 @@
                     </span>
                     <span class="info-box">
                         <strong class="title">{{ item.title }}</strong>
-                        <span class="date">등록일 필요</span>
+                        <span class="date">{{ item.updateDt }}</span>
                     </span>
                 </router-link>
             </li>

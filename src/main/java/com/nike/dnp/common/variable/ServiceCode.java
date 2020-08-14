@@ -32,7 +32,7 @@ public class ServiceCode {
     @RequiredArgsConstructor
     @Getter
     public enum SearchEnumCode {
-        UPDATE_DT("updateDt") //최신순
+        LATEST("updateDt") //최신순
         , START_DATE("campaignBeginDt"); //시작일순
 
         /**

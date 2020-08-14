@@ -8,6 +8,7 @@ import com.nike.dnp.dto.calendar.CalendarSearchDTO;
 import com.nike.dnp.dto.calendar.CalendarUpdateDTO;
 import com.nike.dnp.entity.calendar.Calendar;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.calendar.CalendarService;
@@ -190,9 +191,7 @@ public class CalendarController {
     public SingleResult<Calendar> findById(@PathVariable @ApiParam(value="켈린더 시퀀스",name = "calendarSeq",example = "4") final Long calendarSeq){
         log.info("CalendarController.findById");
         return responseService.getSingleResult(calendarService.findById(calendarSeq).orElseThrow(() ->
-            new CodeMessageHandleException(
-                    FailCode.ExceptionError.NOT_FOUND.name()
-                    , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))
+                new NotFoundHandleException()
         ));
     }
 
