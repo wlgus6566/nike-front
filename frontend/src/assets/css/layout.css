@@ -100,7 +100,7 @@ nav .nav-link.router-link-active:after {
 nav .depth2 > .nav-link {
     color: #888;
 }
-nav .depth2 > .nav-link .noto-sans {
+nav .depth2 > .nav-link > span {
     line-height: 30px;
     display: inline-block;
     vertical-align: 0.1em;

@@ -18,7 +18,7 @@ const routes = [
                 component: pages('report/management.vue'),
                 meta: {
                     layout: 'Default',
-                    detail: true,
+                    historyBack: null,
                 },
             },
             {
@@ -26,7 +26,7 @@ const routes = [
                 component: pages('report/detail-view.vue'),
                 meta: {
                     layout: 'Default',
-                    historyBack: null,
+                    detail: true,
                 },
             },
         ],
