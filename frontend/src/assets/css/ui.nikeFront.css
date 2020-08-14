@@ -629,14 +629,14 @@
 }
 /* date-picker */
 .date-picker {
+    position: relative;
     border-bottom: 1px solid black;
 }
 .date-picker-group {
     display: flex;
 }
 .date-picker-group .date-picker {
-    flex-basis: 107px;
-    width: 107px;
+    flex-basis: 180px;
 }
 .data-picker .focus\:vc-shadow:focus {
     box-shadow: none;
@@ -652,6 +652,16 @@
 .date-picker-group .date-picker + .date-picker {
     margin-left: 46px;
 }
+.date-picker-group .date-picker + .date-picker:before {
+    position: absolute;
+    left: -25px;
+    top: 19px;
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 1px;
+    background: #000;
+}
 .date-picker .vc-leading-tight {
     height: 39px;
     line-height: 16px;
@@ -660,7 +670,7 @@
     background: url('../images/svg/icon-input-calender.svg') right 10px
         no-repeat;
     font-size: 14px;
-    color: #888;
+    color: #000;
     letter-spacing: 0;
 }
 .date-picker .el-range-editor.el-input__inner {
@@ -1524,6 +1534,7 @@
     line-height: 14px;
     color: #888;
     font-weight: 300;
+    letter-spacing: 0;
 }
 .folder-name {
     display: block;
@@ -3349,6 +3360,7 @@
     font-size: 16px;
     color: #fff;
     font-weight: 300;
+    letter-spacing: 0;
 }
 .member-inquiry .name {
     display: block;
@@ -3369,6 +3381,7 @@
     opacity: 0.5;
     color: #fff;
     font-size: 12px;
+    letter-spacing: 0;
 }
 .member-inquiry .info-list dd {
     display: flex;
@@ -3377,6 +3390,7 @@
     line-height: 21px;
     color: #fff;
     font-size: 18px;
+    letter-spacing: 0;
 }
 .member-inquiry .info-list dd + dt {
     margin-top: 25px;
@@ -4052,6 +4066,7 @@
     font-size: 10px;
     color: #555;
     line-height: 11px;
+    letter-spacing: 0;
 }
 .folder-item .info-box .location li + li {
     margin-left: 2px;
@@ -4158,6 +4173,7 @@
     right: 0;
     margin: 0;
     transform: translateY(-50%);
+    letter-spacing: 0;
 }
 .folder-list-row li .view-area {
     position: relative;
@@ -4174,6 +4190,8 @@
     width: auto;
     padding: 0 10px;
     color: #000;
+    font-size: 12px;
+    letter-spacing: 0;
     background: transparent;
 }
 .folder-list-row li .view-area .view:before {
