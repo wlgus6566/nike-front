@@ -35,10 +35,10 @@
                                     :name="reportSection.name"
                                     :value="radio.value"
                                 />
-                                <span></span>
-                            </span>
-                            <span>
-                                {{ radio.title }}
+                                <i></i>
+                                <span class="txt">
+                                    {{ radio.title }}
+                                </span>
                             </span>
                         </label>
                     </div>

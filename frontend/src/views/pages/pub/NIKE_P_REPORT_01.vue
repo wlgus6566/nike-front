@@ -3,7 +3,9 @@
         <header>
             <div class="inner">
                 <h1>
-                    <a href="#"><img alt="" src="@/assets/images/logo-nike.svg" /></a>
+                    <a href="#"
+                        ><img alt="" src="@/assets/images/logo-nike.svg"
+                    /></a>
                 </h1>
                 <nav>
                     <ul>
@@ -17,7 +19,9 @@
         </header>
         <section id="container">
             <div class="contents">
-                <h2 class="page-title">REPORT <span class="ko">업로드</span></h2>
+                <h2 class="page-title">
+                    REPORT <span class="ko">업로드</span>
+                </h2>
                 <h3 class="form-title">폴더 설정</h3>
                 <hr class="hr-black" />
                 <ul class="form-list-thumb">
@@ -35,37 +39,43 @@
                         <div class="form-column">
                             <label class="check-label">
                                 <span class="radio">
-                                    <input type="radio" name="sortation" checked />
-                                    <span></span>
+                                    <input
+                                        type="radio"
+                                        name="sortation"
+                                        checked
+                                    />
+                                    <i></i>
+                                    <span class="txt">SP</span>
                                 </span>
-                                <span>SP</span>
                             </label>
                             <label class="check-label">
                                 <span class="radio">
                                     <input type="radio" name="sortation" />
-                                    <span></span>
+                                    <i></i>
+                                    <span class="txt">SU</span>
                                 </span>
-                                <span>SU</span>
                             </label>
                             <label class="check-label">
                                 <span class="radio">
                                     <input type="radio" name="sortation" />
-                                    <span></span>
+                                    <i></i>
                                 </span>
-                                <span>FA</span>
+                                <span class="txt">FA</span>
                             </label>
                             <label class="check-label">
                                 <span class="radio">
                                     <input type="radio" name="sortation" />
-                                    <span></span>
+                                    <i></i>
+                                    <span class="txt">HO</span>
                                 </span>
-                                <span>HO</span>
                             </label>
                         </div>
                     </li>
                     <li class="form-row">
                         <div class="form-column">
-                            <label class="label-title required">보고서 명</label>
+                            <label class="label-title required"
+                                >보고서 명</label
+                            >
                         </div>
                         <div class="form-column">
                             <span class="textarea">
@@ -91,7 +101,9 @@
                                             <li>
                                                 <label>
                                                     <span class="checkbox">
-                                                        <input type="checkbox" />
+                                                        <input
+                                                            type="checkbox"
+                                                        />
                                                         <span></span>
                                                     </span>
                                                     <span class="txt"
@@ -102,7 +114,9 @@
                                             <li>
                                                 <label>
                                                     <span class="checkbox">
-                                                        <input type="checkbox" />
+                                                        <input
+                                                            type="checkbox"
+                                                        />
                                                         <span></span>
                                                     </span>
                                                     <span class="txt"
@@ -113,7 +127,9 @@
                                             <li>
                                                 <label>
                                                     <span class="checkbox">
-                                                        <input type="checkbox" />
+                                                        <input
+                                                            type="checkbox"
+                                                        />
                                                         <span></span>
                                                     </span>
                                                     <span class="txt"
@@ -124,7 +140,9 @@
                                             <li>
                                                 <label>
                                                     <span class="checkbox">
-                                                        <input type="checkbox" />
+                                                        <input
+                                                            type="checkbox"
+                                                        />
                                                         <span></span>
                                                     </span>
                                                     <span class="txt"
@@ -135,7 +153,9 @@
                                             <li>
                                                 <label>
                                                     <span class="checkbox">
-                                                        <input type="checkbox" />
+                                                        <input
+                                                            type="checkbox"
+                                                        />
                                                         <span></span>
                                                     </span>
                                                     <span class="txt"
@@ -147,7 +167,9 @@
                                     </div>
                                     <div class="btn-box">
                                         <div class="fine-file">
-                                            <span class="btn-form-gray"><span>찾기</span></span>
+                                            <span class="btn-form-gray"
+                                                ><span>찾기</span></span
+                                            >
                                             <input type="file" />
                                         </div>
                                         <button type="button" class="btn-form">
@@ -160,7 +182,9 @@
                     </ul>
                 </div>
                 <div class="btn-area">
-                    <button type="button" class="btn-s-black"><span>저장</span></button>
+                    <button type="button" class="btn-s-black">
+                        <span>저장</span>
+                    </button>
                 </div>
             </div>
             <aside>
