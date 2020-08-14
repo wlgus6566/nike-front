@@ -4,6 +4,7 @@ import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.agency.AgencySaveDTO;
 import com.nike.dnp.entity.agency.Agency;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.agency.AgencyRepository;
 import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
@@ -115,7 +116,6 @@ public class AgencyService {
      * @since 2020. 7. 30. 오후 3:07:57
      */
     public Optional<Agency> findById(final Long agencySeq) {
-        return Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencySeq, "Y").orElseThrow(() ->
-                new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+        return Optional.ofNullable(agencyRepository.findByAgencySeqAndUseYn(agencySeq, "Y").orElseThrow(() -> new NotFoundHandleException()));
     }
 }

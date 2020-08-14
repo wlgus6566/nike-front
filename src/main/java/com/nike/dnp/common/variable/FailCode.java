@@ -65,6 +65,7 @@ public class FailCode {
         , NOT_FOUND_PRODUCT
         , MINIMUM_ORDER_QUANTITY
         , MAX_INSERT_CALENDAR
+        , NULL_FOLDER_IMAGE
     }
 
 }
