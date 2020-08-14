@@ -588,6 +588,7 @@ public class ContentsService {
                     checkedContentsFileList.remove(contentsFile);
                 }
             }
+
         }
         return checkedContentsFileList;
     }
