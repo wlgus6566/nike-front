@@ -1,11 +1,11 @@
 package com.nike.dnp.service.notice;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.notice.*;
 import com.nike.dnp.entity.notice.NoticeArticle;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.notice.NoticeRepository;
 import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.ObjectMapperUtil;
@@ -149,7 +149,7 @@ public class NoticeService {
         return noticeRepository
                 .findById(noticeSeq)
                 .map(i -> i.update(customerUpdateDTO))
-                .orElseThrow(IllegalArgumentException::new); //error code : NotFoundException
+                .orElseThrow(NotFoundHandleException::new); //error code : NotFoundException
     }
 
     /**
@@ -169,7 +169,7 @@ public class NoticeService {
         return noticeRepository
                 .findById(noticeSeq)
                 .map(NoticeArticle::delete)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(NotFoundHandleException::new);
     }
 
     public String uploadEditorImages(MultipartHttpServletRequest multiReq, String noticeArticleSectionCode) {
