@@ -239,7 +239,6 @@ public class Contents extends BaseTimeWithoutUpdateDtEntity {
         }
         saveContents.setMemo(contentsSaveDTO.getMemo());
 
-
         saveContents.setUpdateDt(LocalDateTime.now());
 
         return saveContents;
