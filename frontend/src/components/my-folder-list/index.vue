@@ -24,7 +24,9 @@
                         </p>
                     </div>
                     <div v-else>
-                        <strong class="title">계정명</strong>
+                        <strong class="title">
+                            {{ item.nickname }}
+                        </strong>
                         <p class="txt">
                             {{ item.folderName }}
                         </p>
