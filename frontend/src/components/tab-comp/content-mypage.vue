@@ -1,9 +1,9 @@
 <template>
     <ul class="aside-menu">
-        <li v-for="menu in myMenu">
+        <li v-for="(menu, index) in myMenu" :key="index">
             <strong class="title" v-html="menu.menuName" />
             <ul class="menu" v-if="menu.menus">
-                <li v-for="depth in menu.menus">
+                <li v-for="(depth, index) in menu.menus" :key="index">
                     <router-link
                         :to="depth.menuPathUrl"
                         v-html="depth.menuName"

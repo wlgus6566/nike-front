@@ -21,10 +21,16 @@
                                 newsDetail.thumbnailFilePhysicalName
                             "
                         >
-                            <span class="sub">
-                                권장 사이즈는 최소 660*330, 최대<br />
-                                3000*1500입니다.
-                            </span>
+                            <template slot="txt-up">
+                                NEWS 이미지 등록
+                                <span class="sub">
+                                    권장 사이즈는 최소 660*330,<br />
+                                    최대 3000*1500입니다.
+                                </span>
+                            </template>
+                            <template slot="txt">
+                                NEWS 이미지 재등록
+                            </template>
                         </thumbnail>
                     </div>
                 </li>

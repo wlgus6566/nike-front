@@ -225,7 +225,6 @@ export default {
 .file-list li img {
     width: 100%;
     height: 100%;
-    background: red;
     display: block;
     vertical-align: top;
 }

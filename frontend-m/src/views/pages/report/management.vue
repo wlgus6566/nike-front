@@ -43,7 +43,7 @@
                 v-for="item in reportList"
                 :key="item.reportSeq"
             >
-                <a :href="`/report/detail-view/${item.reportSeq}`">
+                <a :href="`/report/${item.reportSeq}`">
                     <div class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </div>
