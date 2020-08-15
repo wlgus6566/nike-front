@@ -76,7 +76,7 @@
                                         v-model="checkAll"
                                         @click="allCheckFn()"
                                     />
-                                    <span></span>
+                                    <i></i>
                                 </span>
                             </th>
                             <th>계정명</th>
@@ -96,7 +96,7 @@
                                         v-model="checkItem"
                                         @click="checked(item.userSeq)"
                                     />
-                                    <span></span>
+                                    <i></i>
                                 </span>
                             </td>
                             <td>

@@ -3,61 +3,63 @@
         <div class="user-info">
             <span class="store-name">홍대 SKNRS</span>
             <div class="side">
-                <button type="button" class="btn-alram active">
+                <button type="button" class="btn-out" @click="logout">
+                    <span>로그아웃</span>
+                </button>
+                <button type="button" class="btn-alarm" @click="openAlarm">
                     <span>알람</span>
                 </button>
-                <div class="alram-box">
+                <!--<div class="alarm-box">
                     <strong class="title">NEW</strong>
-                    <div class="alram-item">
+                    <div class="alarm-item">
                         <p class="txt">
-                            에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
+                            에어맥스 2090 신제품 런칭 그래픽 자료가
+                            업데이트되었습니다.
                         </p>
                     </div>
                     <button type="button" class="btn-close">
                         <span>닫기</span>
                     </button>
-                </div>
-                <div class="alram-box">
-                    <strong class="title">NEW</strong>
-                    <ul class="alram-list">
-                        <li class="alram-item active">
-                            <p class="txt">
-                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
-                            </p>
-                            <span class="date">Now</span>
-                        </li>
-                        <li class="alram-item active">
-                            <p class="txt">
-                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
-                            </p>
-                            <span class="date">Now</span>
-                        </li>
-                        <li class="alram-item active">
-                            <p class="txt">
-                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
-                            </p>
-                            <span class="date">Now</span>
-                        </li>
-                        <li class="alram-item active">
-                            <p class="txt">
-                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
-                            </p>
-                            <span class="date">Now</span>
-                        </li>
-                        <li class="alram-item active">
-                            <p class="txt">
-                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
-                            </p>
-                            <span class="date">Now</span>
-                        </li>
-                        <li class="alram-item active">
-                            <p class="txt">
-                                에어맥스 2090 신제품 런칭 그래픽 자료가 업데이트되었습니다.
-                            </p>
-                            <span class="date">Now</span>
-                        </li>
-                    </ul>
-                    <button type="button" class="btn-close">
+                </div>-->
+                <div
+                    class="alarm-box"
+                    ref="alarm"
+                    :class="{ active: alarmActive }"
+                >
+                    <strong class="title">NOTICE</strong>
+                    <el-scrollbar
+                        class="cart-list-scroll"
+                        wrap-class="alarm-list-wrap"
+                        :native="false"
+                    >
+                        <transition-group
+                            tag="ul"
+                            class="alarm-list"
+                            v-if="alarmDataList.content"
+                            name="fade"
+                        >
+                            <li
+                                class="alarm-item active"
+                                v-for="item in alarmDataList.content"
+                                :key="item.alarmSeq"
+                            >
+                                <button
+                                    type="button"
+                                    @click="delAlarmData(item.alarmSeq)"
+                                    ref="alarmBtn"
+                                >
+                                    <span class="date">
+                                        {{ item.registrationDt }}
+                                    </span>
+                                </button>
+                                <a href="naver.com" class="txt" ref="alarmIrem">
+                                    {{ item.folderName }}
+                                </a>
+                            </li>
+                        </transition-group>
+                    </el-scrollbar>
+
+                    <button type="button" class="btn-close" @click="alarmClose">
                         <span>닫기</span>
                     </button>
                 </div>
@@ -65,13 +67,86 @@
         </div>
         <div class="space-info">
             <p class="store">WINWIN OFFICE</p>
-            <a href="mailto:nike@win-win.co.kr" class="mail">nike@win-win.co.kr</a>
+            <a href="mailto:nike@win-win.co.kr" class="mail"
+                >nike@win-win.co.kr</a
+            >
         </div>
     </div>
 </template>
 <script>
+import { getAlarm, delAlarm } from '@/api/alarm';
 export default {
     name: 'UserInfo.vue',
+    data() {
+        return {
+            page: 0,
+            size: 10,
+            alarmDataList: [],
+            alarmActive: false,
+        };
+    },
+    created() {
+        this.alarmData();
+    },
+    methods: {
+        openAlarm() {
+            this.alarmActive = !this.alarmActive;
+            this.$refs.alarmIrem.forEach((el, index) => {
+                this.$refs.alarmBtn[index].style.paddingTop =
+                    el.offsetHeight + 'px';
+            });
+
+            if (this.alarmActive) {
+                const alarmH =
+                    this.$refs.alarm.querySelector('.alarm-list').offsetHeight +
+                    40;
+                this.$refs.alarm.style.height = alarmH + 'px';
+            } else {
+                this.$refs.alarm.style.height = '0px';
+            }
+        },
+        alarmClose() {
+            this.alarmActive = false;
+            this.$refs.alarm.style.height = '0px';
+        },
+        logout() {
+            this.$store.commit('LOGOUT');
+            this.$router.push('/login');
+        },
+        // 알람목록
+        async alarmData() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getAlarm({
+                    page: this.page,
+                    size: this.size,
+                });
+                this.alarmDataList = response;
+            } catch (error) {
+                console.log(error);
+                if (error.data.existMsg) {
+                    alert(error.data.msg);
+                }
+            }
+        },
+        // 알람삭제
+        async delAlarmData(seq) {
+            console.log(seq);
+            try {
+                const {
+                    data: { data: response },
+                } = await delAlarm(seq);
+                await this.alarmData();
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+                if (error.data.existMsg) {
+                    alert(error.data.msg);
+                }
+            }
+        },
+    },
 };
 </script>
 <style scoped>
@@ -130,57 +205,81 @@ export default {
 }
 .user-info .side [class^='btn-'] + [class^='btn-'] {
     margin-right: -2px;
+    margin-left: 10px;
 }
-.user-info .side .btn-alram {
+.user-info .side .btn-out {
+    background-image: url('../../assets/images/svg/icon-logout.svg');
+}
+.user-info .side .btn-alarm {
     background-image: url('../../assets/images/svg/icon-alarm-off.svg');
 }
-.user-info .side .btn-alram.active {
+.user-info .side .btn-alarm.active {
     background-image: url('../../assets/images/svg/icon-alarm-on.svg');
 }
-.alram-box {
+::v-deep .el-scrollbar__bar {
+    right: 18px;
+}
+.alarm-box {
     z-index: 2;
     position: absolute;
     top: 34px;
     left: 0;
-    display: none;
     box-sizing: border-box;
     width: 100%;
-    padding: 12px 0 0;
+    height: 0;
+    max-height: 300px;
     border-radius: 2px;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
     background: #fff;
+    overflow: hidden;
+    transition: height ease-in-out 0.3s;
 }
-.alram-box .title {
+.alarm-box .title {
     display: block;
     padding: 0 20px;
-    font-size: 11px;
-    line-height: 17px;
-    font-weight: bold;
+    font-size: 14px;
+    line-height: 40px;
+    font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
     color: #000;
+    letter-spacing: 0.05em;
 }
-.alram-item:first-child {
+.alarm-item:first-child {
     margin-top: 10px;
     padding-top: 0;
 }
-.alram-item {
-    padding: 12px 20px 12px 20px;
+.alarm-item {
+    padding: 12px 41px 12px 20px;
 }
-.alram-item .date {
+.alarm-item button {
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+.alarm-item .date {
     display: block;
     margin-top: 4px;
     font-size: 10px;
     line-height: 15px;
     color: #888;
 }
-.alram-item .txt {
+.alarm-item:first-child .txt {
+    margin-top: 0;
+}
+.alarm-item .txt {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    margin-top: 12px;
+    padding: 0 41px 0 29px;
     font-size: 11px;
     line-height: 17px;
     color: #333;
 }
-.alram-item.active {
+.alarm-item.active {
     position: relative;
 }
-.alram-item.active:before {
+.alarm-item.active:before {
     position: absolute;
     top: 17px;
     left: 20px;
@@ -191,22 +290,20 @@ export default {
     border-radius: 100%;
     background: #f36910;
 }
-.alram-item + .alram-item {
+.alarm-item + .alarm-item {
     border-top: 1px solid #eee;
 }
-.alram-list {
-    max-height: 311px;
-    margin-top: 10px;
-    overflow: auto;
+.alarm-list {
+    max-height: 260px;
 }
-.alram-list .alram-item:first-child:before{
-    top:5px;
+.alarm-list .alarm-item:first-child:before {
+    top: 5px;
 }
-.alram-list .alram-item {
+.alarm-list .alarm-item {
     margin-top: 0;
     padding-left: 29px;
 }
-.alram-box .btn-close {
+.alarm-box .btn-close {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -215,10 +312,6 @@ export default {
     border-radius: 0;
     background-image: url('../../assets/images/svg/icon-close-small.svg') !important;
 }
-.alram-box.active {
-    display: block;
-}
-
 .space-info {
     margin-top: 13px;
     font-weight: 300;
@@ -236,5 +329,12 @@ export default {
     margin-top: 5px;
     align-content: center;
     opacity: 0.6;
+}
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
 }
 </style>

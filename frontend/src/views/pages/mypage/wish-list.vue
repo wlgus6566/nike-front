@@ -12,9 +12,9 @@
                         v-model="checkAll"
                         v-on:change="allCheckFn"
                     />
-                    <span></span>
+                    <i></i>
+                    <strong class="txt">전체선택</strong>
                 </span>
-                <strong class="txt">전체선택</strong>
             </label>
 
             <p class="desc">
@@ -62,11 +62,15 @@
 </template>
 
 <script>
-    import {deleteWishList, deleteWishListCheck, getWishList,} from '@/api/wish-list';
-    // import { postBasketSaveList } from '@/api/basket';
-    import {addBasketList, addProductBasket} from '@/utils/basket';
+import {
+    deleteWishList,
+    deleteWishListCheck,
+    getWishList,
+} from '@/api/wish-list';
+// import { postBasketSaveList } from '@/api/basket';
+import { addBasketList, addProductBasket } from '@/utils/basket';
 
-    export default {
+export default {
     name: 'wish-list',
     components: {
         WishList: () => import('@/components/wish-list/index'),

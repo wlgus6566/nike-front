@@ -9,7 +9,7 @@
                         :disabled="contentsFileList && !contentsFileList.length"
                         @click="$emit('allCheckFn')"
                     />
-                    <span></span>
+                    <i></i>
                 </span>
                 <strong class="txt" :class="{ 'fc-black': checkAll }">
                     전체선택 (
@@ -60,7 +60,7 @@
                                         )
                                     "
                                 />
-                                <span></span>
+                                <i></i>
                             </span>
                             <span class="thumbnail">
                                 <img

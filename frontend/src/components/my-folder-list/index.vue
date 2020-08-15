@@ -24,7 +24,9 @@
                         </p>
                     </div>
                     <div v-else>
-                        <strong class="title">계정명</strong>
+                        <strong class="title">
+                            {{ item.nickname }}
+                        </strong>
                         <p class="txt">
                             {{ item.folderName }}
                         </p>
@@ -66,7 +68,7 @@ export default {
             if (item.topMenuCode) {
                 return `/${item.topMenuCode}/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
             } else {
-                return `/report/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
+                return `/report/${item.folderSeq}`.toLocaleLowerCase();
             }
         },
     },

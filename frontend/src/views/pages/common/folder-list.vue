@@ -187,7 +187,6 @@ export default {
     },
     activated() {
         if (this.$store.state.reload) {
-            console.log(123);
             this.initFetchData();
             this.$store.commit('SET_RELOAD', false);
         }

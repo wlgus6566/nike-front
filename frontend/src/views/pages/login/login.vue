@@ -71,7 +71,7 @@ export default {
                         params: this.loginData,
                     });
                 } else if (response.data.code === 'SUCCESS') {
-                    // await this.$router.push('/');
+                    await this.$router.push('/');
                 }
                 console.log(response);
             } catch (error) {

@@ -3,7 +3,9 @@
         <header>
             <div class="inner">
                 <h1>
-                    <a href="#"><img alt="" src="@/assets/images/logo-nike.svg" /></a>
+                    <a href="#"
+                        ><img alt="" src="@/assets/images/logo-nike.svg"
+                    /></a>
                 </h1>
                 <nav>
                     <ul>
@@ -23,7 +25,7 @@
                     <label class="check-label">
                         <span class="checkbox">
                             <input type="checkbox" />
-                            <span></span>
+                            <i></i>
                         </span>
                         <strong class="txt">전체선택</strong>
                     </label>
@@ -42,16 +44,20 @@
                     <li class="wish-list-item">
                         <span class="checkbox">
                             <input type="checkbox" />
-                            <span></span>
+                            <i></i>
                         </span>
                         <a href="#" class="title-box">
                             <span class="thumbnail">
-                                <img src="http://placehold.it/400x200" alt="임시ㅣ미지" />
+                                <img
+                                    src="http://placehold.it/400x200"
+                                    alt="임시ㅣ미지"
+                                />
                             </span>
                             <span class="info-box">
                                 <strong class="title"
-                                    >뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴
-                                    유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴
+                                    >뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴
+                                    유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설
+                                    뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴
                                     유니버설 뉴 유니버설</strong
                                 >
                                 <span class="txt">일이삼사</span>
@@ -77,16 +83,20 @@
                     <li class="wish-list-item">
                         <span class="checkbox">
                             <input type="checkbox" />
-                            <span></span>
+                            <i></i>
                         </span>
                         <a href="#" class="title-box">
                             <span class="thumbnail">
-                                <img src="http://placehold.it/400x200" alt="임시ㅣ미지" />
+                                <img
+                                    src="http://placehold.it/400x200"
+                                    alt="임시ㅣ미지"
+                                />
                             </span>
                             <span class="info-box">
                                 <strong class="title"
-                                    >뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴
-                                    유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴
+                                    >뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴
+                                    유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설
+                                    뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴
                                     유니버설 뉴 유니버설</strong
                                 >
                                 <span class="txt">일이삼사</span>
@@ -112,16 +122,20 @@
                     <li class="wish-list-item">
                         <span class="checkbox">
                             <input type="checkbox" />
-                            <span></span>
+                            <i></i>
                         </span>
                         <a href="#" class="title-box">
                             <span class="thumbnail">
-                                <img src="http://placehold.it/400x200" alt="임시ㅣ미지" />
+                                <img
+                                    src="http://placehold.it/400x200"
+                                    alt="임시ㅣ미지"
+                                />
                             </span>
                             <span class="info-box">
                                 <strong class="title"
-                                    >뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴
-                                    유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴
+                                    >뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴
+                                    유니버설 뉴 유니버설 뉴 유니버설 뉴 유니버설
+                                    뉴 유니버설 뉴 유니버설 뉴 유니버설 뉴
                                     유니버설 뉴 유니버설</strong
                                 >
                                 <span class="txt">일이삼사</span>

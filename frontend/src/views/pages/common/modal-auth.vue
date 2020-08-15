@@ -1,5 +1,5 @@
 <template>
-    <ModalComp @close="thisClose">
+    <div @close="thisClose">
         <template v-slot:modal-header>
             <div class="modal-header">
                 <h1>권한 설정</h1>
@@ -15,10 +15,9 @@
             />
         </template>
         <template v-slot:modal-footer>123</template>
-    </ModalComp>
+    </div>
 </template>
 <script>
-import ModalComp from '@/components/modal-comp/index';
 import GroupTreeListTable from '@/components/group-tree/tree-list-table';
 import { getAuthList } from '@/api/auth';
 import bus from '@/utils/bus';
@@ -80,7 +79,7 @@ export default {
             }
         },
     },
-    components: { ModalComp, GroupTreeListTable },
+    components: { GroupTreeListTable },
 };
 </script>
 <style scoped></style>

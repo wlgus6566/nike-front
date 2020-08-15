@@ -5,6 +5,7 @@ import { loginUser } from '@/api/login';
 import { getBasketList } from '@/api/basket.js';
 import { getContentsBasket } from '@/api/contents';
 import { getReportBasket } from '@/api/report';
+import { getGnbMenu } from '@/api/mypage';
 
 import {
     deleteCookie,
@@ -20,6 +21,7 @@ export default new Vuex.Store({
         user: '',
         nick: '',
         token: '',
+        gnbMenuListData: [],
         basketItemDrag: false,
         fileMouseenter: false,
         basketListData: null,
@@ -49,6 +51,9 @@ export default new Vuex.Store({
         SET_TOKEN(state, token) {
             state.token = token;
         },
+        SET_GNB(state, gnbMenu) {
+            state.gnbMenuListData = gnbMenu;
+        },
         SET_BASKET(state, basketList) {
             state.basketListData = basketList;
         },
@@ -59,6 +64,7 @@ export default new Vuex.Store({
             state.user = '';
             state.nick = '';
             state.token = '';
+            state.gnbMenuListData = [];
             state.basketItemDrag = false;
             state.fileMouseenter = false;
             state.basketListData = null;
@@ -98,7 +104,14 @@ export default new Vuex.Store({
             }
             return response;
         },
-
+        // 장바구니 리스트 api
+        async gnbMenuList({ commit }) {
+            const {
+                data: { data: response },
+            } = await getGnbMenu();
+            commit('SET_GNB', response);
+            return response;
+        },
         // 장바구니 리스트 api
         async basketList({ commit }, data) {
             const {

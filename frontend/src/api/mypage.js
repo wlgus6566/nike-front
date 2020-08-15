@@ -1,8 +1,13 @@
 import axios from 'axios';
-import {setInterceptors} from '@/api/config/interceptors';
+import { setInterceptors } from '@/api/config/interceptors';
 
 const apiMyPage = axios.create({ baseURL: '/api/mypage', timeout: 3000 });
 setInterceptors(apiMyPage);
+
+// gnbMenu
+function getGnbMenu() {
+    return apiMyPage.get(`/user/gnb`);
+}
 
 // MYPAGE 최근 업로드 한 폴더 목록
 function uploadFolderViewList(params) {
@@ -30,6 +35,7 @@ function changePassword(data) {
     //console.log(params);
 }
 export {
+    getGnbMenu,
     uploadFolderViewList,
     historyFolderViewList,
     getMyInfo,

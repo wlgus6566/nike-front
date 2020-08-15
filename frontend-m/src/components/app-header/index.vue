@@ -1,19 +1,29 @@
 <template>
     <header :class="{ 'page-header': tabMenuData !== null }">
         <h1 class="logo" v-if="this.$route.path === '/'">
-            <a href="#"><span>나이키</span></a>
+            <a href="/"><span>나이키</span></a>
         </h1>
         <template v-else>
             <button
                 type="button"
                 class="btn-back"
                 v-if="$route.meta.historyBack !== null"
+                @click="$router.go(-1)"
             >
                 뒤로가기
             </button>
             <div class="inner" v-if="tabMenuData !== null">
-                <h1 class="page-title">{{ tabMenuData.menuName }}</h1>
-                <NavItem :tabMenuData="tabMenuData.menus" />
+                <h1 class="page-title" v-if="!$route.meta.detail">
+                    {{ tabMenuData.menuName }}
+                </h1>
+                <div class="btn-box" v-if="$route.meta.detail">
+                    <button type="button" class="btn-txt">삭제</button>
+                    <button type="button" class="btn-txt">수정</button>
+                </div>
+                <NavItem
+                    v-if="!$route.meta.detail"
+                    :tabMenuData="tabMenuData.menus"
+                />
             </div>
         </template>
     </header>
