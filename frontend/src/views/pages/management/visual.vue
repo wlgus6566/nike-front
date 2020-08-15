@@ -31,48 +31,68 @@
                     </div>
                     <div class="form-column">
                         <div class="main-visual-upload">
-                            <thumbnail
-                                class="pc-upload"
-                                :size="2 / 1"
-                                @cropImage="pCropImage"
-                                :imageBase64="bannerData.imageFilePhysicalName"
-                                :imageFileName="bannerData.imageFileName"
-                                :imgHeight="1600"
-                                :imgWidth="800"
+                            <span
+                                class="thumb-file pc-upload"
+                                :class="{
+                                    'file-upload':
+                                        bannerData.imageFilePhysicalName,
+                                }"
                             >
-                                <template slot="txt-up">
+                                <input
+                                    type="file"
+                                    ref="pcBanner"
+                                    @change="imageChange($event, 'pc')"
+                                />
+                                <span class="thumb">
+                                    <img
+                                        :src="bannerData.imageFilePhysicalName"
+                                        :alt="
+                                            pcFormFile.detailThumbnailFileName
+                                        "
+                                        v-if="bannerData.imageFilePhysicalName"
+                                    />
+                                </span>
+                                <span class="txt">
                                     PC 이미지 등록
                                     <span class="sub">
                                         권장 사이즈는 최소 1600*800,<br />
                                         최대 3200*1600입니다.
                                     </span>
-                                </template>
-                                <template slot="txt">
-                                    PC 이미지 재등록
-                                </template>
-                            </thumbnail>
-                            <thumbnail
-                                class="mobile-upload"
-                                :size="1 / 1"
-                                @cropImage="mCropImage"
-                                :imageBase64="
-                                    bannerData.mobileImageFilePhysicalName
-                                "
-                                :imageFileName="bannerData.mobileImageFileName"
-                                :imgHeight="1200"
-                                :imgWidth="1200"
+                                </span>
+                            </span>
+                            <span
+                                class="thumb-file mobile-upload"
+                                :class="{
+                                    'file-upload':
+                                        bannerData.mobileImageFileName,
+                                }"
+                                ref="moBanner"
                             >
-                                <span slot="txt-up">
+                                <input
+                                    type="file"
+                                    @change="imageChange($event, 'mo')"
+                                />
+                                <span class="thumb">
+                                    <img
+                                        :src="
+                                            bannerData.mobileImageFilePhysicalName
+                                        "
+                                        :alt="
+                                            moFormFile.detailThumbnailFileName
+                                        "
+                                        v-if="
+                                            bannerData.mobileImageFilePhysicalName
+                                        "
+                                    />
+                                </span>
+                                <span class="txt">
                                     Mobile 이미지 등록
                                     <span class="sub">
                                         권장 사이즈는 최소 1200*1200,<br />
                                         최대 4000*4000입니다.
                                     </span>
                                 </span>
-                                <span slot="txt">
-                                    Mobile 이미지 재등록
-                                </span>
-                            </thumbnail>
+                            </span>
                         </div>
                     </div>
                 </li>
@@ -128,8 +148,8 @@
     </div>
 </template>
 <script>
-import thumbnail from '@/components/thumbnail/index';
 import { postBanner } from '@/api/banner';
+import { fileUpLoad } from '@/api/file';
 export default {
     name: 'visual',
     data() {
@@ -138,14 +158,14 @@ export default {
                 contents: '',
                 imageFileName: '',
                 imageFilePhysicalName: '',
-                imageFileSize: '',
                 linkUrl: '',
                 linkUrlTypeCode: 'ASSET',
                 mobileImageFileName: '',
                 mobileImageFilePhysicalName: '',
-                mobileImageFileSize: '',
                 title: '',
             },
+            pcFormFile: [],
+            moFormFile: [],
             urlCheck: {
                 checkItem: [
                     { value: 'ASSET', title: '기본(ASSET > ALL 메뉴로 연결)' },
@@ -154,11 +174,10 @@ export default {
                 name: 'url',
                 value: 'ASSET',
             },
+            aa: '',
         };
     },
-    components: {
-        thumbnail,
-    },
+    components: {},
     watch: {
         'urlCheck.value'(val) {
             if (val !== 'ASSET') {
@@ -169,32 +188,88 @@ export default {
         },
     },
     methods: {
-        //이미지 받아오기
-        pCropImage(imageBase64, imgName) {
-            this.bannerData.imageFilePhysicalName = imageBase64;
-            this.bannerData.imageFileName = imgName;
+        imageChange(e, device) {
+            this.uploadFiles(e.target.files[0], device);
+            if (device === 'pc') {
+                const imaName = e.target.files[0].name;
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    this.bannerData.imageFilePhysicalName = reader.result;
+                    this.bannerData.imageFileName = imaName;
+                };
+                if (e.target.files[0]) {
+                    reader.readAsDataURL(e.target.files[0]);
+                } else {
+                    this.bannerData.imageFilePhysicalName = '';
+                    this.bannerData.imageFileName = '';
+                }
+            } else {
+                const imaName = e.target.files[0].name;
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    this.bannerData.mobileImageFilePhysicalName = reader.result;
+                    this.bannerData.mobileImageFileName = imaName;
+                };
+                if (e.target.files[0]) {
+                    reader.readAsDataURL(e.target.files[0]);
+                } else {
+                    this.bannerData.mobileImageFilePhysicalName = '';
+                    this.bannerData.mobileImageFileName = '';
+                }
+            }
         },
-        mCropImage(imageBase64, imgName) {
-            this.bannerData.mobileImageFilePhysicalName = imageBase64;
-            this.bannerData.mobileImageFileName = imgName;
+
+        async uploadFiles(file, device) {
+            console.log(device);
+            const formData = new FormData();
+            formData.append('uploadFile', file, file.name);
+            try {
+                const {
+                    data: { data: response },
+                } = await fileUpLoad(formData);
+                if (device === 'pc') {
+                    this.pcFormFile = response;
+                    console.log(this.pcFormFile);
+                } else {
+                    this.moFormFile = response;
+                    console.log(this.moFormFile);
+                }
+            } catch (e) {
+                console.log(e);
+            }
         },
+
         async addBanner() {
             try {
                 const response = await postBanner({
                     contents: this.bannerData.contents,
-                    imageFileName: this.bannerData.imageFileName,
-                    imageFilePhysicalName: this.bannerData
-                        .imageFilePhysicalName,
-                    imageFileSize: this.bannerData.imageFileSize,
+                    imageFileName: this.pcFormFile.detailThumbnailFileName,
+                    imageFilePhysicalName: this.pcFormFile
+                        .detailThumbnailFilePhysicalName,
+                    imageFileSize: this.pcFormFile.detailThumbnailFileSize,
                     linkUrl: this.bannerData.linkUrl,
-                    linkUrlTypeCode: this.bannerData.linkUrlTypeCode,
-                    mobileImageFileName: this.bannerData.mobileImageFileName,
-                    mobileImageFilePhysicalName: this.bannerData
-                        .mobileImageFilePhysicalName,
-                    mobileImageFileSize: this.bannerData.mobileImageFileSize,
+                    linkUrlTypeCode: 'ASSET',
+                    mobileImageFileName: this.moFormFile
+                        .detailThumbnailFileName,
+                    mobileImageFilePhysicalName: this.moFormFile
+                        .detailThumbnailFilePhysicalName,
+                    mobileImageFileSize: this.moFormFile.fileSize,
                     title: this.bannerData.title,
                 });
-                console.log(response);
+                alert(response.data.msg);
+                await this.$router.push('/');
+                this.bannerData = {
+                    contents: '',
+                    imageFileName: '',
+                    imageFilePhysicalName: '',
+                    linkUrl: '',
+                    linkUrlTypeCode: 'ASSET',
+                    mobileImageFileName: '',
+                    mobileImageFilePhysicalName: '',
+                    title: '',
+                };
+                this.pcFormFile = [];
+                this.moFormFile = [];
             } catch (error) {
                 console.log(error);
                 if (error.data.existMsg) {

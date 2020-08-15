@@ -2,12 +2,12 @@
     <div>
         <div class="main-banner">
             <div class="thumbnail">
-                <img src="http://placehold.it/820X410" alt="이미지없음" />
-                <!-- <img
-                        :src="mainData.mainVisual.pcImageUrl"
-                        :alt="mainData.mainVisual.imageFileName"
-                        v-if="mainData.mainVisual.pcImageUrl"
-                />-->
+                <!--img src="http://placehold.it/820X410" alt="이미지없음" />-->
+                <img
+                    :src="mainData.mainVisual.pcImageUrl"
+                    :alt="mainData.mainVisual.imageFileName"
+                    v-if="mainData.mainVisual.pcImageUrl"
+                />
             </div>
             <div class="info-box">
                 <strong class="title">

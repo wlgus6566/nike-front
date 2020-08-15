@@ -35,7 +35,7 @@
                         <transition-group
                             tag="ul"
                             class="alarm-list"
-                            v-if="alarmDataList.content.length"
+                            v-if="alarmDataList.content"
                             name="fade"
                         >
                             <li

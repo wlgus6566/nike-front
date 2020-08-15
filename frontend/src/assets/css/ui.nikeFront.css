@@ -1417,6 +1417,7 @@
     width: 100%;
     padding-top: 100%;
     background: #eeeeee;
+    overflow: hidden;
 }
 .thumb-file .thumb img {
     position: absolute;
