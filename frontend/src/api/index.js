@@ -22,3 +22,6 @@ export const code = createWithAuth(`/api/open/code`, { timeout: 3000 });
 export const user = createWithAuth(`/api/user`, { timeout: 3000 });
 export const calendar = createWithAuth(`/api/calendar`, { timeout: 3000 });
 export const file = createWithAuth(`/api/open`);
+export const alarm = createWithAuth(`/api/alarm`, { timeout: 3000 });
+export const banner = createWithAuth(`/api/banner`, { timeout: 3000 });
+export const main = createWithAuth(`/api/main`, { timeout: 3000 });

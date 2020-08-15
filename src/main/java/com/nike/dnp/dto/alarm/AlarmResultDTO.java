@@ -81,11 +81,9 @@ public class AlarmResultDTO {
      *
      * @author [오지훈]
      */
-    @Column(name = "REGISTRATION_DT")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
-    @CreationTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
     @ApiModelProperty(name = "registrationDt", value = "최초 작성일", hidden = true)
     private LocalDateTime registrationDt;
 
