@@ -1,4 +1,4 @@
-import {auth} from './index';
+import { auth } from './index';
 
 /**
  * 그룹(권한) 관리 목록 조회
@@ -6,6 +6,9 @@ import {auth} from './index';
  */
 function getAuthList() {
     return auth.get(`/`);
+}
+function postAuth(data) {
+    return auth.post(`/`, data);
 }
 function getAuthCacheList() {
     return auth.get(`/list`);
@@ -17,4 +20,4 @@ function delAuth(seq) {
     return auth.delete(`${seq}`);
 }
 
-export { getAuthList, getAuthCacheList, getAuthView, delAuth };
+export { getAuthList, getAuthCacheList, getAuthView, delAuth, postAuth };
