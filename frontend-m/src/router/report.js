@@ -22,7 +22,7 @@ const routes = [
                 },
             },
             {
-                path: 'detail-view/:id',
+                path: ':id',
                 component: pages('report/detail-view.vue'),
                 meta: {
                     layout: 'Default',

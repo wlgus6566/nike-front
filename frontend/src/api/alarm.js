@@ -4,5 +4,11 @@ import { alarm } from './index';
 function getAlarm(data) {
     return alarm.get(`/`, data);
 }
+//알람 삭제
+function delAlarm(alarmSeq, param) {
+    return alarm.delete(`/${alarmSeq}`, {
+        params: param,
+    });
+}
 
-export { getAlarm };
+export { getAlarm, delAlarm };

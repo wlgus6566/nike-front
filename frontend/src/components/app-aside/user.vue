@@ -32,18 +32,31 @@
                         wrap-class="alarm-list-wrap"
                         :native="false"
                     >
-                        <ul class="alarm-list">
+                        <transition-group
+                            tag="ul"
+                            class="alarm-list"
+                            v-if="alarmDataList.content.length"
+                            name="fade"
+                        >
                             <li
                                 class="alarm-item active"
-                                v-for="(item, index) in alarmDataList.content"
-                                :key="index"
+                                v-for="item in alarmDataList.content"
+                                :key="item.alarmSeq"
                             >
-                                <p class="txt">
+                                <button
+                                    type="button"
+                                    @click="delAlarmData(item.alarmSeq)"
+                                    ref="alarmBtn"
+                                >
+                                    <span class="date">
+                                        {{ item.registrationDt }}
+                                    </span>
+                                </button>
+                                <a href="naver.com" class="txt" ref="alarmIrem">
                                     {{ item.folderName }}
-                                </p>
-                                <span class="date">Now</span>
+                                </a>
                             </li>
-                        </ul>
+                        </transition-group>
                     </el-scrollbar>
 
                     <button type="button" class="btn-close" @click="alarmClose">
@@ -61,7 +74,7 @@
     </div>
 </template>
 <script>
-import { getAlarm } from '@/api/alarm';
+import { getAlarm, delAlarm } from '@/api/alarm';
 export default {
     name: 'UserInfo.vue',
     data() {
@@ -78,12 +91,16 @@ export default {
     methods: {
         openAlarm() {
             this.alarmActive = !this.alarmActive;
+            this.$refs.alarmIrem.forEach((el, index) => {
+                this.$refs.alarmBtn[index].style.paddingTop =
+                    el.offsetHeight + 'px';
+            });
+
             if (this.alarmActive) {
                 const alarmH =
                     this.$refs.alarm.querySelector('.alarm-list').offsetHeight +
                     40;
                 this.$refs.alarm.style.height = alarmH + 'px';
-                this.alarmLading = false;
             } else {
                 this.$refs.alarm.style.height = '0px';
             }
@@ -96,6 +113,7 @@ export default {
             this.$store.commit('LOGOUT');
             this.$router.push('/login');
         },
+        // 알람목록
         async alarmData() {
             try {
                 const {
@@ -105,6 +123,22 @@ export default {
                     size: this.size,
                 });
                 this.alarmDataList = response;
+            } catch (error) {
+                console.log(error);
+                if (error.data.existMsg) {
+                    alert(error.data.msg);
+                }
+            }
+        },
+        // 알람삭제
+        async delAlarmData(seq) {
+            console.log(seq);
+            try {
+                const {
+                    data: { data: response },
+                } = await delAlarm(seq);
+                await this.alarmData();
+                console.log(response);
             } catch (error) {
                 console.log(error);
                 if (error.data.existMsg) {
@@ -216,6 +250,11 @@ export default {
 .alarm-item {
     padding: 12px 41px 12px 20px;
 }
+.alarm-item button {
+    display: block;
+    width: 100%;
+    text-align: left;
+}
 .alarm-item .date {
     display: block;
     margin-top: 4px;
@@ -223,7 +262,16 @@ export default {
     line-height: 15px;
     color: #888;
 }
+.alarm-item:first-child .txt {
+    margin-top: 0;
+}
 .alarm-item .txt {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    margin-top: 12px;
+    padding: 0 41px 0 29px;
     font-size: 11px;
     line-height: 17px;
     color: #333;
@@ -281,5 +329,12 @@ export default {
     margin-top: 5px;
     align-content: center;
     opacity: 0.6;
+}
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
 }
 </style>
