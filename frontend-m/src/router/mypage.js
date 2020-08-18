@@ -6,7 +6,8 @@ const routes = [
         name: 'mypage',
         component: pages('mypage/index.vue'),
         meta: {
-            layout: 'Index',
+            layout: 'Default',
+            hideHeaderFooter: true,
             depth: true,
             title: '마이페이지 메인',
         },
