@@ -47,6 +47,8 @@ export default {
                 ease: Cubic.easeInOut,
                 onComplete: function() {
                     el.style.height = 'auto';
+                    el.style.paddingTop = '10px';
+                    el.style.paddingBottom = '10px';
                     done();
                 },
             });
@@ -54,6 +56,8 @@ export default {
         itemClose(el, done) {
             gsap.to(el, 0.3, {
                 height: 0,
+                paddingTop: 0,
+                paddingBottom: 0,
                 ease: Cubic.easeInOut,
                 onComplete: done,
             });
@@ -61,12 +65,9 @@ export default {
         menuFn(e, seq) {
             const seqList = this.menuData.map(el => el.menuSeq);
             const _index = seqList.indexOf(seq);
-            const menu = this.$refs.menuItem[_index];
-            console.log(menu.childNodes);
+            //const menu = this.$refs.menuItem[_index];
             if (this.activeIndex !== _index) {
                 this.activeIndex = _index;
-                console.log();
-                menu.style.height = menu.childNodes[1].offsetHeight + 'px';
             } else {
                 this.activeIndex = null;
             }
