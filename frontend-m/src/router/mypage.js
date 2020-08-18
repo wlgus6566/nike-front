@@ -52,6 +52,8 @@ const routes = [
                 component: pages('mypage/notice-detail.vue'),
                 meta: {
                     layout: 'Default',
+                    topCode: 'notice',
+                    detail: true,
                     depth: '/mypage/customer',
                 },
             },
@@ -68,6 +70,8 @@ const routes = [
                 component: pages('mypage/news-list.vue'),
                 meta: {
                     layout: 'Default',
+                    topCode: 'news',
+                    detail: true,
                     depth: '/mypage/customer',
                 },
             },
