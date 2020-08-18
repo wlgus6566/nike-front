@@ -13,10 +13,6 @@ body {
 body {
     padding: var(--safeTop) 0 var(--safeBtm);
 }
-#app {
-    height: 100vh;
-    overflow: hidden;
-}
 #wrap {
     display: flex;
     flex-direction: column;
