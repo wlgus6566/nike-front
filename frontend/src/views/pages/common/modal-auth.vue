@@ -1,20 +1,15 @@
 <template>
     <div @close="thisClose">
-        <template v-slot:modal-header>
-            <div class="modal-header">
-                <h1>권한 설정</h1>
-            </div>
-        </template>
-        <template v-slot:modal-content>
-            <GroupTreeListTable
-                :groupTreeData="groupTreeData"
-                :groupTreeActive="groupTreeActive"
-                :groupTreeOpen="groupTreeOpen"
-                :groupTreeAddItem="groupTreeAddItem"
-                :checks="checks"
-            />
-        </template>
-        <template v-slot:modal-footer>123</template>
+        <div class="modal-header">
+            <h1>권한 설정</h1>
+        </div>
+        <GroupTreeListTable
+            :groupTreeData="groupTreeData"
+            :groupTreeActive="groupTreeActive"
+            :groupTreeOpen="groupTreeOpen"
+            :groupTreeAddItem="groupTreeAddItem"
+            :checks="checks"
+        />
     </div>
 </template>
 <script>
@@ -25,7 +20,7 @@ export default {
     mounted() {
         this.getAuthList();
 
-        bus.$on('selectActive', (item) => {
+        bus.$on('selectActive', item => {
             this.groupTreeAddItem = null;
             if (this.groupTreeActive.authSeq === item.authSeq) {
                 this.groupTreeActive = {};
@@ -42,10 +37,10 @@ export default {
         bus.$on('groupTreeDel', () => {
             this.delAuth(this.groupTreeActive.authSeq);
         });
-        bus.$on('groupTreeToggle', (authSeq) => {
-            if (this.groupTreeOpen.some((el) => el === authSeq)) {
+        bus.$on('groupTreeToggle', authSeq => {
+            if (this.groupTreeOpen.some(el => el === authSeq)) {
                 this.groupTreeOpen = this.groupTreeOpen.filter(
-                    (el) => el !== authSeq
+                    el => el !== authSeq
                 );
             } else {
                 this.groupTreeOpen.push(authSeq);
