@@ -10,6 +10,7 @@
             <el-scrollbar view-class="group-tree-scroll" :native="false">
                 <div class="group-tree-inner">
                     <GroupTreeList
+                        :authName="authName"
                         :groupTreeData="groupTreeData"
                         :groupTreeActive="groupTreeActive"
                         :groupTreeOpen="groupTreeOpen"
@@ -32,7 +33,7 @@
                     class="add"
                     :disabled="
                         groupTreeActive.authDepth === '3' ||
-                        !groupTreeActive.authDepth
+                        !groupTreeActive.authName
                     "
                     @click="groupTreeAdd"
                 >
@@ -50,6 +51,7 @@ export default {
     name: 'GroupTree',
     components: { GroupTreeList },
     props: [
+        'authName',
         'groupTreeData',
         'groupTreeActive',
         'groupTreeOpen',
