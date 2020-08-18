@@ -2,12 +2,12 @@
     <div>
         <div class="sorting-area">
             <p class="total">전체 <strong>({{totalElements}})</strong></p>
-            <div class="search-input" v-bind:class="{ active: isActive }"> <!-- active 추가하면 검색 화면 보임 -->
+            <div class="search-input" v-bind:class="{ active: isActive }">
                 <div class="input-box">
-                    <input type="text" placeholder="검색어를 입력해주세요." v-model="keyword"/>
-                    <button type="button" class="search" v-on:click="searchInputActive"><span>검색</span></button>
+                    <input type="text" placeholder="검색어를 입력해주세요." @keyup.enter="searchInputActive" v-model="keyword"/>
+                    <button type="button" class="search" @click="searchInputActive"><span>검색</span></button>
                 </div>
-                <div class="btn-txt" v-on:click="searchInputInactive"><span>취소</span></div>
+                <div class="btn-txt" @click="searchInputInactive"><span>취소</span></div>
             </div>
         </div>
         <ul class="notice-list">
@@ -19,10 +19,17 @@
                 </a>
             </li>
         </ul>
+        <Pagination
+                v-if="noticeData.length"
+                :itemLength="itemLength"
+                :pageCount="pageCount"
+                :totalItem="totalElements"
+                @handleCurrentChange="handleCurrentChange"
+        />
     </div>
 </template>
 <script>
-import {getCustomerList} from '@/api/customer';
+import { getCustomerList } from '@/api/customer/';
 
 export default {
     name: 'notice-list',
@@ -30,45 +37,52 @@ export default {
         return {
             noticeList: {},
             noticeData: [],
-            pageNumber: 0,
-            totalItem: 0,
-            itemSize: 10,
+            page: 0,
+            pageCount: 11,
+            itemLength: 10,
             keyword: '',
             totalElements: 0,
             isActive: false
         }
+    },
+    components: {
+        Pagination: () => import('@/components/pagination/')
     },
     mounted() {
         this.getNoticeList();
     },
     methods: {
         async getNoticeList() {
-            console.log("this is getNoticeList");
             try {
                 const {
                     data: { data: response },
                 } = await getCustomerList("NOTICE", {
-                    page: this.pageNumber,
-                    size: this.itemSize,
+                    page: this.page,
+                    size: this.itemLength,
                     keyword: this.keyword
                 });
                 this.noticeList = response;
                 this.noticeData = response.content;
                 this.totalElements = response.totalElements;
-                console.log(this.noticeList);
-                console.log(this.noticeData);
-                console.log(this.totalElements);
             } catch (error) {
                 console.log(error);
             }
         },
         searchInputActive: function (event) {
-            console.log("searchInputActive");
-            this.isActive = true;
+            if (this.isActive) {
+                this.getNoticeList();
+            } else {
+                this.isActive = true;
+            }
         },
         searchInputInactive: function (event) {
-            console.log("searchInputInactive");
             this.isActive = false;
+            this.keyword = "";
+            this.getNoticeList();
+        },
+        handleCurrentChange(val) {
+            this.page = val;
+            this.getNoticeList();
         }
     }
 };
