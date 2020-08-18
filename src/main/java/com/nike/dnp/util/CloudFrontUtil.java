@@ -32,7 +32,7 @@ public class CloudFrontUtil {
      *
      * @author [오지훈]
      */
-    private final static Integer BASIC_MINUTE = 1;
+    private final static Integer BASIC_MINUTE = 30;
 
     /**
      * The DistributionDomain
