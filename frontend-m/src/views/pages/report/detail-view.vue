@@ -4,38 +4,27 @@
             <h2 class="folder-title" v-text="reportDetail.nickname"></h2>
             <div class="inner">
                 <p class="folder-desc" v-text="reportDetail.reportName">
-                    나이키 다이렉트 캠페인 자료와 동영상, 스타일가이드, 기타
-                    그래픽자료가 업데이트 되었습니다. SP20 나이키 다이렉트 NSW
-                    캠페인 시공 에셋 자료가 업데이트 되었습니다.
+                    나이키 다이렉트 캠페인 자료와 동영상, 스타일가이드, 기타 그래픽자료가
+                    업데이트 되었습니다. SP20 나이키 다이렉트 NSW 캠페인 시공 에셋 자료가
+                    업데이트 되었습니다.
                 </p>
-                <span class="folder-date">2020.01.01</span>
-                <p class="folder-memo">
-                    [중요!!!] 2020.10.10까지 시공 완료 필요함!
-                </p>
+                <span class="folder-date" v-text="reportDetail.updateDt">2020.01.01</span>
+                <!--<p class="folder-memo">[중요!!!] 2020.10.10까지 시공 완료 필요함!</p>-->
             </div>
         </div>
 
         <div class="feedback-wrap">
-            <strong class="title">FEEDBACK</strong>
-            <ul class="feedback-list">
-                <li
-                    class="feedback-item"
-                    v-for="item in feedbackList"
-                    :key="item.answerSeq"
-                >
-                    <p class="txt" v-text="item.answerContents">
-                        일산 라페스타점 점장님, 시공보고서 확인완료 했습니다.
-                    </p>
+            <strong class="title">FEEDBACK </strong>
+            <ul class="feedback-list" >
+                <li class="feedback-item" v-for="item in feedbackList" :key="item.answerSeq">
+                    <p class="txt" v-text="item.answerContents">일산 라페스타점 점장님, 시공보고서 확인완료 했습니다.</p>
                     <div class="info">
-                        <span class="name" v-text="item.nickname"
-                            >NIKE MKT 01</span
-                        >
-                        <span class="date">2020. 06. 04.</span>
+                        <span class="name" v-text="item.nickname">NIKE MKT 01</span>
+                        <span class="date" v-text="item.updateDt">2020. 06. 04.</span>
                     </div>
-                    <button type="button" class="del"><span>삭제</span></button>
+                    <button v-if="item.userId === loginUserId" type="button" class="del" @click="delFeedBack(item.answerSeq)"><span>삭제</span></button>
                 </li>
             </ul>
-            <!-- //todo el-ui 작업 -->
             <div class="textarea">
                 <textarea v-model="answerContents"></textarea>
                 <button
@@ -59,93 +48,56 @@
              -->
         </ul>
         <ul class="file-item-list">
-            <li
-                class="file-item"
-                v-for="item in fileList"
-                :key="item.reportFileSeq"
-            >
-                <a href="#">
+            <li class="file-item" v-for="item in fileList" :key="item.reportFileSeq">
+                <a href="#" @click="fileDetailModal(item.reportFileSeq,item.filePhysicalName,item.fileName)" >
                     <span class="thumbnail">
-                        <img
-                            src="/assets/images/svg/icon-illust-file-pdf.svg"
-                            alt="PDF"
-                        />
+                        <img v-if="item.fileContentType.search('image') > -1" :src="item.thumbnailFilePhysicalName" :alt="item.fileExtension" />
+                        <!--<img v-else-if="item.fileExtension === 'PDF'" src="/assets/images/svg/icon-illust-file-pdf.svg" alt="PDF" />-->
+                        <!--<img v-else-if="item.fileExtension === 'MOV'" src="/assets/images/svg/icon-illust-file-pdf.svg" alt="PDF" />
+                        <img v-else-if="item.fileExtension === 'TTF'" src="/assets/images/svg/icon-illust-file-pdf.svg" alt="PDF" />
+                        <img v-else-if="item.fileExtension === 'PDF'" src="/assets/images/svg/icon-illust-file-pdf.svg" alt="PDF" />
+                        <img v-else-if="item.fileExtension === 'PDF'" src="/assets/images/svg/icon-illust-file-pdf.svg" alt="PDF" />-->
                     </span>
                     <span class="info-box">
-                        <strong class="title" v-text="item.fileName"
-                            >SP20 NSW NIKE DIRECT AM90 SP20 NSW 나이키
-                            다이렉트0.PDF</strong
-                        >
+                        <strong class="title" v-text="item.fileName"></strong>
                     </span>
                 </a>
             </li>
-            <!--<li class="file-item">
-                <a href="#">
-                    <span class="thumbnail">
-                        <img src="/assets/images/svg/icon-illust-file-mov.svg" alt="MOV" />
-                    </span>
-                    <span class="info-box">
-                        <strong class="title">SP20 NSW NIKE DIRECT AM90  SP20 NSW 나이키 다이렉트0.PDF</strong>
-                    </span>
-                </a>
-            </li>
-            <li class="file-item">
-                <a href="#">
-                    <span class="thumbnail">
-                        <img src="/assets/images/svg/icon-illust-file-etc.svg" alt="ETC" />
-                    </span>
-                    <span class="info-box">
-                        <strong class="title">SP20 NSW NIKE DIRECT AM90  SP20 NSW 나이키 다이렉트0.PDF</strong>
-                    </span>
-                </a>
-            </li>
-            <li class="file-item">
-                <a href="#">
-                    <span class="thumbnail">
-                        <img src="/assets/images/svg/icon-illust-file-ttf.svg" alt="TTF" />
-                    </span>
-                    <span class="info-box">
-                        <strong class="title">SP20 NSW NIKE DIRECT AM90  SP20 NSW 나이키 다이렉트0.PDF</strong>
-                    </span>
-                </a>
-            </li>
-            <li class="file-item">
-                <a href="#">
-                    <span class="thumbnail">
-                        <img src="/assets/images/svg/icon-illust-file-url.svg" alt="URL" />
-                    </span>
-                    <span class="info-box">
-                        <strong class="title">SP20 NSW NIKE DIRECT AM90  SP20 NSW 나이키 다이렉트0.PDF</strong>
-                    </span>
-                </a>
-            </li>-->
         </ul>
+        <ModalEx :visible.sync="visible.modalEx" />
     </div>
 </template>
 <script>
-import {
-    getReportDetail,
-    getReportDetailFileList,
-    getReportDetailFeedbackList,
-    postReportFeedback,
-} from '@/api/report';
+    import {deleteReportFeedback, getReportDetail, getReportDetailFeedbackList, getReportDetailFileList, postReportFeedback} from "@/api/report";
+    import {getUserIdFromCookie} from "@/utils/cookies"
+    import ModalEx from "@/components/modal-ex/index";
 
-export default {
+    export default {
     name: 'detail-view',
     data() {
         return {
             loading: false,
-            reportDetail: '',
-            feedbackList: [],
-            fileList: [],
-            answerContents: '',
-            fileListSize: 10,
-            fileListPage: 0,
-            fileListLast: false,
-        };
-    },
-    mounted() {
+            reportDetail : '',
+            feedbackList : [],
+            fileList : [],
+            answerContents : "",
+            fileListSize:10,
+            fileListPage:0,
+            fileListLast:false,
+            loginUserId : getUserIdFromCookie(),
+            visible: {
+                modalEx: false,
+            },
+            modelFileDate:''
+        }
+    }
+    , mounted() {
         this.fetchData();
+        console.log(this.loginUserId);
+
+    },
+    components: {
+        ModalEx,
     },
     methods: {
         fetchData() {
@@ -212,6 +164,22 @@ export default {
             } catch (error) {
                 console.log(error);
             }
+        },
+        async delFeedBack(id){
+            console.log(id);
+            if(confirm("FEEDBACK을 삭제 하시겠습니까?")) {
+                try {
+                    const {data: {data: response}} = await deleteReportFeedback(id);
+                    this.fetchData();
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        },
+        fileDetailModal(reportFileSeq,filePysicalName,fileName) {
+            console.log(filePysicalName);
+            console.log(fileName);
+            this.visible.modalEx = true;
         },
     },
 };
