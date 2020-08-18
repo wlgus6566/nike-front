@@ -65,6 +65,7 @@ public class RecentUploadRepositoryImpl extends QuerydslRepositorySupport implem
                 historyResultDTO.setFolderName(recentUpload.getReport().getReportName());
                 historyResultDTO.setMenuCode(recentUpload.getReport().getReportSectionCode());
                 historyResultDTO.setReadCount(recentUpload.getReport().getReadCount());
+                historyResultDTO.setNickname(recentUpload.getReport().getUser().getNickname());
             } else {
                 historyResultDTO.setFolderSeq(recentUpload.getContentsSeq());
                 historyResultDTO.setImageFileName(recentUpload.getContents().getImageFileName());

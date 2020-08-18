@@ -21,7 +21,7 @@
                                     v-model="checkAll"
                                     @click="allCheckFn()"
                                 />
-                                <span></span>
+                                <i></i>
                             </span>
                         </th>
                         <th>구분</th>
@@ -43,7 +43,7 @@
                                     v-model="checkItem"
                                     @click="$emit('checked', item.goodsSeq)"
                                 />
-                                <span></span>
+                                <i></i>
                             </span>
                         </td>
                         <td>
@@ -101,7 +101,7 @@ export default {
     props: ['productListData', 'checkItem', 'checkAll', 'loading'],
     methods: {
         setUrl(item) {
-            return `/order/${item.goodsSeq}`.toLocaleLowerCase();
+            return `modify/${item.goodsSeq}`.toLocaleLowerCase();
         },
         allCheckFn(check) {
             this.$emit('allCheckFn', check);

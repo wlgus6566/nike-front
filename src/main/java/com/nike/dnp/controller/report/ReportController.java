@@ -164,15 +164,18 @@ public class ReportController {
      * @implNote 보고서 수정
      * @since 2020. 7. 9. 오후 6:18:36
      */
-    @ApiOperation(value = "보고서 수정", notes = REQUEST_CHARACTER)
-    @PutMapping(name = "보고서 수정", value = "/{reportSeq}"
-            , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiOperation(
+            value = "보고서 수정"
+            , notes = REQUEST_CHARACTER
+    )
+    @PutMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 수정", value = "/{reportSeq}")
     @ValidField
     public SingleResult<Report> updateReport(
-            @ApiParam(name="reportUpdateDTO", value = "보고서 수정 Json") @RequestBody @Valid final ReportSaveDTO reportSaveDTO,
             @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq
+            , @RequestBody @Valid final ReportSaveDTO reportSaveDTO
             , @ApiIgnore final BindingResult result
     ) {
+        log.info("ReportController.updateReport");
         reportSaveDTO.setReportSeq(reportSeq);
         return responseService.getSingleResult(reportService.update(reportSaveDTO));
     }

@@ -6,6 +6,7 @@ import com.nike.dnp.entity.contents.QContents;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import lombok.experimental.UtilityClass;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**
@@ -31,7 +32,7 @@ public class ContentsPredicateHelper {
 		final BooleanBuilder builder = new BooleanBuilder();
 		final String keyword = contentsSearchDTO.getKeyword();
 
-		if(!StringUtils.isEmpty(keyword.trim())) {
+		if(!ObjectUtils.isEmpty(keyword.trim())) {
 			builder.and(QContents.contents.folderName.contains(keyword));
 		}
 
@@ -54,7 +55,7 @@ public class ContentsPredicateHelper {
 
 		builder.and(QContents.contents.topMenuCode.eq(topMenuCode));
 
-		if (!StringUtils.isEmpty(menuCode) && !"ALL".equals(menuCode)) {
+		if (!ObjectUtils.isEmpty(menuCode) && !"ALL".equals(menuCode)) {
 			builder.and(QContents.contents.menuCode.eq(menuCode));
 		}
 		return builder;
@@ -71,7 +72,7 @@ public class ContentsPredicateHelper {
 	 */
 	public static Predicate eqExposureYn(final String exposureYn) {
 		final BooleanBuilder builder = new BooleanBuilder();
-		if(!StringUtils.isEmpty(exposureYn)){
+		if(!ObjectUtils.isEmpty(exposureYn)){
 			builder.and(QContents.contents.exposureYn.eq(exposureYn));
 		}
 		return builder;

@@ -180,19 +180,6 @@ public class ReportFile extends BaseTimeEntity {
     private Report report;
 
     /**
-     * Gets detail thumbnail file physical name.
-     *
-     * @return the detail thumbnail file physical name
-     * @author [이소정]
-     * @implNote cdnUrl + detailThumbnailFilePhysicalName
-     * @since 2020. 7. 30. 오후 3:53:23
-     */
-    public String getDetailThumbnailFilePhysicalName() {
-        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName) ? detailThumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName);
-    }
-
-
-    /**
      * Save report file.
      *
      * @param reportSeq         the report seq

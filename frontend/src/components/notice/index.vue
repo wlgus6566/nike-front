@@ -15,7 +15,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in noticeData" :key="index">
+                    <tr
+                        v-for="(item, index) in noticeData"
+                        :key="index"
+                        :class="{ noti: item.noticeYn === 'Y' }"
+                    >
                         <td v-if="item.noticeYn === 'Y'">
                             <span class="label-noti">중요</span>
                         </td>
@@ -28,7 +32,7 @@
                             </router-link>
                         </td>
                         <td>
-                            <span class="date"> 등록일 필요</span>
+                            <span class="date">{{ item.updateDt }}</span>
                         </td>
                     </tr>
                 </tbody>

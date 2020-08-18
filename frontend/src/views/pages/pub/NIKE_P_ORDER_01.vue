@@ -3,7 +3,9 @@
         <header>
             <div class="inner">
                 <h1>
-                    <a href="#"><img alt="" src="@/assets/images/logo-nike.svg" /></a>
+                    <a href="#"
+                        ><img alt="" src="@/assets/images/logo-nike.svg"
+                    /></a>
                 </h1>
                 <nav>
                     <ul>
@@ -35,17 +37,21 @@
                         <div class="form-column">
                             <label class="check-label">
                                 <span class="radio">
-                                    <input type="radio" name="campaign" checked />
-                                    <span></span>
+                                    <input
+                                        type="radio"
+                                        name="campaign"
+                                        checked
+                                    />
+                                    <i></i>
+                                    <span class="txt">노출</span>
                                 </span>
-                                <span>노출</span>
                             </label>
                             <label class="check-label">
                                 <span class="radio">
                                     <input type="radio" name="campaign" />
-                                    <span></span>
+                                    <i></i>
+                                    <span class="txt">미노출</span>
                                 </span>
-                                <span>미노출</span>
                             </label>
                         </div>
                     </li>
@@ -98,7 +104,9 @@
                     </li>
                     <li class="form-row">
                         <div class="form-column">
-                            <label class="label-title required">단가 입력</label>
+                            <label class="label-title required"
+                                >단가 입력</label
+                            >
                         </div>
                         <div class="form-column">
                             <span class="input-txt">
@@ -109,7 +117,9 @@
                     </li>
                     <li class="form-row">
                         <div class="form-column">
-                            <label class="label-title required">최소 주문 수량</label>
+                            <label class="label-title required"
+                                >최소 주문 수량</label
+                            >
                         </div>
                         <div class="form-column">
                             <span class="input-txt">
@@ -121,8 +131,12 @@
                 </ul>
                 <hr class="hr-gray" />
                 <div class="btn-area">
-                    <button type="button" class="btn-s-white"><span>취소</span></button>
-                    <button type="button" class="btn-s-black"><span>저장</span></button>
+                    <button type="button" class="btn-s-white">
+                        <span>취소</span>
+                    </button>
+                    <button type="button" class="btn-s-black">
+                        <span>저장</span>
+                    </button>
                 </div>
             </div>
             <aside>

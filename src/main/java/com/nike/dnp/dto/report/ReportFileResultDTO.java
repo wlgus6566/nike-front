@@ -1,7 +1,9 @@
 package com.nike.dnp.dto.report;
 
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.util.ObjectUtils;
 
 import javax.validation.constraints.NotBlank;
 
@@ -59,7 +61,7 @@ public class ReportFileResultDTO {
      * @author [이소정]
      */
     @NotBlank(message = "report.file")
-    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리명", example = "/upload/report/path", required = true)
+    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리명", example = "http://cdnUrl/file/report/graphic_file_name.jpg", required = true)
     private String filePhysicalName;
 
     /**
@@ -101,7 +103,7 @@ public class ReportFileResultDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg")
+    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/report/graphic_file_name_detail_thumbnail.jpg")
     private String detailThumbnailFilePhysicalName;
 
 
@@ -124,8 +126,44 @@ public class ReportFileResultDTO {
      * 썸네일 파일 물리 명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_thumbnail.jpg")
+    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/report/graphic_file_name_thumbnail.jpg")
     private String thumbnailFilePhysicalName;
 
+
+    /**
+     * Gets detail thumbnail file physical name.
+     *
+     * @return the detail thumbnail file physical name
+     * @author [이소정]
+     * @implNote cdnUrl + detailThumbnailFilePhysicalName
+     * @since 2020. 7. 30. 오후 3:53:23
+     */
+    public String getDetailThumbnailFilePhysicalName() {
+        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName) ? detailThumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName);
+    }
+
+    /**
+     * Gets thumbnail file physical name.
+     *
+     * @return the thumbnail file physical name
+     * @author [이소정]
+     * @implNote
+     * @since 2020. 8. 14. 오후 7:48:12
+     */
+    public String getThumbnailFilePhysicalName() {
+        return ObjectUtils.isEmpty(thumbnailFilePhysicalName) ? thumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
+    }
+
+    /**
+     * Gets file physical name.
+     *
+     * @return the file physical name
+     * @author [이소정]
+     * @implNote
+     * @since 2020. 8. 14. 오후 7:50:15
+     */
+    public String getFilePhysicalName() {
+        return CloudFrontUtil.getCustomSignedUrl(filePhysicalName);
+    }
 
 }

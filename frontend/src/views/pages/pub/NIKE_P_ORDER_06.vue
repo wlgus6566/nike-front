@@ -84,7 +84,7 @@
                                 <th>
                                     <span class="checkbox">
                                         <input type="checkbox" />
-                                        <span></span>
+                                        <i></i>
                                     </span>
                                 </th>
                                 <th>구분</th>
@@ -101,7 +101,7 @@
                                 <td>
                                     <span class="checkbox">
                                         <input type="checkbox" />
-                                        <span></span>
+                                        <i></i>
                                     </span>
                                 </td>
                                 <td>부자재 > 운영 비품</td>
@@ -120,7 +120,7 @@
                                 <td>
                                     <span class="checkbox">
                                         <input type="checkbox" />
-                                        <span></span>
+                                        <i></i>
                                     </span>
                                 </td>
                                 <td>부자재 > 운영 비품</td>
@@ -139,7 +139,7 @@
                                 <td>
                                     <span class="checkbox">
                                         <input type="checkbox" />
-                                        <span></span>
+                                        <i></i>
                                     </span>
                                 </td>
                                 <td>부자재 > 운영 비품</td>

@@ -23,10 +23,12 @@ function getContentsViewFile(topMenuCode, menuCode, contentsSeq, params) {
 }
 
 function postContents(topMenuCode, menuCode, data) {
+    console.log('등록');
     return contents.post(`/${topMenuCode}/${menuCode}`, data);
 }
-function putContents(topMenuCode, menuCode, data) {
-    return contents.post(`/${topMenuCode}/${menuCode}`, data);
+function putContents(topMenuCode, menuCode, data, id) {
+    console.log('수정');
+    return contents.put(`/${topMenuCode}/${menuCode}/${id}`, data);
 }
 function deleteContents(topMenuCode, menuCode, contentsSeq) {
     return contents.delete(`/${topMenuCode}/${menuCode}/${contentsSeq}`);

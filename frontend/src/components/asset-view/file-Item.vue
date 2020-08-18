@@ -9,19 +9,22 @@
                         :disabled="contentsFileList && !contentsFileList.length"
                         @click="$emit('allCheckFn')"
                     />
-                    <span></span>
+                    <i></i>
                 </span>
-                <strong class="txt">전체선택</strong>
+                <strong class="txt" :class="{ 'fc-black': checkAll }">
+                    전체선택 (
+                    <em>{{ checkContentsFileList.length }}</em> /
+                    <em>{{ contentsFileListTotal }}</em>
+                    )
+                </strong>
             </label>
-            <p class="desc">
-                <span class="fc-black" v-if="checkAll">
-                    전체 파일이 선택됨
-                </span>
-                <span v-else>
-                    <em>{{ checkContentsFileList.length }}</em>
-                    개의 파일이 선택됨
-                </span>
-            </p>
+            <button
+                type="button"
+                class="txt-btn"
+                @click="$emit('addContBasket', checkContentsFileList)"
+            >
+                <span>선택 담기</span>
+            </button>
             <div class="right">
                 <FilterSelect :listSortSelect="orderType" />
                 <FilterSelect :listSortSelect="fileExtension" />
@@ -57,7 +60,7 @@
                                         )
                                     "
                                 />
-                                <span></span>
+                                <i></i>
                             </span>
                             <span class="thumbnail">
                                 <img
@@ -170,6 +173,7 @@ export default {
         'orderType',
         'fileExtension',
         'checkContentsFileList',
+        'contentsFileListTotal',
     ],
     created() {},
     computed: {
@@ -218,8 +222,12 @@ export default {
         },
         onStart(e) {
             const thumbnail = document.querySelector('.drag-item .thumbnail');
-            const left = e.originalEvent.pageX - e.item.offsetLeft - 60;
-            const top = e.originalEvent.pageY - e.item.offsetTop - 60;
+            const absoluteLeft =
+                window.pageXOffset + thumbnail.getBoundingClientRect().left;
+            const absoluteTop =
+                window.pageYOffset + thumbnail.getBoundingClientRect().top;
+            const left = e.originalEvent.pageX - absoluteLeft - 50;
+            const top = e.originalEvent.pageY - absoluteTop - 50;
             thumbnail.style.transform = `translate(${left}px,${top}px)`;
             this.$store.commit('SET_BASKET_ITEM_DRAG', true);
         },
@@ -265,7 +273,7 @@ export default {
 .drag-item {
     opacity: 1 !important;
     border: none !important;
-    background: none !important;
+    background: transparent !important;
 }
 .drag-item .list {
     padding: 0;

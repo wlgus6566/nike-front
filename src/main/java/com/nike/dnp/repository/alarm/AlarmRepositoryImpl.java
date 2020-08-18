@@ -2,8 +2,11 @@ package com.nike.dnp.repository.alarm;
 
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.alarm.AlarmResultDTO;
+import com.nike.dnp.dto.contents.ContentsFileResultDTO;
 import com.nike.dnp.entity.alarm.Alarm;
 import com.nike.dnp.entity.alarm.QAlarm;
+import com.nike.dnp.util.ObjectMapperUtil;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -51,15 +54,22 @@ public class AlarmRepositoryImpl extends QuerydslRepositorySupport implements Al
         final QAlarm qAlarm = QAlarm.alarm;
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 
-        final List<Alarm> alarmList = queryFactory.selectFrom(qAlarm)
-                .where(qAlarm.userSeq.eq(userSeq)).fetch();
+        JPAQuery<Alarm> query = queryFactory.selectFrom(qAlarm)
+                .where(qAlarm.userSeq.eq(userSeq));
+
+//        final List<Alarm> alarmList = queryFactory.selectFrom(qAlarm)
+//                .where(qAlarm.userSeq.eq(userSeq)).fetch();
+
+        final List<Alarm> alarmList = ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), Alarm.class);
 
         final List<AlarmResultDTO> alarmResultList = new ArrayList<>();
         for (final Alarm alarm : alarmList) {
             final AlarmResultDTO alarmResultDTO = new AlarmResultDTO();
+            alarmResultDTO.setAlarmSeq(alarm.getAlarmSeq());
             alarmResultDTO.setUserSeq(userSeq);
             alarmResultDTO.setTypeAction(alarm.getTypeAction());
             alarmResultDTO.setTypeCd(alarm.getTypeCd());
+            alarmResultDTO.setRegistrationDt(alarm.getRegistrationDt());
 
             if (ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(alarm.getTypeCd())) {
                 alarmResultDTO.setFolderSeq(alarm.getReport().getReportSeq());
@@ -67,11 +77,12 @@ public class AlarmRepositoryImpl extends QuerydslRepositorySupport implements Al
             } else {
                 alarmResultDTO.setFolderSeq(alarm.getContents().getContentsSeq());
                 alarmResultDTO.setFolderName(alarm.getContents().getFolderName());
+                alarmResultDTO.setMenuCode(alarm.getContents().getMenuCode());
             }
 
             alarmResultList.add(alarmResultDTO);
         }
 
-        return new PageImpl<>(alarmResultList, pageRequest, alarmResultList.size());
+        return new PageImpl<>(alarmResultList, pageRequest, query.fetchCount());
     }
 }

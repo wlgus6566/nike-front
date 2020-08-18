@@ -15,8 +15,8 @@
                             placeholder: 'YYYY.MM.DD',
                         }"
                         :attributes="attrs"
-                        :min-date="minDate()"
-                        :max-date="new Date()"
+                        :min-date="minDate('from')"
+                        :max-date="maxDate('from')"
                     />
                 </div>
                 <div class="date-picker">
@@ -28,8 +28,8 @@
                             placeholder: 'YYYY.MM.DD',
                         }"
                         :attributes="attrs"
-                        :min-date="minDate()"
-                        :max-date="new Date()"
+                        :min-date="minDate('to')"
+                        :max-date="maxDate('to')"
                     />
                 </div>
             </div>
@@ -49,9 +49,9 @@
 </template>
 
 <script>
-    import {getMyOrder, getMyOrderDetail} from '@/api/my-order';
+import { getMyOrder, getMyOrderDetail } from '@/api/my-order';
 
-    export default {
+export default {
     name: 'my-order',
     components: {
         MyOrder: () => import('@/components/my-order/index'),
@@ -92,10 +92,13 @@
     activated() {
         this.fetchData();
     },
-    mounted() {
-        //this.fetchData();
+    created() {
+        const minDate = new Date();
+        minDate.setMonth(minDate.getMonth() - 3);
+        const maxDate = new Date();
+        this.range.beginDt = minDate;
+        this.range.endDt = maxDate;
     },
-    created() {},
     watch: {
         make: {
             deep: true,
@@ -152,14 +155,28 @@
         // showOrderSheet() {
         //     this.visible.orderSheet = true;
         // },
-        minDate() {
-            const date = new Date();
-            date.setMonth(date.getMonth() - 3);
-            return date;
+        minDate(tt) {
+            if (tt === 'to') {
+                return this.range.beginDt;
+            }
+            if (tt === 'from') {
+                return null;
+            }
+        },
+        maxDate(tt) {
+            if (tt === 'to') {
+                return new Date();
+            }
+            if (tt === 'from') {
+                const date = Math.min(
+                    this.range.endDt.getTime(),
+                    new Date().getTime()
+                );
+                return date;
+            }
         },
         async fetchData() {
             this.loadingData = true;
-            console.log();
             try {
                 const {
                     data: { data: response },
@@ -169,6 +186,7 @@
                     beginDt: this.make.beginDt,
                     endDt: this.make.endDt,
                 });
+                console.log(response);
                 this.orderList = response.content;
                 this.loadingData = false;
             } catch (error) {

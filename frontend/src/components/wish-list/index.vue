@@ -12,7 +12,7 @@
                     v-model="checkWishItem"
                     @click="$emit('checkedWish', item.wishListSeq)"
                 />
-                <span></span>
+                <i></i>
             </span>
             <a href="#" class="title-box">
                 <span class="thumbnail">

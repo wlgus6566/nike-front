@@ -12,13 +12,13 @@
                                 ref="allCheck"
                                 @change="allAgreeCheck"
                             />
-                            <span></span>
+                            <i></i>
+                            <span class="txt"
+                                >서비스 이용약관 안내, 개인정보 처리방침에 대한
+                                안내를 모두 읽었으며 아래내용에 모두
+                                동의합니다.</span
+                            >
                         </span>
-                        <span class="txt"
-                            >서비스 이용약관 안내, 개인정보 처리방침에 대한
-                            안내를 모두 읽었으며 아래내용에 모두
-                            동의합니다.</span
-                        >
                     </label>
                 </div>
                 <div class="agree-list">
@@ -32,11 +32,11 @@
                                     ref="check1"
                                     @change="agreeCheck"
                                 />
-                                <span></span>
+                                <i></i>
+                                <span class="txt"
+                                    >약관을 읽었으며 이에 동의합니다.</span
+                                >
                             </span>
-                            <span class="txt"
-                                >약관을 읽었으며 이에 동의합니다.</span
-                            >
                         </label>
                         <div class="agree-content">
                             <div class="info">
@@ -92,11 +92,11 @@
                                     ref="check2"
                                     @change="agreeCheck"
                                 />
-                                <span></span>
+                                <i></i>
+                                <span class="txt"
+                                    >약관을 읽었으며 이에 동의합니다.</span
+                                >
                             </span>
-                            <span class="txt"
-                                >약관을 읽었으며 이에 동의합니다.</span
-                            >
                         </label>
                         <div class="agree-content">
                             <div class="info">
