@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- //todo swiper-->
-        <ul class="sorting-tab">
+        <ul class="sorting-tab line2">
             <li class="active" v-for="codeList in categoryCodeList.listSortOptions">
                 <a href="#" v-on:click="tabChange(codeList.value)">{{codeList.label}}</a>
             </li>

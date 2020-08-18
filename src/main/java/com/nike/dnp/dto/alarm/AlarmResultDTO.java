@@ -87,4 +87,11 @@ public class AlarmResultDTO {
     @ApiModelProperty(name = "registrationDt", value = "최초 작성일", hidden = true)
     private LocalDateTime registrationDt;
 
+    /**
+     * 2depth 메뉴 코드
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "menuCode", value = "2depth 메뉴 코드")
+    private String menuCode;
 }

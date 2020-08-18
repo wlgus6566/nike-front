@@ -85,7 +85,7 @@ public class ContentsFileSaveDTO {
      * @author [이소정]
      */
     @ApiModelProperty(name = "fileSize", value = "파일 사이즈", example = "1200")
-    private Long fileSize;
+    private Long fileSize = 0l;
 
     /**
      * 파일 물리 명

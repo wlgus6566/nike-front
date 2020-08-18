@@ -52,6 +52,7 @@ const routes = [
                 component: pages('mypage/notice-detail.vue'),
                 meta: {
                     layout: 'Default',
+                    detail: true,
                     depth: '/mypage/customer',
                 },
             },
