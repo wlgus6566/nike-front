@@ -2,12 +2,12 @@
     <div>
         <div class="sorting-area">
             <p class="total">전체 <strong>({{totalElements}})</strong></p>
-            <div class="search-input" v-bind:class="{ active: isActive }"> <!-- active 추가하면 검색 화면 보임 -->
+            <div class="search-input" v-bind:class="{ active: isActive }">
                 <div class="input-box">
-                    <input type="text" placeholder="검색어를 입력해주세요." v-model="keyword"/>
-                    <button type="button" class="search" v-on:click="searchInputActive"><span>검색</span></button>
+                    <input type="text" placeholder="검색어를 입력해주세요." @keyup.enter="searchInputActive" v-model="keyword"/>
+                    <button type="button" class="search" @click="searchInputActive"><span>검색</span></button>
                 </div>
-                <div class="btn-txt" v-on:click="searchInputInactive"><span>취소</span></div>
+                <div class="btn-txt" @click="searchInputInactive"><span>취소</span></div>
             </div>
         </div>
         <ul class="notice-list">
@@ -69,11 +69,16 @@ export default {
             }
         },
         searchInputActive: function (event) {
-            this.isActive = true;
+            if (this.isActive) {
+                this.getNoticeList();
+            } else {
+                this.isActive = true;
+            }
         },
         searchInputInactive: function (event) {
             this.isActive = false;
             this.keyword = "";
+            this.getNoticeList();
         },
         handleCurrentChange(val) {
             this.page = val;
