@@ -17,8 +17,12 @@
                     {{ tabMenuData.menuName }}
                 </h1>
                 <div class="btn-box" v-if="$route.meta.detail">
-                    <button type="button" class="btn-txt">삭제</button>
-                    <button type="button" class="btn-txt">수정</button>
+                    <button type="button" class="btn-txt" @click="delFn">
+                        삭제
+                    </button>
+                    <button type="button" class="btn-txt" @click="modiFn">
+                        수정
+                    </button>
                 </div>
                 <NavItem
                     v-if="!$route.meta.detail"
@@ -46,6 +50,11 @@ export default {
         NavItem,
     },
     methods: {
+        delFn() {
+            console.log(this.$route.meta.topCode);
+            console.log(this.$route.params.id);
+        },
+        modiFn() {},
         async tabMenuFn() {
             const titleValue = this.$route.path.split('/')[1];
             this.tabMenuData = this.$store.state.menuData.filter(el => {

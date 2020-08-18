@@ -4,6 +4,7 @@ const routes = [
     {
         path: '/report',
         component: pages('report/index.vue'),
+        redirect: '/report/upload/',
         children: [
             {
                 path: 'upload',
@@ -26,6 +27,7 @@ const routes = [
                 component: pages('report/detail-view.vue'),
                 meta: {
                     layout: 'Default',
+                    topCode: 'report',
                     detail: true,
                 },
             },
