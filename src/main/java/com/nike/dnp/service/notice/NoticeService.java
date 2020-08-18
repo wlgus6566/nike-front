@@ -7,12 +7,14 @@ import com.nike.dnp.entity.notice.NoticeArticle;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.notice.NoticeRepository;
+import com.nike.dnp.util.FileUtil;
 import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.ObjectMapperUtil;
 import com.nike.dnp.util.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -42,12 +44,8 @@ public class NoticeService {
      */
     private final NoticeRepository noticeRepository;
 
-    /**
-     * The Notice max count
-     *
-     * @author [정주희]
-     */
-    private final long NOTICE_MAX_COUNT = 3L;
+    @Value("${nike.file.editorUrl:}")
+    private String editorUrl;
 
     /**
      * Find notice pages page.
@@ -121,6 +119,8 @@ public class NoticeService {
 
         final long count = Math.toIntExact(noticeRepository.checkNoticeYnCnt());
 
+        final long NOTICE_MAX_COUNT = 3L;
+
         if (count >= NOTICE_MAX_COUNT) {
             throw new CodeMessageHandleException(FailCode.ConfigureError.EXCEED_MAX_NOTICE.name(),
                     MessageUtil.getMessage(FailCode.ConfigureError.EXCEED_MAX_NOTICE.name()));
@@ -176,14 +176,18 @@ public class NoticeService {
         log.info("NoticeService.uploadEditorImages");
 
         MultipartFile mf = multiReq.getFile("editor");
+
+        final String ext = org.springframework.util.StringUtils.getFilenameExtension(mf.getOriginalFilename());
+        final String awsPath = "editor/" + noticeArticleSectionCode + "/" + FileUtil.makeFileName() + "." + ext;
+
         String uploadUrl = null;
         try {
-            uploadUrl = S3Util.upload(mf, noticeArticleSectionCode);
+            uploadUrl = S3Util.editorUpload(mf, awsPath);
         } catch (IOException e) {
             e.printStackTrace(); //code exception
         }
 
-        return uploadUrl;
+        return editorUrl + uploadUrl;
     }
 
     private void checkNoticeYn(final String code, final String isYn){
