@@ -1,25 +1,25 @@
 <template>
     <div class="filter-select">
         <button type="button" @click="modalSelect">
-            {{ selectList.value }}
+            {{ cascaderList.value }}
         </button>
         <ListmModal
-            :selectList="selectList"
+            :cascaderList="cascaderList"
             :showList="showList"
             @closeModal="closeModal"
         />
     </div>
 </template>
 <script>
-import ListmModal from '@/components/filter-select/list-modal';
+import ListmModal from '@/components/cascader-select/list-modal';
 export default {
-    name: 'filter-select',
+    name: 'cascader-select',
     data() {
         return {
             showList: false,
         };
     },
-    props: ['selectList'],
+    props: ['cascaderList'],
     components: {
         ListmModal,
     },

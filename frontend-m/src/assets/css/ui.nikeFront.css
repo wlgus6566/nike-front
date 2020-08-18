@@ -175,6 +175,7 @@
 .main-update-list {
     display: flex;
     margin: 15px -20px 0;
+    overflow-x: auto;
 }
 
 .update-list-item {
@@ -762,7 +763,9 @@
 }
 .sorting-tab {
     display: flex;
-    margin-top: 15px;
+    margin: 15px -20px 0;
+    padding: 0 20px;
+    overflow-x: auto;
 }
 .sorting-tab li {
     flex: 0 0 auto;
@@ -1526,4 +1529,7 @@
     font-size: 14px;
     line-height: 16px;
     color: #888;
+}
+.filter-select + .filter-select {
+    margin-left: 15px;
 }
