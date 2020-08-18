@@ -57,7 +57,10 @@ export default {
     methods: {
         menuFn() {
             const menu = this.$store.state.menuData.filter(
-                el => el.menuCode !== 'MYPAGE' && el.menuCode !== 'HOME'
+                el =>
+                    el.menuCode !== 'MYPAGE' &&
+                    el.menuCode !== 'HOME' &&
+                    el.mobileYn === 'Y'
             );
             this.menuData = menu;
             // console.log(this.menuData);

@@ -11,14 +11,10 @@
         </div>
         <hr />
         <ul class="my-menu">
-            <li
-                v-for="(menu, index) in myMenuData.menus"
-                :key="index"
-                v-if="menu.mobileYn === 'Y'"
-            >
+            <li v-for="(menu, index) in myMenuData.menus" :key="index">
                 <strong class="title">{{ menu.menuName }}</strong>
                 <ul v-if="menu.menus">
-                    <li v-for="depth in menu.menus">
+                    <li v-for="(depth, index) in menu.menus" :key="index">
                         <router-link :to="depth.menuPathUrl">{{
                             depth.menuName
                         }}</router-link>
@@ -45,7 +41,7 @@ export default {
     methods: {
         myMenuFn() {
             const menu = this.$store.state.menuData.filter(
-                el => el.menuCode === 'MYPAGE'
+                el => el.menuCode === 'MYPAGE' && el.mobileYn === 'Y'
             );
             this.myMenuData = menu[0];
         },

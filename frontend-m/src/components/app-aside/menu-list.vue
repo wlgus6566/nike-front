@@ -1,10 +1,6 @@
 <template>
     <ul class="menu-list" v-if="menuData">
-        <li
-            v-for="menu in menuData"
-            :key="menu.menuSeq"
-            v-if="menu.mobileYn === 'Y'"
-        >
+        <li v-for="menu in menuData" :key="menu.menuSeq">
             <button type="button">
                 <span>{{ menu.menuName }}</span>
             </button>
