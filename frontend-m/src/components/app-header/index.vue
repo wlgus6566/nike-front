@@ -16,7 +16,7 @@
                 <h1 class="page-title" v-if="!$route.meta.detail">
                     {{ tabMenuData.menuName }}
                 </h1>
-                <div class="btn-box" v-if="$route.meta.detail">
+                <div class="btn-box" v-if="$route.meta.detail.btn">
                     <button type="button" class="btn-txt" @click="delFn">
                         삭제
                     </button>

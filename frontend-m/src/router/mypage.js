@@ -53,7 +53,10 @@ const routes = [
                 meta: {
                     layout: 'Default',
                     topCode: 'notice',
-                    detail: true,
+                    detail: {
+                        show: true,
+                        btn: false,
+                    },
                     depth: '/mypage/customer',
                 },
             },
@@ -71,7 +74,10 @@ const routes = [
                 meta: {
                     layout: 'Default',
                     topCode: 'news',
-                    detail: true,
+                    detail: {
+                        show: true,
+                        btn: false,
+                    },
                     depth: '/mypage/customer',
                 },
             },

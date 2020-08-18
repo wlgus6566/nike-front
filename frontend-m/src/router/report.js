@@ -28,7 +28,10 @@ const routes = [
                 meta: {
                     layout: 'Default',
                     topCode: 'report',
-                    detail: true,
+                    detail: {
+                        show: true,
+                        btn: true,
+                    },
                 },
             },
         ],
