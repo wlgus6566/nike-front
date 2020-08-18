@@ -171,7 +171,10 @@ public class ContentsService {
         // 컨텐츠 파일 저장
         final List<ContentsFile> savedContentsFileList = new ArrayList<>();
         if (!ObjectUtils.isEmpty(contentsSaveDTO.getContentsFileList()) && !contentsSaveDTO.getContentsFileList().isEmpty()) {
-            for (final ContentsFileSaveDTO contentsFileSaveDTO : contentsSaveDTO.getContentsFileList()) {
+            // 비어있는 파일이 있는지 확인
+            List<ContentsFileSaveDTO> checkedFileList = this.checkAndRemoveFile(contentsSaveDTO.getContentsFileList());
+
+            for (final ContentsFileSaveDTO contentsFileSaveDTO : checkedFileList) {
                 this.checkContentsFileValidation(contentsFileSaveDTO);
                 final ContentsFile savedContentsFile = contentsFileRepository.save(
                         new ContentsFile().save(savedContents.getContentsSeq(), this.s3FileCopySave(contentsFileSaveDTO))
@@ -320,7 +323,7 @@ public class ContentsService {
         for (ContentsFile contentsFile : beforeFileList) {
             notUseFileList.add(contentsFile);
         }
-        final List<ContentsFileSaveDTO> newFileList = contentsSaveDTO.getContentsFileList();
+        List<ContentsFileSaveDTO> newFileList = this.checkAndRemoveFile(contentsSaveDTO.getContentsFileList());
 
         // 기존에 있는 파일 목록과 DTO받은 파일 목록 비교해서
         // case1.기본목록O, 새로운목록X : useYn = 'N' update
@@ -558,6 +561,38 @@ public class ContentsService {
         }
     }
 
+
+    /**
+     * Check and remove file list.
+     *
+     * @param contentsFileList the contents file list
+     * @return the list
+     * @author [이소정]
+     * @implNote 파일, 동영상 아무것도 선택하지 않은 경우 저장하지 않고 pass
+     * @since 2020. 8. 14. 오후 9:36:19
+     */
+    public List<ContentsFileSaveDTO> checkAndRemoveFile(final List<ContentsFileSaveDTO> contentsFileList) {
+        List<ContentsFileSaveDTO> checkedContentsFileList = new ArrayList<>();
+        if (!ObjectUtils.isEmpty(contentsFileList) && !contentsFileList.isEmpty()) {
+            for (ContentsFileSaveDTO contentsFileSaveDTO : contentsFileList) {
+                checkedContentsFileList.add(contentsFileSaveDTO);
+            }
+
+
+            for (ContentsFileSaveDTO contentsFile : contentsFileList) {
+                if (ObjectUtils.isEmpty(contentsFile.getFileName())
+                        && 0 == contentsFile.getFileSize()
+                        && ObjectUtils.isEmpty(contentsFile.getFilePhysicalName())
+                        && ObjectUtils.isEmpty(contentsFile.getTitle())
+                        && ObjectUtils.isEmpty(contentsFile.getUrl())) {
+                    checkedContentsFileList.remove(contentsFile);
+                }
+            }
+
+        }
+        return checkedContentsFileList;
+    }
+
     /**
      * Check contents file validation.
      *
@@ -571,14 +606,13 @@ public class ContentsService {
         // 파일 종류가 FILE인 경우 파일 정보 필수
         if (ServiceCode.ContentsFileKindCode.FILE.toString().equals(contentsFileSaveDTO.getFileKindCode())) {
             // 새로 등록한 파일 인 경우에만 validation check
-            if (!ObjectUtils.isEmpty(contentsFileSaveDTO.getFilePhysicalName()) && contentsFileSaveDTO.getFilePhysicalName().contains("/temp/")) {
-                if (ObjectUtils.isEmpty(contentsFileSaveDTO.getFileName())
-                        || Objects.isNull(contentsFileSaveDTO.getFileSize())
-                        || ObjectUtils.isEmpty(contentsFileSaveDTO.getFilePhysicalName())) {
+                if ((ObjectUtils.isEmpty(contentsFileSaveDTO.getContentsFileSeq()) || 0l == contentsFileSaveDTO.getContentsFileSeq())
+                        && (ObjectUtils.isEmpty(contentsFileSaveDTO.getFileName())
+                            || Objects.isNull(contentsFileSaveDTO.getFileSize())
+                            || ObjectUtils.isEmpty(contentsFileSaveDTO.getFilePhysicalName()))) {
                     throw new CodeMessageHandleException(FailCode.ConfigureError.SELECT_FILE.name(),
                             MessageUtil.getMessage(FailCode.ConfigureError.SELECT_FILE.name()));
                 }
-            }
         } else {
             // 파일 종류가 VIDEO/VR 인 경우 타이틀, url 필수
             if (ObjectUtils.isEmpty(contentsFileSaveDTO.getTitle())) {

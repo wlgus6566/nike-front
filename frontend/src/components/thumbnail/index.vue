@@ -12,12 +12,15 @@
                 <img v-if="cropImg" :src="cropImg" :alt="imgName" />
             </span>
             <span class="txt" v-if="cropImg">
-                썸네일 이미지 재등록
+                <slot name="txt"></slot>
             </span>
-            <span class="txt" v-else>썸네일 이미지 등록</span>
+            <span class="txt" v-else>
+                <slot name="txt-up"></slot>
+            </span>
         </label>
 
         <cropperModal
+            ref="test"
             :visible.sync="visible.cropperModal"
             :imgSrc="this.imgSrc"
             :cropImg="this.cropImg"
@@ -30,7 +33,7 @@
 
 <script>
 import 'cropperjs/dist/cropper.css';
-const Compress = require('compress.js');
+import Compress from 'compress.js';
 import cropperModal from './cropperModal';
 
 export default {
@@ -43,10 +46,14 @@ export default {
             imgSrc: null,
             cropImg: null,
             imgName: null,
+            width: 1000,
+            height: 1000,
         };
     },
     mounted() {
         this.cropImg = this.imageBase64;
+        this.height = this.imgHeight;
+        this.width = this.imgWidth;
     },
     activated() {
         this.cropImg = this.imageBase64;
@@ -60,7 +67,7 @@ export default {
         },
     },
     components: { cropperModal },
-    props: ['imageBase64', 'imageFileName', 'size'],
+    props: ['imageBase64', 'imageFileName', 'size', 'imgHeight', 'imgWidth'],
 
     computed: {},
     methods: {
@@ -75,20 +82,21 @@ export default {
                 alert('Please select an image file');
                 return;
             }
-            const compress = new Compress();
-            compress
+
+            new Compress()
                 .compress([file], {
                     size: 4, // the max size in MB, defaults to 2MB
                     quality: 1, // the quality of the image, max is 1,
-                    maxWidth: 1000, // the max width of the output image, defaults to 1920px
-                    maxHeight: 1000, // the max height of the output image, defaults to 1920px
+                    maxWidth: this.width, // the max width of the output image, defaults to 1920px
+                    maxHeight: this.height, // the max height of the output image, defaults to 1920px
                     resize: true, // defaults to true, set false if you do not want to resize the image width and height
                 })
                 .then((data) => {
-                    const url = `${data[0].prefix}${data[0].data}`;
+                    this.popupOpen();
+                    let url = `${data[0].prefix}${data[0].data}`;
                     this.imgSrc = url;
                     this.imgName = file.name;
-                    this.popupOpen();
+                    this.$refs.test.test(url);
                 })
                 .catch((e) => {
                     console.log(e);

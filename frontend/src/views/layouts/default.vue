@@ -63,14 +63,13 @@
 <script>
 import Sticky from 'vue-sticky-directive';
 import { gsap, Cubic, TimelineLite } from 'gsap/all';
-
 import appHeader from '@/components/app-header';
-
+import { getGnbMenu } from '@/api/mypage';
 export default {
     name: 'LayoutDefault',
-    created() {},
     data() {
         return {
+            lnb: [],
             tw: new TimelineLite({ paused: true }),
             newRoutePath: '',
             oldRoutePath: '',
@@ -104,15 +103,22 @@ export default {
         AsideOrder: () => import('@/components/app-aside/order.vue'),
         AsideReport: () => import('@/components/app-aside/report.vue'),
     },
-    mounted() {
-        this.activeSet();
-        this.headerAni();
-        this.toggleHeader(this.headerActiveNav, this.tw._dur);
-        const target = [document.querySelector('header .inner')];
-        this.asideAnimation(target, '-100%', '0%');
+    created() {
+        this.gnbMenuList();
     },
-
     methods: {
+        async gnbMenuList() {
+            try {
+                await this.$store.dispatch('gnbMenuList');
+                this.activeSet();
+                this.headerAni();
+                this.toggleHeader(this.headerActiveNav, this.tw._dur);
+                const target = [document.querySelector('header .inner')];
+                this.asideAnimation(target, '-100%', '0%');
+            } catch (e) {
+                console.log(e);
+            }
+        },
         activeSet() {
             this.activeLink = document.querySelector(
                 `.depth1 > a[href='${this.$route.matched[0].path}']`
@@ -122,12 +128,15 @@ export default {
                 this.activeUl = this.activeLink.nextSibling;
             }
         },
-        headerAni() {
+        headerAni(headerActiveNav) {
             const header = document.querySelector('header');
             const logo = header.querySelector('h1');
             const bg = header.querySelector('.header-bg');
             const nav = header.querySelector('nav');
-            const anchor = nav.querySelector('.depth1 > .router-link-active');
+            const anchor = headerActiveNav
+                ? headerActiveNav
+                : nav.querySelector('.depth1 > .router-link-active');
+            console.log(anchor);
             let parentN = null;
             let ul = null;
             if (anchor) {
@@ -260,7 +269,8 @@ export default {
                 this.oldRoutePath.split('/')[1]
             ) {
                 if (this.headerActiveNav) {
-                    this.headerAni();
+                    console.log();
+                    this.headerAni(this.headerActiveNav);
                 }
                 this.toggleHeader(this.headerActiveNav);
             }

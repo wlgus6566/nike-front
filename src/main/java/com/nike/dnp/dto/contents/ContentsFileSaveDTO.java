@@ -166,7 +166,7 @@ public class ContentsFileSaveDTO {
      *
      * @author [이소정]
      */
-    @NotEmpty(message = "contentsFile.fileOrder")
+    @NotNull(message = "contentsFile.fileOrder")
     @ApiModelProperty(name = "fileOrder", value = "파일 순서", example = "1")
     private Long fileOrder;
 

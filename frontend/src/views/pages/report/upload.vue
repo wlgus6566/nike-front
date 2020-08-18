@@ -16,7 +16,14 @@
                         @cropImage="cropImage"
                         :imageBase64="reportDetailData.imageFilePhysicalName"
                         :imageFileName="reportDetailData.imageFileName"
-                    />
+                    >
+                        <template slot="txt-up">
+                            썸네일 이미지 등록
+                        </template>
+                        <template slot="txt">
+                            썸네일 이미지 재등록
+                        </template>
+                    </thumbnail>
                 </li>
                 <li class="form-row">
                     <div class="form-column">
@@ -35,10 +42,10 @@
                                     :name="reportSection.name"
                                     :value="radio.value"
                                 />
-                                <span></span>
-                            </span>
-                            <span>
-                                {{ radio.title }}
+                                <i></i>
+                                <span class="txt">
+                                    {{ radio.title }}
+                                </span>
                             </span>
                         </label>
                     </div>
@@ -74,7 +81,7 @@
                                             <label>
                                                 <span class="checkbox">
                                                     <input type="checkbox" />
-                                                    <span></span>
+                                                    <i></i>
                                                 </span>
                                                 <span class="txt">
                                                     P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg
@@ -88,7 +95,7 @@
                                             <label>
                                                 <span class="checkbox">
                                                     <input type="checkbox" />
-                                                    <span></span>
+                                                    <i></i>
                                                 </span>
                                                 <span class="txt"
                                                     >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
@@ -99,7 +106,7 @@
                                             <label>
                                                 <span class="checkbox">
                                                     <input type="checkbox" />
-                                                    <span></span>
+                                                    <i></i>
                                                 </span>
                                                 <span class="txt"
                                                     >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
@@ -110,7 +117,7 @@
                                             <label>
                                                 <span class="checkbox">
                                                     <input type="checkbox" />
-                                                    <span></span>
+                                                    <i></i>
                                                 </span>
                                                 <span class="txt"
                                                     >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span

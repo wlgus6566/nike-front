@@ -5,90 +5,279 @@
         </h2>
         <h3 class="form-title mt20">메인 비주얼 등록</h3>
         <hr class="hr-black" />
-        <ul class="form-list">
-            <li class="form-row">
-                <div class="form-column">
-                    <label class="label-title required">TITLE</label>
-                </div>
-                <div class="form-column">
-                    <input type="text" />
-                </div>
-            </li>
-            <li class="form-row">
-                <div class="form-column">
-                    <label class="label-title required">DESCRIPTION</label>
-                </div>
-                <div class="form-column">
-                    <span class="textarea">
-                        <textarea cols="100" rows="2"></textarea>
-                    </span>
-                </div>
-            </li>
-            <li class="form-row">
-                <div class="form-column">
-                    <label class="label-title required">이미지 등록</label>
-                </div>
-                <div class="form-column">
-                    <div class="main-visual-upload">
-                        <span class="thumb-file file-upload pc-upload">
-                            <input type="file" />
-                            <span class="thumb"> </span>
-                            <span class="txt">
-                                PC 이미지 등록
-                                <span class="sub">
-                                    권장 사이즈는 최소 1600*800,<br />
-                                    최대 3200*1600입니다.
-                                </span>
-                            </span>
-                        </span>
-                        <span class="thumb-file mobile-upload">
-                            <input type="file" />
-                            <span class="thumb"> </span>
-                            <span class="txt">
-                                Mobile 이미지 등록
-                                <span class="sub">
-                                    권장 사이즈는 최소 1200*1200,<br />
-                                    최대 4000*4000입니다.
-                                </span>
-                            </span>
+        <form action="" @submit.prevent="addBanner">
+            <ul class="form-list">
+                <li class="form-row">
+                    <div class="form-column">
+                        <label class="label-title required">TITLE</label>
+                    </div>
+                    <div class="form-column">
+                        <input type="text" v-model="bannerData.title" />
+                    </div>
+                </li>
+                <li class="form-row">
+                    <div class="form-column">
+                        <label class="label-title required">DESCRIPTION</label>
+                    </div>
+                    <div class="form-column">
+                        <span class="textarea">
+                            <textarea v-model="bannerData.contents"></textarea>
                         </span>
                     </div>
-                </div>
-            </li>
-            <li class="form-row">
-                <div class="form-column">
-                    <label class="label-title required">연결 URL (PC)</label>
-                </div>
-                <div class="form-column">
-                    <div class="main-visual-upload">
-                        <label class="check-label">
-                            <span class="radio">
-                                <input type="radio" name="url" checked />
-                                <span></span>
-                            </span>
-                            <span>기본(ASSET > ALL 메뉴로 연결)</span>
-                        </label>
-                        <label class="check-label">
-                            <span class="radio">
-                                <input type="radio" name="url" />
-                                <span></span>
-                            </span>
-                            <span>URL 입력</span>
-                        </label>
+                </li>
+                <li class="form-row">
+                    <div class="form-column">
+                        <label class="label-title required">이미지 등록</label>
                     </div>
-                </div>
-            </li>
-        </ul>
-        <hr class="hr-gray" />
-        <div class="btn-area">
-            <button type="button" class="btn-s-white"><span>취소</span></button>
-            <button type="button" class="btn-s-black"><span>저장</span></button>
-        </div>
+                    <div class="form-column">
+                        <div class="main-visual-upload">
+                            <span
+                                class="thumb-file pc-upload"
+                                :class="{
+                                    'file-upload':
+                                        bannerData.imageFilePhysicalName,
+                                }"
+                            >
+                                <input
+                                    type="file"
+                                    ref="pcBanner"
+                                    @change="imageChange($event, 'pc')"
+                                />
+                                <span class="thumb">
+                                    <img
+                                        :src="bannerData.imageFilePhysicalName"
+                                        :alt="
+                                            pcFormFile.detailThumbnailFileName
+                                        "
+                                        v-if="bannerData.imageFilePhysicalName"
+                                    />
+                                </span>
+                                <span class="txt">
+                                    PC 이미지 등록
+                                    <span class="sub">
+                                        권장 사이즈는 최소 1600*800,<br />
+                                        최대 3200*1600입니다.
+                                    </span>
+                                </span>
+                            </span>
+                            <span
+                                class="thumb-file mobile-upload"
+                                :class="{
+                                    'file-upload':
+                                        bannerData.mobileImageFileName,
+                                }"
+                                ref="moBanner"
+                            >
+                                <input
+                                    type="file"
+                                    @change="imageChange($event, 'mo')"
+                                />
+                                <span class="thumb">
+                                    <img
+                                        :src="
+                                            bannerData.mobileImageFilePhysicalName
+                                        "
+                                        :alt="
+                                            moFormFile.detailThumbnailFileName
+                                        "
+                                        v-if="
+                                            bannerData.mobileImageFilePhysicalName
+                                        "
+                                    />
+                                </span>
+                                <span class="txt">
+                                    Mobile 이미지 등록
+                                    <span class="sub">
+                                        권장 사이즈는 최소 1200*1200,<br />
+                                        최대 4000*4000입니다.
+                                    </span>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li class="form-row">
+                    <div class="form-column">
+                        <label class="label-title required"
+                            >연결 URL (PC)</label
+                        >
+                    </div>
+                    <div class="form-column">
+                        <div class="main-visual-upload">
+                            <label
+                                class="check-label"
+                                v-for="(radio, index) in urlCheck.checkItem"
+                                :key="index"
+                            >
+                                <span class="radio">
+                                    <input
+                                        type="radio"
+                                        v-model="urlCheck.value"
+                                        :name="urlCheck.name"
+                                        :value="radio.value"
+                                    />
+                                    <i></i>
+                                    <span class="txt">
+                                        {{ radio.title }}
+                                        {{ urlCheck.value }}
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <li class="form-row" v-if="urlCheck.value === 'N'">
+                    <div class="form-column">
+                        <label class="label-title required">URL</label>
+                    </div>
+                    <div class="form-column">
+                        <input type="text" v-model="bannerData.linkUrl" />
+                    </div>
+                </li>
+            </ul>
+            <hr class="hr-gray" />
+            <div class="btn-area">
+                <button type="button" class="btn-s-white">
+                    <span>취소</span>
+                </button>
+                <button type="submit" class="btn-s-black">
+                    <span>저장</span>
+                </button>
+            </div>
+        </form>
     </div>
 </template>
 <script>
+import { postBanner } from '@/api/banner';
+import { fileUpLoad } from '@/api/file';
 export default {
     name: 'visual',
+    data() {
+        return {
+            bannerData: {
+                contents: '',
+                imageFileName: '',
+                imageFilePhysicalName: '',
+                linkUrl: '',
+                linkUrlTypeCode: 'ASSET',
+                mobileImageFileName: '',
+                mobileImageFilePhysicalName: '',
+                title: '',
+            },
+            pcFormFile: [],
+            moFormFile: [],
+            urlCheck: {
+                checkItem: [
+                    { value: 'ASSET', title: '기본(ASSET > ALL 메뉴로 연결)' },
+                    { value: 'N', title: 'URL 입력' },
+                ],
+                name: 'url',
+                value: 'ASSET',
+            },
+            aa: '',
+        };
+    },
+    components: {},
+    watch: {
+        'urlCheck.value'(val) {
+            if (val !== 'ASSET') {
+                this.bannerData.linkUrlTypeCode = null;
+            } else {
+                this.bannerData.linkUrlTypeCode = val;
+            }
+        },
+    },
+    methods: {
+        imageChange(e, device) {
+            this.uploadFiles(e.target.files[0], device);
+            if (device === 'pc') {
+                const imaName = e.target.files[0].name;
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    this.bannerData.imageFilePhysicalName = reader.result;
+                    this.bannerData.imageFileName = imaName;
+                };
+                if (e.target.files[0]) {
+                    reader.readAsDataURL(e.target.files[0]);
+                } else {
+                    this.bannerData.imageFilePhysicalName = '';
+                    this.bannerData.imageFileName = '';
+                }
+            } else {
+                const imaName = e.target.files[0].name;
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    this.bannerData.mobileImageFilePhysicalName = reader.result;
+                    this.bannerData.mobileImageFileName = imaName;
+                };
+                if (e.target.files[0]) {
+                    reader.readAsDataURL(e.target.files[0]);
+                } else {
+                    this.bannerData.mobileImageFilePhysicalName = '';
+                    this.bannerData.mobileImageFileName = '';
+                }
+            }
+        },
+
+        async uploadFiles(file, device) {
+            console.log(device);
+            const formData = new FormData();
+            formData.append('uploadFile', file, file.name);
+            try {
+                const {
+                    data: { data: response },
+                } = await fileUpLoad(formData);
+                if (device === 'pc') {
+                    this.pcFormFile = response;
+                    console.log(this.pcFormFile);
+                } else {
+                    this.moFormFile = response;
+                    console.log(this.moFormFile);
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+        async addBanner() {
+            try {
+                const response = await postBanner({
+                    contents: this.bannerData.contents,
+                    imageFileName: this.pcFormFile.detailThumbnailFileName,
+                    imageFilePhysicalName: this.pcFormFile
+                        .detailThumbnailFilePhysicalName,
+                    imageFileSize: this.pcFormFile.detailThumbnailFileSize,
+                    linkUrl: this.bannerData.linkUrl,
+                    linkUrlTypeCode: 'ASSET',
+                    mobileImageFileName: this.moFormFile
+                        .detailThumbnailFileName,
+                    mobileImageFilePhysicalName: this.moFormFile
+                        .detailThumbnailFilePhysicalName,
+                    mobileImageFileSize: this.moFormFile.fileSize,
+                    title: this.bannerData.title,
+                });
+                alert(response.data.msg);
+                await this.$router.push('/');
+                this.bannerData = {
+                    contents: '',
+                    imageFileName: '',
+                    imageFilePhysicalName: '',
+                    linkUrl: '',
+                    linkUrlTypeCode: 'ASSET',
+                    mobileImageFileName: '',
+                    mobileImageFilePhysicalName: '',
+                    title: '',
+                };
+                this.pcFormFile = [];
+                this.moFormFile = [];
+            } catch (error) {
+                console.log(error);
+                if (error.data.existMsg) {
+                    alert(error.data.msg);
+                }
+            }
+        },
+    },
 };
 </script>
 <style scoped></style>

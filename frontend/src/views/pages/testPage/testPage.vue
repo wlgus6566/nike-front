@@ -6,7 +6,6 @@
     </div>
 </template>
 <script>
-import testModal from '@/components/modal-comp/testmodal';
 import deepmerge from 'deepmerge';
 export default {
     data() {

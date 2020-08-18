@@ -4,6 +4,7 @@ import com.nike.dnp.common.validation.ValidationGroups;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.GroupSequence;
 import javax.validation.constraints.NotBlank;
 
 
@@ -11,8 +12,8 @@ import javax.validation.constraints.NotBlank;
  * UserCertDTO
  *
  * @author [오지훈]
- * @since 2020. 6. 22. 오후 12:14:01
  * @implNote User(유저) 패스워드 설정 DTO 작성
+ * @since 2020. 6. 22. 오후 12:14:01
  */
 @Getter
 @Setter
@@ -27,7 +28,7 @@ public class UserCertDTO {
      * @author [오지훈]
      */
     @NotBlank(message = "userCert.certCode",
-            groups = {ValidationGroups.Group3.class})
+            groups = {ValidationGroups.Group1.class})
     @ApiModelProperty(value = "인증 코드", name = "certCode"
             , example = "y1v0LCq93KX05pR%2FWw3zF65hK%2FCOqYTZDdIXzM0BsC97m%2Fg1QcY1sCZAEvuTFgmcVg3a8J6xDFalUNjUfmmtu5sWZuI%3D")
     private String certCode;
@@ -48,8 +49,8 @@ public class UserCertDTO {
      * @author [오지훈]
      */
     @NotBlank(message = "userCert.newPassword",
-            groups = {ValidationGroups.Group1.class})
-    @ApiModelProperty(value = "새로운 비밀번호", name = "newPassword", example = "Emotion1!@")
+            groups = {ValidationGroups.Group3.class})
+    @ApiModelProperty(value = "새 비밀번호", name = "newPassword", example = "Emotion1!@")
     private String newPassword;
 
     /**
@@ -58,8 +59,49 @@ public class UserCertDTO {
      * @author [오지훈]
      */
     @NotBlank(message = "userCert.confirmPassword",
-            groups = {ValidationGroups.Group1.class})
-    @ApiModelProperty(value = "확인 비밀번호", name = "confirmPassword", example = "Emotion1!@")
+            groups = {ValidationGroups.Group4.class})
+    @ApiModelProperty(value = "새 비밀번호(확인)", name = "confirmPassword", example = "Emotion1!@")
     private String confirmPassword;
+
+
+    /**
+     * The interface Set password.
+     *
+     * @author [오지훈]
+     * @implNote Login 비밀번호 설정 Validation Group
+     * @since 2020. 8. 14. 오후 5:23:08
+     */
+    @GroupSequence({ValidationGroups.Group1.class, ValidationGroups.Group3.class, ValidationGroups.Group4.class})
+    public interface SetPassword {}
+
+    /**
+     * The interface Change password.
+     *
+     * @author [오지훈]
+     * @implNote Login 비밀번호 변경 Validation Group
+     * @since 2020. 8. 14. 오후 5:23:08
+     */
+    @GroupSequence({ValidationGroups.Group1.class, ValidationGroups.Group2.class, ValidationGroups.Group3.class, ValidationGroups.Group4.class})
+    public interface ChangePassword {}
+
+    /**
+     * The interface Check cert.
+     *
+     * @author [오지훈]
+     * @implNote Login 인증코드 검증 Validation Group
+     * @since 2020. 8. 14. 오후 5:23:08
+     */
+    @GroupSequence({ValidationGroups.Group1.class})
+    public interface CheckCert {}
+
+    /**
+     * The interface My change password.
+     *
+     * @author [오지훈]
+     * @implNote Mypage 비밀번호 변경 Validation Group
+     * @since 2020. 8. 14. 오후 5:23:08
+     */
+    @GroupSequence({ValidationGroups.Group2.class, ValidationGroups.Group3.class, ValidationGroups.Group4.class})
+    public interface MyChangePassword {}
 
 }

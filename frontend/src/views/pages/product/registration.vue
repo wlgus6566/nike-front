@@ -13,7 +13,14 @@
                         @cropImage="cropImage"
                         :imageBase64="detailData.imageFilePhysicalName"
                         :imageFileName="detailData.imageFileName"
-                    />
+                    >
+                        <template slot="txt-up">
+                            썸네일 이미지 등록
+                        </template>
+                        <template slot="txt">
+                            썸네일 이미지 재등록
+                        </template>
+                    </thumbnail>
                 </li>
                 <li class="form-row">
                     <div class="form-column">
@@ -32,11 +39,11 @@
                                     :name="exposure.name"
                                     :value="radio.value"
                                 />
-                                <span></span>
-                            </span>
-                            <span>
-                                {{ radio.title }}
-                                {{ exposure.value }}
+                                <i></i>
+                                <span class="txt">
+                                    {{ radio.title }}
+                                    {{ exposure.value }}
+                                </span>
                             </span>
                         </label>
                     </div>

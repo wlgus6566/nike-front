@@ -2,18 +2,19 @@ package com.nike.dnp.controller.alarm;
 
 import com.nike.dnp.dto.SearchDTO;
 import com.nike.dnp.dto.alarm.AlarmResultDTO;
+import com.nike.dnp.entity.alarm.Alarm;
+import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.alarm.AlarmService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * The Class Alarm controller.
@@ -83,6 +84,14 @@ public class AlarmController {
         return responseService.getSingleResult(alarmService.findAllPaging(searchDTO));
     }
 
+
+    @ApiOperation(value="알림 삭제")
+    @DeleteMapping(name = "알림 삭제", value = "/{alarmSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<Alarm> deleteContents(
+            @ApiParam(name = "alarmSeq", value = "알림 시퀀스", defaultValue = "4", required = true) @PathVariable final Long alarmSeq
+    ) {
+        return responseService.getSingleResult(alarmService.delete(alarmSeq));
+    }
 
 }
 

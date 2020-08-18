@@ -65,7 +65,11 @@ export default {
         VueCropper,
     },
     methods: {
+        test(url) {
+            this.$refs.cropper.replace(url);
+        },
         crop() {
+            console.log(this.$refs.cropper);
             this.$emit(
                 'cropImage',
                 this.$refs.cropper.getCroppedCanvas().toDataURL()

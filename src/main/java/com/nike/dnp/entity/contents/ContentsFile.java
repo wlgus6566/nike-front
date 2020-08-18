@@ -227,41 +227,41 @@ public class ContentsFile extends BaseTimeEntity {
     @ApiModelProperty(name = "contents", value = "The Contents", hidden = true)
     private Contents contents;
 
-    /**
-     * Gets file physical name.
-     *
-     * @return the file physical name
-     * @author [이소정]
-     * @implNote cdnUrl + filePhysicalName
-     * @since 2020. 7. 30. 오후 3:49:08
-     */
-    public String getFilePhysicalName() {
-        return ObjectUtils.isEmpty(filePhysicalName) ? filePhysicalName : CloudFrontUtil.getCustomSignedUrl(filePhysicalName);
-    }
-
-    /**
-     * Gets thumbnail file physical name.
-     *
-     * @return the thumbnail file physical name
-     * @author [이소정]
-     * @implNote cdnUrl + thumbnailFilePhysicalName
-     * @since 2020. 7. 30. 오후 3:49:08
-     */
-    public String getThumbnailFilePhysicalName() {
-        return ObjectUtils.isEmpty(thumbnailFilePhysicalName) ? thumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
-    }
-
-    /**
-     * Gets detail thumbnail file physical name.
-     *
-     * @return the detail thumbnail file physical name
-     * @author [이소정]
-     * @implNote cdnUrl + detailThumbnailFilePhysicalName
-     * @since 2020. 7. 30. 오후 3:49:08
-     */
-    public String getDetailThumbnailFilePhysicalName() {
-        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName) ? detailThumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName);
-    }
+//    /**
+//     * Gets file physical name.
+//     *
+//     * @return the file physical name
+//     * @author [이소정]
+//     * @implNote cdnUrl + filePhysicalName
+//     * @since 2020. 7. 30. 오후 3:49:08
+//     */
+//    public String getFilePhysicalName() {
+//        return ObjectUtils.isEmpty(filePhysicalName) ? filePhysicalName : CloudFrontUtil.getCustomSignedUrl(filePhysicalName);
+//    }
+//
+//    /**
+//     * Gets thumbnail file physical name.
+//     *
+//     * @return the thumbnail file physical name
+//     * @author [이소정]
+//     * @implNote cdnUrl + thumbnailFilePhysicalName
+//     * @since 2020. 7. 30. 오후 3:49:08
+//     */
+//    public String getThumbnailFilePhysicalName() {
+//        return ObjectUtils.isEmpty(thumbnailFilePhysicalName) ? thumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
+//    }
+//
+//    /**
+//     * Gets detail thumbnail file physical name.
+//     *
+//     * @return the detail thumbnail file physical name
+//     * @author [이소정]
+//     * @implNote cdnUrl + detailThumbnailFilePhysicalName
+//     * @since 2020. 7. 30. 오후 3:49:08
+//     */
+//    public String getDetailThumbnailFilePhysicalName() {
+//        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName) ? detailThumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName);
+//    }
 
 
     /**

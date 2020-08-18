@@ -46,24 +46,12 @@ const routes = [
                 },
             },
             {
-                path: '*/:id',
+                path: ':id',
                 component: pages('report/detail-view'),
                 meta: {
                     layout: 'Default',
                     aside: 'Report',
                     topMenuCode: 'REPORT 상세',
-                },
-                beforeEnter: (to, from, next) => {
-                    const menuCodeArr = ['sp', 'su', 'fa', 'ho'];
-                    const findMenuCode = menuCodeArr.findIndex(
-                        (el) => el === to.params.pathMatch
-                    );
-                    if (findMenuCode !== -1) {
-                        to.meta.menuCode = menuCodeArr[findMenuCode];
-                        next();
-                    } else {
-                        next('404'); //todo 404 만들기
-                    }
                 },
             },
         ],

@@ -1,6 +1,12 @@
 <template>
-    <div class="file-setting">
-        {{ file.progress }}
+    <li class="file-setting">
+        <transition name="fade">
+            <span
+                class="progress"
+                v-if="file.progress && file.progress !== 100"
+                :style="{ width: `${file.progress}%` }"
+            ></span>
+        </transition>
         <ul class="form-list">
             <li class="form-row">
                 <div class="form-column">
@@ -76,20 +82,15 @@
         >
             <span>삭제</span>
         </button>
-    </div>
+    </li>
 </template>
 <script>
-import UploadFile from './upload-file';
 export default {
     name: 'file-item',
-    data() {
-        return {};
-    },
     props: {
         file: Object,
         listLength: Number,
     },
-    components: { UploadFile },
 };
 </script>
 <style scoped>
@@ -108,5 +109,21 @@ export default {
     font-size: 14px;
     line-height: 30px;
     flex: 1 1 auto;
+}
+.file-setting .progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 10px;
+    background: Red;
+}
+.fade-enter-active,
+.fade-leave-active {
+    transition: all 1s;
+}
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
 }
 </style>
