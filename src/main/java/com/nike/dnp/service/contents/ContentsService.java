@@ -333,7 +333,7 @@ public class ContentsService {
                 && !ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
             for (final ContentsFile beforeFile : beforeFileList) {
                 for (final ContentsFileSaveDTO newFile : newFileList) {
-                    if (beforeFile.getContentsFileSeq() == newFile.getContentsFileSeq()) {
+                    if (beforeFile.getContentsFileSeq().equals(newFile.getContentsFileSeq())) {
                         notUseFileList.remove(beforeFile);
                     }
                 }
@@ -581,7 +581,7 @@ public class ContentsService {
 
             for (ContentsFileSaveDTO contentsFile : contentsFileList) {
                 if (ObjectUtils.isEmpty(contentsFile.getFileName())
-                        && 0 == contentsFile.getFileSize()
+                        && 0l == contentsFile.getFileSize()
                         && ObjectUtils.isEmpty(contentsFile.getFilePhysicalName())
                         && ObjectUtils.isEmpty(contentsFile.getTitle())
                         && ObjectUtils.isEmpty(contentsFile.getUrl())) {

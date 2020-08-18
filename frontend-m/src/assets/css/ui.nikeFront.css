@@ -1537,3 +1537,6 @@
     line-height: 16px;
     color: #888;
 }
+.filter-select + .filter-select {
+    margin-left: 15px;
+}

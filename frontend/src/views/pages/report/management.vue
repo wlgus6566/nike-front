@@ -111,6 +111,7 @@ export default {
             this.getReport();
         },
     },
+
     methods: {
         //권한 조회
         async authCacheList() {
