@@ -6,9 +6,8 @@
             }"
             v-for="(val, index) in options"
             :key="index"
-            @click="selectedFn(val.label)"
         >
-            <span>{{ val.label }}</span>
+            <span @click="selectedFn(val.label)">{{ val.label }}</span>
             <ListItem
                 v-if="val.children"
                 :cascaderList="cascaderList"
@@ -42,11 +41,11 @@ export default {
     font-size: 14px;
     color: #000;
 }
-.select-options-list li.selected {
+.select-options-list li.selected > span {
     color: #fa5400;
     font-weight: bold;
 }
-.select-options-list li.selected span:after {
+.select-options-list li.selected > span:after {
     content: '';
     display: inline-block;
     width: 4px;
