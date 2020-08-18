@@ -8,7 +8,7 @@
             @sectionCodeChange="sectionCodeChange"
         />
         <template v-if="historyFolderData">
-            <FolderList
+            <MyFolderList
                 v-if="historyFolderData.length"
                 :listTypes="listTypes"
                 :folderListData="historyFolderData"
@@ -25,13 +25,13 @@
 </template>
 
 <script>
-    import {historyFolderViewList} from '@/api/mypage';
-    import SortingList from '@/components/asset-view/sorting-list.vue';
-    import FolderList from '@/components/folder-list';
-    import Loading from '@/components/loading';
-    import NoData from '@/components/no-data';
+import { historyFolderViewList } from '@/api/mypage';
+import SortingList from '@/components/asset-view/sorting-list.vue';
+import MyFolderList from '@/components/my-folder-list';
+import Loading from '@/components/loading';
+import NoData from '@/components/no-data';
 
-    export default {
+export default {
     name: 'latest',
     data() {
         return {
@@ -93,7 +93,7 @@
     mounted() {},
     components: {
         SortingList,
-        FolderList,
+        MyFolderList,
         Loading,
         NoData,
     },

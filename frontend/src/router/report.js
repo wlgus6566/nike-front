@@ -1,4 +1,4 @@
-import {pages} from '@/utils/global-methods';
+import { pages } from '@/utils/global-methods';
 
 const routes = [
     {
@@ -11,26 +11,17 @@ const routes = [
                 component: pages('report/upload.vue'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
-                    title: 'REPORT UPLOAD',
+                    aside: 'Report',
+                    title: 'REPORT <span class="ko">업로드</span>',
                 },
             },
             {
-                path: 'management',
-                component: pages('report/management.vue'),
+                path: '*/modify/:id',
+                component: pages('report/upload'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
-                    title: 'REPORT 관리',
-                },
-            },
-            {
-                path: '*/:id',
-                component: pages('report/detail-view'),
-                meta: {
-                    layout: 'Default',
-                    aside: 'Order',
-                    topMenuCode: 'REPORT 상세',
+                    aside: 'Report',
+                    topMenuCode: 'REPORT <span class="ko">업로드 수정</span>',
                 },
                 beforeEnter: (to, from, next) => {
                     const menuCodeArr = ['sp', 'su', 'fa', 'ho'];
@@ -43,6 +34,24 @@ const routes = [
                     } else {
                         next('404'); //todo 404 만들기
                     }
+                },
+            },
+            {
+                path: 'management',
+                component: pages('report/management.vue'),
+                meta: {
+                    layout: 'Default',
+                    aside: 'Report',
+                    title: 'REPORT <span class="ko">관리</span>',
+                },
+            },
+            {
+                path: ':id',
+                component: pages('report/detail-view'),
+                meta: {
+                    layout: 'Default',
+                    aside: 'Report',
+                    topMenuCode: 'REPORT 상세',
                 },
             },
         ],

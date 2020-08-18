@@ -1,9 +1,11 @@
 package com.nike.dnp.service.report;
 
 import com.nike.dnp.common.variable.FailCode;
+import com.nike.dnp.dto.report.ReportAnswerResultDTO;
 import com.nike.dnp.dto.report.ReportAnswerSaveDTO;
 import com.nike.dnp.entity.report.ReportAnswer;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.report.ReportAnswerRepository;
 import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
@@ -43,9 +45,9 @@ public class ReportAnswerService {
      * @implNote 보고서 피드백 전체 목록 조회
      * @since 2020. 7. 10. 오후 6:48:57
      */
-    public List<ReportAnswer> findAll(final Long reportSeq) {
+    public List<ReportAnswerResultDTO> findAll(final Long reportSeq) {
         log.info("ReportAnswerService.findAll");
-        return reportAnswerRepository.findAllByReportSeqAndUseYn(reportSeq, "Y");
+        return reportAnswerRepository.findAllReportAnswerList(reportSeq);
     }
 
 
@@ -78,7 +80,7 @@ public class ReportAnswerService {
     public ReportAnswer delete(final Long answerSeq) {
         log.info("ReportAnswerService.delete");
         final Optional<ReportAnswer> reportAnswer = this.findById(answerSeq);
-        reportAnswer.ifPresent(value -> value.updateUseYn("Y"));
+        reportAnswer.ifPresent(value -> value.updateUseYn("N"));
         return reportAnswer.get();
 
     }
@@ -95,6 +97,6 @@ public class ReportAnswerService {
     public Optional<ReportAnswer> findById(final Long answerSeq) {
         log.info("ReportAnswerService.findById");
         return Optional.ofNullable(reportAnswerRepository.findById(answerSeq).orElseThrow((
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())))));
+                () -> new NotFoundHandleException())));
     }
 }

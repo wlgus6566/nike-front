@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 import java.util.Locale;
@@ -225,62 +227,41 @@ public class ContentsFile extends BaseTimeEntity {
     @ApiModelProperty(name = "contents", value = "The Contents", hidden = true)
     private Contents contents;
 
-    /**
-     * The constant cdnUrl.
-     *
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
-    private static String cdnUrl;
-
-    /**
-     * Sets cdn url.
-     *
-     * @param cdnUrl the cdn url
-     * @author [이소정]
-     * @implNote cdnUrl 셋팅
-     * @since 2020. 7. 30. 오후 3:49:08
-     */
-    @Value("${nike.file.cdnUrl:}")
-    public void setCdnUrl(final String cdnUrl) {
-        this.cdnUrl = cdnUrl;
-    }
-
-    /**
-     * Gets file physical name.
-     *
-     * @return the file physical name
-     * @author [이소정]
-     * @implNote cdnUrl + filePhysicalName
-     * @since 2020. 7. 30. 오후 3:49:08
-     */
-    public String getFilePhysicalName() {
-        return this.cdnUrl + filePhysicalName;
-    }
-
-    /**
-     * Gets thumbnail file physical name.
-     *
-     * @return the thumbnail file physical name
-     * @author [이소정]
-     * @implNote cdnUrl + thumbnailFilePhysicalName
-     * @since 2020. 7. 30. 오후 3:49:08
-     */
-    public String getThumbnailFilePhysicalName() {
-        return this.cdnUrl + thumbnailFilePhysicalName;
-    }
-
-    /**
-     * Gets detail thumbnail file physical name.
-     *
-     * @return the detail thumbnail file physical name
-     * @author [이소정]
-     * @implNote cdnUrl + detailThumbnailFilePhysicalName
-     * @since 2020. 7. 30. 오후 3:49:08
-     */
-    public String getDetailThumbnailFilePhysicalName() {
-        return this.cdnUrl + detailThumbnailFilePhysicalName;
-    }
+//    /**
+//     * Gets file physical name.
+//     *
+//     * @return the file physical name
+//     * @author [이소정]
+//     * @implNote cdnUrl + filePhysicalName
+//     * @since 2020. 7. 30. 오후 3:49:08
+//     */
+//    public String getFilePhysicalName() {
+//        return ObjectUtils.isEmpty(filePhysicalName) ? filePhysicalName : CloudFrontUtil.getCustomSignedUrl(filePhysicalName);
+//    }
+//
+//    /**
+//     * Gets thumbnail file physical name.
+//     *
+//     * @return the thumbnail file physical name
+//     * @author [이소정]
+//     * @implNote cdnUrl + thumbnailFilePhysicalName
+//     * @since 2020. 7. 30. 오후 3:49:08
+//     */
+//    public String getThumbnailFilePhysicalName() {
+//        return ObjectUtils.isEmpty(thumbnailFilePhysicalName) ? thumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
+//    }
+//
+//    /**
+//     * Gets detail thumbnail file physical name.
+//     *
+//     * @return the detail thumbnail file physical name
+//     * @author [이소정]
+//     * @implNote cdnUrl + detailThumbnailFilePhysicalName
+//     * @since 2020. 7. 30. 오후 3:49:08
+//     */
+//    public String getDetailThumbnailFilePhysicalName() {
+//        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName) ? detailThumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName);
+//    }
 
 
     /**
@@ -305,7 +286,7 @@ public class ContentsFile extends BaseTimeEntity {
         contentsFile.setUseYn("Y");
         contentsFile.setContentsSeq(contentsSeq);
 
-        boolean isFile = ServiceCode.ContentsFileKindCode.FILE.toString().equals(fileKindCode);
+        boolean isFile = ServiceCode.ContentsFileKindCode.FILE.toString().equals(contentsFileSaveDTO.getFileKindCode());
 
         contentsFile.setFileSectionCode(contentsFileSaveDTO.getFileSectionCode());
         contentsFile.setFileKindCode(contentsFileSaveDTO.getFileKindCode());
@@ -350,18 +331,43 @@ public class ContentsFile extends BaseTimeEntity {
         this.fileContentType = isFile ? contentsFileSaveDTO.getFileContentType() : null;
         this.fileExtension = isFile ? contentsFileSaveDTO.getFileExtension().toUpperCase(Locale.KOREA) : null;
 
-        this.fileName = isFile ? contentsFileSaveDTO.getFileName() : null;
-        this.fileSize = isFile ? contentsFileSaveDTO.getFileSize() : null;
-        this.filePhysicalName = isFile ? contentsFileSaveDTO.getFilePhysicalName() : null;
-        this.thumbnailFileName = isFile ? contentsFileSaveDTO.getThumbnailFileName() : null;
-        this.thumbnailFileSize = isFile ? contentsFileSaveDTO.getThumbnailFileSize() : null;
-        this.thumbnailFilePhysicalName = isFile ? contentsFileSaveDTO.getThumbnailFilePhysicalName() : null;
-        this.detailThumbnailFileName = isFile ? contentsFileSaveDTO.getDetailThumbnailFileName() : null;
-        this.detailThumbnailFileSize = isFile ? contentsFileSaveDTO.getDetailThumbnailFileSize() : null;
-        this.detailThumbnailFilePhysicalName = isFile ? contentsFileSaveDTO.getDetailThumbnailFilePhysicalName() : null;
+        if (this.checkTempFile(contentsFileSaveDTO.getFilePhysicalName())) {
+            this.fileName = isFile ? contentsFileSaveDTO.getFileName() : null;
+            this.fileSize = isFile ? contentsFileSaveDTO.getFileSize() : null;
+            this.filePhysicalName = isFile ? contentsFileSaveDTO.getFilePhysicalName() : null;
+        }
+
+        if (this.checkTempFile(contentsFileSaveDTO.getThumbnailFilePhysicalName())) {
+            this.thumbnailFileName = isFile ? contentsFileSaveDTO.getThumbnailFileName() : null;
+            this.thumbnailFileSize = isFile ? contentsFileSaveDTO.getThumbnailFileSize() : null;
+            this.thumbnailFilePhysicalName = isFile ? contentsFileSaveDTO.getThumbnailFilePhysicalName() : null;
+        }
+
+        if (this.checkTempFile(contentsFileSaveDTO.getDetailThumbnailFilePhysicalName())) {
+            this.detailThumbnailFileName = isFile ? contentsFileSaveDTO.getDetailThumbnailFileName() : null;
+            this.detailThumbnailFileSize = isFile ? contentsFileSaveDTO.getDetailThumbnailFileSize() : null;
+            this.detailThumbnailFilePhysicalName = isFile ? contentsFileSaveDTO.getDetailThumbnailFilePhysicalName() : null;
+        }
 
         this.title = !isFile ? contentsFileSaveDTO.getTitle() : null;
         this.url = isFile ? null : contentsFileSaveDTO.getUrl();
+    }
+
+    /**
+     * Check temp file boolean.
+     *
+     * @param physicalName the physical name
+     * @return the boolean
+     * @author [이소정]
+     * @implNote temp 파일 여부 확인
+     * @since 2020. 8. 13. 오후 6:06:44
+     */
+    public boolean checkTempFile(final String physicalName) {
+        if (!ObjectUtils.isEmpty(physicalName) && physicalName.contains("/temp/")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

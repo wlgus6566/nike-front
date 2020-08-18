@@ -3,6 +3,7 @@ package com.nike.dnp.service.contents;
 import com.nike.dnp.common.mail.MailService;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
@@ -13,16 +14,17 @@ import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.entity.user.UserContents;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
 import com.nike.dnp.service.alarm.AlarmService;
+import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.history.HistoryService;
 import com.nike.dnp.service.user.UserContentsService;
 import com.nike.dnp.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -107,6 +109,8 @@ public class ContentsService {
      */
     private final UserAuthRepository userAuthRepository;
 
+    private final AuthService authService;
+
 
     /**
      * Find all paging page.
@@ -141,6 +145,8 @@ public class ContentsService {
                                 ? Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).ascending() : Sort.by(ServiceCode.SearchEnumCode.LATEST.getValue()).descending()));
     }
 
+
+
     /**
      * Save contents.
      *
@@ -164,8 +170,11 @@ public class ContentsService {
 
         // 컨텐츠 파일 저장
         final List<ContentsFile> savedContentsFileList = new ArrayList<>();
-        if (!contentsSaveDTO.getContentsFileList().isEmpty()) {
-            for (final ContentsFileSaveDTO contentsFileSaveDTO : contentsSaveDTO.getContentsFileList()) {
+        if (!ObjectUtils.isEmpty(contentsSaveDTO.getContentsFileList()) && !contentsSaveDTO.getContentsFileList().isEmpty()) {
+            // 비어있는 파일이 있는지 확인
+            List<ContentsFileSaveDTO> checkedFileList = this.checkAndRemoveFile(contentsSaveDTO.getContentsFileList());
+
+            for (final ContentsFileSaveDTO contentsFileSaveDTO : checkedFileList) {
                 this.checkContentsFileValidation(contentsFileSaveDTO);
                 final ContentsFile savedContentsFile = contentsFileRepository.save(
                         new ContentsFile().save(savedContents.getContentsSeq(), this.s3FileCopySave(contentsFileSaveDTO))
@@ -176,10 +185,12 @@ public class ContentsService {
         savedContents.setContentsFileList(savedContentsFileList);
 
         // 사용자 컨텐츠 권한 저장
-        this.saveUserContentsAuth(savedContents.getContentsSeq(), contentsSaveDTO.getChecks());
+        List<UserContentsSaveDTO.AuthCheckDTO> saveCheckList = new ArrayList<>();
+        List<UserContentsSaveDTO.AuthCheckDTO> transformAuthDTOList = this.transformAuthList(saveCheckList, contentsSaveDTO.getChecks());
+        this.saveUserContentsAuth(savedContents.getContentsSeq(), transformAuthDTOList);
 
         // 권한 그룹에 알림 전송
-        this.sendAlarm(savedContents.getContentsSeq(), contentsSaveDTO, ServiceCode.AlarmActionEnumCode.NEW.toString());
+        this.sendAlarm(savedContents.getContentsSeq(), contentsSaveDTO, transformAuthDTOList, ServiceCode.AlarmActionEnumCode.NEW.toString());
 
         // 최근 업로드 목록 추가
         historyService.saveRecentUploadHistory(savedContents.getContentsSeq(), contentsSaveDTO.getTopMenuCode());
@@ -187,17 +198,56 @@ public class ContentsService {
         return savedContents;
     }
 
+
+    /**
+     * Transform auth list list.
+     *
+     * @param saveCheckList the save check list
+     * @param checkList     the check list
+     * @return the list
+     * @author [이소정]
+     * @implNote 권한 목록 형식 변환
+     * @since 2020. 8. 14. 오후 2:59:37
+     */
+    public List<UserContentsSaveDTO.AuthCheckDTO> transformAuthList(
+            final List<UserContentsSaveDTO.AuthCheckDTO> saveCheckList, final List<AuthReturnDTO> checkList
+    ) {
+        if (!ObjectUtils.isEmpty(checkList) && !checkList.isEmpty()) {
+            for (AuthReturnDTO authReturnDTO : checkList) {
+                if ("Y".equals(authReturnDTO.getViewYn()) && "Y".equals(authReturnDTO.getCheckBoxYn())) {
+                    UserContentsSaveDTO.AuthCheckDTO checkDTO = new UserContentsSaveDTO.AuthCheckDTO();
+                    checkDTO.setAuthSeq(authReturnDTO.getAuthSeq());
+                    checkDTO.setDetailAuthYn(authReturnDTO.getDetailAuthYn());
+                    checkDTO.setEmailReceptionYn(authReturnDTO.getEmailReceptionYn());
+                    saveCheckList.add(checkDTO);
+                }
+
+                if (!ObjectUtils.isEmpty(authReturnDTO.getSubAuths()) && !authReturnDTO.getSubAuths().isEmpty()) {
+                    this.transformAuthList(saveCheckList, authReturnDTO.getSubAuths());
+                }
+            }
+        }
+
+        return saveCheckList;
+    }
+
     /**
      * Send alarm.
      *
-     * @param contentSeq      the content seq
-     * @param contentsSaveDTO the contents save dto
-     * @param actionEnumCode  the action enum code
+     * @param contentSeq           the content seq
+     * @param contentsSaveDTO      the contents save dto
+     * @param transformAuthDTOList the transform auth dto list
+     * @param actionEnumCode       the action enum code
      * @author [이소정]
      * @implNote 노출인 경우 > 권한 그룹에 알림 전송
      * @since 2020. 8. 3. 오후 2:52:57
      */
-    public void sendAlarm(final Long contentSeq, final ContentsSaveDTO contentsSaveDTO, final String actionEnumCode) {
+    public void sendAlarm(
+            final Long contentSeq
+            , final ContentsSaveDTO contentsSaveDTO
+            , final List<UserContentsSaveDTO.AuthCheckDTO> transformAuthDTOList
+            , final String actionEnumCode
+    ) {
         log.info("ContentsService.sendAlarm");
         if ("Y".equals(contentsSaveDTO.getExposureYn())) {
             alarmService.sendAlarmTargetList(
@@ -205,7 +255,7 @@ public class ContentsService {
                     , contentsSaveDTO.getTopMenuCode()
                     , contentSeq
                     , null
-                    , this.findAllAuthUser(contentsSaveDTO.getChecks()));
+                    , this.findAllAuthUser(transformAuthDTOList));
         }
 
     }
@@ -226,13 +276,19 @@ public class ContentsService {
         log.info("ContentsService.findByContentsSeq");
         final Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
         final Contents findContents = contents.orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name())));
+                () -> new NotFoundHandleException());
         findContents.updateReadCount(findContents.getReadCount());
 
         // history 저장
         historyService.saveViewHistory(contentsSeq, topMenuCode);
 
-        return ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
+        // 권한 목록 조회
+        UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
+        userContentsSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
+        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+        ContentsResultDTO contentsResultDTO = ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
+        contentsResultDTO.setChecks(authService.getAuthList(userContentsSearchDTO));
+        return contentsResultDTO;
     }
 
     /**
@@ -254,20 +310,27 @@ public class ContentsService {
         final Optional<Contents> contents = this.findById(contentsSaveDTO.getContentsSeq());
 
         // 썸네일 base64 -> file 정보로 변환
-        this.base64ToFile(contentsSaveDTO);
+        if(!ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64()) && contentsSaveDTO.getImageBase64().contains("base64")){
+            this.base64ToFile(contentsSaveDTO);
+        }
 
         contents.ifPresent(value -> value.update(contentsSaveDTO));
 
         // contents File
         final List<ContentsFile> beforeFileList = contentsFileRepository.findByContentsSeqAndUseYn(contentsSaveDTO.getContentsSeq(), "Y");
-        final List<ContentsFile> notUseFileList = beforeFileList;
-        final List<ContentsFileSaveDTO> newFileList = contentsSaveDTO.getContentsFileList();
+
+        final List<ContentsFile> notUseFileList = new ArrayList<>();
+        for (ContentsFile contentsFile : beforeFileList) {
+            notUseFileList.add(contentsFile);
+        }
+        List<ContentsFileSaveDTO> newFileList = this.checkAndRemoveFile(contentsSaveDTO.getContentsFileList());
 
         // 기존에 있는 파일 목록과 DTO받은 파일 목록 비교해서
         // case1.기본목록O, 새로운목록X : useYn = 'N' update
         // case2.기존목록X, 새로운목록O : save
         // case3.기존목록O, 새로운목록O : update
-        if (!beforeFileList.isEmpty() && !newFileList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(beforeFileList) && !beforeFileList.isEmpty()
+                && !ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
             for (final ContentsFile beforeFile : beforeFileList) {
                 for (final ContentsFileSaveDTO newFile : newFileList) {
                     if (beforeFile.getContentsFileSeq() == newFile.getContentsFileSeq()) {
@@ -277,7 +340,7 @@ public class ContentsService {
             }
         }
 
-        if (!newFileList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
             for (final ContentsFileSaveDTO contentsFileSaveDTO : newFileList) {
                 final Long contentsFileSeq = null != contentsFileSaveDTO.getContentsFileSeq() ? contentsFileSaveDTO.getContentsFileSeq() : 0l;
                 final Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
@@ -295,7 +358,7 @@ public class ContentsService {
             }
         }
 
-        if (!notUseFileList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(notUseFileList) && !notUseFileList.isEmpty()) {
             for (final ContentsFile contentsFile : notUseFileList) {
                 contentsFile.updateUseYn("N");
                 // 관련 콘텐츠 장바구니 삭제
@@ -313,9 +376,11 @@ public class ContentsService {
         }
 
         // 사용자 컨텐츠 권한 저장
-        this.saveUserContentsAuth(contentsSaveDTO.getContentsSeq(), contentsSaveDTO.getChecks());
+        List<UserContentsSaveDTO.AuthCheckDTO> saveCheckList = new ArrayList<>();
+        List<UserContentsSaveDTO.AuthCheckDTO> transformAuthDTOList = this.transformAuthList(saveCheckList, contentsSaveDTO.getChecks());
+        this.saveUserContentsAuth(contentsSaveDTO.getContentsSeq(), transformAuthDTOList);
         // 권한 그룹에 알림 전송
-        this.sendAlarm(contentsSaveDTO.getContentsSeq(), contentsSaveDTO, ServiceCode.AlarmActionEnumCode.UPDATE.toString());
+        this.sendAlarm(contentsSaveDTO.getContentsSeq(), contentsSaveDTO, transformAuthDTOList, ServiceCode.AlarmActionEnumCode.UPDATE.toString());
 
         return contents.get();
     }
@@ -363,7 +428,7 @@ public class ContentsService {
 
         // 관련 콘텐츠 파일 삭제
         final List<ContentsFile> contentsFileList = contents.get().getContentsFileList();
-        if (!contentsFileList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(contentsFileList) && !contentsFileList.isEmpty()) {
             for (final ContentsFile contentsFile : contentsFileList) {
                 contentsFile.updateUseYn("N");
                 // 관련 콘텐츠 장바구니 삭제
@@ -411,7 +476,7 @@ public class ContentsService {
     public Optional<Contents> findById(final Long contentsSeq) {
         log.info("ContentsService.findById");
         return Optional.ofNullable(contentsRepository.findById(contentsSeq).orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+                () -> new NotFoundHandleException()));
     }
 
     /**
@@ -450,7 +515,7 @@ public class ContentsService {
         List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsMailSendDTO.getContentsSeq());
 
         // 이메일 발송
-        if (!emailAuthUserList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(emailAuthUserList) && !emailAuthUserList.isEmpty()) {
             for (final ContentsUserEmailDTO userEmailDTO : emailAuthUserList) {
                 final SendDTO sendDTO = new SendDTO();
                 sendDTO.setEmail(userEmailDTO.getUserId());
@@ -478,16 +543,54 @@ public class ContentsService {
      */
     public void checkContentsValidation(final ContentsSaveDTO contentsSaveDTO) {
         log.info("ContentsService.checkContentsValidation");
+        // 등록인 경우, base64 필수
+        if (ObjectUtils.isEmpty(contentsSaveDTO.getContentsSeq()) && ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
+            throw new CodeMessageHandleException(FailCode.ConfigureError.NULL_FOLDER_IMAGE.name(),
+                    MessageUtil.getMessage(FailCode.ConfigureError.NULL_FOLDER_IMAGE.name()));
+        }
+
         // 날짜 선택(CampaignPeriodSectionCode = SELECT) 인 경우 시작, 종료 날짜 필수
         if (contentsSaveDTO.getCampaignPeriodSectionCode().equals(ServiceCode.ContentsCampaignPeriodCode.SELECT.toString())) {
-            if (StringUtils.isBlank(contentsSaveDTO.getCampaignBeginDt())) {
+            if (ObjectUtils.isEmpty(contentsSaveDTO.getCampaignBeginDt())) {
                 throw new CodeMessageHandleException(FailCode.ConfigureError.SELECT_CAMPAIGN_BEGIN_DT.name(),
                         MessageUtil.getMessage(FailCode.ConfigureError.SELECT_CAMPAIGN_BEGIN_DT.name()));
-            } else if (StringUtils.isBlank(contentsSaveDTO.getCampaignEndDt())) {
+            } else if (ObjectUtils.isEmpty(contentsSaveDTO.getCampaignEndDt())) {
                 throw new CodeMessageHandleException(FailCode.ConfigureError.SELECT_CAMPAIGN_END_DT.name(),
                         MessageUtil.getMessage(FailCode.ConfigureError.SELECT_CAMPAIGN_END_DT.name()));
             }
         }
+    }
+
+
+    /**
+     * Check and remove file list.
+     *
+     * @param contentsFileList the contents file list
+     * @return the list
+     * @author [이소정]
+     * @implNote 파일, 동영상 아무것도 선택하지 않은 경우 저장하지 않고 pass
+     * @since 2020. 8. 14. 오후 9:36:19
+     */
+    public List<ContentsFileSaveDTO> checkAndRemoveFile(final List<ContentsFileSaveDTO> contentsFileList) {
+        List<ContentsFileSaveDTO> checkedContentsFileList = new ArrayList<>();
+        if (!ObjectUtils.isEmpty(contentsFileList) && !contentsFileList.isEmpty()) {
+            for (ContentsFileSaveDTO contentsFileSaveDTO : contentsFileList) {
+                checkedContentsFileList.add(contentsFileSaveDTO);
+            }
+
+
+            for (ContentsFileSaveDTO contentsFile : contentsFileList) {
+                if (ObjectUtils.isEmpty(contentsFile.getFileName())
+                        && 0 == contentsFile.getFileSize()
+                        && ObjectUtils.isEmpty(contentsFile.getFilePhysicalName())
+                        && ObjectUtils.isEmpty(contentsFile.getTitle())
+                        && ObjectUtils.isEmpty(contentsFile.getUrl())) {
+                    checkedContentsFileList.remove(contentsFile);
+                }
+            }
+
+        }
+        return checkedContentsFileList;
     }
 
     /**
@@ -501,19 +604,21 @@ public class ContentsService {
     public void checkContentsFileValidation(final ContentsFileSaveDTO contentsFileSaveDTO) {
         log.info("ContentsService.checkContentsFileValidation");
         // 파일 종류가 FILE인 경우 파일 정보 필수
-        if (ServiceCode.ContentsFileKindCode.FILE.equals(contentsFileSaveDTO.getFileKindCode())) {
-            if (StringUtils.isBlank(contentsFileSaveDTO.getFileName())
-                    || Objects.isNull(contentsFileSaveDTO.getFileSize())
-                    || StringUtils.isBlank(contentsFileSaveDTO.getFilePhysicalName())) {
-                throw new CodeMessageHandleException(FailCode.ConfigureError.SELECT_FILE.name(),
-                        MessageUtil.getMessage(FailCode.ConfigureError.SELECT_FILE.name()));
-            }
+        if (ServiceCode.ContentsFileKindCode.FILE.toString().equals(contentsFileSaveDTO.getFileKindCode())) {
+            // 새로 등록한 파일 인 경우에만 validation check
+                if ((ObjectUtils.isEmpty(contentsFileSaveDTO.getContentsFileSeq()) || 0l == contentsFileSaveDTO.getContentsFileSeq())
+                        && (ObjectUtils.isEmpty(contentsFileSaveDTO.getFileName())
+                            || Objects.isNull(contentsFileSaveDTO.getFileSize())
+                            || ObjectUtils.isEmpty(contentsFileSaveDTO.getFilePhysicalName()))) {
+                    throw new CodeMessageHandleException(FailCode.ConfigureError.SELECT_FILE.name(),
+                            MessageUtil.getMessage(FailCode.ConfigureError.SELECT_FILE.name()));
+                }
         } else {
             // 파일 종류가 VIDEO/VR 인 경우 타이틀, url 필수
-            if (StringUtils.isBlank(contentsFileSaveDTO.getTitle())) {
+            if (ObjectUtils.isEmpty(contentsFileSaveDTO.getTitle())) {
                 throw new CodeMessageHandleException(FailCode.ConfigureError.NULL_TITLE.name(),
                         MessageUtil.getMessage(FailCode.ConfigureError.NULL_TITLE.name()));
-            } else if (StringUtils.isBlank(contentsFileSaveDTO.getUrl())) {
+            } else if (ObjectUtils.isEmpty(contentsFileSaveDTO.getUrl())) {
                 throw new CodeMessageHandleException(FailCode.ConfigureError.NULL_URL.name(),
                         MessageUtil.getMessage(FailCode.ConfigureError.NULL_URL.name()));
             }
@@ -531,9 +636,11 @@ public class ContentsService {
      */
     public ContentsFileSaveDTO s3FileCopySave(final ContentsFileSaveDTO contentsFileSaveDTO) {
         log.info("ContentsService.s3FileCopySave");
-        contentsFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getFilePhysicalName()));
-        contentsFileSaveDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getThumbnailFilePhysicalName()));
-        contentsFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getThumbnailFilePhysicalName()));
+        if (!ObjectUtils.isEmpty(contentsFileSaveDTO.getFilePhysicalName()) && contentsFileSaveDTO.getFilePhysicalName().contains("/temp/")) {
+            contentsFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getFilePhysicalName()));
+            contentsFileSaveDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getThumbnailFilePhysicalName()));
+            contentsFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(contentsFileSaveDTO.getDetailThumbnailFilePhysicalName()));
+        }
         return contentsFileSaveDTO;
     }
 
@@ -595,6 +702,25 @@ public class ContentsService {
         final List<Contents> contentsList
                 = contentsRepository.findByUpdateDtBeforeAndTopMenuCode(beforeDate, topMenuCode);
         contentsRepository.deleteAll(contentsList);
+    }
+
+    /**
+     * Load auth list list.
+     *
+     * @param topMenuCode the top menu code
+     * @param menuCode    the menu code
+     * @return the list
+     * @author [이소정]
+     * @implNote 콘텐츠 권한 목록 조회
+     * @since 2020. 8. 13. 오후 9:26:08
+     */
+    public List<AuthReturnDTO> loadAuthList(final String topMenuCode, final String menuCode) {
+        // 권한 목록 조회
+        UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
+        userContentsSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
+        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+        return authService.getAuthList(userContentsSearchDTO);
+
     }
 
 }

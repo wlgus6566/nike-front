@@ -57,9 +57,11 @@ public class AlarmRepositoryImpl extends QuerydslRepositorySupport implements Al
         final List<AlarmResultDTO> alarmResultList = new ArrayList<>();
         for (final Alarm alarm : alarmList) {
             final AlarmResultDTO alarmResultDTO = new AlarmResultDTO();
+            alarmResultDTO.setAlarmSeq(alarm.getAlarmSeq());
             alarmResultDTO.setUserSeq(userSeq);
             alarmResultDTO.setTypeAction(alarm.getTypeAction());
             alarmResultDTO.setTypeCd(alarm.getTypeCd());
+            alarmResultDTO.setRegistrationDt(alarm.getRegistrationDt());
 
             if (ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(alarm.getTypeCd())) {
                 alarmResultDTO.setFolderSeq(alarm.getReport().getReportSeq());

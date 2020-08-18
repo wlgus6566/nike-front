@@ -26,6 +26,40 @@ public interface MenuRepositoryCustom {
      */
     List<MenuReturnDTO> getMenus(final Long authSeq);
 
+    /**
+     * Gets menus.
+     *
+     * @param authSeq the auth seq
+     * @return the menus
+     * @author [오지훈]
+     * @since 2020. 7. 8. 오후 6:18:06
+     * @implNote 상위 메뉴 목록(GNB)
+     */
+    List<MenuReturnDTO> getUpperMenus(final Long authSeq);
 
+    /**
+     * Gets lower menus.
+     *
+     * @param authSeq   the auth seq
+     * @param menuSeq   the menu seq
+     * @param menuDepth the menu depth
+     * @return the lower menus
+     * @author [오지훈]
+     * @implNote 권한 관리 중인 하위 메뉴 목록(GNB)
+     * @since 2020. 8. 10. 오후 5:33:21
+     */
+    List<MenuReturnDTO> getLowerMenus(final Long authSeq, final Long menuSeq, final Long menuDepth);
+
+    /**
+     * Gets sub menus.
+     *
+     * @param menuSeq   the menu seq
+     * @param menuDepth the menu depth
+     * @return the sub menus
+     * @author [오지훈]
+     * @implNote 권한 관리 하지않는 하위 메뉴 목록(GNB)
+     * @since 2020. 8. 10. 오후 5:33:22
+     */
+    List<MenuReturnDTO> getSubMenus(final Long menuSeq, final Long menuDepth);
 
 }

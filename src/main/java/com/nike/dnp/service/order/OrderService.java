@@ -45,7 +45,7 @@ public class OrderService {
 	 * @return the order
 	 * @author [윤태호]
 	 * @since 2020. 7. 1. 오후 2:47:41
-	 * @implNote
+	 * @implNote 주문 저장
 	 */
 	@Transactional
 	public OrderEntity saveOrder(final OrderProductSaveDTO orderProductSaveDTO) {
@@ -58,9 +58,10 @@ public class OrderService {
 	}
 
 	/**
-	 * After 1 year delete.
+	 * 1년 지난 주문서 삭제
 	 *
 	 * @author [윤태호]
+	 * @implNote 1년 지난 주문서 삭제
 	 * @since 2020. 8. 5. 오후 3:38:13
 	 */
 	@Transactional
@@ -79,7 +80,7 @@ public class OrderService {
 	 * @param useYn    the use yn
 	 * @return the order product mapping
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 주문 제품 맴핑 조회
 	 * @since 2020. 7. 7. 오후 2:44:07
 	 */
 	public OrderEntity findByOrderSeqAndUseYn(final Long orderSeq, String useYn) {
@@ -93,7 +94,7 @@ public class OrderService {
 	 * @param orderSearchDTO the order search dto
 	 * @return the page
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 주문 페이징
 	 * @since 2020. 7. 7. 오후 2:44:07
 	 */
 	public Page<OrderEntity> findPageOrder(final OrderSearchDTO orderSearchDTO) {

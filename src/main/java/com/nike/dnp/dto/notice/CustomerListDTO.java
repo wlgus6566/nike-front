@@ -2,9 +2,13 @@ package com.nike.dnp.dto.notice;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
@@ -20,6 +24,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@Component
 public class CustomerListDTO {
 
     /**
@@ -38,15 +43,21 @@ public class CustomerListDTO {
     @ApiParam(name = "noticeArticleSectionCode", value = "게시물 구분 코드", defaultValue = "NOTICE", required = true)
     private String noticeArticleSectionCode;
 
-
-
     /**
      * The Notice article category code
      *
      * @author [정주희]
      */
-    @ApiParam(name = "noticeArticleCategoryCode", value = "[QNA] 게시물 카테고리 코드", defaultValue = "ASSET")
+    @ApiParam(name = "noticeArticleCategoryCode", value = "[QNA] 게시물 카테고리 코드 (상위 코드 : NOTICE_CATEGORY_CODE)", defaultValue = "ASSET")
     private String noticeArticleCategoryCode;
+
+    /**
+     * The Notice article category value
+     *
+     * @author [정주희]
+     */
+    @ApiParam(name = "noticeArticleCategoryCode", value = "[QNA] 게시물 카테고리 코드 값", defaultValue = "ASSET/TOOLKIT/FOUNDATION", hidden = true)
+    private String noticeArticleCategoryValue;
 
     /**
      * The Notice yn
@@ -112,4 +123,16 @@ public class CustomerListDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
     @ApiModelProperty(name = "updateDt", value = "최종 수정일")
     private LocalDateTime updateDt;
+
+/*    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
+    private static String cdnUrl;
+
+    @Value("${nike.file.cdnUrl:}")
+    public void setCdnUrl(final String cdnUrl) {
+        this.cdnUrl = cdnUrl;
+    }*/
+
+    public String getThumbnailFilePhysicalName() {
+        return StringUtils.isEmpty(thumbnailFilePhysicalName) ? null : CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
+    }
 }

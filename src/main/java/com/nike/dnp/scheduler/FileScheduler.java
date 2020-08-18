@@ -23,7 +23,7 @@ public class FileScheduler {
 	 *
 	 * @author [윤태호]
 	 * @since 2020. 7. 10. 오후 5:55:23
-	 * @implNote
+	 * @implNote 파일 삭제
 	 */
 	@Scheduled(cron = "0 0 0 * * *")
 //	@Scheduled(cron = "*/10 * * * * *")

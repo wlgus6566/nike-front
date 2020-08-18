@@ -26,11 +26,11 @@ public class OrderScheduler {
 
 
 	/**
-	 * 장바구니 초기화 <br />
+	 * 1년 지난 주문 삭제 처리 <br />
 	 * [00초], [00분], [00시], [매일], [매월], [매년]
 	 *
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 1년 지난 주문 삭제 처리
 	 * @since 2020. 7. 6. 오후 4:28:04
 	 */
 	//@Scheduled(cron = "*/10 * * * * *")

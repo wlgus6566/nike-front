@@ -13,13 +13,13 @@ function getCustomerList(sectionCode, params) {
 }
 
 //상세 공통
-function getCustomerDetail(noticeSeq) {
-    return apiCustomer.get(`/detail/${noticeSeq}`);
+function getCustomerDetail(noticeArticleSectionCode, noticeSeq) {
+    return apiCustomer.get(`/${noticeArticleSectionCode}/${noticeSeq}`);
 }
 
 //삭제 공통
-function deleteCustomer(noticeSeq) {
-    return apiCustomer.delete(`/${noticeSeq}`);
+function deleteCustomer(noticeArticleSectionCode, noticeSeq) {
+    return apiCustomer.delete(`/${noticeArticleSectionCode}/${noticeSeq}`);
 }
 
 //공지사항 등록
@@ -42,6 +42,16 @@ function putNews(noticeSeq, data) {
     return apiCustomer.put(`/NEWS/${noticeSeq}`, data);
 }
 
+//FAQ 등록
+function postFaq(data) {
+    return apiCustomer.post(`/QnA`, data);
+}
+
+//FAQ 수정
+function putFaq(noticeSeq, data) {
+    return apiCustomer.put(`/QNA/${noticeSeq}`, data);
+}
+
 export {
     getCustomerList,
     getCustomerDetail,
@@ -50,4 +60,6 @@ export {
     deleteCustomer,
     postNews,
     putNews,
+    postFaq,
+    putFaq,
 };

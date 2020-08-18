@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { changePassword } from '@/api/my-page';
+import { changePassword } from '@/api/mypage';
 
 export default {
     data() {

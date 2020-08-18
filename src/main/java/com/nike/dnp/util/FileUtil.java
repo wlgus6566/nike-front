@@ -202,7 +202,7 @@ public class FileUtil {
 										 final String resizeExt) throws IOException {
 		log.info("FileUtil.fileSave");
 		final StopWatch stopWatch = new StopWatch();
-		stopWatch.start("fileUpload");
+		stopWatch.start("fileUpload_" + uploadFile.getOriginalFilename());
 
 		final String extension = StringUtils.getFilenameExtension(uploadFile.getOriginalFilename());
 
@@ -210,7 +210,7 @@ public class FileUtil {
 		uploadFile.transferTo(toFile);
 		stopWatch.getTotalTimeSeconds();
 		stopWatch.stop();
-		log.debug("stopWatch.getLastTaskTimeMillis() {}", stopWatch.getLastTaskTimeMillis());
+		log.debug("stopWatch.getLastTaskTimeMillis() {} :  {} ms",stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 		final FileResultDTO fileResultDTO = new FileResultDTO();
 		fileResultDTO.setFileName(uploadFile.getOriginalFilename());
 		fileResultDTO.setFilePhysicalName(toFile.getPath().replace(root, ""));
@@ -225,7 +225,7 @@ public class FileUtil {
 			}else{
 				resizeExtension = resizeExt;
 			}
-			stopWatch.start("700resize");
+			stopWatch.start("700resize_"+uploadFile.getOriginalFilename());
 			// 이미지 사이즈 700x700 으로 변환
 			final String detailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_detail." + resizeExtension;
 			final StringBuilder detailCommand = new StringBuilder(imageMagick);
@@ -244,17 +244,17 @@ public class FileUtil {
 				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
-			log.debug("stopWatch.getLastTaskTimeMillis() {}", stopWatch.getLastTaskTimeMillis());
+			log.debug("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 			final File detailFile = new File(detailPath);
 			if(detailFile.isFile()){
 				String detailThumbnail = uploadFile.getOriginalFilename();
 				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail." + resizeExtension;
 				fileResultDTO.setDetailThumbnailFileName(detailThumbnail);
-				fileResultDTO.setDetailThumbnailPhysicalName(detailFile.getPath().replace(root, ""));
-				fileResultDTO.setDetailThumbnailSize(detailFile.length());
+				fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getPath().replace(root, ""));
+				fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
 			}
 
-			stopWatch.start("100resize");
+			stopWatch.start("100resize_" + uploadFile.getOriginalFilename());
 			// 이미지 사이즈 100x100으로 변환
 			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail." + resizeExtension;
 			final StringBuilder command = new StringBuilder(imageMagick);
@@ -273,15 +273,15 @@ public class FileUtil {
 				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
-			log.debug("stopWatch.getLastTaskTimeMillis() {}", stopWatch.getLastTaskTimeMillis());
+			log.debug("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 
 			final File thumbnailFile = new File(thumbnailPath);
 			if(thumbnailFile.isFile()){
 				String thumbnail = uploadFile.getOriginalFilename();
 				thumbnail = thumbnail.replace("." + StringUtils.getFilenameExtension(thumbnail), "") + "_thumbnail." + resizeExtension;
 				fileResultDTO.setThumbnailFileName(thumbnail);
-				fileResultDTO.setThumbnailPhysicalName(thumbnailFile.getPath().replace(root, ""));
-				fileResultDTO.setThumbnailSize(thumbnailFile.length());
+				fileResultDTO.setThumbnailFilePhysicalName(thumbnailFile.getPath().replace(root, ""));
+				fileResultDTO.setThumbnailFileSize(thumbnailFile.length());
 			}
 
 		}else if(resize && (uploadFile.getContentType().toUpperCase(Locale.getDefault()).contains("VIDEO"))){
@@ -292,7 +292,7 @@ public class FileUtil {
 					,"scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
 					,thumbnailPath};
 			log.debug("command.toString() {}", command.toString());
-			stopWatch.start("videoResize");
+			stopWatch.start("videoResize_"+uploadFile.getOriginalFilename());
 			final ProcessBuilder processBuilder = new ProcessBuilder(command);
 			processBuilder.redirectErrorStream(true);
 			Process process = null;
@@ -318,17 +318,17 @@ public class FileUtil {
 				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
-			log.debug("stopWatch.getLastTaskTimeMillis() {}", stopWatch.getLastTaskTimeMillis());
+			log.debug("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 			final File detailFile = new File(thumbnailPath);
 			if(detailFile.isFile()){
 				String detailThumbnail = uploadFile.getOriginalFilename();
 				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail.mp4";
 				fileResultDTO.setDetailThumbnailFileName(detailThumbnail);
-				fileResultDTO.setDetailThumbnailPhysicalName(detailFile.getPath().replace(root, ""));
-				fileResultDTO.setDetailThumbnailSize(detailFile.length());
+				fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getPath().replace(root, ""));
+				fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
 			}
 		}
-		log.debug("stopWatch.getTotalTimeSeconds() {}", stopWatch.getTotalTimeSeconds());
+		log.debug("stopWatch.getTotalTimeSeconds() {} :  {} s", uploadFile.getOriginalFilename(),stopWatch.getTotalTimeSeconds());
 		log.debug("stopWatch.prettyPrint() {}", stopWatch.prettyPrint());
 		return fileResultDTO;
 	}
@@ -379,7 +379,7 @@ public class FileUtil {
 	 * @since 2020. 7. 13. 오후 4:55:25
 	 * @implNote
 	 */
-	public static FileResultDTO fileSave(final MultipartFile uploadFile, final String folder) throws IOException {		
+	public static FileResultDTO fileSave(final MultipartFile uploadFile, final String folder) throws IOException {
 		log.info("FileUtil.fileSave");
 		return fileSave(uploadFile, folder, false, null);
 	}
@@ -395,7 +395,7 @@ public class FileUtil {
 	 * @since 2020. 7. 13. 오후 4:55:25
 	 * @implNote
 	 */
-	public static FileResultDTO fileTempSave(final MultipartFile uploadFile) throws IOException {		
+	public static FileResultDTO fileTempSave(final MultipartFile uploadFile) throws IOException {
 		log.info("FileUtil.fileTempSave");
 		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder());
 	}
@@ -480,7 +480,6 @@ public class FileUtil {
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 
-
 	/**
 	 * Exhaust input stream.
 	 *
@@ -503,6 +502,5 @@ public class FileUtil {
 				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 		}).start();
-
 	}
 }

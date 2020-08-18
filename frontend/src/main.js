@@ -6,6 +6,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import VueCookies from 'vue-cookies';
+import VueMoment from 'vue-moment';
 import CKEditor from 'ckeditor4-vue';
 import VCalendar from 'v-calendar';
 import VModal from 'vue-js-modal';
@@ -20,13 +21,13 @@ Vue.use(VModal, {
         width: '800px',
         height: 'auto',
         adaptive: false,
-        draggable: true,
+        draggable: false,
         scrollable: true,
         reset: true,
         dynamic: true,
     },
 });
-Vue.use(require('vue-moment'));
+Vue.use(VueMoment);
 Vue.use(VCalendar, {
     locale: 'en-US',
     masks: {
@@ -68,7 +69,7 @@ Vue.filter('formattedNumber', (value, prefix, suffix) => {
 new Vue({
     router,
     store,
-    render: h => h(App),
+    render: (h) => h(App),
 }).$mount('#app');
 
 // setupCalendar({

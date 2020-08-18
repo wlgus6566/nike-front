@@ -32,6 +32,7 @@ export default {
     components: {
         ContentMypage: () => import('@/components/tab-comp/content-mypage.vue'),
         ContentOrder: () => import('@/components/tab-comp/content-order.vue'),
+        ContentReport: () => import('@/components/tab-comp/content-report.vue'),
         ContentFile: () => import('@/components/tab-comp/content-file.vue'),
         ContentAsset: () => import('@/components/tab-comp/content-asset.vue'),
         ContentTooKlit: () =>

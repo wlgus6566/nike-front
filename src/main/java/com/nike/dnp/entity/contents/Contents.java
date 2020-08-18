@@ -1,17 +1,31 @@
 package com.nike.dnp.entity.contents;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.entity.BaseTimeWithoutUpdateDtEntity;
+import com.nike.dnp.util.CloudFrontUtil;
 import com.nike.dnp.util.LocalDateUtil;
+import com.nike.dnp.util.S3Util;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,7 +41,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_CONTENTS")
-public class Contents extends BaseTimeEntity {
+public class Contents extends BaseTimeWithoutUpdateDtEntity {
 
     /**
      * 컨텐츠 시퀀스
@@ -179,6 +193,18 @@ public class Contents extends BaseTimeEntity {
     private List<ContentsFile> contentsFileList;
 
     /**
+     * 최종 수정일
+     *
+     * @author [오지훈]
+     */
+    @Column(name = "UPDATE_DT")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    @ApiModelProperty(name = "updateDt", value = "최종 수정일", hidden = true)
+    private LocalDateTime updateDt;
+
+    /**
      * Save contents.
      *
      * @param contentsSaveDTO the contents save dto
@@ -213,6 +239,8 @@ public class Contents extends BaseTimeEntity {
         }
         saveContents.setMemo(contentsSaveDTO.getMemo());
 
+        saveContents.setUpdateDt(LocalDateTime.now());
+
         return saveContents;
     }
 
@@ -228,9 +256,13 @@ public class Contents extends BaseTimeEntity {
     public void update(final ContentsSaveDTO contentsSaveDTO) {
         log.info("Contents.update");
         this.menuCode = contentsSaveDTO.getMenuCode();
-        this.imageFileName = contentsSaveDTO.getImageFileName();
-        this.imageFileSize = contentsSaveDTO.getImageFileSize();
-        this.imageFilePhysicalName = contentsSaveDTO.getImageFilePhysicalName();
+        if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageFilePhysicalName()) && !contentsSaveDTO.getImageFilePhysicalName().contains("/contents/")) {
+            this.imageFileName = contentsSaveDTO.getImageFileName();
+            this.imageFileSize = contentsSaveDTO.getImageFileSize();
+            this.imageFilePhysicalName = contentsSaveDTO.getImageFilePhysicalName();
+        }
+        this.updateDt = LocalDateTime.now();
+
         this.folderName = contentsSaveDTO.getFolderName();
         this.folderContents = contentsSaveDTO.getFolderContents();
         this.campaignPeriodSectionCode = contentsSaveDTO.getCampaignPeriodSectionCode();
@@ -250,7 +282,6 @@ public class Contents extends BaseTimeEntity {
         this.readCount = readCount + 1;
     }
 
-
     /**
      * Delete.
      *
@@ -262,36 +293,15 @@ public class Contents extends BaseTimeEntity {
         this.useYn = "N";
     }
 
-    /**
-     * The constant cdnUrl.
-     *
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
-    private static String cdnUrl;
-
-    /**
-     * Sets cdn url.
-     *
-     * @param cdnUrl the cdn url
-     * @author [이소정]
-     * @implNote cdnUrl 설정
-     * @since 2020. 7. 30. 오후 3:47:29
-     */
-    @Value("${nike.file.cdnUrl:}")
-    public void setCdnUrl(final String cdnUrl) {
-        this.cdnUrl = cdnUrl;
-    }
-
-    /**
-     * Gets image file physical name.
-     *
-     * @return the image file physical name
-     * @author [이소정]
-     * @implNote cdnUrl + imageFilePhysicalName
-     * @since 2020. 7. 30. 오후 3:47:29
-     */
-    public String getImageFilePhysicalName() {
-        return this.cdnUrl + imageFilePhysicalName;
-    }
+//    /**
+//     * Gets image file physical name.
+//     *
+//     * @return the image file physical name
+//     * @author [이소정]
+//     * @implNote cdnUrl + imageFilePhysicalName
+//     * @since 2020. 7. 30. 오후 3:47:29
+//     */
+//    public String getImageFilePhysicalName() {
+//        return CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
+//    }
 }

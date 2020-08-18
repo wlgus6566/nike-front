@@ -13,7 +13,7 @@ const routes = [
                 meta: { layout: 'Default', aside: 'Order', title: '상품 등록' },
             },
             {
-                path: '/:id',
+                path: 'modify/:id',
                 component: pages('product/registration'),
                 meta: { layout: 'Default', aside: 'Order', title: '상품 수정' },
             },
@@ -128,14 +128,14 @@ const routes = [
                 ],
             },
             {
-                path: 'niki-by-you',
+                path: 'nike-by-you',
                 component: pages('root'),
                 meta: {
                     layout: 'Default',
                     aside: 'Order',
                     title: 'Niki By You',
                 },
-                redirect: '/order/niki-by-you/shoes',
+                redirect: '/order/nike-by-you/shoes',
                 children: [
                     {
                         path: 'shoes',

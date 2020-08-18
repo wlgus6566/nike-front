@@ -2,6 +2,7 @@ package com.nike.dnp.controller.contents;
 
 import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.model.response.CommonResult;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * The Class Contents controller.
@@ -214,8 +216,7 @@ public class ContentsController {
      * @param result          the result
      * @return the single result
      * @author [이소정]
-     * @implNote
-     * @apiNote 콘텐츠 수정
+     * @implNote 콘텐츠 수정
      * @since 2020. 7. 13. 오전 11:59:45
      */
     @ApiOperation(value = "컨텐츠 수정", notes = REQUEST_CHARACTER + REQUEST_MENU_DESC)
@@ -285,7 +286,7 @@ public class ContentsController {
      * @param result      the result
      * @return the common result
      * @author [이소정]
-     * @implNote
+     * @implNote 컨텐츠 알림메일전송
      * @since 2020. 7. 30. 오후 3:58:41
      */
     @ApiOperation(value = "컨텐츠 알림메일전송", notes = REQUEST_CHARACTER)
@@ -297,6 +298,25 @@ public class ContentsController {
     ) {
         contentsService.sendEmail(mailSendDTO);
         return responseService.getSuccessResult();
+    }
+
+    /**
+     * Send email common result.
+     *
+     * @param topMenuCode the top menu code
+     * @param menuCode    the menu code
+     * @return the common result
+     * @author [이소정]
+     * @implNote 컨텐츠 권한 목록 조회
+     * @since 2020. 7. 30. 오후 3:58:41
+     */
+    @ApiOperation(value = "컨텐츠 권한 목록 조회", notes = REQUEST_CHARACTER)
+    @GetMapping(name = "컨텐츠 권한 목록 조회", value = "/{topMenuCode}/{menuCode}/authList", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<AuthReturnDTO> loadAuthList(
+            @ApiParam(name = TOP_MENU_CODE, value = TOP_MENU_VALUE, defaultValue = TOP_MENU_EXAMPLE, required = true) @PathVariable final String topMenuCode
+            , @ApiParam(name = MENU_CODE, value = MENU_CODE_VALUE, defaultValue = "SP", required = true) @PathVariable final String menuCode
+    ) {
+        return contentsService.loadAuthList(topMenuCode, menuCode);
     }
 
 

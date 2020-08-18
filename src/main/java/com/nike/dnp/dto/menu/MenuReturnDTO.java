@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.List;
+
 /**
  * MenuReturnDTO
  *
@@ -65,6 +67,40 @@ public class MenuReturnDTO {
      */
     @ApiModelProperty(name = "menuPathUrl", value = "메뉴 경로 URL", required = true)
     private String menuPathUrl;
+
+    /**
+     * PC 노출 여부
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "pcYn", value = "PC 노출 여부", required = true)
+    private String pcYn;
+
+    /**
+     * MOBILE 노출 여부
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "mobileYn", value = "MOBILE 노출 여부", required = true)
+    private String mobileYn;
+
+    /**
+     * 부
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "managementYn", value = "managementYn", required = true)
+    private String managementYn;
+
+    /**
+     * 하위 메뉴 목록
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "menu", value = "하위 메뉴 목록")
+    private List<MenuReturnDTO> menus;
+
+
 
 //    /**
 //     * 생성 권한 여부

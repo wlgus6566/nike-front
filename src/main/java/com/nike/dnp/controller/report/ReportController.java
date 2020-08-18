@@ -3,6 +3,7 @@ package com.nike.dnp.controller.report;
 import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
+import com.nike.dnp.dto.report.ReportResultDTO;
 import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.entity.report.Report;
@@ -100,13 +101,12 @@ public class ReportController {
         + "size||노출갯수|Integer\n\n\n\n"
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 목록 조회")
-    public SingleResult<Page<Report>> findAllReports(
+    public SingleResult<Page<ReportResultDTO>> findAllReports(
             final ReportSearchDTO reportSearchDTO
     ) {
         log.info("ReportController.findAllReports");
         return responseService.getSingleResult(reportService.findAllPaging(reportSearchDTO));
     }
-
 
     /**
      * Save report single result.
@@ -146,7 +146,7 @@ public class ReportController {
     )
     @GetMapping(name = " 보고서 상세조회", value = "/{reportSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Report> findReport(
+    public SingleResult<ReportResultDTO> findReport(
             @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq
     ) {
         log.info("ReportController.findReport");
@@ -164,15 +164,18 @@ public class ReportController {
      * @implNote 보고서 수정
      * @since 2020. 7. 9. 오후 6:18:36
      */
-    @ApiOperation(value = "보고서 수정", notes = REQUEST_CHARACTER)
-    @PutMapping(name = "보고서 수정", value = "/{reportSeq}"
-            , produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiOperation(
+            value = "보고서 수정"
+            , notes = REQUEST_CHARACTER
+    )
+    @PutMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 수정", value = "/{reportSeq}")
     @ValidField
     public SingleResult<Report> updateReport(
-            @ApiParam(name="reportUpdateDTO", value = "보고서 수정 Json") @RequestBody @Valid final ReportSaveDTO reportSaveDTO,
             @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq
+            , @RequestBody @Valid final ReportSaveDTO reportSaveDTO
             , @ApiIgnore final BindingResult result
     ) {
+        log.info("ReportController.updateReport");
         reportSaveDTO.setReportSeq(reportSeq);
         return responseService.getSingleResult(reportService.update(reportSaveDTO));
     }
@@ -225,7 +228,7 @@ public class ReportController {
      * @since 2020. 7. 15. 오후 6:30:45
      */
     @ApiOperation(value = "보고서 파일 다운로드", notes = REQUEST_CHARACTER)
-    @PostMapping(name = "보고서 파일 다운로드", value = "/download/{reportFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(name = "보고서 파일 다운로드", value = "/download/{reportFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public CommonResult downloadFile(
             @ApiParam(name="reportFileSeq", value = "보고서 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long reportFileSeq
     ) {

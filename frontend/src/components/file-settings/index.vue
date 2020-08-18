@@ -14,23 +14,25 @@
                 ref="uploadIpt"
                 multiple
                 @change="uploadIptChange"
+                style="position: absolute; left: -9999px;"
             />
             <draggable
-                v-model="fileList"
+                ref="fileListUl"
+                v-model="FileList"
                 v-bind="dragOptions"
-                tag="ul"
                 @start="isDragging = true"
                 @end="isDragging = false"
+                class="file-setting-list"
+                tag="ul"
             >
-                <transition-group type="transition" name="flip-list">
-                    <FileItem
-                        v-for="(file, index) in fileList"
-                        :file="file"
-                        :key="index"
-                        v-on:fileSelect="fileSelect"
-                        v-on:fileDelete="fileDelete(index)"
-                    />
-                </transition-group>
+                <FileItem
+                    v-for="file in FileList"
+                    :listLength="FileList.length"
+                    :file="file"
+                    :key="file.fileOrder"
+                    @fileSelect="fileSelect"
+                    @fileDelete="fileDelete(file)"
+                />
             </draggable>
         </div>
         <div class="btn-area-file">
@@ -44,11 +46,47 @@
 <script>
 import draggable from 'vuedraggable';
 import { fileUpLoad } from '@/api/file';
+import { getContentsViewFile } from '@/api/contents';
 export default {
     name: 'FileSettings',
     data() {
         return {
-            fileList: null,
+            uploadFile: [],
+
+            test: {
+                detailThumbnailFileName: '',
+                detailThumbnailFilePhysicalName: '',
+                detailThumbnailFileSize: '',
+                fileExtension: '',
+                fileKindCode: 'FILE',
+                filePhysicalName: '',
+                fileSectionCode: 'GUIDE',
+                thumbnailFileName: '',
+                thumbnailFilePhysicalName: '',
+                thumbnailFileSize: '',
+                progress: 0,
+                title: '',
+                url: '',
+            },
+            FileList: [],
+            defaultFileData: {
+                detailThumbnailFileName: '',
+                detailThumbnailFilePhysicalName: '',
+                detailThumbnailFileSize: '',
+                fileContentType: '',
+                fileExtension: '',
+                fileKindCode: 'FILE',
+                fileName: '',
+                fileOrder: 0,
+                filePhysicalName: '',
+                fileSectionCode: 'GUIDE',
+                fileSize: 0,
+                thumbnailFileName: '',
+                thumbnailFilePhysicalName: '',
+                thumbnailFileSize: '',
+                title: '',
+                url: '',
+            },
         };
     },
     computed: {
@@ -61,67 +99,161 @@ export default {
             };
         },
     },
-    props: {
-        beforeUpload: Function,
-    },
+    created() {},
     components: {
         FileItem: () => import('@/components/file-settings/file-item.vue'),
         draggable,
     },
     methods: {
+        emitFileList() {
+            console.log(123);
+            this.FileList.forEach((el, index) => {
+                el.fileOrder = index;
+            });
+            this.$emit('FileListUpdate', this.FileList);
+        },
         uploadIptChange(e) {
             const files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
-            this.inputFileValue = files;
-            console.log(files);
-            files.forEach((el) => {
-                this.fileList.push({
-                    fileKindCode: 'FILE',
-                    fileName: el.name,
-                    fileSectionCode: 'GUIDE', //파일구분
-                    fileExtension: el.type,
-                    filePhysicalName: '',
-                    fileSize: el.size,
+
+            let mergeArray = Array.from(files).filter((item) => {
+                return this.FileList.every((el) => {
+                    return (
+                        item.name !== el.fileName &&
+                        item.type !== el.fileExtension &&
+                        item.size !== el.fileSize
+                    );
                 });
             });
-            this.uploadFiles(files);
-        },
-        uploadFiles() {
-            this.inputFileValue.forEach(async (el) => {
-                const data = new FormData();
-                data.append('uploadFile', el);
-                const config = {
-                    onUploadProgress: (progressEvent) => {
-                        const percentCompleted = Math.round(
-                            (progressEvent.loaded * 100) / progressEvent.total
-                        );
-                        el.test = percentCompleted;
-                        //return percentCompleted;
-                        console.log(el.test);
-                    },
-                };
-                const response = await fileUpLoad(data, config);
-                console.log(response);
-                console.log(response.data);
+
+            mergeArray.forEach((el) => {
+                const idx = this.FileList.findIndex((el) => {
+                    return el.fileKindCode === 'FILE' && !el.fileName;
+                });
+
+                if (idx !== -1) {
+                    alert(1);
+                    this.FileList[idx].fileContentType = el.type;
+                    this.FileList[idx].fileName = el.name;
+                    this.FileList[idx].fileSize = el.size;
+                } else {
+                    this.FileList.push({
+                        fileContentType: el.type,
+                        fileName: el.name,
+                        fileOrder: this.FileList.length,
+                        fileSize: el.size,
+                        title: '',
+                        url: '',
+                        ...this.test,
+                    });
+                }
             });
+            this.emitFileList();
+            this.uploadFile = this.uploadFile.concat(mergeArray);
+            //this.uploadFiles(mergeArray);
+        },
+        async uploadFiles() {
+            await Promise.all(
+                this.uploadFile.map(async (el, idx) => {
+                    try {
+                        const formData = new FormData();
+                        formData.append('uploadFile', el);
+                        const config = {
+                            onUploadProgress: (progressEvent) => {
+                                const percentCompleted = Math.round(
+                                    (progressEvent.loaded * 100) /
+                                        progressEvent.total
+                                );
+                                this.FileList.forEach((item) => {
+                                    if (
+                                        item.fileName === el.name &&
+                                        item.fileContentType === el.type &&
+                                        item.fileSize === el.size
+                                    ) {
+                                        item.progress = percentCompleted;
+                                    }
+                                });
+                                this.emitFileList();
+                            },
+                        };
+                        const {
+                            data: { data: response },
+                        } = await fileUpLoad(formData, config);
+
+                        this.FileList.forEach((item, idx, array) => {
+                            if (
+                                item.fileName === el.name &&
+                                item.fileContentType === el.type &&
+                                item.fileSize === el.size
+                            ) {
+                                array[idx] = {
+                                    fileKindCode: 'FILE',
+                                    fileSectionCode: 'GUIDE',
+                                    progress: 100,
+                                    title: '',
+                                    url: '',
+                                    ...response,
+                                };
+                                this.emitFileList();
+                                //console.log(item);
+                            }
+                        });
+                    } catch (e) {
+                        console.log(e);
+                    }
+                })
+            );
+            this.$emit('submitForm');
         },
         fileAdd() {
-            this.fileList.push({
-                fileKindCode: 'FILE',
-                fileName: '',
-                fileSectionCode: 'ASSET',
-                fileSize: 600,
-                title: '',
-                url: '',
-            });
+            console.log('fileAdd');
+            this.FileList.push({ ...this.defaultFileData });
+            this.emitFileList();
         },
-        fileDelete(idx) {
-            this.fileList.splice(idx, 1);
+        fileDelete(file) {
+            console.log('fileDelete');
+            const idx = this.FileList.findIndex((el) => {
+                return (
+                    el.fileName === file.fileName &&
+                    el.fileExtension === file.fileExtension &&
+                    el.fileSize === file.fileSize
+                );
+            });
+            this.FileList.splice(idx, 1);
+            this.emitFileList();
         },
         fileSelect() {
-            /*this.$refs.uploadIpt.value = null;
-            this.PhysicalName: '/cdn/file/path',
-                this.$refs.uploadIpt.click();*/
+            console.log('fileSelect');
+            this.$refs.uploadIpt.value = null;
+            this.$refs.uploadIpt.click();
+        },
+
+        async getFolderDetailFile() {
+            this.loadingData = true;
+            this.checkAll = false;
+            try {
+                const {
+                    data: { data: response },
+                } = await getContentsViewFile(
+                    this.$route.meta.topMenuCode,
+                    this.$route.meta.menuCode,
+                    this.$route.params.id,
+                    {
+                        page: this.page,
+                        size: this.itemLength,
+                    }
+                );
+                if (response.content && response.content.length) {
+                    this.FileList = response.content;
+                } else {
+                    this.FileList.push(this.defaultFileData);
+                }
+
+                this.emitFileList();
+                this.loadingData = false;
+            } catch (error) {
+                console.log(error);
+            }
         },
     },
 };

@@ -25,8 +25,8 @@ import java.util.List;
  * 장바구니 컨트롤러
  *
  * @author [윤태호]
- * @since 2020. 7. 2. 오후 4:22:03
  * @apiNote
+ * @since 2020. 7. 2. 오후 4:22:03
  */
 @Slf4j
 @RestController
@@ -69,10 +69,11 @@ public class GoodsBasketController {
 	 * 장바구니 등록 및 수정
 	 *
 	 * @param goodsBasketSaveDTO the goods basket save dto
+	 * @param result             the result
 	 * @return the single result
 	 * @author [윤태호]
+	 * @apiNote 장바구니 등록 및 수정
 	 * @since 2020. 7. 2. 오후 4:31:14
-	 * @apiNote
 	 */
 	@ApiOperation(value = "장바구니 등록 및 수정", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -88,10 +89,11 @@ public class GoodsBasketController {
 	 * 장바구니 다건 등록 및 수정
 	 *
 	 * @param goodsBasketSaveListDTO the goods basket save list dto
+	 * @param result                 the result
 	 * @return the single result
 	 * @author [윤태호]
+	 * @apiNote 장바구니 다건 등록 및 수정
 	 * @since 2020. 7. 6. 오전 11:38:25
-	 * @apiNote
 	 */
 	@ApiOperation(value = "장바구니 다건 등록 및 수정", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/saveList", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -102,14 +104,13 @@ public class GoodsBasketController {
 		return responseService.getSingleResult(goodsBasketService.saveBasketList(goodsBasketSaveListDTO));
 	}
 
-
 	/**
 	 * 장바구니 조회
 	 *
 	 * @return the single result
 	 * @author [윤태호]
+	 * @apiNote 장바구니 조회
 	 * @since 2020. 7. 2. 오후 6:20:53
-	 * @apiNote
 	 */
 	@ApiOperation(value = "장바구니 조회", notes = BASIC_CHARACTER)
 	@GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -118,15 +119,14 @@ public class GoodsBasketController {
 		return responseService.getSingleResult(goodsBasketService.findByAll());
 	}
 
-
 	/**
 	 * 장바구니 삭제
 	 *
 	 * @param goodsBasketSeq the goods basket seq
 	 * @return the common result
 	 * @author [윤태호]
+	 * @apiNote 장바구니 삭제
 	 * @since 2020. 7. 3. 오후 12:09:20
-	 * @apiNote
 	 */
 	@ApiOperation(value = "장바구니 삭제", notes = BASIC_CHARACTER)
 	@DeleteMapping(value = "/{goodsBasketSeq}",produces = MediaType.APPLICATION_JSON_VALUE)

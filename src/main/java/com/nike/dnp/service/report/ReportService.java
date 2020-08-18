@@ -5,12 +5,16 @@ import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
-import com.nike.dnp.dto.report.*;
+import com.nike.dnp.dto.report.ReportFileSaveDTO;
+import com.nike.dnp.dto.report.ReportResultDTO;
+import com.nike.dnp.dto.report.ReportSaveDTO;
+import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.report.ReportFileRepository;
 import com.nike.dnp.repository.report.ReportRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
@@ -33,6 +37,7 @@ import org.springframework.util.ObjectUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -41,7 +46,6 @@ import java.util.Optional;
  * @author [이소정]
  * @implNote 보고서 서비스
  * @since 2020. 7. 7. 오후 2:40:15
- * @implNote
  */
 @Slf4j
 @Service
@@ -114,7 +118,7 @@ public class ReportService {
      * @implNote 보고서 페이징 처리 된 목록 조회
      * @since 2020. 7. 8. 오후 5:28:17
      */
-    public Page<Report> findAllPaging(final ReportSearchDTO reportSearchDTO) {
+    public Page<ReportResultDTO> findAllPaging(final ReportSearchDTO reportSearchDTO) {
         log.info("ReportService.findAllPaging");
         // 권한 검색 조건
         final List<Long> authSeqList = new ArrayList<>();
@@ -150,14 +154,16 @@ public class ReportService {
         log.info("ReportService.save");
         reportSaveDTO.setAuthSeq(SecurityUtil.currentUser().getAuthSeq());
 
+        this.checkReportValidation(reportSaveDTO);
         // 썸네일 base64 -> file 정보로 변환
         this.base64ToFile(reportSaveDTO);
 
         final Report savedReport = reportRepository.save(new Report().save(reportSaveDTO));
         final List<ReportFile> reportFileList = new ArrayList<>();
 
-        if (!reportSaveDTO.getReportFileSaveDTOList().isEmpty()) {
+        if (!ObjectUtils.isEmpty(reportSaveDTO.getReportFileSaveDTOList()) && !reportSaveDTO.getReportFileSaveDTOList().isEmpty()) {
             for (final ReportFileSaveDTO reportFileSaveDTO : reportSaveDTO.getReportFileSaveDTOList()) {
+                this.checkReportFileValidation(reportFileSaveDTO);
                 final ReportFile savedReportFile = reportFileRepository.save(
                         new ReportFile().save(savedReport.getReportSeq(), this.s3FileCopySave(reportFileSaveDTO))
                 );
@@ -191,15 +197,17 @@ public class ReportService {
      * @since 2020. 7. 8. 오후 5:52:10
      */
     @Transactional
-    public Report findByReportSeq(final Long reportSeq) {
+    public ReportResultDTO findByReportSeq(final Long reportSeq) {
         log.info("ReportService.findByReportSeq");
-        final Report findReport = reportRepository.findByReportSeq(reportSeq);
+        final Optional<Report> report = reportRepository.findByReportSeq(reportSeq);
+        final Report findReport = report.orElseThrow(
+                () -> new NotFoundHandleException());
+
         findReport.updateReadCount(findReport.getReadCount());
 
         // history 저장
         historyService.saveViewHistory(reportSeq, ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
-
-        return findReport;
+        return reportRepository.findReportWithUserName(reportSeq);
     }
 
     /**
@@ -241,15 +249,25 @@ public class ReportService {
         final Optional<Report> report = this.findById(reportSaveDTO.getReportSeq());
 
         // 썸네일 base64 -> file 정보로 변환
-        this.base64ToFile(reportSaveDTO);
+        // 썸네일 base64 -> file 정보로 변환
+        if(!ObjectUtils.isEmpty(reportSaveDTO.getImageBase64()) && reportSaveDTO.getImageBase64().contains("base64")){
+            this.base64ToFile(reportSaveDTO);
+        }
 
         report.ifPresent(value -> value.update(reportSaveDTO));
 
         final List<ReportFile> beforeFileList = reportFileRepository.findByReportSeqAndUseYn(reportSaveDTO.getReportSeq(), "Y");
-        final List<ReportFile> lastBeforeFileList = reportFileRepository.findByReportSeqAndUseYn(reportSaveDTO.getReportSeq(), "Y");
+
+        final List<ReportFile> lastBeforeFileList  = new ArrayList<>();
+        if (!ObjectUtils.isEmpty(beforeFileList) && !beforeFileList.isEmpty()) {
+            for (ReportFile reportFile : beforeFileList) {
+                lastBeforeFileList.add(reportFile);
+            }
+        }
         final List<ReportFileSaveDTO> newFileList = reportSaveDTO.getReportFileSaveDTOList();
 
-        if (!beforeFileList.isEmpty() && !newFileList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(beforeFileList) && !beforeFileList.isEmpty()
+                && !ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
             for (final ReportFile beforeFile : beforeFileList) {
                 for (final ReportFileSaveDTO newFile : newFileList) {
                     if (beforeFile.getReportFileSeq() == newFile.getReportFileSeq()) {
@@ -259,11 +277,12 @@ public class ReportService {
             }
         }
 
-        if (!newFileList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
             for (final ReportFileSaveDTO reportFileSaveDTO : newFileList) {
                 final Long reportFileSeq = null != reportFileSaveDTO.getReportFileSeq() ? reportFileSaveDTO.getReportFileSeq() : 0l;
                 final Optional<ReportFile> reportFile = reportFileRepository.findById(reportFileSeq);
 
+                this.checkReportFileValidation(reportFileSaveDTO);
                 this.s3FileCopySave(reportFileSaveDTO);
                 final ReportFile saveReportFile = reportFile.orElse(
                         new ReportFile().save(report.get().getReportSeq(), reportFileSaveDTO)
@@ -354,6 +373,44 @@ public class ReportService {
     }
 
     /**
+     * Check report validation.
+     *
+     * @param reportSaveDTO the report save dto
+     * @author [이소정]
+     * @implNote 보고서 유효성 체크
+     * @since 2020. 8. 14. 오후 1:56:40
+     */
+    public void checkReportValidation(final ReportSaveDTO reportSaveDTO) {
+        log.info("ContentsService.checkContentsValidation");
+        // 등록인 경우, base64 필수
+        if (ObjectUtils.isEmpty(reportSaveDTO.getImageBase64())) {
+            throw new CodeMessageHandleException(FailCode.ConfigureError.NULL_FOLDER_IMAGE.name(),
+                    MessageUtil.getMessage(FailCode.ConfigureError.NULL_FOLDER_IMAGE.name()));
+        }
+    }
+
+    /**
+     * Check report file validation.
+     *
+     * @param reportFileSaveDTO the report file save dto
+     * @author [이소정]
+     * @implNote
+     * @since 2020. 8. 13. 오후 7:07:34
+     */
+    public void checkReportFileValidation(final ReportFileSaveDTO reportFileSaveDTO) {
+        log.info("ReportService.checkReportFileValidation");
+        // 새로 등록한 파일 인 경우에만 validation check
+        if (!ObjectUtils.isEmpty(reportFileSaveDTO.getFilePhysicalName()) && reportFileSaveDTO.getFilePhysicalName().contains("/temp/")) {
+            if (ObjectUtils.isEmpty(reportFileSaveDTO.getFileName())
+                    || Objects.isNull(reportFileSaveDTO.getFileSize())
+                    || ObjectUtils.isEmpty(reportFileSaveDTO.getFilePhysicalName())) {
+                throw new CodeMessageHandleException(FailCode.ConfigureError.SELECT_FILE.name(),
+                        MessageUtil.getMessage(FailCode.ConfigureError.SELECT_FILE.name()));
+            }
+        }
+    }
+
+    /**
      * Delete report file.
      *
      * @param reportFileList the report file list
@@ -362,7 +419,7 @@ public class ReportService {
      * @since 2020. 8. 3. 오후 6:02:16
      */
     public void deleteReportFile(final List<ReportFile> reportFileList) {
-        if (!reportFileList.isEmpty()) {
+        if (!ObjectUtils.isEmpty(reportFileList) && !reportFileList.isEmpty()) {
             for (final ReportFile reportFile : reportFileList) {
                 reportFile.updateUseYn("N");
                 // 관련 보고서 장바구니 삭제
@@ -384,7 +441,7 @@ public class ReportService {
         final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
         userContentsSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
         userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
-        final List<AuthReturnDTO> authList = userContentsService.getAuthList(userContentsSearchDTO);
+        final List<AuthReturnDTO> authList = authService.getAuthList(userContentsSearchDTO);
 
         final List<Long> userSeqList  = new ArrayList<>();
         for (final AuthReturnDTO authReturnDTO : authList) {
@@ -409,7 +466,7 @@ public class ReportService {
     public Optional<Report> findById(final Long reportSeq) {
         log.info("ReportService.findById");
         return Optional.ofNullable(reportRepository.findById(reportSeq).orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+                () -> new NotFoundHandleException()));
     }
 
     /**
@@ -424,7 +481,7 @@ public class ReportService {
     public Optional<ReportFile> findByFileId(final Long reportFileSeq) {
         log.info("ReportService.findByFileId");
         return Optional.ofNullable(reportFileRepository.findById(reportFileSeq).orElseThrow(
-                () -> new CodeMessageHandleException(FailCode.ExceptionError.NOT_FOUND.name(), MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()))));
+                () -> new NotFoundHandleException()));
     }
 
     /**
@@ -438,9 +495,11 @@ public class ReportService {
      */
     public ReportFileSaveDTO s3FileCopySave(final ReportFileSaveDTO reportFileSaveDTO) {
         log.info("ReportService.s3FileCopySave");
-        reportFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getFilePhysicalName()));
-        reportFileSaveDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getThumbnailFilePhysicalName()));
-        reportFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getThumbnailFilePhysicalName()));
+        if (!ObjectUtils.isEmpty(reportFileSaveDTO.getFilePhysicalName()) && reportFileSaveDTO.getFilePhysicalName().contains("/temp/")) {
+            reportFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getFilePhysicalName()));
+            reportFileSaveDTO.setThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getThumbnailFilePhysicalName()));
+            reportFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(reportFileSaveDTO.getDetailThumbnailFilePhysicalName()));
+        }
         return reportFileSaveDTO;
     }
 

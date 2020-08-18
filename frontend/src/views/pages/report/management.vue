@@ -1,11 +1,10 @@
 <template>
     <div>
-        <h2 class="page-title">
-            {{ this.$route.meta.title }}
-        </h2>
+        <h2 class="page-title" v-html="this.$route.meta.title" />
         <div class="sorting-area">
             <ListSorting :listTypes="listTypes" />
             <FilterSelect :listSortSelect="listSortSelect" />
+            <CascaderSelect :listCascader="authority" />
             <SearchInput @searchSubmit="searchSubmit" />
         </div>
         <template v-if="reportListData">
@@ -29,22 +28,24 @@
     </div>
 </template>
 <script>
-    import ReportList from '@/components/report-list';
-    import FilterSelect from '@/components/filter-select';
-    import ListSorting from '@/components/list-sorting';
-    import SearchInput from '@/components/search-input';
-    import NoData from '@/components/no-data';
-    import Loading from '@/components/loading';
-    import {getReportList} from '@/api/report';
+import ReportList from '@/components/report-list';
+import FilterSelect from '@/components/filter-select';
+import CascaderSelect from '@/components/cascader-select';
+import ListSorting from '@/components/list-sorting';
+import SearchInput from '@/components/search-input';
+import NoData from '@/components/no-data';
+import Loading from '@/components/loading';
+import { getReportList } from '@/api/report';
+import { getCategoryList } from '@/utils/code';
+import { getAuthCacheList } from '@/api/auth';
 
-    export default {
+export default {
     name: 'management',
     data() {
         return {
             reportListData: null,
             page: 0,
             itemLength: 20,
-            groupSeq: '',
             listTypes: [
                 {
                     title: '컬럼타입',
@@ -61,24 +62,17 @@
                         value: 'ALL',
                         label: 'ALL',
                     },
-                    {
-                        value: 'SP',
-                        label: 'SP',
-                    },
-                    {
-                        value: 'SU',
-                        label: 'SU',
-                    },
-                    {
-                        value: 'FA',
-                        label: 'FA',
-                    },
-                    {
-                        value: 'HO',
-                        label: 'HO',
-                    },
                 ],
                 value: 'ALL',
+            },
+            authority: {
+                value: [null],
+                options: [
+                    {
+                        value: null,
+                        label: '전체 그룹',
+                    },
+                ],
             },
             loadingData: false,
             searchKeyword: '',
@@ -87,20 +81,70 @@
     components: {
         ReportList,
         FilterSelect,
+        CascaderSelect,
         ListSorting,
         SearchInput,
         NoData,
         Loading,
     },
-    mounted() {
+    created() {
+        this.getReport();
+        this.authCacheList();
+    },
+    activated() {
         this.getReport();
     },
+    mounted() {
+        getCategoryList(
+            'REPORT_SECTION_CODE',
+            this.listSortSelect.listSortOptions
+        );
+    },
     watch: {
-        'listSortSelect.value'() {
+        'listSortSelect.value'(val) {
+            if (val === '') {
+                this.listSortSelect.value = 'ALL';
+            }
+            this.getReport();
+        },
+        'authority.value'() {
             this.getReport();
         },
     },
     methods: {
+        //권한 조회
+        async authCacheList() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getAuthCacheList();
+                this.userDataList = response;
+                this.recursionFn(response, this.authority.options, 1);
+                this.recursionFn(response, this.addAuthority.options, 1);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        recursionFn(data, item, minIndx) {
+            let _minIndx = minIndx;
+            if (minIndx === undefined) {
+                _minIndx = 0;
+            }
+            data.forEach((el, index) => {
+                item.push({
+                    value: el.authSeq,
+                    label: el.authName,
+                });
+                if (el.subAuths) {
+                    item[index + _minIndx].children = [];
+                    this.recursionFn(
+                        el.subAuths,
+                        item[index + _minIndx].children
+                    );
+                }
+            });
+        },
         searchSubmit(val) {
             this.searchKeyword = val;
             this.getReport();
@@ -114,7 +158,7 @@
                     size: this.itemLength,
                     keyword: this.searchKeyword,
                     sectionCode: this.listSortSelect.value,
-                    groupSeq: this.groupSeq,
+                    groupSeq: this.authority.value.slice(-1)[0],
                 });
                 console.log(response);
                 this.reportListData = response.content;

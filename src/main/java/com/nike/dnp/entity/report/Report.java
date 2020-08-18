@@ -1,14 +1,28 @@
 package com.nike.dnp.entity.report;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.entity.BaseTimeWithoutUpdateDtEntity;
+import com.nike.dnp.entity.user.User;
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -25,7 +39,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_REPORT")
-public class Report extends BaseTimeEntity {
+public class Report extends BaseTimeWithoutUpdateDtEntity {
 
     /**
      * 보고서 시퀀스
@@ -121,37 +135,38 @@ public class Report extends BaseTimeEntity {
     private List<ReportFile> reportFileList;
 
     /**
-     * The constant cdnUrl.
+     * The user.
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
-    private static String cdnUrl;
+    @ManyToOne
+    @JoinColumn(name = "REGISTER_SEQ", insertable = false, updatable = false)
+    @ApiModelProperty(name = "userSeq", value = "유저 시퀀스", hidden = true)
+    private User user;
 
     /**
-     * Sets cdn url.
+     * 최종 수정일
      *
-     * @param cdnUrl the cdn url
-     * @author [이소정]
-     * @implNote cndUrl 셋팅
-     * @since 2020. 7. 30. 오후 3:51:40
+     * @author [오지훈]
      */
-    @Value("${nike.file.cdnUrl:}")
-    public void setCdnUrl(final String cdnUrl) {
-        this.cdnUrl = cdnUrl;
-    }
+    @Column(name = "UPDATE_DT")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    @ApiModelProperty(name = "updateDt", value = "최종 수정일", hidden = true)
+    private LocalDateTime updateDt;
 
-    /**
-     * Gets image file physical name.
-     *
-     * @return the image file physical name
-     * @author [이소정]
-     * @implNote cdnUrl + imageFilePhysicalName
-     * @since 2020. 7. 30. 오후 3:51:40
-     */
-    public String getImageFilePhysicalName() {
-        return this.cdnUrl + imageFilePhysicalName;
-    }
+//    /**
+//     * Gets image file physical name.
+//     *
+//     * @return the image file physical name
+//     * @author [이소정]
+//     * @implNote cdnUrl + imageFilePhysicalName
+//     * @since 2020. 7. 30. 오후 3:51:40
+//     */
+//    public String getImageFilePhysicalName() {
+//        return CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
+//    }
 
     /**
      * Save report.
@@ -173,6 +188,7 @@ public class Report extends BaseTimeEntity {
         savedReport.setAuthSeq(reportSaveDTO.getAuthSeq());
         savedReport.setReadCount(0l);
         savedReport.setUseYn("Y");
+        savedReport.setUpdateDt(LocalDateTime.now());
         return savedReport;
     }
 
@@ -188,9 +204,13 @@ public class Report extends BaseTimeEntity {
         log.info("Report.update");
         this.reportSectionCode = reportSaveDTO.getReportSectionCode();
         this.reportName = reportSaveDTO.getReportName();
-        this.imageFileName = reportSaveDTO.getImageFileName();
-        this.imageFileSize = reportSaveDTO.getImageFileSize();
-        this.imageFilePhysicalName = reportSaveDTO.getImageFilePhysicalName();
+
+        if (!ObjectUtils.isEmpty(reportSaveDTO.getImageFilePhysicalName()) && !ObjectUtils.isEmpty(reportSaveDTO.getImageFilePhysicalName().contains("/report/"))) {
+            this.imageFileName = reportSaveDTO.getImageFileName();
+            this.imageFileSize = reportSaveDTO.getImageFileSize();
+            this.imageFilePhysicalName = reportSaveDTO.getImageFilePhysicalName();
+        }
+        this.updateDt = LocalDateTime.now();
     }
 
     /**
@@ -218,5 +238,11 @@ public class Report extends BaseTimeEntity {
         log.info("Report.updateReadCount");
         this.readCount = readCount + 1;
     }
+
+
+//     TODO[lsj]
+//    @ManyToOne
+//    @JoinColumn(name="userSeq", foreignKey = @ForeignKey(name = "registerSeq"))
+//    private User user;
 
 }

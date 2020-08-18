@@ -54,15 +54,17 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
             final HistoryResultDTO historyResultDTO = new HistoryResultDTO();
             historyResultDTO.setHistorySeq(history.getHistorySeq());
             historyResultDTO.setTypeCd(history.getTypeCd());
-            historyResultDTO.setRegistrationDt(history.getRegistrationDt());
+            historyResultDTO.setUpdateDt(history.getUpdateDt());
 //            report인 경우
             if (history.getTypeCd().equals(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString())) {
                 historyResultDTO.setFolderSeq(history.getReportSeq());
                 historyResultDTO.setImageFileName(history.getReport().getImageFileName());
+                historyResultDTO.setMenuCode(history.getReport().getReportSectionCode());
                 historyResultDTO.setImageFileSize(history.getReport().getImageFileSize());
                 historyResultDTO.setImageFilePhysicalName(history.getReport().getImageFilePhysicalName());
                 historyResultDTO.setFolderName(history.getReport().getReportName());
                 historyResultDTO.setReadCount(history.getReport().getReadCount());
+                historyResultDTO.setNickname(history.getReport().getUser().getNickname());
             } else {
                 historyResultDTO.setFolderSeq(history.getContentsSeq());
                 historyResultDTO.setImageFileName(history.getContents().getImageFileName());

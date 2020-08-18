@@ -6,9 +6,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.Column;
 import java.time.LocalDateTime;
@@ -59,6 +62,14 @@ public class HistoryResultDTO {
     @Column(name = "TOP_MENU_CODE")
     @ApiModelProperty(name = "topMenuCode", value = "최고 메뉴 공통코드", example = "ASSET")
     private String topMenuCode;
+
+    /**
+     * 보고서 구분 코드
+     * @author [이소정]
+     */
+    @Column(name = "TOP_MENU_CODE")
+    @ApiModelProperty(name = "reportName", value = "보고서 구분 코드")
+    private String reportSectionCode;
 
     /**
      * 2depth 메뉴 코드
@@ -121,7 +132,7 @@ public class HistoryResultDTO {
      */
     @Column(name = "CAMPAIGN_BEGIN_DT")
     @ApiModelProperty(name = "campaignBeginDt", value = "캠페인 시작 일시", example = "2020.06.01 00:00:00")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
     private LocalDateTime campaignBeginDt;
 
     /**
@@ -130,7 +141,7 @@ public class HistoryResultDTO {
      */
     @Column(name = "CAMPAIGN_END_DT")
     @ApiModelProperty(name = "campaignEndDt", value = "캠페인 종료 일시", example = "2020.09.01 23:59:59")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
     private LocalDateTime campaignEndDt;
 
     /**
@@ -142,15 +153,35 @@ public class HistoryResultDTO {
     private Long readCount;
 
     /**
-     * 최초 작성일
+     * 최종 수정일
      *
      * @author [오지훈]
      */
-    @Column(name = "REGISTRATION_DT")
+    @Column(name = "UPDATE_DT")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
-    @CreationTimestamp
-    @ApiModelProperty(name = "registrationDt", value = "최초 작성일", hidden = true)
-    private LocalDateTime registrationDt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+    @UpdateTimestamp
+    @ApiModelProperty(name = "updateDt", value = "최종 수정일", hidden = true)
+    private LocalDateTime updateDt;
+
+    /**
+     * 닉네임
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "nickname", value = "닉네임")
+    private String nickname;
+
+    /**
+     * Gets thumbnail file physical name.
+     *
+     * @return the thumbnail file physical name
+     * @author [이소정]
+     * @implNote signedUrl + 썸네일 파일 경로
+     * @since 2020. 7. 30. 오후 3:43:38
+     */
+    public String getImageFilePhysicalName() {
+        return ObjectUtils.isEmpty(imageFilePhysicalName) ? imageFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
+    }
 }

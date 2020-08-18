@@ -11,55 +11,55 @@
                         <label>
                             <span class="checkbox">
                                 <input type="checkbox" />
-                                <span></span>
+                                <i></i>
+                                <span class="txt"
+                                    >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpgP20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpg</span
+                                >
                             </span>
-                            <span
-                                class="txt"
-                            >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpgP20_Nsw_Nike_Gallery_graphic_1_700x1000.jpgP20_N.jpg</span>
                         </label>
                     </li>
                     <li>
                         <label>
                             <span class="checkbox">
                                 <input type="checkbox" />
-                                <span></span>
+                                <i></i>
+                                <span class="txt"
+                                    >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                >
                             </span>
-                            <span class="txt"
-                                >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                            >
                         </label>
                     </li>
                     <li>
                         <label>
                             <span class="checkbox">
                                 <input type="checkbox" />
-                                <span></span>
+                                <i></i>
+                                <span class="txt"
+                                    >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                >
                             </span>
-                            <span class="txt"
-                                >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                            >
                         </label>
                     </li>
                     <li>
                         <label>
                             <span class="checkbox">
                                 <input type="checkbox" />
-                                <span></span>
+                                <i></i>
+                                <span class="txt"
+                                    >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                >
                             </span>
-                            <span class="txt"
-                                >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                            >
                         </label>
                     </li>
                     <li>
                         <label>
                             <span class="checkbox">
                                 <input type="checkbox" />
-                                <span></span>
+                                <i></i>
+                                <span class="txt"
+                                    >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
+                                >
                             </span>
-                            <span class="txt"
-                                >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                            >
                         </label>
                     </li>
                 </ul>
@@ -101,7 +101,7 @@ export default {
     methods: {
         getData() {
             let vm = this;
-            axios.detail(vm.key).then(response => {
+            axios.detail(vm.key).then((response) => {
                 console.log('=======param start=====');
                 console.log('사용하는 데이터부분');
                 console.log(response.data.data);
@@ -122,7 +122,7 @@ export default {
                     .get(url, {
                         responseType: 'blob',
                         timeout: 0,
-                        onDownloadProgress: function(progressEvent) {
+                        onDownloadProgress: function (progressEvent) {
                             dataFile['data' + i]['totalSize'] =
                                 progressEvent.total;
                             dataFile['data' + i]['curSize'] =
@@ -141,7 +141,7 @@ export default {
                             );
                         },
                     })
-                    .then(response => {
+                    .then((response) => {
                         const url = window.URL.createObjectURL(
                             new Blob([response.data])
                         );
@@ -152,7 +152,7 @@ export default {
                         document.body.appendChild(link);
                         link.click();
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.log(error);
                     });
             }

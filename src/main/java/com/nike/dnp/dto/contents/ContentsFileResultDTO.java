@@ -1,9 +1,11 @@
 package com.nike.dnp.dto.contents;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.ObjectUtils;
 
 /**
  * The Class Contents list dto.
@@ -77,6 +79,30 @@ public class ContentsFileResultDTO {
     private long fileOrder;
 
     /**
+     * 상세 썸네일 명
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailThumbnailFileName", value ="상세 썸네일 명", example = "graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFileName;
+
+    /**
+     * 상세 썸네일 사이즈
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailThumbnailFileSize", value ="상세 썸네일 사이즈", example = "700")
+    private String detailThumbnailFileSize;
+
+    /**
+     * 상세 썸네일 물리 경로
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFilePhysicalName;
+
+    /**
      * 썸네일 파일 물리 명
      *
      * @author [이소정]
@@ -117,68 +143,67 @@ public class ContentsFileResultDTO {
     private String fileExtension;
 
     /**
-     * The constant cdnUrl.
-     *
+     * 파일 명
      * @author [이소정]
      */
-    @ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
-    private static String cdnUrl;
+    @ApiModelProperty(name = "fileName", value = "파일 명")
+    private String fileName;
 
     /**
-     * Sets cdn url.
-     *
-     * @param cdnUrl the cdn url
+     * 파일 사이즈
      * @author [이소정]
-     * @implNote cdnUrl 셋팅
-     * @since 2020. 7. 30. 오후 3:43:38
      */
-    @Value("${nike.file.cdnUrl:}")
-    public void setCdnUrl(final String cdnUrl) {
-        this.cdnUrl = cdnUrl;
-    }
+    @ApiModelProperty(name = "fileSize", value = "파일 사이즈")
+    private Long fileSize;
+
+    /**
+     * 파일 물리 명
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명")
+    private String filePhysicalName;
+
+    /**
+     * 다운로드 수
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "downloadCount", value = "다운로드 수")
+    private long downloadCount;
 
     /**
      * Gets thumbnail file physical name.
      *
      * @return the thumbnail file physical name
      * @author [이소정]
-     * @implNote cndUrl + thumbnailFilePhysicalName
+     * @implNote signedUrl + 썸네일 파일 경로
      * @since 2020. 7. 30. 오후 3:43:38
      */
     public String getThumbnailFilePhysicalName() {
-        return this.cdnUrl + thumbnailFilePhysicalName;
+        return ObjectUtils.isEmpty(thumbnailFilePhysicalName) ? thumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
     }
 
+    /**
+     * Gets file physical name.
+     *
+     * @return the file physical name
+     * @author [이소정]
+     * @implNote signedUrl + 파일 경로
+     * @since 2020. 8. 14. 오후 7:50:43
+     */
+    public String getFilePhysicalName() {
+        return ObjectUtils.isEmpty(filePhysicalName) ? filePhysicalName : CloudFrontUtil.getCustomSignedUrl(filePhysicalName);
+    }
 
-
-//    TODO[lsj] 상세페이지에서 필요 없어서 주석 추후 삭제 예정
-//     by.2020.07.17 sojeong.lee
-//    /**
-//     * 파일 명
-//     * @author [이소정]
-//     */
-//    @ApiModelProperty(name = "fileName", value = "파일 명")
-//    private String fileName;
-//
-//    /**
-//     * 파일 사이즈
-//     * @author [이소정]
-//     */
-//    @ApiModelProperty(name = "fileSize", value = "파일 사이즈")
-//    private Long fileSize;
-//
-//    /**
-//     * 파일 물리 명
-//     * @author [이소정]
-//     */
-//    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명")
-//    private String filePhysicalName;
-//
-//    /**
-//     * 다운로드 수
-//     * @author [이소정]
-//     */
-//    @ApiModelProperty(name = "downloadCount", value = "다운로드 수")
-//    private long downloadCount;
+    /**
+     * Gets detail thumbnail file physical name.
+     *
+     * @return the detail thumbnail file physical name
+     * @author [이소정]
+     * @implNote signedUrl + 상세 이미지 경로
+     * @since 2020. 8. 14. 오후 7:50:44
+     */
+    public String getDetailThumbnailFilePhysicalName() {
+        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName) ? detailThumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName);
+    }
 
 }

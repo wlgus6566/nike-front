@@ -100,7 +100,7 @@ nav .nav-link.router-link-active:after {
 nav .depth2 > .nav-link {
     color: #888;
 }
-nav .depth2 > .nav-link .noto-sans {
+nav .depth2 > .nav-link > span {
     line-height: 30px;
     display: inline-block;
     vertical-align: 0.1em;
@@ -152,6 +152,15 @@ header .sticky-content {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: calc(100% - 200px);
+    max-width: calc(100% - 200px);
+    box-sizing: border-box;
+    min-height: calc(100vh);
+}
+#container-clean {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: calc(100% - 200px);
     box-sizing: border-box;
     min-height: calc(100vh);
 }
@@ -161,6 +170,7 @@ header .sticky-content {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: calc(100% - 300px);
+    max-width: calc(100% - 300px);
     padding: 80px 60px 130px;
     box-sizing: border-box;
 }
@@ -253,6 +263,7 @@ footer {
     position: relative;
     background: #fff;
     border-radius: 4px;
+    padding: 50px;
     overflow: hidden;
     box-sizing: border-box;
     flex-direction: column;
@@ -307,9 +318,9 @@ footer {
     opacity: 0;
     transform: translateY(-20px);
 }
-.el-popup-parent--hidden {
+/*.el-popup-parent--hidden {
     padding-right: 0 !important;
-}
+}*/
 
 .aside-wrap .no-data {
     margin-top: 0;

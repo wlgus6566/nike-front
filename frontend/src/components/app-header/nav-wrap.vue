@@ -13,13 +13,13 @@
     </div>
 </template>
 <script>
-	import navItem from './nav-item';
+import navItem from './nav-item';
 
-	export default {
+export default {
     name: 'nav-wrap',
     data() {
         return {
-            lnb: [
+            /*  lnb: [
                 {
                     title: 'HOME',
                     titleKo: '메인',
@@ -315,9 +315,19 @@
                         },
                     ],
                 },
-            ],
+            ],*/
             activeIndex: null,
         };
+    },
+    created() {},
+    computed: {
+        lnb() {
+            const menu = this.$store.state.gnbMenuListData;
+            return menu.filter((item) => {
+                if (item.menuCode !== 'MYPAGE' && item.pcYn === 'Y')
+                    return item;
+            });
+        },
     },
     components: { navItem },
 };
