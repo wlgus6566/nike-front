@@ -1,54 +1,31 @@
 <template>
-    <div class="aside-menu">
-        <strong class="title">HISTORY</strong>
-        <ul class="menu">
-            <li>
-                <router-link to="/mypage/upload"
-                    >내가 업로드한 폴더</router-link
-                >
-            </li>
-            <li>
-                <router-link to="/mypage/latest">최근 본 폴더</router-link>
-            </li>
-        </ul>
-        <strong class="title">ORDER</strong>
-        <ul class="menu">
-            <li>
-                <router-link to="/mypage/order">주문내역확인</router-link>
-            </li>
-            <li>
-                <router-link to="/mypage/wish-list">위시리스트</router-link>
-            </li>
-        </ul>
-        <strong class="title">MY INFO</strong>
-        <ul class="menu">
-            <li>
-                <router-link to="/mypage/info">회원정보 조회</router-link>
-            </li>
-            <li>
-                <router-link to="/mypage/password">비밀번호 변경</router-link>
-            </li>
-            <li>
-                <a href="#" @click.prevent="logout">로그아웃</a>
-            </li>
-        </ul>
-        <strong class="title">CUSTOMER CENTER</strong>
-        <ul class="menu">
-            <li>
-                <router-link to="/mypage/notice">공지사항</router-link>
-            </li>
-            <li>
-                <router-link to="/mypage/news">NEWS</router-link>
-            </li>
-            <li>
-                <router-link to="/mypage/faq">자주 묻는 질문</router-link>
-            </li>
-        </ul>
-    </div>
+    <ul class="aside-menu">
+        <li v-for="(menu, index) in myMenu" :key="index">
+            <strong class="title" v-html="menu.menuName" />
+            <ul class="menu" v-if="menu.menus">
+                <li v-for="(depth, index) in menu.menus" :key="index">
+                    <router-link
+                        :to="depth.menuPathUrl"
+                        v-html="depth.menuName"
+                    />
+                </li>
+            </ul>
+        </li>
+    </ul>
 </template>
 <script>
 export default {
     name: 'MypageMenu',
+    created() {},
+    computed: {
+        myMenu() {
+            const menu = this.$store.state.gnbMenuListData.filter((item) => {
+                if (item.menuCode === 'MYPAGE' && item.pcYn === 'Y')
+                    return item;
+            });
+            return menu[0].menus;
+        },
+    },
     methods: {
         logout() {
             this.$store.commit('LOGOUT');
@@ -70,7 +47,7 @@ export default {
     letter-spacing: 0.5px;
     font-weight: normal;
 }
-.aside-menu .menu + .title {
+.aside-menu li + li .title {
     margin-top: 10px;
 }
 .aside-menu .menu li a {

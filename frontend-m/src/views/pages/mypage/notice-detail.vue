@@ -1,24 +1,23 @@
 <template>
     <div>
-        <div class="sorting-area">
-            <p class="total">전체 <strong>({{totalElements}})</strong></p>
-            <div class="search-input" v-bind:class="{ active: isActive }"> <!-- active 추가하면 검색 화면 보임 -->
-                <div class="input-box">
-                    <input type="text" placeholder="검색어를 입력해주세요." v-model="keyword"/>
-                    <button type="button" class="search" v-on:click="searchInputActive"><span>검색</span></button>
-                </div>
-                <div class="btn-txt" v-on:click="searchInputInactive"><span>취소</span></div>
+        <div class="detail-view">
+            <div class="title-box">
+                <h2 class="title">나이키 플랫폼 서버 시스템 내부 점검 안내 공지</h2>
+                <span class="date">2020.01.01</span>
+            </div>
+            <div class="detail-cont">
+                안녕하세요.<br /><br />
+                나이키를 사랑해 주시는 고객님께 감사드립니다.<br /><br />
+                보다 안정되고 나은 서비스 제공을 위한 시스템 점검으로 서비스 이용이 아래와 같이 중지됩니다.<br />
+                서비스 이용에 불편을 드려 대단히 죄송합니다.<br /><br />
+                <strong>점검 시간 : 2020년 6월 21일 일요일 01:00 ~ 07:00 (6 시간)</strong><br /><br />
+                조속한 시간 내에 시스템 점검이 완료되어 앞으로도 더욱 나은 서비스를 제공할 수 있도록 노력하겠습니다.<br /><br />
+                감사합니다.
             </div>
         </div>
-        <ul class="notice-list">
-            <li v-for="item in noticeData">
-                <a :href="`/mypage/notice/detail/${item.noticeArticleSeq}`">
-                    <span class="label-noti" v-if="item.noticeYn === 'Y'">중요</span>
-                    <span class="title">{{item.title}}</span>
-                    <span class="data">{{item.updateDt}}</span>
-                </a>
-            </li>
-        </ul>
+        <div class="btn-area">
+            <button type="button" class="btn-s-sm-black"><span>목록</span></button>
+        </div>
     </div>
 </template>
 <script>

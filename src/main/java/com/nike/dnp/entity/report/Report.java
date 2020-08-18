@@ -156,17 +156,17 @@ public class Report extends BaseTimeWithoutUpdateDtEntity {
     @ApiModelProperty(name = "updateDt", value = "최종 수정일", hidden = true)
     private LocalDateTime updateDt;
 
-    /**
-     * Gets image file physical name.
-     *
-     * @return the image file physical name
-     * @author [이소정]
-     * @implNote cdnUrl + imageFilePhysicalName
-     * @since 2020. 7. 30. 오후 3:51:40
-     */
-    public String getImageFilePhysicalName() {
-        return CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
-    }
+//    /**
+//     * Gets image file physical name.
+//     *
+//     * @return the image file physical name
+//     * @author [이소정]
+//     * @implNote cdnUrl + imageFilePhysicalName
+//     * @since 2020. 7. 30. 오후 3:51:40
+//     */
+//    public String getImageFilePhysicalName() {
+//        return CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
+//    }
 
     /**
      * Save report.
@@ -205,7 +205,7 @@ public class Report extends BaseTimeWithoutUpdateDtEntity {
         this.reportSectionCode = reportSaveDTO.getReportSectionCode();
         this.reportName = reportSaveDTO.getReportName();
 
-        if (!ObjectUtils.isEmpty(reportSaveDTO.getImageFilePhysicalName()) && !ObjectUtils.isEmpty(reportSaveDTO.getImageBase64())) {
+        if (!ObjectUtils.isEmpty(reportSaveDTO.getImageFilePhysicalName()) && !ObjectUtils.isEmpty(reportSaveDTO.getImageFilePhysicalName().contains("/report/"))) {
             this.imageFileName = reportSaveDTO.getImageFileName();
             this.imageFileSize = reportSaveDTO.getImageFileSize();
             this.imageFilePhysicalName = reportSaveDTO.getImageFilePhysicalName();

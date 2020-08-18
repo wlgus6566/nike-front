@@ -3,6 +3,7 @@ package com.nike.dnp.service.alarm;
 import com.nike.dnp.dto.SearchDTO;
 import com.nike.dnp.dto.alarm.AlarmResultDTO;
 import com.nike.dnp.entity.alarm.Alarm;
+import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.alarm.AlarmRepository;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The Class Alarm service.
@@ -66,6 +68,7 @@ public class AlarmService {
      * @implNote 전송할 알림 목록
      * @since 2020. 7. 24. 오후 7:16:33
      */
+    @Transactional
     public List<Alarm> sendAlarmTargetList(
             final String actionCode, final String typeCd
             , final Long contentsSeq, final Long reportSeq
@@ -82,5 +85,23 @@ public class AlarmService {
             savedAlarmList.add(alarmRepositoryl.save(alarm));
         }
         return savedAlarmList;
+    }
+
+    /**
+     * Delete alarm.
+     *
+     * @param alarmSeq the alarm seq
+     * @return the alarm
+     * @author [이소정]
+     * @implNote 알림 삭제
+     * @since 2020. 8. 14. 오후 8:33:46
+     */
+    @Transactional
+    public Alarm delete(final Long alarmSeq) {
+        final Optional<Alarm> alarm = Optional.ofNullable(
+                alarmRepositoryl.findById(alarmSeq).orElseThrow(() -> new NotFoundHandleException())
+        );
+        alarmRepositoryl.delete(alarm.get());
+        return alarm.get();
     }
 }

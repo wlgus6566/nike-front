@@ -1,13 +1,19 @@
 function saveAuthToCookie(value) {
-    document.cookie = `user_token=${value}`;
+    setCookie('user_token', value);
 }
 function saveUserNickToCookie(value) {
-    document.cookie = `user_nick=${value}`;
+    setCookie('user_nick', value);
 }
 function saveUserIdToCookie(value) {
-    document.cookie = `user_id=${value}`;
+    setCookie('user_id', value);
 }
+function setCookie(cname, cvalue) {
+    const expires = new Date();
+    expires.setMinutes(expires.getMinutes() + 30);
+    document.cookie = `${cname}=${cvalue}; expires=${expires.toGMTString()}`;
 
+    document.cookie = `${cname}=${cvalue};`;
+}
 function getAuthFromCookie() {
     return document.cookie.replace(
         /(?:(?:^|.*;\s*)user_token\s*=\s*([^;]*).*$)|^.*$/,

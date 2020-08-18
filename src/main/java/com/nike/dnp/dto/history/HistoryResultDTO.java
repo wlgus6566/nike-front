@@ -6,10 +6,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.Column;
 import java.time.LocalDateTime;
@@ -170,4 +172,16 @@ public class HistoryResultDTO {
      */
     @ApiModelProperty(name = "nickname", value = "닉네임")
     private String nickname;
+
+    /**
+     * Gets thumbnail file physical name.
+     *
+     * @return the thumbnail file physical name
+     * @author [이소정]
+     * @implNote signedUrl + 썸네일 파일 경로
+     * @since 2020. 7. 30. 오후 3:43:38
+     */
+    public String getImageFilePhysicalName() {
+        return ObjectUtils.isEmpty(imageFilePhysicalName) ? imageFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
+    }
 }
