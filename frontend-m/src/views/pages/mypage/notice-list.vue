@@ -19,10 +19,17 @@
                 </a>
             </li>
         </ul>
+        <Pagination
+                v-if="noticeData.length"
+                :itemLength="itemLength"
+                :pageCount="pageCount"
+                :totalItem="totalElements"
+                @handleCurrentChange="handleCurrentChange"
+        />
     </div>
 </template>
 <script>
-import {getCustomerList} from '@/api/customer';
+import { getCustomerList } from '@/api/customer/';
 
 export default {
     name: 'notice-list',
@@ -30,45 +37,47 @@ export default {
         return {
             noticeList: {},
             noticeData: [],
-            pageNumber: 0,
-            totalItem: 0,
-            itemSize: 10,
+            page: 0,
+            pageCount: 11,
+            itemLength: 10,
             keyword: '',
             totalElements: 0,
             isActive: false
         }
+    },
+    components: {
+        Pagination: () => import('@/components/pagination/')
     },
     mounted() {
         this.getNoticeList();
     },
     methods: {
         async getNoticeList() {
-            console.log("this is getNoticeList");
             try {
                 const {
                     data: { data: response },
                 } = await getCustomerList("NOTICE", {
-                    page: this.pageNumber,
-                    size: this.itemSize,
+                    page: this.page,
+                    size: this.itemLength,
                     keyword: this.keyword
                 });
                 this.noticeList = response;
                 this.noticeData = response.content;
                 this.totalElements = response.totalElements;
-                console.log(this.noticeList);
-                console.log(this.noticeData);
-                console.log(this.totalElements);
             } catch (error) {
                 console.log(error);
             }
         },
         searchInputActive: function (event) {
-            console.log("searchInputActive");
             this.isActive = true;
         },
         searchInputInactive: function (event) {
-            console.log("searchInputInactive");
             this.isActive = false;
+            this.keyword = "";
+        },
+        handleCurrentChange(val) {
+            this.page = val;
+            this.getNoticeList();
         }
     }
 };
