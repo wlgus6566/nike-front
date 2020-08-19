@@ -1,53 +1,53 @@
 <template>
     <div class="filter-select">
-        <button type="button" @click="openModal">
-            {{ selectLabel }}
+        <button type="button" @click="modalOpen">
+            {{ cascaderList.value }}
         </button>
         <ListmModal
-            :selectList="selectList"
+            :cascaderList="cascaderList"
             :showList="showList"
-	        :selectLabel="selectLabel"
             @closeModal="closeModal"
         />
     </div>
 </template>
 <script>
-import ListmModal from '@/components/filter-select/list-modal';
+import ListmModal from '@/components/cascader-select/list-modal';
 export default {
-    name: 'filter-select',
+    name: 'cascader-select',
     data() {
         return {
             showList: false,
-	        selectLabel:'',
+            selectLabel:[],
         };
     },
-    props: ['selectList'],
+    props: ['cascaderList'],
     components: {
         ListmModal,
     },
 	watch:{
-        'selectList.value'(){
-            const _index = this.selectList.options.findIndex(el => {
-                return el.value === this.selectList.value
+       /* 'cascaderList.value'(){
+            const _index = this.cascaderList.options.findIndex(el => {
+                return el.value === this.cascaderList.value
             });
-            this.selectLabel = this.selectList.options[_index].label
-        }
+            this.selectLabel = this.cascaderList.options[_index].label
+        }*/
 	},
     mounted() {
-        this.findLabel();
+       /* this.findLabel();*/
     },
     methods: {
         findLabel(){
-			const _index = this.selectList.options.findIndex(el => {
-			    return el.value === this.selectList.value
-			})
-            this.selectLabel = this.selectList.options[_index].label
+            const _index = this.cascaderList.options.findIndex(el => {
+                return el.value === this.cascaderList.value
+            })
+            console.log(_index)
+            this.selectLabel = this.cascaderList.options[_index].label
         },
         closeModal() {
             this.showList = false;
             document.querySelector('body').classList.remove('modal-list-open');
         },
-        openModal() {
+        modalOpen() {
             this.showList = !this.showList;
             if (this.showList) {
                 document.querySelector('body').classList.add('modal-list-open');
