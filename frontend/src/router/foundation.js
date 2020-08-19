@@ -52,12 +52,22 @@ const routes = [
             },
             {
                 path: 'upload',
-                component: pages('foundation/upload'),
+                component: pages('common/folder-upload'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
-                    topMenuCode: 'ASSET',
+                    aside: 'File',
+                    topMenuCode: 'FOUNDATION',
                     title: 'UPLOAD',
+                },
+            },
+            {
+                path: '*/modify/:id',
+                component: pages('common/folder-upload'),
+                meta: {
+                    layout: 'Default',
+                    aside: 'File',
+                    topMenuCode: 'FOUNDATION',
+                    title: 'MODIFY',
                 },
             },
             {
@@ -66,7 +76,7 @@ const routes = [
                 meta: {
                     layout: 'Default',
                     aside: 'Order',
-                    topMenuCode: 'ASSET',
+                    topMenuCode: 'FOUNDATION',
                 },
                 beforeEnter: (to, from, next) => {
                     const menuCodeArr = ['vms', 'ekin', 'digital', 'rb'];

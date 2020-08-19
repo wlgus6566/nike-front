@@ -52,7 +52,7 @@
                                     type="checkbox"
                                     :value="item.contentsFileSeq"
                                     v-model="checkContentsFileList"
-                                    :disabled="item.url"
+                                    :disabled="item.fileKindCode !== 'FILE'"
                                     @click="
                                         $emit(
                                             'checkContentsFile',
