@@ -66,37 +66,11 @@
         </div>
         <h2 class="main-title">NOTICE</h2>
         <ul class="notice-list">
-            <li>
+            <li v-for="item in noticeArticleList" :key="item.noticeArticleSeq">
                 <a href="">
-                    <span class="label-noti">중요</span>
-                    <span class="title">NIKE 2020 PSKO 일정이 업데이트 되었습니다.</span>
-                    <span class="data">2020.06.17</span>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <span class="label-noti">중요</span>
-                    <span class="title">NIKE 2020 PSKO 일정이 업데이트 되었습니다.</span>
-                    <span class="data">2020.06.17</span>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <span class="label-noti">중요</span>
-                    <span class="title">NIKE 2020 PSKO 일정이 업데이트 되었습니다.</span>
-                    <span class="data">2020.06.17</span>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <span class="title">NIKE 2020 PSKO 일정이 업데이트 되었습니다.</span>
-                    <span class="data">2020.06.17</span>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <span class="title">NIKE 2020 PSKO 일정이 업데이트 되었습니다.</span>
-                    <span class="data">2020.06.17</span>
+                    <span class="label-noti" v-if="item.noticeYn === 'Y'">중요</span>
+                    <span class="title" v-text="item.title">NIKE 2020 PSKO 일정이 업데이트 되었습니다.</span>
+                    <span class="data" v-text="item.updateDt">2020.06.17</span>
                 </a>
             </li>
         </ul>
@@ -106,20 +80,20 @@
         </div>
         <h2 class="main-title">REPORT</h2>
         <ul class="main-report-list">
-            <li class="report-list-item">
+            <li class="report-list-item" v-for="item in reportList" :key="item.reportSeq">
                 <a href="#">
                     <span class="thumbnail">
-                        <img src="http://placehold.it/410X410" alt="" />
+                        <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
                     <span class="info-box">
-                        <strong class="title">
+                        <strong class="title" v-text="item.reportName">
                             조던 서울조던
                         </strong>
-                        <p class="desc">
+                        <!--<p class="desc">
                             코리아 팀 스니커즈 컬렉션 코리아 팀 스니커즈 컬렉션코리아 팀
                             스니커즈 컬렉션코리아 팀 스니커즈 컬렉션코리아 팀 스니커즈
                             컬렉션
-                        </p>
+                        </p>-->
                     </span>
                 </a>
             </li>
@@ -172,14 +146,44 @@
     </div>
 </template>
 <script>
-export default {
+    import {getMain} from '@/api/main';
+
+
+    export default {
     name: 'MainPage',
     data() {
-        return {};
+        return {
+            loading: false,
+            assetContentsList : [],
+            foundationContentsList : [],
+            mainVisual:'',
+            newsArticleList : [],
+            noticeArticleList:[],
+            reportList : [],
+            toolKitContentsList : []
+        };
     },
     mounted(){
         console.log("test");
-    },methods: {}
+        this.fetchData();
+    },methods: {
+        async fetchData(){
+            this.loading = true;
+            try{
+                const {
+                    data: {data: response}
+                }= await getMain();
+                this.assetContentsList = response.assetContentsList;
+                this.foundationContentsList = response.foundationContentsList;
+                this.mainVisual = response.mainVisual;
+                this.newsArticleList = response.newsArticleList;
+                this.noticeArticleList = response.noticeArticleList;
+                this.reportList = response.reportList;
+            } catch (error){
+                console.log(error);
+            }
+        }
+    }
 };
 </script>
 <style scoped></style>

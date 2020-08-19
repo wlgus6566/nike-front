@@ -56,13 +56,10 @@
             console.log(this.$route.meta.topCode);
             console.log(this.$route.params.id);
             if(this.$route.meta.topCode === 'report') {
-//                deleteReport(this.$route.params.id);
-                deletePost();
-
                 if(confirm("REPORT를 삭제 하시겠습니까?")) {
                     try {
-                        const {data: {data: response}} = await deleteReportFeedback(id);
-                        this.fetchData();
+                        //const {data: {data: response}} = await deleteReportFeedback(id);
+                        //this.fetchData();
                     } catch (error) {
                         console.log(error);
                     }
