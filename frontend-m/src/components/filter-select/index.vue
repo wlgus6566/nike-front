@@ -3,34 +3,34 @@
         <button type="button" @click="openModal">
             {{ selectLabel }}
         </button>
-        <ListmModal
+        <ListModal
             :selectList="selectList"
             :showList="showList"
-	        :selectLabel="selectLabel"
+	          :selectLabel="selectLabel"
             @closeModal="closeModal"
         />
     </div>
 </template>
 <script>
-import ListmModal from '@/components/filter-select/list-modal';
+import ListModal from '@/components/filter-select/list-modal';
 export default {
-    name: 'filter-select',
+    name: 'FilterSelect',
     data() {
         return {
             showList: false,
-	        selectLabel:'',
+	          selectLabel:'',
         };
     },
     props: ['selectList'],
     components: {
-        ListmModal,
+      ListModal,
     },
 	watch:{
         'selectList.value'(){
-            const _index = this.selectList.options.findIndex(el => {
+            const _index = this.selectList.listSortOptions.findIndex(el => {
                 return el.value === this.selectList.value
             });
-            this.selectLabel = this.selectList.options[_index].label
+            this.selectLabel = this.selectList.listSortOptions[_index].label
         }
 	},
     mounted() {
@@ -38,10 +38,10 @@ export default {
     },
     methods: {
         findLabel(){
-			const _index = this.selectList.options.findIndex(el => {
+			const _index = this.selectList.listSortOptions.findIndex(el => {
 			    return el.value === this.selectList.value
 			})
-            this.selectLabel = this.selectList.options[_index].label
+            this.selectLabel = this.selectList.listSortOptions[_index].label
         },
         closeModal() {
             this.showList = false;

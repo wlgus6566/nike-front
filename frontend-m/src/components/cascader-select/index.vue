@@ -1,47 +1,46 @@
 <template>
     <div class="filter-select">
         <button type="button" @click="modalOpen">
-            {{ cascaderList.value }}
+            {{ selectLabel }}
         </button>
         <ListmModal
             :cascaderList="cascaderList"
             :showList="showList"
             @closeModal="closeModal"
+            @changeInput="changeInput"
         />
     </div>
 </template>
 <script>
 import ListmModal from '@/components/cascader-select/list-modal';
+import bus from '@/utils/bus';
 export default {
     name: 'cascader-select',
     data() {
         return {
             showList: false,
-            selectLabel:[],
+            selectLabel :this.cascaderList.options[0].label
         };
     },
     props: ['cascaderList'],
     components: {
         ListmModal,
     },
-	watch:{
-       /* 'cascaderList.value'(){
-            const _index = this.cascaderList.options.findIndex(el => {
-                return el.value === this.cascaderList.value
-            });
-            this.selectLabel = this.cascaderList.options[_index].label
-        }*/
-	},
+    // watch:{
+    //   'cascaderList.value'(val){
+    //     this.selectLabel = val
+    //   }
+    // },
     mounted() {
-       /* this.findLabel();*/
+      bus.$on('changeInput', (val) => {
+        this.selectLabel = val
+      });
     },
     methods: {
-        findLabel(){
-            const _index = this.cascaderList.options.findIndex(el => {
-                return el.value === this.cascaderList.value
-            })
-            console.log(_index)
-            this.selectLabel = this.cascaderList.options[_index].label
+        changeInput(val){
+          console.log(1)
+          console.log(val)
+          this.selectLabel = val
         },
         closeModal() {
             this.showList = false;

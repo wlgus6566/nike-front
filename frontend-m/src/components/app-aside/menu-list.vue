@@ -73,7 +73,7 @@ export default {
             }
         },
         linkOpen() {
-            console.log(this.$route.path);
+            //console.log(this.$route.path);
         },
     },
 };
