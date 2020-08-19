@@ -1,11 +1,12 @@
 <template>
     <div class="filter-select">
-        <button type="button" @click="modalSelect">
-            {{ selectList.value }}
+        <button type="button" @click="openModal">
+            {{ selectLabel }}
         </button>
         <ListmModal
             :selectList="selectList"
             :showList="showList"
+	        :selectLabel="selectLabel"
             @closeModal="closeModal"
         />
     </div>
@@ -17,19 +18,36 @@ export default {
     data() {
         return {
             showList: false,
+	        selectLabel:'',
         };
     },
     props: ['selectList'],
     components: {
         ListmModal,
     },
-    mounted() {},
+	watch:{
+        'selectList.value'(){
+            const _index = this.selectList.options.findIndex(el => {
+                return el.value === this.selectList.value
+            });
+            this.selectLabel = this.selectList.options[_index].label
+        }
+	},
+    mounted() {
+        this.findLabel();
+    },
     methods: {
+        findLabel(){
+			const _index = this.selectList.options.findIndex(el => {
+			    return el.value === this.selectList.value
+			})
+            this.selectLabel = this.selectList.options[_index].label
+        },
         closeModal() {
             this.showList = false;
             document.querySelector('body').classList.remove('modal-list-open');
         },
-        modalSelect() {
+        openModal() {
             this.showList = !this.showList;
             if (this.showList) {
                 document.querySelector('body').classList.add('modal-list-open');
