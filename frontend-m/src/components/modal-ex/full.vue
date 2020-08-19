@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         title="상세보기"
-        class="modal"
+        class="modal full"
         :visible="visible"
         :append-to-body="true"
         @close="$emit('update:visible', false)"
@@ -12,11 +12,15 @@
             </div>
         </el-scrollbar>
 
-        <!--        <div slot="footer" class="dialog-footer">-->
-        <!--            <el-button @click="$emit('update:visible', false)" type="info" round>-->
-        <!--                확인-->
-        <!--            </el-button>-->
-        <!--        </div>-->
+        <div slot="footer" class="dialog-footer">
+            <el-button
+                @click="$emit('update:visible', false)"
+                type="info"
+                round
+            >
+                확인
+            </el-button>
+        </div>
     </el-dialog>
 </template>
 
