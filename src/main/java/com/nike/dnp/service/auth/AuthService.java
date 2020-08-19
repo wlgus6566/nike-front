@@ -516,13 +516,69 @@ public class AuthService {
         }
     }
 
-//    TODO[lsj] 보고서 권한 목록 재가공 필요
-//    public List<AuthReturnDTO> getAuthList2 (final UserContentsSearchDTO userContentsSearchDTO, final Long authDepth) {
-//        List<AuthReturnDTO> asd = this.getAuthList(userContentsSearchDTO);
+    /**
+     * Gets auth list with depth.
+     *
+     * @param userContentsSearchDTO the user contents search dto
+     * @param auth                  the auth
+     * @return the auth list with depth
+     * @author [이소정]
+     * @implNote 권한 depth에 맞는 목록
+     * @since 2020. 8. 18. 오후 10:07:48
+     */
+//    TODO[lsj]
+    public List<AuthReturnDTO> getAuthListWithDepth (final UserContentsSearchDTO userContentsSearchDTO, final Auth auth) {
+        List<AuthReturnDTO> allAuthList = this.getAuthList(userContentsSearchDTO);
+        List<AuthReturnDTO> transformAuthList = new ArrayList<>();
+
+        if (!ObjectUtils.isEmpty(allAuthList) && !allAuthList.isEmpty()) {
+
+            if (1 == auth.getAuthDepth()) {
+                transformAuthList = allAuthList;
+
+            } else {
+                for (AuthReturnDTO authReturnDTO : allAuthList) {
+//                    this.findAuthList(auth.getAuthSeq(), authReturnDTO.getSubAuths());
+                }
+            }
+        }
+
+        return transformAuthList;
+
+    }
+
+//    public List<AuthReturnDTO> findAuthList(final Long authSeq, final List<AuthReturnDTO> authReturnDTOList) {
+//        if (!ObjectUtils.isEmpty(authReturnDTOList) && !authReturnDTOList.isEmpty()) {
+//            for (AuthReturnDTO authReturnDTO : authReturnDTOList) {
+//                if (authSeq.equals(authReturnDTO.getAuthSeq())) {
 //
+//                }
+//            }
+//        }
+//    }
+
+//    public List<AuthReturnDTO> transformAuthList(final List<AuthReturnDTO> returnList, final List<AuthReturnDTO> allAuthList) {
 //
+//        for (AuthReturnDTO authReturnDTO : allAuthList) {
 //
+//            if (!ObjectUtils.isEmpty(authReturnDTO.getSubAuths()) && !authReturnDTO.getSubAuths().isEmpty()) {
+//                List<AuthReturnDTO> newAuthReturnList = new ArrayList<>();
+//                for (AuthReturnDTO subAuth : authReturnDTO.getSubAuths()) {
+//                    if ("Y".equals(subAuth.getViewYn())) {
+//                        newAuthReturnList.add(subAuth);
+//                    }
+//                }
 //
+//                // 하위 목록이 있고, 하위에 viewYn이 있는경우
+//                if ((!ObjectUtils.isEmpty(newAuthReturnList) && ! newAuthReturnList.isEmpty()) || "Y".equals(authReturnDTO.getViewYn())) {
+//                    authReturnDTO.setSubAuths(newAuthReturnList);
+//                    returnList.add(authReturnDTO);
+//                    this.transformAuthList(returnList, authReturnDTO.getSubAuths());
+//                }
+//            }
+//        }
+//
+//        return returnList;
 //    }
 
     /**

@@ -215,8 +215,10 @@ public class ReportController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<List<AuthReturnDTO>> findByAuthDepth() {
         log.info("AuthController.findByAuthDepth");
+//        return responseService.getSingleResult(
+//                authService.findByAuthDepth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString()));
         return responseService.getSingleResult(
-                authService.findByAuthDepth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString()));
+                reportService.findAllAuthUserWithDepth());
     }
 
     /**
