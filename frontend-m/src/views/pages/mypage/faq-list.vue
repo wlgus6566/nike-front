@@ -5,8 +5,8 @@
                 <a href="#" v-on:click="tabChange(codeList.value)">{{codeList.label}}</a>
             </li>
         </ul>
-        <ul class="faq-list" v-for="item in faqData">
-            <li :class="{ active: item.noticeArticleSeq === activeSeq}">
+        <ul class="faq-list" >
+            <li v-for="item in faqData" :class="{ active: item.noticeArticleSeq === activeSeq}">
                 <a href="#" class="sbj" @click="setActiveSeq(item.noticeArticleSeq)">
                     <span class="category">[<em>{{item.noticeArticleCategoryValue}}</em>]</span>
                     <span class="title">{{item.title}}</span>

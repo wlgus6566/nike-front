@@ -10,8 +10,8 @@
                 <div class="btn-txt" @click="searchInputInactive"><span>취소</span></div>
             </div>
         </div>
-        <div class="news-list" v-for="item in newsData">
-            <div class="news-list-item">
+        <div class="news-list" >
+            <div class="news-list-item" v-for="item in newsData">
                 <a :href="`/mypage/news/detail/${item.noticeArticleSeq}`">
                     <span class="thumbnail">
                         <img :src="item.thumbnailFilePhysicalName" alt="">
