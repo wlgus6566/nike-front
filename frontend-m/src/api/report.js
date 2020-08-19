@@ -34,4 +34,13 @@ function postReportFeedback(data) {
     return report.post(`/answer`, data);
 }
 
-export { getReportList, postReport , getReportDetail, getReportDetailFileList, getReportDetailFeedbackList, postReportFeedback};
+function deleteReportFeedback(id) {
+    return report.delete('/answer/'+id);
+}
+
+// REPORT 삭제
+function deleteReport(id){
+    return report.delete('/'+id);
+}
+
+export { getReportList, postReport , getReportDetail, getReportDetailFileList, getReportDetailFeedbackList, postReportFeedback, deleteReportFeedback, deleteReport};
