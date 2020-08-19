@@ -23,13 +23,6 @@ export default {
     methods: {
         selectedFn(label) {
             this.cascaderList.value = label;
-            // const seqList = this.options.map(el => el.label);
-            // const _index = seqList.indexOf(label);
-            // if (this.selectedIndex !== _index) {
-            //     this.selectedIndex = _index;
-            // } else {
-            //     this.selectedIndex = null;
-            // }
         },
     },
 };
