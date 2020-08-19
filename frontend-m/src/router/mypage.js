@@ -49,11 +49,10 @@ const routes = [
                 },
             },
             {
-                path: 'notice/detail/:id',
-                component: pages('mypage/notice-detail.vue'),
+                path: ':sectionCode/detail/:id',
+                component: pages('mypage/customer-detail.vue'),
                 meta: {
                     layout: 'Default',
-                    detail: true,
                     depth: '/mypage/customer',
                 },
             },

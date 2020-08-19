@@ -2,11 +2,11 @@
     <div>
         <div class="detail-view">
             <div class="title-box">
-                <h2 class="title">{{noticeData.title}}</h2>
-                <span class="date">{{noticeData.updateDt}}</span>
+                <h2 class="title">{{customerData.title}}</h2>
+                <span class="date">{{customerData.updateDt}}</span>
             </div>
             <div class="detail-cont">
-                {{noticeData.contents}}
+                {{customerData.contents}}
             </div>
         </div>
         <div class="btn-area">
@@ -18,10 +18,10 @@
 import { getCustomerDetail } from '@/api/customer/';
 
 export default {
-    name: 'notice-detail',
+    name: 'news-detail',
     data() {
         return {
-            noticeData: {}
+            customerData: {}
         }
     },
     mounted() {
@@ -30,8 +30,9 @@ export default {
     methods: {
         async getNoticeDetail() {
             try {
-                const { data: response } = await getCustomerDetail("NOTICE", this.$route.params.id);
-                this.noticeData = response.data;
+                const { data: response } = await getCustomerDetail(this.$route.params.sectionCode, this.$route.params.id);
+                this.customerData = response.data;
+                console.log(this.$route.params.sectionCode);
             } catch (error) {
                 console.log(error);
             }
@@ -39,7 +40,6 @@ export default {
         goToNoticeList: function () {
             this.$router.go(-1);
         }
-
     }
 };
 </script>

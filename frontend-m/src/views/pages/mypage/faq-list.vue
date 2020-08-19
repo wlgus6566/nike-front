@@ -24,6 +24,7 @@
                 :totalItem="totalElements"
                 @handleCurrentChange="handleCurrentChange"
         />
+        <Loading v-if="loadingData" />
     </div>
 </template>
 <script>
@@ -46,11 +47,13 @@ export default {
                 listSortOptions: [{ value: '', label: 'ALL' }],
                 value: '',
             },
-            noticeArticleCategoryCode: null
+            noticeArticleCategoryCode: null,
+            loadingData: false
         }
     },
     components: {
-        Pagination: () => import('@/components/pagination/')
+        Pagination: () => import('@/components/pagination/'),
+        Loading: () => import('@/components/loading/')
     },
     mounted() {
         this.getCategoryCode();
@@ -80,6 +83,7 @@ export default {
             }
         },
         async getCategoryCode() {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -91,6 +95,7 @@ export default {
                         label: el.codeName,
                     });
                 });
+                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }

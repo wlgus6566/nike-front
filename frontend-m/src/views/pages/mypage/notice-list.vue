@@ -2,7 +2,7 @@
     <div>
         <div class="sorting-area">
             <p class="total">전체 <strong>({{totalElements}})</strong></p>
-            <div class="search-input" v-bind:class="{ active: isActive }">
+            <div class="search-input" :class="{ active: isActive }">
                 <div class="input-box">
                     <input type="text" placeholder="검색어를 입력해주세요." @keyup.enter="searchInputActive" v-model="keyword"/>
                     <button type="button" class="search" @click="searchInputActive"><span>검색</span></button>
@@ -26,6 +26,7 @@
                 :totalItem="totalElements"
                 @handleCurrentChange="handleCurrentChange"
         />
+        <Loading v-if="loadingData" />
     </div>
 </template>
 <script>
@@ -42,17 +43,20 @@ export default {
             itemLength: 10,
             keyword: '',
             totalElements: 0,
-            isActive: false
+            isActive: false,
+            loadingData: false
         }
     },
     components: {
-        Pagination: () => import('@/components/pagination/')
+        Pagination: () => import('@/components/pagination/'),
+        Loading: () => import('@/components/loading/')
     },
     mounted() {
         this.getNoticeList();
     },
     methods: {
         async getNoticeList() {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -64,6 +68,7 @@ export default {
                 this.noticeList = response;
                 this.noticeData = response.content;
                 this.totalElements = response.totalElements;
+                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }
