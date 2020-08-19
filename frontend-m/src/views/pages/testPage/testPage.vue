@@ -1,7 +1,8 @@
 <template>
     <div>
         <FilterSelect :selectList="selectList"></FilterSelect>
-<!--        <CascaderSelect :cascaderList="authority"></CascaderSelect>-->
+        <CascaderSelect :cascaderList="authority"></CascaderSelect>
+
         <button type="button" @click="openModal">팝업</button> <br />
         <button type="button" @click="openModal2">팝업 full</button>
         <div class="modal-wrap">
@@ -14,34 +15,31 @@
 import ModalEx from '@/components/modal-ex';
 import ModalFull from '@/components/modal-ex/full.vue';
 import FilterSelect from '@/components/filter-select';
-// import CascaderSelect from '@/components/cascader-select';
+import CascaderSelect from '@/components/cascader-select';
 import { getAuthCacheList } from '@/api/auth';
 
 export default {
     data() {
         return {
             selectList: {
-                value: '1',
-                options: [
+                value: '최신순',
+                listSortOptions: [
                     {
                         label: '최신순',
-                        value: '1',
+                        value: '최신순',
                     },
                     {
                         label: '이름순',
-                        value: '2',
-                    },
-                    {
-                        label: '3이름순',
-                        value: '3',
+                        value: '이름순',
                     },
                 ],
             },
             authority: {
-                value: [null],
+                value: ['all'],
+	              name: 'authority',
                 options: [
                     {
-                        value: null,
+                        value: 'all',
                         label: '전체 그룹',
                     },
                 ],
@@ -57,7 +55,7 @@ export default {
         ModalEx,
         ModalFull,
         FilterSelect,
-        // CascaderSelect,
+        CascaderSelect,
     },
     created() {
         this.authCacheList();
@@ -76,7 +74,7 @@ export default {
                 const {
                     data: { data: response },
                 } = await getAuthCacheList();
-                console.log(response);
+
                 this.recursionFn(response, this.authority.options, 1);
             } catch (error) {
                 console.log(error);

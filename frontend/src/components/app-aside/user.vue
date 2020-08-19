@@ -42,19 +42,14 @@
                                 class="alarm-item active"
                                 v-for="item in alarmDataList.content"
                                 :key="item.alarmSeq"
+                                @click="delAlarmData(item.alarmSeq)"
                             >
-                                <button
-                                    type="button"
-                                    @click="delAlarmData(item.alarmSeq)"
-                                    ref="alarmBtn"
-                                >
-                                    <span class="date">
-                                        {{ item.registrationDt }}
-                                    </span>
-                                </button>
-                                <a href="naver.com" class="txt" ref="alarmIrem">
-                                    {{ item.folderName }}
-                                </a>
+                                <router-link :to="setUrl(item)" class="txt" >
+                                    {{ item.folderName }}이(가) 업데이트 되었습니다.
+                                  <span class="date">
+                                    {{ item.registrationDt }}
+                                  </span>
+                                </router-link>
                             </li>
                         </transition-group>
                     </el-scrollbar>
@@ -91,23 +86,11 @@ export default {
     methods: {
         openAlarm() {
             this.alarmActive = !this.alarmActive;
-            this.$refs.alarmIrem.forEach((el, index) => {
-                this.$refs.alarmBtn[index].style.paddingTop =
-                    el.offsetHeight + 'px';
-            });
-
-            if (this.alarmActive) {
-                const alarmH =
-                    this.$refs.alarm.querySelector('.alarm-list').offsetHeight +
-                    40;
-                this.$refs.alarm.style.height = alarmH + 'px';
-            } else {
-                this.$refs.alarm.style.height = '0px';
-            }
+            this.$refs.alarm.style.height = document.querySelector(".alarm-list").offsetHeight + 40 + 'px'
         },
         alarmClose() {
             this.alarmActive = false;
-            this.$refs.alarm.style.height = '0px';
+            this.$refs.alarm.style.height = '0'
         },
         logout() {
             this.$store.commit('LOGOUT');
@@ -138,13 +121,20 @@ export default {
                     data: { data: response },
                 } = await delAlarm(seq);
                 await this.alarmData();
-                console.log(response);
+                console.log(response)
             } catch (error) {
-                console.log(error);
+                //console.log(error);
                 if (error.data.existMsg) {
                     alert(error.data.msg);
                 }
             }
+        },
+        setUrl(item) {
+          console.log(item)
+          if(item.typeCd === "REPORT_MANAGE"){
+            return `/report/${item.folderSeq}`.toLocaleLowerCase();
+          }
+
         },
     },
 };
@@ -250,11 +240,6 @@ export default {
 .alarm-item {
     padding: 12px 41px 12px 20px;
 }
-.alarm-item button {
-    display: block;
-    width: 100%;
-    text-align: left;
-}
 .alarm-item .date {
     display: block;
     margin-top: 4px;
@@ -262,16 +247,8 @@ export default {
     line-height: 15px;
     color: #888;
 }
-.alarm-item:first-child .txt {
-    margin-top: 0;
-}
 .alarm-item .txt {
-    position: absolute;
-    top: 0;
-    left: 0;
     display: block;
-    margin-top: 12px;
-    padding: 0 41px 0 29px;
     font-size: 11px;
     line-height: 17px;
     color: #333;

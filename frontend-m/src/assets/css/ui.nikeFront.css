@@ -605,6 +605,23 @@
     text-indent: -9999px;
     overflow: hidden;
 }
+.sorting-area [class^='type-list'] + .filter-select{
+	position:relative;
+	margin-left:10px;
+	padding-left:20px;
+}
+.sorting-area [class^='type-list'] + .filter-select:before{
+	content:"";
+	position:absolute;
+	top:50%;
+	left:0;
+	display:block;
+	width:1px;
+	height:10px;
+	transform:translateY(-50%);
+	background:#ddd;
+
+}
 .sorting-area .search-input {
     position: absolute;
     top: 0;
