@@ -22,6 +22,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * The Class Notice controller.
@@ -338,14 +339,14 @@ public class NoticeController {
      */
     @ApiOperation(value = "Customer Center 에디터 이미지 업로드", notes = BASIC_CHARACTER)
     @PostMapping("/{noticeArticleSectionCode}/images")
-    public SingleResult<String> uploadEditorImages(
+    public SingleResult<List<String>> uploadEditorImages(
             @ApiParam(name = "noticeArticleSectionCode", value = "Customer Center 게시글 종류 코드",
                     allowableValues = "NOTICE, NEWS, QNA", required = true)
             @PathVariable final String noticeArticleSectionCode,
             final MultipartHttpServletRequest multiReq) {
         log.info("NoticeController.uploadEditorImages");
 
-        String uploadUrl = noticeService.uploadEditorImages(multiReq, noticeArticleSectionCode);
+        List<String> uploadUrl = noticeService.uploadEditorImages(multiReq, noticeArticleSectionCode);
         return responseService.getSingleResult(uploadUrl);
     }
 }
