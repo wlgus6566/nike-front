@@ -123,38 +123,41 @@ export default {
         }
         this.fetchData();
       },
+      'authority.value'() {
+        this.fetchData();
+      },
     },
     methods: {
         //권한 조회 (리포트 권한 목록 수정되면 교체 되어야함)
         async authCacheList() {
-          try {
-            const {
-              data: { data: response },
-            } = await getAuthCacheList();
+            try {
+              const {
+                data: { data: response },
+              } = await getAuthCacheList();
 
-            this.recursionFn(response, this.authority.options, 1);
-          } catch (error) {
-            console.log(error);
-          }
+              this.recursionFn(response, this.authority.options, 1);
+            } catch (error) {
+              console.log(error);
+            }
         },
         recursionFn(data, item, minIndx) {
-          let _minIndx = minIndx;
-          if (minIndx === undefined) {
-            _minIndx = 0;
-          }
-          data.forEach((el, index) => {
-            item.push({
-              value: el.authSeq,
-              label: el.authName,
-            });
-            if (el.subAuths) {
-              item[index + _minIndx].children = [];
-              this.recursionFn(
-                  el.subAuths,
-                  item[index + _minIndx].children
-              );
+            let _minIndx = minIndx;
+            if (minIndx === undefined) {
+              _minIndx = 0;
             }
-          });
+            data.forEach((el, index) => {
+              item.push({
+                value: el.authSeq,
+                label: el.authName,
+              });
+              if (el.subAuths) {
+                item[index + _minIndx].children = [];
+                this.recursionFn(
+                    el.subAuths,
+                    item[index + _minIndx].children
+                );
+              }
+            });
         },
         // 기본 데이터 조회
         async fetchData() {
@@ -167,7 +170,7 @@ export default {
                     size: this.size,
                     keyword: this.keyword,
                     sectionCode: this.selectList.value,
-                    groupSeq: this.authority.value,
+                    //groupSeq: this.authority.value,
                 });
                 this.reportList = response.content;
             } catch (error) {
