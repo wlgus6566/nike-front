@@ -50,7 +50,7 @@ nike:
 cloud:
   aws:
     distributionDomain: 'd3a4mwwf905xos.cloudfront.net'
-    privateKeyFilePath: '/home/ec2-user/nikecdn.der'
+    privateKeyFilePath: '/home/ec2-user/der/nikecdn.der'
     credentials:
       accessKey: 'AKIA4FO4XQUFNEBRAZU4'
       secretKey: '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'
