@@ -3,61 +3,64 @@
         <div class="user-info">
             <span class="store-name">홍대 SKNRS</span>
             <div class="side">
-                <button type="button" class="btn-out" @click="logout">
-                    <span>로그아웃</span>
-                </button>
-                <button type="button" class="btn-alarm" @click="openAlarm">
-                    <span>알람</span>
-                </button>
-                <!--<div class="alarm-box">
-                    <strong class="title">NEW</strong>
-                    <div class="alarm-item">
-                        <p class="txt">
-                            에어맥스 2090 신제품 런칭 그래픽 자료가
-                            업데이트되었습니다.
-                        </p>
-                    </div>
-                    <button type="button" class="btn-close">
-                        <span>닫기</span>
-                    </button>
-                </div>-->
-                <div
-                    class="alarm-box"
-                    ref="alarm"
-                    :class="{ active: alarmActive }"
-                >
-                    <strong class="title">NOTICE</strong>
-                    <el-scrollbar
-                        class="cart-list-scroll"
-                        wrap-class="alarm-list-wrap"
-                        :native="false"
-                    >
-                        <transition-group
-                            tag="ul"
-                            class="alarm-list"
-                            v-if="alarmDataList.content"
-                            name="fade"
-                        >
-                            <li
-                                class="alarm-item active"
-                                v-for="item in alarmDataList.content"
-                                :key="item.alarmSeq"
-                                @click="delAlarmData(item.alarmSeq)"
-                            >
-                                <router-link :to="setUrl(item)" class="txt" >
-                                    {{ item.folderName }}이(가) 업데이트 되었습니다.
-                                  <span class="date">
-                                    {{ item.registrationDt }}
-                                  </span>
-                                </router-link>
-                            </li>
-                        </transition-group>
-                    </el-scrollbar>
+              <template v-if="alarmDataList.content">
+                  <button type="button" class="btn-out" @click="logout">
+                      <span>로그아웃</span>
+                  </button>
+                  <button type="button" class="btn-alarm"  :class="{active : alarmDataList.content.length }" @click="openAlarm">
+                      <span>알람</span>
+                  </button>
+                  <!--<div class="alarm-box">
+                      <strong class="title">NEW</strong>
+                      <div class="alarm-item">
+                          <p class="txt">
+                              에어맥스 2090 신제품 런칭 그래픽 자료가
+                              업데이트되었습니다.
+                          </p>
+                      </div>
+                      <button type="button" class="btn-close">
+                          <span>닫기</span>
+                      </button>
+                  </div>-->
 
-                    <button type="button" class="btn-close" @click="alarmClose">
-                        <span>닫기</span>
-                    </button>
-                </div>
+                  <div
+                      class="alarm-box"
+                      ref="alarm"
+                      v-if="alarmDataList.content.length"
+                      :class="{ active: alarmActive }"
+                  >
+                      <strong class="title">NOTICE</strong>
+                      <el-scrollbar
+                          class="cart-list-scroll"
+                          wrap-class="alarm-list-wrap"
+                          :native="false"
+                      >
+                          <transition-group
+                              tag="ul"
+                              class="alarm-list"
+                              name="fade"
+                          >
+                              <li
+                                  class="alarm-item active"
+                                  v-for="item in alarmDataList.content "
+                                  :key="item.alarmSeq"
+                                  @click="delAlarmData(item.alarmSeq)"
+                              >
+                                  <router-link :to="setUrl(item)" class="txt" >
+                                      {{ item.folderName }}이(가) 업데이트 되었습니다.
+                                    <span class="date">
+                                      {{ item.registrationDt }}
+                                    </span>
+                                  </router-link>
+                              </li>
+                          </transition-group>
+                      </el-scrollbar>
+
+                      <button type="button" class="btn-close" @click="alarmClose">
+                          <span>닫기</span>
+                      </button>
+                  </div>
+              </template>
             </div>
         </div>
         <div class="space-info">
@@ -85,8 +88,10 @@ export default {
     },
     methods: {
         openAlarm() {
-            this.alarmActive = !this.alarmActive;
-            this.$refs.alarm.style.height = document.querySelector(".alarm-list").offsetHeight + 40 + 'px'
+            if(this.alarmDataList.content.length !== 0 ){
+              this.alarmActive = !this.alarmActive;
+              this.$refs.alarm.style.height = document.querySelector(".alarm-list").offsetHeight + 40 + 'px'
+            }
         },
         alarmClose() {
             this.alarmActive = false;
@@ -121,7 +126,7 @@ export default {
                     data: { data: response },
                 } = await delAlarm(seq);
                 await this.alarmData();
-                console.log(response)
+                this.alarmActive = false;
             } catch (error) {
                 //console.log(error);
                 if (error.data.existMsg) {
