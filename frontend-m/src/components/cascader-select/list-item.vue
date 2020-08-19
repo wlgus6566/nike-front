@@ -7,8 +7,17 @@
             v-for="(val, index) in options"
             :key="index"
         >
-            <span @click="selectedFn(val.label)">{{ val.label }}</span>
+            <label class="select-label">
+                <input
+                    type="radio"
+                    v-model="cascaderList.value"
+                    :name="cascaderList.name"
+                    :value="val.value"
+                >
+                <span>{{ val.label }}</span>
+            </label>
             <ListItem
+                class="depth-list"
                 v-if="val.children"
                 :cascaderList="cascaderList"
                 :options="val.children"
@@ -19,20 +28,30 @@
 <script>
 export default {
     name: 'ListItem',
+    data(){
+        return{
+
+        }
+    },
+    watch:{
+
+    },
     props: ['cascaderList', 'options'],
     methods: {
-        selectedFn(label) {
-            this.cascaderList.value = label;
-        },
+
     },
 };
 </script>
 <style scoped>
-.select-options-list li {
-    padding: 0 20px;
-    line-height: 45px;
-    font-size: 14px;
-    color: #000;
+.select-list-wrap > .select-options-list > li > .select-label{
+    background:#f7f7f7;
+}
+.select-options-list > li > .select-label {
+    display:block;
+    padding:0 20px;
+    line-height:45px;
+    font-size:14px;
+    color:#000;
 }
 .select-options-list li.selected > span {
     color: #fa5400;
@@ -47,5 +66,17 @@ export default {
     border-radius: 100%;
     background: #fa5400;
     vertical-align: 3px;
+}
+.depth-list {
+    padding:0 15px;
+
+}
+.depth-list li .select-label:before{
+    content:"";
+    display:inline-block;
+    width:20px;
+    height:20px;
+    background:url(../../assets/images/svg/icon-dropbox-depth.svg) no-repeat center;
+    vertical-align: middle;
 }
 </style>

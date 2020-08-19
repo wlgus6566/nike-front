@@ -1,7 +1,7 @@
 <template>
     <div class="filter-select">
         <button type="button" @click="modalOpen">
-            {{ cascaderList.value }}
+            {{ selectLabel }}
         </button>
         <ListmModal
             :cascaderList="cascaderList"
