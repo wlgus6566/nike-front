@@ -1,6 +1,6 @@
 <template>
     <div class="filter-select">
-        <button type="button" @click="modalSelect">
+        <button type="button" @click="modalOpen">
             {{ cascaderList.value }}
         </button>
         <ListmModal
@@ -17,19 +17,37 @@ export default {
     data() {
         return {
             showList: false,
+            selectLabel:[],
         };
     },
     props: ['cascaderList'],
     components: {
         ListmModal,
     },
-    mounted() {},
+	watch:{
+       /* 'cascaderList.value'(){
+            const _index = this.cascaderList.options.findIndex(el => {
+                return el.value === this.cascaderList.value
+            });
+            this.selectLabel = this.cascaderList.options[_index].label
+        }*/
+	},
+    mounted() {
+       /* this.findLabel();*/
+    },
     methods: {
+        findLabel(){
+            const _index = this.cascaderList.options.findIndex(el => {
+                return el.value === this.cascaderList.value
+            })
+            console.log(_index)
+            this.selectLabel = this.cascaderList.options[_index].label
+        },
         closeModal() {
             this.showList = false;
             document.querySelector('body').classList.remove('modal-list-open');
         },
-        modalSelect() {
+        modalOpen() {
             this.showList = !this.showList;
             if (this.showList) {
                 document.querySelector('body').classList.add('modal-list-open');

@@ -5,11 +5,11 @@
             <ul class="select-options-list">
                 <li
                     :class="{
-                        selected: selectList.value === val.label,
+                        selected: selectList.value === val.value,
                     }"
                     v-for="(val, index) in selectList.options"
                     :key="index"
-                    @click="selectedFn(val.label)"
+                    @click="selectedFn(val.value)"
                 >
                     <span>{{ val.label }}</span>
                 </li>
@@ -30,8 +30,8 @@ export default {
         this.modal();
     },
     methods: {
-        selectedFn(label) {
-            this.selectList.value = label;
+        selectedFn(value) {
+            this.selectList.value = value;
             // const seqList = this.options.map(el => el.label);
             // const _index = seqList.indexOf(label);
             // if (this.selectedIndex !== _index) {
