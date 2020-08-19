@@ -13,6 +13,7 @@
                     v-model="cascaderList.value"
                     :name="cascaderList.name"
                     :value="val.value"
+                    @change="changeInput(val.label )"
                 >
                 <span>{{ val.label }}</span>
             </label>
@@ -26,19 +27,18 @@
     </ul>
 </template>
 <script>
+import bus from '@/utils/bus';
 export default {
     name: 'ListItem',
     data(){
         return{
-
         }
-    },
-    watch:{
-
     },
     props: ['cascaderList', 'options'],
     methods: {
-
+      changeInput(val){
+        bus.$emit('changeInput', val);
+      }
     },
 };
 </script>
