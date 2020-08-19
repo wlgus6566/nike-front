@@ -7,7 +7,7 @@
                     :class="{
                         selected: selectList.value === val.value,
                     }"
-                    v-for="(val, index) in selectList.options"
+                    v-for="(val, index) in selectList.listSortOptions"
                     :key="index"
                     @click="selectedFn(val.value)"
                 >
@@ -19,7 +19,7 @@
 </template>
 <script>
 export default {
-    name: 'List-modal',
+    name: 'ListModal',
     data() {
         return {
             selectedIndex: null,

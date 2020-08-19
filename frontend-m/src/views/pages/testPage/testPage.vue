@@ -23,7 +23,7 @@ export default {
         return {
             selectList: {
                 value: '최신순',
-                options: [
+                listSortOptions: [
                     {
                         label: '최신순',
                         value: '최신순',
