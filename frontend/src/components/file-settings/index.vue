@@ -30,6 +30,7 @@
                     :listLength="FileList.length"
                     :file="file"
                     :key="file.fileOrder"
+                    :pageFileSectionCodeName="pageFileSectionCodeName"
                     @fileSelect="fileSelect"
                     @fileDelete="fileDelete(file)"
                 />
@@ -89,6 +90,7 @@ export default {
             },
         };
     },
+    props: ['pageFileSectionCodeName'],
     computed: {
         dragOptions() {
             return {
@@ -106,7 +108,6 @@ export default {
     },
     methods: {
         emitFileList() {
-            console.log(123);
             this.FileList.forEach((el, index) => {
                 el.fileOrder = index;
             });
@@ -132,7 +133,6 @@ export default {
                 });
 
                 if (idx !== -1) {
-                    alert(1);
                     this.FileList[idx].fileContentType = el.type;
                     this.FileList[idx].fileName = el.name;
                     this.FileList[idx].fileSize = el.size;
@@ -154,7 +154,7 @@ export default {
         },
         async uploadFiles() {
             await Promise.all(
-                this.uploadFile.map(async (el, idx) => {
+                this.uploadFile.map(async (el) => {
                     try {
                         const formData = new FormData();
                         formData.append('uploadFile', el);
@@ -176,10 +176,11 @@ export default {
                                 this.emitFileList();
                             },
                         };
-                        const {
-                            data: { data: response },
-                        } = await fileUpLoad(formData, config);
-
+                        const response = await fileUpLoad(formData, config);
+                        if (response.existMsg) {
+                            alert(response.msg);
+                        }
+                        console.log(response);
                         this.FileList.forEach((item, idx, array) => {
                             if (
                                 item.fileName === el.name &&
@@ -195,7 +196,6 @@ export default {
                                     ...response,
                                 };
                                 this.emitFileList();
-                                //console.log(item);
                             }
                         });
                     } catch (e) {
@@ -206,12 +206,10 @@ export default {
             this.$emit('submitForm');
         },
         fileAdd() {
-            console.log('fileAdd');
             this.FileList.push({ ...this.defaultFileData });
             this.emitFileList();
         },
         fileDelete(file) {
-            console.log('fileDelete');
             const idx = this.FileList.findIndex((el) => {
                 return (
                     el.fileName === file.fileName &&
@@ -223,7 +221,6 @@ export default {
             this.emitFileList();
         },
         fileSelect() {
-            console.log('fileSelect');
             this.$refs.uploadIpt.value = null;
             this.$refs.uploadIpt.click();
         },
