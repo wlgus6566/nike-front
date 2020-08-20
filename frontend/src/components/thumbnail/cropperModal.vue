@@ -5,7 +5,6 @@
         width="700px"
         :visible="visible"
         :append-to-body="true"
-        @close="$emit('update:visible', false)"
     >
         <el-scrollbar wrap-class="modal-scroll" :native="false">
             <div class="dialog-header">
