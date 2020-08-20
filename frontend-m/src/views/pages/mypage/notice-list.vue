@@ -1,30 +1,49 @@
 <template>
     <div>
         <div class="sorting-area">
-            <p class="total">전체 <strong>({{totalElements}})</strong></p>
+            <p class="total">
+                전체 <strong>({{ totalElements }})</strong>
+            </p>
             <div class="search-input" v-bind:class="{ active: isActive }">
                 <div class="input-box">
-                    <input type="text" placeholder="검색어를 입력해주세요." @keyup.enter="searchInputActive" v-model="keyword"/>
-                    <button type="button" class="search" @click="searchInputActive"><span>검색</span></button>
+                    <input
+                        type="text"
+                        placeholder="검색어를 입력해주세요."
+                        @keyup.enter="searchInputActive"
+                        v-model="keyword"
+                    />
+                    <button
+                        type="button"
+                        class="search"
+                        @click="searchInputActive"
+                    >
+                        <span>검색</span>
+                    </button>
                 </div>
-                <div class="btn-txt" @click="searchInputInactive"><span>취소</span></div>
+                <div class="btn-txt" @click="searchInputInactive">
+                    <span>취소</span>
+                </div>
             </div>
         </div>
         <ul class="notice-list">
             <li v-for="item in noticeData">
-                <a :href="`/mypage/notice/detail/${item.noticeArticleSeq}`">
-                    <span class="label-noti" v-if="item.noticeYn === 'Y'">중요</span>
-                    <span class="title">{{item.title}}</span>
-                    <span class="data">{{item.updateDt}}</span>
-                </a>
+                <router-link
+                    :to="`/mypage/notice/detail/${item.noticeArticleSeq}`"
+                >
+                    <span class="label-noti" v-if="item.noticeYn === 'Y'"
+                        >중요</span
+                    >
+                    <span class="title">{{ item.title }}</span>
+                    <span class="data">{{ item.updateDt }}</span>
+                </router-link>
             </li>
         </ul>
         <Pagination
-                v-if="noticeData.length"
-                :itemLength="itemLength"
-                :pageCount="pageCount"
-                :totalItem="totalElements"
-                @handleCurrentChange="handleCurrentChange"
+            v-if="noticeData.length"
+            :itemLength="itemLength"
+            :pageCount="pageCount"
+            :totalItem="totalElements"
+            @handleCurrentChange="handleCurrentChange"
         />
     </div>
 </template>
@@ -42,11 +61,11 @@ export default {
             itemLength: 10,
             keyword: '',
             totalElements: 0,
-            isActive: false
-        }
+            isActive: false,
+        };
     },
     components: {
-        Pagination: () => import('@/components/pagination/')
+        Pagination: () => import('@/components/pagination/'),
     },
     mounted() {
         this.getNoticeList();
@@ -56,10 +75,10 @@ export default {
             try {
                 const {
                     data: { data: response },
-                } = await getCustomerList("NOTICE", {
+                } = await getCustomerList('NOTICE', {
                     page: this.page,
                     size: this.itemLength,
-                    keyword: this.keyword
+                    keyword: this.keyword,
                 });
                 this.noticeList = response;
                 this.noticeData = response.content;
@@ -77,14 +96,14 @@ export default {
         },
         searchInputInactive: function (event) {
             this.isActive = false;
-            this.keyword = "";
+            this.keyword = '';
             this.getNoticeList();
         },
         handleCurrentChange(val) {
             this.page = val;
             this.getNoticeList();
-        }
-    }
+        },
+    },
 };
 </script>
 <style scoped></style>

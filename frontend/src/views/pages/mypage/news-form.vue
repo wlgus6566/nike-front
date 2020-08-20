@@ -163,13 +163,13 @@ export default {
                 console.log(response);
                 console.log(response.data.msg);
 
-                // this.$store.commit('SET_RELOAD', true);
-                // if (response.data.success) {
-                //     this.newsDetail.title = '';
-                //     this.newsDetail.contents = '';
-                //     this.newsDetail.imageBase64 = '';
-                //     this.$router.push('/mypage/news');
-                // }
+                this.$store.commit('SET_RELOAD', true);
+                if (response.data.success) {
+                    this.newsDetail.title = '';
+                    this.newsDetail.contents = '';
+                    this.newsDetail.imageBase64 = '';
+                    this.$router.push('/mypage/news');
+                }
             } catch (error) {
                 console.log(error);
             }

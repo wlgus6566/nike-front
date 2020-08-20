@@ -1,4 +1,8 @@
 import axios from 'axios';
+axios.defaults.baseURL =
+    process.env.NODE_ENV === 'development'
+        ? '/'
+        : 'https://devapi.nikespace.co.kr';
 
 const apiLogin = axios.create({ baseURL: '/api', timeout: 30000 });
 
