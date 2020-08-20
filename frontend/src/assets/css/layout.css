@@ -322,6 +322,28 @@ footer {
     padding-right: 0 !important;
 }*/
 
+/* el-dialog */
+.el-dialog .el-dialog__header {
+    margin: 0 50px;
+    padding: 50px 0 10px;
+    border-bottom: 2px solid #000;
+}
+.el-dialog__title {
+    line-height: 27px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.el-dialog__header + .el-dialog__body {
+    padding: 0 50px;
+}
+.el-dialog__footer {
+    padding: 30px 50px 50px;
+    text-align: center;
+}
+.el-dialog__footer [class^='btn'] + [class^='btn'] {
+    margin-left: 10px;
+}
+
 .aside-wrap .no-data {
     margin-top: 0;
     height: 100%;
