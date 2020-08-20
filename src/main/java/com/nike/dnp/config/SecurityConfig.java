@@ -162,6 +162,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(final WebSecurity web) {
 		final String[] staticPatterns = {
+				"/pc/**", "/mo/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
+				"/pc.html", "/mo.html","index.html", //frontend page
 				"/resources/**", "/static/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/css/**", "/font/**", "/js/**", "/images/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
