@@ -42,10 +42,9 @@
                     </button>
                 </li>
             </ul>
-            <!-- todo 에이젼시 nodata 요청 -->
             <NoData v-else>
-                <i class="icon-search"></i>
-                <p class="desc">AGENCY 목록이 없습니다.</p>
+                <i class="icon-data"></i>
+                <p class="desc">등록된 데이터가 없습니다.</p>
             </NoData>
         </template>
         <div class="btn-tbl-box">
@@ -62,9 +61,9 @@
     </div>
 </template>
 <script>
-    import NoData from '@/components/no-data';
+import NoData from '@/components/no-data';
 
-    export default {
+export default {
     name: 'index',
     data() {
         return {};

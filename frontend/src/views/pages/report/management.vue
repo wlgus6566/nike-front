@@ -35,7 +35,7 @@ import ListSorting from '@/components/list-sorting';
 import SearchInput from '@/components/search-input';
 import NoData from '@/components/no-data';
 import Loading from '@/components/loading';
-import { getReportList } from '@/api/report';
+import { getReportList, getGroupAuthority } from '@/api/report';
 import { getCategoryList } from '@/utils/code';
 import { getAuthCacheList } from '@/api/auth';
 
@@ -76,6 +76,7 @@ export default {
             },
             loadingData: false,
             searchKeyword: '',
+            userDataList: '',
         };
     },
     components: {
@@ -118,7 +119,7 @@ export default {
             try {
                 const {
                     data: { data: response },
-                } = await getAuthCacheList();
+                } = await getGroupAuthority();
                 this.userDataList = response;
                 this.recursionFn(response, this.authority.options, 1);
                 this.recursionFn(response, this.addAuthority.options, 1);
@@ -133,10 +134,12 @@ export default {
                 _minIndx = 0;
             }
             data.forEach((el, index) => {
-                item.push({
-                    value: el.authSeq,
-                    label: el.authName,
-                });
+                if (el.checkBoxYn) {
+                    item.push({
+                        value: el.authSeq,
+                        label: el.authName,
+                    });
+                }
                 if (el.subAuths) {
                     item[index + _minIndx].children = [];
                     this.recursionFn(

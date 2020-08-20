@@ -62,7 +62,10 @@
                                 <img
                                     :src="item.thumbnailFilePhysicalName"
                                     alt=""
+                                    v-if="item.thumbnailFilePhysicalName"
                                 />
+                                <!--  //todo 나중에 작업해야함  extension asset 동일 -->
+                                <span class="extension-pdf" v-else></span>
                             </span>
                             <span class="info-box">
                                 <strong class="title">{{
