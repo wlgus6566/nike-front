@@ -51,7 +51,8 @@
                         <label class="label-title required">내용</label>
                     </div>
                     <div class="form-column">
-                        <span class="textarea">
+                      <ckeditor v-model="newsDetail.contents" style="width:100%"/>
+                        <!--<span class="textarea">
                             <textarea
                                 required
                                 cols="100"
@@ -59,7 +60,7 @@
                                 style="height: 300px;"
                                 v-model="newsDetail.contents"
                             ></textarea>
-                        </span>
+                        </span>-->
                     </div>
                 </li>
             </ul>
