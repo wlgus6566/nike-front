@@ -3,7 +3,7 @@
         <h2 class="page-title">
             <span>{{ this.$route.meta.title }}</span>
         </h2>
-        <form @submit.prevent="submitData">
+        <form @submit.prevent="submitData" ref="form">
             <h3 class="form-title mt20">등록/수정</h3>
             <hr class="hr-black" />
             <ul class="form-list news">
@@ -52,7 +52,6 @@
                         <ckeditor
                             v-model="newsDetail.contents"
                             style="width: 100%;"
-                            required
                         />
                         <!--<span class="textarea">
                             <textarea
@@ -104,22 +103,17 @@ export default {
     components: {
         thumbnail,
     },
-    // created() {
-    //     if (this.$route.params.id) {
-    //         this.getNewsDetail();
-    //     }
-    // },
+    activated() {
+        this.$refs.form.reset();
+        this.detailDataReset();
+    },
     mounted() {
         console.log(this.noticeArticleSectionCode);
-        if (this.noticeArticleSectionCode) {
+        if (this.$route.meta.modify) {
             this.getNewsDetail();
         }
     },
     methods: {
-        // fileChange(target) {
-        //     console.log(target.files);
-        // },
-
         //이미지 받아오기
         cropImage(imageBase64, imgName) {
             this.newsDetail.imageBase64 = imageBase64;
@@ -162,13 +156,15 @@ export default {
                 });
 
                 console.log(response);
-                console.log(response.data.msg);
 
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
                     console.log('성공');
                     this.detailDataReset();
+
                     this.$router.push('/mypage/news');
+                } else {
+                    alert(response.data.msg);
                 }
             } catch (error) {
                 console.log(error);
@@ -185,7 +181,7 @@ export default {
                     const response = await putNews(this.$route.params.id, {
                         title: this.newsDetail.title,
                         contents: this.newsDetail.contents,
-                        imageBase64: this.newsDetail.thumbnailFilePhysicalName,
+                        imageBase64: this.newsDetail.imageBase64,
                         noticeArticleSectionCode: this.newsDetail
                             .noticeArticleSectionCode,
                         thumbnailFileName: this.newsDetail.thumbnailFileName,
@@ -196,9 +192,11 @@ export default {
 
                     this.$store.commit('SET_RELOAD', true);
                     if (response.data.success) {
-                        console.log('수정');
+                        console.log('수정성공');
                         this.detailDataReset();
                         this.$router.push('/mypage/news');
+                    } else {
+                        alert(response.data.msg);
                     }
                 } catch (error) {
                     console.log(error);
@@ -207,6 +205,7 @@ export default {
         },
         //뉴스 상세
         async getNewsDetail() {
+            console.log('상세 데이터 불러옴');
             console.log(this.$route.params.id);
             try {
                 const {
@@ -216,7 +215,7 @@ export default {
                     this.$route.params.id
                 );
                 this.newsDetail = response;
-                console.log('디테일');
+                console.log('상세 데이터');
                 console.log(response);
             } catch (error) {
                 console.log(error);
