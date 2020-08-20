@@ -10,14 +10,24 @@ function getAuthList() {
 function postAuth(data) {
     return auth.post(`/`, data);
 }
+function putAuth(seq, data) {
+    return auth.put(`/${seq}`, data);
+}
 function getAuthCacheList() {
     return auth.get(`/list`);
 }
 function getAuthView(seq) {
-    return auth.get(`${seq}`);
+    return auth.get(`/role/${seq}`);
 }
 function delAuth(seq) {
     return auth.delete(`${seq}`);
 }
 
-export { getAuthList, getAuthCacheList, getAuthView, delAuth, postAuth };
+export {
+    getAuthList,
+    getAuthCacheList,
+    getAuthView,
+    delAuth,
+    postAuth,
+    putAuth,
+};

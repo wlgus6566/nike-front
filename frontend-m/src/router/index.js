@@ -8,6 +8,7 @@ import RepotRoutes from './report';
 import InformationRoutes from './information';
 import MyPageRoutes from './mypage';
 import testRoutes from './test';
+import ErrorRoutes from './error';
 
 // Import methods
 import {pages} from '@/utils/global-methods';
@@ -29,6 +30,7 @@ const router = new VueRouter({
         ...InformationRoutes,
         ...MyPageRoutes,
         ...testRoutes,
+        ...ErrorRoutes,
     ],
 });
 
