@@ -1,6 +1,6 @@
 <template>
     <el-dialog
-        title="이미지등록"
+        title=""
         class="modal-wrap"
         width="700px"
         :visible="visible"
@@ -8,6 +8,9 @@
         @close="$emit('update:visible', false)"
     >
         <el-scrollbar wrap-class="modal-scroll" :native="false">
+            <div class="dialog-header">
+                <h2 class="dialog-title">이미지등록</h2>
+            </div>
             <div class="crop-editor">
                 <div class="preview-original">
                     <h2 class="title">

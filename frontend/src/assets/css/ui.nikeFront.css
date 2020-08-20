@@ -4008,6 +4008,7 @@
     display: flex;
     justify-content: space-between;
     padding: 20px 0 30px;
+    border-top: 2px solid #000;
     border-bottom: 1px solid #ccc;
 }
 .crop-editor .title {

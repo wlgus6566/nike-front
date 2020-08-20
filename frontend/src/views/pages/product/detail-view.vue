@@ -1,6 +1,5 @@
 <template>
     <el-dialog
-        title=""
         class="modal-wrap"
         :visible="visible"
         :append-to-body="true"
@@ -61,9 +60,9 @@
 </template>
 
 <script>
-    import {addProductBasket} from '@/utils/basket';
+import { addProductBasket } from '@/utils/basket';
 
-    export default {
+export default {
     data() {
         return {};
     },
