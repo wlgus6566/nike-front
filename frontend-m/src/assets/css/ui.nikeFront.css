@@ -1413,7 +1413,7 @@
     transform: translateY(-50%);
 }
 .faq-list li .cont {
-    display: none;
+    overflow: hidden;
     padding: 30px 20px;
     background: #f7f7f7;
     font-size: 14px;
@@ -1423,7 +1423,6 @@
     background-image: url(../images/svg/icon-arrow-up.svg);
 }
 .faq-list li.active .cont {
-    display: block;
 }
 /* agree-check */
 .agree-check {
