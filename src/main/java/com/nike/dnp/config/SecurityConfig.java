@@ -2,6 +2,7 @@ package com.nike.dnp.config;
 
 import com.nike.dnp.config.auth.*;
 import com.nike.dnp.config.jwt.JwtAuthorizationFilter;
+import com.nike.dnp.config.jwt.JwtHelper;
 import com.nike.dnp.repository.user.UserRepository;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.service.ResponseService;
@@ -181,18 +182,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-						.accessDecisionManager(accessDecisionManager())
-						.antMatchers(HttpMethod.POST,"/api/login").permitAll()
-						.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**").authenticated()
-						.anyRequest().authenticated();
+				.accessDecisionManager(accessDecisionManager())
+				.antMatchers(HttpMethod.POST,"/api/login").permitAll()
+				.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**").authenticated()
+				.anyRequest().authenticated();
 
 		http.addFilter(authenticationFilter()) // 인증 필터
-			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository,this.redisService)) //jwt 토큰 인증 필터
-			.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
-			.and().cors()	//cors 설정
-			.and()
-			.csrf().disable() // csrf 사용 안함
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
+				.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository,this.redisService)) //jwt 토큰 인증 필터
+				.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
+				.and().cors()	//cors 설정
+				.and()
+				.csrf().disable() // csrf 사용 안함
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
 	}
 
 	/**
@@ -202,13 +203,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * @return the cors configuration source
 	 */
 	@Bean
-		public CorsConfigurationSource corsConfigurationSource() {
-			CorsConfiguration configuration = new CorsConfiguration();
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
 
 		configuration.addAllowedOrigin("*");
 		configuration.addAllowedHeader("*");
 		configuration.addAllowedMethod("*");
 		configuration.setAllowCredentials(true);
+		configuration.addExposedHeader(JwtHelper.HEADER_STRING); //header 노출 설정
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
