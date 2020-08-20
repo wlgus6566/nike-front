@@ -20,12 +20,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * The Class Notice service.
@@ -185,33 +181,32 @@ public class NoticeService {
      * @since 2020. 8. 19. 오후 12:17:33
      * @implNote 에디터 이미지 업로드
      */
-    public List<String> uploadEditorImages(MultipartHttpServletRequest multiReq, String noticeArticleSectionCode) {
+    public String uploadEditorImages(MultipartFile multiReq, String noticeArticleSectionCode) {
         log.info("NoticeService.uploadEditorImages");
 
-        final Iterator<String> fileNames = multiReq.getFileNames();
-        List<String> imageUrl = new ArrayList<>();
+        final String ext = org.springframework.util.StringUtils.getFilenameExtension(multiReq.getOriginalFilename());
+        final String awsPath = "editor/" + noticeArticleSectionCode + "/" + FileUtil.makeFileName() + "." + ext;
 
-        while (fileNames.hasNext()) {
-            String name = fileNames.next();
-            MultipartFile mf = multiReq.getFile(name);
-
-            final String ext = org.springframework.util.StringUtils.getFilenameExtension(mf.getOriginalFilename());
-            final String awsPath = "editor/" + noticeArticleSectionCode + "/" + FileUtil.makeFileName() + "." + ext;
-
-            String uploadUrl = null;
-            try {
-                uploadUrl = S3Util.editorUpload(mf, awsPath);
-            } catch (IOException e) {
-                e.printStackTrace(); //code exception
-            }
-
-            imageUrl.add(editorUrl + uploadUrl);
-
+        String uploadUrl = null;
+        try {
+            uploadUrl = S3Util.editorUpload(multiReq, awsPath);
+        } catch (IOException e) {
+            e.printStackTrace(); //code exception
         }
 
-        return imageUrl;
+        return editorUrl + uploadUrl;
     }
 
+    /**
+     * Check notice yn.
+     *
+     *
+     * @param code the code         
+     * @return isYn the is yn
+     * @author [정주희]
+     * @since 2020. 8. 19. 오후 12:17:33
+     * @implNote 등록/수정 버튼 클릭시 고정게시글 개수 체크
+     */
     private void checkNoticeYn(final String code, final String isYn){
         if(StringUtils.equalsIgnoreCase(code, "NOTICE") && StringUtils.equalsIgnoreCase(isYn, "Y")){
             this.checkNoticeYnCnt();

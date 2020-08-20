@@ -46,6 +46,7 @@ nike:
     imageMagickCommand: 'convert'
     ffmpeg: '/usr/bin'
     ffmpegCommand: 'ffmpeg'
+    editorUrl: 'https://nike-test-resource-bucket-dnp.s3.ap-northeast-2.amazonaws.com'
 
 ## AWS
 cloud:
@@ -57,6 +58,7 @@ cloud:
       secretKey: 'y693rde5z6BOilyRVTexTGIVE6l4edGc8nkKh11u'
     s3:
       bucket: 'nike-test-bucket-dnp'
+      editor: 'nike-test-resource-bucket-dnp'
     region:
       static: 'ap-northeast-2'
     stack:

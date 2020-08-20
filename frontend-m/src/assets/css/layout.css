@@ -179,6 +179,7 @@ footer .copy {
 }
 
 .nav-area {
+    z-index: 5;
     position: fixed;
     bottom: 0;
     left: 0;

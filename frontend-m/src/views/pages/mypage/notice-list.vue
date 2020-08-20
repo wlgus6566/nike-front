@@ -1,50 +1,38 @@
 <template>
     <div>
         <div class="sorting-area">
-            <p class="total">
-                전체 <strong>({{ totalElements }})</strong>
-            </p>
-            <div class="search-input" v-bind:class="{ active: isActive }">
+            <p class="total">전체 <strong>({{totalElements}})</strong></p>
+            <div class="search-input" :class="{ active: isActive }">
                 <div class="input-box">
-                    <input
-                        type="text"
-                        placeholder="검색어를 입력해주세요."
-                        @keyup.enter="searchInputActive"
-                        v-model="keyword"
-                    />
-                    <button
-                        type="button"
-                        class="search"
-                        @click="searchInputActive"
-                    >
-                        <span>검색</span>
-                    </button>
+                    <input type="text" placeholder="검색어를 입력해주세요." @keyup.enter="searchInputActive" v-model="keyword"/>
+                    <button type="button" class="search" @click="searchInputActive"><span>검색</span></button>
                 </div>
-                <div class="btn-txt" @click="searchInputInactive">
-                    <span>취소</span>
-                </div>
+                <div class="btn-txt" @click="searchInputInactive"><span>취소</span></div>
             </div>
         </div>
-        <ul class="notice-list">
+        <ul class="notice-list" v-if="noticeData.length > 0">
             <li v-for="item in noticeData">
-                <router-link
-                    :to="`/mypage/notice/detail/${item.noticeArticleSeq}`"
-                >
-                    <span class="label-noti" v-if="item.noticeYn === 'Y'"
-                        >중요</span
-                    >
-                    <span class="title">{{ item.title }}</span>
-                    <span class="data">{{ item.updateDt }}</span>
-                </router-link>
+                <a :href="`/mypage/notice/detail/${item.noticeArticleSeq}`">
+                    <span class="label-noti" v-if="item.noticeYn === 'Y'">중요</span>
+                    <span class="title">{{item.title}}</span>
+                    <span class="data">{{item.updateDt}}</span>
+                </a>
             </li>
         </ul>
+        <div class="no-data-wrap" v-else-if="noticeData.length === 0 && keyword !== ''">
+            <div class="no-data">
+                <i class="icon-search"></i>
+                <p class="desc">검색 결과가 없습니다.</p>
+            </div>
+        </div>
         <Pagination
-            v-if="noticeData.length"
-            :itemLength="itemLength"
-            :pageCount="pageCount"
-            :totalItem="totalElements"
-            @handleCurrentChange="handleCurrentChange"
+                v-if="noticeData.length"
+                :itemLength="itemLength"
+                :pageCount="pageCount"
+                :totalItem="totalElements"
+                @handleCurrentChange="handleCurrentChange"
         />
+        <Loading v-if="loadingData" />
     </div>
 </template>
 <script>
@@ -62,27 +50,31 @@ export default {
             keyword: '',
             totalElements: 0,
             isActive: false,
-        };
+            loadingData: false
+        }
     },
     components: {
         Pagination: () => import('@/components/pagination/'),
+        Loading: () => import('@/components/loading/')
     },
     mounted() {
         this.getNoticeList();
     },
     methods: {
         async getNoticeList() {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
-                } = await getCustomerList('NOTICE', {
+                } = await getCustomerList("NOTICE", {
                     page: this.page,
                     size: this.itemLength,
-                    keyword: this.keyword,
+                    keyword: this.keyword
                 });
                 this.noticeList = response;
                 this.noticeData = response.content;
                 this.totalElements = response.totalElements;
+                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }
@@ -96,14 +88,14 @@ export default {
         },
         searchInputInactive: function (event) {
             this.isActive = false;
-            this.keyword = '';
+            this.keyword = "";
             this.getNoticeList();
         },
         handleCurrentChange(val) {
             this.page = val;
             this.getNoticeList();
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped></style>

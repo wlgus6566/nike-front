@@ -4,7 +4,22 @@
         <div class="sorting-area">
             <SearchInput @searchSubmit="searchSubmit" />
         </div>
-        <newsList :newsData="newsDataContent" />
+        <template v-if="newsDataContent">
+            <newsList
+                :newsData="newsDataContent"
+                v-if="newsDataContent.length"
+            />
+            <template v-else>
+                <NoData v-if="searchKeyword === ''">
+                    <i class="icon-data"></i>
+                    <p class="desc">등록된 데이터가 없습니다.</p>
+                </NoData>
+                <NoData v-else>
+                    <i class="icon-search"></i>
+                    <p class="desc">검색 결과가 없습니다.</p>
+                </NoData>
+            </template>
+        </template>
         <Loading v-if="loadingData" />
         <div class="btn-tbl-box">
             <div class="right">
@@ -43,6 +58,8 @@ export default {
     components: {
         newsList: () => import('@/components/news/list'),
         SearchInput: () => import('@/components/search-input/index'),
+        NoData: () => import('@/components/no-data'),
+        Loading: () => import('@/components/loading'),
         Pagination: () => import('@/components/pagination/'),
     },
     mounted() {

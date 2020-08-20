@@ -76,14 +76,13 @@ export default {
     bottom: -100%;
     left: 0;
     width: 100%;
+    padding: 20px 0;
+    box-sizing: border-box;
     background: #fff;
     transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
 }
 .modal-list.active .modal-list-contents {
     bottom: 0;
-}
-.modal-list-contents {
-    padding: 20px 0;
 }
 .select-options-list {
     max-height: 360px;
