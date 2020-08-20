@@ -28,6 +28,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -158,13 +161,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(final WebSecurity web) {
 		final String[] staticPatterns = {
-				"/pc/**", "/mo/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
-				"/pc.html", "/mo.html","index.html", //frontend page
+				"/resources/**", "/static/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
+				"/css/**", "/font/**", "/js/**", "/images/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
 				"/api/download" // 임시
 				, "/error" // 에러
 				// ,"/swagger-ui/**","/v3/**" //swagger 3.0 임시
-				,"/api/open/**"
+				,"/api/open/**", "/api/main/**", "/api/alarm/**"
 		};
 		web.ignoring().antMatchers(staticPatterns);
 	}
@@ -186,9 +189,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.addFilter(authenticationFilter()) // 인증 필터
 			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository,this.redisService)) //jwt 토큰 인증 필터
 			.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
+			.and().cors()	//cors 설정
 			.and()
 			.csrf().disable() // csrf 사용 안함
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
+	}
+
+	/**
+	 * cors 설정 추가
+	 * hw
+	 *
+	 * @return the cors configuration source
+	 */
+	@Bean
+		public CorsConfigurationSource corsConfigurationSource() {
+			CorsConfiguration configuration = new CorsConfiguration();
+
+		configuration.addAllowedOrigin("*");
+		configuration.addAllowedHeader("*");
+		configuration.addAllowedMethod("*");
+		configuration.setAllowCredentials(true);
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
 	}
 
 	/**
