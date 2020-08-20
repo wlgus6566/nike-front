@@ -1,55 +1,99 @@
 <template>
     <div>
         <div class="sorting-area">
-            <p class="total">전체 <strong>(20)</strong></p>
-            <div class="search-input"> <!-- active 추가하면 검색 화면 보임 -->
+            <p class="total">전체 <strong>({{totalElements}})</strong></p>
+            <div class="search-input" :class="{ active: isActive }">
                 <div class="input-box">
-                    <input type="text" placeholder="검색어를 입력해주세요." />
-                    <button type="button" class="search"><span>검색</span></button>
+                    <input type="text" placeholder="검색어를 입력해주세요." @keyup.enter="searchInputActive" v-model="keyword"/>
+                    <button type="button" class="search" @click="searchInputActive"><span>검색</span></button>
                 </div>
-                <button type="button" class="btn-txt"><span>취소</span></button>
+                <div class="btn-txt" @click="searchInputInactive"><span>취소</span></div>
             </div>
         </div>
-        <div class="news-list">
+        <div class="news-list" v-for="item in newsData">
             <div class="news-list-item">
-                <a href="#">
-							<span class="thumbnail">
-								<img src="http://placehold.it/410X410" alt="">
-							</span>
+                <a :href="`/mypage/news/detail/${item.noticeArticleSeq}`">
+                    <span class="thumbnail">
+                        <img :src="item.thumbnailFilePhysicalName" alt="">
+                    </span>
                     <span class="info-box">
-								<p class="title">글로벌 스포츠 브랜드 나이키, 브랜드 문화 공간 마이클 조던을 담은 ‘조던 서울’ 오픈 포토리캡 글로벌 스포츠 브랜드 나이키, 브랜드 문화 공간 마이클 조던을 담은 ‘조던 서울’ 오픈 포토리캡</p>
-								<span class="date">2020.06.17</span>
-							</span>
-                </a>
-            </div>
-            <div class="news-list-item">
-                <a href="#">
-							<span class="thumbnail">
-								<img src="http://placehold.it/410X410" alt="">
-							</span>
-                    <span class="info-box">
-								<p class="title">글로벌 스포츠 브랜드 나이키, AK 수원 오픈 리캡</p>
-								<span class="date">2020.06.17</span>
-							</span>
-                </a>
-            </div>
-            <div class="news-list-item">
-                <a href="#">
-							<span class="thumbnail">
-								<img src="http://placehold.it/410X410" alt="">
-							</span>
-                    <span class="info-box">
-								<p class="title">문화적 커뮤니티 공간이 될 조던 서울, 30일 가로수길 오픈</p>
-								<span class="date">2020.06.17</span>
-							</span>
+                        <p class="title">{{item.title}}</p>
+                        <span class="date">{{item.updateDt}}</span>
+                    </span>
                 </a>
             </div>
         </div>
+        <Pagination
+                v-if="newsData.length"
+                :itemLength="itemLength"
+                :pageCount="pageCount"
+                :totalItem="totalElements"
+                @handleCurrentChange="handleCurrentChange"
+        />
+        <Loading v-if="loadingData" />
     </div>
 </template>
 <script>
+import {getCustomerList} from "@/api/customer/";
+
 export default {
     name: 'news-list',
+    data() {
+        return {
+            newsList: {},
+            newsData: [],
+            page: 0,
+            pageCount: 11,
+            itemLength: 10,
+            keyword: '',
+            totalElements: 0,
+            isActive: false,
+            loadingData: false
+        }
+    },
+    components: {
+        Pagination: () => import('@/components/pagination/'),
+        Loading: () => import('@/components/loading/')
+    },
+    mounted() {
+        this.getNewsList();
+    },
+    methods: {
+        async getNewsList() {
+            this.loadingData = true;
+            try {
+                const {
+                    data: { data: response },
+                } = await getCustomerList("NEWS", {
+                    page: this.page,
+                    size: this.itemLength,
+                    keyword: this.keyword
+                });
+                this.newsList = response;
+                this.newsData = response.content;
+                this.totalElements = response.totalElements;
+                this.loadingData = false;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        searchInputActive: function () {
+            if (this.isActive) {
+                this.getNewsList();
+            } else {
+                this.isActive = true;
+            }
+        },
+        searchInputInactive: function () {
+            this.isActive = false;
+            this.keyword = "";
+            this.getNewsList();
+        },
+        handleCurrentChange(val) {
+            this.page = val;
+            this.getNewsList();
+        }
+    }
 };
 </script>
 <style scoped></style>

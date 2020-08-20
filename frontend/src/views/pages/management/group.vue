@@ -1,8 +1,12 @@
 <template>
     <div>
         <h2 class="page-title"><span class="ko">권한 그룹관리</span></h2>
+        <button type="button" class="btn-s-black" @click="saveAuth">
+            저장
+        </button>
         <div class="group-management">
             <GroupTree
+                :authName="authName"
                 :groupTreeData="groupTreeData"
                 :groupTreeActive="groupTreeActive"
                 :groupTreeOpen="groupTreeOpen"
@@ -10,460 +14,17 @@
             />
             <div class="group-detail">
                 <div class="group-name">
-                    <label for="groupName">그룹명</label>
-                    <input type="text" id="groupName" />
+                    <label for="authName">그룹명</label>
+                    <input type="text" id="authName" v-model="authName" />
                 </div>
                 <div>
-                    <table class="group-table">
-                        <colgroup>
-                            <col style="width: 175px;" />
-                            <col style="width: auto;" />
-                            <col style="width: auto;" />
-                            <col style="width: auto;" />
-                            <col style="width: auto;" />
-                            <col style="width: auto;" />
-                            <col style="width: auto;" />
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>
-                                    <label class="group-check-all">
-                                        <input type="checkbox" />
-                                        <i />
-                                        ASSET
-                                    </label>
-                                </th>
-                                <th>목록</th>
-                                <th>등록/수정</th>
-                                <th>삭제</th>
-                                <th>상세보기</th>
-                                <th>다운로드/주문</th>
-                                <th>REPORT 노출</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>ALL</th>
-                                <td>
-                                    <label class="disabled">
-                                        <input type="checkbox" disabled />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label class="checked">
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>SP</th>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>SU</th>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>FA</th>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>HO</th>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="group-table">
-                        <colgroup>
-                            <col style="width: 175px;" />
-                            <col style="width: auto;" />
-                            <col style="width: auto;" />
-                            <col style="width: auto;" />
-                            <col style="width: auto;" />
-                            <col style="width: auto;" />
-                            <col style="width: auto;" />
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>
-                                    <label class="group-check-all">
-                                        <input type="checkbox" />
-                                        <i />
-                                        ASSET
-                                    </label>
-                                </th>
-                                <th>목록</th>
-                                <th>등록/수정</th>
-                                <th>삭제</th>
-                                <th>상세보기</th>
-                                <th>다운로드/주문</th>
-                                <th>REPORT 노출</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>ALL</th>
-                                <td>
-                                    <label class="disabled">
-                                        <input type="checkbox" disabled />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label class="checked">
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>SP</th>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>SU</th>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>FA</th>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>HO</th>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" />
-                                        <i />
-                                    </label>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <GroupTable
+                        v-for="(table, index) in groupDetailDataBase"
+                        :table="table"
+                        :menuRoleSeqArray="menuRoleSeqArray"
+                        :key="index"
+                        @toggleCheck="toggleCheck"
+                    />
                 </div>
             </div>
         </div>
@@ -471,33 +32,92 @@
 </template>
 <script>
 import GroupTree from '@/components/group-tree/index';
+import GroupTable from '@/views/pages/management/GroupTable';
 import bus from '@/utils/bus';
-import { getAuthList, getAuthView, delAuth } from '@/api/auth';
+import { delAuth, getAuthList, getAuthView, postAuth } from '@/api/auth';
+import { getMenuManage } from '@/api/menu';
+
 export default {
-    authName: 'group',
+    name: 'Group',
     data() {
         return {
-            groupTreeData: [],
+            authSeq: '',
+            authDepth: '',
+            upperAuthSeq: '',
+            authName: '',
+            menuRoleSeqArray: [],
+            DefaultMenuRoleSeqArray: [],
+            groupTreeData: [
+                {
+                    authDepth: '',
+                    authName: '전체 권한그룹',
+                    authSeq: '0',
+                    registerSeq: '',
+                    registrationDt: '',
+                    roleType: '',
+                    subAuths: '',
+                    updateDt: '',
+                    updaterSeq: '',
+                    useYn: '',
+                },
+            ],
             groupTreeActive: {},
             groupTreeOpen: [],
             groupTreeAddItem: null,
             groupDetailData: [],
+            groupDetailDataBase: [],
         };
     },
     methods: {
+        toggleCheck(seq) {
+            if (this.menuRoleSeqArray.some((el) => el === seq)) {
+                this.menuRoleSeqArray = this.menuRoleSeqArray.filter(
+                    (el) => el !== seq
+                );
+            } else {
+                this.menuRoleSeqArray.push(seq);
+            }
+        },
+        async saveAuth() {
+            const { data: response } = await postAuth({
+                authDepth: this.authDepth,
+                authName: this.authName,
+                menuRoleSeqArray: this.menuRoleSeqArray,
+                upperAuthSeq: this.upperAuthSeq,
+            });
+            if (response.existMsg) {
+                alert(response.msg);
+            }
+            console.log(response);
+        },
+        async getDefaultView() {
+            const {
+                data: { data: response },
+            } = await getMenuManage();
+            this.groupDetailDataBase = response;
+            this.groupDetailDataBase.forEach((a) => {
+                a.subMenus.forEach((b) => {
+                    b.skillCodes.forEach((el) => {
+                        if (el.menuRoleSeq && b[el.field] === 'Y') {
+                            this.menuRoleSeqArray.push(el.menuRoleSeq);
+                        }
+                    });
+                });
+            });
+            this.DefaultMenuRoleSeqArray = this.menuRoleSeqArray;
+        },
         async getAuthList() {
             try {
                 const {
                     data: { data: response },
                 } = await getAuthList();
-                this.groupTreeData = response;
+                this.groupTreeData[0].subAuths = response;
                 console.log('getAuthList', response);
             } catch (e) {
                 console.log(e);
             }
         },
         async authView(seq) {
-            console.log('????');
             try {
                 const {
                     data: { data: response },
@@ -510,25 +130,36 @@ export default {
         },
         async delAuth(seq) {
             try {
-                const response = await delAuth(seq);
-                this.getAuthList();
+                const { data: response } = await delAuth(seq);
+                await this.getAuthList();
+                if (response.existMsg) {
+                    alert(response.msg);
+                }
                 console.log('delAuth', response);
             } catch (e) {
                 console.log(e);
             }
         },
     },
-    components: { GroupTree },
+    components: { GroupTable, GroupTree },
     created() {
         this.getAuthList();
+        this.getDefaultView();
+        bus.$on('authNameUpdate', (value) => {
+            this.authName = value;
+        });
 
-        bus.$on('selectActive', (item) => {
+        bus.$on('selectActive', (item, depth) => {
             this.groupTreeAddItem = null;
             if (this.groupTreeActive.authSeq === item.authSeq) {
                 this.groupTreeActive = {};
+                this.upperAuthSeq = '';
+                this.authDepth = '';
             } else {
                 this.authView(item.authSeq);
                 this.groupTreeActive = item;
+                this.upperAuthSeq = depth;
+                this.authDepth = depth - 1;
             }
         });
 
@@ -583,7 +214,6 @@ export default {
 }
 
 .group-detail {
-    height: 3000px;
     flex: 1 1 auto;
     margin-left: 30px;
 }

@@ -6,7 +6,8 @@ const routes = [
         name: 'mypage',
         component: pages('mypage/index.vue'),
         meta: {
-            layout: 'Index',
+            layout: 'Default',
+            hideHeaderFooter: true,
             depth: true,
             title: '마이페이지 메인',
         },
@@ -48,8 +49,8 @@ const routes = [
                 },
             },
             {
-                path: 'notice/detail/:id',
-                component: pages('mypage/notice-detail.vue'),
+                path: ':sectionCode/detail/:id',
+                component: pages('mypage/customer-detail.vue'),
                 meta: {
                     layout: 'Default',
                     depth: '/mypage/customer',

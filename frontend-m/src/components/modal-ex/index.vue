@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         title="상세보기"
-        class="modal-wrap"
+        class="modal"
         :visible="visible"
         :append-to-body="true"
         @close="$emit('update:visible', false)"
@@ -32,16 +32,4 @@ export default {
     methods: {},
 };
 </script>
-<style>
-.modal-wrap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.modal-wrap .el-dialog {
-    margin: 0 !important;
-}
-.modal-wrap .el-scrollbar__wrap {
-    max-height: 80vh;
-}
-</style>
+<style></style>
