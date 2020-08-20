@@ -104,7 +104,7 @@ public class ReportController {
     public SingleResult<Page<ReportResultDTO>> findAllReports(
             final ReportSearchDTO reportSearchDTO
     ) {
-        log.info("ReportController.findAllReports");
+        log.info("ReportController.findAllReports" + reportSearchDTO);
         return responseService.getSingleResult(reportService.findAllPaging(reportSearchDTO));
     }
 
