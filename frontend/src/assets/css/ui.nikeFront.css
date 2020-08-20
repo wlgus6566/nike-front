@@ -4004,3 +4004,34 @@
 .extension-ttf {
     background-position: -100px -300px;
 }
+.crop-editor {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0 30px;
+    border-bottom: 1px solid #ccc;
+}
+.crop-editor .title {
+    margin-bottom: 10px;
+    font-weight: 400;
+    font-size: 12px;
+    color: #000;
+}
+.crop-editor .preview {
+    width: 150px;
+    height: 150px;
+    box-sizing: border-box;
+}
+.crop-editor .preview-crop .frame {
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+.crop-editor.type2 .preview-crop {
+}
+.crop-editor.type2 .preview-crop .preview {
+    width: 180px !important;
+    height: 90px !important;
+    overflow: hidden;
+}
+.crop-editor.type2 .preview img {
+    transform: translateX(0) translateY(-75px);
+}
