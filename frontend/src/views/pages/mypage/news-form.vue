@@ -51,7 +51,10 @@
                         <label class="label-title required">내용</label>
                     </div>
                     <div class="form-column">
-                      <ckeditor v-model="newsDetail.contents" style="width:100%"/>
+                        <ckeditor
+                            v-model="newsDetail.contents"
+                            style="width: 100%;"
+                        />
                         <!--<span class="textarea">
                             <textarea
                                 required
@@ -160,13 +163,13 @@ export default {
                 console.log(response);
                 console.log(response.data.msg);
 
-                // this.$store.commit('SET_RELOAD', true);
-                // if (response.data.success) {
-                //     this.newsDetail.title = '';
-                //     this.newsDetail.contents = '';
-                //     this.newsDetail.imageBase64 = '';
-                //     this.$router.push('/mypage/news');
-                // }
+                this.$store.commit('SET_RELOAD', true);
+                if (response.data.success) {
+                    this.newsDetail.title = '';
+                    this.newsDetail.contents = '';
+                    this.newsDetail.imageBase64 = '';
+                    this.$router.push('/mypage/news');
+                }
             } catch (error) {
                 console.log(error);
             }

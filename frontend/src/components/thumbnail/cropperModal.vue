@@ -8,7 +8,7 @@
         @close="$emit('update:visible', false)"
     >
         <el-scrollbar wrap-class="modal-scroll" :native="false">
-            <div class="crop-editor type2">
+            <div class="crop-editor">
                 <div class="preview-original">
                     <h2 class="title">
                         원본 이미지
