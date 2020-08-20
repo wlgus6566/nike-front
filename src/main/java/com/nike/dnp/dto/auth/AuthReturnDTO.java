@@ -5,6 +5,7 @@ import com.nike.dnp.common.variable.ServiceCode;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,6 @@ import java.util.List;
  */
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
