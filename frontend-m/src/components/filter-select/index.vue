@@ -1,36 +1,73 @@
 <template>
     <div class="filter-select">
-        <select v-model="selectList.value" ref="select">
-            <option
-                v-for="(option, index) in selectList.options"
-                :key="index"
-                :value="option.value"
-            >
-                {{ option.label }}
-            </option>
-        </select>
+        <button type="button" @click="openModal">
+            {{ selectLabel }}
+        </button>
+        <ListModal
+            :selectList="selectList"
+            :showList="showList"
+	          :selectLabel="selectLabel"
+            @closeModal="closeModal"
+        />
     </div>
 </template>
 <script>
+import ListModal from '@/components/filter-select/list-modal';
 export default {
-    name: 'filter-select',
+    name: 'FilterSelect',
+    data() {
+        return {
+            showList: false,
+	          selectLabel:'',
+        };
+    },
     props: ['selectList'],
+    components: {
+      ListModal,
+    },
+	watch:{
+        'selectList.value'(){
+            const _index = this.selectList.listSortOptions.findIndex(el => {
+                return el.value === this.selectList.value
+            });
+            this.selectLabel = this.selectList.listSortOptions[_index].label
+        }
+	},
     mounted() {
-        this.selectView();
+        this.findLabel();
     },
     methods: {
-        selectView() {
-            this.$refs.select.style.display = 'none';
-            const parent = this.$refs.select.parentNode;
-            console.log(parent);
-            parent.createElement('<button>asdasd</button>');
+        findLabel(){
+			const _index = this.selectList.listSortOptions.findIndex(el => {
+			    return el.value === this.selectList.value
+			})
+            this.selectLabel = this.selectList.listSortOptions[_index].label
+        },
+        closeModal() {
+            this.showList = false;
+            document.querySelector('body').classList.remove('modal-list-open');
+        },
+        openModal() {
+            this.showList = !this.showList;
+            if (this.showList) {
+                document.querySelector('body').classList.add('modal-list-open');
+            }
         },
     },
 };
 </script>
 <style scoped>
-select {
+.filter-select {
+    display: inline-flex;
+    padding: 15px 0;
+}
+.filter-select button {
     color: #000;
     font-size: 14px;
+    line-height: 20px;
+    font-weight: bold;
+    padding-right: 25px;
+    background: url(../../assets/images/svg/icon-filter-arrow-down.svg)
+        no-repeat center right;
 }
 </style>

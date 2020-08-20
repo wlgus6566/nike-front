@@ -44,17 +44,12 @@ export default {
         return {
             totalPage: null,
             loadingData: false,
-
             page: 0,
-            itemLength: 10,
-
+            itemLength: 9999,
             checkAll: false,
-
             folderDetail: null,
             contentsFileList: null,
-            contentsFileListTotal: 0,
             checkContentsFileList: [],
-
             sectionCode: {
                 listSortOptions: [
                     {
@@ -192,6 +187,15 @@ export default {
         fileItem,
     },
     computed: {
+        contentsFileListTotal() {
+            if (this.contentsFileList) {
+                return this.contentsFileList.filter(
+                    (el) => el.fileKindCode === 'FILE'
+                ).length;
+            } else {
+                return 0;
+            }
+        },
         storeContBasketList: {
             get() {
                 return this.$store.state.contBasketList.map(
@@ -242,7 +246,6 @@ export default {
             }
         },
         modifyFolder() {
-            console.log(this.$route.meta.topMenuCode);
             this.$router.push(
                 `/${this.$route.meta.topMenuCode.toLowerCase()}/${
                     this.$route.meta.menuCode
@@ -315,7 +318,6 @@ export default {
                 this.contentsFileList.length;
         },
         async getFolderDetail() {
-            console.log(this.$route);
             try {
                 const {
                     data: { data: response },
@@ -355,7 +357,6 @@ export default {
                     );
                 } else {
                     this.contentsFileList = response.content;
-                    this.contentsFileListTotal = response.totalElements;
                 }
                 this.page++;
                 this.loadingData = false;

@@ -8,9 +8,9 @@ function saveUserIdToCookie(value) {
     setCookie('user_id', value);
 }
 function setCookie(cname, cvalue) {
-    /*const expires = new Date();
+    const expires = new Date();
     expires.setMinutes(expires.getMinutes() + 30);
-    document.cookie = `${cname}=${cvalue}; expires=${expires.toGMTString()}`;*/
+    document.cookie = `${cname}=${cvalue}; expires=${expires.toGMTString()}`;
 
     document.cookie = `${cname}=${cvalue};`;
 }

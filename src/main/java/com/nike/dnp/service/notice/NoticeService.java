@@ -7,12 +7,14 @@ import com.nike.dnp.entity.notice.NoticeArticle;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.notice.NoticeRepository;
+import com.nike.dnp.util.FileUtil;
 import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.ObjectMapperUtil;
 import com.nike.dnp.util.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * The Class Notice service.
@@ -42,12 +47,8 @@ public class NoticeService {
      */
     private final NoticeRepository noticeRepository;
 
-    /**
-     * The Notice max count
-     *
-     * @author [정주희]
-     */
-    private final long NOTICE_MAX_COUNT = 3L;
+    @Value("${nike.file.editorUrl:}")
+    private String editorUrl;
 
     /**
      * Find notice pages page.
@@ -121,6 +122,8 @@ public class NoticeService {
 
         final long count = Math.toIntExact(noticeRepository.checkNoticeYnCnt());
 
+        final long NOTICE_MAX_COUNT = 3L;
+
         if (count >= NOTICE_MAX_COUNT) {
             throw new CodeMessageHandleException(FailCode.ConfigureError.EXCEED_MAX_NOTICE.name(),
                     MessageUtil.getMessage(FailCode.ConfigureError.EXCEED_MAX_NOTICE.name()));
@@ -172,20 +175,53 @@ public class NoticeService {
                 .orElseThrow(NotFoundHandleException::new);
     }
 
-    public String uploadEditorImages(MultipartHttpServletRequest multiReq, String noticeArticleSectionCode) {
+    /**
+     * Upload editor images list.
+     *
+     *
+     * @param multiReq                 the multi req             
+     * @return noticeArticleSectionCode the notice article section code
+     * @author [정주희]
+     * @since 2020. 8. 19. 오후 12:17:33
+     * @implNote 에디터 이미지 업로드
+     */
+    public List<String> uploadEditorImages(MultipartHttpServletRequest multiReq, String noticeArticleSectionCode) {
         log.info("NoticeService.uploadEditorImages");
 
-        MultipartFile mf = multiReq.getFile("editor");
-        String uploadUrl = null;
-        try {
-            uploadUrl = S3Util.upload(mf, noticeArticleSectionCode);
-        } catch (IOException e) {
-            e.printStackTrace(); //code exception
+        final Iterator<String> fileNames = multiReq.getFileNames();
+        List<String> imageUrl = new ArrayList<>();
+
+        while (fileNames.hasNext()) {
+            String name = fileNames.next();
+            MultipartFile mf = multiReq.getFile(name);
+
+            final String ext = org.springframework.util.StringUtils.getFilenameExtension(mf.getOriginalFilename());
+            final String awsPath = "editor/" + noticeArticleSectionCode + "/" + FileUtil.makeFileName() + "." + ext;
+
+            String uploadUrl = null;
+            try {
+                uploadUrl = S3Util.editorUpload(mf, awsPath);
+            } catch (IOException e) {
+                e.printStackTrace(); //code exception
+            }
+
+            imageUrl.add(editorUrl + uploadUrl);
+
         }
 
-        return uploadUrl;
+        return imageUrl;
     }
 
+    /**
+     * Check notice yn.
+     *
+     *
+     * @param code the code         
+     * @return isYn the is yn
+     * @author [정주희]
+     * @since 2020. 8. 19. 오후 12:17:33
+     * @implNote 등록/수정 버튼 클릭시 고정게시글 개수 체크
+     */
     private void checkNoticeYn(final String code, final String isYn){
         if(StringUtils.equalsIgnoreCase(code, "NOTICE") && StringUtils.equalsIgnoreCase(isYn, "Y")){
             this.checkNoticeYnCnt();

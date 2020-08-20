@@ -28,6 +28,7 @@
                         groupTreeOpen.some((el) => el === item.authSeq)
                     "
                     v-if="item.subAuths"
+                    :authName="authName"
                     :groupTreeData="item.subAuths"
                     :groupTreeActive="groupTreeActive"
                     :groupTreeOpen="groupTreeOpen"
@@ -45,7 +46,11 @@
                 >
                     <div class="tree-item active">
                         <i class="tree-icon"></i>
-                        <input type="text" />
+                        <input
+                            type="text"
+                            :value="authName"
+                            @input="authNameUpdate"
+                        />
                     </div>
                 </div>
             </transition>
@@ -77,6 +82,7 @@ export default {
         draggable,
     },
     props: [
+        'authName',
         'groupTreeData',
         'groupTreeActive',
         'groupTreeOpen',
@@ -84,6 +90,9 @@ export default {
         'depth',
     ],
     methods: {
+        authNameUpdate(e) {
+            bus.$emit('authNameUpdate', e.target.value);
+        },
         treeItemClass(authSeq) {
             return {
                 'tree-item': true,
@@ -92,7 +101,7 @@ export default {
             };
         },
         selectActive(item) {
-            bus.$emit('selectActive', item);
+            bus.$emit('selectActive', item, this.depth);
         },
         toggle(seq) {
             bus.$emit('groupTreeToggle', seq);

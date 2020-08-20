@@ -14,7 +14,7 @@ spring:
       ansi:
         enabled: always
   redis:
-    host: 10.80.1.212
+    host: nike-test-redis-a.f5zylx.ng.0001.apn2.cache.amazonaws.com
     port: 6379
     #password: 2motion1!!
     cache:
@@ -40,8 +40,24 @@ security:
 #임시경로
 nike:
   file:
-    root: '/home/emotion/file_temp'
+    root: '/home/ec2-user/file_temp'
     imageMagick: '/usr/bin'
     imageMagickCommand: 'convert'
     ffmpeg: '/usr/bin'
     ffmpegCommand: 'ffmpeg'
+
+## AWS
+cloud:
+  aws:
+    distributionDomain: 'd3a4mwwf905xos.cloudfront.net'
+    privateKeyFilePath: '/home/ec2-user/der/nikecdn.der'
+    credentials:
+      accessKey: 'AKIA4FO4XQUFNEBRAZU4'
+      secretKey: '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'
+    s3:
+      bucket: 'nike-test-bucket-dnp'
+    region:
+      static: 'ap-northeast-2'
+    stack:
+      auto:  false
+
