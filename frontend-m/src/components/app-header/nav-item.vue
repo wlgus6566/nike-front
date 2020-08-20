@@ -20,7 +20,6 @@ export default {
     methods: {
         tabItemClass(val) {
             const titleValue = this.$route.path;
-            console.log(titleValue);
             return {
                 active: titleValue === val,
             };
