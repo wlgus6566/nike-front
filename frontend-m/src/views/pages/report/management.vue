@@ -28,7 +28,7 @@
                 </button>
             </div>
         </div>
-        <ul class="folder-list-row">
+        <ul :class="viewTypeClass">
             <li
                 class="folder-list-item"
                 v-for="item in reportList"
@@ -64,9 +64,9 @@
 <script>
 import FilterSelect from '@/components/filter-select';
 import CascaderSelect from '@/components/cascader-select';
-import { getReportList } from '@/api/report';
-import { getCategoryList } from '@/utils/code';
-import { getAuthCacheList } from '@/api/auth';
+import {getReportList} from '@/api/report';
+import {getCategoryList} from '@/utils/code';
+import {getAuthCacheList} from '@/api/auth';
 
 export default {
     name: 'management',
@@ -81,6 +81,7 @@ export default {
             reportList: [],
             searchIsActive: false,
             viewType: true,
+            viewTypeClass : 'folder-list-row',
             selectList: {
                 value: 'ALL',
                 listSortOptions: [
@@ -184,8 +185,10 @@ export default {
         viewTypeToggle() {
             if (this.viewType) {
                 this.viewType = false;
+                this.viewTypeClass = 'folder-list';
             } else {
                 this.viewType = true;
+                this.viewTypeClass = 'folder-list-row';
             }
         },
         search() {
