@@ -40,7 +40,7 @@ security:
 #임시경로
 nike:
   file:
-    root: '/home/emotion/file_temp'
+    root: '/home/ec2-user/file_temp'
     imageMagick: '/usr/bin'
     imageMagickCommand: 'convert'
     ffmpeg: '/usr/bin'

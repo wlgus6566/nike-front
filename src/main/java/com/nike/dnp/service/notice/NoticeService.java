@@ -212,6 +212,16 @@ public class NoticeService {
         return imageUrl;
     }
 
+    /**
+     * Check notice yn.
+     *
+     *
+     * @param code the code         
+     * @return isYn the is yn
+     * @author [정주희]
+     * @since 2020. 8. 19. 오후 12:17:33
+     * @implNote 등록/수정 버튼 클릭시 고정게시글 개수 체크
+     */
     private void checkNoticeYn(final String code, final String isYn){
         if(StringUtils.equalsIgnoreCase(code, "NOTICE") && StringUtils.equalsIgnoreCase(isYn, "Y")){
             this.checkNoticeYnCnt();
