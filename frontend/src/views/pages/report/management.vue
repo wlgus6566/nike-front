@@ -134,12 +134,12 @@ export default {
                 _minIndx = 0;
             }
             data.forEach((el, index) => {
-                if (el.checkBoxYn) {
-                    item.push({
-                        value: el.authSeq,
-                        label: el.authName,
-                    });
-                }
+                const _boolean = el.checkBoxYn === 'Y' ? false : true;
+                item.push({
+                    value: el.authSeq,
+                    label: el.authName,
+                    disabled: _boolean,
+                });
                 if (el.subAuths) {
                     item[index + _minIndx].children = [];
                     this.recursionFn(

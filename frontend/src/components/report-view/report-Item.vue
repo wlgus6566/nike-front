@@ -61,11 +61,16 @@
                             <span class="thumbnail">
                                 <img
                                     :src="item.thumbnailFilePhysicalName"
-                                    alt=""
+                                    :alt="item.thumbnailFileName"
                                     v-if="item.thumbnailFilePhysicalName"
                                 />
                                 <!--  //todo 나중에 작업해야함  extension asset 동일 -->
-                                <span class="extension-pdf" v-else></span>
+                                <span
+                                    :class="[
+                                        `extension-${item.fileExtension.toLowerCase()}`,
+                                    ]"
+                                    v-else
+                                ></span>
                             </span>
                             <span class="info-box">
                                 <strong class="title">{{
@@ -127,7 +132,12 @@
                         >
                             <div class="inner">
                                 <div class="thumbnail">
-                                    <img :src="item.imageFileName" alt="" />
+                                    <img
+                                        :src="
+                                            item.detailThumbnailFilePhysicalName
+                                        "
+                                        :alt="item.detailThumbnailFileName"
+                                    />
                                 </div>
                                 <div class="down-info">
                                     <span class="key">다운로드 횟수</span>

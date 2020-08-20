@@ -6,7 +6,7 @@
         <ListModal
             :selectList="selectList"
             :showList="showList"
-	          :selectLabel="selectLabel"
+            :selectLabel="selectLabel"
             @closeModal="closeModal"
         />
     </div>
@@ -18,30 +18,30 @@ export default {
     data() {
         return {
             showList: false,
-	          selectLabel:'',
+            selectLabel: '',
         };
     },
     props: ['selectList'],
     components: {
-      ListModal,
+        ListModal,
     },
-	watch:{
-        'selectList.value'(){
+    watch: {
+        'selectList.value'() {
             const _index = this.selectList.listSortOptions.findIndex(el => {
-                return el.value === this.selectList.value
+                return el.value === this.selectList.value;
             });
-            this.selectLabel = this.selectList.listSortOptions[_index].label
-        }
-	},
+            this.selectLabel = this.selectList.listSortOptions[_index].label;
+        },
+    },
     mounted() {
         this.findLabel();
     },
     methods: {
-        findLabel(){
-			const _index = this.selectList.listSortOptions.findIndex(el => {
-			    return el.value === this.selectList.value
-			})
-            this.selectLabel = this.selectList.listSortOptions[_index].label
+        findLabel() {
+            const _index = this.selectList.listSortOptions.findIndex(el => {
+                return el.value === this.selectList.value;
+            });
+            this.selectLabel = this.selectList.listSortOptions[_index].label;
         },
         closeModal() {
             this.showList = false;
@@ -50,6 +50,7 @@ export default {
         openModal() {
             this.showList = !this.showList;
             if (this.showList) {
+                console.log(document.scrollingElement.scrollTop);
                 document.querySelector('body').classList.add('modal-list-open');
             }
         },

@@ -65,7 +65,10 @@
                 <div class="dimmed"></div>
                 <div class="inner">
                     <UserInfo></UserInfo>
-                    <MenuList :menuData="menuData"></MenuList>
+                    <MenuList
+                        :menuData="menuData"
+                        @menuClose="menuClose"
+                    ></MenuList>
                     <button class="btn-close" @click="menuClose">닫기</button>
                 </div>
             </div>
@@ -109,7 +112,7 @@ export default {
     computed: {},
     methods: {
         menuLottie(index) {
-            this.anim.forEach((el) => {
+            this.anim.forEach(el => {
                 el.goToAndStop(0, true);
             });
             this.anim[index].play();
@@ -130,7 +133,7 @@ export default {
         menuClose() {
             this.menuUse = false;
         },
-        handleAnimation: function (anim) {
+        handleAnimation: function(anim) {
             this.anim.push(anim);
             anim.stop();
             anim.loop = false;
