@@ -62,20 +62,23 @@
                         <label class="label-title required">내용</label>
                     </div>
                     <div class="form-column">
-                      <ckeditor v-model="noticeDetail.contents" style="width:100%"/>
+                        <ckeditor
+                            v-model="noticeDetail.contents"
+                            style="width: 100%;"
+                        />
                     </div>
-<!--                    <div class="form-column">-->
-<!--                        <span class="textarea">-->
-<!--                            <textarea-->
-<!--                                required-->
-<!--                                cols="100"-->
-<!--                                rows="2"-->
-<!--                                style="height: 300px;"-->
-<!--                                v-model="noticeDetail.contents"-->
-<!--                                id="p_content"-->
-<!--                            ></textarea>-->
-<!--                        </span>-->
-<!--                    </div>-->
+                    <!--                    <div class="form-column">-->
+                    <!--                        <span class="textarea">-->
+                    <!--                            <textarea-->
+                    <!--                                required-->
+                    <!--                                cols="100"-->
+                    <!--                                rows="2"-->
+                    <!--                                style="height: 300px;"-->
+                    <!--                                v-model="noticeDetail.contents"-->
+                    <!--                                id="p_content"-->
+                    <!--                            ></textarea>-->
+                    <!--                        </span>-->
+                    <!--                    </div>-->
                 </li>
             </ul>
             <hr class="hr-gray" />
@@ -112,7 +115,6 @@ export default {
                 contents: '',
                 noticeYn: null,
             },
-
         };
     },
     mounted() {

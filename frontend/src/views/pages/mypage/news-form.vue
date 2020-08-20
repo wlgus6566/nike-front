@@ -51,7 +51,10 @@
                         <label class="label-title required">내용</label>
                     </div>
                     <div class="form-column">
-                      <ckeditor v-model="newsDetail.contents" style="width:100%"/>
+                        <ckeditor
+                            v-model="newsDetail.contents"
+                            style="width: 100%;"
+                        />
                         <!--<span class="textarea">
                             <textarea
                                 required
