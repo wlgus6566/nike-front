@@ -18,8 +18,7 @@
                             </div>
                             <div class="form-column">
                                 <span class="form-val">
-                                    <!-- //todo  유저정보 필요해욥 -->
-                                    유저정보 필요해욥
+                                    {{ userNickname }}
                                 </span>
                             </div>
                         </li>
@@ -114,11 +113,18 @@
 </template>
 
 <script>
+import { getUserNickFromCookie } from '@/utils/cookies';
+
 export default {
     data() {
         return {
             orderComment: '',
         };
+    },
+    computed: {
+        userNickname() {
+            return this.$store.state.nick || getUserNickFromCookie();
+        },
     },
     props: ['visible', 'receipt', 'basketList', 'totalPrice'],
     mounted() {},

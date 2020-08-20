@@ -35,8 +35,8 @@ export default {
         ContentReport: () => import('@/components/tab-comp/content-report.vue'),
         ContentFile: () => import('@/components/tab-comp/content-file.vue'),
         ContentAsset: () => import('@/components/tab-comp/content-asset.vue'),
-        ContentTooKlit: () =>
-            import('@/components/tab-comp/content-tookit.vue'),
+        ContentToolKit: () =>
+            import('@/components/tab-comp/content-toolkit.vue'),
         ContentFoundation: () =>
             import('@/components/tab-comp/content-foundation.vue'),
     },

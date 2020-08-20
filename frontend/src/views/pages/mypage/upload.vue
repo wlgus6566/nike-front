@@ -16,7 +16,7 @@
             <template v-else>
                 <NoData>
                     <i class="icon-file"></i>
-                    <p class="desc">업로드 한 없습니다.</p>
+                    <p class="desc">업로드한 폴더가 없습니다.</p>
                 </NoData>
             </template>
         </template>
@@ -160,7 +160,6 @@ export default {
                         this.endPage();
                     }
                 } else {
-                    console.log(this.sectionCode.value);
                     this.uploadFolderDataList = response;
                     this.uploadFolderData = response.content;
                 }
