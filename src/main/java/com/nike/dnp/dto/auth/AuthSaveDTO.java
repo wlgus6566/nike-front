@@ -25,7 +25,8 @@ public class AuthSaveDTO {
      *
      * @author [오지훈]
      */
-    @NotNull(message = "auth.upperAuthSeq")
+    // TODO 최상위 권한의 경우 null 허용 2020.08.19 by sojeong.lee
+//    @NotNull(message = "auth.upperAuthSeq")
     @ApiModelProperty(name = "upperAuthSeq", value = "상위 권한 시퀀스")
     private Long upperAuthSeq;
 

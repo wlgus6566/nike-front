@@ -6,6 +6,12 @@ function getReportList(params) {
         params: params,
     });
 }
+//REPORT 그룹 depth별 목록조회
+function getGroupAuthority(params) {
+    return report.get(`/groupList`, {
+        params: params,
+    });
+}
 //REPORT 등록
 function postReport(data) {
     return report.post(`/`, data);
@@ -62,6 +68,7 @@ function deleteReportBasket(reportBasketSeq, data) {
 
 export {
     getReportList,
+    getGroupAuthority,
     postReport,
     putReport,
     delReport,

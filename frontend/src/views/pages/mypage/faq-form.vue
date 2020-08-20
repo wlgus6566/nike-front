@@ -49,7 +49,11 @@
                         <label class="label-title required">답변</label>
                     </div>
                     <div class="form-column">
-                        <span class="textarea">
+                        <ckeditor
+                            v-model="faqDetail.contents"
+                            style="width: 100%;"
+                        />
+                        <!--                        <span class="textarea">
                             <textarea
                                 cols="100"
                                 rows="2"
@@ -57,7 +61,7 @@
                                 v-model="faqDetail.contents"
                                 required
                             ></textarea>
-                        </span>
+                        </span>-->
                     </div>
                 </li>
             </ul>

@@ -10,6 +10,7 @@ import com.nike.dnp.dto.report.ReportResultDTO;
 import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
+import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.entity.user.UserAuth;
@@ -452,6 +453,13 @@ public class ReportService {
             }
         }
         return userSeqList;
+    }
+
+    public List<AuthReturnDTO> findAllAuthUserWithDepth() {
+        final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
+        userContentsSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
+        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+        return authService.getAuthListWithDepth(userContentsSearchDTO, authService.getById(SecurityUtil.currentUser().getAuthSeq()));
     }
 
     /**

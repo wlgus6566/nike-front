@@ -19,7 +19,7 @@ export default {
     data() {
         return {
             showList: false,
-            selectLabel :this.cascaderList.options[0].label
+            selectLabel: this.cascaderList.options[0].label,
         };
     },
     props: ['cascaderList'],
@@ -32,24 +32,32 @@ export default {
     //   }
     // },
     mounted() {
-      bus.$on('changeInput', (val) => {
-        this.selectLabel = val
-      });
+        bus.$on('changeInput', val => {
+            this.selectLabel = val;
+        });
     },
     methods: {
-        changeInput(val){
-          console.log(1)
-          console.log(val)
-          this.selectLabel = val
+        changeInput(val) {
+            console.log(1);
+            console.log(val);
+            this.selectLabel = val;
         },
         closeModal() {
             this.showList = false;
+            document.querySelector('.modal-list-open').style.overflow = '';
+            document.querySelector('#wrap').style.margin = '';
+            window.scrollTo(0, this.topScollVal);
             document.querySelector('body').classList.remove('modal-list-open');
         },
         modalOpen() {
+            this.topScollVal = document.scrollingElement.scrollTop;
             this.showList = !this.showList;
             if (this.showList) {
                 document.querySelector('body').classList.add('modal-list-open');
+                document.querySelector('.modal-list-open').style.overflow =
+                    'hidden';
+                document.querySelector('#wrap').style.marginTop =
+                    '-' + this.topScollVal + 'px';
             }
         },
     },
