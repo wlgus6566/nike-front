@@ -68,7 +68,7 @@
         <h2 class="main-title">REPORT</h2>
         <ul class="main-report-list">
             <li class="report-list-item" v-for="item in reportList" :key="item.reportSeq">
-                <a href="#">
+                <a :href="'/report/'+item.reportSeq">
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
