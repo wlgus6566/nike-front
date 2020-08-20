@@ -135,8 +135,7 @@ export default {
 }
 .menu-list li button span,
 .menu-list li a span {
-    font-size: 16px;
-    letter-spacing: -0.5px;
+    letter-spacing: 0.2px;
 }
 .depth {
     padding: 10px 0;

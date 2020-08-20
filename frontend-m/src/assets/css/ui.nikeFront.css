@@ -393,6 +393,7 @@
     line-height: 14px;
     font-size: 12px;
     color: #888;
+    letter-spacing: 0;
 }
 .folder-list-item .location {
     display: flex;
@@ -605,6 +606,9 @@
     background: url(../images/svg/icon-filter-list-off.svg);
     text-indent: -9999px;
     overflow: hidden;
+}
+.sorting-area .type-list-thum {
+    background-image: url(../images/svg/icon-filter-thum-on.svg);
 }
 .sorting-area [class^='type-list'] + .filter-select {
     position: relative;
@@ -1517,12 +1521,12 @@
 }
 .my-menu .title {
     display: block;
-    margin-top: 20px;
+    margin: 20px 0 5px;
     line-height: 19px;
     font-size: 16px;
     font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
     font-weight: normal;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.5px;
 }
 .my-menu a {
     display: block;
