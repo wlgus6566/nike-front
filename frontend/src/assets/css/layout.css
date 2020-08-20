@@ -323,21 +323,28 @@ footer {
 }*/
 
 /* el-dialog */
-.el-dialog .el-dialog__header {
-    margin: 0 50px;
-    padding: 50px 0 10px;
-    border-bottom: 2px solid #000;
+.el-dialog {
+    padding-bottom: 50px;
 }
 .el-dialog__title {
+    display: none;
+}
+.dialog-header {
+    margin-bottom: 10px;
+}
+.el-dialog .el-dialog__body {
+    padding-bottom: 0;
+}
+.dialog-title {
     line-height: 27px;
     font-size: 18px;
     font-weight: bold;
 }
-.el-dialog__header + .el-dialog__body {
-    padding: 0 50px;
-}
+/*.el-dialog__header + .el-dialog__body {*/
+/*    padding: 0 50px;*/
+/*}*/
 .el-dialog__footer {
-    padding: 30px 50px 50px;
+    padding: 30px 50px 0;
     text-align: center;
 }
 .el-dialog__footer [class^='btn'] + [class^='btn'] {

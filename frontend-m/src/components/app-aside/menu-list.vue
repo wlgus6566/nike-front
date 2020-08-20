@@ -11,8 +11,14 @@
             </button>
             <transition @enter="itemOpen" @leave="itemClose">
                 <ul class="depth" v-if="activeIndex === index">
-                    <li v-for="depth in menu.menus" :key="depth.menuSeq">
-                        <a :href="depth.menuPathUrl">{{ depth.menuName }}</a>
+                    <li
+                        v-for="depth in menu.menus"
+                        :key="depth.menuSeq"
+                        @click="$emit('menuClose')"
+                    >
+                        <router-link :to="depth.menuPathUrl">
+                            {{ depth.menuName }}
+                        </router-link>
                     </li>
                 </ul>
             </transition>

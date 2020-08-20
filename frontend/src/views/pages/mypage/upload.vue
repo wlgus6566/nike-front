@@ -14,13 +14,13 @@
                 :folderListData="uploadFolderData"
             />
             <template v-else>
-                <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
-                <NoData v-else>
+                <NoData>
                     <i class="icon-file"></i>
                     <p class="desc">업로드 한 없습니다.</p>
                 </NoData>
             </template>
         </template>
+        <Loading v-if="loadingData" />
     </div>
 </template>
 
@@ -75,12 +75,6 @@ export default {
             },
             totalPage: null,
             loadingData: false,
-            loadingStyle: {
-                width: this.width ? `${this.width}px` : '100%',
-                height: this.height ? `${this.height}px` : '100%',
-                overflow: 'hidden',
-                margin: '0 auto',
-            },
         };
     },
     watch: {

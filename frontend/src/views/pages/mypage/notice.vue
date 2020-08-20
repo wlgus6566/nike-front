@@ -13,8 +13,8 @@
             />
             <template v-else>
                 <NoData v-if="searchKeyword === ''">
-                    <i class="icon-file"></i>
-                    <p class="desc">등록한 공지사항이 없습니다</p>
+                    <i class="icon-data"></i>
+                    <p class="desc">등록된 데이터가 없습니다.</p>
                 </NoData>
                 <NoData v-else>
                     <i class="icon-search"></i>
