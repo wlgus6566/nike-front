@@ -1517,12 +1517,12 @@
 }
 .my-menu .title {
     display: block;
-    margin-top: 20px;
+    margin: 20px 0 5px;
     line-height: 19px;
     font-size: 16px;
     font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
     font-weight: normal;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.5px;
 }
 .my-menu a {
     display: block;
