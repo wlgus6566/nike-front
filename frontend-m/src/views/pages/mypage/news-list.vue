@@ -10,7 +10,7 @@
                 <div class="btn-txt" @click="searchInputInactive"><span>취소</span></div>
             </div>
         </div>
-        <div class="news-list" >
+        <div class="news-list" v-if="newsData.length > 0">
             <div class="news-list-item" v-for="item in newsData">
                 <a :href="`/mypage/news/detail/${item.noticeArticleSeq}`">
                     <span class="thumbnail">
@@ -21,6 +21,12 @@
                         <span class="date">{{item.updateDt}}</span>
                     </span>
                 </a>
+            </div>
+        </div>
+        <div class="no-data-wrap" v-else-if="newsData.length === 0 && keyword !== ''">
+            <div class="no-data">
+                <i class="icon-search"></i>
+                <p class="desc">검색 결과가 없습니다.</p>
             </div>
         </div>
         <Pagination
