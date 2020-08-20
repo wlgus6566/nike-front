@@ -16,10 +16,8 @@
                             class="new-upload"
                             :size="2 / 1"
                             @cropImage="cropImage"
-                            :thumbnailFileName="newsDetail.thumbnailFileName"
-                            :thumbnailFilePhysicalName="
-                                newsDetail.thumbnailFilePhysicalName
-                            "
+                            :imageBase64="newsDetail.thumbnailFilePhysicalName"
+                            :imageFileName="newsDetail.thumbnailFileName"
                         >
                             <template slot="txt-up">
                                 NEWS 이미지 등록
@@ -54,6 +52,7 @@
                         <ckeditor
                             v-model="newsDetail.contents"
                             style="width: 100%;"
+                            required
                         />
                         <!--<span class="textarea">
                             <textarea
@@ -105,14 +104,16 @@ export default {
     components: {
         thumbnail,
     },
+    // created() {
+    //     if (this.$route.params.id) {
+    //         this.getNewsDetail();
+    //     }
+    // },
     mounted() {
-        console.log(this.$route.meta.sectionCode);
-        if (this.$route.meta.modify) {
+        console.log(this.noticeArticleSectionCode);
+        if (this.noticeArticleSectionCode) {
             this.getNewsDetail();
         }
-    },
-    activated() {
-        //this.getNewsList();
     },
     methods: {
         // fileChange(target) {
@@ -165,9 +166,8 @@ export default {
 
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
-                    this.newsDetail.title = '';
-                    this.newsDetail.contents = '';
-                    this.newsDetail.imageBase64 = '';
+                    console.log('성공');
+                    this.detailDataReset();
                     this.$router.push('/mypage/news');
                 }
             } catch (error) {
@@ -185,18 +185,18 @@ export default {
                     const response = await putNews(this.$route.params.id, {
                         title: this.newsDetail.title,
                         contents: this.newsDetail.contents,
-                        imageBase64: this.newsDetail.imageBase64,
+                        imageBase64: this.newsDetail.thumbnailFilePhysicalName,
                         noticeArticleSectionCode: this.newsDetail
                             .noticeArticleSectionCode,
                         thumbnailFileName: this.newsDetail.thumbnailFileName,
-                        thumbnailFilePhysicalName: this.newsDetail
-                            .thumbnailFilePhysicalName,
                         thumbnailFileSize: this.newsDetail.thumbnailFileSize,
                         useYn: this.useYn,
                     });
+                    console.log(response);
 
                     this.$store.commit('SET_RELOAD', true);
                     if (response.data.success) {
+                        console.log('수정');
                         this.detailDataReset();
                         this.$router.push('/mypage/news');
                     }
@@ -205,23 +205,6 @@ export default {
                 }
             }
         },
-
-        //뉴스 리스트
-        // async getNewsList() {
-        //     try {
-        //         const {
-        //             data: { data: response },
-        //         } = await getCustomerList(this.$route.meta.sectionCode, {
-        //             page: 0,
-        //             size: 20,
-        //             keyword: '',
-        //         });
-        //         console.log(response);
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // },
-
         //뉴스 상세
         async getNewsDetail() {
             console.log(this.$route.params.id);
@@ -233,6 +216,8 @@ export default {
                     this.$route.params.id
                 );
                 this.newsDetail = response;
+                console.log('디테일');
+                console.log(response);
             } catch (error) {
                 console.log(error);
             }
@@ -247,12 +232,12 @@ export default {
             this.$router.go(-1);
         },
         detailDataReset() {
-            this.newsDetail.title = '';
-            this.newsDetail.contents = '';
-            this.newsDetail.imageBase64 = '';
-            this.newsDetail.thumbnailFileName = '';
-            this.newsDetail.thumbnailFilePhysicalName = '';
-            this.newsDetail.thumbnailFileSize = '';
+            this.newsDetail.title = null;
+            this.newsDetail.contents = null;
+            this.newsDetail.imageBase64 = null;
+            this.newsDetail.thumbnailFileName = null;
+            this.newsDetail.thumbnailFilePhysicalName = null;
+            this.newsDetail.thumbnailFileSize = null;
         },
     },
 };
