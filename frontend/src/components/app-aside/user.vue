@@ -3,66 +3,64 @@
         <div class="user-info">
             <span class="store-name">홍대 SKNRS</span>
             <div class="side">
-                <button type="button" class="btn-out" @click="logout">
-                    <span>로그아웃</span>
-                </button>
-                <button type="button" class="btn-alarm" @click="openAlarm">
-                    <span>알람</span>
-                </button>
-                <!--<div class="alarm-box">
-                    <strong class="title">NEW</strong>
-                    <div class="alarm-item">
-                        <p class="txt">
-                            에어맥스 2090 신제품 런칭 그래픽 자료가
-                            업데이트되었습니다.
-                        </p>
-                    </div>
-                    <button type="button" class="btn-close">
-                        <span>닫기</span>
-                    </button>
-                </div>-->
-                <div
-                    class="alarm-box"
-                    ref="alarm"
-                    :class="{ active: alarmActive }"
-                >
-                    <strong class="title">NOTICE</strong>
-                    <el-scrollbar
-                        class="cart-list-scroll"
-                        wrap-class="alarm-list-wrap"
-                        :native="false"
-                    >
-                        <transition-group
-                            tag="ul"
-                            class="alarm-list"
-                            v-if="alarmDataList.content"
-                            name="fade"
-                        >
-                            <li
-                                class="alarm-item active"
-                                v-for="item in alarmDataList.content"
-                                :key="item.alarmSeq"
-                            >
-                                <button
-                                    type="button"
-                                    @click="delAlarmData(item.alarmSeq)"
-                                    ref="alarmBtn"
-                                >
-                                    <span class="date">
-                                        {{ item.registrationDt }}
-                                    </span>
-                                </button>
-                                <a href="naver.com" class="txt" ref="alarmIrem">
-                                    {{ item.folderName }}
-                                </a>
-                            </li>
-                        </transition-group>
-                    </el-scrollbar>
+              <template v-if="alarmDataList.content">
+                  <button type="button" class="btn-out" @click="logout">
+                      <span>로그아웃</span>
+                  </button>
+                  <button type="button" class="btn-alarm"  :class="{active : alarmDataList.content.length }" @click="openAlarm">
+                      <span>알람</span>
+                  </button>
+                  <!--<div class="alarm-box">
+                      <strong class="title">NEW</strong>
+                      <div class="alarm-item">
+                          <p class="txt">
+                              에어맥스 2090 신제품 런칭 그래픽 자료가
+                              업데이트되었습니다.
+                          </p>
+                      </div>
+                      <button type="button" class="btn-close">
+                          <span>닫기</span>
+                      </button>
+                  </div>-->
 
-                    <button type="button" class="btn-close" @click="alarmClose">
-                        <span>닫기</span>
-                    </button>
-                </div>
+                  <div
+                      class="alarm-box"
+                      ref="alarm"
+                      v-if="alarmDataList.content.length"
+                      :class="{ active: alarmActive }"
+                  >
+                      <strong class="title">NOTICE</strong>
+                      <el-scrollbar
+                          class="cart-list-scroll"
+                          wrap-class="alarm-list-wrap"
+                          :native="false"
+                      >
+                          <transition-group
+                              tag="ul"
+                              class="alarm-list"
+                              name="fade"
+                          >
+                              <li
+                                  class="alarm-item active"
+                                  v-for="item in alarmDataList.content "
+                                  :key="item.alarmSeq"
+                                  @click="delAlarmData(item.alarmSeq)"
+                              >
+                                  <router-link :to="setUrl(item)" class="txt" >
+                                      {{ item.folderName }}이(가) 업데이트 되었습니다.
+                                    <span class="date">
+                                      {{ item.registrationDt }}
+                                    </span>
+                                  </router-link>
+                              </li>
+                          </transition-group>
+                      </el-scrollbar>
+
+                      <button type="button" class="btn-close" @click="alarmClose">
+                          <span>닫기</span>
+                      </button>
+                  </div>
+              </template>
             </div>
         </div>
         <div class="space-info">
@@ -90,24 +88,14 @@ export default {
     },
     methods: {
         openAlarm() {
-            this.alarmActive = !this.alarmActive;
-            this.$refs.alarmIrem.forEach((el, index) => {
-                this.$refs.alarmBtn[index].style.paddingTop =
-                    el.offsetHeight + 'px';
-            });
-
-            if (this.alarmActive) {
-                const alarmH =
-                    this.$refs.alarm.querySelector('.alarm-list').offsetHeight +
-                    40;
-                this.$refs.alarm.style.height = alarmH + 'px';
-            } else {
-                this.$refs.alarm.style.height = '0px';
+            if(this.alarmDataList.content.length !== 0 ){
+              this.alarmActive = !this.alarmActive;
+              this.$refs.alarm.style.height = document.querySelector(".alarm-list").offsetHeight + 40 + 'px'
             }
         },
         alarmClose() {
             this.alarmActive = false;
-            this.$refs.alarm.style.height = '0px';
+            this.$refs.alarm.style.height = '0'
         },
         logout() {
             this.$store.commit('LOGOUT');
@@ -138,13 +126,20 @@ export default {
                     data: { data: response },
                 } = await delAlarm(seq);
                 await this.alarmData();
-                console.log(response);
+                this.alarmActive = false;
             } catch (error) {
-                console.log(error);
+                //console.log(error);
                 if (error.data.existMsg) {
                     alert(error.data.msg);
                 }
             }
+        },
+        setUrl(item) {
+          console.log(item)
+          if(item.typeCd === "REPORT_MANAGE"){
+            return `/report/${item.folderSeq}`.toLocaleLowerCase();
+          }
+
         },
     },
 };
@@ -250,11 +245,6 @@ export default {
 .alarm-item {
     padding: 12px 41px 12px 20px;
 }
-.alarm-item button {
-    display: block;
-    width: 100%;
-    text-align: left;
-}
 .alarm-item .date {
     display: block;
     margin-top: 4px;
@@ -262,16 +252,8 @@ export default {
     line-height: 15px;
     color: #888;
 }
-.alarm-item:first-child .txt {
-    margin-top: 0;
-}
 .alarm-item .txt {
-    position: absolute;
-    top: 0;
-    left: 0;
     display: block;
-    margin-top: 12px;
-    padding: 0 41px 0 29px;
     font-size: 11px;
     line-height: 17px;
     color: #333;
