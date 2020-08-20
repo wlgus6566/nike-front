@@ -4,7 +4,6 @@
             <span class="ko">위시리스트</span>
         </h2>
         <div class="all-box type2" v-if="wishListData">
-            <!-- todo 전체선택 스크립트 작업 필요  -->
             <label class="check-label">
                 <span class="checkbox">
                     <input

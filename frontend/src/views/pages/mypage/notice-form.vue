@@ -113,15 +113,17 @@ export default {
             noticeDetail: {
                 title: '',
                 contents: '',
-                noticeYn: null,
+                noticeYn: 'N',
             },
         };
     },
     mounted() {
         this.getNoticeList();
+        //this.noticeDetail.noticeYn = 'N';
         if (this.$route.meta.modify) {
             this.getNoticeDetail();
         }
+        console.log(this.noticeDetail.noticeYn);
     },
     activated() {
         this.getNoticeList();

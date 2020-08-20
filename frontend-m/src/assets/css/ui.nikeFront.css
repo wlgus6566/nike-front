@@ -171,6 +171,7 @@
     line-height: 14px;
     font-size: 12px;
     color: #888;
+    letter-spacing: 0;
 }
 .main-update-list {
     white-space: nowrap;
@@ -605,22 +606,21 @@
     text-indent: -9999px;
     overflow: hidden;
 }
-.sorting-area [class^='type-list'] + .filter-select{
-	position:relative;
-	margin-left:10px;
-	padding-left:20px;
+.sorting-area [class^='type-list'] + .filter-select {
+    position: relative;
+    margin-left: 10px;
+    padding-left: 20px;
 }
-.sorting-area [class^='type-list'] + .filter-select:before{
-	content:"";
-	position:absolute;
-	top:50%;
-	left:0;
-	display:block;
-	width:1px;
-	height:10px;
-	transform:translateY(-50%);
-	background:#ddd;
-
+.sorting-area [class^='type-list'] + .filter-select:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 10px;
+    transform: translateY(-50%);
+    background: #ddd;
 }
 .sorting-area .search-input {
     position: absolute;
@@ -630,7 +630,7 @@
     align-items: center;
     width: 36px;
     height: 50px;
-	transition:all ease 0.3s;
+    transition: all ease 0.3s;
 }
 .sorting-area .search-input .input-box {
     position: relative;
@@ -1616,4 +1616,28 @@
 }
 .extension-ttf {
     background-position: -80px -240px;
+}
+/* el-pagination */
+.el-pagination {
+    margin-top: 20px;
+    padding: 0;
+    text-align: center;
+}
+.el-pager li {
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    box-sizing: border-box;
+    color: #ccc;
+    font-size: 14px;
+    font-weight: 300;
+}
+.el-pager li.active {
+    color: #000;
+    font-weight: 600;
+}
+.el-pagination button,
+.el-pagination span:not([class*='suffix']) {
+    width: 36px;
+    height: 36px;
 }
