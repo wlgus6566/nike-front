@@ -195,6 +195,7 @@ public class Product extends BaseTimeEntity {
 
 	@Transient
 	public String getImageFilePhysicalName() {
-		return CloudFrontUtil.getSignedUrl(imageFilePhysicalName);
+		return CloudFrontUtil.getCustomSignedUrl(
+				imageFilePhysicalName);
 	}
 }
