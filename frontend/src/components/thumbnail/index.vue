@@ -20,7 +20,7 @@
         </label>
 
         <cropperModal
-            ref="test"
+            ref="abcd"
             :visible.sync="visible.cropperModal"
             :imgSrc="this.imgSrc"
             :cropImg="this.cropImg"
@@ -96,7 +96,7 @@ export default {
                     let url = `${data[0].prefix}${data[0].data}`;
                     this.imgSrc = url;
                     this.imgName = file.name;
-                    this.$refs.test.test(url);
+                    this.$refs.abcd.abcd(url);
                 })
                 .catch((e) => {
                     console.log(e);
