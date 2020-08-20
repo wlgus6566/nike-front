@@ -1,28 +1,40 @@
 <template>
     <div>
-        <ul class="sorting-tab line2">
-            <li class="active" v-for="codeList in categoryCodeList.listSortOptions">
-                <a href="#" v-on:click="tabChange(codeList.value)">{{codeList.label}}</a>
+        <ul class="sorting-tab">
+            <li
+                class="active"
+                v-for="codeList in categoryCodeList.listSortOptions"
+            >
+                <a href="#" v-on:click="tabChange(codeList.value)">{{
+                    codeList.label
+                }}</a>
             </li>
         </ul>
         <ul class="faq-list" v-for="item in faqData">
-            <li :class="{ active: item.noticeArticleSeq === activeSeq}">
-                <a href="#" class="sbj" @click="setActiveSeq(item.noticeArticleSeq)">
-                    <span class="category">[<em>{{item.noticeArticleCategoryValue}}</em>]</span>
-                    <span class="title">{{item.title}}</span>
+            <li :class="{ active: item.noticeArticleSeq === activeSeq }">
+                <a
+                    href="#"
+                    class="sbj"
+                    @click="setActiveSeq(item.noticeArticleSeq)"
+                >
+                    <span class="category"
+                        >[<em>{{ item.noticeArticleCategoryValue }}</em
+                        >]</span
+                    >
+                    <span class="title">{{ item.title }}</span>
                     <i class="arrow"></i>
                 </a>
                 <div class="cont isActive">
-                    {{item.contents}}
+                    {{ item.contents }}
                 </div>
             </li>
         </ul>
         <Pagination
-                v-if="faqData.length"
-                :itemLength="itemLength"
-                :pageCount="pageCount"
-                :totalItem="totalElements"
-                @handleCurrentChange="handleCurrentChange"
+            v-if="faqData.length"
+            :itemLength="itemLength"
+            :pageCount="pageCount"
+            :totalItem="totalElements"
+            @handleCurrentChange="handleCurrentChange"
         />
     </div>
 </template>
@@ -46,11 +58,11 @@ export default {
                 listSortOptions: [{ value: '', label: 'ALL' }],
                 value: '',
             },
-            noticeArticleCategoryCode: null
-        }
+            noticeArticleCategoryCode: null,
+        };
     },
     components: {
-        Pagination: () => import('@/components/pagination/')
+        Pagination: () => import('@/components/pagination/'),
     },
     mounted() {
         this.getCategoryCode();
@@ -66,7 +78,7 @@ export default {
             try {
                 const {
                     data: { data: response },
-                } = await getCustomerList("QNA", {
+                } = await getCustomerList('QNA', {
                     page: this.page,
                     size: this.itemLength,
                     noticeArticleCategoryCode: this.categoryCodeList.value,
@@ -83,7 +95,7 @@ export default {
             try {
                 const {
                     data: { data: response },
-                } = await getCode("NOTICE_CATEGORY_CODE");
+                } = await getCode('NOTICE_CATEGORY_CODE');
 
                 response.forEach((el) => {
                     this.categoryCodeList.listSortOptions.push({
@@ -98,7 +110,7 @@ export default {
         tabChange: function (code) {
             this.categoryCodeList.value = code;
         },
-        setActiveSeq: function(seq) {
+        setActiveSeq: function (seq) {
             if (this.activeSeq === seq) {
                 this.activeSeq = null;
             } else {
@@ -108,8 +120,8 @@ export default {
         handleCurrentChange(val) {
             this.page = val;
             this.getNoticeList();
-        }
-    }
+        },
+    },
 };
 </script>
 <style scoped></style>

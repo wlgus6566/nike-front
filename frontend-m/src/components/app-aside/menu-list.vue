@@ -12,7 +12,9 @@
             <transition @enter="itemOpen" @leave="itemClose">
                 <ul class="depth" v-if="activeIndex === index">
                     <li v-for="depth in menu.menus" :key="depth.menuSeq">
-                        <a :href="depth.menuPathUrl">{{ depth.menuName }}</a>
+                        <router-link :to="depth.menuPathUrl">{{
+                            depth.menuName
+                        }}</router-link>
                     </li>
                 </ul>
             </transition>
@@ -45,7 +47,7 @@ export default {
                 paddingTop: 0,
                 paddingBottom: 0,
                 ease: Cubic.easeInOut,
-                onComplete: function() {
+                onComplete: function () {
                     el.style.height = 'auto';
                     el.style.paddingTop = '10px';
                     el.style.paddingBottom = '10px';
@@ -63,7 +65,7 @@ export default {
             });
         },
         menuFn(e, seq) {
-            const seqList = this.menuData.map(el => el.menuSeq);
+            const seqList = this.menuData.map((el) => el.menuSeq);
             const _index = seqList.indexOf(seq);
             //const menu = this.$refs.menuItem[_index];
             if (this.activeIndex !== _index) {
