@@ -1,17 +1,12 @@
 import axios from 'axios';
-axios.defaults.baseURL =
-    process.env.NODE_ENV === 'development'
-        ? '/'
-        : 'https://devapi.nikespace.co.kr';
+axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 import { setInterceptors } from './config/interceptors';
 
 function createWithAuth(url, options) {
-    console.log(`${process.env.VUE_APP_API_URL}`);
     const instance = axios.create(Object.assign({ baseURL: url }, options));
     setInterceptors(instance);
     return instance;
 }
-
 export const agency = createWithAuth('/api/agency', { timeout: 3000 });
 export const auth = createWithAuth('/api/auth', { timeout: 3000 });
 export const basket = createWithAuth('/api/goodsBasket', { timeout: 3000 });

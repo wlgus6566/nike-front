@@ -73,7 +73,7 @@ public class AlarmResultDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "typeCd", value ="메뉴 타입 코드(ASSET, TOOLKIT, FOUNDATION, REPORT)", example = "example")
+    @ApiModelProperty(name = "typeCd", value ="메뉴 타입 코드(ASSET, TOOLKIT, FOUNDATION, REPORT_MANAGE)", example = "example")
     private String typeCd;
 
     /**

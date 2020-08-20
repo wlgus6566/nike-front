@@ -108,6 +108,9 @@ public class AuthService {
      */
     public List<Auth> findAll() {
         log.info("AuthService.findAll");
+        // TODO[lsj] 지훈님께 확인 필요 :
+        //  useYn 조회 조건이 1depth에만 적용됨.!
+        //  2, 3 depth도 삭제 된 얘들은 노출 안되도록 처리 필요 2020.08.19 sojeong.lee
         return authRepository.findAllByUseYnAndUpperAuthSeqIsNull("Y");
     }
 
@@ -492,6 +495,7 @@ public class AuthService {
         this.remove(authSeq);
         redisService.delete(REDIS_ROLES_AUTHS+auth.getRoleType());
         redisService.delete(REDIS_ROLES_MENUS+auth.getRoleType());
+
         return auth;
     }
 
@@ -516,14 +520,122 @@ public class AuthService {
         }
     }
 
-//    TODO[lsj] 보고서 권한 목록 재가공 필요
-//    public List<AuthReturnDTO> getAuthList2 (final UserContentsSearchDTO userContentsSearchDTO, final Long authDepth) {
-//        List<AuthReturnDTO> asd = this.getAuthList(userContentsSearchDTO);
-//
-//
-//
-//
-//    }
+    /**
+     * Gets auth list with depth.
+     *
+     * @param userContentsSearchDTO the user contents search dto
+     * @param auth                  the auth
+     * @return the auth list with depth
+     * @author [이소정]
+     * @implNote 권한 depth에 맞는 목록
+     * @since 2020. 8. 18. 오후 10:07:48
+     */
+//    TODO[lsj]
+    public List<AuthReturnDTO> getAuthListWithDepth(final UserContentsSearchDTO userContentsSearchDTO, final Auth auth) {
+        List<AuthReturnDTO> allAuthList = this.getAuthList(userContentsSearchDTO);
+        List<AuthReturnDTO> transformAuthList = new ArrayList<>();
+
+        if (!ObjectUtils.isEmpty(allAuthList) && !allAuthList.isEmpty()) {
+
+            if (1 == auth.getAuthDepth()) {
+                for (AuthReturnDTO authReturnDTO : allAuthList) {
+                    List<AuthReturnDTO> findAuthList = new ArrayList<>();
+                    findAuthList = this.findUseYnAuthList(findAuthList, authReturnDTO.getSubAuths());
+
+                    authReturnDTO.setSubAuths(findAuthList);
+                    if (!findAuthList.isEmpty() || "Y".equals(authReturnDTO.getViewYn())) {
+                        transformAuthList.add(authReturnDTO);
+                    }
+                }
+            } else {
+                List<AuthReturnDTO> findDepthList = new ArrayList<>();
+                for (AuthReturnDTO authReturnDTO : allAuthList) {
+                    if (auth.getAuthSeq().equals(authReturnDTO.getAuthSeq())) {
+                        findDepthList.add(authReturnDTO);
+                        break;
+                    }
+
+                    // 3depth인경우
+                    AuthReturnDTO findAuth =this.findAuthDepthList(auth.getAuthSeq(), authReturnDTO.getSubAuths());
+                    if (!ObjectUtils.isEmpty(findAuth.getAuthSeq())) {
+                        findDepthList.add(findAuth);
+                    }
+
+                }
+
+                for (AuthReturnDTO authReturnDTO : findDepthList) {
+                    List<AuthReturnDTO> findAuthList = new ArrayList<>();
+                    findAuthList = this.findUseYnAuthList(findAuthList, authReturnDTO.getSubAuths());
+
+                    authReturnDTO.setSubAuths(findAuthList);
+                    if (!findAuthList.isEmpty() || "Y".equals(authReturnDTO.getViewYn())) {
+                        transformAuthList.add(authReturnDTO);
+                    }
+                }
+            }
+        }
+
+        return transformAuthList;
+
+    }
+
+    /**
+     * Find auth depth list auth return dto.
+     *
+     * @param authSeq the auth seq
+     * @param subList the sub list
+     * @return the auth return dto
+     * @author [이소정]
+     * @implNote 권한 depth 구조에 맞는 auth 찾기
+     * @since 2020. 8. 20. 오후 1:01:22
+     */
+    public AuthReturnDTO findAuthDepthList(final Long authSeq, final List<AuthReturnDTO> subList) {
+        AuthReturnDTO findAuth = new AuthReturnDTO();
+
+        if (!ObjectUtils.isEmpty(subList) && !subList.isEmpty()) {
+            for (AuthReturnDTO authReturnDTO : subList) {
+                if (authSeq.equals(authReturnDTO.getAuthSeq())) {
+                    findAuth = authReturnDTO;
+                    break;
+                }
+
+                if (!ObjectUtils.isEmpty(findAuth) && !ObjectUtils.isEmpty(authReturnDTO.getSubAuths()) && !authReturnDTO.getSubAuths().isEmpty()) {
+                    findAuth = this.findAuthDepthList(authSeq, authReturnDTO.getSubAuths());
+                }
+            }
+        }
+        return findAuth;
+    }
+
+    /**
+     * Find use yn auth list list.
+     *
+     * @param saveList    the save list
+     * @param subAuthList the sub auth list
+     * @return the list
+     * @author [이소정]
+     * @implNote 권한목록 중 Y인것만 check
+     * @since 2020. 8. 20. 오후 1:01:57
+     */
+    public List<AuthReturnDTO> findUseYnAuthList(final List<AuthReturnDTO> saveList, final List<AuthReturnDTO> subAuthList) {
+        List<AuthReturnDTO>  findAuthList = new ArrayList<>();
+
+        if (!ObjectUtils.isEmpty(subAuthList) && !subAuthList.isEmpty()) {
+            for (AuthReturnDTO authReturnDTO : subAuthList) {
+
+                if (!ObjectUtils.isEmpty(authReturnDTO.getSubAuths()) && !authReturnDTO.getSubAuths().isEmpty()) {
+                    findAuthList = this.findUseYnAuthList(saveList, authReturnDTO.getSubAuths());
+                }
+
+                authReturnDTO.setSubAuths(findAuthList);
+                if (!findAuthList.isEmpty() || "Y".equals(authReturnDTO.getViewYn())) {
+                    saveList.add(authReturnDTO);
+                }
+            }
+        }
+
+        return saveList;
+    }
 
     /**
      * Gets auth list.

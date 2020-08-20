@@ -17,12 +17,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * The Class Notice controller.
@@ -338,15 +337,16 @@ public class NoticeController {
      * @since 2020. 7. 31. 오후 3:47:48
      */
     @ApiOperation(value = "Customer Center 에디터 이미지 업로드", notes = BASIC_CHARACTER)
-    @PostMapping("/{noticeArticleSectionCode}/images")
-    public SingleResult<List<String>> uploadEditorImages(
+    @PostMapping(value = "/{noticeArticleSectionCode}/images",
+            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public SingleResult<String> uploadEditorImages(
             @ApiParam(name = "noticeArticleSectionCode", value = "Customer Center 게시글 종류 코드",
                     allowableValues = "NOTICE, NEWS, QNA", required = true)
             @PathVariable final String noticeArticleSectionCode,
-            final MultipartHttpServletRequest multiReq) {
+            @ApiParam(name = "file", value = "파일업로드") final MultipartFile file) {
         log.info("NoticeController.uploadEditorImages");
 
-        List<String> uploadUrl = noticeService.uploadEditorImages(multiReq, noticeArticleSectionCode);
+        String uploadUrl = noticeService.uploadEditorImages(file, noticeArticleSectionCode);
         return responseService.getSingleResult(uploadUrl);
     }
 }
