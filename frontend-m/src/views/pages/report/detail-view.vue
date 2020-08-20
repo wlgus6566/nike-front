@@ -64,13 +64,13 @@
                 </a>
             </li>
         </ul>
-        <ModalEx :visible.sync="visible.modalEx" />
+        <fileDetailPopup :visible.sync="visible.modalEx" :filePopupFile="filePopupFile" :filePopupName="filePopupName" />
     </div>
 </template>
 <script>
     import {deleteReportFeedback, getReportDetail, getReportDetailFeedbackList, getReportDetailFileList, postReportFeedback} from "@/api/report";
     import {getUserIdFromCookie} from "@/utils/cookies"
-    import ModalEx from "@/components/modal-ex/index";
+    import fileDetailPopup from "@/views/pages/report/file-Detail-Popup";
 
     export default {
     name: 'detail-view',
@@ -88,16 +88,15 @@
             visible: {
                 modalEx: false,
             },
-            modelFileDate:''
+            filePopupFile:'',
+            filePopupName:''
         }
     }
     , mounted() {
         this.fetchData();
-        console.log(this.loginUserId);
-
     },
     components: {
-        ModalEx,
+        fileDetailPopup: fileDetailPopup,
     },
     methods: {
         fetchData() {
@@ -166,7 +165,6 @@
             }
         },
         async delFeedBack(id){
-            console.log(id);
             if(confirm("FEEDBACK을 삭제 하시겠습니까?")) {
                 try {
                     const {data: {data: response}} = await deleteReportFeedback(id);
@@ -176,11 +174,11 @@
                 }
             }
         },
-        fileDetailModal(reportFileSeq,filePysicalName,fileName) {
-            console.log(filePysicalName);
-            console.log(fileName);
+        fileDetailModal(reportFileSeq, filePhysicalName, fileName) {
+            this.filePopupFile = filePhysicalName;
+            this.filePopupName = fileName;
             this.visible.modalEx = true;
-        },
+        }
     },
 };
 </script>

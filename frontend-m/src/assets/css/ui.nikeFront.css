@@ -607,6 +607,9 @@
     text-indent: -9999px;
     overflow: hidden;
 }
+.sorting-area .type-list-thum {
+    background-image: url(../images/svg/icon-filter-thum-on.svg);
+}
 .sorting-area [class^='type-list'] + .filter-select {
     position: relative;
     margin-left: 10px;
