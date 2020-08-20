@@ -52,12 +52,22 @@ const routes = [
             },
             {
                 path: 'upload',
-                component: pages('toolkit/upload'),
+                component: pages('common/folder-upload'),
                 meta: {
                     layout: 'Default',
                     aside: 'File',
                     topMenuCode: 'TOOLKIT',
                     title: 'UPLOAD',
+                },
+            },
+            {
+                path: '*/modify/:id',
+                component: pages('common/folder-upload'),
+                meta: {
+                    layout: 'Default',
+                    aside: 'File',
+                    topMenuCode: 'TOOLKIT',
+                    title: 'MODIFY',
                 },
             },
             {

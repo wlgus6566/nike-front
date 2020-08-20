@@ -605,6 +605,23 @@
     text-indent: -9999px;
     overflow: hidden;
 }
+.sorting-area [class^='type-list'] + .filter-select{
+	position:relative;
+	margin-left:10px;
+	padding-left:20px;
+}
+.sorting-area [class^='type-list'] + .filter-select:before{
+	content:"";
+	position:absolute;
+	top:50%;
+	left:0;
+	display:block;
+	width:1px;
+	height:10px;
+	transform:translateY(-50%);
+	background:#ddd;
+
+}
 .sorting-area .search-input {
     position: absolute;
     top: 0;
@@ -613,6 +630,7 @@
     align-items: center;
     width: 36px;
     height: 50px;
+	transition:all ease 0.3s;
 }
 .sorting-area .search-input .input-box {
     position: relative;
@@ -1539,4 +1557,63 @@
 }
 .filter-select + .filter-select {
     margin-left: 15px;
+}
+[extension] {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    background-image: url('../images/icon_extension.png');
+    background-repeat: no-repeat;
+    background-size: 400px auto;
+}
+.extension-pdf {
+    background-position: 0 0;
+}
+.extension-indd {
+    background-position: -80px 0;
+}
+.extension-ppt {
+    background-position: -160px 0;
+}
+.extension-pptx {
+    background-position: -240px 0;
+}
+.extension-key {
+    background-position: -320px 0;
+}
+.extension-doc {
+    background-position: 0 -80px;
+}
+.extension-docx {
+    background-position: -80px -80px;
+}
+.extension-xls {
+    background-position: -160px -80px;
+}
+.extension-xlsx {
+    background-position: -240px -80px;
+}
+.extension-vr {
+    background-position: -320px -80px;
+}
+.extension-mp4 {
+    background-position: 0 -160px;
+}
+.extension-mov {
+    background-position: -80px -160px;
+}
+.extension-url {
+    background-position: -160px -160px;
+}
+.extension-avi {
+    background-position: -240px -160px;
+}
+.extension-etc {
+    background-position: -320px -160px;
+}
+.extension-otf {
+    background-position: 0 -240px;
+}
+.extension-ttf {
+    background-position: -80px -240px;
 }

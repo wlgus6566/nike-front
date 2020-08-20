@@ -63,7 +63,7 @@ const routes = [
             },
             {
                 path: 'upload',
-                component: pages('asset/upload'),
+                component: pages('common/folder-upload'),
                 meta: {
                     layout: 'Default',
                     aside: 'File',
@@ -73,7 +73,7 @@ const routes = [
             },
             {
                 path: '*/modify/:id',
-                component: pages('asset/upload'),
+                component: pages('common/folder-upload'),
                 meta: {
                     layout: 'Default',
                     aside: 'File',

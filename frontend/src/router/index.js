@@ -54,7 +54,7 @@ const router = new VueRouter({
         });
     },
 });
-
+console.log(router.options.routes);
 router.beforeEach((to, from, next) => {
     if (to.meta.unauthorized) {
         if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
