@@ -3,14 +3,19 @@
         <div class="user-info">
             <span class="store-name">홍대 SKNRS</span>
             <div class="side">
-              <template v-if="alarmDataList.content">
-                  <button type="button" class="btn-out" @click="logout">
-                      <span>로그아웃</span>
-                  </button>
-                  <button type="button" class="btn-alarm"  :class="{active : alarmDataList.content.length }" @click="openAlarm">
-                      <span>알람</span>
-                  </button>
-                  <!--<div class="alarm-box">
+                <template v-if="alarmDataList.content">
+                    <button type="button" class="btn-out" @click="logout">
+                        <span>로그아웃</span>
+                    </button>
+                    <button
+                        type="button"
+                        class="btn-alarm"
+                        :class="{ active: alarmDataList.content.length }"
+                        @click="openAlarm"
+                    >
+                        <span>알람</span>
+                    </button>
+                    <!--<div class="alarm-box">
                       <strong class="title">NEW</strong>
                       <div class="alarm-item">
                           <p class="txt">
@@ -23,44 +28,48 @@
                       </button>
                   </div>-->
 
-                  <div
-                      class="alarm-box"
-                      ref="alarm"
-                      v-if="alarmDataList.content.length"
-                      :class="{ active: alarmActive }"
-                  >
-                      <strong class="title">NOTICE</strong>
-                      <el-scrollbar
-                          class="cart-list-scroll"
-                          wrap-class="alarm-list-wrap"
-                          :native="false"
-                      >
-                          <transition-group
-                              tag="ul"
-                              class="alarm-list"
-                              name="fade"
-                          >
-                              <li
-                                  class="alarm-item active"
-                                  v-for="item in alarmDataList.content "
-                                  :key="item.alarmSeq"
-                                  @click="delAlarmData(item.alarmSeq)"
-                              >
-                                  <router-link :to="setUrl(item)" class="txt" >
-                                      {{ item.folderName }}이(가) 업데이트 되었습니다.
-                                    <span class="date">
-                                      {{ item.registrationDt }}
-                                    </span>
-                                  </router-link>
-                              </li>
-                          </transition-group>
-                      </el-scrollbar>
-
-                      <button type="button" class="btn-close" @click="alarmClose">
-                          <span>닫기</span>
-                      </button>
-                  </div>
-              </template>
+                    <div
+                        class="alarm-box"
+                        ref="alarm"
+                        v-if="alarmDataList.content.length"
+                        :class="{ active: alarmActive }"
+                    >
+                        <strong class="title">NOTICE</strong>
+                        <el-scrollbar
+                            class="cart-list-scroll"
+                            wrap-class="alarm-list-wrap"
+                            :native="false"
+                        >
+                            <transition-group
+                                tag="ul"
+                                class="alarm-list"
+                                name="fade"
+                            >
+                                <li
+                                    class="alarm-item active"
+                                    v-for="item in alarmDataList.content"
+                                    :key="item.alarmSeq"
+                                    @click="delAlarmData(item.alarmSeq)"
+                                >
+                                    <router-link :to="setUrl(item)" class="txt">
+                                        {{ item.folderName }}이(가) 업데이트
+                                        되었습니다.
+                                        <span class="date">
+                                            {{ item.registrationDt }}
+                                        </span>
+                                    </router-link>
+                                </li>
+                            </transition-group>
+                        </el-scrollbar>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            @click="alarmClose"
+                        >
+                            <span>닫기</span>
+                        </button>
+                    </div>
+                </template>
             </div>
         </div>
         <div class="space-info">
@@ -78,7 +87,7 @@ export default {
     data() {
         return {
             page: 0,
-            size: 10,
+            size: 4,
             alarmDataList: [],
             alarmActive: false,
         };
@@ -88,14 +97,17 @@ export default {
     },
     methods: {
         openAlarm() {
-            if(this.alarmDataList.content.length !== 0 ){
-              this.alarmActive = !this.alarmActive;
-              this.$refs.alarm.style.height = document.querySelector(".alarm-list").offsetHeight + 40 + 'px'
+            if (this.alarmDataList.content.length !== 0) {
+                this.alarmActive = !this.alarmActive;
+                this.$refs.alarm.style.height =
+                    document.querySelector('.alarm-list').offsetHeight +
+                    40 +
+                    'px';
             }
         },
         alarmClose() {
             this.alarmActive = false;
-            this.$refs.alarm.style.height = '0'
+            this.$refs.alarm.style.height = '0';
         },
         logout() {
             this.$store.commit('LOGOUT');
@@ -108,7 +120,7 @@ export default {
                     data: { data: response },
                 } = await getAlarm({
                     page: this.page,
-                    size: this.size,
+                    size: 1,
                 });
                 this.alarmDataList = response;
             } catch (error) {
@@ -135,11 +147,19 @@ export default {
             }
         },
         setUrl(item) {
-          console.log(item)
-          if(item.typeCd === "REPORT_MANAGE"){
-            return `/report/${item.folderSeq}`.toLocaleLowerCase();
-          }
-
+            const topCode =
+                item.typeCd === 'REPORT_MANAGE'
+                    ? 'report'
+                    : item.typeCd === 'FOUNDATION'
+                    ? 'foundation'
+                    : item.typeCd === 'TOOLKIT'
+                    ? 'toolkit'
+                    : 'asset';
+            if (topCode === 'report') {
+                return `/${topCode}/${item.folderSeq}`.toLocaleLowerCase();
+            } else {
+                return `/${topCode}/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
+            }
         },
     },
 };
@@ -180,12 +200,11 @@ export default {
     position: absolute;
     top: -2px;
     right: 0;
-    display: flex;
     width: 100%;
-    justify-content: end;
+    text-align: right;
 }
 .user-info .side [class^='btn-'] {
-    display: block;
+    display: inline-flex;
     width: 22px;
     height: 22px;
     background: no-repeat center;
@@ -195,9 +214,9 @@ export default {
     text-indent: -9999999px;
     overflow: hidden;
 }
-.user-info .side [class^='btn-']:first-child {
-    margin-left: auto;
-}
+/*.user-info .side [class^='btn-']:first-child {*/
+/*    margin-left: auto;*/
+/*}*/
 .user-info .side [class^='btn-'] + [class^='btn-'] {
     margin-right: -2px;
     margin-left: 10px;
@@ -228,6 +247,7 @@ export default {
     background: #fff;
     overflow: hidden;
     transition: height ease-in-out 0.3s;
+    text-align: left;
 }
 .alarm-box .title {
     display: block;
