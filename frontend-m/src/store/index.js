@@ -1,11 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import {loginUser} from '@/api/login';
-import {getGnbList} from '@/api/my-page';
+import { loginUser } from '@/api/login';
+import { getGnbList } from '@/api/my-page';
 
-import {deleteCookie, saveAuthToCookie, saveUserIdToCookie, saveUserNickToCookie,} from '@/utils/cookies.js';
-
+import {
+    deleteCookie,
+    saveAuthToCookie,
+    saveUserIdToCookie,
+    saveUserNickToCookie,
+} from '@/utils/cookies.js';
 
 Vue.use(Vuex);
 
@@ -548,7 +552,7 @@ export default new Vuex.Store({
                                 menuSeq: 50,
                                 menuCode: 'CUSTOMER_FAQ',
                                 upperMenuSeq: 22,
-                                menuName: 'FAQ',
+                                menuName: '자주 묻는 질문',
                                 upperMenuName: 'CUSTOMER CENTER',
                                 menuPathUrl: '/mypage/faq',
                                 pcYn: 'Y',

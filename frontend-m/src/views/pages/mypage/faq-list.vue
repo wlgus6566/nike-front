@@ -2,8 +2,9 @@
     <div>
         <ul class="sorting-tab">
             <li
-                class="active"
                 v-for="codeList in categoryCodeList.listSortOptions"
+                key="index"
+                :class="{ active: categoryCodeList.value === codeList.value }"
             >
                 <a href="#" v-on:click="tabChange(codeList.value)">{{
                     codeList.label
@@ -67,6 +68,7 @@ export default {
     mounted() {
         this.getCategoryCode();
         this.getFaqList();
+        console.log(this.categoryCodeList.listSortOptions);
     },
     watch: {
         'categoryCodeList.value'() {
