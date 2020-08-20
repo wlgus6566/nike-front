@@ -96,6 +96,7 @@ export default {
             aniMenu: { animationData: aniMenu.default },
             animationSpeed: 1,
             show: false,
+            topScollVal: 0,
         };
     },
     components: {
@@ -128,10 +129,19 @@ export default {
             // console.log(this.menuData);
         },
         menuOpen() {
+            this.topScollVal = document.scrollingElement.scrollTop;
             this.menuUse = true;
+            document.querySelector('body').classList.add('menu-open');
+            document.querySelector('.menu-open').style.overflow = 'hidden';
+            document.querySelector('#wrap').style.marginTop =
+                '-' + this.topScollVal + 'px';
         },
         menuClose() {
             this.menuUse = false;
+            document.querySelector('.menu-open').style.overflow = '';
+            document.querySelector('#wrap').style.margin = '';
+            window.scrollTo(0, this.topScollVal);
+            document.querySelector('body').classList.remove('menu-open');
         },
         handleAnimation: function(anim) {
             this.anim.push(anim);

@@ -1,6 +1,6 @@
 <template>
     <div class="filter-select">
-        <button type="button" @click="openModal">
+        <button type="button" @click="modalOpen">
             {{ selectLabel }}
         </button>
         <ListModal
@@ -19,6 +19,7 @@ export default {
         return {
             showList: false,
             selectLabel: '',
+            topScollVal: '',
         };
     },
     props: ['selectList'],
@@ -45,13 +46,20 @@ export default {
         },
         closeModal() {
             this.showList = false;
+            document.querySelector('.modal-list-open').style.overflow = '';
+            document.querySelector('#wrap').style.margin = '';
+            window.scrollTo(0, this.topScollVal);
             document.querySelector('body').classList.remove('modal-list-open');
         },
-        openModal() {
+        modalOpen() {
+            this.topScollVal = document.scrollingElement.scrollTop;
             this.showList = !this.showList;
             if (this.showList) {
-                console.log(document.scrollingElement.scrollTop);
                 document.querySelector('body').classList.add('modal-list-open');
+                document.querySelector('.modal-list-open').style.overflow =
+                    'hidden';
+                document.querySelector('#wrap').style.marginTop =
+                    '-' + this.topScollVal + 'px';
             }
         },
     },
