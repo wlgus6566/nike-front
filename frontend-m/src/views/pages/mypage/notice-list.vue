@@ -2,7 +2,7 @@
     <div>
         <div class="sorting-area">
             <p class="total">전체 <strong>({{totalElements}})</strong></p>
-            <div class="search-input" v-bind:class="{ active: isActive }">
+            <div class="search-input" :class="{ active: isActive }">
                 <div class="input-box">
                     <input type="text" placeholder="검색어를 입력해주세요." @keyup.enter="searchInputActive" v-model="keyword"/>
                     <button type="button" class="search" @click="searchInputActive"><span>검색</span></button>
@@ -10,7 +10,7 @@
                 <div class="btn-txt" @click="searchInputInactive"><span>취소</span></div>
             </div>
         </div>
-        <ul class="notice-list">
+        <ul class="notice-list" v-if="noticeData.length > 0">
             <li v-for="item in noticeData">
                 <a :href="`/mypage/notice/detail/${item.noticeArticleSeq}`">
                     <span class="label-noti" v-if="item.noticeYn === 'Y'">중요</span>
@@ -19,6 +19,12 @@
                 </a>
             </li>
         </ul>
+        <div class="no-data-wrap" v-else-if="noticeData.length === 0 && keyword !== ''">
+            <div class="no-data">
+                <i class="icon-search"></i>
+                <p class="desc">검색 결과가 없습니다.</p>
+            </div>
+        </div>
         <Pagination
                 v-if="noticeData.length"
                 :itemLength="itemLength"
@@ -26,6 +32,7 @@
                 :totalItem="totalElements"
                 @handleCurrentChange="handleCurrentChange"
         />
+        <Loading v-if="loadingData" />
     </div>
 </template>
 <script>
@@ -42,17 +49,20 @@ export default {
             itemLength: 10,
             keyword: '',
             totalElements: 0,
-            isActive: false
+            isActive: false,
+            loadingData: false
         }
     },
     components: {
-        Pagination: () => import('@/components/pagination/')
+        Pagination: () => import('@/components/pagination/'),
+        Loading: () => import('@/components/loading/')
     },
     mounted() {
         this.getNoticeList();
     },
     methods: {
         async getNoticeList() {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -64,6 +74,7 @@ export default {
                 this.noticeList = response;
                 this.noticeData = response.content;
                 this.totalElements = response.totalElements;
+                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }

@@ -13,6 +13,7 @@ import {
     saveAuthToCookie,
     saveUserNickToCookie,
     saveUserIdToCookie,
+    saveRoleToCookie,
 } from '@/utils/cookies.js';
 
 Vue.use(Vuex);
@@ -21,6 +22,7 @@ export default new Vuex.Store({
         user: '',
         nick: '',
         token: '',
+        role: '',
         gnbMenuListData: [],
         basketItemDrag: false,
         fileMouseenter: false,
@@ -51,6 +53,9 @@ export default new Vuex.Store({
         SET_TOKEN(state, token) {
             state.token = token;
         },
+        SET_ROLE(state, role) {
+            state.role = role;
+        },
         SET_GNB(state, gnbMenu) {
             state.gnbMenuListData = gnbMenu;
         },
@@ -64,6 +69,7 @@ export default new Vuex.Store({
             state.user = '';
             state.nick = '';
             state.token = '';
+            state.role = '';
             state.gnbMenuListData = [];
             state.basketItemDrag = false;
             state.fileMouseenter = false;
@@ -94,12 +100,15 @@ export default new Vuex.Store({
     actions: {
         async LOGIN({ commit }, data) {
             const response = await loginUser(data);
+            console.log(response);
             if (response.data.code === 'SUCCESS') {
                 commit('SET_USER', response.data.data.userId);
                 commit('SET_NICK', response.data.data.nickname);
+                commit('SET_ROLE', response.data.data.role);
                 commit('SET_TOKEN', response.headers.authorization);
                 saveUserIdToCookie(response.data.data.userId);
                 saveUserNickToCookie(response.data.data.nickname);
+                saveRoleToCookie(response.data.data.role);
                 saveAuthToCookie(response.headers.authorization);
             }
             return response;

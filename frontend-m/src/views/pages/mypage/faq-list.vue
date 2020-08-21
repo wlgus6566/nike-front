@@ -5,8 +5,8 @@
                 <a href="#" v-on:click="tabChange(codeList.value)">{{codeList.label}}</a>
             </li>
         </ul>
-        <ul class="faq-list" v-for="item in faqData">
-            <li :class="{ active: item.noticeArticleSeq === activeSeq}">
+        <ul class="faq-list" >
+            <li v-for="item in faqData" :class="{ active: item.noticeArticleSeq === activeSeq}">
                 <a href="#" class="sbj" @click="setActiveSeq(item.noticeArticleSeq)">
                     <span class="category">[<em>{{item.noticeArticleCategoryValue}}</em>]</span>
                     <span class="title">{{item.title}}</span>
@@ -24,6 +24,7 @@
                 :totalItem="totalElements"
                 @handleCurrentChange="handleCurrentChange"
         />
+        <Loading v-if="loadingData" />
     </div>
 </template>
 <script>
@@ -46,11 +47,13 @@ export default {
                 listSortOptions: [{ value: '', label: 'ALL' }],
                 value: '',
             },
-            noticeArticleCategoryCode: null
+            noticeArticleCategoryCode: null,
+            loadingData: false
         }
     },
     components: {
-        Pagination: () => import('@/components/pagination/')
+        Pagination: () => import('@/components/pagination/'),
+        Loading: () => import('@/components/loading/')
     },
     mounted() {
         this.getCategoryCode();
@@ -80,6 +83,7 @@ export default {
             }
         },
         async getCategoryCode() {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -91,6 +95,7 @@ export default {
                         label: el.codeName,
                     });
                 });
+                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }

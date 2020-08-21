@@ -1,13 +1,16 @@
 <template>
     <div id="wrap">
-        <Header></Header>
-        <section class="contents">
+        <Header v-if="!$route.meta.hideHeaderFooter" />
+        <section class="contents" v-if="!$route.meta.hideHeaderFooter">
             <transition mode="out-in" name="page-change">
                 <router-view></router-view>
             </transition>
         </section>
-        <Footer></Footer>
-        <Navigation></Navigation>
+        <transition mode="out-in" name="page-change" v-else>
+            <router-view></router-view>
+        </transition>
+        <Footer v-if="!$route.meta.hideHeaderFooter" />
+        <Navigation />
     </div>
 </template>
 <script>
@@ -20,6 +23,9 @@ export default {
         Header,
         Footer,
         Navigation,
+    },
+    mounted() {
+        console.log(this.$route.meta.hideHeaderFooter);
     },
 };
 </script>

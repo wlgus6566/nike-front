@@ -1,6 +1,9 @@
 function saveAuthToCookie(value) {
     setCookie('user_token', value);
 }
+function saveRoleToCookie(value) {
+    setCookie('user_role', value);
+}
 function saveUserNickToCookie(value) {
     setCookie('user_nick', value);
 }
@@ -11,8 +14,12 @@ function setCookie(cname, cvalue) {
     const expires = new Date();
     expires.setMinutes(expires.getMinutes() + 30);
     document.cookie = `${cname}=${cvalue}; expires=${expires.toGMTString()}`;
-
-    document.cookie = `${cname}=${cvalue};`;
+}
+function getRoleFromCookie() {
+    return document.cookie.replace(
+        /(?:(?:^|.*;\s*)user_role\s*=\s*([^;]*).*$)|^.*$/,
+        '$1'
+    );
 }
 function getAuthFromCookie() {
     return document.cookie.replace(
@@ -39,8 +46,10 @@ function deleteCookie(value) {
 
 export {
     saveAuthToCookie,
+    saveRoleToCookie,
     saveUserNickToCookie,
     saveUserIdToCookie,
+    getRoleFromCookie,
     getAuthFromCookie,
     getUserNickFromCookie,
     getUserIdFromCookie,

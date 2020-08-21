@@ -279,13 +279,13 @@ public class ContentsSaveDTO {
     @ApiModelProperty(name = "checks", value = "컨텐츠 권한 목록")
     private List<AuthReturnDTO> checks;
 
-    /**
-     * 권한 체크 목록
-     *
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "authChecks", value = "권한 체크 목록", hidden = true)
-    private List<UserContentsSaveDTO.AuthCheckDTO> dddddddddd = new ArrayList<>();
+//    /**
+//     * 권한 체크 목록
+//     *
+//     * @author [오지훈]
+//     */
+//    @ApiModelProperty(name = "authChecks", value = "권한 체크 목록", hidden = true)
+//    private List<UserContentsSaveDTO.AuthCheckDTO> dddddddddd = new ArrayList<>();
 
     /**
      * The Class Auth check.

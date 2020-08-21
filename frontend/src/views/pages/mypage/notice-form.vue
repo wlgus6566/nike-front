@@ -12,31 +12,31 @@
                         <span class="label-title">상단 고정 여부</span>
                     </div>
                     <div class="form-column">
-                        <label class="check-label">
+                        <span class="check-label">
                             <span class="radio">
                                 <input
                                     type="radio"
                                     value="Y"
                                     checked
+                                    @click="noticeCheck($event, true)"
                                     v-model="noticeDetail.noticeYn"
-                                    @click="noticeCheck($event)"
                                 />
                                 <i></i>
                                 <span class="txt">고정</span>
                             </span>
-                        </label>
-                        <label class="check-label">
+                        </span>
+                        <span class="check-label">
                             <span class="radio">
                                 <input
                                     type="radio"
                                     value="N"
                                     v-model="noticeDetail.noticeYn"
-                                    @click="noticeCheck($event)"
                                 />
                                 <i></i>
                                 <span class="txt">비고정</span>
                             </span>
-                        </label>
+                        </span>
+                        {{ this.noticeDetail.noticeYn }}
                     </div>
                     <div class="form-column agr">
                         <span class="form-desc"
@@ -62,16 +62,23 @@
                         <label class="label-title required">내용</label>
                     </div>
                     <div class="form-column">
-                        <span class="textarea">
-                            <textarea
-                                required
-                                cols="100"
-                                rows="2"
-                                style="height: 300px;"
-                                v-model="noticeDetail.contents"
-                            ></textarea>
-                        </span>
+                        <ckeditor
+                            v-model="noticeDetail.contents"
+                            style="width: 100%;"
+                        />
                     </div>
+                    <!--                    <div class="form-column">-->
+                    <!--                        <span class="textarea">-->
+                    <!--                            <textarea-->
+                    <!--                                required-->
+                    <!--                                cols="100"-->
+                    <!--                                rows="2"-->
+                    <!--                                style="height: 300px;"-->
+                    <!--                                v-model="noticeDetail.contents"-->
+                    <!--                                id="p_content"-->
+                    <!--                            ></textarea>-->
+                    <!--                        </span>-->
+                    <!--                    </div>-->
                 </li>
             </ul>
             <hr class="hr-gray" />
@@ -106,12 +113,13 @@ export default {
             noticeDetail: {
                 title: '',
                 contents: '',
-                noticeYn: null,
+                noticeYn: 'N',
             },
         };
     },
     mounted() {
         this.getNoticeList();
+        //this.noticeDetail.noticeYn = 'N';
         if (this.$route.meta.modify) {
             this.getNoticeDetail();
         }
@@ -169,6 +177,7 @@ export default {
                         this.detailDataReset();
                         this.$router.push('/mypage/notice');
                     }
+                    console.log(response);
                 } catch (error) {
                     console.log(error);
                 }
@@ -186,8 +195,14 @@ export default {
                     keyword: '',
                 });
                 this.noticeYnLength = response.content.filter((el) => {
-                    return el.noticeYn === 'Y';
+                    console.log(el.noticeArticleSeq);
+                    console.log(this.$route.params.id * 1);
+                    return (
+                        el.noticeYn === 'Y' &&
+                        el.noticeArticleSeq !== this.$route.params.id * 1
+                    );
                 });
+                console.log(this.noticeYnLength);
             } catch (error) {
                 console.log(error);
             }
@@ -210,12 +225,10 @@ export default {
         },
 
         //중요공지 체크
-        noticeCheck(e) {
-            if (
-                this.noticeDetail.noticeYn === 'N' &&
-                this.noticeYnLength.length >= 3
-            ) {
+        noticeCheck(e, YN) {
+            if (YN && this.noticeYnLength.length >= 3) {
                 e.preventDefault();
+                this.noticeDetail.noticeYn = 'N';
                 alert('상단 고정은 최대 3개까지만 설정가능합니다.');
             }
         },

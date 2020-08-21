@@ -2,6 +2,7 @@
     <div>
         <FilterSelect :selectList="selectList"></FilterSelect>
         <CascaderSelect :cascaderList="authority"></CascaderSelect>
+
         <button type="button" @click="openModal">팝업</button> <br />
         <button type="button" @click="openModal2">팝업 full</button>
         <div class="modal-wrap">
@@ -22,7 +23,7 @@ export default {
         return {
             selectList: {
                 value: '최신순',
-                options: [
+                listSortOptions: [
                     {
                         label: '최신순',
                         value: '최신순',
@@ -34,10 +35,11 @@ export default {
                 ],
             },
             authority: {
-                value: [null],
+                value: ['all'],
+	              name: 'authority',
                 options: [
                     {
-                        value: null,
+                        value: 'all',
                         label: '전체 그룹',
                     },
                 ],
@@ -72,7 +74,7 @@ export default {
                 const {
                     data: { data: response },
                 } = await getAuthCacheList();
-                console.log(response);
+
                 this.recursionFn(response, this.authority.options, 1);
             } catch (error) {
                 console.log(error);

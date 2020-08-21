@@ -1,38 +1,65 @@
 <template>
     <div class="filter-select">
-        <button type="button" @click="modalSelect">
-            {{ selectList.value }}
+        <button type="button" @click="modalOpen">
+            {{ selectLabel }}
         </button>
-        <ListmModal
+        <ListModal
             :selectList="selectList"
             :showList="showList"
+            :selectLabel="selectLabel"
             @closeModal="closeModal"
         />
     </div>
 </template>
 <script>
-import ListmModal from '@/components/filter-select/list-modal';
+import ListModal from '@/components/filter-select/list-modal';
 export default {
-    name: 'filter-select',
+    name: 'FilterSelect',
     data() {
         return {
             showList: false,
+            selectLabel: '',
+            topScollVal: '',
         };
     },
     props: ['selectList'],
     components: {
-        ListmModal,
+        ListModal,
     },
-    mounted() {},
+    watch: {
+        'selectList.value'() {
+            const _index = this.selectList.listSortOptions.findIndex(el => {
+                return el.value === this.selectList.value;
+            });
+            this.selectLabel = this.selectList.listSortOptions[_index].label;
+        },
+    },
+    mounted() {
+        this.findLabel();
+    },
     methods: {
+        findLabel() {
+            const _index = this.selectList.listSortOptions.findIndex(el => {
+                return el.value === this.selectList.value;
+            });
+            this.selectLabel = this.selectList.listSortOptions[_index].label;
+        },
         closeModal() {
             this.showList = false;
+            document.querySelector('.modal-list-open').style.overflow = '';
+            document.querySelector('#wrap').style.margin = '';
+            window.scrollTo(0, this.topScollVal);
             document.querySelector('body').classList.remove('modal-list-open');
         },
-        modalSelect() {
+        modalOpen() {
+            this.topScollVal = document.scrollingElement.scrollTop;
             this.showList = !this.showList;
             if (this.showList) {
                 document.querySelector('body').classList.add('modal-list-open');
+                document.querySelector('.modal-list-open').style.overflow =
+                    'hidden';
+                document.querySelector('#wrap').style.marginTop =
+                    '-' + this.topScollVal + 'px';
             }
         },
     },

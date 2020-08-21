@@ -5,11 +5,11 @@
             <ul class="select-options-list">
                 <li
                     :class="{
-                        selected: selectList.value === val.label,
+                        selected: selectList.value === val.value,
                     }"
-                    v-for="(val, index) in selectList.options"
+                    v-for="(val, index) in selectList.listSortOptions"
                     :key="index"
-                    @click="selectedFn(val.label)"
+                    @click="selectedFn(val.value)"
                 >
                     <span>{{ val.label }}</span>
                 </li>
@@ -19,7 +19,7 @@
 </template>
 <script>
 export default {
-    name: 'List-modal',
+    name: 'ListModal',
     data() {
         return {
             selectedIndex: null,
@@ -30,8 +30,8 @@ export default {
         this.modal();
     },
     methods: {
-        selectedFn(label) {
-            this.selectList.value = label;
+        selectedFn(value) {
+            this.selectList.value = value;
             // const seqList = this.options.map(el => el.label);
             // const _index = seqList.indexOf(label);
             // if (this.selectedIndex !== _index) {
@@ -76,14 +76,13 @@ export default {
     bottom: -100%;
     left: 0;
     width: 100%;
+    padding: 20px 0;
+    box-sizing: border-box;
     background: #fff;
     transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
 }
 .modal-list.active .modal-list-contents {
     bottom: 0;
-}
-.modal-list-contents {
-    padding: 20px 0;
 }
 .select-options-list {
     max-height: 360px;

@@ -209,7 +209,7 @@ public class CloudFrontUtil {
                     // CIDR IP address restriction (optional, 0.0.0.0/0 means everyone)
                     "0.0.0.0/0",
                     // DateGreaterThan (optional) 시작
-                    ServiceUtils.parseIso8601Date(LocalDateTime.now().toString())
+                    ServiceUtils.parseIso8601Date(LocalDateTime.now().minusMinutes(1).toString())
             );
 
             return CloudFrontService.signUrl(
