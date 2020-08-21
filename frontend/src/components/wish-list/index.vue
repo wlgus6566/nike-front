@@ -14,7 +14,11 @@
                 />
                 <i></i>
             </span>
-            <a href="#" class="title-box">
+            <a
+                href="#"
+                class="title-box"
+                @click.prevent="$emit('showDetailView', item.goodsSeq)"
+            >
                 <span class="thumbnail">
                     <img
                         :src="item.product.imageFilePhysicalName"

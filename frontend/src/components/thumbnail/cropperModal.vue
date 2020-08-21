@@ -5,7 +5,6 @@
         width="700px"
         :visible="visible"
         :append-to-body="true"
-        @close="$emit('update:visible', false)"
     >
         <el-scrollbar wrap-class="modal-scroll" :native="false">
             <div class="dialog-header">
@@ -78,7 +77,6 @@ export default {
             this.$refs.cropper.replace(url);
         },
         crop() {
-            console.log(this.$refs.cropper);
             this.$emit(
                 'cropImage',
                 this.$refs.cropper.getCroppedCanvas().toDataURL()

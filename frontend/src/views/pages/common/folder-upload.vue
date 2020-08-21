@@ -300,15 +300,6 @@ export default {
         if (this.$route.params.id) {
             this.getFolderDetail();
         }
-        /*bus.$on('detailAuthYnUpdate', (seq) => {
-				const idx = this.folderDetail.checks.findIndex((el) => {
-					return el.authSeq === seq;
-				});
-				const value = this.checks[idx].detailAuthYn === 'Y' ? 'N' : 'Y';
-				this.checks[idx].detailAuthYn = value;
-			});
-			bus.$on('emailReceptionYnUpdate', (seq) => {});*/
-
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {

@@ -26,6 +26,7 @@ export default {
                         component: 'ContentOrder',
                     },
                 ],
+                showIndex: '1',
             },
         };
     },

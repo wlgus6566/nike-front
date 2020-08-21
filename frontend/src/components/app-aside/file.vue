@@ -20,14 +20,15 @@ export default {
                 tabClass: 'tab-list',
                 tabList: [
                     {
-                        title: 'FILE',
-                        component: 'ContentFile',
-                    },
-                    {
                         title: 'MYPAGE',
                         component: 'ContentMypage',
                     },
+                    {
+                        title: 'FILE',
+                        component: 'ContentFile',
+                    },
                 ],
+                showIndex: 1,
             },
         };
     },

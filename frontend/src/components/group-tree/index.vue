@@ -7,7 +7,7 @@
             sticky-z-index="20"
             v-sticky
         >
-            <el-scrollbar view-class="group-tree-scroll" :native="false">
+            <el-scrollbar wrap-class="group-tree-scroll" :native="false">
                 <div class="group-tree-inner">
                     <GroupTreeList
                         :authName="authName"
@@ -23,7 +23,7 @@
                 <button
                     type="button"
                     class="del"
-                    :disabled="!groupTreeActive.authDepth"
+                    :disabled="deleteDisabled"
                     @click="groupTreeDel"
                 >
                     삭제
@@ -31,10 +31,7 @@
                 <button
                     type="button"
                     class="add"
-                    :disabled="
-                        groupTreeActive.authDepth === '3' ||
-                        !groupTreeActive.authName
-                    "
+                    :disabled="addDisabled"
                     @click="groupTreeAdd"
                 >
                     추가
@@ -59,6 +56,21 @@ export default {
     ],
     directives: {
         Sticky,
+    },
+    computed: {
+        deleteDisabled() {
+            return !(
+                this.groupTreeActive.authSeq !== 'root' &&
+                this.authName &&
+                !this.groupTreeActive.subAuths
+            );
+        },
+        addDisabled() {
+            return (
+                this.groupTreeActive.authDepth === 3 ||
+                !this.groupTreeActive.authName
+            );
+        },
     },
     methods: {
         groupTreeDel() {
@@ -154,6 +166,7 @@ export default {
     flex: 1 1 auto;
     line-height: 18px;
     color: #333;
+    word-break: break-all;
 }
 ::v-deep .tree-item input {
     height: 24px;
