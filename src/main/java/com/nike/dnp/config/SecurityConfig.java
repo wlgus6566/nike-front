@@ -207,11 +207,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-
+		//개발 설정
 		configuration.addAllowedOrigin("https://devwww.nikespace.co.kr");
-		configuration.addAllowedOrigin("https://www.nikespace.co.kr");
 		configuration.addAllowedOrigin("http://devwww.nikespace.co.kr");
+		//운영 설정
+		configuration.addAllowedOrigin("https://www.nikespace.co.kr");
 		configuration.addAllowedOrigin("http://www.nikespace.co.kr");
+		//로컬 설정
+		configuration.addAllowedOrigin("http://localhost:8080");
+		configuration.addAllowedOrigin("http://localhost:8081");
+		configuration.addAllowedOrigin("http://localhost:8082");
+
 		configuration.addAllowedHeader("*");
 		configuration.addAllowedMethod("*");
 		configuration.setAllowCredentials(true);
