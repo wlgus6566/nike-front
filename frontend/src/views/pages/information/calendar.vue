@@ -25,6 +25,8 @@
             @modifyCalendar="modifyCalendar"
             @delCalendar="delCalendar"
             @closeDialog="closeDialog"
+<!--            @eventRender="eventRender"-->
+<!--            @eventPositioned="eventPositioned"-->
         />
         <div class="btn-tbl-box">
             <div class="right">
@@ -84,6 +86,7 @@ import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import momentPlugin from '@fullcalendar/moment'
 
 import calendarManagement from '@/views/pages/information/calendar-management';
 
@@ -112,24 +115,22 @@ export default {
             calendarData: [],
             todayData: [],
             calendarOptions: {
-                plugins: [dayGridPlugin, interactionPlugin],
+                plugins: [dayGridPlugin, interactionPlugin, momentPlugin ],
                 initialView: 'dayGridMonth',
                 dateClick: this.handleDateClick,
                 events: [],
-                header: {
+                headerToolbar: {
                     left: 'prev',
                     center: 'title',
                     right: 'next',
                 },
+                titleFormat: moment(new Date()).format('YYYY.MM'),
                 customButtons: {
                     prev: {
                         // this overrides the prev button
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
-                            console.log(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
-                            );
                             this.getCalendarList(
                                 moment(calendarApi.getDate()).format('YYYY.MM')
                             );
@@ -140,9 +141,6 @@ export default {
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
-                            console.log(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
-                            );
                             this.getCalendarList(
                                 moment(calendarApi.getDate()).format('YYYY.MM')
                             );
@@ -174,7 +172,6 @@ export default {
         },
         // 한달 일정 조회
         async getCalendarList(yyyyMm) {
-            console.log(yyyyMm);
             this.yyyyMm = !!yyyyMm ? yyyyMm : this.yyyyMm;
             const {
                 data: { data: response },
@@ -194,12 +191,22 @@ export default {
         transformData() {
             this.calendarOptions.events = [];
             this.calendarData.forEach((item) => {
+                console.log('for', item);
+                let color;
+                if (item.calendarSectionCode === 'EDUCATION') {
+                    color = '#be1767';
+                } else if (item.calendarSectionCode === 'CAMPAIGN') {
+                    color = '#007b68';
+                } else {
+                    color = '#2c0fb4';
+                }
                 this.calendarOptions.events.push({
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
                     start: moment(item.beginDt).format('YYYY-MM-DD'),
                     end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
+                    color: color
                 });
             });
         },
