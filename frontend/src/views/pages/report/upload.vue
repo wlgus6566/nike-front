@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="page-title" v-html="$route.meta.title" />
+        <h2 class="page-title">REPORT UPLOAD</h2>
         <form action="" @submit.prevent="addReport">
             <h3 class="form-title mt20">폴더 설정</h3>
             <hr class="hr-black" />

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="page-title">{{ this.title }}</h2>
+        <h2 class="page-title">{{ title }}</h2>
         <form action="" @submit.prevent="uploadFiles">
             <h3 class="form-title mt20">{{ pageOptionName }} 설정</h3>
             <hr class="hr-black" />
@@ -10,7 +10,14 @@
                         :size="1 / 1"
                         @cropImage="cropImage"
                         :imageBase64="folderDetail.imageFilePhysicalName"
-                    />
+                    >
+                        <template slot="txt-up">
+                            썸네일 이미지 등록
+                        </template>
+                        <template slot="txt">
+                            썸네일 이미지 재등록
+                        </template>
+                    </thumbnail>
                 </li>
                 <li class="form-row">
                     <div class="form-column">
@@ -215,12 +222,7 @@
 import thumbnail from '@/components/thumbnail/index';
 import FileSettings from '@/components/file-settings/index.vue';
 import ModalAuth from '@/views/pages/common/modal-auth';
-import {
-    getContentsView,
-    getContentsViewFile,
-    postContents,
-    putContents,
-} from '@/api/contents';
+import { getContentsView, postContents, putContents } from '@/api/contents';
 export default {
     name: 'UPLOAD',
     data() {
@@ -300,9 +302,8 @@ export default {
         if (this.$route.params.id) {
             this.getFolderDetail();
         }
-        window.addEventListener('scroll', this.handleScroll);
     },
-    activated() {
+    /*activated() {
         window.addEventListener('scroll', this.handleScroll);
     },
     deactivated() {
@@ -310,7 +311,7 @@ export default {
     },
     destroyed() {
         window.removeEventListener('scroll', this.handleScroll);
-    },
+    },*/
     methods: {
         FileListUpdate(fileList) {
             this.folderDetail.contentsFileList = fileList;
@@ -341,16 +342,6 @@ export default {
                 return this.folderDetail.campaignEndDt;
             }
         },
-        handleScroll() {
-            if (this.loadingData) return;
-            const windowE = document.documentElement;
-            if (
-                windowE.clientHeight + windowE.scrollTop >=
-                windowE.scrollHeight
-            ) {
-                this.infiniteScroll();
-            }
-        },
         uploadFiles() {
             this.$refs.fileSet.uploadFiles();
         },
@@ -367,7 +358,7 @@ export default {
                     alert(response.msg);
                 }
                 if (response.success) {
-                    this.$router.go(-1);
+                    //this.$router.go(-1);
                 }
                 console.log(response);
             } catch (e) {
@@ -384,7 +375,6 @@ export default {
                 if (response.existMsg) {
                     alert(response.msg);
                 }
-                console.log(response);
                 this.menuCode = response.data.menuCode;
                 this.folderDetail = {
                     ...response.data,
