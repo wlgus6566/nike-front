@@ -16,6 +16,7 @@ function getContents(topMenuCode, menuCode, params) {
 function getContentsView(topMenuCode, menuCode, contentsSeq) {
     return contents.get(`/${topMenuCode}/${menuCode}/${contentsSeq}`);
 }
+
 function getContentsViewFile(topMenuCode, menuCode, contentsSeq, params) {
     return contents.get(`/${topMenuCode}/${menuCode}/${contentsSeq}/file`, {
         params: params,

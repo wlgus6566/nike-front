@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            {{ this.$route.meta.title }}
+            CALENDAR
         </h2>
         <ul class="schedule-type">
             <li class="edu">교육</li>
