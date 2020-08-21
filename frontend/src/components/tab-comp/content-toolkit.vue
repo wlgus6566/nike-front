@@ -40,14 +40,14 @@
 import { historyFolderViewList } from '@/api/mypage';
 
 export default {
-    name: 'ContentAsset',
+    name: 'ContentToolKit',
     data() {
         return {
             loadingData: false,
             historyFolderData: [],
             size: 3,
             page: 0,
-            sectionCode: 'ASSET',
+            sectionCode: 'TOOLKIT',
         };
     },
     created() {

@@ -1,16 +1,18 @@
 <template>
     <div class="user">
         <div class="user-info">
-            <span class="store-name">홍대 SKNRS</span>
+            <span class="store-name">
+                {{ userNickname }}
+            </span>
             <div class="side">
-                <template v-if="alarmDataList.content">
+                <template v-if="alarmDataListCont">
                     <button type="button" class="btn-out" @click="logout">
                         <span>로그아웃</span>
                     </button>
                     <button
                         type="button"
                         class="btn-alarm"
-                        :class="{ active: alarmDataList.content.length }"
+                        :class="{ active: alarmDataListCont.length }"
                         @click="openAlarm"
                     >
                         <span>알람</span>
@@ -31,7 +33,7 @@
                     <div
                         class="alarm-box"
                         ref="alarm"
-                        v-if="alarmDataList.content.length"
+                        v-if="alarmDataListCont.length"
                         :class="{ active: alarmActive }"
                     >
                         <strong class="title">NOTICE</strong>
@@ -47,7 +49,7 @@
                             >
                                 <li
                                     class="alarm-item active"
-                                    v-for="item in alarmDataList.content"
+                                    v-for="item in alarmDataListCont"
                                     :key="item.alarmSeq"
                                     @click="delAlarmData(item.alarmSeq)"
                                 >
@@ -61,6 +63,7 @@
                                 </li>
                             </transition-group>
                         </el-scrollbar>
+                        <Loading v-if="loadingData" />
                         <button
                             type="button"
                             class="btn-close"
@@ -73,15 +76,24 @@
             </div>
         </div>
         <div class="space-info">
-            <p class="store">WINWIN OFFICE</p>
-            <a href="mailto:nike@win-win.co.kr" class="mail"
-                >nike@win-win.co.kr</a
-            >
+            <div class="store">
+                {{ userRole }}
+            </div>
+            <div class="mail">
+                {{ userIdVal }}
+            </div>
         </div>
     </div>
 </template>
 <script>
+import Loading from '@/components/loading';
 import { getAlarm, delAlarm } from '@/api/alarm';
+import {
+    getUserNickFromCookie,
+    getUserIdFromCookie,
+    getRoleFromCookie,
+} from '@/utils/cookies';
+
 export default {
     name: 'UserInfo.vue',
     data() {
@@ -89,11 +101,29 @@ export default {
             page: 0,
             size: 4,
             alarmDataList: [],
+            alarmDataListCont: [],
             alarmActive: false,
+            totalPage: 0,
+            loadingData: false,
         };
     },
-    created() {
-        this.alarmData();
+    mounted() {
+        this.initFetchData();
+    },
+    components: {
+        Loading,
+    },
+    watch: {},
+    computed: {
+        userNickname() {
+            return this.$store.state.nick || getUserNickFromCookie();
+        },
+        userIdVal() {
+            return this.$store.state.user || getUserIdFromCookie();
+        },
+        userRole() {
+            return this.$store.state.role || getRoleFromCookie();
+        },
     },
     methods: {
         openAlarm() {
@@ -103,26 +133,75 @@ export default {
                     document.querySelector('.alarm-list').offsetHeight +
                     40 +
                     'px';
+                this.handleScroll();
+                document
+                    .querySelector('.alarm-list-wrap')
+                    .addEventListener('scroll', this.handleScroll);
             }
         },
         alarmClose() {
             this.alarmActive = false;
-            this.$refs.alarm.style.height = '0';
+            this.$refs.alarm.style.height = '0'
         },
         logout() {
             this.$store.commit('LOGOUT');
             this.$router.push('/login');
         },
+        initFetchData() {
+            this.alarmData();
+        },
+        //클릭시 업로드 한 폴더 리스트 다시 불러오기
+        handleScroll() {
+            if (this.loadingData) return;
+            const alarmList = document.querySelector('.alarm-list-wrap');
+            if (
+                alarmList.clientHeight + alarmList.scrollTop >=
+                alarmList.scrollHeight
+            ) {
+                this.infiniteScroll();
+            }
+        },
+        infiniteScroll() {
+            if (
+                !this.loadingData &&
+                this.totalPage > this.page - 1 &&
+                this.alarmDataListCont.length >= this.size &&
+                this.alarmDataListCont.length !== 0
+            ) {
+                console.log('infiniteScroll');
+                this.alarmData(true);
+            }
+        },
+        endPage() {
+            alert('마지막 페이지');
+        },
         // 알람목록
-        async alarmData() {
+        async alarmData(infinite) {
+            this.loadingData = true;
+            console.log(this.page);
             try {
                 const {
                     data: { data: response },
                 } = await getAlarm({
                     page: this.page,
-                    size: 1,
+                    size: this.size,
                 });
-                this.alarmDataList = response;
+                console.log(this.totalPage);
+                this.totalPage = response.totalPages;
+                if (infinite) {
+                    if (this.totalPage > this.page - 1) {
+                        this.alarmDataListCont = this.alarmDataListCont.concat(
+                            response.content
+                        );
+                    } else if (this.totalPage === this.page - 1) {
+                        this.endPage();
+                    }
+                } else {
+                    this.alarmDataList = response;
+                    this.alarmDataListCont = response.content;
+                }
+                this.page++;
+                this.loadingData = false;
             } catch (error) {
                 console.log(error);
                 if (error.data.existMsg) {
@@ -241,7 +320,7 @@ export default {
     box-sizing: border-box;
     width: 100%;
     height: 0;
-    max-height: 300px;
+    max-height: 260px;
     border-radius: 2px;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
     background: #fff;
@@ -296,7 +375,7 @@ export default {
     border-top: 1px solid #eee;
 }
 .alarm-list {
-    max-height: 260px;
+    max-height: 200px;
 }
 .alarm-list .alarm-item:first-child:before {
     top: 5px;

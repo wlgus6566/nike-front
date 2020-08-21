@@ -51,6 +51,7 @@
                     <div class="form-column">
                         <ckeditor
                             v-model="faqDetail.contents"
+                            :config="editorConfig"
                             style="width: 100%;"
                         />
                         <!--                        <span class="textarea">
@@ -80,6 +81,7 @@
 <script>
 import { getCustomerDetail, postFaq, putFaq } from '@/api/customer';
 import { getCode } from '@/api/code';
+import { getAuthFromCookie } from '@/utils/cookies';
 
 export default {
     name: 'faq-form',
@@ -96,7 +98,21 @@ export default {
                 contents: '',
                 noticeArticleCategoryCode: null,
             },
+            // 에디터 업로드 설정
+            editorConfig: {
+                // TODO url에 NOTICE 부분 noticeArticleSectionCode에 맞게 변경 필요
+                filebrowserImageUploadUrl: '',
+                // TODO 현재 로그인한 계정의 auth값 가져오기
+                fileTools_requestHeaders: {
+                    Authorization: '',
+                },
+            },
         };
+    },
+    created() {
+        this.editorConfig.filebrowserImageUploadUrl = `/api/customer/${this.$route.name.toUpperCase()}/images`;
+        this.editorConfig.fileTools_requestHeaders.Authorization =
+            this.$store.state.token || getAuthFromCookie();
     },
     mounted() {
         this.getCategoryCode();
@@ -129,6 +145,8 @@ export default {
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
                     this.detailDataReset();
+                    console.log(this.faqDetail.noticeArticleCategoryCode);
+                    console.log(this.categoryCodeList);
                     this.$router.push('/mypage/faq');
                 }
             } catch (error) {
@@ -208,9 +226,10 @@ export default {
             this.$router.go(-1);
         },
         detailDataReset() {
-            this.title = '';
-            this.contents = '';
-            this.noticeArticleCategoryCode = '';
+            this.faqDetail.title = '';
+            this.faqDetail.contents = '';
+            this.faqDetail.noticeArticleCategoryCode = null;
+            this.categoryCodeList.value = '';
             this.noticeArticleSeq = '';
         },
     },

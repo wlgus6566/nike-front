@@ -13,13 +13,19 @@
             <tr>
                 <th>
                     <label class="group-check-all">
-                        <input type="checkbox" /> <i />
+                        <input
+                            type="checkbox"
+                            :value="false"
+                            v-model="checkAll"
+                            @click="allCheckFn()"
+                        />
+                        <i />
                         {{ table.menuName }}
                     </label>
                 </th>
                 <th
-                    v-for="(thead, theadIindex) in table.skillCodes"
-                    :key="theadIindex"
+                    v-for="(thead, theadIndex) in table.skillCodes"
+                    :key="theadIndex"
                 >
                     {{ thead.message }}
                 </th>
@@ -29,7 +35,6 @@
             <tr v-for="(tr, trIndex) in table.subMenus" :key="trIndex">
                 <th v-html="tr.menuName"></th>
                 <td v-for="(td, tdIndex) in tr.skillCodes" :key="tdIndex">
-                    <!--{{ td.menuRoleSeq }}-->
                     <label
                         :class="{
                             disabled: !td.menuRoleSeq,
@@ -57,9 +62,40 @@ export default {
     name: 'GroupTable',
     props: ['table', 'menuRoleSeqArray'],
     data() {
-        return {};
+        return {
+            checkAll: false,
+        };
+    },
+    watch: {
+        menuRoleSeqArray() {
+            const totalLength = this.table.subMenus.reduce((a, b) => {
+                return a + b.skillCodes.filter((c) => c.menuRoleSeq).length;
+            }, 0);
+            const checkedLength = this.table.subMenus.reduce((a, b) => {
+                const bb = b.skillCodes.reduce((c, d) => {
+                    const dd = this.menuRoleSeqArray.some((e) => {
+                        return e === d.menuRoleSeq;
+                    });
+                    return c + (dd ? 1 : 0);
+                }, 0);
+                return a + bb;
+            }, 0);
+            this.checkAll = totalLength === checkedLength;
+        },
     },
     methods: {
+        allCheckFn() {
+            let array = [];
+            this.table.subMenus.forEach((a) => {
+                a.skillCodes.forEach((b) => {
+                    if (b.menuRoleSeq) {
+                        array.push(b.menuRoleSeq);
+                    }
+                });
+            });
+
+            this.$emit('allCheckFn', array, this.checkAll);
+        },
         toggleCheck(seq) {
             this.$emit('toggleCheck', seq);
         },
@@ -138,7 +174,7 @@ export default {
 .group-table tbody td label input {
     position: absolute;
     top: 0;
-    left: -9999px;
+    left: 0;
     opacity: 0;
 }
 .group-table tbody td label i {
@@ -171,7 +207,7 @@ export default {
     background: url('../../../assets/images/svg/icon-btn-check-management-circle-grey.svg')
         no-repeat 50% / contain;
 }
-.group-check-all.checked i {
+.group-check-all input[type='checkbox']:checked + i {
     background-image: url('../../../assets/images/svg/icon-btn-check-management-circle-orange.svg');
 }
 </style>

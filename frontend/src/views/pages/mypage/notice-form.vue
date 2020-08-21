@@ -12,31 +12,31 @@
                         <span class="label-title">상단 고정 여부</span>
                     </div>
                     <div class="form-column">
-                        <label class="check-label">
+                        <span class="check-label">
                             <span class="radio">
                                 <input
                                     type="radio"
                                     value="Y"
                                     checked
+                                    @click="noticeCheck($event, true)"
                                     v-model="noticeDetail.noticeYn"
-                                    @click="noticeCheck($event)"
                                 />
                                 <i></i>
                                 <span class="txt">고정</span>
                             </span>
-                        </label>
-                        <label class="check-label">
+                        </span>
+                        <span class="check-label">
                             <span class="radio">
                                 <input
                                     type="radio"
                                     value="N"
                                     v-model="noticeDetail.noticeYn"
-                                    @click="noticeCheck($event)"
                                 />
                                 <i></i>
                                 <span class="txt">비고정</span>
                             </span>
-                        </label>
+                        </span>
+                        {{ this.noticeDetail.noticeYn }}
                     </div>
                     <div class="form-column agr">
                         <span class="form-desc"
@@ -63,8 +63,8 @@
                     </div>
                     <div class="form-column">
                         <ckeditor
-                            :config="editorConfig"
                             v-model="noticeDetail.contents"
+                            :config="editorConfig"
                             style="width: 100%;"
                         />
                     </div>
@@ -103,6 +103,8 @@ import {
     putNotice,
 } from '@/api/customer';
 
+import { getAuthFromCookie } from '@/utils/cookies';
+
 export default {
     name: 'notice-form',
     data() {
@@ -119,21 +121,26 @@ export default {
             // 에디터 업로드 설정
             editorConfig: {
                 // TODO url에 NOTICE 부분 noticeArticleSectionCode에 맞게 변경 필요
-                filebrowserImageUploadUrl: '/api/customer/NOTICE/images',
+                filebrowserImageUploadUrl: '',
                 // TODO 현재 로그인한 계정의 auth값 가져오기
                 fileTools_requestHeaders: {
-                    Authorization: 'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJyZHMiOiJhdXRoczp5dGg1OTE0MzE0OCIsInN1YiI6Inl0aCIsImV4cCI6MTYyNjc2NTk0MywiaWF0IjoxNTk1MjI5OTQzfQ.wg_VqONs3LYXKKHclCwYSHn0jyEv6jM13TMUqKp0vLo_Mhxp0Gwj-PWWFxNhGzsXQKhryIpGV85hXHX7t-DjVA'
-                }
-            }
+                    Authorization: '',
+                },
+            },
         };
     },
+    created() {
+        this.editorConfig.filebrowserImageUploadUrl = `/api/customer/${this.$route.name.toUpperCase()}/images`;
+        this.editorConfig.fileTools_requestHeaders.Authorization =
+            this.$store.state.token || getAuthFromCookie();
+    },
+    components: {},
     mounted() {
         this.getNoticeList();
         //this.noticeDetail.noticeYn = 'N';
         if (this.$route.meta.modify) {
             this.getNoticeDetail();
         }
-        console.log(this.noticeDetail.noticeYn);
     },
     activated() {
         this.getNoticeList();
@@ -188,6 +195,7 @@ export default {
                         this.detailDataReset();
                         this.$router.push('/mypage/notice');
                     }
+                    //console.log(response);
                 } catch (error) {
                     console.log(error);
                 }
@@ -205,8 +213,14 @@ export default {
                     keyword: '',
                 });
                 this.noticeYnLength = response.content.filter((el) => {
-                    return el.noticeYn === 'Y';
+                    console.log(el.noticeArticleSeq);
+                    console.log(this.$route.params.id * 1);
+                    return (
+                        el.noticeYn === 'Y' &&
+                        el.noticeArticleSeq !== this.$route.params.id * 1
+                    );
                 });
+                console.log(this.noticeYnLength);
             } catch (error) {
                 console.log(error);
             }
@@ -229,12 +243,10 @@ export default {
         },
 
         //중요공지 체크
-        noticeCheck(e) {
-            if (
-                this.noticeDetail.noticeYn === 'N' &&
-                this.noticeYnLength.length >= 3
-            ) {
+        noticeCheck(e, YN) {
+            if (YN && this.noticeYnLength.length >= 3) {
                 e.preventDefault();
+                this.noticeDetail.noticeYn = 'N';
                 alert('상단 고정은 최대 3개까지만 설정가능합니다.');
             }
         },

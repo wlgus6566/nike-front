@@ -1,11 +1,76 @@
 <template>
-    <div>
-        ContentFoundation
+    <div class="history-box">
+        <div class="item-box">
+            <template v-if="historyFolderData">
+                <ul class="item-list" v-if="historyFolderData.length">
+                    <li
+                        class="item"
+                        v-for="(item, index) in historyFolderData"
+                        :key="index"
+                    >
+                        <div class="thumbnail">
+                            <img :src="item.imageFilePhysicalName" alt="" />
+                        </div>
+                        <div class="info-box">
+                            <p class="title">{{ item.folderName }}</p>
+                            <span class="date">
+                                {{
+                                    $moment(item.campaignBeginDt).format(
+                                        'YYYY.MM.DD'
+                                    )
+                                }}
+                                ~
+                                {{
+                                    $moment(item.campaignEndDt).format(
+                                        'YYYY.MM.DD'
+                                    )
+                                }}
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                <div v-else>
+                    최근 본 폴더가 없습니다
+                </div>
+            </template>
+        </div>
     </div>
 </template>
 <script>
+import { historyFolderViewList } from '@/api/mypage';
+
 export default {
-    name: 'ContentFoundation.vue',
+    name: 'ContentFoundation',
+    data() {
+        return {
+            loadingData: false,
+            historyFolderData: [],
+            size: 3,
+            page: 0,
+            sectionCode: 'FOUNDATION',
+        };
+    },
+    created() {
+        this.historyViewDataList();
+    },
+    methods: {
+        //최근 본 폴더 리스트
+        async historyViewDataList() {
+            this.loadingData = true;
+            try {
+                const {
+                    data: { data: response },
+                } = await historyFolderViewList({
+                    page: this.page,
+                    size: this.size,
+                    typeCd: this.sectionCode,
+                });
+                this.historyFolderData = response.content;
+                this.loadingData = false;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+    },
 };
 </script>
-<style scoped></style>
