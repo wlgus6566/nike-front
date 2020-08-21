@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            <span class="ko">{{ $route.meta.title }}</span>
+            <span class="ko">{{ title }}</span>
         </h2>
         <h3 class="form-title mt20">메인 비주얼 등록</h3>
         <hr class="hr-black" />
@@ -149,6 +149,7 @@ export default {
     name: 'visual',
     data() {
         return {
+            title: this.$route.meta.title,
             bannerData: {
                 contents: '',
                 imageFileName: '',

@@ -117,6 +117,7 @@ export default {
                 title: '',
                 contents: '',
                 noticeYn: 'N',
+                noticeArticleSeq: null,
             },
             // 에디터 업로드 설정
             editorConfig: {
@@ -185,6 +186,7 @@ export default {
                     const response = await putNotice(this.$route.params.id, {
                         contents: this.noticeDetail.contents,
                         noticeArticleSectionCode: 'NOTICE',
+                        noticeArticleSeq: this.noticeArticleSeq,
                         noticeYn: this.noticeDetail.noticeYn,
                         title: this.noticeDetail.title,
                         useYn: this.useYn,
@@ -194,8 +196,12 @@ export default {
                     if (response.data.success) {
                         this.detailDataReset();
                         this.$router.push('/mypage/notice');
+                    } else {
+                        alert(response.data.msg);
                     }
-                    //console.log(response);
+                    console.log(response);
+                    console.log('시퀀스');
+                    console.log(this.noticeArticleSeq);
                 } catch (error) {
                     console.log(error);
                 }
@@ -213,14 +219,14 @@ export default {
                     keyword: '',
                 });
                 this.noticeYnLength = response.content.filter((el) => {
-                    console.log(el.noticeArticleSeq);
-                    console.log(this.$route.params.id * 1);
+                    //console.log(el.noticeArticleSeq);
+                    //console.log(this.$route.params.id * 1);
                     return (
                         el.noticeYn === 'Y' &&
                         el.noticeArticleSeq !== this.$route.params.id * 1
                     );
                 });
-                console.log(this.noticeYnLength);
+                //console.log(this.noticeYnLength);
             } catch (error) {
                 console.log(error);
             }
@@ -228,7 +234,7 @@ export default {
 
         //공지사항 상세
         async getNoticeDetail() {
-            console.log(this.$route.params.id);
+            //console.log(this.$route.params.id);
             try {
                 const {
                     data: { data: response },
@@ -237,6 +243,7 @@ export default {
                     this.$route.params.id
                 );
                 this.noticeDetail = response;
+                this.noticeArticleSeq = response.noticeArticleSeq;
             } catch (error) {
                 console.log(error);
             }

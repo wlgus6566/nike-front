@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            <span class="ko">{{ this.$route.meta.title }}</span>
+            <span class="ko">계정관리</span>
         </h2>
         <div class="sorting-area">
             <CascaderSelect :listCascader="authority" />

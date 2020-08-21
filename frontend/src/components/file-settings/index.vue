@@ -69,7 +69,26 @@ export default {
                 title: '',
                 url: '',
             },
-            FileList: [],
+            FileList: [
+                {
+                    detailThumbnailFileName: '',
+                    detailThumbnailFilePhysicalName: '',
+                    detailThumbnailFileSize: '',
+                    fileContentType: '',
+                    fileExtension: '',
+                    fileKindCode: 'FILE',
+                    fileName: '',
+                    fileOrder: 0,
+                    filePhysicalName: '',
+                    fileSectionCode: 'GUIDE',
+                    fileSize: 0,
+                    thumbnailFileName: '',
+                    thumbnailFilePhysicalName: '',
+                    thumbnailFileSize: '',
+                    title: '',
+                    url: '',
+                },
+            ],
             defaultFileData: {
                 detailThumbnailFileName: '',
                 detailThumbnailFilePhysicalName: '',
@@ -226,8 +245,6 @@ export default {
         },
 
         async getFolderDetailFile() {
-            this.loadingData = true;
-            this.checkAll = false;
             try {
                 const {
                     data: { data: response },
@@ -240,14 +257,12 @@ export default {
                         size: this.itemLength,
                     }
                 );
+
                 if (response.content && response.content.length) {
                     this.FileList = response.content;
-                } else {
-                    this.FileList.push(this.defaultFileData);
                 }
 
                 this.emitFileList();
-                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }

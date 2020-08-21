@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            <span class="ko">{{ this.$route.meta.title }}</span>
+            <span class="ko">상품관리</span>
         </h2>
         <div class="sorting-area" ref="focusOut" tabindex="0">
             <FilterSelect :listSortSelect="category2Code" />
