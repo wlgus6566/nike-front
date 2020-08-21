@@ -200,9 +200,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	/**
 	 * cors 설정 추가
-	 * hw
 	 *
 	 * @return the cors configuration source
+	 * @author [김형욱]
+	 * @implNote cors 설정 추가
+	 * @since 2020. 8. 21. 오후 12:05:46
 	 */
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
