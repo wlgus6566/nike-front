@@ -214,6 +214,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		configuration.addAllowedOrigin("https://www.nikespace.co.kr");
 		configuration.addAllowedOrigin("http://www.nikespace.co.kr");
 		//로컬 설정
+		configuration.addAllowedOrigin("http://localhost:8080");
 		configuration.addAllowedOrigin("http://localhost:8081");
 		configuration.addAllowedOrigin("http://localhost:8082");
 
