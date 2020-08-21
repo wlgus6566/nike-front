@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            <span class="ko">{{ this.$route.meta.title }}</span>
+            <span class="ko">{{ title }}</span>
         </h2>
         <div class="sorting-area">
             <SearchInput @searchSubmit="searchSubmit" />
@@ -45,6 +45,7 @@ export default {
     name: 'product-list',
     data() {
         return {
+            title: this.$route.meta.title,
             userProductListData: null,
             productDetailData: {
                 goodsName: '',

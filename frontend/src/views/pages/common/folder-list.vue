@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="page-title">{{ this.title }}</h2>
+        <h2 class="page-title">{{ title }}</h2>
         <div class="upload-summury">
             <strong class="title">파일올리기</strong>
             <p class="desc">
