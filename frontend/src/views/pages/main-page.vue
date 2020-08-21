@@ -224,7 +224,7 @@ export default {
                     center: 'title',
                     right: 'next',
                 },
-                titleFormat: 'yyyy.mM',
+                titleFormat: 'yyyy.M',
                 customButtons: {
                     prev: {
                         // this overrides the prev button
