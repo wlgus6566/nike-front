@@ -209,7 +209,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 
-		configuration.addAllowedOrigin("*");
+		configuration.addAllowedOrigin("https://devwww.nikespace.co.kr");
+		configuration.addAllowedOrigin("https://www.nikespace.co.kr");
+		configuration.addAllowedOrigin("http://devwww.nikespace.co.kr");
+		configuration.addAllowedOrigin("http://www.nikespace.co.kr");
 		configuration.addAllowedHeader("*");
 		configuration.addAllowedMethod("*");
 		configuration.setAllowCredentials(true);
