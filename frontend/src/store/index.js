@@ -80,6 +80,7 @@ export default new Vuex.Store({
             deleteCookie('user_id');
             deleteCookie('user_nick');
             deleteCookie('user_token');
+            deleteCookie('user_role');
         },
         SET_CONT_BASKET(state, data) {
             state.contBasketList = data;
