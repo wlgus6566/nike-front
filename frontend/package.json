@@ -12,6 +12,7 @@
         "@fullcalendar/core": "^5.2.1",
         "@fullcalendar/daygrid": "^5.2.0",
         "@fullcalendar/interaction": "^5.2.0",
+        "@fullcalendar/moment": "^5.3.0",
         "@fullcalendar/vue": "^5.2.0",
         "axios": "^0.19.2",
         "ckeditor4-vue": "^1.0.1",
