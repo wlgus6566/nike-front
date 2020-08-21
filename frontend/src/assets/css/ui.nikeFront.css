@@ -1769,6 +1769,7 @@
 .all-box {
     display: flex;
     align-items: center;
+    height: 40px;
     padding: 10px 0;
 }
 .all-box.type2 {
@@ -2368,6 +2369,8 @@
 .feedback-item .info .date {
     position: relative;
     padding: 0 10px;
+    letter-spacing: 0;
+    font-weight: 100;
 }
 .feedback-item .info .name + .date:before {
     content: '';
