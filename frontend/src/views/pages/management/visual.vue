@@ -46,9 +46,7 @@
                                 <span class="thumb">
                                     <img
                                         :src="bannerData.imageFilePhysicalName"
-                                        :alt="
-                                            pcFormFile.detailThumbnailFileName
-                                        "
+                                        :alt="bannerData.imageFileName"
                                         v-if="bannerData.imageFilePhysicalName"
                                     />
                                 </span>
@@ -77,9 +75,7 @@
                                         :src="
                                             bannerData.mobileImageFilePhysicalName
                                         "
-                                        :alt="
-                                            moFormFile.detailThumbnailFileName
-                                        "
+                                        :alt="bannerData.mobileImageFileName"
                                         v-if="
                                             bannerData.mobileImageFilePhysicalName
                                         "
@@ -119,7 +115,6 @@
                                     <i></i>
                                     <span class="txt">
                                         {{ radio.title }}
-                                        {{ urlCheck.value }}
                                     </span>
                                 </span>
                             </label>
@@ -137,7 +132,7 @@
             </ul>
             <hr class="hr-gray" />
             <div class="btn-area">
-                <button type="button" class="btn-s-white">
+                <button type="button" class="btn-s-white" @click="detailBanner">
                     <span>취소</span>
                 </button>
                 <button type="submit" class="btn-s-black">
@@ -148,7 +143,7 @@
     </div>
 </template>
 <script>
-import { postBanner } from '@/api/banner';
+import { getBanner, postBanner } from '@/api/banner';
 import { fileUpLoad } from '@/api/file';
 export default {
     name: 'visual',
@@ -174,20 +169,29 @@ export default {
                 name: 'url',
                 value: 'ASSET',
             },
-            aa: '',
         };
     },
     components: {},
     watch: {
         'urlCheck.value'(val) {
             if (val !== 'ASSET') {
-                this.bannerData.linkUrlTypeCode = null;
+                this.bannerData.linkUrlTypeCode = 'URL';
             } else {
                 this.bannerData.linkUrlTypeCode = val;
             }
         },
+        'bannerData.linkUrlTypeCode'(val) {
+            if (val !== 'ASEET') {
+                this.urlCheck.value = 'N';
+            }
+        },
     },
+    created() {
+        this.detailBanner();
+    },
+    mounted() {},
     methods: {
+        //이미지 페이지에 삽입
         imageChange(e, device) {
             this.uploadFiles(e.target.files[0], device);
             if (device === 'pc') {
@@ -219,6 +223,7 @@ export default {
             }
         },
 
+        //이미지 폼데이터로 변환
         async uploadFiles(file, device) {
             console.log(device);
             const formData = new FormData();
@@ -239,6 +244,7 @@ export default {
             }
         },
 
+        //배너 등록
         async addBanner() {
             try {
                 const response = await postBanner({
@@ -248,7 +254,7 @@ export default {
                         .detailThumbnailFilePhysicalName,
                     imageFileSize: this.pcFormFile.detailThumbnailFileSize,
                     linkUrl: this.bannerData.linkUrl,
-                    linkUrlTypeCode: 'ASSET',
+                    linkUrlTypeCode: this.bannerData.linkUrlTypeCode,
                     mobileImageFileName: this.moFormFile
                         .detailThumbnailFileName,
                     mobileImageFilePhysicalName: this.moFormFile
@@ -257,19 +263,23 @@ export default {
                     title: this.bannerData.title,
                 });
                 alert(response.data.msg);
-                await this.$router.push('/');
-                this.bannerData = {
-                    contents: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    linkUrl: '',
-                    linkUrlTypeCode: 'ASSET',
-                    mobileImageFileName: '',
-                    mobileImageFilePhysicalName: '',
-                    title: '',
-                };
-                this.pcFormFile = [];
-                this.moFormFile = [];
+                if (response.data.success) {
+                    await this.$router.push('/');
+                }
+            } catch (error) {
+                console.log(error);
+                if (error.data.existMsg) {
+                    alert(error.data.msg);
+                }
+            }
+        },
+        //배너 상세
+        async detailBanner() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getBanner();
+                this.bannerData = response;
             } catch (error) {
                 console.log(error);
                 if (error.data.existMsg) {

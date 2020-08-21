@@ -182,9 +182,7 @@
                         <strong class="title">
                             {{ newItem.title }}
                         </strong>
-                        <p class="desc">
-                            {{ newItem.contents }}
-                        </p>
+                        <p class="desc" v-html="newItem.contents" />
                         <span class="date">
                             {{ newItem.updateDt }}
                         </span>

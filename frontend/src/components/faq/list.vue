@@ -19,8 +19,11 @@
                 <i class="arrow"></i>
             </a>
             <transition @enter="itemOpen" @leave="itemClose">
-                <div class="cont" v-if="isActive === item.noticeArticleSeq">
-                    {{ item.contents }}
+                <div
+                    class="cont"
+                    v-if="isActive === item.noticeArticleSeq"
+                    v-html="item.contents"
+                >
                     <div class="btn-area">
                         <button
                             type="button"

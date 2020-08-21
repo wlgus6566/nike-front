@@ -162,7 +162,7 @@
     min-width: 50px;
     height: 30px;
     padding: 0 16px;
-    border: 1px solid #eee;
+    border: 1px solid #ccc;
     border-radius: 0;
     font-size: 10px;
     font-weight: bold;
@@ -815,6 +815,7 @@
     top: 40px;
     left: -18px;
     display: block;
+    width: 300px;
     height: 0;
     padding: 0 20px 0;
     border: 1px solid transparent;
@@ -1170,6 +1171,7 @@
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: 20px;
+    height: 22px;
 }
 .upload-file-list li label .txt {
     display: block;
@@ -1630,18 +1632,17 @@
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: 100px;
-    padding-top: 100px;
+    height: 100px;
     overflow: hidden;
     background: url('../../assets/images/img-asset-none@2x.png') no-repeat
         center #fff;
     background-size: 100%;
+    text-align: center;
+    line-height: 100px;
 }
 .file-item .list .thumbnail img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     max-width: 100%;
+    vertical-align: middle;
 }
 .file-item .list .info-box {
     flex-grow: 0;
@@ -1678,6 +1679,7 @@
     width: 30px;
     height: 30px;
     margin-left: 5px;
+    border-radius: 0;
     background: url('../images/svg/icon-view-down.svg') no-repeat center;
 }
 .file-item .btn-box .btn-more.active {
@@ -1977,6 +1979,10 @@
 .login-wrap .title {
     font-weight: 700;
     font-size: 30px;
+    line-height: 45px;
+}
+.login-wrap .bullet-list {
+    margin-top: 20px;
 }
 .agree-wrap {
     margin-top: 40px;
@@ -2519,6 +2525,8 @@
     font-size: 12px;
     color: #888;
     line-height: 14px;
+    font-weight: 300;
+    letter-spacing: 0;
 }
 .tbl-list {
     margin-top: 20px;
@@ -2575,6 +2583,7 @@
 .tbl-list .date {
     color: #888;
     letter-spacing: 0;
+    font-weight: 300;
 }
 .label-noti {
     display: inline-block;
@@ -2651,6 +2660,7 @@
     font-size: 12px;
     color: #888;
     letter-spacing: 0px;
+    font-weight: 300;
 }
 .detail-view .detail-cont {
     margin-top: 40px;
@@ -2697,11 +2707,13 @@
     line-height: 14px;
     font-size: 12px;
     color: #888;
+    letter-spacing: 0;
 }
 .faq-tab li.active a {
     border-color: #000;
     color: #000;
     background: #fff;
+    font-weight: 600;
 }
 
 .faq-list {
@@ -2799,6 +2811,7 @@
     font-size: 14px;
     line-height: 20px;
     color: #333;
+    font-weight: 100;
 }
 .contact-item .info-box {
     position: absolute;
@@ -2807,18 +2820,28 @@
 }
 .contact-item .info-box .info-txt {
     display: block;
-    padding-left: 20px;
     line-height: 20px;
     font-size: 12px;
     color: #555;
     letter-spacing: 0;
+}
+.contact-item .info-box .info-txt + .info-txt {
+    margin-top: 4px;
+}
+.contact-item .info-box .info-txt:before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 2px;
+    vertical-align: top;
     background: no-repeat center left;
 }
-.contact-item .info-box .info-txt.tel {
+.contact-item .info-box .info-txt.tel:before {
     background-image: url('../images/svg/icon-phone-small.svg');
 }
 
-.contact-item .info-box .info-txt.mail {
+.contact-item .info-box .info-txt.mail:before {
     background-image: url('../images/svg/icon-mail-small.svg');
 }
 .contact-item .modi {
@@ -3131,6 +3154,7 @@
 }
 .error-box {
     display: flex;
+    width: 100%;
     height: 100%;
     flex-direction: column;
     align-items: center;
@@ -3175,8 +3199,11 @@
     display: block;
     width: 120px;
     height: 120px;
-    background: url('../images/svg/illust-page-folder-upload-none.svg')
-        no-repeat center;
+    background: url('../images/svg/illust-page-folder-order-none.svg') no-repeat
+        center;
+}
+.no-data .icon-data {
+    background-image: url('../images/svg/illust-page-folder-order-none.svg');
 }
 .no-data .icon-search {
     background-image: url('../images/svg/illust-page-folder-wish-none.svg');
@@ -3879,6 +3906,7 @@
     margin: 0;
     transform: translateY(-50%);
     letter-spacing: 0;
+    font-weight: 300;
 }
 .folder-list-row li .view-area {
     position: relative;
@@ -3921,3 +3949,107 @@
     top: 0;
     right: 0;
 }
+[class^='extension'] {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background-image: url('../images/icon_extension.png');
+    background-repeat: no-repeat;
+}
+.extension-pdf {
+    background-position: 0 0;
+}
+.extension-indd {
+    background-position: -100px 0;
+}
+.extension-ppt {
+    background-position: -200px 0;
+}
+.extension-pptx {
+    background-position: -300px 0;
+}
+.extension-key {
+    background-position: -400px 0;
+}
+.extension-doc {
+    background-position: 0 -100px;
+}
+.extension-docx {
+    background-position: -100px -100px;
+}
+.extension-xls {
+    background-position: -200px -100px;
+}
+.extension-xlsx {
+    background-position: -300px -100px;
+}
+.extension-vr {
+    background-position: -400px -100px;
+}
+.extension-mp4 {
+    background-position: 0 -200px;
+}
+.extension-mov {
+    background-position: -100px -200px;
+}
+.extension-url {
+    background-position: -200px -200px;
+}
+.extension-avi {
+    background-position: -300px -200px;
+}
+.extension-etc {
+    background-position: -400px -200px;
+}
+.extension-otf {
+    background-position: 0 -300px;
+}
+.extension-ttf {
+    background-position: -100px -300px;
+}
+.crop-editor {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0 30px;
+    border-top: 2px solid #000;
+    border-bottom: 1px solid #ccc;
+}
+.crop-editor .title {
+    margin-bottom: 10px;
+    font-weight: 400;
+    font-size: 12px;
+    color: #000;
+}
+.crop-editor .preview-crop {
+    position: relative;
+    align-self: flex-start;
+}
+.crop-editor .preview-crop:before {
+    position: absolute;
+    left: -24px;
+    top: calc(50% + 5px);
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url('../images/svg/icon-calender-right.svg') 0 0 no-repeat;
+}
+.crop-editor .preview {
+    width: 160px;
+    height: 160px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.crop-editor .preview-crop .frame {
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+/*.crop-editor.type2 .preview-crop:before {*/
+/*    top: 64px;*/
+/*}*/
+/*.crop-editor.type2 .preview-crop .preview {*/
+/*    height: 80px !important;*/
+/*}*/
+/*.crop-editor.type2 .preview img {*/
+/*    transform: translateX(0) translateY(-75px);*/
+/*}*/

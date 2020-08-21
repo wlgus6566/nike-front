@@ -20,14 +20,15 @@ export default {
                 tabClass: 'tab-list',
                 tabList: [
                     {
-                        title: 'REPORT',
-                        component: 'ContentReport',
-                    },
-                    {
                         title: 'MYPAGE',
                         component: 'ContentMypage',
                     },
+                    {
+                        title: 'REPORT',
+                        component: 'ContentReport',
+                    },
                 ],
+                showIndex: 1,
             },
         };
     },

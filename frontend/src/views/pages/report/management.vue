@@ -35,7 +35,7 @@ import ListSorting from '@/components/list-sorting';
 import SearchInput from '@/components/search-input';
 import NoData from '@/components/no-data';
 import Loading from '@/components/loading';
-import { getReportList } from '@/api/report';
+import { getReportList, getGroupAuthority } from '@/api/report';
 import { getCategoryList } from '@/utils/code';
 import { getAuthCacheList } from '@/api/auth';
 
@@ -76,6 +76,7 @@ export default {
             },
             loadingData: false,
             searchKeyword: '',
+            userDataList: '',
         };
     },
     components: {
@@ -111,13 +112,14 @@ export default {
             this.getReport();
         },
     },
+
     methods: {
         //권한 조회
         async authCacheList() {
             try {
                 const {
                     data: { data: response },
-                } = await getAuthCacheList();
+                } = await getGroupAuthority();
                 this.userDataList = response;
                 this.recursionFn(response, this.authority.options, 1);
                 this.recursionFn(response, this.addAuthority.options, 1);
@@ -132,9 +134,11 @@ export default {
                 _minIndx = 0;
             }
             data.forEach((el, index) => {
+                const _boolean = el.checkBoxYn === 'Y' ? false : true;
                 item.push({
                     value: el.authSeq,
                     label: el.authName,
+                    disabled: _boolean,
                 });
                 if (el.subAuths) {
                     item[index + _minIndx].children = [];

@@ -20,7 +20,7 @@
         </label>
 
         <cropperModal
-            ref="test"
+            ref="cModal"
             :visible.sync="visible.cropperModal"
             :imgSrc="this.imgSrc"
             :cropImg="this.cropImg"
@@ -72,7 +72,10 @@ export default {
     computed: {},
     methods: {
         cropImage(cropperUrl) {
+            this.imgName = null;
+            this.imgSrc = null;
             this.cropImg = cropperUrl;
+            this.$refs.input.value = '';
             this.$emit('cropImage', this.cropImg, this.imgName);
             this.visible.cropperModal = false;
         },
@@ -83,7 +86,9 @@ export default {
                 return;
             }
 
-            new Compress()
+            console.log(file);
+
+            const com = new Compress()
                 .compress([file], {
                     size: 4, // the max size in MB, defaults to 2MB
                     quality: 1, // the quality of the image, max is 1,
@@ -96,11 +101,13 @@ export default {
                     let url = `${data[0].prefix}${data[0].data}`;
                     this.imgSrc = url;
                     this.imgName = file.name;
-                    this.$refs.test.test(url);
+                    console.log(this.$refs.cModal.$refs);
+                    this.$refs.cModal.$refs.cropper.replace(url);
                 })
                 .catch((e) => {
                     console.log(e);
                 });
+            console.log(com);
         },
         popupOpen() {
             this.visible.cropperModal = true;

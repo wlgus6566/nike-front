@@ -108,6 +108,9 @@ public class AuthService {
      */
     public List<Auth> findAll() {
         log.info("AuthService.findAll");
+        // TODO[lsj] 지훈님께 확인 필요 :
+        //  useYn 조회 조건이 1depth에만 적용됨.!
+        //  2, 3 depth도 삭제 된 얘들은 노출 안되도록 처리 필요 2020.08.19 sojeong.lee
         return authRepository.findAllByUseYnAndUpperAuthSeqIsNull("Y");
     }
 
@@ -492,6 +495,7 @@ public class AuthService {
         this.remove(authSeq);
         redisService.delete(REDIS_ROLES_AUTHS+auth.getRoleType());
         redisService.delete(REDIS_ROLES_MENUS+auth.getRoleType());
+
         return auth;
     }
 
@@ -559,6 +563,7 @@ public class AuthService {
 
                 }
 
+
                 for (AuthReturnDTO authReturnDTO : findDepthList) {
                     List<AuthReturnDTO> findAuthList = new ArrayList<>();
                     findAuthList = this.findUseYnAuthList(findAuthList, authReturnDTO.getSubAuths());
@@ -586,8 +591,8 @@ public class AuthService {
      * @since 2020. 8. 20. 오후 1:01:22
      */
     public AuthReturnDTO findAuthDepthList(final Long authSeq, final List<AuthReturnDTO> subList) {
-        AuthReturnDTO findAuth = new AuthReturnDTO();
 
+        AuthReturnDTO findAuth = new AuthReturnDTO();
         if (!ObjectUtils.isEmpty(subList) && !subList.isEmpty()) {
             for (AuthReturnDTO authReturnDTO : subList) {
                 if (authSeq.equals(authReturnDTO.getAuthSeq())) {
@@ -613,16 +618,20 @@ public class AuthService {
      * @implNote 권한목록 중 Y인것만 check
      * @since 2020. 8. 20. 오후 1:01:57
      */
+    // TODO[lsj] 3depth 인 경우 무한루프 error발생
     public List<AuthReturnDTO> findUseYnAuthList(final List<AuthReturnDTO> saveList, final List<AuthReturnDTO> subAuthList) {
-        List<AuthReturnDTO>  findAuthList = new ArrayList<>();
 
         if (!ObjectUtils.isEmpty(subAuthList) && !subAuthList.isEmpty()) {
             for (AuthReturnDTO authReturnDTO : subAuthList) {
+                List<AuthReturnDTO>  findAuthList = new ArrayList<>();
 
                 if (!ObjectUtils.isEmpty(authReturnDTO.getSubAuths()) && !authReturnDTO.getSubAuths().isEmpty()) {
                     findAuthList = this.findUseYnAuthList(saveList, authReturnDTO.getSubAuths());
                 }
-
+//                AuthReturnDTO newAuthDTO = new AuthReturnDTO();
+//                newAuthDTO.setAuthSeq(authReturnDTO.getAuthSeq());
+//                newAuthDTO.setViewYn(authReturnDTO.getViewYn());
+//                newAuthDTO.setSubAuths(findAuthList);
                 authReturnDTO.setSubAuths(findAuthList);
                 if (!findAuthList.isEmpty() || "Y".equals(authReturnDTO.getViewYn())) {
                     saveList.add(authReturnDTO);

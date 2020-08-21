@@ -225,9 +225,11 @@ export default {
     margin-right: 10px;
     overflow: hidden;
     background: red;
+    line-height: 50px;
+    text-align: center;
 }
 .cart-item .thumbnail img {
-    vertical-align: top;
+    vertical-align: middle;
 }
 .cart-item .del {
     position: absolute;

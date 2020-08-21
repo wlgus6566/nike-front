@@ -4,7 +4,6 @@
             <span class="ko">위시리스트</span>
         </h2>
         <div class="all-box type2" v-if="wishListData">
-            <!-- todo 전체선택 스크립트 작업 필요  -->
             <label class="check-label">
                 <span class="checkbox">
                     <input
@@ -55,9 +54,15 @@
             @addBasket="addBasket"
             @wishDelete="wishDelete"
             @checkedWish="checkedWish"
+            @showDetailView="showDetailView"
         />
         <WishListNodata v-if="wishListData && wishListData.length === 0" />
         <Loading v-if="loadingData" />
+        <detailView
+            :visible.sync="visible.detailView"
+            :productDetailData="productDetailData"
+            @addWishList="addWishList"
+        />
     </div>
 </template>
 
@@ -66,6 +71,7 @@ import {
     deleteWishList,
     deleteWishListCheck,
     getWishList,
+    postWishList,
 } from '@/api/wish-list';
 // import { postBasketSaveList } from '@/api/basket';
 import { addBasketList, addProductBasket } from '@/utils/basket';
@@ -75,6 +81,7 @@ export default {
     components: {
         WishList: () => import('@/components/wish-list/index'),
         WishListNodata: () => import('@/components/wish-list/nodata'),
+        detailView: () => import('@/views/pages/product/detail-view'),
         Loading: () => import('@/components/wish-list/loading'),
     },
     data() {
@@ -87,6 +94,10 @@ export default {
             checkWishItem: [],
             deleteLoading: [],
             basketList: [],
+            visible: {
+                detailView: false,
+            },
+            productDetailData: {},
             //check: this.items.state,
         };
     },
@@ -94,6 +105,36 @@ export default {
         this.fetchData(true);
     },
     methods: {
+        // 상세 팝업
+        showDetailView(goodsSeq) {
+            console.log(goodsSeq);
+            this.visible.detailView = true;
+            const findIndex = this.wishListData.findIndex(
+                (el) => el.goodsSeq === goodsSeq
+            );
+            this.productDetailData = this.wishListData[findIndex].product;
+        },
+        // 위시리스트에 상품 추가
+        async addWishList(goodsSeq) {
+            try {
+                const findIndex = this.wishListData.findIndex(
+                    (el) => el.goodsSeq === goodsSeq.goodsSeq
+                );
+                if (findIndex == -1) {
+                    await postWishList({
+                        goodsSeq: goodsSeq.goodsSeq,
+                    });
+                    await this.getWishiList();
+                    alert(
+                        '위시리스트에 추가 되었습니다.\n위시리스트는 마이페이지에서 확인가능합니다.'
+                    );
+                } else {
+                    alert('이미 담긴 상품입니다.');
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
         checkedWish(seq, del) {
             const indexOfChecked = this.checkWishItem.findIndex(
                 (el) => el === seq

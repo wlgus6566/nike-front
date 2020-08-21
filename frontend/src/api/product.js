@@ -1,4 +1,4 @@
-import {product} from './index';
+import { product } from './index';
 
 // PRODUCT 목록 조회
 function getProductList(params) {

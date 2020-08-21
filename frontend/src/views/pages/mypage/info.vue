@@ -8,7 +8,6 @@
                 <span class="desc">HELLO!</span>
                 <strong class="name">
                     <em>
-                        <!-- //todo login 정보  nickname null -->
                         {{ userData.nickname }}
                     </em>
                     님

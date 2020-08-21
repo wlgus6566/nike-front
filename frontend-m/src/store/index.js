@@ -1,11 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import {loginUser} from '@/api/login';
-import {getGnbList} from '@/api/my-page';
+import { loginUser } from '@/api/login';
+import { getGnbList } from '@/api/my-page';
 
-import {deleteCookie, saveAuthToCookie, saveUserIdToCookie, saveUserNickToCookie,} from '@/utils/cookies.js';
-
+import {
+    deleteCookie,
+    saveAuthToCookie,
+    saveUserIdToCookie,
+    saveUserNickToCookie,
+} from '@/utils/cookies.js';
 
 Vue.use(Vuex);
 
@@ -300,7 +304,7 @@ export default new Vuex.Store({
                         menuSeq: 41,
                         menuCode: 'REPORT_UPLOAD',
                         upperMenuSeq: 20,
-                        menuName: 'REPORT UPLOAD',
+                        menuName: '업로드',
                         upperMenuName: 'REPORT',
                         menuPathUrl: '/report/upload',
                         pcYn: 'Y',
@@ -311,7 +315,7 @@ export default new Vuex.Store({
                         menuSeq: 42,
                         menuCode: 'REPORT_MANAGE',
                         upperMenuSeq: 20,
-                        menuName: 'REPORT 관리',
+                        menuName: '관리',
                         upperMenuName: 'REPORT',
                         menuPathUrl: '/report/management',
                         pcYn: 'Y',
@@ -548,7 +552,7 @@ export default new Vuex.Store({
                                 menuSeq: 50,
                                 menuCode: 'CUSTOMER_FAQ',
                                 upperMenuSeq: 22,
-                                menuName: 'FAQ',
+                                menuName: '자주 묻는 질문',
                                 upperMenuName: 'CUSTOMER CENTER',
                                 menuPathUrl: '/mypage/faq',
                                 pcYn: 'Y',

@@ -83,6 +83,13 @@ public class S3Util {
 	 */
 	private static AmazonS3 client;
 
+	/**
+	 * The constant editorBucket
+	 *
+	 * @author [정주희]
+	 */
+	private static String editorBucket;
+
 
 	/**
 	 * Set root.
@@ -147,6 +154,19 @@ public class S3Util {
 	@Value("${cloud.aws.region.static:}")
 	public void setRegion(final String region) {
 		this.region = region;
+	}
+
+	/**
+	 * Sets editor bucket.
+	 *
+	 * @param editorBucket the editor bucket
+	 * @author [정주희]
+	 * @implNote 에디터 이미지 업로드 버켓
+	 * @since 2020. 8. 19. 오후 2:53:37
+	 */
+	@Value("${cloud.aws.s3.editor:}")
+	public void setEditorBucket(final String editorBucket) {
+		this.editorBucket = editorBucket;
 	}
 
 	/**
@@ -348,6 +368,29 @@ public class S3Util {
 		final ObjectMetadata objectMetadata = new ObjectMetadata();
 		client.putObject(new PutObjectRequest(bucket,awsPath,multipartFile.getInputStream(),objectMetadata).withCannedAcl(CannedAccessControlList.Private));
 		final URL url = client.getUrl(bucket, awsPath);
+		log.debug("url.toString() {}", url.toString());
+		return url.getPath();
+	}
+
+	/**
+	 * Editor upload string.
+	 *
+	 * @param multipartFile the multipart file
+	 * @param awsPath       the aws path
+	 * @return the string
+	 * @throws IOException the io exception
+	 * @author [정주희]
+	 * @since 2020. 8. 19. 오후 2:52:50
+	 */
+	public static String editorUpload(final MultipartFile multipartFile, final String awsPath) throws IOException {
+		log.info("S3Util.editorUpload");
+
+		final ObjectMetadata objectMetadata = new ObjectMetadata();
+		client
+				.putObject(new PutObjectRequest(editorBucket, awsPath, multipartFile.getInputStream(), objectMetadata)
+						.withCannedAcl(CannedAccessControlList.PublicRead));
+		final URL url = client.getUrl(editorBucket, awsPath);
+
 		log.debug("url.toString() {}", url.toString());
 		return url.getPath();
 	}
