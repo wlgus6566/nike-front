@@ -3,14 +3,14 @@
         <li
             class="wish-list-item"
             v-for="item in listData"
-            :key="item.wishListSeq"
+            :key="item.goodsSeq"
         >
             <span class="checkbox">
                 <input
                     type="checkbox"
-                    :value="item.wishListSeq"
+                    :value="item.goodsSeq"
                     v-model="checkWishItem"
-                    @click="$emit('checkedWish', item.wishListSeq)"
+                    @click="$emit('checkedWish', item.goodsSeq)"
                 />
                 <i></i>
             </span>
@@ -57,12 +57,12 @@
                 <button
                     type="button"
                     class="delete"
-                    v-on:click="$emit('wishDelete', item.wishListSeq)"
+                    v-on:click="$emit('wishDelete', item.goodsSeq)"
                 >
                     <span>삭제</span>
                 </button>
             </div>
-            <div class="loading" v-if="isLoading(item.wishListSeq)">
+            <div class="loading" v-if="isLoading(item.goodsSeq)">
                 loading
             </div>
         </li>
