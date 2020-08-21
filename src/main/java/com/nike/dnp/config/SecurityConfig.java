@@ -161,7 +161,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	public void configure(final WebSecurity web) {
-		// TODO[lsj] 여기에 있는 url도 cors 에러 대응 필요 2020.08.21
 		final String[] staticPatterns = {
 				"/pc/**", "/mo/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/pc.html", "/mo.html","index.html", //frontend page
@@ -184,17 +183,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
+		http.cors();
 		http.authorizeRequests()
 				.accessDecisionManager(accessDecisionManager())
 				.antMatchers(HttpMethod.POST,"/api/login").permitAll()
-				// TODO[lsj] "/api/alarm/**", "/api/open/**" 는 원래 위에 있어야 하는데 위에 cors에러 발생하여 임시 추가 2020.08.21
-				.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**", "/api/open/**").authenticated()
+				.antMatchers("/api/mypage/**", "/api/main/**").authenticated()
 				.anyRequest().authenticated();
 
 		http.addFilter(authenticationFilter()) // 인증 필터
 				.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository,this.redisService)) //jwt 토큰 인증 필터
 				.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
-				.and().cors()	//cors 설정
 				.and()
 				.csrf().disable() // csrf 사용 안함
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
