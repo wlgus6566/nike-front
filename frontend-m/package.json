@@ -19,6 +19,7 @@
         "lodash": "^4.17.19",
         "lottie-web": "^5.7.1",
         "vue": "^2.6.11",
+        "vue-infinite-scroll": "^2.0.2",
         "vue-js-modal": "^2.0.0-rc.6",
         "vue-moment": "^4.1.0",
         "vue-router": "^3.2.0",

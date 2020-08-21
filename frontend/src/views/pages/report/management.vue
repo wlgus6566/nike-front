@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="page-title" v-html="this.$route.meta.title" />
+        <h2 class="page-title">REPORT <span class="ko">관리</span></h2>
         <div class="sorting-area">
             <ListSorting :listTypes="listTypes" />
             <FilterSelect :listSortSelect="listSortSelect" />

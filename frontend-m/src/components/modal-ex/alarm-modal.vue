@@ -6,10 +6,10 @@
         :append-to-body="true"
         @close="$emit('update:visible', false)"
     >
-        <el-scrollbar view-class="view-box" :native="false">
+        <el-scrollbar view-class="view-box" :native="false" style="max-height:550px">
             <div class="el-dialog__inner">
-                <ul class="notice-list" >
-                    <li v-for="item in alarmData">
+                <ul class="notice-list">
+                    <li v-for="item in alarmList">
                         <a href="#" @click="delAlarmData(item.alarmSeq)">
                             <span class="title" v-if="item.typeAction === 'NEW'" @click="detailPageUrl(item)">
                                 새로 등록된 {{item.typeCd}}({{item.folderName}})이 있습니다.
@@ -33,75 +33,17 @@ import { getAlarm, delAlarm } from '@/api/alarm';
 export default {
     data() {
         return {
-            alarmList: {},
             alarmData: [],
             alarmActive: false,
             totalPage: null,
             page: 0,
-            size: 5,
+            itemLength: 20,
         };
     },
-    created() {
-        this.getAlarmData();
-        window.addEventListener('scroll', this.handleScroll);
-    },
-    activated() {
-        window.addEventListener('scroll', this.handleScroll);
-    },
-    deactivated() {
-        window.removeEventListener('scroll', this.handleScroll);
-    },
-    destroyed() {
-        window.removeEventListener('scroll', this.handleScroll);
-    },
-    props: ['visible'],
-    mounted() {
-        this.getAlarmData();
-    },
+    created() {},
+    props: ['visible', 'alarmList'],
+    mounted() {},
     methods: {
-        handleScroll() {
-            const windowE = document.documentElement;
-            if (
-                windowE.clientHeight + windowE.scrollTop >=
-                windowE.scrollHeight
-            ) {
-                this.infiniteScroll();
-            }
-        },
-        infiniteScroll() {
-            console.log("this is infiniteScroll");
-            if (
-                this.totalPage > this.page  &&
-                this.alarmData.length >= this.size &&
-                this.alarmData.length !== 0
-            ) {
-                console.log('infiniteScroll');
-                this.getAlarmData(true);
-            }
-        },
-        async getAlarmData(scroll) {
-            try {
-                const {
-                    data: { data: response },
-                } = await getAlarm({
-                    page: this.page,
-                    size: this.size,
-                });
-                console.log(response);
-                this.alarmList = response;
-                this.totalPage = response.totalPages;
-                this.alarmData = response.content;
-                this.alarmData.forEach((el) => {
-                    el.typeCd === "REPORT_MANAGE" ? el.typeCd = "REPORT" : el.typeCd;
-                });
-                console.log(this.alarmData);
-            } catch (error) {
-                console.log(error);
-                if (error.data.existMsg) {
-                    alert(error.data.msg);
-                }
-            }
-        },
         detailPageUrl: function(data) {
             if (data.typeCd === "REPORT") {
                 this.$router.push(`/report/${data.folderSeq}`);

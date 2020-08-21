@@ -22,6 +22,8 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The Class Notice controller.
@@ -329,7 +331,7 @@ public class NoticeController {
      * Upload editor images single result.
      *
      * @param noticeArticleSectionCode the section code
-     * @param multiReq    the multi req
+     * @param upload    upload file
      * @return the single result
      * @throws IOException the io exception
      * @author [정주희]
@@ -339,14 +341,19 @@ public class NoticeController {
     @ApiOperation(value = "Customer Center 에디터 이미지 업로드", notes = BASIC_CHARACTER)
     @PostMapping(value = "/{noticeArticleSectionCode}/images",
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public SingleResult<String> uploadEditorImages(
+    public EditorImageDto uploadEditorImages(
             @ApiParam(name = "noticeArticleSectionCode", value = "Customer Center 게시글 종류 코드",
                     allowableValues = "NOTICE, NEWS, QNA", required = true)
             @PathVariable final String noticeArticleSectionCode,
-            @ApiParam(name = "file", value = "파일업로드") final MultipartFile file) {
+            @ApiParam(name = "upload", value = "파일업로드") final MultipartFile upload) {
         log.info("NoticeController.uploadEditorImages");
 
-        String uploadUrl = noticeService.uploadEditorImages(file, noticeArticleSectionCode);
-        return responseService.getSingleResult(uploadUrl);
+        String uploadUrl = noticeService.uploadEditorImages(upload, noticeArticleSectionCode);
+        EditorImageDto editorImageDto = new EditorImageDto();
+        editorImageDto.setUploaded(1);
+        editorImageDto.setFileName(upload.getOriginalFilename());
+        editorImageDto.setUrl(uploadUrl);
+
+        return editorImageDto;
     }
 }

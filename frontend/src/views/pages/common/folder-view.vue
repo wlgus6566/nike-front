@@ -289,10 +289,11 @@ export default {
             this.checkAll = !this.checkAll;
             if (this.checkAll) {
                 this.contentsFileList.forEach((el) => {
+                    console.log(el);
                     const indexOfChecked = this.checkContentsFileList.findIndex(
                         (elChecked) => elChecked === el.contentsFileSeq
                     );
-                    if (indexOfChecked === -1) {
+                    if (indexOfChecked === -1 && el.fileKindCode === 'FILE') {
                         this.checkContentsFileList.push(el.contentsFileSeq);
                     }
                 });

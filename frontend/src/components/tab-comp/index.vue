@@ -21,7 +21,8 @@
 export default {
     data() {
         return {
-            tabContent: this.tabMenus.tabList[0].component,
+            tabContent: this.tabMenus.tabList[this.tabMenus.showIndex]
+                .component,
         };
     },
     name: 'TabComponent.vue',

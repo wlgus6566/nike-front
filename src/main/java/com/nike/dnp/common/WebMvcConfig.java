@@ -22,8 +22,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	 * @implNote
 	 * @since 2020. 8. 18. 오후 4:43:44
 	 */
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
-	}
+//	@Override
+//	public void addCorsMappings(CorsRegistry registry) {
+//		registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
+//	}
 }

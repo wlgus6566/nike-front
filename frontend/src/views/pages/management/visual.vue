@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            <span class="ko">{{ $route.meta.title }}</span>
+            <span class="ko">{{ title }}</span>
         </h2>
         <h3 class="form-title mt20">메인 비주얼 등록</h3>
         <hr class="hr-black" />
@@ -46,9 +46,7 @@
                                 <span class="thumb">
                                     <img
                                         :src="bannerData.imageFilePhysicalName"
-                                        :alt="
-                                            pcFormFile.detailThumbnailFileName
-                                        "
+                                        :alt="bannerData.imageFileName"
                                         v-if="bannerData.imageFilePhysicalName"
                                     />
                                 </span>
@@ -77,9 +75,7 @@
                                         :src="
                                             bannerData.mobileImageFilePhysicalName
                                         "
-                                        :alt="
-                                            moFormFile.detailThumbnailFileName
-                                        "
+                                        :alt="bannerData.mobileImageFileName"
                                         v-if="
                                             bannerData.mobileImageFilePhysicalName
                                         "
@@ -136,7 +132,7 @@
             </ul>
             <hr class="hr-gray" />
             <div class="btn-area">
-                <button type="button" class="btn-s-white">
+                <button type="button" class="btn-s-white" @click="detailBanner">
                     <span>취소</span>
                 </button>
                 <button type="submit" class="btn-s-black">
@@ -153,6 +149,7 @@ export default {
     name: 'visual',
     data() {
         return {
+            title: this.$route.meta.title,
             bannerData: {
                 contents: '',
                 imageFileName: '',
@@ -277,7 +274,7 @@ export default {
                 }
             }
         },
-        //배너 등록
+        //배너 상세
         async detailBanner() {
             try {
                 const {

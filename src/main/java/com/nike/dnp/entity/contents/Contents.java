@@ -261,12 +261,20 @@ public class Contents extends BaseTimeWithoutUpdateDtEntity {
             this.imageFileSize = contentsSaveDTO.getImageFileSize();
             this.imageFilePhysicalName = contentsSaveDTO.getImageFilePhysicalName();
         }
-        this.updateDt = LocalDateTime.now();
-
         this.folderName = contentsSaveDTO.getFolderName();
         this.folderContents = contentsSaveDTO.getFolderContents();
         this.campaignPeriodSectionCode = contentsSaveDTO.getCampaignPeriodSectionCode();
+        // 캠페인기간 > 날짜선택 인 경우
+        if (ServiceCode.ContentsCampaignPeriodCode.SELECT.toString().equals(contentsSaveDTO.getCampaignPeriodSectionCode())) {
+            this.campaignBeginDt = LocalDateUtil.strToLocalDateTime(contentsSaveDTO.getCampaignBeginDt()+" 00:00:00","yyyy.MM.dd HH:mm:ss");
+            this.campaignEndDt =LocalDateUtil.strToLocalDateTime(contentsSaveDTO.getCampaignEndDt()+" 23:59:59","yyyy.MM.dd HH:mm:ss");
+        } else {
+            this.campaignBeginDt = null;
+            this.campaignEndDt =null;
+        }
+        this.memo = contentsSaveDTO.getMemo();
         this.exposureYn = contentsSaveDTO.getExposureYn();
+        this.updateDt = LocalDateTime.now();
     }
 
     /**

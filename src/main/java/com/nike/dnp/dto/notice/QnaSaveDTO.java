@@ -34,6 +34,7 @@ public class QnaSaveDTO extends BasicDTO {
      *
      * @author [정주희]
      */
+    @NotBlank(message = "customer.category")
     @ApiModelProperty(name = "noticeArticleCategoryCode",
             value = "[QNA] 게시물 카테고리 코드 (상위 코드 : NOTICE_CATEGORY_CODE)", example = "ASSET", required = true)
     private String noticeArticleCategoryCode;

@@ -2,6 +2,7 @@ package com.nike.dnp.config;
 
 import com.nike.dnp.config.auth.*;
 import com.nike.dnp.config.jwt.JwtAuthorizationFilter;
+import com.nike.dnp.config.jwt.JwtHelper;
 import com.nike.dnp.repository.user.UserRepository;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.service.ResponseService;
@@ -28,6 +29,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -160,6 +164,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		final String[] staticPatterns = {
 				"/pc/**", "/mo/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/pc.html", "/mo.html","index.html", //frontend page
+				"/resources/**", "/static/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
+				"/css/**", "/font/**", "/js/**", "/images/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
 				"/api/download" // 임시
 				, "/error" // 에러
@@ -177,18 +183,51 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
+		http.cors();
 		http.authorizeRequests()
-						.accessDecisionManager(accessDecisionManager())
-						.antMatchers(HttpMethod.POST,"/api/login").permitAll()
-						.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**").authenticated()
-						.anyRequest().authenticated();
+				.accessDecisionManager(accessDecisionManager())
+				.antMatchers(HttpMethod.POST,"/api/login").permitAll()
+				.antMatchers("/api/mypage/**", "/api/main/**").authenticated()
+				.anyRequest().authenticated();
 
 		http.addFilter(authenticationFilter()) // 인증 필터
-			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository,this.redisService)) //jwt 토큰 인증 필터
-			.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
-			.and()
-			.csrf().disable() // csrf 사용 안함
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
+				.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository,this.redisService)) //jwt 토큰 인증 필터
+				.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
+				.and()
+				.csrf().disable() // csrf 사용 안함
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
+	}
+
+	/**
+	 * cors 설정 추가
+	 *
+	 * @return the cors configuration source
+	 * @author [김형욱]
+	 * @implNote cors 설정 추가
+	 * @since 2020. 8. 21. 오후 12:05:46
+	 */
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		//개발 설정
+		configuration.addAllowedOrigin("https://devwww.nikespace.co.kr");
+		configuration.addAllowedOrigin("http://devwww.nikespace.co.kr");
+		//운영 설정
+		configuration.addAllowedOrigin("https://www.nikespace.co.kr");
+		configuration.addAllowedOrigin("http://www.nikespace.co.kr");
+		//로컬 설정
+		configuration.addAllowedOrigin("http://localhost:8080");
+		configuration.addAllowedOrigin("http://localhost:8081");
+		configuration.addAllowedOrigin("http://localhost:8082");
+
+		configuration.addAllowedHeader("*");
+		configuration.addAllowedMethod("*");
+		configuration.setAllowCredentials(true);
+		configuration.addExposedHeader(JwtHelper.HEADER_STRING); //header 노출 설정
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
 	}
 
 	/**
