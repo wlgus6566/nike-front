@@ -12,8 +12,7 @@
                     <span class="title">{{item.title}}</span>
                     <i class="arrow"></i>
                 </a>
-                <div class="cont isActive">
-                    {{item.contents}}
+                <div class="cont isActive" v-html="item.contents">
                 </div>
             </li>
         </ul>
