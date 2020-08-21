@@ -179,16 +179,19 @@ export default {
             if (this.$route.meta.modify) {
                 try {
                     const response = await putNews(this.$route.params.id, {
-                        title: this.newsDetail.title,
                         contents: this.newsDetail.contents,
                         imageBase64: this.newsDetail.imageBase64,
                         noticeArticleSectionCode: this.newsDetail
                             .noticeArticleSectionCode,
                         thumbnailFileName: this.newsDetail.thumbnailFileName,
+                        thumbnailFilePhysicalName: this.newsDetail
+                            .thumbnailFilePhysicalName,
                         thumbnailFileSize: this.newsDetail.thumbnailFileSize,
+                        title: this.newsDetail.title,
                         useYn: this.useYn,
                     });
                     console.log(response);
+                    console.log(this.newsDetail.imageBase64);
 
                     this.$store.commit('SET_RELOAD', true);
                     if (response.data.success) {
