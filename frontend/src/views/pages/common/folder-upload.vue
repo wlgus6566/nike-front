@@ -260,8 +260,8 @@ export default {
                 },
             ],
 
-            BeginDt: null,
-            EndDt: null,
+            BeginDt: new Date(),
+            EndDt: new Date(),
 
             folderDetail: {
                 campaignBeginDt: null,
@@ -408,10 +408,10 @@ export default {
                 };
                 this.BeginDt = response.data.campaignBeginDt
                     ? new Date(response.data.campaignBeginDt)
-                    : null;
+                    : new Date();
                 this.EndDt = response.data.campaignEndDt
                     ? new Date(response.data.campaignEndDt)
-                    : null;
+                    : new Date();
                 await this.$refs.fileSet.getFolderDetailFile();
             } catch (error) {
                 console.log(error);
