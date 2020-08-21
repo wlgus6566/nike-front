@@ -25,8 +25,6 @@
             @modifyCalendar="modifyCalendar"
             @delCalendar="delCalendar"
             @closeDialog="closeDialog"
-<!--            @eventRender="eventRender"-->
-<!--            @eventPositioned="eventPositioned"-->
         />
         <div class="btn-tbl-box">
             <div class="right">

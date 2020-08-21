@@ -126,8 +126,12 @@
             <div class="inner">
                 <h2 class="main-title">CALENDAR</h2>
                 <div>
-                    <!-- todo// 캘릭터 작업 -->
-                    CALENDAR
+                    <FullCalendar
+                        ref="fullCalendar"
+                        :options="calendarOptions"
+                        defaultView="month"
+                        :editable="false"
+                    />
                 </div>
             </div>
         </div>
@@ -192,16 +196,68 @@
 </template>
 <script>
 import { getMain } from '@/api/main';
+import {
+    getCalendarList, // CALENDAR 목록 조회
+    postCalendar, // CALENDAR 등록
+    getTodayCalendar, // CALENDAR 오늘 조회
+    getDetailCalendar, // CALENDAR 상세조회
+} from '@/api/calendar';
+
+import moment from 'moment';
+import FullCalendar from '@fullcalendar/vue';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import momentPlugin from '@fullcalendar/moment'
 
 export default {
     name: 'MainPage',
     data() {
         return {
             mainData: [],
+            yyyyMm: moment(new Date()).format('YYYY.MM'),
+            calendarOptions: {
+                plugins: [dayGridPlugin, interactionPlugin, momentPlugin ],
+                initialView: 'dayGridMonth',
+                dateClick: this.handleDateClick,
+                height: 500,
+                events: [],
+                headerToolbar: {
+                    left: 'prev',
+                    center: 'title',
+                    right: 'next',
+                },
+                titleFormat: 'yyyy.mM',
+                customButtons: {
+                    prev: {
+                        // this overrides the prev button
+                        click: () => {
+                            let calendarApi = this.$refs.fullCalendar.getApi();
+                            calendarApi.prev();
+                            this.getCalendarList(
+                                moment(calendarApi.getDate()).format('YYYY.MM')
+                            );
+                        },
+                    },
+                    next: {
+                        // this overrides the next button
+                        click: () => {
+                            let calendarApi = this.$refs.fullCalendar.getApi();
+                            calendarApi.next();
+                            this.getCalendarList(
+                                moment(calendarApi.getDate()).format('YYYY.MM')
+                            );
+                        },
+                    },
+                },
+            },
         };
+    },
+    components: {
+        FullCalendar
     },
     created() {
         this.main();
+        this.loadCalendar();
     },
     methods: {
         async main() {
@@ -214,6 +270,52 @@ export default {
                 console.log(error);
                 alert(error.response.data.msg);
             }
+        },
+        // 달력 초기 목록 호출
+        async loadCalendar() {
+            this.loadingData = true;
+            try {
+                await this.getCalendarList(this.yyyyMm);
+                this.loadingData = false;
+                await this.loadCalendarCode();
+            } catch (error) {
+                alert(error.response.data.msg);
+            }
+        },
+        // 한달 일정 조회
+        async getCalendarList(yyyyMm) {
+            this.yyyyMm = !!yyyyMm ? yyyyMm : this.yyyyMm;
+            const {
+                data: { data: response },
+            } = await getCalendarList({ yyyyMm: this.yyyyMm });
+            this.calendarData = response;
+            this.transformData();
+        },
+        // 달력에 맞게 변수명 변경
+        transformData() {
+            this.calendarOptions.events = [];
+            this.calendarData.forEach((item) => {
+                let color;
+                if (item.calendarSectionCode === 'EDUCATION') {
+                    color = '#be1767';
+                } else if (item.calendarSectionCode === 'CAMPAIGN') {
+                    color = '#007b68';
+                } else {
+                    color = '#2c0fb4';
+                }
+                this.calendarOptions.events.push({
+                    ...item,
+                    title: item.scheduleName,
+                    description: item.contents,
+                    start: moment(item.beginDt).format('YYYY-MM-DD'),
+                    end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
+                    color: color
+                });
+            });
+        },
+        // 달력에 일자 클릭시
+        handleDateClick(arg) {
+            this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
         },
     },
 };
