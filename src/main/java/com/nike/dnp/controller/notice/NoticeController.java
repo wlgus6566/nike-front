@@ -22,6 +22,8 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The Class Notice controller.
@@ -339,14 +341,21 @@ public class NoticeController {
     @ApiOperation(value = "Customer Center 에디터 이미지 업로드", notes = BASIC_CHARACTER)
     @PostMapping(value = "/{noticeArticleSectionCode}/images",
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public SingleResult<String> uploadEditorImages(
+    public Map<String,Object> uploadEditorImages(
             @ApiParam(name = "noticeArticleSectionCode", value = "Customer Center 게시글 종류 코드",
                     allowableValues = "NOTICE, NEWS, QNA", required = true)
             @PathVariable final String noticeArticleSectionCode,
-            @ApiParam(name = "file", value = "파일업로드") final MultipartFile file) {
+//            @ApiParam(name = "file", value = "파일업로드") final MultipartFile file) {
+            @ApiParam(name = "upload", value = "파일업로드") final MultipartFile upload) {
         log.info("NoticeController.uploadEditorImages");
 
-        String uploadUrl = noticeService.uploadEditorImages(file, noticeArticleSectionCode);
-        return responseService.getSingleResult(uploadUrl);
+        String uploadUrl = noticeService.uploadEditorImages(upload, noticeArticleSectionCode);
+        Map<String,Object> data = new HashMap<String,Object>();
+        data.put("uploaded",1);
+        data.put("fileName",upload.getOriginalFilename());
+        data.put("url",uploadUrl);
+        return data;
+//        return responseService.getSingleResult(data);
+//        return responseService.getSingleResult(uploadUrl);
     }
 }

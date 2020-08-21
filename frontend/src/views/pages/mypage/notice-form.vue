@@ -63,6 +63,7 @@
                     </div>
                     <div class="form-column">
                         <ckeditor
+                            :config="editorConfig"
                             v-model="noticeDetail.contents"
                             style="width: 100%;"
                         />
@@ -115,6 +116,15 @@ export default {
                 contents: '',
                 noticeYn: 'N',
             },
+            // 에디터 업로드 설정
+            editorConfig: {
+                // TODO url에 NOTICE 부분 noticeArticleSectionCode에 맞게 변경 필요
+                filebrowserImageUploadUrl: '/api/customer/NOTICE/images',
+                // TODO 현재 로그인한 계정의 auth값 가져오기
+                fileTools_requestHeaders: {
+                    Authorization: 'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJyZHMiOiJhdXRoczp5dGg1OTE0MzE0OCIsInN1YiI6Inl0aCIsImV4cCI6MTYyNjc2NTk0MywiaWF0IjoxNTk1MjI5OTQzfQ.wg_VqONs3LYXKKHclCwYSHn0jyEv6jM13TMUqKp0vLo_Mhxp0Gwj-PWWFxNhGzsXQKhryIpGV85hXHX7t-DjVA'
+                }
+            }
         };
     },
     mounted() {

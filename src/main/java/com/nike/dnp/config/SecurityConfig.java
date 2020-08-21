@@ -171,7 +171,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				, "/error" // 에러
 				// ,"/swagger-ui/**","/v3/**" //swagger 3.0 임시
 				,"/api/open/**"
-//				, "/api/main/**", "/api/alarm/**"
 		};
 		web.ignoring().antMatchers(staticPatterns);
 	}
