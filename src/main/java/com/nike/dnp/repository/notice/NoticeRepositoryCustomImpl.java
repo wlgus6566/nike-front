@@ -84,7 +84,7 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
      * @implNote 공지사항 등록시 상단 고정된 게시글 개수 확인
      */
     @Override
-    public Long checkNoticeYnCnt() {
+    public List<NoticeArticle> checkNoticeYn() {
         log.info("NoticeRepositoryCustomImpl.checkNoticeYnCnt");
 
         final QNoticeArticle qNoticeArticle = QNoticeArticle.noticeArticle;
@@ -95,6 +95,6 @@ public class NoticeRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         qNoticeArticle.noticeArticleSectionCode.eq("NOTICE"),
                         qNoticeArticle.noticeYn.eq("Y")
                 );
-        return query.fetchCount();
+        return query.fetch();
     }
 }
