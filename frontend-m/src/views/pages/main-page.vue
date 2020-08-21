@@ -105,6 +105,8 @@
 </template>
 <script>
 import {getMain} from '@/api/main';
+import {getCalendarList, getTodayCalendar} from '@/api/calendar/';
+import {getCode} from '@/api/code/'
 
 import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
@@ -123,14 +125,19 @@ export default {
             noticeArticleList:[],
             reportList : [],
             toolKitContentsList : [],
+            yyyyMm: moment(new Date()).format('YYYY.MM'),
+            searchDt: moment(new Date()).format('YYYY.MM.DD'),
+            currentDate: moment(new Date()).format('YYYY.MM.DD'),
+            statusCode: null,
+            calendarDetail: {},
+            calenderSectionCodeList: [],
+            calendarData: [],
+            todayData: [],
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin],
                 initialView: 'dayGridMonth',
                 dateClick: this.handleDateClick,
-                events: [ //달력에 표시
-                    { title: 'event 1', date: '2020-08-01' },
-                    { title: 'event 2', date: '2020-08-02' }
-                ],
+                events: [], //달력에 표시
                 customButtons: {
                     prev: {
                         // this overrides the prev button
@@ -169,6 +176,7 @@ export default {
     mounted(){
         console.log("test");
         this.fetchData();
+        this.fetchCalendar();
     },methods: {
         async fetchData(){
             this.loading = true;
@@ -186,8 +194,52 @@ export default {
                 console.log(error);
             }
         },
+        async fetchCalendar() {
+            try {
+                await this.getCalendarList(this.yyyyMm);
+                await this.getTodayCalendar(this.searchDt);
+                await this.loadCalendarCode();
+            } catch (error) {
+                alert(error.response.data.msg);
+            }
+        },
         handleDateClick: function(arg) { // date 클릭시 이벤트 처리
-            alert('data click : ' + args.dateStr)
+            alert("handleDateClick : " + arg.dateStr);
+            this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
+        },
+        async getCalendarList(yyyyMm) {
+            this.yyyyMm = !!yyyyMm ? yyyyMm : this.yyyyMm;
+            const {
+                data: { data: response },
+            } = await getCalendarList({ yyyyMm: this.yyyyMm });
+            this.calendarData = response;
+            this.transformData();
+        },
+        async getTodayCalendar(searchDt) {
+            console.log("getTodayCalendar")
+            this.searchDt = !!searchDt ? searchDt : this.searchDt;
+            const {
+                data: { data: response },
+            } = await getTodayCalendar({ searchDt: this.searchDt });
+            this.todayData = response;
+        },
+        async loadCalendarCode() {
+            const {
+                data: { data: response },
+            } = await getCode('CALANDAR_TYPE');
+            this.calenderSectionCodeList = response;
+        },
+        transformData: function () {
+            this.calendarOptions.events = [];
+            this.calendarData.forEach((item) => {
+                this.calendarOptions.events.push({
+                    ...item,
+                    title: item.scheduleName,
+                    description: item.contents,
+                    start: moment(item.beginDt).format('YYYY-MM-DD'),
+                    end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
+                });
+            });
         }
     }
 };
