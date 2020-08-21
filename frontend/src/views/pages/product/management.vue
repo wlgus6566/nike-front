@@ -215,8 +215,8 @@ export default {
             return indexFind !== -1;
         },
         async checkDel() {
-            this.loading = true;
             if (this.checkItem.length > 0) {
+                this.loading = true;
                 if (!confirm('선택한 상품을 삭제하시겠습니까? ')) {
                     return false;
                 }

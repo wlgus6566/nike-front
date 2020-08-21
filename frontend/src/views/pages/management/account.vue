@@ -495,27 +495,36 @@ export default {
 
         // 유저 다건 삭제
         async userArrayDelete() {
-            let deleteAlert = confirm('선택한 계정을 삭제하시겠습니까?');
-            if (deleteAlert) {
-                console.log(this.checkItem);
-                try {
-                    const response = await deleteArrayUser({
-                        userSeqArray: this.checkItem,
-                    });
-                    if (response.data.existMsg) {
-                        alert(response.data.msg);
+            console.log(this.checkItem.length !== 0);
+            if (this.checkItem.length === 0 || this.checkItem.length === null) {
+                alert('하나 이상의 계정을 선택해 주세요');
+            } else {
+                let deleteAlert = confirm(
+                    '선택한 계정을 삭제하시겠습니까? 계정 삭제 시 해당 계정으로 로그인이 불가능하며, 플랫폼 사용 이력이 모두 삭제됩니다.'
+                );
+                if (deleteAlert) {
+                    console.log(this.checkItem);
+                    try {
+                        const response = await deleteArrayUser({
+                            userSeqArray: this.checkItem,
+                        });
+                        if (response.data.existMsg) {
+                            alert(response.data.msg);
+                        }
+                        if (response.data.success) {
+                            this.getUserList();
+                        }
+                    } catch (error) {
+                        console.log(error);
                     }
-                    if (response.data.success) {
-                        this.getUserList();
-                    }
-                } catch (error) {
-                    console.log(error);
                 }
             }
         },
         // 유저 단건 삭제
         async userDelete(seq) {
-            let deleteAlert = confirm('선택한 계정을 삭제하시겠습니까?');
+            let deleteAlert = confirm(
+                '선택한 계정을 삭제하시겠습니까? 계정 삭제 시 해당 계정으로 로그인이 불가능하며, 플랫폼 사용 이력이 모두 삭제됩니다.'
+            );
             if (deleteAlert) {
                 if (this.loading) return;
                 this.loading = true;
