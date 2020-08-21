@@ -63,7 +63,7 @@
         </ul>
         <h2 class="main-title">CALENDAR</h2>
         <div>
-            갤린더 영역
+            <FullCalendar ref="fullCalendar" :options="calendarOptions"/>
         </div>
         <h2 class="main-title">REPORT</h2>
         <ul class="main-report-list">
@@ -106,6 +106,10 @@
 <script>
 import {getMain} from '@/api/main';
 
+import moment from 'moment';
+import FullCalendar from '@fullcalendar/vue';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
 export default {
     name: 'MainPage',
@@ -118,8 +122,49 @@ export default {
             newsArticleList : [],
             noticeArticleList:[],
             reportList : [],
-            toolKitContentsList : []
+            toolKitContentsList : [],
+            calendarOptions: {
+                plugins: [dayGridPlugin, interactionPlugin],
+                initialView: 'dayGridMonth',
+                dateClick: this.handleDateClick,
+                events: [ //달력에 표시
+                    { title: 'event 1', date: '2020-08-01' },
+                    { title: 'event 2', date: '2020-08-02' }
+                ],
+                customButtons: {
+                    prev: {
+                        // this overrides the prev button
+                        click: () => {
+                            let calendarApi = this.$refs.fullCalendar.getApi();
+                            calendarApi.prev();
+                            console.log(
+                                moment(calendarApi.getDate()).format('YYYY.MM')
+                            );
+                            this.getCalendarList(
+                                moment(calendarApi.getDate()).format('YYYY.MM')
+                            );
+                        },
+                    },
+                    next: {
+                        // this overrides the next button
+                        click: () => {
+                            let calendarApi = this.$refs.fullCalendar.getApi();
+                            calendarApi.next();
+                            console.log(
+                                moment(calendarApi.getDate()).format('YYYY.MM')
+                            );
+                            this.getCalendarList(
+                                moment(calendarApi.getDate()).format('YYYY.MM')
+                            );
+                        },
+                    },
+                },
+
+            }
         };
+    },
+    components: {
+        FullCalendar
     },
     mounted(){
         console.log("test");
@@ -140,6 +185,9 @@ export default {
             } catch (error){
                 console.log(error);
             }
+        },
+        handleDateClick: function(arg) { // date 클릭시 이벤트 처리
+            alert('data click : ' + args.dateStr)
         }
     }
 };
