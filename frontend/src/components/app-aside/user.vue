@@ -141,7 +141,7 @@ export default {
         },
         alarmClose() {
             this.alarmActive = false;
-            this.$refs.alarm.style.height = '0';
+            this.$refs.alarm.style.height = '0'
         },
         logout() {
             this.$store.commit('LOGOUT');

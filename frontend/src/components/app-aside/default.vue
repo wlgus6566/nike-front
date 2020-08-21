@@ -23,6 +23,7 @@ export default {
                         component: 'ContentMypage',
                     },
                 ],
+                showIndex: 0,
             },
         };
     },

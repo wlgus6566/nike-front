@@ -341,7 +341,7 @@ public class NoticeController {
     @ApiOperation(value = "Customer Center 에디터 이미지 업로드", notes = BASIC_CHARACTER)
     @PostMapping(value = "/{noticeArticleSectionCode}/images",
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public SingleResult<EditorImageDto> uploadEditorImages(
+    public EditorImageDto uploadEditorImages(
             @ApiParam(name = "noticeArticleSectionCode", value = "Customer Center 게시글 종류 코드",
                     allowableValues = "NOTICE, NEWS, QNA", required = true)
             @PathVariable final String noticeArticleSectionCode,
@@ -354,6 +354,6 @@ public class NoticeController {
         editorImageDto.setFileName(upload.getOriginalFilename());
         editorImageDto.setUrl(uploadUrl);
 
-        return responseService.getSingleResult(editorImageDto);
+        return editorImageDto;
     }
 }

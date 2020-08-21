@@ -183,16 +183,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
+		http.cors();
 		http.authorizeRequests()
 				.accessDecisionManager(accessDecisionManager())
 				.antMatchers(HttpMethod.POST,"/api/login").permitAll()
-				.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**").authenticated()
+				.antMatchers("/api/mypage/**", "/api/main/**").authenticated()
 				.anyRequest().authenticated();
 
 		http.addFilter(authenticationFilter()) // 인증 필터
 				.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository,this.redisService)) //jwt 토큰 인증 필터
 				.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
-				.and().cors()	//cors 설정
 				.and()
 				.csrf().disable() // csrf 사용 안함
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
@@ -200,9 +200,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	/**
 	 * cors 설정 추가
-	 * hw
 	 *
 	 * @return the cors configuration source
+	 * @author [김형욱]
+	 * @implNote cors 설정 추가
+	 * @since 2020. 8. 21. 오후 12:05:46
 	 */
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
