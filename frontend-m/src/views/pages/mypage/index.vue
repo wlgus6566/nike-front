@@ -8,8 +8,8 @@
                 <button type="button" class="btn-out">나가기</button>
                 <button type="button" class="btn-alarm" @click="alarmModal">알람</button>
             </div>
-            <div class="modal-wrap">
-                <AlarmModal :visible.sync="visible.activeModal" />
+            <div class="modal-wrap" >
+                <AlarmModal :visible.sync="visible.activeModal" :alarmList="alarmData"/>
             </div>
         </div>
         <hr />
@@ -28,6 +28,7 @@
     </div>
 </template>
 <script>
+import { getAlarm } from '@/api/alarm';
 export default {
     name: 'mypageIndex',
     data() {
@@ -36,16 +37,23 @@ export default {
             visible: {
                 activeModal: false,
             },
+            alarmList: null,
+            alarmData: [],
+            alarmActive: false,
+            totalPage: null,
+            page: 0,
+            itemLength: 10,
         };
     },
-    created() {},
     components: {
         AlarmModal: () => import('@/components/modal-ex/alarm-modal/'),
         Loading: () => import('@/components/loading/')
     },
+
     mounted() {
+        console.log("mounted");
         this.myMenuFn();
-        //console.log(this.myMenuData);
+        this.getAlarmData();
     },
     watch: {},
     methods: {
@@ -55,10 +63,31 @@ export default {
             );
             this.myMenuData = menu[0];
         },
+        //알람
         alarmModal() {
             console.log("alarmModal")
             this.visible.activeModal = true;
         },
+        async getAlarmData() {
+            console.log("getAlarmData")
+            try {
+                const {
+                    data: { data: response },
+                } = await getAlarm({
+                    page: this.page,
+                    size: this.itemLength,
+                });
+                this.totalPage = response.totalPages;
+                this.alarmData = response.content;
+                this.alarmData.forEach((el) => {
+                    el.typeCd === "REPORT_MANAGE" ? el.typeCd = "REPORT" : el.typeCd;
+                });
+                console.log(this.totalPage);
+                console.log(this.alarmData);
+            } catch (error) {
+                console.log(error);
+            }
+        }
     },
 };
 </script>
