@@ -162,6 +162,7 @@ export default {
                         orderType: this.listSortSelect.value,
                     }
                 );
+                console.log(response);
                 this.totalPage = response.totalPages - 1;
                 if (infinite) {
                     if (this.totalPage > this.page - 1) {

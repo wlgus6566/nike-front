@@ -3,9 +3,9 @@
         <transition name="fade">
             <span
                 class="progress"
-                v-if="file.progress && file.progress !== 100"
                 :style="{ width: `${file.progress}%` }"
             ></span>
+            <!--v-if="file.progress && file.progress !== 100"-->
         </transition>
         <ul class="form-list">
             <li class="form-row">
