@@ -122,7 +122,7 @@ export default {
                     center: 'title',
                     right: 'next',
                 },
-                titleFormat: moment(new Date()).format('YYYY.MM'),
+                titleFormat: 'yyyy.M',
                 customButtons: {
                     prev: {
                         // this overrides the prev button
