@@ -2846,7 +2846,7 @@
 }
 .contact-item .modi {
     position: absolute;
-    top: 30px;
+    top: 27px;
     right: 30px;
     display: block;
     width: 20px;
@@ -2866,7 +2866,8 @@
     margin-top: 20px;
 }
 .contact-list li {
-    flex-basis: calc((100% - 20px) / 2);
+    flex-basis: calc(50% - 10px);
+    -ms-flex-preferred-size: calc(50% - 80px);
 }
 .contact-list li:nth-child(2n) {
     margin-left: 20px;
