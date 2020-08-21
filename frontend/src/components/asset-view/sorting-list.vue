@@ -46,7 +46,7 @@ export default {
 }
 .sorting-list li button {
     display: block;
-    font-size: 18px;management
+    font-size: 18px;
     color: #ccc;
     line-height: 21px;
     font-family: 'Bebas Neue', sans-serif;

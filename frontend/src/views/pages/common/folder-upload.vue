@@ -138,7 +138,7 @@
                             >
                                 <div class="date-picker">
                                     <v-date-picker
-                                        v-model="folderDetail.campaignBeginDt"
+                                        v-model="BeginDt"
                                         locale="en-us"
                                         color="orange"
                                         :input-props="{
@@ -151,7 +151,7 @@
                                 </div>
                                 <div class="date-picker">
                                     <v-date-picker
-                                        v-model="folderDetail.campaignEndDt"
+                                        v-model="EndDt"
                                         locale="en-us"
                                         color="orange"
                                         :input-props="{
@@ -260,6 +260,9 @@ export default {
                 },
             ],
 
+            BeginDt: null,
+            EndDt: null,
+
             folderDetail: {
                 campaignBeginDt: null,
                 campaignEndDt: null,
@@ -292,6 +295,18 @@ export default {
         pageFileSectionCodeName() {
             return this.folderSet[this.$route.meta.topMenuCode.toLowerCase()]
                 .fileSectionCodeName;
+        },
+    },
+    watch: {
+        BeginDt(date) {
+            this.folderDetail.campaignBeginDt = this.$moment(date).format(
+                'YYYY.MM.DD'
+            );
+        },
+        EndDt(date) {
+            this.folderDetail.campaignEndDt = this.$moment(date).format(
+                'YYYY.MM.DD'
+            );
         },
     },
     components: {
@@ -347,6 +362,15 @@ export default {
         },
         async submitForm() {
             const uploadFn = this.$route.params.id ? putContents : postContents;
+
+            this.folderDetail.campaignBeginDt = this.$moment(
+                this.folderDetail.campaignBeginDt
+            ).format('YYYY.MM.DD');
+
+            this.folderDetail.campaignEndDt = this.$moment(
+                this.folderDetail.campaignEndDt
+            ).format('YYYY.MM.DD');
+
             try {
                 const { data: response } = await uploadFn(
                     this.$route.meta.topMenuCode,
@@ -357,8 +381,9 @@ export default {
                 if (response.existMsg) {
                     alert(response.msg);
                 }
+                this.$store.commit('SET_RELOAD', true);
                 if (response.success) {
-                    //this.$router.go(-1);
+                    this.$router.go(-1);
                 }
                 console.log(response);
             } catch (e) {
@@ -379,14 +404,14 @@ export default {
                 this.folderDetail = {
                     ...response.data,
                     imageBase64: response.data.imageFilePhysicalName,
-                    campaignBeginDt: response.data.campaignBeginDt
-                        ? new Date(response.data.campaignBeginDt)
-                        : null,
-                    campaignEndDt: response.data.campaignEndDt
-                        ? new Date(response.data.campaignEndDt)
-                        : null,
                     contentsFileList: [],
                 };
+                this.BeginDt = response.data.campaignBeginDt
+                    ? new Date(response.data.campaignBeginDt)
+                    : null;
+                this.EndDt = response.data.campaignEndDt
+                    ? new Date(response.data.campaignEndDt)
+                    : null;
                 await this.$refs.fileSet.getFolderDetailFile();
             } catch (error) {
                 console.log(error);

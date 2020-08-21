@@ -19,7 +19,13 @@
                 <div class="info-box">
                     <strong class="title">{{ item.folderName }}</strong>
                     <p class="txt">{{ item.folderContents }}</p>
-                    <p class="date">
+                    <p
+                        v-if="item.campaignPeriodSectionCode === 'EVERY'"
+                        class="date"
+                    >
+                        365
+                    </p>
+                    <p v-else class="date">
                         {{ $moment(item.campaignBeginDt).format('YYYY.MM.DD') }}
                         ~
                         {{ $moment(item.campaignEndDt).format('YYYY.MM.DD') }}
