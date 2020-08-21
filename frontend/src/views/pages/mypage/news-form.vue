@@ -3,7 +3,7 @@
         <h2 class="page-title">
             <span>{{ this.$route.meta.title }}</span>
         </h2>
-        <form @submit.prevent="submitData">
+        <form @submit.prevent="submitData" ref="form">
             <h3 class="form-title mt20">등록/수정</h3>
             <hr class="hr-black" />
             <ul class="form-list news">
@@ -16,10 +16,8 @@
                             class="new-upload"
                             :size="2 / 1"
                             @cropImage="cropImage"
-                            :thumbnailFileName="newsDetail.thumbnailFileName"
-                            :thumbnailFilePhysicalName="
-                                newsDetail.thumbnailFilePhysicalName
-                            "
+                            :imageBase64="newsDetail.thumbnailFilePhysicalName"
+                            :imageFileName="newsDetail.thumbnailFileName"
                         >
                             <template slot="txt-up">
                                 NEWS 이미지 등록
@@ -105,20 +103,17 @@ export default {
     components: {
         thumbnail,
     },
+    activated() {
+        this.$refs.form.reset();
+        this.detailDataReset();
+    },
     mounted() {
-        console.log(this.$route.meta.sectionCode);
+        console.log(this.noticeArticleSectionCode);
         if (this.$route.meta.modify) {
             this.getNewsDetail();
         }
     },
-    activated() {
-        //this.getNewsList();
-    },
     methods: {
-        // fileChange(target) {
-        //     console.log(target.files);
-        // },
-
         //이미지 받아오기
         cropImage(imageBase64, imgName) {
             this.newsDetail.imageBase64 = imageBase64;
@@ -161,14 +156,15 @@ export default {
                 });
 
                 console.log(response);
-                console.log(response.data.msg);
 
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
-                    this.newsDetail.title = '';
-                    this.newsDetail.contents = '';
-                    this.newsDetail.imageBase64 = '';
+                    console.log('성공');
+                    this.detailDataReset();
+
                     this.$router.push('/mypage/news');
+                } else {
+                    alert(response.data.msg);
                 }
             } catch (error) {
                 console.log(error);
@@ -189,41 +185,27 @@ export default {
                         noticeArticleSectionCode: this.newsDetail
                             .noticeArticleSectionCode,
                         thumbnailFileName: this.newsDetail.thumbnailFileName,
-                        thumbnailFilePhysicalName: this.newsDetail
-                            .thumbnailFilePhysicalName,
                         thumbnailFileSize: this.newsDetail.thumbnailFileSize,
                         useYn: this.useYn,
                     });
+                    console.log(response);
 
                     this.$store.commit('SET_RELOAD', true);
                     if (response.data.success) {
+                        console.log('수정성공');
                         this.detailDataReset();
                         this.$router.push('/mypage/news');
+                    } else {
+                        alert(response.data.msg);
                     }
                 } catch (error) {
                     console.log(error);
                 }
             }
         },
-
-        //뉴스 리스트
-        // async getNewsList() {
-        //     try {
-        //         const {
-        //             data: { data: response },
-        //         } = await getCustomerList(this.$route.meta.sectionCode, {
-        //             page: 0,
-        //             size: 20,
-        //             keyword: '',
-        //         });
-        //         console.log(response);
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // },
-
         //뉴스 상세
         async getNewsDetail() {
+            console.log('상세 데이터 불러옴');
             console.log(this.$route.params.id);
             try {
                 const {
@@ -233,6 +215,8 @@ export default {
                     this.$route.params.id
                 );
                 this.newsDetail = response;
+                console.log('상세 데이터');
+                console.log(response);
             } catch (error) {
                 console.log(error);
             }
@@ -247,12 +231,12 @@ export default {
             this.$router.go(-1);
         },
         detailDataReset() {
-            this.newsDetail.title = '';
-            this.newsDetail.contents = '';
-            this.newsDetail.imageBase64 = '';
-            this.newsDetail.thumbnailFileName = '';
-            this.newsDetail.thumbnailFilePhysicalName = '';
-            this.newsDetail.thumbnailFileSize = '';
+            this.newsDetail.title = null;
+            this.newsDetail.contents = null;
+            this.newsDetail.imageBase64 = null;
+            this.newsDetail.thumbnailFileName = null;
+            this.newsDetail.thumbnailFilePhysicalName = null;
+            this.newsDetail.thumbnailFileSize = null;
         },
     },
 };

@@ -129,6 +129,8 @@ export default {
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
                     this.detailDataReset();
+                    console.log(this.faqDetail.noticeArticleCategoryCode);
+                    console.log(this.categoryCodeList);
                     this.$router.push('/mypage/faq');
                 }
             } catch (error) {
@@ -208,9 +210,10 @@ export default {
             this.$router.go(-1);
         },
         detailDataReset() {
-            this.title = '';
-            this.contents = '';
-            this.noticeArticleCategoryCode = '';
+            this.faqDetail.title = '';
+            this.faqDetail.contents = '';
+            this.faqDetail.noticeArticleCategoryCode = null;
+            this.categoryCodeList.value = '';
             this.noticeArticleSeq = '';
         },
     },
