@@ -10,6 +10,6 @@ cd /home/ec2-user/
 /home/ec2-user/apache-tomcat-8.5.57/bin/shutdown.sh
 cd /home/ec2-user/apache-tomcat-8.5.57/webapps
 rm -rf ROOT/ ./ROOT.war
-cp ~/build/test-app.war ./ROOT.war
+cp ~/build/nike-dnp-front-ver1.0.war ./ROOT.war
 cd ..
 /home/ec2-user/apache-tomcat-8.5.57/bin/startup.sh
