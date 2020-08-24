@@ -247,9 +247,7 @@ export default {
                     return false;
                 }
             } else {
-                alert(
-                    'CART에 이미 담긴 상품을 제외한 나머지 상품만 추가됩니다.'
-                );
+                alert('이미 담긴 상품입니다');
             }
         },
         async checkedWishBasket() {
