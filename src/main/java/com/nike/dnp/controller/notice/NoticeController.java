@@ -212,9 +212,11 @@ public class NoticeController {
      */
     @ApiOperation(value = "공지사항 고정 게시글 개수 조회", notes = BASIC_CHARACTER)
     @GetMapping("/NOTICE/noticeYnCnt")
-    public SingleResult<Long> checkNoticeYnCnt() {
+    public SingleResult<Boolean> checkNoticeYnCnt(
+            @ApiParam(value = "게시글 시퀀스", name = "noticeArticleSeq")
+            @RequestParam(required = false) Long noticeArticleSeq) {
         log.info("NoticeController.checkNoticeYnCnt");
-        return responseService.getSingleResult(noticeService.checkNoticeYnCnt());
+        return responseService.getSingleResult(noticeService.checkNoticeYn(noticeArticleSeq));
     }
 
     /**

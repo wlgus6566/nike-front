@@ -63,7 +63,7 @@
         </ul>
         <h2 class="main-title">CALENDAR</h2>
         <div>
-            갤린더 영역
+            <FullCalendar ref="fullCalendar" :options="calendarOptions"/>
         </div>
         <h2 class="main-title">REPORT</h2>
         <ul class="main-report-list">
@@ -105,7 +105,13 @@
 </template>
 <script>
 import {getMain} from '@/api/main';
+import {getCalendarList, getTodayCalendar} from '@/api/calendar/';
+import {getCode} from '@/api/code/'
 
+import moment from 'moment';
+import FullCalendar from '@fullcalendar/vue';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
 export default {
     name: 'MainPage',
@@ -118,12 +124,59 @@ export default {
             newsArticleList : [],
             noticeArticleList:[],
             reportList : [],
-            toolKitContentsList : []
+            toolKitContentsList : [],
+            yyyyMm: moment(new Date()).format('YYYY.MM'),
+            searchDt: moment(new Date()).format('YYYY.MM.DD'),
+            currentDate: moment(new Date()).format('YYYY.MM.DD'),
+            statusCode: null,
+            calendarDetail: {},
+            calenderSectionCodeList: [],
+            calendarData: [],
+            todayData: [],
+            calendarOptions: {
+                plugins: [dayGridPlugin, interactionPlugin],
+                initialView: 'dayGridMonth',
+                dateClick: this.handleDateClick,
+                events: [], //달력에 표시
+                customButtons: {
+                    prev: {
+                        // this overrides the prev button
+                        click: () => {
+                            let calendarApi = this.$refs.fullCalendar.getApi();
+                            calendarApi.prev();
+                            console.log(
+                                moment(calendarApi.getDate()).format('YYYY.MM')
+                            );
+                            this.getCalendarList(
+                                moment(calendarApi.getDate()).format('YYYY.MM')
+                            );
+                        },
+                    },
+                    next: {
+                        // this overrides the next button
+                        click: () => {
+                            let calendarApi = this.$refs.fullCalendar.getApi();
+                            calendarApi.next();
+                            console.log(
+                                moment(calendarApi.getDate()).format('YYYY.MM')
+                            );
+                            this.getCalendarList(
+                                moment(calendarApi.getDate()).format('YYYY.MM')
+                            );
+                        },
+                    },
+                },
+
+            }
         };
+    },
+    components: {
+        FullCalendar
     },
     mounted(){
         console.log("test");
         this.fetchData();
+        this.fetchCalendar();
     },methods: {
         async fetchData(){
             this.loading = true;
@@ -140,6 +193,53 @@ export default {
             } catch (error){
                 console.log(error);
             }
+        },
+        async fetchCalendar() {
+            try {
+                await this.getCalendarList(this.yyyyMm);
+                await this.getTodayCalendar(this.searchDt);
+                await this.loadCalendarCode();
+            } catch (error) {
+                alert(error.response.data.msg);
+            }
+        },
+        handleDateClick: function(arg) { // date 클릭시 이벤트 처리
+            alert("handleDateClick : " + arg.dateStr);
+            this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
+        },
+        async getCalendarList(yyyyMm) {
+            this.yyyyMm = !!yyyyMm ? yyyyMm : this.yyyyMm;
+            const {
+                data: { data: response },
+            } = await getCalendarList({ yyyyMm: this.yyyyMm });
+            this.calendarData = response;
+            this.transformData();
+        },
+        async getTodayCalendar(searchDt) {
+            console.log("getTodayCalendar")
+            this.searchDt = !!searchDt ? searchDt : this.searchDt;
+            const {
+                data: { data: response },
+            } = await getTodayCalendar({ searchDt: this.searchDt });
+            this.todayData = response;
+        },
+        async loadCalendarCode() {
+            const {
+                data: { data: response },
+            } = await getCode('CALANDAR_TYPE');
+            this.calenderSectionCodeList = response;
+        },
+        transformData: function () {
+            this.calendarOptions.events = [];
+            this.calendarData.forEach((item) => {
+                this.calendarOptions.events.push({
+                    ...item,
+                    title: item.scheduleName,
+                    description: item.contents,
+                    start: moment(item.beginDt).format('YYYY-MM-DD'),
+                    end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
+                });
+            });
         }
     }
 };
