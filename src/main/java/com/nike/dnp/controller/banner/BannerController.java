@@ -2,6 +2,7 @@ package com.nike.dnp.controller.banner;
 
 import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.banner.BannerReturnDTO;
 import com.nike.dnp.dto.banner.BannerSaveDTO;
 import com.nike.dnp.entity.banner.Banner;
 import com.nike.dnp.model.response.SingleResult;
@@ -67,7 +68,7 @@ public class BannerController {
     @ApiOperation(value = "메인 비주얼 상세", notes = OPERATION_CHARACTER)
     @GetMapping(name = "메인 비주얼 상세"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Banner> getBanner () {
+    public SingleResult<BannerReturnDTO> getBanner () {
         log.info("BannerController.getBanner");
         return responseService.getSingleResult(bannerService.findBanner());
     }
@@ -114,10 +115,11 @@ public class BannerController {
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
-    public SingleResult<Banner> update(
+    public SingleResult<BannerReturnDTO> update(
             @ApiParam(value = "배너 시퀀스", required = true) @PathVariable final Long bannerSeq
             , @ApiParam(value = "메인 비주얼 수정 DTO", required = true) @Valid @RequestBody final BannerSaveDTO bannerSaveDTO
-            , @ApiIgnore final BindingResult result) {
+            , @ApiIgnore final BindingResult result
+    ) {
         log.info("BannerController.update");
         return responseService.getSingleResult(
                 bannerService.update(bannerSeq, bannerSaveDTO)

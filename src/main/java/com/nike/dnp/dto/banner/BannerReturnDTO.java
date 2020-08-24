@@ -1,43 +1,30 @@
-package com.nike.dnp.entity.banner;
+package com.nike.dnp.dto.banner;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.nike.dnp.common.variable.ServiceCode;
-import com.nike.dnp.dto.banner.BannerSaveDTO;
-import com.nike.dnp.entity.BaseTimeEntity;
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
-import javax.persistence.*;
-import java.io.Serializable;
+import org.springframework.util.ObjectUtils;
 
 /**
- * Banner Entity
+ * BannerReturnDTO
  *
  * @author [오지훈]
  * @since 2020. 6. 24. 오후 6:09:56
- * @implNote Banner(메인 비주얼) Entity 작성
+ * @implNote Banner(메인 비주얼) Return DTO 작성
  */
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-@Entity
-@Table(name = "TB_BANNER")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@DynamicUpdate
-@DynamicInsert
-public class Banner extends BaseTimeEntity implements Serializable {
+public class BannerReturnDTO {
 
     /**
      * 배너 시퀀스
      *
      * @author [오지훈]
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "BANNER_SEQ")
     @ApiModelProperty(name = "bannerSeq", value = "배너 시퀀스", hidden = true)
     private Long bannerSeq;
 
@@ -46,7 +33,6 @@ public class Banner extends BaseTimeEntity implements Serializable {
      *
      * @author [오지훈]
      */
-    @Column(name = "TITLE")
     @ApiModelProperty(name = "title", value = "제목", required = true)
     private String title;
 
@@ -55,7 +41,6 @@ public class Banner extends BaseTimeEntity implements Serializable {
      *
      * @author [오지훈]
      */
-    @Column(name = "CONTENTS")
     @ApiModelProperty(name = "contents", value = "내용", required = true)
     private String contents;
 
@@ -64,7 +49,6 @@ public class Banner extends BaseTimeEntity implements Serializable {
      *
      * @author [오지훈]
      */
-    @Column(name = "IMAGE_FILE_NAME")
     @ApiModelProperty(name = "imageFileName", value = "이미지_파일_명", required = true)
     private String imageFileName;
 
@@ -73,7 +57,6 @@ public class Banner extends BaseTimeEntity implements Serializable {
      *
      * @author [오지훈]
      */
-    @Column(name = "IMAGE_FILE_SIZE")
     @ApiModelProperty(name = "imageFileSize", value = "이미지_파일_사이즈", required = true)
     private String imageFileSize;
 
@@ -82,7 +65,6 @@ public class Banner extends BaseTimeEntity implements Serializable {
      *
      * @author [오지훈]
      */
-    @Column(name = "IMAGE_FILE_PHYSICAL_NAME")
     @ApiModelProperty(name = "imageFilePhysicalName", value = "이미지_파일_물리_명", required = true)
     private String imageFilePhysicalName;
 
@@ -91,7 +73,6 @@ public class Banner extends BaseTimeEntity implements Serializable {
      *
      * @author [오지훈]
      */
-    @Column(name = "MOBILE_IMAGE_FILE_NAME")
     @ApiModelProperty(name = "mobileImageFileName", value = "모바일_이미지_파일_명", required = true)
     private String mobileImageFileName;
 
@@ -100,7 +81,6 @@ public class Banner extends BaseTimeEntity implements Serializable {
      *
      * @author [오지훈]
      */
-    @Column(name = "MOBILE_IMAGE_FILE_SIZE")
     @ApiModelProperty(name = "mobileImageFileSize", value = "모바일_이미지_파일_사이즈", required = true)
     private String mobileImageFileSize;
 
@@ -109,7 +89,6 @@ public class Banner extends BaseTimeEntity implements Serializable {
      *
      * @author [오지훈]
      */
-    @Column(name = "MOBILE_IMAGE_FILE_PHYSICAL_NAME")
     @ApiModelProperty(name = "mobileImageFilePhysicalName", value = "모바일_이미지_파일_물리_명", required = true)
     private String mobileImageFilePhysicalName;
 
@@ -118,7 +97,6 @@ public class Banner extends BaseTimeEntity implements Serializable {
      *
      * @author [오지훈]
      */
-    @Column(name = "LINK_URL_TYPE_CODE")
     @ApiModelProperty(name = "linkUrlTypeCode", value = "링크_URL_타입_공통코드")
     private String linkUrlTypeCode;
 
@@ -127,7 +105,6 @@ public class Banner extends BaseTimeEntity implements Serializable {
      *
      * @author [오지훈]
      */
-    @Column(name = "LINK_URL")
     @ApiModelProperty(name = "linkUrl", value = "링크_URL", required = true)
     private String linkUrl;
 
@@ -136,44 +113,31 @@ public class Banner extends BaseTimeEntity implements Serializable {
      *
      * @author [오지훈]
      */
-    @Column(name = "USE_YN")
     @ApiModelProperty(name = "useYn", value = "사용_여부", required = true)
     private String useYn;
 
     /**
-     * Save or update banner.
+     * Gets image file physical name.
      *
-     * @param bannerSaveDTO the banner save dto
-     * @return the banner
+     * @return the image file physical name
      * @author [오지훈]
-     * @since 2020. 7. 24. 오전 10:05:40
-     * @implNote제 메인비주얼 등록 및 수정
+     * @implNote [Description 작성]
+     * @since 2020. 8. 24. 오후 4:09:53
      */
-    public Banner saveOrUpdate (final BannerSaveDTO bannerSaveDTO) {
-        this.title = bannerSaveDTO.getTitle();
-        this.contents = bannerSaveDTO.getContents();
-        this.imageFileName = bannerSaveDTO.getImageFileName();
-        this.imageFileSize = bannerSaveDTO.getImageFileSize();
-        this.imageFilePhysicalName = bannerSaveDTO.getImageFilePhysicalName();
-        this.mobileImageFileName = bannerSaveDTO.getMobileImageFileName();
-        this.mobileImageFileSize = bannerSaveDTO.getMobileImageFileSize();
-        this.mobileImageFilePhysicalName = bannerSaveDTO.getMobileImageFilePhysicalName();
-        this.linkUrlTypeCode = bannerSaveDTO.getLinkUrlTypeCode();
-        this.linkUrl = bannerSaveDTO.getLinkUrl();
-        this.useYn = ServiceCode.YesOrNoEnumCode.Y.name();
-        return this;
+    public String getImageFilePhysicalName() {
+        return ObjectUtils.isEmpty(imageFilePhysicalName) ? "" : CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
     }
 
     /**
-     * Delete banner.
+     * Gets mobile image file physical name.
      *
-     * @return the banner
+     * @return the mobile image file physical name
      * @author [오지훈]
-     * @implNote 메인비주얼 삭제
-     * @since 2020. 8. 11. 오후 12:01:07
+     * @implNote [Description 작성]
+     * @since 2020. 8. 24. 오후 4:09:54
      */
-    public Banner delete () {
-        this.useYn = ServiceCode.YesOrNoEnumCode.N.name();
-        return this;
+    public String getMobileImageFilePhysicalName() {
+        return ObjectUtils.isEmpty(mobileImageFilePhysicalName) ? "" : CloudFrontUtil.getCustomSignedUrl(mobileImageFilePhysicalName);
     }
+
 }
