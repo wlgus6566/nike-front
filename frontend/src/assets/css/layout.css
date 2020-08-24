@@ -416,6 +416,7 @@ footer > .inner .info-list {
 }
 .item-list .item .thumbnail {
     display: block;
+    flex: 0 0 50px;
     width: 50px;
     height: 50px;
     margin-right: 10px;
@@ -426,12 +427,18 @@ footer > .inner .info-list {
 .item-list .item .thumbnail img {
     vertical-align: middle;
 }
+.item-list .item .info-box {
+    max-width: calc(100% - 60px);
+}
 .item-list .item .info-box .title {
     display: block;
     font-size: 12px;
     line-height: 18px;
     letter-spacing: -0.5px;
     color: #000;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .item-list .item .info-box .date {
     display: block;
