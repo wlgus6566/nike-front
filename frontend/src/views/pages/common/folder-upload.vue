@@ -137,30 +137,24 @@
                                 "
                             >
                                 <div class="date-picker">
-                                    <v-date-picker
+                                    <el-date-picker
                                         v-model="BeginDt"
-                                        locale="en-us"
-                                        color="orange"
-                                        :input-props="{
-                                            placeholder: 'YYYY.MM.DD',
-                                        }"
-                                        :attributes="attrs"
-                                        :min-date="minDate('from')"
-                                        :max-date="maxDate('from')"
-                                    />
+                                        type="date"
+                                        placeholder="YYYY.MM.DD"
+                                        format="yyyy.MM.dd"
+                                        :picker-options="pickerBeginOption"
+                                    >
+                                    </el-date-picker>
                                 </div>
                                 <div class="date-picker">
-                                    <v-date-picker
+                                    <el-date-picker
                                         v-model="EndDt"
-                                        locale="en-us"
-                                        color="orange"
-                                        :input-props="{
-                                            placeholder: 'YYYY.MM.DD',
-                                        }"
-                                        :attributes="attrs"
-                                        :min-date="minDate('to')"
-                                        :max-date="maxDate('to')"
-                                    />
+                                        type="date"
+                                        placeholder="YYYY.MM.DD"
+                                        format="yyyy.MM.dd"
+                                        :picker-options="pickerEndOption"
+                                    >
+                                    </el-date-picker>
                                 </div>
                             </div>
                         </div>
@@ -289,6 +283,28 @@ export default {
                 imageBase64: '',
                 memo: '',
             },
+            pickerBeginOption: {
+                firstDayOfWeek: 7,
+                cellClassName: (date) => {
+                    if (new Date(date).getDay() === 0) {
+                        return 'el-holiday';
+                    }
+                },
+                disabledDate: (time) => {
+                    return time.getTime() > this.EndDt.getTime();
+                },
+            },
+            pickerEndOption: {
+                firstDayOfWeek: 7,
+                cellClassName: (date) => {
+                    if (new Date(date).getDay() === 0) {
+                        return 'el-holiday';
+                    }
+                },
+                disabledDate: (time) => {
+                    return time.getTime() < this.BeginDt.getTime();
+                },
+            },
         };
     },
     computed: {
@@ -308,12 +324,12 @@ export default {
     watch: {
         BeginDt(date) {
             this.folderDetail.campaignBeginDt = this.$moment(date).format(
-                'YYYY.MM.DD'
+                'yyyy.mm.dd'
             );
         },
         EndDt(date) {
             this.folderDetail.campaignEndDt = this.$moment(date).format(
-                'YYYY.MM.DD'
+                'yyyy.mm.dd'
             );
         },
     },
@@ -347,6 +363,7 @@ export default {
         ModalAuthOpen() {
             this.visible.ModalAuth = true;
         },
+
         minDate(tt) {
             if (tt === 'to') {
                 return this.folderDetail.campaignBeginDt;
@@ -434,4 +451,4 @@ export default {
     },
 };
 </script>
-<style scoped></style>
+<style></style>
