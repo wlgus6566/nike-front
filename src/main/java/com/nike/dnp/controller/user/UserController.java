@@ -1,6 +1,7 @@
 package com.nike.dnp.controller.user;
 
 import com.nike.dnp.common.aspect.ValidField;
+import com.nike.dnp.common.validation.ValidationGroups;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.common.variable.SuccessCode;
 import com.nike.dnp.dto.user.*;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -221,7 +223,7 @@ public class UserController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<Integer> checkId (
-            @ModelAttribute @Valid final UserIdDTO userIdDTO
+            @ModelAttribute @Validated({ValidationGroups.Group1.class}) final UserIdDTO userIdDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserController.checkId");
         return responseService.getSingleResult(userService.checkId(userIdDTO.getUserId())

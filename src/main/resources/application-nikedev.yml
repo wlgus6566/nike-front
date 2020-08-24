@@ -16,7 +16,6 @@ spring:
   redis:
     host: nike-test-redis-a.f5zylx.ng.0001.apn2.cache.amazonaws.com
     port: 6379
-    #password: 2motion1!!
     cache:
       redis:
         cache-null-values: false
