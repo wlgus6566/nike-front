@@ -144,9 +144,6 @@ export default {
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
-                            console.log(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
-                            );
                             this.getCalendarList(
                                 moment(calendarApi.getDate()).format('YYYY.MM')
                             );
@@ -157,9 +154,6 @@ export default {
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
-                            console.log(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
-                            );
                             this.getCalendarList(
                                 moment(calendarApi.getDate()).format('YYYY.MM')
                             );
@@ -174,7 +168,6 @@ export default {
         FullCalendar
     },
     mounted(){
-        console.log("test");
         this.fetchData();
         this.fetchCalendar();
     },methods: {
@@ -204,7 +197,6 @@ export default {
             }
         },
         handleDateClick: function(arg) { // date 클릭시 이벤트 처리
-            alert("handleDateClick : " + arg.dateStr);
             this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
         },
         async getCalendarList(yyyyMm) {
@@ -216,7 +208,6 @@ export default {
             this.transformData();
         },
         async getTodayCalendar(searchDt) {
-            console.log("getTodayCalendar")
             this.searchDt = !!searchDt ? searchDt : this.searchDt;
             const {
                 data: { data: response },

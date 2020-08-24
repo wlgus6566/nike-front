@@ -113,7 +113,7 @@ export default {
             calendarData: [],
             todayData: [],
             calendarOptions: {
-                plugins: [dayGridPlugin, interactionPlugin, momentPlugin ],
+                plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
                 dateClick: this.handleDateClick,
                 events: [],
@@ -236,8 +236,8 @@ export default {
         },
 
         /*
-                calendar-management 관련 메소드
-             */
+            calendar-management 관련 메소드
+         */
         async createCalendar(data) {
             try {
                 const { data: response } = await postCalendar(data);
@@ -291,3 +291,9 @@ export default {
     },
 };
 </script>
+<style type="text/css">
+    /*TODO 주말 색 변경필오*/
+    .fc-day-sun.fc-daygrid-day-frame.fc-daygrid-day-top.fc-daygrid-day-number { color:#0000FF; }     /* 토요일 */
+    .fc-day-number.fc-sun.fc-past { color:#FF0000; }    /* 일요일 */
+</style>
+<link href="./fullcalendar-2.9.1/fullcalendar.css" rel="stylesheet"/>

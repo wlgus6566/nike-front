@@ -197,9 +197,7 @@ import { getMain } from '@/api/main';
 import {
     getCalendarList, // CALENDAR 목록 조회
     getCalendarEachList, // CALENDAR 목록 조회
-    postCalendar, // CALENDAR 등록
     getTodayCalendar, // CALENDAR 오늘 조회
-    getDetailCalendar, // CALENDAR 상세조회
 } from '@/api/calendar';
 
 import moment from 'moment';
@@ -221,6 +219,10 @@ export default {
                 dateClick: this.handleDateClick,
                 height: 500,
                 events: [],
+                dayMaxEventRows: true,
+                timeGrid: {
+                    dayMaxEventRows: 1
+                },
                 headerToolbar: {
                     left: 'prev',
                     center: 'title',
@@ -233,7 +235,7 @@ export default {
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
-                            this.getCalendarList(
+                            this.getCalendarEachList(
                                 moment(calendarApi.getDate()).format('YYYY.MM')
                             );
                         },
@@ -243,7 +245,7 @@ export default {
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
-                            this.getCalendarList(
+                            this.getCalendarEachList(
                                 moment(calendarApi.getDate()).format('YYYY.MM')
                             );
                         },
@@ -267,7 +269,6 @@ export default {
                 } = await getMain();
                 this.mainData = response;
             } catch (error) {
-                console.log(error);
                 alert(error.response.data.msg);
             }
         },
@@ -275,20 +276,18 @@ export default {
         async loadCalendar() {
             this.loadingData = true;
             try {
-                // await this.getCalendarList(this.yyyyMm);
                 await this.getCalendarEachList(this.yyyyMm);
                 this.loadingData = false;
-                await this.loadCalendarCode();
             } catch (error) {
                 alert(error.response.data.msg);
             }
         },
         // 한달 일정 조회
-        async getCalendarList(yyyyMm) {
+        async getCalendarEachList(yyyyMm) {
             this.yyyyMm = !!yyyyMm ? yyyyMm : this.yyyyMm;
             const {
                 data: { data: response },
-            } = await getCalendarList({ yyyyMm: this.yyyyMm });
+            } = await getCalendarEachList({ yyyyMm: this.yyyyMm });
             this.calendarData = response;
             this.transformData();
         },
