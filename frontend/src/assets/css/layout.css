@@ -349,6 +349,8 @@ footer > .inner .info-list {
 
 /* el-dialog */
 .el-dialog {
+    min-width: 600px;
+    max-width: 600px;
     padding-bottom: 50px;
 }
 .el-dialog__title {

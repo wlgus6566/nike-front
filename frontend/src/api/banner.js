@@ -5,9 +5,14 @@ function postBanner(data) {
     return banner.post(`/`, data);
 }
 
-//배너상세
+//배너 등록
 function getBanner(data) {
     return banner.get(`/`, data);
 }
 
-export { postBanner, getBanner };
+//배너수정
+function putBanner(bannerSeq, data) {
+    return banner.put(`/${bannerSeq}`, data);
+}
+
+export { postBanner, getBanner, putBanner };

@@ -182,7 +182,7 @@
                         <strong class="title">
                             {{ newItem.title }}
                         </strong>
-                        <p class="desc" v-html="newItem.contents" />
+                        <!--                        <p class="desc" v-html="newItem.contents" />-->
                         <span class="date">
                             {{ newItem.updateDt }}
                         </span>
@@ -205,7 +205,7 @@ import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import momentPlugin from '@fullcalendar/moment'
+import momentPlugin from '@fullcalendar/moment';
 
 export default {
     name: 'MainPage',
@@ -214,7 +214,7 @@ export default {
             mainData: [],
             yyyyMm: moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
-                plugins: [dayGridPlugin, interactionPlugin, momentPlugin ],
+                plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
                 dateClick: this.handleDateClick,
                 height: 500,
@@ -251,7 +251,7 @@ export default {
         };
     },
     components: {
-        FullCalendar
+        FullCalendar,
     },
     created() {
         this.main();
@@ -307,7 +307,7 @@ export default {
                     description: item.contents,
                     start: moment(item.beginDt).format('YYYY-MM-DD'),
                     end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
-                    color: color
+                    color: color,
                 });
             });
         },
