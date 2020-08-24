@@ -36,7 +36,6 @@
                                 <span class="txt">비고정</span>
                             </span>
                         </span>
-                        {{ this.noticeDetail.noticeYn }}
                     </div>
                     <div class="form-column agr">
                         <span class="form-desc"
