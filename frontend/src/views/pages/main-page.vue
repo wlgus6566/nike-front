@@ -271,6 +271,9 @@ export default {
         this.main();
         this.loadCalendar();
     },
+    activated() {
+        this.main();
+    },
     methods: {
         test(e) {
             //console.log(e);
