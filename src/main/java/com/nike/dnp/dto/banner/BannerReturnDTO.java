@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.springframework.util.ObjectUtils;
 
 /**
  * BannerReturnDTO
@@ -117,27 +116,71 @@ public class BannerReturnDTO {
     private String useYn;
 
     /**
-     * Gets image file physical name.
+     * PC 이미지 전체 URL
      *
-     * @return the image file physical name
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "pcImageUrl", value = "사용_여부", required = true)
+    private String pcImageUrl;
+
+    /**
+     * MOBILE 이미지 전체 URL
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "mobileImageUrl", value = "사용_여부", required = true)
+    private String mobileImageUrl;
+
+    /**
+     * Gets pc image url.
+     *
+     * @return the pc image url
      * @author [오지훈]
      * @implNote [Description 작성]
-     * @since 2020. 8. 24. 오후 4:09:53
+     * @since 2020. 8. 24. 오후 7:23:34
      */
-    public String getImageFilePhysicalName() {
-        return ObjectUtils.isEmpty(imageFilePhysicalName) ? "" : CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
+    public String getPcImageUrl() {
+        return CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
     }
 
     /**
-     * Gets mobile image file physical name.
+     * Gets mobile image url.
      *
-     * @return the mobile image file physical name
+     * @return the mobile image url
      * @author [오지훈]
      * @implNote [Description 작성]
-     * @since 2020. 8. 24. 오후 4:09:54
+     * @since 2020. 8. 24. 오후 7:23:35
      */
-    public String getMobileImageFilePhysicalName() {
-        return ObjectUtils.isEmpty(mobileImageFilePhysicalName) ? "" : CloudFrontUtil.getCustomSignedUrl(mobileImageFilePhysicalName);
+    public String getMobileImageUrl() {
+        return CloudFrontUtil.getCustomSignedUrl(mobileImageFilePhysicalName);
     }
+
+//    /**
+//     * Gets image file physical name.
+//     *
+//     * @return the image file physical name
+//     * @author [오지훈]
+//     * @implNote [Description 작성]
+//     * @since 2020. 8. 24. 오후 4:09:53
+//     */
+//    public String getImageFilePhysicalName() {
+//        return ObjectUtils.isEmpty(imageFilePhysicalName) ? ""
+//                : imageFilePhysicalName.startsWith("http") ? imageFilePhysicalName
+//                : CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
+//    }
+//
+//    /**
+//     * Gets mobile image file physical name.
+//     *
+//     * @return the mobile image file physical name
+//     * @author [오지훈]
+//     * @implNote [Description 작성]
+//     * @since 2020. 8. 24. 오후 4:09:54
+//     */
+//    public String getMobileImageFilePhysicalName() {
+//        return ObjectUtils.isEmpty(mobileImageFilePhysicalName) ? ""
+//                : mobileImageFilePhysicalName.startsWith("http") ? mobileImageFilePhysicalName
+//                : CloudFrontUtil.getCustomSignedUrl(mobileImageFilePhysicalName);
+//    }
 
 }

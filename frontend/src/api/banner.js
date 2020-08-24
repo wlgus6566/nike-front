@@ -1,4 +1,4 @@
-import { banner } from './index';
+import {banner} from './index';
 
 //배너상세
 function postBanner(data) {
@@ -11,8 +11,8 @@ function getBanner(data) {
 }
 
 //배너수정
-function putBanner(bannerSeq, data) {
-    return banner.put(`/${bannerSeq}`, data);
+function putBanner(data) {
+    return banner.put(`/6`, data);
 }
 
 export { postBanner, getBanner, putBanner };

@@ -140,9 +140,16 @@ public class BannerService {
     public BannerReturnDTO update (final Long bannerSeq, final BannerSaveDTO bannerSaveDTO) {
         final Banner banner = this.findByBannerSeq(bannerSeq);
 
+        System.out.println("======================================================");
+        System.out.println(bannerSaveDTO.getImageFilePhysicalName());
+        System.out.println(bannerSaveDTO.getMobileImageFilePhysicalName());
+        System.out.println("======================================================");
+
         if (bannerSaveDTO.getImageFilePhysicalName().contains("temp/")) {
             bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
         } else {
+            bannerSaveDTO.setImageFileName(banner.getImageFileName());
+            bannerSaveDTO.setImageFileSize(banner.getImageFileSize());
             bannerSaveDTO.setImageFilePhysicalName(banner.getImageFilePhysicalName());
         }
         if (bannerSaveDTO.getMobileImageFilePhysicalName().contains("temp/")) {
