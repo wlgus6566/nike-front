@@ -1,9 +1,10 @@
 import axios from 'axios';
-axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 import { setInterceptors } from './config/interceptors';
 
 function createWithAuth(url, options) {
-    const instance = axios.create(Object.assign({ baseURL: axios.defaults.baseURL+url }, options));
+    const instance = axios.create(
+        Object.assign({ baseURL: process.env.VUE_APP_API_URL + url }, options)
+    );
     setInterceptors(instance);
     return instance;
 }

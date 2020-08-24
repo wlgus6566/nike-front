@@ -124,6 +124,17 @@ nav .depth3 > .nav-link.router-link-active {
     font-weight: 700;
 }
 
+.icon-lnb {
+    position: absolute;
+    left: 10px;
+    top: 88px;
+    z-index: 2;
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url('../images/svg/icon-lnb-back.svg') 0 0 no-repeat;
+}
 header .icon-ellipsis {
     z-index: 2;
     position: absolute;
@@ -214,7 +225,6 @@ footer {
     flex-shrink: 0;
     flex-basis: 100%;
     background: #000;
-    padding: 0 300px 0 200px;
     box-sizing: border-box;
 }
 footer > .inner {

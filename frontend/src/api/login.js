@@ -1,11 +1,9 @@
 import axios from 'axios';
-axios.defaults.baseURL = process.env.VUE_APP_API_URL;
-// axios.defaults.baseURL =
-//     process.env.NODE_ENV === 'development'
-//         ? '/'
-//         : 'https://devapi.nikespace.co.kr';
 
-const apiLogin = axios.create({ baseURL: axios.defaults.baseURL+'/api', timeout: 30000 });
+const apiLogin = axios.create({
+    baseURL: process.env.VUE_APP_API_URL + '/api',
+    timeout: 30000,
+});
 
 function loginUser(data) {
     return apiLogin.post('/login', data);

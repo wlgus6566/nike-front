@@ -6,6 +6,12 @@ function getCalendarList(params) {
         params: params,
     });
 }
+//CALENDAR 목록 각 일자목록대로 조회
+function getCalendarEachList(params) {
+    return calendar.get(`/eachList`, {
+        params: params,
+    });
+}
 //CALENDAR 등록
 function postCalendar(data) {
     return calendar.post(`/`, data);
@@ -30,6 +36,7 @@ function putCalendar(calendarSeq, data) {
 }
 export {
     getCalendarList,
+    getCalendarEachList,
     postCalendar,
     getTodayCalendar,
     getDetailCalendar,

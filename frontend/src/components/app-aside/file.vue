@@ -28,7 +28,7 @@ export default {
                         component: 'ContentFile',
                     },
                 ],
-                showIndex: 1,
+                showIndex: 0,
             },
         };
     },
