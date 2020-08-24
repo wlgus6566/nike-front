@@ -18,7 +18,7 @@
                 </p>
 
                 <a :href="`${mainData.mainVisual.linkUrl}`" class="btn-s-black">
-                    <span class="bebas">VIEW</span>
+                    <span>VIEW</span>
                 </a>
             </div>
         </div>
@@ -182,7 +182,7 @@
                         <strong class="title">
                             {{ newItem.title }}
                         </strong>
-                        <!--                        <p class="desc" v-html="newItem.contents" />-->
+                        <p class="desc" v-html="newItem.contents" />
                         <span class="date">
                             {{ newItem.updateDt }}
                         </span>
@@ -196,6 +196,7 @@
 import { getMain } from '@/api/main';
 import {
     getCalendarList, // CALENDAR 목록 조회
+    getCalendarEachList, // CALENDAR 목록 조회
     postCalendar, // CALENDAR 등록
     getTodayCalendar, // CALENDAR 오늘 조회
     getDetailCalendar, // CALENDAR 상세조회
@@ -212,6 +213,7 @@ export default {
     data() {
         return {
             mainData: [],
+            todayData: [],
             yyyyMm: moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
@@ -219,6 +221,23 @@ export default {
                 dateClick: this.handleDateClick,
                 height: 500,
                 events: [],
+                // eventClassNames: function (event, element) {
+                //     console.log('d', event);
+                //     console.log('element : ', element);
+                //     // element.addClass(event.class)
+                //     // info.el.setAttribute('data-vue-id', event._uid);
+                //     // info.el.appendChild(event.$el)
+                // },
+                eventClassNames: [ 'aaaaaaaaaaaaaaaaa', 'bbbbbbbbbbbbbbbb' ],
+                eventDidMount: function(info) {
+                    console.log(info.event.extendedProps);
+                    // {description: "Lecture", department: "BioChemistry"}
+                },
+                eventRender: function(event, element) {
+                    if (event.allDay) {
+                        element.addClass('all-day-event');
+                    }
+                },
                 headerToolbar: {
                     left: 'prev',
                     center: 'title',
@@ -273,7 +292,8 @@ export default {
         async loadCalendar() {
             this.loadingData = true;
             try {
-                await this.getCalendarList(this.yyyyMm);
+                // await this.getCalendarList(this.yyyyMm);
+                await this.getCalendarEachList(this.yyyyMm);
                 this.loadingData = false;
                 await this.loadCalendarCode();
             } catch (error) {
@@ -309,17 +329,26 @@ export default {
                     end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
                     color: color,
                 });
+
             });
         },
         // 달력에 일자 클릭시
         handleDateClick(arg) {
             this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
         },
+        async getTodayCalendar(searchDt) {
+            this.searchDt = !!searchDt ? searchDt : this.searchDt;
+            const {
+                data: { data: response },
+            } = await getTodayCalendar({ searchDt: this.searchDt });
+            this.todayData = response;
+        },
     },
 };
 </script>
 <style scoped>
 /* main */
+
 .main-banner {
     display: block;
 }

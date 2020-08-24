@@ -16,10 +16,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,6 +117,44 @@ public class CalendarService {
         log.info("CalendarService.findAll");
         calendarSearchDTO.setYyyyMm(calendarSearchDTO.getYyyyMm().replace(".", ""));
         return calendarRepository.findByMonthSearch(calendarSearchDTO);
+    }
+
+    public List<Calendar> findAllEach(final CalendarSearchDTO calendarSearchDTO) {
+        calendarSearchDTO.setYyyyMm(calendarSearchDTO.getYyyyMm().replace(".", ""));
+        List<Calendar> findAllList =  calendarRepository.findByMonthSearch(calendarSearchDTO);
+
+        final String DATE_PATTERN = "yyyy-MM-dd";
+        SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Calendar> eachCalendarList = new ArrayList<>();
+
+        for (Calendar calendar : findAllList) {
+            SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+            Date startDate = Timestamp.valueOf(calendar.getBeginDt());
+            Date endDate = Timestamp.valueOf(calendar.getEndDt());
+
+            ArrayList<String> dates = new ArrayList<String>();
+            Date currentDate = startDate;
+            while (currentDate.compareTo(endDate) <= 0) {
+//                dates.add(sdf.format(currentDate));
+                Calendar newCalendar = new Calendar();
+                newCalendar.setBeginDt(LocalDateTime.parse(transFormat.format(currentDate), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                newCalendar.setEndDt(LocalDateTime.parse(transFormat.format(currentDate), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                newCalendar.setCalendarSeq(calendar.getCalendarSeq());
+                newCalendar.setCalendarSectionCode(calendar.getCalendarSectionCode());
+                newCalendar.setScheduleName(calendar.getScheduleName());
+                newCalendar.setContents(calendar.getContents());
+                eachCalendarList.add(newCalendar);
+
+                java.util.Calendar c = java.util.Calendar.getInstance();
+                c.setTime(currentDate);
+                c.add(java.util.Calendar.DAY_OF_MONTH, 1);
+                currentDate = c.getTime();
+
+            }
+        }
+
+        return eachCalendarList;
+
     }
 
     /**
