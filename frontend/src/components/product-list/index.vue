@@ -147,6 +147,12 @@ export default {
     font-size: 12px;
     color: #555;
     line-height: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
 }
 .product-list-item .info-box .desc-txt-box {
     overflow: hidden;

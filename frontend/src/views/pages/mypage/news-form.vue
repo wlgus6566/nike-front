@@ -168,7 +168,6 @@ export default {
                         .thumbnailFilePhysicalName,
                     thumbnailFileSize: this.newsDetail.thumbnailFileSize,
                     useYn: this.useYn,
-                    msg: this.errMsg,
                 });
 
                 console.log(response);

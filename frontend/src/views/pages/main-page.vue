@@ -18,7 +18,7 @@
                 </p>
 
                 <a :href="`${mainData.mainVisual.linkUrl}`" class="btn-s-black">
-                    <span>VIEW</span>
+                    <span class="bebas">VIEW</span>
                 </a>
             </div>
         </div>

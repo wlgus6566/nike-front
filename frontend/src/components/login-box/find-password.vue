@@ -32,9 +32,9 @@
     </form>
 </template>
 <script>
-import { sendEmail } from '@/api/login.js';
+    import {sendEmail} from '@/api/login.js';
 
-export default {
+    export default {
     name: 'FindPW',
     data() {
         return {
@@ -45,13 +45,14 @@ export default {
     methods: {
         async findPW() {
             if (!this.userId) {
-                alert('아이디를 입력해 주세요.');
+                alert('E-MAIL을 입력해 주세요.');
                 this.$refs.mailId.focus();
                 return;
             }
             try {
                 const { data: response } = await sendEmail({
                     userId: this.userId,
+                    platform: 'PC'
                 });
                 console.log(response);
                 if (response.existMsg) {

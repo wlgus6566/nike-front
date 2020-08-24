@@ -27,9 +27,6 @@ export default {
     },
     name: 'TabComponent.vue',
     props: ['tabMenus'],
-    mounted() {
-        // console.log(this.tabMenus);
-    },
     components: {
         ContentMypage: () => import('@/components/tab-comp/content-mypage.vue'),
         ContentOrder: () => import('@/components/tab-comp/content-order.vue'),

@@ -19,11 +19,17 @@ export default {
     created() {},
     computed: {
         myMenu() {
-            const menu = this.$store.state.gnbMenuListData.filter((item) => {
-                if (item.menuCode === 'MYPAGE' && item.pcYn === 'Y')
-                    return item;
-            });
-            return menu[0].menus;
+            if (this.$store.state.gnbMenuListData) {
+                const menu = this.$store.state.gnbMenuListData.filter(
+                    (item) => {
+                        if (item.menuCode === 'MYPAGE' && item.pcYn === 'Y')
+                            return item;
+                    }
+                );
+                return menu[0].menus;
+            } else {
+                return null;
+            }
         },
     },
     methods: {

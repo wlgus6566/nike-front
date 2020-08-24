@@ -125,7 +125,6 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		//TODO[ojh] 2020-07-02 : 휴면회원 확인 (추후 로직 추가예정)
 		if (isValid && ServiceCode.UserStatusEnumCode.DORMANT.toString().equals(user.get().getUserStatusCode())) {
 			if (certCode.isEmpty()) {
-				//TODO[ojh] 2020-07-02 : [인증코드] 메일 발송
 				userMailService.createCertCode(authUserDTO.getUserId());
 
 				JsonUtil.write(response.getWriter()
@@ -146,7 +145,6 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 				}
 				if (isValid && certCode.equals(decodeCertCode)) {
 					user.get().updateStatus(ServiceCode.UserStatusEnumCode.NORMAL.toString());
-					//TODO[ojh] 2020-07-02 : [휴면계정 해제 안내] 메일 발송
 					userMailService.sendMailForChangeDormant(user.get());
 				}
 			}
@@ -256,6 +254,8 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 				final String headerValue = request.getHeader(headerName);
 				header.put(headerName, headerValue);
 			}*/
+
+			// 로그인일자 / userAgent 업데이트
 			user.ifPresent(value -> value.updateLoginDt(request.getHeader("user-agent")));
 
 			// 약관동의 업데이트
@@ -271,7 +271,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 			// 로그인 로그 등록
 			final UserLoginLogSaveDTO saveDTO = new UserLoginLogSaveDTO();
 			saveDTO.setUserSeq(authUserDTO.getUserSeq());
-			saveDTO.setLoginIp(request.getRemoteAddr()); //TODO[ojh] IP 어떻게 받는지..
+			saveDTO.setLoginIp(request.getRemoteAddr());
 			loginLogService.save(saveDTO);
 
 			// redis 인증코드 삭제
