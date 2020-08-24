@@ -651,6 +651,7 @@
     display: flex;
 }
 .date-picker-group .date-picker {
+    width: 180px;
     flex-basis: 180px;
 }
 .data-picker .focus\:vc-shadow:focus {
@@ -788,6 +789,145 @@
 .vc-day-content:hover {
     background-color: #f5f5f5;
 }
+
+/* vc-calendar IE11  */
+.vc-container .vc-grid-container {
+    width: 100%;
+    display: -ms-grid;
+}
+.vc-container .vc-grid-container.vc-weeks {
+    padding: 5px 6px 7px 6px;
+}
+.vc-container .vc-grid-container .vc-day-content {
+    min-height: 1.8rem;
+    width: 1.8rem;
+    height: 1.8rem;
+    margin: 0.1rem auto;
+}
+.vc-container > .vc-grid-cell {
+    width: 320px;
+    background: red;
+}
+.vc-container .vc-pane {
+    width: 320px;
+}
+.vc-grid-container {
+}
+
+/* Element UI Datepicker */
+.date-picker .el-date-edirtor {
+    height: 39px;
+    line-height: 16px;
+    padding: 0 24px 0 0;
+    box-sizing: border-box;
+
+    font-size: 14px;
+    color: #000;
+    letter-spacing: 0;
+}
+.date-picker .el-input__inner {
+    padding-left: 0;
+    border: none;
+}
+.el-date-editor.el-input {
+    width: 100%;
+}
+.date-picker .el-input__suffix {
+    width: 20px;
+    height: 100%;
+    right: 0;
+    background: url('../images/svg/icon-input-calender.svg') right 10px
+        no-repeat;
+}
+.date-picker .el-input__prefix {
+    display: none;
+}
+.el-date-picker__header {
+    margin: 20px 20px 0;
+}
+[aria-label='Previous Year'],
+[aria-label='Next Year'] {
+    display: none;
+}
+.el-picker-panel__icon-btn {
+    margin-top: 0;
+    float: none;
+    color: #000;
+    font-weight: bold;
+    font-size: 14px;
+}
+.el-date-picker__prev-btn {
+    margin-right: 30px;
+}
+.el-date-picker__next-btn {
+    margin-left: 30px;
+}
+.el-date-picker__header-label {
+    display: inline-block;
+    padding: 0;
+    font-size: 20px;
+    color: #000;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+}
+.el-date-picker__header-label + .el-date-picker__header-label:before {
+    content: '.';
+    display: inline-block;
+    font-size: 20px;
+    color: #000;
+}
+.el-month-table td .cell:hover,
+.el-year-table td .cell:hover,
+.el-year-table td.current:not(.disabled) .cell,
+.el-month-table td.current:not(.disabled) .cell,
+.el-date-picker__header-label.active,
+.el-date-picker__header-label:hover {
+    color: #fa5400;
+}
+.el-picker-panel__content {
+    margin-top: 10px;
+}
+.el-date-table th {
+    font-size: 14px;
+    color: #888;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.5px;
+    border: none;
+}
+.el-date-table td {
+    color: #333;
+}
+.el-date-table td.next-month,
+.el-date-table td.prev-month {
+    color: #333;
+    opacity: 0.3;
+}
+.el-date-table td span {
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+}
+.el-date-table td.today span {
+    background-color: #000;
+    color: #fff;
+}
+.el-date-table td.current:not(.disabled) span {
+    background-color: #fa5400;
+    font-weight: bold;
+}
+.el-date-table td.available:hover {
+    color: #fa5400;
+}
+.el-date-table .el-holiday span {
+    color: #f20000;
+}
+.el-date-table td.disabled div {
+    background-color: #fff;
+    color: #333;
+    opacity: 0.3;
+}
+
 /* date-picker-wrap */
 .date-picker-wrap {
     position: relative;
