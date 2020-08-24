@@ -214,12 +214,12 @@ export default {
             yyyyMm: moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
-                eventRender: function(info) {
+                eventRender: function (info) {
                     var tooltip = new Tooltip(info.el, {
                         title: info.event.extendedProps.description,
                         placement: 'top',
                         trigger: 'hover',
-                        container: 'body'
+                        container: 'body',
                     });
                 },
                 initialView: 'dayGridMonth',
@@ -231,7 +231,7 @@ export default {
                 events: [],
                 dayMaxEventRows: true,
                 timeGrid: {
-                    dayMaxEventRows: 1
+                    dayMaxEventRows: 1,
                 },
                 headerToolbar: {
                     left: 'prev',
@@ -339,16 +339,16 @@ export default {
                     start: moment(item.beginDt).format('YYYY-MM-DD'),
                     end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
                     color: color,
-                    checkDuple: false
+                    checkDuple: false,
                 });
             });
             this.distinctAndAddEvent();
         },
         distinctAndAddEvent() {
             let distinctEventList = [];
-            this.calendarOptions.events.forEach(item => {
+            this.calendarOptions.events.forEach((item) => {
                 let check = false;
-                distinctEventList.forEach(ele => {
+                distinctEventList.forEach((ele) => {
                     if (item.start === ele.start) {
                         check = true;
                     }
@@ -356,11 +356,10 @@ export default {
                 if (!check) {
                     distinctEventList.push(item);
                 }
-            })
-            distinctEventList.forEach(item => {
+            });
+            distinctEventList.forEach((item) => {
                 this.calendarOptions.events.unshift(item);
             });
-
         },
         // 달력에 일자 클릭시
         // handleDateClick(arg) {
@@ -714,5 +713,32 @@ export default {
 }
 ::v-deep .test {
     background: red;
+}
+
+::v-deep .fc-daygrid-day-bottom {
+    width: 100%;
+}
+::v-deep .fc-daygrid-more-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    text-indent: -99999px;
+}
+::v-deep .fc-daygrid-more-link:before {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    content: '';
+    display: block;
+    width: 3px;
+    height: 3px;
+    border-radius: 100%;
+    background: #fa5400;
+}
+::v-deep .fc-popover-body .fc-daygrid-event-harness:first-child {
+    display: none;
 }
 </style>
