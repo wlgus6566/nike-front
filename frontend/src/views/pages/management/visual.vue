@@ -34,8 +34,7 @@
                             <span
                                 class="thumb-file pc-upload"
                                 :class="{
-                                    'file-upload':
-                                        bannerData.imageFilePhysicalName,
+                                    'file-upload': bannerData.pcImageUrl,
                                 }"
                             >
                                 <input
@@ -61,8 +60,7 @@
                             <span
                                 class="thumb-file mobile-upload"
                                 :class="{
-                                    'file-upload':
-                                        bannerData.mobileImageFileName,
+                                    'file-upload': bannerData.mobileImageUrl,
                                 }"
                                 ref="moBanner"
                             >
@@ -143,7 +141,7 @@ import { getBanner, putBanner, postBanner } from '@/api/banner';
 import { fileUpLoad } from '@/api/file';
 
 export default {
-    name: 'visual',
+    name: 'visualManage',
     data() {
         return {
             title: this.$route.meta.title,
@@ -182,6 +180,9 @@ export default {
                     this.linkUrl = '';
                     this.bannerData.linkUrl = '';
                 }
+                if (this.linkUrl !== '') {
+                    this.bannerData.linkUrl = this.linkUrl;
+                }
             } else {
                 this.bannerData.linkUrlTypeCode = val;
                 this.bannerData.linkUrl = '/asset/all';
@@ -195,6 +196,9 @@ export default {
                 console.log('va;', val);
                 if (val !== 'ASSET') {
                     this.urlCheck.value = 'N';
+                    if (this.linkUrl === '') {
+                        this.bannerData.linkUrl = this.linkUrl;
+                    }
                 }
             }
         },
@@ -247,20 +251,16 @@ export default {
                 const {
                     data: { data: response },
                 } = await fileUpLoad(formData);
-                console.log(response);
                 if (device === 'pc') {
                     this.bannerData.imageFilePhysicalName =
                         response.filePhysicalName;
                     this.bannerData.imageFileName = response.fileName;
                     this.bannerData.imageFileSize = response.fileSize;
-                    console.log(this.pcFormFile);
                 } else {
-                    //this.moFormFile = response;
                     this.bannerData.mobileImageFilePhysicalName =
                         response.filePhysicalName;
                     this.bannerData.mobileImageFileName = response.fileName;
                     this.bannerData.mobileImageFileSize = response.fileSize;
-                    console.log(this.moFormFile);
                 }
             } catch (e) {
                 console.log(e);
@@ -313,11 +313,25 @@ export default {
                 this.bannerData = response;
                 if (this.bannerData.title === undefined) {
                     this.detailData = false;
-                    this.bannerData.linkUrl = '/asset/all';
+                    this.bannerData = {
+                        contents: '',
+                        imageFileName: '',
+                        imageFilePhysicalName: '',
+                        linkUrl: '/asset/all',
+                        linkUrlTypeCode: 'ASSET',
+                        mobileImageFileName: '',
+                        mobileImageFilePhysicalName: '',
+                        title: '',
+                        pcImageUrl: '',
+                        mobileImageUrl: '',
+                    };
                 } else if (this.bannerData.title) {
                     console.log(response.linkUrl);
                     this.detailData = true;
                     this.linkUrl = response.linkUrl;
+                    if (response.linkUrlTypeCode === 'ASSET') {
+                        this.linkUrl = '';
+                    }
                 }
             } catch (error) {
                 console.log(error);

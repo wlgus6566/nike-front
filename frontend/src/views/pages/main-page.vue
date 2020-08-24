@@ -273,7 +273,7 @@ export default {
     },
     methods: {
         test(e) {
-            console.log(e);
+            //console.log(e);
             const date = this.$moment(e.date).format('YYYY-MM-DD');
             const cal = this.$refs.fullCalendar.$el;
             const td = cal.querySelector(`td[data-date="${date}"]`);
@@ -287,7 +287,6 @@ export default {
                 close.addEventListener('click', () => {
                     td.classList.remove('test');
                 });
-                console.log();
             }, 0);
         },
 
