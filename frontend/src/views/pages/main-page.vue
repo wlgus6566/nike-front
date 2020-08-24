@@ -724,7 +724,7 @@ export default {
     left: 0;
     display: block;
     width: 100%;
-    text-indent: -99999px;
+    /*text-indent: -99999px;*/
 }
 ::v-deep .fc-daygrid-more-link:before {
     position: absolute;
