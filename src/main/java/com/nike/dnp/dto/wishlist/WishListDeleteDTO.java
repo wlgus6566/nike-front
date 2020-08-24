@@ -24,8 +24,8 @@ public class WishListDeleteDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiModelProperty(name = "위시리스트 시퀀스 배열", allowableValues = "1,2,3")
-	@NotNull(message = "wishList.wishListSeqList")
-	private List<Long> wishListSeqList;
+	@ApiModelProperty(name = "제품 시퀀스 배열", allowableValues = "1,2,3")
+	@NotNull(message = "product.goodsSeqList")
+	private List<Long> goodsSeqList;
 
 }
