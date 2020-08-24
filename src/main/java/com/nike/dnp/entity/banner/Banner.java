@@ -142,46 +142,70 @@ public class Banner extends BaseTimeEntity implements Serializable {
     private String useYn;
 
     /**
-     * PC CDN URL
+     * Gets image file physical name.
      *
-     * @author [오지훈]
-     */
-    @Transient
-    @ApiModelProperty(name = "pcImageUrl", value = "PC CDN URL")
-    private String pcImageUrl;
-
-    /**
-     * MOBILE CDN URL
-     *
-     * @author [오지훈]
-     */
-    @Transient
-    @ApiModelProperty(name = "mobileImageUrl", value = "MOBILE CDN URL")
-    private String mobileImageUrl;
-
-    /**
-     * Gets pc image url.
-     *
-     * @return the pc image url
+     * @return the image file physical name
      * @author [오지훈]
      * @implNote [Description 작성]
-     * @since 2020. 8. 12. 오전 11:36:09
+     * @since 2020. 8. 24. 오후 4:09:53
      */
-    public String getPcImageUrl() {
+    public String getImageFilePhysicalName() {
         return CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
     }
 
     /**
-     * Gets mobile image url.
+     * Gets mobile image file physical name.
      *
-     * @return the mobile image url
+     * @return the mobile image file physical name
      * @author [오지훈]
      * @implNote [Description 작성]
-     * @since 2020. 8. 12. 오전 11:36:11
+     * @since 2020. 8. 24. 오후 4:09:54
      */
-    public String getMobileImageUrl() {
+    public String getMobileImageFilePhysicalName() {
         return CloudFrontUtil.getCustomSignedUrl(mobileImageFilePhysicalName);
     }
+
+//    /**
+//     * PC CDN URL
+//     *
+//     * @author [오지훈]
+//     */
+//    @Transient
+//    @ApiModelProperty(name = "pcImageUrl", value = "PC CDN URL")
+//    private String pcImageUrl;
+//
+//    /**
+//     * MOBILE CDN URL
+//     *
+//     * @author [오지훈]
+//     */
+//    @Transient
+//    @ApiModelProperty(name = "mobileImageUrl", value = "MOBILE CDN URL")
+//    private String mobileImageUrl;
+//
+//    /**
+//     * Gets pc image url.
+//     *
+//     * @return the pc image url
+//     * @author [오지훈]
+//     * @implNote [Description 작성]
+//     * @since 2020. 8. 12. 오전 11:36:09
+//     */
+//    public String getPcImageUrl() {
+//        return CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
+//    }
+//
+//    /**
+//     * Gets mobile image url.
+//     *
+//     * @return the mobile image url
+//     * @author [오지훈]
+//     * @implNote [Description 작성]
+//     * @since 2020. 8. 12. 오전 11:36:11
+//     */
+//    public String getMobileImageUrl() {
+//        return CloudFrontUtil.getCustomSignedUrl(mobileImageFilePhysicalName);
+//    }
 
     /**
      * Save or update banner.
@@ -203,6 +227,7 @@ public class Banner extends BaseTimeEntity implements Serializable {
         this.mobileImageFilePhysicalName = bannerSaveDTO.getMobileImageFilePhysicalName();
         this.linkUrlTypeCode = bannerSaveDTO.getLinkUrlTypeCode();
         this.linkUrl = bannerSaveDTO.getLinkUrl();
+        this.useYn = ServiceCode.YesOrNoEnumCode.Y.name();
         return this;
     }
 
@@ -211,7 +236,7 @@ public class Banner extends BaseTimeEntity implements Serializable {
      *
      * @return the banner
      * @author [오지훈]
-     * @implNote 메인비주얼 삭
+     * @implNote 메인비주얼 삭제
      * @since 2020. 8. 11. 오후 12:01:07
      */
     public Banner delete () {

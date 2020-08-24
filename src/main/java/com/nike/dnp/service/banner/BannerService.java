@@ -1,14 +1,11 @@
 package com.nike.dnp.service.banner;
 
-import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.banner.BannerSaveDTO;
 import com.nike.dnp.entity.banner.Banner;
-import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.banner.BannerRepository;
 import com.nike.dnp.service.RedisService;
-import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -101,8 +98,7 @@ public class BannerService {
      * @implNote 배너 상세
      */
     public Banner findByBannerSeq(final Long bannerSeq) {
-        return this.findById(bannerSeq).orElseThrow(
-                () -> new NotFoundHandleException());
+        return this.findById(bannerSeq).orElseThrow(NotFoundHandleException::new);
     }
 
     /**
@@ -136,8 +132,18 @@ public class BannerService {
     @Transactional
     public Banner update (final Long bannerSeq, final BannerSaveDTO bannerSaveDTO) {
         final Banner banner = this.findByBannerSeq(bannerSeq);
-        bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
-        bannerSaveDTO.setMobileImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getMobileImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
+
+        if (bannerSaveDTO.getImageFilePhysicalName().contains("temp/")) {
+            bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
+        } else {
+            bannerSaveDTO.setImageFilePhysicalName(banner.getImageFilePhysicalName());
+        }
+        if (bannerSaveDTO.getMobileImageFilePhysicalName().contains("temp/")) {
+            bannerSaveDTO.setMobileImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getMobileImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
+        } else {
+            bannerSaveDTO.setMobileImageFilePhysicalName(banner.getMobileImageFilePhysicalName());
+        }
+
         banner.saveOrUpdate(bannerSaveDTO);
         redisService.delete(BANNER_REDIS_KEY);
         redisService.set(BANNER_REDIS_KEY, banner, 0);
@@ -150,7 +156,7 @@ public class BannerService {
      * @param bannerSeq the banner seq
      * @return the banner
      * @author [오지훈]
-     * @implNoe 배너 삭제
+     * @implNote 배너 삭제
      * @since 2020. 8. 11. 오후 12:01:46
      */
     @Transactional
