@@ -170,6 +170,8 @@ export default {
                 if (response.data.success) {
                     this.detailDataReset();
                     this.$router.push('/mypage/notice');
+                } else {
+                    alert(response.data.msg);
                 }
             } catch (error) {
                 console.log(error);
