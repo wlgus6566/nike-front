@@ -1,6 +1,7 @@
 package com.nike.dnp.controller.open;
 
 import com.nike.dnp.common.aspect.ValidField;
+import com.nike.dnp.common.validation.ValidationGroups;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.SuccessCode;
 import com.nike.dnp.dto.user.UserCertDTO;
@@ -23,8 +24,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
-
-import javax.validation.Valid;
 
 /**
  * The Class Login controller.
@@ -81,7 +80,7 @@ public class OpenLoginController {
     @GetMapping(name = "ID 확인, 인증코드 생성 및 비밀번호 설정 이메일 발송", value = "/send/cert")
     @ValidField
     public SingleResult<String> sendCert (
-            @ModelAttribute @Valid final UserIdDTO userIdDTO
+            @ModelAttribute @Validated({ValidationGroups.Group1.class, ValidationGroups.Group2.class}) final UserIdDTO userIdDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserController.sendCert");
 
@@ -93,7 +92,7 @@ public class OpenLoginController {
         );
 
         return responseService.getSingleResult(
-                userMailService.sendMailForSetPassword(user)
+                userMailService.sendMailForSetPassword(user, userIdDTO.getPlatform())
                 , SuccessCode.ConfigureSuccess.SEND_EMAIL.name()
                 , MessageUtil.getMessage(SuccessCode.ConfigureSuccess.SEND_EMAIL.name())
                 , true

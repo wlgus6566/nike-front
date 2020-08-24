@@ -38,7 +38,7 @@ public class AuthUpdateDTO {
     @ApiModelProperty(name = "menuRoleSeqArray", value = "메뉴 역할 시퀀스 배열")
     private Long[] menuRoleSeqArray;
 
-    //TODO[ojh] 2020-07-13 : 이번엔 안하는걸로~
+    // 이번엔 안하는걸로~
     /*
     @ApiModelProperty(name = "insertMenuRoleSeqArray", value = "등록 메뉴 역할 시퀀스 배열")
     Long[] insertMenuRoleSeqArray;

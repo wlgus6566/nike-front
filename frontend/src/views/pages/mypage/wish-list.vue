@@ -289,9 +289,7 @@ export default {
             }
         },
     },
-    created() {
-        // this.$store.dispatch('basketList');
-    },
+    created() {},
 };
 </script>
 

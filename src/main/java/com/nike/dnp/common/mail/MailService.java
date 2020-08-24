@@ -66,19 +66,9 @@ public class MailService {
         String result = "";
         try {
             final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new ClassPathResource("templates/email/NIKESPACE_"+emailType+".html").getInputStream()));
-            /*String inputLine;
-            final StringBuilder response = new StringBuilder();
-            while ((inputLine = bufferedReader.readLine()) != null) {
-                response.append(inputLine);
-            }*/
-            //TODO[ojh] 2020-07-21 : 기능 작동하는지 확인 안될 경우 위의 주석 해제
             final String response = bufferedReader.lines().collect(Collectors.joining());
             result = response;
             bufferedReader.close();
-
-
-
-
         } catch (IOException exception) {
             log.error("exception", exception);
         }
@@ -108,8 +98,8 @@ public class MailService {
                 ) {
                     result = result.replace("["+ field.getName() +"]", (String) field.get(sendDTO));
                 }
-            } catch (IllegalAccessException e) {
-                log.error("exception", e);
+            } catch (IllegalAccessException exception) {
+                log.error("exception", exception);
             }
         }
         return result;

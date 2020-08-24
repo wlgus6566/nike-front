@@ -1,5 +1,7 @@
 package com.nike.dnp.dto.user;
 
+import com.nike.dnp.common.validation.ValidationGroups;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.*;
 
@@ -25,8 +27,17 @@ public class UserIdDTO {
      *
      * @author [오지훈]
      */
-    @NotBlank(message = "user.userId")
+    @NotBlank(message = "user.userId", groups = {ValidationGroups.Group1.class})
     @ApiParam(value = "유저 ID", name = "userId", required = true, defaultValue = "test@nike.co.kr")
     private String userId;
+
+    /**
+     * 접속 platform
+     *
+     * @author [오지훈]
+     */
+    @NotBlank(message = "userCert.platform", groups = {ValidationGroups.Group2.class})
+    @ApiModelProperty(value = "접속 platform", name = "platform", required = true, example = "PC", allowableValues = "PC,MOBILE")
+    private String platform;
 
 }

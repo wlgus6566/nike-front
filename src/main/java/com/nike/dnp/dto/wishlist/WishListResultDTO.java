@@ -4,6 +4,7 @@ import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.entity.wishlist.WishList;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.util.ObjectUtils;
 
 /**
  * The Class Wish list result dto.
@@ -62,9 +63,11 @@ public class WishListResultDTO {
 	 */
 	public static WishListResultDTO ofSave(final WishList wishList) {
 		final WishListResultDTO result = new WishListResultDTO();
-		result.setGoodsSeq(wishList.getGoodsSeq());
-		result.setWishListSeq(wishList.getWishListSeq());
-		result.setUserSeq(wishList.getUserSeq());
+		if(!ObjectUtils.isEmpty(wishList)){
+			result.setGoodsSeq(wishList.getGoodsSeq());
+			result.setWishListSeq(wishList.getWishListSeq());
+			result.setUserSeq(wishList.getUserSeq());
+		}
 		return result;
 	}
 }

@@ -147,9 +147,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		/*SecureRandom secureRandom = new SecureRandom();
-		secureRandom.setSeed(100100);
-		return new BCryptPasswordEncoder(10,secureRandom);*/
 		return new BCryptPasswordEncoder();
 	}
 
@@ -171,8 +168,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/api/download" // 임시
 				, "/error" // 에러
 				// ,"/swagger-ui/**","/v3/**" //swagger 3.0 임시
-				,"/api/open/**"
+				//,"/api/open/**"
 		};
+
 		web.ignoring().antMatchers(staticPatterns);
 	}
 
@@ -188,8 +186,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.accessDecisionManager(accessDecisionManager())
 				.antMatchers(HttpMethod.POST,"/api/login").permitAll()
+				.antMatchers("/api/open/**").permitAll()
 				// TODO[lsj] "/api/alarm/**", "/api/open/**" 는 원래 위에 있어야 하는데 위에 cors에러 발생하여 임시 추가 2020.08.21
-				.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**", "/api/open/**").authenticated()
+				.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**").authenticated()
 				.anyRequest().authenticated();
 
 		http.addFilter(authenticationFilter()) // 인증 필터
@@ -212,6 +211,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		//개발 설정
+		configuration.addAllowedOrigin("https://devapi.nikespace.co.kr/");
 		configuration.addAllowedOrigin("https://devwww.nikespace.co.kr");
 		configuration.addAllowedOrigin("http://devwww.nikespace.co.kr");
 		//운영 설정

@@ -16,7 +16,6 @@ spring:
   redis:
     host: nike-test-redis-a.f5zylx.ng.0001.apn2.cache.amazonaws.com
     port: 6379
-    #password: 2motion1!!
     cache:
       redis:
         cache-null-values: false
@@ -39,6 +38,13 @@ security:
 
 #임시경로
 nike:
+  url:
+    pc:
+      login: 'https://devwww.nikespace.co.kr/login'
+      password: 'https://devwww.nikespace.co.kr/password-set'
+    mobile:
+      login: 'https://devwww.nikespace.co.kr/login'
+      password: 'https://devwww.nikespace.co.kr/password-set'
   file:
     root: '/home/ec2-user/file_temp'
     imageMagick: '/usr/bin'

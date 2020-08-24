@@ -57,7 +57,10 @@ import { getContents } from '@/api/contents.js';
 export default {
     name: 'folder-list',
     watch: {
-        'listSortSelect.value'() {
+        'listSortSelect.value'(val) {
+            if (val === '') {
+                this.listSortSelect.value = 'LATEST';
+            }
             this.initFetchData();
         },
     },

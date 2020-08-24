@@ -63,7 +63,6 @@ public class UserCertDTO {
     @ApiModelProperty(value = "새 비밀번호(확인)", name = "confirmPassword", example = "Emotion1!@")
     private String confirmPassword;
 
-
     /**
      * The interface Set password.
      *

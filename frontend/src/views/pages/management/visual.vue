@@ -45,9 +45,17 @@
                                 />
                                 <span class="thumb">
                                     <img
+                                        :src="bannerData.pcImageUrl"
+                                        :alt="bannerData.imageFileName"
+                                        v-if="bannerData.pcImageUrl"
+                                    />
+                                    <img
                                         :src="bannerData.imageFilePhysicalName"
                                         :alt="bannerData.imageFileName"
-                                        v-if="bannerData.imageFilePhysicalName"
+                                        v-if="
+                                            !bannerData.pcImageUrl &&
+                                            bannerData.imageFilePhysicalName
+                                        "
                                     />
                                 </span>
                                 <span class="txt">
@@ -72,11 +80,17 @@
                                 />
                                 <span class="thumb">
                                     <img
+                                        :src="bannerData.mobileImageUrl"
+                                        :alt="bannerData.mobileImageFileName"
+                                        v-if="bannerData.mobileImageUrl"
+                                    />
+                                    <img
                                         :src="
                                             bannerData.mobileImageFilePhysicalName
                                         "
                                         :alt="bannerData.mobileImageFileName"
                                         v-if="
+                                            !bannerData.mobileImageUrl &&
                                             bannerData.mobileImageFilePhysicalName
                                         "
                                     />
@@ -143,7 +157,7 @@
     </div>
 </template>
 <script>
-import { getBanner, postBanner } from '@/api/banner';
+import { getBanner, postBanner, putBanner } from '@/api/banner';
 import { fileUpLoad } from '@/api/file';
 export default {
     name: 'visual',
@@ -170,6 +184,7 @@ export default {
                 name: 'url',
                 value: 'ASSET',
             },
+            detailData: false,
         };
     },
     components: {},
@@ -181,10 +196,16 @@ export default {
                 this.bannerData.linkUrlTypeCode = val;
             }
         },
+        bannerData() {
+            this.detailData = true;
+        },
         'bannerData.linkUrlTypeCode'(val) {
             if (val !== 'ASEET') {
                 this.urlCheck.value = 'N';
             }
+        },
+        pcFormFile(val) {
+            console.log(val);
         },
     },
     created() {
@@ -196,6 +217,7 @@ export default {
         imageChange(e, device) {
             this.uploadFiles(e.target.files[0], device);
             if (device === 'pc') {
+                console.log(device);
                 const imaName = e.target.files[0].name;
                 const reader = new FileReader();
                 reader.onloadend = () => {
@@ -209,6 +231,7 @@ export default {
                     this.bannerData.imageFileName = '';
                 }
             } else {
+                console.log(device);
                 const imaName = e.target.files[0].name;
                 const reader = new FileReader();
                 reader.onloadend = () => {
@@ -247,33 +270,129 @@ export default {
 
         //배너 등록
         async addBanner() {
-            try {
-                const response = await postBanner({
-                    contents: this.bannerData.contents,
-                    imageFileName: this.pcFormFile.detailThumbnailFileName,
-                    imageFilePhysicalName: this.pcFormFile
-                        .detailThumbnailFilePhysicalName,
-                    imageFileSize: this.pcFormFile.detailThumbnailFileSize,
-                    linkUrl: this.bannerData.linkUrl,
-                    linkUrlTypeCode: this.bannerData.linkUrlTypeCode,
-                    mobileImageFileName: this.moFormFile
-                        .detailThumbnailFileName,
-                    mobileImageFilePhysicalName: this.moFormFile
-                        .detailThumbnailFilePhysicalName,
-                    mobileImageFileSize: this.moFormFile.fileSize,
-                    title: this.bannerData.title,
-                });
-                alert(response.data.msg);
-                if (response.data.success) {
-                    await this.$router.push('/');
+            if (!this.detailData) {
+                try {
+                    const response = await postBanner({
+                        contents: this.bannerData.contents,
+                        imageFileName: this.pcFormFile.fileName,
+                        imageFilePhysicalName: this.pcFormFile.filePhysicalName,
+                        imageFileSize: this.pcFormFile.fileSize,
+                        linkUrl: this.bannerData.linkUrl,
+                        linkUrlTypeCode: this.bannerData.linkUrlTypeCode,
+                        mobileImageFileName: this.moFormFile.fileName,
+                        mobileImageFilePhysicalName: this.moFormFile
+                            .filePhysicalName,
+                        mobileImageFileSize: this.moFormFile.fileSize,
+                        title: this.bannerData.title,
+                    });
+                    alert(response.data.msg);
+                    if (response.data.success) {
+                        await this.$router.push('/');
+                    }
+                } catch (error) {
+                    console.log(error);
+                    if (error.data.existMsg) {
+                        alert(error.data.msg);
+                    }
                 }
-            } catch (error) {
-                console.log(error);
-                if (error.data.existMsg) {
-                    alert(error.data.msg);
+            } else {
+                try {
+                    let modifyData = {};
+                    if (
+                        this.moFormFile.length === 0 &&
+                        this.pcFormFile.length === 0
+                    ) {
+                        console.log('pc , mo 이미지가 등록되지 않음');
+                        modifyData = {
+                            contents: this.bannerData.contents,
+                            imageFileName: this.bannerData.imageFileName,
+                            imageFilePhysicalName: this.bannerData
+                                .imageFilePhysicalName,
+                            imageFileSize: this.bannerData.imageFileSize,
+                            linkUrl: this.bannerData.linkUrl,
+                            linkUrlTypeCode: this.bannerData.linkUrlTypeCode,
+                            mobileImageFileName: this.bannerData
+                                .mobileImageFileName,
+                            mobileImageFilePhysicalName: this.bannerData
+                                .mobileImageFilePhysicalName,
+                            mobileImageFileSize: this.bannerData
+                                .mobileImageFileSize,
+                            title: this.bannerData.title,
+                        };
+                    } else if (this.pcFormFile.length === 0) {
+                        console.log('pc이미지가 등록되지 않음');
+                        modifyData = {
+                            contents: this.bannerData.contents,
+                            imageFileName: this.bannerData.imageFileName,
+                            imageFilePhysicalName: this.bannerData
+                                .imageFilePhysicalName,
+                            imageFileSize: this.bannerData.imageFileSize,
+                            linkUrl: this.bannerData.linkUrl,
+                            linkUrlTypeCode: this.bannerData.linkUrlTypeCode,
+                            mobileImageFileName: this.moFormFile
+                                .detailThumbnailFileName,
+                            mobileImageFilePhysicalName: this.moFormFile
+                                .detailThumbnailFilePhysicalName,
+                            mobileImageFileSize: this.moFormFile.fileSize,
+                            title: this.bannerData.title,
+                        };
+                    } else if (this.moFormFile.length === 0) {
+                        console.log('mo이미지가 등록되지 않음');
+                        modifyData = {
+                            contents: this.bannerData.contents,
+                            imageFileName: this.pcFormFile
+                                .detailThumbnailFileName,
+                            imageFilePhysicalName: this.pcFormFile
+                                .detailThumbnailFilePhysicalName,
+                            imageFileSize: this.pcFormFile
+                                .detailThumbnailFileSize,
+                            linkUrl: this.bannerData.linkUrl,
+                            linkUrlTypeCode: this.bannerData.linkUrlTypeCode,
+                            mobileImageFileName: this.bannerData
+                                .mobileImageFileName,
+                            mobileImageFilePhysicalName: this.bannerData
+                                .mobileImageFilePhysicalName,
+                            mobileImageFileSize: this.bannerData
+                                .mobileImageFileSize,
+                            title: this.bannerData.title,
+                        };
+                    } else {
+                        console.log('이미지가 전부 변경됨');
+                        modifyData = {
+                            contents: this.bannerData.contents,
+                            imageFileName: this.pcFormFile.fileName,
+                            imageFilePhysicalName: this.pcFormFile
+                                .filePhysicalName,
+                            imageFileSize: this.pcFormFile.fileSize,
+                            linkUrl: this.bannerData.linkUrl,
+                            linkUrlTypeCode: this.bannerData.linkUrlTypeCode,
+                            mobileImageFileName: this.moFormFile.fileName,
+                            mobileImageFilePhysicalName: this.moFormFile
+                                .filePhysicalName,
+                            mobileImageFileSize: this.moFormFile.fileSize,
+                            title: this.bannerData.title,
+                        };
+                    }
+                    console.log(modifyData);
+                    const response = await putBanner(
+                        this.bannerData.bannerSeq,
+                        {
+                            modifyData,
+                        }
+                    );
+                    alert(response.data.msg);
+                    if (response.data.success) {
+                        await this.$router.push('/');
+                    }
+                } catch (error) {
+                    console.log(error);
+                    if (error.data.existMsg) {
+                        alert(error.data.msg);
+                    }
                 }
             }
         },
+
         //배너 상세
         async detailBanner() {
             try {

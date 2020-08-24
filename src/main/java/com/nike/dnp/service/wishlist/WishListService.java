@@ -2,6 +2,7 @@ package com.nike.dnp.service.wishlist;
 
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.wishlist.WishListDeleteDTO;
+import com.nike.dnp.dto.wishlist.WishListSaveDTO;
 import com.nike.dnp.dto.wishlist.WishListSearchDTO;
 import com.nike.dnp.entity.wishlist.WishList;
 import com.nike.dnp.exception.CodeMessageHandleException;
@@ -101,7 +102,7 @@ public class WishListService {
 	}
 
 	/**
-	 * 위시리스트 리스트 삭제
+	 * 다건 위시리스트 리스트 삭제
 	 *
 	 * @param wishListDeleteDTO the wish list delete dto
 	 * @author [윤태호]
@@ -111,7 +112,8 @@ public class WishListService {
 	@Transactional
 	public void deleteList(final WishListDeleteDTO wishListDeleteDTO) {
 		log.info("WishListService.deleteList");
-		final List<WishList> wishListList = wishListRepository.findAllById(wishListDeleteDTO.getWishListSeqList());
+//		final List<WishList> wishListList = wishListRepository.findAllById(wishListDeleteDTO.getWishListSeqList());
+		final List<WishList> wishListList = wishListRepository.findAllByGoodsSeqInAndRegisterSeq(wishListDeleteDTO.getGoodsSeqList(), SecurityUtil.currentUser().getUserSeq());
 		wishListList.forEach(wishList -> {
 			if(wishList.getUserSeq().equals(SecurityUtil.currentUser().getUserSeq())){
 				wishListRepository.delete(wishList);
@@ -133,5 +135,18 @@ public class WishListService {
 		final List<WishList> byRegistrationDtAfter =
 				wishListRepository.findByRegistrationDtBefore(LocalDateTime.of(LocalDate.now().plusDays(-7), LocalTime.of(0,0,0)));
 		wishListRepository.deleteAll(byRegistrationDtAfter);
+	}
+
+	/**
+	 * 위시리스트 등록 상품 확인
+	 *
+	 * @param wishListSaveDTO the wish list save dto
+	 * @return the wish list
+	 * @author [윤태호]
+	 * @implNote
+	 * @since 2020. 8. 24. 오후 2:28:58
+	 */
+	public WishList findByGoodSeq(WishListSaveDTO wishListSaveDTO) {
+		return wishListRepository.findByGoodsSeqAndRegisterSeq(wishListSaveDTO.getGoodsSeq(),SecurityUtil.currentUser().getUserSeq());
 	}
 }

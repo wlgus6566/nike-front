@@ -89,6 +89,25 @@ public class WishListController {
 		return responseService.getSingleResult(WishListResultDTO.ofSave(wishListService.save(wishListSaveDTO.getGoodsSeq())));
 	}
 
+
+	/**
+	 * 위시리스트 중복 체크
+	 *
+	 * @param wishListSaveDTO the wish list save dto
+	 * @param result          the result
+	 * @return the single result
+	 * @author [윤태호]
+	 * @apiNote 위시리스트 등록
+	 * @since 2020. 7. 3. 오후 3:38:34
+	 */
+	@ApiOperation(value = "위시리스트 등록", notes = BASIC_CHARACTER)
+	@GetMapping(value = "/wishlist/check", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ValidField
+	public SingleResult<WishListResultDTO> chackWishList(@Valid @ModelAttribute final WishListSaveDTO wishListSaveDTO, @ApiIgnore final BindingResult result) {
+		log.info("WishListController.chackWishList");
+		return responseService.getSingleResult(WishListResultDTO.ofSave(wishListService.findByGoodSeq(wishListSaveDTO)));
+	}
+
 	/**
 	 * 위시 리스트 조회
 	 *
