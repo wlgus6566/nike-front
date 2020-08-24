@@ -74,6 +74,7 @@ export default {
                         component: 'ContentFoundation',
                     },
                 ],
+                showIndex: 0,
             },
             deleteLoading: [],
         };
