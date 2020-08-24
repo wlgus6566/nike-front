@@ -62,8 +62,10 @@ public class BannerService {
      * @implNote 배너 상세(캐시)
      */
     public Banner getBanner() {
-        final Banner banner = (Banner) redisService.get(BANNER_REDIS_KEY);
-        return ObjectUtils.isEmpty(banner) ? bannerRepository.findAllByUseYnOrderByUpdateDt(ServiceCode.YesOrNoEnumCode.Y.name()).get(0) : banner;
+        // TODO error발생 임시 주석 sojeong.lee 2020.08.24
+//        final Banner banner = (Banner) redisService.get(BANNER_REDIS_KEY);
+//        return ObjectUtils.isEmpty(banner) ? bannerRepository.findAllByUseYnOrderByUpdateDt(ServiceCode.YesOrNoEnumCode.Y.name()).get(0) : banner;
+        return bannerRepository.findAllByUseYnOrderByUpdateDt(ServiceCode.YesOrNoEnumCode.Y.name()).get(0);
     }
 
     /**
