@@ -51,7 +51,7 @@ export default {
             input.style.width = `${
                 Math.ceil(widthGuideTxt.offsetWidth) + 30
             }px`;
-            widthGuideTxt.remove();
+            widthGuideTxt.parentNode.removeChild(widthGuideTxt);
         },
     },
     mounted() {

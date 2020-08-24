@@ -323,6 +323,9 @@ export default {
         ModalAuth,
     },
     created() {
+        this.menuCode = this.folderSet[
+            this.$route.meta.topMenuCode.toLowerCase()
+        ].menuCode[0];
         if (this.$route.params.id) {
             this.getFolderDetail();
         }

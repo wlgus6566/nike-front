@@ -3801,7 +3801,6 @@
     background-size: 100%;
 }
 .folder-item .thumbnail img {
-    display: none;
     position: absolute;
     top: 50%;
     left: 50%;
