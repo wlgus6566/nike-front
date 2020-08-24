@@ -86,9 +86,7 @@ export default {
                 return;
             }
 
-            console.log(file);
-
-            const com = new Compress()
+            new Compress()
                 .compress([file], {
                     size: 4, // the max size in MB, defaults to 2MB
                     quality: 1, // the quality of the image, max is 1,
@@ -101,13 +99,11 @@ export default {
                     let url = `${data[0].prefix}${data[0].data}`;
                     this.imgSrc = url;
                     this.imgName = file.name;
-                    console.log(this.$refs.cModal.$refs);
                     this.$refs.cModal.$refs.cropper.replace(url);
                 })
                 .catch((e) => {
                     console.log(e);
                 });
-            console.log(com);
         },
         popupOpen() {
             this.visible.cropperModal = true;

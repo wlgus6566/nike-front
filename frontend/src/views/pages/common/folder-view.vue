@@ -351,6 +351,7 @@ export default {
                         fileExtension: this.fileExtension.value,
                     }
                 );
+                console.log(response);
                 this.totalPage = response.totalPages - 1;
                 if (infinite) {
                     this.contentsFileList = this.contentsFileList.concat(
@@ -386,6 +387,11 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
+        if (this.$store.state.reload) {
+            this.getFolderDetail();
+            this.initFetchData();
+            this.$store.commit('SET_RELOAD', false);
+        }
         window.addEventListener('scroll', this.handleScroll);
     },
     deactivated() {

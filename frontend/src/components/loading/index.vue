@@ -24,7 +24,7 @@ export default {
     methods: {
         handleAnimation: function (anim) {
             this.anim = anim;
-            console.log(this.anim);
+            this.anim.setSpeed(0.5);
         },
 
         stop: function () {

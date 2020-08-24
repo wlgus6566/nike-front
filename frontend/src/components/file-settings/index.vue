@@ -177,6 +177,8 @@ export default {
                     try {
                         const formData = new FormData();
                         formData.append('uploadFile', el);
+                        console.log(el);
+                        console.log(formData);
                         const config = {
                             onUploadProgress: (progressEvent) => {
                                 const percentCompleted = Math.round(
@@ -199,7 +201,6 @@ export default {
                         if (response.existMsg) {
                             alert(response.msg);
                         }
-                        console.log(response);
                         this.FileList.forEach((item, idx, array) => {
                             if (
                                 item.fileName === el.name &&
@@ -212,7 +213,7 @@ export default {
                                     progress: 100,
                                     title: '',
                                     url: '',
-                                    ...response,
+                                    ...response.data.data,
                                 };
                                 this.emitFileList();
                             }
@@ -222,6 +223,7 @@ export default {
                     }
                 })
             );
+            this.uploadFile = [];
             this.$emit('submitForm');
         },
         fileAdd() {
