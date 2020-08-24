@@ -2080,6 +2080,7 @@
     border: 1px solid #ddd;
     font-size: 14px;
     width: 100%;
+    line-height: 18px;
 }
 .table .input-box::placeholder {
     font-family: 'Noto Sans KR', sans-serif;
@@ -3236,7 +3237,7 @@
     background-image: url('../images/svg/illust-page-folder-order-none.svg');
 }
 .no-data .icon-search {
-    background-image: url('../images/svg/illust-page-folder-wish-none.svg');
+    background-image: url('../images/svg/illust-page-search-none.svg');
 }
 .no-data .icon-order {
     background-image: url('../images/svg/illust-page-folder-order-none.svg');

@@ -54,7 +54,15 @@
                                     @click="delAlarmData(item.alarmSeq)"
                                 >
                                     <router-link :to="setUrl(item)" class="txt">
-                                        {{ item.folderName }}이(가) 업데이트
+                                        <em
+                                            v-if="
+                                                item.typeCd !== 'REPORT_MANAGE'
+                                            "
+                                        >
+                                            {{ item.typeCd }}
+                                        </em>
+                                        <em v-else>REPORT</em>
+                                        ({{ item.folderName }})이(가) 업데이트
                                         되었습니다.
                                         <span class="date">
                                             {{ item.registrationDt }}
@@ -105,6 +113,7 @@ export default {
             alarmActive: false,
             totalPage: 0,
             loadingData: false,
+            folderName: '',
         };
     },
     mounted() {
@@ -141,7 +150,7 @@ export default {
         },
         alarmClose() {
             this.alarmActive = false;
-            this.$refs.alarm.style.height = '0'
+            this.$refs.alarm.style.height = '0';
         },
         logout() {
             this.$store.commit('LOGOUT');

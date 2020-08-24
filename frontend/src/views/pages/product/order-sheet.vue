@@ -139,9 +139,6 @@ export default {
 .modal-wrap .el-scrollbar__wrap {
     max-height: 80vh;
 }
-.el-dialog {
-    width: 600px;
-}
 .form-desc {
     margin-top: 5px;
     font-size: 10px;

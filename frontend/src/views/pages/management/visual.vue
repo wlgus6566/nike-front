@@ -143,7 +143,7 @@
     </div>
 </template>
 <script>
-import { getBanner, postBanner } from '@/api/banner';
+import { getBanner, postBanner, putBanner } from '@/api/banner';
 import { fileUpLoad } from '@/api/file';
 export default {
     name: 'visual',
@@ -170,6 +170,7 @@ export default {
                 name: 'url',
                 value: 'ASSET',
             },
+            detailData: false,
         };
     },
     components: {},
@@ -180,6 +181,9 @@ export default {
             } else {
                 this.bannerData.linkUrlTypeCode = val;
             }
+        },
+        bannerData() {
+            this.detailData = true;
         },
         'bannerData.linkUrlTypeCode'(val) {
             if (val !== 'ASEET') {
@@ -247,33 +251,70 @@ export default {
 
         //배너 등록
         async addBanner() {
-            try {
-                const response = await postBanner({
-                    contents: this.bannerData.contents,
-                    imageFileName: this.pcFormFile.detailThumbnailFileName,
-                    imageFilePhysicalName: this.pcFormFile
-                        .detailThumbnailFilePhysicalName,
-                    imageFileSize: this.pcFormFile.detailThumbnailFileSize,
-                    linkUrl: this.bannerData.linkUrl,
-                    linkUrlTypeCode: this.bannerData.linkUrlTypeCode,
-                    mobileImageFileName: this.moFormFile
-                        .detailThumbnailFileName,
-                    mobileImageFilePhysicalName: this.moFormFile
-                        .detailThumbnailFilePhysicalName,
-                    mobileImageFileSize: this.moFormFile.fileSize,
-                    title: this.bannerData.title,
-                });
-                alert(response.data.msg);
-                if (response.data.success) {
-                    await this.$router.push('/');
+            if (!this.detailData) {
+                console.log(2);
+                try {
+                    const response = await postBanner({
+                        contents: this.bannerData.contents,
+                        imageFileName: this.pcFormFile.detailThumbnailFileName,
+                        imageFilePhysicalName: this.pcFormFile
+                            .detailThumbnailFilePhysicalName,
+                        imageFileSize: this.pcFormFile.detailThumbnailFileSize,
+                        linkUrl: this.bannerData.linkUrl,
+                        linkUrlTypeCode: this.bannerData.linkUrlTypeCode,
+                        mobileImageFileName: this.moFormFile
+                            .detailThumbnailFileName,
+                        mobileImageFilePhysicalName: this.moFormFile
+                            .detailThumbnailFilePhysicalName,
+                        mobileImageFileSize: this.moFormFile.fileSize,
+                        title: this.bannerData.title,
+                    });
+                    alert(response.data.msg);
+                    if (response.data.success) {
+                        await this.$router.push('/');
+                    }
+                } catch (error) {
+                    console.log(error);
+                    if (error.data.existMsg) {
+                        alert(error.data.msg);
+                    }
                 }
-            } catch (error) {
-                console.log(error);
-                if (error.data.existMsg) {
-                    alert(error.data.msg);
+            } else {
+                try {
+                    console.log(1);
+                    const response = await putBanner(
+                        this.bannerData.bannerSeq,
+                        {
+                            contents: this.bannerData.contents,
+                            imageFileName: this.pcFormFile
+                                .detailThumbnailFileName,
+                            imageFilePhysicalName: this.pcFormFile
+                                .detailThumbnailFilePhysicalName,
+                            imageFileSize: this.pcFormFile
+                                .detailThumbnailFileSize,
+                            linkUrl: this.bannerData.linkUrl,
+                            linkUrlTypeCode: this.bannerData.linkUrlTypeCode,
+                            mobileImageFileName: this.moFormFile
+                                .detailThumbnailFileName,
+                            mobileImageFilePhysicalName: this.moFormFile
+                                .detailThumbnailFilePhysicalName,
+                            mobileImageFileSize: this.moFormFile.fileSize,
+                            title: this.bannerData.title,
+                        }
+                    );
+                    alert(response.data.msg);
+                    if (response.data.success) {
+                        await this.$router.push('/');
+                    }
+                } catch (error) {
+                    console.log(error);
+                    if (error.data.existMsg) {
+                        alert(error.data.msg);
+                    }
                 }
             }
         },
+
         //배너 상세
         async detailBanner() {
             try {
