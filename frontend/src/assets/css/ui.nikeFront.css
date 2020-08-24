@@ -18,7 +18,7 @@
 }
 
 .bebas {
-    font-family: 'Bebas Neue', sans-serif !important;
+    font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif !important;
     letter-spacing: 0.5px;
 }
 /* align */
@@ -40,6 +40,10 @@
 }
 .fc-black {
     color: #000 !important;
+}
+.bebas {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.5px;
 }
 .img-cropper {
     width: 398px;
@@ -248,9 +252,10 @@
     height: 20px;
     background: no-repeat center;
 }
-/*[class^='btn-'] .icon-mail {*/
-/*    background-image: url('../images/svg/icon-alarm-mail.svg');*/
-/*}*/
+[class^='btn-'] .icon-mail {
+    background-image: url('../images/svg/icon-mail-send.svg');
+    margin-left: 5px;
+}
 [class^='btn-'] .icon-check {
     background-image: url('../images/svg/icon-btn-check.svg');
 }
@@ -270,7 +275,8 @@
     display: inline-block;
     border-bottom: 1px solid #888;
     border-radius: 0;
-    line-height: 18px;
+    height: 18px;
+    line-height: 14px;
     font-size: 12px;
     color: #888;
     font-weight: bold;
@@ -1225,6 +1231,7 @@
 }
 .file-setting .form-column {
     padding-left: 0;
+    align-items: center;
 }
 .file-setting .btn-del {
     position: absolute;
@@ -1798,6 +1805,7 @@
     position: relative;
     margin: 0 0 0 15px;
 }
+.all-box .check-label + .txt-btn::before,
 .all-box .check-label + .txt-btn:before {
     position: absolute;
     top: 50%;
@@ -1808,6 +1816,7 @@
     height: 10px;
     margin-top: -5px;
     background: #ddd;
+    overflow: visible;
 }
 .all-box .el-checkbox + .desc {
     padding: 0 0 0 15px;
@@ -2477,12 +2486,17 @@
     font-size: 14px;
     line-height: 20px;
     color: #888;
+    font-weight: 100;
 }
 .upload-summury [class^='btn-'] {
     position: absolute;
     top: 50%;
     right: 50px;
     transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.5px;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 .news-list {
