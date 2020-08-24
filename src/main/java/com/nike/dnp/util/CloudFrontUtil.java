@@ -197,7 +197,7 @@ public class CloudFrontUtil {
 
         try {
             Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-            final String policyResourcePath = "https://" + DISTRIBUTION_DOMAIN + "/" +  newObjectKey;
+            final String policyResourcePath = "https://" + DISTRIBUTION_DOMAIN + "/" + newObjectKey;
             //final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(new FileInputStream(PRIVATE_KEY_FILE_PATH));
             final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(Files.newInputStream(Paths.get(PRIVATE_KEY_FILE_PATH)));
 

@@ -1,10 +1,10 @@
 package com.nike.dnp.dto.main;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nike.dnp.dto.banner.BannerReturnDTO;
 import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.notice.CustomerListDTO;
 import com.nike.dnp.dto.report.ReportResultDTO;
-import com.nike.dnp.entity.banner.Banner;
 import lombok.*;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class MainResultDTO {
      *
      * @author [이소정]
      */
-    private Banner mainVisual;
+    private BannerReturnDTO mainVisual;
 
     /**
      * The Asset contents list
