@@ -206,19 +206,40 @@ import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import momentPlugin from '@fullcalendar/moment'
+import timeGridPlugin from '@fullcalendar/timegrid'
+
+// const EventClass = Vue.extend(Event)
 
 export default {
     name: 'MainPage',
     data() {
         return {
             mainData: [],
+            eventsObj: {},
             yyyyMm: moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
-                plugins: [dayGridPlugin, interactionPlugin, momentPlugin ],
+                plugins: [dayGridPlugin, interactionPlugin, momentPlugin, timeGridPlugin ],
                 initialView: 'dayGridMonth',
                 dateClick: this.handleDateClick,
                 height: 500,
                 events: [],
+                // eventClassNames: function (event, element) {
+                //     console.log('d', event);
+                //     console.log('element : ', element);
+                //     // element.addClass(event.class)
+                //     // info.el.setAttribute('data-vue-id', event._uid);
+                //     // info.el.appendChild(event.$el)
+                // },
+                eventClassNames: [ 'aaaaaaaaaaaaaaaaa', 'bbbbbbbbbbbbbbbb' ],
+                eventDidMount: function(info) {
+                    console.log(info.event.extendedProps);
+                    // {description: "Lecture", department: "BioChemistry"}
+                },
+                eventRender: function(event, element) {
+                    if (event.allDay) {
+                        element.addClass('all-day-event');
+                    }
+                },
                 headerToolbar: {
                     left: 'prev',
                     center: 'title',
@@ -307,7 +328,8 @@ export default {
                     description: item.contents,
                     start: moment(item.beginDt).format('YYYY-MM-DD'),
                     end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
-                    color: color
+                    color: color,
+                    className: 'dfdfdfdfdfdfdfddfd'
                 });
             });
         },
@@ -320,6 +342,7 @@ export default {
 </script>
 <style scoped>
 /* main */
+
 .main-banner {
     display: block;
 }
