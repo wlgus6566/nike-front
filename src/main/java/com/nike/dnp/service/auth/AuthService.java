@@ -434,8 +434,7 @@ public class AuthService {
             this.setAuthsMenusByRoleType(roleType);
         }
 
-        //TODO[ojh] 2020-07-13 : 등록/삭제 시퀀스배열이 따로 올 경우
-        //TODO[ojh] 2020-07-13 : 이번엔 안하는걸로~
+        // 등록/삭제 시퀀스배열이 따로 올 경우 > 이번엔 안하는걸로~
         /*if (auth.isPresent()) {
             if (authUpdateDTO.getDeleteMenuRoleSeqArray().length > 0) {
                 authMenuRoleRepository.deleteAllByMenuRoleSeqArray(authSeq, authUpdateDTO.getDeleteMenuRoleSeqArray());

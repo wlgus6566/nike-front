@@ -1,7 +1,6 @@
 package com.nike.dnp.controller.mypage;
 
 import com.nike.dnp.common.aspect.ValidField;
-import com.nike.dnp.common.validation.ValidationGroups;
 import com.nike.dnp.common.variable.SuccessCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.menu.MenuReturnDTO;
@@ -106,6 +105,23 @@ public class MyPageUserController {
     }
 
     /**
+     * Gets user session init.
+     *
+     * @return the user session init
+     * @author [오지훈]
+     * @implNote USER 세션 갱신
+     * @since 2020. 8. 14. 오후 1:51:47
+     */
+    @ApiOperation(value = "USER 세션 갱신"
+            , notes = OPERATION_CHARACTER)
+    @GetMapping(name = "USER 세션 갱신", value = "/init"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<Boolean> getUserSessionInit () {
+        log.info("UserMyPageController.getUserSessionInit");
+        return responseService.getSingleResult(true);
+    }
+
+    /**
      * Change password single result.
      *
      * @param authUserDTO the auth user dto
@@ -124,8 +140,7 @@ public class MyPageUserController {
     @ValidField
     public SingleResult<UserResultDTO> changePassword (
             @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO
-            , @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody
-                @Validated({ValidationGroups.Group1.class, ValidationGroups.Group2.class}) final UserCertDTO userCertDTO
+            , @ApiParam(value = "유저 인증코드 DTO", required = true) @RequestBody @Validated({UserCertDTO.MyChangePassword.class}) final UserCertDTO userCertDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserMyPageController.changePassword");
         return responseService.getSingleResult(

@@ -11,7 +11,9 @@
                     <span
                         class="thumb-file"
                         :class="{
-                            'file-upload': detailData.imageBase64,
+                            'file-upload':
+                                detailData.imageBase64 ||
+                                detailData.imageFilePhysicalName,
                         }"
                     >
                         <input type="file" @change="imageChange($event)" />
@@ -20,6 +22,14 @@
                                 :src="detailData.imageBase64"
                                 :alt="detailData.imageFileName"
                                 v-if="detailData.imageBase64"
+                            />
+                            <img
+                                :src="detailData.imageFilePhysicalName"
+                                :alt="detailData.imageFileName"
+                                v-if="
+                                    detailData.imageFilePhysicalName &&
+                                    !detailData.imageBase64
+                                "
                             />
                         </span>
                         <span class="txt">

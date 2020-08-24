@@ -16,5 +16,15 @@ function deleteWishList(seq) {
 function deleteWishListCheck(data) {
     return wishList.delete(`/mypage/wishlist/delete/`, { data });
 }
+function getWishCheck(params) {
+    console.log(params);
+    return wishList.get(`/wishlist/check`, { params: params });
+}
 
-export { getWishList, postWishList, deleteWishList, deleteWishListCheck };
+export {
+    getWishList,
+    postWishList,
+    deleteWishList,
+    deleteWishListCheck,
+    getWishCheck,
+};

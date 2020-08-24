@@ -36,7 +36,12 @@
                 </NoData>
             </template>
         </template>
-        <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
     </div>
 </template>
 <script>
@@ -52,7 +57,10 @@ import { getContents } from '@/api/contents.js';
 export default {
     name: 'folder-list',
     watch: {
-        'listSortSelect.value'() {
+        'listSortSelect.value'(val) {
+            if (val === '') {
+                this.listSortSelect.value = 'LATEST';
+            }
             this.initFetchData();
         },
     },
@@ -95,12 +103,6 @@ export default {
                 },
             ],
             folderListData: null,
-            loadingStyle: {
-                width: this.width ? `${this.width}px` : '100%',
-                height: this.height ? `${this.height}px` : '100%',
-                overflow: 'hidden',
-                margin: '0 auto',
-            },
         };
     },
     components: {
@@ -123,7 +125,6 @@ export default {
             }
         },
         initFetchData() {
-            console.log('initFetchData');
             this.totalPage = null;
             this.page = 0;
             this.folderListData = null;
@@ -140,7 +141,6 @@ export default {
                 this.folderListData.length >= this.itemLength &&
                 this.folderListData.length !== 0
             ) {
-                console.log('infiniteScroll');
                 this.fetchData(true);
             }
         },
@@ -162,7 +162,6 @@ export default {
                         orderType: this.listSortSelect.value,
                     }
                 );
-                console.log(response);
                 this.totalPage = response.totalPages - 1;
                 if (infinite) {
                     if (this.totalPage > this.page - 1) {
@@ -201,4 +200,15 @@ export default {
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.list-loading {
+    position: relative;
+    padding-top: 70%;
+}
+::v-deep .list-loading .lottie {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>

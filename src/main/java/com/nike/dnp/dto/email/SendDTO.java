@@ -93,24 +93,21 @@ public class SendDTO {
      *
      * @author [오지훈]
      */
-    //TODO[ojh] 2020-07-02 : 변경예정
-    private String loginUrl = "";
+    private String loginUrl;
 
     /**
      * The Password url
      *
      * @author [오지훈]
      */
-    //TODO[ojh] 2020-07-02 : 변경예정
-    private String passwordUrl = "";
+    private String passwordUrl;
 
     /**
      * The Contents url
      *
      * @author [오지훈]
      */
-    //TODO[ojh] 2020-07-02 : 변경예정
-    private String contentsUrl = "";
+    private String contentsUrl;
 
     /**
      * The Product list

@@ -9,6 +9,7 @@ import com.nike.dnp.util.CryptoUtil;
 import com.nike.dnp.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,38 @@ import java.time.LocalDate;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserMailService {
+
+    /**
+     * PC Login Url
+     *
+     * @author [오지훈]
+     */
+    @Value("${nike.url.pc.login}")
+    private String PC_LOGIN_URL;
+
+    /**
+     * PC Password 설정 Url
+     *
+     * @author [오지훈]
+     */
+    @Value("${nike.url.pc.password}")
+    private String PC_PASSWORD_URL;
+
+    /**
+     * MOBILE Login Url
+     *
+     * @author [오지훈]
+     */
+    @Value("${nike.url.mobile.login}")
+    private String MOBILE_LOGIN_URL;
+
+    /**
+     * MOBILE Password 설정 Url
+     *
+     * @author [오지훈]
+     */
+    @Value("${nike.url.mobile.password}")
+    private String MOBILE_PASSWORD_URL;
 
     /**
      * RedisService
@@ -56,9 +89,7 @@ public class UserMailService {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
-
-        //TODO[ojh] 2020-07-03 : 변경예정
-        //sendDTO.setLoginUrl("loginUrl");
+        sendDTO.setLoginUrl(PC_LOGIN_URL);
 
         mailService.sendMail(
                 ServiceCode.EmailTypeEnumCode.USER_CREATE.toString()
@@ -78,15 +109,13 @@ public class UserMailService {
      * @implNote 비밀번호 설정 안내 메일
      */
     @Transactional
-    public String sendMailForSetPassword(final User user) {
+    public String sendMailForSetPassword(final User user, final String platfrom) {
+        final String keyCode = this.createEncodeCertCode(user.getUserId());
+        final String url = platfrom.equals("MOBILE") ? MOBILE_PASSWORD_URL : PC_PASSWORD_URL;
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
-
-        final String keyCode = this.createEncodeCertCode(user.getUserId());
-
-        //TODO[ojh] 2020-07-02 : 변경예정
-        sendDTO.setPasswordUrl("url?certCode="+keyCode);
+        sendDTO.setPasswordUrl(url+"?certCode="+keyCode);
 
         mailService.sendMail(
                 ServiceCode.EmailTypeEnumCode.PASSWORD_SETTING.toString()
@@ -110,9 +139,7 @@ public class UserMailService {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
-
-        //TODO[ojh] 2020-07-02 : 변경예정
-        sendDTO.setLoginUrl("loginUrl");
+        sendDTO.setLoginUrl(PC_LOGIN_URL);
 
         mailService.sendMail(
                 ServiceCode.EmailTypeEnumCode.PASSWORD_GUIDE.toString()
@@ -153,14 +180,11 @@ public class UserMailService {
      */
     @Transactional
     public void sendMailForChangeDormant(final User user) {
-
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
         //sendDTO.setProcessingDt(this.getCurrentDate());
-
-        //TODO[ojh] 2020-07-02 : 변경예정
-        sendDTO.setLoginUrl("loginUrl");
+        sendDTO.setLoginUrl(PC_LOGIN_URL);
 
         mailService.sendMail(
                 ServiceCode.EmailTypeEnumCode.DORMANT_PREV.toString()
@@ -183,9 +207,7 @@ public class UserMailService {
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
         //sendDTO.setProcessingDt(this.getCurrentDate());
-
-        //TODO[ojh] 2020-07-02 : 변경예정
-        sendDTO.setLoginUrl("loginUrl");
+        sendDTO.setLoginUrl(PC_LOGIN_URL);
 
         mailService.sendMail(
                 ServiceCode.EmailTypeEnumCode.DORMANT_ACTIVE.toString()
@@ -207,9 +229,7 @@ public class UserMailService {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
-
-        //TODO[ojh] 2020-07-02 : 변경예정
-        sendDTO.setLoginUrl("loginUrl");
+        sendDTO.setLoginUrl(PC_LOGIN_URL);
 
         mailService.sendMail(
                 ServiceCode.EmailTypeEnumCode.DORMANT_CHANGE.toString()

@@ -48,6 +48,11 @@ function delContentsBasket(contentsBasketSeq) {
     return contents.delete(`/basket/${contentsBasketSeq}`);
 }
 
+// 컨텐츠 권한 목록 조회
+function getContentsAuthList(topMenuCode, menuCode) {
+    return contents.get(`/${topMenuCode}/${menuCode}/authList`);
+}
+
 export {
     getContents,
     getContentsView,
@@ -58,4 +63,5 @@ export {
     getContentsBasket,
     addContentsBasket,
     delContentsBasket,
+    getContentsAuthList,
 };

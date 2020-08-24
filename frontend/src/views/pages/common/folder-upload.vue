@@ -191,6 +191,11 @@
                         >
                             <span>권한설정</span>
                         </button>
+                        <ModalAuth
+                            :checks="folderDetail.checks"
+                            :visible.sync="visible.ModalAuth"
+                            @checksUpdate="checksUpdate"
+                        />
                     </div>
                 </li>
             </ul>
@@ -221,6 +226,9 @@ export default {
     name: 'UPLOAD',
     data() {
         return {
+            visible: {
+                ModalAuth: false,
+            },
             folderSet: {
                 asset: {
                     folderOptionName: '캠페인',
@@ -328,6 +336,7 @@ export default {
     components: {
         thumbnail,
         FileSettings,
+        ModalAuth,
     },
     created() {
         if (this.$route.params.id) {
@@ -352,10 +361,7 @@ export default {
             this.folderDetail.imageBase64 = imageBase64;
         },
         ModalAuthOpen() {
-            this.$modal.show(ModalAuth, {
-                groupTreeData: this.groupTreeData,
-                checks: this.folderDetail.checks,
-            });
+            this.visible.ModalAuth = true;
         },
 
         minDate(tt) {
@@ -377,16 +383,23 @@ export default {
         uploadFiles() {
             this.$refs.fileSet.uploadFiles();
         },
+        checksUpdate(checksArr) {
+            console.log(checksArr[0].subAuths);
+            this.folderDetail.checks = checksArr[0].subAuths;
+            this.visible.ModalAuth = false;
+        },
         async submitForm() {
             const uploadFn = this.$route.params.id ? putContents : postContents;
 
             this.folderDetail.campaignBeginDt = this.$moment(
-                this.folderDetail.campaignBeginDt
+                this.BeginDt
             ).format('YYYY.MM.DD');
 
-            this.folderDetail.campaignEndDt = this.$moment(
-                this.folderDetail.campaignEndDt
-            ).format('YYYY.MM.DD');
+            console.log(this.folderDetail.campaignBeginDt);
+
+            this.folderDetail.campaignEndDt = this.$moment(this.EndDt).format(
+                'YYYY.MM.DD'
+            );
 
             try {
                 const { data: response } = await uploadFn(
@@ -414,6 +427,7 @@ export default {
                     this.$route.params.pathMatch,
                     this.$route.params.id
                 );
+                console.log(response);
                 if (response.existMsg) {
                     alert(response.msg);
                 }
@@ -425,10 +439,10 @@ export default {
                 };
                 this.BeginDt = response.data.campaignBeginDt
                     ? new Date(response.data.campaignBeginDt)
-                    : null;
+                    : new Date();
                 this.EndDt = response.data.campaignEndDt
                     ? new Date(response.data.campaignEndDt)
-                    : null;
+                    : new Date();
                 await this.$refs.fileSet.getFolderDetailFile();
             } catch (error) {
                 console.log(error);

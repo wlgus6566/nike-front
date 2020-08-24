@@ -16,11 +16,11 @@
     </section>
 </template>
 <script>
-import LoginForm from '@/components/login-box/login-form';
-import CertCode from '@/components/login-box/cert-code';
-import FindPW from '@/components/login-box/find-password';
+    import LoginForm from '@/components/login-box/login-form';
+    import CertCode from '@/components/login-box/cert-code';
+    import FindPW from '@/components/login-box/find-password';
 
-export default {
+    export default {
     name: 'login',
     data() {
         return {
@@ -14205,7 +14205,7 @@ export default {
         },
         async login() {
             if (!this.loginData.username) {
-                alert('아이디를 입력해 주세요.');
+                alert('E-MAIL을 입력해 주세요.');
                 return;
             }
             if (!this.loginData.password) {

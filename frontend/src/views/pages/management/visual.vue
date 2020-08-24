@@ -45,9 +45,9 @@
                                 />
                                 <span class="thumb">
                                     <img
-                                        :src="bannerData.imageFilePhysicalName"
+                                        :src="bannerData.pcImageUrl"
                                         :alt="bannerData.imageFileName"
-                                        v-if="bannerData.imageFilePhysicalName"
+                                        v-if="bannerData.pcImageUrl"
                                     />
                                 </span>
                                 <span class="txt">
@@ -72,13 +72,9 @@
                                 />
                                 <span class="thumb">
                                     <img
-                                        :src="
-                                            bannerData.mobileImageFilePhysicalName
-                                        "
+                                        :src="bannerData.mobileImageUrl"
                                         :alt="bannerData.mobileImageFileName"
-                                        v-if="
-                                            bannerData.mobileImageFilePhysicalName
-                                        "
+                                        v-if="bannerData.mobileImageUrl"
                                     />
                                 </span>
                                 <span class="txt">
@@ -126,7 +122,7 @@
                         <label class="label-title required">URL</label>
                     </div>
                     <div class="form-column">
-                        <input type="text" v-model="bannerData.linkUrl" />
+                        <input type="text" v-model="linkUrl" />
                     </div>
                 </li>
             </ul>
@@ -143,8 +139,9 @@
     </div>
 </template>
 <script>
-import { getBanner, postBanner } from '@/api/banner';
+import { getBanner, putBanner, postBanner } from '@/api/banner';
 import { fileUpLoad } from '@/api/file';
+
 export default {
     name: 'visual',
     data() {
@@ -155,11 +152,14 @@ export default {
                 imageFileName: '',
                 imageFilePhysicalName: '',
                 linkUrl: '',
-                linkUrlTypeCode: 'ASSET',
+                linkUrlTypeCode: '',
                 mobileImageFileName: '',
                 mobileImageFilePhysicalName: '',
                 title: '',
+                pcImageUrl: '',
+                mobileImageUrl: '',
             },
+            linkUrl: '',
             pcFormFile: [],
             moFormFile: [],
             urlCheck: {
@@ -170,6 +170,7 @@ export default {
                 name: 'url',
                 value: 'ASSET',
             },
+            detailData: false,
         };
     },
     components: {},
@@ -177,13 +178,24 @@ export default {
         'urlCheck.value'(val) {
             if (val !== 'ASSET') {
                 this.bannerData.linkUrlTypeCode = 'URL';
+                if (this.bannerData.linkUrl === '') {
+                    this.linkUrl = '';
+                    this.bannerData.linkUrl = '';
+                }
             } else {
                 this.bannerData.linkUrlTypeCode = val;
+                this.bannerData.linkUrl = '/asset/all';
             }
         },
+        linkUrl(val) {
+            this.bannerData.linkUrl = val;
+        },
         'bannerData.linkUrlTypeCode'(val) {
-            if (val !== 'ASEET') {
-                this.urlCheck.value = 'N';
+            if (val !== undefined) {
+                console.log('va;', val);
+                if (val !== 'ASSET') {
+                    this.urlCheck.value = 'N';
+                }
             }
         },
     },
@@ -196,29 +208,31 @@ export default {
         imageChange(e, device) {
             this.uploadFiles(e.target.files[0], device);
             if (device === 'pc') {
+                console.log(device);
                 const imaName = e.target.files[0].name;
                 const reader = new FileReader();
                 reader.onloadend = () => {
-                    this.bannerData.imageFilePhysicalName = reader.result;
+                    this.bannerData.pcImageUrl = reader.result;
                     this.bannerData.imageFileName = imaName;
                 };
                 if (e.target.files[0]) {
                     reader.readAsDataURL(e.target.files[0]);
                 } else {
-                    this.bannerData.imageFilePhysicalName = '';
+                    this.bannerData.pcImageUrl = '';
                     this.bannerData.imageFileName = '';
                 }
             } else {
+                console.log(device);
                 const imaName = e.target.files[0].name;
                 const reader = new FileReader();
                 reader.onloadend = () => {
-                    this.bannerData.mobileImageFilePhysicalName = reader.result;
+                    this.bannerData.mobileImageUrl = reader.result;
                     this.bannerData.mobileImageFileName = imaName;
                 };
                 if (e.target.files[0]) {
                     reader.readAsDataURL(e.target.files[0]);
                 } else {
-                    this.bannerData.mobileImageFilePhysicalName = '';
+                    this.bannerData.mobileImageUrl = '';
                     this.bannerData.mobileImageFileName = '';
                 }
             }
@@ -233,11 +247,19 @@ export default {
                 const {
                     data: { data: response },
                 } = await fileUpLoad(formData);
+                console.log(response);
                 if (device === 'pc') {
-                    this.pcFormFile = response;
+                    this.bannerData.imageFilePhysicalName =
+                        response.filePhysicalName;
+                    this.bannerData.imageFileName = response.fileName;
+                    this.bannerData.imageFileSize = response.fileSize;
                     console.log(this.pcFormFile);
                 } else {
-                    this.moFormFile = response;
+                    //this.moFormFile = response;
+                    this.bannerData.mobileImageFilePhysicalName =
+                        response.filePhysicalName;
+                    this.bannerData.mobileImageFileName = response.fileName;
+                    this.bannerData.mobileImageFileSize = response.fileSize;
                     console.log(this.moFormFile);
                 }
             } catch (e) {
@@ -248,21 +270,27 @@ export default {
         //배너 등록
         async addBanner() {
             try {
-                const response = await postBanner({
+                const data = {
                     contents: this.bannerData.contents,
-                    imageFileName: this.pcFormFile.detailThumbnailFileName,
-                    imageFilePhysicalName: this.pcFormFile
-                        .detailThumbnailFilePhysicalName,
-                    imageFileSize: this.pcFormFile.detailThumbnailFileSize,
+                    imageFileName: this.bannerData.imageFileName,
+                    imageFilePhysicalName: this.bannerData
+                        .imageFilePhysicalName,
+                    imageFileSize: this.bannerData.imageFileSize,
                     linkUrl: this.bannerData.linkUrl,
                     linkUrlTypeCode: this.bannerData.linkUrlTypeCode,
-                    mobileImageFileName: this.moFormFile
-                        .detailThumbnailFileName,
-                    mobileImageFilePhysicalName: this.moFormFile
-                        .detailThumbnailFilePhysicalName,
-                    mobileImageFileSize: this.moFormFile.fileSize,
+                    mobileImageFileName: this.bannerData.mobileImageFileName,
+                    mobileImageFilePhysicalName: this.bannerData
+                        .mobileImageFilePhysicalName,
+                    mobileImageFileSize: this.bannerData.mobileImageFileSize,
                     title: this.bannerData.title,
-                });
+                };
+                let response = '';
+                if (!this.detailData) {
+                    response = await postBanner(data);
+                } else {
+                    console.log(this.bannerData.bannerSeq);
+                    response = await putBanner(this.bannerData.bannerSeq, data);
+                }
                 alert(response.data.msg);
                 if (response.data.success) {
                     await this.$router.push('/');
@@ -271,9 +299,11 @@ export default {
                 console.log(error);
                 if (error.data.existMsg) {
                     alert(error.data.msg);
+                    ``;
                 }
             }
         },
+
         //배너 상세
         async detailBanner() {
             try {
@@ -281,6 +311,14 @@ export default {
                     data: { data: response },
                 } = await getBanner();
                 this.bannerData = response;
+                if (this.bannerData.title === undefined) {
+                    this.detailData = false;
+                    this.bannerData.linkUrl = '/asset/all';
+                } else if (this.bannerData.title) {
+                    console.log(response.linkUrl);
+                    this.detailData = true;
+                    this.linkUrl = response.linkUrl;
+                }
             } catch (error) {
                 console.log(error);
                 if (error.data.existMsg) {
