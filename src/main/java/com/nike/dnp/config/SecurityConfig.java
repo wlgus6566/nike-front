@@ -211,6 +211,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		//개발 설정
+		configuration.addAllowedOrigin("https://devapi.nikespace.co.kr/");
 		configuration.addAllowedOrigin("https://devwww.nikespace.co.kr");
 		configuration.addAllowedOrigin("http://devwww.nikespace.co.kr");
 		//운영 설정
