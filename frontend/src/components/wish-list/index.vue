@@ -57,7 +57,7 @@
                 <button
                     type="button"
                     class="delete"
-                    v-on:click="$emit('wishDelete', item.goodsSeq)"
+                    v-on:click="$emit('wishDelete', item.wishListSeq)"
                 >
                     <span>삭제</span>
                 </button>
