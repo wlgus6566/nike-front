@@ -18,7 +18,7 @@
                 </p>
 
                 <a :href="`${mainData.mainVisual.linkUrl}`" class="btn-s-black">
-                    <span class="bebas">VIEW</span>
+                    <span>VIEW</span>
                 </a>
             </div>
         </div>
@@ -182,7 +182,7 @@
                         <strong class="title">
                             {{ newItem.title }}
                         </strong>
-                        <!--                        <p class="desc" v-html="newItem.contents" />-->
+                        <p class="desc" v-html="newItem.contents" />
                         <span class="date">
                             {{ newItem.updateDt }}
                         </span>
@@ -221,6 +221,23 @@ export default {
                 dateClick: this.handleDateClick,
                 height: 500,
                 events: [],
+                // eventClassNames: function (event, element) {
+                //     console.log('d', event);
+                //     console.log('element : ', element);
+                //     // element.addClass(event.class)
+                //     // info.el.setAttribute('data-vue-id', event._uid);
+                //     // info.el.appendChild(event.$el)
+                // },
+                eventClassNames: [ 'aaaaaaaaaaaaaaaaa', 'bbbbbbbbbbbbbbbb' ],
+                eventDidMount: function(info) {
+                    console.log(info.event.extendedProps);
+                    // {description: "Lecture", department: "BioChemistry"}
+                },
+                eventRender: function(event, element) {
+                    if (event.allDay) {
+                        element.addClass('all-day-event');
+                    }
+                },
                 headerToolbar: {
                     left: 'prev',
                     center: 'title',
@@ -331,6 +348,7 @@ export default {
 </script>
 <style scoped>
 /* main */
+
 .main-banner {
     display: block;
 }
