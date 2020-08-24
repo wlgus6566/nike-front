@@ -1,18 +1,18 @@
-import {banner} from './index';
+import { banner } from './index';
 
-//배너상세
+//배너등록
 function postBanner(data) {
     return banner.post(`/`, data);
 }
 
-//배너 등록
+//배너 상세
 function getBanner(data) {
     return banner.get(`/`, data);
 }
 
 //배너수정
-function putBanner(data) {
-    return banner.put(`/6`, data);
+function putBanner(seq, data) {
+    return banner.put(`/${seq}`, data);
 }
 
 export { postBanner, getBanner, putBanner };

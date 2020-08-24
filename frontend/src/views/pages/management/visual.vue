@@ -122,7 +122,7 @@
                         <label class="label-title required">URL</label>
                     </div>
                     <div class="form-column">
-                        <input type="text" v-model="bannerData.linkUrl" />
+                        <input type="text" v-model="linkUrl" />
                     </div>
                 </li>
             </ul>
@@ -139,10 +139,10 @@
     </div>
 </template>
 <script>
-    import {getBanner, putBanner} from '@/api/banner';
-    import {fileUpLoad} from '@/api/file';
+import { getBanner, putBanner, postBanner } from '@/api/banner';
+import { fileUpLoad } from '@/api/file';
 
-    export default {
+export default {
     name: 'visual',
     data() {
         return {
@@ -157,8 +157,9 @@
                 mobileImageFilePhysicalName: '',
                 title: '',
                 pcImageUrl: '',
-                mobileImageUrl: ''
+                mobileImageUrl: '',
             },
+            linkUrl: '',
             pcFormFile: [],
             moFormFile: [],
             urlCheck: {
@@ -177,20 +178,25 @@
         'urlCheck.value'(val) {
             if (val !== 'ASSET') {
                 this.bannerData.linkUrlTypeCode = 'URL';
+                if (this.bannerData.linkUrl === '') {
+                    this.linkUrl = '';
+                    this.bannerData.linkUrl = '';
+                }
             } else {
                 this.bannerData.linkUrlTypeCode = val;
+                this.bannerData.linkUrl = '/asset/all';
             }
         },
-        /*bannerData() {
-            this.detailData = true;
-        },*/
+        linkUrl(val) {
+            this.bannerData.linkUrl = val;
+        },
         'bannerData.linkUrlTypeCode'(val) {
-            if (val !== 'ASEET') {
-                this.urlCheck.value = 'N';
+            if (val !== undefined) {
+                console.log('va;', val);
+                if (val !== 'ASSET') {
+                    this.urlCheck.value = 'N';
+                }
             }
-        },
-        pcFormFile(val) {
-            console.log(val);
         },
     },
     created() {
@@ -241,18 +247,19 @@
                 const {
                     data: { data: response },
                 } = await fileUpLoad(formData);
-                console.log(response)
+                console.log(response);
                 if (device === 'pc') {
-                    //this.pcFormFile = response;
-                    this.bannerData.imageFilePhysicalName = response.filePhysicalName
-                    this.bannerData.imageFileName = response.fileName
-                    this.bannerData.imageFileSize = response.fileSize
+                    this.bannerData.imageFilePhysicalName =
+                        response.filePhysicalName;
+                    this.bannerData.imageFileName = response.fileName;
+                    this.bannerData.imageFileSize = response.fileSize;
                     console.log(this.pcFormFile);
                 } else {
                     //this.moFormFile = response;
-                    this.bannerData.mobileImageFilePhysicalName = response.filePhysicalName
-                    this.bannerData.mobileImageFileName = response.fileName
-                    this.bannerData.mobileImageFileSize = response.fileSize
+                    this.bannerData.mobileImageFilePhysicalName =
+                        response.filePhysicalName;
+                    this.bannerData.mobileImageFileName = response.fileName;
+                    this.bannerData.mobileImageFileSize = response.fileSize;
                     console.log(this.moFormFile);
                 }
             } catch (e) {
@@ -263,12 +270,11 @@
         //배너 등록
         async addBanner() {
             try {
-                console.log(this.bannerData);
-
-                const response = await putBanner({
+                const data = {
                     contents: this.bannerData.contents,
                     imageFileName: this.bannerData.imageFileName,
-                    imageFilePhysicalName: this.bannerData.imageFilePhysicalName,
+                    imageFilePhysicalName: this.bannerData
+                        .imageFilePhysicalName,
                     imageFileSize: this.bannerData.imageFileSize,
                     linkUrl: this.bannerData.linkUrl,
                     linkUrlTypeCode: this.bannerData.linkUrlTypeCode,
@@ -277,7 +283,14 @@
                         .mobileImageFilePhysicalName,
                     mobileImageFileSize: this.bannerData.mobileImageFileSize,
                     title: this.bannerData.title,
-                });
+                };
+                let response = '';
+                if (!this.detailData) {
+                    response = await postBanner(data);
+                } else {
+                    console.log(this.bannerData.bannerSeq);
+                    response = await putBanner(this.bannerData.bannerSeq, data);
+                }
                 alert(response.data.msg);
                 if (response.data.success) {
                     await this.$router.push('/');
@@ -285,7 +298,8 @@
             } catch (error) {
                 console.log(error);
                 if (error.data.existMsg) {
-                    alert(error.data.msg);``
+                    alert(error.data.msg);
+                    ``;
                 }
             }
         },
@@ -297,6 +311,14 @@
                     data: { data: response },
                 } = await getBanner();
                 this.bannerData = response;
+                if (this.bannerData.title === undefined) {
+                    this.detailData = false;
+                    this.bannerData.linkUrl = '/asset/all';
+                } else if (this.bannerData.title) {
+                    console.log(response.linkUrl);
+                    this.detailData = true;
+                    this.linkUrl = response.linkUrl;
+                }
             } catch (error) {
                 console.log(error);
                 if (error.data.existMsg) {
