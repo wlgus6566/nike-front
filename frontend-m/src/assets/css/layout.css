@@ -378,6 +378,10 @@ footer .copy {
 .modal.full .el-dialog__body {
     padding: 0;
 }
+.modal-contents{
+	max-height:420px;
+	overflow:auto;
+}
 .modal.full .el-dialog__footer {
     position: absolute;
     bottom: 0;
@@ -397,4 +401,8 @@ footer .copy {
     border-radius: 0;
     border: none;
     background-color: #000;
+}
+
+.modal.full .modal-contents {
+	max-height:none;
 }

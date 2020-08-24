@@ -5,8 +5,7 @@
                 <h2 class="title">{{customerData.title}}</h2>
                 <span class="date">{{customerData.updateDt}}</span>
             </div>
-            <div class="detail-cont">
-                {{customerData.contents}}
+            <div class="detail-cont" v-html="customerData.contents">
             </div>
         </div>
         <div class="btn-area">
@@ -33,6 +32,7 @@ export default {
                 const { data: response } = await getCustomerDetail(this.$route.params.sectionCode, this.$route.params.id);
                 this.customerData = response.data;
                 console.log(this.$route.params.sectionCode);
+                console.log(this.customerData);
             } catch (error) {
                 console.log(error);
             }

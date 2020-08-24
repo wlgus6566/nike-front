@@ -46,7 +46,7 @@ export default {
         };
     },
     components: {
-        AlarmModal: () => import('@/components/modal-ex/alarm-modal/'),
+        AlarmModal: () => import('@/views/pages/mypage/alarm-modal'),
         Loading: () => import('@/components/loading/')
     },
 
