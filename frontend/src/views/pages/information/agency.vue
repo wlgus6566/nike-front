@@ -92,11 +92,14 @@ export default {
             let addAlert = confirm('AGENCY를 등록하시겠습니까?');
             if (addAlert) {
                 try {
-                    const {
-                        data: { data: response },
-                    } = await postAgencyContact(addData);
-                    this.visible.agencyManagement = false;
-                    await this.getAgencyData();
+                    const response = await postAgencyContact(addData);
+
+                    if (response.data.success) {
+                        this.visible.agencyManagement = false;
+                        await this.getAgencyData();
+                    } else {
+                        alert(response.data.msg);
+                    }
                 } catch (error) {
                     console.log(error.response);
                 }

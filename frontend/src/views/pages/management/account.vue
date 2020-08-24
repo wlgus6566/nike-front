@@ -130,7 +130,7 @@
         </template>
         <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
 
-        <div class="btn-tbl-box" v-if="searchKeyword !== ''">
+        <div class="btn-tbl-box">
             <button
                 type="button"
                 class="btn-form"

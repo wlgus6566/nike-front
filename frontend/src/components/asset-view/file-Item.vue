@@ -69,9 +69,9 @@
                                 />
                             </span>
                             <span class="info-box">
-                                <strong class="title">{{
+                                <em class="title">{{
                                     item.title || item.thumbnailFileName
-                                }}</strong>
+                                }}</em>
                             </span>
                         </label>
                         <div class="btn-box">
