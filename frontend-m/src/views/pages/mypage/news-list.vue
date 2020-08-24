@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="news-list" v-if="newsData.length > 0">
-            <div class="news-list-item" v-for="item in newsData">
+            <div class="news-list-item" v-for="(item , index) in newsData" :key="index">
                 <a :href="`/mypage/news/detail/${item.noticeArticleSeq}`">
                     <span class="thumbnail">
                         <img :src="item.thumbnailFilePhysicalName" alt="">

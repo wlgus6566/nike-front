@@ -1,33 +1,41 @@
 <template>
     <ul :class="[`tree-depth${depth}`]">
-        <li v-for="item in groupTreeData" :key="item.authSeq">
-            <div :class="treeItemClass(item.authSeq)">
-                <a href="#" @click.prevent="selectActive(item)">
-                    <i class="tree-icon"></i>
-                    <span class="tree-name">{{ item.authName }}</span>
-                </a>
+        <li v-for="item in groupTreeData" :key="item.authSeq" class="tree-item">
+            <div class="inner">
                 <button
-                    v-if="depth !== 0 && item.subAuths && item.subAuths.length"
                     type="button"
-                    class="tree-toggle"
+                    :class="treeItemClass(item.authSeq)"
                     @click="toggle(item.authSeq)"
                 >
-                    toggle
+                    <i class="tree-icon"></i>
+                    <span class="tree-name">{{ item.authName }}</span>
+                    <i
+                        class="tree-arr"
+                        v-if="
+                            depth !== 0 && item.subAuths && item.subAuths.length
+                        "
+                    ></i>
                 </button>
-            </div>
-            <div>
-                <input
-                    type="checkbox"
-                    :value="item.authSeq"
-                    v-model="detailAuthYn"
-                    @click="detailAuthYnUpdate(item.authSeq)"
-                />
-                <input
-                    type="checkbox"
-                    :value="item.authSeq"
-                    v-model="emailReceptionYn"
-                    @click="$emit('emailReceptionYnUpdate', item.authSeq)"
-                />
+                <label v-if="depth !== 0">
+                    <span class="checkbox">
+                        <input
+                            type="checkbox"
+                            :checked="item.detailAuthYn === 'Y'"
+                            @click="detailAuthUpdate(item.authSeq)"
+                        />
+                        <i></i>
+                    </span>
+                </label>
+                <label v-if="depth !== 0">
+                    <span class="checkbox">
+                        <input
+                            type="checkbox"
+                            :checked="item.emailReceptionYn === 'Y'"
+                            @click="emailReceptionUpdate(item.authSeq)"
+                        />
+                        <i></i>
+                    </span>
+                </label>
             </div>
             <transition @enter="itemOpen" @leave="itemClose" :css="false">
                 <GroupTreeListTable
@@ -37,26 +45,13 @@
                     "
                     v-if="item.subAuths"
                     :groupTreeData="item.subAuths"
-                    :groupTreeActive="groupTreeActive"
                     :groupTreeOpen="groupTreeOpen"
                     :groupTreeAddItem="groupTreeAddItem"
+                    :detailAuthCheck="detailAuthCheck"
+                    :emailReceptionCheck="emailReceptionCheck"
                     :checks="checks"
                     :depth="depth + 1"
                 />
-            </transition>
-            <transition @enter="itemOpen" @leave="itemClose" :css="false">
-                <div
-                    :class="[`tree-depth${depth + 1}`]"
-                    v-if="
-                        groupTreeAddItem === item.authSeq &&
-                        groupTreeOpen.some((el) => el === item.authSeq)
-                    "
-                >
-                    <div class="tree-item active">
-                        <i class="tree-icon"></i>
-                        <input type="text" />
-                    </div>
-                </div>
             </transition>
         </li>
     </ul>
@@ -69,7 +64,6 @@ export default {
     data() {
         return {};
     },
-    mounted() {},
     computed: {
         detailAuthYn() {
             const arr = this.checks.filter((el) => el.detailAuthYn === 'Y');
@@ -83,25 +77,25 @@ export default {
     components: {},
     props: [
         'groupTreeData',
-        'groupTreeActive',
         'groupTreeOpen',
         'groupTreeAddItem',
+        'detailAuthCheck',
+        'emailReceptionCheck',
         'depth',
         'checks',
     ],
     methods: {
-        detailAuthYnUpdate(seq) {
-            bus.$emit('detailAuthYnUpdate', seq);
+        detailAuthUpdate(seq) {
+            bus.$emit('detailAuthUpdate', seq);
+        },
+        emailReceptionUpdate(seq) {
+            bus.$emit('emailReceptionUpdate', seq);
         },
         treeItemClass(authSeq) {
             return {
-                'tree-item': true,
-                active: this.groupTreeActive.authSeq === authSeq,
+                'tree-txt': true,
                 open: this.groupTreeOpen.some((el) => el === authSeq),
             };
-        },
-        selectActive(item) {
-            bus.$emit('selectActive', item);
         },
         toggle(seq) {
             bus.$emit('groupTreeToggle', seq);
@@ -130,7 +124,90 @@ export default {
 };
 </script>
 <style scoped>
-.ghost {
-    opacity: 1;
+.tree-item {
+}
+.tree-depth0 .tree-icon {
+    width: 20px;
+    background: url('../../assets/images/svg/icon-group-tree-depth-all.svg') 50% /
+        contain;
+}
+.tree-depth2 {
+    background: #f7f7f7;
+}
+.tree-depth2 > .tree-item > .inner {
+    padding-left: 30px;
+}
+::v-deep .tree-depth2 > .tree-item > .inner > .tree-txt {
+    width: 230px;
+}
+
+.tree-depth3 > .tree-item > .inner {
+    padding-left: 60px;
+}
+::v-deep .tree-depth3 > .tree-item > .inner > .tree-txt {
+    width: 200px;
+}
+.tree-depth0 ul {
+    overflow: hidden;
+}
+.tree-depth1 .tree-icon {
+    width: 30px;
+    background: url('../../assets/images/svg/icon-group-tree-depth1.svg') 50% /
+        contain;
+}
+.tree-depth2 .tree-icon {
+    width: 30px;
+    background: url('../../assets/images/svg/icon-group-tree-depth2.svg') 50% /
+        contain;
+}
+.tree-depth3 .tree-icon {
+    width: 3px;
+    height: 3px;
+    background: #333;
+    display: inline-block;
+}
+.tree-icon {
+    width: 30px;
+    height: 20px;
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: middle;
+    flex: 0 0 auto;
+}
+.tree-name {
+    display: inline-block;
+    vertical-align: middle;
+}
+.tree-arr {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    vertical-align: middle;
+    background: red;
+    flex: 0 0 auto;
+    background: url('../../assets/images/svg/icon-group-tree-depth-toggle.svg')
+        50% / contain;
+}
+::v-deep .tree-txt.open > .tree-arr {
+    transform: rotate(-180deg);
+}
+.tree-item > .inner {
+    display: flex;
+    padding-right: 40px;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #eee;
+}
+.tree-item > .inner .tree-txt {
+    display: flex;
+    line-height: 20px;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 260px;
+    align-items: center;
+}
+.tree-item > .inner label {
+    width: 100px;
+    text-align: center;
 }
 </style>

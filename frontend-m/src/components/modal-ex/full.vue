@@ -6,11 +6,9 @@
         :append-to-body="true"
         @close="$emit('update:visible', false)"
     >
-        <el-scrollbar view-class="view-box" :native="false">
-            <div class="el-dialog__inner">
-                모달 컨텐츠 등록
-            </div>
-        </el-scrollbar>
+        <div class="modal-contents">
+          모달 컨텐츠 등록
+        </div>
 
         <div slot="footer" class="dialog-footer">
             <el-button

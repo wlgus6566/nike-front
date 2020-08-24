@@ -61,7 +61,6 @@ export default {
     display: inline-block;
     line-height: 24px;
     font-size: 20px;
-    line-height: 24px;
     color: #ccc;
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 0.5px;
