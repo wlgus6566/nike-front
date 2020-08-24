@@ -196,6 +196,7 @@
 import { getMain } from '@/api/main';
 import {
     getCalendarList, // CALENDAR 목록 조회
+    getCalendarEachList, // CALENDAR 목록 조회
     postCalendar, // CALENDAR 등록
     getTodayCalendar, // CALENDAR 오늘 조회
     getDetailCalendar, // CALENDAR 상세조회
@@ -212,6 +213,7 @@ export default {
     data() {
         return {
             mainData: [],
+            todayData: [],
             yyyyMm: moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
@@ -273,7 +275,8 @@ export default {
         async loadCalendar() {
             this.loadingData = true;
             try {
-                await this.getCalendarList(this.yyyyMm);
+                // await this.getCalendarList(this.yyyyMm);
+                await this.getCalendarEachList(this.yyyyMm);
                 this.loadingData = false;
                 await this.loadCalendarCode();
             } catch (error) {
@@ -309,11 +312,19 @@ export default {
                     end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
                     color: color,
                 });
+
             });
         },
         // 달력에 일자 클릭시
         handleDateClick(arg) {
             this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
+        },
+        async getTodayCalendar(searchDt) {
+            this.searchDt = !!searchDt ? searchDt : this.searchDt;
+            const {
+                data: { data: response },
+            } = await getTodayCalendar({ searchDt: this.searchDt });
+            this.todayData = response;
         },
     },
 };
