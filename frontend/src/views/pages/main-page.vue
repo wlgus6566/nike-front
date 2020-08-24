@@ -195,7 +195,6 @@
 <script>
 import { getMain } from '@/api/main';
 import {
-    getCalendarList, // CALENDAR 목록 조회
     getCalendarEachList, // CALENDAR 목록 조회
     getTodayCalendar, // CALENDAR 오늘 조회
 } from '@/api/calendar';
@@ -215,8 +214,17 @@ export default {
             yyyyMm: moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
+                eventRender: function(info) {
+                    var tooltip = new Tooltip(info.el, {
+                        title: info.event.extendedProps.description,
+                        placement: 'top',
+                        trigger: 'hover',
+                        container: 'body'
+                    });
+                },
                 initialView: 'dayGridMonth',
-                dateClick: this.handleDateClick,
+                // 일자 클릭시
+                // dateClick: this.handleDateClick,
                 height: 500,
                 events: [],
                 dayMaxEventRows: true,
@@ -310,14 +318,34 @@ export default {
                     start: moment(item.beginDt).format('YYYY-MM-DD'),
                     end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
                     color: color,
+                    checkDuple: false
                 });
-
             });
+            this.distinctAndAddEvent();
+        },
+        distinctAndAddEvent() {
+            let distinctEventList = [];
+            this.calendarOptions.events.forEach(item => {
+                let check = false;
+                distinctEventList.forEach(ele => {
+                    if (item.start === ele.start) {
+                        check = true;
+                    }
+                });
+                if (!check) {
+                    distinctEventList.push(item);
+                }
+            })
+            distinctEventList.forEach(item => {
+                this.calendarOptions.events.unshift(item);
+            });
+
         },
         // 달력에 일자 클릭시
-        handleDateClick(arg) {
-            this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
-        },
+        // handleDateClick(arg) {
+        //     console.log('click : ', arg);
+        //     // this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
+        // },
         async getTodayCalendar(searchDt) {
             this.searchDt = !!searchDt ? searchDt : this.searchDt;
             const {
