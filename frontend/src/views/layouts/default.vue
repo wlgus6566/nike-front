@@ -15,7 +15,7 @@
                 <appHeader />
             </div>
             <i class="icon-ellipsis"></i>
-            <i class="icon-lnb"></i>
+            <!--            <i class="icon-lnb"></i>-->
             <div class="header-bg" v-on:mouseenter="mouseEvent(false)"></div>
         </header>
         <section id="container">
