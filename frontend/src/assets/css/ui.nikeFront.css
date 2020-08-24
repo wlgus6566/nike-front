@@ -732,7 +732,7 @@
     font-family: 'Roboto', sans-serif;
     font-size: 12px !important;
     color: #333;
-    font-weight: 400 !important;
+    font-weight: 400;
 }
 .vc-day-content.vc-text-gray-400 {
     color: rgba(0, 0, 0, 0.2);
@@ -756,6 +756,15 @@
     height: 26px !important;
     box-sizing: border-box;
 }
+.weekday-1 .vc-day-content {
+    color: #f20000;
+}
+.weekday-1 .vc-highlights + .vc-day-content {
+    color: #fff;
+}
+/*vc-highlights .vc-day-content {*/
+/*    font-weight: bold !important;*/
+/*}*/
 .vc-border-orange-900,
 .vc-border-orange-700,
 .vc-bg-orange-600 {
