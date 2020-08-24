@@ -1326,13 +1326,13 @@
 }
 
 .el-dialog__body .form-row {
-    padding: 6px 0;
+    padding: 15px 0;
 }
 .el-dialog__body .form-column {
     align-items: center;
 }
 .el-dialog__body .label-title {
-    font-size: 12px;
+    font-size: 14px;
     color: #333;
     line-height: 18px;
 }

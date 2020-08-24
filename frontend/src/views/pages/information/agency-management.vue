@@ -154,6 +154,7 @@ export default {
     align-items: center;
 }
 .modal-wrap .el-dialog {
+    width: 600px;
     margin: 0 !important;
 }
 .modal-wrap .el-scrollbar__wrap {
