@@ -3306,6 +3306,8 @@
     color: #fff;
     font-size: 18px;
     letter-spacing: 0;
+    line-break: anywhere;
+    word-break: break-all;
 }
 .member-inquiry .info-list dd + dt {
     margin-top: 25px;
