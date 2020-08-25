@@ -16,9 +16,13 @@
 <script>
 export default {
     name: 'MypageMenu',
-    created() {},
-    computed: {
-        myMenu() {
+    data() {
+        return {
+            myMenu: null,
+        };
+    },
+    watch: {
+        '$store.state.gnbMenuListData'() {
             if (this.$store.state.gnbMenuListData) {
                 const menu = this.$store.state.gnbMenuListData.filter(
                     (item) => {
@@ -26,7 +30,7 @@ export default {
                             return item;
                     }
                 );
-                return menu[0].menus;
+                this.myMenu = menu[0].menus;
             } else {
                 return null;
             }

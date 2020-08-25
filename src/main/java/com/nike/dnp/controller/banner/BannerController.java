@@ -87,7 +87,7 @@ public class BannerController {
             , consumes = {MediaType.APPLICATION_JSON_VALUE}
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
-    public SingleResult<Banner> save (
+    public SingleResult<BannerReturnDTO> save (
             @ApiParam(value = "메인 비주얼 등록 DTO", required = true) @Valid @RequestBody final BannerSaveDTO bannerSaveDTO
             , @ApiIgnore final BindingResult result) {
         log.info("BannerController.save");

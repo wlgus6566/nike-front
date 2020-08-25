@@ -58,7 +58,7 @@ export default {
     props: ['item', 'depth', 'navIdx', 'activeIndex'],
     watch: {
         $route(newRoute) {
-            this.init(newRoute.matched);
+            //this.init(newRoute.matched);
         },
     },
     data: function () {
@@ -120,7 +120,7 @@ export default {
         },
     },
     mounted() {
-        this.init(this.$route.matched);
+        //this.init(this.$route.matched);
     },
 };
 </script>

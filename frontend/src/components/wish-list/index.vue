@@ -62,9 +62,7 @@
                     <span>삭제</span>
                 </button>
             </div>
-            <div class="loading" v-if="isLoading(item.goodsSeq)">
-                loading
-            </div>
+            <Loading v-if="isLoading(item.goodsSeq)" />
         </li>
     </transition-group>
 </template>
@@ -73,6 +71,9 @@
 export default {
     name: 'wish-list-comp',
     props: ['listData', 'checkWishItem', 'deleteLoading'],
+    components: {
+        Loading: () => import('@/components/loading'),
+    },
     methods: {
         isLoading(seq) {
             const indexFind = this.deleteLoading.findIndex((el) => {

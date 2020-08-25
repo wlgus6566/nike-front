@@ -46,7 +46,7 @@ export default {
             return `${defaultClass}${detailAuth}${exposure}`;
         },
         setUrl(item) {
-            return `/report/${item.reportSeq}`.toLocaleLowerCase();
+            return `/report/detail/${item.reportSeq}`.toLocaleLowerCase();
         },
     },
 };
