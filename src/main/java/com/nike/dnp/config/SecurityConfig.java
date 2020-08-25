@@ -33,6 +33,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -160,20 +161,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(final WebSecurity web) {
 		// TODO[lsj] 아래 내용도 cors 에러 나지 않도록 추가 필요 2020.08.21
 		final String[] staticPatterns = {
-				"/pc/**", "/mo/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
-				"/pc.html", "/mo.html","index.html", //frontend page
-				"/resources/**", "/static/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
-				"/css/**", "/font/**", "/js/**", "/images/**", // Static 요소
+				"/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
-				"/api/download" // 임시
-				, "/error" // 에러
-				// ,"/swagger-ui/**","/v3/**" //swagger 3.0 임시
-				//,"/api/open/**"
+				"/api/download", // 임시
+				"/error" // 에러
 		};
 
 		web.ignoring().antMatchers(staticPatterns);
 	}
-
 	/**
 	 * configure
 	 * @param http
@@ -182,16 +177,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
-		http.cors();
-		http.authorizeRequests()
+		http.cors()
+			.and()
+				.authorizeRequests()
 				.accessDecisionManager(accessDecisionManager())
 				.antMatchers(HttpMethod.POST,"/api/login").permitAll()
 				.antMatchers("/api/open/**").permitAll()
-				// TODO[lsj] "/api/alarm/**", "/api/open/**" 는 원래 위에 있어야 하는데 위에 cors에러 발생하여 임시 추가 2020.08.21
-				.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**").authenticated()
-				.anyRequest().authenticated();
-
-		http.addFilter(authenticationFilter()) // 인증 필터
+				//.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**").authenticated()
+				.anyRequest().authenticated()
+			.and()
+				.addFilter(authenticationFilter()) // 인증 필터
 				.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository,this.redisService)) //jwt 토큰 인증 필터
 				.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
 				.and()
@@ -209,26 +204,53 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration configuration = new CorsConfiguration();
+		final CorsConfiguration configuration = new CorsConfiguration();
+		/*
 		//개발 설정
-		configuration.addAllowedOrigin("https://devapi.nikespace.co.kr/");
+		configuration.addAllowedOrigin("https://devapi.nikespace.co.kr");
 		configuration.addAllowedOrigin("https://devwww.nikespace.co.kr");
 		configuration.addAllowedOrigin("http://devwww.nikespace.co.kr");
 		configuration.addAllowedOrigin("https://ckeditor.com");
 		//운영 설정
+		configuration.addAllowedOrigin("https://api.nikespace.co.kr");
 		configuration.addAllowedOrigin("https://www.nikespace.co.kr");
 		configuration.addAllowedOrigin("http://www.nikespace.co.kr");
 		//로컬 설정
 		configuration.addAllowedOrigin("http://localhost:8080");
 		configuration.addAllowedOrigin("http://localhost:8081");
 		configuration.addAllowedOrigin("http://localhost:8082");
+		configuration.addAllowedMethod("*");
+		*/
+
+		List<String> origins = new ArrayList<>();
+		//개발 설정
+		origins.add("https://devapi.nikespace.co.kr");
+		origins.add("https://devwww.nikespace.co.kr");
+		origins.add("http://devapi.nikespace.co.kr");
+		//운영 설정
+		origins.add("https://api.nikespace.co.kr");
+		origins.add("https://www.nikespace.co.kr");
+		origins.add("http://www.nikespace.co.kr");
+		//로컬 설정
+		origins.add("http://localhost:8080");
+		origins.add("http://localhost:8081");
+		origins.add("http://localhost:8082");
+		//외부 설정
+		origins.add("https://ckeditor.com");
+		configuration.setAllowedOrigins(origins);
+
+		List<String> methods = new ArrayList<>();
+		methods.add("GET");
+		methods.add("POST");
+		methods.add("PUT");
+		methods.add("DELETE");
+		configuration.setAllowedMethods(methods);
 
 		configuration.addAllowedHeader("*");
-		configuration.addAllowedMethod("*");
 		configuration.setAllowCredentials(true);
 		configuration.addExposedHeader(JwtHelper.HEADER_STRING); //header 노출 설정
 
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
@@ -245,17 +267,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new AffirmativeBased(decisionVoters);
 	}
 
-	/*
-	// filter Meta Service 미사용
-	@Bean
-	public AccessDecisionManager accessDecisionManager() {
-		List<AccessDecisionVoter<? extends Object>> decisionVoters = Arrays.asList(new AuthenticatedVoter(), new RoleVoter(), new WebExpressionVoter());
-		return new UnanimousBased(decisionVoters);
-
-	}
-
-	*/
-
 	/**
 	 * 인증 필터
 	 *
@@ -265,7 +276,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public AuthenticationFilter authenticationFilter() {
-
 		AuthenticationFilter filter = null;
 		try {
 			filter = new AuthenticationFilter(authenticationManager());

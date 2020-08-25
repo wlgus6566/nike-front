@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            <span class="ko">{{ this.$route.meta.title }}</span>
+            <span class="ko">공지사항</span>
         </h2>
         <form @submit.prevent="submitData">
             <h3 class="form-title mt20">등록/수정</h3>

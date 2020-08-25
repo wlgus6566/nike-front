@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            <span class="ko">{{ this.$route.meta.title }}</span>
+            <span class="ko">공지사항</span>
         </h2>
         <div class="sorting-area">
             <SearchInput @searchSubmit="searchSubmit" />
