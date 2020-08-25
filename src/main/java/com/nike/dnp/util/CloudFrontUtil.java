@@ -150,6 +150,10 @@ public class CloudFrontUtil {
         return ObjectUtils.isEmpty(objectKey) ? "" : createCustomSingedUrl(objectKey, BASIC_MINUTE);
     }
 
+    public static void addProviderSecurity() {
+        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+    }
+
     /**
      * Create signed url canned string.
      *
@@ -164,10 +168,8 @@ public class CloudFrontUtil {
         final String newObjectKey = S3Util.awsPathReplace(objectKey);
 
         try {
-            Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+            addProviderSecurity();
             final String policyResourcePath = "https://" + DISTRIBUTION_DOMAIN + "/" + newObjectKey;
-            //final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(new FileInputStream(PRIVATE_KEY_FILE_PATH));
-
             final InputStream is = Files.newInputStream(Paths.get(PRIVATE_KEY_FILE_PATH));
             final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(is);
             is.close();
@@ -201,57 +203,32 @@ public class CloudFrontUtil {
         final String newObjectKey = S3Util.awsPathReplace(objectKey);
 
         try {
-            Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+            addProviderSecurity();
             final String policyResourcePath = "https://" + DISTRIBUTION_DOMAIN + "/" + newObjectKey;
-            //final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(new FileInputStream(PRIVATE_KEY_FILE_PATH));
-
             final InputStream is = Files.newInputStream(Paths.get(PRIVATE_KEY_FILE_PATH));
             final byte[] derPrivateKey = ServiceUtils.readInputStreamToBytes(is);
             is.close();
 
             final String policy = CloudFrontService.buildPolicyForSignedUrl(
-                    // Resource path (optional, can include '*' and '?' wildcards)
-                    policyResourcePath,
-                    // DateLessThan 종료, 접근 만료시간 세팅
-                    ServiceUtils.parseIso8601Date(LocalDateTime.now().plusMinutes(minute).toString()),
-                    // CIDR IP address restriction (optional, 0.0.0.0/0 means everyone)
-                    "0.0.0.0/0",
-                    // DateGreaterThan (optional) 시작
-                    ServiceUtils.parseIso8601Date(LocalDateTime.now().minusMinutes(1).toString())
+                    policyResourcePath, // Resource path (optional, can include '*' and '?' wildcards)
+                    ServiceUtils.parseIso8601Date(LocalDateTime.now().plusMinutes(minute).toString()), // DateLessThan 종료, 접근 만료시간 세팅
+                    "0.0.0.0/0", // CIDR IP address restriction (optional, 0.0.0.0/0 means everyone)
+                    ServiceUtils.parseIso8601Date(LocalDateTime.now().minusMinutes(1).toString()) // DateGreaterThan (optional) 시작
             );
 
             return CloudFrontService.signUrl(
-                    // Resource URL or Path
                     policyResourcePath,
-                    // Certificate identifier, an active trusted signer for the distribution
                     KEY_PAIR_ID,
-                    // DER Private key data
                     derPrivateKey,
-                    // Access control policy
                     policy
             );
         } catch (CloudFrontServiceException | ParseException | IOException exception) {
+            log.error("exception", exception);
             throw new CodeMessageHandleException(
                     FailCode.ExceptionError.ERROR.name()
                     , exception.getMessage()
             );
         }
     }
-
-//    public void getCloudFrontCookieForCannedPolicy() throws ParseException, InvalidKeySpecException, IOException {
-//
-//        CloudFrontCookieSigner.CookiesForCannedPolicy cookies = CloudFrontCookieSigner.getCookiesForCannedPolicy(
-//                SignerUtils.Protocol.http, distributionDomain, new File(privateKeyFilePath), s3ObjectKey,
-//                keyPairId,  ServiceUtils.parseIso8601Date("2020-08-06T17:30:00.000Z"));
-//        // 아래 세개의 값을 세팅한다
-//        /*
-//        httpGet.addHeader("Cookie", cookiesForCannedPolicy.getExpires().getKey() + "=" +
-//                cookies.getExpires().getValue());
-//        httpGet.addHeader("Cookie", cookiesForCannedPolicy.getSignature().getKey() + "=" +
-//                cookies.getSignature().getValue());
-//        httpGet.addHeader("Cookie", cookiesForCannedPolicy.getKeyPairId().getKey() + "=" +
-//                cookies.getKeyPairId().getValue());
-//        */
-//    }
 
 }
