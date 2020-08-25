@@ -2,8 +2,11 @@ package com.nike.dnp.repository.notice;
 
 import com.nike.dnp.dto.notice.CustomerListDTO;
 import com.nike.dnp.dto.notice.CustomerSearchDTO;
+import com.nike.dnp.entity.notice.NoticeArticle;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * The Interface Notice repository custom.
@@ -34,5 +37,5 @@ public interface NoticeRepositoryCustom {
      * @implNote [method 설명]
      * @since 2020. 7. 31. 오후 4:12:22
      */
-    Long checkNoticeYnCnt();
+    List<NoticeArticle> checkNoticeYn();
 }

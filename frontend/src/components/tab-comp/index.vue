@@ -21,22 +21,20 @@
 export default {
     data() {
         return {
-            tabContent: this.tabMenus.tabList[0].component,
+            tabContent: this.tabMenus.tabList[this.tabMenus.showIndex]
+                .component,
         };
     },
     name: 'TabComponent.vue',
     props: ['tabMenus'],
-    mounted() {
-        // console.log(this.tabMenus);
-    },
     components: {
         ContentMypage: () => import('@/components/tab-comp/content-mypage.vue'),
         ContentOrder: () => import('@/components/tab-comp/content-order.vue'),
         ContentReport: () => import('@/components/tab-comp/content-report.vue'),
         ContentFile: () => import('@/components/tab-comp/content-file.vue'),
         ContentAsset: () => import('@/components/tab-comp/content-asset.vue'),
-        ContentTooKlit: () =>
-            import('@/components/tab-comp/content-tookit.vue'),
+        ContentToolKit: () =>
+            import('@/components/tab-comp/content-toolkit.vue'),
         ContentFoundation: () =>
             import('@/components/tab-comp/content-foundation.vue'),
     },
@@ -60,7 +58,6 @@ export default {
     display: inline-block;
     line-height: 24px;
     font-size: 20px;
-    line-height: 24px;
     color: #ccc;
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 0.5px;

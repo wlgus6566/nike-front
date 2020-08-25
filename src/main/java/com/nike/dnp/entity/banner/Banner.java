@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.banner.BannerSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
-import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -142,48 +141,6 @@ public class Banner extends BaseTimeEntity implements Serializable {
     private String useYn;
 
     /**
-     * PC CDN URL
-     *
-     * @author [오지훈]
-     */
-    @Transient
-    @ApiModelProperty(name = "pcImageUrl", value = "PC CDN URL")
-    private String pcImageUrl;
-
-    /**
-     * MOBILE CDN URL
-     *
-     * @author [오지훈]
-     */
-    @Transient
-    @ApiModelProperty(name = "mobileImageUrl", value = "MOBILE CDN URL")
-    private String mobileImageUrl;
-
-    /**
-     * Gets pc image url.
-     *
-     * @return the pc image url
-     * @author [오지훈]
-     * @implNote [Description 작성]
-     * @since 2020. 8. 12. 오전 11:36:09
-     */
-    public String getPcImageUrl() {
-        return CloudFrontUtil.getCustomSignedUrl(imageFilePhysicalName);
-    }
-
-    /**
-     * Gets mobile image url.
-     *
-     * @return the mobile image url
-     * @author [오지훈]
-     * @implNote [Description 작성]
-     * @since 2020. 8. 12. 오전 11:36:11
-     */
-    public String getMobileImageUrl() {
-        return CloudFrontUtil.getCustomSignedUrl(mobileImageFilePhysicalName);
-    }
-
-    /**
      * Save or update banner.
      *
      * @param bannerSaveDTO the banner save dto
@@ -203,6 +160,7 @@ public class Banner extends BaseTimeEntity implements Serializable {
         this.mobileImageFilePhysicalName = bannerSaveDTO.getMobileImageFilePhysicalName();
         this.linkUrlTypeCode = bannerSaveDTO.getLinkUrlTypeCode();
         this.linkUrl = bannerSaveDTO.getLinkUrl();
+        this.useYn = ServiceCode.YesOrNoEnumCode.Y.name();
         return this;
     }
 
@@ -211,7 +169,7 @@ public class Banner extends BaseTimeEntity implements Serializable {
      *
      * @return the banner
      * @author [오지훈]
-     * @implNote 메인비주얼 삭
+     * @implNote 메인비주얼 삭제
      * @since 2020. 8. 11. 오후 12:01:07
      */
     public Banner delete () {

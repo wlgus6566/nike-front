@@ -46,8 +46,8 @@
             try {
                 const { data: response } = await sendEmail({
                     userId: this.userId,
+                    platform: 'MOBILE'
                 });
-                console.log(response);
                 if (response.existMsg) {
                     alert(response.msg);
                 }

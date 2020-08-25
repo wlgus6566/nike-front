@@ -4,7 +4,6 @@
             <span class="ko">위시리스트</span>
         </h2>
         <div class="all-box type2" v-if="wishListData">
-            <!-- todo 전체선택 스크립트 작업 필요  -->
             <label class="check-label">
                 <span class="checkbox">
                     <input
@@ -46,18 +45,30 @@
             </div>
         </div>
         <!-- wish list -->
-
-        <WishList
-            v-if="wishListData"
-            :listData="wishListData"
-            :checkWishItem="checkWishItem"
-            :deleteLoading="deleteLoading"
-            @addBasket="addBasket"
-            @wishDelete="wishDelete"
-            @checkedWish="checkedWish"
+        <template v-if="wishListData">
+            <WishList
+                v-if="wishListData.length"
+                :listData="wishListData"
+                :checkWishItem="checkWishItem"
+                :deleteLoading="deleteLoading"
+                @addBasket="addBasket"
+                @wishDelete="wishDelete"
+                @checkedWish="checkedWish"
+                @showDetailView="showDetailView"
+            />
+            <WishListNodata v-if="wishListData && wishListData.length === 0" />
+        </template>
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
         />
-        <WishListNodata v-if="wishListData && wishListData.length === 0" />
-        <Loading v-if="loadingData" />
+        <detailView
+            :visible.sync="visible.detailView"
+            :productDetailData="productDetailData"
+            @addWishList="addWishList"
+        />
     </div>
 </template>
 
@@ -66,6 +77,7 @@ import {
     deleteWishList,
     deleteWishListCheck,
     getWishList,
+    postWishList,
 } from '@/api/wish-list';
 // import { postBasketSaveList } from '@/api/basket';
 import { addBasketList, addProductBasket } from '@/utils/basket';
@@ -75,7 +87,8 @@ export default {
     components: {
         WishList: () => import('@/components/wish-list/index'),
         WishListNodata: () => import('@/components/wish-list/nodata'),
-        Loading: () => import('@/components/wish-list/loading'),
+        detailView: () => import('@/views/pages/product/detail-view'),
+        Loading: () => import('@/components/loading'),
     },
     data() {
         return {
@@ -86,14 +99,59 @@ export default {
             checkAll: false,
             checkWishItem: [],
             deleteLoading: [],
-            basketList: [],
+            //basketList: [],
+            visible: {
+                detailView: false,
+            },
+            productDetailData: {},
             //check: this.items.state,
         };
     },
     activated() {
-        this.fetchData(true);
+        this.fetchData();
+        this.checkAll = false;
+        this.checkWishItem = [];
+    },
+    computed: {
+        basketList() {
+            if (!!this.$store.state.basketListData) {
+                return this.$store.state.basketListData;
+            } else {
+                return [];
+            }
+        },
+        basketItem() {},
     },
     methods: {
+        // 상세 팝업
+        showDetailView(goodsSeq) {
+            this.visible.detailView = true;
+            const findIndex = this.wishListData.findIndex(
+                (el) => el.goodsSeq === goodsSeq
+            );
+            this.productDetailData = this.wishListData[findIndex].product;
+        },
+        // 위시리스트에 상품 추가
+        async addWishList(goodsSeq) {
+            try {
+                const findIndex = this.wishListData.findIndex(
+                    (el) => el.goodsSeq === goodsSeq.goodsSeq
+                );
+                if (findIndex == -1) {
+                    await postWishList({
+                        goodsSeq: goodsSeq.goodsSeq,
+                    });
+                    await this.getWishiList();
+                    alert(
+                        '위시리스트에 추가 되었습니다.\n위시리스트는 마이페이지에서 확인가능합니다.'
+                    );
+                } else {
+                    alert('이미 담긴 상품입니다.');
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
         checkedWish(seq, del) {
             const indexOfChecked = this.checkWishItem.findIndex(
                 (el) => el === seq
@@ -112,10 +170,10 @@ export default {
             if (this.checkAll) {
                 this.wishListData.forEach((el) => {
                     const indexOfChecked = this.checkWishItem.findIndex(
-                        (elChecked) => elChecked === el.wishListSeq
+                        (elChecked) => elChecked === el.goodsSeq
                     );
                     if (indexOfChecked === -1) {
-                        this.checkWishItem.push(el.wishListSeq);
+                        this.checkWishItem.push(el.goodsSeq);
                     }
                 });
             } else {
@@ -123,24 +181,29 @@ export default {
             }
         },
         async checkedWishDelete() {
-            if (!confirm('위시리스트에서 삭제 됩니다. 삭제하시겠습니까?')) {
-                return false;
-            }
-            this.deleteLoading = this.checkWishItem;
-            try {
-                await deleteWishListCheck({
-                    wishListSeqList: this.checkWishItem,
-                });
-                await this.fetchData();
-                this.checkWishItem.forEach((seq) => {
-                    this.checkedWish(seq, true);
-                });
-                this.deleteLoading = [];
-            } catch (error) {
-                console.log(error);
-                if (error.data.existMsg) {
-                    alert(error.data.msg);
+            if (this.checkWishItem.length !== 0) {
+                if (!confirm('위시리스트에서 삭제 됩니다. 삭제하시겠습니까?')) {
+                    return false;
                 }
+                this.deleteLoading = this.checkWishItem;
+                try {
+                    await deleteWishListCheck({
+                        goodsSeqList: this.checkWishItem,
+                    });
+                    await this.fetchData();
+                    this.checkWishItem.forEach((seq) => {
+                        this.checkedWish(seq, true);
+                    });
+                    this.checkAll = false;
+                    this.deleteLoading = [];
+                } catch (error) {
+                    console.log(error);
+                    if (error.data.existMsg) {
+                        alert(error.data.msg);
+                    }
+                }
+            } else {
+                alert('하나 이상의 상품을 선택해 주세요.');
             }
         },
         async wishDelete(seq) {
@@ -160,8 +223,8 @@ export default {
                 }
             }
         },
-        async fetchData(mounted) {
-            if (mounted) this.loadingData = true;
+        async fetchData() {
+            if (this.loadingData) return;
             try {
                 const {
                     data: { data: response },
@@ -170,49 +233,82 @@ export default {
                     size: this.itemLength,
                 });
                 this.wishListData = response.content;
+                await this.$store.dispatch('basketList');
                 this.loadingData = false;
-                return;
             } catch (error) {
                 console.log(error);
             }
         },
         async addBasket(item) {
-            if (confirm('CART에 담으시겠습니까?')) {
-                await addProductBasket(
-                    item.goodsSeq,
-                    item.product.minimumOrderQuantity
-                );
-                this.$router.push('/order');
+            const basketItem = this.basketList.findIndex((el) => {
+                return el.goodsSeq === item.goodsSeq;
+            });
+            if (basketItem === -1) {
+                if (confirm('CART에 담으시겠습니까?')) {
+                    await addProductBasket(
+                        item.goodsSeq,
+                        item.product.minimumOrderQuantity
+                    );
+                    this.$router.push('/order');
+                } else {
+                    return false;
+                }
             } else {
-                return false;
+                alert('이미 담긴 상품입니다');
             }
         },
         async checkedWishBasket() {
-            if (confirm('CART에 담으시겠습니까?')) {
-                const goodsSeq = [];
-                const minimumOrder = [];
-                this.wishListData.forEach((el) => {
-                    const indexOfChecked = this.checkWishItem.findIndex(
-                        (item) => {
-                            return item === el.wishListSeq;
-                        }
-                    );
-                    if (indexOfChecked !== -1) {
-                        goodsSeq.push(el.goodsSeq);
-                        minimumOrder.push(el.product.minimumOrderQuantity);
-                    }
+            if (this.checkWishItem.length !== 0) {
+                const basketItem = this.basketList.map((el) => {
+                    return el.goodsSeq;
                 });
-                await addBasketList(goodsSeq, minimumOrder);
-                this.$router.push('/order');
+                const basketCheck = this.checkWishItem.filter(function (seq) {
+                    return basketItem.includes(seq);
+                });
+                if (basketCheck.length !== 0) {
+                    alert(
+                        'CART에 이미 담긴 상품을 제외한 나머지 상품만 추가됩니다.'
+                    );
+                }
+                if (basketCheck.length === this.checkWishItem.length) return;
+                if (confirm('CART에 담으시겠습니까?')) {
+                    const goodsSeq = [];
+                    const minimumOrder = [];
+                    this.wishListData.forEach((el) => {
+                        const indexOfChecked = this.checkWishItem.findIndex(
+                            (item) => {
+                                return item === el.goodsSeq;
+                            }
+                        );
+                        if (indexOfChecked !== -1) {
+                            goodsSeq.push(el.goodsSeq);
+                            minimumOrder.push(el.product.minimumOrderQuantity);
+                        }
+                    });
+                    await addBasketList(goodsSeq, minimumOrder);
+                    this.checkWishItem = [];
+                    this.$router.push('/order');
+                } else {
+                    return false;
+                }
             } else {
-                return false;
+                alert('하나 이상의 상품을 선택해 주세요.');
             }
         },
     },
-    created() {
-        this.$store.dispatch('basketList');
-    },
+    created() {},
 };
 </script>
 
-<style></style>
+<style>
+.list-loading {
+    position: relative;
+    padding-top: 70%;
+}
+::v-deep .list-loading .lottie {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>

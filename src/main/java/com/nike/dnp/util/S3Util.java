@@ -1,8 +1,5 @@
 package com.nike.dnp.util;
 
-import com.amazonaws.AmazonServiceException;
-import com.amazonaws.HttpMethod;
-import com.amazonaws.SdkClientException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -83,6 +80,11 @@ public class S3Util {
 	 */
 	private static AmazonS3 client;
 
+	/**
+	 * The constant editorBucket
+	 *
+	 * @author [정주희]
+	 */
 	private static String editorBucket;
 
 
@@ -151,6 +153,14 @@ public class S3Util {
 		this.region = region;
 	}
 
+	/**
+	 * Sets editor bucket.
+	 *
+	 * @param editorBucket the editor bucket
+	 * @author [정주희]
+	 * @implNote 에디터 이미지 업로드 버켓
+	 * @since 2020. 8. 19. 오후 2:53:37
+	 */
 	@Value("${cloud.aws.s3.editor:}")
 	public void setEditorBucket(final String editorBucket) {
 		this.editorBucket = editorBucket;
@@ -359,6 +369,16 @@ public class S3Util {
 		return url.getPath();
 	}
 
+	/**
+	 * Editor upload string.
+	 *
+	 * @param multipartFile the multipart file
+	 * @param awsPath       the aws path
+	 * @return the string
+	 * @throws IOException the io exception
+	 * @author [정주희]
+	 * @since 2020. 8. 19. 오후 2:52:50
+	 */
 	public static String editorUpload(final MultipartFile multipartFile, final String awsPath) throws IOException {
 		log.info("S3Util.editorUpload");
 
@@ -371,7 +391,6 @@ public class S3Util {
 		log.debug("url.toString() {}", url.toString());
 		return url.getPath();
 	}
-
 
 	/**
 	 * 아마존 패스 경로 수정
@@ -389,43 +408,6 @@ public class S3Util {
 			awsPath = awsPath.substring(awsPath.indexOf('/')+1);
 		}
 		return awsPath;
-	}
-
-	/**
-	 * Generate presigned url.
-	 *
-	 * @param objectKey the object key
-	 * @author [오지훈]
-	 * @implNote S3 Signed URL 적용
-	 * @since 2020. 8. 10. 오전 9:42:48
-	 */
-	public static void GeneratePresignedURL(final String objectKey) {
-		String bucketName = "nike-test-bucket-dnp";
-		try {
-			// Set the presigned URL to expire after one hour.
-			java.util.Date expiration = new java.util.Date();
-			long expTimeMillis = expiration.getTime();
-			expTimeMillis += 1000 * 60;
-//			expTimeMillis += 1000 * 60 * 60;
-			expiration.setTime(expTimeMillis);
-			// Generate the presigned URL.
-			System.out.println("Generating pre-signed URL.");
-
-			GeneratePresignedUrlRequest generatePresignedUrlRequest =
-					new GeneratePresignedUrlRequest(bucketName, objectKey)
-							.withMethod(HttpMethod.GET)
-							.withExpiration(expiration);
-			URL url = client.generatePresignedUrl(generatePresignedUrlRequest);
-			System.out.println("Pre-Signed URL: " + url.toString());
-		} catch (AmazonServiceException e) {
-			// The call was transmitted successfully, but Amazon S3 couldn't process
-			// it, so it returned an error response.
-			e.printStackTrace();
-		} catch (SdkClientException e) {
-			// Amazon S3 couldn't be contacted for a response, or the client
-			// couldn't parse the response from Amazon S3.
-			e.printStackTrace();
-		}
 	}
 
 }

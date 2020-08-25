@@ -9,6 +9,9 @@
     },
     "dependencies": {
         "@fullcalendar/core": "^5.2.1",
+        "@fullcalendar/daygrid": "^5.3.0",
+        "@fullcalendar/interaction": "^5.3.0",
+        "@fullcalendar/vue": "^5.3.0",
         "axios": "^0.19.2",
         "core-js": "^3.6.5",
         "cropperjs": "^1.5.7",
@@ -19,6 +22,7 @@
         "lodash": "^4.17.19",
         "lottie-web": "^5.7.1",
         "vue": "^2.6.11",
+        "vue-infinite-scroll": "^2.0.2",
         "vue-js-modal": "^2.0.0-rc.6",
         "vue-moment": "^4.1.0",
         "vue-router": "^3.2.0",

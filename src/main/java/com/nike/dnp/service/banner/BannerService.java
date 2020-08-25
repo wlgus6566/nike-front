@@ -1,14 +1,13 @@
 package com.nike.dnp.service.banner;
 
-import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.banner.BannerReturnDTO;
 import com.nike.dnp.dto.banner.BannerSaveDTO;
 import com.nike.dnp.entity.banner.Banner;
-import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.banner.BannerRepository;
 import com.nike.dnp.service.RedisService;
-import com.nike.dnp.util.MessageUtil;
+import com.nike.dnp.util.ObjectMapperUtil;
 import com.nike.dnp.util.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -61,9 +61,12 @@ public class BannerService {
      * @since 2020. 7. 20. 오전 11:36:13
      * @implNote 배너 상세(캐시)
      */
-    public Banner getBanner() {
-        final Banner banner = (Banner) redisService.get(BANNER_REDIS_KEY);
-        return ObjectUtils.isEmpty(banner) ? bannerRepository.findAllByUseYnOrderByUpdateDt(ServiceCode.YesOrNoEnumCode.Y.name()).get(0) : banner;
+    public BannerReturnDTO getBanner() {
+        BannerReturnDTO bannerDTO = (BannerReturnDTO) redisService.get(BANNER_REDIS_KEY);
+        if (ObjectUtils.isEmpty(bannerDTO)) {
+            bannerDTO = this.findBanner();
+        }
+        return bannerDTO;
     }
 
     /**
@@ -74,8 +77,9 @@ public class BannerService {
      * @implNote 배너 상세(DB)
      * @since 2020. 8. 12. 오후 2:12:13
      */
-    public Banner findBanner() {
-        return bannerRepository.findAllByUseYnOrderByUpdateDt(ServiceCode.YesOrNoEnumCode.Y.name()).get(0);
+    public BannerReturnDTO findBanner() {
+        final List<Banner> banners = bannerRepository.findAllByUseYnOrderByUpdateDt(ServiceCode.YesOrNoEnumCode.Y.name());
+        return ObjectUtils.isEmpty(banners) ? new BannerReturnDTO() : ObjectMapperUtil.map(banners.get(0), BannerReturnDTO.class);
     }
 
     /**
@@ -101,8 +105,7 @@ public class BannerService {
      * @implNote 배너 상세
      */
     public Banner findByBannerSeq(final Long bannerSeq) {
-        return this.findById(bannerSeq).orElseThrow(
-                () -> new NotFoundHandleException());
+        return this.findById(bannerSeq).orElseThrow(NotFoundHandleException::new);
     }
 
     /**
@@ -115,12 +118,13 @@ public class BannerService {
      * @implNote 배너 등록
      */
     @Transactional
-    public Banner save (final BannerSaveDTO bannerSaveDTO) {
+    public BannerReturnDTO save (final BannerSaveDTO bannerSaveDTO) {
         bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
         bannerSaveDTO.setMobileImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getMobileImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
         final Banner banner = bannerRepository.save(new Banner().saveOrUpdate(bannerSaveDTO));
-        redisService.set(BANNER_REDIS_KEY, banner, 0);
-        return banner;
+        final BannerReturnDTO bannerDTO = ObjectMapperUtil.map(banner, BannerReturnDTO.class);
+        redisService.set(BANNER_REDIS_KEY, bannerDTO, 0);
+        return bannerDTO;
     }
 
     /**
@@ -134,14 +138,26 @@ public class BannerService {
      * @implNote 배너 수정
      */
     @Transactional
-    public Banner update (final Long bannerSeq, final BannerSaveDTO bannerSaveDTO) {
+    public BannerReturnDTO update (final Long bannerSeq, final BannerSaveDTO bannerSaveDTO) {
         final Banner banner = this.findByBannerSeq(bannerSeq);
-        bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
-        bannerSaveDTO.setMobileImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getMobileImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
-        banner.saveOrUpdate(bannerSaveDTO);
+
+        if (bannerSaveDTO.getImageFilePhysicalName().contains("temp/")) {
+            bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
+        } else {
+            bannerSaveDTO.setImageFileName(banner.getImageFileName());
+            bannerSaveDTO.setImageFileSize(banner.getImageFileSize());
+            bannerSaveDTO.setImageFilePhysicalName(banner.getImageFilePhysicalName());
+        }
+        if (bannerSaveDTO.getMobileImageFilePhysicalName().contains("temp/")) {
+            bannerSaveDTO.setMobileImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getMobileImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
+        } else {
+            bannerSaveDTO.setMobileImageFilePhysicalName(banner.getMobileImageFilePhysicalName());
+        }
+
+        final BannerReturnDTO bannerDTO = ObjectMapperUtil.map(banner.saveOrUpdate(bannerSaveDTO), BannerReturnDTO.class);
         redisService.delete(BANNER_REDIS_KEY);
-        redisService.set(BANNER_REDIS_KEY, banner, 0);
-        return banner;
+        redisService.set(BANNER_REDIS_KEY, bannerDTO, 0);
+        return bannerDTO;
     }
 
     /**
@@ -150,7 +166,7 @@ public class BannerService {
      * @param bannerSeq the banner seq
      * @return the banner
      * @author [오지훈]
-     * @implNoe 배너 삭제
+     * @implNote 배너 삭제
      * @since 2020. 8. 11. 오후 12:01:46
      */
     @Transactional

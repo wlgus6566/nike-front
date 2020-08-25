@@ -18,7 +18,7 @@
                 </p>
 
                 <a :href="`${mainData.mainVisual.linkUrl}`" class="btn-s-black">
-                    <span>VIEW</span>
+                    <span class="bebas">VIEW</span>
                 </a>
             </div>
         </div>
@@ -126,8 +126,12 @@
             <div class="inner">
                 <h2 class="main-title">CALENDAR</h2>
                 <div>
-                    <!-- todo// 캘릭터 작업 -->
-                    CALENDAR
+                    <FullCalendar
+                        ref="fullCalendar"
+                        :options="calendarOptions"
+                        defaultView="month"
+                        :editable="false"
+                    />
                 </div>
             </div>
         </div>
@@ -178,9 +182,7 @@
                         <strong class="title">
                             {{ newItem.title }}
                         </strong>
-                        <p class="desc">
-                            {{ newItem.contents }}
-                        </p>
+                        <!--                        <p class="desc" v-html="newItem.contents" />-->
                         <span class="date">
                             {{ newItem.updateDt }}
                         </span>
@@ -192,18 +194,97 @@
 </template>
 <script>
 import { getMain } from '@/api/main';
+import {
+    getCalendarEachList, // CALENDAR 목록 조회
+    getTodayCalendar, // CALENDAR 오늘 조회
+} from '@/api/calendar';
+
+import moment from 'moment';
+import FullCalendar from '@fullcalendar/vue';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import momentPlugin from '@fullcalendar/moment';
 
 export default {
     name: 'MainPage',
     data() {
         return {
             mainData: [],
+            todayData: [],
+            yyyyMm: moment(new Date()).format('YYYY.MM'),
+            calendarOptions: {
+                plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
+                initialView: 'dayGridMonth',
+                // 일자 클릭시
+                // dateClick: this.handleDateClick,
+                dateClick: this.handleDateClick,
+                moreLinkClick: this.test,
+                height: 500,
+                events: [],
+                dayMaxEventRows: true,
+                timeGrid: {
+                    dayMaxEventRows: 1,
+                },
+                headerToolbar: {
+                    left: 'prev',
+                    center: 'title',
+                    right: 'next',
+                },
+                titleFormat: 'yyyy.M',
+                customButtons: {
+                    prev: {
+                        // this overrides the prev button
+                        click: () => {
+                            let calendarApi = this.$refs.fullCalendar.getApi();
+                            calendarApi.prev();
+                            this.getCalendarEachList(
+                                moment(calendarApi.getDate()).format('YYYY.MM')
+                            );
+                        },
+                    },
+                    next: {
+                        // this overrides the next button
+                        click: () => {
+                            let calendarApi = this.$refs.fullCalendar.getApi();
+                            calendarApi.next();
+                            this.getCalendarEachList(
+                                moment(calendarApi.getDate()).format('YYYY.MM')
+                            );
+                        },
+                    },
+                },
+            },
         };
+    },
+    components: {
+        FullCalendar,
     },
     created() {
         this.main();
+        this.loadCalendar();
+    },
+    activated() {
+        this.main();
     },
     methods: {
+        test(e) {
+            //console.log(e);
+            const date = this.$moment(e.date).format('YYYY-MM-DD');
+            const cal = this.$refs.fullCalendar.$el;
+            const td = cal.querySelector(`td[data-date="${date}"]`);
+            td.classList.add('test');
+
+            setTimeout(() => {
+                const modal = document.querySelector('.fc-more-popover');
+                const close = modal.querySelector('.fc-popover-close');
+                const body = modal.querySelector('.fc-popover-body');
+                body.append('<a>자세히 보기?</a>');
+                close.addEventListener('click', () => {
+                    td.classList.remove('test');
+                });
+            }, 0);
+        },
+
         async main() {
             try {
                 const {
@@ -211,9 +292,88 @@ export default {
                 } = await getMain();
                 this.mainData = response;
             } catch (error) {
-                console.log(error);
                 alert(error.response.data.msg);
             }
+        },
+        // 달력 초기 목록 호출
+        async loadCalendar() {
+            this.loadingData = true;
+            try {
+                await this.getCalendarEachList(this.yyyyMm);
+                this.loadingData = false;
+            } catch (error) {
+                alert(error.response.data.msg);
+            }
+        },
+        // 한달 일정 조회
+        async getCalendarEachList(yyyyMm) {
+            this.yyyyMm = !!yyyyMm ? yyyyMm : this.yyyyMm;
+            const {
+                data: { data: response },
+            } = await getCalendarEachList({ yyyyMm: this.yyyyMm });
+            this.calendarData = response;
+            this.transformData();
+        },
+        // 달력에 맞게 변수명 변경
+        transformData() {
+            // this.calendarOptions.events = [];
+            let getEvent = [];
+            this.calendarData.forEach((item) => {
+                let color;
+                if (item.calendarSectionCode === 'EDUCATION') {
+                    color = '#be1767';
+                } else if (item.calendarSectionCode === 'CAMPAIGN') {
+                    color = '#007b68';
+                } else {
+                    color = '#2c0fb4';
+                }
+                getEvent.push({
+                    ...item,
+                    title: item.scheduleName,
+                    description: item.contents,
+                    start: moment(item.beginDt).format('YYYY-MM-DD'),
+                    end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
+                    color: color,
+                    checkDuple: false,
+                });
+            });
+            this.distinctAndAddEvent(getEvent);
+        },
+        distinctAndAddEvent(getEvent) {
+            let distinctEventList = [];
+            getEvent.forEach(item => {
+                let check = false;
+                distinctEventList.forEach((ele) => {
+                    if (item.start === ele.start) {
+                        check = true;
+                    }
+                });
+                if (!check) {
+                    distinctEventList.push(item);
+                }
+            });
+            distinctEventList.forEach(item => {
+                getEvent.unshift(item);
+            });
+            this.patchEventData(getEvent);
+        },
+        patchEventData(getEvent) {
+            getEvent.forEach(item => {
+                this.calendarOptions.events.push({
+                    'contents': item['contents'],
+                    'start': item['start'],
+                    'end': item['end'],
+                    'title': item['title'],
+                    'color': item['color'],
+                })
+            })
+        },
+        async getTodayCalendar(searchDt) {
+            this.searchDt = !!searchDt ? searchDt : this.searchDt;
+            const {
+                data: { data: response },
+            } = await getTodayCalendar({ searchDt: this.searchDt });
+            this.todayData = response;
         },
     },
 };
@@ -549,5 +709,38 @@ export default {
     font-size: 12px;
     line-height: 14px;
     color: #888;
+}
+::v-deep .fc .fc-more-popover {
+    margin-top: 20px;
+}
+::v-deep .test {
+    background: red;
+}
+
+::v-deep .fc-daygrid-day-bottom {
+    width: 100%;
+}
+::v-deep .fc-daygrid-more-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    /*text-indent: -99999px;*/
+}
+::v-deep .fc-daygrid-more-link:before {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    content: '';
+    display: block;
+    width: 3px;
+    height: 3px;
+    border-radius: 100%;
+    background: #fa5400;
+}
+::v-deep .fc-popover-body .fc-daygrid-event-harness:first-child {
+    display: none;
 }
 </style>

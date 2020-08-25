@@ -8,19 +8,34 @@
         <form action="" @submit.prevent="addProduct">
             <ul class="form-list-thumb">
                 <li class="form-row thumb-row">
-                    <thumbnail
-                        :size="1 / 1"
-                        @cropImage="cropImage"
-                        :imageBase64="detailData.imageFilePhysicalName"
-                        :imageFileName="detailData.imageFileName"
+                    <span
+                        class="thumb-file"
+                        :class="{
+                            'file-upload':
+                                detailData.imageBase64 ||
+                                detailData.imageFilePhysicalName,
+                        }"
                     >
-                        <template slot="txt-up">
-                            썸네일 이미지 등록
-                        </template>
-                        <template slot="txt">
-                            썸네일 이미지 재등록
-                        </template>
-                    </thumbnail>
+                        <input type="file" @change="imageChange($event)" />
+                        <span class="thumb">
+                            <img
+                                :src="detailData.imageBase64"
+                                :alt="detailData.imageFileName"
+                                v-if="detailData.imageBase64"
+                            />
+                            <img
+                                :src="detailData.imageFilePhysicalName"
+                                :alt="detailData.imageFileName"
+                                v-if="
+                                    detailData.imageFilePhysicalName &&
+                                    !detailData.imageBase64
+                                "
+                            />
+                        </span>
+                        <span class="txt">
+                            이미지 등록
+                        </span>
+                    </span>
                 </li>
                 <li class="form-row">
                     <div class="form-column">
@@ -181,17 +196,15 @@
 <script>
 import { getProductDetail, postProduct, putProduct } from '@/api/product';
 
-import thumbnail from '@/components/thumbnail/index';
 import { getAgencyContact } from '@/api/agency';
 import store from '@/store';
 import { getCode } from '@/api/code';
 import { getCategoryList } from '@/utils/code';
+import { fileUpLoad } from '@/api/file';
 
 export default {
     name: 'registration',
-    components: {
-        thumbnail,
-    },
+    components: {},
     data() {
         return {
             exposure: {
@@ -283,6 +296,44 @@ export default {
                 this.$refs.test.focus();
             }
         },
+        //이미지 페이지에 삽입
+        imageChange(e) {
+            //this.uploadFiles(e.target.files[0], device);
+            const imaName = e.target.files[0].name;
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                console.log(reader.result);
+                this.detailData.imageBase64 = reader.result;
+                this.detailData.imageFileName = imaName;
+            };
+            if (e.target.files[0]) {
+                reader.readAsDataURL(e.target.files[0]);
+            } else {
+                this.detailData.imageBase64 = '';
+                this.detailData.imageFileName = '';
+            }
+        },
+
+        //이미지 폼데이터로 변환
+        // async uploadFiles(file, device) {
+        //     console.log(device);
+        //     const formData = new FormData();
+        //     formData.append('uploadFile', file, file.name);
+        //     try {
+        //         const {
+        //             data: { data: response },
+        //         } = await fileUpLoad(formData);
+        //         if (device === 'pc') {
+        //             this.pcFormFile = response;
+        //             console.log(this.pcFormFile);
+        //         } else {
+        //             this.moFormFile = response;
+        //             console.log(this.moFormFile);
+        //         }
+        //     } catch (e) {
+        //         console.log(e);
+        //     }
+        // },
         // 단가 입력 val
         unitPriceVal() {
             const numbers = /^[0-9]+$/;

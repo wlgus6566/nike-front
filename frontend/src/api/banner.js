@@ -5,4 +5,14 @@ function postBanner(data) {
     return banner.post(`/`, data);
 }
 
-export { postBanner };
+//배너 상세
+function getBanner(data) {
+    return banner.get(`/`, data);
+}
+
+//배너수정
+function putBanner(seq, data) {
+    return banner.put(`/${seq}`, data);
+}
+
+export { postBanner, getBanner, putBanner };

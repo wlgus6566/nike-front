@@ -52,7 +52,7 @@
                                     type="checkbox"
                                     :value="item.contentsFileSeq"
                                     v-model="checkContentsFileList"
-                                    :disabled="item.url"
+                                    :disabled="item.fileKindCode !== 'FILE'"
                                     @click="
                                         $emit(
                                             'checkContentsFile',
@@ -69,9 +69,9 @@
                                 />
                             </span>
                             <span class="info-box">
-                                <strong class="title">{{
+                                <em class="title">{{
                                     item.title || item.thumbnailFileName
-                                }}</strong>
+                                }}</em>
                             </span>
                         </label>
                         <div class="btn-box">
@@ -108,9 +108,7 @@
                             <button
                                 type="button"
                                 :class="buttonClass(item.contentsFileSeq)"
-                                :disabled="
-                                    item.fileKindCode === 'VR' || item.url
-                                "
+                                :disabled="item.fileKindCode !== 'FILE'"
                                 @click="accordion(item.contentsFileSeq)"
                             >
                                 <span>더보기</span>
@@ -128,7 +126,12 @@
                         >
                             <div class="inner">
                                 <div class="thumbnail">
-                                    <img :src="item.imageFileName" alt="" />
+                                    <img
+                                        :src="
+                                            item.detailThumbnailFilePhysicalName
+                                        "
+                                        alt=""
+                                    />
                                 </div>
                                 <div class="down-info">
                                     <span class="key">다운로드 횟수</span>

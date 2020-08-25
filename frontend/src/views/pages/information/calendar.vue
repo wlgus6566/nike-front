@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            {{ this.$route.meta.title }}
+            CALENDAR
         </h2>
         <ul class="schedule-type">
             <li class="edu">교육</li>
@@ -84,6 +84,7 @@ import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import momentPlugin from '@fullcalendar/moment'
 
 import calendarManagement from '@/views/pages/information/calendar-management';
 
@@ -112,24 +113,22 @@ export default {
             calendarData: [],
             todayData: [],
             calendarOptions: {
-                plugins: [dayGridPlugin, interactionPlugin],
+                plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
                 dateClick: this.handleDateClick,
                 events: [],
-                header: {
+                headerToolbar: {
                     left: 'prev',
                     center: 'title',
                     right: 'next',
                 },
+                titleFormat: 'yyyy.M',
                 customButtons: {
                     prev: {
                         // this overrides the prev button
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
-                            console.log(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
-                            );
                             this.getCalendarList(
                                 moment(calendarApi.getDate()).format('YYYY.MM')
                             );
@@ -140,9 +139,6 @@ export default {
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
-                            console.log(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
-                            );
                             this.getCalendarList(
                                 moment(calendarApi.getDate()).format('YYYY.MM')
                             );
@@ -174,7 +170,6 @@ export default {
         },
         // 한달 일정 조회
         async getCalendarList(yyyyMm) {
-            console.log(yyyyMm);
             this.yyyyMm = !!yyyyMm ? yyyyMm : this.yyyyMm;
             const {
                 data: { data: response },
@@ -194,12 +189,22 @@ export default {
         transformData() {
             this.calendarOptions.events = [];
             this.calendarData.forEach((item) => {
+                console.log('for', item);
+                let color;
+                if (item.calendarSectionCode === 'EDUCATION') {
+                    color = '#be1767';
+                } else if (item.calendarSectionCode === 'CAMPAIGN') {
+                    color = '#007b68';
+                } else {
+                    color = '#2c0fb4';
+                }
                 this.calendarOptions.events.push({
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
                     start: moment(item.beginDt).format('YYYY-MM-DD'),
                     end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
+                    color: color
                 });
             });
         },
@@ -231,8 +236,8 @@ export default {
         },
 
         /*
-                calendar-management 관련 메소드
-             */
+            calendar-management 관련 메소드
+         */
         async createCalendar(data) {
             try {
                 const { data: response } = await postCalendar(data);
@@ -286,3 +291,9 @@ export default {
     },
 };
 </script>
+<style type="text/css">
+    /*TODO 주말 색 변경필오*/
+    .fc-day-sun.fc-daygrid-day-frame.fc-daygrid-day-top.fc-daygrid-day-number { color:#0000FF; }     /* 토요일 */
+    .fc-day-number.fc-sun.fc-past { color:#FF0000; }    /* 일요일 */
+</style>
+<link href="./fullcalendar-2.9.1/fullcalendar.css" rel="stylesheet"/>

@@ -18,7 +18,7 @@
 }
 
 .bebas {
-    font-family: 'Bebas Neue', sans-serif !important;
+    font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif !important;
     letter-spacing: 0.5px;
 }
 /* align */
@@ -40,6 +40,10 @@
 }
 .fc-black {
     color: #000 !important;
+}
+.bebas {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.5px;
 }
 .img-cropper {
     width: 398px;
@@ -81,6 +85,7 @@
     color: #000;
     line-height: 27px;
     font-weight: bold;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 .form-title + [class^='hr-'] {
     margin-top: 10px;
@@ -247,9 +252,10 @@
     height: 20px;
     background: no-repeat center;
 }
-/*[class^='btn-'] .icon-mail {*/
-/*    background-image: url('../images/svg/icon-alarm-mail.svg');*/
-/*}*/
+[class^='btn-'] .icon-mail {
+    background-image: url('../images/svg/icon-mail-send.svg');
+    margin-left: 5px;
+}
 [class^='btn-'] .icon-check {
     background-image: url('../images/svg/icon-btn-check.svg');
 }
@@ -269,7 +275,8 @@
     display: inline-block;
     border-bottom: 1px solid #888;
     border-radius: 0;
-    line-height: 18px;
+    height: 18px;
+    line-height: 14px;
     font-size: 12px;
     color: #888;
     font-weight: bold;
@@ -379,6 +386,7 @@
     width: 20px;
     height: 20px;
     background: url('../images/svg/icon-checkbox-off.svg') no-repeat center;
+    vertical-align: top;
 }
 .checkbox input:checked + i {
     background-image: url('../images/svg/icon-checkbox-on.svg');
@@ -643,6 +651,7 @@
     display: flex;
 }
 .date-picker-group .date-picker {
+    width: 180px;
     flex-basis: 180px;
 }
 .data-picker .focus\:vc-shadow:focus {
@@ -724,7 +733,7 @@
     font-family: 'Roboto', sans-serif;
     font-size: 12px !important;
     color: #333;
-    font-weight: 400 !important;
+    font-weight: 400;
 }
 .vc-day-content.vc-text-gray-400 {
     color: rgba(0, 0, 0, 0.2);
@@ -748,6 +757,15 @@
     height: 26px !important;
     box-sizing: border-box;
 }
+.weekday-1 .vc-day-content {
+    color: #f20000;
+}
+.weekday-1 .vc-highlights + .vc-day-content {
+    color: #fff;
+}
+/*vc-highlights .vc-day-content {*/
+/*    font-weight: bold !important;*/
+/*}*/
 .vc-border-orange-900,
 .vc-border-orange-700,
 .vc-bg-orange-600 {
@@ -771,6 +789,145 @@
 .vc-day-content:hover {
     background-color: #f5f5f5;
 }
+
+/* vc-calendar IE11  */
+.vc-container .vc-grid-container {
+    width: 100%;
+    display: -ms-grid;
+}
+.vc-container .vc-grid-container.vc-weeks {
+    padding: 5px 6px 7px 6px;
+}
+.vc-container .vc-grid-container .vc-day-content {
+    min-height: 1.8rem;
+    width: 1.8rem;
+    height: 1.8rem;
+    margin: 0.1rem auto;
+}
+.vc-container > .vc-grid-cell {
+    width: 320px;
+    background: red;
+}
+.vc-container .vc-pane {
+    width: 320px;
+}
+.vc-grid-container {
+}
+
+/* Element UI Datepicker */
+.date-picker .el-date-edirtor {
+    height: 39px;
+    line-height: 16px;
+    padding: 0 24px 0 0;
+    box-sizing: border-box;
+
+    font-size: 14px;
+    color: #000;
+    letter-spacing: 0;
+}
+.date-picker .el-input__inner {
+    padding-left: 0;
+    border: none;
+}
+.el-date-editor.el-input {
+    width: 100%;
+}
+.date-picker .el-input__suffix {
+    width: 20px;
+    height: 100%;
+    right: 0;
+    background: url('../images/svg/icon-input-calender.svg') right 10px
+        no-repeat;
+}
+.date-picker .el-input__prefix {
+    display: none;
+}
+.el-date-picker__header {
+    margin: 20px 20px 0;
+}
+[aria-label='Previous Year'],
+[aria-label='Next Year'] {
+    display: none;
+}
+.el-picker-panel__icon-btn {
+    margin-top: 0;
+    float: none;
+    color: #000;
+    font-weight: bold;
+    font-size: 14px;
+}
+.el-date-picker__prev-btn {
+    margin-right: 30px;
+}
+.el-date-picker__next-btn {
+    margin-left: 30px;
+}
+.el-date-picker__header-label {
+    display: inline-block;
+    padding: 0;
+    font-size: 20px;
+    color: #000;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+}
+.el-date-picker__header-label + .el-date-picker__header-label:before {
+    content: '.';
+    display: inline-block;
+    font-size: 20px;
+    color: #000;
+}
+.el-month-table td .cell:hover,
+.el-year-table td .cell:hover,
+.el-year-table td.current:not(.disabled) .cell,
+.el-month-table td.current:not(.disabled) .cell,
+.el-date-picker__header-label.active,
+.el-date-picker__header-label:hover {
+    color: #fa5400;
+}
+.el-picker-panel__content {
+    margin-top: 10px;
+}
+.el-date-table th {
+    font-size: 14px;
+    color: #888;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.5px;
+    border: none;
+}
+.el-date-table td {
+    color: #333;
+}
+.el-date-table td.next-month,
+.el-date-table td.prev-month {
+    color: #333;
+    opacity: 0.3;
+}
+.el-date-table td span {
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+}
+.el-date-table td.today span {
+    background-color: #000;
+    color: #fff;
+}
+.el-date-table td.current:not(.disabled) span {
+    background-color: #fa5400;
+    font-weight: bold;
+}
+.el-date-table td.available:hover {
+    color: #fa5400;
+}
+.el-date-table .el-holiday span {
+    color: #f20000;
+}
+.el-date-table td.disabled div {
+    background-color: #fff;
+    color: #333;
+    opacity: 0.3;
+}
+
 /* date-picker-wrap */
 .date-picker-wrap {
     position: relative;
@@ -815,6 +972,7 @@
     top: 40px;
     left: -18px;
     display: block;
+    width: 300px;
     height: 0;
     padding: 0 20px 0;
     border: 1px solid transparent;
@@ -1222,6 +1380,7 @@
 }
 .file-setting .form-column {
     padding-left: 0;
+    align-items: center;
 }
 .file-setting .btn-del {
     position: absolute;
@@ -1323,13 +1482,13 @@
 }
 
 .el-dialog__body .form-row {
-    padding: 6px 0;
+    padding: 15px 0;
 }
 .el-dialog__body .form-column {
     align-items: center;
 }
 .el-dialog__body .label-title {
-    font-size: 12px;
+    font-size: 14px;
     color: #333;
     line-height: 18px;
 }
@@ -1631,18 +1790,17 @@
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: 100px;
-    padding-top: 100px;
+    height: 100px;
     overflow: hidden;
     background: url('../../assets/images/img-asset-none@2x.png') no-repeat
         center #fff;
     background-size: 100%;
+    text-align: center;
+    line-height: 100px;
 }
 .file-item .list .thumbnail img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     max-width: 100%;
+    vertical-align: middle;
 }
 .file-item .list .info-box {
     flex-grow: 0;
@@ -1769,6 +1927,7 @@
 .all-box {
     display: flex;
     align-items: center;
+    height: 40px;
     padding: 10px 0;
 }
 .all-box.type2 {
@@ -1795,6 +1954,7 @@
     position: relative;
     margin: 0 0 0 15px;
 }
+.all-box .check-label + .txt-btn::before,
 .all-box .check-label + .txt-btn:before {
     position: absolute;
     top: 50%;
@@ -1805,6 +1965,7 @@
     height: 10px;
     margin-top: -5px;
     background: #ddd;
+    overflow: visible;
 }
 .all-box .el-checkbox + .desc {
     padding: 0 0 0 15px;
@@ -2059,6 +2220,7 @@
     border: 1px solid #ddd;
     font-size: 14px;
     width: 100%;
+    line-height: 18px;
 }
 .table .input-box::placeholder {
     font-family: 'Noto Sans KR', sans-serif;
@@ -2368,6 +2530,8 @@
 .feedback-item .info .date {
     position: relative;
     padding: 0 10px;
+    letter-spacing: 0;
+    font-weight: 100;
 }
 .feedback-item .info .name + .date:before {
     content: '';
@@ -2472,12 +2636,17 @@
     font-size: 14px;
     line-height: 20px;
     color: #888;
+    font-weight: 100;
 }
 .upload-summury [class^='btn-'] {
     position: absolute;
     top: 50%;
     right: 50px;
     transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.5px;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 .news-list {
@@ -2545,12 +2714,13 @@
     box-sizing: border-box;
 }
 .tbl-list table td {
-    padding: 16px 5px;
+    padding: 15px 5px;
     border-top: 1px solid #eee;
     font-size: 12px;
     text-align: center;
     box-sizing: border-box;
     word-break: keep-all;
+    vertical-align: middle;
 }
 .tbl-list table td button {
     display: block;
@@ -2846,7 +3016,7 @@
 }
 .contact-item .modi {
     position: absolute;
-    top: 30px;
+    top: 27px;
     right: 30px;
     display: block;
     width: 20px;
@@ -2866,7 +3036,8 @@
     margin-top: 20px;
 }
 .contact-list li {
-    flex-basis: calc((100% - 20px) / 2);
+    flex-basis: calc(50% - 10px);
+    -ms-flex-preferred-size: calc(50% - 80px);
 }
 .contact-list li:nth-child(2n) {
     margin-left: 20px;
@@ -2998,17 +3169,29 @@
 }
 .wish-list-item .title-box .title {
     display: block;
+    display: -webkit-box;
     line-height: 20px;
     font-size: 14px;
     color: #000;
     font-weight: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
 }
 .wish-list-item .title-box .txt {
     display: block;
+    display: -webkit-box;
     margin-top: 8px;
     line-height: 18px;
     font-size: 12px;
     color: #555;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
 }
 .wish-list-item .desc-txt-box {
     margin-top: 8px;
@@ -3154,6 +3337,7 @@
 }
 .error-box {
     display: flex;
+    width: 100%;
     height: 100%;
     flex-direction: column;
     align-items: center;
@@ -3198,11 +3382,14 @@
     display: block;
     width: 120px;
     height: 120px;
-    background: url('../images/svg/illust-page-folder-upload-none.svg')
-        no-repeat center;
+    background: url('../images/svg/illust-page-folder-order-none.svg') no-repeat
+        center;
+}
+.no-data .icon-data {
+    background-image: url('../images/svg/illust-page-folder-order-none.svg');
 }
 .no-data .icon-search {
-    background-image: url('../images/svg/illust-page-folder-wish-none.svg');
+    background-image: url('../images/svg/illust-page-search-none.svg');
 }
 .no-data .icon-order {
     background-image: url('../images/svg/illust-page-folder-order-none.svg');
@@ -3341,6 +3528,7 @@
     line-height: 18px;
     font-size: 12px;
     color: #333;
+    font-weight: 400;
 }
 .sheet-item .info-box .txt {
     display: block;
@@ -3753,7 +3941,6 @@
     background-size: 100%;
 }
 .folder-item .thumbnail img {
-    display: none;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -3778,10 +3965,17 @@
     word-break: keep-all;
 }
 .folder-item .info-box .txt {
+    display: block;
+    display: -webkit-box;
     margin-top: 8px;
     line-height: 18px;
     font-size: 12px;
     color: #555;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: keep-all;
 }
 .folder-item .info-box .location {
     display: flex;
@@ -3945,3 +4139,107 @@
     top: 0;
     right: 0;
 }
+[class^='extension'] {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background-image: url('../images/icon_extension.png');
+    background-repeat: no-repeat;
+}
+.extension-pdf {
+    background-position: 0 0;
+}
+.extension-indd {
+    background-position: -100px 0;
+}
+.extension-ppt {
+    background-position: -200px 0;
+}
+.extension-pptx {
+    background-position: -300px 0;
+}
+.extension-key {
+    background-position: -400px 0;
+}
+.extension-doc {
+    background-position: 0 -100px;
+}
+.extension-docx {
+    background-position: -100px -100px;
+}
+.extension-xls {
+    background-position: -200px -100px;
+}
+.extension-xlsx {
+    background-position: -300px -100px;
+}
+.extension-vr {
+    background-position: -400px -100px;
+}
+.extension-mp4 {
+    background-position: 0 -200px;
+}
+.extension-mov {
+    background-position: -100px -200px;
+}
+.extension-url {
+    background-position: -200px -200px;
+}
+.extension-avi {
+    background-position: -300px -200px;
+}
+.extension-etc {
+    background-position: -400px -200px;
+}
+.extension-otf {
+    background-position: 0 -300px;
+}
+.extension-ttf {
+    background-position: -100px -300px;
+}
+.crop-editor {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0 30px;
+    border-top: 2px solid #000;
+    border-bottom: 1px solid #ccc;
+}
+.crop-editor .title {
+    margin-bottom: 10px;
+    font-weight: 400;
+    font-size: 12px;
+    color: #000;
+}
+.crop-editor .preview-crop {
+    position: relative;
+    align-self: flex-start;
+}
+.crop-editor .preview-crop:before {
+    position: absolute;
+    left: -24px;
+    top: calc(50% + 5px);
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url('../images/svg/icon-calender-right.svg') 0 0 no-repeat;
+}
+.crop-editor .preview {
+    width: 160px;
+    height: 160px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.crop-editor .preview-crop .frame {
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+/*.crop-editor.type2 .preview-crop:before {*/
+/*    top: 64px;*/
+/*}*/
+/*.crop-editor.type2 .preview-crop .preview {*/
+/*    height: 80px !important;*/
+/*}*/
+/*.crop-editor.type2 .preview img {*/
+/*    transform: translateX(0) translateY(-75px);*/
+/*}*/

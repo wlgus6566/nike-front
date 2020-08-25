@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            <span class="ko">{{ this.$route.meta.title }}</span>
+            <span class="ko">{{ title }}</span>
         </h2>
         <div class="sorting-area">
             <SearchInput @searchSubmit="searchSubmit" />
@@ -23,7 +23,12 @@
                 </NoData>
             </template>
         </template>
-        <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
         <detailView
             :visible.sync="visible.detailView"
             :productDetailData="productDetailData"
@@ -32,19 +37,20 @@
     </div>
 </template>
 <script>
-    import SearchInput from '@/components/search-input';
-    import ProductList from '@/components/product-list';
-    import Loading from '@/components/loading';
-    import NoData from '@/components/no-data';
-    import detailView from '@/views/pages/product/detail-view';
+import SearchInput from '@/components/search-input';
+import ProductList from '@/components/product-list';
+import Loading from '@/components/loading';
+import NoData from '@/components/no-data';
+import detailView from '@/views/pages/product/detail-view';
 
-    import {getUserProductList} from '@/api/product.js';
-    import {getWishList, postWishList} from '@/api/wish-list';
+import { getUserProductList } from '@/api/product.js';
+import { getWishCheck, postWishList } from '@/api/wish-list';
 
-    export default {
+export default {
     name: 'product-list',
     data() {
         return {
+            title: this.$route.meta.title,
             userProductListData: null,
             productDetailData: {
                 goodsName: '',
@@ -56,12 +62,6 @@
                 exposureYn: '',
             },
             loadingData: false,
-            loadingStyle: {
-                width: this.width ? `${this.width}px` : '100%',
-                height: this.height ? `${this.height}px` : '100%',
-                overflow: 'hidden',
-                margin: '0 auto',
-            },
             totalPage: null,
             page: 0,
             itemLength: 20,
@@ -94,7 +94,6 @@
     },
     mounted() {
         //this.initGetUserProduct();
-        this.getWishiList();
     },
     methods: {
         handleScroll() {
@@ -175,37 +174,28 @@
             this.productDetailData = this.userProductListData[findIndex];
         },
 
-        // 위시리스트 목록 가져오기
-        async getWishiList() {
+        // 위시리스트에 상품 추가
+        async addWishList(goodsSeq) {
+            console.log(goodsSeq.goodsSeq);
             try {
                 const {
                     data: { data: response },
-                } = await getWishList({
-                    page: this.page,
-                    size: this.itemLength,
+                } = await getWishCheck({
+                    goodsSeq: goodsSeq.goodsSeq,
                 });
-                this.wishListData = response.content;
-            } catch (error) {
-                console.log(error);
-            }
-        },
-
-        // 위시리스트에 상품 추가
-        async addWishList(goodsSeq) {
-            try {
-                const findIndex = this.wishListData.findIndex(
-                    (el) => el.goodsSeq === goodsSeq.goodsSeq
-                );
-                if (findIndex == -1) {
-                    await postWishList({
-                        goodsSeq: goodsSeq.goodsSeq,
-                    });
-                    await this.getWishiList();
-                    alert(
-                        '위시리스트에 추가 되었습니다.\n위시리스트는 마이페이지에서 확인가능합니다.'
-                    );
+                if (response.goodsSeq === null) {
+                    try {
+                        await postWishList({
+                            goodsSeq: goodsSeq.goodsSeq,
+                        });
+                        alert(
+                            '위시리스트에 추가 되었습니다.\n위시리스트는 마이페이지에서 확인가능합니다.'
+                        );
+                    } catch (error) {
+                        console.log(error);
+                    }
                 } else {
-                    alert('이미 담긴 상품입니다.');
+                    alert('이미 담긴상품 입니다.');
                 }
             } catch (error) {
                 console.log(error);
@@ -214,4 +204,15 @@
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.list-loading {
+    position: relative;
+    padding-top: 70%;
+}
+::v-deep .list-loading .lottie {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>

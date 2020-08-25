@@ -6,6 +6,12 @@ function getReportList(params) {
         params: params,
     });
 }
+//REPORT 그룹 depth별 목록조회
+function getGroupAuthority(params) {
+    return report.get(`/groupList`, {
+        params: params,
+    });
+}
 //REPORT 등록
 function postReport(data) {
     return report.post(`/`, data);
@@ -41,8 +47,9 @@ function deleteAnswerList(answerSeq) {
 }
 
 //REPORT 파일 목록
-function getReportFile(reportSeq, data) {
-    return report.get(`/file/${reportSeq}`, data);
+function getReportFile(reportSeq, param) {
+    //http://10.80.1.212/api/report/file/4?size=20
+    return report.get(`/file/${reportSeq}`, param);
 }
 
 //REPORT 장바구니 목록
@@ -62,6 +69,7 @@ function deleteReportBasket(reportBasketSeq, data) {
 
 export {
     getReportList,
+    getGroupAuthority,
     postReport,
     putReport,
     delReport,

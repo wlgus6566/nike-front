@@ -8,27 +8,28 @@
         />
         <agencyManagement
             :visible.sync="visible.agencyManagement"
-            v-bind:addAgencyData="addAgencyData"
-            v-bind:agencySeq="agencySeq"
-            v-on:addAgencyManagement="addAgencyManagement"
-            v-on:delAgencyManagement="delAgencyManagement"
-            v-on:modifyAgencyManagement="modifyAgencyManagement"
+            :addAgencyData="addAgencyData"
+            :agencySeq="agencySeq"
+            @addAgencyManagement="addAgencyManagement"
+            @delAgencyManagement="delAgencyManagement"
+            @modifyAgencyManagement="modifyAgencyManagement"
+            @cancelFn="cancelFn"
         />
         <Loading v-if="loadingData" />
     </div>
 </template>
 <script>
-    import {
-        delAgencyContact,
-        getAgencyContact,
-        getDetailAgencyContact,
-        postAgencyContact,
-        putAgencyContact,
-    } from '@/api/agency';
-    import agencyManagement from '@/views/pages/information/agency-management';
-    import Loading from '@/components/loading';
+import {
+    delAgencyContact,
+    getAgencyContact,
+    getDetailAgencyContact,
+    postAgencyContact,
+    putAgencyContact,
+} from '@/api/agency';
+import agencyManagement from '@/views/pages/information/agency-management';
+import Loading from '@/components/loading';
 
-    export default {
+export default {
     name: 'agency',
     data() {
         return {
@@ -56,6 +57,9 @@
     },
     computed: {},
     methods: {
+        cancelFn() {
+            this.visible.agencyManagement = false;
+        },
         showAgencyManagement() {
             this.addAgencyData = {
                 agencyDescription: '',
@@ -88,11 +92,14 @@
             let addAlert = confirm('AGENCY를 등록하시겠습니까?');
             if (addAlert) {
                 try {
-                    const {
-                        data: { data: response },
-                    } = await postAgencyContact(addData);
-                    this.visible.agencyManagement = false;
-                    await this.getAgencyData();
+                    const response = await postAgencyContact(addData);
+
+                    if (response.data.success) {
+                        this.visible.agencyManagement = false;
+                        await this.getAgencyData();
+                    } else {
+                        alert(response.data.msg);
+                    }
                 } catch (error) {
                     console.log(error.response);
                 }

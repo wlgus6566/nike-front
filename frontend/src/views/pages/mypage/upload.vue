@@ -14,13 +14,18 @@
                 :folderListData="uploadFolderData"
             />
             <template v-else>
-                <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
-                <NoData v-else>
+                <NoData>
                     <i class="icon-file"></i>
-                    <p class="desc">업로드 한 없습니다.</p>
+                    <p class="desc">업로드한 폴더가 없습니다.</p>
                 </NoData>
             </template>
         </template>
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
     </div>
 </template>
 
@@ -75,18 +80,12 @@ export default {
             },
             totalPage: null,
             loadingData: false,
-            loadingStyle: {
-                width: this.width ? `${this.width}px` : '100%',
-                height: this.height ? `${this.height}px` : '100%',
-                overflow: 'hidden',
-                margin: '0 auto',
-            },
         };
     },
     watch: {
         'sectionCode.value'() {
             this.page = 0;
-            this.uploadViewDataList();
+            this.initFetchData();
         },
     },
     mounted() {},
@@ -125,7 +124,6 @@ export default {
             }
         },
         initFetchData() {
-            console.log('initFetchData');
             this.totalPage = null;
             this.page = 0;
             this.uploadFolderData = null;
@@ -138,7 +136,6 @@ export default {
                 this.uploadFolderData.length >= this.itemLength &&
                 this.uploadFolderData.length !== 0
             ) {
-                console.log('infiniteScroll');
                 this.uploadViewDataList(true);
             }
         },
@@ -166,7 +163,6 @@ export default {
                         this.endPage();
                     }
                 } else {
-                    console.log(this.sectionCode.value);
                     this.uploadFolderDataList = response;
                     this.uploadFolderData = response.content;
                 }
@@ -180,4 +176,15 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.list-loading {
+    position: relative;
+    padding-top: 70%;
+}
+::v-deep .list-loading .lottie {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>

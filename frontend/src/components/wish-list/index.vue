@@ -3,18 +3,22 @@
         <li
             class="wish-list-item"
             v-for="item in listData"
-            :key="item.wishListSeq"
+            :key="item.goodsSeq"
         >
             <span class="checkbox">
                 <input
                     type="checkbox"
-                    :value="item.wishListSeq"
+                    :value="item.goodsSeq"
                     v-model="checkWishItem"
-                    @click="$emit('checkedWish', item.wishListSeq)"
+                    @click="$emit('checkedWish', item.goodsSeq)"
                 />
                 <i></i>
             </span>
-            <a href="#" class="title-box">
+            <a
+                href="#"
+                class="title-box"
+                @click.prevent="$emit('showDetailView', item.goodsSeq)"
+            >
                 <span class="thumbnail">
                     <img
                         :src="item.product.imageFilePhysicalName"
@@ -58,9 +62,7 @@
                     <span>삭제</span>
                 </button>
             </div>
-            <div class="loading" v-if="isLoading(item.wishListSeq)">
-                loading
-            </div>
+            <Loading v-if="isLoading(item.goodsSeq)" />
         </li>
     </transition-group>
 </template>
@@ -69,6 +71,9 @@
 export default {
     name: 'wish-list-comp',
     props: ['listData', 'checkWishItem', 'deleteLoading'],
+    components: {
+        Loading: () => import('@/components/loading'),
+    },
     methods: {
         isLoading(seq) {
             const indexFind = this.deleteLoading.findIndex((el) => {

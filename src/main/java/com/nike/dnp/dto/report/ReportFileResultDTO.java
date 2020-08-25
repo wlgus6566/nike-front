@@ -139,7 +139,7 @@ public class ReportFileResultDTO {
      * @since 2020. 7. 30. 오후 3:53:23
      */
     public String getDetailThumbnailFilePhysicalName() {
-        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName) ? detailThumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName);
+        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName) ? detailThumbnailFilePhysicalName : CloudFrontUtil.getSignedUrl(detailThumbnailFilePhysicalName);
     }
 
     /**
@@ -151,7 +151,7 @@ public class ReportFileResultDTO {
      * @since 2020. 8. 14. 오후 7:48:12
      */
     public String getThumbnailFilePhysicalName() {
-        return ObjectUtils.isEmpty(thumbnailFilePhysicalName) ? thumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
+        return ObjectUtils.isEmpty(thumbnailFilePhysicalName) ? thumbnailFilePhysicalName : CloudFrontUtil.getSignedUrl(thumbnailFilePhysicalName);
     }
 
     /**
@@ -163,7 +163,7 @@ public class ReportFileResultDTO {
      * @since 2020. 8. 14. 오후 7:50:15
      */
     public String getFilePhysicalName() {
-        return CloudFrontUtil.getCustomSignedUrl(filePhysicalName);
+        return CloudFrontUtil.getSignedUrl(filePhysicalName);
     }
 
 }

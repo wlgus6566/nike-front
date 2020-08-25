@@ -20,7 +20,7 @@
         </label>
 
         <cropperModal
-            ref="test"
+            ref="cModal"
             :visible.sync="visible.cropperModal"
             :imgSrc="this.imgSrc"
             :cropImg="this.cropImg"
@@ -72,7 +72,10 @@ export default {
     computed: {},
     methods: {
         cropImage(cropperUrl) {
+            this.imgName = null;
+            this.imgSrc = null;
             this.cropImg = cropperUrl;
+            this.$refs.input.value = '';
             this.$emit('cropImage', this.cropImg, this.imgName);
             this.visible.cropperModal = false;
         },
@@ -96,7 +99,7 @@ export default {
                     let url = `${data[0].prefix}${data[0].data}`;
                     this.imgSrc = url;
                     this.imgName = file.name;
-                    this.$refs.test.test(url);
+                    this.$refs.cModal.$refs.cropper.replace(url);
                 })
                 .catch((e) => {
                     console.log(e);

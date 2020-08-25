@@ -17,12 +17,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The Class Notice controller.
@@ -211,9 +212,11 @@ public class NoticeController {
      */
     @ApiOperation(value = "공지사항 고정 게시글 개수 조회", notes = BASIC_CHARACTER)
     @GetMapping("/NOTICE/noticeYnCnt")
-    public SingleResult<Long> checkNoticeYnCnt() {
+    public SingleResult<Boolean> checkNoticeYnCnt(
+            @ApiParam(value = "게시글 시퀀스", name = "noticeArticleSeq")
+            @RequestParam(required = false) Long noticeArticleSeq) {
         log.info("NoticeController.checkNoticeYnCnt");
-        return responseService.getSingleResult(noticeService.checkNoticeYnCnt());
+        return responseService.getSingleResult(noticeService.checkNoticeYn(noticeArticleSeq));
     }
 
     /**
@@ -330,7 +333,7 @@ public class NoticeController {
      * Upload editor images single result.
      *
      * @param noticeArticleSectionCode the section code
-     * @param multiReq    the multi req
+     * @param upload    upload file
      * @return the single result
      * @throws IOException the io exception
      * @author [정주희]
@@ -338,15 +341,21 @@ public class NoticeController {
      * @since 2020. 7. 31. 오후 3:47:48
      */
     @ApiOperation(value = "Customer Center 에디터 이미지 업로드", notes = BASIC_CHARACTER)
-    @PostMapping("/{noticeArticleSectionCode}/images")
-    public SingleResult<List<String>> uploadEditorImages(
+    @PostMapping(value = "/{noticeArticleSectionCode}/images",
+            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public EditorImageDto uploadEditorImages(
             @ApiParam(name = "noticeArticleSectionCode", value = "Customer Center 게시글 종류 코드",
                     allowableValues = "NOTICE, NEWS, QNA", required = true)
             @PathVariable final String noticeArticleSectionCode,
-            final MultipartHttpServletRequest multiReq) {
+            @ApiParam(name = "upload", value = "파일업로드") final MultipartFile upload) {
         log.info("NoticeController.uploadEditorImages");
 
-        List<String> uploadUrl = noticeService.uploadEditorImages(multiReq, noticeArticleSectionCode);
-        return responseService.getSingleResult(uploadUrl);
+        String uploadUrl = noticeService.uploadEditorImages(upload, noticeArticleSectionCode);
+        EditorImageDto editorImageDto = new EditorImageDto();
+        editorImageDto.setUploaded(1);
+        editorImageDto.setFileName(upload.getOriginalFilename());
+        editorImageDto.setUrl(uploadUrl);
+
+        return editorImageDto;
     }
 }

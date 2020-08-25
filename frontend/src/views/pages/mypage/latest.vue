@@ -14,13 +14,18 @@
                 :folderListData="historyFolderData"
             />
             <template v-else>
-                <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
-                <NoData v-else>
+                <NoData>
                     <i class="icon-file"></i>
                     <p class="desc">최근 본 폴더가 없습니다.</p>
                 </NoData>
             </template>
         </template>
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
     </div>
 </template>
 
@@ -76,18 +81,12 @@ export default {
             },
             totalPage: null,
             loadingData: false,
-            loadingStyle: {
-                width: this.width ? `${this.width}px` : '100%',
-                height: this.height ? `${this.height}px` : '100%',
-                overflow: 'hidden',
-                margin: '0 auto',
-            },
         };
     },
     watch: {
         'sectionCode.value'() {
             this.page = 0;
-            this.historyViewDataList();
+            this.initFetchData();
         },
     },
     mounted() {},
@@ -179,4 +178,15 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.list-loading {
+    position: relative;
+    padding-top: 70%;
+}
+::v-deep .list-loading .lottie {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>

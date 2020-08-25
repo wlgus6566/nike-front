@@ -16,7 +16,6 @@ spring:
   redis:
     host: nike-test-redis-a.f5zylx.ng.0001.apn2.cache.amazonaws.com
     port: 6379
-    #password: 2motion1!!
     cache:
       redis:
         cache-null-values: false
@@ -39,23 +38,32 @@ security:
 
 #임시경로
 nike:
+  url:
+    pc:
+      login: 'https://devwww.nikespace.co.kr/login'
+      password: 'https://devwww.nikespace.co.kr/password-set'
+    mobile:
+      login: 'https://devwww.nikespace.co.kr/login'
+      password: 'https://devwww.nikespace.co.kr/password-set'
   file:
-    root: '/home/emotion/file_temp'
+    root: '/home/ec2-user/file_temp'
     imageMagick: '/usr/bin'
     imageMagickCommand: 'convert'
     ffmpeg: '/usr/bin'
     ffmpegCommand: 'ffmpeg'
+    editorUrl: 'https://nike-test-resource-bucket-dnp.s3.ap-northeast-2.amazonaws.com'
 
 ## AWS
 cloud:
   aws:
-    distributionDomain: 'd3a4mwwf905xos.cloudfront.net'
-    privateKeyFilePath: '/home/ec2-user/nikecdn.der'
+    distributionDomain: 'devresource.nikespace.co.kr'
+    privateKeyFilePath: '/home/ec2-user/der/nikecdn.der'
     credentials:
       accessKey: 'AKIA4FO4XQUFNEBRAZU4'
       secretKey: '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'
     s3:
       bucket: 'nike-test-bucket-dnp'
+      editor: 'nike-test-resource-bucket-dnp'
     region:
       static: 'ap-northeast-2'
     stack:

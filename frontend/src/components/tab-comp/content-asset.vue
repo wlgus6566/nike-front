@@ -1,83 +1,76 @@
 <template>
     <div class="history-box">
         <div class="item-box">
-            <ul class="item-list">
-                <li class="item">
-                    <div class="thumbnail">
-                        <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    </div>
-                    <div class="info-box">
-                        <p class="title">듀브레</p>
-                        <span class="date">2020.01.01 - 2020.03.31</span>
-                    </div>
-                </li>
-                <li class="item">
-                    <div class="thumbnail">
-                        <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    </div>
-                    <div class="info-box">
-                        <p class="title">듀브레</p>
-                        <span class="date">2020.01.01 - 2020.03.31</span>
-                    </div>
-                </li>
-                <li class="item">
-                    <div class="thumbnail">
-                        <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    </div>
-                    <div class="info-box">
-                        <p class="title">듀브레</p>
-                        <span class="date">2020.01.01 - 2020.03.31</span>
-                    </div>
-                </li>
-                <li class="item">
-                    <div class="thumbnail">
-                        <img src="../../assets/images/img-asset-none@2x.png" alt="" />
-                    </div>
-                    <div class="info-box">
-                        <p class="title">듀브레</p>
-                        <span class="date">2020.01.01 - 2020.03.31</span>
-                    </div>
-                </li>
-            </ul>
+            <template v-if="historyFolderData">
+                <ul class="item-list" v-if="historyFolderData.length">
+                    <li
+                        class="item"
+                        v-for="(item, index) in historyFolderData"
+                        :key="index"
+                    >
+                        <div class="thumbnail">
+                            <img :src="item.imageFilePhysicalName" alt="" />
+                        </div>
+                        <div class="info-box">
+                            <p class="title">{{ item.folderName }}</p>
+                            <span class="date">
+                                {{
+                                    $moment(item.campaignBeginDt).format(
+                                        'YYYY.MM.DD'
+                                    )
+                                }}
+                                ~
+                                {{
+                                    $moment(item.campaignEndDt).format(
+                                        'YYYY.MM.DD'
+                                    )
+                                }}
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                <div v-else>
+                    최근 본 폴더가 없습니다
+                </div>
+            </template>
         </div>
     </div>
 </template>
 <script>
+import { historyFolderViewList } from '@/api/mypage';
+
 export default {
-    name: 'HistoryItem',
+    name: 'ContentAsset',
+    data() {
+        return {
+            loadingData: false,
+            historyFolderData: [],
+            size: 3,
+            page: 0,
+            sectionCode: 'ASSET',
+        };
+    },
+    created() {
+        this.historyViewDataList();
+    },
+    methods: {
+        //최근 본 폴더 리스트
+        async historyViewDataList() {
+            this.loadingData = true;
+            try {
+                const {
+                    data: { data: response },
+                } = await historyFolderViewList({
+                    page: this.page,
+                    size: this.size,
+                    typeCd: this.sectionCode,
+                });
+                this.historyFolderData = response.content;
+                this.loadingData = false;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+    },
 };
 </script>
-<style scoped>
-.history-box {
-    margin-top: 10px;
-}
-.item-list .item {
-    display: flex;
-    align-items: center;
-    padding: 5px 0;
-}
-.item-list .item .thumbnail {
-    display: block;
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-}
-.item-list .item .thumbnail img {
-    vertical-align: top;
-}
-.item-list .item .info-box .title {
-    display: block;
-    font-size: 12px;
-    line-height: 18px;
-    letter-spacing: -0.5px;
-    color: #000;
-}
-.item-list .item .info-box .date {
-    display: block;
-    margin-top: 3px;
-    font-size: 10px;
-    line-height: 11px;
-    color: #888;
-    font-weight: 300;
-}
-</style>

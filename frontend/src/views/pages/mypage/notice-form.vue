@@ -12,31 +12,30 @@
                         <span class="label-title">상단 고정 여부</span>
                     </div>
                     <div class="form-column">
-                        <label class="check-label">
+                        <span class="check-label">
                             <span class="radio">
                                 <input
                                     type="radio"
                                     value="Y"
                                     checked
+                                    @click="noticeCheck($event, true)"
                                     v-model="noticeDetail.noticeYn"
-                                    @click="noticeCheck($event)"
                                 />
                                 <i></i>
                                 <span class="txt">고정</span>
                             </span>
-                        </label>
-                        <label class="check-label">
+                        </span>
+                        <span class="check-label">
                             <span class="radio">
                                 <input
                                     type="radio"
                                     value="N"
                                     v-model="noticeDetail.noticeYn"
-                                    @click="noticeCheck($event)"
                                 />
                                 <i></i>
                                 <span class="txt">비고정</span>
                             </span>
-                        </label>
+                        </span>
                     </div>
                     <div class="form-column agr">
                         <span class="form-desc"
@@ -62,16 +61,24 @@
                         <label class="label-title required">내용</label>
                     </div>
                     <div class="form-column">
-                        <span class="textarea">
-                            <textarea
-                                required
-                                cols="100"
-                                rows="2"
-                                style="height: 300px;"
-                                v-model="noticeDetail.contents"
-                            ></textarea>
-                        </span>
+                        <ckeditor
+                            v-model="noticeDetail.contents"
+                            :config="editorConfig"
+                            style="width: 100%;"
+                        />
                     </div>
+                    <!--                    <div class="form-column">-->
+                    <!--                        <span class="textarea">-->
+                    <!--                            <textarea-->
+                    <!--                                required-->
+                    <!--                                cols="100"-->
+                    <!--                                rows="2"-->
+                    <!--                                style="height: 300px;"-->
+                    <!--                                v-model="noticeDetail.contents"-->
+                    <!--                                id="p_content"-->
+                    <!--                            ></textarea>-->
+                    <!--                        </span>-->
+                    <!--                    </div>-->
                 </li>
             </ul>
             <hr class="hr-gray" />
@@ -95,6 +102,8 @@ import {
     putNotice,
 } from '@/api/customer';
 
+import { getAuthFromCookie } from '@/utils/cookies';
+
 export default {
     name: 'notice-form',
     data() {
@@ -106,12 +115,29 @@ export default {
             noticeDetail: {
                 title: '',
                 contents: '',
-                noticeYn: null,
+                noticeYn: 'N',
+                noticeArticleSeq: null,
+            },
+            // 에디터 업로드 설정
+            editorConfig: {
+                // TODO url에 NOTICE 부분 noticeArticleSectionCode에 맞게 변경 필요
+                filebrowserImageUploadUrl: '',
+                // TODO 현재 로그인한 계정의 auth값 가져오기
+                fileTools_requestHeaders: {
+                    Authorization: '',
+                },
             },
         };
     },
+    created() {
+        this.editorConfig.filebrowserImageUploadUrl = `/api/customer/${this.$route.name.toUpperCase()}/images`;
+        this.editorConfig.fileTools_requestHeaders.Authorization =
+            this.$store.state.token || getAuthFromCookie();
+    },
+    components: {},
     mounted() {
         this.getNoticeList();
+        //this.noticeDetail.noticeYn = 'N';
         if (this.$route.meta.modify) {
             this.getNoticeDetail();
         }
@@ -143,6 +169,8 @@ export default {
                 if (response.data.success) {
                     this.detailDataReset();
                     this.$router.push('/mypage/notice');
+                } else {
+                    alert(response.data.msg);
                 }
             } catch (error) {
                 console.log(error);
@@ -159,6 +187,7 @@ export default {
                     const response = await putNotice(this.$route.params.id, {
                         contents: this.noticeDetail.contents,
                         noticeArticleSectionCode: 'NOTICE',
+                        noticeArticleSeq: this.noticeArticleSeq,
                         noticeYn: this.noticeDetail.noticeYn,
                         title: this.noticeDetail.title,
                         useYn: this.useYn,
@@ -168,7 +197,12 @@ export default {
                     if (response.data.success) {
                         this.detailDataReset();
                         this.$router.push('/mypage/notice');
+                    } else {
+                        alert(response.data.msg);
                     }
+                    console.log(response);
+                    console.log('시퀀스');
+                    console.log(this.noticeArticleSeq);
                 } catch (error) {
                     console.log(error);
                 }
@@ -186,8 +220,14 @@ export default {
                     keyword: '',
                 });
                 this.noticeYnLength = response.content.filter((el) => {
-                    return el.noticeYn === 'Y';
+                    //console.log(el.noticeArticleSeq);
+                    //console.log(this.$route.params.id * 1);
+                    return (
+                        el.noticeYn === 'Y' &&
+                        el.noticeArticleSeq !== this.$route.params.id * 1
+                    );
                 });
+                //console.log(this.noticeYnLength);
             } catch (error) {
                 console.log(error);
             }
@@ -195,7 +235,7 @@ export default {
 
         //공지사항 상세
         async getNoticeDetail() {
-            console.log(this.$route.params.id);
+            //console.log(this.$route.params.id);
             try {
                 const {
                     data: { data: response },
@@ -204,18 +244,17 @@ export default {
                     this.$route.params.id
                 );
                 this.noticeDetail = response;
+                this.noticeArticleSeq = response.noticeArticleSeq;
             } catch (error) {
                 console.log(error);
             }
         },
 
         //중요공지 체크
-        noticeCheck(e) {
-            if (
-                this.noticeDetail.noticeYn === 'N' &&
-                this.noticeYnLength.length >= 3
-            ) {
+        noticeCheck(e, YN) {
+            if (YN && this.noticeYnLength.length >= 3) {
                 e.preventDefault();
+                this.noticeDetail.noticeYn = 'N';
                 alert('상단 고정은 최대 3개까지만 설정가능합니다.');
             }
         },

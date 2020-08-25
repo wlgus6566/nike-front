@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            <span class="ko">{{ $route.meta.title }}</span>
+            <span class="ko">{{ title }}</span>
         </h2>
         <h3 class="form-title mt20">메인 비주얼 등록</h3>
         <hr class="hr-black" />
@@ -34,8 +34,7 @@
                             <span
                                 class="thumb-file pc-upload"
                                 :class="{
-                                    'file-upload':
-                                        bannerData.imageFilePhysicalName,
+                                    'file-upload': bannerData.pcImageUrl,
                                 }"
                             >
                                 <input
@@ -45,11 +44,9 @@
                                 />
                                 <span class="thumb">
                                     <img
-                                        :src="bannerData.imageFilePhysicalName"
-                                        :alt="
-                                            pcFormFile.detailThumbnailFileName
-                                        "
-                                        v-if="bannerData.imageFilePhysicalName"
+                                        :src="bannerData.pcImageUrl"
+                                        :alt="bannerData.imageFileName"
+                                        v-if="bannerData.pcImageUrl"
                                     />
                                 </span>
                                 <span class="txt">
@@ -63,8 +60,7 @@
                             <span
                                 class="thumb-file mobile-upload"
                                 :class="{
-                                    'file-upload':
-                                        bannerData.mobileImageFileName,
+                                    'file-upload': bannerData.mobileImageUrl,
                                 }"
                                 ref="moBanner"
                             >
@@ -74,15 +70,9 @@
                                 />
                                 <span class="thumb">
                                     <img
-                                        :src="
-                                            bannerData.mobileImageFilePhysicalName
-                                        "
-                                        :alt="
-                                            moFormFile.detailThumbnailFileName
-                                        "
-                                        v-if="
-                                            bannerData.mobileImageFilePhysicalName
-                                        "
+                                        :src="bannerData.mobileImageUrl"
+                                        :alt="bannerData.mobileImageFileName"
+                                        v-if="bannerData.mobileImageUrl"
                                     />
                                 </span>
                                 <span class="txt">
@@ -119,7 +109,6 @@
                                     <i></i>
                                     <span class="txt">
                                         {{ radio.title }}
-                                        {{ urlCheck.value }}
                                     </span>
                                 </span>
                             </label>
@@ -131,13 +120,13 @@
                         <label class="label-title required">URL</label>
                     </div>
                     <div class="form-column">
-                        <input type="text" v-model="bannerData.linkUrl" />
+                        <input type="text" v-model="linkUrl" />
                     </div>
                 </li>
             </ul>
             <hr class="hr-gray" />
             <div class="btn-area">
-                <button type="button" class="btn-s-white">
+                <button type="button" class="btn-s-white" @click="detailBanner">
                     <span>취소</span>
                 </button>
                 <button type="submit" class="btn-s-black">
@@ -148,22 +137,27 @@
     </div>
 </template>
 <script>
-import { postBanner } from '@/api/banner';
+import { getBanner, putBanner, postBanner } from '@/api/banner';
 import { fileUpLoad } from '@/api/file';
+
 export default {
-    name: 'visual',
+    name: 'visualManage',
     data() {
         return {
+            title: this.$route.meta.title,
             bannerData: {
                 contents: '',
                 imageFileName: '',
                 imageFilePhysicalName: '',
                 linkUrl: '',
-                linkUrlTypeCode: 'ASSET',
+                linkUrlTypeCode: '',
                 mobileImageFileName: '',
                 mobileImageFilePhysicalName: '',
                 title: '',
+                pcImageUrl: '',
+                mobileImageUrl: '',
             },
+            linkUrl: '',
             pcFormFile: [],
             moFormFile: [],
             urlCheck: {
@@ -174,53 +168,82 @@ export default {
                 name: 'url',
                 value: 'ASSET',
             },
-            aa: '',
+            detailData: false,
         };
     },
     components: {},
     watch: {
         'urlCheck.value'(val) {
             if (val !== 'ASSET') {
-                this.bannerData.linkUrlTypeCode = null;
+                this.bannerData.linkUrlTypeCode = 'URL';
+                if (this.bannerData.linkUrl === '') {
+                    this.linkUrl = '';
+                    this.bannerData.linkUrl = '';
+                }
+                if (this.linkUrl !== '') {
+                    this.bannerData.linkUrl = this.linkUrl;
+                }
             } else {
                 this.bannerData.linkUrlTypeCode = val;
+                this.bannerData.linkUrl = '/asset/all';
+            }
+        },
+        linkUrl(val) {
+            this.bannerData.linkUrl = val;
+        },
+        'bannerData.linkUrlTypeCode'(val) {
+            if (val !== undefined) {
+                if (val !== 'ASSET') {
+                    this.urlCheck.value = 'N';
+                    if (this.linkUrl === '') {
+                        this.bannerData.linkUrl = this.linkUrl;
+                    }
+                }
             }
         },
     },
+    created() {
+        this.detailBanner();
+    },
+    activated() {
+        this.detailBanner();
+    },
+    mounted() {},
     methods: {
+        //이미지 페이지에 삽입
         imageChange(e, device) {
             this.uploadFiles(e.target.files[0], device);
             if (device === 'pc') {
                 const imaName = e.target.files[0].name;
                 const reader = new FileReader();
                 reader.onloadend = () => {
-                    this.bannerData.imageFilePhysicalName = reader.result;
+                    this.bannerData.pcImageUrl = reader.result;
                     this.bannerData.imageFileName = imaName;
                 };
                 if (e.target.files[0]) {
                     reader.readAsDataURL(e.target.files[0]);
                 } else {
-                    this.bannerData.imageFilePhysicalName = '';
+                    this.bannerData.pcImageUrl = '';
                     this.bannerData.imageFileName = '';
                 }
             } else {
                 const imaName = e.target.files[0].name;
                 const reader = new FileReader();
                 reader.onloadend = () => {
-                    this.bannerData.mobileImageFilePhysicalName = reader.result;
+                    this.bannerData.mobileImageUrl = reader.result;
                     this.bannerData.mobileImageFileName = imaName;
                 };
                 if (e.target.files[0]) {
                     reader.readAsDataURL(e.target.files[0]);
                 } else {
-                    this.bannerData.mobileImageFilePhysicalName = '';
+                    this.bannerData.mobileImageUrl = '';
                     this.bannerData.mobileImageFileName = '';
                 }
             }
         },
 
+        //이미지 폼데이터로 변환
         async uploadFiles(file, device) {
-            console.log(device);
             const formData = new FormData();
             formData.append('uploadFile', file, file.name);
             try {
@@ -228,48 +251,85 @@ export default {
                     data: { data: response },
                 } = await fileUpLoad(formData);
                 if (device === 'pc') {
-                    this.pcFormFile = response;
-                    console.log(this.pcFormFile);
+                    this.bannerData.imageFilePhysicalName =
+                        response.filePhysicalName;
+                    this.bannerData.imageFileName = response.fileName;
+                    this.bannerData.imageFileSize = response.fileSize;
                 } else {
-                    this.moFormFile = response;
-                    console.log(this.moFormFile);
+                    this.bannerData.mobileImageFilePhysicalName =
+                        response.filePhysicalName;
+                    this.bannerData.mobileImageFileName = response.fileName;
+                    this.bannerData.mobileImageFileSize = response.fileSize;
                 }
             } catch (e) {
                 console.log(e);
             }
         },
 
+        //배너 등록
         async addBanner() {
             try {
-                const response = await postBanner({
+                const data = {
                     contents: this.bannerData.contents,
-                    imageFileName: this.pcFormFile.detailThumbnailFileName,
-                    imageFilePhysicalName: this.pcFormFile
-                        .detailThumbnailFilePhysicalName,
-                    imageFileSize: this.pcFormFile.detailThumbnailFileSize,
+                    imageFileName: this.bannerData.imageFileName,
+                    imageFilePhysicalName: this.bannerData
+                        .imageFilePhysicalName,
+                    imageFileSize: this.bannerData.imageFileSize,
                     linkUrl: this.bannerData.linkUrl,
-                    linkUrlTypeCode: 'ASSET',
-                    mobileImageFileName: this.moFormFile
-                        .detailThumbnailFileName,
-                    mobileImageFilePhysicalName: this.moFormFile
-                        .detailThumbnailFilePhysicalName,
-                    mobileImageFileSize: this.moFormFile.fileSize,
+                    linkUrlTypeCode: this.bannerData.linkUrlTypeCode,
+                    mobileImageFileName: this.bannerData.mobileImageFileName,
+                    mobileImageFilePhysicalName: this.bannerData
+                        .mobileImageFilePhysicalName,
+                    mobileImageFileSize: this.bannerData.mobileImageFileSize,
                     title: this.bannerData.title,
-                });
-                alert(response.data.msg);
-                await this.$router.push('/');
-                this.bannerData = {
-                    contents: '',
-                    imageFileName: '',
-                    imageFilePhysicalName: '',
-                    linkUrl: '',
-                    linkUrlTypeCode: 'ASSET',
-                    mobileImageFileName: '',
-                    mobileImageFilePhysicalName: '',
-                    title: '',
                 };
-                this.pcFormFile = [];
-                this.moFormFile = [];
+                let response = '';
+                if (!this.detailData) {
+                    response = await postBanner(data);
+                } else {
+                    response = await putBanner(this.bannerData.bannerSeq, data);
+                }
+                alert(response.data.msg);
+                if (response.data.success) {
+                    await this.$router.push('/');
+                }
+            } catch (error) {
+                console.log(error);
+                if (error.data.existMsg) {
+                    alert(error.data.msg);
+                    ``;
+                }
+            }
+        },
+
+        //배너 상세
+        async detailBanner() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getBanner();
+                this.bannerData = response;
+                if (this.bannerData.title === undefined) {
+                    this.detailData = false;
+                    this.bannerData = {
+                        contents: '',
+                        imageFileName: '',
+                        imageFilePhysicalName: '',
+                        linkUrl: '/asset/all',
+                        linkUrlTypeCode: 'ASSET',
+                        mobileImageFileName: '',
+                        mobileImageFilePhysicalName: '',
+                        title: '',
+                        pcImageUrl: '',
+                        mobileImageUrl: '',
+                    };
+                } else if (this.bannerData.title) {
+                    this.detailData = true;
+                    this.linkUrl = response.linkUrl;
+                    if (response.linkUrlTypeCode === 'ASSET') {
+                        this.linkUrl = '';
+                    }
+                }
             } catch (error) {
                 console.log(error);
                 if (error.data.existMsg) {

@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const apiLogin = axios.create({ baseURL: '/api', timeout: 30000 });
+const apiLogin = axios.create({
+    baseURL: process.env.VUE_APP_API_URL + '/api',
+    timeout: 30000,
+});
 
 function loginUser(data) {
     return apiLogin.post('/login', data);

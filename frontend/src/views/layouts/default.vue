@@ -15,6 +15,7 @@
                 <appHeader />
             </div>
             <i class="icon-ellipsis"></i>
+            <!--            <i class="icon-lnb"></i>-->
             <div class="header-bg" v-on:mouseenter="mouseEvent(false)"></div>
         </header>
         <section id="container">
@@ -56,7 +57,15 @@
         </section>
 
         <footer>
-            footer
+            <div class="inner">
+                <span class="copy">
+                    ⓒ 2020 Nike Korea LLC. All Rights Reserved
+                </span>
+                <ul class="info-list">
+                    <li><router-link to="/">개인정보처리방침</router-link></li>
+                    <li><router-link to="/">이용약관</router-link></li>
+                </ul>
+            </div>
         </footer>
     </div>
 </template>
@@ -136,13 +145,23 @@ export default {
             const anchor = headerActiveNav
                 ? headerActiveNav
                 : nav.querySelector('.depth1 > .router-link-active');
-            console.log(anchor);
             let parentN = null;
             let ul = null;
             if (anchor) {
                 parentN = anchor.parentNode;
                 ul = anchor.nextSibling;
             }
+
+            gsap.set(header, { clearProps: 'all' });
+            gsap.set(logo, { clearProps: 'all' });
+            gsap.set(bg, { clearProps: 'all' });
+            gsap.set(nav, { clearProps: 'all' });
+            gsap.set(nav.querySelectorAll('.depth1'), { clearProps: 'all' });
+            gsap.set(nav.querySelectorAll('.depth1 > ul'), { display: 'none' });
+            gsap.set(nav.querySelectorAll('.depth1 > a'), {
+                clearProps: 'all',
+            });
+
             this.tw.clear();
             this.tw
                 .set(header, {
@@ -269,7 +288,7 @@ export default {
                 this.oldRoutePath.split('/')[1]
             ) {
                 if (this.headerActiveNav) {
-                    console.log();
+                    console.log(11111111111111111);
                     this.headerAni(this.headerActiveNav);
                 }
                 this.toggleHeader(this.headerActiveNav);

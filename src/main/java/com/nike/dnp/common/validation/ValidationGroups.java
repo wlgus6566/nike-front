@@ -39,12 +39,21 @@ public class ValidationGroups {
     public interface Group3 {}
 
     /**
-     * The Interface Group 3.
+     * The Interface Group 4.
      *
      * @author [오지훈]
      * @since 2020. 7. 28. 오후 4:40:39
      * @implNote
      */
     public interface Group4 {}
+
+    /**
+     * The Interface Group 5.
+     *
+     * @author [오지훈]
+     * @since 2020. 7. 28. 오후 4:40:39
+     * @implNote
+     */
+    public interface Group5 {}
 
 }

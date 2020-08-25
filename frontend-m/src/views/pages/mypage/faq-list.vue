@@ -1,22 +1,25 @@
 <template>
     <div>
         <ul class="sorting-tab line2">
-            <li class="active" v-for="codeList in categoryCodeList.listSortOptions">
+            <li :class="{ active: categoryCodeList.value === codeList.value }" v-for="(codeList ,index) in categoryCodeList.listSortOptions" :key="index">
                 <a href="#" v-on:click="tabChange(codeList.value)">{{codeList.label}}</a>
             </li>
         </ul>
-        <ul class="faq-list" v-for="item in faqData">
-            <li :class="{ active: item.noticeArticleSeq === activeSeq}">
-                <a href="#" class="sbj" @click="setActiveSeq(item.noticeArticleSeq)">
-                    <span class="category">[<em>{{item.noticeArticleCategoryValue}}</em>]</span>
-                    <span class="title">{{item.title}}</span>
-                    <i class="arrow"></i>
-                </a>
-                <div class="cont isActive">
-                    {{item.contents}}
-                </div>
-            </li>
-        </ul>
+
+            <ul class="faq-list" >
+                <li v-for="(item ,index) in faqData" :class="{ active: item.noticeArticleSeq === activeSeq}" :key="index">
+                    <a href="#" class="sbj" @click="setActiveSeq(item.noticeArticleSeq)">
+                        <span class="category">[<em>{{item.noticeArticleCategoryValue}}</em>]</span>
+                        <span class="title">{{item.title}}</span>
+                        <i class="arrow"></i>
+                    </a>
+                    <transition @enter="itemOpen" @leave="itemClose">
+                        <div class="cont"  v-if="activeSeq === item.noticeArticleSeq" v-html="item.contents">
+                        </div>
+                    </transition>
+                </li>
+            </ul>
+
         <Pagination
                 v-if="faqData.length"
                 :itemLength="itemLength"
@@ -24,11 +27,13 @@
                 :totalItem="totalElements"
                 @handleCurrentChange="handleCurrentChange"
         />
+        <Loading v-if="loadingData" />
     </div>
 </template>
 <script>
 import { getCustomerList, getCustomerDetail } from '@/api/customer/';
 import { getCode } from '@/api/code/';
+import {Cubic, gsap} from "gsap/all";
 
 export default {
     name: 'faq-list',
@@ -46,11 +51,13 @@ export default {
                 listSortOptions: [{ value: '', label: 'ALL' }],
                 value: '',
             },
-            noticeArticleCategoryCode: null
+            noticeArticleCategoryCode: null,
+            loadingData: false,
         }
     },
     components: {
-        Pagination: () => import('@/components/pagination/')
+        Pagination: () => import('@/components/pagination/'),
+        Loading: () => import('@/components/loading/')
     },
     mounted() {
         this.getCategoryCode();
@@ -62,6 +69,34 @@ export default {
         },
     },
     methods: {
+      itemOpen(el, done) {
+        gsap.set(el, {
+          height: 'auto',
+          paddingTop: 30,
+          paddingBottom: 30,
+        });
+        gsap.from(el, 0.3, {
+          height: 0,
+          paddingTop: 0,
+          paddingBottom: 0,
+          ease: Cubic.easeInOut,
+          onComplete: function () {
+            el.style.height = 'auto';
+            el.style.paddingTop = '30px';
+            el.style.paddingBottom = '30px';
+            done();
+          },
+        });
+      },
+      itemClose(el, done) {
+        gsap.to(el, 0.3, {
+          height: 0,
+          paddingTop: 0,
+          paddingBottom: 0,
+          ease: Cubic.easeInOut,
+          onComplete: done,
+        });
+      },
         async getFaqList() {
             try {
                 const {
@@ -80,6 +115,7 @@ export default {
             }
         },
         async getCategoryCode() {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -91,6 +127,7 @@ export default {
                         label: el.codeName,
                     });
                 });
+                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }

@@ -3,9 +3,9 @@
         <transition name="fade">
             <span
                 class="progress"
-                v-if="file.progress && file.progress !== 100"
                 :style="{ width: `${file.progress}%` }"
             ></span>
+            <!--v-if="file.progress && file.progress !== 100"-->
         </transition>
         <ul class="form-list">
             <li class="form-row">
@@ -13,11 +13,13 @@
                     <span class="label-title required">파일 구분</span>
                 </div>
                 <div class="form-column">
-                    <el-radio v-model="file.fileSectionCode" label="ASSET">
-                        ASSET
-                    </el-radio>
-                    <el-radio v-model="file.fileSectionCode" label="GUIDE">
-                        GUIDE
+                    <el-radio
+                        v-model="file.fileSectionCode"
+                        :label="item"
+                        v-for="item in pageFileSectionCodeName"
+                        :key="item"
+                    >
+                        {{ item }}
                     </el-radio>
                 </div>
             </li>
@@ -90,6 +92,7 @@ export default {
     props: {
         file: Object,
         listLength: Number,
+        pageFileSectionCodeName: Array,
     },
 };
 </script>

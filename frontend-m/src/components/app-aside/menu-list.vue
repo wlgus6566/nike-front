@@ -11,8 +11,14 @@
             </button>
             <transition @enter="itemOpen" @leave="itemClose">
                 <ul class="depth" v-if="activeIndex === index">
-                    <li v-for="depth in menu.menus" :key="depth.menuSeq">
-                        <a :href="depth.menuPathUrl">{{ depth.menuName }}</a>
+                    <li
+                        v-for="depth in menu.menus"
+                        :key="depth.menuSeq"
+                        @click="$emit('menuClose')"
+                    >
+                        <router-link :to="depth.menuPathUrl">
+                            {{ depth.menuName }}
+                        </router-link>
                     </li>
                 </ul>
             </transition>
@@ -73,7 +79,7 @@ export default {
             }
         },
         linkOpen() {
-            console.log(this.$route.path);
+            //console.log(this.$route.path);
         },
     },
 };
@@ -129,8 +135,7 @@ export default {
 }
 .menu-list li button span,
 .menu-list li a span {
-    font-size: 16px;
-    letter-spacing: -0.5px;
+    letter-spacing: 0.2px;
 }
 .depth {
     padding: 10px 0;

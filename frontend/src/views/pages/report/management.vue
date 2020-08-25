@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="page-title" v-html="this.$route.meta.title" />
+        <h2 class="page-title" v-html="title"></h2>
         <div class="sorting-area">
             <ListSorting :listTypes="listTypes" />
             <FilterSelect :listSortSelect="listSortSelect" />
@@ -35,7 +35,7 @@ import ListSorting from '@/components/list-sorting';
 import SearchInput from '@/components/search-input';
 import NoData from '@/components/no-data';
 import Loading from '@/components/loading';
-import { getReportList } from '@/api/report';
+import { getReportList, getGroupAuthority } from '@/api/report';
 import { getCategoryList } from '@/utils/code';
 import { getAuthCacheList } from '@/api/auth';
 
@@ -43,6 +43,7 @@ export default {
     name: 'management',
     data() {
         return {
+            title: this.$route.meta.title,
             reportListData: null,
             page: 0,
             itemLength: 20,
@@ -76,6 +77,7 @@ export default {
             },
             loadingData: false,
             searchKeyword: '',
+            userDataList: '',
         };
     },
     components: {
@@ -118,7 +120,7 @@ export default {
             try {
                 const {
                     data: { data: response },
-                } = await getAuthCacheList();
+                } = await getGroupAuthority();
                 this.userDataList = response;
                 this.recursionFn(response, this.authority.options, 1);
                 this.recursionFn(response, this.addAuthority.options, 1);
@@ -133,9 +135,11 @@ export default {
                 _minIndx = 0;
             }
             data.forEach((el, index) => {
+                const _boolean = el.checkBoxYn === 'Y' ? false : true;
                 item.push({
                     value: el.authSeq,
                     label: el.authName,
+                    disabled: _boolean,
                 });
                 if (el.subAuths) {
                     item[index + _minIndx].children = [];

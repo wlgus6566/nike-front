@@ -16,7 +16,9 @@
                                 type="button"
                                 class="txt-btn-orange"
                                 v-if="agencySeq"
-                                v-on:click="$emit('delAgencyManagement', agencySeq)"
+                                v-on:click="
+                                    $emit('delAgencyManagement', agencySeq)
+                                "
                             >
                                 <span>AGENCY 삭제</span>
                             </button>
@@ -26,22 +28,32 @@
                     <ul class="form-list">
                         <li class="form-row">
                             <div class="form-column">
-                                <label class="label-title required">AGENCY 명</label>
+                                <label class="label-title required"
+                                    >AGENCY 명</label
+                                >
                             </div>
                             <div class="form-column">
-                                <input type="text" v-model="addAgencyData.agencyName" required />
+                                <input
+                                    type="text"
+                                    v-model="addAgencyData.agencyName"
+                                    required
+                                />
                             </div>
                         </li>
                         <li class="form-row">
                             <div class="form-column">
-                                <label class="label-title required">AGENCY 설명</label>
+                                <label class="label-title required"
+                                    >AGENCY 설명</label
+                                >
                             </div>
                             <div class="form-column">
                                 <span class="textarea">
                                     <textarea
                                         cols="100"
                                         rows="2"
-                                        v-model="addAgencyData.agencyDescription"
+                                        v-model="
+                                            addAgencyData.agencyDescription
+                                        "
                                         required
                                     >
                                     </textarea>
@@ -53,26 +65,43 @@
                                 <label class="label-title">대표번호</label>
                             </div>
                             <div class="form-column">
-                                <input type="tel" v-model="addAgencyData.telephoneNumber" />
+                                <input
+                                    type="tel"
+                                    v-model="addAgencyData.telephoneNumber"
+                                />
                             </div>
                         </li>
                         <li class="form-row">
                             <div class="form-column">
-                                <label class="label-title required">대표 E-MAIL</label>
+                                <label class="label-title required"
+                                    >대표 E-MAIL</label
+                                >
                             </div>
                             <div class="form-column">
-                                <input type="email" v-model="addAgencyData.email" required />
+                                <input
+                                    type="email"
+                                    v-model="addAgencyData.email"
+                                    required
+                                />
                             </div>
                         </li>
                     </ul>
                     <hr class="hr-gray" />
                     <div class="btn-area">
-                        <button type="button" class="btn-s"><span>취소</span></button>
+                        <button
+                            type="button"
+                            class="btn-s"
+                            @click="$emit('cancelFn')"
+                        >
+                            <span>취소</span>
+                        </button>
                         <button
                             type="button"
                             class="btn-s-black"
                             v-if="agencySeq"
-                            v-on:click="$emit('modifyAgencyManagement', agencySeq)"
+                            v-on:click="
+                                $emit('modifyAgencyManagement', agencySeq)
+                            "
                         >
                             <span>수정</span>
                         </button>
@@ -125,6 +154,7 @@ export default {
     align-items: center;
 }
 .modal-wrap .el-dialog {
+    width: 600px;
     margin: 0 !important;
 }
 .modal-wrap .el-scrollbar__wrap {

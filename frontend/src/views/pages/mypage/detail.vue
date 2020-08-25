@@ -6,10 +6,10 @@
                 <h2 class="title">{{ noticeDetail.title }}</h2>
                 <span class="date">{{ noticeDetail.updateDt }}</span>
             </div>
-            <div class="detail-cont">{{ noticeDetail.contents }}</div>
+            <div class="detail-cont" v-html="noticeDetail.contents"></div>
         </div>
         <div class="btn-area">
-            <button type="button" class="btn-s-black" @click="$router.go(-1)">
+            <button type="button" class="btn-s-black" @click="listRoute">
                 <span>목록으로 가기</span>
             </button>
         </div>
@@ -38,6 +38,14 @@ export default {
         BtnArea: () => import('@/components/asset-view/btn-area.vue'),
     },
     methods: {
+        //목록이동
+        listRoute() {
+            if (this.noticeArticleSectionCode === 'NOTICE') {
+                this.$router.push('/mypage/notice');
+            } else if (this.noticeArticleSectionCode === 'NEWS') {
+                this.$router.push('/mypage/news');
+            }
+        },
         //공지사항 상세
         async getNoticeDetail() {
             try {
@@ -48,6 +56,7 @@ export default {
                     this.$route.params.id
                 );
                 console.log(response);
+
                 this.noticeDetail = response;
                 this.noticeArticleSectionCode =
                     response.noticeArticleSectionCode;

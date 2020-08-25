@@ -46,7 +46,6 @@ export default {
 }
 .sorting-list li button {
     display: block;
-    padding: 0 5px;
     font-size: 18px;
     color: #ccc;
     line-height: 21px;
@@ -55,7 +54,7 @@ export default {
 .sorting-list li button span {
     position: relative;
     display: inline-block;
-    padding: 11px 5px 10px;
+    padding: 11px 10px 10px;
     letter-spacing: 0.5px;
 }
 .sorting-list li.active button {

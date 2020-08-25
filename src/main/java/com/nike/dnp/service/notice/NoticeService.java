@@ -19,12 +19,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -104,7 +102,8 @@ public class NoticeService {
     public NoticeArticle save(final CustomerSaveDTO customerSaveDTO) {
         log.info("NoticeService.save");
 
-        this.checkNoticeYn(customerSaveDTO.getNoticeArticleSectionCode(), customerSaveDTO.getNoticeYn());
+        this.checkNoticeYn(customerSaveDTO.getNoticeArticleSectionCode(),
+                customerSaveDTO.getNoticeYn(), null);
 
         return noticeRepository.save(new NoticeArticle().customerSave(customerSaveDTO));
     }
@@ -117,19 +116,29 @@ public class NoticeService {
      * @since 2020. 7. 20. 오후 9:21:57
      * @implNote 공지사항 등록시 상단 고정된 게시글 개수 확인
      */
-    public Long checkNoticeYnCnt() {
+    public Boolean checkNoticeYn(Long noticeArticleSeq) {
         log.info("NoticeService.checkNoticeYnCnt");
 
-        final long count = Math.toIntExact(noticeRepository.checkNoticeYnCnt());
+        final List<NoticeArticle> noticeArticles = noticeRepository.checkNoticeYn();
 
         final long NOTICE_MAX_COUNT = 3L;
+        boolean seqCheck = false;
 
-        if (count >= NOTICE_MAX_COUNT) {
+        if (!ObjectUtils.isEmpty(noticeArticleSeq)) {
+            for (NoticeArticle notice : noticeArticles) {
+                if (notice.getNoticeArticleSeq().equals(noticeArticleSeq)) {
+                    seqCheck = true;
+                    break;
+                }
+            }
+        }
+
+        if (noticeArticles.size() >= NOTICE_MAX_COUNT && !seqCheck) {
             throw new CodeMessageHandleException(FailCode.ConfigureError.EXCEED_MAX_NOTICE.name(),
                     MessageUtil.getMessage(FailCode.ConfigureError.EXCEED_MAX_NOTICE.name()));
         }
 
-        return noticeRepository.checkNoticeYnCnt();
+        return true;
     }
 
     /**
@@ -147,7 +156,8 @@ public class NoticeService {
     public NoticeArticle updateCustomerCenter(Long noticeSeq, final CustomerUpdateDTO customerUpdateDTO) {
         log.info("NoticeService.updateCustomerCenter");
 
-        this.checkNoticeYn(customerUpdateDTO.getNoticeArticleSectionCode(), customerUpdateDTO.getNoticeYn());
+        this.checkNoticeYn(customerUpdateDTO.getNoticeArticleSectionCode(),
+                customerUpdateDTO.getNoticeYn(), customerUpdateDTO.getNoticeArticleSeq());
 
         return noticeRepository
                 .findById(noticeSeq)
@@ -185,36 +195,35 @@ public class NoticeService {
      * @since 2020. 8. 19. 오후 12:17:33
      * @implNote 에디터 이미지 업로드
      */
-    public List<String> uploadEditorImages(MultipartHttpServletRequest multiReq, String noticeArticleSectionCode) {
+    public String uploadEditorImages(MultipartFile multiReq, String noticeArticleSectionCode) {
         log.info("NoticeService.uploadEditorImages");
 
-        final Iterator<String> fileNames = multiReq.getFileNames();
-        List<String> imageUrl = new ArrayList<>();
+        final String ext = org.springframework.util.StringUtils.getFilenameExtension(multiReq.getOriginalFilename());
+        final String awsPath = "editor/" + noticeArticleSectionCode + "/" + FileUtil.makeFileName() + "." + ext;
 
-        while (fileNames.hasNext()) {
-            String name = fileNames.next();
-            MultipartFile mf = multiReq.getFile(name);
-
-            final String ext = org.springframework.util.StringUtils.getFilenameExtension(mf.getOriginalFilename());
-            final String awsPath = "editor/" + noticeArticleSectionCode + "/" + FileUtil.makeFileName() + "." + ext;
-
-            String uploadUrl = null;
-            try {
-                uploadUrl = S3Util.editorUpload(mf, awsPath);
-            } catch (IOException e) {
-                e.printStackTrace(); //code exception
-            }
-
-            imageUrl.add(editorUrl + uploadUrl);
-
+        String uploadUrl = null;
+        try {
+            uploadUrl = S3Util.editorUpload(multiReq, awsPath);
+        } catch (IOException e) {
+            e.printStackTrace(); //code exception
         }
 
-        return imageUrl;
+        return editorUrl + uploadUrl;
     }
 
-    private void checkNoticeYn(final String code, final String isYn){
+    /**
+     * Check notice yn.
+     *
+     *
+     * @param code the code         
+     * @return isYn the is yn
+     * @author [정주희]
+     * @since 2020. 8. 19. 오후 12:17:33
+     * @implNote 등록/수정 버튼 클릭시 고정게시글 개수 체크
+     */
+    private void checkNoticeYn(final String code, final String isYn, final Long seq){
         if(StringUtils.equalsIgnoreCase(code, "NOTICE") && StringUtils.equalsIgnoreCase(isYn, "Y")){
-            this.checkNoticeYnCnt();
+            this.checkNoticeYn(seq);
         }
     }
 }

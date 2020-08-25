@@ -67,13 +67,14 @@ export default {
                     },
                     {
                         title: 'TOOLKIT',
-                        component: 'ContentTooKit',
+                        component: 'ContentToolKit',
                     },
                     {
                         title: 'FOUNDATION',
                         component: 'ContentFoundation',
                     },
                 ],
+                showIndex: 0,
             },
             deleteLoading: [],
         };
