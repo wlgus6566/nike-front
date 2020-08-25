@@ -118,12 +118,13 @@ public class BannerService {
      * @implNote 배너 등록
      */
     @Transactional
-    public Banner save (final BannerSaveDTO bannerSaveDTO) {
+    public BannerReturnDTO save (final BannerSaveDTO bannerSaveDTO) {
         bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
         bannerSaveDTO.setMobileImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getMobileImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
         final Banner banner = bannerRepository.save(new Banner().saveOrUpdate(bannerSaveDTO));
-        redisService.set(BANNER_REDIS_KEY, banner, 0);
-        return banner;
+        final BannerReturnDTO bannerDTO = ObjectMapperUtil.map(banner, BannerReturnDTO.class);
+        redisService.set(BANNER_REDIS_KEY, bannerDTO, 0);
+        return bannerDTO;
     }
 
     /**
@@ -139,11 +140,6 @@ public class BannerService {
     @Transactional
     public BannerReturnDTO update (final Long bannerSeq, final BannerSaveDTO bannerSaveDTO) {
         final Banner banner = this.findByBannerSeq(bannerSeq);
-
-        System.out.println("======================================================");
-        System.out.println(bannerSaveDTO.getImageFilePhysicalName());
-        System.out.println(bannerSaveDTO.getMobileImageFilePhysicalName());
-        System.out.println("======================================================");
 
         if (bannerSaveDTO.getImageFilePhysicalName().contains("temp/")) {
             bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
