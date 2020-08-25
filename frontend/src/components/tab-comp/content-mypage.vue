@@ -23,6 +23,18 @@ export default {
     },
     watch: {
         '$store.state.gnbMenuListData'() {
+            this.dataBinding();
+        },
+    },
+    mounted() {
+        this.dataBinding();
+    },
+    methods: {
+        logout() {
+            this.$store.commit('LOGOUT');
+            this.$router.push('/login');
+        },
+        dataBinding() {
             if (this.$store.state.gnbMenuListData) {
                 const menu = this.$store.state.gnbMenuListData.filter(
                     (item) => {
@@ -34,12 +46,6 @@ export default {
             } else {
                 return null;
             }
-        },
-    },
-    methods: {
-        logout() {
-            this.$store.commit('LOGOUT');
-            this.$router.push('/login');
         },
     },
 };

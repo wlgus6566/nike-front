@@ -1,8 +1,6 @@
 <template>
     <div>
-        <h2 class="page-title">
-            <span>{{ this.$route.meta.title }}</span>
-        </h2>
+        <h2 class="page-title">NEWS</h2>
         <form @submit.prevent="submitData" ref="form">
             <h3 class="form-title mt20">등록/수정</h3>
             <hr class="hr-black" />
@@ -115,7 +113,7 @@ export default {
         thumbnail,
     },
     created() {
-        this.editorConfig.filebrowserImageUploadUrl = `/api/customer/${this.$route.name.toUpperCase()}/images`;
+        this.editorConfig.filebrowserImageUploadUrl = process.env.VUE_APP_API_URL+`/api/customer/${this.$route.name.toUpperCase()}/images`;
         this.editorConfig.fileTools_requestHeaders.Authorization =
             this.$store.state.token || getAuthFromCookie();
     },

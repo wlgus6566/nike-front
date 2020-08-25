@@ -131,16 +131,34 @@ export default {
     display: block;
     margin-top: 12px;
     font-size: 16px;
+    max-height: 48px;
     line-height: 24px;
     color: #000;
     font-weight: bold;
     overflow: hidden;
-    text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
     word-wrap: break-word;
+    position: relative;
+    text-align: justify;
+    margin-right: -1em;
+    padding-right: 1em;
 }
+.product-list-item .info-box .title:before {
+    content: '...';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.product-list-item .info-box .title:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    background: white;
+}
+
 .product-list-item .info-box .txt {
     display: block;
     margin-top: 8px;

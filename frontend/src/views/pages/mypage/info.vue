@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            <span class="ko">{{ this.$route.meta.title }}</span>
+            <span class="ko">회원정보 조회</span>
         </h2>
         <div class="member-inquiry">
             <div class="inner">

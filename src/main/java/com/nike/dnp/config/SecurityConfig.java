@@ -33,6 +33,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -176,15 +177,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
-		http.cors();
-		http.authorizeRequests()
+		http.cors()
+			.and()
+				.authorizeRequests()
 				.accessDecisionManager(accessDecisionManager())
 				.antMatchers(HttpMethod.POST,"/api/login").permitAll()
 				.antMatchers("/api/open/**").permitAll()
-				.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**").authenticated()
-				.anyRequest().authenticated();
-
-		http.addFilter(authenticationFilter()) // 인증 필터
+				//.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**").authenticated()
+				.anyRequest().authenticated()
+			.and()
+				.addFilter(authenticationFilter()) // 인증 필터
 				.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository,this.redisService)) //jwt 토큰 인증 필터
 				.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
 				.and()
@@ -203,8 +205,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		final CorsConfiguration configuration = new CorsConfiguration();
+		/*
 		//개발 설정
-		configuration.addAllowedOrigin("https://devapi.nikespace.co.kr/");
+		configuration.addAllowedOrigin("https://devapi.nikespace.co.kr");
 		configuration.addAllowedOrigin("https://devwww.nikespace.co.kr");
 		configuration.addAllowedOrigin("http://devwww.nikespace.co.kr");
 		configuration.addAllowedOrigin("https://ckeditor.com");
@@ -216,9 +219,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		configuration.addAllowedOrigin("http://localhost:8080");
 		configuration.addAllowedOrigin("http://localhost:8081");
 		configuration.addAllowedOrigin("http://localhost:8082");
+		configuration.addAllowedMethod("*");
+		*/
+
+		List<String> origins = new ArrayList<>();
+		//개발 설정
+		origins.add("https://devapi.nikespace.co.kr");
+		origins.add("https://devwww.nikespace.co.kr");
+		origins.add("http://devapi.nikespace.co.kr");
+		//운영 설정
+		origins.add("https://api.nikespace.co.kr");
+		origins.add("https://www.nikespace.co.kr");
+		origins.add("http://www.nikespace.co.kr");
+		//로컬 설정
+		origins.add("http://localhost:8080");
+		origins.add("http://localhost:8081");
+		origins.add("http://localhost:8082");
+		//외부 설정
+		origins.add("https://ckeditor.com");
+		configuration.setAllowedOrigins(origins);
+
+		List<String> methods = new ArrayList<>();
+		methods.add("GET");
+		methods.add("POST");
+		methods.add("PUT");
+		methods.add("DELETE");
+		configuration.setAllowedMethods(methods);
 
 		configuration.addAllowedHeader("*");
-		configuration.addAllowedMethod("*");
 		configuration.setAllowCredentials(true);
 		configuration.addExposedHeader(JwtHelper.HEADER_STRING); //header 노출 설정
 
