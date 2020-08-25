@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a href="#" class="main-visual">
+        <a :href="mainVisual.linkUrl" class="main-visual">
             <span class="thumbnail">
                 <img :src="mainVisual.mobileImageUrl" alt="">
             </span>
