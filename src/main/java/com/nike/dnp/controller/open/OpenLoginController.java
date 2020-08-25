@@ -37,6 +37,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @Api(description = "로그인 관련", tags = "LOGIN")
 @RequestMapping(value = "/api/open/login", name = "로그인 관련")
 @RequiredArgsConstructor
+@CrossOrigin
 public class OpenLoginController {
 
     /**
