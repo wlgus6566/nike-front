@@ -165,9 +165,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
 				"/api/download", // 임시
 				"/error", // 에러
-				//"/api/open/**"
 		};
-
 		web.ignoring().antMatchers(staticPatterns);
 	}
 	/**
@@ -240,12 +238,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		origins.add("https://ckeditor.com");
 		configuration.setAllowedOrigins(origins);
 
-		List<String> methods = new ArrayList<>();
+		/*List<String> methods = new ArrayList<>();
 		methods.add("GET");
 		methods.add("POST");
 		methods.add("PUT");
-		methods.add("DELETE");
-		configuration.setAllowedMethods(methods);
+		methods.add("DELETE");*/
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
 
 		configuration.addAllowedHeader("*");
 		configuration.setAllowCredentials(true);
