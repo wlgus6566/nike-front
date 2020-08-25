@@ -1,6 +1,6 @@
 <template>
     <div>
-        <BtnArea @delete="deleteReport" @edit="modifyFolder" />
+        <BtnArea @delete="deleteReport" @edit="modifyReport" />
         <div class="folder-wrap">
             <h2 class="folder-title">
                 {{ reportDetailData.reportName }}
@@ -28,7 +28,12 @@
                     @reportAnswerDelete="reportAnswerDelete"
                 />
             </template>
-            <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
+            <Loading
+                class="list-loading"
+                :width="172"
+                :height="172"
+                v-if="loadingData"
+            />
             <div class="textarea">
                 <textarea
                     v-model="answerData.answerContents"
@@ -94,12 +99,6 @@ export default {
                 reportSeq: null,
             },
             reportFileData: {},
-            loadingStyle: {
-                width: this.width ? `${this.width}px` : '100%',
-                height: this.height ? `${this.height}px` : '100%',
-                overflow: 'hidden',
-                margin: '0 auto',
-            },
             sectionCode: {
                 listSortOptions: [
                     {
@@ -157,10 +156,8 @@ export default {
             }
         },
         //리포트 수정
-        modifyFolder() {
-            this.$router.push(
-                `/report/${this.$route.meta.menuCode}/modify/${this.$route.params.id}`
-            );
+        modifyReport() {
+            this.$router.push(`/report/modify/${this.$route.params.id}`);
         },
         // 파일 선택 담기
         async addReportBasket(seq) {
@@ -317,3 +314,15 @@ export default {
     },
 };
 </script>
+<style scoped>
+.list-loading {
+    position: relative;
+    padding-top: 70%;
+}
+::v-deep .list-loading .lottie {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="page-title">REPORT UPLOAD</h2>
+        <h2 class="page-title" v-html="title"></h2>
         <form action="" @submit.prevent="addReport">
             <h3 class="form-title mt20">폴더 설정</h3>
             <hr class="hr-black" />
@@ -14,8 +14,7 @@
                     <thumbnail
                         :size="1 / 1"
                         @cropImage="cropImage"
-                        :imageBase64="reportDetailData.imageFilePhysicalName"
-                        :imageFileName="reportDetailData.imageFileName"
+                        :imageBase64="reportDetailData.imageBase64"
                     >
                         <template slot="txt-up">
                             썸네일 이미지 등록
@@ -32,19 +31,18 @@
                     <div class="form-column">
                         <label
                             class="check-label"
-                            v-for="(radio, index) in reportSection.checkItem"
+                            v-for="(radio, index) in reportSection.radio"
                             :key="index"
                         >
                             <span class="radio">
                                 <input
                                     type="radio"
                                     v-model="reportSection.value"
-                                    :name="reportSection.name"
-                                    :value="radio.value"
+                                    :value="radio"
                                 />
                                 <i></i>
                                 <span class="txt">
-                                    {{ radio.title }}
+                                    {{ radio }}
                                 </span>
                             </span>
                         </label>
@@ -131,7 +129,7 @@
                                         <span class="btn-form-gray"
                                             ><span>찾기</span></span
                                         >
-                                        <input type="file" />
+                                        <input type="file" ref="fileInput" />
                                     </div>
                                     <button type="button" class="btn-form">
                                         <span>삭제</span>
@@ -152,26 +150,46 @@
 </template>
 <script>
 import thumbnail from '@/components/thumbnail/index';
-import { getReportDetail, postReport, putReport } from '@/api/report';
+import {
+    getReportDetail,
+    postReport,
+    putReport,
+    getReportFile,
+} from '@/api/report';
 
 export default {
     name: 'upload',
     data() {
         return {
+            title: this.$route.meta.title,
+            reportSeq: null,
+            imageFilePhysicalName: null,
+            readCount: null,
+            nickname: null,
+            updateDt: null,
             reportDetailData: {
-                reportName: null,
-                imageBase64: null,
-                imageFileName: null,
+                reportName: '',
                 reportSectionCode: null,
+                imageBase64: null,
+                reportFileSaveDTOList: [
+                    {
+                        detailThumbnailFileName: null,
+                        detailThumbnailFilePhysicalName: null,
+                        detailThumbnailFileSize: null,
+                        fileContentType: null,
+                        fileExtension: null,
+                        fileName: null,
+                        filePhysicalName: null,
+                        fileSize: null,
+                        reportFileSeq: null,
+                        thumbnailFileName: null,
+                        thumbnailFilePhysicalName: null,
+                        thumbnailFileSize: null,
+                    },
+                ],
             },
             reportSection: {
-                checkItem: [
-                    { value: 'SP', title: 'SP' },
-                    { value: 'SU', title: 'SU' },
-                    { value: 'FA', title: 'FA' },
-                    { value: 'HO', title: 'HO' },
-                ],
-                name: 'reportSection',
+                radio: ['SP', 'SU', 'FA', 'HO'],
                 value: 'SP',
             },
         };
@@ -180,7 +198,9 @@ export default {
         thumbnail,
     },
     created() {
-        this.reportDetailView();
+        if (this.$route.params.id) {
+            this.reportDetailView();
+        }
     },
     methods: {
         cropImage(imageBase64, imgName) {
@@ -193,13 +213,37 @@ export default {
                 const {
                     data: { data: response },
                 } = await getReportDetail(this.$route.params.id);
-                this.reportDetailData = response;
-                this.reportSection.value = this.reportDetailData.reportSectionCode;
-                console.log(this.reportDetailData);
+
+                this.reportSeq = response.reportSeq;
+                this.readCount = response.readCount;
+                this.nickname = response.nickname;
+                this.updateDt = response.updateDt;
+
+                this.reportDetailData.reportName = response.reportName;
+                this.reportDetailData.reportSectionCode =
+                    response.reportSectionCode;
+                this.reportDetailData.imageBase64 =
+                    response.imageFilePhysicalName;
+                await this.getReportFileData();
             } catch (error) {
                 console.log(error);
             }
         },
+        // 리포트 상세 파일 데이터
+        async getReportFileData() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getReportFile(this.$route.params.id, {
+                    page: 0,
+                    size: 1000,
+                });
+                this.reportDetailData.reportFileSaveDTOList = response.content;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
         // 리포트 등록
         async addReport() {
             const data = {
@@ -258,14 +302,6 @@ export default {
                     }
                 }
             }
-        },
-        reportDataReset() {
-            this.reportDetailData = {
-                reportName: null,
-                imageBase64: null,
-                imageFileName: null,
-                reportSectionCode: null,
-            };
         },
     },
 };

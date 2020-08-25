@@ -47,8 +47,9 @@ function deleteAnswerList(answerSeq) {
 }
 
 //REPORT 파일 목록
-function getReportFile(reportSeq, data) {
-    return report.get(`/file/${reportSeq}`, data);
+function getReportFile(reportSeq, param) {
+    //http://10.80.1.212/api/report/file/4?size=20
+    return report.get(`/file/${reportSeq}`, param);
 }
 
 //REPORT 장바구니 목록
