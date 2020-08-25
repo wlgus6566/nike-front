@@ -364,22 +364,22 @@ export default {
             this.visible.ModalAuth = true;
         },
 
-        minDate(tt) {
-            if (tt === 'to') {
-                return this.folderDetail.campaignBeginDt;
-            }
-            if (tt === 'from') {
-                return null;
-            }
-        },
-        maxDate(tt) {
-            if (tt === 'to') {
-                return null;
-            }
-            if (tt === 'from') {
-                return this.folderDetail.campaignEndDt;
-            }
-        },
+        // minDate(tt) {
+        //     if (tt === 'to') {
+        //         return this.folderDetail.campaignBeginDt;
+        //     }
+        //     if (tt === 'from') {
+        //         return null;
+        //     }
+        // },
+        // maxDate(tt) {
+        //     if (tt === 'to') {
+        //         return null;
+        //     }
+        //     if (tt === 'from') {
+        //         return this.folderDetail.campaignEndDt;
+        //     }
+        // },
         uploadFiles() {
             this.$refs.fileSet.uploadFiles();
         },
