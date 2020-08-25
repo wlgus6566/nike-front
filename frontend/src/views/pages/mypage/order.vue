@@ -13,7 +13,6 @@
                         placeholder="YYYY.MM.DD"
                         format="yyyy.MM.dd"
                         :picker-options="pickerBeginOption"
-                        :minDate="pickerBeginOption.minDate"
                     >
                     </el-date-picker>
                 </div>
