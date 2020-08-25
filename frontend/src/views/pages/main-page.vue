@@ -278,7 +278,7 @@ export default {
                 const modal = document.querySelector('.fc-more-popover');
                 const close = modal.querySelector('.fc-popover-close');
                 const body = modal.querySelector('.fc-popover-body');
-                body.append('<a>자세히 보기?</a>');
+                body.append(this.yyyyMm + '<a>자세히 보기?</a>');
                 close.addEventListener('click', () => {
                     td.classList.remove('test');
                 });
@@ -319,13 +319,13 @@ export default {
             // this.calendarOptions.events = [];
             let getEvent = [];
             this.calendarData.forEach((item) => {
-                let color;
+                let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
-                    color = '#be1767';
+                    className = 'edu';
                 } else if (item.calendarSectionCode === 'CAMPAIGN') {
-                    color = '#007b68';
+                    className = 'campaign';
                 } else {
-                    color = '#2c0fb4';
+                    className = 'official';
                 }
                 getEvent.push({
                     ...item,
@@ -333,8 +333,7 @@ export default {
                     description: item.contents,
                     start: moment(item.beginDt).format('YYYY-MM-DD'),
                     end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
-                    color: color,
-                    checkDuple: false,
+                    className: className,
                 });
             });
             this.distinctAndAddEvent(getEvent);
