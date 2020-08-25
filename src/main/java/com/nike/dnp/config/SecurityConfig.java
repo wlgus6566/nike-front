@@ -165,7 +165,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
 				"/api/download", // 임시
 				"/error", // 에러
-				"/api/open/**"
+				//"/api/open/**"
 		};
 
 		web.ignoring().antMatchers(staticPatterns);
@@ -178,12 +178,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
-		http.cors()
+		http.cors().configurationSource(corsConfigurationSource())
 			.and()
 				.authorizeRequests()
 				.accessDecisionManager(accessDecisionManager())
 				.antMatchers(HttpMethod.POST,"/api/login").permitAll()
-				//.antMatchers("/api/open/**").permitAll()
+				.antMatchers("/api/open/**").permitAll()
 				//.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**").authenticated()
 				.anyRequest().authenticated()
 			.and()
