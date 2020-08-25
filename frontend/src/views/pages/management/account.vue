@@ -333,21 +333,11 @@ export default {
             this.getUserList();
         },
         beginDt() {
-            this.fetchData();
+            this.getUserList();
         },
         endDt() {
-            this.fetchData();
+            this.getUserList();
         },
-        // make: {
-        //     deep: true,
-        //     handler(val) {
-        //         console.log(val);
-        //         if (val.beginDt && val.endDt) {
-        //             this.dataPickerShowData.visible = false;
-        //             this.getUserList();
-        //         }
-        //     },
-        // },
     },
     methods: {
         //데이터 피커 리켓
