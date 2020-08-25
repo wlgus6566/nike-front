@@ -22,7 +22,14 @@ body {
     overflow: hidden;
 }
 header {
+    z-index: 2;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     display: block;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
 }
 header .logo {
     width: 90px;
@@ -36,10 +43,10 @@ header .logo span {
     text-indent: -9999px;
 }
 .page-header {
-    position: relative;
     display: flex;
     min-height: 60px;
     padding: 0 0 0 20px;
+    border: none;
 }
 .btn-back {
     flex: 0 0 36px;
@@ -90,7 +97,7 @@ header .logo span {
 }
 .nav-tab {
     display: flex;
-    margin: -10px 0 0 -15px;
+    margin: 0 0 0 -15px;
 }
 .nav-tab:after {
     content: '';
@@ -131,6 +138,12 @@ header .logo span {
     height: 2px;
     background: #000;
     transform: translateX(-50%);
+}
+header + .contents {
+    padding-top: 60px;
+}
+.page-header + .contents {
+    padding-top: 100px;
 }
 .contents {
     display: flex;
@@ -378,9 +391,9 @@ footer .copy {
 .modal.full .el-dialog__body {
     padding: 0;
 }
-.modal-contents{
-	max-height:420px;
-	overflow:auto;
+.modal-contents {
+    max-height: 420px;
+    overflow: auto;
 }
 .modal.full .el-dialog__footer {
     position: absolute;
@@ -404,5 +417,5 @@ footer .copy {
 }
 
 .modal.full .modal-contents {
-	max-height:none;
+    max-height: none;
 }
