@@ -16,9 +16,25 @@
 <script>
 export default {
     name: 'MypageMenu',
-    created() {},
-    computed: {
-        myMenu() {
+    data() {
+        return {
+            myMenu: null,
+        };
+    },
+    watch: {
+        '$store.state.gnbMenuListData'() {
+            this.dataBinding();
+        },
+    },
+    mounted() {
+        this.dataBinding();
+    },
+    methods: {
+        logout() {
+            this.$store.commit('LOGOUT');
+            this.$router.push('/login');
+        },
+        dataBinding() {
             if (this.$store.state.gnbMenuListData) {
                 const menu = this.$store.state.gnbMenuListData.filter(
                     (item) => {
@@ -26,16 +42,10 @@ export default {
                             return item;
                     }
                 );
-                return menu[0].menus;
+                this.myMenu = menu[0].menus;
             } else {
                 return null;
             }
-        },
-    },
-    methods: {
-        logout() {
-            this.$store.commit('LOGOUT');
-            this.$router.push('/login');
         },
     },
 };

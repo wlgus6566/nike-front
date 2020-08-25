@@ -214,14 +214,6 @@ export default {
             yyyyMm: moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
-                eventRender: function (info) {
-                    var tooltip = new Tooltip(info.el, {
-                        title: info.event.extendedProps.description,
-                        placement: 'top',
-                        trigger: 'hover',
-                        container: 'body',
-                    });
-                },
                 initialView: 'dayGridMonth',
                 // 일자 클릭시
                 // dateClick: this.handleDateClick,
@@ -324,7 +316,8 @@ export default {
         },
         // 달력에 맞게 변수명 변경
         transformData() {
-            this.calendarOptions.events = [];
+            // this.calendarOptions.events = [];
+            let getEvent = [];
             this.calendarData.forEach((item) => {
                 let color;
                 if (item.calendarSectionCode === 'EDUCATION') {
@@ -334,7 +327,7 @@ export default {
                 } else {
                     color = '#2c0fb4';
                 }
-                this.calendarOptions.events.push({
+                getEvent.push({
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
@@ -344,11 +337,11 @@ export default {
                     checkDuple: false,
                 });
             });
-            this.distinctAndAddEvent();
+            this.distinctAndAddEvent(getEvent);
         },
-        distinctAndAddEvent() {
+        distinctAndAddEvent(getEvent) {
             let distinctEventList = [];
-            this.calendarOptions.events.forEach((item) => {
+            getEvent.forEach(item => {
                 let check = false;
                 distinctEventList.forEach((ele) => {
                     if (item.start === ele.start) {
@@ -359,15 +352,22 @@ export default {
                     distinctEventList.push(item);
                 }
             });
-            distinctEventList.forEach((item) => {
-                this.calendarOptions.events.unshift(item);
+            distinctEventList.forEach(item => {
+                getEvent.unshift(item);
             });
+            this.patchEventData(getEvent);
         },
-        // 달력에 일자 클릭시
-        // handleDateClick(arg) {
-        //     console.log('click : ', arg);
-        //     // this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
-        // },
+        patchEventData(getEvent) {
+            getEvent.forEach(item => {
+                this.calendarOptions.events.push({
+                    'contents': item['contents'],
+                    'start': item['start'],
+                    'end': item['end'],
+                    'title': item['title'],
+                    'color': item['color'],
+                })
+            })
+        },
         async getTodayCalendar(searchDt) {
             this.searchDt = !!searchDt ? searchDt : this.searchDt;
             const {

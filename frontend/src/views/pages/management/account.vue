@@ -128,7 +128,12 @@
                 </NoData>
             </template>
         </template>
-        <Loading :loadingStyle="loadingStyle" v-if="loadingData" />
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
 
         <div class="btn-tbl-box">
             <button
@@ -261,12 +266,6 @@ export default {
                 userId: null,
             },
             loadingData: false,
-            loadingStyle: {
-                width: this.width ? `${this.width}px` : '100%',
-                height: this.height ? `${this.height}px` : '100%',
-                overflow: 'hidden',
-                margin: '0 auto',
-            },
         };
     },
     components: {
@@ -642,4 +641,15 @@ export default {
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.list-loading {
+    position: relative;
+    padding-top: 70%;
+}
+::v-deep .list-loading .lottie {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>
