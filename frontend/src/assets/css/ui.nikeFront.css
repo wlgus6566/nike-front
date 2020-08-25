@@ -3812,6 +3812,7 @@
 .schedule-item .content {
     position: relative;
     z-index: 2;
+    flex-grow: 1;
 }
 .schedule-item .title {
     font-size: 14px;
