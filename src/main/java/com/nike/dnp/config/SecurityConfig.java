@@ -207,6 +207,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		configuration.addAllowedOrigin("https://devapi.nikespace.co.kr/");
 		configuration.addAllowedOrigin("https://devwww.nikespace.co.kr");
 		configuration.addAllowedOrigin("http://devwww.nikespace.co.kr");
+		configuration.addAllowedOrigin("https://ckeditor.com");
 		//운영 설정
 		configuration.addAllowedOrigin("https://api.nikespace.co.kr");
 		configuration.addAllowedOrigin("https://www.nikespace.co.kr");
