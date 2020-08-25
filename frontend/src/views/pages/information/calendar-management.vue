@@ -11,7 +11,7 @@
                 <div>
                     <div class="title-wrap">
                         <h3 class="form-title mt0">CALENDAR 관리</h3>
-                        <div class="right">
+                        <div class="right" v-if="calendarDetail.calendarSeq">
                             <button
                                 type="button"
                                 class="txt-btn-orange"
@@ -212,5 +212,8 @@ export default {
 }
 .modal-wrap .el-scrollbar__wrap {
     max-height: 80vh;
+}
+.form-list .check-label:nth-child(3) {
+    padding-right: 0;
 }
 </style>

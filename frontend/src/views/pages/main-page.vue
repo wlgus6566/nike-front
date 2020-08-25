@@ -125,7 +125,7 @@
             </div>
             <div class="inner">
                 <h2 class="main-title">CALENDAR</h2>
-                <div>
+                <div class="main-fc">
                     <FullCalendar
                         ref="fullCalendar"
                         :options="calendarOptions"
