@@ -271,7 +271,7 @@ public class ReportService {
                 && !ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
             for (final ReportFile beforeFile : beforeFileList) {
                 for (final ReportFileSaveDTO newFile : newFileList) {
-                    if (beforeFile.getReportFileSeq() == newFile.getReportFileSeq()) {
+                    if (beforeFile.getReportFileSeq().equals(newFile.getReportFileSeq())) {
                         lastBeforeFileList.remove(beforeFile);
                     }
                 }

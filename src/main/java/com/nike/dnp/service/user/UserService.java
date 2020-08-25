@@ -147,8 +147,8 @@ public class UserService implements UserDetailsService {
      */
     public Optional<User> findById(final Long userSeq) {
         log.info("UserService.findById");
-        return Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
-                () -> new NotFoundHandleException()));
+        return Optional.ofNullable(userRepository.findById(userSeq)
+                .orElseThrow(NotFoundHandleException::new));
     }
 
     /**
@@ -162,8 +162,8 @@ public class UserService implements UserDetailsService {
      */
     public UserResultDTO getUser(final Long userSeq) {
         log.info("UserService.getUser");
-        final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
-                () -> new NotFoundHandleException()));
+        final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq)
+                .orElseThrow(NotFoundHandleException::new));
 
         final UserResultDTO userResultDTO = new UserResultDTO();
         if (user.isPresent()) {
@@ -174,8 +174,8 @@ public class UserService implements UserDetailsService {
             userResultDTO.setUserStatusCode(getUser.getUserStatusCode());
             userResultDTO.setAuthName(getUser.getUserAuth().getAuth().getAuthName());
 
-            Auth auth = getUser.getUserAuth().getAuth();
-            Long[] authSeqArray = new Long[0];
+            final Auth auth = getUser.getUserAuth().getAuth();
+            Long[] authSeqArray;
             if (auth.getAuthDepth().equals(2L)) {
                 authSeqArray = new Long[2];
                 authSeqArray[0] = auth.getUpperAuthSeq();
@@ -186,6 +186,9 @@ public class UserService implements UserDetailsService {
                 authSeqArray[0] = upperAuth.getUpperAuthSeq();
                 authSeqArray[1] = auth.getUpperAuthSeq();
                 authSeqArray[2] = auth.getAuthSeq();
+            } else {
+                authSeqArray = new Long[1];
+                authSeqArray[0] = auth.getAuthSeq();
             }
             userResultDTO.setAuthSeqArray(authSeqArray);
         }
@@ -204,8 +207,8 @@ public class UserService implements UserDetailsService {
     public UserResultDTO getMyPage() {
         log.info("UserService.getMyPage");
         final Long userSeq = SecurityUtil.currentUser().getUserSeq();
-        final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq).orElseThrow(
-                () -> new NotFoundHandleException()));
+        final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq)
+                .orElseThrow(NotFoundHandleException::new));
 
         final UserResultDTO userResultDTO = new UserResultDTO();
         if (user.isPresent()) {

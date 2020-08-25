@@ -8,7 +8,7 @@ import store from './store';
 import VueCookies from 'vue-cookies';
 import VueMoment from 'vue-moment';
 import CKEditor from 'ckeditor4-vue';
-import VCalendar from 'v-calendar';
+// import VCalendar from 'v-calendar';
 import VModal from 'vue-js-modal';
 import lineClamp from './utils/lineclamp';
 
@@ -28,23 +28,23 @@ Vue.use(VModal, {
     },
 });
 Vue.use(VueMoment);
-Vue.use(VCalendar, {
-    locale: 'en-US',
-    masks: {
-        title: 'YYYY.MM',
-        weekdays: 'WWW',
-        data: ['YYYY-MM-DD'],
-        input: ['YYYY.MM.DD'],
-        dayPopover: 'WWW, MMM D, YYYY',
-        // navMonths: 'MMM',
-    },
-    datePicker: {
-        mode: 'multiple',
-        popover: {
-            visibility: 'focus',
-        },
-    },
-});
+// Vue.use(VCalendar, {
+//     locale: 'en-US',
+//     masks: {
+//         title: 'YYYY.MM',
+//         weekdays: 'WWW',
+//         data: ['YYYY-MM-DD'],
+//         input: ['YYYY.MM.DD'],
+//         dayPopover: 'WWW, MMM D, YYYY',
+//         // navMonths: 'MMM',
+//     },
+//     datePicker: {
+//         mode: 'multiple',
+//         popover: {
+//             visibility: 'focus',
+//         },
+//     },
+// });
 
 Vue.directive('lineClamp', lineClamp);
 

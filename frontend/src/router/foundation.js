@@ -11,7 +11,7 @@ const routes = [
                 component: pages('common/folder-list'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'FOUNDATION',
                     menuCode: 'VMS',
                     title: 'VMS',
@@ -22,7 +22,7 @@ const routes = [
                 component: pages('common/folder-list'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'FOUNDATION',
                     menuCode: 'EKIN',
                     title: 'EKIN',
@@ -33,7 +33,7 @@ const routes = [
                 component: pages('common/folder-list'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'FOUNDATION',
                     menuCode: 'DIGITAL',
                     title: 'DIGITAL',
@@ -44,7 +44,7 @@ const routes = [
                 component: pages('common/folder-list'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'FOUNDATION',
                     menuCode: 'RB',
                     title: 'RB',
@@ -75,7 +75,7 @@ const routes = [
                 component: pages('common/folder-view'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Order',
+                    aside: 'File',
                     topMenuCode: 'FOUNDATION',
                 },
                 beforeEnter: (to, from, next) => {

@@ -2,7 +2,6 @@
     <div>
         <div class="main-banner">
             <div class="thumbnail">
-                <!--img src="http://placehold.it/820X410" alt="이미지없음" />-->
                 <img
                     :src="mainData.mainVisual.pcImageUrl"
                     :alt="mainData.mainVisual.imageFileName"
@@ -125,7 +124,7 @@
             </div>
             <div class="inner">
                 <h2 class="main-title">CALENDAR</h2>
-                <div>
+                <div class="main-fc">
                     <FullCalendar
                         ref="fullCalendar"
                         :options="calendarOptions"
@@ -219,7 +218,7 @@ export default {
                 // dateClick: this.handleDateClick,
                 dateClick: this.handleDateClick,
                 moreLinkClick: this.test,
-                height: 500,
+                height: 350,
                 events: [],
                 dayMaxEventRows: true,
                 timeGrid: {
@@ -278,7 +277,12 @@ export default {
                 const modal = document.querySelector('.fc-more-popover');
                 const close = modal.querySelector('.fc-popover-close');
                 const body = modal.querySelector('.fc-popover-body');
-                body.append('<a>자세히 보기?</a>');
+                const a = document.createElement('a');
+                //TODO router 작업 필요
+                a.href = '/information/calendar';
+                a.classList.add('fc-more');
+                a.append('자세히 보기');
+                body.append(a);
                 close.addEventListener('click', () => {
                     td.classList.remove('test');
                 });
@@ -319,13 +323,13 @@ export default {
             // this.calendarOptions.events = [];
             let getEvent = [];
             this.calendarData.forEach((item) => {
-                let color;
+                let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
-                    color = '#be1767';
+                    className = 'edu';
                 } else if (item.calendarSectionCode === 'CAMPAIGN') {
-                    color = '#007b68';
+                    className = 'campaign';
                 } else {
-                    color = '#2c0fb4';
+                    className = 'official';
                 }
                 getEvent.push({
                     ...item,
@@ -333,7 +337,7 @@ export default {
                     description: item.contents,
                     start: moment(item.beginDt).format('YYYY-MM-DD'),
                     end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
-                    color: color,
+                    className: className,
                     checkDuple: false,
                 });
             });
@@ -341,7 +345,7 @@ export default {
         },
         distinctAndAddEvent(getEvent) {
             let distinctEventList = [];
-            getEvent.forEach(item => {
+            getEvent.forEach((item) => {
                 let check = false;
                 distinctEventList.forEach((ele) => {
                     if (item.start === ele.start) {
@@ -352,21 +356,21 @@ export default {
                     distinctEventList.push(item);
                 }
             });
-            distinctEventList.forEach(item => {
+            distinctEventList.forEach((item) => {
                 getEvent.unshift(item);
             });
             this.patchEventData(getEvent);
         },
         patchEventData(getEvent) {
-            getEvent.forEach(item => {
+            getEvent.forEach((item) => {
                 this.calendarOptions.events.push({
-                    'contents': item['contents'],
-                    'start': item['start'],
-                    'end': item['end'],
-                    'title': item['title'],
-                    'color': item['color'],
-                })
-            })
+                    contents: item['contents'],
+                    start: item['start'],
+                    end: item['end'],
+                    title: item['title'],
+                    color: item['color'],
+                });
+            });
         },
         async getTodayCalendar(searchDt) {
             this.searchDt = !!searchDt ? searchDt : this.searchDt;
@@ -711,10 +715,10 @@ export default {
     color: #888;
 }
 ::v-deep .fc .fc-more-popover {
-    margin-top: 20px;
+    margin-top: 18px;
 }
 ::v-deep .test {
-    background: red;
+    /*background: red;*/
 }
 
 ::v-deep .fc-daygrid-day-bottom {
@@ -725,12 +729,14 @@ export default {
     top: 0;
     left: 0;
     display: block;
-    width: 100%;
+    width: 30px;
+    height: 30px;
+    font: 0/0 a;
     /*text-indent: -99999px;*/
 }
 ::v-deep .fc-daygrid-more-link:before {
     position: absolute;
-    top: 0;
+    top: 6px;
     left: 50%;
     transform: translateX(-50%);
     content: '';
