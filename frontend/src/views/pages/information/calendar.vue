@@ -45,6 +45,11 @@
         <ul class="schedule-list">
             <li
                 class="schedule-item"
+                :class="{
+                    'edu':item.calendarSectionCode === 'EDUCATION'
+                    , 'campaign':item.calendarSectionCode === 'CAMPAIGN'
+                    , 'official':item.calendarSectionCode === 'ETC'
+                }"
                 v-for="item in todayData"
                 :key="item.calendarSeq"
             >
@@ -191,14 +196,13 @@ export default {
         transformData() {
             this.calendarOptions.events = [];
             this.calendarData.forEach((item) => {
-                console.log('for', item);
-                let color;
+                let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
-                    color = '#be1767';
+                    className = 'edu';
                 } else if (item.calendarSectionCode === 'CAMPAIGN') {
-                    color = '#007b68';
+                    className = 'campaign';
                 } else {
-                    color = '#2c0fb4';
+                    className = 'official';
                 }
                 this.calendarOptions.events.push({
                     ...item,
@@ -206,7 +210,7 @@ export default {
                     description: item.contents,
                     start: moment(item.beginDt).format('YYYY-MM-DD'),
                     end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
-                    color: color,
+                    className: className,
                 });
             });
         },
