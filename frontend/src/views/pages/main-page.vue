@@ -125,7 +125,7 @@
             </div>
             <div class="inner">
                 <h2 class="main-title">CALENDAR</h2>
-                <div>
+                <div class="main-fc">
                     <FullCalendar
                         ref="fullCalendar"
                         :options="calendarOptions"
@@ -316,8 +316,7 @@ export default {
         },
         // 달력에 맞게 변수명 변경
         transformData() {
-            // this.calendarOptions.events = [];
-            let getEvent = [];
+            this.calendarOptions.events = [];
             this.calendarData.forEach((item) => {
                 let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
@@ -327,20 +326,20 @@ export default {
                 } else {
                     className = 'official';
                 }
-                getEvent.push({
+                this.calendarOptions.events.push({
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: moment(item.beginDt).format('YYYY-MM-DD'),
-                    end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
+                    start: item.beginDt.replace(/\./gi, "-"),
+                    end: moment(item.endDt).add(1, 'days')._i.replace(/\./gi, "-"),
                     className: className,
                 });
             });
-            this.distinctAndAddEvent(getEvent);
+            this.distinctAndAddEvent();
         },
-        distinctAndAddEvent(getEvent) {
+        distinctAndAddEvent() {
             let distinctEventList = [];
-            getEvent.forEach(item => {
+            this.calendarOptions.events.forEach(item => {
                 let check = false;
                 distinctEventList.forEach((ele) => {
                     if (item.start === ele.start) {
@@ -352,20 +351,8 @@ export default {
                 }
             });
             distinctEventList.forEach(item => {
-                getEvent.unshift(item);
+                this.calendarOptions.events.unshift(item);
             });
-            this.patchEventData(getEvent);
-        },
-        patchEventData(getEvent) {
-            getEvent.forEach(item => {
-                this.calendarOptions.events.push({
-                    'contents': item['contents'],
-                    'start': item['start'],
-                    'end': item['end'],
-                    'title': item['title'],
-                    'color': item['color'],
-                })
-            })
         },
         async getTodayCalendar(searchDt) {
             this.searchDt = !!searchDt ? searchDt : this.searchDt;

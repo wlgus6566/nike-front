@@ -20,9 +20,9 @@ export default {
     props: ['listCascader'],
     watch: {
         'listCascader.value'(val) {
-            if (val.length === 0) {
-                this.listCascader.value = [null];
-            }
+            // if (val.length === 0) {
+            //     this.listCascader.value = [null];
+            // }
             this.cloneTxt = '';
             val.forEach((el) => {
                 this.testArr(this.listCascader.options, el);
@@ -35,7 +35,6 @@ export default {
         const NotoSans = new FontFaceObserver('Noto Sans KR', { weight: 700 });
         const Roboto = new FontFaceObserver('Roboto', { weight: 700 });
         Promise.all([NotoSans.load(), Roboto.load()]).then(() => {
-            console.log(1);
             this.selectWidthSet();
             this.listCascader.value = [null];
         });
@@ -54,7 +53,6 @@ export default {
         selectWidthSet() {
             const selectDiv = this.$refs.select.$el;
             const input = selectDiv.querySelector('input');
-            console.log(input.value);
             input.insertAdjacentHTML(
                 'afterend',
                 `<div id="select-width">${this.cloneTxt}</div>`
