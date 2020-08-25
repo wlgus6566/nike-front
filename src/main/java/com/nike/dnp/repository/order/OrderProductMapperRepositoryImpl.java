@@ -59,6 +59,7 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 																			 orderProductMapping.orderQuantity,
 																			 product.goodsName,
 																			 product.goodsDescription,
+																			 product.imageFilePhysicalName,
 																			 agency.agencyName,
 																			 agency.agencySeq,
 																			 agency.email,
