@@ -218,7 +218,6 @@ export default {
             this.fetchData();
         },
         handleScroll() {
-
             if(this.loadingData) return;
             const windowE = document.documentElement;
             if(
@@ -227,7 +226,8 @@ export default {
             ) {
                 this.infiniteScroll();
             }
-        }, infiniteScroll() {
+        },
+        infiniteScroll() {
             if(
                 !this.loadingData &&
                 this.totalPage > this.page - 1 &&
