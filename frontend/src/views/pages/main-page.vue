@@ -321,7 +321,8 @@ export default {
         },
         // 달력에 맞게 변수명 변경
         transformData() {
-            this.calendarOptions.events = [];
+            // this.calendarOptions.events = [];
+            let getEvent = [];
             this.calendarData.forEach((item) => {
                 let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
@@ -331,20 +332,21 @@ export default {
                 } else {
                     className = 'official';
                 }
-                this.calendarOptions.events.push({
+                getEvent.push({
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: item.beginDt.replace(/\./gi, "-"),
-                    end: moment(item.endDt).add(1, 'days')._i.replace(/\./gi, "-"),
+                    start: moment(item.beginDt).format('YYYY-MM-DD'),
+                    end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
                     className: className,
+                    checkDuple: false,
                 });
             });
-            this.distinctAndAddEvent();
+            this.distinctAndAddEvent(getEvent);
         },
-        distinctAndAddEvent() {
+        distinctAndAddEvent(getEvent) {
             let distinctEventList = [];
-            this.calendarOptions.events.forEach(item => {
+            getEvent.forEach((item) => {
                 let check = false;
                 distinctEventList.forEach((ele) => {
                     if (item.start === ele.start) {
@@ -355,8 +357,8 @@ export default {
                     distinctEventList.push(item);
                 }
             });
-            distinctEventList.forEach(item => {
-                this.calendarOptions.events.unshift(item);
+            distinctEventList.forEach((item) => {
+                getEvent.unshift(item);
             });
             this.patchEventData(getEvent);
         },

@@ -4102,6 +4102,7 @@
     justify-content: center;
 }
 .fc .fc-more-popover {
+    margin-left: -90px !important;
     border: 1px solid #ccc !important;
 }
 .fc.fc-theme-standard .fc-popover-header {
@@ -4110,6 +4111,7 @@
     justify-content: flex-end;
 }
 .fc .fc-popover-close {
+    z-index: 20;
     position: absolute;
     right: 10px;
     top: 10px;
@@ -4125,6 +4127,7 @@
 }
 .fc .fc-more-popover .fc-popover-body {
     background-color: #f7f7f7;
+    width: 230px;
 }
 .fc .fc-more-popover .fc-popover-body:after {
     content: '';
@@ -4162,8 +4165,8 @@
     margin-top: 5px;
     font-size: 10px;
     color: #555;
-    font-family: 'Noto Sans', sans-serif;
-    font-weight: 600;
+    font-family: 'Noto Sans KR', 'Arial', 'Apple SD Gothic Neo', sans-serif;
+    font-weight: bold;
 }
 .fc-popover-body .fc-more:after {
     content: '';
