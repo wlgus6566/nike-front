@@ -155,6 +155,9 @@ export default {
             },
         };
     },
+    watch:{
+        calenderSectionCodeList(){}
+    },
     components: {
         FullCalendar,
         calendarManagement,
@@ -224,6 +227,7 @@ export default {
             this.calendarDetail = {
                 ...this.calendarDialogInitData,
             };
+            this.calendarSeq = null;
             this.visible.calendarManagement = true;
         },
         // 일정 수정 클릭시
