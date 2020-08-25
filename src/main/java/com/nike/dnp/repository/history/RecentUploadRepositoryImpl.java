@@ -84,6 +84,6 @@ public class RecentUploadRepositoryImpl extends QuerydslRepositorySupport implem
             recentUploadResultList.add(historyResultDTO);
         }
 
-        return new PageImpl<>(recentUploadResultList, pageRequest, recentUploadResultList.size());
+        return new PageImpl<>(recentUploadResultList, pageRequest, query.fetchCount());
     }
 }

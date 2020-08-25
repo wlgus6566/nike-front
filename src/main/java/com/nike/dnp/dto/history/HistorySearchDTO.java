@@ -35,4 +35,13 @@ public class HistorySearchDTO extends SearchDTO {
      */
     @ApiModelProperty(name = "최초 등록자", hidden = true)
     private Long registerSeq;
+
+    /**
+     * The Mobile yn
+     * 모바일인 경우 asset을 목록에서 제외
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "모바일api 여부", value = "Y/N", example = "N")
+    private String mobileYn = "N";
 }

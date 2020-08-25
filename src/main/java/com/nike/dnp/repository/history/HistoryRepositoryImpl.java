@@ -83,7 +83,7 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
             historyResultList.add(historyResultDTO);
         }
 
-        return new PageImpl<>(historyResultList, pageRequest, historyResultList.size());
+        return new PageImpl<>(historyResultList, pageRequest, query.fetchCount());
     }
 
 
