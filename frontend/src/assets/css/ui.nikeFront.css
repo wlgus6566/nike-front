@@ -3726,7 +3726,7 @@
     z-index: 2000 !important;
 }
 
-/* calendar */
+/* Full calendar */
 .schedule-type {
 }
 .schedule-type:after {
@@ -3920,6 +3920,9 @@
 .fc-direction-ltr .fc-daygrid-event.fc-event-end,
 .fc-direction-rtl .fc-daygrid-event.fc-event-start {
     margin-right: 9px !important;
+}
+/* Main Full calendar */
+.main-fc {
 }
 
 /* folder-item */
