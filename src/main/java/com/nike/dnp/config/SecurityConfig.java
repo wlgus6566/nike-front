@@ -175,7 +175,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
-		http.cors().configurationSource(corsConfigurationSource())
+		http.cors()
 			.and()
 				.authorizeRequests()
 				.accessDecisionManager(accessDecisionManager())
