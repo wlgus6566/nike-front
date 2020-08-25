@@ -35,6 +35,7 @@ export default {
         const NotoSans = new FontFaceObserver('Noto Sans KR', { weight: 700 });
         const Roboto = new FontFaceObserver('Roboto', { weight: 700 });
         Promise.all([NotoSans.load(), Roboto.load()]).then(() => {
+            console.log(1);
             this.selectWidthSet();
             this.listCascader.value = [null];
         });
@@ -62,7 +63,7 @@ export default {
             input.style.width = `${
                 Math.ceil(widthGuideTxt.offsetWidth) + 30
             }px`;
-            widthGuideTxt.remove();
+            widthGuideTxt.parentNode.removeChild(widthGuideTxt);
         },
     },
 };

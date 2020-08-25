@@ -246,7 +246,7 @@ export default {
     text-indent: -99999px;
 }
 .info-box {
-    max-width: calc(100% - 60px);
+    max-width: calc(100% - 61px);
     box-sizing: border-box;
 }
 .info-box .title {
