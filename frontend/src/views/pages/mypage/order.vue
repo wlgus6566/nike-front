@@ -63,7 +63,7 @@ export default {
             visible: {
                 orderSheet: false,
             },
-            beginDt: new Date(),
+            beginDt: new Date().setMonth(new Date().getMonth() - 3),
             endDt: new Date(),
             today: new Date(),
             pickerBeginOption: {
