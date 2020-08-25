@@ -449,6 +449,13 @@ footer > .inner .info-list {
     color: #888;
     font-weight: 300;
 }
+.history-box .item-box .no-data {
+    height: 157px;
+    border-color: #e5e5e5;
+}
+.history-box .item-box .no-data .txt {
+    margin-top: 0 !important;
+}
 /*
 
 .modal-wrap.modal-overlay {
