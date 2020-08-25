@@ -193,7 +193,6 @@ export default {
         },
         'bannerData.linkUrlTypeCode'(val) {
             if (val !== undefined) {
-                console.log('va;', val);
                 if (val !== 'ASSET') {
                     this.urlCheck.value = 'N';
                     if (this.linkUrl === '') {
@@ -206,13 +205,15 @@ export default {
     created() {
         this.detailBanner();
     },
+    activated() {
+        this.detailBanner();
+    },
     mounted() {},
     methods: {
         //이미지 페이지에 삽입
         imageChange(e, device) {
             this.uploadFiles(e.target.files[0], device);
             if (device === 'pc') {
-                console.log(device);
                 const imaName = e.target.files[0].name;
                 const reader = new FileReader();
                 reader.onloadend = () => {
@@ -226,7 +227,6 @@ export default {
                     this.bannerData.imageFileName = '';
                 }
             } else {
-                console.log(device);
                 const imaName = e.target.files[0].name;
                 const reader = new FileReader();
                 reader.onloadend = () => {
@@ -244,7 +244,6 @@ export default {
 
         //이미지 폼데이터로 변환
         async uploadFiles(file, device) {
-            console.log(device);
             const formData = new FormData();
             formData.append('uploadFile', file, file.name);
             try {
@@ -288,7 +287,6 @@ export default {
                 if (!this.detailData) {
                     response = await postBanner(data);
                 } else {
-                    console.log(this.bannerData.bannerSeq);
                     response = await putBanner(this.bannerData.bannerSeq, data);
                 }
                 alert(response.data.msg);
@@ -326,7 +324,6 @@ export default {
                         mobileImageUrl: '',
                     };
                 } else if (this.bannerData.title) {
-                    console.log(response.linkUrl);
                     this.detailData = true;
                     this.linkUrl = response.linkUrl;
                     if (response.linkUrlTypeCode === 'ASSET') {
