@@ -164,7 +164,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
 				"/api/download", // 임시
-				"/error" // 에러
+				"/error", // 에러
+				"/api/open/**"
 		};
 
 		web.ignoring().antMatchers(staticPatterns);
@@ -182,7 +183,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.accessDecisionManager(accessDecisionManager())
 				.antMatchers(HttpMethod.POST,"/api/login").permitAll()
-				.antMatchers("/api/open/**").permitAll()
+				//.antMatchers("/api/open/**").permitAll()
 				//.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**").authenticated()
 				.anyRequest().authenticated()
 			.and()
@@ -226,7 +227,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//개발 설정
 		origins.add("https://devapi.nikespace.co.kr");
 		origins.add("https://devwww.nikespace.co.kr");
-		origins.add("http://devapi.nikespace.co.kr");
+		origins.add("http://devwww.nikespace.co.kr");
 		//운영 설정
 		origins.add("https://api.nikespace.co.kr");
 		origins.add("https://www.nikespace.co.kr");
