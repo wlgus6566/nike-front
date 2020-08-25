@@ -730,13 +730,14 @@ export default {
     top: 0;
     left: 0;
     display: block;
-    width: 100%;
+    width: 30px;
+    height: 30px;
     font: 0/0 a;
     /*text-indent: -99999px;*/
 }
 ::v-deep .fc-daygrid-more-link:before {
     position: absolute;
-    top: 0;
+    top: 6px;
     left: 50%;
     transform: translateX(-50%);
     content: '';

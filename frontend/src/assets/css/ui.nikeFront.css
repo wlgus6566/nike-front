@@ -4101,6 +4101,15 @@
     padding-top: 12px;
     justify-content: center;
 }
+.main-fc .fc .fc-daygrid-body-balanced .fc-daygrid-day-events {
+    top: 7px;
+    position: absolute;
+    left: 50%;
+    right: auto;
+    height: 30px;
+    width: 30px;
+    margin: 0 0 0 -15px;
+}
 .fc .fc-more-popover {
     margin-left: -90px !important;
     border: 1px solid #ccc !important;
