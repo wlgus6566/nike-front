@@ -40,38 +40,48 @@
                 </a>
             </div>
         </div>
-
         <h3 class="schedule-title">{{ searchDt }}</h3>
-        <ul class="schedule-list">
-            <li
-                class="schedule-item"
-                :class="{
-                    'edu':item.calendarSectionCode === 'EDUCATION'
-                    , 'campaign':item.calendarSectionCode === 'CAMPAIGN'
-                    , 'official':item.calendarSectionCode === 'ETC'
-                }"
-                v-for="item in todayData"
-                :key="item.calendarSeq"
-            >
-                <div class="content">
-                    <h4 class="title">{{ item.scheduleName }}</h4>
-                    <p class="desc">{{ item.contents }}</p>
-                </div>
+        <template v-if="todayData">
+            <ul class="schedule-list" v-if="todayData.length !== 0">
+                <li
+                    class="schedule-item"
+                    :class="{
+                        edu: item.calendarSectionCode === 'EDUCATION',
+                        campaign: item.calendarSectionCode === 'CAMPAIGN',
+                        official: item.calendarSectionCode === 'ETC',
+                    }"
+                    v-for="item in todayData"
+                    :key="item.calendarSeq"
+                >
+                    <div class="content">
+                        <h4 class="title">
+                            <strong>{{ item.scheduleName }}</strong>
+                        </h4>
+                        <p class="desc">{{ item.contents }}</p>
+                    </div>
 
-                <div class="info">
-                    <el-button
-                        type="white"
-                        class="btn-edit"
-                        @click="onClickToEdit(item)"
-                    >
-                        수정하기
-                    </el-button>
-                    <span class="date">
-                        {{ item.beginDt }} ~ {{ item.endDt }}</span
-                    >
-                </div>
-            </li>
-        </ul>
+                    <div class="info">
+                        <el-button
+                            type="white"
+                            class="btn-edit"
+                            @click="onClickToEdit(item)"
+                        >
+                            수정하기
+                        </el-button>
+                        <span class="date">
+                            {{ item.beginDt }} ~ {{ item.endDt }}</span
+                        >
+                    </div>
+                </li>
+            </ul>
+            <ul class="schedule-list" v-else>
+                <li class="schedule-item">
+                    <div class="content">
+                        <h4 class="title">등록된 일정이 없습니다.</h4>
+                    </div>
+                </li>
+            </ul>
+        </template>
     </div>
 </template>
 
@@ -155,8 +165,8 @@ export default {
             },
         };
     },
-    watch:{
-        calenderSectionCodeList(){}
+    watch: {
+        calenderSectionCodeList() {},
     },
     components: {
         FullCalendar,
@@ -211,8 +221,10 @@ export default {
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: item.beginDt.replace(/\./gi, "-"),
-                    end: moment(item.endDt).add(1, 'days')._i.replace(/\./gi, "-"),
+                    start: item.beginDt.replace(/\./gi, '-'),
+                    end: moment(item.endDt)
+                        .add(1, 'days')
+                        ._i.replace(/\./gi, '-'),
                     className: className,
                 });
             });

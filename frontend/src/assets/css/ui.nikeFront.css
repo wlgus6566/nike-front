@@ -3815,8 +3815,9 @@
 }
 .schedule-item .title {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: normal;
     max-width: 500px;
+    color: #888;
 }
 .schedule-item .title:before {
     content: '';
