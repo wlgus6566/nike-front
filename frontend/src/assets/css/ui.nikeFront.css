@@ -3894,6 +3894,13 @@
     position: relative;
     margin-top: 20px;
 }
+.fullCalendar-wrap .fc .fc-daygrid-day-frame {
+    cursor: pointer;
+}
+.fullCalendar-wrap .fc .fc-daygrid-event-harness-abs,
+.fullCalendar-wrap .fc-direction-ltr .fc-daygrid-event {
+    cursor: auto;
+}
 .fullCalendar-wrap .schedule-type {
     position: absolute;
     top: 5px;
@@ -4063,6 +4070,9 @@
 }
 
 /* Main Full calendar */
+.main-fc {
+    margin-top: 20px;
+}
 .main-fc .fc {
     border: 1px solid #eee;
 }
@@ -4109,6 +4119,11 @@
     height: 30px;
     width: 30px;
     margin: 0 0 0 -15px;
+}
+.main-fc .fc .fc-h-event .fc-event-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .fc .fc-more-popover {
     margin-left: -90px !important;
