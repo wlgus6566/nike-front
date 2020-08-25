@@ -828,4 +828,16 @@ public class AuthService {
             target.setCheckBoxYn("Y");
         }
     }
+
+    /**
+     * Delete key.
+     *
+     * @param key the key
+     * @author [오지훈]
+     * @implNote redis key 삭제
+     * @since 2020. 8. 25. 오후 6:49:41
+     */
+    public void deleteKey(final String key) {
+        redisService.delete(key);
+    }
 }

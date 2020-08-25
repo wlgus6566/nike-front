@@ -216,4 +216,23 @@ public class AuthController {
         );
     }
 
+    /**
+     * Delete key single result.
+     *
+     * @param key the key
+     * @return the single result
+     * @author [오지훈]
+     * @implNote Redis Key 삭제
+     * @since 2020. 8. 25. 오후 6:50:30
+     */
+    //TODO[ojh] 2020/08/25 : 오픈전 삭제 조치 예정
+    @ApiOperation(value = "cache key 삭제"
+            , notes = OPERATION_CHARACTER)
+    @DeleteMapping(name = "cache key 삭제"
+            , value = "/key"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<Boolean> deleteKey(@RequestParam final String key) {
+        authService.deleteKey(key);
+        return responseService.getSingleResult(true);
+    }
 }
