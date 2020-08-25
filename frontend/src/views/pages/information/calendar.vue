@@ -208,8 +208,8 @@ export default {
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: moment(item.beginDt).format('YYYY-MM-DD'),
-                    end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
+                    start: item.beginDt.replace(/\./gi, "-"),
+                    end: moment(item.endDt).add(1, 'days')._i.replace(/\./gi, "-"),
                     className: className,
                 });
             });
