@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="page-title">REPORT <span class="ko">관리</span></h2>
+        <h2 class="page-title" v-html="title"></h2>
         <div class="sorting-area">
             <ListSorting :listTypes="listTypes" />
             <FilterSelect :listSortSelect="listSortSelect" />
@@ -43,6 +43,7 @@ export default {
     name: 'management',
     data() {
         return {
+            title: this.$route.meta.title,
             reportListData: null,
             page: 0,
             itemLength: 20,

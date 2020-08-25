@@ -8,7 +8,7 @@ const routes = [
         children: [
             {
                 path: 'upload',
-                component: pages('report/upload.vue'),
+                component: pages('report/upload'),
                 meta: {
                     layout: 'Default',
                     aside: 'Report',
@@ -16,29 +16,17 @@ const routes = [
                 },
             },
             {
-                path: '*/modify/:id',
+                path: 'modify/:id',
                 component: pages('report/upload'),
                 meta: {
                     layout: 'Default',
                     aside: 'Report',
-                    topMenuCode: 'REPORT <span class="ko">업로드 수정</span>',
-                },
-                beforeEnter: (to, from, next) => {
-                    const menuCodeArr = ['sp', 'su', 'fa', 'ho'];
-                    const findMenuCode = menuCodeArr.findIndex(
-                        (el) => el === to.params.pathMatch
-                    );
-                    if (findMenuCode !== -1) {
-                        to.meta.menuCode = menuCodeArr[findMenuCode];
-                        next();
-                    } else {
-                        next('404'); //todo 404 만들기
-                    }
+                    title: 'REPORT <span class="ko">업로드 수정</span>',
                 },
             },
             {
                 path: 'management',
-                component: pages('report/management.vue'),
+                component: pages('report/management'),
                 meta: {
                     layout: 'Default',
                     aside: 'Report',
@@ -46,12 +34,12 @@ const routes = [
                 },
             },
             {
-                path: ':id',
+                path: 'detail/:id',
                 component: pages('report/detail-view'),
                 meta: {
                     layout: 'Default',
                     aside: 'Report',
-                    topMenuCode: 'REPORT 상세',
+                    title: 'REPORT 상세',
                 },
             },
         ],
