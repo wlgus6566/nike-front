@@ -8,6 +8,7 @@ import org.jets3t.service.CloudFrontServiceException;
 import org.jets3t.service.utils.ServiceUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -105,7 +106,7 @@ public class CloudFrontUtil {
      * @since 2020. 8. 7. 오후 4:32:56
      */
     public static String getSignedUrl(final String objectKey, final int minute) {
-        return createSignedUrlCanned(objectKey, minute);
+        return ObjectUtils.isEmpty(objectKey) ? "" : createSignedUrlCanned(objectKey, minute);
     }
 
     /**
@@ -118,7 +119,7 @@ public class CloudFrontUtil {
      * @since 2020. 8. 7. 오후 4:32:56
      */
     public static String getSignedUrl(final String objectKey) {
-        return createSignedUrlCanned(objectKey, BASIC_MINUTE);
+        return ObjectUtils.isEmpty(objectKey) ? "" : createSignedUrlCanned(objectKey, BASIC_MINUTE);
     }
 
     /**
@@ -132,7 +133,7 @@ public class CloudFrontUtil {
      * @since 2020. 8. 7. 오후 4:32:56
      */
     public static String getCustomSignedUrl(final String objectKey, final int minute) {
-        return createCustomSingedUrl(objectKey, minute);
+        return ObjectUtils.isEmpty(objectKey) ? "" : createCustomSingedUrl(objectKey, minute);
     }
 
     /**
@@ -145,7 +146,7 @@ public class CloudFrontUtil {
      * @since 2020. 8. 7. 오후 4:32:56
      */
     public static String getCustomSignedUrl(final String objectKey) {
-        return createCustomSingedUrl(objectKey, BASIC_MINUTE);
+        return ObjectUtils.isEmpty(objectKey) ? "" : createCustomSingedUrl(objectKey, BASIC_MINUTE);
     }
 
     /**

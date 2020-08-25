@@ -217,18 +217,19 @@ export default {
                 initialView: 'dayGridMonth',
                 // 일자 클릭시
                 // dateClick: this.handleDateClick,
+                dateClick: this.handleDateClick,
+                moreLinkClick: this.test,
                 height: 500,
                 events: [],
                 dayMaxEventRows: true,
                 timeGrid: {
-                    dayMaxEventRows: 1
+                    dayMaxEventRows: 1,
                 },
                 headerToolbar: {
                     left: 'prev',
                     center: 'title',
                     right: 'next',
                 },
-                editable : true,
                 titleFormat: 'yyyy.M',
                 customButtons: {
                     prev: {
@@ -262,7 +263,28 @@ export default {
         this.main();
         this.loadCalendar();
     },
+    activated() {
+        this.main();
+    },
     methods: {
+        test(e) {
+            //console.log(e);
+            const date = this.$moment(e.date).format('YYYY-MM-DD');
+            const cal = this.$refs.fullCalendar.$el;
+            const td = cal.querySelector(`td[data-date="${date}"]`);
+            td.classList.add('test');
+
+            setTimeout(() => {
+                const modal = document.querySelector('.fc-more-popover');
+                const close = modal.querySelector('.fc-popover-close');
+                const body = modal.querySelector('.fc-popover-body');
+                body.append('<a>자세히 보기?</a>');
+                close.addEventListener('click', () => {
+                    td.classList.remove('test');
+                });
+            }, 0);
+        },
+
         async main() {
             try {
                 const {
@@ -312,7 +334,7 @@ export default {
                     start: moment(item.beginDt).format('YYYY-MM-DD'),
                     end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
                     color: color,
-                    checkDuple: false
+                    checkDuple: false,
                 });
             });
             this.distinctAndAddEvent(getEvent);
@@ -321,7 +343,7 @@ export default {
             let distinctEventList = [];
             getEvent.forEach(item => {
                 let check = false;
-                distinctEventList.forEach(ele => {
+                distinctEventList.forEach((ele) => {
                     if (item.start === ele.start) {
                         check = true;
                     }
@@ -329,7 +351,7 @@ export default {
                 if (!check) {
                     distinctEventList.push(item);
                 }
-            })
+            });
             distinctEventList.forEach(item => {
                 getEvent.unshift(item);
             });
@@ -687,5 +709,38 @@ export default {
     font-size: 12px;
     line-height: 14px;
     color: #888;
+}
+::v-deep .fc .fc-more-popover {
+    margin-top: 20px;
+}
+::v-deep .test {
+    background: red;
+}
+
+::v-deep .fc-daygrid-day-bottom {
+    width: 100%;
+}
+::v-deep .fc-daygrid-more-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    /*text-indent: -99999px;*/
+}
+::v-deep .fc-daygrid-more-link:before {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    content: '';
+    display: block;
+    width: 3px;
+    height: 3px;
+    border-radius: 100%;
+    background: #fa5400;
+}
+::v-deep .fc-popover-body .fc-daygrid-event-harness:first-child {
+    display: none;
 }
 </style>
