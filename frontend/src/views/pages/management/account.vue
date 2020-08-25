@@ -221,21 +221,8 @@ export default {
                 ],
             },
             placeholder: 'abc',
-            // make: {
-            //     beginDt: null,
-            //     endDt: null,
-            // },
-            // attrs: [
-            //     {
-            //         key: 'today',
-            //         highlight: 'gray',
-            //         dates: new Date(),
-            //         class: 'vc-today',
-            //         contentClass: 'vc-today',
-            //     },
-            // ],
-            beginDt: new Date(),
-            endDt: new Date(),
+            beginDt: null,
+            endDt: null,
             today: new Date(),
             pickerBeginOption: {
                 firstDayOfWeek: 7,
@@ -245,13 +232,9 @@ export default {
                     }
                 },
                 disabledDate: (time) => {
-                    const minDt = new Date();
-                    minDt.setMonth(minDt.getMonth() - 3);
-                    return (
-                        time.getTime() > this.endDt.getTime() ||
-                        time.getTime() < minDt ||
-                        time.getTime() > new Date()
-                    );
+                    if (this.endDt !== null) {
+                        return time.getTime() > this.endDt.getTime();
+                    }
                 },
             },
             pickerEndOption: {
@@ -262,13 +245,9 @@ export default {
                     }
                 },
                 disabledDate: (time) => {
-                    const minDt = new Date();
-                    minDt.setMonth(minDt.getMonth() - 3);
-                    return (
-                        time.getTime() < this.beginDt.getTime() ||
-                        time.getTime() < minDt ||
-                        time.getTime() > new Date()
-                    );
+                    if (this.beginDt !== null) {
+                        return time.getTime() < this.beginDt.getTime();
+                    }
                 },
             },
             userSeqArray: [],
@@ -406,6 +385,14 @@ export default {
         // USER 목록 조회
         async getUserList() {
             this.loadingData = true;
+            let beginDt = null;
+            let endDt = null;
+            if (this.beginDt !== null) {
+                beginDt = this.$moment(this.beginDt).format('YYYY-MM-DD');
+            }
+            if (this.endDt !== null) {
+                endDt = this.$moment(this.endDt).format('YYYY-MM-DD');
+            }
             try {
                 const {
                     data: { data: response },
@@ -416,8 +403,8 @@ export default {
                     status: this.listSortSelect.value,
                     sort: this.sort,
                     authSeq: this.authority.value.slice(-1)[0],
-                    beginDt: this.$moment(this.beginDt).format('YYYY-MM-DD'),
-                    endDt: this.$moment(this.endDt).format('YYYY-MM-DD'),
+                    beginDt: beginDt,
+                    endDt: endDt,
                 });
                 this.userData = response.content;
                 this.totalItem = response.totalElements;
