@@ -3,17 +3,19 @@
         <h2 class="page-title">
             CALENDAR
         </h2>
-        <ul class="schedule-type">
-            <li class="edu">교육</li>
-            <li class="campaign">캠페인</li>
-            <li class="official">기타 공개일정</li>
-        </ul>
-        <FullCalendar
-            ref="fullCalendar"
-            :options="calendarOptions"
-            defaultView="month"
-            :editable="false"
-        />
+        <div class="fullCalendar-wrap">
+            <ul class="schedule-type">
+                <li class="edu">교육</li>
+                <li class="campaign">캠페인</li>
+                <li class="official">기타 공개일정</li>
+            </ul>
+            <FullCalendar
+                ref="fullCalendar"
+                :options="calendarOptions"
+                defaultView="month"
+                :editable="false"
+            />
+        </div>
 
         <calendarManagement
             :visible.sync="visible.calendarManagement"
@@ -84,7 +86,7 @@ import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import momentPlugin from '@fullcalendar/moment'
+import momentPlugin from '@fullcalendar/moment';
 
 import calendarManagement from '@/views/pages/information/calendar-management';
 
@@ -204,7 +206,7 @@ export default {
                     description: item.contents,
                     start: moment(item.beginDt).format('YYYY-MM-DD'),
                     end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
-                    color: color
+                    color: color,
                 });
             });
         },
@@ -292,8 +294,12 @@ export default {
 };
 </script>
 <style type="text/css">
-    /*TODO 주말 색 변경필오*/
-    .fc-day-sun.fc-daygrid-day-frame.fc-daygrid-day-top.fc-daygrid-day-number { color:#0000FF; }     /* 토요일 */
-    .fc-day-number.fc-sun.fc-past { color:#FF0000; }    /* 일요일 */
+/*TODO 주말 색 변경필오*/
+.fc-day-sun.fc-daygrid-day-frame.fc-daygrid-day-top.fc-daygrid-day-number {
+    color: #0000ff;
+} /* 토요일 */
+.fc-day-number.fc-sun.fc-past {
+    color: #ff0000;
+} /* 일요일 */
 </style>
-<link href="./fullcalendar-2.9.1/fullcalendar.css" rel="stylesheet"/>
+<link href="./fullcalendar-2.9.1/fullcalendar.css" rel="stylesheet" />

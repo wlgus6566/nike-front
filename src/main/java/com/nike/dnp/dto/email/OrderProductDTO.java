@@ -37,4 +37,11 @@ public class OrderProductDTO {
      */
     private int amount;
 
+    /**
+     * 이미지 파일
+     *
+     * @author [윤태호]
+     */
+    private String imageFilePhysicalName;
+
 }

@@ -27,7 +27,7 @@ logging:
   config: classpath:logback-nikedev.xml
 
 server:
-  domain: http://localhost
+  domain: https://devwww.nikespace.co.kr
   port: 8080
 
 ## 시큐리티 url/ ip 체크 flag

@@ -288,6 +288,7 @@ export default {
                 authSeq: null,
                 nickname: null,
                 userId: null,
+                authSeqArray: null,
             },
             loadingData: false,
         };
@@ -363,6 +364,7 @@ export default {
                 authSeq: null,
                 nickname: null,
                 userId: null,
+                authSeqArray: null,
             };
             this.addAuthority.value = [null];
             this.visible.AccountManagement = true;
@@ -525,9 +527,10 @@ export default {
                 const {
                     data: { data: response },
                 } = await getUserDetail(seq);
+                this.addAuthority.value = response.authSeqArray;
                 this.addUserData = response;
                 this.visible.AccountManagement = true;
-                console.log(response);
+                console.log(response.authSeqArray);
             } catch (error) {
                 console.log(error);
             }

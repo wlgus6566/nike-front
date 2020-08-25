@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            <span class="ko">{{ this.$route.meta.title }}</span>
+            <span class="ko">최근 본 폴더</span>
         </h2>
         <SortingList
             :sectionCode="sectionCode"
@@ -20,7 +20,12 @@
                 </NoData>
             </template>
         </template>
-        <Loading v-if="loadingData" />
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
     </div>
 </template>
 
@@ -81,7 +86,7 @@ export default {
     watch: {
         'sectionCode.value'() {
             this.page = 0;
-            this.historyViewDataList();
+            this.initFetchData();
         },
     },
     mounted() {},
@@ -173,4 +178,15 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.list-loading {
+    position: relative;
+    padding-top: 70%;
+}
+::v-deep .list-loading .lottie {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>
