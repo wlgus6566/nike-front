@@ -9,6 +9,7 @@ import com.nike.dnp.dto.order.OrderProductResultDTO;
 import com.nike.dnp.entity.order.OrderEntity;
 import com.nike.dnp.entity.order.OrderProductMapping;
 import com.nike.dnp.repository.order.OrderProductMapperRepository;
+import com.nike.dnp.util.CloudFrontUtil;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -98,8 +99,7 @@ public class OrderProductMappingService {
 			for(final OrderProductResultDTO orderProductResultDTO : emailList){
 				final Long agencySeq = Long.parseLong(String.valueOf(orderProductResultDTO.getAgencySeq()));
 				if(tempAgencySeq.equals(agencySeq)){
-					sendDTO.setNickname(SecurityUtil.currentUser()
-													.getNickname());
+					sendDTO.setNickname(SecurityUtil.currentUser().getNickname());
 					sendDTO.setEmail(String.valueOf( orderProductResultDTO.getEmail()));
 					sendDTO.setAgencyName(String.valueOf(orderProductResultDTO.getAgencyName()));
 					sendDTO.setOrderDt(String.valueOf(orderProductResultDTO.getRegistrationDt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"))));
@@ -108,6 +108,8 @@ public class OrderProductMappingService {
 					orderProductDTO.setAmount(Integer.parseInt(String.valueOf(orderProductResultDTO.getOrderQuantity())));
 					orderProductDTO.setProductName(String.valueOf(orderProductResultDTO.getGoodsName()));
 					orderProductDTO.setProductDesc(String.valueOf(orderProductResultDTO.getGoodsDescription()));
+					orderProductDTO.setImageFilePhysicalName(orderProductResultDTO.getImageFilePhysicalName());
+
 					productList.add(orderProductDTO);
 				}
 			}
@@ -119,13 +121,37 @@ public class OrderProductMappingService {
 			final DecimalFormat format = new DecimalFormat("###,###");
 			final StringBuilder builder = new StringBuilder();
 			for(final OrderProductDTO dto : sendDTO.getProductList()){
-				builder.append("<tr style=\"border-top:1px solid #ddd\"><td style=\"padding:15px; border-right:1px solid #ddd;\"><p style=\"margin:0\">");
+				builder.append("<tr>");
+				builder.append("	<td style=\"padding:15px; border-bottom:1px solid #ddd;\">");
+				builder.append("		<table  border=\"0\" >");
+				builder.append("			<tr>");
+				builder.append("				<td style=\"width:50px; vertical-align:top\">");
+				builder.append("					<span style=\"display:inline-block;width:50px; height:50px; line-height:50px; background:#f7f7f7;\" >");
+				builder.append("						<img src=\"");
+				builder.append(CloudFrontUtil.createCustomSingedUrl(dto.getImageFilePhysicalName(), 259200));
+				builder.append(							"\" alt=\"\" style=\"max-width:100%; vertical-align:middle\">");
+				builder.append("					</span>");
+				builder.append("				</td>");
+				builder.append("				<td style=\"padding:15px;\">");
+				builder.append("					<p style=\"margin:0; font-size:12px; color:#333; line-height:18px;\">");
 				builder.append(dto.getProductName());
-				builder.append("</p><p style=\"margin:2px 0 0 0; font-size:12px; color:#888;\">");
+				builder.append("					</p>");
+				builder.append("					<p style=\"margin:5px 0 0 0; font-size:11px; color:#555; line-height:17px;\">");
 				builder.append(dto.getProductDesc());
-				builder.append("</p></td><td align=\"center\"><p>");
+				builder.append("					</p>");
+				builder.append("				</td>");
+				builder.append("			</tr>");
+				builder.append("		</table>");
+				builder.append("	</td>");
+				builder.append("	<td align=\"center\" style=\"width:103px; border-bottom:1px solid #ddd;\">");
+				builder.append("	<p style=\"font-size:12px; color:#000;\">");
+				builder.append("		<strong>");
 				builder.append(format.format(dto.getAmount()));
-				builder.append("개</p></td></tr>");
+				builder.append("		</strong>");
+				builder.append("		개</p>");
+				builder.append("	</td>");
+				builder.append("</tr>");
+
 			}
 			sendDTO.setOrderArea(builder.toString());
 			mailService.sendMail(
