@@ -3957,7 +3957,116 @@
     margin-right: 9px !important;
 }
 /* Main Full calendar */
-.main-fc {
+.main-fc .fc {
+    border: 1px solid #eee;
+}
+.main-fc .fc .fc-toolbar.fc-header-toolbar {
+    padding: 20px 20px 12px;
+    margin-bottom: 0;
+}
+.main-fc .fc .fc-header-toolbar .fc-toolbar-title {
+    font-size: 20px;
+}
+.main-fc .fc .fc-prev-button {
+    margin-right: 40px;
+}
+.main-fc .fc .fc-next-button {
+    margin-left: 40px;
+}
+.main-fc .fc .fc-col-header-cell-cushion {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    color: #888;
+    font-weight: 400;
+}
+.main-fc .fc-theme-standard .fc-scrollgrid {
+    padding: 0 30px 26px;
+    border: none;
+}
+.main-fc .fc .fc-daygrid-day.fc-day-today {
+    background-color: transparent;
+}
+.main-fc .fc-theme-standard th,
+.main-fc .fc-theme-standard td {
+    border: none;
+}
+.main-fc .fc .fc-daygrid-day-top {
+    padding-top: 12px;
+    justify-content: center;
+}
+.fc .fc-more-popover {
+    border: 1px solid #ccc !important;
+}
+.fc.fc-theme-standard .fc-popover-header {
+    position: relative;
+    background-color: #f7f7f7;
+    justify-content: flex-end;
+}
+.fc .fc-popover-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+}
+.fc .fc-daygrid-body-balanced .fc-daygrid-day-events {
+    top: 13px;
+}
+.fc .fc-popover-title {
+    display: none;
+}
+.fc .fc-more-popover .fc-popover-body {
+    background-color: #f7f7f7;
+}
+.fc .fc-more-popover .fc-popover-body:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+.fc .fc-popover-body .fc-h-event {
+    background: transparent !important;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+.fc-popover-body .fc-h-event .fc-event-title-container {
+    position: relative;
+    padding-left: 7px;
+    padding-right: 11px;
+}
+.fc-popover-body .fc-h-event .fc-event-title-container:before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 3px;
+    height: 3px;
+    background: #fa5400;
+}
+.fc-popover-body .fc-h-event .fc-event-title {
+    font-size: 12px;
+    color: #000;
+}
+.fc-popover-body .fc-more {
+    float: right;
+    line-height: 15px;
+    margin-top: 5px;
+    font-size: 10px;
+    color: #555;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 600;
+}
+.fc-popover-body .fc-more:after {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+
+    background: url('../../assets/images/svg/icon-more-small.svg') 0 0 no-repeat;
+    vertical-align: -3px;
 }
 
 /* folder-item */

@@ -219,7 +219,7 @@ export default {
                 // dateClick: this.handleDateClick,
                 dateClick: this.handleDateClick,
                 moreLinkClick: this.test,
-                height: 500,
+                height: 350,
                 events: [],
                 dayMaxEventRows: true,
                 timeGrid: {
@@ -278,7 +278,12 @@ export default {
                 const modal = document.querySelector('.fc-more-popover');
                 const close = modal.querySelector('.fc-popover-close');
                 const body = modal.querySelector('.fc-popover-body');
-                body.append('<a>자세히 보기?</a>');
+                const a = document.createElement('a');
+                //TODO router 작업 필요
+                a.href = '/information/calendar';
+                a.classList.add('fc-more');
+                a.append('자세히 보기');
+                body.append(a);
                 close.addEventListener('click', () => {
                     td.classList.remove('test');
                 });
@@ -341,7 +346,7 @@ export default {
         },
         distinctAndAddEvent(getEvent) {
             let distinctEventList = [];
-            getEvent.forEach(item => {
+            getEvent.forEach((item) => {
                 let check = false;
                 distinctEventList.forEach((ele) => {
                     if (item.start === ele.start) {
@@ -352,21 +357,21 @@ export default {
                     distinctEventList.push(item);
                 }
             });
-            distinctEventList.forEach(item => {
+            distinctEventList.forEach((item) => {
                 getEvent.unshift(item);
             });
             this.patchEventData(getEvent);
         },
         patchEventData(getEvent) {
-            getEvent.forEach(item => {
+            getEvent.forEach((item) => {
                 this.calendarOptions.events.push({
-                    'contents': item['contents'],
-                    'start': item['start'],
-                    'end': item['end'],
-                    'title': item['title'],
-                    'color': item['color'],
-                })
-            })
+                    contents: item['contents'],
+                    start: item['start'],
+                    end: item['end'],
+                    title: item['title'],
+                    color: item['color'],
+                });
+            });
         },
         async getTodayCalendar(searchDt) {
             this.searchDt = !!searchDt ? searchDt : this.searchDt;
@@ -711,10 +716,10 @@ export default {
     color: #888;
 }
 ::v-deep .fc .fc-more-popover {
-    margin-top: 20px;
+    margin-top: 18px;
 }
 ::v-deep .test {
-    background: red;
+    /*background: red;*/
 }
 
 ::v-deep .fc-daygrid-day-bottom {
@@ -726,6 +731,7 @@ export default {
     left: 0;
     display: block;
     width: 100%;
+    font: 0/0 a;
     /*text-indent: -99999px;*/
 }
 ::v-deep .fc-daygrid-more-link:before {
