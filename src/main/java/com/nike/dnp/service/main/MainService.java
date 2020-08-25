@@ -95,14 +95,14 @@ public class MainService {
 
         // REPORT
         mainResultDTO.setReportList(reportRepository.findRecentReport(
-                PageRequest.of(0, 4, Sort.by(SORT_BY).descending())
+                PageRequest.of(0, 3, Sort.by(SORT_BY).descending())
         ));
 
         // NOTICE
         CustomerSearchDTO customerSearchDTO = new CustomerSearchDTO();
         customerSearchDTO.setNoticeArticleSectionCode(ServiceCode.NoticeArticleSectionEnumCode.NOTICE.toString());
         customerSearchDTO.setPage(0);
-        customerSearchDTO.setSize(5);
+        customerSearchDTO.setSize(6);
         mainResultDTO.setNoticeArticleList(noticeService.findNoticePages(customerSearchDTO).getContent());
 
 

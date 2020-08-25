@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="page-title">{{ this.$route.meta.title }}</h2>
+        <h2 class="page-title">NEWS</h2>
         <div class="sorting-area">
             <SearchInput @searchSubmit="searchSubmit" />
         </div>
