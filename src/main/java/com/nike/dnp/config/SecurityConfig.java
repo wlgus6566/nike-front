@@ -159,14 +159,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	public void configure(final WebSecurity web) {
-		// TODO[lsj] 아래 내용도 cors 에러 나지 않도록 추가 필요 2020.08.21
 		final String[] staticPatterns = {
 				"/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
-				"/api/download", // 임시
-				"/error" // 에러
+				"/api/download", "/api/open/**", // 임시
+				"/error", // 에러
 		};
-
 		web.ignoring().antMatchers(staticPatterns);
 	}
 	/**
@@ -183,7 +181,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.accessDecisionManager(accessDecisionManager())
 				.antMatchers(HttpMethod.POST,"/api/login").permitAll()
 				.antMatchers("/api/open/**").permitAll()
-				//.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**").authenticated()
 				.anyRequest().authenticated()
 			.and()
 				.addFilter(authenticationFilter()) // 인증 필터
@@ -205,28 +202,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		final CorsConfiguration configuration = new CorsConfiguration();
-		/*
-		//개발 설정
-		configuration.addAllowedOrigin("https://devapi.nikespace.co.kr");
-		configuration.addAllowedOrigin("https://devwww.nikespace.co.kr");
-		configuration.addAllowedOrigin("http://devwww.nikespace.co.kr");
-		configuration.addAllowedOrigin("https://ckeditor.com");
-		//운영 설정
-		configuration.addAllowedOrigin("https://api.nikespace.co.kr");
-		configuration.addAllowedOrigin("https://www.nikespace.co.kr");
-		configuration.addAllowedOrigin("http://www.nikespace.co.kr");
-		//로컬 설정
-		configuration.addAllowedOrigin("http://localhost:8080");
-		configuration.addAllowedOrigin("http://localhost:8081");
-		configuration.addAllowedOrigin("http://localhost:8082");
-		configuration.addAllowedMethod("*");
-		*/
 
 		List<String> origins = new ArrayList<>();
 		//개발 설정
 		origins.add("https://devapi.nikespace.co.kr");
 		origins.add("https://devwww.nikespace.co.kr");
-		origins.add("http://devapi.nikespace.co.kr");
+		origins.add("http://devwww.nikespace.co.kr");
 		//운영 설정
 		origins.add("https://api.nikespace.co.kr");
 		origins.add("https://www.nikespace.co.kr");
@@ -238,14 +219,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//외부 설정
 		origins.add("https://ckeditor.com");
 		configuration.setAllowedOrigins(origins);
-
-		List<String> methods = new ArrayList<>();
-		methods.add("GET");
-		methods.add("POST");
-		methods.add("PUT");
-		methods.add("DELETE");
-		configuration.setAllowedMethods(methods);
-
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
 		configuration.addAllowedHeader("*");
 		configuration.setAllowCredentials(true);
 		configuration.addExposedHeader(JwtHelper.HEADER_STRING); //header 노출 설정

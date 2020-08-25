@@ -59,6 +59,7 @@
                 </router-link>
             </li>
         </ul>
+        <Loading v-if="loadingData" />
     </div>
 </template>
 <script>
@@ -72,9 +73,11 @@ export default {
     name: 'management',
     data() {
         return {
-            loading: false,
+            loadingData: false,
             page: 0,
-            size: 20,
+            size: 10,
+            pageLast : false,
+            totalPage : 0,
             keyword: '',
             sectionCode: '',
             groupSeq: '',
@@ -106,9 +109,20 @@ export default {
     components: {
         FilterSelect,
         CascaderSelect,
+        Loading: () => import('@/components/loading/')
     },
     created() {
         this.authCacheList();
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    activated() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    deactivated() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
     },
     mounted() {
         this.fetchData();
@@ -158,8 +172,8 @@ export default {
             });
         },
         // 기본 데이터 조회
-        async fetchData() {
-            this.loading = true;
+        async fetchData(paging) {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -170,9 +184,18 @@ export default {
                     sectionCode: this.selectList.value,
                     //groupSeq: this.authority.value,
                 });
-                this.reportList = response.content;
+                if(paging){
+                    this.reportList = this.reportList.concat(response.content);
+                }else{
+                    this.reportList = response.content;
+                }
+                console.log(response);
+                this.pageLast = response.last;
+                this.totalPage = response.totalPages;
+                this.loadingData = false;
             } catch (error) {
                 console.log(error);
+                this.loadingData = false;
             }
         },
         searchView() {
@@ -194,6 +217,28 @@ export default {
         search() {
             this.fetchData();
         },
+        handleScroll() {
+            if(this.loadingData) return;
+            const windowE = document.documentElement;
+            if(
+                windowE.clientHeight + windowE.scrollTop >=
+                windowE.scrollHeight
+            ) {
+                this.infiniteScroll();
+            }
+        },
+        infiniteScroll() {
+            if(
+                !this.loadingData &&
+                this.totalPage > this.page - 1 &&
+                this.reportList.length >= this.size &&
+                this.reportList.length !== 0 &&
+                !this.pageLast
+            ) {
+                this.page++;
+                this.fetchData(true);
+            }
+        }
     },
 };
 </script>

@@ -321,32 +321,30 @@ export default {
         },
         // 달력에 맞게 변수명 변경
         transformData() {
-            // this.calendarOptions.events = [];
-            let getEvent = [];
+            this.calendarOptions.events = [];
             this.calendarData.forEach((item) => {
-                let color;
+                let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
-                    color = '#be1767';
+                    className = 'edu';
                 } else if (item.calendarSectionCode === 'CAMPAIGN') {
-                    color = '#007b68';
+                    className = 'campaign';
                 } else {
-                    color = '#2c0fb4';
+                    className = 'official';
                 }
-                getEvent.push({
+                this.calendarOptions.events.push({
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: moment(item.beginDt).format('YYYY-MM-DD'),
-                    end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
-                    color: color,
-                    checkDuple: false,
+                    start: item.beginDt.replace(/\./gi, "-"),
+                    end: moment(item.endDt).add(1, 'days')._i.replace(/\./gi, "-"),
+                    className: className,
                 });
             });
-            this.distinctAndAddEvent(getEvent);
+            this.distinctAndAddEvent();
         },
-        distinctAndAddEvent(getEvent) {
+        distinctAndAddEvent() {
             let distinctEventList = [];
-            getEvent.forEach((item) => {
+            this.calendarOptions.events.forEach(item => {
                 let check = false;
                 distinctEventList.forEach((ele) => {
                     if (item.start === ele.start) {
@@ -357,8 +355,8 @@ export default {
                     distinctEventList.push(item);
                 }
             });
-            distinctEventList.forEach((item) => {
-                getEvent.unshift(item);
+            distinctEventList.forEach(item => {
+                this.calendarOptions.events.unshift(item);
             });
             this.patchEventData(getEvent);
         },
