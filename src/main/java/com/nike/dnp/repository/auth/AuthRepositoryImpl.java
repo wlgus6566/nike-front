@@ -61,6 +61,7 @@ public class AuthRepositoryImpl extends QuerydslRepositorySupport implements Aut
                         AuthReturnDTO.class
                         , auth.authSeq
                         , auth.authName
+                        , auth.useYn
                         , upperAuth.authSeq.as("upperAuthSeq")
                         , upperAuth.authName.as("upperAuthName")
                         , userContents.detailAuthYn
@@ -71,11 +72,11 @@ public class AuthRepositoryImpl extends QuerydslRepositorySupport implements Aut
                 .innerJoin(authMenuRole).on(auth.authSeq.eq(authMenuRole.authSeq))
                 .innerJoin(menuRole).on(
                         authMenuRole.menuRoleSeq.eq(menuRole.menuRoleSeq)
-                        .and(menuRole.menuSkillCode.eq(skillCode))
+                        , AuthPredicateHelper.eqSkillCode(skillCode)
                 )
                 .innerJoin(menu).on(
                         menuRole.menuSeq.eq(menu.menuSeq)
-                        .and(menu.menuCode.eq(menuCode))
+                        , AuthPredicateHelper.eqMenuCode(menuCode)
                 )
                 .leftJoin(userContents).on(auth.authSeq.eq(userContents.authSeq))
                 .where(auth.useYn.eq(ServiceCode.YesOrNoEnumCode.Y.toString()))
