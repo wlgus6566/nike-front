@@ -71,7 +71,31 @@
                                 <label class="label-title required">기간</label>
                             </div>
                             <div class="form-column">
-                                <div class="data-picker">
+                                <div class="date-picker-group">
+                                    <div class="date-picker">
+                                        <el-date-picker
+                                            ref="dataPeriod"
+                                            v-model="beginDt"
+                                            type="date"
+                                            placeholder="YYYY.MM.DD"
+                                            format="yyyy.MM.dd"
+                                            :picker-options="pickerBeginOption"
+                                        >
+                                        </el-date-picker>
+                                    </div>
+                                    <div class="date-picker">
+                                        <el-date-picker
+                                            v-model="endDt"
+                                            type="date"
+                                            placeholder="YYYY.MM.DD"
+                                            format="yyyy.MM.dd"
+                                            :picker-options="pickerEndOption"
+                                        >
+                                        </el-date-picker>
+                                    </div>
+                                </div>
+
+                                <!--  <div class="data-picker">
                                     <el-date-picker
                                         ref="dataPeriod"
                                         v-model="dataPeriod"
@@ -82,7 +106,7 @@
                                         end-placeholder="End date"
                                     >
                                     </el-date-picker>
-                                </div>
+                                </div>-->
                             </div>
                         </li>
                         <li class="form-row">
@@ -131,6 +155,43 @@ export default {
         calendarSeq: Number,
         calendarDetail: Object,
         calenderSectionCodeList: Array,
+        beginDt: new Date(),
+        endDt: new Date(),
+        today: new Date(),
+        pickerBeginOption: {
+            firstDayOfWeek: 7,
+            cellClassName: (date) => {
+                if (new Date(date).getDay() === 0) {
+                    return 'el-holiday';
+                }
+            },
+            disabledDate: (time) => {
+                const minDt = new Date();
+                minDt.setMonth(minDt.getMonth() - 3);
+                return (
+                    time.getTime() > this.endDt.getTime() ||
+                    time.getTime() < minDt ||
+                    time.getTime() > new Date()
+                );
+            },
+        },
+        pickerEndOption: {
+            firstDayOfWeek: 7,
+            cellClassName: (date) => {
+                if (new Date(date).getDay() === 0) {
+                    return 'el-holiday';
+                }
+            },
+            disabledDate: (time) => {
+                const minDt = new Date();
+                minDt.setMonth(minDt.getMonth() - 3);
+                return (
+                    time.getTime() < this.beginDt.getTime() ||
+                    time.getTime() < minDt ||
+                    time.getTime() > new Date()
+                );
+            },
+        },
     },
     data() {
         return {
@@ -140,12 +201,12 @@ export default {
     },
     watch: {
         calendarDetail() {
-            this.detailData = this.calendarDetail;
+            /*this.detailData = this.calendarDetail;
             this.dataPeriod = [];
             if (this.calendarDetail.beginDt && this.calendarDetail.endDt) {
                 this.dataPeriod.push(this.calendarDetail.beginDt);
                 this.dataPeriod.push(this.calendarDetail.endDt);
-            }
+            }*/
             console.log('calendarDetail');
         },
     },
@@ -155,7 +216,7 @@ export default {
                 alert('일정 명을 입력해 주세요.');
                 this.$refs.scheduleName.focus();
                 return false;
-            } else if (!this.dataPeriod || this.dataPeriod.length !== 2) {
+            } else if (this.beginDt === undefined || this.endDt === undefined) {
                 alert('기간을 선택해 주세요.');
                 this.$refs.dataPeriod.focus();
                 return false;
@@ -164,12 +225,14 @@ export default {
         },
         onClickToSave() {
             if (this.validationData() && confirm('일정을 등록하시겠습니까?')) {
+                console.log(this.$moment(this.beginDt).format('YYYY-MM-DD'));
+                console.log(this.$moment(this.endDt).format('YYYY-MM-DD'));
                 this.detailData = {
                     calendarSectionCode: this.detailData.calendarSectionCode,
                     scheduleName: this.detailData.scheduleName,
                     contents: this.detailData.contents,
-                    beginDt: this.dataPeriod[0],
-                    endDt: this.dataPeriod[1],
+                    beginDt: this.$moment(this.beginDt).format('YYYY-MM-DD'),
+                    endDt: this.$moment(this.endDt).format('YYYY-MM-DD'),
                 };
                 if (this.statusCode === 'EDIT') {
                     this.$emit(
