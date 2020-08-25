@@ -39,15 +39,13 @@
                                             v-model="
                                                 detailData.calendarSectionCode
                                             "
-                                            :name="
-                                                detailData.calendarSectionCode
-                                            "
+                                            name="calendarSectionCode"
                                             :value="item.code"
                                         />
                                         <i></i>
                                         <span class="txt">{{
                                             item.codeName
-                                        }} / {{item.code}}/{{detailData.calendarSectionCode}}</span>
+                                        }} </span>
                                     </span>
                                 </label>
                             </div>
