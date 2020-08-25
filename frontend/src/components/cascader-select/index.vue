@@ -20,9 +20,9 @@ export default {
     props: ['listCascader'],
     watch: {
         'listCascader.value'(val) {
-            if (val.length === 0) {
-                this.listCascader.value = [null];
-            }
+            // if (val.length === 0) {
+            //     this.listCascader.value = [null];
+            // }
             this.cloneTxt = '';
             val.forEach((el) => {
                 this.testArr(this.listCascader.options, el);
