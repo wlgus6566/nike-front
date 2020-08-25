@@ -47,7 +47,7 @@
                                         <i></i>
                                         <span class="txt">{{
                                             item.codeName
-                                        }}</span>
+                                        }} / {{item.code}}/{{detailData.calendarSectionCode}}</span>
                                     </span>
                                 </label>
                             </div>
@@ -155,9 +155,6 @@ export default {
         calendarSeq: Number,
         calendarDetail: Object,
         calenderSectionCodeList: Array,
-        beginDt: new Date(),
-        endDt: new Date(),
-        today: new Date(),
         pickerBeginOption: {
             firstDayOfWeek: 7,
             cellClassName: (date) => {
@@ -195,19 +192,30 @@ export default {
     },
     data() {
         return {
-            detailData: {},
-            dataPeriod: [],
+            detailData: Object,
+            beginDt: new Date(),
+            endDt: new Date(),
+            today: new Date(),
+            calendarDialogInitData: {
+                calendarSectionCode: 'EDUCATION',
+                scheduleName: null,
+                beginDt: null,
+                endDt: null,
+                contents: null,
+            },
         };
     },
     watch: {
         calendarDetail() {
-            /*this.detailData = this.calendarDetail;
-            this.dataPeriod = [];
-            if (this.calendarDetail.beginDt && this.calendarDetail.endDt) {
-                this.dataPeriod.push(this.calendarDetail.beginDt);
-                this.dataPeriod.push(this.calendarDetail.endDt);
-            }*/
-            console.log('calendarDetail');
+            if (!!this.calendarSeq) {
+                this.detailData = this.calendarDetail;
+                this.beginDt = this.calendarDetail.beginDt;
+                this.endDt = this.calendarDetail.endDt;
+            } else {
+                this.detailData = this.calendarDetail;
+                this.beginDt = this.today;
+                this.endDt = this.today;
+            }
         },
     },
     methods: {
@@ -225,14 +233,14 @@ export default {
         },
         onClickToSave() {
             if (this.validationData() && confirm('일정을 등록하시겠습니까?')) {
-                console.log(this.$moment(this.beginDt).format('YYYY-MM-DD'));
-                console.log(this.$moment(this.endDt).format('YYYY-MM-DD'));
+                // console.log(this.$moment(this.beginDt).format('YYYY-MM-DD'));
+                // console.log(this.$moment(this.endDt).format('YYYY-MM-DD'));
                 this.detailData = {
                     calendarSectionCode: this.detailData.calendarSectionCode,
                     scheduleName: this.detailData.scheduleName,
                     contents: this.detailData.contents,
-                    beginDt: this.$moment(this.beginDt).format('YYYY-MM-DD'),
-                    endDt: this.$moment(this.endDt).format('YYYY-MM-DD'),
+                    beginDt: this.$moment(this.beginDt).format('YYYY.MM.DD'),
+                    endDt: this.$moment(this.endDt).format('YYYY.MM.DD'),
                 };
                 if (this.statusCode === 'EDIT') {
                     this.$emit(
