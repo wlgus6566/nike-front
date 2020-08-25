@@ -160,20 +160,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(final WebSecurity web) {
 		// TODO[lsj] 아래 내용도 cors 에러 나지 않도록 추가 필요 2020.08.21
 		final String[] staticPatterns = {
-				"/pc/**", "/mo/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
-				"/pc.html", "/mo.html","index.html", //frontend page
-				"/resources/**", "/static/**", "/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
-				"/css/**", "/font/**", "/js/**", "/images/**", // Static 요소
+				"/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
-				"/api/download" // 임시
-				, "/error" // 에러
-				// ,"/swagger-ui/**","/v3/**" //swagger 3.0 임시
-				//,"/api/open/**"
+				"/api/download", // 임시
+				"/error" // 에러
 		};
 
 		web.ignoring().antMatchers(staticPatterns);
 	}
-
 	/**
 	 * configure
 	 * @param http
@@ -187,7 +181,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.accessDecisionManager(accessDecisionManager())
 				.antMatchers(HttpMethod.POST,"/api/login").permitAll()
 				.antMatchers("/api/open/**").permitAll()
-				// TODO[lsj] "/api/alarm/**", "/api/open/**" 는 원래 위에 있어야 하는데 위에 cors에러 발생하여 임시 추가 2020.08.21
 				.antMatchers("/api/mypage/**", "/api/main/**", "/api/alarm/**").authenticated()
 				.anyRequest().authenticated();
 
@@ -209,12 +202,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration configuration = new CorsConfiguration();
+		final CorsConfiguration configuration = new CorsConfiguration();
 		//개발 설정
 		configuration.addAllowedOrigin("https://devapi.nikespace.co.kr/");
 		configuration.addAllowedOrigin("https://devwww.nikespace.co.kr");
 		configuration.addAllowedOrigin("http://devwww.nikespace.co.kr");
 		//운영 설정
+		configuration.addAllowedOrigin("https://api.nikespace.co.kr");
 		configuration.addAllowedOrigin("https://www.nikespace.co.kr");
 		configuration.addAllowedOrigin("http://www.nikespace.co.kr");
 		//로컬 설정
@@ -227,7 +221,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		configuration.setAllowCredentials(true);
 		configuration.addExposedHeader(JwtHelper.HEADER_STRING); //header 노출 설정
 
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
@@ -244,17 +238,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new AffirmativeBased(decisionVoters);
 	}
 
-	/*
-	// filter Meta Service 미사용
-	@Bean
-	public AccessDecisionManager accessDecisionManager() {
-		List<AccessDecisionVoter<? extends Object>> decisionVoters = Arrays.asList(new AuthenticatedVoter(), new RoleVoter(), new WebExpressionVoter());
-		return new UnanimousBased(decisionVoters);
-
-	}
-
-	*/
-
 	/**
 	 * 인증 필터
 	 *
@@ -264,7 +247,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public AuthenticationFilter authenticationFilter() {
-
 		AuthenticationFilter filter = null;
 		try {
 			filter = new AuthenticationFilter(authenticationManager());
