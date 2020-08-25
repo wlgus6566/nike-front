@@ -82,7 +82,7 @@ export default {
         WishList: () => import('@/components/wish-list/index'),
         WishListNodata: () => import('@/components/wish-list/nodata'),
         detailView: () => import('@/views/pages/product/detail-view'),
-        Loading: () => import('@/components/wish-list/loading'),
+        Loading: () => import('@/components/loading'),
     },
     data() {
         return {
@@ -103,6 +103,8 @@ export default {
     },
     activated() {
         this.fetchData(true);
+        this.checkAll = false;
+        this.checkWishItem = [];
     },
     computed: {
         basketList() {
@@ -187,6 +189,7 @@ export default {
                     this.checkWishItem.forEach((seq) => {
                         this.checkedWish(seq, true);
                     });
+                    this.checkAll = false;
                     this.deleteLoading = [];
                 } catch (error) {
                     console.log(error);
