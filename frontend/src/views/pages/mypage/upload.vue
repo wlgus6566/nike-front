@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            <span class="ko">{{ this.$route.meta.title }}</span>
+            <span class="ko">내가 업로드한 폴더</span>
         </h2>
         <SortingList
             :sectionCode="sectionCode"

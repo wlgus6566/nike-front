@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            <span class="ko">{{ this.$route.meta.title }}</span>
+            <span class="ko">상품관리</span>
         </h2>
         <h3 class="form-title mt20">상품등록</h3>
         <hr class="hr-black" />
