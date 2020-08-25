@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
  * The Class Order product result dto.
  *
  * @author [오지훈]
- * @since 2020. 7. 21. 오후 3:54:59
  * @implNote
+ * @since 2020. 7. 21. 오후 3:54:59
  */
 @Getter
 @Setter
@@ -97,4 +97,13 @@ public class OrderProductResultDTO {
 	 */
 	@ApiModelProperty(name = "orderDescription", value = "주문 코맨트")
 	private String orderDescription;
+
+
+	/**
+	 * 이미지 파일
+	 *
+	 * @author [윤태호]
+	 */
+	@ApiModelProperty(hidden = true)
+	private String imageFilePhysicalName;
 }
