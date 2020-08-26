@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -25,7 +26,7 @@ public class ContentsMailSendDTO {
      *
      * @author [이소정]
      */
-    @NotEmpty(message = "contentsMailSend.contentsSeq")
+    @NotNull(message = "contentsMailSend.contentsSeq")
     @ApiModelProperty(name = "contentsSeq", value = "컨텐츠 시퀀스", example = "4")
     private Long contentsSeq;
 
