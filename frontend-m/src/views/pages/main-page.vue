@@ -64,10 +64,10 @@
         <h2 class="main-title">CALENDAR</h2>
         <div>
             <FullCalendar
-                    ref="fullCalendar"
-                    :options="calendarOptions"
-                    defaultView="month"
-                    :editable="false"
+                ref="fullCalendar"
+                :options="calendarOptions"
+                defaultView="month"
+                :editable="false"
             />
         </div>
         <h2 class="main-title">REPORT</h2>
@@ -212,7 +212,12 @@ export default {
                 const modal = document.querySelector('.fc-more-popover');
                 const close = modal.querySelector('.fc-popover-close');
                 const body = modal.querySelector('.fc-popover-body');
-                body.append(this.yyyyMm + '<a>자세히 보기?</a>');
+                const a = document.createElement('a');
+                //TODO router 작업 필요
+                a.href = '/information/calendar';
+                a.classList.add('fc-more');
+                a.append('자세히 보기');
+                body.append(a);
                 close.addEventListener('click', () => {
                     td.classList.remove('test');
                 });
