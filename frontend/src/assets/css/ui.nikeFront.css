@@ -1218,6 +1218,7 @@
 .el-cascader-node__label {
     display: block;
     max-width: 110px;
+    max-height: 40px;
     box-sizing: border-box;
     word-break: break-all;
     white-space: normal;
@@ -1225,6 +1226,33 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
+
+/* IE 대응 말줄임 */
+/*@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    !* IE10+ CSS *!
+    .el-cascader-node__label {
+        position: relative;
+        text-align: justify;
+        margin-right: -1em;
+        padding-right: 1em !important;
+    }
+    .el-cascader-node__label:before {
+        content: '...';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+    .el-cascader-node__label:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        margin-top: 0.2em;
+        background: white;
+    }
+}*/
+
 .el-cascader-node.in-active-path .el-cascader-node__label {
     font-weight: bold;
     color: #000;
@@ -1819,6 +1847,7 @@
 .file-item .list .info-box .title {
     display: block;
     display: -webkit-box;
+    max-height: 40px;
     line-height: 20px;
     font-size: 14px;
     color: #000;
@@ -1827,6 +1856,33 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     white-space: pre-wrap;
+}
+/* IE 대응 말줄임 */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS */
+    .file-item .list .info-box .title {
+        position: relative;
+        text-align: justify;
+        margin-right: -1em;
+        padding-right: 1em;
+    }
+
+    .file-item .list .info-box .title:before {
+        content: '...';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    .file-item .list .info-box .title:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        margin-top: 0.2em;
+        background: white;
+    }
 }
 .file-item .btn-box {
     display: flex;
@@ -2515,12 +2571,41 @@
 .feedback-item .txt {
     display: block;
     display: -webkit-box;
+    max-height: 40px;
     font-size: 14px;
     line-height: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+}
+
+/* IE 대응 말줄임 */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS */
+    .feedback-item .txt {
+        position: relative;
+        text-align: justify;
+        margin-right: -1em;
+        padding-right: 1em;
+    }
+
+    .feedback-item .txt:before {
+        content: '...';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    .feedback-item .txt:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        margin-top: 0.2em;
+        background: white;
+    }
 }
 .feedback-item .info {
     position: absolute;
@@ -3176,6 +3261,7 @@
 .wish-list-item .title-box .title {
     display: block;
     display: -webkit-box;
+    max-height: 40px;
     line-height: 20px;
     font-size: 14px;
     color: #000;
@@ -3186,9 +3272,37 @@
     -webkit-box-orient: vertical;
     word-wrap: break-word;
 }
+/* IE 대응 말줄임 */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS */
+    .wish-list-item .title-box .title {
+        position: relative;
+        text-align: justify;
+        margin-right: -1em;
+        padding-right: 1em;
+    }
+
+    .wish-list-item .title-box .title:before {
+        content: '...';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    .wish-list-item .title-box .title:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        margin-top: 0.2em;
+        background: white;
+    }
+}
 .wish-list-item .title-box .txt {
     display: block;
     display: -webkit-box;
+    max-height: 36px;
     margin-top: 8px;
     line-height: 18px;
     font-size: 12px;
@@ -3198,6 +3312,33 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     word-wrap: break-word;
+}
+/* IE 대응 말줄임 */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS */
+    .wish-list-item .title-box .txt {
+        position: relative;
+        text-align: justify;
+        margin-right: -1em;
+        padding-right: 1em;
+    }
+
+    .wish-list-item .title-box .txt:before {
+        content: '...';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    .wish-list-item .title-box .txt:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        margin-top: 0.2em;
+        background: white;
+    }
 }
 .wish-list-item .desc-txt-box {
     margin-top: 8px;
@@ -4251,6 +4392,7 @@
 .folder-item .info-box .txt {
     display: block;
     display: -webkit-box;
+    max-height: 36px;
     margin-top: 8px;
     line-height: 18px;
     font-size: 12px;
@@ -4261,6 +4403,55 @@
     overflow: hidden;
     word-break: keep-all;
 }
+
+/* IE 대응 말줄임 */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS */
+    .folder-item .info-box .title {
+        position: relative;
+        text-align: justify;
+        /*margin-right: -1em;*/
+        padding-right: 1em;
+    }
+    .folder-item .info-box .title:before {
+        content: '...';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+    .folder-item .info-box .title:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        margin-top: 0.2em;
+        background: white;
+    }
+
+    .folder-item .info-box .txt {
+        position: relative;
+        text-align: justify;
+        /*margin-right: -1em;*/
+        padding-right: 1em;
+    }
+    .folder-item .info-box .txt:before {
+        content: '...';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+    .folder-item .info-box .txt:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        margin-top: 0.2em;
+        background: white;
+    }
+}
+
 .folder-item .info-box .location {
     display: flex;
     margin-top: 10px;
