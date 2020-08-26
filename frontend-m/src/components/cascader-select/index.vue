@@ -8,6 +8,7 @@
             :showList="showList"
             @closeModal="closeModal"
             @changeInput="changeInput"
+            @dimmedClose="dimmedClose"
         />
     </div>
 </template>
@@ -20,6 +21,7 @@ export default {
         return {
             showList: false,
             selectLabel: this.cascaderList.options[0].label,
+            hideLabel: '',
         };
     },
     props: ['cascaderList'],
@@ -32,18 +34,29 @@ export default {
     //   }
     // },
     mounted() {
-        bus.$on('changeInput', val => {
-            this.selectLabel = val;
+        bus.$on('changeInput', (label, val) => {
+            console.log(val);
+            this.closeModal(label, val);
         });
     },
     methods: {
-        changeInput(val) {
-            console.log(1);
-            console.log(val);
-            this.selectLabel = val;
+        changeInput() {
+            // console.log(1);
+            // console.log(val);
+            // this.selectLabel = val;
         },
-        closeModal() {
+        dimmedClose() {
             this.showList = false;
+            document.querySelector('.modal-list-open').style.overflow = '';
+            document.querySelector('#wrap').style.margin = '';
+            window.scrollTo(0, this.topScollVal);
+            document.querySelector('body').classList.remove('modal-list-open');
+        },
+        closeModal(label, val) {
+            this.hideLabel = label;
+            this.cascaderList.value = val;
+            this.showList = false;
+            this.selectLabel = this.hideLabel;
             document.querySelector('.modal-list-open').style.overflow = '';
             document.querySelector('#wrap').style.margin = '';
             window.scrollTo(0, this.topScollVal);

@@ -35,11 +35,11 @@ export default {
                 ],
             },
             authority: {
-                value: ['all'],
-	              name: 'authority',
+                value: null,
+                name: 'authority',
                 options: [
                     {
-                        value: 'all',
+                        value: null,
                         label: '전체 그룹',
                     },
                 ],

@@ -34,7 +34,7 @@ server:
 ## 시큐리티 url/ ip 체크 flag
 security:
   auth:
-    url: false
+    url: true
     ip : false
 
 #임시경로

@@ -65,9 +65,8 @@
 <script>
 import FilterSelect from '@/components/filter-select';
 import CascaderSelect from '@/components/cascader-select';
-import {getReportList} from '@/api/report';
-import {getCategoryList} from '@/utils/code';
-import {getAuthCacheList} from '@/api/auth';
+import { getReportList, getGroupAuthority } from '@/api/report';
+import { getCategoryList } from '@/utils/code';
 
 export default {
     name: 'management',
@@ -76,15 +75,16 @@ export default {
             loadingData: false,
             page: 0,
             size: 10,
-            pageLast : false,
-            totalPage : 0,
+            pageLast: false,
+            totalPage: 0,
             keyword: '',
             sectionCode: '',
             groupSeq: '',
             reportList: [],
             searchIsActive: false,
             viewType: true,
-            viewTypeClass : 'folder-list-row',
+            viewTypeClass: 'folder-list-row',
+            userDataList: '',
             selectList: {
                 value: 'ALL',
                 listSortOptions: [
@@ -95,11 +95,11 @@ export default {
                 ],
             },
             authority: {
-                value: ['all'],
+                value: null,
                 name: 'authority',
                 options: [
                     {
-                        value: 'all',
+                        value: null,
                         label: '전체 그룹',
                     },
                 ],
@@ -109,7 +109,7 @@ export default {
     components: {
         FilterSelect,
         CascaderSelect,
-        Loading: () => import('@/components/loading/')
+        Loading: () => import('@/components/loading/'),
     },
     created() {
         this.authCacheList();
@@ -140,14 +140,16 @@ export default {
         },
     },
     methods: {
-        //권한 조회 (리포트 권한 목록 수정되면 교체 되어야함)
+        //권한 조회
         async authCacheList() {
             try {
                 const {
                     data: { data: response },
-                } = await getAuthCacheList();
-
+                } = await getGroupAuthority();
+                this.userDataList = response;
+                console.log(response);
                 this.recursionFn(response, this.authority.options, 1);
+                //this.recursionFn(response, this.addAuthority.options, 1);
             } catch (error) {
                 console.log(error);
             }
@@ -182,11 +184,11 @@ export default {
                     size: this.size,
                     keyword: this.keyword,
                     sectionCode: this.selectList.value,
-                    //groupSeq: this.authority.value,
+                    groupSeq: this.authority.value,
                 });
-                if(paging){
+                if (paging) {
                     this.reportList = this.reportList.concat(response.content);
-                }else{
+                } else {
                     this.reportList = response.content;
                 }
                 console.log(response);
@@ -218,9 +220,9 @@ export default {
             this.fetchData();
         },
         handleScroll() {
-            if(this.loadingData) return;
+            if (this.loadingData) return;
             const windowE = document.documentElement;
-            if(
+            if (
                 windowE.clientHeight + windowE.scrollTop >=
                 windowE.scrollHeight
             ) {
@@ -228,7 +230,7 @@ export default {
             }
         },
         infiniteScroll() {
-            if(
+            if (
                 !this.loadingData &&
                 this.totalPage > this.page - 1 &&
                 this.reportList.length >= this.size &&
@@ -238,7 +240,7 @@ export default {
                 this.page++;
                 this.fetchData(true);
             }
-        }
+        },
     },
 };
 </script>

@@ -2,16 +2,18 @@
     <div>
         <a :href="mainVisual.linkUrl" class="main-visual">
             <span class="thumbnail">
-                <img :src="mainVisual.mobileImageUrl" alt="">
+                <img :src="mainVisual.mobileImageUrl" alt="" />
             </span>
             <strong class="title" v-text="mainVisual.title"></strong>
-            <span class="desc" v-text="mainVisual.contents">
-
-            </span>
+            <span class="desc" v-text="mainVisual.contents"> </span>
         </a>
         <h2 class="main-title">RECENT UPDATE</h2>
         <div class="main-update-list">
-            <div class="update-list-item" v-for="item in assetContentsList" :key="item.contentsSeq">
+            <div
+                class="update-list-item"
+                v-for="item in assetContentsList"
+                :key="item.contentsSeq"
+            >
                 <a href="#">
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
@@ -20,11 +22,17 @@
                         <span class="label">
                             ASSET
                         </span>
-                        <span class="desc" v-text="item.folderContents">SP20 나이키 다이렉트</span>
+                        <span class="desc" v-text="item.folderContents"
+                            >SP20 나이키 다이렉트</span
+                        >
                     </span>
                 </a>
             </div>
-            <div class="update-list-item" v-for="item in foundationContentsList" :key="item.contentsSeq">
+            <div
+                class="update-list-item"
+                v-for="item in foundationContentsList"
+                :key="item.contentsSeq"
+            >
                 <a href="#">
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
@@ -33,11 +41,17 @@
                         <span class="label">
                             FOUNDATION
                         </span>
-                        <span class="desc" v-text="item.folderContents">SP20 나이키 다이렉트</span>
+                        <span class="desc" v-text="item.folderContents"
+                            >SP20 나이키 다이렉트</span
+                        >
                     </span>
                 </a>
             </div>
-            <div class="update-list-item" v-for="item in toolKitContentsList" :key="item.contentsSeq">
+            <div
+                class="update-list-item"
+                v-for="item in toolKitContentsList"
+                :key="item.contentsSeq"
+            >
                 <a href="#">
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
@@ -46,7 +60,9 @@
                         <span class="label">
                             TOOLKIT
                         </span>
-                        <span class="desc" v-text="item.folderContents">SP20 나이키 다이렉트</span>
+                        <span class="desc" v-text="item.folderContents"
+                            >SP20 나이키 다이렉트</span
+                        >
                     </span>
                 </a>
             </div>
@@ -54,9 +70,13 @@
         <h2 class="main-title">NOTICE</h2>
         <ul class="notice-list">
             <li v-for="item in noticeArticleList" :key="item.noticeArticleSeq">
-                <a :href="'/mypage/notice/detail/'+item.noticeArticleSeq" >
-                    <span class="label-noti" v-if="item.noticeYn === 'Y'">중요</span>
-                    <span class="title" v-text="item.title">NIKE 2020 PSKO 일정이 업데이트 되었습니다.</span>
+                <a :href="'/mypage/notice/detail/' + item.noticeArticleSeq">
+                    <span class="label-noti" v-if="item.noticeYn === 'Y'"
+                        >중요</span
+                    >
+                    <span class="title" v-text="item.title"
+                        >NIKE 2020 PSKO 일정이 업데이트 되었습니다.</span
+                    >
                     <span class="data" v-text="item.updateDt">2020.06.17</span>
                 </a>
             </li>
@@ -72,8 +92,12 @@
         </div>
         <h2 class="main-title">REPORT</h2>
         <ul class="main-report-list">
-            <li class="report-list-item" v-for="item in reportList" :key="item.reportSeq">
-                <a :href="'/report/'+item.reportSeq">
+            <li
+                class="report-list-item"
+                v-for="item in reportList"
+                :key="item.reportSeq"
+            >
+                <a :href="'/report/' + item.reportSeq">
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
@@ -82,9 +106,9 @@
                             조던 서울조던
                         </strong>
                         <p class="desc" v-text="item.reportName">
-                            코리아 팀 스니커즈 컬렉션 코리아 팀 스니커즈 컬렉션코리아 팀
-                            스니커즈 컬렉션코리아 팀 스니커즈 컬렉션코리아 팀 스니커즈
-                            컬렉션
+                            코리아 팀 스니커즈 컬렉션 코리아 팀 스니커즈
+                            컬렉션코리아 팀 스니커즈 컬렉션코리아 팀 스니커즈
+                            컬렉션코리아 팀 스니커즈 컬렉션
                         </p>
                     </span>
                 </a>
@@ -92,25 +116,32 @@
         </ul>
         <h2 class="main-title">NEWS</h2>
         <div class="main-news-list">
-            <div class="news-list-item" v-for="item in newsArticleList" :key="item.noticeArticleSeq">
-                <a :href="'/mypage/news/detail/'+item.noticeArticleSeq">
+            <div
+                class="news-list-item"
+                v-for="item in newsArticleList"
+                :key="item.noticeArticleSeq"
+            >
+                <a :href="'/mypage/news/detail/' + item.noticeArticleSeq">
                     <span class="thumbnail">
                         <img :src="item.thumbnailFilePhysicalName" alt="" />
                     </span>
                     <span class="info-box">
-                        <strong class="title" v-text="item.title">JORDAN SEOUL</strong>
-                        <p class="desc" v-text="item.contents">조던 서울 오픈 포토 리캡</p>
-                        <span class="date" v-text="item.updateDt">2020. 06. 17.</span>
+                        <strong class="title" v-text="item.title"
+                            >JORDAN SEOUL</strong
+                        >
+                        <!--                        <p class="desc" v-text="item.contents">조던 서울 오픈 포토 리캡</p>-->
+                        <span class="date" v-text="item.updateDt"
+                            >2020. 06. 17.</span
+                        >
                     </span>
                 </a>
             </div>
         </div>
-
     </div>
 </template>
 <script>
-import {getMain} from '@/api/main';
-import {getCalendarEachList, getTodayCalendar} from '@/api/calendar/';
+import { getMain } from '@/api/main';
+import { getCalendarEachList, getTodayCalendar } from '@/api/calendar/';
 
 import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
@@ -123,13 +154,13 @@ export default {
     data() {
         return {
             loading: false,
-            assetContentsList : [],
-            foundationContentsList : [],
-            mainVisual:'',
-            newsArticleList : [],
-            noticeArticleList:[],
-            reportList : [],
-            toolKitContentsList : [],
+            assetContentsList: [],
+            foundationContentsList: [],
+            mainVisual: '',
+            newsArticleList: [],
+            noticeArticleList: [],
+            reportList: [],
+            toolKitContentsList: [],
             todayData: [],
             yyyyMm: moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
@@ -177,27 +208,28 @@ export default {
         };
     },
     components: {
-        FullCalendar
+        FullCalendar,
     },
-    created(){
+    created() {
         this.loadCalendar();
     },
-    mounted(){
+    mounted() {
         this.fetchData();
-    },methods: {
-        async fetchData(){
+    },
+    methods: {
+        async fetchData() {
             this.loading = true;
-            try{
+            try {
                 const {
-                    data: {data: response}
-                }= await getMain();
+                    data: { data: response },
+                } = await getMain();
                 this.assetContentsList = response.assetContentsList;
                 this.foundationContentsList = response.foundationContentsList;
                 this.mainVisual = response.mainVisual;
                 this.newsArticleList = response.newsArticleList;
                 this.noticeArticleList = response.noticeArticleList;
                 this.reportList = response.reportList;
-            } catch (error){
+            } catch (error) {
                 console.log(error);
             }
         },
@@ -245,7 +277,7 @@ export default {
         // 달력에 맞게 변수명 변경
         transformData() {
             this.calendarOptions.events = [];
-            this.calendarData.forEach((item) => {
+            this.calendarData.forEach(item => {
                 let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
                     className = 'edu';
@@ -258,8 +290,10 @@ export default {
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: item.beginDt.replace(/\./gi, "-"),
-                    end: moment(item.endDt).add(1, 'days')._i.replace(/\./gi, "-"),
+                    start: item.beginDt.replace(/\./gi, '-'),
+                    end: moment(item.endDt)
+                        .add(1, 'days')
+                        ._i.replace(/\./gi, '-'),
                     className: className,
                 });
             });
@@ -269,7 +303,7 @@ export default {
             let distinctEventList = [];
             this.calendarOptions.events.forEach(item => {
                 let check = false;
-                distinctEventList.forEach((ele) => {
+                distinctEventList.forEach(ele => {
                     if (item.start === ele.start) {
                         check = true;
                     }
@@ -289,41 +323,41 @@ export default {
             } = await getTodayCalendar({ searchDt: this.searchDt });
             this.todayData = response;
         },
-    }
+    },
 };
 </script>
 <style scoped>
-    ::v-deep .fc .fc-more-popover {
-        margin-top: 20px;
-    }
-    ::v-deep .test {
-        background: red;
-    }
+::v-deep .fc .fc-more-popover {
+    margin-top: 20px;
+}
+::v-deep .test {
+    background: red;
+}
 
-    ::v-deep .fc-daygrid-day-bottom {
-        width: 100%;
-    }
-    ::v-deep .fc-daygrid-more-link {
-        position: absolute;
-        top: 0;
-        left: 0;
-        display: block;
-        width: 100%;
-        /*text-indent: -99999px;*/
-    }
-    ::v-deep .fc-daygrid-more-link:before {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        content: '';
-        display: block;
-        width: 3px;
-        height: 3px;
-        border-radius: 100%;
-        background: #fa5400;
-    }
-    ::v-deep .fc-popover-body .fc-daygrid-event-harness:first-child {
-        display: none;
-    }
+::v-deep .fc-daygrid-day-bottom {
+    width: 100%;
+}
+::v-deep .fc-daygrid-more-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    /*text-indent: -99999px;*/
+}
+::v-deep .fc-daygrid-more-link:before {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    content: '';
+    display: block;
+    width: 3px;
+    height: 3px;
+    border-radius: 100%;
+    background: #fa5400;
+}
+::v-deep .fc-popover-body .fc-daygrid-event-harness:first-child {
+    display: none;
+}
 </style>
