@@ -1,6 +1,8 @@
 <template>
-    <div class="no-data">
-        <slot />
+    <div class="no-data-wrap">
+        <div class="no-data">
+            <slot />
+        </div>
     </div>
 </template>
 <script>
