@@ -20,7 +20,12 @@
                 </NoData>
             </template>
         </template>
-        <Loading v-if="loadingData" />
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
         <div class="btn-tbl-box">
             <div class="right">
                 <router-link to="/mypage/news/form" class="btn-form-gray">

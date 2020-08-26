@@ -57,7 +57,12 @@
             @showDetailView="showDetailView"
         />
         <WishListNodata v-if="wishListData && wishListData.length === 0" />
-        <Loading v-if="loadingData" />
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
         <detailView
             :visible.sync="visible.detailView"
             :productDetailData="productDetailData"

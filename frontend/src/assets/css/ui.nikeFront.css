@@ -4107,6 +4107,16 @@
     padding: 5px;
     border: 1px solid #ddd;
 }
+.list-loading {
+    position: relative;
+    padding-top: 70%;
+}
+.list-loading .lottie {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 /*.crop-editor.type2 .preview-crop:before {*/
 /*    top: 64px;*/
 /*}*/
