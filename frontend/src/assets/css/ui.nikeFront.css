@@ -4147,6 +4147,8 @@ img.image-grayscale {
     flex-grow: 1;
 }
 .schedule-item .title {
+    position: relative;
+    padding-left: 11px;
     font-size: 14px;
     font-weight: normal;
     max-width: 500px;
@@ -4155,6 +4157,9 @@ img.image-grayscale {
 }
 .schedule-item .title:before {
     content: '';
+    position: absolute;
+    top: 6px;
+    left: 0;
     display: inline-block;
     width: 6px;
     height: 6px;
