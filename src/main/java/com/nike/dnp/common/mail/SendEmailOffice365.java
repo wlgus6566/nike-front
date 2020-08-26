@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import javax.mail.*;
@@ -134,6 +135,7 @@ public class SendEmailOffice365 {
      * @since 2020. 6. 24. 오전 11:44:14
      * @implNote 메일 발송
      */
+    @Transactional
     public void sendEmail(final String fromEmail, final String toEmail, final String subject, final String file) {
         log.info("SendEmailOffice365.sendEmail");
         final Session session = Session.getInstance(this.getEmailProperties(), new Authenticator() {
