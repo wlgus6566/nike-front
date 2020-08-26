@@ -2,7 +2,7 @@ import { report } from './index';
 
 //REPORT 목록 조회
 function getReportList(params) {
-    return report.get(`/`, {
+    return report.get(``, {
         params: params,
     });
 }
@@ -14,7 +14,7 @@ function getGroupAuthority(params) {
 }
 //REPORT 등록
 function postReport(data) {
-    return report.post(`/`, data);
+    return report.post(``, data);
 }
 
 // REPORT 상세 조회

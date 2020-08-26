@@ -183,6 +183,9 @@ export default {
                 } = await getWishCheck({
                     goodsSeq: goodsSeq.goodsSeq,
                 });
+                if (response.data.existMsg) {
+                    alert(response.data.msg);
+                }
                 if (response.goodsSeq === null) {
                     try {
                         await postWishList({
@@ -193,12 +196,14 @@ export default {
                         );
                     } catch (error) {
                         console.log(error);
+                        alert(error.data.msg);
                     }
                 } else {
                     alert('이미 담긴상품 입니다.');
                 }
             } catch (error) {
                 console.log(error);
+                alert(error.data.msg);
             }
         },
     },
