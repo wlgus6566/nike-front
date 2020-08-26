@@ -7,8 +7,8 @@
 </head>
 <body style="margin:0;">
 <div style="overflow: hidden; padding: 70px 0; background-color:#eee;">
-    <div style="max-width:650px; margin:0 auto;">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="width:100%; margin:0; padding:0 !important;  border-collapse:collapse; font-size:14px; font-family:'Noto Sans KR',Sans-serif; background-color: #fff;text-align:center; color:#000; box-shadow:0 5px 10px 0 rgba(0, 0, 0, 0.05);">
+    <div style="width:650px; max-width:650px; margin:0 auto;">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="width:100%; margin:0; padding:0 !important;  border-collapse:collapse; font-size:14px; font-family:'Noto Sans KR', 'Malgun Gothic', Arial, Sans-serif; background-color: #fff;text-align:center; color:#000; box-shadow:0 5px 10px 0 rgba(0, 0, 0, 0.05);">
             <tbody>
             <tr>
                 <td style="padding:42px 50px 0">
@@ -29,15 +29,18 @@
                 </td>
             </tr>
             <tr>
-                <td style="font-size:0; margin-top:20px; display:inline-block; width:84.6%; height:2px; background-color:#000;"></td>
+                <td height="15" style="margin:0; padding:0;"></td>
             </tr>
             <tr>
-                <td align="left" class="title" style="font-family:sans-serif; padding:40px 50px 25px; font-size:30px; letter-spacing:-0.5px; color:#000">
+                <td style="margin:0; padding:0; display:inline-block; width:84.6%; height:2px; background-color:#000;"></td>
+            </tr>
+            <tr>
+                <td align="left" class="title" style="font-family:'Noto Sans KR', 'Malgun Gothic', Arial, Sans-serif; padding:40px 50px 25px; font-size:30px; letter-spacing:-0.5px; color:#000">
                     <strong style="width:100%; margin:0;">주문서</strong>
                 </td>
             </tr>
             <tr>
-                <td align="left" class="text-area" style="font-family:sans-serif; padding:0 50px; letter-spacing:-0.5px;">
+                <td align="left" class="text-area" style="font-family:'Noto Sans KR', 'Malgun Gothic', Arial, Sans-serif; padding:0 50px; letter-spacing:-0.5px;">
                     <p style="margin:0; padding-bottom:40px; border-bottom:1px solid #eee;">
                         <strong style="line-height:24px; ">[agencyName]</strong>님<br><strong class="chain" style="color:#fa5400">[nickname]</strong>에서 주문이 발주되었음을 알려드립니다.
                     </p>
@@ -46,18 +49,21 @@
             <tr>
                 <td align="left" style="padding: 33px 50px 0; letter-spacing: -0.5px;">
                     <strong>주문 일시</strong>
-                    <span style="color:#888; letter-spacing:0;">2020.06.30 15:34</span>
-                    <table border="0" style="width:100%; margin-top:15px; border:1px solid #ddd; border-bottom:none; border-collapse:collapse; table-layout:fixed">
+                    <span style="color:#888; letter-spacing:0;">[orderDt]</span>
+
+                    <table border="0" style="width:100%; margin-top:15px; border:1px solid #ddd; border-bottom:none; border-collapse:collapse; table-layout:fixed; font-family:'Noto Sans KR', 'Malgun Gothic', Arial, Sans-serif;">
                         <thead>
                         <tr>
-                            <th style="padding:14px 0 13px 30px; border-bottom:1px solid #ddd; font-weight:normal; background-color:#f7f7f7; text-align:left; line-height:18px; font-size:12px; color:#555; font-weight:bold;">주문 상품명</th>
+                            <th style="width:50px; padding:14px 0 13px 30px; border-bottom:1px solid #ddd; font-weight:normal; background-color:#f7f7f7; text-align:left; line-height:18px; font-size:12px; color:#555; font-weight:bold;"></th>
+                            <th style="border-bottom:1px solid #ddd; padding:13px 0 12px; font-weight:normal; background-color:#f7f7f7; line-height:18px; font-size:12px; color:#555; font-weight:bold;">주문 상품명</th>
                             <th style="width:103px; border-bottom:1px solid #ddd; padding:13px 0 12px; font-weight:normal; background-color:#f7f7f7; line-height:18px; font-size:12px; color:#555; font-weight:bold;">주문수량</th>
                         </tr>
                         </thead>
                         <tbody>
-                        [orderArea]
+                            [orderArea]
                         </tbody>
                     </table>
+
                 </td>
             </tr>
             <tr>
@@ -68,8 +74,11 @@
             </tr>
 
             <tr>
-                <td align="left" style="padding-top:50px;">
-                    <p style="margin:0; padding:21px 0 21px 50px; font-size:12px; background-color:#f7f7f7; color:#888; letter-spacing:-0.5px;">
+                <td height="50" style="margin:0; padding:0;"></td>
+            </tr>
+            <tr>
+                <td align="left" style="margin:0; padding:20px 50px; background-color:#f7f7f7; font-family:'Noto Sans KR', 'Malgun Gothic', Arial, Sans-serif;">
+                    <p style="margin:0; padding:0; font-size:12px; color:#888; letter-spacing:-0.5px;">
                         ※ 본 메일은 발신전용으로 회신이 되지 않습니다.
                     </p>
                 </td>

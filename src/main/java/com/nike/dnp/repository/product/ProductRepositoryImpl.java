@@ -81,7 +81,7 @@ public class ProductRepositoryImpl extends QuerydslRepositorySupport implements 
 				qUser.nickname))
 				.from(qProduct)
 				.innerJoin(qAgency).on(qProduct.agencySeq.eq(qAgency.agencySeq))
-				.innerJoin(qUser).on(qProduct.registerSeq.eq(qUser.userSeq))
+				.innerJoin(qUser).on(qProduct.updaterSeq.eq(qUser.userSeq))
 				.where(
 						ProductPredicateHelper.eqCate2gory(productSearchDTO.getCategory2Code()),
 						ProductPredicateHelper.eqCate3gory(productSearchDTO.getCategory3Code()),
