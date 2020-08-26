@@ -130,7 +130,9 @@ export default {
         };
     },
     created() {
-        this.editorConfig.filebrowserImageUploadUrl = process.env.VUE_APP_API_URL+`/api/customer/${this.$route.name.toUpperCase()}/images`;
+        this.editorConfig.filebrowserImageUploadUrl =
+            process.env.VUE_APP_API_URL +
+            `/api/customer/${this.$route.name.toUpperCase()}/images`;
         this.editorConfig.fileTools_requestHeaders.Authorization =
             this.$store.state.token || getAuthFromCookie();
     },
@@ -144,6 +146,7 @@ export default {
     },
     activated() {
         this.getNoticeList();
+        this.detailDataReset();
     },
     methods: {
         submitData() {
@@ -271,6 +274,8 @@ export default {
             this.noticeDetail.title = '';
             this.noticeDetail.contents = '';
             this.noticeDetail.noticeYn = null;
+            this.editorConfig.filebrowserImageUploadUrl = '';
+            this.editorConfig.fileTools_requestHeaders.Authorization = '';
         },
     },
 };
