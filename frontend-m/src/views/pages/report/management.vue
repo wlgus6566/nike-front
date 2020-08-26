@@ -55,9 +55,9 @@
                             </p>
                         </div>
                         <div class="view-area">
-                            <span class="view" v-text="item.readCount"
-                                >10,000</span
-                            >
+                            <span class="view" v-text="item.readCount">
+                                10,000
+                            </span>
                         </div>
                     </router-link>
                 </li>
