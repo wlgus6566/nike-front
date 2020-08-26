@@ -113,7 +113,9 @@ export default {
         thumbnail,
     },
     created() {
-        this.editorConfig.filebrowserImageUploadUrl = process.env.VUE_APP_API_URL+`/api/customer/${this.$route.name.toUpperCase()}/images`;
+        this.editorConfig.filebrowserImageUploadUrl =
+            process.env.VUE_APP_API_URL +
+            `/api/customer/${this.$route.name.toUpperCase()}/images`;
         this.editorConfig.fileTools_requestHeaders.Authorization =
             this.$store.state.token || getAuthFromCookie();
     },
@@ -180,7 +182,7 @@ export default {
                     alert(response.data.msg);
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -215,7 +217,7 @@ export default {
                         alert(response.data.msg);
                     }
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         },
@@ -234,7 +236,7 @@ export default {
                 console.log('상세 데이터');
                 console.log(response);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 

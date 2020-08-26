@@ -246,8 +246,7 @@ export default {
                 }
                 console.log(response);
             } catch (error) {
-                console.log(error);
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         agreeCheck() {

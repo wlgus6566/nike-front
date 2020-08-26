@@ -166,8 +166,8 @@ export default {
                     alert(response.data.msg);
                 }
                 console.log(response.data);
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         async getDefaultView() {
@@ -194,8 +194,8 @@ export default {
                 } = await getAuthList();
                 this.groupTreeData[0].subAuths = response;
                 this.groupTreeAddItem = null;
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         async authView(seq) {
@@ -204,8 +204,8 @@ export default {
                     data: { data: response },
                 } = await getAuthView(seq);
                 this.menuRoleSeqArray = response.map((el) => el.menuRoleSeq);
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         async delAuth(seq) {
@@ -216,8 +216,8 @@ export default {
                     alert(response.msg);
                 }
                 console.log('delAuth', response);
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
     },

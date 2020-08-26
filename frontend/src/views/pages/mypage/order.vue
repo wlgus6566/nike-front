@@ -136,7 +136,7 @@ export default {
                 this.orderList = response.content;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         async showOrderDetail(seq) {
@@ -148,7 +148,7 @@ export default {
                 } = await getMyOrderDetail(seq);
                 this.orderDetailData = response;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

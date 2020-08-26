@@ -124,8 +124,8 @@ export default {
                 this.toggleHeader(this.headerActiveNav, this.tw._dur);
                 const target = [document.querySelector('header .inner')];
                 this.asideAnimation(target, '-100%', '0%');
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         activeSet() {

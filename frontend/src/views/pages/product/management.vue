@@ -170,7 +170,7 @@ export default {
                     this.agencySeq.listSortOptions.push(agencyList);
                 });
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -233,10 +233,7 @@ export default {
                     });
                     this.deleteLoading = [];
                 } catch (error) {
-                    console.log(error);
-                    if (error.data.existMsg) {
-                        alert(error.data.msg);
-                    }
+                    console.error(error);
                 }
             } else {
                 alert('하나 이상의 상품을 선택해 주세요.');
@@ -267,7 +264,7 @@ export default {
                 this.loading = false;
                 this.totalItem = this.productList.totalElements;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

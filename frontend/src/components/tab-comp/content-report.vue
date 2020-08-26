@@ -111,8 +111,8 @@ export default {
                     data: { data: response },
                 } = await this.$store.dispatch('getReportListBasket');
                 this.reportBasketList = response;
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         async addContBasket(seq) {
@@ -120,8 +120,8 @@ export default {
             try {
                 await postReportBasket();
                 await this.$store.dispatch('getReportListBasket');
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         async delReportBasket(seq) {
@@ -132,8 +132,8 @@ export default {
                 await this.$store.dispatch('getReportListBasket');
                 await this.getContBasket();
                 this.deleteLoading = [];
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
     },

@@ -182,7 +182,7 @@ export default {
                     await this.$router.push('/order/complete');
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

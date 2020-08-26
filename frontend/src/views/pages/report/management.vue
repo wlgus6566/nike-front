@@ -131,11 +131,9 @@ export default {
                     data: { data: response },
                 } = await getGroupAuthority();
                 this.userDataList = response;
-                console.log(response);
                 this.recursionFn(response, this.authority.options, 1);
-                this.recursionFn(response, this.addAuthority.options, 1);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -178,7 +176,7 @@ export default {
                 console.log(response);
                 this.reportListData = response.content;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

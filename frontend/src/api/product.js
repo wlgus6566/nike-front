@@ -23,7 +23,7 @@ function getProductDetail(goodsSeq, params) {
 // PRODUCT 등록
 function postProduct(data) {
     console.log(data);
-    return product.post(`/`, data);
+    return product.post(``, data);
 }
 
 // PRODUCT 수정
@@ -34,7 +34,7 @@ function putProduct(goodsSeq, data) {
 
 // PRODUCT 상품 삭제[배열]
 function delProduct(params) {
-    return product.delete(`/`, {
+    return product.delete(``, {
         params: params,
     });
 }

@@ -249,7 +249,7 @@ export default {
                     response.imageFilePhysicalName;
                 await this.getReportFileData();
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         // 리포트 상세 파일 데이터
@@ -264,7 +264,7 @@ export default {
                 this.reportDetailData.reportFileSaveDTOList = response.content;
                 this.fileOrderSet();
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -346,8 +346,8 @@ export default {
                                 }
                             }
                         );
-                    } catch (e) {
-                        console.log(e);
+                    } catch (error) {
+                        console.error(error);
                     }
                 })
             );
@@ -377,7 +377,7 @@ export default {
                     await this.$router.push(`/report/management`);
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
