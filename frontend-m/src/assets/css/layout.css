@@ -30,6 +30,7 @@ header {
     display: block;
     background-color: #fff;
     border-bottom: 1px solid #eee;
+    box-sizing: border-box;
 }
 header .logo {
     width: 90px;
