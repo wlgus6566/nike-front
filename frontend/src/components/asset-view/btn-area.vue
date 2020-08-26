@@ -1,6 +1,6 @@
 <template>
     <div class="btn-detail">
-        <a @click="$router.go(-1)" class="btn-list"
+        <a @click="$emit('goToList')" class="btn-list"
             ><span>목록으로 가기</span></a
         >
         <div class="btn-box">

@@ -1,6 +1,10 @@
 <template>
     <div>
-        <BtnArea @delete="deleteFolder" @edit="modifyFolder">
+        <BtnArea
+            @goToList="goToList"
+            @delete="deleteFolder"
+            @edit="modifyFolder"
+        >
             <button type="button" class="btn-o-gray">
                 <i class="icon-mail"></i>
                 <span>알림메일전송</span>
@@ -222,6 +226,13 @@ export default {
         },
     },
     methods: {
+        goToList() {
+            this.$router.push(
+                `/${this.$route.meta.topMenuCode.toLowerCase()}/${
+                    this.$route.params.pathMatch
+                }`
+            );
+        },
         async deleteFolder() {
             if (
                 !confirm(
@@ -238,7 +249,11 @@ export default {
                 );
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
-                    await this.$router.go(-1);
+                    await this.$router.push(
+                        `/${this.$route.meta.topMenuCode.toLowerCase()}/${
+                            this.$route.params.pathMatch
+                        }`
+                    );
                 }
                 console.log(response);
             } catch (error) {
@@ -248,7 +263,7 @@ export default {
         modifyFolder() {
             this.$router.push(
                 `/${this.$route.meta.topMenuCode.toLowerCase()}/${
-                    this.$route.meta.menuCode
+                    this.$route.params.pathMatch
                 }/modify/${this.$route.params.id}`
             );
         },
@@ -388,6 +403,7 @@ export default {
     },
     activated() {
         if (this.$store.state.reload) {
+            this.$store.dispatch('getContBasket');
             this.getFolderDetail();
             this.initFetchData();
             this.$store.commit('SET_RELOAD', false);

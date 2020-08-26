@@ -24,7 +24,12 @@
                 </NoData>
             </template>
         </template>
-        <Loading v-if="loadingData" />
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
     </div>
 </template>
 <script>
@@ -94,7 +99,11 @@ export default {
         this.authCacheList();
     },
     activated() {
-        this.getReport();
+        if (this.$store.state.reload) {
+            this.getReport();
+            this.authCacheList();
+            this.$store.commit('SET_RELOAD', false);
+        }
     },
     mounted() {
         getCategoryList(
@@ -122,6 +131,7 @@ export default {
                     data: { data: response },
                 } = await getGroupAuthority();
                 this.userDataList = response;
+                console.log(response);
                 this.recursionFn(response, this.authority.options, 1);
                 this.recursionFn(response, this.addAuthority.options, 1);
             } catch (error) {
@@ -135,7 +145,7 @@ export default {
                 _minIndx = 0;
             }
             data.forEach((el, index) => {
-                const _boolean = el.checkBoxYn === 'Y' ? false : true;
+                const _boolean = el.checkBoxYn === 'Y';
                 item.push({
                     value: el.authSeq,
                     label: el.authName,

@@ -93,7 +93,6 @@
                         typeCd: this.typeCd,
                         MobileYn: 'Y'
                     });
-                    this.historyFolderData = response.content;
                     this.pageLast = response.last;
                     this.totalPage = response.totalPages;
 
@@ -129,8 +128,10 @@
                 스크롤 관련 method
              */
             handleScroll() {
+                console.log('a')
                 if (this.loadingData) return;
                 const windowE = document.documentElement;
+                console.log('b', windowE.clientHeight + windowE.scrollTop >= windowE.scrollHeight)
                 if (
                     windowE.clientHeight + windowE.scrollTop >=
                     windowE.scrollHeight
@@ -139,6 +140,7 @@
                 }
             },
             infiniteScroll() {
+                console.log('ssss');
                 if (
                     !this.loadingData &&
                     this.totalPage > this.page - 1 &&

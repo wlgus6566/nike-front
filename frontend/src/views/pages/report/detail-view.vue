@@ -1,6 +1,10 @@
 <template>
     <div>
-        <BtnArea @delete="deleteReport" @edit="modifyReport" />
+        <BtnArea
+            @goToList="goToList"
+            @delete="deleteReport"
+            @edit="modifyReport"
+        />
         <div class="folder-wrap">
             <h2 class="folder-title">
                 {{ reportDetailData.reportName }}
@@ -124,6 +128,13 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
+        if (this.$store.state.reload) {
+            this.$store.dispatch('getReportListBasket');
+            this.reportDetailView();
+            this.reportAnswerList();
+            this.initFetchData();
+            this.$store.commit('SET_RELOAD', false);
+        }
         window.addEventListener('scroll', this.handleScroll);
     },
     deactivated() {
@@ -133,9 +144,11 @@ export default {
         window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
+        goToList() {
+            this.$router.push(`/report/management`);
+        },
         //리포트 삭제
         async deleteReport() {
-            console.log(this.$route.params.id);
             if (
                 !confirm(
                     '삭제 시 등록한 내용이 전부 삭제 됩니다. 삭제하시겠습니까?'
@@ -161,7 +174,6 @@ export default {
         },
         // 파일 선택 담기
         async addReportBasket(seq) {
-            console.log(seq);
             try {
                 await postReportBasket(seq);
                 await this.$store.dispatch('getReportListBasket');
@@ -314,15 +326,4 @@ export default {
     },
 };
 </script>
-<style scoped>
-.list-loading {
-    position: relative;
-    padding-top: 70%;
-}
-::v-deep .list-loading .lottie {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-</style>
+<style scoped></style>

@@ -3,12 +3,15 @@
 .fc-orage {
     color: #fa5400 !important;
 }
-/* btn */
 .btn-wrap {
+    z-index: 2;
     position: fixed;
     bottom: 60px;
     left: 0;
     width: 100%;
+}
+.btn-wrap.on {
+    transition: all 0.2s cubic-bezier(0.37, 0.64, 1, 1);
 }
 .btn-area {
     display: flex;
@@ -494,6 +497,7 @@
     padding-top: 80px;
 }
 .folder-list-row > li .info-box {
+    max-width: calc(100% - 80px - 15px);
     margin-left: 15px;
 }
 .folder-list-row > li .info-box .title {
