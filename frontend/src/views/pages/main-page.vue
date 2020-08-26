@@ -447,6 +447,7 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 100%;
 }
 .main-update-list li a .info-box {
     position: absolute;
@@ -661,6 +662,7 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 100%;
     transform: translate(-50%, -50%);
 }
 
