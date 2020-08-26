@@ -293,7 +293,9 @@ export default {
                     }
                 },
                 disabledDate: (time) => {
-                    return time.getTime() > this.EndDt.getTime();
+                    if (this.EndDt !== null) {
+                        return time.getTime() > this.EndDt.getTime();
+                    }
                 },
             },
             pickerEndOption: {
@@ -304,7 +306,9 @@ export default {
                     }
                 },
                 disabledDate: (time) => {
-                    return time.getTime() < this.BeginDt.getTime();
+                    if (this.BeginDt !== null) {
+                        return time.getTime() < this.BeginDt.getTime();
+                    }
                 },
             },
         };
