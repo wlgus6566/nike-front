@@ -9,24 +9,24 @@
                 <a href="#" @click="onClickTab(item.value)">{{item.title}}</a>
             </li>
         </ul>
-        <template v-if="uploadFolderData">
+        <template v-if="uploadFolderData.length">
             <MyFolderList
                 v-if="uploadFolderData.length"
                 :folderListData="uploadFolderData"
             />
-            <template v-else>
-                <NoData>
-                    <i class="icon-file"></i>
-                    <p class="desc">업로드한 폴더가 없습니다.</p>
-                </NoData>
-            </template>
+        </template>
+        <template v-else>
+            <NoData>
+                <i class="icon-file"></i>
+                <p class="desc">업로드한 폴더가 없습니다.</p>
+            </NoData>
         </template>
     </div>
 </template>
 <script>
+
 import {
     uploadFolderViewList
-    , historyFolderViewList
 } from '@/api/mypage';
 
 import MyFolderList from '@/components/my-folder-list';

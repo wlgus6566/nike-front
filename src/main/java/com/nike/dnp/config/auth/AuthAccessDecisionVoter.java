@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -104,7 +105,7 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 		}
 
 		if(result == ACCESS_GRANTED && authUrl){
-			result = urlExpression(authentication,object);
+			result = urlExpression(authentication, object, attributes);
 		}
 
 		return result;
@@ -139,55 +140,70 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 	 *
 	 * @param authentication the authentication
 	 * @param object         the object
+	 * @param attributes
 	 * @return int
 	 * @author [윤태호]
 	 * @since 2020. 7. 14. 오후 5:54:44
 	 * @implNote
 	 */
-	private int urlExpression(final Authentication authentication,final Object object) {
+	private int urlExpression(final Authentication authentication, final Object object, Collection<ConfigAttribute> attributes) {
 
-		// 입력 받은 url
-		final String method = ((FilterInvocation) object).getRequest().getMethod();
-		final String url = ((FilterInvocation) object).getRequestUrl();
 
-		final AuthUserDTO authUserDTO = (AuthUserDTO) authentication.getPrincipal();
-		final List<MenuRoleResourceReturnDTO> authsResourcesByRoleType = authService.getAuthsResourcesByRoleType(authUserDTO.getRole());
-
-		//url 체크
-		final AntPathMatcher antPathMatcher = new AntPathMatcher();
-
+		boolean authCheck = true;
+		Iterator<ConfigAttribute> iterator = attributes.iterator();
+		while(iterator.hasNext()){
+			ConfigAttribute configAttribute = iterator.next();
+			if("permitAll".equalsIgnoreCase(String.valueOf(configAttribute))){
+				authCheck = false;
+			}
+		}
 		int result = ACCESS_DENIED;
-		for(final MenuRoleResourceReturnDTO menuRoleResourceReturnDTO : authsResourcesByRoleType){
-			StringBuilder resourceUrl = new StringBuilder(menuRoleResourceReturnDTO.getResourceUrl());
-			final String resourceMethod = menuRoleResourceReturnDTO.getResourceMethod();
-			if(resourceUrl.toString().contains("{")){
-				resourceUrl= new StringBuilder(resourceUrl.toString().substring(0, resourceUrl.toString().indexOf("{")));
-				resourceUrl.append('*');
-			}
-			if(method.equalsIgnoreCase(HttpMethod.GET.name())){
-				resourceUrl.append('*');
-			}
-			//url 매칭 되는것이 있는지 체크
-			if(antPathMatcher.match(resourceUrl.toString(),url) &&
-					(String.valueOf(resourceMethod).isEmpty() || resourceMethod.contains(method))){
-				result = ACCESS_GRANTED;
-				break;
+		if(authCheck){
+			// 입력 받은 url
+			final String method = ((FilterInvocation) object).getRequest().getMethod();
+			final String url = ((FilterInvocation) object).getRequestUrl();
 
-				/* role 이 여러개일 경우 */
-				/*final String[] roleArray = urlFilterMata.getExpression().split(",");
-				for(final String role : roleArray){
-					if(role.equalsIgnoreCase(permitAll)){
-						result = ACCESS_GRANTED;
-					}else{
-						for(final GrantedAuthority authority : authentication.getAuthorities()){
-							if(authority.getAuthority().equalsIgnoreCase(role)){
-								result = ACCESS_GRANTED;
-								break;
+			final AuthUserDTO authUserDTO = (AuthUserDTO) authentication.getPrincipal();
+			final List<MenuRoleResourceReturnDTO> authsResourcesByRoleType = authService.getAuthsResourcesByRoleType(authUserDTO.getRole());
+
+			//url 체크
+			final AntPathMatcher antPathMatcher = new AntPathMatcher();
+
+
+			for(final MenuRoleResourceReturnDTO menuRoleResourceReturnDTO : authsResourcesByRoleType){
+				StringBuilder resourceUrl = new StringBuilder(menuRoleResourceReturnDTO.getResourceUrl());
+				final String resourceMethod = menuRoleResourceReturnDTO.getResourceMethod();
+				if(resourceUrl.toString().contains("{")){
+					resourceUrl= new StringBuilder(resourceUrl.toString().substring(0, resourceUrl.toString().indexOf("{")));
+					resourceUrl.append('*');
+				}
+				if(method.equalsIgnoreCase(HttpMethod.GET.name())){
+					resourceUrl.append('*');
+				}
+				//url 매칭 되는것이 있는지 체크
+				if(antPathMatcher.match(resourceUrl.toString(),url) &&
+						(String.valueOf(resourceMethod).isEmpty() || resourceMethod.contains(method))){
+					result = ACCESS_GRANTED;
+					break;
+
+					/* role 이 여러개일 경우 */
+					/*final String[] roleArray = urlFilterMata.getExpression().split(",");
+					for(final String role : roleArray){
+						if(role.equalsIgnoreCase(permitAll)){
+							result = ACCESS_GRANTED;
+						}else{
+							for(final GrantedAuthority authority : authentication.getAuthorities()){
+								if(authority.getAuthority().equalsIgnoreCase(role)){
+									result = ACCESS_GRANTED;
+									break;
+								}
 							}
 						}
-					}
-				}*/
+					}*/
+				}
 			}
+		}else{
+			result = ACCESS_GRANTED;
 		}
 		return result;
 	}
