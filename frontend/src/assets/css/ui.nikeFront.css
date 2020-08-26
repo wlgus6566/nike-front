@@ -657,6 +657,9 @@
     width: 180px;
     flex-basis: 180px;
 }
+.view-box .date-picker-group .date-picker {
+    width: 145px;
+}
 .data-picker .focus\:vc-shadow:focus {
     box-shadow: none;
 }
