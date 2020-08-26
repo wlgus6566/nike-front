@@ -278,11 +278,13 @@ export default {
                 const close = modal.querySelector('.fc-popover-close');
                 const body = modal.querySelector('.fc-popover-body');
                 const a = document.createElement('a');
+                const txt = document.createTextNode('자세히 보기');
                 //TODO router 작업 필요
                 a.href = '/information/calendar';
                 a.classList.add('fc-more');
-                a.append('자세히 보기');
-                body.append(a);
+                a.appendChild(txt);
+                body.appendChild(a);
+                console.log(a);
                 close.addEventListener('click', () => {
                     td.classList.remove('test');
                 });
@@ -320,8 +322,7 @@ export default {
         },
         // 달력에 맞게 변수명 변경
         transformData() {
-            // this.calendarOptions.events = [];
-            let getEvent = [];
+            this.calendarOptions.events = [];
             this.calendarData.forEach((item) => {
                 let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
@@ -331,21 +332,22 @@ export default {
                 } else {
                     className = 'official';
                 }
-                getEvent.push({
+                this.calendarOptions.events.push({
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: moment(item.beginDt).format('YYYY-MM-DD'),
-                    end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
+                    start: item.beginDt.replace(/\./gi, '-'),
+                    end: moment(item.endDt)
+                        .add(1, 'days')
+                        ._i.replace(/\./gi, '-'),
                     className: className,
-                    checkDuple: false,
                 });
             });
-            this.distinctAndAddEvent(getEvent);
+            this.distinctAndAddEvent();
         },
-        distinctAndAddEvent(getEvent) {
+        distinctAndAddEvent() {
             let distinctEventList = [];
-            getEvent.forEach((item) => {
+            this.calendarOptions.events.forEach((item) => {
                 let check = false;
                 distinctEventList.forEach((ele) => {
                     if (item.start === ele.start) {
@@ -357,19 +359,7 @@ export default {
                 }
             });
             distinctEventList.forEach((item) => {
-                getEvent.unshift(item);
-            });
-            this.patchEventData(getEvent);
-        },
-        patchEventData(getEvent) {
-            getEvent.forEach((item) => {
-                this.calendarOptions.events.push({
-                    contents: item['contents'],
-                    start: item['start'],
-                    end: item['end'],
-                    title: item['title'],
-                    color: item['color'],
-                });
+                this.calendarOptions.events.unshift(item);
             });
         },
         async getTodayCalendar(searchDt) {
@@ -461,6 +451,7 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 100%;
 }
 .main-update-list li a .info-box {
     position: absolute;
@@ -675,6 +666,7 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 100%;
     transform: translate(-50%, -50%);
 }
 

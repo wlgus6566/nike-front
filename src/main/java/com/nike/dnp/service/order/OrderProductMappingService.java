@@ -122,36 +122,28 @@ public class OrderProductMappingService {
 			final StringBuilder builder = new StringBuilder();
 			for(final OrderProductDTO dto : sendDTO.getProductList()){
 				builder.append("<tr>");
-				builder.append("	<td style=\"padding:15px; border-bottom:1px solid #ddd;\">");
-				builder.append("		<table  border=\"0\" >");
-				builder.append("			<tr>");
-				builder.append("				<td style=\"width:50px; vertical-align:top\">");
-				builder.append("					<span style=\"display:inline-block;width:50px; height:50px; line-height:50px; background:#f7f7f7;\" >");
-				builder.append("						<img src=\"");
+				builder.append("	<td style=\"width:50px; margin:0; padding:15px; border-bottom:1px solid #ddd;\">");
+				builder.append("		<div style=\"width:50px; height:50px; overflow:hidden; margin:0; padding:0; line-height:50px; background:#f7f7f7; \">");
+				builder.append("			<img width=\"50\" style=\"width:50px; vertical-align:middle;\" src=\"");
 				builder.append(CloudFrontUtil.createCustomSingedUrl(dto.getImageFilePhysicalName(), 259200));
-				builder.append(							"\" alt=\"\" style=\"max-width:100%; vertical-align:middle\">");
-				builder.append("					</span>");
-				builder.append("				</td>");
-				builder.append("				<td style=\"padding:15px;\">");
-				builder.append("					<p style=\"margin:0; font-size:12px; color:#333; line-height:18px;\">");
-				builder.append(dto.getProductName());
-				builder.append("					</p>");
-				builder.append("					<p style=\"margin:5px 0 0 0; font-size:11px; color:#555; line-height:17px;\">");
-				builder.append(dto.getProductDesc());
-				builder.append("					</p>");
-				builder.append("				</td>");
-				builder.append("			</tr>");
-				builder.append("		</table>");
+				builder.append("\" alt=\"\" >");
+				builder.append("		</div>");
 				builder.append("	</td>");
-				builder.append("	<td align=\"center\" style=\"width:103px; border-bottom:1px solid #ddd;\">");
-				builder.append("	<p style=\"font-size:12px; color:#000;\">");
+				builder.append("	<td style=\"margin:0; padding:15px; border-bottom:1px solid #ddd;\">");
+				builder.append("		<p style=\"margin:0; font-size:12px; color:#333; line-height:18px;\">");
+				builder.append(dto.getProductName());
+				builder.append("		</p>");
+				builder.append("		<p style=\"margin:5px 0 0 0; font-size:11px; color:#555; line-height:17px;\">");
+				builder.append(dto.getProductDesc());
+				builder.append("		</p>");
+				builder.append("	</td>");
+				builder.append("	<td align=\"center\" style=\"margin:0; padding:0; width:103px; border-bottom:1px solid #ddd; font-size:12px; color:#000;\">");
 				builder.append("		<strong>");
 				builder.append(format.format(dto.getAmount()));
 				builder.append("		</strong>");
 				builder.append("		개</p>");
 				builder.append("	</td>");
 				builder.append("</tr>");
-
 			}
 			sendDTO.setOrderArea(builder.toString());
 			mailService.sendMail(

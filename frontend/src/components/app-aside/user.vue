@@ -71,7 +71,12 @@
                                 </li>
                             </transition-group>
                         </el-scrollbar>
-                        <Loading v-if="loadingData" />
+                        <Loading
+                            class="list-loading"
+                            :width="172"
+                            :height="172"
+                            v-if="loadingData"
+                        />
                         <button
                             type="button"
                             class="btn-close"

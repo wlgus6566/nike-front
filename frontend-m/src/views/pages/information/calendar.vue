@@ -15,14 +15,13 @@
             <h3>{{ searchDt }}</h3>
             <ul>
                 <li
-                        class="schedule-item"
-                        :class="{
-                    'edu':item.calendarSectionCode === 'EDUCATION'
-                    , 'campaign':item.calendarSectionCode === 'CAMPAIGN'
-                    , 'official':item.calendarSectionCode === 'ETC'
-                }"
-                        v-for="item in todayData"
-                        :key="item.calendarSeq"
+                    class="schedule-item"
+                    :class="{ 'edu':item.calendarSectionCode === 'EDUCATION'
+                        , 'campaign':item.calendarSectionCode === 'CAMPAIGN'
+                        , 'official':item.calendarSectionCode === 'ETC'
+                    }"
+                    v-for="item in todayData"
+                    :key="item.calendarSeq"
                 >
                     <div class="content">
                         <h4 class="title">{{ item.scheduleName }}</h4>
@@ -43,7 +42,6 @@
 import {
     getCalendarList, // CALENDAR 목록 조회
     getTodayCalendar, // CALENDAR 오늘 조회
-    getDetailCalendar, // CALENDAR 상세조회
 } from '@/api/calendar';
 
 import { getCode } from '@/api/code';
@@ -79,6 +77,7 @@ export default {
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
                 dateClick: this.handleDateClick,
+                height: 500,
                 events: [],
                 headerToolbar: {
                     left: 'prev',

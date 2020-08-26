@@ -27,7 +27,7 @@ function postContents(topMenuCode, menuCode, data) {
     console.log('등록');
     return contents.post(`/${topMenuCode}/${menuCode}`, data);
 }
-function putContents(topMenuCode, menuCode, data, id) {
+function putContents(topMenuCode, menuCode, id, data) {
     console.log('수정');
     return contents.put(`/${topMenuCode}/${menuCode}/${id}`, data);
 }

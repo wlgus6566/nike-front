@@ -66,6 +66,7 @@ public class FailCode {
         , MINIMUM_ORDER_QUANTITY
         , MAX_INSERT_CALENDAR
         , NULL_FOLDER_IMAGE
+        , DUPLICATE_CONTENT
     }
 
 }

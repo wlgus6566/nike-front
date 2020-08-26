@@ -79,7 +79,7 @@ public class MainService {
         // 콘텐츠 (ASSET, TOOLKIT, FOUNDATION)
         mainResultDTO.setAssetContentsList(
                 contentsRepository.findRecentContents(ServiceCode.ContentsTopMenuCode.ASSET.toString(),
-                        PageRequest.of(0, 4, Sort.by(SORT_BY).descending())
+                        PageRequest.of(0, 5, Sort.by(SORT_BY).descending())
                 )
         );
         mainResultDTO.setToolKitContentsList(
@@ -102,7 +102,7 @@ public class MainService {
         CustomerSearchDTO customerSearchDTO = new CustomerSearchDTO();
         customerSearchDTO.setNoticeArticleSectionCode(ServiceCode.NoticeArticleSectionEnumCode.NOTICE.toString());
         customerSearchDTO.setPage(0);
-        customerSearchDTO.setSize(6);
+        customerSearchDTO.setSize(7);
         mainResultDTO.setNoticeArticleList(noticeService.findNoticePages(customerSearchDTO).getContent());
 
 

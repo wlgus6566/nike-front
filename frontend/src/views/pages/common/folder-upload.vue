@@ -207,7 +207,7 @@
                 @submitForm="submitForm"
             />
             <div class="btn-area">
-                <button type="button" class="btn-s-white">
+                <button type="button" class="btn-s-white" @click="cancelBack()">
                     <span>취소</span>
                 </button>
                 <button type="submit" class="btn-s-black">
@@ -222,6 +222,8 @@ import thumbnail from '@/components/thumbnail/index';
 import FileSettings from '@/components/file-settings/index.vue';
 import ModalAuth from '@/views/pages/common/modal-auth';
 import { getContentsView, postContents, putContents } from '@/api/contents';
+import bus from '@/utils/bus';
+import { postReport, putReport } from '@/api/report';
 export default {
     name: 'UPLOAD',
     data() {
@@ -262,8 +264,8 @@ export default {
                 },
             ],
 
-            BeginDt: new Date(),
-            EndDt: new Date(),
+            BeginDt: null,
+            EndDt: null,
 
             folderDetail: {
                 campaignBeginDt: null,
@@ -291,7 +293,9 @@ export default {
                     }
                 },
                 disabledDate: (time) => {
-                    return time.getTime() > this.EndDt.getTime();
+                    if (this.EndDt !== null) {
+                        return time.getTime() > this.EndDt.getTime();
+                    }
                 },
             },
             pickerEndOption: {
@@ -302,7 +306,9 @@ export default {
                     }
                 },
                 disabledDate: (time) => {
-                    return time.getTime() < this.BeginDt.getTime();
+                    if (this.BeginDt !== null) {
+                        return time.getTime() < this.BeginDt.getTime();
+                    }
                 },
             },
         };
@@ -339,6 +345,18 @@ export default {
         ModalAuth,
     },
     created() {
+        console.log(
+            this.folderSet[this.$route.meta.topMenuCode.toLowerCase()]
+                .menuCode[0]
+        );
+        this.menuCode = this.folderSet[
+            this.$route.meta.topMenuCode.toLowerCase()
+        ].menuCode[0];
+        if (this.$route.params.id) {
+            this.getFolderDetail();
+        }
+    },
+    activated() {
         this.menuCode = this.folderSet[
             this.$route.meta.topMenuCode.toLowerCase()
         ].menuCode[0];
@@ -349,7 +367,7 @@ export default {
     /*activated() {
         window.addEventListener('scroll', this.handleScroll);
     },
-    deactivated() {
+    /*deactivated() {
         window.removeEventListener('scroll', this.handleScroll);
     },
     destroyed() {
@@ -384,41 +402,80 @@ export default {
         //     }
         // },
         uploadFiles() {
+            console.log(this.menuCode);
+
+            if (!this.folderDetail.imageBase64) {
+                alert('썸네일');
+                return;
+            }
+            if (!this.folderDetail.folderName) {
+                alert('캠페인 명');
+                return;
+            }
+            if (!this.folderDetail.folderContents) {
+                alert('캠페인 상세');
+                return;
+            }
+            if (this.folderDetail.campaignPeriodSectionCode === 'SELECT') {
+                if (!this.folderDetail.campaignBeginDt) {
+                    alert('시작일');
+                    return;
+                }
+                if (!this.folderDetail.campaignEndDt) {
+                    alert('종료일');
+                    return;
+                }
+            }
+
             this.$refs.fileSet.uploadFiles();
         },
         checksUpdate(checksArr) {
-            console.log(checksArr[0].subAuths);
             this.folderDetail.checks = checksArr[0].subAuths;
             this.visible.ModalAuth = false;
         },
         async submitForm() {
-            const uploadFn = this.$route.params.id ? putContents : postContents;
-
-            this.folderDetail.campaignBeginDt = this.$moment(
-                this.BeginDt
-            ).format('YYYY.MM.DD');
-
-            console.log(this.folderDetail.campaignBeginDt);
-
-            this.folderDetail.campaignEndDt = this.$moment(this.EndDt).format(
-                'YYYY.MM.DD'
-            );
-
             try {
-                const { data: response } = await uploadFn(
-                    this.$route.meta.topMenuCode,
-                    this.menuCode,
-                    this.folderDetail,
-                    this.$route.params.id
-                );
-                if (response.existMsg) {
-                    alert(response.msg);
+                bus.$emit('pageLoading', true);
+                this.folderDetail.campaignBeginDt = this.$moment(
+                    this.BeginDt
+                ).format('YYYY.MM.DD');
+                this.folderDetail.campaignEndDt = this.$moment(
+                    this.EndDt
+                ).format('YYYY.MM.DD');
+                console.log(this.$route);
+                let response;
+                if (this.$route.params.id) {
+                    response = await putContents(
+                        this.$route.meta.topMenuCode,
+                        this.$route.params.pathMatch,
+                        this.$route.params.id,
+                        this.folderDetail
+                    );
+                } else {
+                    response = await postContents(
+                        this.$route.meta.topMenuCode,
+                        this.menuCode,
+                        this.folderDetail
+                    );
                 }
-                this.$store.commit('SET_RELOAD', true);
-                if (response.success) {
-                    this.$router.go(-1);
+                bus.$emit('pageLoading', false);
+                if (response.data.existMsg) {
+                    alert(response.data.msg);
                 }
-                console.log(response);
+                if (response.data.success) {
+                    this.$store.commit('SET_RELOAD', true);
+                    if (this.$route.params.id) {
+                        await this.$router.push(
+                            `/${this.$route.meta.topMenuCode.toLowerCase()}/${
+                                this.$route.params.pathMatch
+                            }/${this.$route.params.id}`
+                        );
+                    } else {
+                        await this.$router.push(
+                            `/${this.$route.meta.topMenuCode.toLowerCase()}/${this.menuCode.toLowerCase()}`
+                        );
+                    }
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -442,14 +499,20 @@ export default {
                 };
                 this.BeginDt = response.data.campaignBeginDt
                     ? new Date(response.data.campaignBeginDt)
-                    : new Date();
+                    : null;
                 this.EndDt = response.data.campaignEndDt
                     ? new Date(response.data.campaignEndDt)
-                    : new Date();
+                    : null;
                 await this.$refs.fileSet.getFolderDetailFile();
             } catch (error) {
                 console.log(error);
             }
+        },
+        cancelBack() {
+            if (!confirm('작성을 취소하시겠습니까?')) {
+                return false;
+            }
+            this.$router.go(-1);
         },
     },
 };

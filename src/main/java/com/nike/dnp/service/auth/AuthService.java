@@ -542,46 +542,28 @@ public class AuthService {
      */
     public List<AuthReturnDTO> getAuthListWithDepth(final UserContentsSearchDTO userContentsSearchDTO, final Auth auth) {
         log.info("AuthService.getAuthListWithDepth");
-        List<AuthReturnDTO> allAuthList = this.getAuthList(userContentsSearchDTO);
+        List<AuthReturnDTO> allAuthList = this.getAuthList2(userContentsSearchDTO);
         List<AuthReturnDTO> transformAuthList = new ArrayList<>();
 
         if (!ObjectUtils.isEmpty(allAuthList) && !allAuthList.isEmpty()) {
 
             if (1 == auth.getAuthDepth()) {
-                for (AuthReturnDTO authReturnDTO : allAuthList) {
-                    List<AuthReturnDTO> findAuthList = new ArrayList<>();
-                    findAuthList = this.findUseYnAuthList(findAuthList, authReturnDTO.getSubAuths());
-
-                    authReturnDTO.setSubAuths(findAuthList);
-                    if (!findAuthList.isEmpty() || "Y".equals(authReturnDTO.getViewYn())) {
-                        transformAuthList.add(authReturnDTO);
-                    }
-                }
+                transformAuthList = allAuthList;
             } else {
                 List<AuthReturnDTO> findDepthList = new ArrayList<>();
                 for (AuthReturnDTO authReturnDTO : allAuthList) {
                     if (auth.getAuthSeq().equals(authReturnDTO.getAuthSeq())) {
-                        findDepthList.add(authReturnDTO);
+                        transformAuthList.add(authReturnDTO);
                         break;
                     }
 
                     // 3depth인경우
                     AuthReturnDTO findAuth =this.findAuthDepthList(auth.getAuthSeq(), authReturnDTO.getSubAuths());
                     if (!ObjectUtils.isEmpty(findAuth.getAuthSeq())) {
-                        findDepthList.add(findAuth);
+                        transformAuthList.add(findAuth);
+                        break;
                     }
 
-                }
-
-
-                for (AuthReturnDTO authReturnDTO : findDepthList) {
-                    List<AuthReturnDTO> findAuthList = new ArrayList<>();
-                    findAuthList = this.findUseYnAuthList(findAuthList, authReturnDTO.getSubAuths());
-
-                    authReturnDTO.setSubAuths(findAuthList);
-                    if (!findAuthList.isEmpty() || "Y".equals(authReturnDTO.getViewYn())) {
-                        transformAuthList.add(authReturnDTO);
-                    }
                 }
             }
         }
@@ -618,39 +600,39 @@ public class AuthService {
         return findAuth;
     }
 
-    /**
-     * Find use yn auth list list.
-     *
-     * @param saveList    the save list
-     * @param subAuthList the sub auth list
-     * @return the list
-     * @author [이소정]
-     * @implNote 권한목록 중 Y인것만 check
-     * @since 2020. 8. 20. 오후 1:01:57
-     */
-    // TODO[lsj] 3depth 인 경우 무한루프 error발생
-    public List<AuthReturnDTO> findUseYnAuthList(final List<AuthReturnDTO> saveList, final List<AuthReturnDTO> subAuthList) {
-
-        if (!ObjectUtils.isEmpty(subAuthList) && !subAuthList.isEmpty()) {
-            for (AuthReturnDTO authReturnDTO : subAuthList) {
-                List<AuthReturnDTO>  findAuthList = new ArrayList<>();
-
-                if (!ObjectUtils.isEmpty(authReturnDTO.getSubAuths()) && !authReturnDTO.getSubAuths().isEmpty()) {
-                    findAuthList = this.findUseYnAuthList(saveList, authReturnDTO.getSubAuths());
-                }
-//                AuthReturnDTO newAuthDTO = new AuthReturnDTO();
-//                newAuthDTO.setAuthSeq(authReturnDTO.getAuthSeq());
-//                newAuthDTO.setViewYn(authReturnDTO.getViewYn());
-//                newAuthDTO.setSubAuths(findAuthList);
-                authReturnDTO.setSubAuths(findAuthList);
-                if (!findAuthList.isEmpty() || "Y".equals(authReturnDTO.getViewYn())) {
-                    saveList.add(authReturnDTO);
-                }
-            }
-        }
-
-        return saveList;
-    }
+//    /**
+//     * Find use yn auth list list.
+//     *
+//     * @param saveList    the save list
+//     * @param subAuthList the sub auth list
+//     * @return the list
+//     * @author [이소정]
+//     * @implNote 권한목록 중 Y인것만 check
+//     * @since 2020. 8. 20. 오후 1:01:57
+//     */
+//    // TODO[lsj] 3depth 인 경우 무한루프 error발생
+//    public List<AuthReturnDTO> findUseYnAuthList(final List<AuthReturnDTO> saveList, final List<AuthReturnDTO> subAuthList) {
+//
+//        if (!ObjectUtils.isEmpty(subAuthList) && !subAuthList.isEmpty()) {
+//            for (AuthReturnDTO authReturnDTO : subAuthList) {
+//                List<AuthReturnDTO>  findAuthList = new ArrayList<>();
+//
+//                if (!ObjectUtils.isEmpty(authReturnDTO.getSubAuths()) && !authReturnDTO.getSubAuths().isEmpty()) {
+//                    findAuthList = this.findUseYnAuthList(saveList, authReturnDTO.getSubAuths());
+//                }
+////                AuthReturnDTO newAuthDTO = new AuthReturnDTO();
+////                newAuthDTO.setAuthSeq(authReturnDTO.getAuthSeq());
+////                newAuthDTO.setViewYn(authReturnDTO.getViewYn());
+////                newAuthDTO.setSubAuths(findAuthList);
+//                authReturnDTO.setSubAuths(findAuthList);
+//                if (!findAuthList.isEmpty() || "Y".equals(authReturnDTO.getViewYn())) {
+//                    saveList.add(authReturnDTO);
+//                }
+//            }
+//        }
+//
+//        return saveList;
+//    }
 
     /**
      * Gets auth list.

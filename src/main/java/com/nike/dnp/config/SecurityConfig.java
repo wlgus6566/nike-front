@@ -162,7 +162,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		final String[] staticPatterns = {
 				"/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
-				"/api/download", "/api/open/**", // 임시
+				"/api/download",
+				"/api/open/**", // 임시
 				"/error", // 에러
 		};
 		web.ignoring().antMatchers(staticPatterns);
@@ -177,18 +178,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.cors()
 			.and()
-				.authorizeRequests()
-				.accessDecisionManager(accessDecisionManager())
-				.antMatchers(HttpMethod.POST,"/api/login").permitAll()
-				.antMatchers("/api/open/**").permitAll()
-				.anyRequest().authenticated()
+			.authorizeRequests()
+			.antMatchers(HttpMethod.POST,"/api/login").permitAll()
+			.antMatchers("/api/open/**","/api/main/", "/api/mypage/**", "/api/calendar/eachList/**", "/api/alarm/**","/api/join/**").permitAll()
+			.accessDecisionManager(accessDecisionManager())
+			.anyRequest().authenticated()
 			.and()
-				.addFilter(authenticationFilter()) // 인증 필터
-				.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository,this.redisService)) //jwt 토큰 인증 필터
-				.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
-				.and()
-				.csrf().disable() // csrf 사용 안함
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
+			.addFilter(authenticationFilter()) // 인증 필터
+			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository,this.redisService)) //jwt 토큰 인증 필터
+			.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
+			.and()
+			.csrf().disable() // csrf 사용 안함
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
 	}
 
 	/**

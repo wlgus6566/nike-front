@@ -4,49 +4,33 @@
             <li
                 v-for="item in tabList"
                 :key="item.value"
-                :class="{active:tabValue === item.value}"
+                :class="{active:typeCd === item.value}"
             >
                 <a href="#" @click="onClickTab(item.value)">{{item.title}}</a>
             </li>
         </ul>
-        <ul class="folder-list-row">
-            <li
-                class="folder-list-item"
-                v-for="item in uploadFolderData"
-                :key="item.historySeq"
-            >
-                <router-link :to="setUrl(item)">
-                    <div class="thumbnail">
-                        <img :src="item.imageFilePhysicalName" alt="" />
-                    </div>
-                    <div class="info-box">
-                        <strong class="title">{{item.folderName}}</strong>
-                        <p class="date" v-if="item.typeCd === 'REPORT_MANAGE'">
-                            {{ $moment(item.updateDt).format('YYYY.MM.DD') }}
-                        </p>
-                        <p class="date" v-else>
-                            {{ $moment(item.campaignBeginDt).format('YYYY.MM.DD') }} ~ {{ $moment(item.campaignEndDt).format('YYYY.MM.DD') }}
-                        </p>
-                        <ul class="location">
-                            <li v-if="item.typeCd !== 'REPORT_MANAGE'">{{item.topMenuCode}}</li>
-                            <li v-else>REPORT</li>
-                            <li>{{item.menuCode}}</li>
-                        </ul>
-                    </div>
-                    <div class="view-area">
-                        <span class="view">{{item.readCount}}</span>
-                    </div>
-                </router-link>
-            </li>
-        </ul>
-
+        <template v-if="uploadFolderData.length">
+            <MyFolderList
+                v-if="uploadFolderData.length"
+                :folderListData="uploadFolderData"
+            />
+        </template>
+        <template v-else>
+            <NoData>
+                <i class="icon-file"></i>
+                <p class="desc">업로드한 폴더가 없습니다.</p>
+            </NoData>
+        </template>
     </div>
 </template>
 <script>
-    import {
-        uploadFolderViewList
-        , historyFolderViewList
-    } from '@/api/mypage';
+
+import {
+    uploadFolderViewList
+} from '@/api/mypage';
+
+import MyFolderList from '@/components/my-folder-list';
+import NoData from '@/components/no-data';
 
 export default {
     name: 'upload',
@@ -58,7 +42,6 @@ export default {
             totalPage: null,
             typeCd: 'ALL',
             pageLast: true,
-            totalPage: null,
             loadingData: false,
             tabList: [
                 {
@@ -78,8 +61,11 @@ export default {
                     title: 'REPORT',
                 },
             ],
-            tabValue: 'ALL'
         };
+    },
+    components: {
+        MyFolderList,
+        NoData,
     },
     created() {
         this.fetchData();
@@ -109,9 +95,8 @@ export default {
                 });
                 this.uploadFolderData = response.content;
                 this.pageLast = response.last;
-                console.log('pageLast', this.pageLast)
-
                 this.totalPage = response.totalPages;
+
                 if (infinite) {
                     if (this.totalPage > this.page - 1) {
                         this.uploadFolderData = this.uploadFolderData.concat(
@@ -137,15 +122,6 @@ export default {
             this.page = 0;
             this.fetchData();
         },
-        // 상세 페이지 연결
-        setUrl(item) {
-            // console.log('item : ', item);
-            if (item.typeCd === 'REPORT_MANAGE') {
-                return `/report/${item.folderSeq}`.toLocaleLowerCase();
-            } else {
-                return `/${item.topMenuCode}/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
-            }
-        },
         endPage() {
             alert('마지막 페이지');
         },
@@ -163,12 +139,6 @@ export default {
             }
         },
         infiniteScroll() {
-            console.log('infiniteScroll',
-                !this.loadingData,
-                this.totalPage > this.page - 1,
-                this.uploadFolderData.length >= this.pageSize,
-                this.uploadFolderData.length !== 0,
-                !this.pageLast)
             if (
                 !this.loadingData &&
                 this.totalPage > this.page - 1 &&
@@ -176,7 +146,6 @@ export default {
                 this.uploadFolderData.length !== 0 &&
                 !this.pageLast
             ) {
-                console.log('uin')
                 this.fetchData(true);
             }
         },

@@ -506,6 +506,7 @@ public class ContentsService {
      * @implNote 컨텐츠 저장, 수정 시 메일 보내기
      * @since 2020. 7. 30. 오후 12:01:26
      */
+    @Transactional
     public void sendEmail(final ContentsMailSendDTO contentsMailSendDTO) {
         log.info("ContentsService.sendEmail");
         // 컨텐츠 조회
