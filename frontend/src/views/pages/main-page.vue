@@ -296,7 +296,7 @@ export default {
                 } = await getMain();
                 this.mainData = response;
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         // 달력 초기 목록 호출
@@ -306,7 +306,7 @@ export default {
                 await this.getCalendarEachList(this.yyyyMm);
                 this.loadingData = false;
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         // 한달 일정 조회
@@ -334,8 +334,10 @@ export default {
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: item.beginDt.replace(/\./gi, "-"),
-                    end: moment(item.endDt).add(1, 'days')._i.replace(/\./gi, "-"),
+                    start: item.beginDt.replace(/\./gi, '-'),
+                    end: moment(item.endDt)
+                        .add(1, 'days')
+                        ._i.replace(/\./gi, '-'),
                     className: className,
                 });
             });
@@ -343,7 +345,7 @@ export default {
         },
         distinctAndAddEvent() {
             let distinctEventList = [];
-            this.calendarOptions.events.forEach(item => {
+            this.calendarOptions.events.forEach((item) => {
                 let check = false;
                 distinctEventList.forEach((ele) => {
                     if (item.start === ele.start) {
@@ -354,7 +356,7 @@ export default {
                     distinctEventList.push(item);
                 }
             });
-            distinctEventList.forEach(item => {
+            distinctEventList.forEach((item) => {
                 this.calendarOptions.events.unshift(item);
             });
         },

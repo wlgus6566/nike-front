@@ -46,9 +46,9 @@
             <li
                 class="schedule-item"
                 :class="{
-                    'edu':item.calendarSectionCode === 'EDUCATION'
-                    , 'campaign':item.calendarSectionCode === 'CAMPAIGN'
-                    , 'official':item.calendarSectionCode === 'ETC'
+                    edu: item.calendarSectionCode === 'EDUCATION',
+                    campaign: item.calendarSectionCode === 'CAMPAIGN',
+                    official: item.calendarSectionCode === 'ETC',
                 }"
                 v-for="item in todayData"
                 :key="item.calendarSeq"
@@ -155,8 +155,8 @@ export default {
             },
         };
     },
-    watch:{
-        calenderSectionCodeList(){}
+    watch: {
+        calenderSectionCodeList() {},
     },
     components: {
         FullCalendar,
@@ -175,7 +175,7 @@ export default {
                 this.loadingData = false;
                 await this.loadCalendarCode();
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         // 한달 일정 조회
@@ -211,8 +211,10 @@ export default {
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: item.beginDt.replace(/\./gi, "-"),
-                    end: moment(item.endDt).add(1, 'days')._i.replace(/\./gi, "-"),
+                    start: item.beginDt.replace(/\./gi, '-'),
+                    end: moment(item.endDt)
+                        .add(1, 'days')
+                        ._i.replace(/\./gi, '-'),
                     className: className,
                 });
             });
@@ -258,7 +260,7 @@ export default {
                     this.processAfterSuccess();
                 }
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         async modifyCalendar(calendarSeq, data) {
@@ -272,7 +274,7 @@ export default {
                     this.processAfterSuccess();
                 }
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         async delCalendar(calendarSeq) {
@@ -286,7 +288,7 @@ export default {
                     this.processAfterSuccess();
                 }
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         async processAfterSuccess() {

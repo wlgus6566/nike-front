@@ -98,7 +98,7 @@ export default {
                         this.totalItem - this.page * this.itemLength - index;
                 });
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         //검색

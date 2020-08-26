@@ -77,7 +77,7 @@ export default {
                 console.log(response);
                 this.userData = response;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

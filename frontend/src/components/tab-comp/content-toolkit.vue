@@ -68,7 +68,7 @@ export default {
                 this.historyFolderData = response.content;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

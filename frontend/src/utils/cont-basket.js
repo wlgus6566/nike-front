@@ -15,7 +15,7 @@ const addProductBasket = async (goodsSeq, orderQuantity) => {
         });
         await store.dispatch('basketList');
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 };
 
@@ -33,7 +33,7 @@ const addBasketList = async (goodsSeqList, orderQuantityList) => {
         });
         await store.dispatch('basketList');
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 };
 
@@ -47,7 +47,7 @@ const deleteBasketItem = async (goodsBasketSeq) => {
         await store.dispatch('deleteBasketItem', goodsBasketSeq);
         await store.dispatch('basketList');
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 };
 

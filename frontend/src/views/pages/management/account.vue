@@ -410,7 +410,7 @@ export default {
                 this.totalItem = response.totalElements;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -444,7 +444,7 @@ export default {
                 this.recursionFn(response, this.authority.options, 1);
                 this.recursionFn(response, this.addAuthority.options, 1);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -470,7 +470,7 @@ export default {
                             this.getUserList();
                         }
                     } catch (error) {
-                        console.log(error);
+                        console.error(error);
                     }
                 }
             }
@@ -494,7 +494,7 @@ export default {
                         this.loading = false;
                     }
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         },
@@ -509,7 +509,7 @@ export default {
                 this.visible.AccountManagement = true;
                 console.log(response.authSeqArray);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -545,7 +545,7 @@ export default {
                             this.addAuthority.value = [null];
                         }
                     } catch (error) {
-                        console.log(error);
+                        console.error(error);
                     }
                 }
             }
@@ -578,7 +578,7 @@ export default {
                         this.addAuthority.value = [null];
                     }
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         },
@@ -592,7 +592,7 @@ export default {
                     alert(response.data.msg);
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

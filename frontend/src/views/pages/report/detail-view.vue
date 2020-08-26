@@ -161,11 +161,11 @@ export default {
                 this.$store.commit('SET_RELOAD', true);
                 await this.$store.dispatch('getReportListBasket');
                 if (response.data.success) {
-                    await this.$router.go(-1);
+                    await this.$router.push('/report/management');
                 }
                 console.log(response);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         //리포트 수정
@@ -177,8 +177,8 @@ export default {
             try {
                 await postReportBasket(seq);
                 await this.$store.dispatch('getReportListBasket');
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         allCheckFn() {
@@ -224,7 +224,7 @@ export default {
                 } = await getReportDetail(this.$route.params.id);
                 this.reportDetailData = response;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         handleScroll() {
@@ -277,7 +277,7 @@ export default {
                 this.page++;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -291,7 +291,7 @@ export default {
                 this.answerList = response;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         // 리포트 댓글 등록
@@ -306,7 +306,7 @@ export default {
                 await this.reportAnswerList();
                 this.answerData.answerContents = null;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -319,7 +319,7 @@ export default {
                     console.log(response);
                     await this.reportAnswerList();
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         },

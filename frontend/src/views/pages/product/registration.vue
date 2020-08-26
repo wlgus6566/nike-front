@@ -369,7 +369,7 @@ export default {
                     this.agencySeq.listSortOptions.push(agencyList);
                 });
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         //이미지 받아오기
@@ -406,7 +406,7 @@ export default {
                     this.category3Code.value = this.detailData.category3Code;
                     this.agencySeq.value = this.detailData.agencySeq;
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         },
@@ -442,7 +442,7 @@ export default {
                         await store.dispatch('basketList');
                         this.detailData.imageBase64 = null;
                     } catch (error) {
-                        console.log(error);
+                        console.error(error);
                     }
                 }
             } else {
@@ -454,7 +454,7 @@ export default {
                         this.productDataReset();
                         await this.$router.push('/order/management');
                     } catch (error) {
-                        console.log(error);
+                        console.error(error);
                     }
                 }
             }

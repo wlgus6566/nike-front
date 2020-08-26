@@ -293,7 +293,9 @@ export default {
                     }
                 },
                 disabledDate: (time) => {
-                    return time.getTime() > this.EndDt.getTime();
+                    if (this.EndDt) {
+                        return time.getTime() > this.EndDt.getTime();
+                    }
                 },
             },
             pickerEndOption: {
@@ -304,7 +306,9 @@ export default {
                     }
                 },
                 disabledDate: (time) => {
-                    return time.getTime() < this.BeginDt.getTime();
+                    if (this.BeginDt) {
+                        return time.getTime() < this.BeginDt.getTime();
+                    }
                 },
             },
         };
@@ -341,10 +345,6 @@ export default {
         ModalAuth,
     },
     created() {
-        console.log(
-            this.folderSet[this.$route.meta.topMenuCode.toLowerCase()]
-                .menuCode[0]
-        );
         this.menuCode = this.folderSet[
             this.$route.meta.topMenuCode.toLowerCase()
         ].menuCode[0];
@@ -472,8 +472,8 @@ export default {
                         );
                     }
                 }
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         async getFolderDetail() {
@@ -501,7 +501,7 @@ export default {
                     : null;
                 await this.$refs.fileSet.getFolderDetailFile();
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

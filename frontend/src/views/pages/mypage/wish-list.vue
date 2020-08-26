@@ -147,7 +147,7 @@ export default {
                     alert('이미 담긴 상품입니다.');
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         checkedWish(seq, del) {
@@ -194,10 +194,7 @@ export default {
                     });
                     this.deleteLoading = [];
                 } catch (error) {
-                    console.log(error);
-                    if (error.data.existMsg) {
-                        alert(error.data.msg);
-                    }
+                    console.error(error);
                 }
             } else {
                 alert('하나 이상의 상품을 선택해 주세요.');
@@ -214,10 +211,7 @@ export default {
                 this.checkedWish(seq, true);
                 this.deleteLoading = [];
             } catch (error) {
-                console.log(error);
-                if (error.data.existMsg) {
-                    alert(error.data.msg);
-                }
+                console.error(error);
             }
         },
         async fetchData(mounted) {
@@ -234,7 +228,7 @@ export default {
                 this.loadingData = false;
                 return;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         async addBasket(item) {
