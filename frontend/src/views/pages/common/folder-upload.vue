@@ -207,7 +207,7 @@
                 @submitForm="submitForm"
             />
             <div class="btn-area">
-                <button type="button" class="btn-s-white">
+                <button type="button" class="btn-s-white" @click="cancelBack()">
                     <span>취소</span>
                 </button>
                 <button type="submit" class="btn-s-black">
@@ -293,7 +293,9 @@ export default {
                     }
                 },
                 disabledDate: (time) => {
-                    return time.getTime() > this.EndDt.getTime();
+                    if (this.EndDt !== null) {
+                        return time.getTime() > this.EndDt.getTime();
+                    }
                 },
             },
             pickerEndOption: {
@@ -304,7 +306,9 @@ export default {
                     }
                 },
                 disabledDate: (time) => {
-                    return time.getTime() < this.BeginDt.getTime();
+                    if (this.BeginDt !== null) {
+                        return time.getTime() < this.BeginDt.getTime();
+                    }
                 },
             },
         };
@@ -503,6 +507,12 @@ export default {
             } catch (error) {
                 console.log(error);
             }
+        },
+        cancelBack() {
+            if (!confirm('작성을 취소하시겠습니까?')) {
+                return false;
+            }
+            this.$router.go(-1);
         },
     },
 };
