@@ -11,6 +11,10 @@ const routes = [
                 component: pages('common/folder-list.vue'),
                 meta: {
                     layout: 'Default',
+                    aside: 'File',
+                    topMenuCode: 'TOOLKIT',
+                    menuCode: 'VMS',
+                    title: 'VMS',
                 },
             },
             {
@@ -18,6 +22,10 @@ const routes = [
                 component: pages('common/folder-list.vue'),
                 meta: {
                     layout: 'Default',
+                    aside: 'File',
+                    topMenuCode: 'TOOLKIT',
+                    menuCode: 'EKIN',
+                    title: 'EKIN',
                 },
             },
             {
@@ -25,6 +33,42 @@ const routes = [
                 component: pages('common/folder-list.vue'),
                 meta: {
                     layout: 'Default',
+                    aside: 'File',
+                    topMenuCode: 'TOOLKIT',
+                    menuCode: 'SOCIAL',
+                    title: 'SOCIAL',
+                },
+            },
+            {
+                path: 'rb',
+                component: pages('common/folder-list'),
+                meta: {
+                    layout: 'Default',
+                    aside: 'File',
+                    topMenuCode: 'TOOLKIT',
+                    menuCode: 'RB',
+                    title: 'RB',
+                },
+            },
+            {
+                path: '*/:id',
+                component: pages('common/folder-view'),
+                meta: {
+                    layout: 'Default',
+                    aside: 'File',
+                    topMenuCode: 'TOOLKIT',
+                },
+                beforeEnter: (to, from, next) => {
+                    const menuCodeArr = ['vms', 'ekin', 'social', 'rb'];
+                    const findMenuCode = menuCodeArr.some(
+                        (el) => el === to.params.pathMatch
+                    );
+                    if (findMenuCode) {
+                        to.meta.menuCode = menuCodeArr[findMenuCode];
+                        next();
+                    } else {
+                        next('/404'); //todo 404 만들기
+                    }
                 },
             },
         ],
