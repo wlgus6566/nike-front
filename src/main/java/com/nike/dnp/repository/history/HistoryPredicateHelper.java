@@ -38,9 +38,7 @@ public class HistoryPredicateHelper {
 
 		// mobile이고 타입코드가 없거나 All 인 경우
 		if (isMobile && (StringUtils.isEmpty(typeCd.trim()) || ServiceCode.HistoryTabEnumCode.ALL.toString().equals(typeCd.trim()))) {
-			builder.and(QHistory.history.typeCd.eq(ServiceCode.HistoryTabEnumCode.FOUNDATION.toString()));
-			builder.and(QHistory.history.typeCd.eq(ServiceCode.HistoryTabEnumCode.TOOLKIT.toString()));
-			builder.and(QHistory.history.typeCd.eq(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString()));
+			builder.and(QHistory.history.typeCd.ne(ServiceCode.HistoryTabEnumCode.ASSET.toString()));
 		// 타입코드가 없지 않고 ALL이 아닌 경우
 		} else if (!StringUtils.isEmpty(typeCd.trim()) && !ServiceCode.HistoryTabEnumCode.ALL.toString().equals(typeCd.trim())) {
 			builder.and(QHistory.history.typeCd.eq(typeCd));
@@ -78,9 +76,7 @@ public class HistoryPredicateHelper {
 
 		// mobile이고 타입코드가 없거나 All 인 경우
 		if (isMobile && (StringUtils.isEmpty(typeCd.trim()) || ServiceCode.HistoryTabEnumCode.ALL.toString().equals(typeCd.trim()))) {
-			builder.and(QRecentUpload.recentUpload.typeCd.eq(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString()));
-			builder.or(QRecentUpload.recentUpload.typeCd.eq(ServiceCode.HistoryTabEnumCode.FOUNDATION.toString()));
-			builder.or(QRecentUpload.recentUpload.typeCd.eq(ServiceCode.HistoryTabEnumCode.TOOLKIT.toString()));
+			builder.and(QRecentUpload.recentUpload.typeCd.ne(ServiceCode.HistoryTabEnumCode.ASSET.toString()));
 			// 타입코드가 없지 않고 ALL이 아닌 경우
 		} else if (!StringUtils.isEmpty(typeCd.trim()) && !ServiceCode.HistoryTabEnumCode.ALL.toString().equals(typeCd.trim())) {
 			builder.and(QRecentUpload.recentUpload.typeCd.eq(typeCd));
