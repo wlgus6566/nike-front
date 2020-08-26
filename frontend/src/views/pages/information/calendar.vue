@@ -130,7 +130,7 @@ export default {
             calendarData: [],
             todayData: [],
             calendarOptions: {
-                height: 700,
+                height: 'auto',
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
                 dateClick: this.handleDateClick,
