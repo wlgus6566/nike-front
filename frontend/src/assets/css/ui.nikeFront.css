@@ -1317,16 +1317,29 @@
     height: 130px;
     padding: 10px 15px;
     border: 1px solid #ddd;
-
     overflow: auto;
 }
 .upload-file-list.actice {
     background: #f7f7f7;
 }
+.upload-file-list li {
+    position: relative;
+}
+.upload-file-list li .progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: rgba(255, 0, 0, 0.3);
+}
 .upload-file-list li label {
+    padding: 5px 0;
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
-    padding: 5px 0;
+
     font-size: 14px;
     color: #000;
 }
@@ -1690,12 +1703,12 @@
 }
 .folder-title {
     display: block;
-    max-width: 640px;
+    /*max-width: 640px;*/
     font-weight: bold;
     font-size: 40px;
     letter-spacing: -1px;
+    word-break: break-all;
     line-height: 52px;
-    word-break: keep-all;
 }
 .folder-desc {
     display: block;

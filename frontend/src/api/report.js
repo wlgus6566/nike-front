@@ -17,7 +17,7 @@ function postReport(data) {
     return report.post(`/`, data);
 }
 //REPORT 수정
-function putReport(reportSeq, data) {
+function putReport(data, reportSeq) {
     return report.put(`/${reportSeq}`, data);
 }
 

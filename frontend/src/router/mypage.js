@@ -3,7 +3,6 @@ import { pages } from '@/utils/global-methods';
 const routes = [
     {
         path: '/mypage/upload',
-        name: 'upload',
         component: pages('mypage/upload.vue'),
         meta: {
             layout: 'Default',
@@ -13,7 +12,6 @@ const routes = [
     },
     {
         path: '/mypage/latest',
-        name: 'latest',
         component: pages('mypage/latest.vue'),
         meta: {
             layout: 'Default',
@@ -23,7 +21,6 @@ const routes = [
     },
     {
         path: '/mypage/order',
-        name: 'order',
         component: pages('mypage/order.vue'),
         meta: {
             layout: 'Default',
@@ -33,7 +30,6 @@ const routes = [
     },
     {
         path: '/mypage/wish-list',
-        name: 'wish-list',
         component: pages('mypage/wish-list.vue'),
         meta: {
             layout: 'Default',
@@ -43,7 +39,6 @@ const routes = [
     },
     {
         path: '/mypage/info',
-        name: 'info',
         component: pages('mypage/info.vue'),
         meta: {
             layout: 'Default',
@@ -53,7 +48,6 @@ const routes = [
     },
     {
         path: '/mypage/password',
-        name: 'password',
         component: pages('mypage/password.vue'),
         meta: {
             layout: 'Default',
@@ -64,7 +58,6 @@ const routes = [
     //공지사항
     {
         path: '/mypage/notice/',
-        name: 'notice',
         component: pages('mypage/notice'),
         meta: {
             layout: 'Default',
@@ -76,7 +69,6 @@ const routes = [
     {
         //TODO detail 삭제
         path: '/mypage/notice/detail/:id',
-        name: 'notice',
         component: pages('mypage/detail'),
         meta: {
             layout: 'Default',
@@ -86,7 +78,6 @@ const routes = [
     },
     {
         path: '/mypage/notice/form',
-        name: 'notice',
         component: pages('mypage/notice-form'),
         meta: {
             layout: 'Default',
@@ -97,7 +88,6 @@ const routes = [
     },
     {
         path: '/mypage/notice/modify/:id',
-        name: 'notice',
         component: pages('mypage/notice-form'),
         meta: {
             layout: 'Default',
@@ -110,7 +100,6 @@ const routes = [
     //NEWS
     {
         path: '/mypage/news/',
-        name: 'news',
         component: pages('mypage/news.vue'),
         meta: {
             layout: 'Default',
@@ -121,7 +110,6 @@ const routes = [
     },
     {
         path: '/mypage/news/detail/:id',
-        name: 'news',
         component: pages('mypage/detail'),
         meta: {
             layout: 'Default',
@@ -131,7 +119,6 @@ const routes = [
     },
     {
         path: '/mypage/news/form',
-        name: 'news',
         component: pages('mypage/news-form'),
         meta: {
             layout: 'Default',
@@ -142,7 +129,6 @@ const routes = [
     },
     {
         path: '/mypage/news/modify/:id',
-        name: 'notice',
         component: pages('mypage/news-form'),
         meta: {
             layout: 'Default',
@@ -155,7 +141,6 @@ const routes = [
     //FAQ
     {
         path: '/mypage/faq',
-        name: 'faq',
         component: pages('mypage/faq.vue'),
         meta: {
             layout: 'Default',
@@ -166,7 +151,6 @@ const routes = [
     },
     {
         path: '/mypage/faq/form',
-        name: 'notice',
         component: pages('mypage/faq-form'),
         meta: {
             layout: 'Default',
@@ -177,7 +161,6 @@ const routes = [
     },
     {
         path: '/mypage/faq/modify/:id',
-        name: 'notice',
         component: pages('mypage/faq-form'),
         meta: {
             layout: 'Default',

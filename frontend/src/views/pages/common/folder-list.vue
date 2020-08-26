@@ -188,6 +188,7 @@ export default {
     activated() {
         if (this.$store.state.reload) {
             this.initFetchData();
+            this.$store.dispatch('getContBasket');
             this.$store.commit('SET_RELOAD', false);
         }
         window.addEventListener('scroll', this.handleScroll);
