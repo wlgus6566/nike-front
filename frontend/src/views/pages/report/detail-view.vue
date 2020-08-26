@@ -124,6 +124,13 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
+        if (this.$store.state.reload) {
+            this.$store.dispatch('getReportListBasket');
+            this.reportDetailView();
+            this.reportAnswerList();
+            this.initFetchData();
+            this.$store.commit('SET_RELOAD', false);
+        }
         window.addEventListener('scroll', this.handleScroll);
     },
     deactivated() {
@@ -135,7 +142,6 @@ export default {
     methods: {
         //리포트 삭제
         async deleteReport() {
-            console.log(this.$route.params.id);
             if (
                 !confirm(
                     '삭제 시 등록한 내용이 전부 삭제 됩니다. 삭제하시겠습니까?'
@@ -161,7 +167,6 @@ export default {
         },
         // 파일 선택 담기
         async addReportBasket(seq) {
-            console.log(seq);
             try {
                 await postReportBasket(seq);
                 await this.$store.dispatch('getReportListBasket');
