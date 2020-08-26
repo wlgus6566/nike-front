@@ -1,6 +1,6 @@
 <template>
     <section class="modal-list" :class="{ active: showList }">
-        <div class="dimmed" @click="$emit('closeModal')"></div>
+        <div class="dimmed" @click="$emit('dimmedClose')"></div>
         <div class="modal-list-contents">
             <div class="select-list-wrap">
                 <ListItem
@@ -68,7 +68,7 @@ export default {
     transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
 }
 .modal-list.active .modal-list-contents {
-    bottom: 0;
+    bottom: 60px;
 }
 .modal-list-contents {
     padding: 20px 0;
