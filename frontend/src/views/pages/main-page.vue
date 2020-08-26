@@ -278,11 +278,13 @@ export default {
                 const close = modal.querySelector('.fc-popover-close');
                 const body = modal.querySelector('.fc-popover-body');
                 const a = document.createElement('a');
+                const txt = document.createTextNode('자세히 보기');
                 //TODO router 작업 필요
                 a.href = '/information/calendar';
                 a.classList.add('fc-more');
-                a.append('자세히 보기');
-                body.append(a);
+                a.appendChild(txt);
+                body.appendChild(a);
+                console.log(a);
                 close.addEventListener('click', () => {
                     td.classList.remove('test');
                 });
@@ -334,8 +336,10 @@ export default {
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: item.beginDt.replace(/\./gi, "-"),
-                    end: moment(item.endDt).add(1, 'days')._i.replace(/\./gi, "-"),
+                    start: item.beginDt.replace(/\./gi, '-'),
+                    end: moment(item.endDt)
+                        .add(1, 'days')
+                        ._i.replace(/\./gi, '-'),
                     className: className,
                 });
             });
@@ -343,7 +347,7 @@ export default {
         },
         distinctAndAddEvent() {
             let distinctEventList = [];
-            this.calendarOptions.events.forEach(item => {
+            this.calendarOptions.events.forEach((item) => {
                 let check = false;
                 distinctEventList.forEach((ele) => {
                     if (item.start === ele.start) {
@@ -354,7 +358,7 @@ export default {
                     distinctEventList.push(item);
                 }
             });
-            distinctEventList.forEach(item => {
+            distinctEventList.forEach((item) => {
                 this.calendarOptions.events.unshift(item);
             });
         },
