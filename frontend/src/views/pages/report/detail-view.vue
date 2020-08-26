@@ -1,6 +1,10 @@
 <template>
     <div>
-        <BtnArea @delete="deleteReport" @edit="modifyReport" />
+        <BtnArea
+            @goToList="goToList"
+            @delete="deleteReport"
+            @edit="modifyReport"
+        />
         <div class="folder-wrap">
             <h2 class="folder-title">
                 {{ reportDetailData.reportName }}
@@ -140,6 +144,9 @@ export default {
         window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
+        goToList() {
+            this.$router.push(`/report/management`);
+        },
         //리포트 삭제
         async deleteReport() {
             if (
@@ -319,15 +326,4 @@ export default {
     },
 };
 </script>
-<style scoped>
-.list-loading {
-    position: relative;
-    padding-top: 70%;
-}
-::v-deep .list-loading .lottie {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-</style>
+<style scoped></style>

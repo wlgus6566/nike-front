@@ -1,6 +1,10 @@
 <template>
     <div>
-        <BtnArea @delete="deleteBoard" @edit="modifyRoute" />
+        <BtnArea
+            @goToList="goToList"
+            @delete="deleteBoard"
+            @edit="modifyRoute"
+        />
         <div class="detail-view">
             <div class="title-box">
                 <h2 class="title">{{ noticeDetail.title }}</h2>
@@ -38,6 +42,9 @@ export default {
         BtnArea: () => import('@/components/asset-view/btn-area.vue'),
     },
     methods: {
+        goToList() {
+            this.$router.push(`/mypage/news`);
+        },
         //목록이동
         listRoute() {
             if (this.noticeArticleSectionCode === 'NOTICE') {

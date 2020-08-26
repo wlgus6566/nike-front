@@ -45,19 +45,18 @@
             </div>
         </div>
         <!-- wish list -->
-        <template v-if="wishListData">
-            <WishList
-                v-if="wishListData.length"
-                :listData="wishListData"
-                :checkWishItem="checkWishItem"
-                :deleteLoading="deleteLoading"
-                @addBasket="addBasket"
-                @wishDelete="wishDelete"
-                @checkedWish="checkedWish"
-                @showDetailView="showDetailView"
-            />
-            <WishListNodata v-if="wishListData && wishListData.length === 0" />
-        </template>
+
+        <WishList
+            v-if="wishListData"
+            :listData="wishListData"
+            :checkWishItem="checkWishItem"
+            :deleteLoading="deleteLoading"
+            @addBasket="addBasket"
+            @wishDelete="wishDelete"
+            @checkedWish="checkedWish"
+            @showDetailView="showDetailView"
+        />
+        <WishListNodata v-if="wishListData && wishListData.length === 0" />
         <Loading
             class="list-loading"
             :width="172"
@@ -88,7 +87,7 @@ export default {
         WishList: () => import('@/components/wish-list/index'),
         WishListNodata: () => import('@/components/wish-list/nodata'),
         detailView: () => import('@/views/pages/product/detail-view'),
-        Loading: () => import('@/components/loading'),
+        Loading: () => import('@/components/wish-list/loading'),
     },
     data() {
         return {
@@ -96,7 +95,6 @@ export default {
             loadingData: false,
             page: 0,
             itemLength: 20,
-            totalPage: null,
             checkAll: false,
             checkWishItem: [],
             deleteLoading: [],
@@ -108,21 +106,8 @@ export default {
             //check: this.items.state,
         };
     },
-    created() {
-        this.initFetchData();
-        window.addEventListener('scroll', this.handleScroll);
-    },
     activated() {
-        this.initFetchData();
-        this.checkAll = false;
-        this.checkWishItem = [];
-        window.addEventListener('scroll', this.handleScroll);
-    },
-    deactivated() {
-        window.removeEventListener('scroll', this.handleScroll);
-    },
-    destroyed() {
-        window.removeEventListener('scroll', this.handleScroll);
+        this.fetchData(true);
     },
     computed: {
         basketList() {
@@ -137,6 +122,7 @@ export default {
     methods: {
         // 상세 팝업
         showDetailView(goodsSeq) {
+            console.log(goodsSeq);
             this.visible.detailView = true;
             const findIndex = this.wishListData.findIndex(
                 (el) => el.goodsSeq === goodsSeq
@@ -206,7 +192,6 @@ export default {
                     this.checkWishItem.forEach((seq) => {
                         this.checkedWish(seq, true);
                     });
-                    this.checkAll = false;
                     this.deleteLoading = [];
                 } catch (error) {
                     console.log(error);
@@ -235,38 +220,8 @@ export default {
                 }
             }
         },
-        handleScroll() {
-            if (this.loadingData) return;
-            const windowE = document.documentElement;
-            if (
-                windowE.clientHeight + windowE.scrollTop >=
-                windowE.scrollHeight
-            ) {
-                this.infiniteScroll();
-            }
-        },
-        initFetchData() {
-            this.totalPage = null;
-            this.page = 0;
-            this.wishListData = null;
-            this.fetchData();
-        },
-        infiniteScroll() {
-            if (
-                !this.loadingData &&
-                this.totalPage > this.page - 1 &&
-                this.wishListData.length >= this.itemLength &&
-                this.wishListData.length !== 0
-            ) {
-                console.log(1);
-                this.fetchData(true);
-            }
-        },
-        endPage() {
-            alert('마지막 페이지');
-        },
-        async fetchData(infinite) {
-            this.loadingData = true;
+        async fetchData(mounted) {
+            if (mounted) this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -274,21 +229,10 @@ export default {
                     page: this.page,
                     size: this.itemLength,
                 });
-                this.totalPage = response.totalPages - 1;
-                if (infinite) {
-                    if (this.totalPage > this.page - 1) {
-                        this.wishListData = this.wishListData.concat(
-                            response.content
-                        );
-                    } else if (this.totalPage === this.page - 1) {
-                        this.endPage();
-                    }
-                } else {
-                    this.wishListData = response.content;
-                    await this.$store.dispatch('basketList');
-                }
-                this.page++;
+                this.wishListData = response.content;
+                await this.$store.dispatch('basketList');
                 this.loadingData = false;
+                return;
             } catch (error) {
                 console.log(error);
             }
@@ -350,18 +294,8 @@ export default {
             }
         },
     },
+    created() {},
 };
 </script>
 
-<style>
-.list-loading {
-    position: relative;
-    padding-top: 70%;
-}
-::v-deep .list-loading .lottie {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-</style>
+<style></style>
