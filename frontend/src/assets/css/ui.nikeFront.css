@@ -4164,11 +4164,12 @@ img.image-grayscale {
     vertical-align: 2px;
 }
 .schedule-item .desc {
+    max-width: 500px;
     margin-top: 5px;
     padding-left: 11px;
     font-size: 11px;
     color: #555;
-    max-width: 500px;
+    word-break: break-all;
 }
 .schedule-item .date {
     font-size: 12px;
