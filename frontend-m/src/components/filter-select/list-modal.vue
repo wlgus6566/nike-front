@@ -1,6 +1,6 @@
 <template>
     <section class="modal-list" :class="{ active: showList }">
-        <div class="dimmed" @click="$emit('closeModal')"></div>
+        <div class="dimmed" @click="$emit('dimmedClose')"></div>
         <div class="modal-list-contents">
             <ul class="select-options-list">
                 <li
@@ -9,7 +9,7 @@
                     }"
                     v-for="(val, index) in selectList.listSortOptions"
                     :key="index"
-                    @click="selectedFn(val.value)"
+                    @click="selectedFn(val.value, val.label)"
                 >
                     <span>{{ val.label }}</span>
                 </li>
@@ -25,13 +25,14 @@ export default {
             selectedIndex: null,
         };
     },
-    props: ['selectList', 'showList'],
+    props: ['selectList', 'showList', 'selectLabel'],
     mounted() {
         this.modal();
     },
     methods: {
-        selectedFn(value) {
+        selectedFn(value, label) {
             this.selectList.value = value;
+            this.$emit('changeLabelFn', value, label);
             // const seqList = this.options.map(el => el.label);
             // const _index = seqList.indexOf(label);
             // if (this.selectedIndex !== _index) {
@@ -82,7 +83,7 @@ export default {
     transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
 }
 .modal-list.active .modal-list-contents {
-    bottom: 0;
+    bottom: 60px;
 }
 .select-options-list {
     max-height: 360px;
