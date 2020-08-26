@@ -4145,13 +4145,13 @@ img.image-grayscale {
     position: relative;
     z-index: 2;
     flex-grow: 1;
+    max-width: calc(100% - 300px);
 }
 .schedule-item .title {
     position: relative;
     padding-left: 11px;
     font-size: 14px;
     font-weight: normal;
-    max-width: 500px;
     word-break: break-all;
     color: #888;
 }
@@ -4169,7 +4169,6 @@ img.image-grayscale {
     vertical-align: 2px;
 }
 .schedule-item .desc {
-    max-width: 500px;
     margin-top: 5px;
     padding-left: 11px;
     font-size: 11px;
