@@ -8,6 +8,8 @@
             :showList="showList"
             :selectLabel="selectLabel"
             @closeModal="closeModal"
+            @changeLabelFn="changeLabelFn"
+            @dimmedClose="dimmedClose"
         />
     </div>
 </template>
@@ -19,6 +21,7 @@ export default {
         return {
             showList: false,
             selectLabel: '',
+            hideLabel: '',
             topScollVal: '',
         };
     },
@@ -27,25 +30,37 @@ export default {
         ListModal,
     },
     watch: {
-        'selectList.value'() {
-            const _index = this.selectList.listSortOptions.findIndex(el => {
-                return el.value === this.selectList.value;
-            });
-            this.selectLabel = this.selectList.listSortOptions[_index].label;
-        },
+        // 'selectList.value'() {
+        //     const _index = this.selectList.listSortOptions.findIndex(el => {
+        //         return el.value === this.selectList.value;
+        //     });
+        //     this.selectLabel = this.selectList.listSortOptions[_index].label;
+        // },
     },
     mounted() {
         this.findLabel();
     },
     methods: {
+        changeLabelFn(label) {
+            this.closeModal(label);
+        },
         findLabel() {
             const _index = this.selectList.listSortOptions.findIndex(el => {
                 return el.value === this.selectList.value;
             });
             this.selectLabel = this.selectList.listSortOptions[_index].label;
         },
-        closeModal() {
+        dimmedClose() {
             this.showList = false;
+            document.querySelector('.modal-list-open').style.overflow = '';
+            document.querySelector('#wrap').style.margin = '';
+            window.scrollTo(0, this.topScollVal);
+            document.querySelector('body').classList.remove('modal-list-open');
+        },
+        closeModal(label) {
+            this.hideLabel = label;
+            this.showList = false;
+            this.selectLabel = this.hideLabel;
             document.querySelector('.modal-list-open').style.overflow = '';
             document.querySelector('#wrap').style.margin = '';
             window.scrollTo(0, this.topScollVal);
