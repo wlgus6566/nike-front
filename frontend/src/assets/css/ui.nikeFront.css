@@ -4292,6 +4292,22 @@ img.image-grayscale {
 .fullCalendar-wrap .fc .fc-daygrid-body td + td {
     border-left: 1px solid #ddd;
 }
+.fullCalendar-wrap .fc .fc-daygrid-body .fc-daygrid-day-number {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+}
+.fullCalendar-wrap .fc .fc-daygrid-body td.active {
+    background: rgba(250, 84, 0, 0.05);
+}
+.fullCalendar-wrap .fc .fc-daygrid-body .active .fc-daygrid-day-number {
+    background: #fa5400;
+    color: #fff;
+}
 .fullCalendar-wrap .fc .fc-daygrid-body .fc-day-other {
     background: #f7f7f7;
 }

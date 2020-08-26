@@ -231,6 +231,12 @@ export default {
         },
         // 달력에 일자 클릭시
         handleDateClick(arg) {
+            if (document.querySelector('.fc-daygrid-day.active')) {
+                document
+                    .querySelector('.fc-daygrid-day.active')
+                    .classList.remove('active');
+            }
+            arg.dayEl.classList.add('active');
             this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
         },
         // 일정 등록 클릭시
