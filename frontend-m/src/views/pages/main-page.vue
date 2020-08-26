@@ -63,7 +63,12 @@
         </ul>
         <h2 class="main-title">CALENDAR</h2>
         <div>
-            <FullCalendar ref="fullCalendar" :options="calendarOptions"/>
+            <FullCalendar
+                    ref="fullCalendar"
+                    :options="calendarOptions"
+                    defaultView="month"
+                    :editable="false"
+            />
         </div>
         <h2 class="main-title">REPORT</h2>
         <ul class="main-report-list">
@@ -105,13 +110,13 @@
 </template>
 <script>
 import {getMain} from '@/api/main';
-import {getCalendarList, getTodayCalendar} from '@/api/calendar/';
-import {getCode} from '@/api/code/'
+import {getCalendarEachList, getTodayCalendar} from '@/api/calendar/';
 
 import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import momentPlugin from '@fullcalendar/moment';
 
 export default {
     name: 'MainPage',
@@ -125,26 +130,34 @@ export default {
             noticeArticleList:[],
             reportList : [],
             toolKitContentsList : [],
-            yyyyMm: moment(new Date()).format('YYYY.MM'),
-            searchDt: moment(new Date()).format('YYYY.MM.DD'),
-            currentDate: moment(new Date()).format('YYYY.MM.DD'),
-            statusCode: null,
-            calendarDetail: {},
-            calenderSectionCodeList: [],
-            calendarData: [],
             todayData: [],
+            yyyyMm: moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
-                plugins: [dayGridPlugin, interactionPlugin],
+                plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
+                // 일자 클릭시
+                // dateClick: this.handleDateClick,
                 dateClick: this.handleDateClick,
-                events: [], //달력에 표시
+                moreLinkClick: this.test,
+                height: 500,
+                events: [],
+                dayMaxEventRows: true,
+                timeGrid: {
+                    dayMaxEventRows: 1,
+                },
+                headerToolbar: {
+                    left: 'prev',
+                    center: 'title',
+                    right: 'next',
+                },
+                titleFormat: 'yyyy.M',
                 customButtons: {
                     prev: {
                         // this overrides the prev button
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
-                            this.getCalendarList(
+                            this.getCalendarEachList(
                                 moment(calendarApi.getDate()).format('YYYY.MM')
                             );
                         },
@@ -154,22 +167,23 @@ export default {
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
-                            this.getCalendarList(
+                            this.getCalendarEachList(
                                 moment(calendarApi.getDate()).format('YYYY.MM')
                             );
                         },
                     },
                 },
-
-            }
+            },
         };
     },
     components: {
         FullCalendar
     },
+    created(){
+        this.loadCalendar();
+    },
     mounted(){
         this.fetchData();
-        this.fetchCalendar();
     },methods: {
         async fetchData(){
             this.loading = true;
@@ -187,25 +201,81 @@ export default {
                 console.log(error);
             }
         },
-        async fetchCalendar() {
+        test(e) {
+            //console.log(e);
+            const date = this.$moment(e.date).format('YYYY-MM-DD');
+            const cal = this.$refs.fullCalendar.$el;
+            const td = cal.querySelector(`td[data-date="${date}"]`);
+            td.classList.add('test');
+
+            setTimeout(() => {
+                const modal = document.querySelector('.fc-more-popover');
+                const close = modal.querySelector('.fc-popover-close');
+                const body = modal.querySelector('.fc-popover-body');
+                body.append(this.yyyyMm + '<a>자세히 보기?</a>');
+                close.addEventListener('click', () => {
+                    td.classList.remove('test');
+                });
+            }, 0);
+        },
+        // 달력 초기 목록 호출
+        async loadCalendar() {
+            this.loadingData = true;
             try {
-                await this.getCalendarList(this.yyyyMm);
-                await this.getTodayCalendar(this.searchDt);
-                await this.loadCalendarCode();
+                await this.getCalendarEachList(this.yyyyMm);
+                this.loadingData = false;
             } catch (error) {
                 alert(error.response.data.msg);
             }
         },
-        handleDateClick: function(arg) { // date 클릭시 이벤트 처리
-            this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
-        },
-        async getCalendarList(yyyyMm) {
+        // 한달 일정 조회
+        async getCalendarEachList(yyyyMm) {
             this.yyyyMm = !!yyyyMm ? yyyyMm : this.yyyyMm;
             const {
                 data: { data: response },
-            } = await getCalendarList({ yyyyMm: this.yyyyMm });
+            } = await getCalendarEachList({ yyyyMm: this.yyyyMm });
             this.calendarData = response;
             this.transformData();
+        },
+        // 달력에 맞게 변수명 변경
+        transformData() {
+            this.calendarOptions.events = [];
+            this.calendarData.forEach((item) => {
+                let className;
+                if (item.calendarSectionCode === 'EDUCATION') {
+                    className = 'edu';
+                } else if (item.calendarSectionCode === 'CAMPAIGN') {
+                    className = 'campaign';
+                } else {
+                    className = 'official';
+                }
+                this.calendarOptions.events.push({
+                    ...item,
+                    title: item.scheduleName,
+                    description: item.contents,
+                    start: item.beginDt.replace(/\./gi, "-"),
+                    end: moment(item.endDt).add(1, 'days')._i.replace(/\./gi, "-"),
+                    className: className,
+                });
+            });
+            this.distinctAndAddEvent();
+        },
+        distinctAndAddEvent() {
+            let distinctEventList = [];
+            this.calendarOptions.events.forEach(item => {
+                let check = false;
+                distinctEventList.forEach((ele) => {
+                    if (item.start === ele.start) {
+                        check = true;
+                    }
+                });
+                if (!check) {
+                    distinctEventList.push(item);
+                }
+            });
+            distinctEventList.forEach(item => {
+                this.calendarOptions.events.unshift(item);
+            });
         },
         async getTodayCalendar(searchDt) {
             this.searchDt = !!searchDt ? searchDt : this.searchDt;
@@ -214,25 +284,41 @@ export default {
             } = await getTodayCalendar({ searchDt: this.searchDt });
             this.todayData = response;
         },
-        async loadCalendarCode() {
-            const {
-                data: { data: response },
-            } = await getCode('CALANDAR_TYPE');
-            this.calenderSectionCodeList = response;
-        },
-        transformData: function () {
-            this.calendarOptions.events = [];
-            this.calendarData.forEach((item) => {
-                this.calendarOptions.events.push({
-                    ...item,
-                    title: item.scheduleName,
-                    description: item.contents,
-                    start: moment(item.beginDt).format('YYYY-MM-DD'),
-                    end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
-                });
-            });
-        }
     }
 };
 </script>
-<style scoped></style>
+<style scoped>
+    ::v-deep .fc .fc-more-popover {
+        margin-top: 20px;
+    }
+    ::v-deep .test {
+        background: red;
+    }
+
+    ::v-deep .fc-daygrid-day-bottom {
+        width: 100%;
+    }
+    ::v-deep .fc-daygrid-more-link {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        /*text-indent: -99999px;*/
+    }
+    ::v-deep .fc-daygrid-more-link:before {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        content: '';
+        display: block;
+        width: 3px;
+        height: 3px;
+        border-radius: 100%;
+        background: #fa5400;
+    }
+    ::v-deep .fc-popover-body .fc-daygrid-event-harness:first-child {
+        display: none;
+    }
+</style>
