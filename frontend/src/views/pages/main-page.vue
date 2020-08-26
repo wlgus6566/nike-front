@@ -320,8 +320,7 @@ export default {
         },
         // 달력에 맞게 변수명 변경
         transformData() {
-            // this.calendarOptions.events = [];
-            let getEvent = [];
+            this.calendarOptions.events = [];
             this.calendarData.forEach((item) => {
                 let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
@@ -331,21 +330,20 @@ export default {
                 } else {
                     className = 'official';
                 }
-                getEvent.push({
+                this.calendarOptions.events.push({
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: moment(item.beginDt).format('YYYY-MM-DD'),
-                    end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
+                    start: item.beginDt.replace(/\./gi, "-"),
+                    end: moment(item.endDt).add(1, 'days')._i.replace(/\./gi, "-"),
                     className: className,
-                    checkDuple: false,
                 });
             });
-            this.distinctAndAddEvent(getEvent);
+            this.distinctAndAddEvent();
         },
-        distinctAndAddEvent(getEvent) {
+        distinctAndAddEvent() {
             let distinctEventList = [];
-            getEvent.forEach((item) => {
+            this.calendarOptions.events.forEach(item => {
                 let check = false;
                 distinctEventList.forEach((ele) => {
                     if (item.start === ele.start) {
@@ -356,20 +354,8 @@ export default {
                     distinctEventList.push(item);
                 }
             });
-            distinctEventList.forEach((item) => {
-                getEvent.unshift(item);
-            });
-            this.patchEventData(getEvent);
-        },
-        patchEventData(getEvent) {
-            getEvent.forEach((item) => {
-                this.calendarOptions.events.push({
-                    contents: item['contents'],
-                    start: item['start'],
-                    end: item['end'],
-                    title: item['title'],
-                    color: item['color'],
-                });
+            distinctEventList.forEach(item => {
+                this.calendarOptions.events.unshift(item);
             });
         },
         async getTodayCalendar(searchDt) {
