@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -87,7 +88,7 @@ public class JoinController {
      * @implNote
      * @since 2020. 8. 26. 오후 4:00:40
      */
-    @GetMapping(value = "/delete", name = "점유시간 삭제")
+    @DeleteMapping(value = "/delete", name = "점유시간 삭제")
     public CommonResult joinRedisDelete(HttpServletRequest request, JoinDTO joinDTO) {
         String token = request.getHeader("Authorization");
         if(!ObjectUtils.isEmpty(token)){
@@ -95,7 +96,7 @@ public class JoinController {
             redisKey.append(joinDTO.getMenuName());
             redisKey.append(":");
             redisKey.append(joinDTO.getSeq());
-            String redisToken = String.valueOf(redisService.get(redisKey.toString()));
+            String redisToken = StringUtils.defaultIfBlank((String) redisService.get(redisKey.toString()), null);
             if(!ObjectUtils.isEmpty(redisToken)){
                 if(redisToken.equals(token)){
                     redisService.delete(redisKey.toString());
