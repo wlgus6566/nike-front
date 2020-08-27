@@ -30,18 +30,18 @@ export default {
         ListModal,
     },
     watch: {
-        // 'selectList.value'() {
-        //     const _index = this.selectList.listSortOptions.findIndex(el => {
-        //         return el.value === this.selectList.value;
-        //     });
-        //     this.selectLabel = this.selectList.listSortOptions[_index].label;
-        // },
+        'selectList.value'() {
+            const _index = this.selectList.listSortOptions.findIndex(el => {
+                return el.value === this.selectList.value;
+            });
+            this.selectLabel = this.selectList.listSortOptions[_index].label;
+        },
     },
     mounted() {
         this.findLabel();
     },
     methods: {
-        changeLabelFn(label) {
+        changeLabelFn(value, label) {
             this.closeModal(label);
         },
         findLabel() {
