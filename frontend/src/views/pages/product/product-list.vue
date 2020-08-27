@@ -123,7 +123,6 @@ export default {
             this.initGetUserProduct();
         },
         initGetUserProduct() {
-            console.log('initGetUserProduct');
             this.totalPage = null;
             this.page = 0;
             this.userProductListData = null;
