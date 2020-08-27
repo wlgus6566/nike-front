@@ -28,6 +28,7 @@
             <template v-if="answerList">
                 <FeedbackList
                     :answerList="answerList"
+                    :userId="userId"
                     v-if="answerList.length"
                     @reportAnswerDelete="reportAnswerDelete"
                 />
@@ -84,6 +85,7 @@ import Loading from '@/components/loading';
 import FeedbackList from '@/components/feedback-list';
 import SortingList from '@/components/asset-view/sorting-list.vue';
 import ReportItem from '@/components/report-view/report-Item.vue';
+import { getUserIdFromCookie } from '@/utils/cookies';
 export default {
     name: 'detail-view',
     data() {
@@ -120,6 +122,11 @@ export default {
         Loading,
         SortingList,
         ReportItem,
+    },
+    computed: {
+        userId() {
+            return this.$store.state.user || getUserIdFromCookie();
+        },
     },
     created() {
         this.reportDetailView();
