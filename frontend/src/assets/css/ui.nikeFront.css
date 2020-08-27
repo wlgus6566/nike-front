@@ -5,7 +5,7 @@
 }
 /* margin */
 .mt0 {
-    margin-top: 0px !important;
+    margin-top: 0 !important;
 }
 .mt10 {
     margin-top: 10px !important;
@@ -664,8 +664,8 @@
     box-shadow: none;
 }
 .vc-popover-content-wrapper {
-    -webkit-box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.08);
-    box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.08);
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.08);
     z-index: 30 !important;
 }
 .date-picker .focus\:vc-shadow:focus {
@@ -1361,7 +1361,7 @@
     top: 0;
     left: 0;
     height: 2px;
-    width: 0%;
+    width: 0;
     background: rgba(255, 0, 0, 0.3);
 }
 .upload-file-list li label {
@@ -2942,7 +2942,7 @@
     display: inline-block;
     font-size: 12px;
     color: #888;
-    letter-spacing: 0px;
+    letter-spacing: 0;
     font-weight: 300;
 }
 .detail-view .detail-cont {
@@ -3006,7 +3006,7 @@
 }
 
 .detail-view .detail-cont hr {
-    border: 0px;
+    border: 0;
     border-top: 1px solid #ccc;
 }
 
@@ -4355,7 +4355,7 @@ img.image-grayscale {
     border-color: #007b68;
 }
 .fullCalendar-wrap .fc-direction-ltr .fc-daygrid-event.campaign:before {
-    background-color: #007b68;
+    background-color: #00b398;
 }
 .fullCalendar-wrap .fc-direction-ltr .fc-daygrid-event.edu {
     border-color: #be1767;
