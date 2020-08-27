@@ -115,6 +115,9 @@ export default {
                 console.log(res);
                 if (res.data.success) {
                     alert('변경되었습니다.');
+                    this.password = '';
+                    this.newPassword = '';
+                    this.confirmPassword = '';
                     this.$router.push('/mypage/info');
                 } else {
                     alert(res.data.msg);
