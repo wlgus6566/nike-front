@@ -288,7 +288,6 @@ export default {
                 this.oldRoutePath.split('/')[1]
             ) {
                 if (this.headerActiveNav) {
-                    console.log(11111111111111111);
                     this.headerAni(this.headerActiveNav);
                 }
                 this.toggleHeader(this.headerActiveNav);

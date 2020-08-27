@@ -196,8 +196,6 @@ export default {
 .group-check-all input {
     opacity: 0;
     position: absolute;
-    top: 0;
-    left: -9999px;
 }
 .group-check-all i {
     display: inline-block;
