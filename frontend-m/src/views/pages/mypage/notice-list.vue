@@ -57,7 +57,8 @@ export default {
     },
     components: {
         Pagination: () => import('@/components/pagination/'),
-        Loading: () => import('@/components/loading/')
+        Loading: () => import('@/components/loading/'),
+        NoData: () => import('@/components/no-data')
     },
     mounted() {
         this.getNoticeList();
