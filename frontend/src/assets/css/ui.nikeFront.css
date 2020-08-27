@@ -4483,6 +4483,7 @@ img.image-grayscale {
     margin: 0 0 0 -15px;
 }
 .main-fc .fc .fc-h-event .fc-event-title {
+    max-width: 160px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

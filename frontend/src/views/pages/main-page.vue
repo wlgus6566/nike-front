@@ -284,7 +284,6 @@ export default {
                 a.classList.add('fc-more');
                 a.appendChild(txt);
                 body.appendChild(a);
-                console.log(a);
                 close.addEventListener('click', () => {
                     td.classList.remove('test');
                 });
