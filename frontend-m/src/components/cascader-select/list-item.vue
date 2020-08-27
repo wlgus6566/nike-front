@@ -51,7 +51,7 @@ export default {
     vertical-align: 3px;
 }
 .select-options-list > li.disabled > span,
-.depth-list > li.disabled > .select-label:before {
+.select-options-list > li.disabled > .select-label:before {
     opacity: 0.3;
 }
 .depth-list > li.selected > .select-label:before {
