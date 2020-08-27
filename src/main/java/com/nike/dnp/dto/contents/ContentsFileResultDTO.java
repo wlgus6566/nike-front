@@ -131,7 +131,7 @@ public class ContentsFileResultDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileExtension", value = "파일 컨텐츠 타입", example = "image/jpeg")
+    @ApiModelProperty(name = "fileContentType", value = "파일 컨텐츠 타입", example = "image/jpeg")
     private String fileContentType;
 
     /**

@@ -1,6 +1,7 @@
 package com.nike.dnp.entity.report;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.report.ReportFileSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.util.CloudFrontUtil;
@@ -66,6 +67,15 @@ public class ReportFile extends BaseTimeEntity {
     @Column(name = "FILE_SIZE")
     @ApiModelProperty(name = "fileSize", value = "파일 사이즈")
     private String fileSize;
+
+    /**
+     * 파일 종류 공통코드
+     *
+     * @author [이소정]
+     */
+    @Column(name = "FILE_KIND_CODE")
+    @ApiModelProperty(name = "fileKindCode", value = "FILE", hidden = true)
+    private String fileKindCode;
 
     /**
      * The File physical name
@@ -208,7 +218,7 @@ public class ReportFile extends BaseTimeEntity {
         saveReportFile.setDetailThumbnailFileSize(reportFileSaveDTO.getDetailThumbnailFileSize());
         saveReportFile.setDetailThumbnailFilePhysicalName(reportFileSaveDTO.getDetailThumbnailFilePhysicalName());
 
-
+        saveReportFile.setFileKindCode(ServiceCode.ContentsFileKindCode.FILE.toString());
         saveReportFile.setDownloadCount(0l);
         saveReportFile.setUseYn("Y");
         return saveReportFile;
