@@ -128,4 +128,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.login-wrap {
+    padding-top: 0;
+}
+</style>

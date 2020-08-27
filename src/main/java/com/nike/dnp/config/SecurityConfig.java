@@ -180,7 +180,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.authorizeRequests()
 			.antMatchers(HttpMethod.POST,"/api/login").permitAll()
-			.antMatchers("/api/open/**","/api/main/", "/api/mypage/**", "/api/calendar/eachList/**", "/api/alarm/**","/api/join/**").permitAll()
+			.antMatchers("/api/open/**"
+						, "/api/main"
+						, "/api/main/**"
+						, "/api/mypage/**"
+						, "/api/calendar/eachList/**"
+						, "/api/alarm/**"
+						,"/api/join/**").permitAll()
 			.accessDecisionManager(accessDecisionManager())
 			.anyRequest().authenticated()
 			.and()
