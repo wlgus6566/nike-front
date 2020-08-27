@@ -241,7 +241,7 @@ export default {
                     ? 'toolkit'
                     : 'asset';
             if (topCode === 'report') {
-                return `/${topCode}/${item.folderSeq}`.toLocaleLowerCase();
+                return `/${topCode}/detail/${item.folderSeq}`.toLocaleLowerCase();
             } else {
                 return `/${topCode}/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
             }
