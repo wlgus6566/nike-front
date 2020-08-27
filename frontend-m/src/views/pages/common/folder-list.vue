@@ -1,7 +1,6 @@
 <template>
     <div>
         <div class="sorting-area">
-<!--            <ListSorting :listTypes="listTypes" />-->
             <button
                     type="button"
                     :class="[viewType ? 'type-list' : 'type-list-thum']"
@@ -12,7 +11,7 @@
             <FilterSelect :selectList="listSortSelect"></FilterSelect>
             <div class="search-input" :class="{ active: isActive }">
                 <div class="input-box">
-                    <input type="text" placeholder="검색어를 입력해주세요." v-model="searchKeyword"/>
+                    <input type="text" placeholder="검색어를 입력해주세요." @keyup.enter="onClickSearch" v-model="searchKeyword"/>
                     <button type="button" class="search" @click="onClickSearch"><span>검색</span></button>
                 </div>
                 <button type="button" class="btn-txt" @click="cancelSearch"><span>취소</span></button>
@@ -20,11 +19,35 @@
         </div>
         <template v-if="folderListData">
             <ul :class="viewTypeClass" v-if="folderListData.length">
-                <FolderList
-                    v-if="folderListData.length"
-                    :listTypes="listTypes"
-                    :folderListData="folderListData"
-                />
+                <li
+                    class="folder-list-item"
+                    v-for="(item, index) in folderListData"
+                    :key="index"
+                >
+                    <router-link :to="setUrl(item)">
+                        <div class="thumbnail">
+                            <img :src="item.imageFilePhysicalName" alt="" />
+                        </div>
+                        <div class="info-box">
+                            <strong class="title">{{ item.folderName }}</strong>
+                            <p class="txt">{{ item.folderContents }}</p>
+                            <p
+                                    v-if="item.campaignPeriodSectionCode === 'EVERY'"
+                                    class="date"
+                            >
+                                365
+                            </p>
+                            <p v-else class="date">
+                                {{ $moment(item.campaignBeginDt).format('YYYY.MM.DD') }}
+                                ~
+                                {{ $moment(item.campaignEndDt).format('YYYY.MM.DD') }}
+                            </p>
+                        </div>
+                        <div class="view-area">
+                            <span class="view">{{ item.readCount }}</span>
+                        </div>
+                    </router-link>
+                </li>
             </ul>
             <template v-else>
                 <NoData>
@@ -67,7 +90,6 @@ export default {
             viewTypeClass: 'folder-list-row',
             isLastPage: true,
             loadingData: false,
-            // orderType: 'LATEST',
             listSortSelect: {
                 listSortOptions: [
                     {
@@ -98,11 +120,16 @@ export default {
             if (val === '') {
                 this.listSortSelect.value = 'LATEST';
             }
-            this.initFetchData();
+            this.page = 0;
+            this.initPageData();
         },
+        // 라우터 변경 감지
+        '$route'(to, from) {
+            this.initPageData();
+        }
     },
     created() {
-        this.initFetchData();
+        this.initPageData();
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
@@ -115,6 +142,12 @@ export default {
         window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
+        initPageData() {
+            this.totalPage = null;
+            this.page = 0;
+            this.folderListData = null;
+            this.initFetchData();
+        },
         // 초기 데이타 조회
         async initFetchData(infinite) {
             this.loadingData = true;
@@ -145,7 +178,6 @@ export default {
                 } else {
                     this.folderListData = response.content;
                 }
-                this.isLastPage = response.last;
                 this.page++;
                 this.loadingData = false;
             } catch (error) {
@@ -154,10 +186,10 @@ export default {
         },
         // 검색
         onClickSearch() {
-            console.log('onClickSearch')
             this.isActive = true;
             if (!!this.searchKeyword) {
-                this.initFetchData();
+                this.page = 0;
+                this.initPageData();
             }
         },
         // 검색 취소
@@ -174,33 +206,32 @@ export default {
                 this.viewTypeClass = 'folder-list-row';
             }
         },
+        setUrl(item) {
+            return `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase();
+        },
         /**
          * 스크롤 관련 method
          */
         handleScroll() {
             if (this.loadingData) return;
             const windowE = document.documentElement;
+            console.log('indowE.clientHeight + windowE.scrollTop', windowE.clientHeight + windowE.scrollTop, windowE.scrollHeight)
             if (
-                windowE.clientHeight + windowE.scrollTop+1 >=
+                windowE.clientHeight + windowE.scrollTop >=
                 windowE.scrollHeight
             ) {
                 this.infiniteScroll();
             }
         },
         infiniteScroll() {
-            console.log('aaaaa', !this.loadingData &&
-                this.totalPage > this.page - 1 &&
-                this.folderListData.length >= this.itemLength &&
-                this.folderListData.length !== 0 &&
-                !this.isLastPage)
             if (
                 !this.loadingData &&
                 this.totalPage > this.page - 1 &&
-                this.folderListData.length >= this.itemLength &&
+                this.folderListData.length >= this.pageSize &&
                 this.folderListData.length !== 0 &&
                 !this.isLastPage
             ) {
-                this.initFetchData(true);
+                this.initPageData(true);
             }
         },
     },

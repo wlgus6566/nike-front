@@ -1,4 +1,12 @@
 <template>
+<!--    <transition-group-->
+<!--            name="folder-list"-->
+<!--            tag="ul"-->
+<!--            v-bind:class="[-->
+<!--            { 'folder-list': listTypes[0].active },-->
+<!--            { 'folder-list-row': listTypes[1].active },-->
+<!--        ]"-->
+<!--    >-->
     <li
         class="folder-list-item"
         v-for="(item, index) in folderListData"
@@ -28,19 +36,20 @@
             </div>
         </router-link>
     </li>
+<!--    </transition-group>-->
 </template>
 <script>
 export default {
     name: 'folder-list',
-    props: ['folderListData'],
+    props: ['folderListData', 'listTypes'],
     mounted() {},
     methods: {
-        classBind(el) {
-            const defaultClass = 'folder-list-item';
-            const detailAuth = el.detailAuthYn === 'Y' ? ' detail-auth' : '';
-            const exposure = el.exposure === 'Y' ? ' exposure' : '';
-            return `${defaultClass}${detailAuth}${exposure}`;
-        },
+        // classBind(el) {
+        //     const defaultClass = 'folder-list-item';
+        //     const detailAuth = el.detailAuthYn === 'Y' ? ' detail-auth' : '';
+        //     const exposure = el.exposure === 'Y' ? ' exposure' : '';
+        //     return `${defaultClass}${detailAuth}${exposure}`;
+        // },
         setUrl(item) {
             return `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase();
         },
