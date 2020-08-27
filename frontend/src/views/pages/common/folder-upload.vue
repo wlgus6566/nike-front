@@ -480,7 +480,7 @@ export default {
             try {
                 const { data: response } = await getContentsView(
                     this.$route.meta.topMenuCode,
-                    this.$route.params.pathMatch,
+                    this.$route.params.pathMatch.toUpperCase(),
                     this.$route.params.id
                 );
                 console.log(response);
