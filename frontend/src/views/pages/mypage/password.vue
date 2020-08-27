@@ -97,11 +97,23 @@ export default {
         };
     },
     mounted() {
-        this.password = '';
-        this.newPassword = '';
-        this.confirmPassword = '';
+        this.reset();
+    },
+    activated() {
+        this.reset();
+    },
+    deactivated() {
+        this.reset();
+    },
+    destroyed() {
+        this.reset();
     },
     methods: {
+        reset() {
+            this.password = '';
+            this.newPassword = '';
+            this.confirmPassword = '';
+        },
         async passwordChange() {
             try {
                 const res = await changePassword({

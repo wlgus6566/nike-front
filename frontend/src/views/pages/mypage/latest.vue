@@ -137,7 +137,6 @@ export default {
                 this.historyFolderData.length >= this.itemLength &&
                 this.historyFolderData.length !== 0
             ) {
-                console.log('infiniteScroll');
                 this.historyViewDataList(true);
             }
         },
