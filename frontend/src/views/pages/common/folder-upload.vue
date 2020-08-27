@@ -398,8 +398,6 @@ export default {
         //     }
         // },
         uploadFiles() {
-            console.log(this.menuCode);
-
             if (!this.folderDetail.imageBase64) {
                 alert('썸네일');
                 return;
@@ -438,12 +436,12 @@ export default {
                 this.folderDetail.campaignEndDt = this.$moment(
                     this.EndDt
                 ).format('YYYY.MM.DD');
-                console.log(this.$route);
                 let response;
+
                 if (this.$route.params.id) {
                     response = await putContents(
                         this.$route.meta.topMenuCode,
-                        this.$route.params.pathMatch,
+                        this.$route.params.pathMatch.toUpperCase(),
                         this.$route.params.id,
                         this.folderDetail
                     );
@@ -477,6 +475,7 @@ export default {
             }
         },
         async getFolderDetail() {
+            console.log(this.$route.params.pathMatch.toUpperCase());
             try {
                 const { data: response } = await getContentsView(
                     this.$route.meta.topMenuCode,

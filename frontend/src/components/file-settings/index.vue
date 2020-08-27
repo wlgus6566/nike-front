@@ -191,13 +191,13 @@ export default {
                         const formData = new FormData();
                         formData.append('uploadFile', el);
                         const config = {
-                            onDownloadProgress: (progressEvent) => {
+                            /* onDownloadProgress: (progressEvent) => {
                                 let percentCompleted = Math.round(
                                     (progressEvent.loaded * 100) /
                                         progressEvent.total
                                 );
                                 console.log(percentCompleted);
-                            },
+                            },*/
 
                             onUploadProgress: (progressEvent) => {
                                 let percentCompleted = Math.round(
@@ -232,7 +232,6 @@ export default {
                                 this.emitFileList();
                             }
                         });
-                        console.log(3);
                     } catch (error) {
                         console.error(error);
                     }
