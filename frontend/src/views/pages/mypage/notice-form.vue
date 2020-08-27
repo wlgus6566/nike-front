@@ -106,6 +106,11 @@ import { getAuthFromCookie } from '@/utils/cookies';
 
 export default {
     name: 'notice-form',
+    watch: {
+        '$route'() {
+            this.$destroy();
+        }
+    },
     data() {
         return {
             //noticeArticleSectionCode: 'NOTICE',

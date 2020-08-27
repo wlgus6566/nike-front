@@ -85,6 +85,11 @@ import { getAuthFromCookie } from '@/utils/cookies';
 
 export default {
     name: 'faq-form',
+    watch: {
+        '$route'() {
+            this.$destroy();
+        }
+    },
     data() {
         return {
             noticeArticleSeq: null,
