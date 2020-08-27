@@ -50,8 +50,9 @@ export default {
     background: #fa5400;
     vertical-align: 3px;
 }
-.select-options-list > li.disabled > span {
-    color: blue;
+.select-options-list > li.disabled > span,
+.select-options-list > li.disabled > .select-label:before {
+    opacity: 0.3;
 }
 .depth-list > li.selected > .select-label:before {
     background-image: url(../../assets/images/svg/icon-dropbox-depth-on.svg);

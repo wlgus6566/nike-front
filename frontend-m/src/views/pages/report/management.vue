@@ -133,21 +133,17 @@ export default {
         Loading: () => import('@/components/loading/'),
     },
     created() {
-        this.fetchData();
+        this.initRepoerProduct();
         this.authCacheList();
-        console.log('activated');
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
-        console.log('activated');
         window.addEventListener('scroll', this.handleScroll);
     },
     deactivated() {
-        console.log('activated');
         window.removeEventListener('scroll', this.handleScroll);
     },
     destroyed() {
-        console.log('activated');
         window.removeEventListener('scroll', this.handleScroll);
     },
     mounted() {
@@ -158,13 +154,19 @@ export default {
             if (val === '') {
                 this.selectList.value = 'ALL';
             }
-            this.fetchData();
+            this.initRepoerProduct();
         },
         'authority.value'() {
-            this.fetchData();
+            this.initRepoerProduct();
         },
     },
     methods: {
+        initRepoerProduct() {
+            this.totalPage = null;
+            this.page = 0;
+            this.reportList = null;
+            this.fetchData();
+        },
         //권한 조회
         async authCacheList() {
             try {
@@ -218,13 +220,11 @@ export default {
                 } else {
                     this.reportList = response.content;
                 }
-                console.log(response);
                 this.pageLast = response.last;
                 this.totalPage = response.totalPages;
                 this.loadingData = false;
             } catch (error) {
                 console.log(error);
-                this.loadingData = false;
             }
         },
         searchView() {
@@ -244,7 +244,7 @@ export default {
             }
         },
         search() {
-            this.fetchData();
+            this.initRepoerProduct();
         },
         handleScroll() {
             if (this.loadingData) return;
