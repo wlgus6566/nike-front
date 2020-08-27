@@ -100,7 +100,7 @@ public class ReportController {
         + "number||현재페이지|Integer\n"
         + "size||노출갯수|Integer\n\n\n\n"
     )
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 목록 조회test")
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 목록 조회")
     public SingleResult<Page<ReportResultDTO>> findAllReports(
             final ReportSearchDTO reportSearchDTO
     ) {
@@ -147,7 +147,7 @@ public class ReportController {
     @GetMapping(name = " 보고서 상세조회", value = "/{reportSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<ReportResultDTO> findReport(
-            @ApiParam(name = "reportSeq", value = "보고서 시퀀스tetetet", defaultValue = "2") @PathVariable final Long reportSeq
+            @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2") @PathVariable final Long reportSeq
     ) {
         log.info("ReportController.findReport");
         return responseService.getSingleResult(reportService.findByReportSeq(reportSeq));

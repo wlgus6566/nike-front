@@ -4156,7 +4156,7 @@ img.image-grayscale {
     position: relative;
     z-index: 2;
     flex-grow: 1;
-    max-width: calc(100% - 300px);
+    /*max-width: calc(100% - 300px);*/
 }
 .schedule-item .title {
     position: relative;
@@ -4192,9 +4192,11 @@ img.image-grayscale {
     letter-spacing: 0;
 }
 .schedule-item .info {
+    flex-shrink: 0;
     z-index: 2;
     position: relative;
     margin-top: 14px;
+    margin-left: 30px;
 }
 .schedule-item .btn-edit {
     margin-right: 32px;

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="page-title">개인정보 처리방침</h2>
+        <h2 class="page-title"><span class="ko">개인정보 처리방침</span></h2>
         <termsTab :tabName="tabName" />
         <div class="filter-select">
             <el-select v-model="termsHistory">
