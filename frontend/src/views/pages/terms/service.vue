@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="page-title">이용약관</h2>
+        <h2 class="page-title"><span class="ko">이용약관</span></h2>
         <termsTab :tabName="tabName" />
         <div class="filter-select">
             <el-select v-model="termsHistory">
