@@ -16,8 +16,10 @@
                         :key="depth.menuSeq"
                         @click="$emit('menuClose')"
                     >
-                        <router-link :to="depth.menuPathUrl">
-                            {{ depth.menuName }}
+                        <router-link
+                            :to="depth.menuPathUrl"
+                            v-html="depth.menuName"
+                        >
                         </router-link>
                     </li>
                 </ul>

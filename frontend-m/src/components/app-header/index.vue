@@ -62,7 +62,6 @@ export default {
         NavItem,
     },
     destroyed() {
-        this.tabMenuFn();
         window.removeEventListener('scroll', this.handleScroll);
     },
     created() {

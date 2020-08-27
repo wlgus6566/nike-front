@@ -34,11 +34,23 @@ export default {
         },
     },
     mounted() {},
+    created() {
+        this.gnbMenuList();
+    },
     components: {
         LayoutDefault: layouts('default'),
         LayoutClean: layouts('clean'),
         LayoutPub: layouts('pub'),
         LayoutIndex: layouts('index'),
+    },
+    methods: {
+        async gnbMenuList() {
+            try {
+                await this.$store.dispatch('gnbMenuList');
+            } catch (error) {
+                console.error(error);
+            }
+        },
     },
 };
 </script>
