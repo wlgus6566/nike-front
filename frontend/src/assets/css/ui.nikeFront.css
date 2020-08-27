@@ -5,7 +5,7 @@
 }
 /* margin */
 .mt0 {
-    margin-top: 0px !important;
+    margin-top: 0 !important;
 }
 .mt10 {
     margin-top: 10px !important;
@@ -664,8 +664,8 @@
     box-shadow: none;
 }
 .vc-popover-content-wrapper {
-    -webkit-box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.08);
-    box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.08);
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.08);
     z-index: 30 !important;
 }
 .date-picker .focus\:vc-shadow:focus {
@@ -4355,7 +4355,7 @@ img.image-grayscale {
     border-color: #007b68;
 }
 .fullCalendar-wrap .fc-direction-ltr .fc-daygrid-event.campaign:before {
-    background-color: #007b68;
+    background-color: #00b398;
 }
 .fullCalendar-wrap .fc-direction-ltr .fc-daygrid-event.edu {
     border-color: #be1767;
