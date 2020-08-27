@@ -353,7 +353,7 @@ export default {
                     data: { data: response },
                 } = await getContentsView(
                     this.$route.meta.topMenuCode,
-                    this.$route.params.pathMatch,
+                    this.$route.params.pathMatch.toUpperCase(),
                     this.$route.params.id
                 );
                 this.folderDetail = response;
@@ -370,7 +370,7 @@ export default {
                     data: { data: response },
                 } = await getContentsViewFile(
                     this.$route.meta.topMenuCode,
-                    this.$route.meta.menuCode,
+                    this.$route.params.pathMatch.toUpperCase(),
                     this.$route.params.id,
                     {
                         page: this.page,
@@ -380,7 +380,6 @@ export default {
                         fileExtension: this.fileExtension.value,
                     }
                 );
-                console.log(response);
                 this.totalPage = response.totalPages - 1;
                 if (infinite) {
                     this.contentsFileList = this.contentsFileList.concat(
