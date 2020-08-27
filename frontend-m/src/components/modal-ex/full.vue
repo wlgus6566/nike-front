@@ -3,11 +3,12 @@
         title="상세보기"
         class="modal full"
         :visible="visible"
+        fullscreen
         :append-to-body="true"
         @close="$emit('update:visible', false)"
     >
         <div class="modal-contents">
-          모달 컨텐츠 등록
+            모달 컨텐츠 등록
         </div>
 
         <div slot="footer" class="dialog-footer">
