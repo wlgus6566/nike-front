@@ -28,43 +28,63 @@
                 </button>
             </div>
         </div>
-        <ul :class="viewTypeClass">
-            <li
-                class="folder-list-item"
-                v-for="item in reportList"
-                :key="item.reportSeq"
-            >
-                <router-link :to="`/report/${item.reportSeq}`">
-                    <div class="thumbnail">
-                        <img :src="item.imageFilePhysicalName" alt="" />
-                    </div>
-                    <div class="info-box">
-                        <strong class="title" v-text="item.nickname"
-                            >NIKE GANGNAM</strong
-                        >
-                        <p class="txt" v-text="item.reportName">
-                            FA2ss0 RN NIKE DIRECT 시공 보고서 자료
-                        </p>
-                        <p class="date">
-                            {{
-                                $moment(item.registrationDt).format(
-                                    'YYYY.MM.DD'
-                                )
-                            }}
-                        </p>
-                    </div>
-                    <div class="view-area">
-                        <span class="view" v-text="item.readCount">10,000</span>
-                    </div>
-                </router-link>
-            </li>
-        </ul>
-        <Loading v-if="loadingData" />
+        <template v-if="reportList">
+            <ul :class="viewTypeClass" v-if="reportList.length">
+                <li
+                    class="folder-list-item"
+                    v-for="item in reportList"
+                    :key="item.reportSeq"
+                >
+                    <router-link :to="`/report/${item.reportSeq}`">
+                        <div class="thumbnail">
+                            <img :src="item.imageFilePhysicalName" alt="" />
+                        </div>
+                        <div class="info-box">
+                            <strong class="title" v-text="item.nickname"
+                                >NIKE GANGNAM</strong
+                            >
+                            <p class="txt" v-text="item.reportName">
+                                FA2ss0 RN NIKE DIRECT 시공 보고서 자료
+                            </p>
+                            <p class="date">
+                                {{
+                                    $moment(item.registrationDt).format(
+                                        'YYYY.MM.DD'
+                                    )
+                                }}
+                            </p>
+                        </div>
+                        <div class="view-area">
+                            <span class="view" v-text="item.readCount">
+                                10,000
+                            </span>
+                        </div>
+                    </router-link>
+                </li>
+            </ul>
+            <template v-else>
+                <NoData v-if="keyword === ''">
+                    <i class="icon-upload"></i>
+                    <p class="desc">업로드한 폴더가 없습니다.</p>
+                </NoData>
+                <NoData v-else>
+                    <i class="icon-search"></i>
+                    <p class="desc">검색 결과가 없습니다.</p>
+                </NoData>
+            </template>
+        </template>
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
     </div>
 </template>
 <script>
 import FilterSelect from '@/components/filter-select';
 import CascaderSelect from '@/components/cascader-select';
+import NoData from '@/components/no-data';
 import { getReportList, getGroupAuthority } from '@/api/report';
 import { getCategoryList } from '@/utils/code';
 
@@ -80,7 +100,7 @@ export default {
             keyword: '',
             sectionCode: '',
             groupSeq: '',
-            reportList: [],
+            reportList: null,
             searchIsActive: false,
             viewType: true,
             viewTypeClass: 'folder-list-row',
@@ -109,23 +129,28 @@ export default {
     components: {
         FilterSelect,
         CascaderSelect,
+        NoData,
         Loading: () => import('@/components/loading/'),
     },
     created() {
+        this.fetchData();
         this.authCacheList();
+        console.log('activated')
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
+        console.log('activated')
         window.addEventListener('scroll', this.handleScroll);
     },
     deactivated() {
+        console.log('activated')
         window.removeEventListener('scroll', this.handleScroll);
     },
     destroyed() {
+        console.log('activated')
         window.removeEventListener('scroll', this.handleScroll);
     },
     mounted() {
-        this.fetchData();
         getCategoryList('REPORT_SECTION_CODE', this.selectList.listSortOptions);
     },
     watch: {

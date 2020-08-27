@@ -109,7 +109,7 @@ export default {
                         this.totalItem - this.page * this.itemLength - index;
                 });
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         //게시물 삭제
@@ -121,7 +121,7 @@ export default {
                 await deleteCustomer(this.noticeArticleSectionCode, id);
                 await this.getFaqList();
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -165,7 +165,7 @@ export default {
                     });
                 });
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

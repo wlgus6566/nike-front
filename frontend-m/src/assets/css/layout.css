@@ -30,6 +30,7 @@ header {
     display: block;
     background-color: #fff;
     border-bottom: 1px solid #eee;
+    box-sizing: border-box;
 }
 header .logo {
     width: 90px;
@@ -41,6 +42,12 @@ header .logo span {
     display: block;
     overflow: hidden;
     text-indent: -9999px;
+}
+/*.sticky-header header {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
+}*/
+.sticky-header .page-header.header-detail {
+    border-bottom: 1px solid #eee;
 }
 .page-header {
     display: flex;
@@ -139,7 +146,8 @@ header .logo span {
     background: #000;
     transform: translateX(-50%);
 }
-header + .contents {
+header + .contents,
+.page-header.header-detail + .contents {
     padding-top: 60px;
 }
 .page-header + .contents {
@@ -260,7 +268,7 @@ footer .copy {
     font-size: 13px;
     color: #888;
 }
-.sticky-wrap .contents {
+.sticky-bottom .contents {
     padding-bottom: 100px;
 }
 

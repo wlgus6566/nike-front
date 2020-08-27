@@ -176,7 +176,7 @@ export default {
                     alert(response.data.msg);
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -207,7 +207,7 @@ export default {
                     console.log('시퀀스');
                     console.log(this.noticeArticleSeq);
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         },
@@ -232,7 +232,7 @@ export default {
                 });
                 //console.log(this.noticeYnLength);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -249,7 +249,7 @@ export default {
                 this.noticeDetail = response;
                 this.noticeArticleSeq = response.noticeArticleSeq;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 

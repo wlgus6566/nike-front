@@ -201,6 +201,7 @@ import store from '@/store';
 import { getCode } from '@/api/code';
 import { getCategoryList } from '@/utils/code';
 import { fileUpLoad } from '@/api/file';
+import Compress from 'compress.js';
 
 export default {
     name: 'registration',
@@ -298,20 +299,24 @@ export default {
         },
         //이미지 페이지에 삽입
         imageChange(e) {
-            //this.uploadFiles(e.target.files[0], device);
-            const imaName = e.target.files[0].name;
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                console.log(reader.result);
-                this.detailData.imageBase64 = reader.result;
-                this.detailData.imageFileName = imaName;
-            };
-            if (e.target.files[0]) {
-                reader.readAsDataURL(e.target.files[0]);
-            } else {
-                this.detailData.imageBase64 = '';
-                this.detailData.imageFileName = '';
-            }
+            const file = e.target.files[0];
+
+            new Compress()
+                .compress([file], {
+                    size: 4, // the max size in MB, defaults to 2MB
+                    quality: 1, // the quality of the image, max is 1,
+                    maxWidth: 500, // the max width of the output image, defaults to 1920px
+                    maxHeight: 500, // the max height of the output image, defaults to 1920px
+                    resize: true, // defaults to true, set false if you do not want to resize the image width and height
+                })
+                .then((data) => {
+                    let url = `${data[0].prefix}${data[0].data}`;
+                    this.detailData.imageBase64 = url;
+                    this.detailData.imageFileName = file.name;
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
         },
 
         //이미지 폼데이터로 변환
@@ -369,7 +374,7 @@ export default {
                     this.agencySeq.listSortOptions.push(agencyList);
                 });
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         //이미지 받아오기
@@ -406,7 +411,7 @@ export default {
                     this.category3Code.value = this.detailData.category3Code;
                     this.agencySeq.value = this.detailData.agencySeq;
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         },
@@ -442,7 +447,7 @@ export default {
                         await store.dispatch('basketList');
                         this.detailData.imageBase64 = null;
                     } catch (error) {
-                        console.log(error);
+                        console.error(error);
                     }
                 }
             } else {
@@ -454,7 +459,7 @@ export default {
                         this.productDataReset();
                         await this.$router.push('/order/management');
                     } catch (error) {
-                        console.log(error);
+                        console.error(error);
                     }
                 }
             }

@@ -1,5 +1,10 @@
 <template>
-    <header :class="{ 'page-header': tabMenuData !== null }">
+    <header
+        :class="{
+            'page-header': tabMenuData !== null,
+            'header-detail': $route.meta.btn,
+        }"
+    >
         <h1 class="logo" v-if="this.$route.path === '/'">
             <a href="/"><span>나이키</span></a>
         </h1>
@@ -43,9 +48,6 @@ export default {
             tabMenuData: null,
         };
     },
-    created() {
-        this.tabMenuFn();
-    },
     computed: {
         pathUrl() {
             return this.$route.path;
@@ -59,7 +61,31 @@ export default {
     components: {
         NavItem,
     },
+    destroyed() {
+        this.tabMenuFn();
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    created() {
+        this.tabMenuFn();
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    activated() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    deactivated() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    mounted() {},
     methods: {
+        handleScroll() {
+            const body = document.querySelector('body');
+            const windowE = document.documentElement;
+            if (windowE.scrollTop === 0) {
+                body.classList.remove('sticky-header');
+            } else {
+                body.classList.add('sticky-header');
+            }
+        },
         async delFn() {
             console.log(this.$route.meta.topCode);
             console.log(this.$route.params.id);

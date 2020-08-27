@@ -284,7 +284,6 @@ export default {
                 a.classList.add('fc-more');
                 a.appendChild(txt);
                 body.appendChild(a);
-                console.log(a);
                 close.addEventListener('click', () => {
                     td.classList.remove('test');
                 });
@@ -298,7 +297,7 @@ export default {
                 } = await getMain();
                 this.mainData = response;
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         // 달력 초기 목록 호출
@@ -308,7 +307,7 @@ export default {
                 await this.getCalendarEachList(this.yyyyMm);
                 this.loadingData = false;
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         // 한달 일정 조회

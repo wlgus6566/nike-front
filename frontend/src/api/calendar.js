@@ -2,7 +2,7 @@ import { calendar } from './index';
 
 //CALENDAR 목록 조회
 function getCalendarList(params) {
-    return calendar.get(`/`, {
+    return calendar.get(``, {
         params: params,
     });
 }
@@ -14,7 +14,7 @@ function getCalendarEachList(params) {
 }
 //CALENDAR 등록
 function postCalendar(data) {
-    return calendar.post(`/`, data);
+    return calendar.post(``, data);
 }
 //CALENDAR 오늘 조회
 function getTodayCalendar(params) {
@@ -41,5 +41,5 @@ export {
     getTodayCalendar,
     getDetailCalendar,
     delCalendar,
-    putCalendar
+    putCalendar,
 };

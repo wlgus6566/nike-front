@@ -16,11 +16,11 @@
     </section>
 </template>
 <script>
-    import LoginForm from '@/components/login-box/login-form';
-    import CertCode from '@/components/login-box/cert-code';
-    import FindPW from '@/components/login-box/find-password';
+import LoginForm from '@/components/login-box/login-form';
+import CertCode from '@/components/login-box/cert-code';
+import FindPW from '@/components/login-box/find-password';
 
-    export default {
+export default {
     name: 'login',
     data() {
         return {
@@ -14238,8 +14238,7 @@
                 }
                 console.log(response);
             } catch (error) {
-                console.log(error);
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
     },

@@ -110,7 +110,9 @@ export default {
         };
     },
     created() {
-        this.editorConfig.filebrowserImageUploadUrl = process.env.VUE_APP_API_URL+`/api/customer/${this.$route.name.toUpperCase()}/images`;
+        this.editorConfig.filebrowserImageUploadUrl =
+            process.env.VUE_APP_API_URL +
+            `/api/customer/${this.$route.name.toUpperCase()}/images`;
         this.editorConfig.fileTools_requestHeaders.Authorization =
             this.$store.state.token || getAuthFromCookie();
     },
@@ -152,7 +154,7 @@ export default {
                     alert(response.data.msg);
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -179,7 +181,7 @@ export default {
                         alert(response.data.msg);
                     }
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         },
@@ -199,7 +201,7 @@ export default {
                     });
                 });
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -217,7 +219,7 @@ export default {
                     response.noticeArticleCategoryCode;
                 //console.log(response);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 

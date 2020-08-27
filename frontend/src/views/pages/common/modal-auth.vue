@@ -103,8 +103,8 @@ export default {
                     'SP'
                 );
                 this.groupTreeData[0].subAuths = response;
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         checksUpdate() {
