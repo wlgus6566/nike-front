@@ -59,7 +59,7 @@ export default {
                 const {
                     data: { data: response },
                 } = await getCustomerDetail(
-                    this.noticeArticleSectionCode,
+                    this.$route.meta.sectionCode,
                     this.$route.params.id
                 );
                 console.log(response);

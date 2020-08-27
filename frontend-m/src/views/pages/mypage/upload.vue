@@ -21,13 +21,12 @@
                 <p class="desc">업로드한 폴더가 없습니다.</p>
             </NoData>
         </template>
+        <Loading v-if="loadingData" />
     </div>
 </template>
 <script>
 
-import {
-    uploadFolderViewList
-} from '@/api/mypage';
+import { uploadFolderViewList } from '@/api/mypage';
 
 import MyFolderList from '@/components/my-folder-list';
 import NoData from '@/components/no-data';
@@ -41,7 +40,7 @@ export default {
             pageSize: 5,
             totalPage: null,
             typeCd: 'ALL',
-            pageLast: true,
+            isLastPage: true,
             loadingData: false,
             tabList: [
                 {
@@ -66,6 +65,7 @@ export default {
     components: {
         MyFolderList,
         NoData,
+        Loading: () => import('@/components/loading/'),
     },
     created() {
         this.fetchData();
@@ -94,7 +94,7 @@ export default {
                     MobileYn: 'Y'
                 });
                 this.uploadFolderData = response.content;
-                this.pageLast = response.last;
+                this.isLastPage = response.last;
                 this.totalPage = response.totalPages;
 
                 if (infinite) {
@@ -109,7 +109,7 @@ export default {
                     this.uploadFolderDataList = response;
                     this.uploadFolderData = response.content;
                 }
-                this.pageLast = response.last;
+                this.isLastPage = response.last;
                 this.page++;
                 this.loadingData = false;
             } catch (error) {
@@ -144,7 +144,7 @@ export default {
                 this.totalPage > this.page - 1 &&
                 this.uploadFolderData.length >= this.pageSize &&
                 this.uploadFolderData.length !== 0 &&
-                !this.pageLast
+                !this.isLastPage
             ) {
                 this.fetchData(true);
             }

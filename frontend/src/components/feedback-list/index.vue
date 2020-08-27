@@ -9,7 +9,9 @@
                 {{ item.answerContents }}
             </p>
             <div class="info">
-                <span class="name">피드백작성계정명</span>
+                <span class="name">
+                    {{ item.nickname }}
+                </span>
                 <span class="date">
                     {{ $moment(item.registrationDt).format('YYYY.MM.DD') }}
                 </span>
@@ -17,6 +19,7 @@
             <button
                 type="button"
                 class="del"
+                v-if="userId === item.userId"
                 @click="$emit('reportAnswerDelete', item.answerSeq)"
             >
                 <span>삭제</span>
@@ -27,7 +30,7 @@
 <script>
 export default {
     name: 'feedback-list',
-    props: ['answerList'],
+    props: ['answerList', 'userId'],
 };
 </script>
 <style scoped></style>

@@ -1,7 +1,10 @@
 package com.nike.dnp.service.calendar;
 
 import com.nike.dnp.common.variable.FailCode;
-import com.nike.dnp.dto.calendar.*;
+import com.nike.dnp.dto.calendar.CalendarDaySearchDTO;
+import com.nike.dnp.dto.calendar.CalendarSaveDTO;
+import com.nike.dnp.dto.calendar.CalendarSearchDTO;
+import com.nike.dnp.dto.calendar.CalendarUpdateDTO;
 import com.nike.dnp.entity.calendar.Calendar;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
@@ -82,25 +85,22 @@ public class CalendarService {
         log.info("CalendarService.save");
         final ModelMapper modelMapper = new ModelMapper();
         final Calendar calendar = modelMapper.map(calendarSaveDTO, Calendar.class);
-
-        calendar.setBeginDt(LocalDateUtil.strToLocalDateTime(
-                calendarSaveDTO.getBeginDt()+" 00:00:00",DATE_FORMAT));
-        calendar.setEndDt(LocalDateUtil.strToLocalDateTime(
-                calendarSaveDTO.getEndDt()+" 23:59:59",DATE_FORMAT));
-
+        calendar.setBeginDt(LocalDateUtil.strToLocalDateTime(calendarSaveDTO.getBeginDt() + " 00:00:00", DATE_FORMAT));
+        calendar.setEndDt(LocalDateUtil.strToLocalDateTime(calendarSaveDTO.getEndDt() + " 23:59:59", DATE_FORMAT));
+        String [] beginDts = calendarSaveDTO.getBeginDt().split("\\.");
+        String [] endDts = calendarSaveDTO.getEndDt().split("\\.");
+        LocalDate beginDt = LocalDate.of(Integer.parseInt(beginDts[0]), Integer.parseInt(beginDts[1]), Integer.parseInt(beginDts[2]));
+        LocalDate endDt = LocalDate.of(Integer.parseInt(endDts[0]), Integer.parseInt(endDts[1]), Integer.parseInt(endDts[2])).plusDays(1);
+        while(beginDt.isBefore(endDt)){
+            long cnt = calendarRepository.countByBeginDtBeforeAndEndDtAfter(beginDt.atTime(1,0,0), beginDt.atTime(1, 0, 0));
+            if(cnt >= 3){
+                throw new CodeMessageHandleException(FailCode.ConfigureError.MAX_INSERT_CALENDAR.name(),
+                                                     MessageUtil.getMessage(FailCode.ConfigureError.MAX_INSERT_CALENDAR.name(), new String[] {beginDt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))}));
+            }
+            beginDt = beginDt.plusDays(1);
+        }
         calendar.setRegisterSeq(SecurityUtil.currentUser().getUserSeq());
         calendar.setUpdaterSeq(SecurityUtil.currentUser().getUserSeq());
-
-        List<CalendarCheckDTO> checkDTOList =  calendarRepository.findDayListCount(calendar);
-
-        log.debug("checkDTOList.toString() {}", checkDTOList.toString());
-        for(CalendarCheckDTO calendarCheckDTO : checkDTOList){
-            if(calendarCheckDTO.getCount()>3){
-                throw new CodeMessageHandleException(FailCode.ConfigureError.MAX_INSERT_CALENDAR.name(),
-                                                     MessageUtil.getMessage(FailCode.ConfigureError.MAX_INSERT_CALENDAR.name()
-                                                             ,new String [] {calendarCheckDTO.getBeginDt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))}));
-            }
-        }
         return calendarRepository.save(calendar);
     }
 

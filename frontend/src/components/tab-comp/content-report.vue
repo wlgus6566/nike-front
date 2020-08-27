@@ -12,7 +12,19 @@
                             v-for="item in reportBasketList"
                             :key="item.reportBasketSeq"
                         >
-                            <img :src="item.filePhysicalName" alt="" />
+                            <span class="thumbnail">
+                                <img
+                                    :src="item.filePhysicalName"
+                                    :alt="item.fileName"
+                                    v-if="item.filePhysicalName"
+                                />
+                                <span
+                                    :class="[
+                                        `extension-${item.fileExtension.toLowerCase()}`,
+                                    ]"
+                                    v-else
+                                ></span>
+                            </span>
                             <button
                                 type="button"
                                 class="btn-del"
@@ -217,10 +229,15 @@ export default {
     text-indent: -9999999px;
     overflow: hidden;
 }
+.file-list .thumbnail {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: #f7f7f7;
+}
 .file-list li img {
     width: 100%;
     height: 100%;
-    background: red;
     display: block;
     vertical-align: top;
 }
