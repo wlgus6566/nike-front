@@ -84,7 +84,7 @@ export default {
                 this.agencyData = response;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         async addAgencyManagement() {
@@ -106,7 +106,7 @@ export default {
                         alert(response.data.msg);
                     }
                 } catch (error) {
-                    console.log(error.response);
+                    console.error(error);
                 }
             }
         },
@@ -119,7 +119,7 @@ export default {
                 this.addAgencyData = response;
                 this.agencySeq = agencySeq;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         async delAgencyManagement(agencySeq) {
@@ -133,7 +133,7 @@ export default {
                     this.visible.agencyManagement = false;
                     await this.getAgencyData();
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         },
@@ -152,7 +152,7 @@ export default {
                 this.visible.agencyManagement = false;
                 await this.getAgencyData();
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

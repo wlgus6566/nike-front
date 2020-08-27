@@ -157,7 +157,7 @@ export default {
                 this.page++;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -195,15 +195,13 @@ export default {
                             '위시리스트에 추가 되었습니다.\n위시리스트는 마이페이지에서 확인가능합니다.'
                         );
                     } catch (error) {
-                        console.log(error);
-                        alert(error.data.msg);
+                        console.error(error);
                     }
                 } else {
                     alert('이미 담긴상품 입니다.');
                 }
             } catch (error) {
-                console.log(error);
-                alert(error.data.msg);
+                console.error(error);
             }
         },
     },

@@ -130,7 +130,9 @@ export default {
         };
     },
     created() {
-        this.editorConfig.filebrowserImageUploadUrl = process.env.VUE_APP_API_URL+`/api/customer/${this.$route.name.toUpperCase()}/images`;
+        this.editorConfig.filebrowserImageUploadUrl =
+            process.env.VUE_APP_API_URL +
+            `/api/customer/${this.$route.name.toUpperCase()}/images`;
         this.editorConfig.fileTools_requestHeaders.Authorization =
             this.$store.state.token || getAuthFromCookie();
     },
@@ -144,6 +146,7 @@ export default {
     },
     activated() {
         this.getNoticeList();
+        this.detailDataReset();
     },
     methods: {
         submitData() {
@@ -173,7 +176,7 @@ export default {
                     alert(response.data.msg);
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -204,7 +207,7 @@ export default {
                     console.log('시퀀스');
                     console.log(this.noticeArticleSeq);
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         },
@@ -229,7 +232,7 @@ export default {
                 });
                 //console.log(this.noticeYnLength);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -246,7 +249,7 @@ export default {
                 this.noticeDetail = response;
                 this.noticeArticleSeq = response.noticeArticleSeq;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -271,6 +274,8 @@ export default {
             this.noticeDetail.title = '';
             this.noticeDetail.contents = '';
             this.noticeDetail.noticeYn = null;
+            this.editorConfig.filebrowserImageUploadUrl = '';
+            this.editorConfig.fileTools_requestHeaders.Authorization = '';
         },
     },
 };

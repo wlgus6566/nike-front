@@ -186,7 +186,7 @@ export default {
                 this.loadingData = false;
                 await this.loadCalendarCode();
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         // 한달 일정 조회
@@ -277,7 +277,7 @@ export default {
                     this.processAfterSuccess();
                 }
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         async modifyCalendar(calendarSeq, data) {
@@ -291,7 +291,7 @@ export default {
                     this.processAfterSuccess();
                 }
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         async delCalendar(calendarSeq) {
@@ -305,7 +305,7 @@ export default {
                     this.processAfterSuccess();
                 }
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         async processAfterSuccess() {

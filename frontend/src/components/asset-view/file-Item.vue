@@ -62,7 +62,12 @@
                                 />
                                 <i></i>
                             </span>
-                            <span class="thumbnail">
+                            <span
+                                :class="[
+                                    `thumbnail`,
+                                    `extension-${item.fileExtension.toLowerCase()}`,
+                                ]"
+                            >
                                 <img
                                     :src="item.thumbnailFilePhysicalName"
                                     alt=""

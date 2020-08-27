@@ -9,7 +9,13 @@
                 <button type="button" class="btn-alarm" @click="alarmModal">알람</button>
             </div>
             <div class="modal-wrap" >
-                <AlarmModal :visible.sync="visible.activeModal" :alarmList="alarmData"/>
+                <AlarmModal
+                        ref="Alarm"
+                        :visible.sync="visible.activeModal"
+                        :alarmList="alarmData"
+                        @assetClick="clickAsset"
+                        @prAlarmData="getAlarmData"
+                />
             </div>
         </div>
         <hr />
@@ -43,10 +49,11 @@ export default {
             totalPage: null,
             page: 0,
             itemLength: 10,
+            loadingData: false,
         };
     },
     components: {
-        AlarmModal: () => import('@/views/pages/mypage/alarm-modal'),
+        AlarmModal: () => import('@/views/pages/mypage/alarm-modal/'),
         Loading: () => import('@/components/loading/')
     },
 
@@ -65,11 +72,10 @@ export default {
         },
         //알람
         alarmModal() {
-            console.log("alarmModal")
             this.visible.activeModal = true;
         },
-        async getAlarmData() {
-            console.log("getAlarmData")
+        async getAlarmData(infinite) {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -78,16 +84,37 @@ export default {
                     size: this.itemLength,
                 });
                 this.totalPage = response.totalPages;
-                this.alarmData = response.content;
+
+                if (infinite) {
+                    console.log("getAlarmData infinite : " + infinite);
+                    if (this.totalPage > this.page - 1) {
+                        console.log("getAlarmData : " + true);
+                        this.alarmData = this.alarmData.concat(response.content);
+                    } else if (this.totalPage === this.page - 1) {
+                        console.log("getAlarmData : " + false);
+                        this.endPage();
+                    }
+                } else {
+                    console.log("getAlarmData infinite : " + infinite);
+                    this.alarmData = response.content;
+                }
+
                 this.alarmData.forEach((el) => {
                     el.typeCd === "REPORT_MANAGE" ? el.typeCd = "REPORT" : el.typeCd;
                 });
+                this.page++;
                 console.log(this.totalPage);
                 console.log(this.alarmData);
             } catch (error) {
                 console.log(error);
             }
-        }
+        },
+        clickAsset() {
+            console.log("clickAsset");
+            alert("해당 메뉴는 모바일 버전에서 제공되지 않습니다. 자세한 내용은 PC로 접속 시 확인할 수 있습니다.");
+            this.getAlarmData();
+        },
+
     },
 };
 </script>

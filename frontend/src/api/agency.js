@@ -2,11 +2,11 @@ import { agency } from './index';
 
 //AGENCY 에이전시 목록 조회
 function getAgencyContact() {
-    return agency.get(`/`);
+    return agency.get(``);
 }
 //AGENCY 에이전시 등록
 function postAgencyContact(data) {
-    return agency.post(`/`, data);
+    return agency.post(``, data);
 }
 //AGENCY 에이전시 삭제
 function delAgencyContact(agencySeq) {

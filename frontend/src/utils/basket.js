@@ -20,8 +20,8 @@ const addProductBasket = async (goodsSeq, orderQuantity) => {
             alert(response.data.msg);
         }
     } catch (error) {
-        console.log(error);
-        alert(error.data.msg);
+        console.error(error);
+
     }
 };
 
@@ -39,7 +39,7 @@ const addBasketList = async (goodsSeqList, orderQuantityList) => {
         });
         await store.dispatch('basketList');
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 };
 
@@ -53,7 +53,7 @@ const deleteBasketItem = async (goodsBasketSeq) => {
         await deleteBasket(goodsBasketSeq);
         await store.dispatch('basketList');
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 };
 

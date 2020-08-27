@@ -5,10 +5,10 @@ import { auth } from './index';
  * @returns {Promise<AxiosResponse<any>>}
  */
 function getAuthList() {
-    return auth.get(`/`);
+    return auth.get(``);
 }
 function postAuth(data) {
-    return auth.post(`/`, data);
+    return auth.post(``, data);
 }
 function putAuth(seq, data) {
     return auth.put(`/${seq}`, data);

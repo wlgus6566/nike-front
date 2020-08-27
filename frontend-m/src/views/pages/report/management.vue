@@ -135,15 +135,19 @@ export default {
     created() {
         this.fetchData();
         this.authCacheList();
+        console.log('activated')
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
+        console.log('activated')
         window.addEventListener('scroll', this.handleScroll);
     },
     deactivated() {
+        console.log('activated')
         window.removeEventListener('scroll', this.handleScroll);
     },
     destroyed() {
+        console.log('activated')
         window.removeEventListener('scroll', this.handleScroll);
     },
     mounted() {

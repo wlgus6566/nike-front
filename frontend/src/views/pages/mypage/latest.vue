@@ -171,7 +171,7 @@ export default {
                 this.page++;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

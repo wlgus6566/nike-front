@@ -2,7 +2,7 @@ import { contents } from './index';
 
 // 컨텐츠 목록 조회
 function getContents(topMenuCode, menuCode, params) {
-    return contents.get(`/${topMenuCode}/${menuCode}/`, {
+    return contents.get(`/${topMenuCode}/${menuCode}`, {
         params: params,
     });
 }
@@ -24,11 +24,9 @@ function getContentsViewFile(topMenuCode, menuCode, contentsSeq, params) {
 }
 
 function postContents(topMenuCode, menuCode, data) {
-    console.log('등록');
     return contents.post(`/${topMenuCode}/${menuCode}`, data);
 }
 function putContents(topMenuCode, menuCode, id, data) {
-    console.log('수정');
     return contents.put(`/${topMenuCode}/${menuCode}/${id}`, data);
 }
 function deleteContents(topMenuCode, menuCode, contentsSeq) {
@@ -37,7 +35,7 @@ function deleteContents(topMenuCode, menuCode, contentsSeq) {
 
 // 컨텐츠 장바구니 목록 조회
 function getContentsBasket() {
-    return contents.get('/basket/');
+    return contents.get('/basket');
 }
 // 컨텐츠 장바구니 등록
 function addContentsBasket(topMenuCode, menuCode, data) {
@@ -53,6 +51,11 @@ function getContentsAuthList(topMenuCode, menuCode) {
     return contents.get(`/${topMenuCode}/${menuCode}/authList`);
 }
 
+// 컨텐츠 권한 목록 조회
+function sendMail(data) {
+    return contents.post(`/sendMail`, data);
+}
+
 export {
     getContents,
     getContentsView,
@@ -64,4 +67,5 @@ export {
     addContentsBasket,
     delContentsBasket,
     getContentsAuthList,
+    sendMail,
 };

@@ -192,7 +192,6 @@ export default {
         // 알람목록
         async alarmData(infinite) {
             this.loadingData = true;
-            console.log(this.page);
             try {
                 const {
                     data: { data: response },
@@ -200,7 +199,6 @@ export default {
                     page: this.page,
                     size: this.size,
                 });
-                console.log(this.totalPage);
                 this.totalPage = response.totalPages;
                 if (infinite) {
                     if (this.totalPage > this.page - 1) {
@@ -217,10 +215,7 @@ export default {
                 this.page++;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
-                if (error.data.existMsg) {
-                    alert(error.data.msg);
-                }
+                console.error(error);
             }
         },
         // 알람삭제
@@ -233,10 +228,7 @@ export default {
                 await this.alarmData();
                 this.alarmActive = false;
             } catch (error) {
-                //console.log(error);
-                if (error.data.existMsg) {
-                    alert(error.data.msg);
-                }
+                console.error(error);
             }
         },
         setUrl(item) {

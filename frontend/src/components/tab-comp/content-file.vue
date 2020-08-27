@@ -116,8 +116,8 @@ export default {
                     data: { data: response },
                 } = await this.$store.dispatch('getContBasket');
                 this.contBasketList = response;
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         async addContBasket(seqArr) {
@@ -128,8 +128,8 @@ export default {
                     seqArr
                 );
                 await this.$store.dispatch('getContBasket');
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         async delContBasket(seq) {
@@ -138,8 +138,8 @@ export default {
                 await delContentsBasket(seq);
                 await this.$store.dispatch('getContBasket');
                 this.deleteLoading = [];
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
     },
