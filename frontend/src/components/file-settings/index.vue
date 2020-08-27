@@ -273,7 +273,7 @@ export default {
                     data: { data: response },
                 } = await getContentsViewFile(
                     this.$route.meta.topMenuCode,
-                    this.$route.meta.menuCode,
+                    this.$route.params.pathMatch.toUpperCase(),
                     this.$route.params.id,
                     {
                         page: this.page,

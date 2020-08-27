@@ -90,7 +90,7 @@
         </div>
         <div class="space-info">
             <div class="store">
-                {{ userRole }}
+                {{ userAuthName }}
             </div>
             <div class="mail">
                 {{ userIdVal }}
@@ -104,7 +104,7 @@ import { getAlarm, delAlarm } from '@/api/alarm';
 import {
     getUserNickFromCookie,
     getUserIdFromCookie,
-    getRoleFromCookie,
+    getAuthNameFromCookie,
 } from '@/utils/cookies';
 
 export default {
@@ -135,8 +135,8 @@ export default {
         userIdVal() {
             return this.$store.state.user || getUserIdFromCookie();
         },
-        userRole() {
-            return this.$store.state.role || getRoleFromCookie();
+        userAuthName() {
+            return this.$store.state.authName || getAuthNameFromCookie();
         },
     },
     methods: {

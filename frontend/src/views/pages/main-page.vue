@@ -1,11 +1,10 @@
 <template>
-    <div>
+    <div v-if="mainData">
         <div class="main-banner">
             <div class="thumbnail">
                 <img
                     :src="mainData.mainVisual.pcImageUrl"
                     :alt="mainData.mainVisual.imageFileName"
-                    v-if="mainData.mainVisual.pcImageUrl"
                 />
             </div>
             <div class="info-box">
@@ -208,7 +207,7 @@ export default {
     name: 'MainPage',
     data() {
         return {
-            mainData: [],
+            mainData: null,
             todayData: [],
             yyyyMm: moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
@@ -296,6 +295,7 @@ export default {
                     data: { data: response },
                 } = await getMain();
                 this.mainData = response;
+                console.log(response);
             } catch (error) {
                 console.error(error);
             }
@@ -707,7 +707,8 @@ export default {
     color: #888;
 }
 ::v-deep .fc .fc-more-popover {
-    margin-top: 13px;
+    margin-top: 45px;
+    margin-left: -2px;
 }
 ::v-deep .fc .fc-more-popover:before {
     position: absolute;

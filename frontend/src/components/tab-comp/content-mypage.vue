@@ -1,5 +1,5 @@
 <template>
-    <ul class="aside-menu">
+    <ul class="aside-menu" v-if="myMenu">
         <li v-for="(menu, index) in myMenu" :key="index">
             <strong class="title" v-html="menu.menuName" />
             <ul class="menu" v-if="menu.menus">
@@ -34,17 +34,17 @@ export default {
             this.$store.commit('LOGOUT');
             this.$router.push('/login');
         },
-        dataBinding() {
-            if (this.$store.state.gnbMenuListData) {
-                const menu = this.$store.state.gnbMenuListData.filter(
+        async dataBinding() {
+            try {
+                const menu = await this.$store.state.gnbMenuListData.filter(
                     (item) => {
                         if (item.menuCode === 'MYPAGE' && item.pcYn === 'Y')
                             return item;
                     }
                 );
                 this.myMenu = menu[0].menus;
-            } else {
-                return null;
+            } catch (error) {
+                console.log(error);
             }
         },
     },

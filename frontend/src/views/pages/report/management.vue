@@ -42,7 +42,6 @@ import NoData from '@/components/no-data';
 import Loading from '@/components/loading';
 import { getReportList, getGroupAuthority } from '@/api/report';
 import { getCategoryList } from '@/utils/code';
-import { getAuthCacheList } from '@/api/auth';
 
 export default {
     name: 'management',
@@ -52,6 +51,7 @@ export default {
             reportListData: null,
             page: 0,
             itemLength: 20,
+            totalPage: 0,
             listTypes: [
                 {
                     title: '컬럼타입',
@@ -95,16 +95,25 @@ export default {
         Loading,
     },
     created() {
-        this.getReport();
         this.authCacheList();
+        this.initReportProduct();
+        window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
         if (this.$store.state.reload) {
-            this.getReport();
+            this.initReportProduct();
             this.authCacheList();
             this.$store.commit('SET_RELOAD', false);
         }
+        window.addEventListener('scroll', this.handleScroll);
     },
+    deactivated() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+
     mounted() {
         getCategoryList(
             'REPORT_SECTION_CODE',
@@ -116,14 +125,45 @@ export default {
             if (val === '') {
                 this.listSortSelect.value = 'ALL';
             }
-            this.getReport();
+            this.initReportProduct();
         },
-        'authority.value'() {
-            this.getReport();
+        'authority.value'(val) {
+            if (val.length === 0) {
+                this.authority.value = [null];
+            }
+            this.initReportProduct();
         },
     },
 
     methods: {
+        initReportProduct() {
+            this.totalPage = null;
+            this.page = 0;
+            this.reportListData = null;
+            this.getReport();
+        },
+
+        handleScroll() {
+            if (this.loadingData) return;
+            const windowE = document.documentElement;
+            if (
+                windowE.clientHeight + windowE.scrollTop >=
+                windowE.scrollHeight
+            ) {
+                this.infiniteScroll();
+            }
+        },
+        infiniteScroll() {
+            if (
+                !this.loadingData &&
+                this.totalPage > this.page - 1 &&
+                this.reportListData.length >= this.itemLength &&
+                this.reportListData.length !== 0
+            ) {
+                this.getReport(true);
+            }
+        },
+
         //권한 조회
         async authCacheList() {
             try {
@@ -160,9 +200,10 @@ export default {
         },
         searchSubmit(val) {
             this.searchKeyword = val;
-            this.getReport();
+            this.initReportProduct();
         },
-        async getReport() {
+        async getReport(infinite) {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -173,11 +214,26 @@ export default {
                     sectionCode: this.listSortSelect.value,
                     groupSeq: this.authority.value.slice(-1)[0],
                 });
-                console.log(response);
-                this.reportListData = response.content;
+                this.totalPage = response.totalPages - 1;
+                if (infinite) {
+                    if (this.totalPage > this.page - 1) {
+                        this.reportListData = this.reportListData.concat(
+                            response.content
+                        );
+                    } else if (this.totalPage === this.page - 1) {
+                        this.endPage();
+                    }
+                } else {
+                    this.reportListData = response.content;
+                }
+                this.page++;
+                this.loadingData = false;
             } catch (error) {
                 console.error(error);
             }
+        },
+        endPage() {
+            alert('마지막 페이지');
         },
     },
 };
