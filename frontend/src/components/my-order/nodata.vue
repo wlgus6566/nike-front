@@ -1,6 +1,6 @@
 <template>
     <div class="no-data">
-        <i class="icon-wish"></i>
+        <i class="icon-order"></i>
         <p class="desc">주문 내역이 없습니다.</p>
     </div>
 </template>
