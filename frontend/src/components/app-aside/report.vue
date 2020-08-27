@@ -28,7 +28,7 @@ export default {
                         component: 'ContentReport',
                     },
                 ],
-                showIndex: 1,
+                showIndex: 0,
             },
         };
     },
