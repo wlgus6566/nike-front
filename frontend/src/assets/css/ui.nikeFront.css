@@ -3695,6 +3695,9 @@ img.image-grayscale {
     height: 160px;
     background: url('../images/svg/illust-page-error.svg') no-repeat center;
 }
+.error-box .icon-404 {
+    background-image: url('../images/svg/illust-page-404.svg');
+}
 .error-box .icon-repair {
     background-image: url('../images/svg/illust-page-repair.svg');
 }
