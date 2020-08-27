@@ -229,7 +229,7 @@ export default {
             this.authName = value;
         });
 
-        bus.$on('selectActive', (item, depth) => {
+        bus.$on('selectActive', (item) => {
             this.groupTreeAddItem = 0;
             if (this.groupTreeActive.authSeq === item.authSeq) {
                 this.groupTreeActive = {};
