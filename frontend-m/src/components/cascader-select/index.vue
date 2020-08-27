@@ -34,9 +34,9 @@ export default {
     //   }
     // },
     mounted() {
-        bus.$on('changeInput', (label, val) => {
-            console.log(val);
-            this.closeModal(label, val);
+        bus.$on('changeInput', val => {
+            if (val.disabled) return;
+            this.closeModal(val);
         });
     },
     methods: {
@@ -52,9 +52,9 @@ export default {
             window.scrollTo(0, this.topScollVal);
             document.querySelector('body').classList.remove('modal-list-open');
         },
-        closeModal(label, val) {
-            this.hideLabel = label;
-            this.cascaderList.value = val;
+        closeModal(val) {
+            this.hideLabel = val.label;
+            this.cascaderList.value = val.value;
             this.showList = false;
             this.selectLabel = this.hideLabel;
             document.querySelector('.modal-list-open').style.overflow = '';

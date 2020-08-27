@@ -4370,11 +4370,15 @@ img.image-grayscale {
     background-color: #4e53ef;
 }
 .fullCalendar-wrap .fc-daygrid-event .fc-event-title {
+    max-width: 100%;
     font-size: 10px;
     font-weight: bold;
     line-height: 15px;
     font-family: 'Noto Sans KR', 'Arial', 'Apple SD Gothic Neo', sans-serif;
     letter-spacing: -0.05em;
+    color: #be1767;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .fullCalendar-wrap .fc-daygrid-event.campaign .fc-event-title {
     color: #007b68;
@@ -4532,6 +4536,10 @@ img.image-grayscale {
     border: none;
     margin: 0;
     padding: 0;
+}
+.fc-h-event .fc-event-title-container {
+    max-width: 100%;
+    flex: 0 0 auto !important;
 }
 .fc-popover-body .fc-h-event .fc-event-title-container {
     position: relative;

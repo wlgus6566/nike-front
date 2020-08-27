@@ -2,7 +2,7 @@ import { main } from './index';
 
 // main
 function getMain() {
-    return main.get(``);
+    return main.get(`/`);
 }
 
 export { getMain };
