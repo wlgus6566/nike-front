@@ -23,12 +23,14 @@
                 </a>
             </div>
         </div>
-        <div class="no-data-wrap" v-else-if="newsData.length === 0 && keyword !== ''">
-            <div class="no-data">
-                <i class="icon-search"></i>
-                <p class="desc">검색 결과가 없습니다.</p>
-            </div>
-        </div>
+        <NoData v-else-if="newsData.length === 0 && keyword !== ''">
+            <i class="icon-search"></i>
+            <p class="desc">검색 결과가 없습니다.</p>
+        </NoData>
+        <NoData v-else>
+            <i class="icon-upload"></i>
+            <p class="desc">등록된 데이터가 없습니다.</p>
+        </NoData>
         <Pagination
                 v-if="newsData.length"
                 :itemLength="itemLength"
