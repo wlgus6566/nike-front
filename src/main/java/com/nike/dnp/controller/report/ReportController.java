@@ -100,7 +100,7 @@ public class ReportController {
         + "number||현재페이지|Integer\n"
         + "size||노출갯수|Integer\n\n\n\n"
     )
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 목록 조회")
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 목록 조회test")
     public SingleResult<Page<ReportResultDTO>> findAllReports(
             final ReportSearchDTO reportSearchDTO
     ) {
