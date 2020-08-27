@@ -275,11 +275,15 @@ export default {
     letter-spacing: 0;
 }
 .user-info .store-name {
-    display: inline-flex;
+    display: block;
+    max-width: 180px;
     line-height: 16px;
     font-size: 14px;
     font-weight: bold;
     color: #000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .user-info .side {
     position: absolute;
@@ -406,9 +410,12 @@ export default {
     color: #000;
 }
 .space-info .store {
-    display: flex;
+    display: block;
     height: 14px;
-    align-content: center;
+    line-height: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .space-info .mail {
     display: flex;
