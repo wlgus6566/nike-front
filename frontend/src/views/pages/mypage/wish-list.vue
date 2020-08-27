@@ -45,18 +45,19 @@
             </div>
         </div>
         <!-- wish list -->
-
-        <WishList
-            v-if="wishListData"
-            :listData="wishListData"
-            :checkWishItem="checkWishItem"
-            :deleteLoading="deleteLoading"
-            @addBasket="addBasket"
-            @wishDelete="wishDelete"
-            @checkedWish="checkedWish"
-            @showDetailView="showDetailView"
-        />
-        <WishListNodata v-if="wishListData && wishListData.length === 0" />
+        <template v-if="wishListData">
+            <WishList
+                v-if="wishListData.length"
+                :listData="wishListData"
+                :checkWishItem="checkWishItem"
+                :deleteLoading="deleteLoading"
+                @addBasket="addBasket"
+                @wishDelete="wishDelete"
+                @checkedWish="checkedWish"
+                @showDetailView="showDetailView"
+            />
+            <WishListNodata v-if="wishListData && wishListData.length === 0" />
+        </template>
         <Loading
             class="list-loading"
             :width="172"
@@ -87,7 +88,7 @@ export default {
         WishList: () => import('@/components/wish-list/index'),
         WishListNodata: () => import('@/components/wish-list/nodata'),
         detailView: () => import('@/views/pages/product/detail-view'),
-        Loading: () => import('@/components/wish-list/loading'),
+        Loading: () => import('@/components/loading'),
     },
     data() {
         return {
@@ -107,7 +108,9 @@ export default {
         };
     },
     activated() {
-        this.fetchData(true);
+        this.fetchData();
+        this.checkAll = false;
+        this.checkWishItem = [];
     },
     computed: {
         basketList() {
@@ -117,12 +120,10 @@ export default {
                 return [];
             }
         },
-        basketItem() {},
     },
     methods: {
         // 상세 팝업
         showDetailView(goodsSeq) {
-            console.log(goodsSeq);
             this.visible.detailView = true;
             const findIndex = this.wishListData.findIndex(
                 (el) => el.goodsSeq === goodsSeq
@@ -192,9 +193,13 @@ export default {
                     this.checkWishItem.forEach((seq) => {
                         this.checkedWish(seq, true);
                     });
+                    this.checkAll = false;
                     this.deleteLoading = [];
                 } catch (error) {
                     console.error(error);
+                    if (error.data.existMsg) {
+                        alert(error.data.msg);
+                    }
                 }
             } else {
                 alert('하나 이상의 상품을 선택해 주세요.');
@@ -212,10 +217,13 @@ export default {
                 this.deleteLoading = [];
             } catch (error) {
                 console.error(error);
+                if (error.data.existMsg) {
+                    alert(error.data.msg);
+                }
             }
         },
-        async fetchData(mounted) {
-            if (mounted) this.loadingData = true;
+        async fetchData() {
+            if (this.loadingData) return;
             try {
                 const {
                     data: { data: response },
@@ -226,7 +234,6 @@ export default {
                 this.wishListData = response.content;
                 await this.$store.dispatch('basketList');
                 this.loadingData = false;
-                return;
             } catch (error) {
                 console.error(error);
             }
@@ -291,5 +298,3 @@ export default {
     created() {},
 };
 </script>
-
-<style></style>

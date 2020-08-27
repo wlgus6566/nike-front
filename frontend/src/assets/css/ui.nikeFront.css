@@ -3648,18 +3648,20 @@ img.image-grayscale {
     display: flex;
     align-items: flex-end;
 }
+.member-inquiry .data-list li {
+    letter-spacing: 0;
+    color: #fff;
+    white-space: nowrap;
+}
 .member-inquiry .data-list li:first-child {
     line-height: 21px;
-    color: #fff;
     font-size: 18px;
-    color: #fff;
-    margin-right: 18px;
+    margin-right: 15px;
 }
 .member-inquiry .data-list li + li {
     position: relative;
     padding: 0 10px;
     line-height: 14px;
-    color: #fff;
     opacity: 0.55;
     font-weight: 300;
     font-size: 12px;
@@ -3675,6 +3677,9 @@ img.image-grayscale {
     margin-top: -4px;
     background: rgba(255, 255, 255, 0.3);
 }
+.member-inquiry .data-list li:nth-child(2):before {
+    content: none;
+}
 .error-box {
     display: flex;
     width: 100%;
@@ -3689,6 +3694,9 @@ img.image-grayscale {
     width: 160px;
     height: 160px;
     background: url('../images/svg/illust-page-error.svg') no-repeat center;
+}
+.error-box .icon-404 {
+    background-image: url('../images/svg/illust-page-404.svg');
 }
 .error-box .icon-repair {
     background-image: url('../images/svg/illust-page-repair.svg');
@@ -3736,6 +3744,9 @@ img.image-grayscale {
 }
 .no-data .icon-wish {
     background-image: url('../images/svg/illust-page-folder-wish-none.svg');
+}
+.no-data .icon-folder {
+    background-image: url('../images/svg/illust-page-folder-view-none.svg');
 }
 .no-data .icon-drop {
     width: 50px;
@@ -4359,11 +4370,15 @@ img.image-grayscale {
     background-color: #4e53ef;
 }
 .fullCalendar-wrap .fc-daygrid-event .fc-event-title {
+    max-width: 100%;
     font-size: 10px;
     font-weight: bold;
     line-height: 15px;
     font-family: 'Noto Sans KR', 'Arial', 'Apple SD Gothic Neo', sans-serif;
     letter-spacing: -0.05em;
+    color: #be1767;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .fullCalendar-wrap .fc-daygrid-event.campaign .fc-event-title {
     color: #007b68;
@@ -4478,6 +4493,7 @@ img.image-grayscale {
     margin: 0 0 0 -15px;
 }
 .main-fc .fc .fc-h-event .fc-event-title {
+    max-width: 160px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -4520,6 +4536,10 @@ img.image-grayscale {
     border: none;
     margin: 0;
     padding: 0;
+}
+.fc-h-event .fc-event-title-container {
+    max-width: 100%;
+    flex: 0 0 auto !important;
 }
 .fc-popover-body .fc-h-event .fc-event-title-container {
     position: relative;

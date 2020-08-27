@@ -183,6 +183,9 @@ export default {
                 } = await getWishCheck({
                     goodsSeq: goodsSeq.goodsSeq,
                 });
+                if (response.data.existMsg) {
+                    alert(response.data.msg);
+                }
                 if (response.goodsSeq === null) {
                     try {
                         await postWishList({

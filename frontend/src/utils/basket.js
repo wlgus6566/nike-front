@@ -9,13 +9,19 @@ import { deleteBasket, postBasketSave, postBasketSaveList } from '@/api/basket';
  */
 const addProductBasket = async (goodsSeq, orderQuantity) => {
     try {
-        await postBasketSave({
+        const {
+            data: { data: response },
+        } = await postBasketSave({
             goodsSeq: goodsSeq,
             orderQuantity: orderQuantity,
         });
         await store.dispatch('basketList');
+        if (response.data.existMsg) {
+            alert(response.data.msg);
+        }
     } catch (error) {
         console.error(error);
+
     }
 };
 

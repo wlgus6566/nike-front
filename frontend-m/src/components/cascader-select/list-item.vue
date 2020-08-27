@@ -3,14 +3,12 @@
         <li
             :class="{
                 selected: cascaderList.value === val.value,
+                disabled: val.disabled === true,
             }"
             v-for="(val, index) in options"
             :key="index"
         >
-            <span
-                class="select-label"
-                @click="changeInput(val.label, val.value)"
-            >
+            <span class="select-label" @click="changeInput(val)">
                 <span>{{ val.label }}</span>
             </span>
             <ListItem
@@ -31,8 +29,8 @@ export default {
     },
     props: ['cascaderList', 'options'],
     methods: {
-        changeInput(label, val) {
-            bus.$emit('changeInput', label, val);
+        changeInput(val) {
+            bus.$emit('changeInput', val);
         },
     },
 };
@@ -52,7 +50,10 @@ export default {
     background: #fa5400;
     vertical-align: 3px;
 }
-.depth-list > li.selected .select-label:before {
+.select-options-list > li.disabled > span {
+    color: blue;
+}
+.depth-list > li.selected > .select-label:before {
     background-image: url(../../assets/images/svg/icon-dropbox-depth-on.svg);
 }
 .select-options-list > li {

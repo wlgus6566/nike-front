@@ -218,7 +218,7 @@ export default {
                 // dateClick: this.handleDateClick,
                 dateClick: this.handleDateClick,
                 moreLinkClick: this.test,
-                height: 350,
+                height: 358,
                 events: [],
                 dayMaxEventRows: true,
                 timeGrid: {
@@ -229,7 +229,7 @@ export default {
                     center: 'title',
                     right: 'next',
                 },
-                titleFormat: 'yyyy.M',
+                titleFormat: 'yyyy.MM',
                 customButtons: {
                     prev: {
                         // this overrides the prev button
@@ -284,7 +284,6 @@ export default {
                 a.classList.add('fc-more');
                 a.appendChild(txt);
                 body.appendChild(a);
-                console.log(a);
                 close.addEventListener('click', () => {
                     td.classList.remove('test');
                 });
@@ -469,6 +468,7 @@ export default {
     line-height: 17px;
     letter-spacing: 0.5px;
     color: #fff;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 .main-update-list li a:hover .info-box {
     top: 50%;
@@ -707,12 +707,28 @@ export default {
     color: #888;
 }
 ::v-deep .fc .fc-more-popover {
-    margin-top: 18px;
+    margin-top: 13px;
+}
+::v-deep .fc .fc-more-popover:before {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -5px;
+    z-index: 1;
+    content: '';
+    display: inline-block;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #ccc;
+    border-top: 0;
 }
 ::v-deep .test {
     /*background: red;*/
 }
-
+::v-deep .fc .fc-daygrid-day-number {
+    font-weight: 400;
+    font-size: 12px;
+}
 ::v-deep .fc-daygrid-day-bottom {
     width: 100%;
 }

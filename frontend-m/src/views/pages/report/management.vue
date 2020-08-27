@@ -55,9 +55,9 @@
                             </p>
                         </div>
                         <div class="view-area">
-                            <span class="view" v-text="item.readCount"
-                                >10,000</span
-                            >
+                            <span class="view" v-text="item.readCount">
+                                10,000
+                            </span>
                         </div>
                     </router-link>
                 </li>
@@ -135,19 +135,19 @@ export default {
     created() {
         this.fetchData();
         this.authCacheList();
-        console.log('activated')
+        console.log('activated');
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
-        console.log('activated')
+        console.log('activated');
         window.addEventListener('scroll', this.handleScroll);
     },
     deactivated() {
-        console.log('activated')
+        console.log('activated');
         window.removeEventListener('scroll', this.handleScroll);
     },
     destroyed() {
-        console.log('activated')
+        console.log('activated');
         window.removeEventListener('scroll', this.handleScroll);
     },
     mounted() {
@@ -185,9 +185,11 @@ export default {
                 _minIndx = 0;
             }
             data.forEach((el, index) => {
+                const _boolean = el.checkBoxYn === 'Y';
                 item.push({
                     value: el.authSeq,
                     label: el.authName,
+                    disabled: _boolean,
                 });
                 if (el.subAuths) {
                     item[index + _minIndx].children = [];

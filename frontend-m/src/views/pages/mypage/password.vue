@@ -94,7 +94,7 @@ export default {
         this.handleScroll();
     },
     destroyed() {
-        document.querySelector('body').classList.remove('sticky-wrap');
+        document.querySelector('body').classList.remove('sticky-bottom');
         window.removeEventListener('scroll', this.handleScroll);
     },
     created() {
@@ -122,7 +122,7 @@ export default {
             }
         },
         stickyBtn() {
-            document.querySelector('body').classList.add('sticky-wrap');
+            document.querySelector('body').classList.add('sticky-bottom');
         },
         async passwordChange() {
             try {
