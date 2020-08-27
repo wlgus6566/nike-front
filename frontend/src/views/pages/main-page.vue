@@ -707,7 +707,8 @@ export default {
     color: #888;
 }
 ::v-deep .fc .fc-more-popover {
-    margin-top: 13px;
+    margin-top: 45px;
+    margin-left: -2px;
 }
 ::v-deep .fc .fc-more-popover:before {
     position: absolute;
