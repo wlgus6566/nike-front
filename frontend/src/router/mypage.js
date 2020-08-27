@@ -73,6 +73,7 @@ const routes = [
         meta: {
             layout: 'Default',
             aside: 'Default',
+            sectionCode: 'NOTICE',
             title: '공지사항',
         },
     },
@@ -114,6 +115,7 @@ const routes = [
         meta: {
             layout: 'Default',
             aside: 'Default',
+            sectionCode: 'NEWS',
             title: 'NEWS',
         },
     },
@@ -133,7 +135,7 @@ const routes = [
         meta: {
             layout: 'Default',
             aside: 'Default',
-            sectionCode: 'NOTICE',
+            sectionCode: 'NEWS',
             title: 'NEWS',
             modify: true,
         },

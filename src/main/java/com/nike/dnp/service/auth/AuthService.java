@@ -432,16 +432,19 @@ public class AuthService {
 
         auth.update(authUpdateDTO);
         this.initAuthCache();
-
+        this.remove(authSeq);
         if (authUpdateDTO.getMenuRoleSeqArray().length > 0) {
-            this.remove(authSeq);
             Arrays.stream(authUpdateDTO.getMenuRoleSeqArray()).map(
                     menuRoleSeq -> AuthMenuRole.builder()
                             .authSeq(authSeq)
                             .menuRoleSeq(menuRoleSeq)
                             .build()).forEach(authMenuRoleRepository::save);
+
             this.setAuthsResourcesByRoleType(roleType);
             this.setAuthsMenusByRoleType(roleType);
+        } else {
+            redisService.delete(REDIS_ROLES_AUTHS + roleType);
+            redisService.delete(REDIS_ROLES_MENUS + roleType);
         }
 
         // 등록/삭제 시퀀스배열이 따로 올 경우 > 이번엔 안하는걸로~
