@@ -5,6 +5,7 @@ import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.util.JsonUtil;
 import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -16,6 +17,8 @@ import java.io.IOException;
 /**
  * 접속 실패 핸들러
  */
+
+@Slf4j
 @RequiredArgsConstructor
 public class SimpleAccessDeniedHandler implements AccessDeniedHandler {
 
@@ -28,7 +31,7 @@ public class SimpleAccessDeniedHandler implements AccessDeniedHandler {
 	public void handle(final HttpServletRequest request,
 					   final HttpServletResponse response,
 					   final AccessDeniedException exception) throws IOException {
-
+		log.info("SimpleAccessDeniedHandler.handle");
 		response.setContentType("application/json;charset=utf-8");
 		response.setStatus(HttpStatus.FORBIDDEN.value());
 

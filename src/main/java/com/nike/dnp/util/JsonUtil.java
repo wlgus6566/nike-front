@@ -32,6 +32,7 @@ public class JsonUtil {
 	 * @implNote value > json 형태로 writer
 	 */
 	public void write(final Writer writer, final Object value) {
+		log.info("JsonUtil.write");
 		try {
 			new ObjectMapper().writeValue(writer, value);
 		} catch (IOException exception) {

@@ -72,6 +72,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 			, final UserRepository userRepository
 			, final RedisService redisService) {
 		super(authManager);
+		log.info("JwtAuthorizationFilter.JwtAuthorizationFilter");
 		this.userRepository = userRepository;
 		this.redisService = redisService;
 	}
@@ -92,6 +93,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	protected void doFilterInternal(final HttpServletRequest request,
 									final HttpServletResponse response,
 									final FilterChain chain) throws IOException, ServletException {
+		log.info("JwtAuthorizationFilter.doFilterInternal");
 		// 항상 헤더 토큰 체크
 		/*final String header = request.getHeader(JwtHelper.HEADER_STRING);
 		if(header == null  || !header.startsWith(JwtHelper.TOKEN_PREFIX)){
@@ -114,6 +116,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	 * @implNote
 	 */
 	private Authentication getUsernamePasswordAuthentication(final HttpServletRequest request) {
+		log.info("JwtAuthorizationFilter.getUsernamePasswordAuthentication");
 		final String token = request.getHeader(JwtHelper.HEADER_STRING);
 		Authentication authentication = null;
 		if(ObjectUtils.isEmpty(token)){
@@ -163,6 +166,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	 * @implNote
 	 */
 	private Authentication getAuthentication(final String username, final String redisKey, final String redisToken) {
+		log.info("JwtAuthorizationFilter.getAuthentication");
 		Authentication authentication = null;
 		if(username != null){
 			final Optional<User> user = userRepository.findByUserId(username);
