@@ -86,9 +86,9 @@ import { getAuthFromCookie } from '@/utils/cookies';
 export default {
     name: 'faq-form',
     watch: {
-        '$route'() {
+        $route() {
             this.$destroy();
-        }
+        },
     },
     data() {
         return {
@@ -216,7 +216,7 @@ export default {
                 const {
                     data: { data: response },
                 } = await getCustomerDetail(
-                    this.noticeArticleSectionCode,
+                    this.$route.meta.sectionCode,
                     this.$route.params.id
                 );
                 this.faqDetail = response;
