@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            <span class="ko">자주 묻는 질문}</span>
+            <span class="ko">자주 묻는 질문</span>
         </h2>
         <form @submit.prevent="submitData">
             <h3 class="form-title mt20">등록/수정</h3>
