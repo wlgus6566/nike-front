@@ -261,8 +261,8 @@ export default {
                     this.bannerData.mobileImageFileName = response.fileName;
                     this.bannerData.mobileImageFileSize = response.fileSize;
                 }
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
 
@@ -294,11 +294,7 @@ export default {
                     await this.$router.push('/');
                 }
             } catch (error) {
-                console.log(error);
-                if (error.data.existMsg) {
-                    alert(error.data.msg);
-                    ``;
-                }
+                console.error(error);
             }
         },
 
@@ -331,10 +327,7 @@ export default {
                     }
                 }
             } catch (error) {
-                console.log(error);
-                if (error.data.existMsg) {
-                    alert(error.data.msg);
-                }
+                console.error(error);
             }
         },
     },

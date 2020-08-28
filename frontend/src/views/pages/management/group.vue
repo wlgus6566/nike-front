@@ -138,6 +138,10 @@ export default {
             }
         },
         async saveAuth() {
+            if (!this.authName) {
+                alert('그룹명을 입력해 주세요.');
+                return;
+            }
             let response;
             try {
                 if (!this.groupTreeActive.authName) {
@@ -151,13 +155,8 @@ export default {
                     this.authSeq = response.data.data.authSeq;
                 } else {
                     response = await putAuth(this.authSeq, {
-                        //authDepth: this.authDepth,
                         authName: this.authName,
                         menuRoleSeqArray: this.menuRoleSeqArray,
-                        /* upperAuthSeq:
-                            this.upperAuthSeq === 'root'
-                                ? 0
-                                : this.upperAuthSeq,*/
                     });
                 }
                 await this.getAuthList();
@@ -166,15 +165,14 @@ export default {
                     alert(response.data.msg);
                 }
                 console.log(response.data);
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         async getDefaultView() {
             const {
                 data: { data: response },
             } = await getMenuManage();
-            console.log(response);
             this.groupDetailDataBase = response;
             this.groupDetailDataBase.forEach((a) => {
                 a.subMenus.forEach((b) => {
@@ -185,7 +183,7 @@ export default {
                     });
                 });
             });
-            this.DefaultMenuRoleSeqArray = this.menuRoleSeqArray;
+            //this.DefaultMenuRoleSeqArray = this.menuRoleSeqArray;
         },
         async getAuthList() {
             try {
@@ -194,8 +192,8 @@ export default {
                 } = await getAuthList();
                 this.groupTreeData[0].subAuths = response;
                 this.groupTreeAddItem = null;
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         async authView(seq) {
@@ -204,8 +202,8 @@ export default {
                     data: { data: response },
                 } = await getAuthView(seq);
                 this.menuRoleSeqArray = response.map((el) => el.menuRoleSeq);
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         async delAuth(seq) {
@@ -216,12 +214,22 @@ export default {
                     alert(response.msg);
                 }
                 console.log('delAuth', response);
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
     },
     components: { GroupTable, GroupTree },
+    activated() {
+        this.authDepth = null;
+        this.authName = '';
+        this.authSeq = '';
+        this.upperAuthSeq = null;
+        this.groupTreeActive = {};
+        this.groupTreeOpen = [];
+        this.groupTreeAddItem = null;
+        this.groupDetailData = [];
+    },
     created() {
         this.getAuthList();
         this.getDefaultView();
@@ -229,7 +237,7 @@ export default {
             this.authName = value;
         });
 
-        bus.$on('selectActive', (item, depth) => {
+        bus.$on('selectActive', (item) => {
             this.groupTreeAddItem = 0;
             if (this.groupTreeActive.authSeq === item.authSeq) {
                 this.groupTreeActive = {};
@@ -259,7 +267,6 @@ export default {
             this.authSeq = '';
             this.groupTreeActive = {};
             setTimeout(() => {
-                console.log(this.$refs.authNameInput);
                 this.$refs.authNameInput.focus();
             }, 100);
 
@@ -429,8 +436,6 @@ export default {
 .group-check-all input {
     opacity: 0;
     position: absolute;
-    top: 0;
-    left: -9999px;
 }
 .group-check-all i {
     display: inline-block;

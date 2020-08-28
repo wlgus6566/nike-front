@@ -19,7 +19,6 @@
                         v-for="item in pageFileSectionCodeName"
                         :key="item"
                     >
-                        {{ item }}
                     </el-radio>
                 </div>
             </li>

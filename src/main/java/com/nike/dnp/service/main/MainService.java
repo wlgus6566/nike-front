@@ -79,30 +79,30 @@ public class MainService {
         // 콘텐츠 (ASSET, TOOLKIT, FOUNDATION)
         mainResultDTO.setAssetContentsList(
                 contentsRepository.findRecentContents(ServiceCode.ContentsTopMenuCode.ASSET.toString(),
-                        PageRequest.of(0, 4, Sort.by(SORT_BY).descending())
+                        PageRequest.of(0, 5, Sort.by(SORT_BY).descending()), "Y"
                 )
         );
         mainResultDTO.setToolKitContentsList(
                 contentsRepository.findRecentContents(ServiceCode.ContentsTopMenuCode.TOOLKIT.toString(),
-                        PageRequest.of(0, 2, Sort.by(SORT_BY).descending())
+                        PageRequest.of(0, 2, Sort.by(SORT_BY).descending()), "Y"
                 )
         );
         mainResultDTO.setFoundationContentsList(
                 contentsRepository.findRecentContents(ServiceCode.ContentsTopMenuCode.FOUNDATION.toString(),
-                        PageRequest.of(0, 2, Sort.by(SORT_BY).descending())
+                        PageRequest.of(0, 2, Sort.by(SORT_BY).descending()), "Y"
                 )
         );
 
         // REPORT
         mainResultDTO.setReportList(reportRepository.findRecentReport(
-                PageRequest.of(0, 4, Sort.by(SORT_BY).descending())
+                PageRequest.of(0, 3, Sort.by(SORT_BY).descending())
         ));
 
         // NOTICE
         CustomerSearchDTO customerSearchDTO = new CustomerSearchDTO();
         customerSearchDTO.setNoticeArticleSectionCode(ServiceCode.NoticeArticleSectionEnumCode.NOTICE.toString());
         customerSearchDTO.setPage(0);
-        customerSearchDTO.setSize(5);
+        customerSearchDTO.setSize(7);
         mainResultDTO.setNoticeArticleList(noticeService.findNoticePages(customerSearchDTO).getContent());
 
 

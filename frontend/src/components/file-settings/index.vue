@@ -71,6 +71,7 @@ export default {
             },
             FileList: [
                 {
+                    progress: 0,
                     detailThumbnailFileName: '',
                     detailThumbnailFilePhysicalName: '',
                     detailThumbnailFileSize: '',
@@ -90,6 +91,7 @@ export default {
                 },
             ],
             defaultFileData: {
+                progress: 0,
                 detailThumbnailFileName: '',
                 detailThumbnailFilePhysicalName: '',
                 detailThumbnailFileSize: '',
@@ -171,35 +173,47 @@ export default {
             this.uploadFile = this.uploadFile.concat(mergeArray);
             //this.uploadFiles(mergeArray);
         },
+        progressUpdate(percentCompleted, el) {
+            this.FileList.forEach((item, index, array) => {
+                if (
+                    item.fileName === el.name &&
+                    item.fileContentType === el.type &&
+                    item.fileSize === el.size
+                ) {
+                    array[index].progress = percentCompleted;
+                }
+            });
+        },
         async uploadFiles() {
-            await Promise.all(
+            Promise.all(
                 this.uploadFile.map(async (el) => {
                     try {
                         const formData = new FormData();
                         formData.append('uploadFile', el);
-                        console.log(el);
-                        console.log(formData);
                         const config = {
-                            onUploadProgress: (progressEvent) => {
-                                const percentCompleted = Math.round(
+                            /* onDownloadProgress: (progressEvent) => {
+                                let percentCompleted = Math.round(
                                     (progressEvent.loaded * 100) /
                                         progressEvent.total
                                 );
-                                this.FileList.forEach((item) => {
-                                    if (
-                                        item.fileName === el.name &&
-                                        item.fileContentType === el.type &&
-                                        item.fileSize === el.size
-                                    ) {
-                                        item.progress = percentCompleted;
-                                    }
-                                });
+                                console.log(percentCompleted);
+                            },*/
+
+                            onUploadProgress: (progressEvent) => {
+                                let percentCompleted = Math.round(
+                                    (progressEvent.loaded * 95) /
+                                        progressEvent.total
+                                );
+                                this.progressUpdate(percentCompleted, el);
                                 this.emitFileList();
                             },
                         };
+
                         const response = await fileUpLoad(formData, config);
-                        if (response.existMsg) {
-                            alert(response.msg);
+                        this.progressUpdate(100, el);
+                        if (response.data.existMsg) {
+                            alert(response.data.msg);
+                            return;
                         }
                         this.FileList.forEach((item, idx, array) => {
                             if (
@@ -218,13 +232,19 @@ export default {
                                 this.emitFileList();
                             }
                         });
-                    } catch (e) {
-                        console.log(e);
+                    } catch (error) {
+                        console.error(error);
                     }
                 })
-            );
-            this.uploadFile = [];
-            this.$emit('submitForm');
+            )
+                .then((values) => {
+                    console.log(values);
+                    this.uploadFile = [];
+                    this.$emit('submitForm');
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
         },
         fileAdd() {
             this.FileList.push({ ...this.defaultFileData });
@@ -252,7 +272,7 @@ export default {
                     data: { data: response },
                 } = await getContentsViewFile(
                     this.$route.meta.topMenuCode,
-                    this.$route.meta.menuCode,
+                    this.$route.params.pathMatch.toUpperCase(),
                     this.$route.params.id,
                     {
                         page: this.page,
@@ -266,7 +286,7 @@ export default {
 
                 this.emitFileList();
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

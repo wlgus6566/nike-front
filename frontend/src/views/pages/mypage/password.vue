@@ -97,11 +97,23 @@ export default {
         };
     },
     mounted() {
-        this.password = '';
-        this.newPassword = '';
-        this.confirmPassword = '';
+        this.reset();
+    },
+    activated() {
+        this.reset();
+    },
+    deactivated() {
+        this.reset();
+    },
+    destroyed() {
+        this.reset();
     },
     methods: {
+        reset() {
+            this.password = '';
+            this.newPassword = '';
+            this.confirmPassword = '';
+        },
         async passwordChange() {
             try {
                 const res = await changePassword({
@@ -115,17 +127,24 @@ export default {
                 console.log(res);
                 if (res.data.success) {
                     alert('변경되었습니다.');
+                    this.password = '';
+                    this.newPassword = '';
+                    this.confirmPassword = '';
                     this.$router.push('/mypage/info');
                 } else {
                     alert(res.data.msg);
                 }
                 return;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.login-wrap {
+    padding-top: 0;
+}
+</style>

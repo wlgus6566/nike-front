@@ -18,7 +18,12 @@
             @delete="deleteBoard"
         />
         <NoData v-else />
-        <Loading v-if="loadingData" />
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
         <div class="btn-tbl-box">
             <div class="right">
                 <router-link to="/mypage/faq/form" class="btn-form-gray">
@@ -104,7 +109,7 @@ export default {
                         this.totalItem - this.page * this.itemLength - index;
                 });
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         //게시물 삭제
@@ -116,7 +121,7 @@ export default {
                 await deleteCustomer(this.noticeArticleSectionCode, id);
                 await this.getFaqList();
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -160,7 +165,7 @@ export default {
                     });
                 });
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

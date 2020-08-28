@@ -211,8 +211,7 @@ public class AuthService {
      */
     public Optional<Auth> findByRoleType(final String roleType) {
         log.info("AuthService.findByRoleType");
-        return Optional.ofNullable(authRepository.findByRoleType(roleType).orElseThrow(() ->
-                new NotFoundHandleException()));
+        return Optional.ofNullable(authRepository.findByRoleType(roleType).orElseThrow(NotFoundHandleException::new));
     }
 
     /**
@@ -225,6 +224,7 @@ public class AuthService {
      * @implNote 권한 상세 조회(role type으로)
      */
     public Auth getByRoleType(final String roleType) {
+        log.info("AuthService.getByRoleType");
         return this.findByRoleType(roleType).orElse(new Auth());
     }
 
@@ -237,6 +237,7 @@ public class AuthService {
      * @since 2020. 8. 10. 오후 5:31:38
      */
     public List<MenuReturnDTO> getMenus() {
+        log.info("AuthService.getMenus");
         return this.getAuthsMenusByRoleType(SecurityUtil.currentUser().getRole());
     }
 
@@ -301,6 +302,7 @@ public class AuthService {
      * @since 2020. 8. 10. 오후 6:26:08
      */
     public List<MenuReturnDTO> getAuthsMenusByRoleType(final Long authSeq) {
+        log.info("AuthService.getAuthsMenusByRoleType");
         final List<MenuReturnDTO> menus = new ArrayList<>();
         final List<MenuReturnDTO> upperMenus = menuRepository.getUpperMenus(authSeq);
 
@@ -311,7 +313,11 @@ public class AuthService {
                 final List<MenuReturnDTO> lowerMenus = menuRepository.getSubMenus(upperMenu.getMenuSeq(), 2L);
                 if (!lowerMenus.isEmpty()) {
                     for (final MenuReturnDTO lowerMenu : lowerMenus) {
-                        lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
+                        if ("Y".equals(lowerMenu.getManagementYn())) {
+                            lowerMenu.setMenus(menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L));
+                        } else {
+                            lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
+                        }
                     }
                     upperMenu.setMenus(lowerMenus);
                     menus.add(upperMenu);
@@ -320,7 +326,11 @@ public class AuthService {
                 final List<MenuReturnDTO> lowerMenus = menuRepository.getLowerMenus(authSeq, upperMenu.getMenuSeq(), 2L);
                 if (!lowerMenus.isEmpty()) {
                     for (final MenuReturnDTO lowerMenu : lowerMenus) {
-                        lowerMenu.setMenus(menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L));
+                        if ("Y".equals(lowerMenu.getManagementYn())) {
+                            lowerMenu.setMenus(menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L));
+                        } else {
+                            lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
+                        }
                     }
                     upperMenu.setMenus(lowerMenus);
                     menus.add(upperMenu);
@@ -422,16 +432,19 @@ public class AuthService {
 
         auth.update(authUpdateDTO);
         this.initAuthCache();
-
+        this.remove(authSeq);
         if (authUpdateDTO.getMenuRoleSeqArray().length > 0) {
-            this.remove(authSeq);
             Arrays.stream(authUpdateDTO.getMenuRoleSeqArray()).map(
                     menuRoleSeq -> AuthMenuRole.builder()
                             .authSeq(authSeq)
                             .menuRoleSeq(menuRoleSeq)
                             .build()).forEach(authMenuRoleRepository::save);
+
             this.setAuthsResourcesByRoleType(roleType);
             this.setAuthsMenusByRoleType(roleType);
+        } else {
+            redisService.delete(REDIS_ROLES_AUTHS + roleType);
+            redisService.delete(REDIS_ROLES_MENUS + roleType);
         }
 
         // 등록/삭제 시퀀스배열이 따로 올 경우 > 이번엔 안하는걸로~
@@ -464,6 +477,7 @@ public class AuthService {
      */
     @Transactional
     public void remove(final Long authSeq) {
+        log.info("AuthService.remove");
         authMenuRoleRepository.deleteAllByAuthSeq(authSeq);
         authMenuRoleRepository.flush();
     }
@@ -529,48 +543,30 @@ public class AuthService {
      * @implNote 권한 depth에 맞는 목록
      * @since 2020. 8. 18. 오후 10:07:48
      */
-//    TODO[lsj]
     public List<AuthReturnDTO> getAuthListWithDepth(final UserContentsSearchDTO userContentsSearchDTO, final Auth auth) {
-        List<AuthReturnDTO> allAuthList = this.getAuthList(userContentsSearchDTO);
+        log.info("AuthService.getAuthListWithDepth");
+        List<AuthReturnDTO> allAuthList = this.getAuthList2(userContentsSearchDTO);
         List<AuthReturnDTO> transformAuthList = new ArrayList<>();
 
         if (!ObjectUtils.isEmpty(allAuthList) && !allAuthList.isEmpty()) {
 
             if (1 == auth.getAuthDepth()) {
-                for (AuthReturnDTO authReturnDTO : allAuthList) {
-                    List<AuthReturnDTO> findAuthList = new ArrayList<>();
-                    findAuthList = this.findUseYnAuthList(findAuthList, authReturnDTO.getSubAuths());
-
-                    authReturnDTO.setSubAuths(findAuthList);
-                    if (!findAuthList.isEmpty() || "Y".equals(authReturnDTO.getViewYn())) {
-                        transformAuthList.add(authReturnDTO);
-                    }
-                }
+                transformAuthList = allAuthList;
             } else {
                 List<AuthReturnDTO> findDepthList = new ArrayList<>();
                 for (AuthReturnDTO authReturnDTO : allAuthList) {
                     if (auth.getAuthSeq().equals(authReturnDTO.getAuthSeq())) {
-                        findDepthList.add(authReturnDTO);
+                        transformAuthList.add(authReturnDTO);
                         break;
                     }
 
                     // 3depth인경우
                     AuthReturnDTO findAuth =this.findAuthDepthList(auth.getAuthSeq(), authReturnDTO.getSubAuths());
                     if (!ObjectUtils.isEmpty(findAuth.getAuthSeq())) {
-                        findDepthList.add(findAuth);
+                        transformAuthList.add(findAuth);
+                        break;
                     }
 
-                }
-
-
-                for (AuthReturnDTO authReturnDTO : findDepthList) {
-                    List<AuthReturnDTO> findAuthList = new ArrayList<>();
-                    findAuthList = this.findUseYnAuthList(findAuthList, authReturnDTO.getSubAuths());
-
-                    authReturnDTO.setSubAuths(findAuthList);
-                    if (!findAuthList.isEmpty() || "Y".equals(authReturnDTO.getViewYn())) {
-                        transformAuthList.add(authReturnDTO);
-                    }
                 }
             }
         }
@@ -607,39 +603,39 @@ public class AuthService {
         return findAuth;
     }
 
-    /**
-     * Find use yn auth list list.
-     *
-     * @param saveList    the save list
-     * @param subAuthList the sub auth list
-     * @return the list
-     * @author [이소정]
-     * @implNote 권한목록 중 Y인것만 check
-     * @since 2020. 8. 20. 오후 1:01:57
-     */
-    // TODO[lsj] 3depth 인 경우 무한루프 error발생
-    public List<AuthReturnDTO> findUseYnAuthList(final List<AuthReturnDTO> saveList, final List<AuthReturnDTO> subAuthList) {
-
-        if (!ObjectUtils.isEmpty(subAuthList) && !subAuthList.isEmpty()) {
-            for (AuthReturnDTO authReturnDTO : subAuthList) {
-                List<AuthReturnDTO>  findAuthList = new ArrayList<>();
-
-                if (!ObjectUtils.isEmpty(authReturnDTO.getSubAuths()) && !authReturnDTO.getSubAuths().isEmpty()) {
-                    findAuthList = this.findUseYnAuthList(saveList, authReturnDTO.getSubAuths());
-                }
-//                AuthReturnDTO newAuthDTO = new AuthReturnDTO();
-//                newAuthDTO.setAuthSeq(authReturnDTO.getAuthSeq());
-//                newAuthDTO.setViewYn(authReturnDTO.getViewYn());
-//                newAuthDTO.setSubAuths(findAuthList);
-                authReturnDTO.setSubAuths(findAuthList);
-                if (!findAuthList.isEmpty() || "Y".equals(authReturnDTO.getViewYn())) {
-                    saveList.add(authReturnDTO);
-                }
-            }
-        }
-
-        return saveList;
-    }
+//    /**
+//     * Find use yn auth list list.
+//     *
+//     * @param saveList    the save list
+//     * @param subAuthList the sub auth list
+//     * @return the list
+//     * @author [이소정]
+//     * @implNote 권한목록 중 Y인것만 check
+//     * @since 2020. 8. 20. 오후 1:01:57
+//     */
+//    // TODO[lsj] 3depth 인 경우 무한루프 error발생
+//    public List<AuthReturnDTO> findUseYnAuthList(final List<AuthReturnDTO> saveList, final List<AuthReturnDTO> subAuthList) {
+//
+//        if (!ObjectUtils.isEmpty(subAuthList) && !subAuthList.isEmpty()) {
+//            for (AuthReturnDTO authReturnDTO : subAuthList) {
+//                List<AuthReturnDTO>  findAuthList = new ArrayList<>();
+//
+//                if (!ObjectUtils.isEmpty(authReturnDTO.getSubAuths()) && !authReturnDTO.getSubAuths().isEmpty()) {
+//                    findAuthList = this.findUseYnAuthList(saveList, authReturnDTO.getSubAuths());
+//                }
+////                AuthReturnDTO newAuthDTO = new AuthReturnDTO();
+////                newAuthDTO.setAuthSeq(authReturnDTO.getAuthSeq());
+////                newAuthDTO.setViewYn(authReturnDTO.getViewYn());
+////                newAuthDTO.setSubAuths(findAuthList);
+//                authReturnDTO.setSubAuths(findAuthList);
+//                if (!findAuthList.isEmpty() || "Y".equals(authReturnDTO.getViewYn())) {
+//                    saveList.add(authReturnDTO);
+//                }
+//            }
+//        }
+//
+//        return saveList;
+//    }
 
     /**
      * Gets auth list.
@@ -652,39 +648,12 @@ public class AuthService {
      */
     public List<AuthReturnDTO> getAuthList (final UserContentsSearchDTO userContentsSearchDTO) {
         log.info("AuthService.getAuthList");
-        List<AuthReturnDTO> findByConfig = authRepository.findByConfig(
+        final List<AuthReturnDTO> findByConfig = authRepository.findByConfig(
                 userContentsSearchDTO.getMenuCode()
                 , userContentsSearchDTO.getSkillCode());
 
-        List<AuthReturnDTO> auths = this.findAuths();
+        final List<AuthReturnDTO> auths = this.findAuths();
 
-        /*for (AuthReturnDTO authReturnDTO : auths) {
-            for (AuthReturnDTO config : findByConfig) {
-                if (authReturnDTO.getAuthSeq().equals(config.getAuthSeq())) {
-                    authReturnDTO.setDetailAuthYn(config.getDetailAuthYn());
-                    authReturnDTO.setEmailReceptionYn(config.getEmailReceptionYn());
-                    authReturnDTO.setViewYn("Y");
-                }
-                else {
-                    for (AuthReturnDTO dto2 : authReturnDTO.getSubAuths()) {
-                        if (dto2.getAuthSeq().equals(config.getAuthSeq())) {
-                            dto2.setDetailAuthYn(config.getDetailAuthYn());
-                            dto2.setEmailReceptionYn(config.getEmailReceptionYn());
-                            dto2.setViewYn("Y");
-                        }
-                        else {
-                            for (AuthReturnDTO dto3 : dto2.getSubAuths()) {
-                                if (dto3.getAuthSeq().equals(config.getAuthSeq())) {
-                                    dto3.setDetailAuthYn(config.getDetailAuthYn());
-                                    dto3.setEmailReceptionYn(config.getEmailReceptionYn());
-                                    dto3.setViewYn("Y");
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }*/
         for (AuthReturnDTO authReturnDTO : auths) {
             for (AuthReturnDTO config : findByConfig) {
                 this.authConfig(authReturnDTO, config);
@@ -726,6 +695,107 @@ public class AuthService {
         return auths;
     }
 
+    public List<AuthReturnDTO> getAuthList2 (final UserContentsSearchDTO userContentsSearchDTO) {
+        log.info("AuthService.getAuthList2");
+        final List<AuthReturnDTO> findByConfig = authRepository.findByConfig(
+                userContentsSearchDTO.getMenuCode()
+                , userContentsSearchDTO.getSkillCode());
+
+        final List<AuthReturnDTO> auths = this.findAuths();
+
+        for (AuthReturnDTO authReturnDTO : auths) {
+            for (AuthReturnDTO config : findByConfig) {
+                this.authConfig(authReturnDTO, config);
+
+                for (AuthReturnDTO dto2 : authReturnDTO.getSubAuths()) {
+                    this.authConfig(dto2, config);
+
+                    for (AuthReturnDTO dto3 : dto2.getSubAuths()) {
+                        this.authConfig(dto3, config);
+                    }
+                }
+            }
+        }
+
+        for (AuthReturnDTO authReturnDTO : auths) {
+            boolean check = true;
+            for (AuthReturnDTO dto2 : authReturnDTO.getSubAuths()) {
+                boolean check1 = true;
+                for (AuthReturnDTO dto3 : dto2.getSubAuths()) {
+                    if (check1 && dto3.getViewYn().equals("Y")) {
+                        check1 = false;
+                        if (!dto2.getViewYn().equals("Y")) {
+                            dto2.setViewYn("Y");
+                            dto2.setCheckBoxYn("N");
+                        }
+                    }
+                }
+
+                if (check && dto2.getViewYn().equals("Y")) {
+                    check = false;
+                    if (!authReturnDTO.getViewYn().equals("Y")) {
+                        authReturnDTO.setViewYn("Y");
+                        authReturnDTO.setCheckBoxYn("N");
+                    }
+                }
+            }
+        }
+
+        final List<AuthReturnDTO> returns = new ArrayList<>();
+        for (AuthReturnDTO authReturnDTO : auths) {
+            if (authReturnDTO.getViewYn().equals("Y")) {
+                final AuthReturnDTO return1 = authReturnDTO;
+                final List<AuthReturnDTO> return1sub = new ArrayList<>();
+                for (AuthReturnDTO dto2 : return1.getSubAuths()) {
+                    if (dto2.getViewYn().equals("Y")) {
+                        final AuthReturnDTO return2 = dto2;
+                        final List<AuthReturnDTO> return2sub = new ArrayList<>();
+                        for (AuthReturnDTO dto3 : return2.getSubAuths()) {
+                            if (dto3.getViewYn().equals("Y")) {
+                                return2sub.add(dto3);
+                            }
+                        }
+                        return2.setSubAuths(return2sub);
+                        return1sub.add(return2);
+                    }
+                }
+                return1.setSubAuths(return1sub);
+                returns.add(return1);
+            }
+        }
+
+        return returns;
+    }
+
+    public List<AuthReturnDTO> getAuthList3 () {
+        log.info("AuthService.getAuthList3");
+        final List<AuthReturnDTO> auths = this.findAuths();
+        final List<AuthReturnDTO> returns = new ArrayList<>();
+        for (AuthReturnDTO authReturnDTO : auths) {
+            if (authReturnDTO.getUseYn().equals("Y")) {
+                final AuthReturnDTO return1 = authReturnDTO;
+                final List<AuthReturnDTO> return1sub = new ArrayList<>();
+                for (AuthReturnDTO dto2 : return1.getSubAuths()) {
+                    if (dto2.getUseYn().equals("Y")) {
+                        final AuthReturnDTO return2 = dto2;
+                        final List<AuthReturnDTO> return2sub = new ArrayList<>();
+                        for (AuthReturnDTO dto3 : return2.getSubAuths()) {
+                            if (dto3.getUseYn().equals("Y")) {
+                                return2sub.add(dto3);
+                            }
+                        }
+                        return2.setSubAuths(return2sub);
+                        return1sub.add(return2);
+                    }
+                }
+                return1.setSubAuths(return1sub);
+                returns.add(return1);
+            }
+        }
+
+        return returns;
+    }
+
     /**
      * Auth config.
      *
@@ -742,5 +812,17 @@ public class AuthService {
             target.setViewYn("Y");
             target.setCheckBoxYn("Y");
         }
+    }
+
+    /**
+     * Delete key.
+     *
+     * @param key the key
+     * @author [오지훈]
+     * @implNote redis key 삭제
+     * @since 2020. 8. 25. 오후 6:49:41
+     */
+    public void deleteKey(final String key) {
+        redisService.delete(key);
     }
 }

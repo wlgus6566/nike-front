@@ -20,9 +20,9 @@ export default {
     props: ['listCascader'],
     watch: {
         'listCascader.value'(val) {
-            if (val.length === 0) {
-                this.listCascader.value = [null];
-            }
+            // if (val.length === 0) {
+            //     this.listCascader.value = [null];
+            // }
             this.cloneTxt = '';
             val.forEach((el) => {
                 this.testArr(this.listCascader.options, el);
@@ -53,7 +53,6 @@ export default {
         selectWidthSet() {
             const selectDiv = this.$refs.select.$el;
             const input = selectDiv.querySelector('input');
-            console.log(input.value);
             input.insertAdjacentHTML(
                 'afterend',
                 `<div id="select-width">${this.cloneTxt}</div>`
@@ -62,7 +61,7 @@ export default {
             input.style.width = `${
                 Math.ceil(widthGuideTxt.offsetWidth) + 30
             }px`;
-            widthGuideTxt.remove();
+            widthGuideTxt.parentNode.removeChild(widthGuideTxt);
         },
     },
 };

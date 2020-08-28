@@ -25,30 +25,24 @@
                     <strong class="title">최종로그인</strong>
                     <div class="date-picker-group">
                         <div class="date-picker">
-                            <v-date-picker
-                                v-model="range.beginDt"
-                                locale="en-us"
-                                color="orange"
-                                :input-props="{
-                                    placeholder: 'YYYY.MM.DD',
-                                }"
-                                :attributes="attrs"
-                                :min-date="minDate()"
-                                :max-date="new Date()"
-                            />
+                            <el-date-picker
+                                v-model="beginDt"
+                                type="date"
+                                placeholder="YYYY.MM.DD"
+                                format="yyyy.MM.dd"
+                                :picker-options="pickerBeginOption"
+                            >
+                            </el-date-picker>
                         </div>
                         <div class="date-picker">
-                            <v-date-picker
-                                v-model="range.endDt"
-                                locale="en-us"
-                                color="orange"
-                                :input-props="{
-                                    placeholder: 'YYYY.MM.DD',
-                                }"
-                                :attributes="attrs"
-                                :min-date="minDate()"
-                                :max-date="new Date()"
-                            />
+                            <el-date-picker
+                                v-model="endDt"
+                                type="date"
+                                placeholder="YYYY.MM.DD"
+                                format="yyyy.MM.dd"
+                                :picker-options="pickerEndOption"
+                            >
+                            </el-date-picker>
                         </div>
                     </div>
                 </div>
@@ -204,8 +198,6 @@ export default {
             page: null,
             searchKeyword: '',
             sort: null,
-            beginDt: null,
-            endDt: null,
             userDataList: '',
             userData: '',
             checkAll: false,
@@ -228,25 +220,36 @@ export default {
                     },
                 ],
             },
-            range: {
-                beginDt: null,
-                endDt: null,
-            },
-            make: {
-                beginDt: null,
-                endDt: null,
-            },
             placeholder: 'abc',
-            attrs: [
-                {
-                    key: 'today',
-                    highlight: 'gray',
-                    dates: new Date(),
-                    class: 'vc-today',
-                    contentClass: 'vc-today',
-                },
-            ],
+            beginDt: null,
+            endDt: null,
             today: new Date(),
+            pickerBeginOption: {
+                firstDayOfWeek: 7,
+                cellClassName: (date) => {
+                    if (new Date(date).getDay() === 0) {
+                        return 'el-holiday';
+                    }
+                },
+                disabledDate: (time) => {
+                    if (this.endDt !== null) {
+                        return time.getTime() > this.endDt.getTime();
+                    }
+                },
+            },
+            pickerEndOption: {
+                firstDayOfWeek: 7,
+                cellClassName: (date) => {
+                    if (new Date(date).getDay() === 0) {
+                        return 'el-holiday';
+                    }
+                },
+                disabledDate: (time) => {
+                    if (this.beginDt !== null) {
+                        return time.getTime() < this.beginDt.getTime();
+                    }
+                },
+            },
             userSeqArray: [],
             dataPickerShowData: {
                 visible: false,
@@ -264,6 +267,7 @@ export default {
                 authSeq: null,
                 nickname: null,
                 userId: null,
+                authSeqArray: null,
             },
             loadingData: false,
         };
@@ -307,71 +311,19 @@ export default {
         'authority.value'() {
             this.getUserList();
         },
-        make: {
-            deep: true,
-            handler(val) {
-                if (val.beginDt && val.endDt) {
-                    this.dataPickerShowData.visible = false;
-                    this.getUserList();
-                }
-            },
+        beginDt() {
+            this.getUserList();
         },
-        'range.beginDt'(val) {
-            if (val !== null) {
-                let year = val.getFullYear();
-                let month = val.getMonth() + 1;
-                let day = val.getDate();
-                if (month < 10) {
-                    month = `0${month}`;
-                }
-                if (day < 10) {
-                    day = `0${day}`;
-                }
-                this.make.beginDt = `${year}-${month}-${day}`;
-                if (this.make.endDt !== null) {
-                    const begin = Number(this.make.beginDt.replace(/-/gi, ''));
-                    const end = Number(this.make.endDt.replace(/-/gi, ''));
-                    if (begin > end) {
-                        alert('시작일이 종료일보다 클 수 없습니다.');
-                        this.range.endDt = this.today;
-                    }
-                }
-            }
-        },
-        'range.endDt'(val) {
-            if (val !== null) {
-                let year = val.getFullYear();
-                let month = val.getMonth() + 1;
-                let day = val.getDate();
-                if (month < 10) {
-                    month = `0${month}`;
-                }
-                if (day < 10) {
-                    day = `0${day}`;
-                }
-                this.make.endDt = `${year}-${month}-${day}`;
-                if (this.make.beginDt !== null) {
-                    const begin = Number(this.make.beginDt.replace(/-/gi, ''));
-                    const end = Number(this.make.endDt.replace(/-/gi, ''));
-                    if (begin > end) {
-                        alert('시작일이 종료일보다 클 수 없습니다.');
-                        this.range.endDt = this.today;
-                    }
-                }
-            }
+        endDt() {
+            this.getUserList();
         },
     },
     methods: {
         //데이터 피커 리켓
         dataPickerReset() {
-            this.range = {
-                beginDt: null,
-                endDt: null,
-            };
-            this.make = {
-                beginDt: null,
-                endDt: null,
-            };
+            this.beginDt = null;
+            this.endDt = null;
+
             this.dataPickerShowData.visible = false;
             this.getUserList();
         },
@@ -381,6 +333,7 @@ export default {
                 authSeq: null,
                 nickname: null,
                 userId: null,
+                authSeqArray: null,
             };
             this.addAuthority.value = [null];
             this.visible.AccountManagement = true;
@@ -390,11 +343,6 @@ export default {
             this.dataPickerShowData.visible = !this.dataPickerShowData.visible;
         },
         dates() {},
-        minDate() {
-            const date = new Date();
-            date.setMonth(date.getMonth() - 3);
-            return date;
-        },
         // checkbox
         checked(seq, del) {
             const indexOfChecked = this.checkItem.findIndex((el) => el === seq);
@@ -437,6 +385,14 @@ export default {
         // USER 목록 조회
         async getUserList() {
             this.loadingData = true;
+            let beginDt = null;
+            let endDt = null;
+            if (this.beginDt !== null) {
+                beginDt = this.$moment(this.beginDt).format('YYYY-MM-DD');
+            }
+            if (this.endDt !== null) {
+                endDt = this.$moment(this.endDt).format('YYYY-MM-DD');
+            }
             try {
                 const {
                     data: { data: response },
@@ -447,14 +403,14 @@ export default {
                     status: this.listSortSelect.value,
                     sort: this.sort,
                     authSeq: this.authority.value.slice(-1)[0],
-                    beginDt: this.make.beginDt,
-                    endDt: this.make.endDt,
+                    beginDt: beginDt,
+                    endDt: endDt,
                 });
                 this.userData = response.content;
                 this.totalItem = response.totalElements;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -488,13 +444,13 @@ export default {
                 this.recursionFn(response, this.authority.options, 1);
                 this.recursionFn(response, this.addAuthority.options, 1);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
         // 유저 다건 삭제
         async userArrayDelete() {
-            console.log(this.checkItem.length !== 0);
+            // console.log(this.checkItem.length !== 0);
             if (this.checkItem.length === 0 || this.checkItem.length === null) {
                 alert('하나 이상의 계정을 선택해 주세요');
             } else {
@@ -502,7 +458,7 @@ export default {
                     '선택한 계정을 삭제하시겠습니까? 계정 삭제 시 해당 계정으로 로그인이 불가능하며, 플랫폼 사용 이력이 모두 삭제됩니다.'
                 );
                 if (deleteAlert) {
-                    console.log(this.checkItem);
+                    // console.log(this.checkItem);
                     try {
                         const response = await deleteArrayUser({
                             userSeqArray: this.checkItem,
@@ -514,7 +470,7 @@ export default {
                             this.getUserList();
                         }
                     } catch (error) {
-                        console.log(error);
+                        console.error(error);
                     }
                 }
             }
@@ -538,7 +494,7 @@ export default {
                         this.loading = false;
                     }
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         },
@@ -548,11 +504,12 @@ export default {
                 const {
                     data: { data: response },
                 } = await getUserDetail(seq);
+                this.addAuthority.value = response.authSeqArray;
                 this.addUserData = response;
                 this.visible.AccountManagement = true;
-                console.log(response);
+                console.log(response.authSeqArray);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -574,7 +531,7 @@ export default {
                         if (response.data.existMsg) {
                             alert(response.data.msg);
                         }
-                        console.log(response);
+                        // console.log(response);
                         if (response.data.success) {
                             this.visible.AccountManagement = false;
                             await this.getUserList();
@@ -588,7 +545,7 @@ export default {
                             this.addAuthority.value = [null];
                         }
                     } catch (error) {
-                        console.log(error);
+                        console.error(error);
                     }
                 }
             }
@@ -621,7 +578,7 @@ export default {
                         this.addAuthority.value = [null];
                     }
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         },
@@ -635,21 +592,10 @@ export default {
                     alert(response.data.msg);
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },
 };
 </script>
-<style scoped>
-.list-loading {
-    position: relative;
-    padding-top: 70%;
-}
-::v-deep .list-loading .lottie {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-</style>
+<style scoped></style>

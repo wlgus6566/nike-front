@@ -130,11 +130,24 @@ export default {
         };
     },
     created() {
-        this.editorConfig.filebrowserImageUploadUrl = `https://devapi.nikespace.co.kr/api/customer/${this.$route.name.toUpperCase()}/images`;
+        /* console.log(this.$route.name);*/
+        this.editorConfig.filebrowserImageUploadUrl =
+            process.env.VUE_APP_API_URL +
+            `/api/customer/${this.$route.meta.sectionCode}/images`;
         this.editorConfig.fileTools_requestHeaders.Authorization =
             this.$store.state.token || getAuthFromCookie();
     },
     components: {},
+    watch: {
+        'noticeDetail.noticeYn'(val) {
+            if (!val) {
+                this.noticeDetail.noticeYn = 'N';
+            }
+        },
+        $route() {
+            this.$destroy();
+        },
+    },
     mounted() {
         this.getNoticeList();
         //this.noticeDetail.noticeYn = 'N';
@@ -144,6 +157,7 @@ export default {
     },
     activated() {
         this.getNoticeList();
+        this.detailDataReset();
     },
     methods: {
         submitData() {
@@ -173,7 +187,7 @@ export default {
                     alert(response.data.msg);
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -204,7 +218,7 @@ export default {
                     console.log('시퀀스');
                     console.log(this.noticeArticleSeq);
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         },
@@ -229,7 +243,7 @@ export default {
                 });
                 //console.log(this.noticeYnLength);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -240,13 +254,14 @@ export default {
                 const {
                     data: { data: response },
                 } = await getCustomerDetail(
-                    this.noticeArticleSectionCode,
+                    this.$route.meta.sectionCode,
                     this.$route.params.id
                 );
+                console.log(response);
                 this.noticeDetail = response;
                 this.noticeArticleSeq = response.noticeArticleSeq;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -271,6 +286,8 @@ export default {
             this.noticeDetail.title = '';
             this.noticeDetail.contents = '';
             this.noticeDetail.noticeYn = null;
+            this.editorConfig.filebrowserImageUploadUrl = '';
+            this.editorConfig.fileTools_requestHeaders.Authorization = '';
         },
     },
 };

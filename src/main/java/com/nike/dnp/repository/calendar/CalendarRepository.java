@@ -42,6 +42,15 @@ public interface CalendarRepository extends JpaRepository<Calendar, Long>,Calend
     List<Calendar> findAllByBeginDtBeforeAndEndDtAfter(LocalDateTime beginDt,LocalDateTime endDt);
 
 
-
-
+    /**
+     * 날짜별 등록된 컨텐츠 수 조회
+     *
+     * @param beginDt the begin dt
+     * @param endDt   the end dt
+     * @return the long
+     * @author [윤태호]
+     * @implNote
+     * @since 2020. 8. 27. 오후 7:12:08
+     */
+    long countByBeginDtBeforeAndEndDtAfter(LocalDateTime beginDt, LocalDateTime endDt);
 }

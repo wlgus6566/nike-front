@@ -6,7 +6,6 @@ import com.nike.dnp.dto.user.UserContentsSearchDTO;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.auth.AuthService;
-import com.nike.dnp.service.user.UserContentsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -45,11 +44,10 @@ public class UserContentsController {
     private final ResponseService responseService;
 
     /**
-     * UserContentsService
+     * AuthService
      *
      * @author [오지훈]
      */
-    private final UserContentsService userContentsService;
     private final AuthService authService;
 
     /**
@@ -69,16 +67,37 @@ public class UserContentsController {
      * @since 2020. 7. 20. 오후 4:25:57
      * @apiNote 유저 컨텐츠 그룹 권한 목록
      */
-    @ApiOperation(value = "유저 컨텐츠 권한 목록"
+    @ApiOperation(value = "유저 컨텐츠 권한 목록1"
             , notes = OPERATION_CHARACTER)
-    @PostMapping(name = "유저 컨텐츠 그룹 권한 목록"
+    @PostMapping(name = "유저 컨텐츠 그룹 권한 목록1", value = "/list1"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
-    public SingleResult<List<AuthReturnDTO>> list (
+    public SingleResult<List<AuthReturnDTO>> list1 (
             @ApiParam(value = "유저 컨텐츠 권한 검색 DTO", required = true) @Valid @RequestBody final UserContentsSearchDTO userContentsSearchDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserContentsController.list");
         return responseService.getSingleResult(authService.getAuthList(userContentsSearchDTO));
+    }
+
+    @ApiOperation(value = "유저 컨텐츠 권한 목록2"
+            , notes = OPERATION_CHARACTER)
+    @PostMapping(name = "유저 컨텐츠 그룹 권한 목록2", value = "/list2"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ValidField
+    public SingleResult<List<AuthReturnDTO>> list2 (
+            @ApiParam(value = "유저 컨텐츠 권한 검색 DTO", required = true) @Valid @RequestBody final UserContentsSearchDTO userContentsSearchDTO
+            , @ApiIgnore final BindingResult result) {
+        log.info("UserContentsController.list");
+        return responseService.getSingleResult(authService.getAuthList2(userContentsSearchDTO));
+    }
+
+    @ApiOperation(value = "유저 컨텐츠 권한 목록3"
+            , notes = OPERATION_CHARACTER)
+    @PostMapping(name = "유저 컨텐츠 그룹 권한 목록3", value = "/list3"
+            , produces = {MediaType.APPLICATION_JSON_VALUE})
+    public SingleResult<List<AuthReturnDTO>> list3 () {
+        log.info("UserContentsController.list");
+        return responseService.getSingleResult(authService.getAuthList3());
     }
 
 //    /**

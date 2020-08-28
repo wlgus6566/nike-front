@@ -1,0 +1,58 @@
+<template>
+<!--    <transition-group-->
+<!--            name="folder-list"-->
+<!--            tag="ul"-->
+<!--            v-bind:class="[-->
+<!--            { 'folder-list': listTypes[0].active },-->
+<!--            { 'folder-list-row': listTypes[1].active },-->
+<!--        ]"-->
+<!--    >-->
+    <li
+        class="folder-list-item"
+        v-for="(item, index) in folderListData"
+        :key="index"
+    >
+        <router-link :to="setUrl(item)">
+            <div class="thumbnail">
+                <img :src="item.imageFilePhysicalName" alt="" />
+            </div>
+            <div class="info-box">
+                <strong class="title">{{ item.folderName }}</strong>
+                <p class="txt">{{ item.folderContents }}</p>
+                <p
+                    v-if="item.campaignPeriodSectionCode === 'EVERY'"
+                    class="date"
+                >
+                    365
+                </p>
+                <p v-else class="date">
+                    {{ $moment(item.campaignBeginDt).format('YYYY.MM.DD') }}
+                    ~
+                    {{ $moment(item.campaignEndDt).format('YYYY.MM.DD') }}
+                </p>
+            </div>
+            <div class="view-area">
+                <span class="view">{{ item.readCount }}</span>
+            </div>
+        </router-link>
+    </li>
+<!--    </transition-group>-->
+</template>
+<script>
+export default {
+    name: 'folder-list',
+    props: ['folderListData', 'listTypes'],
+    mounted() {},
+    methods: {
+        // classBind(el) {
+        //     const defaultClass = 'folder-list-item';
+        //     const detailAuth = el.detailAuthYn === 'Y' ? ' detail-auth' : '';
+        //     const exposure = el.exposure === 'Y' ? ' exposure' : '';
+        //     return `${defaultClass}${detailAuth}${exposure}`;
+        // },
+        setUrl(item) {
+            return `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase();
+        },
+    },
+};
+</script>

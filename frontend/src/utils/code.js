@@ -12,8 +12,8 @@ const getCategoryList = async (codeName, array) => {
                 label: el.codeName,
             });
         });
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        console.error(error);
     }
 };
 export { getCategoryList };

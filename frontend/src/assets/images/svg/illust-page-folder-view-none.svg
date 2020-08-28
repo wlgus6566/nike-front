@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <path fill="#888" d="M2 11h58.5c1.105 0 2 .895 2 2v48H0V13c0-1.105.895-2 2-2z" transform="translate(29 31)"/>
+            <g stroke-linecap="round" stroke-linejoin="round">
+                <path fill="#FCFCFC" stroke="#CCC" stroke-dasharray="1 2" d="M1 0h42c.552 0 1 .448 1 1v58c0 .552-.448 1-1 1H1c-.552 0-1-.448-1-1V1c0-.552.448-1 1-1z" transform="translate(29 31) translate(9)"/>
+                <path stroke="#DDD" d="M6.417 12L37.583 12M6.417 8L37.583 8M6.417 16L37.583 16M6.417 20L24.75 20" transform="translate(29 31) translate(9)"/>
+            </g>
+            <path fill="#DDD" d="M11.923 22.364h24.96l6.494 4.177H71.38c.553 0 1 .447 1 1 0 .097-.014.195-.042.288L62.338 61H0l9.991-37.156c.235-.873 1.027-1.48 1.932-1.48z" transform="translate(29 31)"/>
+            <path fill="#888" d="M36.546 42.588c-1.17.311-2.113.27-2.647-.123-1.38-1.003-.323-3.027.047-3.635-.672.74-1.344 1.48-1.867 2.286-.821 1.26-1.173 2.644-.618 3.528.998 1.607 3.392.867 4.914.227l14.163-5.965-13.992 3.682z" transform="translate(29 31)"/>
+        </g>
+        <g transform="translate(84 78)">
+            <circle cx="8" cy="8" r="8" fill="#FFF" stroke="#888" stroke-width="3"/>
+            <path fill="#888" d="M7 0L10 0 10 16 7 16z" transform="rotate(45 8.5 8)"/>
+        </g>
+    </g>
+</svg>

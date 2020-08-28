@@ -110,7 +110,21 @@ export default {
     mounted() {
         this.menuLottie(0);
     },
-    computed: {},
+    computed: {
+        pathUrl() {
+            return this.$route.path;
+        },
+    },
+    watch: {
+        pathUrl(val) {
+            if (val.split('/')[1] === 'report') {
+                this.menuLottie(1);
+            }
+        },
+        '$store.state.menuData'() {
+            this.menuFn();
+        },
+    },
     methods: {
         menuLottie(index) {
             this.anim.forEach(el => {
@@ -119,6 +133,7 @@ export default {
             this.anim[index].play();
         },
         menuFn() {
+            if (!this.$store.state.menuData) return;
             const menu = this.$store.state.menuData.filter(
                 el =>
                     el.menuCode !== 'MYPAGE' &&
@@ -126,7 +141,6 @@ export default {
                     el.mobileYn === 'Y'
             );
             this.menuData = menu;
-            // console.log(this.menuData);
         },
         menuOpen() {
             this.topScollVal = document.scrollingElement.scrollTop;

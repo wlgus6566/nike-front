@@ -177,7 +177,7 @@ export default {
                 this.page++;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },
@@ -188,6 +188,7 @@ export default {
     activated() {
         if (this.$store.state.reload) {
             this.initFetchData();
+            this.$store.dispatch('getContBasket');
             this.$store.commit('SET_RELOAD', false);
         }
         window.addEventListener('scroll', this.handleScroll);
@@ -200,15 +201,4 @@ export default {
     },
 };
 </script>
-<style scoped>
-.list-loading {
-    position: relative;
-    padding-top: 70%;
-}
-::v-deep .list-loading .lottie {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-</style>
+<style scoped></style>

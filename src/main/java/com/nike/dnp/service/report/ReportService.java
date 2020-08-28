@@ -271,7 +271,7 @@ public class ReportService {
                 && !ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
             for (final ReportFile beforeFile : beforeFileList) {
                 for (final ReportFileSaveDTO newFile : newFileList) {
-                    if (beforeFile.getReportFileSeq() == newFile.getReportFileSeq()) {
+                    if (beforeFile.getReportFileSeq().equals(newFile.getReportFileSeq())) {
                         lastBeforeFileList.remove(beforeFile);
                     }
                 }
@@ -455,10 +455,19 @@ public class ReportService {
         return userSeqList;
     }
 
+    /**
+     * Find all auth user with depth list.
+     *
+     * @return the list
+     * @author [이소정]
+     * @implNote 권한 목록 조회
+     * @since 2020. 8. 26. 오후 4:52:23
+     */
     public List<AuthReturnDTO> findAllAuthUserWithDepth() {
         final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
         userContentsSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
         userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+
         return authService.getAuthListWithDepth(userContentsSearchDTO, authService.getById(SecurityUtil.currentUser().getAuthSeq()));
     }
 

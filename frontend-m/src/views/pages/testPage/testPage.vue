@@ -2,7 +2,81 @@
     <div>
         <FilterSelect :selectList="selectList"></FilterSelect>
         <CascaderSelect :cascaderList="authority"></CascaderSelect>
-
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <button type="button" @click="openModal">팝업</button> <br />
         <button type="button" @click="openModal2">팝업 full</button>
         <div class="modal-wrap">
@@ -35,11 +109,11 @@ export default {
                 ],
             },
             authority: {
-                value: ['all'],
-	              name: 'authority',
+                value: null,
+                name: 'authority',
                 options: [
                     {
-                        value: 'all',
+                        value: null,
                         label: '전체 그룹',
                     },
                 ],

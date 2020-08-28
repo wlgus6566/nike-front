@@ -15,3 +15,4 @@ export const code = createWithAuth(`/api/open/code`, { timeout: 3000 });
 export const main = createWithAuth(`/api/main`, {timeout: 3000});
 export const alarm = createWithAuth(`/api/alarm`, { timeout: 3000 });
 export const calendar = createWithAuth(`/api/calendar`, { timeout: 3000 });
+export const contents = createWithAuth(`/api/contents`, { timeout: 3000 });

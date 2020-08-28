@@ -3,17 +3,19 @@
         <h2 class="page-title">
             CALENDAR
         </h2>
-        <ul class="schedule-type">
-            <li class="edu">교육</li>
-            <li class="campaign">캠페인</li>
-            <li class="official">기타 공개일정</li>
-        </ul>
-        <FullCalendar
-            ref="fullCalendar"
-            :options="calendarOptions"
-            defaultView="month"
-            :editable="false"
-        />
+        <div class="fullCalendar-wrap">
+            <ul class="schedule-type">
+                <li class="edu">교육</li>
+                <li class="campaign">캠페인</li>
+                <li class="official">기타 공개일정</li>
+            </ul>
+            <FullCalendar
+                ref="fullCalendar"
+                :options="calendarOptions"
+                defaultView="month"
+                :editable="false"
+            />
+        </div>
 
         <calendarManagement
             :visible.sync="visible.calendarManagement"
@@ -38,33 +40,48 @@
                 </a>
             </div>
         </div>
-
         <h3 class="schedule-title">{{ searchDt }}</h3>
-        <ul class="schedule-list">
-            <li
-                class="schedule-item"
-                v-for="item in todayData"
-                :key="item.calendarSeq"
-            >
-                <div class="content">
-                    <h4 class="title">{{ item.scheduleName }}</h4>
-                    <p class="desc">{{ item.contents }}</p>
-                </div>
+        <template v-if="todayData">
+            <ul class="schedule-list" v-if="todayData.length !== 0">
+                <li
+                    class="schedule-item"
+                    :class="{
+                        edu: item.calendarSectionCode === 'EDUCATION',
+                        campaign: item.calendarSectionCode === 'CAMPAIGN',
+                        official: item.calendarSectionCode === 'ETC',
+                    }"
+                    v-for="item in todayData"
+                    :key="item.calendarSeq"
+                >
+                    <div class="content">
+                        <h4 class="title">
+                            <strong>{{ item.scheduleName }}</strong>
+                        </h4>
+                        <p class="desc">{{ item.contents }}</p>
+                    </div>
 
-                <div class="info">
-                    <el-button
-                        type="white"
-                        class="btn-edit"
-                        @click="onClickToEdit(item)"
-                    >
-                        수정하기
-                    </el-button>
-                    <span class="date">
-                        {{ item.beginDt }} ~ {{ item.endDt }}</span
-                    >
-                </div>
-            </li>
-        </ul>
+                    <div class="info">
+                        <el-button
+                            type="white"
+                            class="btn-edit"
+                            @click="onClickToEdit(item)"
+                        >
+                            수정하기
+                        </el-button>
+                        <span class="date">
+                            {{ item.beginDt }} ~ {{ item.endDt }}</span
+                        >
+                    </div>
+                </li>
+            </ul>
+            <ul class="schedule-list" v-else>
+                <li class="schedule-item">
+                    <div class="content">
+                        <h4 class="title">등록된 일정이 없습니다.</h4>
+                    </div>
+                </li>
+            </ul>
+        </template>
     </div>
 </template>
 
@@ -84,7 +101,7 @@ import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import momentPlugin from '@fullcalendar/moment'
+import momentPlugin from '@fullcalendar/moment';
 
 import calendarManagement from '@/views/pages/information/calendar-management';
 
@@ -113,6 +130,7 @@ export default {
             calendarData: [],
             todayData: [],
             calendarOptions: {
+                height: 'auto',
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
                 dateClick: this.handleDateClick,
@@ -122,7 +140,7 @@ export default {
                     center: 'title',
                     right: 'next',
                 },
-                titleFormat: 'yyyy.M',
+                titleFormat: 'yyyy.MM',
                 customButtons: {
                     prev: {
                         // this overrides the prev button
@@ -148,6 +166,9 @@ export default {
             },
         };
     },
+    watch: {
+        calenderSectionCodeList() {},
+    },
     components: {
         FullCalendar,
         calendarManagement,
@@ -165,7 +186,7 @@ export default {
                 this.loadingData = false;
                 await this.loadCalendarCode();
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         // 한달 일정 조회
@@ -189,27 +210,34 @@ export default {
         transformData() {
             this.calendarOptions.events = [];
             this.calendarData.forEach((item) => {
-                console.log('for', item);
-                let color;
+                let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
-                    color = '#be1767';
+                    className = 'edu';
                 } else if (item.calendarSectionCode === 'CAMPAIGN') {
-                    color = '#007b68';
+                    className = 'campaign';
                 } else {
-                    color = '#2c0fb4';
+                    className = 'official';
                 }
                 this.calendarOptions.events.push({
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: moment(item.beginDt).format('YYYY-MM-DD'),
-                    end: moment(item.endDt).add(1, 'days').format('YYYY-MM-DD'),
-                    color: color
+                    start: item.beginDt.replace(/\./gi, '-'),
+                    end: moment(item.endDt)
+                        .add(1, 'days')
+                        ._i.replace(/\./gi, '-'),
+                    className: className,
                 });
             });
         },
         // 달력에 일자 클릭시
         handleDateClick(arg) {
+            if (document.querySelector('.fc-daygrid-day.active')) {
+                document
+                    .querySelector('.fc-daygrid-day.active')
+                    .classList.remove('active');
+            }
+            arg.dayEl.classList.add('active');
             this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
         },
         // 일정 등록 클릭시
@@ -218,6 +246,7 @@ export default {
             this.calendarDetail = {
                 ...this.calendarDialogInitData,
             };
+            this.calendarSeq = null;
             this.visible.calendarManagement = true;
         },
         // 일정 수정 클릭시
@@ -248,7 +277,7 @@ export default {
                     this.processAfterSuccess();
                 }
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         async modifyCalendar(calendarSeq, data) {
@@ -262,7 +291,7 @@ export default {
                     this.processAfterSuccess();
                 }
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         async delCalendar(calendarSeq) {
@@ -276,7 +305,7 @@ export default {
                     this.processAfterSuccess();
                 }
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         async processAfterSuccess() {
@@ -292,8 +321,12 @@ export default {
 };
 </script>
 <style type="text/css">
-    /*TODO 주말 색 변경필오*/
-    .fc-day-sun.fc-daygrid-day-frame.fc-daygrid-day-top.fc-daygrid-day-number { color:#0000FF; }     /* 토요일 */
-    .fc-day-number.fc-sun.fc-past { color:#FF0000; }    /* 일요일 */
+/*TODO 주말 색 변경필오*/
+.fc-day-sun.fc-daygrid-day-frame.fc-daygrid-day-top.fc-daygrid-day-number {
+    color: #0000ff;
+} /* 토요일 */
+.fc-day-number.fc-sun.fc-past {
+    color: #ff0000;
+} /* 일요일 */
 </style>
-<link href="./fullcalendar-2.9.1/fullcalendar.css" rel="stylesheet"/>
+<link href="./fullcalendar-2.9.1/fullcalendar.css" rel="stylesheet" />

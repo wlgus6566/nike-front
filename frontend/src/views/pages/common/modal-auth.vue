@@ -72,26 +72,39 @@ export default {
             }
         });
         bus.$on('detailAuthUpdate', (seq) => {
-            this.dd(this.groupTreeData, seq, 'detailAuthYn');
+            this.groupTreeDataCheckUpdate(
+                this.groupTreeData,
+                seq,
+                'detailAuthYn'
+            );
         });
         bus.$on('emailReceptionUpdate', (seq) => {
-            this.dd(this.groupTreeData, seq, 'emailReceptionYn');
+            this.groupTreeDataCheckUpdate(
+                this.groupTreeData,
+                seq,
+                'emailReceptionYn'
+            );
         });
     },
     props: ['visible', 'checks'],
     methods: {
-        dd(arr, seq, YN) {
-            console.log(YN);
+        groupTreeDataCheckUpdate(arr, seq, YN) {
             arr.forEach((el) => {
                 if (el.authSeq === seq) {
                     if (el[YN] === 'Y') {
                         el[YN] = 'N';
+                        if (YN === 'detailAuthYn') {
+                            el['emailReceptionYn'] = 'N';
+                        }
                     } else {
                         el[YN] = 'Y';
+                        if (YN === 'emailReceptionYn') {
+                            el['detailAuthYn'] = 'Y';
+                        }
                     }
                 }
                 if (el.subAuths) {
-                    this.dd(el.subAuths, seq, YN);
+                    this.groupTreeDataCheckUpdate(el.subAuths, seq, YN);
                 }
             });
         },
@@ -103,8 +116,8 @@ export default {
                     'SP'
                 );
                 this.groupTreeData[0].subAuths = response;
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         checksUpdate() {

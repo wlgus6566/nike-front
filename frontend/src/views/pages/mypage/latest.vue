@@ -137,7 +137,6 @@ export default {
                 this.historyFolderData.length >= this.itemLength &&
                 this.historyFolderData.length !== 0
             ) {
-                console.log('infiniteScroll');
                 this.historyViewDataList(true);
             }
         },
@@ -171,7 +170,7 @@ export default {
                 this.page++;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

@@ -25,11 +25,10 @@ import com.nike.dnp.service.user.UserContentsService;
 import com.nike.dnp.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.Resource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -52,6 +51,14 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ContentsService {
+
+    /**
+     * PC Domain
+     *
+     * @author [오지훈]
+     */
+    @Value("${nike.url.pc.domain}")
+    private String PC_DOMAIN;
 
     /**
      * The Contents repository
@@ -444,27 +451,6 @@ public class ContentsService {
     }
 
     /**
-     * Download contents file string.
-     *
-     * @param contentsFileSeq the contents file seq
-     * @return the string
-     * @author [이소정]
-     * @implNote 컨텐츠 파일 다운로드
-     * @since 2020. 7. 16. 오후 2:51:01
-     */
-    @Transactional
-    public ResponseEntity<Resource> downloadFile(final Long contentsFileSeq) {
-        log.info("ContentsService.downloadFile");
-        final Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
-        if (contentsFile.isPresent()) {
-            contentsFile.ifPresent(value -> value.updateDownloadCount(contentsFile.get().getDownloadCount()));
-            return FileUtil.fileDownload(contentsFile.get().getFilePhysicalName());
-        } else {
-            return null;
-        }
-    }
-
-    /**
      * Find by id optional.
      *
      * @param contentsSeq the contents seq
@@ -506,6 +492,7 @@ public class ContentsService {
      * @implNote 컨텐츠 저장, 수정 시 메일 보내기
      * @since 2020. 7. 30. 오후 12:01:26
      */
+    @Transactional
     public void sendEmail(final ContentsMailSendDTO contentsMailSendDTO) {
         log.info("ContentsService.sendEmail");
         // 컨텐츠 조회
@@ -519,7 +506,7 @@ public class ContentsService {
             for (final ContentsUserEmailDTO userEmailDTO : emailAuthUserList) {
                 final SendDTO sendDTO = new SendDTO();
                 sendDTO.setEmail(userEmailDTO.getUserId());
-                sendDTO.setContentsUrl(contentsMailSendDTO.getContentsUrl());
+                sendDTO.setContentsUrl(PC_DOMAIN + contentsMailSendDTO.getContentsUrl());
                 sendDTO.setContentsImg(userEmailDTO.getImageFilePhysicalName());
 
                 sendDTO.setContentsName(contents.get().getFolderName());

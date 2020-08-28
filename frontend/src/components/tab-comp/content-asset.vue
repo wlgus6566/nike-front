@@ -29,8 +29,8 @@
                         </div>
                     </li>
                 </ul>
-                <div v-else>
-                    최근 본 폴더가 없습니다
+                <div class="no-data" v-else>
+                    <span class="txt">최근 본 폴더가 없습니다</span>
                 </div>
             </template>
         </div>
@@ -68,7 +68,7 @@ export default {
                 this.historyFolderData = response.content;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

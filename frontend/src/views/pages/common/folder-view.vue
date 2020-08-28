@@ -1,7 +1,11 @@
 <template>
     <div>
-        <BtnArea @delete="deleteFolder" @edit="modifyFolder">
-            <button type="button" class="btn-o-gray">
+        <BtnArea
+            @goToList="goToList"
+            @delete="deleteFolder"
+            @edit="modifyFolder"
+        >
+            <button type="button" class="btn-o-gray" @click="sendEmail">
                 <i class="icon-mail"></i>
                 <span>알림메일전송</span>
             </button>
@@ -36,6 +40,7 @@ import {
     deleteContents,
     getContentsView,
     getContentsViewFile,
+    sendMail,
 } from '@/api/contents';
 
 export default {
@@ -222,6 +227,25 @@ export default {
         },
     },
     methods: {
+        async sendEmail() {
+            try {
+                console.log(this.$route.fullPath);
+                const response = await sendMail({
+                    contentsSeq: this.$route.params.id,
+                    contentsUrl: this.$route.fullPath,
+                });
+                console.log(response);
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        goToList() {
+            this.$router.push(
+                `/${this.$route.meta.topMenuCode.toLowerCase()}/${
+                    this.$route.params.pathMatch
+                }`
+            );
+        },
         async deleteFolder() {
             if (
                 !confirm(
@@ -231,24 +255,29 @@ export default {
                 return;
             if (!confirm('정말 삭제하시겠습니까?')) return;
             try {
-                const response = await deleteContents(
+                const {
+                    data: { data: response },
+                } = await deleteContents(
                     this.$route.meta.topMenuCode,
                     this.$route.meta.menuCode,
                     this.$route.params.id
                 );
-                this.$store.commit('SET_RELOAD', true);
-                if (response.data.success) {
-                    await this.$router.go(-1);
+                if (response.success) {
+                    this.$store.commit('SET_RELOAD', true);
+                    await this.$router.push(
+                        `/${this.$route.meta.topMenuCode.toLowerCase()}/${
+                            this.$route.params.pathMatch
+                        }`
+                    );
                 }
-                console.log(response);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         modifyFolder() {
             this.$router.push(
                 `/${this.$route.meta.topMenuCode.toLowerCase()}/${
-                    this.$route.meta.menuCode
+                    this.$route.params.pathMatch
                 }/modify/${this.$route.params.id}`
             );
         },
@@ -289,7 +318,6 @@ export default {
             this.checkAll = !this.checkAll;
             if (this.checkAll) {
                 this.contentsFileList.forEach((el) => {
-                    console.log(el);
                     const indexOfChecked = this.checkContentsFileList.findIndex(
                         (elChecked) => elChecked === el.contentsFileSeq
                     );
@@ -324,12 +352,12 @@ export default {
                     data: { data: response },
                 } = await getContentsView(
                     this.$route.meta.topMenuCode,
-                    this.$route.params.pathMatch,
+                    this.$route.params.pathMatch.toUpperCase(),
                     this.$route.params.id
                 );
                 this.folderDetail = response;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         async getFolderDetailFile(infinite) {
@@ -341,7 +369,7 @@ export default {
                     data: { data: response },
                 } = await getContentsViewFile(
                     this.$route.meta.topMenuCode,
-                    this.$route.meta.menuCode,
+                    this.$route.params.pathMatch.toUpperCase(),
                     this.$route.params.id,
                     {
                         page: this.page,
@@ -351,7 +379,6 @@ export default {
                         fileExtension: this.fileExtension.value,
                     }
                 );
-                console.log(response);
                 this.totalPage = response.totalPages - 1;
                 if (infinite) {
                     this.contentsFileList = this.contentsFileList.concat(
@@ -363,7 +390,7 @@ export default {
                 this.page++;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         async addContBasket(seq) {
@@ -376,8 +403,8 @@ export default {
                     })
                 );
                 await this.$store.dispatch('getContBasket');
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
     },
@@ -388,6 +415,7 @@ export default {
     },
     activated() {
         if (this.$store.state.reload) {
+            this.$store.dispatch('getContBasket');
             this.getFolderDetail();
             this.initFetchData();
             this.$store.commit('SET_RELOAD', false);

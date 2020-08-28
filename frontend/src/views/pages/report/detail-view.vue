@@ -1,6 +1,10 @@
 <template>
     <div>
-        <BtnArea @delete="deleteReport" @edit="modifyReport" />
+        <BtnArea
+            @goToList="goToList"
+            @delete="deleteReport"
+            @edit="modifyReport"
+        />
         <div class="folder-wrap">
             <h2 class="folder-title">
                 {{ reportDetailData.reportName }}
@@ -24,6 +28,7 @@
             <template v-if="answerList">
                 <FeedbackList
                     :answerList="answerList"
+                    :userId="userId"
                     v-if="answerList.length"
                     @reportAnswerDelete="reportAnswerDelete"
                 />
@@ -80,6 +85,7 @@ import Loading from '@/components/loading';
 import FeedbackList from '@/components/feedback-list';
 import SortingList from '@/components/asset-view/sorting-list.vue';
 import ReportItem from '@/components/report-view/report-Item.vue';
+import { getUserIdFromCookie } from '@/utils/cookies';
 export default {
     name: 'detail-view',
     data() {
@@ -117,6 +123,11 @@ export default {
         SortingList,
         ReportItem,
     },
+    computed: {
+        userId() {
+            return this.$store.state.user || getUserIdFromCookie();
+        },
+    },
     created() {
         this.reportDetailView();
         this.reportAnswerList();
@@ -124,6 +135,13 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
+        if (this.$store.state.reload) {
+            this.$store.dispatch('getReportListBasket');
+            this.reportDetailView();
+            this.reportAnswerList();
+            this.initFetchData();
+            this.$store.commit('SET_RELOAD', false);
+        }
         window.addEventListener('scroll', this.handleScroll);
     },
     deactivated() {
@@ -133,9 +151,11 @@ export default {
         window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
+        goToList() {
+            this.$router.push(`/report/management`);
+        },
         //리포트 삭제
         async deleteReport() {
-            console.log(this.$route.params.id);
             if (
                 !confirm(
                     '삭제 시 등록한 내용이 전부 삭제 됩니다. 삭제하시겠습니까?'
@@ -148,11 +168,11 @@ export default {
                 this.$store.commit('SET_RELOAD', true);
                 await this.$store.dispatch('getReportListBasket');
                 if (response.data.success) {
-                    await this.$router.go(-1);
+                    await this.$router.push('/report/management');
                 }
                 console.log(response);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         //리포트 수정
@@ -161,12 +181,11 @@ export default {
         },
         // 파일 선택 담기
         async addReportBasket(seq) {
-            console.log(seq);
             try {
                 await postReportBasket(seq);
                 await this.$store.dispatch('getReportListBasket');
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         allCheckFn() {
@@ -212,7 +231,7 @@ export default {
                 } = await getReportDetail(this.$route.params.id);
                 this.reportDetailData = response;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         handleScroll() {
@@ -265,7 +284,7 @@ export default {
                 this.page++;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -279,7 +298,7 @@ export default {
                 this.answerList = response;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         // 리포트 댓글 등록
@@ -294,7 +313,7 @@ export default {
                 await this.reportAnswerList();
                 this.answerData.answerContents = null;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -307,22 +326,11 @@ export default {
                     console.log(response);
                     await this.reportAnswerList();
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         },
     },
 };
 </script>
-<style scoped>
-.list-loading {
-    position: relative;
-    padding-top: 70%;
-}
-::v-deep .list-loading .lottie {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-</style>
+<style scoped></style>

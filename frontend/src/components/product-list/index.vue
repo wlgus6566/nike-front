@@ -129,6 +129,7 @@ export default {
 }
 .product-list-item .info-box .title {
     display: block;
+    max-height: 48px;
     margin-top: 12px;
     font-size: 16px;
     line-height: 24px;
@@ -143,6 +144,7 @@ export default {
 }
 .product-list-item .info-box .txt {
     display: block;
+    max-height: 36px;
     margin-top: 8px;
     font-size: 12px;
     color: #555;
@@ -154,6 +156,54 @@ export default {
     -webkit-box-orient: vertical;
     word-wrap: break-word;
 }
+/* IE 대응 말줄임 */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS */
+    .product-list-item .info-box .title {
+        position: relative;
+        text-align: justify;
+        margin-right: -1em;
+        padding-right: 1em;
+    }
+    .product-list-item .info-box .title:before {
+        content: '...';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+    .product-list-item .info-box .title:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        margin-top: 0.2em;
+        background: white;
+    }
+
+    .product-list-item .info-box .txt {
+        position: relative;
+        text-align: justify;
+        margin-right: -1em;
+        padding-right: 1em;
+    }
+    .product-list-item .info-box .txt:before {
+        content: '...';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+    .product-list-item .info-box .txt:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        margin-top: 0.2em;
+        background: white;
+    }
+}
+
 .product-list-item .info-box .desc-txt-box {
     overflow: hidden;
     display: block;

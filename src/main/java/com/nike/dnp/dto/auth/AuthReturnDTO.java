@@ -5,7 +5,6 @@ import com.nike.dnp.common.variable.ServiceCode;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -101,5 +100,13 @@ public class AuthReturnDTO {
      */
     @ApiModelProperty(name = "checkBoxYn", value = "컨텐츠 권한 목록 체크박스 노출 여부", required = true, example = "N")
     private String checkBoxYn = ServiceCode.YesOrNoEnumCode.N.name();
+
+    /**
+     * 권한 사용 여부
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "useYn", value = "사용 여부", required = true, example = "N")
+    private String useYn;
 
 }

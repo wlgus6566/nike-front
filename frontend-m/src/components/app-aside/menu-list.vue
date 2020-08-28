@@ -16,8 +16,10 @@
                         :key="depth.menuSeq"
                         @click="$emit('menuClose')"
                     >
-                        <router-link :to="depth.menuPathUrl">
-                            {{ depth.menuName }}
+                        <router-link
+                            :to="depth.menuPathUrl"
+                            v-html="depth.menuName"
+                        >
                         </router-link>
                     </li>
                 </ul>
@@ -38,8 +40,24 @@ export default {
     props: ['menuUse', 'menuData'],
     mounted() {
         this.linkOpen();
+        this.routerFn();
     },
+    computed: {
+        pathUrl() {
+            return this.$route.path;
+        },
+    },
+    watch: {},
     methods: {
+        routerFn() {
+            const menuName = this.menuData.map(el => el.menuName);
+            const path = this.pathUrl.split('/')[1].toUpperCase();
+            const _index = menuName.findIndex(el => {
+                return el === path;
+            });
+            this.activeIndex = _index;
+            return {};
+        },
         itemOpen(el, done) {
             gsap.set(el, {
                 height: 'auto',
@@ -71,7 +89,6 @@ export default {
         menuFn(e, seq) {
             const seqList = this.menuData.map(el => el.menuSeq);
             const _index = seqList.indexOf(seq);
-            //const menu = this.$refs.menuItem[_index];
             if (this.activeIndex !== _index) {
                 this.activeIndex = _index;
             } else {

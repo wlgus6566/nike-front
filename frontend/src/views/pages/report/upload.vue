@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title" v-html="title"></h2>
-        <form action="" @submit.prevent="addReport">
+        <form action="" @submit.prevent="submitReport">
             <h3 class="form-title mt20">폴더 설정</h3>
             <hr class="hr-black" />
             <ul
@@ -31,13 +31,13 @@
                     <div class="form-column">
                         <label
                             class="check-label"
-                            v-for="(radio, index) in reportSection.radio"
+                            v-for="(radio, index) in reportSectionCodeList"
                             :key="index"
                         >
                             <span class="radio">
                                 <input
                                     type="radio"
-                                    v-model="reportSection.value"
+                                    v-model="reportDetailData.reportSectionCode"
                                     :value="radio"
                                 />
                                 <i></i>
@@ -55,6 +55,7 @@
                     <div class="form-column">
                         <span class="textarea">
                             <textarea
+                                rows="5"
                                 v-model="reportDetailData.reportName"
                             ></textarea>
                         </span>
@@ -73,54 +74,37 @@
                         </div>
                         <div class="form-column">
                             <div class="upload-file-box">
-                                <div class="upload-file-list actice">
+                                <div class="upload-file-list">
+                                    <!--actice-->
                                     <ul>
-                                        <li>
+                                        <li
+                                            v-for="item in reportDetailData.reportFileSaveDTOList"
+                                            :key="item.fileOrder"
+                                        >
                                             <label>
                                                 <span class="checkbox">
-                                                    <input type="checkbox" />
+                                                    <input
+                                                        type="checkbox"
+                                                        :value="item.fileOrder"
+                                                        v-model="checkedFile"
+                                                        @click="
+                                                            selectFile(
+                                                                item.fileOrder
+                                                            )
+                                                        "
+                                                    />
                                                     <i></i>
                                                 </span>
                                                 <span class="txt">
-                                                    P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg
-                                                    sw_Nike_Gallery_graphic_1_700x1000.jpgsw_Nike_Gallery_graphic_1_700x1000.jpg
-                                                    sw_Nike_Gallery_graphic_1_700x1000.jpgsw_Nike_Gallery_graphic_1_700x1000.jpg
-                                                    sw_Nike_Gallery_graphic_1_700x1000.jpgsw_Nike_Gallery_graphic_1_700x1000.jpg
+                                                    {{ item.fileName }}
                                                 </span>
                                             </label>
-                                        </li>
-                                        <li>
-                                            <label>
-                                                <span class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <i></i>
-                                                </span>
-                                                <span class="txt"
-                                                    >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                                >
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label>
-                                                <span class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <i></i>
-                                                </span>
-                                                <span class="txt"
-                                                    >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                                >
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label>
-                                                <span class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <i></i>
-                                                </span>
-                                                <span class="txt"
-                                                    >P20_Nsw_Nike_Gallery_graphic_1_700x1000.jpg</span
-                                                >
-                                            </label>
+                                            <span
+                                                class="progress"
+                                                :style="{
+                                                    width: `${item.progress}%`,
+                                                }"
+                                            ></span>
                                         </li>
                                     </ul>
                                 </div>
@@ -129,9 +113,18 @@
                                         <span class="btn-form-gray"
                                             ><span>찾기</span></span
                                         >
-                                        <input type="file" ref="fileInput" />
+                                        <input
+                                            type="file"
+                                            ref="fileInput"
+                                            multiple
+                                            @change="uploadIptChange"
+                                        />
                                     </div>
-                                    <button type="button" class="btn-form">
+                                    <button
+                                        type="button"
+                                        class="btn-form"
+                                        @click="removeFile"
+                                    >
                                         <span>삭제</span>
                                     </button>
                                 </div>
@@ -156,42 +149,30 @@ import {
     putReport,
     getReportFile,
 } from '@/api/report';
+import { fileUpLoad } from '@/api/file';
+import bus from '@/utils/bus';
 
 export default {
     name: 'upload',
     data() {
         return {
             title: this.$route.meta.title,
+            checkedFile: [],
+            uploadFileList: [],
+
             reportSeq: null,
             imageFilePhysicalName: null,
             readCount: null,
             nickname: null,
             updateDt: null,
+
             reportDetailData: {
                 reportName: '',
-                reportSectionCode: null,
+                reportSectionCode: 'SP',
                 imageBase64: null,
-                reportFileSaveDTOList: [
-                    {
-                        detailThumbnailFileName: null,
-                        detailThumbnailFilePhysicalName: null,
-                        detailThumbnailFileSize: null,
-                        fileContentType: null,
-                        fileExtension: null,
-                        fileName: null,
-                        filePhysicalName: null,
-                        fileSize: null,
-                        reportFileSeq: null,
-                        thumbnailFileName: null,
-                        thumbnailFilePhysicalName: null,
-                        thumbnailFileSize: null,
-                    },
-                ],
+                reportFileSaveDTOList: [],
             },
-            reportSection: {
-                radio: ['SP', 'SU', 'FA', 'HO'],
-                value: 'SP',
-            },
+            reportSectionCodeList: ['SP', 'SU', 'FA', 'HO'],
         };
     },
     components: {
@@ -199,16 +180,58 @@ export default {
     },
     created() {
         if (this.$route.params.id) {
-            this.reportDetailView();
+            this.getReportDetailView();
+        }
+    },
+    activated() {
+        this.reportDetailData = {
+            reportName: '',
+            reportSectionCode: 'SP',
+            imageBase64: null,
+            reportFileSaveDTOList: [],
+        };
+        if (this.$route.params.id) {
+            this.getReportDetailView();
         }
     },
     methods: {
-        cropImage(imageBase64, imgName) {
-            this.reportDetailData.imageBase64 = imageBase64;
-            this.reportDetailData.imageFileName = imgName;
+        fileOrderSet() {
+            this.uploadFileList = this.uploadFileList.filter((a) => {
+                return this.reportDetailData.reportFileSaveDTOList.some((b) => {
+                    return (
+                        a.name === b.fileName &&
+                        a.type === b.fileContentType &&
+                        a.size === b.fileSize
+                    );
+                });
+            });
+            this.reportDetailData.reportFileSaveDTOList.forEach((el, index) => {
+                el.fileOrder = index;
+            });
         },
+        cropImage(imageBase64) {
+            this.reportDetailData.imageBase64 = imageBase64;
+        },
+
+        selectFile(seq) {
+            if (this.checkedFile.some((el) => el === seq)) {
+                this.checkedFile = this.checkedFile.filter((el) => el !== seq);
+            } else {
+                this.checkedFile.push(seq);
+            }
+        },
+        removeFile() {
+            this.checkedFile.forEach((a) => {
+                this.reportDetailData.reportFileSaveDTOList = this.reportDetailData.reportFileSaveDTOList.filter(
+                    (b) => b.fileOrder !== a
+                );
+            });
+            this.checkedFile = [];
+            this.fileOrderSet();
+        },
+
         // 리포트 상세 데이터
-        async reportDetailView() {
+        async getReportDetailView() {
             try {
                 const {
                     data: { data: response },
@@ -226,7 +249,7 @@ export default {
                     response.imageFilePhysicalName;
                 await this.getReportFileData();
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         // 리포트 상세 파일 데이터
@@ -239,68 +262,140 @@ export default {
                     size: 1000,
                 });
                 this.reportDetailData.reportFileSaveDTOList = response.content;
+                this.fileOrderSet();
             } catch (error) {
-                console.log(error);
+                console.error(error);
+            }
+        },
+
+        uploadIptChange(e) {
+            const files = e.target.files || e.dataTransfer.files;
+            if (!files.length) return;
+
+            let mergeArray = Array.from(files).filter((item) => {
+                return this.reportDetailData.reportFileSaveDTOList.every(
+                    (el) => {
+                        return (
+                            item.name !== el.fileName &&
+                            item.size !== el.fileSize
+                        );
+                    }
+                );
+            });
+
+            if (mergeArray.length > 10) {
+                alert('10개 이상 못해');
+                mergeArray.splice(10, 9999);
+            }
+
+            mergeArray.forEach((el) => {
+                this.reportDetailData.reportFileSaveDTOList.push({
+                    fileOrder: this.reportDetailData.reportFileSaveDTOList
+                        .length,
+                    fileName: el.name,
+                    fileSize: el.size,
+                    fileContentType: el.type,
+                    progress: 0,
+                });
+            });
+            this.uploadFileList = this.uploadFileList.concat(mergeArray);
+        },
+
+        async uploadFiles() {
+            await Promise.all(
+                this.uploadFileList.map(async (el) => {
+                    try {
+                        const formData = new FormData();
+                        formData.append('uploadFile', el);
+                        const config = {
+                            onUploadProgress: (progressEvent) => {
+                                const percentCompleted = Math.round(
+                                    (progressEvent.loaded * 100) /
+                                        progressEvent.total
+                                );
+                                this.reportDetailData.reportFileSaveDTOList.forEach(
+                                    (item) => {
+                                        if (
+                                            item.fileName === el.name &&
+                                            item.fileContentType === el.type &&
+                                            item.fileSize === el.size
+                                        ) {
+                                            item.progress = percentCompleted;
+                                        }
+                                    }
+                                );
+                            },
+                        };
+                        const response = await fileUpLoad(formData, config);
+                        console.log(response);
+                        if (response.existMsg) {
+                            alert(response.msg);
+                        }
+                        this.reportDetailData.reportFileSaveDTOList.forEach(
+                            (item, idx, array) => {
+                                if (
+                                    item.fileName === el.name &&
+                                    item.fileContentType === el.type &&
+                                    item.fileSize === el.size
+                                ) {
+                                    array[idx] = {
+                                        progress: 100,
+                                        fileOrder: idx,
+                                        ...response.data.data,
+                                    };
+                                }
+                            }
+                        );
+                    } catch (error) {
+                        console.error(error);
+                    }
+                })
+            );
+
+            await this.submitData();
+            this.uploadFileList = [];
+        },
+        async submitData() {
+            bus.$emit('pageLoading', true);
+            //const uploadFn = this.$route.params.id ? putReport : postReport;
+            try {
+                if (this.$route.params.id) {
+                    await putReport(
+                        this.reportDetailData,
+                        this.$route.params.id
+                    );
+                } else {
+                    await postReport(this.reportDetailData);
+                }
+                bus.$emit('pageLoading', false);
+                this.$store.commit('SET_RELOAD', true);
+                if (this.$route.params.id) {
+                    await this.$router.push(
+                        `/report/detail/${this.$route.params.id}`
+                    );
+                } else {
+                    await this.$router.push(`/report/management`);
+                }
+            } catch (error) {
+                console.error(error);
             }
         },
 
         // 리포트 등록
-        async addReport() {
-            const data = {
-                imageBase64: this.reportDetailData.imageBase64,
-                reportFileSaveDTOList: [
-                    {
-                        fileName: 'K-062.png',
-                        filePhysicalName: '/temp/20200814586000aMilVgOPwc.png',
-                        fileSize: 613642,
-                        fileContentType: 'image/png',
-                        fileExtension: 'png',
-                        thumbnailFileName: 'K-062_thumbnail.jpg',
-                        thumbnailFilePhysicalName:
-                            '/temp/20200814586000aMilVgOPwc_thumbnail.jpg',
-                        thumbnailSize: 3379,
-                        detailThumbnailFileName: 'K-062_detail.jpg',
-                        detailThumbnailFileSize: 66211,
-                        detailThumbnailFilePhysicalName:
-                            '/temp/20200814586000aMilVgOPwc_detail.jpg',
-                    },
-                ],
-                reportName: this.reportDetailData.reportName,
-                reportSectionCode: this.reportSection.value,
-            };
-            if (Object.values(data).some((el) => el === '' || el === null)) {
-                alert('필수 입력 값이 누락 되었습니다.');
+        submitReport() {
+            if (!this.reportDetailData.imageBase64) {
+                alert('썸네일 이미지가 누락 되었습니다.');
                 return;
             }
-            if (this.$route.params.id) {
-                let addAlert = confirm('수정하시겠습니까');
-                console.log(data);
-                if (addAlert) {
-                    try {
-                        const { data: response } = await putReport(
-                            this.$route.params.id,
-                            data
-                        );
-                        await this.$router.push('/report/management');
-                        await this.$store.dispatch('getReportListBasket');
-                        this.reportDetailData.imageBase64 = null;
-                    } catch (error) {
-                        console.log(error);
-                    }
-                }
-            } else {
-                let addAlert = confirm('저장하시겠습니까');
-                if (addAlert) {
-                    try {
-                        const {
-                            data: { data: response },
-                        } = await postReport(data);
-                        this.reportDataReset();
-                        await this.$router.push('/report/management');
-                    } catch (error) {
-                        console.log(error);
-                    }
-                }
+            if (!this.reportDetailData.reportName) {
+                alert('보고서 명이 누락 되었습니다.');
+                return;
+            }
+            const addAlert = this.$route.params.id
+                ? confirm('수정하시겠습니까?')
+                : confirm('저장하시겠습니까?');
+            if (addAlert) {
+                this.uploadFiles();
             }
         },
     },

@@ -136,7 +136,6 @@
 
 <script>
 import CascaderSelect from '@/components/cascader-select';
-import bus from '@/utils/bus';
 export default {
     data() {
         return {};
@@ -147,6 +146,15 @@ export default {
     watch: {
         'addUserData.authName'() {
             //this.addAuthority.value = null;
+        },
+        'addAuthority.value'(val) {
+            console.log(val);
+            if (val[0] === null) {
+                if (this.addUserData.authSeqArray === null) return;
+                if (this.addUserData.authSeqArray.length) {
+                    this.addAuthority.value = this.addUserData.authSeqArray;
+                }
+            }
         },
     },
     props: ['visible', 'receipt', 'addUserData', 'addAuthority'],

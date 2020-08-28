@@ -7,30 +7,24 @@
             <strong class="title">기간조회</strong>
             <div class="date-picker-group">
                 <div class="date-picker">
-                    <v-date-picker
-                        v-model="range.beginDt"
-                        locale="en-us"
-                        color="orange"
-                        :input-props="{
-                            placeholder: 'YYYY.MM.DD',
-                        }"
-                        :attributes="attrs"
-                        :min-date="minDate('from')"
-                        :max-date="maxDate('from')"
-                    />
+                    <el-date-picker
+                        v-model="beginDt"
+                        type="date"
+                        placeholder="YYYY.MM.DD"
+                        format="yyyy.MM.dd"
+                        :picker-options="pickerBeginOption"
+                    >
+                    </el-date-picker>
                 </div>
                 <div class="date-picker">
-                    <v-date-picker
-                        v-model="range.endDt"
-                        locale="en-us"
-                        color="orange"
-                        :input-props="{
-                            placeholder: 'YYYY.MM.DD',
-                        }"
-                        :attributes="attrs"
-                        :min-date="minDate('to')"
-                        :max-date="maxDate('to')"
-                    />
+                    <el-date-picker
+                        v-model="endDt"
+                        type="date"
+                        placeholder="YYYY.MM.DD"
+                        format="yyyy.MM.dd"
+                        :picker-options="pickerEndOption"
+                    >
+                    </el-date-picker>
                 </div>
             </div>
         </div>
@@ -60,121 +54,71 @@ export default {
     },
     data() {
         return {
-            range: {
-                beginDt: null,
-                endDt: null,
-            },
             orderList: null,
             orderDetailData: null,
             page: 0,
             itemLength: 20,
             selectedDate: null,
-            make: {
-                beginDt: null,
-                endDt: null,
-            },
             placeholder: 'abc',
-            attrs: [
-                {
-                    key: 'today',
-                    highlight: 'gray',
-                    dates: new Date(),
-                    class: 'vc-today',
-                    contentClass: 'vc-today',
-                },
-            ],
             visible: {
                 orderSheet: false,
             },
+            beginDt: new Date().setMonth(new Date().getMonth() - 3),
+            endDt: new Date(),
             today: new Date(),
+            pickerBeginOption: {
+                firstDayOfWeek: 7,
+                cellClassName: (date) => {
+                    if (new Date(date).getDay() === 0) {
+                        return 'el-holiday';
+                    }
+                },
+                disabledDate: (time) => {
+                    const minDt = new Date();
+                    minDt.setMonth(minDt.getMonth() - 3);
+                    return (
+                        time.getTime() > this.endDt.getTime() ||
+                        time.getTime() < minDt ||
+                        time.getTime() > new Date()
+                    );
+                },
+            },
+            pickerEndOption: {
+                firstDayOfWeek: 7,
+                cellClassName: (date) => {
+                    if (new Date(date).getDay() === 0) {
+                        return 'el-holiday';
+                    }
+                },
+                disabledDate: (time) => {
+                    const minDt = new Date();
+                    minDt.setMonth(minDt.getMonth() - 3);
+                    return (
+                        time.getTime() < this.beginDt.getTime() ||
+                        time.getTime() < minDt ||
+                        time.getTime() > new Date()
+                    );
+                },
+            },
         };
     },
     activated() {
         this.fetchData();
     },
-    created() {
-        const minDate = new Date();
-        minDate.setMonth(minDate.getMonth() - 3);
-        const maxDate = new Date();
-        this.range.beginDt = minDate;
-        this.range.endDt = maxDate;
-    },
+    created() {},
+    mounted() {},
     watch: {
-        make: {
-            deep: true,
-            handler(val) {
-                if (val.beginDt && val.endDt) {
-                    // console.log('실행');
-                    this.fetchData();
-                }
-            },
+        beginDt() {
+            this.fetchData();
         },
-        'range.beginDt'(val) {
-            let year = val.getFullYear();
-            let month = val.getMonth() + 1;
-            let day = val.getDate();
-            if (month < 10) {
-                month = `0${month}`;
-            }
-            if (day < 10) {
-                day = `0${day}`;
-            }
-            this.make.beginDt = `${year}-${month}-${day}`;
-            if (this.make.endDt !== null) {
-                const begin = Number(this.make.beginDt.replace(/-/gi, ''));
-                const end = Number(this.make.endDt.replace(/-/gi, ''));
-                if (begin > end) {
-                    alert('시작일이 종료일보다 클 수 없습니다.');
-                    this.range.endDt = this.today;
-                }
-            }
-        },
-        'range.endDt'(val) {
-            let year = val.getFullYear();
-            let month = val.getMonth() + 1;
-            let day = val.getDate();
-            if (month < 10) {
-                month = `0${month}`;
-            }
-            if (day < 10) {
-                day = `0${day}`;
-            }
-            this.make.endDt = `${year}-${month}-${day}`;
-            if (this.make.beginDt !== null) {
-                const begin = Number(this.make.beginDt.replace(/-/gi, ''));
-                const end = Number(this.make.endDt.replace(/-/gi, ''));
-                if (begin > end) {
-                    alert('시작일이 종료일보다 클 수 없습니다.');
-                    this.range.endDt = this.today;
-                }
-            }
+        endDt() {
+            this.fetchData();
         },
     },
     methods: {
-        dates() {},
         // showOrderSheet() {
         //     this.visible.orderSheet = true;
         // },
-        minDate(tt) {
-            if (tt === 'to') {
-                return this.range.beginDt;
-            }
-            if (tt === 'from') {
-                return null;
-            }
-        },
-        maxDate(tt) {
-            if (tt === 'to') {
-                return new Date();
-            }
-            if (tt === 'from') {
-                const date = Math.min(
-                    this.range.endDt.getTime(),
-                    new Date().getTime()
-                );
-                return date;
-            }
-        },
         async fetchData() {
             this.loadingData = true;
             try {
@@ -183,14 +127,16 @@ export default {
                 } = await getMyOrder({
                     page: this.page,
                     size: this.itemLength,
-                    beginDt: this.make.beginDt,
-                    endDt: this.make.endDt,
+                    beginDt: this.$moment(this.beginDt).format('YYYY-MM-DD'),
+                    endDt: this.$moment(this.endDt).format('YYYY-MM-DD'),
                 });
                 console.log(response);
+                console.log(this.beginDt);
+                console.log(this.endDt);
                 this.orderList = response.content;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         async showOrderDetail(seq) {
@@ -202,7 +148,7 @@ export default {
                 } = await getMyOrderDetail(seq);
                 this.orderDetailData = response;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },

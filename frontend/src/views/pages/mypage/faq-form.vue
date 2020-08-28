@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">
-            <span class="ko">자주 묻는 질문}</span>
+            <span class="ko">자주 묻는 질문</span>
         </h2>
         <form @submit.prevent="submitData">
             <h3 class="form-title mt20">등록/수정</h3>
@@ -85,6 +85,11 @@ import { getAuthFromCookie } from '@/utils/cookies';
 
 export default {
     name: 'faq-form',
+    watch: {
+        '$route'() {
+            this.$destroy();
+        }
+    },
     data() {
         return {
             noticeArticleSeq: null,
@@ -110,7 +115,9 @@ export default {
         };
     },
     created() {
-        this.editorConfig.filebrowserImageUploadUrl = `/api/customer/${this.$route.name.toUpperCase()}/images`;
+        this.editorConfig.filebrowserImageUploadUrl =
+            process.env.VUE_APP_API_URL +
+            `/api/customer/${this.$route.meta.sectionCode}/images`;
         this.editorConfig.fileTools_requestHeaders.Authorization =
             this.$store.state.token || getAuthFromCookie();
     },
@@ -152,7 +159,7 @@ export default {
                     alert(response.data.msg);
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -179,7 +186,7 @@ export default {
                         alert(response.data.msg);
                     }
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         },
@@ -199,7 +206,7 @@ export default {
                     });
                 });
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -217,7 +224,7 @@ export default {
                     response.noticeArticleCategoryCode;
                 //console.log(response);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 

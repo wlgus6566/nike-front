@@ -1,16 +1,16 @@
 import { pages } from '@/utils/global-methods';
 
 const routes = [
-    {
-        path: '404',
+    /*{
+        path: '*',
         component: pages('error/404'),
         meta: { layout: 'Clean' },
     },
     {
-        path: '500',
+        path: 'error',
         component: pages('error/500'),
         meta: { layout: 'Clean' },
-    },
+    },*/
 ];
 
 if (typeof window !== 'undefined') {

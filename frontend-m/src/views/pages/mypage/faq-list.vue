@@ -6,20 +6,23 @@
             </li>
         </ul>
 
-            <ul class="faq-list" >
-                <li v-for="(item ,index) in faqData" :class="{ active: item.noticeArticleSeq === activeSeq}" :key="index">
-                    <a href="#" class="sbj" @click="setActiveSeq(item.noticeArticleSeq)">
-                        <span class="category">[<em>{{item.noticeArticleCategoryValue}}</em>]</span>
-                        <span class="title">{{item.title}}</span>
-                        <i class="arrow"></i>
-                    </a>
-                    <transition @enter="itemOpen" @leave="itemClose">
-                        <div class="cont"  v-if="activeSeq === item.noticeArticleSeq" v-html="item.contents">
-                        </div>
-                    </transition>
-                </li>
-            </ul>
-
+        <ul class="faq-list" v-if="faqData.length > 0">
+            <li v-for="(item ,index) in faqData" :class="{ active: item.noticeArticleSeq === activeSeq}" :key="index">
+                <a href="#" class="sbj" @click="setActiveSeq(item.noticeArticleSeq)">
+                    <span class="category">[<em>{{item.noticeArticleCategoryValue}}</em>]</span>
+                    <span class="title">{{item.title}}</span>
+                    <i class="arrow"></i>
+                </a>
+                <transition @enter="itemOpen" @leave="itemClose">
+                    <div class="cont"  v-if="activeSeq === item.noticeArticleSeq" v-html="item.contents">
+                    </div>
+                </transition>
+            </li>
+        </ul>
+        <NoData v-else>
+            <i class="icon-upload"></i>
+            <p class="desc">등록된 데이터가 없습니다.</p>
+        </NoData>
         <Pagination
                 v-if="faqData.length"
                 :itemLength="itemLength"
@@ -57,7 +60,8 @@ export default {
     },
     components: {
         Pagination: () => import('@/components/pagination/'),
-        Loading: () => import('@/components/loading/')
+        Loading: () => import('@/components/loading/'),
+        NoData: () => import('@/components/no-data')
     },
     mounted() {
         this.getCategoryCode();

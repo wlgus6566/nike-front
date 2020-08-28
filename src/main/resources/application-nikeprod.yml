@@ -16,7 +16,6 @@ spring:
   redis:
     host: 10.80.1.212
     port: 6379
-    #password: 2motion1!!
     cache:
       redis:
         cache-null-values: false
@@ -34,14 +33,39 @@ server:
 ## 시큐리티 url/ ip 체크 flag
 security:
   auth:
-    url: false
+    url: true
     ip : false
 
-#임시경로
+## Custom 설정
 nike:
+  ## Link 관련 설정
+  url:
+    pc:
+      domain: 'http://localhost:8081'
+    mobile:
+      domain: 'http://localhost:8082'
+    login: '/login'
+    password: '/password-set'
+  ## File 관련 설정
   file:
     root: '/home/emotion/file_temp'
     imageMagick: '/usr/bin'
     imageMagickCommand: 'convert'
     ffmpeg: '/usr/bin'
     ffmpegCommand: 'ffmpeg'
+
+## AWS
+cloud:
+  aws:
+    distributionDomain: 'upload.nikespace.co.kr'
+    privateKeyFilePath: '/home/ec2-user/der/nikecdn.der'
+    credentials:
+      accessKey: 'AKIA4FO4XQUFNEBRAZU4'
+      secretKey: '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'
+    s3:
+      bucket: 'nike-prod-bucket-dnp'
+      editor: 'nike-prod-resource-bucket-dnp'
+    region:
+      static: 'ap-northeast-2'
+    stack:
+      auto:  false

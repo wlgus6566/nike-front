@@ -27,24 +27,26 @@ logging:
   config: classpath:logback-nikedev.xml
 
 server:
-  domain: http://localhost
+  domain: https://devwww.nikespace.co.kr
   port: 8080
 
 ## 시큐리티 url/ ip 체크 flag
 security:
   auth:
-    url: false
+    url: true
     ip : false
 
-#임시경로
+## Custom 설정
 nike:
+  ## Link 관련 설정
   url:
     pc:
-      login: 'https://devwww.nikespace.co.kr/login'
-      password: 'https://devwww.nikespace.co.kr/password-set'
+      domain: 'https://devwww.nikespace.co.kr'
     mobile:
-      login: 'https://devwww.nikespace.co.kr/login'
-      password: 'https://devwww.nikespace.co.kr/password-set'
+      domain: 'https://devm.nikespace.co.kr'
+    login: '/login'
+    password: '/password-set'
+  ## File 관련 설정
   file:
     root: '/home/ec2-user/file_temp'
     imageMagick: '/usr/bin'
@@ -56,7 +58,7 @@ nike:
 ## AWS
 cloud:
   aws:
-    distributionDomain: 'devresource.nikespace.co.kr'
+    distributionDomain: 'devupload.nikespace.co.kr'
     privateKeyFilePath: '/home/ec2-user/der/nikecdn.der'
     credentials:
       accessKey: 'AKIA4FO4XQUFNEBRAZU4'

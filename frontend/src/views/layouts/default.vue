@@ -62,8 +62,14 @@
                     ⓒ 2020 Nike Korea LLC. All Rights Reserved
                 </span>
                 <ul class="info-list">
-                    <li><router-link to="/">개인정보처리방침</router-link></li>
-                    <li><router-link to="/">이용약관</router-link></li>
+                    <li>
+                        <router-link to="/terms/privacy"
+                            >개인정보처리방침</router-link
+                        >
+                    </li>
+                    <li>
+                        <router-link to="/terms/service">이용약관</router-link>
+                    </li>
                 </ul>
             </div>
         </footer>
@@ -124,8 +130,8 @@ export default {
                 this.toggleHeader(this.headerActiveNav, this.tw._dur);
                 const target = [document.querySelector('header .inner')];
                 this.asideAnimation(target, '-100%', '0%');
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         activeSet() {
@@ -288,7 +294,6 @@ export default {
                 this.oldRoutePath.split('/')[1]
             ) {
                 if (this.headerActiveNav) {
-                    console.log(11111111111111111);
                     this.headerAni(this.headerActiveNav);
                 }
                 this.toggleHeader(this.headerActiveNav);

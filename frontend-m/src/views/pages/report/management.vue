@@ -28,60 +28,83 @@
                 </button>
             </div>
         </div>
-        <ul :class="viewTypeClass">
-            <li
-                class="folder-list-item"
-                v-for="item in reportList"
-                :key="item.reportSeq"
-            >
-                <router-link :to="`/report/${item.reportSeq}`">
-                    <div class="thumbnail">
-                        <img :src="item.imageFilePhysicalName" alt="" />
-                    </div>
-                    <div class="info-box">
-                        <strong class="title" v-text="item.nickname"
-                            >NIKE GANGNAM</strong
-                        >
-                        <p class="txt" v-text="item.reportName">
-                            FA2ss0 RN NIKE DIRECT 시공 보고서 자료
-                        </p>
-                        <p class="date">
-                            {{
-                                $moment(item.registrationDt).format(
-                                    'YYYY.MM.DD'
-                                )
-                            }}
-                        </p>
-                    </div>
-                    <div class="view-area">
-                        <span class="view" v-text="item.readCount">10,000</span>
-                    </div>
-                </router-link>
-            </li>
-        </ul>
+        <template v-if="reportList">
+            <ul :class="viewTypeClass" v-if="reportList.length">
+                <li
+                    class="folder-list-item"
+                    v-for="item in reportList"
+                    :key="item.reportSeq"
+                >
+                    <router-link :to="`/report/${item.reportSeq}`">
+                        <div class="thumbnail">
+                            <img :src="item.imageFilePhysicalName" alt="" />
+                        </div>
+                        <div class="info-box">
+                            <strong class="title" v-text="item.nickname"
+                                >NIKE GANGNAM</strong
+                            >
+                            <p class="txt" v-text="item.reportName">
+                                FA2ss0 RN NIKE DIRECT 시공 보고서 자료
+                            </p>
+                            <p class="date">
+                                {{
+                                    $moment(item.registrationDt).format(
+                                        'YYYY.MM.DD'
+                                    )
+                                }}
+                            </p>
+                        </div>
+                        <div class="view-area">
+                            <span class="view" v-text="item.readCount">
+                                10,000
+                            </span>
+                        </div>
+                    </router-link>
+                </li>
+            </ul>
+            <template v-else>
+                <NoData v-if="keyword === ''">
+                    <i class="icon-upload"></i>
+                    <p class="desc">업로드한 폴더가 없습니다.</p>
+                </NoData>
+                <NoData v-else>
+                    <i class="icon-search"></i>
+                    <p class="desc">검색 결과가 없습니다.</p>
+                </NoData>
+            </template>
+        </template>
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
     </div>
 </template>
 <script>
 import FilterSelect from '@/components/filter-select';
 import CascaderSelect from '@/components/cascader-select';
-import {getReportList} from '@/api/report';
-import {getCategoryList} from '@/utils/code';
-import {getAuthCacheList} from '@/api/auth';
+import NoData from '@/components/no-data';
+import { getReportList, getGroupAuthority } from '@/api/report';
+import { getCategoryList } from '@/utils/code';
 
 export default {
     name: 'management',
     data() {
         return {
-            loading: false,
+            loadingData: false,
             page: 0,
-            size: 20,
+            size: 10,
+            pageLast: false,
+            totalPage: 0,
             keyword: '',
             sectionCode: '',
             groupSeq: '',
-            reportList: [],
+            reportList: null,
             searchIsActive: false,
             viewType: true,
-            viewTypeClass : 'folder-list-row',
+            viewTypeClass: 'folder-list-row',
+            userDataList: '',
             selectList: {
                 value: 'ALL',
                 listSortOptions: [
@@ -92,11 +115,11 @@ export default {
                 ],
             },
             authority: {
-                value: ['all'],
+                value: null,
                 name: 'authority',
                 options: [
                     {
-                        value: 'all',
+                        value: null,
                         label: '전체 그룹',
                     },
                 ],
@@ -106,12 +129,24 @@ export default {
     components: {
         FilterSelect,
         CascaderSelect,
+        NoData,
+        Loading: () => import('@/components/loading/'),
     },
     created() {
+        this.initRepoerProduct();
         this.authCacheList();
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    activated() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    deactivated() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
     },
     mounted() {
-        this.fetchData();
         getCategoryList('REPORT_SECTION_CODE', this.selectList.listSortOptions);
     },
     watch: {
@@ -119,21 +154,29 @@ export default {
             if (val === '') {
                 this.selectList.value = 'ALL';
             }
-            this.fetchData();
+            this.initRepoerProduct();
         },
         'authority.value'() {
-            this.fetchData();
+            this.initRepoerProduct();
         },
     },
     methods: {
-        //권한 조회 (리포트 권한 목록 수정되면 교체 되어야함)
+        initRepoerProduct() {
+            this.totalPage = null;
+            this.page = 0;
+            this.reportList = null;
+            this.fetchData();
+        },
+        //권한 조회
         async authCacheList() {
             try {
                 const {
                     data: { data: response },
-                } = await getAuthCacheList();
-
+                } = await getGroupAuthority();
+                this.userDataList = response;
+                console.log(response);
                 this.recursionFn(response, this.authority.options, 1);
+                //this.recursionFn(response, this.addAuthority.options, 1);
             } catch (error) {
                 console.log(error);
             }
@@ -144,9 +187,11 @@ export default {
                 _minIndx = 0;
             }
             data.forEach((el, index) => {
+                const _boolean = el.checkBoxYn === 'Y';
                 item.push({
                     value: el.authSeq,
                     label: el.authName,
+                    disabled: _boolean,
                 });
                 if (el.subAuths) {
                     item[index + _minIndx].children = [];
@@ -158,8 +203,8 @@ export default {
             });
         },
         // 기본 데이터 조회
-        async fetchData() {
-            this.loading = true;
+        async fetchData(paging) {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -168,9 +213,16 @@ export default {
                     size: this.size,
                     keyword: this.keyword,
                     sectionCode: this.selectList.value,
-                    //groupSeq: this.authority.value,
+                    groupSeq: this.authority.value,
                 });
-                this.reportList = response.content;
+                if (paging) {
+                    this.reportList = this.reportList.concat(response.content);
+                } else {
+                    this.reportList = response.content;
+                }
+                this.pageLast = response.last;
+                this.totalPage = response.totalPages;
+                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }
@@ -192,7 +244,29 @@ export default {
             }
         },
         search() {
-            this.fetchData();
+            this.initRepoerProduct();
+        },
+        handleScroll() {
+            if (this.loadingData) return;
+            const windowE = document.documentElement;
+            if (
+                windowE.clientHeight + windowE.scrollTop >=
+                windowE.scrollHeight
+            ) {
+                this.infiniteScroll();
+            }
+        },
+        infiniteScroll() {
+            if (
+                !this.loadingData &&
+                this.totalPage > this.page - 1 &&
+                this.reportList.length >= this.size &&
+                this.reportList.length !== 0 &&
+                !this.pageLast
+            ) {
+                this.page++;
+                this.fetchData(true);
+            }
         },
     },
 };

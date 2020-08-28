@@ -33,6 +33,7 @@ import java.util.Optional;
 @Api(description = "코드 정보", tags = "CODE")
 @RequestMapping(value = "/api/open/code", name = "코드")
 @RequiredArgsConstructor
+@CrossOrigin
 public class CodeController {
 
     /**

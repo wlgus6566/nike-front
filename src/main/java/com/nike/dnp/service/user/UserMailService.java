@@ -34,32 +34,38 @@ public class UserMailService {
      *
      * @author [오지훈]
      */
-    @Value("${nike.url.pc.login}")
-    private String PC_LOGIN_URL;
+    @Value("${nike.url.login}")
+    private String LOGIN_URL;
 
     /**
      * PC Password 설정 Url
      *
      * @author [오지훈]
      */
-    @Value("${nike.url.pc.password}")
-    private String PC_PASSWORD_URL;
+    @Value("${nike.url.password}")
+    private String PASSWORD_URL;
 
     /**
-     * MOBILE Login Url
+     * PC Domain
      *
      * @author [오지훈]
      */
-    @Value("${nike.url.mobile.login}")
-    private String MOBILE_LOGIN_URL;
+    @Value("${nike.url.pc.domain}")
+    private String PC_DOMAIN;
+
+    /**
+     * MOBILE Domain
+     *
+     * @author [오지훈]
+     */
+    @Value("${nike.url.mobile.domain}")
+    private String MOBILE_DOMAIN;
 
     /**
      * MOBILE Password 설정 Url
      *
      * @author [오지훈]
      */
-    @Value("${nike.url.mobile.password}")
-    private String MOBILE_PASSWORD_URL;
 
     /**
      * RedisService
@@ -89,7 +95,7 @@ public class UserMailService {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
-        sendDTO.setLoginUrl(PC_LOGIN_URL);
+        sendDTO.setLoginUrl(PC_DOMAIN + LOGIN_URL);
 
         mailService.sendMail(
                 ServiceCode.EmailTypeEnumCode.USER_CREATE.toString()
@@ -109,9 +115,9 @@ public class UserMailService {
      * @implNote 비밀번호 설정 안내 메일
      */
     @Transactional
-    public String sendMailForSetPassword(final User user, final String platfrom) {
+    public String sendMailForSetPassword(final User user, final String platform) {
         final String keyCode = this.createEncodeCertCode(user.getUserId());
-        final String url = platfrom.equals("MOBILE") ? MOBILE_PASSWORD_URL : PC_PASSWORD_URL;
+        final String url = platform.equals("MOBILE") ? MOBILE_DOMAIN : PC_DOMAIN + PASSWORD_URL;
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
@@ -139,7 +145,7 @@ public class UserMailService {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
-        sendDTO.setLoginUrl(PC_LOGIN_URL);
+        sendDTO.setLoginUrl(PC_DOMAIN + LOGIN_URL);
 
         mailService.sendMail(
                 ServiceCode.EmailTypeEnumCode.PASSWORD_GUIDE.toString()
@@ -184,7 +190,7 @@ public class UserMailService {
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
         //sendDTO.setProcessingDt(this.getCurrentDate());
-        sendDTO.setLoginUrl(PC_LOGIN_URL);
+        sendDTO.setLoginUrl(PC_DOMAIN + LOGIN_URL);
 
         mailService.sendMail(
                 ServiceCode.EmailTypeEnumCode.DORMANT_PREV.toString()
@@ -207,7 +213,7 @@ public class UserMailService {
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
         //sendDTO.setProcessingDt(this.getCurrentDate());
-        sendDTO.setLoginUrl(PC_LOGIN_URL);
+        sendDTO.setLoginUrl(PC_DOMAIN + LOGIN_URL);
 
         mailService.sendMail(
                 ServiceCode.EmailTypeEnumCode.DORMANT_ACTIVE.toString()
@@ -229,7 +235,7 @@ public class UserMailService {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
-        sendDTO.setLoginUrl(PC_LOGIN_URL);
+        sendDTO.setLoginUrl(PC_DOMAIN + LOGIN_URL);
 
         mailService.sendMail(
                 ServiceCode.EmailTypeEnumCode.DORMANT_CHANGE.toString()

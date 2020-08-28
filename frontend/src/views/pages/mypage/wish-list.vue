@@ -120,7 +120,6 @@ export default {
                 return [];
             }
         },
-        basketItem() {},
     },
     methods: {
         // 상세 팝업
@@ -149,7 +148,7 @@ export default {
                     alert('이미 담긴 상품입니다.');
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         checkedWish(seq, del) {
@@ -197,7 +196,7 @@ export default {
                     this.checkAll = false;
                     this.deleteLoading = [];
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                     if (error.data.existMsg) {
                         alert(error.data.msg);
                     }
@@ -217,7 +216,7 @@ export default {
                 this.checkedWish(seq, true);
                 this.deleteLoading = [];
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 if (error.data.existMsg) {
                     alert(error.data.msg);
                 }
@@ -236,7 +235,7 @@ export default {
                 await this.$store.dispatch('basketList');
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
         async addBasket(item) {
@@ -299,16 +298,3 @@ export default {
     created() {},
 };
 </script>
-
-<style>
-.list-loading {
-    position: relative;
-    padding-top: 70%;
-}
-::v-deep .list-loading .lottie {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-</style>

@@ -13,6 +13,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Properties;
 
@@ -147,25 +148,22 @@ public class SendEmailOffice365 {
             final Message message = new MimeMessage(session);
             message.setHeader("Content-Type", "text/html; charset=UTF-8");
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
-            message.setFrom(new InternetAddress(fromEmail));
+            message.setFrom(new InternetAddress(fromEmail, "NIKE SPACE", "UTF-8"));
             message.setSubject(subject);
 
             if (file.isEmpty()) {
                 message.setSubject("[NIKE SPACE] 발신 테스트 메일입니다.");
                 message.setText("TEST");
-
             } else {
                 final MimeBodyPart mimeMultipart = new MimeBodyPart();
                 mimeMultipart.setContent(file, "text/html; charset=UTF-8");
                 final Multipart multipart = new MimeMultipart();
                 multipart.addBodyPart(mimeMultipart);
                 message.setContent(multipart);
-
             }
 
             message.setSentDate(new Date());
             Transport.send(message);
-
             emailSendingLogService.save(
                     EmailSendingLogSaveDTO.builder()
                             .email(toEmail)
@@ -173,7 +171,7 @@ public class SendEmailOffice365 {
                             .contents(ObjectUtils.isEmpty(file) ? "" : file)
                             .build());
 
-        } catch (final MessagingException exception) {
+        } catch (final MessagingException | UnsupportedEncodingException exception) {
             log.error("exception", exception);
         }
     }

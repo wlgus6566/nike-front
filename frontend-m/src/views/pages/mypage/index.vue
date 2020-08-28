@@ -5,11 +5,21 @@
             <div class="store">store</div>
             <div class="email">email@email.com</div>
             <div class="btn-box">
-                <button type="button" class="btn-out">나가기</button>
-                <button type="button" class="btn-alarm" @click="alarmModal">알람</button>
+                <button type="button" class="btn-out" @click="logout">
+                    나가기
+                </button>
+                <button type="button" class="btn-alarm" @click="alarmModal">
+                    알람
+                </button>
             </div>
-            <div class="modal-wrap" >
-                <AlarmModal :visible.sync="visible.activeModal" :alarmList="alarmData"/>
+            <div class="modal-wrap">
+                <AlarmModal
+                    ref="Alarm"
+                    :visible.sync="visible.activeModal"
+                    :alarmList="alarmData"
+                    @assetClick="clickAsset"
+                    @prAlarmData="getAlarmData"
+                />
             </div>
         </div>
         <hr />
@@ -18,9 +28,10 @@
                 <strong class="title">{{ menu.menuName }}</strong>
                 <ul v-if="menu.menus">
                     <li v-for="(depth, index) in menu.menus" :key="index">
-                        <router-link :to="depth.menuPathUrl">{{
-                            depth.menuName
-                        }}</router-link>
+                        <router-link
+                            :to="depth.menuPathUrl"
+                            v-html="depth.menuName"
+                        ></router-link>
                     </li>
                 </ul>
             </li>
@@ -43,20 +54,25 @@ export default {
             totalPage: null,
             page: 0,
             itemLength: 10,
+            loadingData: false,
         };
     },
     components: {
-        AlarmModal: () => import('@/views/pages/mypage/alarm-modal'),
-        Loading: () => import('@/components/loading/')
+        AlarmModal: () => import('@/views/pages/mypage/alarm-modal/'),
+        Loading: () => import('@/components/loading/'),
     },
 
     mounted() {
-        console.log("mounted");
+        console.log('mounted');
         this.myMenuFn();
         this.getAlarmData();
     },
     watch: {},
     methods: {
+        logout() {
+            this.$store.commit('LOGOUT');
+            this.$router.push('/login');
+        },
         myMenuFn() {
             const menu = this.$store.state.menuData.filter(
                 el => el.menuCode === 'MYPAGE' && el.mobileYn === 'Y'
@@ -65,11 +81,10 @@ export default {
         },
         //알람
         alarmModal() {
-            console.log("alarmModal")
             this.visible.activeModal = true;
         },
-        async getAlarmData() {
-            console.log("getAlarmData")
+        async getAlarmData(infinite) {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -78,16 +93,42 @@ export default {
                     size: this.itemLength,
                 });
                 this.totalPage = response.totalPages;
-                this.alarmData = response.content;
-                this.alarmData.forEach((el) => {
-                    el.typeCd === "REPORT_MANAGE" ? el.typeCd = "REPORT" : el.typeCd;
+
+                if (infinite) {
+                    console.log('getAlarmData infinite : ' + infinite);
+                    if (this.totalPage > this.page - 1) {
+                        console.log('getAlarmData : ' + true);
+                        this.alarmData = this.alarmData.concat(
+                            response.content
+                        );
+                    } else if (this.totalPage === this.page - 1) {
+                        console.log('getAlarmData : ' + false);
+                        this.endPage();
+                    }
+                } else {
+                    console.log('getAlarmData infinite : ' + infinite);
+                    this.alarmData = response.content;
+                }
+
+                this.alarmData.forEach(el => {
+                    el.typeCd === 'REPORT_MANAGE'
+                        ? (el.typeCd = 'REPORT')
+                        : el.typeCd;
                 });
+                this.page++;
                 console.log(this.totalPage);
                 console.log(this.alarmData);
             } catch (error) {
                 console.log(error);
             }
-        }
+        },
+        clickAsset() {
+            console.log('clickAsset');
+            alert(
+                '해당 메뉴는 모바일 버전에서 제공되지 않습니다. 자세한 내용은 PC로 접속 시 확인할 수 있습니다.'
+            );
+            this.getAlarmData();
+        },
     },
 };
 </script>

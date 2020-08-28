@@ -68,11 +68,11 @@
     </div>
 </template>
 <script>
-    import {deleteReportFeedback, getReportDetail, getReportDetailFeedbackList, getReportDetailFileList, postReportFeedback} from "@/api/report";
-    import {getUserIdFromCookie} from "@/utils/cookies"
-    import fileDetailPopup from "@/views/pages/report/file-Detail-Popup";
+import {deleteReportFeedback, getReportDetail, getReportDetailFeedbackList, getReportDetailFileList, postReportFeedback} from "@/api/report";
+import {getUserIdFromCookie} from "@/utils/cookies"
+import fileDetailPopup from "@/views/pages/report/file-Detail-Popup";
 
-    export default {
+export default {
     name: 'detail-view',
     data() {
         return {
@@ -81,7 +81,7 @@
             feedbackList : [],
             fileList : [],
             answerContents : "",
-            fileListSize:10,
+            fileListSize:20,
             fileListPage:0,
             fileListLast:false,
             loginUserId : getUserIdFromCookie(),
@@ -139,7 +139,6 @@
                 } = await getReportDetailFileList(this.$route.params.id, data);
                 this.fileList = response.content;
                 this.fileListLast = response.last;
-                console.log(this.fileList);
             } catch (error) {
                 console.log(error);
             }

@@ -71,7 +71,12 @@
                                 </li>
                             </transition-group>
                         </el-scrollbar>
-                        <Loading v-if="loadingData" />
+                        <Loading
+                            class="list-loading"
+                            :width="172"
+                            :height="172"
+                            v-if="loadingData"
+                        />
                         <button
                             type="button"
                             class="btn-close"
@@ -85,7 +90,7 @@
         </div>
         <div class="space-info">
             <div class="store">
-                {{ userRole }}
+                {{ userAuthName }}
             </div>
             <div class="mail">
                 {{ userIdVal }}
@@ -99,7 +104,7 @@ import { getAlarm, delAlarm } from '@/api/alarm';
 import {
     getUserNickFromCookie,
     getUserIdFromCookie,
-    getRoleFromCookie,
+    getAuthNameFromCookie,
 } from '@/utils/cookies';
 
 export default {
@@ -130,8 +135,8 @@ export default {
         userIdVal() {
             return this.$store.state.user || getUserIdFromCookie();
         },
-        userRole() {
-            return this.$store.state.role || getRoleFromCookie();
+        userAuthName() {
+            return this.$store.state.authName || getAuthNameFromCookie();
         },
     },
     methods: {
@@ -187,7 +192,6 @@ export default {
         // 알람목록
         async alarmData(infinite) {
             this.loadingData = true;
-            console.log(this.page);
             try {
                 const {
                     data: { data: response },
@@ -195,7 +199,6 @@ export default {
                     page: this.page,
                     size: this.size,
                 });
-                console.log(this.totalPage);
                 this.totalPage = response.totalPages;
                 if (infinite) {
                     if (this.totalPage > this.page - 1) {
@@ -212,10 +215,7 @@ export default {
                 this.page++;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
-                if (error.data.existMsg) {
-                    alert(error.data.msg);
-                }
+                console.error(error);
             }
         },
         // 알람삭제
@@ -228,10 +228,7 @@ export default {
                 await this.alarmData();
                 this.alarmActive = false;
             } catch (error) {
-                //console.log(error);
-                if (error.data.existMsg) {
-                    alert(error.data.msg);
-                }
+                console.error(error);
             }
         },
         setUrl(item) {
@@ -244,7 +241,7 @@ export default {
                     ? 'toolkit'
                     : 'asset';
             if (topCode === 'report') {
-                return `/${topCode}/${item.folderSeq}`.toLocaleLowerCase();
+                return `/${topCode}/detail/${item.folderSeq}`.toLocaleLowerCase();
             } else {
                 return `/${topCode}/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
             }
@@ -278,11 +275,15 @@ export default {
     letter-spacing: 0;
 }
 .user-info .store-name {
-    display: inline-flex;
+    display: block;
+    max-width: 180px;
     line-height: 16px;
     font-size: 14px;
     font-weight: bold;
     color: #000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .user-info .side {
     position: absolute;
@@ -409,9 +410,12 @@ export default {
     color: #000;
 }
 .space-info .store {
-    display: flex;
+    display: block;
     height: 14px;
-    align-content: center;
+    line-height: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .space-info .mail {
     display: flex;

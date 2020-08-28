@@ -12,7 +12,19 @@
                             v-for="item in reportBasketList"
                             :key="item.reportBasketSeq"
                         >
-                            <img :src="item.filePhysicalName" alt="" />
+                            <span class="thumbnail">
+                                <img
+                                    :src="item.filePhysicalName"
+                                    :alt="item.fileName"
+                                    v-if="item.filePhysicalName"
+                                />
+                                <span
+                                    :class="[
+                                        `extension-${item.fileExtension.toLowerCase()}`,
+                                    ]"
+                                    v-else
+                                ></span>
+                            </span>
                             <button
                                 type="button"
                                 class="btn-del"
@@ -21,7 +33,8 @@
                                 <span>삭제</span>
                             </button>
                             <Loading
-                                :style="{ height: '100px', width: '100px' }"
+                                :width="100"
+                                :height="100"
                                 v-if="isLoading(item.reportBasketSeq)"
                             />
                         </li>
@@ -110,8 +123,8 @@ export default {
                     data: { data: response },
                 } = await this.$store.dispatch('getReportListBasket');
                 this.reportBasketList = response;
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         async addContBasket(seq) {
@@ -119,8 +132,8 @@ export default {
             try {
                 await postReportBasket();
                 await this.$store.dispatch('getReportListBasket');
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
         async delReportBasket(seq) {
@@ -131,8 +144,8 @@ export default {
                 await this.$store.dispatch('getReportListBasket');
                 await this.getContBasket();
                 this.deleteLoading = [];
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.error(error);
             }
         },
     },
@@ -216,10 +229,27 @@ export default {
     text-indent: -9999999px;
     overflow: hidden;
 }
+.file-list .thumbnail {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: #f7f7f7;
+}
+.file-list .thumbnail:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
+}
 .file-list li img {
     width: 100%;
     height: 100%;
-    background: red;
     display: block;
     vertical-align: top;
 }

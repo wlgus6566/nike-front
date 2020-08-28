@@ -277,7 +277,7 @@ footer > .inner .info-list {
 }*/
 
 /* modal open css */
-.modal-wrap.modal-overlay {
+.modal-wrap {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -286,8 +286,15 @@ footer > .inner .info-list {
     top: 0;
     left: 0;
     width: 100%;
+    min-width: 800px;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
+}
+.modal-wrap .el-dialog {
+    margin: 0 !important;
+}
+.modal-wrap .el-scrollbar__wrap {
+    max-height: 80vh;
 }
 .vm--modal {
     max-height: 100vh;
@@ -448,6 +455,13 @@ footer > .inner .info-list {
     line-height: 11px;
     color: #888;
     font-weight: 300;
+}
+.history-box .item-box .no-data {
+    height: 157px;
+    border-color: #e5e5e5;
+}
+.history-box .item-box .no-data .txt {
+    margin-top: 0 !important;
 }
 /*
 

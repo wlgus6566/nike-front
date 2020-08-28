@@ -35,6 +35,10 @@
                         <li>{{ item.topMenuCode }}</li>
                         <li>{{ item.menuCode }}</li>
                     </ul>
+                    <ul class="location" v-else>
+                        <li>REPORT</li>
+                        <li>{{ item.menuCode }}</li>
+                    </ul>
                     <p class="date" v-if="item.topMenuCode">
                         {{ $moment(item.campaignBeginDt).format('YYYY.MM.DD') }}
                         ~
@@ -68,7 +72,7 @@ export default {
             if (item.topMenuCode) {
                 return `/${item.topMenuCode}/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
             } else {
-                return `/report/${item.folderSeq}`.toLocaleLowerCase();
+                return `/report/detail/${item.folderSeq}`.toLocaleLowerCase();
             }
         },
     },

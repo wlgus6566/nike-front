@@ -123,7 +123,6 @@ export default {
             this.initGetUserProduct();
         },
         initGetUserProduct() {
-            console.log('initGetUserProduct');
             this.totalPage = null;
             this.page = 0;
             this.userProductListData = null;
@@ -157,7 +156,7 @@ export default {
                 this.page++;
                 this.loadingData = false;
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
 
@@ -183,6 +182,9 @@ export default {
                 } = await getWishCheck({
                     goodsSeq: goodsSeq.goodsSeq,
                 });
+                if (response.data.existMsg) {
+                    alert(response.data.msg);
+                }
                 if (response.goodsSeq === null) {
                     try {
                         await postWishList({
@@ -192,27 +194,16 @@ export default {
                             '위시리스트에 추가 되었습니다.\n위시리스트는 마이페이지에서 확인가능합니다.'
                         );
                     } catch (error) {
-                        console.log(error);
+                        console.error(error);
                     }
                 } else {
                     alert('이미 담긴상품 입니다.');
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         },
     },
 };
 </script>
-<style scoped>
-.list-loading {
-    position: relative;
-    padding-top: 70%;
-}
-::v-deep .list-loading .lottie {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-</style>
+<style scoped></style>

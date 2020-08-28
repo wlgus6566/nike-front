@@ -5,20 +5,25 @@
                 아이디와 비밀번호는 중복 불가합니다.
             </li>
             <li class="desc-item">
-                비밀번호에는 간단한 패턴이나 공통 사전 단어<br>
+                비밀번호에는 간단한 패턴이나 공통 사전 단어<br />
                 (예: NIKE(나이키), JORDAN(조던) 등)를 포함할 수 없습니다.
             </li>
             <li class="desc-item">
-                비밀번호는 동일한 글자, 문자, 숫자 등을 2글자이상 반복할 수<br>
+                비밀번호는 동일한 글자, 문자, 숫자 등을 2글자이상 반복할 수<br />
                 없습니다. (예: AA1234! / A12345@@ 등)
             </li>
-            <li class="desc-item">비밀번호 재사용 : 비밀번호 변경 시 현재 사용 중인 비밀번호의 재 사용은 불가능하며, 기존과는 다른 비밀번호로 변경하셔야 합니다.</li>
+            <li class="desc-item">
+                비밀번호 재사용 : 비밀번호 변경 시 현재 사용 중인 비밀번호의 재
+                사용은 불가능하며, 기존과는 다른 비밀번호로 변경하셔야 합니다.
+            </li>
         </ul>
         <form action="#" @submit.prevent="passwordChange">
             <ul class="form-list">
                 <li class="form-item">
                     <span class="form-column">
-                        <label class="label-title required">기존 비밀번호</label>
+                        <label class="label-title required"
+                            >기존 비밀번호</label
+                        >
                     </span>
                     <span class="form-column">
                         <input
@@ -47,7 +52,9 @@
                 </li>
                 <li class="form-item">
                     <span class="form-column">
-                        <label class="label-title required">새 비밀번호(확인)</label>
+                        <label class="label-title required"
+                            >새 비밀번호(확인)</label
+                        >
                     </span>
                     <span class="form-column">
                         <input
@@ -61,53 +68,99 @@
                     </span>
                 </li>
             </ul>
-            <div class="btn-wrap">
-                <button type="submit" class="btn-s-black-lg">저장</button>
+            <div id="sticky">
+                <div class="btn-wrap">
+                    <button type="submit" class="btn-s-black-lg">저장</button>
+                </div>
             </div>
         </form>
     </div>
 </template>
 
 <script>
-    import {changePassword} from '@/api/my-page';
+import { changePassword } from '@/api/my-page';
 
-    export default {
-        data() {
-            return {
-                password: '',
-                newPassword: '',
-                confirmPassword: '',
-            };
+export default {
+    data() {
+        return {
+            password: '',
+            newPassword: '',
+            confirmPassword: '',
+        };
+    },
+    computed: {
+        stickyH() {
+            return document.querySelector('.btn-wrap').offsetHeight;
         },
-        mounted() {
-            this.password = '';
-            this.newPassword = '';
-            this.confirmPassword = '';
+    },
+    mounted() {
+        this.password = '';
+        this.newPassword = '';
+        this.confirmPassword = '';
+        document.querySelector('#sticky').style.height = this.stickyH;
+        this.handleScroll();
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    created() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    activated() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    deactivated() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    methods: {
+        handleScroll() {
+            const windowE = document.documentElement;
+            const btnWrap = document.querySelector('.btn-wrap');
+            const footerH = document.querySelector('footer').offsetHeight;
+            const navH = document.querySelector('.nav-area').offsetHeight;
+            const stickyWtap = document.querySelector('#sticky');
+            if (
+                windowE.clientHeight + windowE.scrollTop - navH - footerH >=
+                stickyWtap.offsetTop
+            ) {
+                btnWrap.style.position = 'relative';
+                btnWrap.style.bottom = '0';
+            } else {
+                btnWrap.style.position = '';
+                btnWrap.style.bottom = '';
+            }
         },
-        methods: {
-            async passwordChange() {
-                try {
-                    const res = await changePassword({
-                        confirmPassword: this.confirmPassword,
-                        newPassword: this.newPassword,
-                        password: this.password,
-                    });
+        async passwordChange() {
+            try {
+                const res = await changePassword({
+                    confirmPassword: this.confirmPassword,
+                    newPassword: this.newPassword,
+                    password: this.password,
+                });
 
-                    console.log(res);
+                console.log(res);
 
-                    this.msg = res.data.msg;
-                    if (res.data.success) {
-                        alert(this.msg);
-                        this.$router.push('/mypage/info');
-                    } else {
-                        alert(this.msg);
-                    }
-                    return;
-                } catch (error) {
-                    console.log(error);
+                this.msg = res.data.msg;
+                if (res.data.success) {
+                    alert(this.msg);
+                    this.$router.push('/mypage/info');
+                } else {
+                    alert(this.msg);
                 }
-            },
+                return;
+            } catch (error) {
+                console.log(error);
+            }
         },
-    };
+    },
+};
 </script>
-<style scoped></style>
+<style scoped>
+#sticky {
+    margin-top: 30px;
+    margin-bottom: -50px;
+    margin-left: -20px;
+    margin-right: -20px;
+    background: red;
+}
+</style>

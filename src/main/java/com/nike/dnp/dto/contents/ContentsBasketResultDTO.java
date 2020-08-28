@@ -71,6 +71,22 @@ public class ContentsBasketResultDTO {
     private String filePhysicalName;
 
     /**
+     * 파일 확장자
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileExtension", value = "파일 확장자", example = "JPG")
+    private String fileExtension;
+
+    /**
+     * 파일 종류 공통코드
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드(FILE/VIDEO/VR)", required = true)
+    private String fileKindCode;
+
+    /**
      * Gets file physical name.
      *
      * @return the file physical name
