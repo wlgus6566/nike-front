@@ -54,6 +54,7 @@ header .logo span {
     min-height: 60px;
     padding: 0 0 0 20px;
     border: none;
+    z-index: 10;
 }
 .btn-back {
     flex: 0 0 36px;
