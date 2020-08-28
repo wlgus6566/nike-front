@@ -1544,6 +1544,10 @@
 }
 .el-dialog__body .form-val {
     line-height: 18px;
+    letter-spacing: 0;
+}
+.el-dialog__body .form-desc {
+    margin-top: 5px;
 }
 .el-dialog__body .form-list-colunm {
     padding: 0 !important;
