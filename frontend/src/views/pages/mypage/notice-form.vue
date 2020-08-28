@@ -106,11 +106,6 @@ import { getAuthFromCookie } from '@/utils/cookies';
 
 export default {
     name: 'notice-form',
-    watch: {
-        '$route'() {
-            this.$destroy();
-        }
-    },
     data() {
         return {
             //noticeArticleSectionCode: 'NOTICE',
@@ -148,6 +143,9 @@ export default {
             if (!val) {
                 this.noticeDetail.noticeYn = 'N';
             }
+        },
+        $route() {
+            this.$destroy();
         },
     },
     mounted() {
@@ -256,7 +254,7 @@ export default {
                 const {
                     data: { data: response },
                 } = await getCustomerDetail(
-                    this.noticeArticleSectionCode,
+                    this.$route.meta.sectionCode,
                     this.$route.params.id
                 );
                 console.log(response);

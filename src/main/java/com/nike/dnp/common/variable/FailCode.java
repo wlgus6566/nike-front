@@ -67,6 +67,7 @@ public class FailCode {
         , MAX_INSERT_CALENDAR
         , NULL_FOLDER_IMAGE
         , DUPLICATE_CONTENT
+        , FAIL_AGENCY_DELETE
     }
 
 }

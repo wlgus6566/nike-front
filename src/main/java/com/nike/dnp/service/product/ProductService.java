@@ -220,4 +220,17 @@ public class ProductService {
 		});
 		return true;
 	}
+
+	/**
+	 * Find product by agency seq list.
+	 *
+	 * @param agencySeq the agency seq
+	 * @return the list
+	 * @author [이소정]
+	 * @implNote 에이전시 상품 목록 조회
+	 * @since 2020. 8. 28. 오후 2:47:15
+	 */
+	public List<Product> findProductByAgencySeq(final Long agencySeq) {
+		return productRepository.findAllByAgencySeqAndUseYn(agencySeq, "Y");
+	}
 }

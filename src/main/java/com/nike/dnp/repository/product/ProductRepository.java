@@ -4,6 +4,8 @@ import com.nike.dnp.entity.product.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * ProductRepository
  *
@@ -26,4 +28,16 @@ public interface ProductRepository extends JpaRepository<Product,Long>,ProductRe
 	 * @implNote 제품 조회
 	 */
 	Product findByGoodsSeq(Long goodsSeq);
+
+	/**
+	 * Find all by agency seq and use yn list.
+	 *
+	 * @param agencySeq the agency seq
+	 * @param useYn     the use yn
+	 * @return the list
+	 * @author [이소정]
+	 * @implNote 에이전시 상품 목록 조회
+	 * @since 2020. 8. 28. 오후 2:46:39
+	 */
+	List<Product> findAllByAgencySeqAndUseYn(Long agencySeq, String useYn);
 }
