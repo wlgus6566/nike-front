@@ -5,10 +5,8 @@ function getWishList(params) {
         params: params,
     });
 }
-function postWishList(params) {
-    return wishList.post(`/wishlist/save`, null, {
-        params: params,
-    });
+function postWishList(data) {
+    return wishList.post(`/wishlist/save`, { data });
 }
 function deleteWishList(seq) {
     return wishList.delete(`/mypage/wishlist/delete/${seq}`);

@@ -187,7 +187,7 @@ export default {
             }
         },
         endPage() {
-            alert('마지막 페이지');
+            alert('마지막 페이지 입니다.');
         },
         // 알람목록
         async alarmData(infinite) {

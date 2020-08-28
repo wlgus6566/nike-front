@@ -140,7 +140,7 @@ export default {
             }
         },
         endPage() {
-            alert('마지막 페이지');
+            alert('마지막 페이지 입니다.');
         },
         //업로드 한 폴더 리스트
         async uploadViewDataList(infinite) {

@@ -2,33 +2,32 @@
     <div>
         <ul class="sorting-tab">
             <li
-                    v-for="item in tabList"
-                    :key="item.value"
-                    :class="{active:typeCd === item.value}"
+                v-for="item in tabList"
+                :key="item.value"
+                :class="{ active: typeCd === item.value }"
             >
-                <a href="#" @click="onClickTab(item.value)">{{item.title}}</a>
+                <a href="#" @click.prevent="onClickTab(item.value)">{{
+                    item.title
+                }}</a>
             </li>
         </ul>
-        <template v-if="historyFolderData.length">
+        <template v-if="historyFolderData">
             <MyFolderList
-                    v-if="historyFolderData.length"
-                    :folderListData="historyFolderData"
+                v-if="historyFolderData.length"
+                :folderListData="historyFolderData"
             />
-        </template>
-        <template v-else>
-            <NoData>
-                <i class="icon-file"></i>
-                <p class="desc">최근 본 폴더가 없습니다.</p>
-            </NoData>
+            <template v-else>
+                <NoData>
+                    <i class="icon-file"></i>
+                    <p class="desc">최근 본 폴더가 없습니다.</p>
+                </NoData>
+            </template>
         </template>
         <Loading v-if="loadingData" />
     </div>
 </template>
 <script>
-
-import {
-    historyFolderViewList
-} from '@/api/mypage';
+import { historyFolderViewList } from '@/api/mypage';
 
 import MyFolderList from '@/components/my-folder-list';
 import NoData from '@/components/no-data';
@@ -42,7 +41,8 @@ export default {
     },
     data() {
         return {
-            historyFolderData: [],
+            historyFolderDataList: null,
+            historyFolderData: null,
             page: 0,
             pageSize: 20,
             totalPage: null,
@@ -84,7 +84,13 @@ export default {
     },
     methods: {
         // 초기 데이타 조회
-        async initFetchData(infinite) {
+        async initFetchData() {
+            this.totalElements = 0;
+            this.page = 0;
+            this.historyFolderData = null;
+            this.fetchData();
+        },
+        async fetchData(infinite) {
             this.loadingData = true;
             try {
                 const {
@@ -93,7 +99,7 @@ export default {
                     page: this.page,
                     size: this.pageSize,
                     typeCd: this.typeCd,
-                    MobileYn: 'Y'
+                    MobileYn: 'Y',
                 });
                 this.isLastPage = response.last;
                 this.totalPage = response.totalPages;
@@ -120,7 +126,6 @@ export default {
         // tab 클릭시
         onClickTab(item) {
             this.typeCd = item;
-            this.page = 0;
             this.initFetchData();
         },
         endPage() {
@@ -130,10 +135,8 @@ export default {
             스크롤 관련 method
          */
         handleScroll() {
-            console.log('a')
             if (this.loadingData) return;
             const windowE = document.documentElement;
-            console.log('b', windowE.clientHeight + windowE.scrollTop >= windowE.scrollHeight)
             if (
                 windowE.clientHeight + windowE.scrollTop >=
                 windowE.scrollHeight
@@ -142,7 +145,6 @@ export default {
             }
         },
         infiniteScroll() {
-            console.log('ssss');
             if (
                 !this.loadingData &&
                 this.totalPage > this.page - 1 &&
@@ -150,11 +152,10 @@ export default {
                 this.historyFolderData.length !== 0 &&
                 !this.isLastPage
             ) {
-                this.initFetchData(true);
+                this.fetchData(true);
             }
         },
-    }
-
+    },
 };
 </script>
 

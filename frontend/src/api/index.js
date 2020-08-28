@@ -11,7 +11,9 @@ function createWithAuth(url, options) {
 export const agency = createWithAuth('/api/agency', { timeout: 30000 });
 export const auth = createWithAuth('/api/auth', { timeout: 30000 });
 export const basket = createWithAuth('/api/goodsBasket', { timeout: 30000 });
-export const contents = createWithAuth(`/api/contents`, { timeout: 30000 });
+export const contents = createWithAuth(`/api/contents`, {
+    timeout: 30000,
+});
 export const customer = createWithAuth(`/api/customer`, { timeout: 30000 });
 export const myOrder = createWithAuth(`/api`, { timeout: 60000 });
 export const myPage = createWithAuth(`/api/mypage`, { timeout: 30000 });

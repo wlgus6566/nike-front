@@ -284,7 +284,7 @@ export default {
             });
 
             if (mergeArray.length > 10) {
-                alert('10개 이상 못해');
+                alert('10개 이상 등록 할 수 없습니다.');
                 mergeArray.splice(10, 9999);
             }
 
