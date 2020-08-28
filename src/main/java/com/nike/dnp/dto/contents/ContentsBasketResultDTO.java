@@ -67,8 +67,8 @@ public class ContentsBasketResultDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명", example = "http://cdnUrl/file/contents/graphic_img.jpg")
-    private String filePhysicalName;
+    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/contents/graphic_img.jpg")
+    private String thumbnailFilePhysicalName;
 
     /**
      * 파일 확장자
@@ -94,8 +94,8 @@ public class ContentsBasketResultDTO {
      * @implNote cndUrl + FilePhysicalName
      * @since 2020. 7. 29. 오후 6:48:59
      */
-    public String getFilePhysicalName() {
-        return CloudFrontUtil.getCustomSignedUrl(filePhysicalName);
+    public String getThumbnailFilePhysicalName() {
+        return CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
     }
 
 }
