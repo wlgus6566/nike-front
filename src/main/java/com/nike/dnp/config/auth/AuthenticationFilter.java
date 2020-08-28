@@ -43,11 +43,14 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	@Override
 	public Authentication attemptAuthentication(final HttpServletRequest request,
 												final HttpServletResponse response) {
+		log.info("AuthenticationFilter.attemptAuthentication");
 		UsernamePasswordAuthenticationToken token = null;
 		try {
 			final String username = obtainUsername(request);
 			final String password = obtainPassword(request);
 			token = new UsernamePasswordAuthenticationToken(username, password);
+
+
 		} catch (AuthenticationException exception) {
 			log.error("AuthenticationException", exception);
 		}

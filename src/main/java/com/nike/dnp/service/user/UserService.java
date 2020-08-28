@@ -235,8 +235,7 @@ public class UserService implements UserDetailsService {
      */
     public User findByUserId(final String userId) {
         log.info("UserService.findByUserId");
-        return userRepository.findByUserId(userId).orElseThrow(
-                () -> new NotFoundHandleException());
+        return userRepository.findByUserId(userId).orElseThrow(NotFoundHandleException::new);
     }
 
     /**
@@ -263,8 +262,7 @@ public class UserService implements UserDetailsService {
      * @implNote 유저 권한 조회
      */
     public Optional<UserAuth> findByUser(final User user) {
-        return Optional.ofNullable(userAuthRepository.findByUser(user).orElseThrow(
-                () -> new NotFoundHandleException()));
+        return Optional.ofNullable(userAuthRepository.findByUser(user).orElseThrow(NotFoundHandleException::new));
     }
 
     /**
@@ -469,13 +467,6 @@ public class UserService implements UserDetailsService {
         final String userId = decodeCertCode.split(REGEX)[0];
         final String certKey = decodeCertCode.split(REGEX)[1];
         final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));
-
-        System.out.println("======================================================");
-        System.out.println("userId = " + userId);
-        System.out.println("certKey = " + certKey);
-        System.out.println("certCode = " + certCode);
-        System.out.println("======================================================");
-
         return this.checkCertCode(certCode, certKey);
     }
 
@@ -499,10 +490,6 @@ public class UserService implements UserDetailsService {
             );
         }
 
-        System.out.println("======================================================");
-        System.out.println("decodeCertCode = " + decodeCertCode);
-        System.out.println("======================================================");
-
         final String userId = decodeCertCode.split(REGEX)[0];
         final String certKey = decodeCertCode.split(REGEX)[1];
         final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));
@@ -521,11 +508,6 @@ public class UserService implements UserDetailsService {
                         .newPassword(newPassword)
                         .confirmPassword(confirmPassword)
                         .build());
-
-        System.out.println("======================================================");
-        System.out.println("newPassword = " + newPassword);
-        System.out.println("certPassword = " + certPassword);
-        System.out.println("======================================================");
 
         //비밀번호 업데이트
         user.updatePassword(certPassword);

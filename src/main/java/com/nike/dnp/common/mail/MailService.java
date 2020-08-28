@@ -97,6 +97,11 @@ public class MailService {
                         && file.contains("["+ field.getName() +"]")
                 ) {
                     result = result.replace("["+ field.getName() +"]", (String) field.get(sendDTO));
+                } else if (ObjectUtils.isEmpty(field.get(sendDTO))
+                        && BasicVariable.STRING.getValue().equals(field.getType().getSimpleName())
+                        && file.contains("["+ field.getName() +"]")
+                ) {
+                    result = result.replace("["+ field.getName() +"]", "");
                 }
             } catch (IllegalAccessException exception) {
                 log.error("exception", exception);

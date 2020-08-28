@@ -228,10 +228,10 @@ public class ProductController {
 	 * @apiNote 다수 상품 삭제
 	 */
 	@ApiOperation(value = "상품 삭제[배열]", notes = BASIC_CHARACTER)
-	@DeleteMapping(name = "상품 삭제[배열]", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(name = "상품 삭제[배열]", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ValidField
 	public SingleResult<Boolean> deleteProduct(@ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO,
-											   @Valid @ModelAttribute final ProductViewListDTO productViewListDTO,
+											   @Valid @ApiParam(name = "productViewListDTO", value = "상품 삭제 리스트") @RequestBody final ProductViewListDTO productViewListDTO,
 											   @ApiIgnore final BindingResult result) {
 		log.info("ProductController.deleteProduct");
 		final List<Product> productList = productService.findBySearchId(productViewListDTO.getGoodsSeqList());

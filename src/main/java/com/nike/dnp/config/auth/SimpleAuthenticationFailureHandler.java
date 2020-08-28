@@ -51,6 +51,7 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 										final HttpServletResponse response,
 										final AuthenticationException exception
 	) throws IOException {
+		log.info("SimpleAuthenticationFailureHandler.onAuthenticationFailure");
 		response.setContentType("application/json;charset=utf-8");
 		response.setStatus(HttpStatus.BAD_REQUEST.value());
 
@@ -64,7 +65,6 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 								, MessageUtil.getMessage(FailCode.ConfigureError.CHECK_ID_PASSWORD.name())
 						));
 			}
-
 			JsonUtil.write(response.getWriter()
 					, responseService.getFailResult(
 							FailCode.ConfigureError.CHECK_ID_PASSWORD.name()

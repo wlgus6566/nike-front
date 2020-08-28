@@ -33,10 +33,8 @@ function putProduct(goodsSeq, data) {
 }
 
 // PRODUCT 상품 삭제[배열]
-function delProduct(params) {
-    return product.delete(``, {
-        params: params,
-    });
+function delProduct(data) {
+    return product.delete(``, data);
 }
 export {
     getProductList,

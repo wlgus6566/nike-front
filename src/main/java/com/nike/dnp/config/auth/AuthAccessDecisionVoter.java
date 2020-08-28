@@ -95,7 +95,7 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 	public int vote(final Authentication authentication,
 					final Object object,
 					final Collection<ConfigAttribute> attributes) {
-
+		log.info("AuthAccessDecisionVoter.vote");
 		final boolean authUrl = Boolean.valueOf(String.valueOf(BeanUtil.getBean("authUrl")));
 		final boolean authIp = Boolean.valueOf(String.valueOf(BeanUtil.getBean("authIp")));
 		int result = ACCESS_GRANTED;
@@ -121,7 +121,7 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 	 * @implNote
 	 */
 	private int ipExpression(final Object object) {
-
+		log.info("AuthAccessDecisionVoter.ipExpression");
 		final List<SecurityIpFilterMata> ipFilterList = filterMataService.ipFindAll();
 		final String remoteAddr = ((FilterInvocation) object).getRequest().getRemoteAddr();
 		int result = ACCESS_DENIED;
@@ -147,7 +147,7 @@ public class AuthAccessDecisionVoter implements AccessDecisionVoter<Object> {
 	 * @implNote
 	 */
 	private int urlExpression(final Authentication authentication, final Object object, Collection<ConfigAttribute> attributes) {
-
+		log.info("AuthAccessDecisionVoter.urlExpression");
 
 		boolean authCheck = true;
 		Iterator<ConfigAttribute> iterator = attributes.iterator();
