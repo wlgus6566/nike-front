@@ -141,7 +141,7 @@ export default {
     methods: {},
 };
 </script>
-<style>
+<style scoped>
 .modal-wrap {
     display: flex;
     justify-content: center;
@@ -153,8 +153,8 @@ export default {
 .modal-wrap .el-scrollbar__wrap {
     max-height: 80vh;
 }
-.el-dialog,
-.el-dialog__body {
+::v-deep .el-dialog,
+::v-deep .el-dialog__body {
     width: 600px;
     box-sizing: border-box;
 }
