@@ -36,15 +36,17 @@ security:
     url: true
     ip : false
 
-#임시경로
+## Custom 설정
 nike:
+  ## Link 관련 설정
   url:
     pc:
-      login: 'https://devwww.nikespace.co.kr/login'
-      password: 'https://devwww.nikespace.co.kr/password-set'
+      domain: 'https://devwww.nikespace.co.kr'
     mobile:
-      login: 'https://devwww.nikespace.co.kr/login'
-      password: 'https://devwww.nikespace.co.kr/password-set'
+      domain: 'https://devm.nikespace.co.kr'
+    login: '/login'
+    password: '/password-set'
+  ## File 관련 설정
   file:
     root: '/home/ec2-user/file_temp'
     imageMagick: '/usr/bin'

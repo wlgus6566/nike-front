@@ -25,11 +25,10 @@ import com.nike.dnp.service.user.UserContentsService;
 import com.nike.dnp.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.Resource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -52,6 +51,14 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ContentsService {
+
+    /**
+     * PC Domain
+     *
+     * @author [오지훈]
+     */
+    @Value("${nike.url.pc.domain}")
+    private String PC_DOMAIN;
 
     /**
      * The Contents repository
@@ -499,7 +506,7 @@ public class ContentsService {
             for (final ContentsUserEmailDTO userEmailDTO : emailAuthUserList) {
                 final SendDTO sendDTO = new SendDTO();
                 sendDTO.setEmail(userEmailDTO.getUserId());
-                sendDTO.setContentsUrl(contentsMailSendDTO.getContentsUrl());
+                sendDTO.setContentsUrl(PC_DOMAIN + contentsMailSendDTO.getContentsUrl());
                 sendDTO.setContentsImg(userEmailDTO.getImageFilePhysicalName());
 
                 sendDTO.setContentsName(contents.get().getFolderName());
