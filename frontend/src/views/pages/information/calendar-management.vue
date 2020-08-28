@@ -210,8 +210,8 @@ export default {
                     }
                 },
                 disabledDate: (time) => {
-                    if (this.EndDt) {
-                        return time.getTime() > this.EndDt.getTime();
+                    if (this.endDt) {
+                        return time.getTime() > this.endDt.getTime();
                     }
                 },
             },
@@ -223,8 +223,8 @@ export default {
                     }
                 },
                 disabledDate: (time) => {
-                    if (this.BeginDt) {
-                        return time.getTime() < this.BeginDt.getTime();
+                    if (this.beginDt) {
+                        return time.getTime() < this.beginDt.getTime();
                     }
                 },
             },
