@@ -29,7 +29,6 @@ export default new Vuex.Store({
             state.token = token;
         },
         SET_GNB(state, gnbMenu) {
-            console.log(gnbMenu);
             state.menuData = gnbMenu;
         },
         SET_BASKET(state, basketList) {

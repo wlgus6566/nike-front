@@ -57,6 +57,9 @@ export default {
         pathUrl() {
             this.tabMenuFn();
         },
+        '$store.state.menuData'() {
+            this.tabMenuFn();
+        },
     },
     components: {
         NavItem,
@@ -101,7 +104,8 @@ export default {
             }
         },
         modiFn() {},
-        async tabMenuFn() {
+        tabMenuFn() {
+            if (!this.$store.state.menuData) return;
             const titleValue = this.$route.path.split('/')[1];
             this.tabMenuData = this.$store.state.menuData.filter(el => {
                 if (titleValue.toUpperCase() === el.menuName) {

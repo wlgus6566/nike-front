@@ -27,7 +27,6 @@ export default {
     data() {
         return {};
     },
-
     computed: {
         AppLayout() {
             return `Layout${this.$route.meta.layout || 'Default'}`;
