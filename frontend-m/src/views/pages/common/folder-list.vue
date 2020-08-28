@@ -138,7 +138,6 @@ export default {
             if (val === '') {
                 this.listSortSelect.value = 'LATEST';
             }
-            this.page = 0;
             this.initPageData();
         },
         // 라우터 변경 감지
@@ -249,7 +248,7 @@ export default {
                 this.folderListData.length !== 0 &&
                 !this.isLastPage
             ) {
-                this.initPageData(true);
+                this.initFetchData(true);
             }
         },
     },
