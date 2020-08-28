@@ -110,7 +110,18 @@ export default {
     mounted() {
         this.menuLottie(0);
     },
-    computed: {},
+    computed: {
+        pathUrl() {
+            return this.$route.path;
+        },
+    },
+    watch: {
+        pathUrl(val) {
+            if (val.split('/')[1] === 'report') {
+                this.menuLottie(1);
+            }
+        },
+    },
     methods: {
         menuLottie(index) {
             this.anim.forEach(el => {
