@@ -268,7 +268,24 @@ export default {
             BeginDt: null,
             EndDt: null,
 
-            folderDetail: null,
+            folderDetail: {
+                campaignBeginDt: null,
+                campaignEndDt: null,
+                campaignPeriodSectionCode: 'SELECT',
+                checks: [
+                    {
+                        authSeq: 0,
+                        detailAuthYn: 'N',
+                        emailReceptionYn: 'N',
+                    },
+                ],
+                contentsFileList: [],
+                exposureYn: 'Y',
+                folderContents: '',
+                folderName: '',
+                imageBase64: '',
+                memo: '',
+            },
             pickerBeginOption: {
                 firstDayOfWeek: 7,
                 cellClassName: (date) => {

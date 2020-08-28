@@ -334,7 +334,6 @@ export default {
                     this.$refs.datePicker &&
                 !target.closest('.btn-box')
             ) {
-                console.log(3);
                 this.dataPickerShowData.visible = false;
             }
         },

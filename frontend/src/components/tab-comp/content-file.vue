@@ -38,7 +38,7 @@
                 </div>
             </el-scrollbar>
             <button
-                v-if="true"
+                v-if="!downloadFiles"
                 type="button"
                 class="btn-download"
                 @click="fileDownload"
@@ -47,8 +47,8 @@
                 <span class="txt">DOWNLOAD</span>
             </button>
             <span v-else class="btn-download active">
-                <span class="txt">DOWNLOADING(0%)…</span>
-                <span class="gage" style="width: 50%;"></span>
+                <span class="txt">DOWNLOADING({{ this.loaded }}%)…</span>
+                <span class="gage" :style="{ width: `${this.loaded}%` }"></span>
             </span>
         </div>
 
@@ -92,8 +92,29 @@ export default {
                 showIndex: 0,
             },
             deleteLoading: [],
+            downloadFiles: null,
+            loaded: 0,
         };
     },
+    /* watch: {
+        downloadFiles: {
+            deep: true,
+            handler(current) {
+                const total = current.reduce((a, b) => {
+                    console.log(b);
+                    return a + b.total;
+                }, 0);
+                const loaded = current.reduce((a, b) => {
+                    console.log(b);
+
+                    return a + b.loaded;
+                }, 0);
+                console.log(loaded);
+                console.log(total);
+                this.loaded = Math.round((loaded * 100) / total);
+            },
+        },
+    },*/
     computed: {
         contBasketList: {
             get() {
@@ -113,43 +134,53 @@ export default {
         });
     },
     methods: {
+        progress() {
+            const total = this.downloadFiles.reduce((a, b) => {
+                return a + b.total;
+            }, 0);
+            const loaded = this.downloadFiles.reduce((a, b) => {
+                return a + b.loaded;
+            }, 0);
+            this.loaded = Math.round((loaded * 100) / total);
+        },
+
         async fileDownload() {
+            this.downloadFiles = [];
             await Promise.all(
-                this.contBasketList.map(async (el) => {
-                    const config = {
-                        responseType: 'blob',
-                        timeout: 0,
-                        onDownloadProgress: (progressEvent) => {
-                            let percentCompleted = Math.round(
-                                (progressEvent.loaded * 100) /
-                                    progressEvent.total
-                            );
-                            console.log(percentCompleted);
-                            /*console.log(progressEvent.loaded);
-                            console.log(progressEvent.total);
-                            console.log(progressEvent.lengthComputable);
-                            console.log(percentCompleted);*/
-                        },
-                    };
-                    const response = await contentFileDownload(
-                        el.contentsFileSeq,
-                        config
-                    );
-                    console.log(response);
+                this.contBasketList.map(async (el, i) => {
+                    try {
+                        const config = {
+                            responseType: 'blob',
+                            timeout: 0,
+                            onDownloadProgress: (progressEvent) => {
+                                this.downloadFiles[i] = {
+                                    total: progressEvent.total,
+                                    loaded: progressEvent.loaded,
+                                };
+                                this.progress();
+                            },
+                        };
+                        const response = await contentFileDownload(
+                            el.contentsFileSeq,
+                            config
+                        );
+                        await this.delContBasket(el.contentsBasketSeq);
+                        const url = window.URL.createObjectURL(
+                            new Blob([response.data])
+                        );
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.id = 'id_' + i;
+                        link.setAttribute('download', el.fileName);
+                        document.body.appendChild(link);
+                        link.click();
+                        window.URL.revokeObjectURL(url);
+                    } catch (error) {
+                        console.error(error);
+                    }
                 })
             );
-
-            alert(1);
-
-            /*console.log(this.contBasketList[0].filePhysicalName);
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            console.log(url);
-            const link = document.createElement('a');
-            link.href = url;
-            link.id = 'id_0';
-            link.setAttribute('download', '111.json'); //파일명은 따로 입력
-            document.body.appendChild(link);
-            link.click();*/
+            this.downloadFiles = null;
         },
         basketEnter() {
             this.$store.commit('SET_FILE_MOUSEENTER', true);
