@@ -6,13 +6,13 @@ function getWishList(params) {
     });
 }
 function postWishList(data) {
-    return wishList.post(`/wishlist/save`, { data });
+    return wishList.post(`/wishlist/save`, data);
 }
 function deleteWishList(seq) {
     return wishList.delete(`/mypage/wishlist/delete/${seq}`);
 }
 function deleteWishListCheck(data) {
-    return wishList.delete(`/mypage/wishlist/delete/`, { data });
+    return wishList.delete(`/mypage/wishlist/delete/`, data);
 }
 function getWishCheck(params) {
     return wishList.get(`/wishlist/check`, { params: params });

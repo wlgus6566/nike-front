@@ -1,6 +1,6 @@
 package com.nike.dnp.dto.wishlist;
 
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -23,7 +23,7 @@ public class WishListSaveDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiParam(name = "goodsSeq", value = "제품 시퀀스", defaultValue = "4", required = true)
+	@ApiModelProperty(name = "goodsSeq", value = "제품 시퀀스", example = "4", required = true)
 	@NotNull(message = "wishList.goodsSeq")
 	private Long goodsSeq;
 }

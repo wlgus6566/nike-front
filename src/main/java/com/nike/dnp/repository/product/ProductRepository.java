@@ -12,7 +12,7 @@ import java.util.List;
  * @author [윤태호]
  * @implNote Product(제품) Repository Interface 작성
  * @history [윤태호] [2020.06.18] [최초 작성]
- * @since 2020.06.18
+ * @since 2020.06.18 8. 28. 오후 6:04:26
  */
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Long>,ProductRepositoryCustom {
@@ -21,11 +21,11 @@ public interface ProductRepository extends JpaRepository<Product,Long>,ProductRe
 	/**
 	 * 제품 조회
 	 *
-	 * @param goodsSeq      goodsSeq
+	 * @param goodsSeq goodsSeq
 	 * @return the product
 	 * @author [윤태호]
-	 * @since 2020. 6. 24. 오후 4:41:35
 	 * @implNote 제품 조회
+	 * @since 2020. 6. 24. 오후 4:41:35
 	 */
 	Product findByGoodsSeq(Long goodsSeq);
 
@@ -40,4 +40,16 @@ public interface ProductRepository extends JpaRepository<Product,Long>,ProductRe
 	 * @since 2020. 8. 28. 오후 2:46:39
 	 */
 	List<Product> findAllByAgencySeqAndUseYn(Long agencySeq, String useYn);
+
+
+	/**
+	 * 제품 리스트 조회
+	 *
+	 * @param goodsSeq the goods seq
+	 * @return the list
+	 * @author [윤태호]
+	 * @implNote
+	 * @since 2020. 8. 28. 오후 6:04:26
+	 */
+	List<Product> findAllByGoodsSeqIn(Long []  goodsSeq);
 }

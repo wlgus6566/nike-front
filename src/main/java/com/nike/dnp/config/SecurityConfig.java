@@ -148,6 +148,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
+		log.info("SecurityConfig.passwordEncoder");
 		return new BCryptPasswordEncoder();
 	}
 
@@ -159,6 +160,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	public void configure(final WebSecurity web) {
+		log.info("SecurityConfig.configure");
 		final String[] staticPatterns = {
 				"/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
@@ -176,6 +178,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
+		log.info("SecurityConfig.configure");
 		http.cors()
 			.and()
 			.authorizeRequests()
@@ -192,7 +195,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.anyRequest().authenticated()
 			.and()
 			.addFilter(authenticationFilter()) // 인증 필터
-			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository,this.redisService)) //jwt 토큰 인증 필터
+			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository, this.redisService)) //jwt 토큰 인증 필터
 			.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
 			.and()
 			.csrf().disable() // csrf 사용 안함
@@ -209,9 +212,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
+		log.info("SecurityConfig.corsConfigurationSource");
 		final CorsConfiguration configuration = new CorsConfiguration();
-
-		List<String> origins = new ArrayList<>();
+		final List<String> origins = new ArrayList<>();
 		//개발 설정
 		origins.add("https://devapi.nikespace.co.kr");
 		origins.add("https://devwww.nikespace.co.kr");
@@ -245,6 +248,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public AffirmativeBased accessDecisionManager(){
+		log.info("SecurityConfig.accessDecisionManager");
 		final List<AccessDecisionVoter<?>> decisionVoters = Arrays.asList(new RoleVoter(), new AuthAccessDecisionVoter(filterMataService, authService));
 		return new AffirmativeBased(decisionVoters);
 	}
@@ -258,6 +262,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public AuthenticationFilter authenticationFilter() {
+		log.info("SecurityConfig.authenticationFilter");
 		AuthenticationFilter filter = null;
 		try {
 			filter = new AuthenticationFilter(authenticationManager());
@@ -279,6 +284,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public AuthenticationSuccessHandler authenticationSuccessHandler() {
+		log.info("SecurityConfig.authenticationSuccessHandler");
 		return new SimpleAuthenticationSuccessHandler(
 				responseService
 				, loginLogService
@@ -296,6 +302,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public AuthenticationFailureHandler authenticationFailureHandler() {
+		log.info("SecurityConfig.authenticationFailureHandler");
 		return new SimpleAuthenticationFailureHandler(responseService);
 	}
 
@@ -307,6 +314,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public AccessDeniedHandler accessDeniedHandler() {
+		log.info("SecurityConfig.accessDeniedHandler");
 		return new SimpleAccessDeniedHandler(responseService);
 	}
 

@@ -194,9 +194,9 @@ public class ProductService {
 	 * @since 2020. 6. 25. 오후 2:37:34
 	 */
 	@Transactional
-	public List<Product> findBySearchId(final List<Long> goodsSeqList){
+	public List<Product> findBySearchId(final Long [] goodsSeqList){
 		log.info("ProductService.findBySearchId");
-		return productRepository.findAllById(goodsSeqList);
+		return productRepository.findAllByGoodsSeqIn(goodsSeqList);
 	}
 
 	/**

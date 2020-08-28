@@ -13,6 +13,7 @@ import com.nike.dnp.util.CloudFrontUtil;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -102,14 +103,13 @@ public class OrderProductMappingService {
 					sendDTO.setNickname(SecurityUtil.currentUser().getNickname());
 					sendDTO.setEmail(String.valueOf( orderProductResultDTO.getEmail()));
 					sendDTO.setAgencyName(String.valueOf(orderProductResultDTO.getAgencyName()));
-					sendDTO.setOrderDt(String.valueOf(orderProductResultDTO.getRegistrationDt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"))));
-					sendDTO.setOrderComment(String.valueOf(orderProductResultDTO.getOrderDescription()));
+					sendDTO.setOrderDt(orderProductResultDTO.getRegistrationDt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")));
+					sendDTO.setOrderComment(StringUtils.defaultIfBlank(orderProductResultDTO.getOrderDescription(), ""));
 					final OrderProductDTO orderProductDTO = new OrderProductDTO();
 					orderProductDTO.setAmount(Integer.parseInt(String.valueOf(orderProductResultDTO.getOrderQuantity())));
 					orderProductDTO.setProductName(String.valueOf(orderProductResultDTO.getGoodsName()));
 					orderProductDTO.setProductDesc(String.valueOf(orderProductResultDTO.getGoodsDescription()));
 					orderProductDTO.setImageFilePhysicalName(orderProductResultDTO.getImageFilePhysicalName());
-
 					productList.add(orderProductDTO);
 				}
 			}

@@ -1,10 +1,9 @@
 package com.nike.dnp.dto.product;
 
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * The Class Product view list dto.
@@ -24,7 +23,7 @@ public class ProductViewListDTO {
 	 *
 	 * @author [윤태호]
 	 */
-	@ApiParam(name = "goodsSeqList", value = "상품 시퀀스[배열]", defaultValue = "29,30,31",required = true)
+	@ApiModelProperty(name = "goodsSeqList", value = "상품 시퀀스[배열]", example = "4",required = true)
 	@NotNull(message = "product.goodsSeqList")
-	private List<Long> goodsSeqList;
+	private Long[] goodsSeqList;
 }
