@@ -148,9 +148,9 @@
                         />
                     </span>
                     <span class="info-box">
-                        <strong class="title">
+                        <!--<strong class="title">
                             리포트 계정명 필요
-                        </strong>
+                        </strong>-->
                         <p class="desc">
                             {{ repoertItem.reportName }}
                         </p>

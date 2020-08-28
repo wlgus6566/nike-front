@@ -40,7 +40,7 @@ function putNews(noticeSeq, data) {
 
 //FAQ 등록
 function postFaq(data) {
-    return customer.post(`/QnA`, data);
+    return customer.post(`/QNA`, data);
 }
 
 //FAQ 수정

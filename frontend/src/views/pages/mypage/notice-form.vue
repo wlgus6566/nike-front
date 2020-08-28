@@ -286,7 +286,6 @@ export default {
             this.noticeDetail.title = '';
             this.noticeDetail.contents = '';
             this.noticeDetail.noticeYn = null;
-            this.editorConfig.filebrowserImageUploadUrl = '';
             this.editorConfig.fileTools_requestHeaders.Authorization = '';
         },
     },
