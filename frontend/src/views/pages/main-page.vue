@@ -137,25 +137,25 @@
         <h2 class="main-title">REPORT</h2>
         <ul class="main-report-list">
             <li
-                v-for="repoertItem in mainData.reportList"
-                :key="repoertItem.reportSeq"
+                v-for="reportItem in mainData.reportList"
+                :key="reportItem.reportSeq"
             >
-                <router-link :to="`/report/detail/${repoertItem.readCount}`">
+                <router-link :to="`/report/detail/${reportItem.readCount}`">
                     <span class="thumbnail">
                         <img
-                            :src="repoertItem.imageFilePhysicalName"
-                            :alt="repoertItem.reportName"
+                            :src="reportItem.imageFilePhysicalName"
+                            :alt="reportItem.reportName"
                         />
                     </span>
                     <span class="info-box">
                         <strong class="title">
-                            계정명이 안나와요 소정님
+                            {{ reportItem.nickname }}
                         </strong>
                         <p class="desc">
-                            {{ repoertItem.reportName }}
+                            {{ reportItem.reportName }}
                         </p>
                         <span class="date">
-                            {{ repoertItem.updateDt }}
+                            {{ reportItem.updateDt }}
                         </span>
                     </span>
                 </router-link>
