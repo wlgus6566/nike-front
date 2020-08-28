@@ -96,9 +96,30 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
     @Override
     public List<ReportResultDTO> findRecentReport(final PageRequest pageRequest) {
         final QReport qReport = QReport.report;
-        final JPAQuery<Report> query = new JPAQueryFactory(this.getEntityManager()).selectFrom(qReport)
-                .where(QReport.report.useYn.eq("Y"));
-        return ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ReportResultDTO.class);
+        final QUser qUser = QUser.user;
+
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        final JPAQuery<ReportResultDTO> query = queryFactory
+                .select(Projections.bean(
+                        ReportResultDTO.class
+                        , qReport.reportSeq
+                        , qReport.reportSectionCode
+                        , qReport.reportName
+                        , qReport.imageFilePhysicalName
+                        , qReport.readCount
+                        , qUser.nickname
+                        , qReport.updateDt
+                        )
+                )
+                .from(qReport)
+                .leftJoin(qUser).on(qReport.registerSeq.eq(qUser.userSeq))
+                .where(
+                        qReport.useYn.eq("Y")
+                );
+
+        return ObjectMapperUtil.mapAll(
+                getQuerydsl().applyPagination(pageRequest, query).fetch(), ReportResultDTO.class
+        );
     }
 
     /**
