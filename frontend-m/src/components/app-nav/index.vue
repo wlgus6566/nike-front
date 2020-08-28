@@ -118,15 +118,14 @@ export default {
             });
             this.anim[index].play();
         },
-        menuFn() {
-            const menu = this.$store.state.menuData.filter(
+        async menuFn() {
+            const menu = await this.$store.state.menuData.filter(
                 el =>
                     el.menuCode !== 'MYPAGE' &&
                     el.menuCode !== 'HOME' &&
                     el.mobileYn === 'Y'
             );
             this.menuData = menu;
-            // console.log(this.menuData);
         },
         menuOpen() {
             this.topScollVal = document.scrollingElement.scrollTop;

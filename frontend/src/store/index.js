@@ -114,7 +114,7 @@ export default new Vuex.Store({
             }
             return response;
         },
-        // 장바구니 리스트 api
+        // gnb 리스트 api
         async gnbMenuList({ commit }) {
             const {
                 data: { data: response },
