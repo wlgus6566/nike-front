@@ -140,7 +140,7 @@
                 v-for="repoertItem in mainData.reportList"
                 :key="repoertItem.reportSeq"
             >
-                <router-link :to="`/report/${repoertItem.readCount}`">
+                <router-link :to="`/report/detail/${repoertItem.readCount}`">
                     <span class="thumbnail">
                         <img
                             :src="repoertItem.imageFilePhysicalName"
