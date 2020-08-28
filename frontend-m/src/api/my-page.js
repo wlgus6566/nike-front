@@ -1,11 +1,8 @@
-import {myPage} from './index';
+import { myPage } from './index';
 
 // menu 상세 조회
-function getGnbList(params) {
-    console.log(params);
-    return myPage.get(`/user/gnb`, {
-        params: params,
-    });
+function getGnbMenu() {
+    return myPage.get(`/user/gnb`);
 }
 
 // MYPAGE MY INFO 상세 조회
@@ -19,8 +16,4 @@ function changePassword(data) {
     return myPage.put(`/user/change/password`, data);
 }
 
-export {
-    getGnbList,
-    getMyInfo,
-    changePassword
-};
+export { getGnbMenu, getMyInfo, changePassword };

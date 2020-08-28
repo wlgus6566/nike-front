@@ -68,8 +68,10 @@
                     </span>
                 </li>
             </ul>
-            <div class="btn-wrap">
-                <button type="submit" class="btn-s-black-lg">저장</button>
+            <div id="sticky">
+                <div class="btn-wrap">
+                    <button type="submit" class="btn-s-black-lg">저장</button>
+                </div>
             </div>
         </form>
     </div>
@@ -86,15 +88,19 @@ export default {
             confirmPassword: '',
         };
     },
+    computed: {
+        stickyH() {
+            return document.querySelector('.btn-wrap').offsetHeight;
+        },
+    },
     mounted() {
         this.password = '';
         this.newPassword = '';
         this.confirmPassword = '';
-        this.stickyBtn();
+        document.querySelector('#sticky').style.height = this.stickyH;
         this.handleScroll();
     },
     destroyed() {
-        document.querySelector('body').classList.remove('sticky-bottom');
         window.removeEventListener('scroll', this.handleScroll);
     },
     created() {
@@ -108,21 +114,18 @@ export default {
     },
     methods: {
         handleScroll() {
+            console.log(this.stickyH);
             const windowE = document.documentElement;
+            const btnWrap = document.querySelector('.btn-wrap');
             const footerH = document.querySelector('footer').offsetHeight;
             const navH = document.querySelector('.nav-area').offsetHeight;
-            const btnWrap = document.querySelector('.btn-wrap');
-            if (
-                windowE.clientHeight + windowE.scrollTop + 54 >=
-                windowE.scrollHeight
-            ) {
-                btnWrap.style.bottom = footerH + navH + 'px';
-            } else {
-                btnWrap.style.bottom = '';
+            const stickyWtap = document.querySelector('#sticky');
+            console.log(windowE.scrollTop - stickyWtap.offsetTop);
+            console.log(stickyWtap.offsetTop);
+            if (windowE.scrollTop - footerH - navH === stickyWtap.offsetTop) {
+                btnWrap.style.position = 'relative';
+                btnWrap.style.bottom = '0';
             }
-        },
-        stickyBtn() {
-            document.querySelector('body').classList.add('sticky-bottom');
         },
         async passwordChange() {
             try {
@@ -149,4 +152,12 @@ export default {
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+#sticky {
+    margin-top: 30px;
+    margin-bottom: -50px;
+    margin-left: -20px;
+    margin-right: -20px;
+    background: red;
+}
+</style>

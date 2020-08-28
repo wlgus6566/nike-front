@@ -57,12 +57,14 @@ export default {
         pathUrl() {
             this.tabMenuFn();
         },
+        '$store.state.menuData'() {
+            this.tabMenuFn();
+        },
     },
     components: {
         NavItem,
     },
     destroyed() {
-        this.tabMenuFn();
         window.removeEventListener('scroll', this.handleScroll);
     },
     created() {
@@ -102,7 +104,8 @@ export default {
             }
         },
         modiFn() {},
-        async tabMenuFn() {
+        tabMenuFn() {
+            if (!this.$store.state.menuData) return;
             const titleValue = this.$route.path.split('/')[1];
             this.tabMenuData = this.$store.state.menuData.filter(el => {
                 if (titleValue.toUpperCase() === el.menuName) {
