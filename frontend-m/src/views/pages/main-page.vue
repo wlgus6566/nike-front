@@ -78,7 +78,7 @@
                 v-for="item in reportList"
                 :key="item.reportSeq"
             >
-                <a :href="'/report/' + item.reportSeq">
+                <a :href="'/report/detail/' + item.reportSeq">
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
@@ -121,8 +121,8 @@
     </div>
 </template>
 <script>
-import { getMain } from '@/api/main';
-import { getCalendarEachList, getTodayCalendar } from '@/api/calendar/';
+import {getMain} from '@/api/main';
+import {getCalendarEachList, getTodayCalendar} from '@/api/calendar/';
 
 import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
@@ -273,9 +273,7 @@ export default {
                     title: item.scheduleName,
                     description: item.contents,
                     start: item.beginDt.replace(/\./gi, '-'),
-                    end: moment(item.endDt)
-                        .add(1, 'days')
-                        ._i.replace(/\./gi, '-'),
+                    end: item.viewEndDt.replace(/\./gi, '-'),
                     className: className,
                 });
             });
