@@ -1,24 +1,25 @@
 <template>
     <div>
         <div class="fullCalendar-wrap">
-            <ul class="schedule-type">
-                <li class="edu">교육</li>
-                <li class="campaign">캠페인</li>
-                <li class="official">기타 공개일정</li>
-            </ul>
             <FullCalendar
                 ref="fullCalendar"
                 :options="calendarOptions"
                 defaultView="month"
                 :editable="false"
             />
-            <h3>{{ searchDt }}</h3>
-            <ul>
+            <ul class="schedule-type">
+                <li class="edu">교육</li>
+                <li class="campaign">캠페인</li>
+                <li class="official">기타 공개일정</li>
+            </ul>
+            <h3 class="schedule-title">{{ searchDt }}</h3>
+            <ul class="schedule-list">
                 <li
                     class="schedule-item"
-                    :class="{ 'edu':item.calendarSectionCode === 'EDUCATION'
-                        , 'campaign':item.calendarSectionCode === 'CAMPAIGN'
-                        , 'official':item.calendarSectionCode === 'ETC'
+                    :class="{
+                        edu: item.calendarSectionCode === 'EDUCATION',
+                        campaign: item.calendarSectionCode === 'CAMPAIGN',
+                        official: item.calendarSectionCode === 'ETC',
                     }"
                     v-for="item in todayData"
                     :key="item.calendarSeq"
@@ -29,7 +30,7 @@
                     </div>
                     <div class="info">
                         <span class="date">
-                        {{ item.beginDt }} ~ {{ item.endDt }}</span
+                            {{ item.beginDt }} ~ {{ item.endDt }}</span
                         >
                     </div>
                 </li>
@@ -77,14 +78,14 @@ export default {
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
                 dateClick: this.handleDateClick,
-                height: 500,
+                height: 'auto',
                 events: [],
                 headerToolbar: {
                     left: 'prev',
                     center: 'title',
                     right: 'next',
                 },
-                titleFormat: 'yyyy.M',
+                titleFormat: 'yyyy.MM',
                 customButtons: {
                     prev: {
                         // this overrides the prev button
@@ -108,10 +109,10 @@ export default {
                     },
                 },
             },
-        }
+        };
     },
-    watch:{
-        calenderSectionCodeList(){}
+    watch: {
+        calenderSectionCodeList() {},
     },
     components: {
         FullCalendar,
@@ -164,8 +165,10 @@ export default {
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: item.beginDt.replace(/\./gi, "-"),
-                    end: moment(item.endDt).add(1, 'days')._i.replace(/\./gi, "-"),
+                    start: item.beginDt.replace(/\./gi, '-'),
+                    end: moment(item.endDt)
+                        .add(1, 'days')
+                        ._i.replace(/\./gi, '-'),
                     className: className,
                 });
             });
@@ -181,7 +184,7 @@ export default {
             } = await getCode('CALANDAR_TYPE');
             this.calenderSectionCodeList = response;
         },
-    }
+    },
 };
 </script>
 <style scoped></style>
