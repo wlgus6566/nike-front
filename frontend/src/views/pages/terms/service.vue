@@ -4,7 +4,7 @@
         <termsTab :tabName="tabName" />
         <div class="filter-select">
             <el-select v-model="termsHistory">
-                <el-option value="2020-01-01">2020.01.01</el-option>
+                <el-option value="2020-09-21">2020.09.21</el-option>
             </el-select>
         </div>
         <termsService />
@@ -20,7 +20,7 @@ export default {
     data() {
         return {
             tabName: this.$route.meta.title,
-            termsHistory: '2020.01.01',
+            termsHistory: '2020.09.21',
         };
     },
 };
