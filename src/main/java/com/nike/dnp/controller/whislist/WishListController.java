@@ -81,9 +81,9 @@ public class WishListController {
 	 * @apiNote 위시리스트 등록
 	 */
 	@ApiOperation(value = "위시리스트 등록", notes = BASIC_CHARACTER)
-	@PostMapping(value = "/wishlist/save", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/wishlist/save", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ValidField
-	public SingleResult<WishListResultDTO> saveWishList(@Valid @ModelAttribute final WishListSaveDTO wishListSaveDTO,
+	public SingleResult<WishListResultDTO> saveWishList(@Valid @ApiParam(name = "wishListSaveDTO", value = "위시리스트 등록 JSON") @RequestBody  final WishListSaveDTO wishListSaveDTO,
 														@ApiIgnore final BindingResult result) {
 		log.info("WishListController.saveWishList");
 		return responseService.getSingleResult(WishListResultDTO.ofSave(wishListService.save(wishListSaveDTO.getGoodsSeq())));
