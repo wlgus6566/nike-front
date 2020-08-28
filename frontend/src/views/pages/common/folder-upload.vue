@@ -353,6 +353,7 @@ export default {
         }
     },
     activated() {
+        this.dataReset();
         this.menuCode = this.folderSet[
             this.$route.meta.topMenuCode.toLowerCase()
         ].menuCode[0];
@@ -469,6 +470,7 @@ export default {
                             `/${this.$route.meta.topMenuCode.toLowerCase()}/${this.menuCode.toLowerCase()}`
                         );
                     }
+                    this.dataReset();
                 }
             } catch (error) {
                 console.error(error);
@@ -507,7 +509,24 @@ export default {
             if (!confirm('작성을 취소하시겠습니까?')) {
                 return false;
             }
+            this.dataReset();
             this.$router.go(-1);
+        },
+        dataReset() {
+            this.folderDetail.imageFilePhysicalName = '';
+            this.folderDetail.exposureYn = 'Y';
+            this.menuCode = 'SP';
+            this.folderDetail.folderName = '';
+            this.folderDetail.folderContents = '';
+            this.folderDetail.campaignPeriodSectionCode = 'SELECT';
+            this.folderDetail.memo = '';
+            this.checks = [
+                {
+                    authSeq: 0,
+                    detailAuthYn: 'N',
+                    emailReceptionYn: 'N',
+                },
+            ];
         },
     },
 };
