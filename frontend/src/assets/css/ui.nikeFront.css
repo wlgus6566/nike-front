@@ -4866,14 +4866,6 @@ img.image-grayscale {
     background-position: -400px -200px !important;
 }
 
-/* todo video 아이콘 추가 해야 함 */
-.extension-video {
-    background-position: 100px 100px !important;
-    background-color: red !important;
-}
-.extension-video:after {
-    content: 'video 아이콘 tbd';
-}
 .extension-tif {
     background-position: 100px 100px !important;
     background-color: red !important;

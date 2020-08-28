@@ -69,7 +69,7 @@
                                     v-if="item.fileKindCode === 'VR'"
                                 ></span>
                                 <span
-                                    :class="[`extension-video`]"
+                                    :class="[`extension-url`]"
                                     v-else-if="item.fileKindCode === 'VIDEO'"
                                 ></span>
                                 <img

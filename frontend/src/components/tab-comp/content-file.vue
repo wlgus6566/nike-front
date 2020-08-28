@@ -12,7 +12,19 @@
                             v-for="item in contBasketList"
                             :key="item.contentsBasketSeq"
                         >
-                            <img :src="item.filePhysicalName" alt="" />
+                            <span class="thumbnail">
+                                <img
+                                    :src="item.filePhysicalName"
+                                    :alt="item.fileName"
+                                    v-if="item.filePhysicalName"
+                                />
+                                <span
+                                    :class="[
+                                        `extension-${item.fileExtension.toLowerCase()}`,
+                                    ]"
+                                    v-else
+                                ></span>
+                            </span>
                             <button
                                 type="button"
                                 class="btn-del"
@@ -391,5 +403,16 @@ export default {
     color: #999;
     font-weight: 300;
     text-align: center;
+}
+.file-list .thumbnail:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
 }
 </style>
