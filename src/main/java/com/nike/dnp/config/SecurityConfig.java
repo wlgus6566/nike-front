@@ -185,6 +185,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						, "/api/main/**"
 						, "/api/mypage/**"
 						, "/api/calendar/eachList/**"
+						, "/api/contents/download/*"
 						, "/api/alarm/**"
 						,"/api/join/**").permitAll()
 			.accessDecisionManager(accessDecisionManager())

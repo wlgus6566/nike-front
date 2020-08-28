@@ -24,9 +24,7 @@ export default {
         Footer,
         Navigation,
     },
-    mounted() {
-        console.log(this.$route.meta.hideHeaderFooter);
-    },
+    mounted() {},
 };
 </script>
 <style scoped></style>
