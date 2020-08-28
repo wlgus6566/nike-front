@@ -114,17 +114,20 @@ export default {
     },
     methods: {
         handleScroll() {
-            console.log(this.stickyH);
             const windowE = document.documentElement;
             const btnWrap = document.querySelector('.btn-wrap');
             const footerH = document.querySelector('footer').offsetHeight;
             const navH = document.querySelector('.nav-area').offsetHeight;
             const stickyWtap = document.querySelector('#sticky');
-            console.log(windowE.scrollTop - stickyWtap.offsetTop);
-            console.log(stickyWtap.offsetTop);
-            if (windowE.scrollTop - footerH - navH === stickyWtap.offsetTop) {
+            if (
+                windowE.clientHeight + windowE.scrollTop - navH - footerH >=
+                stickyWtap.offsetTop
+            ) {
                 btnWrap.style.position = 'relative';
                 btnWrap.style.bottom = '0';
+            } else {
+                btnWrap.style.position = '';
+                btnWrap.style.bottom = '';
             }
         },
         async passwordChange() {

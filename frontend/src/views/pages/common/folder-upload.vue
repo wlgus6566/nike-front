@@ -520,7 +520,7 @@ export default {
             this.folderDetail.folderContents = '';
             this.folderDetail.campaignPeriodSectionCode = 'SELECT';
             this.folderDetail.memo = '';
-            this.checks = [
+            this.folderDetail.checks = [
                 {
                     authSeq: 0,
                     detailAuthYn: 'N',

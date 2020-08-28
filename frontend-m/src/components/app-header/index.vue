@@ -2,7 +2,7 @@
     <header
         :class="{
             'page-header': tabMenuData !== null,
-            'header-detail': $route.meta.btn,
+            'header-detail': $route.meta.detail,
         }"
     >
         <h1 class="logo" v-if="this.$route.path === '/'">
