@@ -230,10 +230,22 @@ export default {
     overflow: hidden;
 }
 .file-list .thumbnail {
+    position: relative;
     width: 100%;
     height: 100%;
     display: block;
     background: #f7f7f7;
+}
+.file-list .thumbnail:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
 }
 .file-list li img {
     width: 100%;

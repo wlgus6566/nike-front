@@ -4855,7 +4855,11 @@ img.image-grayscale {
     display: inline-block !important;
     width: 100px !important;
     height: 100px !important;
-    background: url('../images/icon_extension.png') no-repeat 0 0 / auto !important;
+    background: url('../images/icon_extension.png') no-repeat -400px -200px /
+        auto !important;
+}
+.extension-etc {
+    background-position: -400px -200px !important;
 }
 .extension-pdf {
     background-position: 0 0 !important;
@@ -4898,9 +4902,6 @@ img.image-grayscale {
 }
 .extension-avi {
     background-position: -300px -200px !important;
-}
-.extension-etc {
-    background-position: -400px -200px !important;
 }
 .extension-otf {
     background-position: 0 -300px !important;
