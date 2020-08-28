@@ -122,7 +122,9 @@ export default {
             };
         },
     },
-    created() {},
+    created() {
+        this.emitFileList();
+    },
     components: {
         FileItem: () => import('@/components/file-settings/file-item.vue'),
         draggable,

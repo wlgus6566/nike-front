@@ -153,40 +153,41 @@ export default {
         calendarSeq: Number,
         calendarDetail: Object,
         calenderSectionCodeList: Array,
-        pickerBeginOption: {
-            firstDayOfWeek: 7,
-            cellClassName: (date) => {
-                if (new Date(date).getDay() === 0) {
-                    return 'el-holiday';
-                }
-            },
-            disabledDate: (time) => {
-                const minDt = new Date();
-                minDt.setMonth(minDt.getMonth() - 3);
-                return (
-                    time.getTime() > this.endDt.getTime() ||
-                    time.getTime() < minDt ||
-                    time.getTime() > new Date()
-                );
-            },
-        },
-        pickerEndOption: {
-            firstDayOfWeek: 7,
-            cellClassName: (date) => {
-                if (new Date(date).getDay() === 0) {
-                    return 'el-holiday';
-                }
-            },
-            disabledDate: (time) => {
-                const minDt = new Date();
-                minDt.setMonth(minDt.getMonth() - 3);
-                return (
-                    time.getTime() < this.beginDt.getTime() ||
-                    time.getTime() < minDt ||
-                    time.getTime() > new Date()
-                );
-            },
-        },
+        // pickerBeginOption: {
+        //     firstDayOfWeek: 7,
+        //     cellClassName: (date) => {
+        //         if (new Date(date).getDay() === 0) {
+        //             return 'el-holiday';
+        //         }
+        //     },
+        //     disabledDate: (time) => {
+        //         console.log('ss')
+        //         const minDt = new Date();
+        //         minDt.setMonth(minDt.getMonth() - 3);
+        //         return (
+        //             time.getTime() > this.endDt.getTime() ||
+        //             time.getTime() < minDt ||
+        //             time.getTime() > new Date()
+        //         );
+        //     },
+        // },
+        // pickerEndOption: {
+        //     firstDayOfWeek: 7,
+        //     cellClassName: (date) => {
+        //         if (new Date(date).getDay() === 0) {
+        //             return 'el-holiday';
+        //         }
+        //     },
+        //     disabledDate: (time) => {
+        //         const minDt = new Date();
+        //         minDt.setMonth(minDt.getMonth() - 3);
+        //         return (
+        //             time.getTime() < this.beginDt.getTime() ||
+        //             time.getTime() < minDt ||
+        //             time.getTime() > new Date()
+        //         );
+        //     },
+        // },
     },
     data() {
         return {
@@ -200,6 +201,32 @@ export default {
                 beginDt: null,
                 endDt: null,
                 contents: null,
+            },
+            pickerBeginOption: {
+                firstDayOfWeek: 7,
+                cellClassName: (date) => {
+                    if (new Date(date).getDay() === 0) {
+                        return 'el-holiday';
+                    }
+                },
+                disabledDate: (time) => {
+                    if (this.EndDt) {
+                        return time.getTime() > this.EndDt.getTime();
+                    }
+                },
+            },
+            pickerEndOption: {
+                firstDayOfWeek: 7,
+                cellClassName: (date) => {
+                    if (new Date(date).getDay() === 0) {
+                        return 'el-holiday';
+                    }
+                },
+                disabledDate: (time) => {
+                    if (this.BeginDt) {
+                        return time.getTime() < this.BeginDt.getTime();
+                    }
+                },
             },
         };
     },

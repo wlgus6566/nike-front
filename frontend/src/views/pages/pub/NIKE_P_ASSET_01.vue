@@ -186,7 +186,7 @@
                                     <span class="label-title">업로드 된 파일</span>
                                 </div>
                                 <div class="form-column">
-                                    <fileUpload />
+
                                 </div>
                             </li>
                         </ul>
@@ -277,7 +277,6 @@
     </div>
 </template>
 <script>
-    import fileUpload from '@/components/file-settings/file-upload';
 
     export default {
     name: 'NIKE_P_ASSET_01',
@@ -334,7 +333,6 @@
         'my-component': {
             template: '<div>파일추가</div>',
         },
-        fileUpload,
     },
     methods: {
         add() {

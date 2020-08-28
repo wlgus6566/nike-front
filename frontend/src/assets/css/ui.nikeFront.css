@@ -4865,6 +4865,14 @@ img.image-grayscale {
 .extension-etc {
     background-position: -400px -200px !important;
 }
+
+.extension-tif {
+    background-position: 100px 100px !important;
+    background-color: red !important;
+}
+.extension-tif:after {
+    content: 'tif 아이콘 tbd';
+}
 .extension-pdf {
     background-position: 0 0 !important;
 }

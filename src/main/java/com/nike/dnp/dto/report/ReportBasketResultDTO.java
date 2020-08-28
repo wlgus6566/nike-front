@@ -61,8 +61,8 @@ public class ReportBasketResultDTO {
      * The File physical name
      * @author [이소정]
      */
-    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리명")
-    private String filePhysicalName;
+    @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리명")
+    private String thumbnailFilePhysicalName;
 
     /**
      * 파일 확장자
@@ -80,8 +80,8 @@ public class ReportBasketResultDTO {
     @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드(FILE/VIDEO/VR)", required = true)
     private String fileKindCode;
 
-    public String getFilePhysicalName() {
-        return CloudFrontUtil.getCustomSignedUrl(filePhysicalName);
+    public String getThumbnailFilePhysicalName() {
+        return CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
     }
 
 
