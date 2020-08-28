@@ -3,14 +3,12 @@ package com.nike.dnp.service.report;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
-import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.report.ReportFileSaveDTO;
 import com.nike.dnp.dto.report.ReportResultDTO;
 import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
-import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.entity.user.UserAuth;
@@ -22,7 +20,6 @@ import com.nike.dnp.repository.user.UserAuthRepository;
 import com.nike.dnp.service.alarm.AlarmService;
 import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.history.HistoryService;
-import com.nike.dnp.service.user.UserContentsService;
 import com.nike.dnp.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -90,13 +87,6 @@ public class ReportService {
     private final AlarmService alarmService;
 
     /**
-     * The User contents service
-     *
-     * @author [이소정]
-     */
-    private final UserContentsService userContentsService;
-
-    /**
      * The User auth repository
      *
      * @author [이소정]
@@ -126,9 +116,12 @@ public class ReportService {
         if (null != reportSearchDTO.getGroupSeq()) {
             authSeqList.add(reportSearchDTO.getGroupSeq());
         } else {
-            final List<AuthReturnDTO> authList = authService.findByAuthDepth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString());
+//            final List<AuthReturnDTO> authList = authService.findByAuthDepth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString());
+            final List<AuthReturnDTO> authList = authService.findByAuthDepth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_MANAGE", ServiceCode.MenuSkillEnumCode.LIST.toString());
             for (final AuthReturnDTO authReturnDTO : authList) {
-                authSeqList.add(authReturnDTO.getAuthSeq());
+                if("Y".equals(authReturnDTO.getCheckBoxYn())) {
+                    authSeqList.add(authReturnDTO.getAuthSeq());
+                }
             }
         }
         reportSearchDTO.setAuthSeqList(authSeqList);
@@ -442,14 +435,16 @@ public class ReportService {
         final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
         userContentsSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
         userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
-        final List<AuthReturnDTO> authList = authService.getAuthList(userContentsSearchDTO);
+        final List<AuthReturnDTO> authList = authService.getAuthList2(userContentsSearchDTO);
 
         final List<Long> userSeqList  = new ArrayList<>();
         for (final AuthReturnDTO authReturnDTO : authList) {
             // authSeq 를 가지고 userSeq 목록 가져오기
-            final List<UserAuth> userAuthList = userAuthRepository.findAllByAuthSeq(authReturnDTO.getAuthSeq());
-            for (final UserAuth userAuth : userAuthList) {
-                userSeqList.add(userAuth.getUserSeq());
+            if ("Y".equals(authReturnDTO.getCheckBoxYn())) {
+                final List<UserAuth> userAuthList = userAuthRepository.findAllByAuthSeq(authReturnDTO.getAuthSeq());
+                for (final UserAuth userAuth : userAuthList) {
+                    userSeqList.add(userAuth.getUserSeq());
+                }
             }
         }
         return userSeqList;
