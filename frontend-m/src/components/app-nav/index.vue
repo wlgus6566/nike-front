@@ -121,6 +121,9 @@ export default {
                 this.menuLottie(1);
             }
         },
+        '$store.state.menuData'() {
+            this.menuFn();
+        },
     },
     methods: {
         menuLottie(index) {
@@ -129,8 +132,9 @@ export default {
             });
             this.anim[index].play();
         },
-        async menuFn() {
-            const menu = await this.$store.state.menuData.filter(
+        menuFn() {
+            if (!this.$store.state.menuData) return;
+            const menu = this.$store.state.menuData.filter(
                 el =>
                     el.menuCode !== 'MYPAGE' &&
                     el.menuCode !== 'HOME' &&
