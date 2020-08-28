@@ -12,7 +12,19 @@
                             v-for="item in contBasketList"
                             :key="item.contentsBasketSeq"
                         >
-                            <img :src="item.filePhysicalName" alt="" />
+                            <span class="thumbnail">
+                                <img
+                                    :src="item.filePhysicalName"
+                                    :alt="item.fileName"
+                                    v-if="item.filePhysicalName"
+                                />
+                                <span
+                                    :class="[
+                                        `extension-${item.fileExtension.toLowerCase()}`,
+                                    ]"
+                                    v-else
+                                ></span>
+                            </span>
                             <button
                                 type="button"
                                 class="btn-del"
@@ -37,12 +49,22 @@
                     </NoData>
                 </div>
             </el-scrollbar>
-            <button type="button" class="btn-download">
-                <span class="gage" style="width: 50%;"></span>
-                <span class="txt" style="display: none;">DOWNLOAD</span>
-                <span class="txt">DOWNLOAD...</span>
+            <button
+                v-if="!downloadFiles"
+                type="button"
+                class="btn-download"
+                @click="fileDownload"
+                :disabled="contBasketList.length === 0"
+            >
+                <span class="txt">DOWNLOAD</span>
             </button>
+            <span v-else class="btn-download active">
+                <span class="txt">DOWNLOADING({{ this.loaded }}%)…</span>
+                <span class="gage" :style="{ width: `${this.loaded}%` }"></span>
+            </span>
         </div>
+
+        {{ contBasketList.length }}
 
         <strong class="tab-title">HISTORY</strong>
         <TabComponent v-bind:tabMenus="historyTab"></TabComponent>
@@ -52,7 +74,11 @@
 import TabComponent from '@/components/tab-comp';
 import NoData from '@/components/no-data';
 import Loading from '@/components/loading';
-import { addContentsBasket, delContentsBasket } from '@/api/contents';
+import {
+    addContentsBasket,
+    delContentsBasket,
+    contentFileDownload,
+} from '@/api/contents';
 import bus from '@/utils/bus';
 
 export default {
@@ -78,8 +104,29 @@ export default {
                 showIndex: 0,
             },
             deleteLoading: [],
+            downloadFiles: null,
+            loaded: 0,
         };
     },
+    /* watch: {
+        downloadFiles: {
+            deep: true,
+            handler(current) {
+                const total = current.reduce((a, b) => {
+                    console.log(b);
+                    return a + b.total;
+                }, 0);
+                const loaded = current.reduce((a, b) => {
+                    console.log(b);
+
+                    return a + b.loaded;
+                }, 0);
+                console.log(loaded);
+                console.log(total);
+                this.loaded = Math.round((loaded * 100) / total);
+            },
+        },
+    },*/
     computed: {
         contBasketList: {
             get() {
@@ -99,6 +146,54 @@ export default {
         });
     },
     methods: {
+        progress() {
+            const total = this.downloadFiles.reduce((a, b) => {
+                return a + b.total;
+            }, 0);
+            const loaded = this.downloadFiles.reduce((a, b) => {
+                return a + b.loaded;
+            }, 0);
+            this.loaded = Math.round((loaded * 100) / total);
+        },
+
+        async fileDownload() {
+            this.downloadFiles = [];
+            await Promise.all(
+                this.contBasketList.map(async (el, i) => {
+                    try {
+                        const config = {
+                            responseType: 'blob',
+                            timeout: 0,
+                            onDownloadProgress: (progressEvent) => {
+                                this.downloadFiles[i] = {
+                                    total: progressEvent.total,
+                                    loaded: progressEvent.loaded,
+                                };
+                                this.progress();
+                            },
+                        };
+                        const response = await contentFileDownload(
+                            el.contentsFileSeq,
+                            config
+                        );
+                        await this.delContBasket(el.contentsBasketSeq);
+                        const url = window.URL.createObjectURL(
+                            new Blob([response.data])
+                        );
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.id = 'id_' + i;
+                        link.setAttribute('download', el.fileName);
+                        document.body.appendChild(link);
+                        link.click();
+                        window.URL.revokeObjectURL(url);
+                    } catch (error) {
+                        console.error(error);
+                    }
+                })
+            );
+            this.downloadFiles = null;
+        },
         basketEnter() {
             this.$store.commit('SET_FILE_MOUSEENTER', true);
         },
@@ -115,6 +210,7 @@ export default {
                 const {
                     data: { data: response },
                 } = await this.$store.dispatch('getContBasket');
+                console.log(response);
                 this.contBasketList = response;
             } catch (error) {
                 console.error(error);
@@ -240,7 +336,7 @@ export default {
     align-items: center;
     font-size: 14px;
     color: #fff;
-    background: #ccc;
+    background: #000;
 }
 .btn-download .gage {
     position: absolute;
@@ -252,12 +348,19 @@ export default {
     background: #fa5400;
 }
 .btn-download .txt {
+    z-index: 1;
     position: relative;
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 0.58px;
 }
+.btn-download.active {
+    background-color: #888 !important;
+}
+.btn-download:disabled {
+    background-color: #ccc !important;
+}
 .btn-download:disabled .gage {
-    width: 0;
+    display: none;
 }
 .flag-box .flag {
     display: inline-flex;
@@ -300,5 +403,16 @@ export default {
     color: #999;
     font-weight: 300;
     text-align: center;
+}
+.file-list .thumbnail:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
 }
 </style>

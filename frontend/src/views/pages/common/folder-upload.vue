@@ -201,6 +201,7 @@
             </ul>
             <hr class="hr-gray" />
             <FileSettings
+                v-if="pageFileSectionCodeName"
                 ref="fileSet"
                 :pageFileSectionCodeName="pageFileSectionCodeName"
                 @FileListUpdate="FileListUpdate"
@@ -223,11 +224,11 @@ import FileSettings from '@/components/file-settings/index.vue';
 import ModalAuth from '@/views/pages/common/modal-auth';
 import { getContentsView, postContents, putContents } from '@/api/contents';
 import bus from '@/utils/bus';
-import { postReport, putReport } from '@/api/report';
 export default {
     name: 'UPLOAD',
     data() {
         return {
+            saveFolder: false,
             visible: {
                 ModalAuth: false,
             },
@@ -345,32 +346,22 @@ export default {
         ModalAuth,
     },
     created() {
-        this.menuCode = this.folderSet[
-            this.$route.meta.topMenuCode.toLowerCase()
-        ].menuCode[0];
-        if (this.$route.params.id) {
-            this.getFolderDetail();
-        }
+        this.folderSetting();
     },
     activated() {
-        this.dataReset();
-        this.menuCode = this.folderSet[
-            this.$route.meta.topMenuCode.toLowerCase()
-        ].menuCode[0];
-        if (this.$route.params.id) {
-            this.getFolderDetail();
-        }
+        this.folderSetting();
     },
-    /*activated() {
-        window.addEventListener('scroll', this.handleScroll);
-    },
-    /*deactivated() {
-        window.removeEventListener('scroll', this.handleScroll);
-    },
-    destroyed() {
-        window.removeEventListener('scroll', this.handleScroll);
-    },*/
     methods: {
+        folderSetting() {
+            this.dataReset();
+            this.saveFolder = false;
+            this.menuCode = this.folderSet[
+                this.$route.meta.topMenuCode.toLowerCase()
+            ].menuCode[0];
+            if (this.$route.params.id) {
+                this.getFolderDetail();
+            }
+        },
         FileListUpdate(fileList) {
             this.folderDetail.contentsFileList = fileList;
         },
@@ -400,24 +391,24 @@ export default {
         // },
         uploadFiles() {
             if (!this.folderDetail.imageBase64) {
-                alert('썸네일');
+                alert('썸네일을 입력해 주세요.');
                 return;
             }
             if (!this.folderDetail.folderName) {
-                alert('캠페인 명');
+                alert('캠페인 명을 입력해 주세요.');
                 return;
             }
             if (!this.folderDetail.folderContents) {
-                alert('캠페인 상세');
+                alert('캠페인 상세를 입력해 주세요.');
                 return;
             }
             if (this.folderDetail.campaignPeriodSectionCode === 'SELECT') {
                 if (!this.folderDetail.campaignBeginDt) {
-                    alert('시작일');
+                    alert('시작일을 입력해 주세요.');
                     return;
                 }
                 if (!this.folderDetail.campaignEndDt) {
-                    alert('종료일');
+                    alert('종료일을 입력해 주세요.');
                     return;
                 }
             }
@@ -457,7 +448,9 @@ export default {
                 if (response.data.existMsg) {
                     alert(response.data.msg);
                 }
+                console.log(response);
                 if (response.data.success) {
+                    this.saveFolder = true;
                     this.$store.commit('SET_RELOAD', true);
                     if (this.$route.params.id) {
                         await this.$router.push(
@@ -470,14 +463,12 @@ export default {
                             `/${this.$route.meta.topMenuCode.toLowerCase()}/${this.menuCode.toLowerCase()}`
                         );
                     }
-                    this.dataReset();
                 }
             } catch (error) {
                 console.error(error);
             }
         },
         async getFolderDetail() {
-            console.log(this.$route.params.pathMatch.toUpperCase());
             try {
                 const { data: response } = await getContentsView(
                     this.$route.meta.topMenuCode,
@@ -500,16 +491,17 @@ export default {
                 this.EndDt = response.data.campaignEndDt
                     ? new Date(response.data.campaignEndDt)
                     : null;
+
+                console.log(this.$refs.fileSet);
                 await this.$refs.fileSet.getFolderDetailFile();
             } catch (error) {
                 console.error(error);
             }
         },
         cancelBack() {
-            if (!confirm('작성을 취소하시겠습니까?')) {
+            /*if (!confirm('작성을 취소하시겠습니까?')) {
                 return false;
-            }
-            this.dataReset();
+            }*/
             this.$router.go(-1);
         },
         dataReset() {
@@ -520,7 +512,7 @@ export default {
             this.folderDetail.folderContents = '';
             this.folderDetail.campaignPeriodSectionCode = 'SELECT';
             this.folderDetail.memo = '';
-            this.checks = [
+            this.folderDetail.checks = [
                 {
                     authSeq: 0,
                     detailAuthYn: 'N',
@@ -528,6 +520,20 @@ export default {
                 },
             ];
         },
+    },
+    beforeRouteLeave(to, from, next) {
+        if (!this.saveFolder) {
+            const answer = window.confirm(
+                '이 페이지에서 나가시겠습니까?\n변경사항이 저장되지 않을 수 있습니다.'
+            );
+            if (answer) {
+                next();
+            } else {
+                next(false);
+            }
+        } else {
+            next();
+        }
     },
 };
 </script>

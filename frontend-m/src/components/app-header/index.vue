@@ -39,7 +39,7 @@
 </template>
 <script>
 import NavItem from '@/components/app-header/nav-item';
-import { deleteReport } from '@/api/report';
+import {deleteReport} from '@/api/report';
 
 export default {
     name: 'headerIndex',
@@ -101,7 +101,9 @@ export default {
                 }
             }
         },
-        modiFn() {},
+        modiFn() {
+            this.$router.push(`/report/modify/${this.$route.params.id}`);
+        },
         tabMenuFn() {
             if (!this.$store.state.menuData) return;
             const titleValue = this.$route.path.split('/')[1];

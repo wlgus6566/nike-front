@@ -255,13 +255,12 @@ export default {
                 return;
             if (!confirm('정말 삭제하시겠습니까?')) return;
             try {
-                const {
-                    data: { data: response },
-                } = await deleteContents(
+                const { data: response } = await deleteContents(
                     this.$route.meta.topMenuCode,
-                    this.$route.meta.menuCode,
+                    this.$route.meta.menuCode.toUpperCase(),
                     this.$route.params.id
                 );
+                console.log(response);
                 if (response.success) {
                     this.$store.commit('SET_RELOAD', true);
                     await this.$router.push(
@@ -308,7 +307,7 @@ export default {
             }
         },
         endPage() {
-            alert('마지막');
+            alert('마지막 페이지 입니다.');
         },
 
         sectionCodeChange(value) {
@@ -397,7 +396,7 @@ export default {
             try {
                 await addContentsBasket(
                     this.$route.meta.topMenuCode,
-                    this.$route.meta.menuCode,
+                    this.$route.meta.menuCode.toUpperCase(),
                     seq.filter((el) => {
                         return !this.storeContBasketList.includes(el);
                     })

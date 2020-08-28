@@ -173,8 +173,6 @@ export default {
 }
 .group-table tbody td label input {
     position: absolute;
-    top: 0;
-    left: 0;
     opacity: 0;
 }
 .group-table tbody td label i {

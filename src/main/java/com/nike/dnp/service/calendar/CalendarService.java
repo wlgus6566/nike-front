@@ -1,16 +1,14 @@
 package com.nike.dnp.service.calendar;
 
 import com.nike.dnp.common.variable.FailCode;
-import com.nike.dnp.dto.calendar.CalendarDaySearchDTO;
-import com.nike.dnp.dto.calendar.CalendarSaveDTO;
-import com.nike.dnp.dto.calendar.CalendarSearchDTO;
-import com.nike.dnp.dto.calendar.CalendarUpdateDTO;
+import com.nike.dnp.dto.calendar.*;
 import com.nike.dnp.entity.calendar.Calendar;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.calendar.CalendarRepository;
 import com.nike.dnp.util.LocalDateUtil;
 import com.nike.dnp.util.MessageUtil;
+import com.nike.dnp.util.ObjectMapperUtil;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -113,10 +111,10 @@ public class CalendarService {
      * @since 2020. 7. 22. 오후 4:45:45
      * @implNote Calendar 목록 조회
      */
-    public List<Calendar> findAll(final CalendarSearchDTO calendarSearchDTO) {
+    public List<CalendarResultDTO> findAll(final CalendarSearchDTO calendarSearchDTO) {
         log.info("CalendarService.findAll");
         calendarSearchDTO.setYyyyMm(calendarSearchDTO.getYyyyMm().replace(".", ""));
-        return calendarRepository.findByMonthSearch(calendarSearchDTO);
+        return ObjectMapperUtil.mapAll(calendarRepository.findByMonthSearch(calendarSearchDTO), CalendarResultDTO.class);
     }
 
     public List<Calendar> findAllEach(final CalendarSearchDTO calendarSearchDTO) {

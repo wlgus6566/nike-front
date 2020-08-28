@@ -35,7 +35,7 @@
                     v-for="item in reportList"
                     :key="item.reportSeq"
                 >
-                    <router-link :to="`/report/${item.reportSeq}`">
+                    <router-link :to="`/report/detail/${item.reportSeq}`">
                         <div class="thumbnail">
                             <img :src="item.imageFilePhysicalName" alt="" />
                         </div>
@@ -85,8 +85,8 @@
 import FilterSelect from '@/components/filter-select';
 import CascaderSelect from '@/components/cascader-select';
 import NoData from '@/components/no-data';
-import { getReportList, getGroupAuthority } from '@/api/report';
-import { getCategoryList } from '@/utils/code';
+import {getGroupAuthority, getReportList} from '@/api/report';
+import {getCategoryList} from '@/utils/code';
 
 export default {
     name: 'management',

@@ -288,7 +288,7 @@ export default {
             return '진짜?';
         };*/
     },
-    /* beforeRouteLeave(to, from, next) {
+    beforeRouteLeave(to, from, next) {
         const answer = window.confirm(
             '이 페이지에서 나가시겠습니까?\n변경사항이 저장되지 않을 수 있습니다.'
         );
@@ -297,7 +297,7 @@ export default {
         } else {
             next(false);
         }
-    },*/
+    },
 };
 </script>
 <style scoped>
@@ -413,8 +413,6 @@ export default {
 }
 .group-table tbody td label input {
     position: absolute;
-    top: 0;
-    left: -9999px;
     opacity: 0;
 }
 .group-table tbody td label i {

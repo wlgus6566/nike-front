@@ -62,20 +62,31 @@
                                 />
                                 <i></i>
                             </span>
-                            <span
-                                :class="[
-                                    `thumbnail`,
-                                    `extension-${item.fileExtension.toLowerCase()}`,
-                                ]"
-                            >
+                            {{ item.fileKindCode }}
+                            <span class="thumbnail">
+                                <span
+                                    :class="[`extension-vr`]"
+                                    v-if="item.fileKindCode === 'VR'"
+                                ></span>
+                                <span
+                                    :class="[`extension-url`]"
+                                    v-else-if="item.fileKindCode === 'VIDEO'"
+                                ></span>
                                 <img
                                     :src="item.thumbnailFilePhysicalName"
-                                    alt=""
+                                    :alt="item.thumbnailFileName"
+                                    v-else-if="item.thumbnailFilePhysicalName"
                                 />
+                                <span
+                                    :class="[
+                                        `extension-${item.fileExtension.toLowerCase()}`,
+                                    ]"
+                                    v-else
+                                ></span>
                             </span>
                             <span class="info-box">
                                 <em class="title">{{
-                                    item.title || item.thumbnailFileName
+                                    item.title || item.fileName
                                 }}</em>
                             </span>
                         </label>

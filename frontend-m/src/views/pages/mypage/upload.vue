@@ -4,28 +4,28 @@
             <li
                 v-for="item in tabList"
                 :key="item.value"
-                :class="{active:typeCd === item.value}"
+                :class="{ active: typeCd === item.value }"
             >
-                <a href="#" @click="onClickTab(item.value)">{{item.title}}</a>
+                <a href="#" @click="onClickTab(item.value)">{{ item.title }}</a>
             </li>
         </ul>
-        <template v-if="uploadFolderData.length">
+        <template v-if="uploadFolderData">
             <MyFolderList
                 v-if="uploadFolderData.length"
                 :folderListData="uploadFolderData"
             />
+            <template v-else>
+                <NoData>
+                    <i class="icon-file"></i>
+                    <p class="desc">업로드한 폴더가 없습니다.</p>
+                </NoData>
+            </template>
         </template>
-        <template v-else>
-            <NoData>
-                <i class="icon-file"></i>
-                <p class="desc">업로드한 폴더가 없습니다.</p>
-            </NoData>
-        </template>
+
         <Loading v-if="loadingData" />
     </div>
 </template>
 <script>
-
 import { uploadFolderViewList } from '@/api/mypage';
 
 import MyFolderList from '@/components/my-folder-list';
@@ -35,7 +35,8 @@ export default {
     name: 'upload',
     data() {
         return {
-            uploadFolderData: [],
+            uploadFolderDataList: null,
+            uploadFolderData: null,
             page: 0,
             pageSize: 5,
             totalPage: null,
@@ -68,7 +69,7 @@ export default {
         Loading: () => import('@/components/loading/'),
     },
     created() {
-        this.fetchData();
+        this.initFetchData();
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
@@ -82,6 +83,12 @@ export default {
     },
     methods: {
         // 초기 데이타 조회
+        async initFetchData() {
+            this.totalElements = 0;
+            this.page = 0;
+            this.uploadFolderData = null;
+            this.fetchData();
+        },
         async fetchData(infinite) {
             this.loadingData = true;
             try {
@@ -91,7 +98,7 @@ export default {
                     page: this.page,
                     size: this.pageSize,
                     typeCd: this.typeCd,
-                    MobileYn: 'Y'
+                    MobileYn: 'Y',
                 });
                 this.uploadFolderData = response.content;
                 this.isLastPage = response.last;
@@ -119,8 +126,7 @@ export default {
         // tab 클릭시
         onClickTab(item) {
             this.typeCd = item;
-            this.page = 0;
-            this.fetchData();
+            this.initFetchData();
         },
         endPage() {
             alert('마지막 페이지');
@@ -149,8 +155,7 @@ export default {
                 this.fetchData(true);
             }
         },
-    }
-
+    },
 };
 </script>
 <style scoped></style>

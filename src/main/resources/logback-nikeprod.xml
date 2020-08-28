@@ -27,11 +27,11 @@
 	</appender>
 	
 	<!-- Loggers -->
-	<logger name="org.springframework" level="INFO" />
-	<logger name="com.nike.dnp" level="INFO" />
+	<logger name="org.springframework" level="ERROR" />
+	<logger name="com.nike.dnp" level="ERROR" />
 	<logger name="jdbc.sqlonly" level="ERROR" />
 
-	<root level="INFO">
+	<root level="ERROR">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="ERROR_FILE" />
 	</root>

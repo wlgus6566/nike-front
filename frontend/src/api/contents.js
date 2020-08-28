@@ -56,6 +56,11 @@ function sendMail(data) {
     return contents.post(`/sendMail`, data);
 }
 
+// 컨텐츠 파일 다운로드
+function contentFileDownload(seq, config) {
+    return contents.get(`/download/${seq}`, config);
+}
+
 export {
     getContents,
     getContentsView,
@@ -68,4 +73,5 @@ export {
     delContentsBasket,
     getContentsAuthList,
     sendMail,
+    contentFileDownload,
 };

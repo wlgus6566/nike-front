@@ -1,6 +1,7 @@
 package com.nike.dnp.controller.main;
 
 import com.nike.dnp.common.aspect.ValidField;
+import com.nike.dnp.dto.calendar.CalendarResultDTO;
 import com.nike.dnp.dto.calendar.CalendarSearchDTO;
 import com.nike.dnp.dto.main.MainResultDTO;
 import com.nike.dnp.entity.calendar.Calendar;
@@ -102,7 +103,7 @@ public class MainController {
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Calendar 조회", value = "/calendar")
     @ValidField
-    public SingleResult<List<Calendar>> findAllCalendar(@Valid @ModelAttribute final CalendarSearchDTO calendarSearchDTO) {
+    public SingleResult<List<CalendarResultDTO>> findAllCalendar(@Valid @ModelAttribute final CalendarSearchDTO calendarSearchDTO) {
         log.info("MainController.findAllCalendar");
         return responseService.getSingleResult(calendarService.findAll(calendarSearchDTO));
     }

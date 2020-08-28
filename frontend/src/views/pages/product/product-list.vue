@@ -182,8 +182,9 @@ export default {
                 } = await getWishCheck({
                     goodsSeq: goodsSeq.goodsSeq,
                 });
-                if (response.data.existMsg) {
-                    alert(response.data.msg);
+                console.log(response);
+                if (response.existMsg) {
+                    alert(response.msg);
                 }
                 if (response.goodsSeq === null) {
                     try {
