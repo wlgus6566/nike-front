@@ -284,24 +284,13 @@ export default {
     created() {
         this.getUserList();
         this.authCacheList();
-    },
-    mounted() {
         getCategoryList('USER_STATUS', this.listSortSelect.listSortOptions);
-        document.querySelector('html').addEventListener('click', (e) => {
-            const target = e.target;
-            console.log(e.target);
-            if (
-                target.closest('.date-picker-group-box') !==
-                    this.$refs.datePicker &&
-                !target.closest('.btn-box')
-            ) {
-                console.log(3);
-                this.dataPickerShowData.visible = false;
-            }
-        });
-        document.querySelector('.el-select').addEventListener('click', () => {
-            this.dataPickerShowData.visible = false;
-        });
+    },
+    activated() {
+        this.compMount();
+    },
+    deactivated() {
+        this.compDestroy();
     },
     computed: {},
     watch: {
@@ -319,6 +308,36 @@ export default {
         },
     },
     methods: {
+        compMount() {
+            document
+                .querySelector('html')
+                .addEventListener('click', this.htmlClick);
+            document
+                .querySelector('.el-select')
+                .addEventListener('click', this.elSelectClick);
+        },
+        compDestroy() {
+            document
+                .querySelector('html')
+                .removeEventListener('click', this.htmlClick);
+            document
+                .querySelector('.el-select')
+                .removeEventListener('click', this.elSelectClick);
+        },
+        elSelectClick() {
+            this.dataPickerShowData.visible = false;
+        },
+        htmlClick(e) {
+            const target = e.target;
+            if (
+                target.closest('.date-picker-group-box') !==
+                    this.$refs.datePicker &&
+                !target.closest('.btn-box')
+            ) {
+                console.log(3);
+                this.dataPickerShowData.visible = false;
+            }
+        },
         //데이터 피커 리켓
         dataPickerReset() {
             this.beginDt = null;

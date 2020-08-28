@@ -4855,6 +4855,22 @@ img.image-grayscale {
     height: 100px !important;
     background: url('../images/icon_extension.png') no-repeat 0 0 / auto !important;
 }
+
+/* todo video 아이콘 추가 해야 함 */
+.extension-video {
+    background-position: 100px 100px !important;
+    background-color: red !important;
+}
+.extension-video:after {
+    content: 'video 아이콘 tbd';
+}
+.extension-tif {
+    background-position: 100px 100px !important;
+    background-color: red !important;
+}
+.extension-tif:after {
+    content: 'tif 아이콘 tbd';
+}
 .extension-pdf {
     background-position: 0 0 !important;
 }

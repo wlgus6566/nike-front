@@ -69,7 +69,7 @@
                                     v-if="item.fileKindCode === 'VR'"
                                 ></span>
                                 <span
-                                    :class="[`extension-etc`]"
+                                    :class="[`extension-video`]"
                                     v-else-if="item.fileKindCode === 'VIDEO'"
                                 ></span>
                                 <img
@@ -86,7 +86,7 @@
                             </span>
                             <span class="info-box">
                                 <em class="title">{{
-                                    item.title || item.thumbnailFileName
+                                    item.title || item.fileName
                                 }}</em>
                             </span>
                         </label>

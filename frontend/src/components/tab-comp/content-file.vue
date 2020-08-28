@@ -37,12 +37,22 @@
                     </NoData>
                 </div>
             </el-scrollbar>
-            <button type="button" class="btn-download">
-                <span class="gage" style="width: 50%;"></span>
-                <span class="txt" style="display: none;">DOWNLOAD</span>
-                <span class="txt">DOWNLOAD...</span>
+            <button
+                v-if="true"
+                type="button"
+                class="btn-download"
+                @click="fileDownload"
+                :disabled="contBasketList.length === 0"
+            >
+                <span class="txt">DOWNLOAD</span>
             </button>
+            <span v-else class="btn-download active">
+                <span class="txt">DOWNLOADING(0%)…</span>
+                <span class="gage" style="width: 50%;"></span>
+            </span>
         </div>
+
+        {{ contBasketList.length }}
 
         <strong class="tab-title">HISTORY</strong>
         <TabComponent v-bind:tabMenus="historyTab"></TabComponent>
@@ -52,7 +62,11 @@
 import TabComponent from '@/components/tab-comp';
 import NoData from '@/components/no-data';
 import Loading from '@/components/loading';
-import { addContentsBasket, delContentsBasket } from '@/api/contents';
+import {
+    addContentsBasket,
+    delContentsBasket,
+    contentFileDownload,
+} from '@/api/contents';
 import bus from '@/utils/bus';
 
 export default {
@@ -99,6 +113,44 @@ export default {
         });
     },
     methods: {
+        async fileDownload() {
+            await Promise.all(
+                this.contBasketList.map(async (el) => {
+                    const config = {
+                        responseType: 'blob',
+                        timeout: 0,
+                        onDownloadProgress: (progressEvent) => {
+                            let percentCompleted = Math.round(
+                                (progressEvent.loaded * 100) /
+                                    progressEvent.total
+                            );
+                            console.log(percentCompleted);
+                            /*console.log(progressEvent.loaded);
+                            console.log(progressEvent.total);
+                            console.log(progressEvent.lengthComputable);
+                            console.log(percentCompleted);*/
+                        },
+                    };
+                    const response = await contentFileDownload(
+                        el.contentsFileSeq,
+                        config
+                    );
+                    console.log(response);
+                })
+            );
+
+            alert(1);
+
+            /*console.log(this.contBasketList[0].filePhysicalName);
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            console.log(url);
+            const link = document.createElement('a');
+            link.href = url;
+            link.id = 'id_0';
+            link.setAttribute('download', '111.json'); //파일명은 따로 입력
+            document.body.appendChild(link);
+            link.click();*/
+        },
         basketEnter() {
             this.$store.commit('SET_FILE_MOUSEENTER', true);
         },
@@ -115,6 +167,7 @@ export default {
                 const {
                     data: { data: response },
                 } = await this.$store.dispatch('getContBasket');
+                console.log(response);
                 this.contBasketList = response;
             } catch (error) {
                 console.error(error);
@@ -240,7 +293,7 @@ export default {
     align-items: center;
     font-size: 14px;
     color: #fff;
-    background: #ccc;
+    background: #000;
 }
 .btn-download .gage {
     position: absolute;
@@ -252,12 +305,19 @@ export default {
     background: #fa5400;
 }
 .btn-download .txt {
+    z-index: 1;
     position: relative;
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 0.58px;
 }
+.btn-download.active {
+    background-color: #888 !important;
+}
+.btn-download:disabled {
+    background-color: #ccc !important;
+}
 .btn-download:disabled .gage {
-    width: 0;
+    display: none;
 }
 .flag-box .flag {
     display: inline-flex;
