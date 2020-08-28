@@ -1,40 +1,63 @@
 <template>
     <div>
         <div class="sorting-area">
-            <p class="total">전체 <strong>({{totalElements}})</strong></p>
+            <p class="total">
+                전체 <strong>({{ totalElements }})</strong>
+            </p>
             <div class="search-input" :class="{ active: isActive }">
                 <div class="input-box">
-                    <input type="text" placeholder="검색어를 입력해주세요." @keyup.enter="searchInputActive" v-model="keyword"/>
-                    <button type="button" class="search" @click="searchInputActive"><span>검색</span></button>
+                    <input
+                        type="text"
+                        placeholder="검색어를 입력해주세요."
+                        @keyup.enter="searchInputActive"
+                        v-model="keyword"
+                    />
+                    <button
+                        type="button"
+                        class="search"
+                        @click="searchInputActive"
+                    >
+                        <span>검색</span>
+                    </button>
                 </div>
-                <div class="btn-txt" @click="searchInputInactive"><span>취소</span></div>
+                <div class="btn-txt" @click="searchInputInactive">
+                    <span>취소</span>
+                </div>
             </div>
         </div>
-        <ul class="notice-list" v-if="noticeData.length > 0">
-            <li v-for="item in noticeData">
-                <a :href="`/mypage/notice/detail/${item.noticeArticleSeq}`">
-                    <span class="label-noti" v-if="item.noticeYn === 'Y'">중요</span>
-                    <span class="title">{{item.title}}</span>
-                    <span class="data">{{item.updateDt}}</span>
-                </a>
-            </li>
-        </ul>
-        <NoData v-else-if="noticeData.length === 0 && keyword !== ''">
-            <i class="icon-search"></i>
-            <p class="desc">검색 결과가 없습니다.</p>
-        </NoData>
-        <NoData v-else>
-            <i class="icon-upload"></i>
-            <p class="desc">등록된 데이터가 없습니다.</p>
-        </NoData>
-        <Pagination
+        <template v-if="noticeData">
+            <ul class="notice-list" v-if="noticeData.length > 0">
+                <li v-for="(item, index) in noticeData" :key="index">
+                    <a :href="`/mypage/notice/detail/${item.noticeArticleSeq}`">
+                        <span class="label-noti" v-if="item.noticeYn === 'Y'"
+                            >중요</span
+                        >
+                        <span class="title">{{ item.title }}</span>
+                        <span class="data">{{ item.updateDt }}</span>
+                    </a>
+                </li>
+            </ul>
+            <template v-else>
+                <NoData v-if="keyword === ''">
+                    <i class="icon-upload"></i>
+                    <p class="desc">등록된 데이터가 없습니다.</p>
+                </NoData>
+                <NoData v-else>
+                    <i class="icon-search"></i>
+                    <p class="desc">검색 결과가 없습니다.</p>
+                </NoData>
+            </template>
+        </template>
+        <Loading v-if="loadingData" />
+        <template v-if="noticeData">
+            <Pagination
                 v-if="noticeData.length"
                 :itemLength="itemLength"
                 :pageCount="pageCount"
                 :totalItem="totalElements"
                 @handleCurrentChange="handleCurrentChange"
-        />
-        <Loading v-if="loadingData" />
+            />
+        </template>
     </div>
 </template>
 <script>
@@ -45,34 +68,40 @@ export default {
     data() {
         return {
             noticeList: {},
-            noticeData: [],
+            noticeData: null,
             page: 0,
-            pageCount: 11,
+            pageCount: 5,
             itemLength: 10,
             keyword: '',
             totalElements: 0,
             isActive: false,
-            loadingData: false
-        }
+            loadingData: false,
+        };
     },
     components: {
         Pagination: () => import('@/components/pagination/'),
         Loading: () => import('@/components/loading/'),
-        NoData: () => import('@/components/no-data')
+        NoData: () => import('@/components/no-data'),
     },
     mounted() {
-        this.getNoticeList();
+        this.initListData();
     },
     methods: {
+        initListData() {
+            this.totalElements = 0;
+            this.page = 0;
+            this.noticeData = null;
+            this.getNoticeList();
+        },
         async getNoticeList() {
             this.loadingData = true;
             try {
                 const {
                     data: { data: response },
-                } = await getCustomerList("NOTICE", {
+                } = await getCustomerList('NOTICE', {
                     page: this.page,
                     size: this.itemLength,
-                    keyword: this.keyword
+                    keyword: this.keyword,
                 });
                 this.noticeList = response;
                 this.noticeData = response.content;
@@ -82,23 +111,24 @@ export default {
                 console.log(error);
             }
         },
-        searchInputActive: function (event) {
+        searchInputActive: function() {
             if (this.isActive) {
-                this.getNoticeList();
+                this.initListData();
             } else {
                 this.isActive = true;
             }
         },
-        searchInputInactive: function (event) {
+        searchInputInactive: function() {
             this.isActive = false;
-            this.keyword = "";
-            this.getNoticeList();
+            this.keyword = '';
+            this.initListData();
         },
         handleCurrentChange(val) {
             this.page = val;
+            this.noticeData = null;
             this.getNoticeList();
-        }
-    }
+        },
+    },
 };
 </script>
 <style scoped></style>
