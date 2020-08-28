@@ -444,27 +444,6 @@ public class ContentsService {
     }
 
     /**
-     * Download contents file string.
-     *
-     * @param contentsFileSeq the contents file seq
-     * @return the string
-     * @author [이소정]
-     * @implNote 컨텐츠 파일 다운로드
-     * @since 2020. 7. 16. 오후 2:51:01
-     */
-    @Transactional
-    public ResponseEntity<Resource> downloadFile(final Long contentsFileSeq) {
-        log.info("ContentsService.downloadFile");
-        final Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
-        if (contentsFile.isPresent()) {
-            contentsFile.ifPresent(value -> value.updateDownloadCount(contentsFile.get().getDownloadCount()));
-            return FileUtil.fileDownload(contentsFile.get().getFilePhysicalName());
-        } else {
-            return null;
-        }
-    }
-
-    /**
      * Find by id optional.
      *
      * @param contentsSeq the contents seq
