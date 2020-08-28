@@ -54,6 +54,8 @@ const routes = [
                 meta: {
                     layout: 'Default',
                     depth: '/mypage/customer',
+                    detail: true,
+                    btn: false,
                 },
             },
             {
