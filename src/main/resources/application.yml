@@ -43,6 +43,13 @@ nike:
       pw: '5Rzz*w#,Kc%9W7s'
     send:
       from: 'cokeplay.emotion@emotion.co.kr'
+#nike:
+#  email:
+#    auth:
+#      id: 'admin@nikespace.co.kr'
+#      pw: '2motion12!@'
+#    send:
+#      from: 'admin@nikespace.co.kr'
   #임시 경로
   file:
     root: '/home/file'
