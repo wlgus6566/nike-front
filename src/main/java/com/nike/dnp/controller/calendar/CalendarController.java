@@ -1,18 +1,12 @@
 package com.nike.dnp.controller.calendar;
 
 import com.nike.dnp.common.aspect.ValidField;
-import com.nike.dnp.common.variable.FailCode;
-import com.nike.dnp.dto.calendar.CalendarDaySearchDTO;
-import com.nike.dnp.dto.calendar.CalendarSaveDTO;
-import com.nike.dnp.dto.calendar.CalendarSearchDTO;
-import com.nike.dnp.dto.calendar.CalendarUpdateDTO;
+import com.nike.dnp.dto.calendar.*;
 import com.nike.dnp.entity.calendar.Calendar;
-import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.calendar.CalendarService;
-import com.nike.dnp.util.MessageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -82,7 +76,7 @@ public class CalendarController {
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Calendar 조회")
     @ValidField
-    public SingleResult<List<Calendar>> findAllContents(@Valid @ModelAttribute final CalendarSearchDTO calendarSearchDTO,@ApiIgnore final BindingResult result) {
+    public SingleResult<List<CalendarResultDTO>> findAllContents(@Valid @ModelAttribute final CalendarSearchDTO calendarSearchDTO, @ApiIgnore final BindingResult result) {
         log.info("CalendarController.findAllContents");
         return responseService.getSingleResult(calendarService.findAll(calendarSearchDTO));
     }
