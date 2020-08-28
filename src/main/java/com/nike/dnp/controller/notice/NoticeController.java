@@ -189,7 +189,7 @@ public class NoticeController {
             value = "Customer Center QnA 등록",
             notes = BASIC_CHARACTER
     )
-    @PostMapping(value = "/QnA",
+    @PostMapping(value = "/QNA",
             name = "Customer Center QnA 등록", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<NoticeArticle> saveQna(@Valid @RequestBody final QnaSaveDTO qnaSaveDTO,
