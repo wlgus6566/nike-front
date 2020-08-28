@@ -1,4 +1,4 @@
-import { pages } from '@/utils/global-methods';
+import {pages} from '@/utils/global-methods';
 
 const routes = [
     {
@@ -15,6 +15,15 @@ const routes = [
                 },
             },
             {
+                path: 'modify/:id',
+                component: pages('report/upload'),
+                meta: {
+                    layout: 'Default',
+                    aside: 'Report',
+                    title: 'REPORT <span class="ko">업로드 수정</span>',
+                },
+            },
+            {
                 path: 'management',
                 component: pages('report/management.vue'),
                 meta: {
@@ -23,7 +32,7 @@ const routes = [
                 },
             },
             {
-                path: ':id',
+                path: 'detail/:id',
                 component: pages('report/detail-view.vue'),
                 meta: {
                     layout: 'Default',

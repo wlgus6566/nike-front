@@ -5,7 +5,9 @@
             <div class="store">store</div>
             <div class="email">email@email.com</div>
             <div class="btn-box">
-                <button type="button" class="btn-out">나가기</button>
+                <button type="button" class="btn-out" @click="logout">
+                    나가기
+                </button>
                 <button type="button" class="btn-alarm" @click="alarmModal">
                     알람
                 </button>
@@ -67,6 +69,10 @@ export default {
     },
     watch: {},
     methods: {
+        logout() {
+            this.$store.commit('LOGOUT');
+            this.$router.push('/login');
+        },
         myMenuFn() {
             const menu = this.$store.state.menuData.filter(
                 el => el.menuCode === 'MYPAGE' && el.mobileYn === 'Y'

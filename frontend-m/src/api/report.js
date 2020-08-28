@@ -1,4 +1,4 @@
-import { report } from './index';
+import {report} from './index';
 
 //REPORT 목록 조회
 function getReportList(params) {
@@ -48,6 +48,19 @@ function deleteReport(id) {
     return report.delete('/' + id);
 }
 
+//REPORT 수정
+function putReport(data, reportSeq) {
+    return report.put(`/${reportSeq}`, data);
+}
+
+//REPORT 파일 목록
+function getReportFile(reportSeq, param) {
+    //http://10.80.1.212/api/report/file/4?size=20
+    return report.get(`/file/${reportSeq}`, param);
+}
+
+
+
 export {
     getReportList,
     getGroupAuthority,
@@ -58,4 +71,6 @@ export {
     postReportFeedback,
     deleteReportFeedback,
     deleteReport,
+    putReport,
+    getReportFile
 };

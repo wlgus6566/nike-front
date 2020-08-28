@@ -2,7 +2,7 @@
     <header
         :class="{
             'page-header': tabMenuData !== null,
-            'header-detail': $route.meta.btn,
+            'header-detail': $route.meta.detail,
         }"
     >
         <h1 class="logo" v-if="this.$route.path === '/'">
@@ -39,7 +39,7 @@
 </template>
 <script>
 import NavItem from '@/components/app-header/nav-item';
-import { deleteReport } from '@/api/report';
+import {deleteReport} from '@/api/report';
 
 export default {
     name: 'headerIndex',
@@ -89,8 +89,6 @@ export default {
             }
         },
         async delFn() {
-            console.log(this.$route.meta.topCode);
-            console.log(this.$route.params.id);
             if (this.$route.meta.topCode === 'report') {
                 if (confirm('REPORT를 삭제 하시겠습니까?')) {
                     try {
@@ -103,7 +101,9 @@ export default {
                 }
             }
         },
-        modiFn() {},
+        modiFn() {
+            this.$router.push(`/report/modify/${this.$route.params.id}`);
+        },
         tabMenuFn() {
             if (!this.$store.state.menuData) return;
             const titleValue = this.$route.path.split('/')[1];
