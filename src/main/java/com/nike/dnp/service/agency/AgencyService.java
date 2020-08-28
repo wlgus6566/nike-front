@@ -3,15 +3,18 @@ package com.nike.dnp.service.agency;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.agency.AgencySaveDTO;
 import com.nike.dnp.entity.agency.Agency;
+import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.agency.AgencyRepository;
+import com.nike.dnp.service.product.ProductService;
 import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +37,13 @@ public class AgencyService {
      * @author [이소정]
      */
     private final AgencyRepository agencyRepository;
+
+    /**
+     * The Product service
+     *
+     * @author [이소정]
+     */
+    private final ProductService productService;
 
     /**
      * Find all list.
@@ -102,6 +112,13 @@ public class AgencyService {
     @Transactional
     public Agency delete(final long agencySeq) {
         final Optional<Agency> findAgency = this.findById(agencySeq);
+        final List<Product> productList = productService.findProductByAgencySeq(agencySeq);
+
+        if (!productList.isEmpty()) {
+            throw new CodeMessageHandleException(FailCode.ConfigureError.FAIL_AGENCY_DELETE.name(),
+                    MessageUtil.getMessage(FailCode.ConfigureError.FAIL_AGENCY_DELETE.name()));
+        }
+
         findAgency.ifPresent(value -> value.updateUseYn("N"));
         return findAgency.get();
     }
