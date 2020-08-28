@@ -103,7 +103,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @since 2020. 7. 27. 오후 6:39:10
      */
     @Override
-    public List<ContentsResultDTO> findRecentContents(final String topMenuCode, final PageRequest pageRequest) {
+    public List<ContentsResultDTO> findRecentContents(final String topMenuCode, final PageRequest pageRequest, final String exposureYn) {
         final ContentsSearchDTO contentsSearchDTO = new ContentsSearchDTO();
         contentsSearchDTO.setTopMenuCode(topMenuCode);
 
@@ -131,7 +131,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                 .from(qContents)
                 .where(
                         ContentsPredicateHelper.eqMenuCode(contentsSearchDTO)
-                        , ContentsPredicateHelper.eqExposureYn(contentsSearchDTO.getExposureYn())
+                        , ContentsPredicateHelper.eqExposureYn(exposureYn)
                         , qContents.useYn.eq("Y")
                 );
 

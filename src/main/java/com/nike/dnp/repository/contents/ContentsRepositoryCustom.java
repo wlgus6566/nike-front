@@ -37,12 +37,13 @@ public interface ContentsRepositoryCustom {
      *
      * @param topMenuCode the top menu code
      * @param pageRequest the page request
+     * @param exposureYn  the exposure yn
      * @return the list
      * @author [이소정]
      * @implNote 메뉴 코드에 따른 콘텐츠 목록 조회
      * @since 2020. 7. 27. 오후 6:41:13
      */
-    List<ContentsResultDTO> findRecentContents(final String topMenuCode, final PageRequest pageRequest);
+    List<ContentsResultDTO> findRecentContents(final String topMenuCode, final PageRequest pageRequest, final String exposureYn);
 
     /**
      * Find all contents mail auth user list.
