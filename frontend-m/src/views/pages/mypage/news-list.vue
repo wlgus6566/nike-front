@@ -76,7 +76,7 @@ export default {
             newsList: null,
             newsData: null,
             page: 0,
-            pageCount: 11,
+            pageCount: 5,
             itemLength: 10,
             keyword: '',
             totalElements: 0,
@@ -130,7 +130,6 @@ export default {
             this.initListData();
         },
         handleCurrentChange(val) {
-            this.page = val;
             this.page = val;
             this.newsData = null;
             this.getNewsList();
