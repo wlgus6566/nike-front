@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -283,7 +284,7 @@ public class ContentsController {
     @GetMapping(name = "컨텐츠 파일 다운로드", value = "/download/{contentsFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Resource> downloadContents(
             @ApiParam(name="contentsFileSeq", value = "컨텐츠 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long contentsFileSeq
-    ) {
+    ) throws IOException {
         return contentsFileService.downloadFile(contentsFileSeq);
 //        return responseService.getSuccessResult();
     }

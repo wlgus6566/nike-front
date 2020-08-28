@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.Optional;
 
 
@@ -70,12 +71,13 @@ public class ContentsFileService {
      * @since 2020. 7. 16. 오후 2:51:01
      */
     @Transactional
-    public ResponseEntity<Resource> downloadFile(final Long contentsFileSeq) {
+    public ResponseEntity<Resource> downloadFile(final Long contentsFileSeq) throws IOException {
         log.info("ContentsService.downloadFile");
-        final Optional<ContentsFile> contentsFile = contentsFileRepository.findById(contentsFileSeq);
+        final Optional<ContentsFile> contentsFile = this.findById(contentsFileSeq);
         if (contentsFile.isPresent()) {
             contentsFile.ifPresent(value -> value.updateDownloadCount(contentsFile.get().getDownloadCount()));
-            return FileUtil.fileDownload(contentsFile.get().getFilePhysicalName());
+            return FileUtil.s3FileDownload(contentsFile.get().getFilePhysicalName(), contentsFile.get().getFileName());
+
         } else {
             return null;
         }
