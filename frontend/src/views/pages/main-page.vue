@@ -77,9 +77,9 @@
                 :key="foundationItem.contentsSeq"
             >
                 <router-link
-                    :to="`'/foundation/${foundationItem.menuCode.toLocaleLowerCase()}/${
+                    :to="`/foundation/${foundationItem.menuCode.toLocaleLowerCase()}/${
                         foundationItem.contentsSeq
-                    }'`"
+                    }`"
                 >
                     <span class="thumbnail">
                         <img
@@ -148,9 +148,9 @@
                         />
                     </span>
                     <span class="info-box">
-                        <!--<strong class="title">
-                            리포트 계정명 필요
-                        </strong>-->
+                        <strong class="title">
+                            계정명이 안나와요 소정님
+                        </strong>
                         <p class="desc">
                             {{ repoertItem.reportName }}
                         </p>
