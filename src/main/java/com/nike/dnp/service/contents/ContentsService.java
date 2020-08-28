@@ -152,6 +152,20 @@ public class ContentsService {
                                 ? Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).ascending() : Sort.by(ServiceCode.SearchEnumCode.LATEST.getValue()).descending()));
     }
 
+    /**
+     * Is auth for contents boolean.
+     *
+     * @param contentsSeq the contents seq
+     * @param authSeq     the auth seq
+     * @return the boolean
+     * @author [이소정]
+     * @implNote 콘텐츠 상세 권한 여부
+     * @since 2020. 8. 28. 오후 6:16:12
+     */
+    public boolean isAuthForContents(final Long contentsSeq, final Long authSeq) {
+        return userContentsService.isAuthForContents(contentsSeq, authSeq);
+    }
+
 
 
     /**
@@ -281,6 +295,11 @@ public class ContentsService {
     @Transactional
     public ContentsResultDTO findByContentsSeq(final Long contentsSeq, final String topMenuCode, final String menuCode) {
         log.info("ContentsService.findByContentsSeq");
+        // 상세 권한 여부 조회
+        if (!this.isAuthForContents(contentsSeq, SecurityUtil.currentUser().getAuthSeq())) {
+            throw new CodeMessageHandleException(FailCode.ConfigureError.NO_AUTH.name(), MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name()));
+        }
+        
         final Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
         final Contents findContents = contents.orElseThrow(
                 () -> new NotFoundHandleException());

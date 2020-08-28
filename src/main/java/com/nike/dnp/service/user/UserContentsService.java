@@ -94,4 +94,24 @@ public class UserContentsService {
         return result;
     }
 
+    /**
+     * Is auth for contents boolean.
+     *
+     * @param contentsSeq the contents seq
+     * @param authSeq     the auth seq
+     * @return the boolean
+     * @author [이소정]
+     * @implNote 콘텐츠 상세 권한 여부
+     * @since 2020. 8. 28. 오후 6:13:54
+     */
+    public boolean isAuthForContents(final Long contentsSeq, final Long authSeq) {
+        List<UserContents> userContentsList = userContentsRepository.findAllByContentsSeqAndAuthSeqAndDetailAuthYn(contentsSeq, authSeq, "Y");
+        if (!userContentsList.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 }
