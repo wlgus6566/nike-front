@@ -49,11 +49,16 @@
                                         v-if="bannerData.pcImageUrl"
                                     />
                                 </span>
-                                <span class="txt">
+                                <span class="txt" v-if="bannerData.pcImageUrl">
+                                    PC 이미지 재등록
+                                    <span class="sub">
+                                        (권장 사이즈 : 최대 3200*1600)
+                                    </span>
+                                </span>
+                                <span class="txt" v-else>
                                     PC 이미지 등록
                                     <span class="sub">
-                                        권장 사이즈는 최소 1600*800,<br />
-                                        최대 3200*1600입니다.
+                                        권장 사이즈는 최대 3200*1600입니다.
                                     </span>
                                 </span>
                             </span>
@@ -75,10 +80,19 @@
                                         v-if="bannerData.mobileImageUrl"
                                     />
                                 </span>
-                                <span class="txt">
+                                <span
+                                    class="txt"
+                                    v-if="bannerData.mobileImageUrl"
+                                >
+                                    Mobile 이미지 재등록
+                                    <span class="sub">
+                                        (권장 사이즈 : 최대 4000*4000)
+                                    </span>
+                                </span>
+                                <span class="txt" v-else>
                                     Mobile 이미지 등록
                                     <span class="sub">
-                                        권장 사이즈는 최소 1200*1200,<br />
+                                        권장 사이즈는<br />
                                         최대 4000*4000입니다.
                                     </span>
                                 </span>
@@ -333,4 +347,11 @@ export default {
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.thumb-file.file-upload .txt .sub {
+    display: block;
+    font-size: 10px;
+    color: #333;
+    line-height: 10px;
+}
+</style>
