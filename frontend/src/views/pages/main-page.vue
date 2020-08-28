@@ -77,9 +77,9 @@
                 :key="foundationItem.contentsSeq"
             >
                 <router-link
-                    :to="`'/foundation/${foundationItem.menuCode.toLocaleLowerCase()}/${
+                    :to="`/foundation/${foundationItem.menuCode.toLocaleLowerCase()}/${
                         foundationItem.contentsSeq
-                    }'`"
+                    }`"
                 >
                     <span class="thumbnail">
                         <img
