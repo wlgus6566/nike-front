@@ -43,9 +43,9 @@
                                             :value="item.code"
                                         />
                                         <i></i>
-                                        <span class="txt">{{
-                                            item.codeName
-                                        }} </span>
+                                        <span class="txt"
+                                            >{{ item.codeName }}
+                                        </span>
                                     </span>
                                 </label>
                             </div>
@@ -206,9 +206,22 @@ export default {
     watch: {
         calendarDetail() {
             if (!!this.calendarSeq) {
+                // beginDt date fomat 변환
+                const beginsecDate = this.calendarDetail.beginDt; /// 문자열 or  숫자 데이터
+                const beginyear = beginsecDate.substr(0, 4);
+                const beginmonth = beginsecDate.substr(5, 2) - 1;
+                const beginday = beginsecDate.substr(8, 2);
+                const beginDtdate = new Date(beginyear, beginmonth, beginday); // date로 변경
+                // endDt date fomat 변환
+                const endDtsecDate = this.calendarDetail.endDt; /// 문자열 or  숫자 데이터
+                const endDtyear = endDtsecDate.substr(0, 4);
+                const endDtmonth = endDtsecDate.substr(5, 2) - 1;
+                const endDtday = endDtsecDate.substr(8, 2);
+                const endDtDtdate = new Date(endDtyear, endDtmonth, endDtday); // date로 변경
+
                 this.detailData = this.calendarDetail;
-                this.beginDt = this.calendarDetail.beginDt;
-                this.endDt = this.calendarDetail.endDt;
+                this.beginDt = beginDtdate;
+                this.endDt = endDtDtdate;
             } else {
                 this.detailData = this.calendarDetail;
                 this.beginDt = this.today;

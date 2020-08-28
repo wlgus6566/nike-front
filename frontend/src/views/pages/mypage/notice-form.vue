@@ -130,13 +130,24 @@ export default {
         };
     },
     created() {
+        /* console.log(this.$route.name);*/
         this.editorConfig.filebrowserImageUploadUrl =
             process.env.VUE_APP_API_URL +
-            `/api/customer/${this.$route.name.toUpperCase()}/images`;
+            `/api/customer/${this.$route.meta.sectionCode}/images`;
         this.editorConfig.fileTools_requestHeaders.Authorization =
             this.$store.state.token || getAuthFromCookie();
     },
     components: {},
+    watch: {
+        'noticeDetail.noticeYn'(val) {
+            if (!val) {
+                this.noticeDetail.noticeYn = 'N';
+            }
+        },
+        $route() {
+            this.$destroy();
+        },
+    },
     mounted() {
         this.getNoticeList();
         //this.noticeDetail.noticeYn = 'N';
@@ -243,9 +254,10 @@ export default {
                 const {
                     data: { data: response },
                 } = await getCustomerDetail(
-                    this.noticeArticleSectionCode,
+                    this.$route.meta.sectionCode,
                     this.$route.params.id
                 );
+                console.log(response);
                 this.noticeDetail = response;
                 this.noticeArticleSeq = response.noticeArticleSeq;
             } catch (error) {

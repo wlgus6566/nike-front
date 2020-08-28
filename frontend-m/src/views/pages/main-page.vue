@@ -11,29 +11,10 @@
         <div class="main-update-list">
             <div
                 class="update-list-item"
-                v-for="item in assetContentsList"
-                :key="item.contentsSeq"
-            >
-                <a href="#">
-                    <span class="thumbnail">
-                        <img :src="item.imageFilePhysicalName" alt="" />
-                    </span>
-                    <span class="info-box">
-                        <span class="label">
-                            ASSET
-                        </span>
-                        <span class="desc" v-text="item.folderContents"
-                            >SP20 나이키 다이렉트</span
-                        >
-                    </span>
-                </a>
-            </div>
-            <div
-                class="update-list-item"
                 v-for="item in foundationContentsList"
                 :key="item.contentsSeq"
             >
-                <a href="#">
+                <a :href="`/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()">
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
@@ -52,7 +33,7 @@
                 v-for="item in toolKitContentsList"
                 :key="item.contentsSeq"
             >
-                <a href="#">
+                <a :href="`/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()">
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
@@ -97,7 +78,7 @@
                 v-for="item in reportList"
                 :key="item.reportSeq"
             >
-                <a :href="'/report/' + item.reportSeq">
+                <a :href="'/report/detail/' + item.reportSeq">
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
@@ -140,8 +121,8 @@
     </div>
 </template>
 <script>
-import { getMain } from '@/api/main';
-import { getCalendarEachList, getTodayCalendar } from '@/api/calendar/';
+import {getMain} from '@/api/main';
+import {getCalendarEachList, getTodayCalendar} from '@/api/calendar/';
 
 import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
@@ -228,6 +209,7 @@ export default {
                 this.mainVisual = response.mainVisual;
                 this.newsArticleList = response.newsArticleList;
                 this.noticeArticleList = response.noticeArticleList;
+                this.toolKitContentsList = response.toolKitContentsList;
                 this.reportList = response.reportList;
             } catch (error) {
                 console.log(error);

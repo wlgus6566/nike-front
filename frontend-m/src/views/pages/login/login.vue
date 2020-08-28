@@ -11,25 +11,25 @@
                 />
             </div>
             <p class="login-desc">
-                사용자는 NIKE D&P Plarform에 로그인함으로써,<br>
+                사용자는 NIKE D&P Plarform에 로그인함으로써,<br />
                 개인정보 처리방침 및 이용약관에 동의합니다.
             </p>
         </div>
     </div>
 </template>
 <script>
-    import LoginForm from '@/components/login-box/login-form';
-    import CertCode from '@/components/login-box/cert-code';
-    import FindPW from '@/components/login-box/find-password';
+import LoginForm from '@/components/login-box/login-form';
+import CertCode from '@/components/login-box/cert-code';
+import FindPW from '@/components/login-box/find-password';
 
-    export default {
+export default {
     name: 'login',
     data() {
         return {
             LoginBox: 'LoginForm',
             loginData: {
-                username: 'jihoon.oh@emotion.co.kr',
-                password: 'Emotion1!@as!',
+                username: '',
+                password: '',
                 certCode: '',
             },
         };
@@ -66,7 +66,10 @@
                         params: this.loginData,
                     });
                 } else if (response.data.code === 'OVERTIME_PASSWORD') {
-                    this.updateValue('certCode', response.data.payload[0].certCode);
+                    this.updateValue(
+                        'certCode',
+                        response.data.payload[0].certCode
+                    );
                     await this.$router.push({
                         name: 'password-change',
                         params: this.loginData,
@@ -83,4 +86,3 @@
     },
 };
 </script>
-

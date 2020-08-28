@@ -19,12 +19,14 @@
                 </a>
             </li>
         </ul>
-        <div class="no-data-wrap" v-else-if="noticeData.length === 0 && keyword !== ''">
-            <div class="no-data">
-                <i class="icon-search"></i>
-                <p class="desc">검색 결과가 없습니다.</p>
-            </div>
-        </div>
+        <NoData v-else-if="noticeData.length === 0 && keyword !== ''">
+            <i class="icon-search"></i>
+            <p class="desc">검색 결과가 없습니다.</p>
+        </NoData>
+        <NoData v-else>
+            <i class="icon-upload"></i>
+            <p class="desc">등록된 데이터가 없습니다.</p>
+        </NoData>
         <Pagination
                 v-if="noticeData.length"
                 :itemLength="itemLength"
@@ -55,7 +57,8 @@ export default {
     },
     components: {
         Pagination: () => import('@/components/pagination/'),
-        Loading: () => import('@/components/loading/')
+        Loading: () => import('@/components/loading/'),
+        NoData: () => import('@/components/no-data')
     },
     mounted() {
         this.getNoticeList();

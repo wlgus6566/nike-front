@@ -62,8 +62,14 @@
                     ⓒ 2020 Nike Korea LLC. All Rights Reserved
                 </span>
                 <ul class="info-list">
-                    <li><router-link to="/">개인정보처리방침</router-link></li>
-                    <li><router-link to="/">이용약관</router-link></li>
+                    <li>
+                        <router-link to="/terms/privacy"
+                            >개인정보처리방침</router-link
+                        >
+                    </li>
+                    <li>
+                        <router-link to="/terms/service">이용약관</router-link>
+                    </li>
                 </ul>
             </div>
         </footer>

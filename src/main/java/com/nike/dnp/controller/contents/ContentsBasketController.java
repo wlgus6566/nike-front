@@ -81,9 +81,9 @@ public class ContentsBasketController {
     /**
      * Save contents single result.
      *
-     * @param topMenuCode           the top menu code
-     * @param menuCode              the menu code
-     * @param contentsBasketSeqList the contents basket seq list
+     * @param topMenuCode   the top menu code
+     * @param menuCode      the menu code
+     * @param basketSeqList the basket seq list
      * @return the single result
      * @author [이소정]
      * @implNote 컨텐츠 장바구니 등록

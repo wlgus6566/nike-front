@@ -84,6 +84,11 @@ import { getAuthFromCookie } from '@/utils/cookies';
 
 export default {
     name: 'notice-form',
+    watch: {
+        '$route'() {
+            this.$destroy();
+        }
+    },
     data() {
         return {
             noticeArticleSectionCode: 'NEWS',
@@ -115,7 +120,7 @@ export default {
     created() {
         this.editorConfig.filebrowserImageUploadUrl =
             process.env.VUE_APP_API_URL +
-            `/api/customer/${this.$route.name.toUpperCase()}/images`;
+            `/api/customer/${this.$route.meta.sectionCode}/images`;
         this.editorConfig.fileTools_requestHeaders.Authorization =
             this.$store.state.token || getAuthFromCookie();
     },

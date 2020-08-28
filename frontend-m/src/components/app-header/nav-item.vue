@@ -6,7 +6,7 @@
             :class="tabItemClass(menu.menuPathUrl)"
         >
             <router-link :to="menu.menuPathUrl">
-                <span>{{ menu.menuName }}</span>
+                <span v-html="menu.menuName"></span>
             </router-link>
         </li>
     </ul>
@@ -20,6 +20,9 @@ export default {
     methods: {
         tabItemClass(val) {
             const titleValue = this.$route.path;
+            if (titleValue === val) {
+                console.log(1);
+            }
             return {
                 active: titleValue === val,
             };

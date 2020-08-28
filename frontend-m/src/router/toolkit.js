@@ -57,6 +57,8 @@ const routes = [
                     layout: 'Default',
                     aside: 'File',
                     topMenuCode: 'TOOLKIT',
+                    detail: true,
+                    btn: false,
                 },
                 beforeEnter: (to, from, next) => {
                     const menuCodeArr = ['vms', 'ekin', 'social', 'rb'];

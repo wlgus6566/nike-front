@@ -353,6 +353,7 @@ export default {
     },
     methods: {
         folderSetting() {
+            this.dataReset();
             this.saveFolder = false;
             this.menuCode = this.folderSet[
                 this.$route.meta.topMenuCode.toLowerCase()
@@ -502,6 +503,22 @@ export default {
                 return false;
             }*/
             this.$router.go(-1);
+        },
+        dataReset() {
+            this.folderDetail.imageFilePhysicalName = '';
+            this.folderDetail.exposureYn = 'Y';
+            this.menuCode = 'SP';
+            this.folderDetail.folderName = '';
+            this.folderDetail.folderContents = '';
+            this.folderDetail.campaignPeriodSectionCode = 'SELECT';
+            this.folderDetail.memo = '';
+            this.folderDetail.checks = [
+                {
+                    authSeq: 0,
+                    detailAuthYn: 'N',
+                    emailReceptionYn: 'N',
+                },
+            ];
         },
     },
     beforeRouteLeave(to, from, next) {

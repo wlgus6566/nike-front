@@ -238,6 +238,7 @@ select[readonly] {
 textarea[readonly] {
     cursor: default;
     background-color: #f4f4f4;
+    color: #888;
 }
 
 input::placeholder,

@@ -42,6 +42,7 @@ public class AgencySaveDTO {
      *
      * @author [이소정]
      */
+    @NotBlank(message = "agency.agencyDescription")
     @ApiModelProperty(name = "agencyDescription", value = "에이젼시 설명", example = "NIKE BY YOU 의류/신발 커스텀 물품 관리")
     private String agencyDescription;
 

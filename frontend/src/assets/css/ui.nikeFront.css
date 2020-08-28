@@ -1544,6 +1544,10 @@
 }
 .el-dialog__body .form-val {
     line-height: 18px;
+    letter-spacing: 0;
+}
+.el-dialog__body .form-desc {
+    margin-top: 5px;
 }
 .el-dialog__body .form-list-colunm {
     padding: 0 !important;
@@ -3399,7 +3403,7 @@ img.image-grayscale {
     line-height: 20px;
     font-size: 14px;
     color: #000;
-    word-break: keep-all;
+    word-break: break-word;
     font-weight: normal;
 }
 .period-list {
@@ -4156,7 +4160,7 @@ img.image-grayscale {
     position: relative;
     z-index: 2;
     flex-grow: 1;
-    max-width: calc(100% - 300px);
+    /*max-width: calc(100% - 300px);*/
 }
 .schedule-item .title {
     position: relative;
@@ -4192,9 +4196,11 @@ img.image-grayscale {
     letter-spacing: 0;
 }
 .schedule-item .info {
+    flex-shrink: 0;
     z-index: 2;
     position: relative;
     margin-top: 14px;
+    margin-left: 30px;
 }
 .schedule-item .btn-edit {
     margin-right: 32px;
@@ -4853,7 +4859,11 @@ img.image-grayscale {
     display: inline-block !important;
     width: 100px !important;
     height: 100px !important;
-    background: url('../images/icon_extension.png') no-repeat 0 0 / auto !important;
+    background: url('../images/icon_extension.png') no-repeat -400px -200px /
+        auto !important;
+}
+.extension-etc {
+    background-position: -400px -200px !important;
 }
 
 /* todo video 아이콘 추가 해야 함 */
@@ -4913,9 +4923,6 @@ img.image-grayscale {
 .extension-avi {
     background-position: -300px -200px !important;
 }
-.extension-etc {
-    background-position: -400px -200px !important;
-}
 .extension-otf {
     background-position: 0 -300px !important;
 }
@@ -4969,6 +4976,80 @@ img.image-grayscale {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+/* Terms */
+.box-tab {
+    margin: 20px 0 40px;
+    display: flex;
+}
+.box-tab li {
+    flex-grow: 1;
+}
+.box-tab li + li {
+    margin-left: 6px;
+}
+.box-tab a {
+    display: block;
+    height: 60px;
+    line-height: 60px;
+    border: 2px solid #f7f7f7;
+    background-color: #f7f7f7;
+    box-sizing: border-box;
+    color: #888;
+    font-size: 14px;
+    text-align: center;
+}
+.box-tab .active a {
+    border-color: #000;
+    background-color: #fff;
+    color: #000;
+    font-weight: 600;
+}
+.terms-content {
+    margin-top: 30px;
+    padding: 50px 40px;
+    border: 1px solid #eee;
+    font-size: 12px;
+    color: #555;
+    line-height: 18px;
+}
+.terms-title {
+    font-size: 16px;
+    color: #000;
+    line-height: 24px;
+}
+.terms-sub {
+    margin-top: 30px;
+    font-size: 13px;
+    color: #333;
+}
+.terms-content p {
+    margin-top: 10px;
+}
+.terms-content a {
+    display: inline-block;
+    line-height: 17px;
+    color: #1355cc;
+    border-bottom: 1px solid #1355cc;
+}
+.terms-bullet {
+}
+.terms-bullet li {
+    position: relative;
+    margin-top: 10px;
+    padding-left: 8px;
+}
+.terms-bullet li:before {
+    position: absolute;
+    left: 0;
+    top: 7px;
+    content: '';
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background-color: #555;
+}
+
 /*.crop-editor.type2 .preview-crop:before {*/
 /*    top: 64px;*/
 /*}*/
