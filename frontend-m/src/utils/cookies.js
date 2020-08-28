@@ -1,6 +1,9 @@
 function saveAuthToCookie(value) {
     document.cookie = `user_token=${value}`;
 }
+function saveAuthNameToCookie(value) {
+    document.cookie = `user_authName=${value}`;
+}
 function saveUserNickToCookie(value) {
     document.cookie = `user_nick=${value}`;
 }
@@ -11,6 +14,12 @@ function saveUserIdToCookie(value) {
 function getAuthFromCookie() {
     return document.cookie.replace(
         /(?:(?:^|.*;\s*)user_token\s*=\s*([^;]*).*$)|^.*$/,
+        '$1'
+    );
+}
+function getAuthNameFromCookie() {
+    return document.cookie.replace(
+        /(?:(?:^|.*;\s*)user_authName\s*=\s*([^;]*).*$)|^.*$/,
         '$1'
     );
 }
@@ -35,6 +44,8 @@ export {
     saveAuthToCookie,
     saveUserNickToCookie,
     saveUserIdToCookie,
+    saveAuthNameToCookie,
+    getAuthNameFromCookie,
     getAuthFromCookie,
     getUserNickFromCookie,
     getUserIdFromCookie,

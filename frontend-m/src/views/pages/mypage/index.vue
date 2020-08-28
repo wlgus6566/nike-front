@@ -1,9 +1,9 @@
 <template>
     <div class="my-main">
         <div class="user-info">
-            <strong class="name">ADMIN</strong>
-            <div class="store">store</div>
-            <div class="email">email@email.com</div>
+            <strong class="name">{{ userNickname }}</strong>
+            <div class="store">{{ userAuthName }}</div>
+            <div class="email">{{ userIdVal }}</div>
             <div class="btn-box">
                 <button type="button" class="btn-out" @click="logout">
                     나가기
@@ -40,6 +40,12 @@
 </template>
 <script>
 import { getAlarm } from '@/api/alarm';
+import {
+    getUserNickFromCookie,
+    getUserIdFromCookie,
+    getAuthNameFromCookie,
+} from '@/utils/cookies';
+
 export default {
     name: 'mypageIndex',
     data() {
@@ -59,21 +65,36 @@ export default {
     },
     components: {
         AlarmModal: () => import('@/views/pages/mypage/alarm-modal/'),
-        Loading: () => import('@/components/loading/'),
+        // Loading: () => import('@/components/loading/'),
     },
-
+    computed: {
+        userNickname() {
+            return this.$store.state.nick || getUserNickFromCookie();
+        },
+        userIdVal() {
+            return this.$store.state.user || getUserIdFromCookie();
+        },
+        userAuthName() {
+            return this.$store.state.authName || getAuthNameFromCookie();
+        },
+    },
     mounted() {
         console.log('mounted');
         this.myMenuFn();
         this.getAlarmData();
     },
-    watch: {},
+    watch: {
+        '$store.state.menuData'() {
+            this.menuFn();
+        },
+    },
     methods: {
         logout() {
             this.$store.commit('LOGOUT');
             this.$router.push('/login');
         },
         myMenuFn() {
+            if (!this.$store.state.menuData) return;
             const menu = this.$store.state.menuData.filter(
                 el => el.menuCode === 'MYPAGE' && el.mobileYn === 'Y'
             );

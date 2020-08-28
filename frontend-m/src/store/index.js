@@ -7,8 +7,9 @@ import { getGnbMenu } from '@/api/my-page';
 import {
     deleteCookie,
     saveAuthToCookie,
-    saveUserIdToCookie,
     saveUserNickToCookie,
+    saveUserIdToCookie,
+    saveAuthNameToCookie,
 } from '@/utils/cookies.js';
 
 Vue.use(Vuex);
@@ -16,6 +17,10 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         menuData: null,
+        user: '',
+        nick: '',
+        token: '',
+        authName: '',
     },
     getters: {},
     mutations: {
@@ -27,6 +32,9 @@ export default new Vuex.Store({
         },
         SET_TOKEN(state, token) {
             state.token = token;
+        },
+        SET_AUTHNAME(state, authName) {
+            state.authName = authName;
         },
         SET_GNB(state, gnbMenu) {
             state.menuData = gnbMenu;
@@ -41,6 +49,7 @@ export default new Vuex.Store({
             state.user = '';
             state.nick = '';
             state.token = '';
+            state.authName = '';
             state.basketItemDrag = false;
             state.fileMouseenter = false;
             state.basketListData = null;
@@ -49,6 +58,7 @@ export default new Vuex.Store({
             deleteCookie('user_id');
             deleteCookie('user_nick');
             deleteCookie('user_token');
+            deleteCookie('user_authName');
         },
         SET_CONT_BASKET(state, data) {
             state.contBasketList = data;
@@ -69,9 +79,11 @@ export default new Vuex.Store({
             if (response.data.code === 'SUCCESS') {
                 commit('SET_USER', response.data.data.userId);
                 commit('SET_NICK', response.data.data.nickname);
+                commit('SET_AUTHNAME', response.data.data.authName);
                 commit('SET_TOKEN', response.headers.authorization);
                 saveUserIdToCookie(response.data.data.userId);
                 saveUserNickToCookie(response.data.data.nickname);
+                saveAuthNameToCookie(response.data.data.authName);
                 saveAuthToCookie(response.headers.authorization);
             }
             return response;

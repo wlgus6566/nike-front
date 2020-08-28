@@ -54,7 +54,7 @@ export default new Vuex.Store({
             state.token = token;
         },
         SET_AUTHNAME(state, authName) {
-            state.role = authName;
+            state.authName = authName;
         },
         SET_GNB(state, gnbMenu) {
             state.gnbMenuListData = gnbMenu;
@@ -69,7 +69,7 @@ export default new Vuex.Store({
             state.user = '';
             state.nick = '';
             state.token = '';
-            state.role = '';
+            state.authName = '';
             state.gnbMenuListData = [];
             state.basketItemDrag = false;
             state.fileMouseenter = false;
@@ -80,7 +80,7 @@ export default new Vuex.Store({
             deleteCookie('user_id');
             deleteCookie('user_nick');
             deleteCookie('user_token');
-            deleteCookie('user_role');
+            deleteCookie('user_authName');
         },
         SET_CONT_BASKET(state, data) {
             state.contBasketList = data;
