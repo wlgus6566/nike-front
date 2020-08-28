@@ -46,7 +46,7 @@
             <template v-else>
                 <NoData>
                     <i class="icon-file"></i>
-                    <p class="desc">파일이 없습니다.</p>
+                    <p class="desc">파일 없음</p>
                 </NoData>
             </template>
         </template>
@@ -75,8 +75,8 @@ export default {
             loading: false,
             contentsDetail : {},
             fileList : [],
-            fileListPage:0,
-            fileListSize:20,
+            page:0,
+            size:3,
             totalPage: 0,
             fileListLast:false,
             loadingData: false,
@@ -122,7 +122,7 @@ export default {
     methods: {
         initPageData() {
             this.fileList = null;
-            this.fileListPage = 0;
+            this.page = 0;
             this.initFetchData();
         },
         initFetchData() {
@@ -153,7 +153,7 @@ export default {
                     this.$route.params.id,
                     {
                         page: this.page,
-                        size: this.itemLength,
+                        size: this.size,
                         sectionCode: this.selectTabValue
                     }
                 );
@@ -175,13 +175,14 @@ export default {
             this.visible.modalEx = true;
         },
         onClickTab(value) {
-            console.log('value')
             this.selectTabValue = value;
             this.initPageData();
         },
         handleScroll() {
             if (this.loadingData) return;
             const windowE = document.documentElement;
+            console.log('dddd', windowE.clientHeight + windowE.scrollTop,
+                windowE.scrollHeight)
             if (
                 windowE.clientHeight + windowE.scrollTop >=
                 windowE.scrollHeight
@@ -193,8 +194,9 @@ export default {
             if (
                 !this.loadingData &&
                 this.totalPage > this.page - 1 &&
-                this.reportList.length >= this.size &&
-                this.reportList.length !== 0 &&
+                !this.fileList &&
+                this.fileList.length >= this.size &&
+                this.fileList.length !== 0 &&
                 !this.pageLast
             ) {
                 this.page++;

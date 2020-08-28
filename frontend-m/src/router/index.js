@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 // Routes
 import LoginRoutes from './login';
 import FoundationRoutes from './foundation';
-import TookitRoutes from './tookit';
+import ToolkitRoutes from './toolkit';
 import RepotRoutes from './report';
 import InformationRoutes from './information';
 import MyPageRoutes from './mypage';
@@ -24,7 +24,7 @@ const router = new VueRouter({
             meta: { layout: 'Default' },
         },
         ...LoginRoutes,
-        ...TookitRoutes,
+        ...ToolkitRoutes,
         ...FoundationRoutes,
         ...RepotRoutes,
         ...InformationRoutes,
