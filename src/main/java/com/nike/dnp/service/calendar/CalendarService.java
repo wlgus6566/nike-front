@@ -117,7 +117,7 @@ public class CalendarService {
         return ObjectMapperUtil.mapAll(calendarRepository.findByMonthSearch(calendarSearchDTO), CalendarResultDTO.class);
     }
 
-    public List<Calendar> findAllEach(final CalendarSearchDTO calendarSearchDTO) {
+    public List<CalendarResultDTO> findAllEach(final CalendarSearchDTO calendarSearchDTO) {
         calendarSearchDTO.setYyyyMm(calendarSearchDTO.getYyyyMm().replace(".", ""));
         List<Calendar> findAllList =  calendarRepository.findByMonthSearch(calendarSearchDTO);
 
@@ -151,7 +151,7 @@ public class CalendarService {
             }
         }
 
-        return eachCalendarList;
+        return ObjectMapperUtil.mapAll(eachCalendarList, CalendarResultDTO.class);
 
     }
 

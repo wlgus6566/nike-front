@@ -1,10 +1,6 @@
 package com.nike.dnp.controller.main;
 
-import com.nike.dnp.common.aspect.ValidField;
-import com.nike.dnp.dto.calendar.CalendarResultDTO;
-import com.nike.dnp.dto.calendar.CalendarSearchDTO;
 import com.nike.dnp.dto.main.MainResultDTO;
-import com.nike.dnp.entity.calendar.Calendar;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.calendar.CalendarService;
@@ -14,15 +10,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
-
-import javax.validation.Valid;
-import java.util.List;
 
 /**
  * The Class Main controller.
@@ -83,29 +73,6 @@ public class MainController {
     public SingleResult<MainResultDTO> findMainInfo() {
         log.info("MainController.findMainInfo");
         return responseService.getSingleResult(mainService.findMainInfo());
-    }
-
-    /**
-     * Calendar 조회
-     *
-     * @param calendarSearchDTO the calendar search dto
-     * @return the single result
-     * @author [김형욱]
-     * @implNote Calendar 조회
-     * @since 2020. 7. 2. 오전 8:55:29
-     */
-    @ApiOperation(
-            value = "Calendar 조회"
-            , notes = REQUEST_CHARACTER + "\n"
-            + "[하위 Parameters 참조]\n\n\n\n"
-            + "## Response ## \n"
-            + "[하위 Model 참조]\n\n\n\n"
-    )
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Calendar 조회", value = "/calendar")
-    @ValidField
-    public SingleResult<List<CalendarResultDTO>> findAllCalendar(@Valid @ModelAttribute final CalendarSearchDTO calendarSearchDTO) {
-        log.info("MainController.findAllCalendar");
-        return responseService.getSingleResult(calendarService.findAll(calendarSearchDTO));
     }
 
 

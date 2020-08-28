@@ -8,7 +8,10 @@ import com.nike.dnp.entity.contents.QContents;
 import com.nike.dnp.entity.user.QUser;
 import com.nike.dnp.entity.user.QUserAuth;
 import com.nike.dnp.entity.user.QUserContents;
+import com.nike.dnp.service.auth.AuthService;
+import com.nike.dnp.service.contents.ContentsService;
 import com.nike.dnp.util.ObjectMapperUtil;
+import com.nike.dnp.util.SecurityUtil;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -18,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,10 +42,14 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
      * @author [이소정]
      * @implNote 생성자 주입
      * @since 2020. 6. 19. 오후 6:15:29
+     * @param authService
      */
-    public ContentsRepositoryImpl() {
+    public ContentsRepositoryImpl(AuthService authService) {
         super(Contents.class);
+        this.contentsService = contentsService;
     }
+
+    private ContentsService contentsService;
 
     /**
      * Find alls page.
@@ -88,7 +96,6 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                 );
 
         final List<ContentsResultDTO> contentsList = ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsResultDTO.class);
-
         return new PageImpl<>(contentsList, pageRequest, query.fetchCount());
     }
 
