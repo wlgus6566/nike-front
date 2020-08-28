@@ -55,7 +55,7 @@ public class ReportBasketRepositoryImpl extends QuerydslRepositorySupport implem
                         ReportBasketResultDTO.class
                         , qReportFile.fileName
                         , qReportFile.fileSize
-                        , qReportFile.filePhysicalName
+                        , qReportFile.thumbnailFilePhysicalName
                         , qReportFile.fileExtension
                         , qReportFile.fileKindCode
                         , qReportBasket.userSeq

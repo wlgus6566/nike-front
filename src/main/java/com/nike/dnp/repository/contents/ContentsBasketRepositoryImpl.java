@@ -54,7 +54,7 @@ public class ContentsBasketRepositoryImpl extends QuerydslRepositorySupport impl
                         ContentsBasketResultDTO.class
                         , qContentsFile.fileName
                         , qContentsFile.fileSize
-                        , qContentsFile.filePhysicalName
+                        , qContentsFile.thumbnailFilePhysicalName
                         , qContentsFile.fileExtension
                         , qContentsFile.fileKindCode
                         , qContentsBasket.userSeq
