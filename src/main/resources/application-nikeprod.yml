@@ -2,7 +2,7 @@ spring:
   profiles: nikeprod
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
+    url: jdbc:mysql://nike-prod-db.c9c2dtiz524o.ap-northeast-2.rds.amazonaws.com:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
     username: nikemanager
     password: 'emotion!@'
   devtools:
@@ -14,7 +14,7 @@ spring:
       ansi:
         enabled: always
   redis:
-    host: 10.80.1.212
+    host: nike-prod-redis.f5zylx.ng.0001.apn2.cache.amazonaws.com
     port: 6379
     cache:
       redis:
