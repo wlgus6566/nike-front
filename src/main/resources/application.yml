@@ -35,30 +35,17 @@ security:
     url: true
     ip : false
 
-## email 계정
+## Custom 설정
 nike:
+  ## email 계정
   email:
     auth:
-      id: 'cokeplay.emotion@emotion.co.kr'
-      pw: '5Rzz*w#,Kc%9W7s'
+      id: 'admin@nikespace.co.kr'
+      pw: '2motion12!@'
     send:
-      from: 'cokeplay.emotion@emotion.co.kr'
-#nike:
-#  email:
-#    auth:
-#      id: 'admin@nikespace.co.kr'
-#      pw: '2motion12!@'
-#    send:
-#      from: 'admin@nikespace.co.kr'
-  #임시 경로
-  file:
-    root: '/home/file'
-    imageMagick: '/imageTool'
-    ffmpeg: '/usr/bin'
-    ffmpegCommand: 'ffmpeg'
-    cdnUrl: 'https://nike-test-bucket-dnp.s3.ap-northeast-2.amazonaws.com'
+      from: 'admin@nikespace.co.kr'
 
-## AWS
+## AWS 설정
 cloud:
   aws:
     keyPairId: 'APKAJNYFE4SZH6RSWVMA'

@@ -38,8 +38,17 @@ security:
     url: false
     ip : false
 
-## 임시경로
+## Custom 설정
 nike:
+  ## Link 관련 설정
+  url:
+    pc:
+      domain: 'http://10.80.1.212:8081'
+    mobile:
+      domain: 'http://10.80.1.212:8082'
+    login: '/login'
+    password: '/password-set'
+  ## File 관련 설정
   file:
     root: '/home/emotion/file_temp'
     imageMagick: '/usr/bin'
