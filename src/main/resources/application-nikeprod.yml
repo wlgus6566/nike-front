@@ -2,9 +2,9 @@ spring:
   profiles: nikeprod
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://nike-prod-db.c9c2dtiz524o.ap-northeast-2.rds.amazonaws.com:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
-    username: nikemanager
-    password: 'emotion!@'
+    #url: jdbc:mysql://nike-prod-db.c9c2dtiz524o.ap-northeast-2.rds.amazonaws.com:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
+    #username: nikemanager
+    #password: 'emotion!@'
   devtools:
     livereload:
       enabled: false
@@ -27,7 +27,7 @@ logging:
   config: classpath:logback-nikeprod.xml
 
 server:
-  domain: http://localhost
+  domain: https://www.nikespace.co.kr
   port: 8080
 
 ## 시큐리티 url/ ip 체크 flag
@@ -41,9 +41,9 @@ nike:
   ## Link 관련 설정
   url:
     pc:
-      domain: 'http://localhost:8081'
+      domain: 'https://www.nikespace.co.kr'
     mobile:
-      domain: 'http://localhost:8082'
+      domain: 'https://m.nikespace.co.kr'
     login: '/login'
     password: '/password-set'
   ## File 관련 설정
