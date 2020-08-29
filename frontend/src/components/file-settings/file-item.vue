@@ -1,11 +1,10 @@
 <template>
     <li class="file-setting">
         <transition name="fade">
-            <span
+            <!--<span
                 class="progress"
                 :style="{ width: `${file.progress}%` }"
-            ></span>
-            <!--v-if="file.progress && file.progress !== 100"-->
+            ></span>-->
         </transition>
         <ul class="form-list">
             <li class="form-row">
@@ -13,13 +12,21 @@
                     <span class="label-title required">파일 구분</span>
                 </div>
                 <div class="form-column">
-                    <el-radio
-                        v-model="file.fileSectionCode"
-                        :label="item"
+                    <label
+                        class="check-label"
                         v-for="item in pageFileSectionCodeName"
                         :key="item"
                     >
-                    </el-radio>
+                        <span class="radio">
+                            <input
+                                type="radio"
+                                v-model="file.fileSectionCode"
+                                :value="item"
+                            /><!--:disabled="!!file.url || !!file.title"-->
+                            <i></i>
+                            <span class="txt">{{ item }}</span>
+                        </span>
+                    </label>
                 </div>
             </li>
             <li class="form-row">
@@ -27,15 +34,21 @@
                     <span class="label-title required">파일 종류</span>
                 </div>
                 <div class="form-column">
-                    <el-radio v-model="file.fileKindCode" label="FILE">
-                        파일
-                    </el-radio>
-                    <el-radio v-model="file.fileKindCode" label="VIDEO">
-                        동영상(URL)
-                    </el-radio>
-                    <el-radio v-model="file.fileKindCode" label="VR">
-                        VR
-                    </el-radio>
+                    <label
+                        class="check-label"
+                        v-for="item in fileKindCodeList"
+                        :key="item.value"
+                    >
+                        <span class="radio">
+                            <input
+                                type="radio"
+                                v-model="file.fileKindCode"
+                                :value="item.value"
+                            /><!-- :disabled="!!file.url || !!file.title"-->
+                            <i></i>
+                            <span class="txt">{{ item.label }}</span>
+                        </span>
+                    </label>
                 </div>
             </li>
             <!-- todo 추가 스크립트 작업 필요  -->
@@ -77,9 +90,9 @@
             </template>
         </ul>
         <button
-            v-if="listLength > 1"
+            v-if="emptyCheck || listLength > 1"
             class="btn-del"
-            v-on:click.prevent="$emit('fileDelete')"
+            @click.prevent="$emit('fileDelete')"
         >
             <span>삭제</span>
         </button>
@@ -92,6 +105,39 @@ export default {
         file: Object,
         listLength: Number,
         pageFileSectionCodeName: Array,
+        menuCode: String,
+    },
+    watch: {
+        'file.fileSectionCode'() {
+            this.file.fileKindCode = 'FILE';
+        },
+    },
+    computed: {
+        emptyCheck() {
+            return this.file.fileName || this.file.title || this.file.url;
+            /*return (
+                (this.file.fileKindCode === 'FILE' && this.file.fileName) ||
+                (this.file.fileKindCode === 'VIDEO' &&
+                    (this.file.url || this.file.title)) ||
+                (this.file.fileKindCode === 'VR' &&
+                    (this.file.url || this.file.title))
+            );*/
+        },
+        fileKindCodeList() {
+            return (this.menuCode === 'VMS' &&
+                this.file.fileSectionCode === 'VR') ||
+                (this.menuCode === 'RB' &&
+                    this.file.fileSectionCode === 'GUIDE')
+                ? [
+                      { label: '파일', value: 'FILE' },
+                      { label: '동영상(URL)', value: 'VIDEO' },
+                      { label: 'VR', value: 'VR' },
+                  ]
+                : [
+                      { label: '파일', value: 'FILE' },
+                      { label: '동영상(URL)', value: 'VIDEO' },
+                  ];
+        },
     },
 };
 </script>

@@ -12,8 +12,18 @@
             v-for="(item, index) in folderListData"
             :key="index"
         >
-            <router-link :to="setUrl(item)">
+            <router-link :to="setUrl(item)" @click.native="alertMsg(item)">
                 <div class="thumbnail">
+                    <span class="exposure" v-if="item.exposureYn === 'N'"
+                        ><i></i>작성중</span
+                    >
+                    <span
+                        class="auth"
+                        v-if="
+                            item.exposureYn === 'Y' && item.detailAuthYn === 'N'
+                        "
+                        ><i></i>권한 없음</span
+                    >
                     <img :src="item.imageFilePhysicalName" alt="" />
                 </div>
                 <div class="info-box">
@@ -44,14 +54,23 @@ export default {
     props: ['listTypes', 'folderListData'],
     mounted() {},
     methods: {
+        alertMsg(item) {
+            if (item.detailAuthYn === 'N') {
+                alert('접근 권한이 없습니다.');
+            }
+        },
         classBind(el) {
             const defaultClass = 'folder-item';
-            const detailAuth = el.detailAuthYn === 'Y' ? ' detail-auth' : '';
+            const detailAuth = el.detailAuthYn === 'N' ? ' detail-auth' : '';
             const exposure = el.exposure === 'Y' ? ' exposure' : '';
             return `${defaultClass}${detailAuth}${exposure}`;
         },
         setUrl(item) {
-            return `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase();
+            if (item.detailAuthYn === 'N') {
+                return `${this.$route.fullPath}`;
+            } else {
+                return `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase();
+            }
         },
     },
 };

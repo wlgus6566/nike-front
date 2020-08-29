@@ -94,12 +94,12 @@
                                                     {{ item.fileName }}
                                                 </span>
                                             </label>
-                                            <span
+                                            <!--<span
                                                 class="progress"
                                                 :style="{
                                                     width: `${item.progress}%`,
                                                 }"
-                                            ></span>
+                                            ></span>-->
                                         </li>
                                     </ul>
                                 </div>
@@ -355,7 +355,6 @@ export default {
             this.uploadFileList = [];
         },
         async submitData() {
-            bus.$emit('pageLoading', true);
             //const uploadFn = this.$route.params.id ? putReport : postReport;
             try {
                 if (this.$route.params.id) {
@@ -394,6 +393,7 @@ export default {
                 ? confirm('수정하시겠습니까?')
                 : confirm('저장하시겠습니까?');
             if (addAlert) {
+                bus.$emit('pageLoading', true);
                 this.uploadFiles();
             }
         },
