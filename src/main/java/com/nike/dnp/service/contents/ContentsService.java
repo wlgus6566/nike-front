@@ -140,7 +140,7 @@ public class ContentsService {
 //        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.LIST.toString());
 
         // 권한에 따른 조건문
-        contentsSearchDTO.setExposureYn(userContentsService.isAuth(authSeq, searchMenuCode, ServiceCode.MenuSkillEnumCode.LIST.toString()) ? null : "Y");
+        contentsSearchDTO.setExposureYn(userContentsService.isAuth(authSeq, searchMenuCode, ServiceCode.MenuSkillEnumCode.CREATE.toString()) ? null : "Y");
 
         // QueryDsl 기능 이용
         contentsSearchDTO.setUserAuthSeq(authSeq);
