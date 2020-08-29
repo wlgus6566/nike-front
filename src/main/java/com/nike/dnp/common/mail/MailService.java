@@ -53,6 +53,25 @@ public class MailService {
     }
 
     /**
+     * Send mails.
+     *
+     * @param emailType the email type
+     * @param subject   the subject
+     * @param sendDTO   the send dto
+     * @author [오지훈]
+     * @since 2020. 7. 1. 오후 2:31:56
+     * @implNote
+     */
+    public void sendMails(final String emailType, final String subject, final SendDTO sendDTO) {
+        log.info("MailService.sendMails");
+        sendEmailOffice365.sendEmails(
+                sendDTO.getEmails()
+                , subject
+                , this.convert(this.getFile(emailType), sendDTO)
+        );
+    }
+
+    /**
      * Gets file.
      *
      * @param emailType the email type

@@ -125,6 +125,20 @@ public class SendEmailOffice365 {
     }
 
     /**
+     * Send emails.
+     *
+     * @param toEmail the to email
+     * @param subject the subject
+     * @param file    the file
+     * @author [오지훈]
+     * @since 2020. 7. 14. 오전 11:53:51
+     * @implNote
+     */
+    public void sendEmails(final String[] toEmail, final String subject, final String file) {
+        this.sendEmails(fromEmail, toEmail, subject, file);
+    }
+
+    /**
      * Send email.
      *
      * @param fromEmail the from
@@ -170,6 +184,65 @@ public class SendEmailOffice365 {
                             .title(message.getSubject())
                             .contents(ObjectUtils.isEmpty(file) ? "" : file)
                             .build());
+
+        } catch (final MessagingException | UnsupportedEncodingException exception) {
+            log.error("exception", exception);
+        }
+    }
+
+    /**
+     * Send emails.
+     *
+     * @param fromEmail the from
+     * @param toEmail   the to
+     * @param subject   the subject
+     * @param file      the file
+     * @author [오지훈]
+     * @since 2020. 6. 24. 오전 11:44:14
+     * @implNote 1회 여러 유저 메일 발송
+     */
+    public void sendEmails(final String fromEmail, final String[] toEmail, final String subject, final String file) {
+        log.info("SendEmailOffice365.sendEmail");
+        final Session session = Session.getInstance(this.getEmailProperties(), new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(contaPadrao, senhaContaPadrao);
+            }
+        });
+
+        try {
+            final Message message = new MimeMessage(session);
+            message.setHeader("Content-Type", "text/html; charset=UTF-8");
+            InternetAddress[] addresses = new InternetAddress[toEmail.length];
+            for (int i=0; i<toEmail.length; i++) {
+                addresses[i] = new InternetAddress(toEmail[i]);
+            }
+            message.setRecipients(Message.RecipientType.TO, addresses);
+            message.setFrom(new InternetAddress(fromEmail, "NIKE SPACE", "UTF-8"));
+            message.setSubject(subject);
+
+            if (file.isEmpty()) {
+                message.setSubject("[NIKE SPACE] 발신 테스트 메일입니다.");
+                message.setText("TEST");
+            } else {
+                final MimeBodyPart mimeMultipart = new MimeBodyPart();
+                mimeMultipart.setContent(file, "text/html; charset=UTF-8");
+                final Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(mimeMultipart);
+                message.setContent(multipart);
+            }
+
+            message.setSentDate(new Date());
+            Transport.send(message);
+
+            for (int i=0; i<toEmail.length; i++) {
+                emailSendingLogService.save(
+                        EmailSendingLogSaveDTO.builder()
+                                .email(toEmail[i])
+                                .title(message.getSubject())
+                                .contents(ObjectUtils.isEmpty(file) ? "" : file)
+                                .build());
+            }
 
         } catch (final MessagingException | UnsupportedEncodingException exception) {
             log.error("exception", exception);
