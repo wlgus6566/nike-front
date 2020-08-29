@@ -35,6 +35,13 @@ public class SendDTO {
     private String email = "";
 
     /**
+     * The Emails
+     *
+     * @author [오지훈]
+     */
+    private String[] emails;
+
+    /**
      * The Cert code
      *
      * @author [오지훈]
