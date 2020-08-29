@@ -168,7 +168,7 @@ public class ReportService {
 
         // 알림 저장
         alarmService.sendAlarmTargetList(
-                ServiceCode.AlarmActionEnumCode.UPDATE.toString()
+                ServiceCode.AlarmActionEnumCode.NEW.toString()
                 , ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString()
                 , null
                 , savedReport.getReportSeq()
@@ -435,7 +435,7 @@ public class ReportService {
         final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
         userContentsSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
         userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
-        final List<AuthReturnDTO> authList = authService.getAuthList2(userContentsSearchDTO);
+        final List<AuthReturnDTO> authList = this.findAllAuthUserWithDepth();
 
         final List<Long> userSeqList  = new ArrayList<>();
         for (final AuthReturnDTO authReturnDTO : authList) {
