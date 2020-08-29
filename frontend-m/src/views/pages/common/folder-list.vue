@@ -70,8 +70,8 @@
             </ul>
             <template v-else>
                 <NoData>
-                    <i class="icon-file"></i>
-                    <p class="desc">업로드한 폴더가 없습니다.</p>
+                    <i class="icon-search"></i>
+                    <p class="desc">검색 결과가 없습니다.</p>
                 </NoData>
             </template>
         </template>

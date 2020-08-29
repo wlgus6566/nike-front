@@ -1035,6 +1035,7 @@
     justify-content: center;
     flex-direction: column;
     text-align: center;
+    min-height: 40vh;
 }
 .no-data {
     padding-bottom: 30px;

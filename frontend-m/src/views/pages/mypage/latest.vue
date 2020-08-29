@@ -16,12 +16,12 @@
                 v-if="historyFolderData.length"
                 :folderListData="historyFolderData"
             />
-            <template v-else>
-                <NoData>
-                    <i class="icon-file"></i>
-                    <p class="desc">최근 본 폴더가 없습니다.</p>
-                </NoData>
-            </template>
+        </template>
+        <template v-else>
+            <NoData>
+                <i class="icon-folder"></i>
+                <p class="desc">최근 본 폴더가 없습니다.</p>
+            </NoData>
         </template>
         <Loading v-if="loadingData" />
     </div>
