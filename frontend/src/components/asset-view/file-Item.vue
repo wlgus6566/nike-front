@@ -125,7 +125,9 @@
                                 :class="buttonClass(item.contentsFileSeq)"
                                 :disabled="
                                     item.fileKindCode === 'VR' ||
-                                    !item.thumbnailFilePhysicalName
+                                    (item.fileKindCode === 'FILE' &&
+                                        !item.thumbnailFilePhysicalName) ||
+                                    (item.fileKindCode === 'VIDEO' && !item.url)
                                 "
                                 @click="accordion(item.contentsFileSeq)"
                             >
