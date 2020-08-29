@@ -5,15 +5,17 @@
             @delete="deleteFolder"
             @edit="modifyFolder"
         >
-            <button
-                type="button"
-                class="btn-o-gray"
-                @click="sendEmail"
-                v-if="folderDetail.exposureYn === 'Y'"
-            >
-                <i class="icon-mail"></i>
-                <span>알림메일전송</span>
-            </button>
+            <template v-if="folderDetail">
+                <button
+                    type="button"
+                    class="btn-o-gray"
+                    @click="sendEmail"
+                    v-if="folderDetail.exposureYn === 'Y'"
+                >
+                    <i class="icon-mail"></i>
+                    <span>알림메일전송</span>
+                </button>
+            </template>
         </BtnArea>
         <folder :folderDetail="folderDetail" v-if="folderDetail"></folder>
         <div class="sorting-list-wrap">
