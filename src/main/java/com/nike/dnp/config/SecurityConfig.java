@@ -165,6 +165,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/favicon/**", "/favicon.ico", "/fileUpload/**", // Static 요소
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
 				"/api/download",
+				// TODO contents/download 임시로 열어둠 추후 삭제 필요!
+				"/api/contents/download/*",
 				"/api/open/**", // 임시
 				"/error", // 에러
 		};
