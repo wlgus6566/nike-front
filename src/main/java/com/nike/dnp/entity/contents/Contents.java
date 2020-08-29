@@ -220,7 +220,7 @@ public class Contents extends BaseTimeWithoutUpdateDtEntity {
         saveContents.setMenuCode(contentsSaveDTO.getMenuCode());
         saveContents.setImageFileName(contentsSaveDTO.getImageFileName());
         saveContents.setImageFileSize(contentsSaveDTO.getImageFileSize());
-        saveContents.setImageFilePhysicalName(contentsSaveDTO.getImageFilePhysicalName());
+        saveContents.setImageFilePhysicalName(contentsSaveDTO.getImageFilePhysicalName().replace("\\", "/"));
         saveContents.setFolderName(contentsSaveDTO.getFolderName());
         saveContents.setFolderContents(contentsSaveDTO.getFolderContents());
         saveContents.setCampaignPeriodSectionCode(contentsSaveDTO.getCampaignPeriodSectionCode());
@@ -259,7 +259,7 @@ public class Contents extends BaseTimeWithoutUpdateDtEntity {
         if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageFilePhysicalName()) && !contentsSaveDTO.getImageFilePhysicalName().contains("/contents/")) {
             this.imageFileName = contentsSaveDTO.getImageFileName();
             this.imageFileSize = contentsSaveDTO.getImageFileSize();
-            this.imageFilePhysicalName = contentsSaveDTO.getImageFilePhysicalName();
+            this.imageFilePhysicalName = contentsSaveDTO.getImageFilePhysicalName().replace("\\", "/");
         }
         this.folderName = contentsSaveDTO.getFolderName();
         this.folderContents = contentsSaveDTO.getFolderContents();
