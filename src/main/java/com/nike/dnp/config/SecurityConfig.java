@@ -166,7 +166,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", // Swagger 관련
 				"/api/download",
 				// TODO contents/download 임시로 열어둠 추후 삭제 필요!
-				"/api/contents/download/*",
+				"/api/contents/download/**",
 				"/api/open/**", // 임시
 				"/error", // 에러
 		};
@@ -190,7 +190,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						, "/api/main/**"
 						, "/api/mypage/**"
 						, "/api/calendar/eachList/**"
-						, "/api/contents/download/*"
+						, "/api/contents/download/**"
 						, "/api/alarm/**"
 						,"/api/join/**").permitAll()
 			.accessDecisionManager(accessDecisionManager())
