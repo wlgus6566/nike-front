@@ -4,6 +4,7 @@ import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.report.ReportAnswerResultDTO;
 import com.nike.dnp.dto.report.ReportAnswerSaveDTO;
+import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportAnswer;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,13 +83,18 @@ public class ReportAnswerService {
         log.info("ReportAnswerService.save");
         final ReportAnswer savedReportAnswer = reportAnswerRepository.save(new ReportAnswer().save(reportAnswerSaveDTO));
 
+        // 보고서 등록한 사람
+        Optional<Report> report = reportService.findById(reportAnswerSaveDTO.getReportSeq());
+        List<Long> userSeq = new ArrayList<>();
+        userSeq.add(report.get().getRegisterSeq());
+
         // 알림 저장
         alarmService.sendAlarmTargetList(
                 ServiceCode.AlarmActionEnumCode.FEEDBACK.toString()
                 , ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString()
                 , null
                 , reportAnswerSaveDTO.getReportSeq()
-                , reportService.findAllAuthUser());
+                , userSeq);
 
 
         return savedReportAnswer;

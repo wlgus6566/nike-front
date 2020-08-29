@@ -75,17 +75,18 @@ public class UserContentsService {
     /**
      * Is auth boolean.
      *
-     * @param authSeq               the auth seq
-     * @param userContentsSearchDTO the user contents search dto
+     * @param authSeq   the auth seq
+     * @param menuCode  the menu code
+     * @param skillCode the skill code
      * @return the boolean
      * @author [오지훈]
      * @implNote 권한 존재 여부
      * @since 2020. 7. 20. 오후 4:25:14
      */
-    public boolean isAuth(final Long authSeq, final UserContentsSearchDTO userContentsSearchDTO) {
+    public boolean isAuth(final Long authSeq, final String menuCode, final String skillCode) {
         log.info("UserContentsService.isAuth");
         boolean result = false;
-        for (final AuthReturnDTO authReturnDTO : authService.getAuthList(userContentsSearchDTO)) {
+        for (final AuthReturnDTO authReturnDTO : authService.findByConfig(menuCode, skillCode)) {
             if (authSeq.equals(authReturnDTO.getAuthSeq())) {
                 result = true;
                 break;

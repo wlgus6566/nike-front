@@ -215,10 +215,8 @@ public class ReportController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<List<AuthReturnDTO>> findByAuthDepth() {
         log.info("AuthController.findByAuthDepth");
-//        return responseService.getSingleResult(
-//                authService.findByAuthDepth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString()));
         return responseService.getSingleResult(
-                reportService.findAllAuthUserWithDepth());
+                reportService.findAllAuthListWithDepth());
     }
 
     /**
@@ -231,7 +229,8 @@ public class ReportController {
      */
     @ApiOperation(value = "보고서 파일 다운로드", notes = REQUEST_CHARACTER)
     @GetMapping(name = "보고서 파일 다운로드", value = "/download/{reportFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin(origins = {"https://devwww.nikespace.co.kr", "http://devwww.nikespace.co.kr"})
+    @CrossOrigin(origins = {"https://devwww.nikespace.co.kr", "http://devwww.nikespace.co.kr",
+            "http://localhost:8081", "https://localhost:8081"})
     public CommonResult downloadFile(
             @ApiParam(name="reportFileSeq", value = "보고서 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long reportFileSeq
     ) {

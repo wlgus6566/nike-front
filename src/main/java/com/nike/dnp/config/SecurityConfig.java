@@ -167,6 +167,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/api/download",
 				// TODO contents/download 임시로 열어둠 추후 삭제 필요!
 				"/api/contents/download/**",
+				"/api/report/download/**",
 				"/api/open/**", // 임시
 				"/error", // 에러
 		};
@@ -191,6 +192,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						, "/api/mypage/**"
 						, "/api/calendar/eachList/**"
 						, "/api/contents/download/**"
+						, "/api/report/download/**"
 						, "/api/alarm/**"
 						,"/api/join/**").permitAll()
 			.accessDecisionManager(accessDecisionManager())
