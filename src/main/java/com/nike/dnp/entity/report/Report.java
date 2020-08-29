@@ -205,7 +205,7 @@ public class Report extends BaseTimeWithoutUpdateDtEntity {
         this.reportSectionCode = reportSaveDTO.getReportSectionCode();
         this.reportName = reportSaveDTO.getReportName();
 
-        if (!ObjectUtils.isEmpty(reportSaveDTO.getImageFilePhysicalName()) && !ObjectUtils.isEmpty(reportSaveDTO.getImageFilePhysicalName().contains("/report/"))) {
+        if (!ObjectUtils.isEmpty(reportSaveDTO.getImageFilePhysicalName()) && !ObjectUtils.isEmpty(reportSaveDTO.getImageFilePhysicalName().contains(".co.kr"))) {
             this.imageFileName = reportSaveDTO.getImageFileName();
             this.imageFileSize = reportSaveDTO.getImageFileSize();
             this.imageFilePhysicalName = reportSaveDTO.getImageFilePhysicalName();

@@ -256,7 +256,7 @@ public class Contents extends BaseTimeWithoutUpdateDtEntity {
     public void update(final ContentsSaveDTO contentsSaveDTO) {
         log.info("Contents.update");
         this.menuCode = contentsSaveDTO.getMenuCode();
-        if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageFilePhysicalName()) && !contentsSaveDTO.getImageFilePhysicalName().contains("/contents/")) {
+        if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageFilePhysicalName()) && !contentsSaveDTO.getImageFilePhysicalName().contains(".co.kr")) {
             this.imageFileName = contentsSaveDTO.getImageFileName();
             this.imageFileSize = contentsSaveDTO.getImageFileSize();
             this.imageFilePhysicalName = contentsSaveDTO.getImageFilePhysicalName().replace("\\", "/");
