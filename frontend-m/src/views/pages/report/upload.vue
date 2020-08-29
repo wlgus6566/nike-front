@@ -2,20 +2,6 @@
     <div>
         <form action="" @submit.prevent="submitReport">
             <ul class="upload-list">
-                <!--                <li class="upload-item thumbnail-file">-->
-                <!--                    <thumbnail-->
-                <!--                        :size="1 / 1"-->
-                <!--                        @cropImage="cropImage"-->
-                <!--                        :imageBase64="reportDetailData.imageBase64"-->
-                <!--                    >-->
-                <!--                        <template slot="txt-up">-->
-                <!--                            썸네일 이미지 등록-->
-                <!--                        </template>-->
-                <!--                        <template slot="txt">-->
-                <!--                            썸네일 이미지 재등록-->
-                <!--                        </template>-->
-                <!--                    </thumbnail>-->
-                <!--                </li>-->
                 <li class="upload-item thumbnail-file">
                     <thumbnail
                       :size="1/1"
@@ -37,9 +23,6 @@
                               multiple
                               @change="uploadIptChange"
                           />
-                            <!-- 파일 등록 전 -->
-                            <!-- <div class="txt">파일등록</div>-->
-                            <!-- 파일 등록 후 -->
                             <div class="txt"v-if="!uploadFileViewer">파일등록</div>
                             <div class="number" v-else v-text="uploadFileSize+'/10'">0/10</div>
                         </div>
@@ -55,18 +38,6 @@
                                     삭제
                                 </button>
                             </li>
-                            <!--<li v-for="item in reportDetailData.reportFileSaveDTOList"
-                                :key="item.fileOrder" class="upload-file-item">
-
-                            </li>
-                            <li class="upload-file-item"></li>
-                            <li class="upload-file-item"></li>
-                            <li class="upload-file-item"></li>
-                            <li class="upload-file-item"></li>
-                            <li class="upload-file-item"></li>
-                            <li class="upload-file-item"></li>
-                            <li class="upload-file-item"></li>
-                            <li class="upload-file-item"></li>-->
                         </ul>
                     </div>
                     <p class="desc">
@@ -116,13 +87,8 @@
 </template>
 <script>
 import thumbnail from '@/components/thumbnail/index';
-import {
-    getReportDetail,
-    getReportFile,
-    postReport,
-    putReport,
-} from '@/api/report';
-import { fileUpLoad } from '@/api/file';
+import {getReportDetail, getReportFile, postReport, putReport,} from '@/api/report';
+import {fileUpLoad} from '@/api/file';
 import bus from '@/utils/bus';
 
 export default {
