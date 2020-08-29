@@ -97,7 +97,7 @@ export default {
         this.password = '';
         this.newPassword = '';
         this.confirmPassword = '';
-        document.querySelector('#sticky').style.height = this.stickyH;
+        this.stickyCss();
         this.handleScroll();
     },
     destroyed() {
@@ -113,21 +113,30 @@ export default {
         window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
+        stickyCss() {
+            const stickyWrap = document.querySelector('#sticky');
+            const contents = document.querySelector('.contents');
+            stickyWrap.style.height = this.stickyH + 'px';
+            contents.style.position = 'relative';
+            contents.style.paddingBottom = '100px';
+        },
         handleScroll() {
             const windowE = document.documentElement;
             const btnWrap = document.querySelector('.btn-wrap');
+            const contents = document.querySelector('.contents');
             const footerH = document.querySelector('footer').offsetHeight;
             const navH = document.querySelector('.nav-area').offsetHeight;
-            const stickyWtap = document.querySelector('#sticky');
+            const stickyWrap = document.querySelector('#sticky');
             if (
                 windowE.clientHeight + windowE.scrollTop - navH - footerH >=
-                stickyWtap.offsetTop
+                stickyWrap.offsetTop
             ) {
                 btnWrap.style.position = 'relative';
                 btnWrap.style.bottom = '0';
             } else {
                 btnWrap.style.position = '';
                 btnWrap.style.bottom = '';
+                contents.style.paddingBottom = '';
             }
         },
         async passwordChange() {
@@ -157,10 +166,11 @@ export default {
 </script>
 <style scoped>
 #sticky {
-    margin-top: 30px;
-    margin-bottom: -50px;
+    position: absolute;
+    left: 20px;
+    bottom: 0;
+    width: 100%;
     margin-left: -20px;
     margin-right: -20px;
-    background: red;
 }
 </style>
