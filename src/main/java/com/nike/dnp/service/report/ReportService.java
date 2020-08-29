@@ -116,12 +116,9 @@ public class ReportService {
         if (null != reportSearchDTO.getGroupSeq()) {
             authSeqList.add(reportSearchDTO.getGroupSeq());
         } else {
-//            final List<AuthReturnDTO> authList = authService.findByAuthDepth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_UPLOAD", ServiceCode.MenuSkillEnumCode.REPORT.toString());
             final List<AuthReturnDTO> authList = authService.findByAuthDepth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_MANAGE", ServiceCode.MenuSkillEnumCode.LIST.toString());
             for (final AuthReturnDTO authReturnDTO : authList) {
-                if("Y".equals(authReturnDTO.getCheckBoxYn())) {
-                    authSeqList.add(authReturnDTO.getAuthSeq());
-                }
+                authSeqList.add(authReturnDTO.getAuthSeq());
             }
         }
         reportSearchDTO.setAuthSeqList(authSeqList);
