@@ -148,7 +148,13 @@ public class ReportService {
 
         this.checkReportValidation(reportSaveDTO);
         // 썸네일 base64 -> file 정보로 변환
-        this.base64ToFile(reportSaveDTO);
+        if (!ObjectUtils.isEmpty(reportSaveDTO.getImageBase64())) {
+            final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.REPORT.getFolder(), reportSaveDTO.getImageBase64());
+
+            reportSaveDTO.setImageFileName(fileResultDTO.getFileName());
+            reportSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
+            reportSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName().replace("//", "/"));
+        }
 
         final Report savedReport = reportRepository.save(new Report().save(reportSaveDTO));
         final List<ReportFile> reportFileList = new ArrayList<>();
@@ -205,18 +211,18 @@ public class ReportService {
      * @implNote base64 -> 파일 형식으로 변환
      * @since 2020. 8. 3. 오후 3:30:09
      */
-    public ReportSaveDTO base64ToFile(final ReportSaveDTO reportSaveDTO) {
-        log.info("reportService.base64ToFile");
-        // 썸네일 base64 -> file 정보로 변환
-        if (!ObjectUtils.isEmpty(reportSaveDTO.getImageBase64())) {
-            final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.REPORT.getFolder(), reportSaveDTO.getImageBase64());
-
-            reportSaveDTO.setImageFileName(fileResultDTO.getFileName());
-            reportSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
-            reportSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
-        }
-        return reportSaveDTO;
-    }
+//    public FileResultDTO base64ToFile(final ReportSaveDTO reportSaveDTO) {
+//        log.info("reportService.base64ToFile");
+//        // 썸네일 base64 -> file 정보로 변환
+//        if (!ObjectUtils.isEmpty(reportSaveDTO.getImageBase64())) {
+//            final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.REPORT.getFolder(), reportSaveDTO.getImageBase64());
+//
+//            reportSaveDTO.setImageFileName(fileResultDTO.getFileName());
+//            reportSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
+//            reportSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
+//        }
+//        return reportSaveDTO;
+//    }
 
     /**
      * Update optional.
@@ -237,7 +243,11 @@ public class ReportService {
         // 썸네일 base64 -> file 정보로 변환
         // 썸네일 base64 -> file 정보로 변환
         if(!ObjectUtils.isEmpty(reportSaveDTO.getImageBase64()) && reportSaveDTO.getImageBase64().contains("base64")){
-            this.base64ToFile(reportSaveDTO);
+            final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(ServiceCode.FileFolderEnumCode.REPORT.getFolder(), reportSaveDTO.getImageBase64());
+
+            reportSaveDTO.setImageFileName(fileResultDTO.getFileName());
+            reportSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
+            reportSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName().replace("//", "/"));
         }
 
         report.ifPresent(value -> value.update(reportSaveDTO));

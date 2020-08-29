@@ -185,7 +185,14 @@ public class ContentsService {
         this.checkContentsValidation(contentsSaveDTO);
 
         // 썸네일 base64 -> file 정보로 변환
-        this.base64ToFile(contentsSaveDTO);
+        if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
+            final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
+                    ServiceCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsSaveDTO.getImageBase64());
+
+            contentsSaveDTO.setImageFileName(fileResultDTO.getFileName());
+            contentsSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
+            contentsSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
+        }
 
         final Contents savedContents = contentsRepository.save(new Contents().save(contentsSaveDTO));
 
@@ -337,7 +344,12 @@ public class ContentsService {
 
         // 썸네일 base64 -> file 정보로 변환
         if(!ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64()) && contentsSaveDTO.getImageBase64().contains("base64")){
-            this.base64ToFile(contentsSaveDTO);
+            final FileResultDTO fileResultDTO = ImageUtil.fileSaveForBase64(
+                    ServiceCode.FileFolderEnumCode.CONTENTS.getFolder(), contentsSaveDTO.getImageBase64());
+
+            contentsSaveDTO.setImageFileName(fileResultDTO.getFileName());
+            contentsSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
+            contentsSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName());
         }
 
         contents.ifPresent(value -> value.update(contentsSaveDTO));
