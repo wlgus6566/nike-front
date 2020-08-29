@@ -118,7 +118,7 @@ export default {
                 return false;
             }
             try {
-                await deleteCustomer(this.noticeArticleSectionCode, id);
+                await deleteCustomer(this.$route.meta.sectionCode, id);
                 await this.getFaqList();
             } catch (error) {
                 console.error(error);

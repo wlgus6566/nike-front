@@ -70,8 +70,8 @@
             </ul>
             <template v-else>
                 <NoData>
-                    <i class="icon-file"></i>
-                    <p class="desc">업로드한 폴더가 없습니다.</p>
+                    <i class="icon-search"></i>
+                    <p class="desc">검색 결과가 없습니다.</p>
                 </NoData>
             </template>
         </template>
@@ -83,14 +83,12 @@ import { getContents } from '@/api/contents';
 
 import ListSorting from '@/components/list-sorting/index';
 import FilterSelect from '@/components/filter-select';
-import FolderList from '@/components/folder-list';
 import NoData from '@/components/no-data';
 
 export default {
     name: 'folder-list',
     components: {
         FilterSelect,
-        FolderList,
         NoData,
         Loading: () => import('@/components/loading/'),
         ListSorting,

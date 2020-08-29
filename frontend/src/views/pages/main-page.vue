@@ -77,9 +77,9 @@
                 :key="foundationItem.contentsSeq"
             >
                 <router-link
-                    :to="`'/foundation/${foundationItem.menuCode.toLocaleLowerCase()}/${
+                    :to="`/foundation/${foundationItem.menuCode.toLocaleLowerCase()}/${
                         foundationItem.contentsSeq
-                    }'`"
+                    }`"
                 >
                     <span class="thumbnail">
                         <img
@@ -137,25 +137,25 @@
         <h2 class="main-title">REPORT</h2>
         <ul class="main-report-list">
             <li
-                v-for="repoertItem in mainData.reportList"
-                :key="repoertItem.reportSeq"
+                v-for="reportItem in mainData.reportList"
+                :key="reportItem.reportSeq"
             >
-                <router-link :to="`/report/detail/${repoertItem.readCount}`">
+                <router-link :to="`/report/detail/${reportItem.reportSeq}`">
                     <span class="thumbnail">
                         <img
-                            :src="repoertItem.imageFilePhysicalName"
-                            :alt="repoertItem.reportName"
+                            :src="reportItem.imageFilePhysicalName"
+                            :alt="reportItem.reportName"
                         />
                     </span>
                     <span class="info-box">
                         <strong class="title">
-                            리포트 계정명 필요
+                            {{ reportItem.nickname }}
                         </strong>
                         <p class="desc">
-                            {{ repoertItem.reportName }}
+                            {{ reportItem.reportName }}
                         </p>
                         <span class="date">
-                            {{ repoertItem.updateDt }}
+                            {{ reportItem.updateDt }}
                         </span>
                     </span>
                 </router-link>
@@ -216,7 +216,7 @@ export default {
                 // 일자 클릭시
                 // dateClick: this.handleDateClick,
                 dateClick: this.handleDateClick,
-                moreLinkClick: this.test,
+                moreLinkClick: this.calClickEvent,
                 height: 358,
                 events: [],
                 dayMaxEventRows: true,
@@ -265,13 +265,19 @@ export default {
         this.main();
     },
     methods: {
-        test(e) {
-            //console.log(e);
+        handleScroll() {
+            const modal = document.querySelector('.fc-popover');
+            if (modal) {
+                modal.remove();
+                window.removeEventListener('scroll', this.handleScroll);
+            }
+        },
+        calClickEvent(e) {
             const date = this.$moment(e.date).format('YYYY-MM-DD');
             const cal = this.$refs.fullCalendar.$el;
             const td = cal.querySelector(`td[data-date="${date}"]`);
             td.classList.add('test');
-
+            window.addEventListener('scroll', this.handleScroll);
             setTimeout(() => {
                 const modal = document.querySelector('.fc-more-popover');
                 const close = modal.querySelector('.fc-popover-close');

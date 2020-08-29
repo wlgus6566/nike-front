@@ -218,13 +218,6 @@ export default {
                 } else {
                     className = 'official';
                 }
-                // console.log('item.endDt', item.endDt)
-                // let aaa = moment(item.endDt).add(1, 'days').format('YYYY-MM-DD');
-                let endDateList = moment(item.endDt).add(1, 'days').format('YYYY-MM-DD');
-                console.log('aaaaa', endDateList);
-                // console.log('aaaaa', endDateList[0]+'-'+endDateList[1]+'-'+endDateList[2]);
-                // let dddd = endDateList[0]+'.'+endDateList[1]+'.'+endDateList[2].replace(/\./gi, '-');
-
                 this.calendarOptions.events.push({
                     ...item,
                     title: item.scheduleName,

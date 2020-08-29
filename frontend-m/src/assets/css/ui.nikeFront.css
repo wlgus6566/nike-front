@@ -1,4 +1,8 @@
 @charset "UTF-8";
+.bebas {
+    font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif !important;
+    letter-spacing: 0.5px;
+}
 /* color */
 .fc-orage {
     color: #fa5400 !important;
@@ -20,6 +24,9 @@
 }
 .btn-area [class^='btn-'] + [class^='btn-'] {
     margin-left: 10px;
+}
+.btn-area .bebas {
+    font-weight: 400;
 }
 [class^='btn-txt'] {
     display: inline-flex;
@@ -129,7 +136,7 @@
     font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
     line-height: 29px;
     font-size: 24px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.05px;
     font-weight: normal;
 }
 .notice-list {
@@ -336,12 +343,13 @@
     font-size: 14px;
     color: #000;
 }
-.news-list-item .info-box .desc {
+.news-list-item .info-box .date {
     display: block;
     margin-top: 8px;
     line-height: 14px;
     font-size: 12px;
     color: #888;
+    letter-spacing: 0;
 }
 
 /* folder-list-item */
@@ -1035,6 +1043,7 @@
     justify-content: center;
     flex-direction: column;
     text-align: center;
+    min-height: 40vh;
 }
 .no-data {
     padding-bottom: 30px;
@@ -1063,11 +1072,19 @@
 }
 
 /* Mypage > 회원정보조회 */
+.contents.my-info {
+    padding-bottom: 0;
+}
+.my-info + footer {
+    display: none;
+}
 .member-inquiry {
+    height: calc(100vh - 160px);
+    box-sizing: border-box;
     position: relative;
     margin: 0 -20px;
-    padding-top: 185.62%;
-    background: black no-repeat left top;
+    /*padding-top: 185.62%;*/
+    background: url('../images/img-my-id.png') 50% 50% no-repeat;
     background-size: cover;
 }
 .member-inquiry .inner {
@@ -1685,7 +1702,7 @@
     width: 30px;
     height: 40px;
     background: url('../images/svg/icon-delete-file-on.svg') 0 0 no-repeat;
-    font: 0/0 a;
+    text-indent: -99999px;
 }
 
 .check-item {
@@ -1786,4 +1803,440 @@
 .el-pagination span:not([class*='suffix']) {
     width: 36px;
     height: 36px;
+}
+
+/* Full calendar */
+.schedule-type {
+    margin-top: 15px;
+    text-align: right;
+}
+.schedule-type li {
+    display: inline-block;
+    font-size: 12px;
+    line-height: 18px;
+}
+.schedule-type li + li {
+    margin-left: 15px;
+}
+.schedule-type li:before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin-right: 5px;
+    border-radius: 50%;
+    vertical-align: 2px;
+}
+.schedule-type .edu {
+    color: #be1767;
+}
+.schedule-type .edu:before {
+    background-color: #be1767;
+}
+.schedule-type .campaign {
+    color: #007b68;
+}
+.schedule-type .campaign:before {
+    background-color: #007b68;
+}
+.schedule-type .official {
+    color: #2c0fb4;
+}
+.schedule-type .official:before {
+    background-color: #2c0fb4;
+}
+.schedule-title {
+    margin-top: 15px;
+    line-height: 21px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+.schedule-list {
+    margin-top: 15px;
+}
+.schedule-item {
+    margin-top: 10px;
+    padding: 15px 20px;
+}
+.schedule-item .content {
+    z-index: 2;
+    flex-grow: 1;
+}
+.schedule-item .title {
+    font-size: 14px;
+    font-weight: 600;
+    word-break: break-all;
+}
+.schedule-item .desc {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #555;
+    word-break: break-all;
+}
+.schedule-item .info {
+    margin-top: 12px;
+}
+.schedule-item .date {
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 0;
+}
+
+.schedule-item .btn-edit {
+    margin-right: 32px;
+    padding: 0;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #333;
+    border-radius: 0;
+    font-size: 10px;
+    color: #333;
+    font-weight: 600;
+}
+
+.schedule-item.edu {
+    background-color: rgba(247, 102, 102, 0.05);
+}
+.schedule-item.edu .title {
+    color: #f76666;
+}
+.schedule-item.official {
+    background-color: rgba(78, 83, 239, 0.05);
+}
+.schedule-item.official .title {
+    color: #4e53ef;
+}
+.schedule-item.campaign {
+    background-color: rgba(0, 179, 152, 0.05);
+}
+.schedule-item.campaign .title {
+    color: #00b398;
+}
+.fc .fc-view-harness-active > .fc-view,
+.fc .fc-scroller-liquid-absolute {
+    position: relative !important;
+}
+.fullCalendar-wrap {
+    position: relative;
+    margin-top: 20px;
+}
+.fullCalendar-wrap .fc {
+    margin: 0 -20px;
+}
+.fullCalendar-wrap .fc .fc-daygrid-day-frame {
+    min-height: auto;
+    cursor: pointer;
+}
+.fullCalendar-wrap .fc .fc-daygrid-event-harness-abs,
+.fullCalendar-wrap .fc-direction-ltr .fc-daygrid-event {
+    cursor: default;
+}
+.fc-direction-ltr .fc-daygrid-event.fc-event-end,
+.fc-direction-rtl .fc-daygrid-event.fc-event-start,
+.fc-direction-ltr .fc-daygrid-block-event:not(.fc-event-end),
+.fc-direction-rtl .fc-daygrid-block-event:not(.fc-event-start) {
+    margin-right: 6px;
+    margin-left: 6px;
+}
+
+.fc .fc-toolbar.fc-header-toolbar {
+    height: 24px;
+    line-height: 24px;
+    margin-top: 10px;
+    margin-bottom: 10px !important;
+    justify-content: center;
+}
+.fc .fc-header-toolbar .fc-toolbar-title {
+    margin: 0 17px;
+    line-height: 24px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+}
+.fc .fc-header-toolbar .fc-toolbar-chunk > .fc-button {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: url('../images/svg/icon-calender-left.svg') no-repeat center;
+    background-color: #fff !important;
+    box-shadow: none !important;
+}
+.fc .fc-header-toolbar .fc-toolbar-chunk > .fc-button[aria-label='next'] {
+    background-image: url('../images/svg/icon-calender-right.svg');
+}
+.fc .fc-header-toolbar .fc-toolbar-chunk > .fc-button .fc-icon {
+    font-size: 24px;
+}
+.fullCalendar-wrap .fc .fc-scrollgrid,
+.fullCalendar-wrap .fc .fc-scrollgrid table {
+    border: none;
+}
+
+.fc .fc-daygrid-day-top {
+    flex-direction: row !important;
+    opacity: 1;
+}
+.fullCalendar-wrap .fc .fc-day-other .fc-daygrid-day-top {
+    opacity: 1;
+    color: #ccc;
+}
+.fullCalendar-wrap .fc-theme-standard th {
+    border-top: none !important;
+    border-bottom: 1px solid #eee !important;
+}
+.fullCalendar-wrap .fc-theme-standard td {
+    border: none;
+}
+.fullCalendar-wrap .fc-theme-standard th {
+    border: 1px solid #000;
+    border-width: 1px 0;
+}
+.fullCalendar-wrap .fc .fc-daygrid-body td {
+    padding-bottom: 7px;
+    border-bottom: 1px solid #eee;
+    height: 100px;
+}
+.fullCalendar-wrap .fc .fc-daygrid-body td + td {
+}
+.fullCalendar-wrap .fc .fc-daygrid-body .fc-daygrid-day-number {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+}
+.fullCalendar-wrap .fc .fc-daygrid-body td.active {
+    background: rgba(250, 84, 0, 0.05);
+}
+.fullCalendar-wrap .fc .fc-daygrid-body .active .fc-daygrid-day-number {
+    background: #fa5400;
+    color: #fff;
+}
+.fullCalendar-wrap .fc .fc-daygrid-body .fc-day-other {
+    cursor: default;
+}
+.fullCalendar-wrap .fc .fc-daygrid-body .fc-day-today {
+    background: #fff;
+}
+.fullCalendar-wrap .fc-daygrid-body .fc-day-sun .fc-daygrid-day-number {
+    color: #f20000;
+}
+.fullCalendar-wrap .fc-daygrid-body .fc-day-other .fc-daygrid-day-number {
+    opacity: 0.3;
+}
+.fullCalendar-wrap .fc-direction-ltr .fc-daygrid-event {
+    position: relative;
+    background-color: transparent !important;
+}
+.fullCalendar-wrap .fc-direction-ltr .fc-daygrid-event:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
+}
+.fullCalendar-wrap .fc-direction-ltr .fc-daygrid-event.campaign {
+    border-color: #007b68;
+}
+.fullCalendar-wrap .fc-direction-ltr .fc-daygrid-event.campaign:before {
+    background-color: #00b398;
+}
+.fullCalendar-wrap .fc-direction-ltr .fc-daygrid-event.edu {
+    border-color: #be1767;
+}
+.fullCalendar-wrap .fc-direction-ltr .fc-daygrid-event.edu:before {
+    background-color: #f76666;
+}
+.fullCalendar-wrap .fc-direction-ltr .fc-daygrid-event.official {
+    border-color: #2c0fb4;
+}
+.fullCalendar-wrap .fc-direction-ltr .fc-daygrid-event.official:before {
+    background-color: #4e53ef;
+}
+.fullCalendar-wrap .fc-daygrid-event .fc-event-title {
+    max-width: 100%;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 15px;
+    font-family: 'Noto Sans KR', 'Arial', 'Apple SD Gothic Neo', sans-serif;
+    letter-spacing: -0.05em;
+    color: #be1767;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.fullCalendar-wrap .fc-daygrid-event.campaign .fc-event-title {
+    color: #007b68;
+}
+.fullCalendar-wrap .fc-daygrid-event.edu .fc-event-title {
+    color: #be1767;
+}
+.fullCalendar-wrap .fc-daygrid-event.official .fc-event-title {
+    color: #2c0fb4;
+}
+.fc .fc-col-header-cell-cushion {
+    padding: 11px 4px !important;
+    font-size: 14px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    font-weight: 400;
+    font-family: 'Bebas Neue', sans-serif;
+}
+.fc .fc-daygrid-day.fc-day-today {
+    background: none;
+}
+.fc .fc-daygrid-day-number {
+    font-size: 14px;
+    color: #333;
+}
+.fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+    width: 26px;
+    height: 26px;
+    margin: 7px 0 0 7px;
+    line-height: 16px;
+    border-radius: 50%;
+    white-space: nowrap;
+    background: #000;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+.fc .fc-h-event {
+    height: 18px;
+    padding-left: 5px;
+    line-height: 15px;
+    border: none;
+    border-left: 3px solid #2b2b2b;
+}
+.fc .fc-h-event .fc-event-title {
+    letter-spacing: 0;
+    font-size: 10px;
+}
+
+.fc .fc-daygrid-event {
+    margin-top: 4px !important;
+}
+.fc-direction-ltr .fc-daygrid-event {
+    border-radius: 0;
+}
+.fc-direction-rtl .fc-daygrid-event.fc-event-end,
+.fc-direction-ltr .fc-daygrid-event.fc-event-start {
+    margin-left: 6px !important;
+}
+.fc-direction-ltr .fc-daygrid-event.fc-event-end,
+.fc-direction-rtl .fc-daygrid-event.fc-event-start {
+    margin-right: 6px !important;
+}
+
+/* Calendar Popup */
+.fc .fc-more-popover {
+    /*margin-left: -92px !important;*/
+    border: 1px solid #ccc !important;
+}
+.fc .fc-more-popover:before {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -5px;
+    z-index: 1;
+    content: '';
+    display: inline-block;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #ccc;
+    border-top: 0;
+}
+.fc.fc-theme-standard .fc-popover-header {
+    position: relative;
+    background-color: #f7f7f7;
+    justify-content: flex-end;
+}
+.fc .fc-popover-close {
+    z-index: 20;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+}
+.fc .fc-popover-title {
+    display: none;
+}
+.fc .fc-more-popover .fc-popover-body {
+    background-color: #f7f7f7;
+    width: 230px;
+}
+.fc .fc-more-popover .fc-popover-body:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+.fc .fc-popover-body .fc-h-event {
+    background: transparent !important;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+.fc-h-event .fc-event-title-container {
+    max-width: 100%;
+    flex: 0 0 auto !important;
+}
+
+.fc-popover-body .fc-h-event .fc-event-title-container {
+    position: relative;
+    padding-left: 8px;
+    padding-right: 11px;
+}
+.fc-popover-body .fc-h-event .fc-event-title-container:before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+}
+.fc-popover-body .fc-h-event.official .fc-event-title-container:before {
+    background-color: #2c0fb4;
+}
+.fc-popover-body .fc-h-event.edu .fc-event-title-container:before {
+    background-color: #be1767;
+}
+.fc-popover-body .fc-h-event.campaign .fc-event-title-container:before {
+    background-color: #007b68;
+}
+.fc-popover-body .fc-h-event .fc-event-title {
+    font-size: 12px;
+    color: #000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.fc-popover-body .fc-more {
+    float: right;
+    line-height: 15px;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #555;
+    font-family: 'Noto Sans KR', 'Arial', 'Apple SD Gothic Neo', sans-serif;
+    font-weight: bold;
+}
+.fc-popover-body .fc-more:after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url('../../assets/images/svg/icon-more.svg') 0 0 no-repeat;
+    vertical-align: -6px;
 }

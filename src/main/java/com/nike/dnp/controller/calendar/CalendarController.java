@@ -81,6 +81,16 @@ public class CalendarController {
         return responseService.getSingleResult(calendarService.findAll(calendarSearchDTO));
     }
 
+    /**
+     * Find all each day single result.
+     *
+     * @param calendarSearchDTO the calendar search dto
+     * @param result            the result
+     * @return the single result
+     * @author [이소정]
+     * @implNote
+     * @since 2020. 8. 28. 오후 7:32:31
+     */
     @ApiOperation(
             value = "Calendar 조회(각 날짜별로 조회)"
             , notes = REQUEST_CHARACTER + "\n"
@@ -90,8 +100,8 @@ public class CalendarController {
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Calendar 조회", value = "/eachList")
     @ValidField
-    public SingleResult<List<Calendar>> findAllEachDay(
-            @Valid @ModelAttribute final CalendarSearchDTO calendarSearchDTO,@ApiIgnore final BindingResult result) {
+    public SingleResult<List<CalendarResultDTO>> findAllEachDay(
+            @Valid @ModelAttribute final CalendarSearchDTO calendarSearchDTO, @ApiIgnore final BindingResult result) {
         log.info("CalendarController.findAllEachDay");
         return responseService.getSingleResult(calendarService.findAllEach(calendarSearchDTO));
     }

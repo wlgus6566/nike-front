@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main-fc">
         <a :href="mainVisual.linkUrl" class="main-visual">
             <span class="thumbnail">
                 <img :src="mainVisual.mobileImageUrl" alt="" />
@@ -14,14 +14,16 @@
                 v-for="item in foundationContentsList"
                 :key="item.contentsSeq"
             >
-                <a :href="`/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()">
+                <a
+                    :href="
+                        `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
+                    "
+                >
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
                     <span class="info-box">
-                        <span class="label">
-                            FOUNDATION
-                        </span>
+                        <span class="label"> FOUNDATION </span>
                         <span class="desc" v-text="item.folderContents"
                             >SP20 나이키 다이렉트</span
                         >
@@ -33,14 +35,16 @@
                 v-for="item in toolKitContentsList"
                 :key="item.contentsSeq"
             >
-                <a :href="`/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()">
+                <a
+                    :href="
+                        `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
+                    "
+                >
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
                     <span class="info-box">
-                        <span class="label">
-                            TOOLKIT
-                        </span>
+                        <span class="label"> TOOLKIT </span>
                         <span class="desc" v-text="item.folderContents"
                             >SP20 나이키 다이렉트</span
                         >
@@ -151,7 +155,7 @@ export default {
                 // dateClick: this.handleDateClick,
                 dateClick: this.handleDateClick,
                 moreLinkClick: this.test,
-                height: 500,
+                height: 410,
                 events: [],
                 dayMaxEventRows: true,
                 timeGrid: {
@@ -162,7 +166,7 @@ export default {
                     center: 'title',
                     right: 'next',
                 },
-                titleFormat: 'yyyy.M',
+                titleFormat: 'yyyy.MM',
                 customButtons: {
                     prev: {
                         // this overrides the prev button
@@ -259,7 +263,7 @@ export default {
         // 달력에 맞게 변수명 변경
         transformData() {
             this.calendarOptions.events = [];
-            this.calendarData.forEach(item => {
+            this.calendarData.forEach((item) => {
                 let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
                     className = 'edu';
@@ -281,9 +285,9 @@ export default {
         },
         distinctAndAddEvent() {
             let distinctEventList = [];
-            this.calendarOptions.events.forEach(item => {
+            this.calendarOptions.events.forEach((item) => {
                 let check = false;
-                distinctEventList.forEach(ele => {
+                distinctEventList.forEach((ele) => {
                     if (item.start === ele.start) {
                         check = true;
                     }
@@ -292,7 +296,7 @@ export default {
                     distinctEventList.push(item);
                 }
             });
-            distinctEventList.forEach(item => {
+            distinctEventList.forEach((item) => {
                 this.calendarOptions.events.unshift(item);
             });
         },
@@ -308,33 +312,63 @@ export default {
 </script>
 <style scoped>
 ::v-deep .fc .fc-more-popover {
-    margin-top: 20px;
+    margin-top: 85px;
 }
 ::v-deep .test {
-    background: red;
+    /*background: red;*/
 }
-
+::v-deep .fc {
+    margin: 15px -20px 0;
+    padding-top: 14px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+::v-deep .fc .fc-scrollgrid-liquid {
+    border: none;
+}
+::v-deep .fc .fc-scroller-liquid-absolute {
+    overflow: visible !important;
+}
+::v-deep .fc .fc-view-harness {
+    height: 316px;
+}
+::v-deep .fc-theme-standard td,
+::v-deep .fc-theme-standard th {
+    border: none;
+}
+::v-deep .fc-daygrid-day-top {
+    display: flex;
+    min-height: 45px;
+    justify-content: center;
+    align-items: center;
+}
 ::v-deep .fc-daygrid-day-bottom {
     width: 100%;
+}
+::v-deep .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+    margin: 0;
 }
 ::v-deep .fc-daygrid-more-link {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 1;
     display: block;
     width: 100%;
-    /*text-indent: -99999px;*/
+    height: 40px;
+    /*font: 0/0 a;*/
+    text-indent: -99999px;
 }
 ::v-deep .fc-daygrid-more-link:before {
     position: absolute;
-    top: 0;
+    top: 3px;
     left: 50%;
     transform: translateX(-50%);
     content: '';
     display: block;
-    width: 3px;
-    height: 3px;
-    border-radius: 100%;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
     background: #fa5400;
 }
 ::v-deep .fc-popover-body .fc-daygrid-event-harness:first-child {

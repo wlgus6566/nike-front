@@ -1,12 +1,14 @@
 package com.nike.dnp.service.report;
 
 import com.nike.dnp.common.variable.FailCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.report.ReportAnswerResultDTO;
 import com.nike.dnp.dto.report.ReportAnswerSaveDTO;
 import com.nike.dnp.entity.report.ReportAnswer;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.report.ReportAnswerRepository;
+import com.nike.dnp.service.alarm.AlarmService;
 import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +39,20 @@ public class ReportAnswerService {
     private final ReportAnswerRepository reportAnswerRepository;
 
     /**
+     * The Alarm service
+     *
+     * @author [이소정]
+     */
+    private final AlarmService alarmService;
+
+    /**
+     * The Report service
+     *
+     * @author [이소정]
+     */
+    private final ReportService reportService;
+
+    /**
      * Find all list.
      *
      * @param reportSeq the report seq
@@ -64,6 +80,16 @@ public class ReportAnswerService {
     public ReportAnswer save(final ReportAnswerSaveDTO reportAnswerSaveDTO) {
         log.info("ReportAnswerService.save");
         final ReportAnswer savedReportAnswer = reportAnswerRepository.save(new ReportAnswer().save(reportAnswerSaveDTO));
+
+        // 알림 저장
+        alarmService.sendAlarmTargetList(
+                ServiceCode.AlarmActionEnumCode.FEEDBACK.toString()
+                , ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString()
+                , null
+                , reportAnswerSaveDTO.getReportSeq()
+                , reportService.findAllAuthUser());
+
+
         return savedReportAnswer;
     }
 
