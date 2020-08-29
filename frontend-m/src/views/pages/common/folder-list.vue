@@ -2,19 +2,28 @@
     <div>
         <div class="sorting-area">
             <button
-                    type="button"
-                    :class="[viewType ? 'type-list' : 'type-list-thum']"
-                    @click="viewTypeToggle()"
+                type="button"
+                :class="[viewType ? 'type-list' : 'type-list-thum']"
+                @click="viewTypeToggle()"
             >
                 <span>컬럼타입</span>
             </button>
             <FilterSelect :selectList="listSortSelect"></FilterSelect>
             <div class="search-input" :class="{ active: isActive }">
                 <div class="input-box">
-                    <input type="text" placeholder="검색어를 입력해주세요." @keyup.enter="onClickSearch" v-model="searchKeyword"/>
-                    <button type="button" class="search" @click="onClickSearch"><span>검색</span></button>
+                    <input
+                        type="text"
+                        placeholder="검색어를 입력해주세요."
+                        @keyup.enter="onClickSearch"
+                        v-model="searchKeyword"
+                    />
+                    <button type="button" class="search" @click="onClickSearch">
+                        <span>검색</span>
+                    </button>
                 </div>
-                <button type="button" class="btn-txt" @click="cancelSearch"><span>취소</span></button>
+                <button type="button" class="btn-txt" @click="cancelSearch">
+                    <span>취소</span>
+                </button>
             </div>
         </div>
         <template v-if="folderListData">
@@ -32,15 +41,25 @@
                             <strong class="title">{{ item.folderName }}</strong>
                             <p class="txt">{{ item.folderContents }}</p>
                             <p
-                                    v-if="item.campaignPeriodSectionCode === 'EVERY'"
-                                    class="date"
+                                v-if="
+                                    item.campaignPeriodSectionCode === 'EVERY'
+                                "
+                                class="date"
                             >
                                 365
                             </p>
                             <p v-else class="date">
-                                {{ $moment(item.campaignBeginDt).format('YYYY.MM.DD') }}
+                                {{
+                                    $moment(item.campaignBeginDt).format(
+                                        'YYYY.MM.DD'
+                                    )
+                                }}
                                 ~
-                                {{ $moment(item.campaignEndDt).format('YYYY.MM.DD') }}
+                                {{
+                                    $moment(item.campaignEndDt).format(
+                                        'YYYY.MM.DD'
+                                    )
+                                }}
                             </p>
                         </div>
                         <div class="view-area">
@@ -51,8 +70,8 @@
             </ul>
             <template v-else>
                 <NoData>
-                    <i class="icon-file"></i>
-                    <p class="desc">업로드한 폴더가 없습니다.</p>
+                    <i class="icon-search"></i>
+                    <p class="desc">검색 결과가 없습니다.</p>
                 </NoData>
             </template>
         </template>
@@ -60,7 +79,6 @@
     </div>
 </template>
 <script>
-
 import { getContents } from '@/api/contents';
 
 import ListSorting from '@/components/list-sorting/index';
@@ -124,9 +142,9 @@ export default {
             this.initPageData();
         },
         // 라우터 변경 감지
-        '$route'(to, from) {
+        $route(to, from) {
             this.initPageData();
-        }
+        },
     },
     created() {
         this.initPageData();
@@ -215,7 +233,11 @@ export default {
         handleScroll() {
             if (this.loadingData) return;
             const windowE = document.documentElement;
-            console.log('indowE.clientHeight + windowE.scrollTop', windowE.clientHeight + windowE.scrollTop, windowE.scrollHeight)
+            console.log(
+                'indowE.clientHeight + windowE.scrollTop',
+                windowE.clientHeight + windowE.scrollTop,
+                windowE.scrollHeight
+            );
             if (
                 windowE.clientHeight + windowE.scrollTop >=
                 windowE.scrollHeight

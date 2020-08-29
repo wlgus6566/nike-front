@@ -4,9 +4,9 @@
             <li
                 v-for="item in tabList"
                 :key="item.value"
-                :class="{active:typeCd === item.value}"
+                :class="{ active: typeCd === item.value }"
             >
-                <a href="#" @click="onClickTab(item.value)">{{item.title}}</a>
+                <a href="#" @click="onClickTab(item.value)">{{ item.title }}</a>
             </li>
         </ul>
         <template v-if="uploadFolderData.length">
@@ -17,7 +17,7 @@
         </template>
         <template v-else>
             <NoData>
-                <i class="icon-file"></i>
+                <i class="icon-upload"></i>
                 <p class="desc">업로드한 폴더가 없습니다.</p>
             </NoData>
         </template>
@@ -25,7 +25,6 @@
     </div>
 </template>
 <script>
-
 import { uploadFolderViewList } from '@/api/mypage';
 
 import MyFolderList from '@/components/my-folder-list';
@@ -91,7 +90,7 @@ export default {
                     page: this.page,
                     size: this.pageSize,
                     typeCd: this.typeCd,
-                    MobileYn: 'Y'
+                    MobileYn: 'Y',
                 });
                 this.uploadFolderData = response.content;
                 this.isLastPage = response.last;
@@ -149,8 +148,7 @@ export default {
                 this.fetchData(true);
             }
         },
-    }
-
+    },
 };
 </script>
 <style scoped></style>
