@@ -73,6 +73,7 @@ export default {
     },
     data() {
         return {
+            test: false,
             title: this.$route.meta.title,
             itemLength: 20,
             totalPage: null,

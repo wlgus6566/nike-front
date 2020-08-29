@@ -62,7 +62,6 @@
                                 />
                                 <i></i>
                             </span>
-                            {{ item.fileKindCode }}
                             <span class="thumbnail">
                                 <span
                                     :class="[`extension-vr`]"

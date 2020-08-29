@@ -8,6 +8,8 @@ import store from './store';
 import VueCookies from 'vue-cookies';
 import VueMoment from 'vue-moment';
 import CKEditor from 'ckeditor4-vue';
+import VueYoutube from 'vue-youtube';
+import vueVimeoPlayer from 'vue-vimeo-player';
 // import VCalendar from 'v-calendar';
 import VModal from 'vue-js-modal';
 import lineClamp from './utils/lineclamp';
@@ -16,17 +18,8 @@ Vue.config.productionTip = false;
 
 Vue.use(CKEditor);
 Vue.use(VueCookies);
-Vue.use(VModal, {
-    dynamicDefaults: {
-        width: '800px',
-        height: 'auto',
-        adaptive: false,
-        draggable: false,
-        scrollable: true,
-        reset: true,
-        dynamic: true,
-    },
-});
+Vue.use(VueYoutube);
+Vue.use(vueVimeoPlayer);
 Vue.use(VueMoment);
 // Vue.use(VCalendar, {
 //     locale: 'en-US',
