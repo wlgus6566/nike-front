@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+    <g fill="none" fill-rule="evenodd" stroke="#FFF" stroke-width="1.5">
+        <path stroke-linecap="round" d="M2.222 23L18.222 23" transform="translate(5 8)"/>
+        <g>
+            <path stroke-linejoin="round" d="M18.523.104l3.143 3.142L5.953 18.96l-3.603.46.46-3.603L18.523.104z" transform="translate(5 8) rotate(4 -1.283 23.672)"/>
+            <path d="M15.667 3.556L18.466 6.355" transform="translate(5 8) rotate(4 -1.283 23.672)"/>
+        </g>
+        <path stroke-linecap="round" d="M21.222 23L24.222 23M27.222 23L28.222 23" transform="translate(5 8)"/>
+    </g>
+</svg>

@@ -14,7 +14,7 @@
                 ref="uploadIpt"
                 multiple
                 @change="uploadIptChange"
-                style="position: absolute; left: -9999px;"
+                style="position: absolute; opacity: 0;"
             />
             <draggable
                 ref="fileListUl"
@@ -31,6 +31,7 @@
                     :file="file"
                     :key="file.fileOrder"
                     :pageFileSectionCodeName="pageFileSectionCodeName"
+                    :menuCode="menuCode"
                     @fileSelect="fileSelect"
                     @fileDelete="fileDelete(file)"
                 />
@@ -111,7 +112,7 @@ export default {
             },
         };
     },
-    props: ['pageFileSectionCodeName'],
+    props: ['pageFileSectionCodeName', 'menuCode'],
     computed: {
         dragOptions() {
             return {
@@ -254,13 +255,12 @@ export default {
         },
         fileDelete(file) {
             const idx = this.FileList.findIndex((el) => {
-                return (
-                    el.fileName === file.fileName &&
-                    el.fileExtension === file.fileExtension &&
-                    el.fileSize === file.fileSize
-                );
+                return el.fileOrder === file.fileOrder;
             });
             this.FileList.splice(idx, 1);
+            if (!this.FileList.length) {
+                this.FileList.push({ ...this.defaultFileData });
+            }
             this.emitFileList();
         },
         fileSelect() {

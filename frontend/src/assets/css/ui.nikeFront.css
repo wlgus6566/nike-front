@@ -419,6 +419,9 @@
 .radio input:checked + i {
     background-image: url('../images/svg/icon-radio-on.svg');
 }
+.radio input:disabled ~ * {
+    opacity: 0.5;
+}
 .checkbox .txt,
 .radio .txt {
     display: inline-block;
@@ -579,7 +582,7 @@
 }
 .check-label {
     display: inline-flex;
-    padding-right: 40px;
+    margin-right: 40px;
     align-items: center;
     box-sizing: border-box;
     color: #888;
@@ -4581,6 +4584,62 @@ img.image-grayscale {
     position: relative;
     flex: 0 1 auto;
 }
+.folder-item .auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 2;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #000;
+}
+.folder-item .auth i {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background: url('../../assets/images/svg/icon-no-authority.svg') no-repeat
+        50% 50% / contain;
+}
+.folder-item .auth,
+.folder-item .exposure {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 2;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #000;
+}
+.folder-item .auth i {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background: url('../../assets/images/svg/icon-no-authority.svg') no-repeat
+        50% 50% / contain;
+}
+.folder-item .exposure i {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background: url('../../assets/images/svg/icon-writing.svg') no-repeat 50%
+        50% / contain;
+}
 .folder-item a {
     z-index: 2;
     position: relative;
@@ -4885,10 +4944,10 @@ img.image-grayscale {
 .extension-docx {
     background-position: -100px -100px !important;
 }
-.extension-xls {
+.extension-xlsx {
     background-position: -200px -100px !important;
 }
-.extension-xlsx {
+.extension-xls {
     background-position: -300px -100px !important;
 }
 .extension-vr {

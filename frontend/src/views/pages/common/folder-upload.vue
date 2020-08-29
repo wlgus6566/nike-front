@@ -65,6 +65,7 @@
                                     type="radio"
                                     v-model="menuCode"
                                     :value="item"
+                                    :disabled="pageMenuCodeDisabled"
                                 />
                                 <i></i>
                                 <span class="txt">{{ item }}</span>
@@ -204,6 +205,7 @@
                 v-if="pageFileSectionCodeName"
                 ref="fileSet"
                 :pageFileSectionCodeName="pageFileSectionCodeName"
+                :menuCode="menuCode"
                 @FileListUpdate="FileListUpdate"
                 @submitForm="submitForm"
             />
@@ -235,6 +237,38 @@ export default {
             folderSet: {
                 asset: {
                     folderOptionName: '캠페인',
+                    menuCodeList: ['SP', 'SU', 'FA', 'HO'],
+                    fileSectionCodeName: {
+                        SP: ['ASSET', 'GUIDE'],
+                        SU: ['ASSET', 'GUIDE'],
+                        FA: ['ASSET', 'GUIDE'],
+                        HO: ['ASSET', 'GUIDE'],
+                    },
+                },
+                toolkit: {
+                    folderOptionName: '툴킷',
+                    menuCodeList: ['VMS', 'EKIN', 'SOCIAL', 'RB'],
+                    fileSectionCodeName: {
+                        VMS: ['GUIDE', 'VIDEO', 'VR'],
+                        EKIN: ['GUIDE', 'VIDEO'],
+                        SOCIAL: ['GUIDE', 'ASSET'],
+                        RB: ['GUIDE', 'ASSET'],
+                    },
+                },
+                foundation: {
+                    folderOptionName: '폴더',
+                    menuCodeList: ['VMS', 'EKIN', 'DIGITAL', 'RB'],
+                    fileSectionCodeName: {
+                        VMS: ['GUIDE', 'VIDEO'],
+                        EKIN: ['GUIDE', 'VIDEO'],
+                        SOCIAL: ['GUIDE', 'ASSET'],
+                        RB: ['GUIDE', 'ASSET'],
+                    },
+                },
+            },
+            /*folderSet: {
+                asset: {
+                    folderOptionName: '캠페인',
                     fileSectionCodeName: ['ASSET', 'GUIDE'],
                     menuCode: ['SP', 'SU', 'FA', 'HO'],
                 },
@@ -248,13 +282,13 @@ export default {
                     fileSectionCodeName: ['GUIDE', 'VIDEO'],
                     menuCode: ['VMS', 'EKIN', 'DIGITAL', 'RB'],
                 },
-            },
+            },*/
             title: this.$route.meta.title,
             itemLength: 20,
             totalPage: null,
             page: 0,
             loadingData: false,
-            menuCode: 'SP',
+            menuCode: null,
             attrs: [
                 {
                     key: 'today',
@@ -317,7 +351,7 @@ export default {
     computed: {
         pageMenuCode() {
             return this.folderSet[this.$route.meta.topMenuCode.toLowerCase()]
-                .menuCode;
+                .menuCodeList;
         },
         pageOptionName() {
             return this.folderSet[this.$route.meta.topMenuCode.toLowerCase()]
@@ -325,7 +359,17 @@ export default {
         },
         pageFileSectionCodeName() {
             return this.folderSet[this.$route.meta.topMenuCode.toLowerCase()]
-                .fileSectionCodeName;
+                .fileSectionCodeName[this.menuCode];
+        },
+        pageMenuCodeDisabled() {
+            return this.folderDetail.contentsFileList.some((el) => {
+                console.log(el);
+                return (
+                    (el.fileKindCode !== 'FILE' &&
+                        (el.url !== '' || el.title !== '')) ||
+                    (el.fileKindCode === 'FILE' && el.fileName !== '')
+                );
+            });
         },
     },
     watch: {
@@ -353,11 +397,10 @@ export default {
     },
     methods: {
         folderSetting() {
+            console.log(this.pageFileSectionCodeName);
             this.dataReset();
             this.saveFolder = false;
-            this.menuCode = this.folderSet[
-                this.$route.meta.topMenuCode.toLowerCase()
-            ].menuCode[0];
+            this.menuCode = this.pageMenuCode[0];
             if (this.$route.params.id) {
                 this.getFolderDetail();
             }
@@ -412,7 +455,7 @@ export default {
                     return;
                 }
             }
-
+            bus.$emit('pageLoading', true);
             this.$refs.fileSet.uploadFiles();
         },
         checksUpdate(checksArr) {
@@ -421,7 +464,6 @@ export default {
         },
         async submitForm() {
             try {
-                bus.$emit('pageLoading', true);
                 this.folderDetail.campaignBeginDt = this.$moment(
                     this.BeginDt
                 ).format('YYYY.MM.DD');
@@ -507,7 +549,7 @@ export default {
         dataReset() {
             this.folderDetail.imageFilePhysicalName = '';
             this.folderDetail.exposureYn = 'Y';
-            this.menuCode = 'SP';
+            this.menuCode = null;
             this.folderDetail.folderName = '';
             this.folderDetail.folderContents = '';
             this.folderDetail.campaignPeriodSectionCode = 'SELECT';
