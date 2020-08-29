@@ -286,7 +286,7 @@ export default {
             this.noticeDetail.title = '';
             this.noticeDetail.contents = '';
             this.noticeDetail.noticeYn = null;
-            this.editorConfig.fileTools_requestHeaders.Authorization = '';
+            //this.editorConfig.fileTools_requestHeaders.Authorization = '';
         },
     },
 };
