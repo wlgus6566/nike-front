@@ -14,9 +14,9 @@
                         >
                             <span class="thumbnail">
                                 <img
-                                    :src="item.filePhysicalName"
+                                    :src="item.thumbnailFilePhysicalName"
                                     :alt="item.fileName"
-                                    v-if="item.filePhysicalName"
+                                    v-if="item.thumbnailFilePhysicalName"
                                 />
                                 <span
                                     :class="[
@@ -49,11 +49,19 @@
                     </NoData>
                 </div>
             </el-scrollbar>
-            <button type="button" class="btn-download">
-                <span class="gage" style="width: 50%;"></span>
-                <span class="txt" style="display: none;">DOWNLOAD</span>
-                <span class="txt">DOWNLOAD...</span>
+            <button
+                v-if="!downloadFiles"
+                type="button"
+                class="btn-download"
+                @click="fileDownload"
+                :disabled="reportBasketList.length === 0"
+            >
+                <span class="txt">DOWNLOAD</span>
             </button>
+            <span v-else class="btn-download active">
+                <span class="txt">DOWNLOADING({{ this.loaded }}%)…</span>
+                <span class="gage" :style="{ width: `${this.loaded}%` }"></span>
+            </span>
         </div>
     </div>
 </template>
@@ -62,6 +70,7 @@ import NoData from '@/components/no-data';
 import Loading from '@/components/loading';
 import { postReportBasket, deleteReportBasket } from '@/api/report';
 import bus from '@/utils/bus';
+import { contentFileDownload } from '@/api/contents';
 
 export default {
     name: 'FileItem',
@@ -84,7 +93,10 @@ export default {
                     },
                 ],
             },
+            link: [],
             deleteLoading: [],
+            downloadFiles: null,
+            loaded: 0,
         };
     },
     computed: {
@@ -93,7 +105,20 @@ export default {
                 return this.$store.state.reportBasketList;
             },
             set(value) {
-                this.$store.commit('SET_CONT_BASKET', value);
+                this.$store.commit('SET_REPORT_BASKET', value);
+            },
+        },
+        totalSize: {
+            get() {
+                return this.$store.state.reportBasketList.reduce(
+                    (acc, current) => {
+                        return acc + current.fileSize;
+                    },
+                    0
+                );
+            },
+            set(value) {
+                this.$store.commit('SET_REPORT_BASKET', value);
             },
         },
     },
@@ -106,6 +131,60 @@ export default {
         });
     },
     methods: {
+        loadedUpdate() {
+            const loaded = this.downloadFiles.reduce((a, b) => {
+                return a + b.loaded;
+            }, 0);
+            this.loaded = Math.round((loaded * 100) / this.totalSize);
+        },
+
+        async fileDownload() {
+            this.downloadFiles = [];
+            this.link.forEach((el) => {
+                el.remove();
+            });
+            this.link = [];
+            await Promise.all(
+                this.reportBasketList.map(async (el, i) => {
+                    try {
+                        const config = {
+                            responseType: 'blob',
+                            timeout: 0,
+                            onDownloadProgress: (progressEvent) => {
+                                this.downloadFiles[i] = {
+                                    total: progressEvent.total,
+                                    loaded: progressEvent.loaded,
+                                };
+                                this.loadedUpdate();
+                            },
+                        };
+                        const response = await contentFileDownload(
+                            el.contentsFileSeq,
+                            config
+                        );
+                        const url = window.URL.createObjectURL(
+                            new Blob([response.data])
+                        );
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.seq = el.contentsBasketSeq;
+                        link.setAttribute('download', el.fileName);
+                        document.body.appendChild(link);
+                        this.link.push(link);
+                        window.URL.revokeObjectURL(url);
+                    } catch (error) {
+                        console.error(error);
+                    }
+                })
+            );
+
+            this.link.forEach((el) => {
+                this.delContBasket(el.seq);
+                el.click();
+            });
+            this.loaded = 0;
+            this.downloadFiles = null;
+        },
         basketEnter() {
             this.$store.commit('SET_FILE_MOUSEENTER', true);
         },

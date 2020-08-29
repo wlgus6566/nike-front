@@ -2,65 +2,42 @@
     <div>
         <form action="" @submit.prevent="submitReport">
             <ul class="upload-list">
-                <!--                <li class="upload-item thumbnail-file">-->
-                <!--                    <thumbnail-->
-                <!--                        :size="1 / 1"-->
-                <!--                        @cropImage="cropImage"-->
-                <!--                        :imageBase64="reportDetailData.imageBase64"-->
-                <!--                    >-->
-                <!--                        <template slot="txt-up">-->
-                <!--                            썸네일 이미지 등록-->
-                <!--                        </template>-->
-                <!--                        <template slot="txt">-->
-                <!--                            썸네일 이미지 재등록-->
-                <!--                        </template>-->
-                <!--                    </thumbnail>-->
-                <!--                </li>-->
                 <li class="upload-item thumbnail-file">
-                    <label
-                        class="thumb-file"
-                        :class="{ 'file-upload': cropImg }"
-                    >
-                        <input type="file" />
-                        <div class="thumb">
-                            <!-- <img src="http://placehold.it/320x320" alt="샘플" />-->
-                        </div>
-                        <p class="txt">
-                            썸네일 이미지 등록
-                        </p>
-                        <!-- 업로드시 나타나는 텍스트 -->
-                        <p class="txt-btm">
-                            <span>썸네일 이미지 재등록</span>
-                        </p>
-                    </label>
+                    <thumbnail
+                      :size="1/1"
+                      @cropImage="cropImage"
+                      :imageBase64="reportDetailData.imageBase64">
+                      <template slot="txt-up">
+                        썸네일 이미지 등록
+                      </template>
+                      <template slot="txt">
+                        썸네일 이미지 재등록
+                      </template>
+                    </thumbnail>
                     <div class="upload-file-box">
                         <div class="fine-file">
-                            <input type="file" />
-                            <!-- 파일 등록 전 -->
-                            <!-- <div class="txt">파일등록</div>-->
-                            <!-- 파일 등록 후 -->
-                            <div class="number">6/10</div>
+                          <input
+                              type="file"
+                              ref="fileInput"
+                              accept="image/*"
+                              multiple
+                              @change="uploadIptChange"
+                          />
+                            <div class="txt"v-if="!uploadFileViewer">파일등록</div>
+                            <div class="number" v-else v-text="uploadFileSize+'/10'">0/10</div>
                         </div>
                         <ul class="upload-file-list">
                             <!-- 이미지 첨부한 타입 -->
-                            <li class="upload-file-item">
+                            <li v-for="item in reportDetailData.reportFileSaveDTOList"
+                                :key="item.fileOrder" class="upload-file-item">
                                 <img
-                                    src="http://placehold.it/130x130"
+                                    :src="item.thumbnailFilePhysicalName"
                                     alt="샘플이미지"
                                 />
-                                <button type="button" class="file-delete">
+                                <button type="button" class="file-delete" @click="removeFile(item.fileOrder)">
                                     삭제
                                 </button>
                             </li>
-                            <li class="upload-file-item"></li>
-                            <li class="upload-file-item"></li>
-                            <li class="upload-file-item"></li>
-                            <li class="upload-file-item"></li>
-                            <li class="upload-file-item"></li>
-                            <li class="upload-file-item"></li>
-                            <li class="upload-file-item"></li>
-                            <li class="upload-file-item"></li>
-                            <li class="upload-file-item"></li>
                         </ul>
                     </div>
                     <p class="desc">
@@ -110,13 +87,8 @@
 </template>
 <script>
 import thumbnail from '@/components/thumbnail/index';
-import {
-    getReportDetail,
-    getReportFile,
-    postReport,
-    putReport,
-} from '@/api/report';
-import { fileUpLoad } from '@/api/file';
+import {getReportDetail, getReportFile, postReport, putReport,} from '@/api/report';
+import {fileUpLoad} from '@/api/file';
 import bus from '@/utils/bus';
 
 export default {
@@ -126,7 +98,7 @@ export default {
             title: this.$route.meta.title,
             checkedFile: [],
             uploadFileList: [],
-
+            uploadFileSize: 0,
             reportSeq: null,
             imageFilePhysicalName: null,
             readCount: null,
@@ -140,6 +112,7 @@ export default {
                 reportFileSaveDTOList: [],
             },
             reportSectionCodeList: ['SP', 'SU', 'FA', 'HO'],
+            uploadFileViewer :false,
         };
     },
     components: {
@@ -172,7 +145,7 @@ export default {
                     );
                 });
             });
-            this.reportDetailData.reportFileSaveDTOList.forEach((el, index) => {
+          this.reportDetailData.reportFileSaveDTOList.forEach((el, index) => {
                 el.fileOrder = index;
             });
         },
@@ -187,14 +160,11 @@ export default {
                 this.checkedFile.push(seq);
             }
         },
-        removeFile() {
-            this.checkedFile.forEach((a) => {
-                this.reportDetailData.reportFileSaveDTOList = this.reportDetailData.reportFileSaveDTOList.filter(
-                    (b) => b.fileOrder !== a
-                );
-            });
-            this.checkedFile = [];
-            this.fileOrderSet();
+        removeFile(order) {
+          this.reportDetailData.reportFileSaveDTOList = this.reportDetailData.reportFileSaveDTOList.filter(
+              (b) => b.fileOrder !== order
+          );
+          this.fileOrderSet();
         },
 
         // 리포트 상세 데이터
@@ -214,7 +184,8 @@ export default {
                     response.reportSectionCode;
                 this.reportDetailData.imageBase64 =
                     response.imageFilePhysicalName;
-                await this.getReportFileData();
+
+              await this.getReportFileData();
             } catch (error) {
                 console.error(error);
             }
@@ -222,14 +193,20 @@ export default {
         // 리포트 상세 파일 데이터
         async getReportFileData() {
             try {
-                const {
+              const {
+
                     data: { data: response },
-                } = await getReportFile(this.$route.params.id, {
+              } = await getReportFile(this.$route.params.id, {
                     page: 0,
                     size: 1000,
-                });
-                this.reportDetailData.reportFileSaveDTOList = response.content;
-                this.fileOrderSet();
+              });
+              this.reportDetailData.reportFileSaveDTOList = response.content;
+              if(this.reportDetailData.reportFileSaveDTOList.length > 0) {
+                this.uploadFileViewer = true;
+                this.uploadFileSize = this.reportDetailData.reportFileSaveDTOList.length;
+              }
+              this.fileOrderSet();
+
             } catch (error) {
                 console.error(error);
             }
@@ -251,21 +228,31 @@ export default {
             });
 
             if (mergeArray.length > 10) {
-                alert('10개 이상 못해');
+                alert('10개 이상 파일을 등록할 수 없습니다.');
                 mergeArray.splice(10, 9999);
             }
 
+
             mergeArray.forEach((el) => {
+              let reader = new FileReader();
+              reader.onloadend = (e) => {
+                //this.reportDetailData.reportFileSaveDTOList[this.reportDetailData.reportFileSaveDTOList.length-1].thumbnailFilePhysicalName = e.target.result;
                 this.reportDetailData.reportFileSaveDTOList.push({
-                    fileOrder: this.reportDetailData.reportFileSaveDTOList
-                        .length,
-                    fileName: el.name,
-                    fileSize: el.size,
-                    fileContentType: el.type,
-                    progress: 0,
+                  fileOrder: this.reportDetailData.reportFileSaveDTOList.length,
+                  fileName: el.name,
+                  fileSize: el.size,
+                  fileContentType: el.type,
+                  thumbnailFilePhysicalName: e.target.result,
+                  progress: 0,
                 });
+
+                this.uploadFileSize++;
+              };
+              reader.readAsDataURL(el);
             });
             this.uploadFileList = this.uploadFileList.concat(mergeArray);
+            this.uploadFileViewer = true;
+
         },
 
         async uploadFiles() {
@@ -294,7 +281,6 @@ export default {
                             },
                         };
                         const response = await fileUpLoad(formData, config);
-                        console.log(response);
                         if (response.existMsg) {
                             alert(response.msg);
                         }

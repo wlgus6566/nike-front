@@ -14,9 +14,9 @@
                         >
                             <span class="thumbnail">
                                 <img
-                                    :src="item.filePhysicalName"
+                                    :src="item.thumbnailFilePhysicalName"
                                     :alt="item.fileName"
-                                    v-if="item.filePhysicalName"
+                                    v-if="item.thumbnailFilePhysicalName"
                                 />
                                 <span
                                     :class="[
@@ -63,9 +63,6 @@
                 <span class="gage" :style="{ width: `${this.loaded}%` }"></span>
             </span>
         </div>
-
-        {{ contBasketList.length }}
-
         <strong class="tab-title">HISTORY</strong>
         <TabComponent v-bind:tabMenus="historyTab"></TabComponent>
     </div>
@@ -103,34 +100,29 @@ export default {
                 ],
                 showIndex: 0,
             },
+            link: [],
             deleteLoading: [],
             downloadFiles: null,
             loaded: 0,
         };
     },
-    /* watch: {
-        downloadFiles: {
-            deep: true,
-            handler(current) {
-                const total = current.reduce((a, b) => {
-                    console.log(b);
-                    return a + b.total;
-                }, 0);
-                const loaded = current.reduce((a, b) => {
-                    console.log(b);
-
-                    return a + b.loaded;
-                }, 0);
-                console.log(loaded);
-                console.log(total);
-                this.loaded = Math.round((loaded * 100) / total);
-            },
-        },
-    },*/
     computed: {
         contBasketList: {
             get() {
                 return this.$store.state.contBasketList;
+            },
+            set(value) {
+                this.$store.commit('SET_CONT_BASKET', value);
+            },
+        },
+        totalSize: {
+            get() {
+                return this.$store.state.contBasketList.reduce(
+                    (acc, current) => {
+                        return acc + current.fileSize;
+                    },
+                    0
+                );
             },
             set(value) {
                 this.$store.commit('SET_CONT_BASKET', value);
@@ -146,18 +138,19 @@ export default {
         });
     },
     methods: {
-        progress() {
-            const total = this.downloadFiles.reduce((a, b) => {
-                return a + b.total;
-            }, 0);
+        loadedUpdate() {
             const loaded = this.downloadFiles.reduce((a, b) => {
                 return a + b.loaded;
             }, 0);
-            this.loaded = Math.round((loaded * 100) / total);
+            this.loaded = Math.round((loaded * 100) / this.totalSize);
         },
 
         async fileDownload() {
             this.downloadFiles = [];
+            this.link.forEach((el) => {
+                el.remove();
+            });
+            this.link = [];
             await Promise.all(
                 this.contBasketList.map(async (el, i) => {
                     try {
@@ -169,29 +162,34 @@ export default {
                                     total: progressEvent.total,
                                     loaded: progressEvent.loaded,
                                 };
-                                this.progress();
+                                this.loadedUpdate();
                             },
                         };
                         const response = await contentFileDownload(
                             el.contentsFileSeq,
                             config
                         );
-                        await this.delContBasket(el.contentsBasketSeq);
                         const url = window.URL.createObjectURL(
                             new Blob([response.data])
                         );
                         const link = document.createElement('a');
                         link.href = url;
-                        link.id = 'id_' + i;
+                        link.seq = el.contentsBasketSeq;
                         link.setAttribute('download', el.fileName);
                         document.body.appendChild(link);
-                        link.click();
+                        this.link.push(link);
                         window.URL.revokeObjectURL(url);
                     } catch (error) {
                         console.error(error);
                     }
                 })
             );
+
+            this.link.forEach((el) => {
+                this.delContBasket(el.seq);
+                el.click();
+            });
+            this.loaded = 0;
             this.downloadFiles = null;
         },
         basketEnter() {
