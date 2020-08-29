@@ -135,12 +135,12 @@ public class ContentsService {
         final Long authSeq = SecurityUtil.currentUser().getAuthSeq();
         // 권한 검사
         final String searchMenuCode = null == menuCode  ? topMenuCode+"_ALL" : topMenuCode + "_" + menuCode;
-        final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
-        userContentsSearchDTO.setMenuCode(searchMenuCode);
-        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.LIST.toString());
+//        final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
+//        userContentsSearchDTO.setMenuCode(searchMenuCode);
+//        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.LIST.toString());
 
         // 권한에 따른 조건문
-        contentsSearchDTO.setExposureYn(userContentsService.isAuth(authSeq, userContentsSearchDTO) ? null : "Y");
+        contentsSearchDTO.setExposureYn(userContentsService.isAuth(authSeq, searchMenuCode, ServiceCode.MenuSkillEnumCode.LIST.toString()) ? null : "Y");
 
         // QueryDsl 기능 이용
         contentsSearchDTO.setUserAuthSeq(authSeq);

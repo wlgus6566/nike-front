@@ -1984,6 +1984,21 @@
     max-height: 700px;
     vertical-align: top;
 }
+.file-item .detail .thumbnail .video-item {
+    max-width: 100%;
+    max-height: 700px;
+    width: 100%;
+    padding-top: 53%;
+    box-sizing: border-box;
+}
+
+.file-item .detail .thumbnail .video-item iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
 .file-item .detail .down-info {
     margin-top: 20px;
     display: flex;

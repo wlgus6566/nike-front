@@ -9,6 +9,7 @@ import com.nike.dnp.dto.report.ReportResultDTO;
 import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.dto.user.UserContentsSearchDTO;
+import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.entity.user.UserAuth;
@@ -164,13 +165,7 @@ public class ReportService {
         savedReport.setReportFileList(reportFileList);
 
         // 알림 저장
-        alarmService.sendAlarmTargetList(
-                ServiceCode.AlarmActionEnumCode.NEW.toString()
-                , ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString()
-                , null
-                , savedReport.getReportSeq()
-                , this.findAllAuthUser());
-
+        this.sendAlarmReport(ServiceCode.AlarmActionEnumCode.NEW.toString(), reportSaveDTO.getReportSeq());
 
         // 최근 업로드 목록 추가
         historyService.saveRecentUploadHistory(savedReport.getReportSeq(), ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
@@ -291,14 +286,32 @@ public class ReportService {
         this.deleteReportFile(lastBeforeFileList);
 
         // 알림 저장
-        alarmService.sendAlarmTargetList(
-                ServiceCode.AlarmActionEnumCode.UPDATE.toString()
-                , ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString()
-                , null
-                , reportSaveDTO.getReportSeq()
-                , this.findAllAuthUser());
+        this.sendAlarmReport(ServiceCode.AlarmActionEnumCode.UPDATE.toString(), reportSaveDTO.getReportSeq());
 
         return report.get();
+    }
+
+    /**
+     * Send alarm report.
+     *
+     * @param alarmActionCode the alarm action code
+     * @param reportSeq       the report seq
+     * @author [이소정]
+     * @implNote 리포트 알림 전송
+     * @since 2020. 8. 29. 오후 6:11:36
+     */
+    @Transactional
+    public void sendAlarmReport(final String alarmActionCode, final Long reportSeq) {
+        final Long authSeq = SecurityUtil.currentUser().getAuthSeq();
+        Optional<Auth> authOptional= authService.findById(authSeq);
+        if (1 != authOptional.get().getAuthDepth()) {
+            alarmService.sendAlarmTargetList(
+                    alarmActionCode
+                    , ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString()
+                    , null
+                    , reportSeq
+                    , this.findAllAuthUser(authSeq, authOptional.get().getAuthDepth()));
+        }
     }
 
     /**
@@ -424,28 +437,87 @@ public class ReportService {
      *
      * @return the list
      * @author [이소정]
-     * @implNote 보고서 상세 권한 있는 그룹의 회원 목록
+     * @implNote 보고서 상세 권한 있고 depth에 맞는 그룹의 회원 목록
      * @since 2020. 7. 24. 오후 8:20:01
      */
-    public List<Long> findAllAuthUser() {
-        log.info("ReportService.findAllAuthUser");
-        final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
-        userContentsSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
-        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
-        final List<AuthReturnDTO> authList = this.findAllAuthUserWithDepth();
+    public List<Long> findAllAuthUser(final Long authSeq, final Long authDepth) {
+        final List<AuthReturnDTO> authList = authService.findByConfig(
+                ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString()
+                , ServiceCode.MenuSkillEnumCode.VIEW.toString()
+        );
+
+        final List<Long> reportViewAuthList = this.findUpperAuthList(authSeq, authDepth, authList);
 
         final List<Long> userSeqList  = new ArrayList<>();
-        for (final AuthReturnDTO authReturnDTO : authList) {
+        for (final Long findAuthSeq : reportViewAuthList) {
             // authSeq 를 가지고 userSeq 목록 가져오기
-            if ("Y".equals(authReturnDTO.getCheckBoxYn())) {
-                final List<UserAuth> userAuthList = userAuthRepository.findAllByAuthSeq(authReturnDTO.getAuthSeq());
-                for (final UserAuth userAuth : userAuthList) {
-                    userSeqList.add(userAuth.getUserSeq());
-                }
+            final List<UserAuth> userAuthList = userAuthRepository.findAllByAuthSeq(findAuthSeq);
+            for (final UserAuth userAuth : userAuthList) {
+                userSeqList.add(userAuth.getUserSeq());
             }
         }
         return userSeqList;
     }
+
+    /**
+     * Find upper auth list list.
+     *
+     * @param authSeq   the auth seq
+     * @param authDepth the auth depth
+     * @param authList  the auth list
+     * @return the list
+     * @author [이소정]
+     * @implNote 권한에 맞는 목록 저장
+     * @since 2020. 8. 29. 오후 6:41:39
+     */
+    public List<Long> findUpperAuthList(final Long authSeq, final Long authDepth, final List<AuthReturnDTO> authList) {
+        List<Long> upperAuthList = new ArrayList<>();
+        for (AuthReturnDTO authReturnDTO : authList) {
+            if (authSeq.equals(authReturnDTO.getAuthSeq())) {
+                if (2 == authDepth) {
+                    upperAuthList.add(authReturnDTO.getAuthSeq());
+                    Long oneDepth = this.findUpperAuthSeq(authReturnDTO.getAuthSeq(), authList);
+                    if (null != oneDepth) {
+                        upperAuthList.add(oneDepth);
+                    }
+                    break;
+                } else {
+                    Long twoDepth = this.findUpperAuthSeq(authReturnDTO.getAuthSeq(), authList);
+                    if (null != twoDepth) {
+                        upperAuthList.add(twoDepth);
+                    }
+                    Long threeDepth = this.findUpperAuthSeq(authReturnDTO.getUpperAuthSeq(), authList);
+                    if (null != threeDepth) {
+                        upperAuthList.add(threeDepth);
+                    }
+                    break;
+                }
+            }
+        }
+        return upperAuthList;
+    }
+
+    /**
+     * Find upper auth seq long.
+     *
+     * @param authSeq  the auth seq
+     * @param authList the auth list
+     * @return the long
+     * @author [이소정]
+     * @implNote authseq로 상위 권한 seq 찾기
+     * @since 2020. 8. 29. 오후 6:41:51
+     */
+    public Long findUpperAuthSeq(final Long authSeq,final List<AuthReturnDTO> authList) {
+        Long upperAuthSeq = null;
+        for (AuthReturnDTO authReturnDTO : authList) {
+            if (authSeq.equals(authReturnDTO.getAuthSeq())) {
+                upperAuthSeq = authReturnDTO.getUpperAuthSeq();
+            }
+        }
+        return upperAuthSeq;
+    }
+
+
 
     /**
      * Find all auth user with depth list.
@@ -455,7 +527,7 @@ public class ReportService {
      * @implNote 권한 목록 조회
      * @since 2020. 8. 26. 오후 4:52:23
      */
-    public List<AuthReturnDTO> findAllAuthUserWithDepth() {
+    public List<AuthReturnDTO> findAllAuthListWithDepth() {
         final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
         userContentsSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
         userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
