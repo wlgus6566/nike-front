@@ -17,7 +17,6 @@ function setInterceptors(instance) {
     instance.interceptors.response.use(
         (config) => config,
         (error) => {
-            console.log(error);
             if (error.response.status === 401) {
                 router.push('/login');
             }
