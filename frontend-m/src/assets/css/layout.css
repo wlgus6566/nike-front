@@ -28,15 +28,16 @@ header {
     left: 0;
     width: 100%;
     display: block;
+    padding: 11px 20px 8px;
     background-color: #fff;
     border-bottom: 1px solid #eee;
     box-sizing: border-box;
 }
 header .logo {
-    width: 90px;
-    height: 60px;
-    background: url(../images/logo-nike.svg) no-repeat center;
-    background-size: 50px 18px;
+    width: 120px;
+    height: 40px;
+    background: url('../images/img-main-logo.svg') 0 0 no-repeat;
+    background-size: 120px auto;
 }
 header .logo span {
     display: block;
@@ -201,7 +202,7 @@ footer .copy {
 }
 
 .nav-area {
-    z-index: 5;
+    z-index: 20;
     position: fixed;
     bottom: 0;
     left: 0;

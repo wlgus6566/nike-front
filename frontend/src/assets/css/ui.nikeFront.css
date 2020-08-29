@@ -3268,6 +3268,7 @@ img.image-grayscale {
     line-height: 20px;
     color: #333;
     font-weight: 100;
+    word-break: break-all;
 }
 .contact-item .info-box {
     position: absolute;
@@ -3323,6 +3324,7 @@ img.image-grayscale {
 }
 .contact-list li {
     flex-basis: calc(50% - 10px);
+    max-width: calc(50% - 10px);
     -ms-flex-preferred-size: calc(50% - 80px);
 }
 .contact-list li:nth-child(2n) {
