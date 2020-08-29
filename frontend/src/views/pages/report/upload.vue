@@ -87,11 +87,6 @@
                                                         type="checkbox"
                                                         :value="item.fileOrder"
                                                         v-model="checkedFile"
-                                                        @click="
-                                                            selectFile(
-                                                                item.fileOrder
-                                                            )
-                                                        "
                                                     />
                                                     <i></i>
                                                 </span>
@@ -282,10 +277,14 @@ export default {
                     }
                 );
             });
-
-            if (mergeArray.length > 10) {
+            if (mergeArray.length + this.uploadFileList.length > 10) {
                 alert('10개 이상 등록 할 수 없습니다.');
-                mergeArray.splice(10, 9999);
+                if (this.uploadFileList.length === 10) return;
+                let maxNum = 10;
+                if (this.uploadFileList.length > 0) {
+                    maxNum = 10 - this.uploadFileList.length;
+                }
+                mergeArray.splice(maxNum, 9999);
             }
 
             mergeArray.forEach((el) => {
