@@ -534,6 +534,17 @@ public class AuthService {
     }
 
     /**
+     * Find by config list.
+     *
+     * @param menuCode  the menu code
+     * @param skillCode the skill code
+     * @return the list
+     */
+    public List<AuthReturnDTO> findByConfig(final String menuCode, final String skillCode) {
+        return authRepository.findByConfig(menuCode, skillCode);
+    }
+
+    /**
      * Gets auth list with depth.
      *
      * @param userContentsSearchDTO the user contents search dto
@@ -648,10 +659,7 @@ public class AuthService {
      */
     public List<AuthReturnDTO> getAuthList (final UserContentsSearchDTO userContentsSearchDTO) {
         log.info("AuthService.getAuthList");
-        final List<AuthReturnDTO> findByConfig = authRepository.findByConfig(
-                userContentsSearchDTO.getMenuCode()
-                , userContentsSearchDTO.getSkillCode());
-
+        final List<AuthReturnDTO> findByConfig = this.findByConfig(userContentsSearchDTO.getMenuCode(), userContentsSearchDTO.getSkillCode());
         final List<AuthReturnDTO> auths = this.findAuths();
 
         for (AuthReturnDTO authReturnDTO : auths) {
@@ -697,10 +705,7 @@ public class AuthService {
 
     public List<AuthReturnDTO> getAuthList2 (final UserContentsSearchDTO userContentsSearchDTO) {
         log.info("AuthService.getAuthList2");
-        final List<AuthReturnDTO> findByConfig = authRepository.findByConfig(
-                userContentsSearchDTO.getMenuCode()
-                , userContentsSearchDTO.getSkillCode());
-
+        final List<AuthReturnDTO> findByConfig = this.findByConfig(userContentsSearchDTO.getMenuCode(), userContentsSearchDTO.getSkillCode());
         final List<AuthReturnDTO> auths = this.findAuths();
 
         for (AuthReturnDTO authReturnDTO : auths) {
