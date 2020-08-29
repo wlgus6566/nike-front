@@ -123,7 +123,10 @@
                             <button
                                 type="button"
                                 :class="buttonClass(item.contentsFileSeq)"
-                                :disabled="item.fileKindCode === 'VR'"
+                                :disabled="
+                                    item.fileKindCode === 'VR' ||
+                                    !item.thumbnailFilePhysicalName
+                                "
                                 @click="accordion(item.contentsFileSeq)"
                             >
                                 <span>더보기</span>
@@ -145,12 +148,14 @@
                                 v-if="item.fileKindCode === 'FILE'"
                             >
                                 <div class="thumbnail">
-                                    <img
-                                        :src="
-                                            item.detailThumbnailFilePhysicalName
-                                        "
-                                        alt=""
-                                    />
+                                    <span class="watermark">
+                                        <img
+                                            :src="
+                                                item.detailThumbnailFilePhysicalName
+                                            "
+                                            alt=""
+                                        />
+                                    </span>
                                 </div>
                                 <div class="down-info">
                                     <span class="key">다운로드 횟수</span>

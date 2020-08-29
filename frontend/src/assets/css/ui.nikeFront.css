@@ -1975,9 +1975,27 @@
     height: 394px;
 }
 .file-item .detail .thumbnail {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.file-item .detail .watermark {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.file-item .detail .watermark:after {
+    z-index: 1;
+    content: '워터마크 임시';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 0, 0, 0.5);
 }
 .file-item .detail .thumbnail img {
     max-width: 100%;
