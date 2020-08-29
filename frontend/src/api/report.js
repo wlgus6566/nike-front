@@ -67,6 +67,11 @@ function deleteReportBasket(reportBasketSeq, data) {
     return report.delete(`/basket/${reportBasketSeq}`, data);
 }
 
+//REPORT 파일 다운로드
+function reportFileDownload(reportBasketSeq, config) {
+    return report.get(`/download/${reportBasketSeq}`, config);
+}
+
 export {
     getReportList,
     getGroupAuthority,
@@ -81,4 +86,5 @@ export {
     postReportBasket,
     deleteReportBasket,
     getReportFile,
+    reportFileDownload,
 };

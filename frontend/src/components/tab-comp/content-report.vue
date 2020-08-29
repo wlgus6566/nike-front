@@ -58,6 +58,7 @@
             >
                 <span class="txt">DOWNLOAD</span>
             </button>
+
             <span v-else class="btn-download active">
                 <span class="txt">DOWNLOADING({{ this.loaded }}%)…</span>
                 <span class="gage" :style="{ width: `${this.loaded}%` }"></span>
@@ -68,9 +69,12 @@
 <script>
 import NoData from '@/components/no-data';
 import Loading from '@/components/loading';
-import { postReportBasket, deleteReportBasket } from '@/api/report';
+import {
+    postReportBasket,
+    deleteReportBasket,
+    reportFileDownload,
+} from '@/api/report';
 import bus from '@/utils/bus';
-import { contentFileDownload } from '@/api/contents';
 
 export default {
     name: 'FileItem',
@@ -146,6 +150,7 @@ export default {
             this.link = [];
             await Promise.all(
                 this.reportBasketList.map(async (el, i) => {
+                    console.log(el);
                     try {
                         const config = {
                             responseType: 'blob',
@@ -158,16 +163,17 @@ export default {
                                 this.loadedUpdate();
                             },
                         };
-                        const response = await contentFileDownload(
-                            el.contentsFileSeq,
+                        const response = await reportFileDownload(
+                            el.reportFileSeq,
                             config
                         );
+                        console.log(response);
                         const url = window.URL.createObjectURL(
                             new Blob([response.data])
                         );
                         const link = document.createElement('a');
                         link.href = url;
-                        link.seq = el.contentsBasketSeq;
+                        link.seq = el.reportBasketSeq;
                         link.setAttribute('download', el.fileName);
                         document.body.appendChild(link);
                         this.link.push(link);
@@ -179,7 +185,7 @@ export default {
             );
 
             this.link.forEach((el) => {
-                this.delContBasket(el.seq);
+                this.delReportBasket(el.seq);
                 el.click();
             });
             this.loaded = 0;
@@ -342,7 +348,7 @@ export default {
     align-items: center;
     font-size: 14px;
     color: #fff;
-    background: #ccc;
+    background: #000;
 }
 .btn-download .gage {
     position: absolute;
@@ -354,12 +360,19 @@ export default {
     background: #fa5400;
 }
 .btn-download .txt {
+    z-index: 1;
     position: relative;
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 0.58px;
 }
+.btn-download.active {
+    background-color: #888 !important;
+}
+.btn-download:disabled {
+    background-color: #ccc !important;
+}
 .btn-download:disabled .gage {
-    width: 0;
+    display: none;
 }
 .flag-box .flag {
     display: inline-flex;

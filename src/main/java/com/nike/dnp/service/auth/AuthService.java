@@ -551,7 +551,7 @@ public class AuthService {
      * @param auth                  the auth
      * @return the auth list with depth
      * @author [이소정]
-     * @implNote 권한 depth에 맞는 목록
+     * @implNote 권한 depth에 맞는 하위 목록
      * @since 2020. 8. 18. 오후 10:07:48
      */
     public List<AuthReturnDTO> getAuthListWithDepth(final UserContentsSearchDTO userContentsSearchDTO, final Auth auth) {
@@ -564,7 +564,6 @@ public class AuthService {
             if (1 == auth.getAuthDepth()) {
                 transformAuthList = allAuthList;
             } else {
-                List<AuthReturnDTO> findDepthList = new ArrayList<>();
                 for (AuthReturnDTO authReturnDTO : allAuthList) {
                     if (auth.getAuthSeq().equals(authReturnDTO.getAuthSeq())) {
                         transformAuthList.add(authReturnDTO);
