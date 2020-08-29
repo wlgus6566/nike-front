@@ -393,6 +393,7 @@ export default {
             }
         },
         async addContBasket(seq) {
+            console.log(this.$route);
             try {
                 await addContentsBasket(
                     this.$route.meta.topMenuCode,
