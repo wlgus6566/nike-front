@@ -123,13 +123,19 @@
                             <button
                                 type="button"
                                 :class="buttonClass(item.contentsFileSeq)"
-                                :disabled="item.fileKindCode !== 'FILE'"
+                                :disabled="
+                                    item.fileKindCode === 'VR' ||
+                                    (item.fileKindCode === 'FILE' &&
+                                        !item.thumbnailFilePhysicalName) ||
+                                    (item.fileKindCode === 'VIDEO' && !item.url)
+                                "
                                 @click="accordion(item.contentsFileSeq)"
                             >
                                 <span>더보기</span>
                             </button>
                         </div>
                     </div>
+
                     <transition
                         @enter="itemOpen"
                         @leave="itemClose"
@@ -139,14 +145,19 @@
                             class="detail"
                             v-if="openFile === item.contentsFileSeq"
                         >
-                            <div class="inner">
+                            <div
+                                class="inner"
+                                v-if="item.fileKindCode === 'FILE'"
+                            >
                                 <div class="thumbnail">
-                                    <img
-                                        :src="
-                                            item.detailThumbnailFilePhysicalName
-                                        "
-                                        alt=""
-                                    />
+                                    <span class="watermark">
+                                        <img
+                                            :src="
+                                                item.detailThumbnailFilePhysicalName
+                                            "
+                                            alt=""
+                                        />
+                                    </span>
                                 </div>
                                 <div class="down-info">
                                     <span class="key">다운로드 횟수</span>
@@ -155,6 +166,29 @@
                                             item.downloadCount
                                         }}</strong>
                                     </span>
+                                </div>
+                            </div>
+                            <div class="inner" v-else>
+                                <div
+                                    class="thumbnail"
+                                    v-if="videoCheck(item.url).type === 'vimeo'"
+                                >
+                                    <vimeo-player
+                                        class="video-item"
+                                        :video-id="videoCheck(item.url).id"
+                                        :player-height="height"
+                                        :player-width="width"
+                                    ></vimeo-player>
+                                </div>
+                                <div class="thumbnail" v-else>
+                                    <div class="video-item">
+                                        <youtube
+                                            :video-id="videoCheck(item.url).id"
+                                            :player-vars="{
+                                                autoplay: 1,
+                                            }"
+                                        ></youtube>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +211,16 @@ import { Cubic, gsap } from 'gsap/all';
 export default {
     name: 'fileItem',
     data() {
-        return { openFile: null, enabled: true, dragging: false };
+        return {
+            openFile: null,
+            enabled: true,
+            dragging: false,
+
+            height: 'auto',
+            width: '600',
+            options: {},
+            playerReady: false,
+        };
     },
     components: {
         Loading,
@@ -220,6 +263,30 @@ export default {
         },
     },
     methods: {
+        videoCheck(url) {
+            url.match(
+                /(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/
+            );
+            let type;
+            if (RegExp.$3.indexOf('youtu') > -1) {
+                type = 'youtube';
+            } else if (RegExp.$3.indexOf('vimeo') > -1) {
+                type = 'vimeo';
+            }
+
+            console.log(RegExp.$6);
+            console.log(type);
+
+            return {
+                type: type,
+                id: RegExp.$6,
+            };
+            /*let ampersandPosition = video_id.indexOf('&');
+            if (ampersandPosition != -1) {
+                video_id = video_id.substring(0, ampersandPosition);
+            }*/
+            //return video_id;
+        },
         test(seq) {
             return this.storeContBasketList.some((el) => el === seq);
         },

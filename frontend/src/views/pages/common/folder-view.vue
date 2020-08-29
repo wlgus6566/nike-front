@@ -5,10 +5,17 @@
             @delete="deleteFolder"
             @edit="modifyFolder"
         >
-            <button type="button" class="btn-o-gray" @click="sendEmail">
-                <i class="icon-mail"></i>
-                <span>알림메일전송</span>
-            </button>
+            <template v-if="folderDetail">
+                <button
+                    type="button"
+                    class="btn-o-gray"
+                    @click="sendEmail"
+                    v-if="folderDetail.exposureYn === 'Y'"
+                >
+                    <i class="icon-mail"></i>
+                    <span>알림메일전송</span>
+                </button>
+            </template>
         </BtnArea>
         <folder :folderDetail="folderDetail" v-if="folderDetail"></folder>
         <div class="sorting-list-wrap">
@@ -229,10 +236,11 @@ export default {
     methods: {
         async sendEmail() {
             try {
+                console.log(this.$route.params.id);
                 console.log(this.$route.fullPath);
                 const response = await sendMail({
                     contentsSeq: this.$route.params.id,
-                    contentsUrl: this.$route.fullPath,
+                    contentsUrl: `/contents/detail/${this.$route.params.id}`,
                 });
                 console.log(response);
             } catch (error) {
@@ -393,6 +401,7 @@ export default {
             }
         },
         async addContBasket(seq) {
+            console.log(this.$route);
             try {
                 await addContentsBasket(
                     this.$route.meta.topMenuCode,

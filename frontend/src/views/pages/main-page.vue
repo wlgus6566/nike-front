@@ -266,9 +266,9 @@ export default {
     },
     methods: {
         handleScroll() {
-            const modal = document.querySelector('.fc-popover');
-            if (modal) {
-                modal.remove();
+            const body = document.querySelector('.fc-daygrid-body');
+            if (body.childNodes[1]) {
+                body.removeChild(body.childNodes[1]);
                 window.removeEventListener('scroll', this.handleScroll);
             }
         },

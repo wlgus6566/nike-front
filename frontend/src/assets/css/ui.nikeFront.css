@@ -1975,14 +1975,47 @@
     height: 394px;
 }
 .file-item .detail .thumbnail {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.file-item .detail .watermark {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.file-item .detail .watermark:after {
+    z-index: 1;
+    content: '워터마크 임시';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 0, 0, 0.5);
 }
 .file-item .detail .thumbnail img {
     max-width: 100%;
     max-height: 700px;
     vertical-align: top;
+}
+.file-item .detail .thumbnail .video-item {
+    max-width: 100%;
+    max-height: 700px;
+    width: 100%;
+    padding-top: 53%;
+    box-sizing: border-box;
+}
+
+.file-item .detail .thumbnail .video-item iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
 }
 .file-item .detail .down-info {
     margin-top: 20px;
@@ -4583,30 +4616,6 @@ img.image-grayscale {
 .folder-item {
     position: relative;
     flex: 0 1 auto;
-}
-.folder-item .auth {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    color: #fff;
-    font-size: 14px;
-    font-weight: bold;
-    z-index: 2;
-    opacity: 0.8;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: #000;
-}
-.folder-item .auth i {
-    display: inline-block;
-    height: 40px;
-    width: 40px;
-    background: url('../../assets/images/svg/icon-no-authority.svg') no-repeat
-        50% 50% / contain;
 }
 .folder-item .auth,
 .folder-item .exposure {
