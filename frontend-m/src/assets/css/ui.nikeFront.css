@@ -1064,11 +1064,19 @@
 }
 
 /* Mypage > 회원정보조회 */
+.contents.my-info {
+    padding-bottom: 0;
+}
+.my-info + footer {
+    display: none;
+}
 .member-inquiry {
+    height: calc(100vh - 160px);
+    box-sizing: border-box;
     position: relative;
     margin: 0 -20px;
-    padding-top: 185.62%;
-    background: black no-repeat left top;
+    /*padding-top: 185.62%;*/
+    background: url('../images/img-my-id.png') 50% 50% no-repeat;
     background-size: cover;
 }
 .member-inquiry .inner {
