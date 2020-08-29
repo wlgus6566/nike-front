@@ -216,7 +216,7 @@ export default {
                 // 일자 클릭시
                 // dateClick: this.handleDateClick,
                 dateClick: this.handleDateClick,
-                moreLinkClick: this.test,
+                moreLinkClick: this.calClickEvent,
                 height: 358,
                 events: [],
                 dayMaxEventRows: true,
@@ -265,13 +265,19 @@ export default {
         this.main();
     },
     methods: {
-        test(e) {
-            //console.log(e);
+        handleScroll() {
+            const modal = document.querySelector('.fc-popover');
+            if (modal) {
+                modal.remove();
+                window.removeEventListener('scroll', this.handleScroll);
+            }
+        },
+        calClickEvent(e) {
             const date = this.$moment(e.date).format('YYYY-MM-DD');
             const cal = this.$refs.fullCalendar.$el;
             const td = cal.querySelector(`td[data-date="${date}"]`);
             td.classList.add('test');
-
+            window.addEventListener('scroll', this.handleScroll);
             setTimeout(() => {
                 const modal = document.querySelector('.fc-more-popover');
                 const close = modal.querySelector('.fc-popover-close');
