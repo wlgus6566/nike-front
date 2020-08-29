@@ -83,14 +83,12 @@ import { getContents } from '@/api/contents';
 
 import ListSorting from '@/components/list-sorting/index';
 import FilterSelect from '@/components/filter-select';
-import FolderList from '@/components/folder-list';
 import NoData from '@/components/no-data';
 
 export default {
     name: 'folder-list',
     components: {
         FilterSelect,
-        FolderList,
         NoData,
         Loading: () => import('@/components/loading/'),
         ListSorting,
