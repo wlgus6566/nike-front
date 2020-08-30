@@ -2,9 +2,9 @@ spring:
   profiles: nikeprod
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://nike-prod-db.c9c2dtiz524o.ap-northeast-2.rds.amazonaws.com:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
-    username: nikemanager
-    password: 'emotion!@'
+    #url:
+    #username:
+    #password:
   devtools:
     livereload:
       enabled: false
