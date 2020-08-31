@@ -69,7 +69,6 @@ router.beforeEach((to, from, next) => {
             bus.$emit('pageLoading', false);
             next();
         } else {
-            alert('로그인 풀림.');
             next('/login');
         }
     }
