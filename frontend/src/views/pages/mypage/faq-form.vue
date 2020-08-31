@@ -52,6 +52,7 @@
                         <ckeditor
                             v-model="faqDetail.contents"
                             :config="editorConfig"
+                            @blur="onEditorInput"
                             style="width: 100%;"
                         />
                         <!--                        <span class="textarea">
@@ -79,11 +80,11 @@
     </div>
 </template>
 <script>
-import { getCustomerDetail, postFaq, putFaq } from '@/api/customer';
-import { getCode } from '@/api/code';
-import { getAuthFromCookie } from '@/utils/cookies';
+    import {getCustomerDetail, postFaq, putFaq} from '@/api/customer';
+    import {getCode} from '@/api/code';
+    import {getAuthFromCookie} from '@/utils/cookies';
 
-export default {
+    export default {
     name: 'faq-form',
     watch: {
         $route() {
@@ -242,6 +243,10 @@ export default {
             this.faqDetail.noticeArticleCategoryCode = null;
             this.categoryCodeList.value = '';
             this.noticeArticleSeq = '';
+        },
+        onEditorInput: function(e) {
+            var editorContents = e.editor._.editable.$.innerHTML;
+            this.faqDetail.contents = editorContents;
         },
     },
 };

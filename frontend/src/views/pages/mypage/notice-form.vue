@@ -64,6 +64,7 @@
                         <ckeditor
                             v-model="noticeDetail.contents"
                             :config="editorConfig"
+                            @blur="onEditorInput"
                             style="width: 100%;"
                         />
                     </div>
@@ -286,7 +287,10 @@ export default {
             this.noticeDetail.title = '';
             this.noticeDetail.contents = '';
             this.noticeDetail.noticeYn = null;
-            //this.editorConfig.fileTools_requestHeaders.Authorization = '';
+        },
+        onEditorInput: function(e) {
+            var editorContents = e.editor._.editable.$.innerHTML;
+            this.noticeDetail.contents = editorContents;
         },
     },
 };
