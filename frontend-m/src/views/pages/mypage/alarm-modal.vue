@@ -46,9 +46,9 @@ export default {
     mounted() {},
     methods: {
         detailPageUrl(item) {
-            if (item.typeCd === "REPORT") {
-                this.$router.push(`/report/${item.folderSeq}`);
-            } else if (item.typeCd === "ASSET") {
+            if (item.typeCd === "report") {
+                this.$router.push(`/report/detail/${item.folderSeq}`);
+            } else if (item.typeCd === "asset") {
                 this.$emit("assetClick");
             } else {
               this.$router.push(`/${item.typeCd}/${item.menuCode}/${item.folderSeq}`);

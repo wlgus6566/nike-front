@@ -1,12 +1,15 @@
 <template>
     <ul class="sorting-list">
         <li
-            :class="activeClass(item)"
+            :class="activeClass(item.value)"
             v-for="item in sectionCode.listSortOptions"
-            :key="item"
+            :key="item.value"
         >
-            <button type="button" @click="$emit('sectionCodeChange', item)">
-                <span>{{ item }}</span>
+            <button
+                type="button"
+                @click="$emit('sectionCodeChange', item.value)"
+            >
+                <span>{{ item.title }}</span>
             </button>
         </li>
     </ul>
@@ -15,6 +18,9 @@
 export default {
     name: 'SortingList',
     props: ['sectionCode'],
+    mounted() {
+        console.log(this.sectionCode);
+    },
     methods: {
         activeClass(value) {
             return value === this.sectionCode.value ? 'active' : '';

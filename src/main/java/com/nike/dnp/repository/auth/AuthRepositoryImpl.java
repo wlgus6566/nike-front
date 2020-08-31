@@ -14,6 +14,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -79,6 +80,48 @@ public class AuthRepositoryImpl extends QuerydslRepositorySupport implements Aut
                         , AuthPredicateHelper.eqMenuCode(userAuthSearchDTO.getMenuCode())
                 )
                 .leftJoin(userContents).on(auth.authSeq.eq(userContents.authSeq).and(userContents.contentsSeq.eq(userAuthSearchDTO.getContentsSeq())))
+                .where(auth.useYn.eq(ServiceCode.YesOrNoEnumCode.Y.toString()))
+                .fetch();
+    }
+
+    /**
+     * Find by config for asset all list.
+     *
+     * @param userAuthSearchDTO the user auth search dto
+     * @return the list
+     * @author [이소정]
+     * @implNote
+     * @since 2020. 8. 31. 오후 6:15:31
+     */
+    @Override
+    public List<AuthReturnDTO> findByConfigForAssetAll(final UserAuthSearchDTO userAuthSearchDTO) {
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        final QAuth auth = new QAuth("auth");
+        final QAuth upperAuth = new QAuth("upperAuth");
+        final QAuthMenuRole authMenuRole = new QAuthMenuRole("authMenuRole");
+        final QMenuRole menuRole = new QMenuRole("menuRole");
+        final QMenu menu = new QMenu("menu");
+
+        return queryFactory
+                .select(Projections.bean(
+                        AuthReturnDTO.class
+                        , auth.authSeq
+                        , auth.authName
+                        , auth.useYn
+                        , upperAuth.authSeq.as("upperAuthSeq")
+                        , upperAuth.authName.as("upperAuthName")
+                ))
+                .from(auth)
+                .leftJoin(upperAuth).on(auth.upperAuthSeq.eq(upperAuth.authSeq))
+                .innerJoin(authMenuRole).on(auth.authSeq.eq(authMenuRole.authSeq))
+                .innerJoin(menuRole).on(
+                        authMenuRole.menuRoleSeq.eq(menuRole.menuRoleSeq)
+                        , AuthPredicateHelper.eqSkillCode(userAuthSearchDTO.getSkillCode())
+                )
+                .innerJoin(menu).on(
+                        menuRole.menuSeq.eq(menu.menuSeq)
+                        ,menu.menuCode.in(userAuthSearchDTO.getMenuCodeList())
+                )
                 .where(auth.useYn.eq(ServiceCode.YesOrNoEnumCode.Y.toString()))
                 .fetch();
     }
