@@ -236,11 +236,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//외부 설정
 		origins.add("https://ckeditor.com");
 		configuration.setAllowedOrigins(origins);
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE","OPTIONS"));
 		configuration.addAllowedHeader("*");
 		configuration.setAllowCredentials(true);
 		configuration.addExposedHeader(JwtHelper.HEADER_STRING); //header 노출 설정
-
+		configuration.setMaxAge(-1L);
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
