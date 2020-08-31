@@ -54,7 +54,6 @@
                     userId: this.userId,
                     platform: 'PC'
                 });
-                console.log(response);
                 if (response.existMsg) {
                     alert(response.msg);
                 }

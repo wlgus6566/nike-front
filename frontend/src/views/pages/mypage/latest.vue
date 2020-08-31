@@ -124,7 +124,7 @@ export default {
             }
         },
         initFetchData() {
-            console.log('initFetchData');
+            //console.log('initFetchData');
             this.totalPage = null;
             this.page = 0;
             this.historyFolderData = null;

@@ -140,13 +140,10 @@ export default {
         uploadIptChange(e) {
             const files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
-
             let mergeArray = Array.from(files).filter((item) => {
                 return this.FileList.every((el) => {
                     return (
-                        item.name !== el.fileName &&
-                        item.type !== el.fileExtension &&
-                        item.size !== el.fileSize
+                        item.name !== el.fileName && item.size !== el.fileSize
                     );
                 });
             });
@@ -241,7 +238,6 @@ export default {
                 })
             )
                 .then((values) => {
-                    console.log(values);
                     this.uploadFile = [];
                     this.$emit('submitForm');
                 })

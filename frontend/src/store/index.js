@@ -36,12 +36,10 @@ export default new Vuex.Store({
         basketAppendCheck(state) {
             return state.basketItemDrag && state.fileMouseenter;
         },
-        isLoggedIn(state) {
-            return !!state.token || getAuthFromCookie();
-        },
-        userToken(state) {
-            return state.token;
-        },
+        /*userToken(state) {
+            console.log('userToken');
+            return state.token || getAuthFromCookie();
+        },*/
     },
     mutations: {
         SET_USER(state, user) {
@@ -103,10 +101,10 @@ export default new Vuex.Store({
             const response = await loginUser(data);
             console.log(response);
             if (response.data.code === 'SUCCESS') {
-                commit('SET_USER', response.data.data.userId);
+                /*commit('SET_USER', response.data.data.userId);
                 commit('SET_NICK', response.data.data.nickname);
                 commit('SET_AUTHNAME', response.data.data.authName);
-                commit('SET_TOKEN', response.headers.authorization);
+                commit('SET_TOKEN', response.headers.authorization);*/
                 saveUserIdToCookie(response.data.data.userId);
                 saveUserNickToCookie(response.data.data.nickname);
                 saveAuthNameToCookie(response.data.data.authName);

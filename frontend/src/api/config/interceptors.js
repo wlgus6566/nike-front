@@ -1,12 +1,12 @@
-import store from '@/store/index.js';
+//import store from '@/store/index.js';
 import router from '@/router';
-import { getAuthFromCookie } from '@/utils/cookies.js';
+import { updateCookie, getAuthFromCookie } from '@/utils/cookies.js';
 
 function setInterceptors(instance) {
     instance.interceptors.request.use(
         (config) => {
-            config.headers.Authorization =
-                store.getters['userToken'] || getAuthFromCookie();
+            config.headers.Authorization = getAuthFromCookie();
+            updateCookie();
             return config;
         },
         (error) => {
@@ -19,12 +19,6 @@ function setInterceptors(instance) {
         (error) => {
             if (error.response.status === 401) {
                 router.push('/login');
-            }
-            if (error.response.data.code === 'NO_AUTH') {
-                //router.go(-1);
-            }
-            if (error.response.data.existMsg) {
-                //alert(error.response.data.msg);
             }
             return Promise.reject(error.response);
         }
