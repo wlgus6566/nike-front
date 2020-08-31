@@ -7,8 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * StartApplication
@@ -49,6 +52,23 @@ public class StartApplication extends SpringBootServletInitializer {
 	@Override
 	protected final SpringApplicationBuilder configure(final SpringApplicationBuilder builder) {
 		return builder.sources(StartApplication.class);
+	}
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/api/open/upload").allowedOrigins("https://www.nikespace.co.kr", "http://localhost:8081")
+				.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+				.maxAge(3600);
+
+				registry.addMapping("/api/open/login/send/cert").allowedOrigins("https://www.nikespace.co.kr","http://localhost:8081").allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS").maxAge(3600);
+
+
+			}
+		};
 	}
 
 }

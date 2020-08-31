@@ -232,6 +232,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//로컬 설정
 		origins.add("http://localhost:8080");
 		origins.add("http://localhost:8081");
+
 		origins.add("http://localhost:8082");
 		//외부 설정
 		origins.add("https://ckeditor.com");
@@ -240,7 +241,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		configuration.addAllowedHeader("*");
 		configuration.setAllowCredentials(true);
 		configuration.addExposedHeader(JwtHelper.HEADER_STRING); //header 노출 설정
-		configuration.setMaxAge(360000000L);
+		configuration.setMaxAge(3600L);
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
