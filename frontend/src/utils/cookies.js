@@ -12,7 +12,7 @@ function saveUserIdToCookie(value) {
 }
 function setCookie(cname, cvalue) {
     const expires = new Date();
-    expires.setMinutes(expires.getMinutes() + 1);
+    expires.setMinutes(expires.getMinutes() + 30);
     document.cookie = `${cname}=${cvalue}; path=/; expires=${expires.toGMTString()}`;
 }
 function getAuthNameFromCookie() {
