@@ -79,11 +79,11 @@
 </template>
 
 <script>
-import { getCustomerDetail, postNews, putNews } from '@/api/customer';
-import thumbnail from '@/components/thumbnail/index';
-import { getAuthFromCookie } from '@/utils/cookies';
+    import {getCustomerDetail, postNews, putNews} from '@/api/customer';
+    import thumbnail from '@/components/thumbnail/index';
+    import {getAuthFromCookie} from '@/utils/cookies';
 
-export default {
+    export default {
     name: 'notice-form',
     watch: {
         '$route'() {
@@ -263,8 +263,7 @@ export default {
             this.newsDetail.thumbnailFileSize = null;
         },
         onEditorInput: function(e) {
-            var editorContents = e.editor._.editable.$.innerHTML;
-            this.newsDetail.contents = editorContents;
+            this.newsDetail.contents = e.editor._.editable.$.innerHTML;
         },
     },
 };

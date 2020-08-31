@@ -245,8 +245,7 @@
             this.noticeArticleSeq = '';
         },
         onEditorInput: function(e) {
-            var editorContents = e.editor._.editable.$.innerHTML;
-            this.faqDetail.contents = editorContents;
+            this.faqDetail.contents = e.editor._.editable.$.innerHTML;
         },
     },
 };
