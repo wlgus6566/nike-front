@@ -131,7 +131,7 @@
                                 </span>
                             </label>
                             <div
-                                class="date-picker-group"
+                                class="date-picker-range"
                                 v-if="
                                     folderDetail.campaignPeriodSectionCode ===
                                     'SELECT'
@@ -147,6 +147,7 @@
                                     >
                                     </el-date-picker>
                                 </div>
+                                <i class="dash"></i>
                                 <div class="date-picker">
                                     <el-date-picker
                                         v-model="EndDt"

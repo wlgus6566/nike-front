@@ -1537,6 +1537,9 @@
     min-height: 220px;
     padding-left: 250px;
 }
+.form-list-thumb .date-picker-range {
+    margin-top: 10px;
+}
 .form-list-thumb.min-height {
     height: 263px;
 }
