@@ -56,4 +56,15 @@ public interface AuthRepositoryCustom {
             , final String menuCode
             , final String skillCode);
 
+    /**
+     * Find by config for asset all list.
+     *
+     * @param userAuthSearchDTO the user auth search dto
+     * @return the list
+     * @author [이소정]
+     * @implNote
+     * @since 2020. 8. 31. 오후 9:51:17
+     */
+    List<AuthReturnDTO> findByConfigForAssetAll(final UserAuthSearchDTO userAuthSearchDTO);
+
 }

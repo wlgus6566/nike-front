@@ -63,23 +63,40 @@ export default {
             folderDetail: null,
             contentsFileList: null,
             checkContentsFileList: [],
-            sectionCode: {
-                listSortOptions: [
-                    {
-                        value: 'ALL',
-                        title: 'ALL',
+
+            folderSet: {
+                asset: {
+                    folderOptionName: '캠페인',
+                    menuCodeList: ['SP', 'SU', 'FA', 'HO'],
+                    fileSectionCodeName: {
+                        SP: ['ASSET', 'GUIDE'],
+                        SU: ['ASSET', 'GUIDE'],
+                        FA: ['ASSET', 'GUIDE'],
+                        HO: ['ASSET', 'GUIDE'],
                     },
-                    {
-                        value: 'ASSET',
-                        title: 'ASSET',
+                },
+                toolkit: {
+                    folderOptionName: '툴킷',
+                    menuCodeList: ['VMS', 'EKIN', 'SOCIAL', 'RB'],
+                    fileSectionCodeName: {
+                        VMS: ['GUIDE', 'VIDEO', 'VR'],
+                        EKIN: ['GUIDE', 'VIDEO'],
+                        SOCIAL: ['GUIDE', 'ASSET'],
+                        RB: ['GUIDE', 'ASSET'],
                     },
-                    {
-                        value: 'GUIDE',
-                        title: 'GUIDE',
+                },
+                foundation: {
+                    folderOptionName: '폴더',
+                    menuCodeList: ['VMS', 'EKIN', 'DIGITAL', 'RB'],
+                    fileSectionCodeName: {
+                        VMS: ['GUIDE', 'VIDEO'],
+                        EKIN: ['GUIDE', 'VIDEO'],
+                        DIGITAL: ['GUIDE', 'ASSET'],
+                        RB: ['GUIDE', 'ASSET'],
                     },
-                ],
-                value: 'ALL',
+                },
             },
+            sectionCode: {},
             orderType: {
                 listSortOptions: [
                     {
@@ -192,7 +209,18 @@ export default {
             },
         };
     },
-    mounted() {},
+    mounted() {
+        this.sectionCode = {
+            listSortOptions: [
+                'ALL',
+                ...this.folderSet[this.$route.meta.topMenuCode.toLowerCase()]
+                    .fileSectionCodeName[
+                    this.$route.meta.menuCode.toUpperCase()
+                ],
+            ],
+            value: 'ALL',
+        };
+    },
     components: {
         BtnArea,
         folder,

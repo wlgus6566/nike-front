@@ -171,7 +171,7 @@ public class ReportService {
         savedReport.setReportFileList(reportFileList);
 
         // 알림 저장
-        this.sendAlarmReport(ServiceCode.AlarmActionEnumCode.NEW.toString(), reportSaveDTO.getReportSeq());
+        this.sendAlarmReport(ServiceCode.AlarmActionEnumCode.NEW.toString(), savedReport.getReportSeq());
 
         // 최근 업로드 목록 추가
         historyService.saveRecentUploadHistory(savedReport.getReportSeq(), ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
