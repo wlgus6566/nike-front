@@ -274,9 +274,6 @@ export default {
                 type = 'vimeo';
             }
 
-            console.log(RegExp.$6);
-            console.log(type);
-
             return {
                 type: type,
                 id: RegExp.$6,

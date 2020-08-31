@@ -182,7 +182,6 @@ export default {
                 this.alarmDataListCont.length >= this.size &&
                 this.alarmDataListCont.length !== 0
             ) {
-                console.log('infiniteScroll');
                 this.alarmData(true);
             }
         },
@@ -220,7 +219,6 @@ export default {
         },
         // 알람삭제
         async delAlarmData(seq) {
-            console.log(seq);
             try {
                 const {
                     data: { data: response },
