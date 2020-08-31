@@ -62,7 +62,7 @@ export default {
                 fileExtension: '',
                 fileKindCode: 'FILE',
                 filePhysicalName: '',
-                fileSectionCode: 'GUIDE',
+                fileSectionCode: null,
                 thumbnailFileName: '',
                 thumbnailFilePhysicalName: '',
                 thumbnailFileSize: '',
@@ -82,7 +82,7 @@ export default {
                     fileName: '',
                     fileOrder: 0,
                     filePhysicalName: '',
-                    fileSectionCode: 'GUIDE',
+                    fileSectionCode: null,
                     fileSize: 0,
                     thumbnailFileName: '',
                     thumbnailFilePhysicalName: '',
@@ -102,7 +102,7 @@ export default {
                 fileName: '',
                 fileOrder: 0,
                 filePhysicalName: '',
-                fileSectionCode: 'GUIDE',
+                fileSectionCode: null,
                 fileSize: 0,
                 thumbnailFileName: '',
                 thumbnailFilePhysicalName: '',
@@ -124,7 +124,14 @@ export default {
         },
     },
     created() {
+        this.FileList[0].fileSectionCode = this.pageFileSectionCodeName[0];
+        this.defaultFileData.fileSectionCode = this.pageFileSectionCodeName[0];
         this.emitFileList();
+    },
+    watch: {
+        pageFileSectionCodeName() {
+            console.log(this.pageFileSectionCodeName);
+        },
     },
     components: {
         FileItem: () => import('@/components/file-settings/file-item.vue'),
@@ -158,6 +165,7 @@ export default {
                     this.FileList[idx].fileName = el.name;
                     this.FileList[idx].fileSize = el.size;
                 } else {
+                    this.test.fileSectionCode = this.pageFileSectionCodeName[0];
                     this.FileList.push({
                         fileContentType: el.type,
                         fileName: el.name,

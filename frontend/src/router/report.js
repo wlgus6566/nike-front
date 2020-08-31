@@ -1,10 +1,16 @@
 import { pages } from '@/utils/global-methods';
+import store from '@/store';
 
 const routes = [
     {
         path: '/report',
         component: pages('report/index.vue'),
-        redirect: '/report/upload',
+        redirect: () => {
+            const idx = store.state.gnbMenuListData.findIndex(
+                (el) => el.menuCode === 'REPORT'
+            );
+            return store.state.gnbMenuListData[idx].menus[0].menuPathUrl;
+        },
         children: [
             {
                 path: 'upload',
