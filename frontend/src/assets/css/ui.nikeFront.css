@@ -663,6 +663,23 @@
 .view-box .date-picker-group .date-picker {
     width: 145px;
 }
+.date-picker-range {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    border: 1px solid #ddd;
+}
+.date-picker-range .dash {
+    flex-shrink: 0;
+    display: inline-block;
+    width: 6px;
+    height: 1px;
+    margin: 0 15px;
+    background: #000;
+}
+.date-picker-range .date-picker {
+    border-bottom: none;
+}
 .data-picker .focus\:vc-shadow:focus {
     box-shadow: none;
 }
