@@ -69,7 +69,7 @@
                                 <label class="label-title required">기간</label>
                             </div>
                             <div class="form-column">
-                                <div class="date-picker-group">
+                                <div class="date-picker-range">
                                     <div class="date-picker">
                                         <el-date-picker
                                             ref="dataPeriod"
@@ -81,6 +81,7 @@
                                         >
                                         </el-date-picker>
                                     </div>
+                                    <i class="dash"></i>
                                     <div class="date-picker">
                                         <el-date-picker
                                             v-model="endDt"

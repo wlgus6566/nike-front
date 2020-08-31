@@ -244,7 +244,7 @@ export default {
                     response.imageFilePhysicalName;
                 await this.getReportFileData();
             } catch (error) {
-                console.error(error);
+                console.log(error);
             }
         },
         // 리포트 상세 파일 데이터
@@ -259,7 +259,7 @@ export default {
                 this.reportDetailData.reportFileSaveDTOList = response.content;
                 this.fileOrderSet();
             } catch (error) {
-                console.error(error);
+                console.log(error);
             }
         },
 
@@ -346,7 +346,7 @@ export default {
                             }
                         );
                     } catch (error) {
-                        console.error(error);
+                        console.log(error);
                     }
                 })
             );
@@ -356,26 +356,37 @@ export default {
         },
         async submitData() {
             //const uploadFn = this.$route.params.id ? putReport : postReport;
+            let responseData = '';
             try {
                 if (this.$route.params.id) {
-                    await putReport(
+                    responseData = await putReport(
                         this.reportDetailData,
                         this.$route.params.id
                     );
                 } else {
-                    await postReport(this.reportDetailData);
+                    responseData = await postReport(this.reportDetailData);
+                }
+                console.log('responseData', responseData);
+                if (responseData.data.code) {
+                    alert(responseData.data.msg);
                 }
                 bus.$emit('pageLoading', false);
                 this.$store.commit('SET_RELOAD', true);
-                if (this.$route.params.id) {
+                this.reportDetailData = {
+                    reportName: '',
+                    reportSectionCode: 'SP',
+                    imageBase64: null,
+                    reportFileSaveDTOList: [],
+                };
+                /*if (this.$route.params.id) {
                     await this.$router.push(
                         `/report/detail/${this.$route.params.id}`
                     );
                 } else {
                     await this.$router.push(`/report/management`);
-                }
+                }*/
             } catch (error) {
-                console.error(error);
+                console.log(error);
             }
         },
 
