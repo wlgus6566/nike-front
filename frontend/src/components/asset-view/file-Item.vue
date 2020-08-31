@@ -149,7 +149,27 @@
                                 class="inner"
                                 v-if="item.fileKindCode === 'FILE'"
                             >
-                                <div class="thumbnail">
+                                <div
+                                    class="thumbnail"
+                                    v-if="
+                                        item.fileContentType.indexOf(
+                                            'video'
+                                        ) === 0
+                                    "
+                                >
+                                    <div class="video-item">
+                                        <video controls>
+                                            <source
+                                                :src="
+                                                    item.detailThumbnailFilePhysicalName
+                                                "
+                                                type="video/mp4"
+                                            />
+                                        </video>
+                                    </div>
+                                </div>
+
+                                <div class="thumbnail" v-else>
                                     <span class="watermark">
                                         <img
                                             :src="
@@ -159,6 +179,7 @@
                                         />
                                     </span>
                                 </div>
+
                                 <div class="down-info">
                                     <span class="key">다운로드 횟수</span>
                                     <span class="val">
@@ -273,9 +294,6 @@ export default {
             } else if (RegExp.$3.indexOf('vimeo') > -1) {
                 type = 'vimeo';
             }
-
-            console.log(RegExp.$6);
-            console.log(type);
 
             return {
                 type: type,

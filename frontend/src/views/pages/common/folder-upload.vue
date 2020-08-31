@@ -131,7 +131,7 @@
                                 </span>
                             </label>
                             <div
-                                class="date-picker-group"
+                                class="date-picker-range"
                                 v-if="
                                     folderDetail.campaignPeriodSectionCode ===
                                     'SELECT'
@@ -147,6 +147,7 @@
                                     >
                                     </el-date-picker>
                                 </div>
+                                <i class="dash"></i>
                                 <div class="date-picker">
                                     <el-date-picker
                                         v-model="EndDt"
@@ -267,7 +268,7 @@ export default {
                     fileSectionCodeName: {
                         VMS: ['GUIDE', 'VIDEO'],
                         EKIN: ['GUIDE', 'VIDEO'],
-                        SOCIAL: ['GUIDE', 'ASSET'],
+                        DIGITAL: ['GUIDE', 'ASSET'],
                         RB: ['GUIDE', 'ASSET'],
                     },
                 },
@@ -396,7 +397,7 @@ export default {
         ModalAuth,
     },
     created() {
-        this.folderSetting();
+        //this.folderSetting();
     },
     activated() {
         this.folderSetting();
@@ -436,10 +437,9 @@ export default {
         },
 
         folderSetting() {
-            console.log(this.pageFileSectionCodeName);
             this.dataReset();
             this.saveFolder = false;
-            this.menuCode = this.pageMenuCode[0];
+
             if (this.$route.params.id) {
                 this.getFolderDetail();
             }
@@ -473,7 +473,7 @@ export default {
         // },
         uploadFiles() {
             if (!this.folderDetail.imageBase64) {
-                alert('썸네일을 입력해 주세요.');
+                alert('썸네일을 선택해 주세요.');
                 return;
             }
             if (!this.folderDetail.folderName) {
@@ -525,11 +525,12 @@ export default {
                         this.folderDetail
                     );
                 }
+
                 bus.$emit('pageLoading', false);
                 if (response.data.existMsg) {
                     alert(response.data.msg);
                 }
-                console.log(response);
+
                 if (response.data.success) {
                     this.saveFolder = true;
                     this.$store.commit('SET_RELOAD', true);
@@ -546,7 +547,13 @@ export default {
                     }
                 }
             } catch (error) {
-                console.error(error);
+                console.error(error.data);
+                if (error.data.code === 'NO_AUTH') {
+                    bus.$emit('pageLoading', false);
+                    if (error.data.existMsg) {
+                        alert(error.data.msg);
+                    }
+                }
             }
         },
         async getFolderDetail() {
@@ -556,10 +563,7 @@ export default {
                     this.$route.params.pathMatch.toUpperCase(),
                     this.$route.params.id
                 );
-                console.log(response);
-                if (response.existMsg) {
-                    alert(response.msg);
-                }
+
                 this.menuCode = response.data.menuCode;
                 this.folderDetail = {
                     ...response.data,
@@ -586,9 +590,14 @@ export default {
             this.$router.go(-1);
         },
         dataReset() {
+            this.BeginDt = null;
+            this.EndDt = null;
+
+            this.folderDetail.campaignBeginDt = null;
+            this.folderDetail.campaignEndDt = null;
             this.folderDetail.imageFilePhysicalName = '';
             this.folderDetail.exposureYn = 'Y';
-            this.menuCode = null;
+            this.menuCode = this.pageMenuCode[0];
             this.folderDetail.folderName = '';
             this.folderDetail.folderContents = '';
             this.folderDetail.campaignPeriodSectionCode = 'SELECT';

@@ -109,7 +109,7 @@ export default {
     },
     watch: {
         'file.fileSectionCode'() {
-            this.file.fileKindCode = 'FILE';
+            //this.file.fileKindCode = 'FILE';
         },
     },
     computed: {

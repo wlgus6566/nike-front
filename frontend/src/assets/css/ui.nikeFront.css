@@ -663,6 +663,23 @@
 .view-box .date-picker-group .date-picker {
     width: 145px;
 }
+.date-picker-range {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    border: 1px solid #ddd;
+}
+.date-picker-range .dash {
+    flex-shrink: 0;
+    display: inline-block;
+    width: 6px;
+    height: 1px;
+    margin: 0 15px;
+    background: #000;
+}
+.date-picker-range .date-picker {
+    border-bottom: none;
+}
 .data-picker .focus\:vc-shadow:focus {
     box-shadow: none;
 }
@@ -1520,6 +1537,9 @@
     min-height: 220px;
     padding-left: 250px;
 }
+.form-list-thumb .date-picker-range {
+    margin-top: 10px;
+}
 .form-list-thumb.min-height {
     height: 263px;
 }
@@ -1997,7 +2017,8 @@
     width: 100%;
     text-indent: -9999px;
     overflow: hidden;
-    background: url('../images/svg/logo_watermark.svg') no-repeat 0 / cover;
+    background: url('../images/svg/logo_watermark.svg') no-repeat center / cover;
+    background-size: 180%;
 }
 .file-item .detail .thumbnail img {
     max-width: 100%;
@@ -2012,6 +2033,7 @@
     box-sizing: border-box;
 }
 
+.file-item .detail .thumbnail .video-item video,
 .file-item .detail .thumbnail .video-item iframe {
     position: absolute;
     top: 0;
@@ -4037,7 +4059,7 @@ img.image-grayscale {
     background: no-repeat center;
     background-size: auto;
 }
-.schedule-item:before {
+/*.schedule-item:before {
     content: '';
     position: absolute;
     top: 0;
@@ -4047,7 +4069,7 @@ img.image-grayscale {
     height: 100%;
     opacity: 0.05;
     background-color: #00b398;
-}
+}*/
 .el-pagination .btn-prev {
     background-image: url(../images/svg/icon-calender-left.svg);
 }
@@ -4349,6 +4371,7 @@ img.image-grayscale {
     height: 20px;
     border-radius: 100%;
     padding: 0;
+    line-height: 11px;
     align-items: center;
     justify-content: center;
 }

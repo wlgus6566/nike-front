@@ -64,6 +64,7 @@
                         <ckeditor
                             v-model="noticeDetail.contents"
                             :config="editorConfig"
+                            @blur="onEditorInput"
                             style="width: 100%;"
                         />
                     </div>
@@ -95,16 +96,11 @@
 </template>
 
 <script>
-import {
-    getCustomerDetail,
-    getCustomerList,
-    postNotice,
-    putNotice,
-} from '@/api/customer';
+    import {getCustomerDetail, getCustomerList, postNotice, putNotice,} from '@/api/customer';
 
-import { getAuthFromCookie } from '@/utils/cookies';
+    import {getAuthFromCookie} from '@/utils/cookies';
 
-export default {
+    export default {
     name: 'notice-form',
     data() {
         return {
@@ -286,7 +282,9 @@ export default {
             this.noticeDetail.title = '';
             this.noticeDetail.contents = '';
             this.noticeDetail.noticeYn = null;
-            //this.editorConfig.fileTools_requestHeaders.Authorization = '';
+        },
+        onEditorInput: function(e) {
+            this.noticeDetail.contents = e.editor._.editable.$.innerHTML;
         },
     },
 };

@@ -32,7 +32,7 @@ function getUserDetail(userSeq, params) {
 
 // user 배열 삭제
 function deleteArrayUser(data) {
-    console.log(data);
+    //console.log(data);
     return user.delete(``, { data });
 }
 
