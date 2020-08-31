@@ -1989,13 +1989,15 @@
 
 .file-item .detail .watermark:after {
     z-index: 1;
-    content: '워터마크 임시';
+    content: '워터마크';
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    background: rgba(255, 0, 0, 0.5);
+    text-indent: -9999px;
+    overflow: hidden;
+    background: url('../images/svg/logo_watermark.svg') no-repeat 0 / cover;
 }
 .file-item .detail .thumbnail img {
     max-width: 100%;
