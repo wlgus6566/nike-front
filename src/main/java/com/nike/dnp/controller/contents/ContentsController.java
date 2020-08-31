@@ -281,7 +281,7 @@ public class ContentsController {
      * @since 2020. 7. 15. 오후 6:30:45
      */
     @ApiOperation(value = "컨텐츠 파일 다운로드", notes = REQUEST_CHARACTER)
-    @GetMapping(name = "컨텐츠 파일 다운로드", value = "/download/{contentsFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(name = "컨텐츠 파일 다운로드", value = "/download/{contentsFileSeq}")
     @CrossOrigin(origins = {"https://devwww.nikespace.co.kr", "http://devwww.nikespace.co.kr",
             "http://localhost:8081", "https://localhost:8081"})
     public ResponseEntity<Resource> downloadContents(

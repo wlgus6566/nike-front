@@ -2,7 +2,7 @@ package com.nike.dnp.controller.user;
 
 import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
-import com.nike.dnp.dto.user.UserContentsSearchDTO;
+import com.nike.dnp.dto.user.UserAuthSearchDTO;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.auth.AuthService;
@@ -61,11 +61,13 @@ public class UserContentsController {
     /**
      * List single result.
      *
-     * @param userContentsSearchDTO the user contents search dto
+     * @param userAuthSearchDTO the user auth search dto
+     * @param result            the result
      * @return the single result
      * @author [오지훈]
-     * @since 2020. 7. 20. 오후 4:25:57
+     * @implNote
      * @apiNote 유저 컨텐츠 그룹 권한 목록
+     * @since 2020. 7. 20. 오후 4:25:57
      */
     @ApiOperation(value = "유저 컨텐츠 권한 목록1"
             , notes = OPERATION_CHARACTER)
@@ -73,10 +75,10 @@ public class UserContentsController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<List<AuthReturnDTO>> list1 (
-            @ApiParam(value = "유저 컨텐츠 권한 검색 DTO", required = true) @Valid @RequestBody final UserContentsSearchDTO userContentsSearchDTO
+            @ApiParam(value = "유저 컨텐츠 권한 검색 DTO", required = true) @Valid @RequestBody final UserAuthSearchDTO userAuthSearchDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserContentsController.list");
-        return responseService.getSingleResult(authService.getAuthList(userContentsSearchDTO));
+        return responseService.getSingleResult(authService.getAuthList(userAuthSearchDTO));
     }
 
     @ApiOperation(value = "유저 컨텐츠 권한 목록2"
@@ -85,10 +87,10 @@ public class UserContentsController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     @ValidField
     public SingleResult<List<AuthReturnDTO>> list2 (
-            @ApiParam(value = "유저 컨텐츠 권한 검색 DTO", required = true) @Valid @RequestBody final UserContentsSearchDTO userContentsSearchDTO
+            @ApiParam(value = "유저 컨텐츠 권한 검색 DTO", required = true) @Valid @RequestBody final UserAuthSearchDTO userAuthSearchDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserContentsController.list");
-        return responseService.getSingleResult(authService.getAuthList2(userContentsSearchDTO));
+        return responseService.getSingleResult(authService.getAuthListWithoutN(userAuthSearchDTO));
     }
 
     @ApiOperation(value = "유저 컨텐츠 권한 목록3"

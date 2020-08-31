@@ -7,8 +7,8 @@ import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
+import com.nike.dnp.dto.user.UserAuthSearchDTO;
 import com.nike.dnp.dto.user.UserContentsSaveDTO;
-import com.nike.dnp.dto.user.UserContentsSearchDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.entity.user.UserAuth;
@@ -316,11 +316,12 @@ public class ContentsService {
         historyService.saveViewHistory(contentsSeq, topMenuCode);
 
         // 권한 목록 조회
-        UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
-        userContentsSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
-        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+        UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
+        userAuthSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
+        userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+        userAuthSearchDTO.setContentsSeq(contentsSeq);
         ContentsResultDTO contentsResultDTO = ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
-        contentsResultDTO.setChecks(authService.getAuthList(userContentsSearchDTO));
+        contentsResultDTO.setChecks(authService.getAuthListWithoutN(userAuthSearchDTO));
         return contentsResultDTO;
     }
 
@@ -579,7 +580,6 @@ public class ContentsService {
         }
     }
 
-
     /**
      * Check and remove file list.
      *
@@ -734,10 +734,11 @@ public class ContentsService {
      */
     public List<AuthReturnDTO> loadAuthList(final String topMenuCode, final String menuCode) {
         // 권한 목록 조회
-        UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
+        UserAuthSearchDTO userContentsSearchDTO = new UserAuthSearchDTO();
         userContentsSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
         userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
-        return authService.getAuthList(userContentsSearchDTO);
+        userContentsSearchDTO.setCreateYn("Y");
+        return authService.getAuthListWithoutN(userContentsSearchDTO);
 
     }
 

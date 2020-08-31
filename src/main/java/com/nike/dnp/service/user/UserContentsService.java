@@ -1,8 +1,8 @@
 package com.nike.dnp.service.user;
 
 import com.nike.dnp.dto.auth.AuthReturnDTO;
+import com.nike.dnp.dto.user.UserAuthSearchDTO;
 import com.nike.dnp.dto.user.UserContentsSaveDTO;
-import com.nike.dnp.dto.user.UserContentsSearchDTO;
 import com.nike.dnp.entity.user.UserContents;
 import com.nike.dnp.repository.user.UserContentsRepository;
 import com.nike.dnp.service.auth.AuthService;
@@ -86,7 +86,12 @@ public class UserContentsService {
     public boolean isAuth(final Long authSeq, final String menuCode, final String skillCode) {
         log.info("UserContentsService.isAuth");
         boolean result = false;
-        for (final AuthReturnDTO authReturnDTO : authService.findByConfig(menuCode, skillCode)) {
+
+        UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
+        userAuthSearchDTO.setMenuCode(menuCode);
+        userAuthSearchDTO.setSkillCode(skillCode);
+
+        for (final AuthReturnDTO authReturnDTO : authService.findByConfig(userAuthSearchDTO)) {
             if (authSeq.equals(authReturnDTO.getAuthSeq())) {
                 result = true;
                 break;
