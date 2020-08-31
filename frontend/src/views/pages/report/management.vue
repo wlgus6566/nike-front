@@ -183,7 +183,7 @@ export default {
                 _minIndx = 0;
             }
             data.forEach((el, index) => {
-                const _boolean = el.checkBoxYn === 'Y';
+                const _boolean = el.checkBoxYn === 'N';
                 item.push({
                     value: el.authSeq,
                     label: el.authName,

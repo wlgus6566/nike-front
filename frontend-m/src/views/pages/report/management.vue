@@ -85,8 +85,8 @@
 import FilterSelect from '@/components/filter-select';
 import CascaderSelect from '@/components/cascader-select';
 import NoData from '@/components/no-data';
-import {getGroupAuthority, getReportList} from '@/api/report';
-import {getCategoryList} from '@/utils/code';
+import { getGroupAuthority, getReportList } from '@/api/report';
+import { getCategoryList } from '@/utils/code';
 
 export default {
     name: 'management',
@@ -187,7 +187,7 @@ export default {
                 _minIndx = 0;
             }
             data.forEach((el, index) => {
-                const _boolean = el.checkBoxYn === 'Y';
+                const _boolean = el.checkBoxYn === 'N';
                 item.push({
                     value: el.authSeq,
                     label: el.authName,
