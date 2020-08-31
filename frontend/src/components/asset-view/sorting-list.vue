@@ -1,14 +1,12 @@
 <template>
     <ul class="sorting-list">
         <li
-            :class="activeClass(item.value)"
+            :class="activeClass(item)"
             v-for="item in sectionCode.listSortOptions"
+            :key="item"
         >
-            <button
-                type="button"
-                @click="$emit('sectionCodeChange', item.value)"
-            >
-                <span>{{ item.title }}</span>
+            <button type="button" @click="$emit('sectionCodeChange', item)">
+                <span>{{ item }}</span>
             </button>
         </li>
     </ul>

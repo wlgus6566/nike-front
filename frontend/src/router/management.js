@@ -1,10 +1,16 @@
 import { pages } from '@/utils/global-methods';
+import store from '@/store';
 
 const routes = [
     {
         path: '/management',
         component: pages('management'),
-        redirect: '/management/visual',
+        redirect: () => {
+            const idx = store.state.gnbMenuListData.findIndex(
+                (el) => el.menuCode === 'MANAGEMENT'
+            );
+            return store.state.gnbMenuListData[idx].menus[0].menuPathUrl;
+        },
         children: [
             {
                 path: 'visual',

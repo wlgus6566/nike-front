@@ -20,8 +20,7 @@
                 ref="fileListUl"
                 v-model="FileList"
                 v-bind="dragOptions"
-                @start="isDragging = true"
-                @end="isDragging = false"
+                @end="emitFileList"
                 class="file-setting-list"
                 tag="ul"
             >
@@ -47,6 +46,7 @@
 </template>
 <script>
 import draggable from 'vuedraggable';
+import FileItem from '@/components/file-settings/file-item.vue';
 import { fileUpLoad } from '@/api/file';
 import { getContentsViewFile } from '@/api/contents';
 export default {
@@ -62,7 +62,7 @@ export default {
                 fileExtension: '',
                 fileKindCode: 'FILE',
                 filePhysicalName: '',
-                fileSectionCode: 'GUIDE',
+                fileSectionCode: null,
                 thumbnailFileName: '',
                 thumbnailFilePhysicalName: '',
                 thumbnailFileSize: '',
@@ -82,7 +82,7 @@ export default {
                     fileName: '',
                     fileOrder: 0,
                     filePhysicalName: '',
-                    fileSectionCode: 'GUIDE',
+                    fileSectionCode: null,
                     fileSize: 0,
                     thumbnailFileName: '',
                     thumbnailFilePhysicalName: '',
@@ -102,7 +102,7 @@ export default {
                 fileName: '',
                 fileOrder: 0,
                 filePhysicalName: '',
-                fileSectionCode: 'GUIDE',
+                fileSectionCode: null,
                 fileSize: 0,
                 thumbnailFileName: '',
                 thumbnailFilePhysicalName: '',
@@ -124,10 +124,17 @@ export default {
         },
     },
     created() {
+        this.FileList[0].fileSectionCode = this.pageFileSectionCodeName[0];
+        this.defaultFileData.fileSectionCode = this.pageFileSectionCodeName[0];
         this.emitFileList();
     },
+    watch: {
+        pageFileSectionCodeName() {
+            console.log(this.pageFileSectionCodeName);
+        },
+    },
     components: {
-        FileItem: () => import('@/components/file-settings/file-item.vue'),
+        FileItem,
         draggable,
     },
     methods: {
@@ -140,16 +147,19 @@ export default {
         uploadIptChange(e) {
             const files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
-
             let mergeArray = Array.from(files).filter((item) => {
                 return this.FileList.every((el) => {
                     return (
-                        item.name !== el.fileName &&
-                        item.type !== el.fileExtension &&
-                        item.size !== el.fileSize
+                        item.name !== el.fileName && item.size !== el.fileSize
                     );
                 });
             });
+
+            if (mergeArray.length !== files.length) {
+                alert(
+                    '다운로드 보관함에 이미 담긴 파일을 제외한 나머지 파일만 추가됩니다.'
+                );
+            }
 
             mergeArray.forEach((el) => {
                 const idx = this.FileList.findIndex((el) => {
@@ -161,6 +171,7 @@ export default {
                     this.FileList[idx].fileName = el.name;
                     this.FileList[idx].fileSize = el.size;
                 } else {
+                    this.test.fileSectionCode = this.pageFileSectionCodeName[0];
                     this.FileList.push({
                         fileContentType: el.type,
                         fileName: el.name,
@@ -241,7 +252,6 @@ export default {
                 })
             )
                 .then((values) => {
-                    console.log(values);
                     this.uploadFile = [];
                     this.$emit('submitForm');
                 })

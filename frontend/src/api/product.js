@@ -22,13 +22,13 @@ function getProductDetail(goodsSeq, params) {
 
 // PRODUCT 등록
 function postProduct(data) {
-    console.log(data);
+    //console.log(data);
     return product.post(``, data);
 }
 
 // PRODUCT 수정
 function putProduct(goodsSeq, data) {
-    console.log(data);
+    //console.log(data);
     return product.put(`/${goodsSeq}`, data);
 }
 

@@ -13,7 +13,7 @@
             <span class="tit2">상세보기</span>
             <span class="tit3">알람 메일 수신 여부</span>
         </div>
-        <el-scrollbar wrap-class="test" view-class="view-box" :native="false">
+        <el-scrollbar wrap-class="wrap" view-class="view-box" :native="false">
             <div class="el-dialog__inner">
                 <GroupTreeListTable
                     :groupTreeData="groupTreeData"
@@ -59,9 +59,10 @@ export default {
             groupDetailData: [],
         };
     },
-    mounted() {
+    activated() {
         this.getAuthList();
-
+    },
+    mounted() {
         bus.$on('groupTreeToggle', (authSeq) => {
             if (this.groupTreeOpen.some((el) => el === authSeq)) {
                 this.groupTreeOpen = this.groupTreeOpen.filter(
@@ -116,6 +117,8 @@ export default {
                     'SP'
                 );
                 this.groupTreeData[0].subAuths = response;
+                console.log(this.groupTreeData);
+                this.checksUpdate();
             } catch (error) {
                 console.error(error);
             }
@@ -158,7 +161,7 @@ export default {
 .auth-title span:first-child {
     width: 260px;
 }
-::v-deep .test {
+::v-deep .wrap {
     max-height: 500px;
     border-bottom: 1px solid #ccc;
 }

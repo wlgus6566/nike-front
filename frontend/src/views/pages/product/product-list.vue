@@ -1,8 +1,12 @@
 <template>
     <div>
-        <h2 class="page-title">
+        <h2 class="page-title" v-if="this.$route.meta.title === 'OTHERS'">
+            {{ title }}
+        </h2>
+        <h2 class="page-title" v-else>
             <span class="ko">{{ title }}</span>
         </h2>
+
         <div class="sorting-area">
             <SearchInput @searchSubmit="searchSubmit" />
         </div>

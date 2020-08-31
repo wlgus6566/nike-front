@@ -49,6 +49,7 @@ import {
     getContentsViewFile,
     sendMail,
 } from '@/api/contents';
+import router from '@/router';
 
 export default {
     name: 'folder-view',
@@ -62,23 +63,40 @@ export default {
             folderDetail: null,
             contentsFileList: null,
             checkContentsFileList: [],
-            sectionCode: {
-                listSortOptions: [
-                    {
-                        value: 'ALL',
-                        title: 'ALL',
+
+            folderSet: {
+                asset: {
+                    folderOptionName: '캠페인',
+                    menuCodeList: ['SP', 'SU', 'FA', 'HO'],
+                    fileSectionCodeName: {
+                        SP: ['ASSET', 'GUIDE'],
+                        SU: ['ASSET', 'GUIDE'],
+                        FA: ['ASSET', 'GUIDE'],
+                        HO: ['ASSET', 'GUIDE'],
                     },
-                    {
-                        value: 'ASSET',
-                        title: 'ASSET',
+                },
+                toolkit: {
+                    folderOptionName: '툴킷',
+                    menuCodeList: ['VMS', 'EKIN', 'SOCIAL', 'RB'],
+                    fileSectionCodeName: {
+                        VMS: ['GUIDE', 'VIDEO', 'VR'],
+                        EKIN: ['GUIDE', 'VIDEO'],
+                        SOCIAL: ['GUIDE', 'ASSET'],
+                        RB: ['GUIDE', 'ASSET'],
                     },
-                    {
-                        value: 'GUIDE',
-                        title: 'GUIDE',
+                },
+                foundation: {
+                    folderOptionName: '폴더',
+                    menuCodeList: ['VMS', 'EKIN', 'DIGITAL', 'RB'],
+                    fileSectionCodeName: {
+                        VMS: ['GUIDE', 'VIDEO'],
+                        EKIN: ['GUIDE', 'VIDEO'],
+                        DIGITAL: ['GUIDE', 'ASSET'],
+                        RB: ['GUIDE', 'ASSET'],
                     },
-                ],
-                value: 'ALL',
+                },
             },
+            sectionCode: {},
             orderType: {
                 listSortOptions: [
                     {
@@ -191,7 +209,18 @@ export default {
             },
         };
     },
-    mounted() {},
+    mounted() {
+        this.sectionCode = {
+            listSortOptions: [
+                'ALL',
+                ...this.folderSet[this.$route.meta.topMenuCode.toLowerCase()]
+                    .fileSectionCodeName[
+                    this.$route.meta.menuCode.toUpperCase()
+                ],
+            ],
+            value: 'ALL',
+        };
+    },
     components: {
         BtnArea,
         folder,
@@ -236,15 +265,20 @@ export default {
     methods: {
         async sendEmail() {
             try {
-                console.log(this.$route.params.id);
-                console.log(this.$route.fullPath);
                 const response = await sendMail({
                     contentsSeq: this.$route.params.id,
                     contentsUrl: this.$route.fullPath,
                     // contentsUrl: `/contents/detail/${this.$route.params.id}`,
                 });
+
                 console.log(response);
+                if (response.data.existMsg) {
+                    alert(response.data.msg);
+                }
             } catch (error) {
+                if (error.data.existMsg) {
+                    alert(error.data.msg);
+                }
                 console.error(error);
             }
         },
@@ -279,7 +313,11 @@ export default {
                     );
                 }
             } catch (error) {
-                console.error(error);
+                if (error.data.code === 'NO_AUTH') {
+                    if (error.data.existMsg) {
+                        alert(error.data.msg);
+                    }
+                }
             }
         },
         modifyFolder() {
@@ -356,14 +394,18 @@ export default {
         },
         async getFolderDetail() {
             try {
-                const {
-                    data: { data: response },
-                } = await getContentsView(
+                const { data: response } = await getContentsView(
                     this.$route.meta.topMenuCode,
                     this.$route.params.pathMatch.toUpperCase(),
                     this.$route.params.id
                 );
-                this.folderDetail = response;
+                if (response.code === 'NO_AUTH') {
+                    router.go(-1);
+                    if (response.existMsg) {
+                        alert(response.msg);
+                    }
+                }
+                this.folderDetail = response.data;
             } catch (error) {
                 console.error(error);
             }
@@ -402,7 +444,6 @@ export default {
             }
         },
         async addContBasket(seq) {
-            console.log(this.$route);
             try {
                 await addContentsBasket(
                     this.$route.meta.topMenuCode,
@@ -413,7 +454,11 @@ export default {
                 );
                 await this.$store.dispatch('getContBasket');
             } catch (error) {
-                console.error(error);
+                if (error.data.code === 'NO_AUTH') {
+                    if (error.data.existMsg) {
+                        alert(error.data.msg);
+                    }
+                }
             }
         },
     },

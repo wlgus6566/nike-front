@@ -50,6 +50,7 @@
                         <ckeditor
                             v-model="newsDetail.contents"
                             :config="editorConfig"
+                            @blur="onEditorInput"
                             style="width: 100%;"
                         />
                         <!--<span class="textarea">
@@ -78,11 +79,11 @@
 </template>
 
 <script>
-import { getCustomerDetail, postNews, putNews } from '@/api/customer';
-import thumbnail from '@/components/thumbnail/index';
-import { getAuthFromCookie } from '@/utils/cookies';
+    import {getCustomerDetail, postNews, putNews} from '@/api/customer';
+    import thumbnail from '@/components/thumbnail/index';
+    import {getAuthFromCookie} from '@/utils/cookies';
 
-export default {
+    export default {
     name: 'notice-form',
     watch: {
         '$route'() {
@@ -260,6 +261,9 @@ export default {
             this.newsDetail.thumbnailFileName = null;
             this.newsDetail.thumbnailFilePhysicalName = null;
             this.newsDetail.thumbnailFileSize = null;
+        },
+        onEditorInput: function(e) {
+            this.newsDetail.contents = e.editor._.editable.$.innerHTML;
         },
     },
 };

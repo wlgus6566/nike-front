@@ -13,6 +13,7 @@ body {
 #app {
 }
 #wrap {
+    overflow: hidden;
     display: flex;
     flex-wrap: wrap;
     min-width: 1440px;

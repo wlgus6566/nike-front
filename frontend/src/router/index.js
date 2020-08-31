@@ -19,6 +19,7 @@ import testRoutes from './test';
 import store from '@/store';
 import { pages } from '@/utils/global-methods';
 import { getAuthFromCookie } from '@/utils/cookies';
+import bus from '@/utils/bus';
 
 Vue.use(VueRouter);
 
@@ -58,13 +59,14 @@ const router = new VueRouter({
 });
 router.beforeEach((to, from, next) => {
     if (to.meta.unauthorized) {
-        if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
+        if (store.state.token || getAuthFromCookie()) {
             next('/');
         } else {
             next();
         }
     } else {
-        if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
+        if (store.state.token || getAuthFromCookie()) {
+            bus.$emit('pageLoading', false);
             next();
         } else {
             next('/login');
