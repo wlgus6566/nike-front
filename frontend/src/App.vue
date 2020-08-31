@@ -67,4 +67,12 @@ export default {
     justify-content: center;
     align-items: center;
 }
+.layout-change-enter-active,
+.layout-change-leave-active {
+    transition: opacity 0.4s;
+}
+.layout-change-enter,
+.layout-change-leave-to {
+    opacity: 0;
+}
 </style>

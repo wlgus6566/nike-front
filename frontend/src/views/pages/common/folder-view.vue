@@ -49,6 +49,7 @@ import {
     getContentsViewFile,
     sendMail,
 } from '@/api/contents';
+import router from '@/router';
 
 export default {
     name: 'folder-view',
@@ -236,8 +237,6 @@ export default {
     methods: {
         async sendEmail() {
             try {
-                console.log(this.$route.params.id);
-                console.log(this.$route.fullPath);
                 const response = await sendMail({
                     contentsSeq: this.$route.params.id,
                     contentsUrl: `/contents/detail/${this.$route.params.id}`,
@@ -278,7 +277,11 @@ export default {
                     );
                 }
             } catch (error) {
-                console.error(error);
+                if (error.data.code === 'NO_AUTH') {
+                    if (error.data.existMsg) {
+                        alert(error.data.msg);
+                    }
+                }
             }
         },
         modifyFolder() {
@@ -355,14 +358,18 @@ export default {
         },
         async getFolderDetail() {
             try {
-                const {
-                    data: { data: response },
-                } = await getContentsView(
+                const { data: response } = await getContentsView(
                     this.$route.meta.topMenuCode,
                     this.$route.params.pathMatch.toUpperCase(),
                     this.$route.params.id
                 );
-                this.folderDetail = response;
+                if (response.code === 'NO_AUTH') {
+                    router.go(-1);
+                    if (response.existMsg) {
+                        alert(response.msg);
+                    }
+                }
+                this.folderDetail = response.data;
             } catch (error) {
                 console.error(error);
             }
