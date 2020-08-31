@@ -49,7 +49,10 @@ function updateCookie() {
 }
 
 function deleteCookie(value) {
-    document.cookie = `${value}=; expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+    console.log(value);
+    const expires = new Date();
+    expires.setMinutes(expires.getMinutes() - 30);
+    document.cookie = `${value}=; path=/; expires=${expires.toGMTString()}`;
 }
 
 export {

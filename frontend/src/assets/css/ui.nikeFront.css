@@ -4369,6 +4369,7 @@ img.image-grayscale {
     height: 20px;
     border-radius: 100%;
     padding: 0;
+    line-height: 11px;
     align-items: center;
     justify-content: center;
 }

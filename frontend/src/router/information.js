@@ -1,10 +1,16 @@
 import { pages } from '@/utils/global-methods';
+import store from '@/store';
 
 const routes = [
     {
         path: '/information',
         component: pages('information/index.vue'),
-        redirect: '/information/agency',
+        redirect: () => {
+            const idx = store.state.gnbMenuListData.findIndex(
+                (el) => el.menuCode === 'INFO'
+            );
+            return store.state.gnbMenuListData[idx].menus[0].menuPathUrl;
+        },
         children: [
             {
                 path: 'agency',
