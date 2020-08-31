@@ -326,6 +326,6 @@ export default {
     max-height: 80vh;
 }
 .form-list .check-label:last-child {
-    padding-right: 0;
+    margin-right: 0;
 }
 </style>
