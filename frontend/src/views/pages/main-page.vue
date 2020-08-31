@@ -27,9 +27,8 @@
                 :key="assetItem.contentsSeq"
             >
                 <router-link
-                    :to="`/asset/${assetItem.menuCode.toLocaleLowerCase()}/${
-                        assetItem.contentsSeq
-                    }`"
+                    :to="setUrl(assetItem)"
+                    @click.native="alertMsg(assetItem)"
                 >
                     <span class="thumbnail">
                         <img
@@ -52,9 +51,8 @@
                 :key="toolKitItem.contentsSeq"
             >
                 <router-link
-                    :to="`/toolKit/${toolKitItem.menuCode.toLocaleLowerCase()}/${
-                        toolKitItem.contentsSeq
-                    }`"
+                    :to="setUrl(toolKitItem)"
+                    @click.native="alertMsg(toolKitItem)"
                 >
                     <span class="thumbnail">
                         <img
@@ -77,9 +75,8 @@
                 :key="foundationItem.contentsSeq"
             >
                 <router-link
-                    :to="`/foundation/${foundationItem.menuCode.toLocaleLowerCase()}/${
-                        foundationItem.contentsSeq
-                    }`"
+                    :to="setUrl(foundationItem)"
+                    @click.native="alertMsg(foundationItem)"
                 >
                     <span class="thumbnail">
                         <img
@@ -140,7 +137,10 @@
                 v-for="reportItem in mainData.reportList"
                 :key="reportItem.reportSeq"
             >
-                <router-link :to="`/report/detail/${reportItem.reportSeq}`">
+                <router-link
+                    :to="setUrl(reportItem)"
+                    @click.native="alertMsg(reportItem)"
+                >
                     <span class="thumbnail">
                         <img
                             :src="reportItem.imageFilePhysicalName"
@@ -265,6 +265,22 @@ export default {
         this.main();
     },
     methods: {
+        alertMsg(item) {
+            if (item.detailAuthYn === 'N') {
+                alert('접근 권한이 없습니다.');
+            }
+        },
+        setUrl(item) {
+            if (item.detailAuthYn === 'N') {
+                return `${this.$route.fullPath}`;
+            } else {
+                if (item.reportSeq) {
+                    return `/report/detail/${item.reportSeq}`.toLocaleLowerCase();
+                } else {
+                    return `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase();
+                }
+            }
+        },
         handleScroll() {
             const body = document.querySelector('.fc-daygrid-body');
             if (body.childNodes[1]) {
