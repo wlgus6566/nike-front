@@ -240,7 +240,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		configuration.addAllowedHeader("*");
 		configuration.setAllowCredentials(true);
 		configuration.addExposedHeader(JwtHelper.HEADER_STRING); //header 노출 설정
-		configuration.setMaxAge(-1L);
+		configuration.setMaxAge(360000000L);
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
