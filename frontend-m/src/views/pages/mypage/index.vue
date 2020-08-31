@@ -132,9 +132,9 @@ export default {
                 }
 
                 this.alarmData.forEach(el => {
-                    el.typeCd === 'REPORT_MANAGE'
-                        ? (el.typeCd = 'REPORT')
-                        : el.typeCd;
+                    el.typeCd = el.typeCd.toLowerCase();
+                    el.menuCode = el.menuCode.toLowerCase();
+                    if (el.typeCd === 'report_manage') el.typeCd = 'report';
                 });
                 this.page++;
                 console.log(this.totalPage);

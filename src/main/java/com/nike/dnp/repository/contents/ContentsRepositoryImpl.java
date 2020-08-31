@@ -144,7 +144,6 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
     @Override
     public List<ContentsUserEmailDTO> findAllContentsMailAuthUser(final long contentsSeq) {
         final QUserContents qUserContents = QUserContents.userContents;
-        final QContents qContents = QContents.contents;
         final QUserAuth qUserAuth = QUserAuth.userAuth;
         final QUser qUser = QUser.user;
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
@@ -153,11 +152,9 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                     Projections.bean(
                         ContentsUserEmailDTO.class
                             , qUser.userId
-                            , qContents.imageFilePhysicalName
                 ))
                 .from(qUserContents)
-                .where(qUserContents.contentsSeq.eq(contentsSeq))
-                .innerJoin(qContents).on(qContents.contentsSeq.eq(contentsSeq))
+                .where(qUserContents.contentsSeq.eq(contentsSeq).and(qUserContents.emailReceptionYn.eq("Y")))
                 .innerJoin(qUserAuth).on(qUserContents.authSeq.eq(qUserAuth.authSeq))
                 .innerJoin(qUser).on(qUserAuth.userSeq.eq(qUser.userSeq))
                 .fetch();
