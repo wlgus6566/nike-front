@@ -4038,7 +4038,7 @@ img.image-grayscale {
     background: no-repeat center;
     background-size: auto;
 }
-.schedule-item:before {
+/*.schedule-item:before {
     content: '';
     position: absolute;
     top: 0;
@@ -4048,7 +4048,7 @@ img.image-grayscale {
     height: 100%;
     opacity: 0.05;
     background-color: #00b398;
-}
+}*/
 .el-pagination .btn-prev {
     background-image: url(../images/svg/icon-calender-left.svg);
 }
@@ -4350,6 +4350,7 @@ img.image-grayscale {
     height: 20px;
     border-radius: 100%;
     padding: 0;
+    line-height: 11px;
     align-items: center;
     justify-content: center;
 }
