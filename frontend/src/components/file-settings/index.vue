@@ -155,6 +155,12 @@ export default {
                 });
             });
 
+            if (mergeArray.length !== files.length) {
+                alert(
+                    '다운로드 보관함에 이미 담긴 파일을 제외한 나머지 파일만 추가됩니다.'
+                );
+            }
+
             mergeArray.forEach((el) => {
                 const idx = this.FileList.findIndex((el) => {
                     return el.fileKindCode === 'FILE' && !el.fileName;
