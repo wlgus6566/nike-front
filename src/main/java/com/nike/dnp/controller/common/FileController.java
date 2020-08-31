@@ -17,10 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -85,7 +82,7 @@ public class FileController {
 	 */
 	@ApiOperation(value = "파일 업로드", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/api/open/upload",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@CrossOrigin(origins = {"https://devwww.nikespace.co.kr", "http://devwww.nikespace.co.kr", "http://localhost:8081", "https://localhost:8081"})
+	@CrossOrigin(origins = {"https://devwww.nikespace.co.kr", "http://devwww.nikespace.co.kr", "http://localhost:8081", "https://localhost:8081"},maxAge = 3600,methods = {RequestMethod.POST,RequestMethod.OPTIONS})
 	public SingleResult<FileResultDTO> upload(final FileUploadDTO fileUploadDTO,
 							   @ApiParam(name = "uploadFile", value = "파일업로드") final MultipartFile uploadFile) throws IOException {
 		log.info("FileController.upload");
