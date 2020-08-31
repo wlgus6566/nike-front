@@ -240,7 +240,8 @@ export default {
                 console.log(this.$route.fullPath);
                 const response = await sendMail({
                     contentsSeq: this.$route.params.id,
-                    contentsUrl: `/contents/detail/${this.$route.params.id}`,
+                    contentsUrl: this.$route.fullPath,
+                    // contentsUrl: `/contents/detail/${this.$route.params.id}`,
                 });
                 console.log(response);
             } catch (error) {
