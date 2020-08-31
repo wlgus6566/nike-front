@@ -135,10 +135,7 @@ public class ContentsService {
         log.info("ContentsService.findAllPaging");
         final Long authSeq = SecurityUtil.currentUser().getAuthSeq();
         // 권한 검사
-        final String searchMenuCode = null == menuCode  ? topMenuCode+"_ALL" : topMenuCode + "_" + menuCode;
-//        final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
-//        userContentsSearchDTO.setMenuCode(searchMenuCode);
-//        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.LIST.toString());
+        final String searchMenuCode = ObjectUtils.isEmpty(menuCode) ? topMenuCode+"_ALL" : topMenuCode + "_" + menuCode;
 
         // 권한에 따른 조건문
         contentsSearchDTO.setExposureYn(userContentsService.isAuth(authSeq, searchMenuCode, ServiceCode.MenuSkillEnumCode.CREATE.toString()) ? null : "Y");
