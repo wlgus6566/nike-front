@@ -103,6 +103,7 @@ public class ReportRepositoryImpl extends QuerydslRepositorySupport implements R
                 .select(Projections.bean(
                         ReportResultDTO.class
                         , qReport.reportSeq
+                        , qReport.authSeq
                         , qReport.reportSectionCode
                         , qReport.reportName
                         , qReport.imageFilePhysicalName

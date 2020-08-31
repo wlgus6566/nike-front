@@ -118,6 +118,14 @@ public class ReportResultDTO {
     private String detailAuthYn = "N";
 
     /**
+     * The Auth seq
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "authSeq", value = "권한 시퀀스", required = true, example = "1", hidden = true)
+    private Long authSeq;
+
+    /**
      * Gets image file physical name.
      *
      * @return the image file physical name
