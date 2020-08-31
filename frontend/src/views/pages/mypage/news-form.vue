@@ -50,6 +50,7 @@
                         <ckeditor
                             v-model="newsDetail.contents"
                             :config="editorConfig"
+                            @blur="onEditorInput"
                             style="width: 100%;"
                         />
                         <!--<span class="textarea">
@@ -260,6 +261,10 @@ export default {
             this.newsDetail.thumbnailFileName = null;
             this.newsDetail.thumbnailFilePhysicalName = null;
             this.newsDetail.thumbnailFileSize = null;
+        },
+        onEditorInput: function(e) {
+            var editorContents = e.editor._.editable.$.innerHTML;
+            this.newsDetail.contents = editorContents;
         },
     },
 };
