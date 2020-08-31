@@ -1997,7 +1997,8 @@
     width: 100%;
     text-indent: -9999px;
     overflow: hidden;
-    background: url('../images/svg/logo_watermark.svg') no-repeat 0 / cover;
+    background: url('../images/svg/logo_watermark.svg') no-repeat center / cover;
+    background-size: 180%;
 }
 .file-item .detail .thumbnail img {
     max-width: 100%;
