@@ -20,8 +20,7 @@
                 ref="fileListUl"
                 v-model="FileList"
                 v-bind="dragOptions"
-                @start="isDragging = true"
-                @end="isDragging = false"
+                @end="emitFileList"
                 class="file-setting-list"
                 tag="ul"
             >
@@ -47,6 +46,7 @@
 </template>
 <script>
 import draggable from 'vuedraggable';
+import FileItem from '@/components/file-settings/file-item.vue';
 import { fileUpLoad } from '@/api/file';
 import { getContentsViewFile } from '@/api/contents';
 export default {
@@ -134,7 +134,7 @@ export default {
         },
     },
     components: {
-        FileItem: () => import('@/components/file-settings/file-item.vue'),
+        FileItem,
         draggable,
     },
     methods: {
@@ -154,6 +154,12 @@ export default {
                     );
                 });
             });
+
+            if (mergeArray.length !== files.length) {
+                alert(
+                    '다운로드 보관함에 이미 담긴 파일을 제외한 나머지 파일만 추가됩니다.'
+                );
+            }
 
             mergeArray.forEach((el) => {
                 const idx = this.FileList.findIndex((el) => {
