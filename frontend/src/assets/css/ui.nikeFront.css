@@ -2033,7 +2033,7 @@
     box-sizing: border-box;
 }
 
-.file-item .detail .thumbnail .video-item video`,
+.file-item .detail .thumbnail .video-item video,
 .file-item .detail .thumbnail .video-item iframe {
     position: absolute;
     top: 0;
