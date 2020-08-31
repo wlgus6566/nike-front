@@ -35,8 +35,8 @@ import java.util.TimeZone;
  * FileUtil
  *
  * @author [윤태호]
- * @since 2020. 7. 10. 오후 2:39:36
  * @implNote
+ * @since 2020. 7. 10. 오후 2:39:36
  */
 @Component
 @Slf4j
@@ -82,13 +82,14 @@ public class FileUtil {
 
 
 
+
 	/**
 	 * 파일 저장 경로
 	 *
 	 * @param root the root
 	 * @author [윤태호]
-	 * @since 2020. 7. 10. 오후 2:39:36
 	 * @implNote
+	 * @since 2020. 7. 10. 오후 2:39:36
 	 */
 	@Value("${nike.file.root:}")
 	public void setRoot(final String root){
@@ -100,8 +101,8 @@ public class FileUtil {
 	 *
 	 * @param imageMagick the image magick
 	 * @author [윤태호]
-	 * @since 2020. 7. 13. 오후 2:30:09
 	 * @implNote
+	 * @since 2020. 7. 13. 오후 2:30:09
 	 */
 	@Value("${nike.file.imageMagick:}")
 	public void setImageMagick(final String imageMagick){
@@ -113,8 +114,8 @@ public class FileUtil {
 	 *
 	 * @param imageMagickCommand the image magick command
 	 * @author [김형욱]
-	 * @since 2020. 7. 17. 오전 11:55:43
 	 * @implNote
+	 * @since 2020. 7. 17. 오전 11:55:43
 	 */
 	@Value("${nike.file.imageMagickCommand:}")
 	public void setImageMagickCommand(final String imageMagickCommand){
@@ -126,8 +127,8 @@ public class FileUtil {
 	 *
 	 * @param ffmpeg the ffmpeg
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:58:36
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:58:36
 	 */
 	@Value("${nike.file.ffmpeg:}")
 	public void setFfmpeg(final String ffmpeg) {
@@ -139,8 +140,8 @@ public class FileUtil {
 	 *
 	 * @param ffmpegCommand the ffmpeg command
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:58:36
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:58:36
 	 */
 	@Value("${nike.file.ffmpegCommand:}")
 	public void setFfmpegCommand(final String ffmpegCommand) {
@@ -154,20 +155,16 @@ public class FileUtil {
 	 * @param extension 파일 확장자
 	 * @return the file
 	 * @author [윤태호]
-	 * @since 2020. 7. 10. 오후 2:39:36
 	 * @implNote
+	 * @since 2020. 7. 10. 오후 2:39:36
 	 */
 	public static File makeNewFile(final String folder,final String extension) {
 		log.info("FileUtil.makeNewFile");
-		final String newFilepath = root + File.separator + folder;
-		final String newFileName = makeFileName() + "." + extension;
-		final File result = new File(newFilepath+File.separator+ newFileName);
+		final String newFilepath = root + File.separator + cleanXSS(folder);
+		final String newFileName = cleanXSS(makeFileName()) + "." + extension;
+		final File result = new File(cleanXSS(newFilepath+File.separator+ newFileName));
 		new File(newFilepath).mkdirs();
 		return result;
-		/*if(result.isFile()){
-			return makeNewFile(folder,extension);
-		}else{
-		}*/
 	}
 
 	/**
@@ -175,6 +172,7 @@ public class FileUtil {
 	 *
 	 * @return the string
 	 * @author [윤태호]
+	 * @implNote
 	 * @since 2020. 7. 29. 오후 2:02:25
 	 */
 	public static String makeFileName(){
@@ -193,8 +191,8 @@ public class FileUtil {
 	 * @return the file result dto
 	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @since 2020. 7. 13. 오후 4:55:25
 	 * @implNote
+	 * @since 2020. 7. 13. 오후 4:55:25
 	 */
 	public static FileResultDTO fileSave(final MultipartFile uploadFile,
 										 final String folder,
@@ -206,13 +204,13 @@ public class FileUtil {
 
 		final String extension = StringUtils.getFilenameExtension(uploadFile.getOriginalFilename());
 
-		final File toFile = makeNewFile(folder, extension);
+		final File toFile = makeNewFile(cleanXSS(folder), cleanXSS(extension));
 		uploadFile.transferTo(toFile);
 		stopWatch.getTotalTimeSeconds();
 		stopWatch.stop();
 		log.debug("stopWatch.getLastTaskTimeMillis() {} :  {} ms",stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 		final FileResultDTO fileResultDTO = new FileResultDTO();
-		fileResultDTO.setFileName(uploadFile.getOriginalFilename());
+		fileResultDTO.setFileName(cleanXSS(uploadFile.getOriginalFilename()));
 		fileResultDTO.setFilePhysicalName(toFile.getPath().replace(root, ""));
 		fileResultDTO.setFileSize(toFile.length());
 		fileResultDTO.setFileContentType(uploadFile.getContentType());
@@ -230,14 +228,14 @@ public class FileUtil {
 			final String detailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_detail." + resizeExtension;
 			final StringBuilder detailCommand = new StringBuilder(imageMagick);
 			detailCommand.append(File.separator).append(imageMagickCommand + " ").append(toFile.getPath());
-			if(extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(Locale.getDefault()).contains("AI") || extension.toUpperCase(Locale.getDefault()).contains("TIF")){
+			if(extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(Locale.getDefault()).contains("AI") || extension.toUpperCase(Locale.getDefault()).contains("TIF")
+					|| extension.toUpperCase(Locale.getDefault()).contains("GIF")){
 				detailCommand.append("[0]");
 			}
 			detailCommand.append(" -resize 700x700 -background white -gravity center -extent 700x700 ").append(detailPath);
-
 			try{
 				final Runtime runtimeDetail = Runtime.getRuntime();
-				final Process procDetail = runtimeDetail.exec(detailCommand.toString());
+				final Process procDetail = runtimeDetail.exec(whiteListing(detailCommand.toString()));
 				procDetail.waitFor();
 			}catch(InterruptedException e){
 				// 리사이즈 문제
@@ -245,7 +243,7 @@ public class FileUtil {
 			}
 			stopWatch.stop();
 			log.debug("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
-			final File detailFile = new File(detailPath);
+			final File detailFile = new File(cleanXSS(detailPath));
 			if(detailFile.isFile()){
 				String detailThumbnail = uploadFile.getOriginalFilename();
 				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail." + resizeExtension;
@@ -266,7 +264,7 @@ public class FileUtil {
 
 			try{
 				final Runtime runtime = Runtime.getRuntime();
-				final Process proc = runtime.exec(command.toString());
+				final Process proc = runtime.exec(whiteListing(command.toString()));
 				proc.waitFor();
 			}catch(InterruptedException e){
 				// 리사이즈 문제
@@ -275,7 +273,7 @@ public class FileUtil {
 			stopWatch.stop();
 			log.debug("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 
-			final File thumbnailFile = new File(thumbnailPath);
+			final File thumbnailFile = new File(cleanXSS(thumbnailPath));
 			if(thumbnailFile.isFile()){
 				String thumbnail = uploadFile.getOriginalFilename();
 				thumbnail = thumbnail.replace("." + StringUtils.getFilenameExtension(thumbnail), "") + "_thumbnail." + resizeExtension;
@@ -288,24 +286,20 @@ public class FileUtil {
 
 			// 사이즈 변환시 700:394 를 변경 하면 됨
 			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail.mp4";
-			final String[] command = {ffmpeg+File.separator+ffmpegCommand,"-y","-i",toFile.getPath(),"-vf"
+			final String[] command = {whiteListing(ffmpeg + File.separator + ffmpegCommand),"-y","-i",toFile.getPath(),"-vf"
 					,"scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
 					,thumbnailPath};
-			log.debug("command.toString() {}", command.toString());
 			stopWatch.start("videoResize_"+uploadFile.getOriginalFilename());
 			final ProcessBuilder processBuilder = new ProcessBuilder(command);
 			processBuilder.redirectErrorStream(true);
 			Process process = null;
-
 			try{
 				process = processBuilder.start();
 			}catch(Exception e){
 				process.destroy();
 				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
-
 			exhaustInputStream(process.getInputStream());
-
 			try{
 				process.waitFor();
 			}catch(InterruptedException e){
@@ -319,7 +313,7 @@ public class FileUtil {
 			}
 			stopWatch.stop();
 			log.debug("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
-			final File detailFile = new File(thumbnailPath);
+			final File detailFile = new File(cleanXSS(thumbnailPath));
 			if(detailFile.isFile()){
 				String detailThumbnail = uploadFile.getOriginalFilename();
 				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail.mp4";
@@ -338,11 +332,10 @@ public class FileUtil {
 	 *
 	 * @param uploadFile the upload file
 	 * @return the file result dto
-	 * @throws IOException          the io exception
-	 * @throws InterruptedException the interrupted exception
+	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @since 2020. 7. 13. 오후 4:55:25
 	 * @implNote
+	 * @since 2020. 7. 13. 오후 4:55:25
 	 */
 	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile) throws IOException {
 		log.info("FileUtil.fileTempSaveAndImageResize");
@@ -355,11 +348,10 @@ public class FileUtil {
 	 * @param uploadFile the upload file
 	 * @param resizeExt  리사이즈 확장 명
 	 * @return the file result dto
-	 * @throws IOException          the io exception
-	 * @throws InterruptedException the interrupted exception
+	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @since 2020. 7. 13. 오후 4:55:25
 	 * @implNote
+	 * @since 2020. 7. 13. 오후 4:55:25
 	 */
 	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile,
 														   final String resizeExt) throws IOException  {
@@ -373,11 +365,10 @@ public class FileUtil {
 	 * @param uploadFile the upload file
 	 * @param folder     the folder
 	 * @return the file result dto
-	 * @throws IOException          the io exception
-	 * @throws InterruptedException the interrupted exception
+	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @since 2020. 7. 13. 오후 4:55:25
 	 * @implNote
+	 * @since 2020. 7. 13. 오후 4:55:25
 	 */
 	public static FileResultDTO fileSave(final MultipartFile uploadFile, final String folder) throws IOException {
 		log.info("FileUtil.fileSave");
@@ -389,11 +380,10 @@ public class FileUtil {
 	 *
 	 * @param uploadFile the upload file
 	 * @return the file result dto
-	 * @throws IOException          the io exception
-	 * @throws InterruptedException the interrupted exception
+	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @since 2020. 7. 13. 오후 4:55:25
 	 * @implNote
+	 * @since 2020. 7. 13. 오후 4:55:25
 	 */
 	public static FileResultDTO fileTempSave(final MultipartFile uploadFile) throws IOException {
 		log.info("FileUtil.fileTempSave");
@@ -405,8 +395,8 @@ public class FileUtil {
 	 * temp 폴더 파일 삭제 (등록후 24시간 지난 파일들만 삭제 처리)
 	 *
 	 * @author [윤태호]
-	 * @since 2020. 7. 13. 오후 4:55:25
 	 * @implNote
+	 * @since 2020. 7. 13. 오후 4:55:25
 	 */
 	public static void deleteTemp() {
 		log.info("FileUtil.deleteTemp");
@@ -439,8 +429,8 @@ public class FileUtil {
 	 * @param filePath the file path
 	 * @return the single result
 	 * @author [이소정]
-	 * @since 2020. 7. 16. 오후 6:15:26
 	 * @implNote
+	 * @since 2020. 7. 16. 오후 6:15:26
 	 */
 	public static ResponseEntity<Resource> fileDownload(final String filePath) {
 		log.info("FileUtil.fileDownload");
@@ -468,10 +458,14 @@ public class FileUtil {
 	 * @return the response entity
 	 * @throws IOException the io exception
 	 * @author [윤태호]
+	 * @implNote
 	 * @since 2020. 7. 28. 오후 2:19:30
 	 */
-	public static ResponseEntity<Resource> s3FileDownload(final String path,final String fileName) throws IOException {
+	public static ResponseEntity<Resource> s3FileDownload(String path,final String fileName) throws IOException {
 		log.info("FileUtil.s3FileDownload");
+
+		// "/product/2020082743000R1QYFU8Fqx.jpg"
+//		path = "/contents/20200828676000XmWVAt0XaA.png";
 		final S3ObjectInputStream s3ObjectInputStream = S3Util.getFile(path);
 		final HttpHeaders headers = new HttpHeaders();
 		final Resource resource = new ByteArrayResource(IOUtils.toByteArray(s3ObjectInputStream));
@@ -485,8 +479,8 @@ public class FileUtil {
 	 *
 	 * @param is the is
 	 * @author [윤태호]
-	 * @since 2020. 7. 27. 오후 4:52:29
 	 * @implNote
+	 * @since 2020. 7. 27. 오후 4:52:29
 	 */
 	private static void exhaustInputStream(final InputStream is) {
 		log.info("FileUtil.exhaustInputStream");
@@ -496,11 +490,72 @@ public class FileUtil {
 				final BufferedReader br = new BufferedReader(new InputStreamReader(is));
 				String cmd;
 				while((cmd = br.readLine()) != null){ // 읽을 라인이 없을때까지 계속 반복
-					log.debug("cmd {}", cmd);
+					log.debug("videoResize {}", cmd);
 				}
 			}catch(IOException e){
 				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 		}).start();
+	}
+
+	/**
+	 * xss 필터 및 path 수정
+	 *
+	 * @param value the value
+	 * @return the string
+	 * @author [윤태호]
+	 * @implNote
+	 * @since 2020. 8. 25. 오후 5:07:38
+	 */
+	public static String cleanXSS(String value) {
+
+		value = value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+		value = value.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");
+		value = value.replaceAll("'", "&#39;");
+		value = value.replaceAll("eval\\((.*)\\)", "");
+		value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
+		value = value.replaceAll("script", "");
+
+
+		value = value.replaceAll("\\.\\./", "");
+		value = value.replaceAll("\\.\\.\\\\", "");
+		return value;
+	}
+
+	/**
+	 * 화이트 문자열 체트
+	 *
+	 * @param paramStr the param str
+	 * @return the string
+	 * @author [윤태호]
+	 * @implNote
+	 * @since 2020. 8. 31. 오후 12:25:53
+	 */
+	private static String whiteListing(String paramStr) {
+		final String[] checkStrArray = {imageMagick + File.separator + imageMagickCommand, ffmpeg + File.separator + ffmpegCommand};
+		boolean check = false;
+		for(String checkStr : checkStrArray){
+			if(paramStr.indexOf(checkStr) == 0){
+				check = true;
+			}
+		}
+		if(check){
+			return paramStr;
+		}
+		return "";
+	}
+
+	/**
+	 * The entry point of application.
+	 *
+	 * @param args the input arguments
+	 * @author [윤태호]
+	 * @implNote
+	 * @since 2020. 8. 31. 오후 12:25:54
+	 */
+	public static void main(String[] args) {
+		String test = "d:/test"+File.separator+"test.jpg../../../../.."+File.separator+"sldjflksjdlfjk";
+
+		System.out.println(whiteListing(test));
 	}
 }
