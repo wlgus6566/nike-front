@@ -66,37 +66,140 @@ export default {
 
             folderSet: {
                 asset: {
-                    folderOptionName: '캠페인',
-                    menuCodeList: ['SP', 'SU', 'FA', 'HO'],
-                    fileSectionCodeName: {
-                        SP: ['ASSET', 'GUIDE'],
-                        SU: ['ASSET', 'GUIDE'],
-                        FA: ['ASSET', 'GUIDE'],
-                        HO: ['ASSET', 'GUIDE'],
-                    },
+                    sp: [
+                        {
+                            value: 'ASSET',
+                            title: 'ASSET',
+                        },
+                        {
+                            value: 'GUIDE',
+                            title: 'GUIDE',
+                        },
+                    ],
+                    su: [
+                        {
+                            value: 'ASSET',
+                            title: 'ASSET',
+                        },
+                        {
+                            value: 'GUIDE',
+                            title: 'GUIDE',
+                        },
+                    ],
+                    fa: [
+                        {
+                            value: 'ASSET',
+                            title: 'ASSET',
+                        },
+                        {
+                            value: 'GUIDE',
+                            title: 'GUIDE',
+                        },
+                    ],
+                    ho: [
+                        {
+                            value: 'ASSET',
+                            title: 'ASSET',
+                        },
+                        {
+                            value: 'GUIDE',
+                            title: 'GUIDE',
+                        },
+                    ],
                 },
                 toolkit: {
-                    folderOptionName: '툴킷',
-                    menuCodeList: ['VMS', 'EKIN', 'SOCIAL', 'RB'],
-                    fileSectionCodeName: {
-                        VMS: ['GUIDE', 'VIDEO', 'VR'],
-                        EKIN: ['GUIDE', 'VIDEO'],
-                        SOCIAL: ['GUIDE', 'ASSET'],
-                        RB: ['GUIDE', 'ASSET'],
-                    },
+                    vms: [
+                        {
+                            value: 'GUIDE',
+                            title: 'GUIDE',
+                        },
+                        {
+                            value: 'VIDEO',
+                            title: 'VIDEO',
+                        },
+                        {
+                            value: 'VR',
+                            title: 'VR',
+                        },
+                    ],
+                    ekin: [
+                        {
+                            value: 'GUIDE',
+                            title: 'GUIDE',
+                        },
+                        {
+                            value: 'VIDEO',
+                            title: 'VIDEO',
+                        },
+                    ],
+                    social: [
+                        {
+                            value: 'GUIDE',
+                            title: 'GUIDE',
+                        },
+                        {
+                            value: 'ASSET',
+                            title: 'ASSET',
+                        },
+                    ],
+                    rb: [
+                        {
+                            value: 'GUIDE',
+                            title: 'GUIDE',
+                        },
+                        {
+                            value: 'ASSET',
+                            title: 'ASSET',
+                        },
+                    ],
                 },
                 foundation: {
-                    folderOptionName: '폴더',
-                    menuCodeList: ['VMS', 'EKIN', 'DIGITAL', 'RB'],
-                    fileSectionCodeName: {
-                        VMS: ['GUIDE', 'VIDEO'],
-                        EKIN: ['GUIDE', 'VIDEO'],
-                        DIGITAL: ['GUIDE', 'ASSET'],
-                        RB: ['GUIDE', 'ASSET'],
-                    },
+                    vms: [
+                        {
+                            value: 'GUIDE',
+                            title: 'GUIDE',
+                        },
+                        {
+                            value: 'VIDEO',
+                            title: 'VIDEO',
+                        },
+                    ],
+                    ekin: [
+                        {
+                            value: 'GUIDE',
+                            title: 'GUIDE',
+                        },
+                        {
+                            value: 'VIDEO',
+                            title: 'VIDEO',
+                        },
+                    ],
+                    digital: [
+                        {
+                            value: 'GUIDE',
+                            title: 'GUIDE',
+                        },
+                        {
+                            value: 'ASSET',
+                            title: 'ASSET',
+                        },
+                    ],
+                    rb: [
+                        {
+                            value: 'GUIDE',
+                            title: 'GUIDE',
+                        },
+                        {
+                            value: 'ASSET',
+                            title: 'ASSET',
+                        },
+                    ],
                 },
             },
-            sectionCode: {},
+            sectionCode: {
+                listSortOptions: [{ value: 'ALL', label: 'ALL' }],
+                value: 'ALL',
+            },
             orderType: {
                 listSortOptions: [
                     {
@@ -210,16 +313,13 @@ export default {
         };
     },
     mounted() {
-        this.sectionCode = {
-            listSortOptions: [
-                'ALL',
-                ...this.folderSet[this.$route.meta.topMenuCode.toLowerCase()]
-                    .fileSectionCodeName[
-                    this.$route.meta.menuCode.toUpperCase()
-                ],
+        this.sectionCode.listSortOptions = [
+            { value: 'ALL', title: 'ALL' },
+            ...this.folderSet[this.$route.meta.topMenuCode.toLowerCase()][
+                this.$route.meta.menuCode.toLowerCase()
             ],
-            value: 'ALL',
-        };
+        ];
+        console.log(this.sectionCode);
     },
     components: {
         BtnArea,
