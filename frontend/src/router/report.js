@@ -11,7 +11,7 @@ const routes = [
                 component: pages('report/upload'),
                 meta: {
                     layout: 'Default',
-                    aside: 'Report',
+                    aside: 'Default',
                     title: 'REPORT <span class="ko">업로드</span>',
                 },
             },

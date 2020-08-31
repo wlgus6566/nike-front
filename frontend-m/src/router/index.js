@@ -7,11 +7,12 @@ import ToolkitRoutes from './toolkit';
 import RepotRoutes from './report';
 import InformationRoutes from './information';
 import MyPageRoutes from './mypage';
+import TermsRoutes from './terms';
 import testRoutes from './test';
 import ErrorRoutes from './error';
 
 // Import methods
-import {pages} from '@/utils/global-methods';
+import { pages } from '@/utils/global-methods';
 
 Vue.use(VueRouter);
 
@@ -29,6 +30,7 @@ const router = new VueRouter({
         ...RepotRoutes,
         ...InformationRoutes,
         ...MyPageRoutes,
+        ...TermsRoutes,
         ...testRoutes,
         ...ErrorRoutes,
     ],
