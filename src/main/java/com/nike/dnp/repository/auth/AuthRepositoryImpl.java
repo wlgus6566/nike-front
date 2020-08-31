@@ -2,6 +2,7 @@ package com.nike.dnp.repository.auth;
 
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
+import com.nike.dnp.dto.user.UserAuthSearchDTO;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.auth.QAuth;
 import com.nike.dnp.entity.auth.QAuthMenuRole;
@@ -39,15 +40,14 @@ public class AuthRepositoryImpl extends QuerydslRepositorySupport implements Aut
     /**
      * Find by config list.
      *
-     * @param menuCode  the menu code
-     * @param skillCode the skill code
+     * @param userAuthSearchDTO the user auth search dto
      * @return the list
      * @author [오지훈]
-     * @since 2020. 7. 20. 오후 4:27:00
      * @implNote 컨텐츠 권한 목록
+     * @since 2020. 7. 20. 오후 4:27:00
      */
     @Override
-    public List<AuthReturnDTO> findByConfig(final String menuCode, final String skillCode) {
+    public List<AuthReturnDTO> findByConfig(final UserAuthSearchDTO userAuthSearchDTO) {
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
         final QAuth auth = new QAuth("auth");
         final QAuth upperAuth = new QAuth("upperAuth");
@@ -72,13 +72,13 @@ public class AuthRepositoryImpl extends QuerydslRepositorySupport implements Aut
                 .innerJoin(authMenuRole).on(auth.authSeq.eq(authMenuRole.authSeq))
                 .innerJoin(menuRole).on(
                         authMenuRole.menuRoleSeq.eq(menuRole.menuRoleSeq)
-                        , AuthPredicateHelper.eqSkillCode(skillCode)
+                        , AuthPredicateHelper.eqSkillCode(userAuthSearchDTO.getSkillCode())
                 )
                 .innerJoin(menu).on(
                         menuRole.menuSeq.eq(menu.menuSeq)
-                        , AuthPredicateHelper.eqMenuCode(menuCode)
+                        , AuthPredicateHelper.eqMenuCode(userAuthSearchDTO.getMenuCode())
                 )
-                .leftJoin(userContents).on(auth.authSeq.eq(userContents.authSeq))
+                .leftJoin(userContents).on(auth.authSeq.eq(userContents.authSeq).and(userContents.contentsSeq.eq(userAuthSearchDTO.getContentsSeq())))
                 .where(auth.useYn.eq(ServiceCode.YesOrNoEnumCode.Y.toString()))
                 .fetch();
     }

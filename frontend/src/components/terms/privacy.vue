@@ -91,8 +91,9 @@
         </p>
         <p>
             만약 귀하가 귀하의 권리를 행사하시고 싶으시면
-            <a href="mailto:privacy@nike.com">privacy@nike.com</a>으로 메일을
-            보내 주십시오.
+            <a href="mailto:privacy@nike.com?subject=[NIKE SPACE]"
+                >privacy@nike.com</a
+            >으로 메일을 보내 주십시오.
         </p>
         <h4 class="terms-sub">기밀 유지와 보호</h4>
         <p>
@@ -123,7 +124,9 @@
         <h4 class="terms-sub">질문 및 피드백</h4>
         <p>
             피드백을 주시거나 질문 또는 우려 사항이 있으시면
-            <a href="mailto:privacy@nike.com">privacy@nike.com</a>
+            <a href="mailto:privacy@nike.com?subject=[NIKE SPACE]"
+                >privacy@nike.com</a
+            >
             주소로 이메일을 보내시거나 (ii)서울특별시 강남구 테헤란로 152, GFC
             빌딩 법무팀 으로 우편을 보내 주십시오.
         </p>

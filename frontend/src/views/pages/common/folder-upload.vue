@@ -169,13 +169,17 @@
                     <div class="form-column">
                         <span class="textarea">
                             <textarea
+                                ref="maxTextarea"
                                 cols="100"
                                 rows="2"
                                 style="height: 80px;"
                                 v-model="folderDetail.memo"
-                            ></textarea>
+                                @input="maxLengthCheck"
+                            />
                             <span class="count">
-                                <strong>100</strong> / <em>150</em>byte
+                                <strong>{{ memoLength }}</strong> /
+                                <em>{{ maxMemo }}</em
+                                >byte
                             </span>
                         </span>
                     </div>
@@ -230,6 +234,8 @@ export default {
     name: 'UPLOAD',
     data() {
         return {
+            maxMemo: 150,
+            memoLength: 0,
             saveFolder: false,
             visible: {
                 ModalAuth: false,
@@ -396,6 +402,39 @@ export default {
         this.folderSetting();
     },
     methods: {
+        /**
+         * 바이트 문자 입력가능 문자수 체크
+         */
+        maxLengthCheck() {
+            const obj = this.$refs.maxTextarea;
+            console.log(Number(this.byteCheck(obj)));
+            if (Number(this.byteCheck(obj)) > Number(this.maxMemo)) {
+                alert('입력가능문자수를 초과하였습니다.');
+                this.folderDetail.memo = obj.value.substr(0, 150);
+                obj.focus();
+            }
+            this.memoLength = this.folderDetail.memo.length;
+        },
+        /**
+         * 바이트수 반환
+         * @param el : tag jquery object
+         * @returns {Number}
+         */
+        byteCheck(el) {
+            var codeByte = 0;
+            for (var idx = 0; idx < el.value.length; idx++) {
+                var oneChar = escape(el.value.charAt(idx));
+                if (oneChar.length == 1) {
+                    codeByte++;
+                } else if (oneChar.indexOf('%u') != -1) {
+                    codeByte += 2;
+                } else if (oneChar.indexOf('%') != -1) {
+                    codeByte++;
+                }
+            }
+            return codeByte;
+        },
+
         folderSetting() {
             console.log(this.pageFileSectionCodeName);
             this.dataReset();

@@ -11,10 +11,10 @@ import org.springframework.util.ObjectUtils;
 
 /**
  *
- * @author [오지훈]
- * @since 2020. 6. 23. 오후 2:55:42
- * @implNote Auth(권한) 검색 조건
- */
+ * @AUTHOR[오지훈]
+*@SINCE2020.6.23.오후2:55:42
+*@IMPL NOTE  AUTH(권한)검색조건
+*/
 @UtilityClass
 public class AuthPredicateHelper {
 

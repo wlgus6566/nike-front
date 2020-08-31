@@ -2,6 +2,7 @@ package com.nike.dnp.advice;
 
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.log.ErrorLogSaveDTO;
+import com.nike.dnp.exception.CodeMessageHandleErrorException;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.model.response.CommonResult;
@@ -66,6 +67,35 @@ public class ExceptionAdvice {
         final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         log.error("==================ERROR===================");
         log.error("Exception Status200Exception", exception);
+        log.error("========================= ErrorLog Start =========================");
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {
+            final ErrorLogSaveDTO errorLog = new ErrorLogSaveDTO();
+            errorLog.setUrl(request.getRequestURI());
+            errorLog.setErrorContents(exception.getMessage());
+            errorLogService.save(errorLog);
+        }
+        log.error("========================= End End =========================");
+
+        return responseService.getFailResult(exception.getCode(), exception.getMessage());
+    }
+
+    /**
+     * status 403 Exception
+     *
+     * @param exception the exception
+     * @return 상태값 : 403, 코드, 메세지
+     * @author [이소정]
+     * @implNote CodeMessageHandleException 에 대한 response셋팅
+     * @since 2020. 8. 31. 오후 3:59:34
+     */
+    @ExceptionHandler(CodeMessageHandleErrorException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    protected CommonResult CodeMessageHandleErrorException(final CodeMessageHandleErrorException exception) {
+        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        log.error("==================ERROR===================");
+        log.error("Exception Status403Exception", exception);
         log.error("========================= ErrorLog Start =========================");
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {

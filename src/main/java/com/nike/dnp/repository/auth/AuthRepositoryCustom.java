@@ -1,6 +1,7 @@
 package com.nike.dnp.repository.auth;
 
 import com.nike.dnp.dto.auth.AuthReturnDTO;
+import com.nike.dnp.dto.user.UserAuthSearchDTO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,14 +30,13 @@ public interface AuthRepositoryCustom {
     /**
      * Find by config list.
      *
-     * @param menuCode  the menu code
-     * @param skillCode the skill code
+     * @param userAuthSearchDTO the user auth search dto
      * @return the list
      * @author [오지훈]
-     * @since 2020. 7. 20. 오후 4:26:39
      * @implNote 조건 검색
+     * @since 2020. 7. 20. 오후 4:26:39
      */
-    List<AuthReturnDTO> findByConfig(final String menuCode, final String skillCode);
+    List<AuthReturnDTO> findByConfig(final UserAuthSearchDTO userAuthSearchDTO);
 
     /**
      * Find by auth depth list.

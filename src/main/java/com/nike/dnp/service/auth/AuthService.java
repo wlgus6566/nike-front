@@ -8,7 +8,7 @@ import com.nike.dnp.dto.auth.AuthSaveDTO;
 import com.nike.dnp.dto.auth.AuthUpdateDTO;
 import com.nike.dnp.dto.menu.MenuReturnDTO;
 import com.nike.dnp.dto.menu.MenuRoleResourceReturnDTO;
-import com.nike.dnp.dto.user.UserContentsSearchDTO;
+import com.nike.dnp.dto.user.UserAuthSearchDTO;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.auth.AuthMenuRole;
 import com.nike.dnp.exception.CodeMessageHandleException;
@@ -536,27 +536,29 @@ public class AuthService {
     /**
      * Find by config list.
      *
-     * @param menuCode  the menu code
-     * @param skillCode the skill code
+     * @param userAuthSearchDTO the user auth search dto
      * @return the list
+     * @author [이소정]
+     * @implNote
+     * @since 2020. 8. 31. 오후 2:43:41
      */
-    public List<AuthReturnDTO> findByConfig(final String menuCode, final String skillCode) {
-        return authRepository.findByConfig(menuCode, skillCode);
+    public List<AuthReturnDTO> findByConfig(final UserAuthSearchDTO userAuthSearchDTO) {
+        return authRepository.findByConfig(userAuthSearchDTO);
     }
 
     /**
      * Gets auth list with depth.
      *
-     * @param userContentsSearchDTO the user contents search dto
-     * @param auth                  the auth
+     * @param userAuthSearchDTO the user auth search dto
+     * @param auth              the auth
      * @return the auth list with depth
      * @author [이소정]
      * @implNote 권한 depth에 맞는 하위 목록
      * @since 2020. 8. 18. 오후 10:07:48
      */
-    public List<AuthReturnDTO> getAuthListWithDepth(final UserContentsSearchDTO userContentsSearchDTO, final Auth auth) {
+    public List<AuthReturnDTO> getAuthListWithDepth(final UserAuthSearchDTO userAuthSearchDTO, final Auth auth) {
         log.info("AuthService.getAuthListWithDepth");
-        List<AuthReturnDTO> allAuthList = this.getAuthList2(userContentsSearchDTO);
+        List<AuthReturnDTO> allAuthList = this.getAuthListWithoutN(userAuthSearchDTO);
         List<AuthReturnDTO> transformAuthList = new ArrayList<>();
 
         if (!ObjectUtils.isEmpty(allAuthList) && !allAuthList.isEmpty()) {
@@ -616,26 +618,26 @@ public class AuthService {
     /**
      * Gets auth list.
      *
-     * @param userContentsSearchDTO the user contents search dto
+     * @param userAuthSearchDTO the user auth search dto
      * @return the auth list
      * @author [오지훈]
-     * @implNote 컨텐츠 권한 목록
+     * @implNote 컨텐츠 권한 목록 (권한 N인것도 다 포함)
      * @since 2020. 7. 20. 오후 4:25:19
      */
-    public List<AuthReturnDTO> getAuthList (final UserContentsSearchDTO userContentsSearchDTO) {
+    public List<AuthReturnDTO> getAuthList(final UserAuthSearchDTO userAuthSearchDTO) {
         log.info("AuthService.getAuthList");
-        final List<AuthReturnDTO> findByConfig = this.findByConfig(userContentsSearchDTO.getMenuCode(), userContentsSearchDTO.getSkillCode());
+        final List<AuthReturnDTO> findByConfig = this.findByConfig(userAuthSearchDTO);
         final List<AuthReturnDTO> auths = this.findAuths();
 
         for (AuthReturnDTO authReturnDTO : auths) {
             for (AuthReturnDTO config : findByConfig) {
-                this.authConfig(authReturnDTO, config);
+                this.authConfig(authReturnDTO, config, userAuthSearchDTO.getCreateYn());
 
                 for (AuthReturnDTO dto2 : authReturnDTO.getSubAuths()) {
-                    this.authConfig(dto2, config);
+                    this.authConfig(dto2, config, userAuthSearchDTO.getCreateYn());
 
                     for (AuthReturnDTO dto3 : dto2.getSubAuths()) {
-                        this.authConfig(dto3, config);
+                        this.authConfig(dto3, config, userAuthSearchDTO.getCreateYn());
                     }
                 }
             }
@@ -668,20 +670,29 @@ public class AuthService {
         return auths;
     }
 
-    public List<AuthReturnDTO> getAuthList2 (final UserContentsSearchDTO userContentsSearchDTO) {
+    /**
+     * Gets auth list 2.
+     *
+     * @param userAuthSearchDTO the user auth search dto
+     * @return the auth list 2
+     * @author [이소정]
+     * @implNote 권한 목록 조회 (권한 Y인것만)
+     * @since 2020. 8. 31. 오후 2:49:32
+     */
+    public List<AuthReturnDTO> getAuthListWithoutN(final UserAuthSearchDTO userAuthSearchDTO) {
         log.info("AuthService.getAuthList2");
-        final List<AuthReturnDTO> findByConfig = this.findByConfig(userContentsSearchDTO.getMenuCode(), userContentsSearchDTO.getSkillCode());
+        final List<AuthReturnDTO> findByConfig = this.findByConfig(userAuthSearchDTO);
         final List<AuthReturnDTO> auths = this.findAuths();
 
         for (AuthReturnDTO authReturnDTO : auths) {
             for (AuthReturnDTO config : findByConfig) {
-                this.authConfig(authReturnDTO, config);
+                this.authConfig(authReturnDTO, config, userAuthSearchDTO.getCreateYn());
 
                 for (AuthReturnDTO dto2 : authReturnDTO.getSubAuths()) {
-                    this.authConfig(dto2, config);
+                    this.authConfig(dto2, config, userAuthSearchDTO.getCreateYn());
 
                     for (AuthReturnDTO dto3 : dto2.getSubAuths()) {
-                        this.authConfig(dto3, config);
+                        this.authConfig(dto3, config, userAuthSearchDTO.getCreateYn());
                     }
                 }
             }
@@ -769,16 +780,23 @@ public class AuthService {
     /**
      * Auth config.
      *
-     * @param target the target
-     * @param config the config
+     * @param target   the target
+     * @param config   the config
+     * @param createYn the create yn
      * @author [오지훈]
      * @implNote authConfig
      * @since 2020. 8. 14. 오후 5:23:07
      */
-    private void authConfig(AuthReturnDTO target, AuthReturnDTO config) {
+    private void authConfig(final AuthReturnDTO target, final AuthReturnDTO config, final String createYn) {
         if (target.getAuthSeq().equals(config.getAuthSeq())) {
-            target.setDetailAuthYn(config.getDetailAuthYn());
-            target.setEmailReceptionYn(config.getEmailReceptionYn());
+            if ("Y".equals(createYn)) {
+                target.setDetailAuthYn("Y");
+                target.setEmailReceptionYn("Y");
+            } else {
+                target.setDetailAuthYn(config.getDetailAuthYn());
+                target.setEmailReceptionYn(config.getEmailReceptionYn());
+            }
+
             target.setViewYn("Y");
             target.setCheckBoxYn("Y");
         }

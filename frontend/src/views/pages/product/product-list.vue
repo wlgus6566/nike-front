@@ -202,6 +202,10 @@ export default {
                 }
             } catch (error) {
                 console.error(error);
+                alert(error.data.msg);
+                /*if (error.response.data.code === 'NO_AUTH') {
+                    //router.go(-1);
+                }*/
             }
         },
     },

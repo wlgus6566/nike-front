@@ -8,7 +8,7 @@ import com.nike.dnp.dto.report.ReportFileSaveDTO;
 import com.nike.dnp.dto.report.ReportResultDTO;
 import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
-import com.nike.dnp.dto.user.UserContentsSearchDTO;
+import com.nike.dnp.dto.user.UserAuthSearchDTO;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportFile;
@@ -451,10 +451,10 @@ public class ReportService {
      * @since 2020. 7. 24. 오후 8:20:01
      */
     public List<Long> findAllAuthUser(final Long authSeq, final Long authDepth) {
-        final List<AuthReturnDTO> authList = authService.findByConfig(
-                ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString()
-                , ServiceCode.MenuSkillEnumCode.VIEW.toString()
-        );
+        UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
+        userAuthSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
+        userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+        final List<AuthReturnDTO> authList = authService.findByConfig(userAuthSearchDTO);
 
         final List<Long> reportViewAuthList = this.findUpperAuthList(authSeq, authDepth, authList);
 
@@ -538,11 +538,11 @@ public class ReportService {
      * @since 2020. 8. 26. 오후 4:52:23
      */
     public List<AuthReturnDTO> findAllAuthListWithDepth() {
-        final UserContentsSearchDTO userContentsSearchDTO = new UserContentsSearchDTO();
-        userContentsSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
-        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+        final UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
+        userAuthSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
+        userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
 
-        return authService.getAuthListWithDepth(userContentsSearchDTO, authService.getById(SecurityUtil.currentUser().getAuthSeq()));
+        return authService.getAuthListWithDepth(userAuthSearchDTO, authService.getById(SecurityUtil.currentUser().getAuthSeq()));
     }
 
     /**

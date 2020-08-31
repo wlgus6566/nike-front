@@ -228,6 +228,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		origins.add("https://api.nikespace.co.kr");
 		origins.add("https://www.nikespace.co.kr");
 		origins.add("http://www.nikespace.co.kr");
+		origins.add("https://nikespace.co.kr");
+		origins.add("http://nikespace.co.kr");
 		//로컬 설정
 		origins.add("http://localhost:8080");
 		origins.add("http://localhost:8081");

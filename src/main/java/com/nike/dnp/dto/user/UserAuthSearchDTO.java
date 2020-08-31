@@ -20,7 +20,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class UserContentsSearchDTO {
+public class UserAuthSearchDTO {
 
     /**
      * 메뉴 코드
@@ -39,5 +39,21 @@ public class UserContentsSearchDTO {
     @NotBlank(message = "userContents.skillCode")
     @ApiModelProperty(name = "skillCode", value = "스킬 코드", example = "VIEW")
     private String skillCode;
+
+    /**
+     * 콘텐츠 일련번호
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "contentsSeq", value = "콘텐츠 일련번호", example = "5", hidden = true)
+    private Long contentsSeq = 0l;
+
+    /**
+     * 등록 여부
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "createYn", value = "등록여부", example = "Y", hidden = true)
+    private String createYn = "N";
 
 }
