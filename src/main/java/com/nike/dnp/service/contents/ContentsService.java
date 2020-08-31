@@ -13,6 +13,7 @@ import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.entity.user.UserContents;
+import com.nike.dnp.exception.CodeMessageHandleErrorException;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
@@ -304,7 +305,7 @@ public class ContentsService {
         log.info("ContentsService.findByContentsSeq");
         // 상세 권한 여부 조회
         if (!this.isAuthForContents(contentsSeq, SecurityUtil.currentUser().getAuthSeq())) {
-            throw new CodeMessageHandleException(FailCode.ConfigureError.NO_AUTH.name(), MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name()));
+            throw new CodeMessageHandleErrorException(FailCode.ConfigureError.NO_AUTH.name(), MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name()));
         }
 
         final Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
