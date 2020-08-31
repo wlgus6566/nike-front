@@ -85,7 +85,11 @@ export default {
                     return el.goodsSeq === item.goodsSeq;
                 });
                 if (findIndex === -1) {
-                    addProductBasket(item.goodsSeq, item.minimumOrderQuantity);
+                    addProductBasket(
+                        item.goodsSeq,
+                        item.minimumOrderQuantity,
+                        false
+                    );
                 } else {
                     alert('이미 담긴 상품입니다.');
                 }

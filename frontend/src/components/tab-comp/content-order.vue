@@ -152,7 +152,11 @@ export default {
         async changeQuantity(item) {
             if (!this.test) {
                 this.test = true;
-                await addProductBasket(item.goodsSeq, item.orderQuantity);
+                await addProductBasket(
+                    item.goodsSeq,
+                    item.orderQuantity,
+                    false
+                );
                 this.test = false;
             }
         },

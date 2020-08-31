@@ -127,13 +127,18 @@ export default {
             let delAlert = confirm('선택한 AGENCY정보를 삭제하시겠습니까?');
             if (delAlert) {
                 try {
-                    const {
-                        data: { data: response },
-                    } = await delAgencyContact(agencySeq);
+                    const response = await delAgencyContact(agencySeq);
+                    console.log(response);
+                    if (response.data.existMsg) {
+                        alert(response.data.msg);
+                    }
                     this.visible.agencyManagement = false;
                     await this.getAgencyData();
                 } catch (error) {
                     console.error(error);
+                    if (error.data.existMsg) {
+                        alert(error.data.msg);
+                    }
                 }
             }
         },

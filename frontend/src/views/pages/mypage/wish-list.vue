@@ -246,7 +246,8 @@ export default {
                 if (confirm('CART에 담으시겠습니까?')) {
                     await addProductBasket(
                         item.goodsSeq,
-                        item.product.minimumOrderQuantity
+                        item.product.minimumOrderQuantity,
+                        false
                     );
                     this.$router.push('/order');
                 } else {

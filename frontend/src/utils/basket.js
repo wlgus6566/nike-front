@@ -5,23 +5,26 @@ import { deleteBasket, postBasketSave, postBasketSaveList } from '@/api/basket';
  * 장바구니 상품 단건 추가
  * @param {number} goodsSeq
  * @param {number} orderQuantity
+ * @param {boolean} msg
  * @returns {Promise<void>}
  */
-const addProductBasket = async (goodsSeq, orderQuantity) => {
+const addProductBasket = async (goodsSeq, orderQuantity, msg) => {
     try {
-        const {
-            data: { data: response },
-        } = await postBasketSave({
+        const response = await postBasketSave({
             goodsSeq: goodsSeq,
             orderQuantity: orderQuantity,
         });
+        console.log(response);
         await store.dispatch('basketList');
+        if (msg) {
+            alert('CART에 담겼습니다');
+        }
         if (response.data.existMsg) {
             alert(response.data.msg);
         }
     } catch (error) {
         console.error(error);
-
+        alert(error.data.msg);
     }
 };
 
