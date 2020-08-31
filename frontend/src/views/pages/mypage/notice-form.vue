@@ -96,16 +96,11 @@
 </template>
 
 <script>
-import {
-    getCustomerDetail,
-    getCustomerList,
-    postNotice,
-    putNotice,
-} from '@/api/customer';
+    import {getCustomerDetail, getCustomerList, postNotice, putNotice,} from '@/api/customer';
 
-import { getAuthFromCookie } from '@/utils/cookies';
+    import {getAuthFromCookie} from '@/utils/cookies';
 
-export default {
+    export default {
     name: 'notice-form',
     data() {
         return {
@@ -289,8 +284,7 @@ export default {
             this.noticeDetail.noticeYn = null;
         },
         onEditorInput: function(e) {
-            var editorContents = e.editor._.editable.$.innerHTML;
-            this.noticeDetail.contents = editorContents;
+            this.noticeDetail.contents = e.editor._.editable.$.innerHTML;
         },
     },
 };
