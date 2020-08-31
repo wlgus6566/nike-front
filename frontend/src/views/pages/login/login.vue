@@ -14239,6 +14239,9 @@ export default {
                 console.log(response);
             } catch (error) {
                 console.error(error);
+                if (error.data.existMsg) {
+                    alert(error.data.msg);
+                }
             }
         },
     },

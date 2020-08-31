@@ -14,7 +14,7 @@ module.exports = {
         },
     },
     devServer: {
-        proxy: {
+        /*proxy: {
             '/api': {
                 target: 'https://devapi.nikespace.co.kr',
                 changeOrigin: true,
@@ -23,7 +23,7 @@ module.exports = {
                     '^/api': '',
                 },
             },
-        },
+        },*/
         overlay: false,
     },
 };
