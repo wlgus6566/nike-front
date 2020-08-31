@@ -409,7 +409,6 @@ export default {
             }
         },
         async addContBasket(seq) {
-            console.log(this.$route);
             try {
                 await addContentsBasket(
                     this.$route.meta.topMenuCode,
@@ -420,7 +419,11 @@ export default {
                 );
                 await this.$store.dispatch('getContBasket');
             } catch (error) {
-                console.error(error);
+                if (error.data.code === 'NO_AUTH') {
+                    if (error.data.existMsg) {
+                        alert(error.data.msg);
+                    }
+                }
             }
         },
     },

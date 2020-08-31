@@ -473,7 +473,7 @@ export default {
         // },
         uploadFiles() {
             if (!this.folderDetail.imageBase64) {
-                alert('썸네일을 입력해 주세요.');
+                alert('썸네일을 선택해 주세요.');
                 return;
             }
             if (!this.folderDetail.folderName) {
