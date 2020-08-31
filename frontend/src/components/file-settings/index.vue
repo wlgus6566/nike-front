@@ -20,8 +20,7 @@
                 ref="fileListUl"
                 v-model="FileList"
                 v-bind="dragOptions"
-                @start="isDragging = true"
-                @end="isDragging = false"
+                @end="emitFileList"
                 class="file-setting-list"
                 tag="ul"
             >
@@ -47,6 +46,7 @@
 </template>
 <script>
 import draggable from 'vuedraggable';
+import FileItem from '@/components/file-settings/file-item.vue';
 import { fileUpLoad } from '@/api/file';
 import { getContentsViewFile } from '@/api/contents';
 export default {
@@ -134,7 +134,7 @@ export default {
         },
     },
     components: {
-        FileItem: () => import('@/components/file-settings/file-item.vue'),
+        FileItem,
         draggable,
     },
     methods: {
