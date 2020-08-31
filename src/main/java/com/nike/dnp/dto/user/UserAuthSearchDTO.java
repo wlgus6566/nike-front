@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 
 /**
@@ -55,5 +56,13 @@ public class UserAuthSearchDTO {
      */
     @ApiModelProperty(name = "createYn", value = "등록여부", example = "Y", hidden = true)
     private String createYn = "N";
+
+    /**
+     * The Menu code list
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "createYn", value = "메뉴 코드 목록", hidden = true)
+    private List<String> menuCodeList;
 
 }

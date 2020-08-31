@@ -143,6 +143,14 @@ public class ContentsResultDTO extends BaseTimeEntity {
     private List<AuthReturnDTO> checks;
 
     /**
+     * The Recipients count
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "recipientsCount", value = "메일 수신자 갯수")
+    private int recipientsCount = 0;
+
+    /**
      * Gets image file physical name.
      *
      * @return the image file physical name

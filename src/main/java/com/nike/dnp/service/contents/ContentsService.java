@@ -117,6 +117,11 @@ public class ContentsService {
      */
     private final UserAuthRepository userAuthRepository;
 
+    /**
+     * The Auth service
+     *
+     * @author [이소정]
+     */
     private final AuthService authService;
 
 
@@ -135,10 +140,16 @@ public class ContentsService {
         log.info("ContentsService.findAllPaging");
         final Long authSeq = SecurityUtil.currentUser().getAuthSeq();
         // 권한 검사
-        final String searchMenuCode = ObjectUtils.isEmpty(menuCode) ? topMenuCode+"_ALL" : topMenuCode + "_" + menuCode;
+        String searchMenuCode = menuCode;
+        if (ObjectUtils.isEmpty(menuCode) || ServiceCode.ContentsMenuCode.ALL.toString().equals(menuCode)) {
+            searchMenuCode = topMenuCode+"_"+ServiceCode.ContentsMenuCode.ALL.toString();
+
+            contentsSearchDTO.setExposureYn(this.isAuthForAssetAll(topMenuCode) ? null : "Y");
+        } else {
+            contentsSearchDTO.setExposureYn(userContentsService.isAuth(authSeq, searchMenuCode, ServiceCode.MenuSkillEnumCode.CREATE.toString()) ? null : "Y");
+        }
 
         // 권한에 따른 조건문
-        contentsSearchDTO.setExposureYn(userContentsService.isAuth(authSeq, searchMenuCode, ServiceCode.MenuSkillEnumCode.CREATE.toString()) ? null : "Y");
 
         // QueryDsl 기능 이용
         contentsSearchDTO.setUserAuthSeq(authSeq);
@@ -148,6 +159,32 @@ public class ContentsService {
                         , contentsSearchDTO.getSize()
                         , contentsSearchDTO.equals(ServiceCode.SearchEnumCode.START_DATE.toString())
                                 ? Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).ascending() : Sort.by(ServiceCode.SearchEnumCode.LATEST.getValue()).descending()));
+    }
+
+    /**
+     * Is auth for asset all boolean.
+     *
+     * @param topMenuCode the top menu code
+     * @return the boolean
+     * @author [이소정]
+     * @implNote assetAll 관련 권한 조회
+     * @since 2020. 8. 31. 오후 9:58:53
+     */
+    public boolean isAuthForAssetAll(final String topMenuCode) {
+        UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
+        List<String> menuCodeList = new ArrayList<>();
+        menuCodeList.add(topMenuCode+"_"+ServiceCode.AssetMenuCode.SP.toString());
+        menuCodeList.add(topMenuCode+"_"+ServiceCode.AssetMenuCode.SU.toString());
+        menuCodeList.add(topMenuCode+"_"+ServiceCode.AssetMenuCode.FA.toString());
+        menuCodeList.add(topMenuCode+"_"+ServiceCode.AssetMenuCode.HO.toString());
+        userAuthSearchDTO.setMenuCodeList(menuCodeList);
+        userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.CREATE.toString());
+        List<AuthReturnDTO> authList = authService.findByConfigForAssetAll(userAuthSearchDTO);
+        if (ObjectUtils.isEmpty(authList)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -240,7 +277,7 @@ public class ContentsService {
     ) {
         if (!ObjectUtils.isEmpty(checkList) && !checkList.isEmpty()) {
             for (AuthReturnDTO authReturnDTO : checkList) {
-                if ("Y".equals(authReturnDTO.getViewYn()) && "Y".equals(authReturnDTO.getCheckBoxYn())) {
+                if ("Y".equals(authReturnDTO.getViewYn()) && ServiceCode.YesOrNoEnumCode.Y.toString().equals(authReturnDTO.getCheckBoxYn())) {
                     UserContentsSaveDTO.AuthCheckDTO checkDTO = new UserContentsSaveDTO.AuthCheckDTO();
                     checkDTO.setAuthSeq(authReturnDTO.getAuthSeq());
                     checkDTO.setDetailAuthYn(authReturnDTO.getDetailAuthYn());
@@ -320,6 +357,10 @@ public class ContentsService {
         userAuthSearchDTO.setContentsSeq(contentsSeq);
         ContentsResultDTO contentsResultDTO = ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
         contentsResultDTO.setChecks(authService.getAuthListWithoutN(userAuthSearchDTO));
+
+        // 메일 갯수 조회
+        List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsSeq);
+        contentsResultDTO.setRecipientsCount(emailAuthUserList.size());
         return contentsResultDTO;
     }
 
@@ -530,29 +571,22 @@ public class ContentsService {
 
         // 수신자 목록 조회
         List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsMailSendDTO.getContentsSeq());
-        String[] emailList;
+        String[] emailList = new String[emailAuthUserList.size()];
 
-//        for (ContentsUserEmailDTO userEmailDTO : emailAuthUserList) {
-//            emailList.
-//        }
-
-        // 이메일 발송
-        if (!ObjectUtils.isEmpty(emailAuthUserList) && !emailAuthUserList.isEmpty()) {
-            for (final ContentsUserEmailDTO userEmailDTO : emailAuthUserList) {
-                final SendDTO sendDTO = new SendDTO();
-                sendDTO.setEmail(userEmailDTO.getUserId());
-                sendDTO.setContentsUrl(PC_DOMAIN + contentsMailSendDTO.getContentsUrl());
-                sendDTO.setContentsImg(userEmailDTO.getImageFilePhysicalName());
-
-                sendDTO.setContentsName(contents.get().getFolderName());
-                mailService.sendMail(
-                        ServiceCode.EmailTypeEnumCode.CONTENTS_UPDATE.toString(),
-                        ServiceCode.EmailTypeEnumCode.CONTENTS_UPDATE.getMessage(),
-                        sendDTO
-                );
-            }
+        for (int i = 0; i < emailAuthUserList.size(); i++) {
+            emailList[i] = emailAuthUserList.get(i).getUserId();
         }
 
+        final SendDTO sendDTO = new SendDTO();
+        sendDTO.setEmails(emailList);
+        sendDTO.setContentsUrl(PC_DOMAIN + contentsMailSendDTO.getContentsUrl());
+
+        sendDTO.setContentsName(contents.get().getFolderName());
+        mailService.sendMails(
+                ServiceCode.EmailTypeEnumCode.CONTENTS_UPDATE.toString(),
+                ServiceCode.EmailTypeEnumCode.CONTENTS_UPDATE.getMessage(),
+                sendDTO
+        );
     }
 
     /**

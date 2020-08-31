@@ -544,6 +544,19 @@ public class AuthService {
     }
 
     /**
+     * Find by config for asset all list.
+     *
+     * @param userAuthSearchDTO the user auth search dto
+     * @return the list
+     * @author [이소정]
+     * @implNote
+     * @since 2020. 8. 31. 오후 9:52:07
+     */
+    public List<AuthReturnDTO> findByConfigForAssetAll(final UserAuthSearchDTO userAuthSearchDTO) {
+        return authRepository.findByConfigForAssetAll(userAuthSearchDTO);
+    }
+
+    /**
      * Gets auth list with depth.
      *
      * @param userAuthSearchDTO the user auth search dto
