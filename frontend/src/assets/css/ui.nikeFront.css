@@ -2057,7 +2057,7 @@
 }
 .all-box .check-label {
     min-width: auto;
-    padding-right: 15px;
+    margin-right: 15px;
 }
 .all-box .txt {
     font-size: 12px;
