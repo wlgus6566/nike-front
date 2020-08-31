@@ -182,9 +182,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		log.info("SecurityConfig.configure");
-		http.cors()
-			.and()
-			.authorizeRequests()
+		http.authorizeRequests()
 			.antMatchers(HttpMethod.POST,"/api/login").permitAll()
 			.antMatchers("/api/open/**"
 						, "/api/main"
@@ -202,7 +200,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository, this.redisService)) //jwt 토큰 인증 필터
 			.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
 			.and()
-			.cors().and()
+			.cors().configurationSource(corsConfigurationSource())
+			.and()
 			.csrf().disable() // csrf 사용 안함
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
 	}
