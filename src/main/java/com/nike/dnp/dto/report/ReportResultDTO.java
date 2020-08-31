@@ -110,6 +110,14 @@ public class ReportResultDTO {
     private List<ReportFile> reportFileList;
 
     /**
+     * 상세 권한 여부
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailAuthYn", value = "상세 권한 여부(N : 권한없음)", example = "Y")
+    private String detailAuthYn = "N";
+
+    /**
      * Gets image file physical name.
      *
      * @return the image file physical name

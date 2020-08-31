@@ -533,6 +533,11 @@ public class ContentsService {
 
         // 수신자 목록 조회
         List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsMailSendDTO.getContentsSeq());
+        String[] emailList;
+
+//        for (ContentsUserEmailDTO userEmailDTO : emailAuthUserList) {
+//            emailList.
+//        }
 
         // 이메일 발송
         if (!ObjectUtils.isEmpty(emailAuthUserList) && !emailAuthUserList.isEmpty()) {

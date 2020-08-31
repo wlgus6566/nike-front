@@ -3,16 +3,21 @@ package com.nike.dnp.service.main;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.main.MainResultDTO;
 import com.nike.dnp.dto.notice.CustomerSearchDTO;
+import com.nike.dnp.dto.report.ReportResultDTO;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import com.nike.dnp.repository.report.ReportRepository;
 import com.nike.dnp.service.banner.BannerService;
 import com.nike.dnp.service.notice.NoticeService;
+import com.nike.dnp.service.user.UserContentsService;
+import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * The Class Agency service.
@@ -63,6 +68,13 @@ public class MainService {
     private final NoticeService noticeService;
 
     /**
+     * The User contents service
+     *
+     * @author [이소정]
+     */
+    private final UserContentsService userContentsService;
+
+    /**
      * Find main info main result dto.
      *
      * @return the main result dto
@@ -94,9 +106,15 @@ public class MainService {
         );
 
         // REPORT
-        mainResultDTO.setReportList(reportRepository.findRecentReport(
-                PageRequest.of(0, 3, Sort.by(SORT_BY).descending())
-        ));
+        List<ReportResultDTO> reportResultDTOList = reportRepository.findRecentReport(PageRequest.of(0, 3, Sort.by(SORT_BY).descending()));
+        String detailAuthYn = "N";
+        if (userContentsService.isAuth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_MANAGE", ServiceCode.MenuSkillEnumCode.VIEW.toString())) {
+            detailAuthYn = "Y";
+        }
+        for (ReportResultDTO reportResultDTO : reportResultDTOList) {
+            reportResultDTO.setDetailAuthYn(detailAuthYn);
+        }
+        mainResultDTO.setReportList(reportResultDTOList);
 
         // NOTICE
         CustomerSearchDTO customerSearchDTO = new CustomerSearchDTO();

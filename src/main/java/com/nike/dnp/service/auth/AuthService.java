@@ -108,9 +108,6 @@ public class AuthService {
      */
     public List<Auth> findAll() {
         log.info("AuthService.findAll");
-        // TODO[lsj] 지훈님께 확인 필요 :
-        //  useYn 조회 조건이 1depth에만 적용됨.!
-        //  2, 3 depth도 삭제 된 얘들은 노출 안되도록 처리 필요 2020.08.19 sojeong.lee
         return authRepository.findAllByUseYnAndUpperAuthSeqIsNull("Y");
     }
 
