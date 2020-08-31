@@ -267,7 +267,7 @@ export default {
                     fileSectionCodeName: {
                         VMS: ['GUIDE', 'VIDEO'],
                         EKIN: ['GUIDE', 'VIDEO'],
-                        SOCIAL: ['GUIDE', 'ASSET'],
+                        DIGITAL: ['GUIDE', 'ASSET'],
                         RB: ['GUIDE', 'ASSET'],
                     },
                 },
