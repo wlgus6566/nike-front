@@ -242,8 +242,15 @@ export default {
                     contentsUrl: this.$route.fullPath,
                     // contentsUrl: `/contents/detail/${this.$route.params.id}`,
                 });
+
                 console.log(response);
+                if (response.data.existMsg) {
+                    alert(response.data.msg);
+                }
             } catch (error) {
+                if (error.data.existMsg) {
+                    alert(error.data.msg);
+                }
                 console.error(error);
             }
         },
