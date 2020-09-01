@@ -131,6 +131,11 @@ public class MenuReturnDTO {
      */
     public List<SkillCodeDTO> getSkillCodes() {
         final List<SkillCodeDTO> skillCodes = new ArrayList<>();
+
+        if (this.menuRoles.isEmpty()) {
+            return new ArrayList<>();
+        }
+
         for (final ServiceCode.MenuSkillEnumCode enumCode : ServiceCode.MenuSkillEnumCode.values()) {
             Long menuRoleSeq = 0L;
             for (final MenuRole menuRole : this.menuRoles) {
