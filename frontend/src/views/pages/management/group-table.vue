@@ -20,7 +20,7 @@
                             @click="allCheckFn()"
                         />
                         <i />
-                        {{ table.menuName }}
+                        <span v-html="table.menuName"></span>
                     </label>
                 </th>
                 <th
@@ -195,11 +195,18 @@ export default {
     opacity: 0;
     position: absolute;
 }
+.group-check-all span {
+    display: inline-block;
+}
+::v-deep .group-check-all span.ko {
+    display: none;
+}
 .group-check-all i {
     display: inline-block;
     vertical-align: middle;
     height: 20px;
     width: 20px;
+    margin-right: 5px;
     background: url('../../../assets/images/svg/icon-btn-check-management-circle-grey.svg')
         no-repeat 50% / contain;
 }
