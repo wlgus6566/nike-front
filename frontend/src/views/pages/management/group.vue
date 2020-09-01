@@ -207,15 +207,17 @@ export default {
             }
         },
         async delAuth(seq) {
-            try {
-                const { data: response } = await delAuth(seq);
-                await this.getAuthList();
-                if (response.existMsg) {
-                    alert(response.msg);
+            if (confirm('삭제하시겠습니까?')) {
+                try {
+                    const { data: response } = await delAuth(seq);
+                    await this.getAuthList();
+                    if (response.existMsg) {
+                        alert(response.msg);
+                    }
+                    console.log('delAuth', response);
+                } catch (error) {
+                    console.error(error);
                 }
-                console.log('delAuth', response);
-            } catch (error) {
-                console.error(error);
             }
         },
     },

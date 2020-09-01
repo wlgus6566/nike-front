@@ -56,6 +56,7 @@ export default {
 @import url('assets/css/reset.css');
 @import url('assets/css/ui.nikeFront.css');
 .page-loading {
+    flex-direction: column;
     z-index: 2000;
     position: fixed;
     top: 0;

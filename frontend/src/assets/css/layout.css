@@ -62,6 +62,20 @@ nav .nav-link {
     font-family: 'Bebas Neue', sans-serif;
     transition: color 200ms ease-in-out 0s;
 }
+
+nav .depth1 > .nav-link span {
+    font-size: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    font-family: 'Bebas Neue', sans-serif;
+    transition: color 200ms ease-in-out 0s;
+}
+nav .depth1 > .nav-link span.ko {
+    display: none;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
 nav .nav-link.hasDepth:after {
     content: '';
     position: absolute;
