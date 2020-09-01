@@ -1,7 +1,6 @@
 package com.nike.dnp.dto.menu;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.entity.menu.MenuRole;
 import io.swagger.annotations.ApiModelProperty;
@@ -112,7 +111,6 @@ public class MenuReturnDTO {
      * @author [오지훈]
      */
     @ApiModelProperty(name = "menuRoles", value = "메뉴 역할")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<MenuRole> menuRoles = new ArrayList<>();
 
     /**
@@ -133,11 +131,6 @@ public class MenuReturnDTO {
      */
     public List<SkillCodeDTO> getSkillCodes() {
         final List<SkillCodeDTO> skillCodes = new ArrayList<>();
-
-        if (this.menuRoles.isEmpty()) {
-            return new ArrayList<>();
-        }
-
         for (final ServiceCode.MenuSkillEnumCode enumCode : ServiceCode.MenuSkillEnumCode.values()) {
             Long menuRoleSeq = 0L;
             for (final MenuRole menuRole : this.menuRoles) {
