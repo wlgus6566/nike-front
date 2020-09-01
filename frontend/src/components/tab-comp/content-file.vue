@@ -176,6 +176,11 @@ export default {
                         link.href = url;
                         link.setAttribute('download', el.fileName);
                         link.click();
+                        link.seq = el.contentsBasketSeq;
+                        document.body.appendChild(link);
+                        this.link.push(link);
+                        window.URL.revokeObjectURL(url);
+
                         /* const url = window.URL.createObjectURL(
                             new Blob([response.data])
                         );
