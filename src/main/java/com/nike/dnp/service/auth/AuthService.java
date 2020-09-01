@@ -17,6 +17,7 @@ import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.auth.AuthMenuRoleRepository;
 import com.nike.dnp.repository.auth.AuthRepository;
 import com.nike.dnp.repository.menu.MenuRepository;
+import com.nike.dnp.repository.menu.MenuRoleRepository;
 import com.nike.dnp.repository.menu.MenuRoleResourceRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
 import com.nike.dnp.service.RedisService;
@@ -99,6 +100,13 @@ public class AuthService {
      * @author [오지훈]
      */
     private final MenuRepository menuRepository;
+
+    /**
+     * The Menu role repository
+     *
+     * @author [오지훈]
+     */
+    private final MenuRoleRepository menuRoleRepository;
 
     /**
      * UserAuthRepository
@@ -354,8 +362,10 @@ public class AuthService {
                         } else {
                             lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
                         }
+                        lowerMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(lowerMenu.getMenuSeq()));
                     }
                     upperMenu.setMenus(lowerMenus);
+                    upperMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(upperMenu.getMenuSeq()));
                     menus.add(upperMenu);
                 }
             } else if ("Y".equals(upperMenu.getManagementYn())) {
@@ -367,8 +377,10 @@ public class AuthService {
                         } else {
                             lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
                         }
+                        lowerMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(lowerMenu.getMenuSeq()));
                     }
                     upperMenu.setMenus(lowerMenus);
+                    upperMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(upperMenu.getMenuSeq()));
                     menus.add(upperMenu);
                 }
             }
