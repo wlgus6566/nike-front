@@ -150,7 +150,6 @@ export default {
             this.link = [];
             await Promise.all(
                 this.reportBasketList.map(async (el, i) => {
-                    console.log(el);
                     try {
                         const config = {
                             responseType: 'blob',
@@ -160,6 +159,7 @@ export default {
                                     total: progressEvent.total,
                                     loaded: progressEvent.loaded,
                                 };
+                                console.log(progressEvent.loaded);
                                 this.loadedUpdate();
                             },
                         };
@@ -167,36 +167,20 @@ export default {
                             el.reportFileSeq,
                             config
                         );
-                        console.log(response);
-
                         const url = window.URL.createObjectURL(
                             new Blob([response.data])
                         );
                         const link = document.createElement('a');
                         link.href = url;
-                        link.setAttribute('download', el.fileName);
-                        link.click();
-                        link.seq = el.reportBasketSeq;
-                        document.body.appendChild(link);
-                        this.link.push(link);
-                        window.URL.revokeObjectURL(url);
-
-                        /* const url = window.URL.createObjectURL(
-                            new Blob([response.data])
-                        );
-                        const link = document.createElement('a');
-                        link.href = url;
                         link.seq = el.reportBasketSeq;
                         link.setAttribute('download', el.fileName);
                         document.body.appendChild(link);
                         this.link.push(link);
-                        window.URL.revokeObjectURL(url);*/
                     } catch (error) {
                         console.error(error);
                     }
                 })
             );
-
             this.link.forEach((el) => {
                 this.delReportBasket(el.seq);
                 el.click();
