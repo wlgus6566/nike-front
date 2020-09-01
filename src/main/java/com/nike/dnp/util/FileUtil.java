@@ -198,7 +198,7 @@ public class FileUtil {
 										 final String folder,
 										 final boolean resize,
 										 final String resizeExt) throws IOException {
-		log.info("FileUtil.fileSave");
+		log.info("FileUtil.fileSave  start");
 		final StopWatch stopWatch = new StopWatch();
 		stopWatch.start("fileUpload_" + uploadFile.getOriginalFilename());
 
@@ -208,7 +208,7 @@ public class FileUtil {
 		uploadFile.transferTo(toFile);
 		stopWatch.getTotalTimeSeconds();
 		stopWatch.stop();
-		log.debug("stopWatch.getLastTaskTimeMillis() {} :  {} ms",stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
+		log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms",stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 		final FileResultDTO fileResultDTO = new FileResultDTO();
 		fileResultDTO.setFileName(cleanXSS(uploadFile.getOriginalFilename()));
 		fileResultDTO.setFilePhysicalName(toFile.getPath().replace(root, ""));
@@ -242,7 +242,7 @@ public class FileUtil {
 				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
-			log.debug("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
+			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 			final File detailFile = new File(cleanXSS(detailPath));
 			if(detailFile.isFile()){
 				String detailThumbnail = uploadFile.getOriginalFilename();
@@ -271,7 +271,7 @@ public class FileUtil {
 				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
-			log.debug("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
+			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 
 			final File thumbnailFile = new File(cleanXSS(thumbnailPath));
 			if(thumbnailFile.isFile()){
@@ -312,7 +312,7 @@ public class FileUtil {
 				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
-			log.debug("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
+			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 			final File detailFile = new File(cleanXSS(thumbnailPath));
 			if(detailFile.isFile()){
 				String detailThumbnail = uploadFile.getOriginalFilename();
@@ -322,8 +322,9 @@ public class FileUtil {
 				fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
 			}
 		}
-		log.debug("stopWatch.getTotalTimeSeconds() {} :  {} s", uploadFile.getOriginalFilename(),stopWatch.getTotalTimeSeconds());
-		log.debug("stopWatch.prettyPrint() {}", stopWatch.prettyPrint());
+		log.info("stopWatch.getTotalTimeSeconds() {} :  {} s", uploadFile.getOriginalFilename(),stopWatch.getTotalTimeSeconds());
+		log.info("stopWatch.prettyPrint() {}", stopWatch.prettyPrint());
+		log.info("FileUtil.fileSave  end");
 		return fileResultDTO;
 	}
 
@@ -490,7 +491,7 @@ public class FileUtil {
 				final BufferedReader br = new BufferedReader(new InputStreamReader(is));
 				String cmd;
 				while((cmd = br.readLine()) != null){ // 읽을 라인이 없을때까지 계속 반복
-					log.debug("videoResize {}", cmd);
+					log.info("videoResize {}", cmd);
 				}
 			}catch(IOException e){
 				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
