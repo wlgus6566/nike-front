@@ -17,7 +17,7 @@
                     >
                         <span>알람</span>
                     </button>
-                    <!--<div class="alarm-box">
+                    <!-- <div class="alarm-box">
                       <strong class="title">NEW</strong>
                       <div class="alarm-item">
                           <p class="txt">
@@ -53,7 +53,12 @@
                                     :key="item.alarmSeq"
                                     @click="delAlarmData(item.alarmSeq)"
                                 >
-                                    <router-link :to="setUrl(item)" class="txt">
+                                    <router-link
+                                        :to="setUrl(item)"
+                                        class="txt"
+                                        v-if="item.typeAction === 'NEW'"
+                                    >
+                                        새로 등록된
                                         <em
                                             v-if="
                                                 item.typeCd !== 'REPORT_MANAGE'
@@ -62,8 +67,32 @@
                                             {{ item.typeCd }}
                                         </em>
                                         <em v-else>REPORT</em>
-                                        ({{ item.folderName }})이(가) 업데이트
-                                        되었습니다.
+                                        ({{ item.folderName }})이 있습니다.
+                                    </router-link>
+                                    <router-link
+                                        :to="setUrl(item)"
+                                        class="txt"
+                                        v-else
+                                    >
+                                        <em
+                                            v-if="
+                                                item.typeCd !== 'REPORT_MANAGE'
+                                            "
+                                        >
+                                            {{ item.typeCd }}
+                                        </em>
+                                        <em v-else>REPORT</em>
+                                        ({{ item.folderName }})
+                                        <span
+                                            v-if="
+                                                item.typeAction !== 'FEEDBACK'
+                                            "
+                                        >
+                                            이(가) 업데이트 되었습니다.
+                                        </span>
+                                        <span v-else>
+                                            에 피드백이 등록되었습니다.
+                                        </span>
                                         <span class="date">
                                             {{ item.registrationDt }}
                                         </span>
@@ -112,7 +141,7 @@ export default {
     data() {
         return {
             page: 0,
-            size: 4,
+            size: 10,
             alarmDataList: [],
             alarmDataListCont: [],
             alarmActive: false,
@@ -172,6 +201,7 @@ export default {
                 alarmList.clientHeight + alarmList.scrollTop >=
                 alarmList.scrollHeight
             ) {
+                console.log(1);
                 this.infiniteScroll();
             }
         },
@@ -223,6 +253,7 @@ export default {
                 const {
                     data: { data: response },
                 } = await delAlarm(seq);
+                console.log(response);
                 await this.alarmData();
                 this.alarmActive = false;
             } catch (error) {
