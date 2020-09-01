@@ -90,9 +90,9 @@ public class AuthController {
             , notes = OPERATION_CHARACTER)
     @GetMapping(name = "그룹(권한) 목록 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<List<Auth>> findAll () {
+    public SingleResult<List<AuthReturnDTO>> findAll () {
         log.info("AuthController.findAll");
-        return responseService.getSingleResult(authService.findAll());
+        return responseService.getSingleResult(authService.findAuths());
     }
 
     /**
