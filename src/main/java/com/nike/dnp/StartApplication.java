@@ -60,9 +60,13 @@ public class StartApplication extends SpringBootServletInitializer {
 
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				/*registry.addMapping("/api/open/upload").allowedOrigins("https://www.nikespace.co.kr", "http://localhost:8081", "https://devwww.nikespace.co.kr")
-				.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-				.maxAge(3600);*/
+				registry.addMapping("/api/**")
+						.allowedOrigins(
+								"https://www.nikespace.co.kr", "https://m.nikespace.co.kr",
+								"http://localhost:8081", "http://localhost:8082",
+								"https://devwww.nikespace.co.kr", "https://devm.nikespace.co.kr")
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+						.maxAge(3000);
 			}
 		};
 	}
