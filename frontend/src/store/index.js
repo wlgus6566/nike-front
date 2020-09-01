@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import router from '@/router';
 import { loginUser } from '@/api/login';
 import { getBasketList } from '@/api/basket.js';
 import { getContentsBasket } from '@/api/contents';
@@ -31,6 +32,12 @@ export default new Vuex.Store({
         contBasketList: [],
         reportBasketList: [],
         reload: false,
+        logoutTimer: {
+            timerInterval: null,
+            modalInterval: null,
+            modalVisible: false,
+            count: null,
+        },
     },
     getters: {
         basketAppendCheck(state) {
@@ -60,9 +67,40 @@ export default new Vuex.Store({
         SET_BASKET(state, basketList) {
             state.basketListData = basketList;
         },
-        SET_BASKETDEL(state, goodsBasketSeq) {
+        /*SET_BASKETDEL(state, goodsBasketSeq) {
             state.goodsBasketSeq = goodsBasketSeq;
+        },*/
+
+        SET_LOGOUT_TIMER(state) {
+            clearInterval(state.logoutTimer.modalInterval);
+            state.logoutTimer.modalInterval = setInterval(() => {
+                state.logoutTimer.modalVisible = true;
+                clearInterval(state.logoutTimer.modalInterval);
+            }, 1000 * 60 * 25);
+
+            clearInterval(state.logoutTimer.timerInterval);
+            const expires = new Date();
+            expires.setMinutes(expires.getMinutes() + 30);
+            const countDownDate = expires.getTime();
+            state.logoutTimer.timerInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                const minutes = Math.floor(
+                    (distance % (1000 * 60 * 60)) / (1000 * 60)
+                );
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                state.logoutTimer.count = `${minutes}:${seconds}`;
+                if (distance <= 0) {
+                    state.logoutTimer.modalVisible = false;
+                    this.commit('LOGOUT');
+                    clearInterval(state.logoutTimer.timerInterval);
+                }
+            }, 1000);
         },
+        LOGOUT_MODAL_STATE(state, visible) {
+            state.logoutTimer.modalVisible = visible || false;
+        },
+
         LOGOUT(state) {
             state.user = '';
             state.nick = '';
@@ -79,6 +117,7 @@ export default new Vuex.Store({
             deleteCookie('user_nick');
             deleteCookie('user_token');
             deleteCookie('user_authName');
+            router.push('/login');
         },
         SET_CONT_BASKET(state, data) {
             state.contBasketList = data;

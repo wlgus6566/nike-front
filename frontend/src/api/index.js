@@ -8,23 +8,24 @@ function createWithAuth(url, options) {
     setInterceptors(instance);
     return instance;
 }
-export const agency = createWithAuth('/api/agency', { timeout: 30000 });
-export const auth = createWithAuth('/api/auth', { timeout: 30000 });
-export const basket = createWithAuth('/api/goodsBasket', { timeout: 30000 });
+export const agency = createWithAuth('/api/agency', { timeout: 0 });
+export const auth = createWithAuth('/api/auth', { timeout: 0 });
+export const basket = createWithAuth('/api/goodsBasket', { timeout: 0 });
 export const contents = createWithAuth(`/api/contents`, {
-    timeout: 30000,
+    timeout: 0,
 });
-export const customer = createWithAuth(`/api/customer`, { timeout: 30000 });
-export const myOrder = createWithAuth(`/api`, { timeout: 60000 });
-export const myPage = createWithAuth(`/api/mypage`, { timeout: 30000 });
-export const menu = createWithAuth(`/api/menu`, { timeout: 30000 });
-export const product = createWithAuth(`/api/product`, { timeout: 30000 });
-export const report = createWithAuth(`/api/report`, { timeout: 30000 });
-export const wishList = createWithAuth(`/api`, { timeout: 30000 });
-export const code = createWithAuth(`/api/open/code`, { timeout: 30000 });
-export const user = createWithAuth(`/api/user`, { timeout: 30000 });
-export const calendar = createWithAuth(`/api/calendar`, { timeout: 30000 });
-export const file = createWithAuth(`/api/open`, { timeout: 9999999999999999 });
-export const alarm = createWithAuth(`/api/alarm`, { timeout: 30000 });
-export const banner = createWithAuth(`/api/banner`, { timeout: 30000 });
-export const main = createWithAuth(`/api/main`, { timeout: 30000 });
+export const customer = createWithAuth(`/api/customer`, { timeout: 0 });
+export const myOrder = createWithAuth(`/api`, { timeout: 0 });
+export const myPage = createWithAuth(`/api/mypage`, { timeout: 0 });
+export const menu = createWithAuth(`/api/menu`, { timeout: 0 });
+export const product = createWithAuth(`/api/product`, { timeout: 0 });
+export const report = createWithAuth(`/api/report`, { timeout: 0 });
+export const wishList = createWithAuth(`/api`, { timeout: 0 });
+export const code = createWithAuth(`/api/open/code`, { timeout: 0 });
+export const user = createWithAuth(`/api/user`, { timeout: 0 });
+export const calendar = createWithAuth(`/api/calendar`, { timeout: 0 });
+export const file = createWithAuth(`/api/open`, { timeout: 0 });
+export const alarm = createWithAuth(`/api/alarm`, { timeout: 0 });
+export const banner = createWithAuth(`/api/banner`, { timeout: 0 });
+export const main = createWithAuth(`/api/main`, { timeout: 0 });
+export const join = createWithAuth(`/api/join`, { timeout: 0 });
