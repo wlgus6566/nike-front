@@ -151,11 +151,11 @@ public class WishListController {
 	 * @param wishListDeleteDTO the wish list delete dto
 	 * @return the common result
 	 * @author [윤태호]
-	 * @since 2020. 7. 6. 오후 3:46:42
 	 * @apiNote 위시 리스트 다건 삭제
+	 * @since 2020. 7. 6. 오후 3:46:42
 	 */
 	@ApiOperation(value = "위시리스트 다건 삭제", notes = BASIC_CHARACTER)
-	@DeleteMapping(value = "/mypage/wishlist/delete", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value = "/mypage/wishlist/delete", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ValidField
 	public CommonResult deleteWishListList(@RequestBody @Valid final WishListDeleteDTO wishListDeleteDTO, @ApiIgnore final BindingResult result) {
 		log.info("WishListController.deleteWishListList");
