@@ -142,7 +142,7 @@
                                 class="date-picker-range"
                                 v-if="
                                     folderDetail.campaignPeriodSectionCode ===
-                                        'SELECT'
+                                    'SELECT'
                                 "
                             >
                                 <div class="date-picker">
@@ -239,12 +239,15 @@
 import thumbnail from '@/components/thumbnail/index';
 import FileSettings from '@/components/file-settings/index.vue';
 import ModalAuth from '@/views/pages/common/modal-auth';
+import ModalLogoutConfirm from '@/views/pages/common/modal-logout-confirm';
 import { getContentsView, postContents, putContents } from '@/api/contents';
+import { joinInit, joinDelete } from '@/api/join';
 import bus from '@/utils/bus';
 export default {
     name: 'UPLOAD',
     data() {
         return {
+            occupyInterval: null,
             maxMemo: 150,
             memoLength: 0,
             saveFolder: false,
@@ -339,12 +342,12 @@ export default {
             },
             pickerBeginOption: {
                 firstDayOfWeek: 7,
-                cellClassName: date => {
+                cellClassName: (date) => {
                     if (new Date(date).getDay() === 0) {
                         return 'el-holiday';
                     }
                 },
-                disabledDate: time => {
+                disabledDate: (time) => {
                     if (this.EndDt) {
                         return time.getTime() > this.EndDt.getTime();
                     }
@@ -352,12 +355,12 @@ export default {
             },
             pickerEndOption: {
                 firstDayOfWeek: 7,
-                cellClassName: date => {
+                cellClassName: (date) => {
                     if (new Date(date).getDay() === 0) {
                         return 'el-holiday';
                     }
                 },
-                disabledDate: time => {
+                disabledDate: (time) => {
                     if (this.BeginDt) {
                         return time.getTime() < this.BeginDt.getTime();
                     }
@@ -379,8 +382,7 @@ export default {
                 .fileSectionCodeName[this.menuCode];
         },
         pageMenuCodeDisabled() {
-            return this.folderDetail.contentsFileList.some(el => {
-                console.log(el);
+            return this.folderDetail.contentsFileList.some((el) => {
                 return (
                     (el.fileKindCode !== 'FILE' &&
                         (el.url !== '' || el.title !== '')) ||
@@ -411,8 +413,35 @@ export default {
     },
     activated() {
         this.folderSetting();
+
+        if (this.$route.params.id) {
+            this.visible.ModalLogoutConfirm = true;
+            this.joinOccupyFn();
+            this.occupyInterval = setInterval(() => {
+                this.joinOccupyFn();
+            }, 1000);
+        }
+    },
+    deactivated() {
+        this.deleteOccupyFn();
+        clearInterval(this.occupyInterval);
     },
     methods: {
+        async joinOccupyFn() {
+            const response = await joinInit({
+                menuCode: this.$route.meta.topMenuCode,
+                set: this.$route.params.id,
+            });
+            console.log(response);
+        },
+        async deleteOccupyFn() {
+            const response = await joinDelete({
+                menuCode: this.$route.meta.topMenuCode,
+                set: this.$route.params.id,
+            });
+            console.log(response);
+        },
+
         /**
          * 바이트 문자 입력가능 문자수 체크
          */

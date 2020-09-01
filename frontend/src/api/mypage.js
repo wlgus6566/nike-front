@@ -30,10 +30,16 @@ function changePassword(data) {
     return myPage.put(`/user/change/password`, data);
     //console.log(params);
 }
+
+// login 연장
+function getLoginUpdate() {
+    return myPage.get(`/user/init`);
+}
 export {
     getGnbMenu,
     uploadFolderViewList,
     historyFolderViewList,
     getMyInfo,
     changePassword,
+    getLoginUpdate,
 };

@@ -1,12 +1,12 @@
-//import store from '@/store/index.js';
+import store from '@/store/index.js';
 import router from '@/router';
 import { updateCookie, getAuthFromCookie } from '@/utils/cookies.js';
+import { logoutCount } from '@/utils/logout-count.js';
 
 function setInterceptors(instance) {
     instance.interceptors.request.use(
         (config) => {
             config.headers.Authorization = getAuthFromCookie();
-            updateCookie();
             return config;
         },
         (error) => {
@@ -15,7 +15,12 @@ function setInterceptors(instance) {
         }
     );
     instance.interceptors.response.use(
-        (config) => config,
+        (config) => {
+            updateCookie();
+            store.commit('SET_LOGOUT_TIMER');
+            //logoutCount(new Date());
+            return config;
+        },
         (error) => {
             if (error.response.status === 401) {
                 router.push('/login');
