@@ -5,7 +5,7 @@
                 ref="input"
                 type="file"
                 name="image"
-                accept="image/*"
+                accept=".png,.gif,.jpeg,.jpg,.bmp"
                 @change="inputChangeEvent"
             />
             <span class="thumb">
@@ -35,6 +35,7 @@
 import 'cropperjs/dist/cropper.css';
 import Compress from 'compress.js';
 import cropperModal from './cropperModal';
+import bus from '@/utils/bus';
 
 export default {
     name: 'thumbnailCropper',
@@ -81,8 +82,11 @@ export default {
         },
         inputChangeEvent(e) {
             const file = e.target.files[0];
+            if (file.length === 0) return;
+            bus.$emit('pageLoading', true);
+
             if (file.type.indexOf('image/') === -1) {
-                alert('Please select an image file');
+                alert('jpg png bmp jpeg 파일만 등록 가능 합니다.');
                 return;
             }
 
@@ -95,6 +99,7 @@ export default {
                     resize: true, // defaults to true, set false if you do not want to resize the image width and height
                 })
                 .then((data) => {
+                    bus.$emit('pageLoading', false);
                     this.popupOpen();
                     let url = `${data[0].prefix}${data[0].data}`;
                     this.imgSrc = url;
@@ -102,6 +107,7 @@ export default {
                     this.$refs.cModal.$refs.cropper.replace(url);
                 })
                 .catch((e) => {
+                    bus.$emit('pageLoading', false);
                     console.log(e);
                 });
         },
