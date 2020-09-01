@@ -121,7 +121,7 @@ public class MenuReturnDTO {
      * @author [오지훈]
      */
     @ApiModelProperty(name = "skillCodes", value = "스킬 코드")
-    private List<MenuReturnDTO.SkillCode> skillCodes = new ArrayList<>();
+    private List<SkillCodeDTO> skillCodes = new ArrayList<>();
 
     /**
      * Gets skill codes.
@@ -131,8 +131,8 @@ public class MenuReturnDTO {
      * @since 2020. 7. 8. 오후 4:16:43
      * @implNote
      */
-    public List<MenuReturnDTO.SkillCode> getSkillCodes() {
-        final List<MenuReturnDTO.SkillCode> skillCodes = new ArrayList<>();
+    public List<SkillCodeDTO> getSkillCodes() {
+        final List<SkillCodeDTO> skillCodes = new ArrayList<>();
 
         if (this.menuRoles.isEmpty()) {
             return new ArrayList<>();
@@ -146,7 +146,7 @@ public class MenuReturnDTO {
                 }
             }
 
-            skillCodes.add(MenuReturnDTO.SkillCode.builder()
+            skillCodes.add(SkillCodeDTO.builder()
                     .menuSeq(this.menuSeq)
                     .code(enumCode.toString())
                     .field(enumCode.getField())
@@ -157,73 +157,5 @@ public class MenuReturnDTO {
         return skillCodes;
     }
 
-    /**
-     * The Class Skill code.
-     *
-     * @author [오지훈]
-     * @since 2020. 7. 14. 오후 12:02:07
-     * @implNote
-     */
-    @Getter
-    @Setter
-    public static class SkillCode {
-        /**
-         * The Menu seq
-         *
-         * @author [오지훈]
-         */
-        private Long menuSeq;
-        /**
-         * The Code
-         *
-         * @author [오지훈]
-         */
-        private String code;
-        /**
-         * The Field
-         *
-         * @author [오지훈]
-         */
-        private String field;
-        /**
-         * The Message
-         *
-         * @author [오지훈]
-         */
-        private String message;
-        /**
-         * The Menu role seq
-         *
-         * @author [오지훈]
-         */
-        private Long menuRoleSeq;
-
-        /**
-         * Instantiates a new Skill code.
-         *
-         * @param menuSeq     the menu seq
-         * @param code        the code
-         * @param field       the field
-         * @param message     the message
-         * @param menuRoleSeq the menu role seq
-         * @author [오지훈]
-         * @since 2020. 7. 21. 오후 3:51:09
-         * @implNote
-         */
-        @Builder
-        public SkillCode (
-                final Long menuSeq
-                , final String code
-                , final String field
-                , final String message
-                , final Long menuRoleSeq
-        ) {
-            this.menuSeq = menuSeq;
-            this.code = code;
-            this.field = field;
-            this.message = message;
-            this.menuRoleSeq = menuRoleSeq;
-        }
-    }
 
 }
