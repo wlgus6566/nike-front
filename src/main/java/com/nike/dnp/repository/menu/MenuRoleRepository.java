@@ -11,11 +11,22 @@ import java.util.List;
  * MenuRoleRepository
  *
  * @author [오지훈]
- * @since 2020. 7. 7. 오후 5:02:35
  * @implNote 메뉴 역할 Repository 작성
+ * @since 2020. 7. 7. 오후 5:02:35
  */
 @Repository
 public interface MenuRoleRepository extends JpaRepository<MenuRole, Long> {
+
+    /**
+     * Find by menu seq list.
+     *
+     * @param menuSeq the menu seq
+     * @return the list
+     * @author [오지훈]
+     * @implNote [Description 작성]
+     * @since 2020. 9. 1. 오전 11:26:11
+     */
+    List<MenuRole> findByMenuSeq(final Long menuSeq);
 
     /**
      * Find by menu seq and menu skill code list.

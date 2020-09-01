@@ -19,17 +19,11 @@
                         <input type="file" @change="imageChange($event)" />
                         <span class="thumb">
                             <img
-                                :src="detailData.imageBase64"
-                                :alt="detailData.imageFileName"
-                                v-if="detailData.imageBase64"
-                            />
-                            <img
-                                :src="detailData.imageFilePhysicalName"
-                                :alt="detailData.imageFileName"
-                                v-if="
-                                    detailData.imageFilePhysicalName &&
-                                    !detailData.imageBase64
+                                :src="
+                                    detailData.imageBase64 ||
+                                    detailData.imageFilePhysicalName
                                 "
+                                :alt="detailData.imageFileName"
                             />
                         </span>
                         <span class="txt">
@@ -201,6 +195,7 @@ import { getCode } from '@/api/code';
 import { getCategoryList } from '@/utils/code';
 import { fileUpLoad } from '@/api/file';
 import Compress from 'compress.js';
+import bus from '@/utils/bus';
 
 export default {
     name: 'registration',
@@ -298,22 +293,25 @@ export default {
         },
         //이미지 페이지에 삽입
         imageChange(e) {
+            bus.$emit('pageLoading', true);
             const file = e.target.files[0];
-
+            console.log(2);
             new Compress()
                 .compress([file], {
                     size: 4, // the max size in MB, defaults to 2MB
                     quality: 1, // the quality of the image, max is 1,
-                    maxWidth: 500, // the max width of the output image, defaults to 1920px
-                    maxHeight: 500, // the max height of the output image, defaults to 1920px
+                    maxWidth: 700, // the max width of the output image, defaults to 1920px
+                    maxHeight: 700, // the max height of the output image, defaults to 1920px
                     resize: true, // defaults to true, set false if you do not want to resize the image width and height
                 })
                 .then((data) => {
+                    bus.$emit('pageLoading', false);
                     let url = `${data[0].prefix}${data[0].data}`;
                     this.detailData.imageBase64 = url;
                     this.detailData.imageFileName = file.name;
                 })
                 .catch((e) => {
+                    bus.$emit('pageLoading', false);
                     console.log(e);
                 });
         },
@@ -402,7 +400,6 @@ export default {
                         }
                     );
                     this.detailData = response.data;
-                    console.log(this.detailData);
                     if (this.detailData.exposureYn === 'N') {
                         this.exposure.value = 'N';
                     }
