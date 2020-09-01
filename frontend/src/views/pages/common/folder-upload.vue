@@ -134,7 +134,7 @@
                                 class="date-picker-range"
                                 v-if="
                                     folderDetail.campaignPeriodSectionCode ===
-                                    'SELECT'
+                                        'SELECT'
                                 "
                             >
                                 <div class="date-picker">
@@ -198,7 +198,9 @@
                             <span>권한설정</span>
                         </button>
                         <ModalAuth
+                            ref="modalAuth"
                             :checks="folderDetail.checks"
+                            :menuCode="menuCode"
                             :visible.sync="visible.ModalAuth"
                             @checksUpdate="checksUpdate"
                         />
@@ -329,12 +331,12 @@ export default {
             },
             pickerBeginOption: {
                 firstDayOfWeek: 7,
-                cellClassName: (date) => {
+                cellClassName: date => {
                     if (new Date(date).getDay() === 0) {
                         return 'el-holiday';
                     }
                 },
-                disabledDate: (time) => {
+                disabledDate: time => {
                     if (this.EndDt) {
                         return time.getTime() > this.EndDt.getTime();
                     }
@@ -342,12 +344,12 @@ export default {
             },
             pickerEndOption: {
                 firstDayOfWeek: 7,
-                cellClassName: (date) => {
+                cellClassName: date => {
                     if (new Date(date).getDay() === 0) {
                         return 'el-holiday';
                     }
                 },
-                disabledDate: (time) => {
+                disabledDate: time => {
                     if (this.BeginDt) {
                         return time.getTime() < this.BeginDt.getTime();
                     }
@@ -369,7 +371,7 @@ export default {
                 .fileSectionCodeName[this.menuCode];
         },
         pageMenuCodeDisabled() {
-            return this.folderDetail.contentsFileList.some((el) => {
+            return this.folderDetail.contentsFileList.some(el => {
                 console.log(el);
                 return (
                     (el.fileKindCode !== 'FILE' &&
@@ -439,9 +441,10 @@ export default {
         folderSetting() {
             this.dataReset();
             this.saveFolder = false;
-
             if (this.$route.params.id) {
                 this.getFolderDetail();
+            } else {
+                this.$refs.modalAuth.getAuthList(this.menuCode);
             }
         },
         FileListUpdate(fileList) {
@@ -577,7 +580,8 @@ export default {
                     ? new Date(response.data.campaignEndDt)
                     : null;
 
-                console.log(this.$refs.fileSet);
+                console.log(this.folderDetail.checks);
+                await this.$refs.modalAuth.dataInit(this.folderDetail.checks);
                 await this.$refs.fileSet.getFolderDetailFile();
             } catch (error) {
                 console.error(error);
@@ -592,7 +596,6 @@ export default {
         dataReset() {
             this.BeginDt = null;
             this.EndDt = null;
-
             this.folderDetail.campaignBeginDt = null;
             this.folderDetail.campaignEndDt = null;
             this.folderDetail.imageFilePhysicalName = '';
@@ -602,13 +605,13 @@ export default {
             this.folderDetail.folderContents = '';
             this.folderDetail.campaignPeriodSectionCode = 'SELECT';
             this.folderDetail.memo = '';
-            this.folderDetail.checks = [
+            /* this.folderDetail.checks = [
                 {
                     authSeq: 0,
                     detailAuthYn: 'N',
                     emailReceptionYn: 'N',
                 },
-            ];
+            ];*/
         },
     },
     beforeRouteLeave(to, from, next) {
