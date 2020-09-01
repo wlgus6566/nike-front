@@ -1,7 +1,6 @@
 import store from '@/store/index.js';
 import router from '@/router';
 import { updateCookie, getAuthFromCookie } from '@/utils/cookies.js';
-import { logoutCount } from '@/utils/logout-count.js';
 
 function setInterceptors(instance) {
     instance.interceptors.request.use(
