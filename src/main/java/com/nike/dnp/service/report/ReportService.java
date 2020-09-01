@@ -537,12 +537,12 @@ public class ReportService {
      * @implNote 권한 목록 조회
      * @since 2020. 8. 26. 오후 4:52:23
      */
-    public List<AuthReturnDTO> findAllAuthListWithDepth() {
+    public List<AuthReturnDTO> findAllAuthListWithDepth(final String onlySkillCode) {
         final UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
         userAuthSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
         userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
 
-        return authService.getAuthListWithDepth(userAuthSearchDTO, authService.getById(SecurityUtil.currentUser().getAuthSeq()));
+        return authService.getAuthListWithDepth(userAuthSearchDTO, authService.getById(SecurityUtil.currentUser().getAuthSeq()), onlySkillCode);
     }
 
     /**

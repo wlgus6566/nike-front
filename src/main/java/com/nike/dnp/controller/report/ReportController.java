@@ -216,7 +216,7 @@ public class ReportController {
     public SingleResult<List<AuthReturnDTO>> findByAuthDepth() {
         log.info("AuthController.findByAuthDepth");
         return responseService.getSingleResult(
-                reportService.findAllAuthListWithDepth());
+                reportService.findAllAuthListWithDepth("Y"));
     }
 
     /**

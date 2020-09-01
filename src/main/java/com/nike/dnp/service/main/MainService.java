@@ -1,6 +1,7 @@
 package com.nike.dnp.service.main;
 
 import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.main.MainResultDTO;
 import com.nike.dnp.dto.notice.CustomerSearchDTO;
 import com.nike.dnp.dto.report.ReportResultDTO;
@@ -8,6 +9,7 @@ import com.nike.dnp.repository.contents.ContentsRepository;
 import com.nike.dnp.repository.report.ReportRepository;
 import com.nike.dnp.service.banner.BannerService;
 import com.nike.dnp.service.notice.NoticeService;
+import com.nike.dnp.service.report.ReportService;
 import com.nike.dnp.service.user.UserContentsService;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +18,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The Class Agency service.
@@ -75,6 +80,13 @@ public class MainService {
     private final UserContentsService userContentsService;
 
     /**
+     * The Report service
+     *
+     * @author [이소정]
+     */
+    private final ReportService reportService;
+
+    /**
      * Find main info main result dto.
      *
      * @return the main result dto
@@ -106,15 +118,7 @@ public class MainService {
         );
 
         // REPORT
-        List<ReportResultDTO> reportResultDTOList = reportRepository.findRecentReport(PageRequest.of(0, 3, Sort.by(SORT_BY).descending()));
-        String detailAuthYn = "N";
-        if (userContentsService.isAuth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_MANAGE", ServiceCode.MenuSkillEnumCode.VIEW.toString())) {
-            detailAuthYn = "Y";
-        }
-        for (ReportResultDTO reportResultDTO : reportResultDTOList) {
-            reportResultDTO.setDetailAuthYn(detailAuthYn);
-        }
-        mainResultDTO.setReportList(reportResultDTOList);
+        mainResultDTO.setReportList(this.checkReportAuthList());
 
         // NOTICE
         CustomerSearchDTO customerSearchDTO = new CustomerSearchDTO();
@@ -132,5 +136,52 @@ public class MainService {
         mainResultDTO.setNewsArticleList(noticeService.findNoticePages(newsSearchDTO).getContent());
 
         return mainResultDTO;
+    }
+
+
+    /**
+     * Check report auth list list.
+     *
+     * @return the list
+     * @author [이소정]
+     * @implNote 리포트 목록 & 권한 체크
+     * @since 2020. 9. 1. 오전 1:34:06
+     */
+    public List<ReportResultDTO> checkReportAuthList() {
+        List<ReportResultDTO> reportList = reportRepository.findRecentReport(PageRequest.of(0, 3, Sort.by(SORT_BY).descending()));
+        List<AuthReturnDTO> reportAuthList = reportService.findAllAuthListWithDepth("N");
+
+        Map<Long, AuthReturnDTO> map = new HashMap<Long, AuthReturnDTO>();
+
+        if (!ObjectUtils.isEmpty(reportAuthList)) {
+            for (AuthReturnDTO authReturnDTO : reportAuthList) {
+                map.put(authReturnDTO.getAuthSeq(), authReturnDTO);
+                if (!ObjectUtils.isEmpty(authReturnDTO.getSubAuths())) {
+                    for (AuthReturnDTO depth2 : authReturnDTO.getSubAuths()) {
+                        map.put(depth2.getAuthSeq(), depth2);
+                        if (!ObjectUtils.isEmpty(depth2.getSubAuths())) {
+                            for (AuthReturnDTO depth3 : depth2.getSubAuths()) {
+                                map.put(depth3.getAuthSeq(), depth3);
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+        // 목록에 내 seq가 있는지
+        boolean checkMyDetailAuthYn = map.containsKey(SecurityUtil.currentUser().getAuthSeq());
+
+        for (ReportResultDTO reportResultDTO : reportList) {
+            if (checkMyDetailAuthYn && map.containsKey(reportResultDTO.getAuthSeq())) {
+                reportResultDTO.setDetailAuthYn("Y");
+            } else {
+                reportResultDTO.setDetailAuthYn("N");
+            }
+
+        }
+
+        return reportList;
     }
 }

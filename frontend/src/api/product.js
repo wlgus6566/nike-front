@@ -34,7 +34,7 @@ function putProduct(goodsSeq, data) {
 
 // PRODUCT 상품 삭제[배열]
 function delProduct(data) {
-    return product.delete(``, data);
+    return product.delete(``, { data });
 }
 export {
     getProductList,

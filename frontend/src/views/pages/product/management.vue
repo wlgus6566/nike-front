@@ -223,7 +223,7 @@ export default {
                 this.deleteLoading = this.checkItem;
                 try {
                     await delProduct({
-                        goodsSeqList: this.checkItem.toString(),
+                        goodsSeqList: this.checkItem,
                     });
                     await this.getProduct();
                     await this.$store.dispatch('basketList');

@@ -44,9 +44,9 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
         final JPAQuery<History> query = queryFactory
                 .selectFrom(qHistory)
                 .where(
-                        HistoryPredicateHelper.eqTypeCdViewHistory(historySearchDTO),
-                        qHistory.registerSeq.eq(historySearchDTO.getRegisterSeq()
-                        ));
+                    HistoryPredicateHelper.eqTypeCdViewHistory(historySearchDTO),
+                    qHistory.registerSeq.eq(historySearchDTO.getRegisterSeq()
+                ));
 
         final List<History> historyList = ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), History.class);
         final List<HistoryResultDTO> historyResultList = new ArrayList<>();

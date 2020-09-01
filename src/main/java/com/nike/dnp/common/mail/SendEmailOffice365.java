@@ -217,7 +217,8 @@ public class SendEmailOffice365 {
             for (int i=0; i<toEmail.length; i++) {
                 addresses[i] = new InternetAddress(toEmail[i]);
             }
-            message.setRecipients(Message.RecipientType.TO, addresses);
+            //message.setRecipients(Message.RecipientType.TO, addresses);
+            //message.addRecipients(Message.RecipientType.BCC, addresses);
             message.setFrom(new InternetAddress(fromEmail, "NIKE SPACE", "UTF-8"));
             message.setSubject(subject);
 
@@ -233,7 +234,7 @@ public class SendEmailOffice365 {
             }
 
             message.setSentDate(new Date());
-            Transport.send(message);
+            Transport.send(message, addresses);
 
             for (int i=0; i<toEmail.length; i++) {
                 emailSendingLogService.save(

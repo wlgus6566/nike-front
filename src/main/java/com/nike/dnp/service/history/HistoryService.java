@@ -114,6 +114,9 @@ public class HistoryService {
     @Transactional
     public History saveViewHistory(final Long folderSeq, final String typeCd) {
         final History history = new History();
+        // 기존 등록된 목록 삭제
+        this.deleteViewHistory(folderSeq, typeCd);
+
         history.setTypeCd(typeCd);
         if (ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString().equals(typeCd)) {
             history.setReportSeq(folderSeq);

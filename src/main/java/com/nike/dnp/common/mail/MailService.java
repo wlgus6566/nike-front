@@ -70,6 +70,20 @@ public class MailService {
                 , this.convert(this.getFile(emailType), sendDTO)
         );
     }
+    /*public void sendMails(final String emailType, final String subject, final SendDTO sendDTO) {
+        log.info("MailService.sendMails");
+        for (String email : sendDTO.getEmails()) {
+            if (EmailPatternUtil.isValidEmail(email)) {
+                sendDTO.setEmail(email);
+                sendEmailOffice365.sendEmail(
+                        email
+                        , subject
+                        , this.convert(this.getFile(emailType), sendDTO)
+                );
+            }
+        }
+
+    }*/
 
     /**
      * Gets file.

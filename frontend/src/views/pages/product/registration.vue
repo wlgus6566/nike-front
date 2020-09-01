@@ -57,7 +57,6 @@
                                 <i></i>
                                 <span class="txt">
                                     {{ radio.title }}
-                                    {{ exposure.value }}
                                 </span>
                             </span>
                         </label>

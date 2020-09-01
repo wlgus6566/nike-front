@@ -566,16 +566,22 @@ public class AuthService {
      * @implNote 권한 depth에 맞는 하위 목록
      * @since 2020. 8. 18. 오후 10:07:48
      */
-    public List<AuthReturnDTO> getAuthListWithDepth(final UserAuthSearchDTO userAuthSearchDTO, final Auth auth) {
+    public List<AuthReturnDTO> getAuthListWithDepth(final UserAuthSearchDTO userAuthSearchDTO, final Auth auth, final String onlySkillCode) {
         log.info("AuthService.getAuthListWithDepth");
-        List<AuthReturnDTO> allAuthList = this.getAuthListWithoutN(userAuthSearchDTO);
+        List<AuthReturnDTO> allAuthList;
+        if ("Y".equals(onlySkillCode)) {
+            allAuthList = this.getAuthListWithoutN(userAuthSearchDTO);
+        } else {
+            allAuthList = this.getAuthList(userAuthSearchDTO);
+        }
+
         List<AuthReturnDTO> transformAuthList = new ArrayList<>();
 
         if (!ObjectUtils.isEmpty(allAuthList) && !allAuthList.isEmpty()) {
 
             if (1 == auth.getAuthDepth()) {
                 transformAuthList = allAuthList;
-            } else {
+            } else if (2 == auth.getAuthDepth()) {
                 for (AuthReturnDTO authReturnDTO : allAuthList) {
                     if (auth.getAuthSeq().equals(authReturnDTO.getAuthSeq())) {
                         transformAuthList.add(authReturnDTO);
@@ -592,9 +598,7 @@ public class AuthService {
                 }
             }
         }
-
         return transformAuthList;
-
     }
 
     /**
