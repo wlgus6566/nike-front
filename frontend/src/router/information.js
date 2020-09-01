@@ -7,7 +7,7 @@ const routes = [
         component: pages('information/index.vue'),
         redirect: () => {
             const idx = store.state.gnbMenuListData.findIndex(
-                (el) => el.menuCode === 'INFO'
+                (el) => el.menuCode === 'INFORMATION'
             );
             return store.state.gnbMenuListData[idx].menus[0].menuPathUrl;
         },
