@@ -61,15 +61,18 @@ nav .nav-link {
     border-radius: 0;
     font-family: 'Bebas Neue', sans-serif;
     transition: color 200ms ease-in-out 0s;
+    overflow: hidden;
 }
 
 nav .depth1 > .nav-link span {
+    display: inline-block;
     font-size: inherit;
     line-height: inherit;
     letter-spacing: inherit;
     color: inherit;
     font-family: 'Bebas Neue', sans-serif;
-    transition: all 200ms ease-in-out 0s;
+    transform: translateX(0);
+    transition: all 300ms ease-in-out 0s;
 }
 nav .depth1 > .nav-link span.ko {
     position: absolute;
@@ -77,17 +80,22 @@ nav .depth1 > .nav-link span.ko {
     left: 0;
     display: block;
     opacity: 0;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Noto Sans KR', 'Roboto', sans-serif;
     font-size: 12px;
     font-weight: bold;
+    transform: translateX(-100px);
 }
 nav .depth1 > .nav-link:hover span {
-    opacity: 0;
+    opacity: 1;
+    transform: translateX(-100px);
+    transition: all 200ms ease-in-out 0s;
 }
 
 nav .depth1 > .nav-link:hover span.ko {
     opacity: 1;
+    transform: translateX(0);
 }
+
 nav .nav-link.hasDepth:after {
     content: '';
     position: absolute;
@@ -123,6 +131,16 @@ nav .nav-link.router-link-active {
 }
 nav .nav-link.router-link-active:after {
     opacity: 1;
+}
+nav .nav-link.router-link-active {
+    color: #000 !important;
+}
+nav .nav-link.router-link-active span {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+nav .nav-link.router-link-active span.ko {
+    opacity: 0 !important;
 }
 nav .depth2 > .nav-link {
     color: #888;
