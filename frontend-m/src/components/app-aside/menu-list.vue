@@ -6,9 +6,11 @@
             ref="menuItem"
             :class="{ active: activeIndex === index }"
         >
-            <button type="button" @click="menuFn($event, menu.menuSeq)">
-                <span>{{ menu.menuName }}</span>
-            </button>
+            <button
+                type="button"
+                @click="menuFn($event, menu.menuSeq)"
+                v-html="menu.menuName"
+            />
             <transition @enter="itemOpen" @leave="itemClose">
                 <ul class="depth" v-if="activeIndex === index">
                     <li
@@ -50,10 +52,10 @@ export default {
     watch: {},
     methods: {
         routerFn() {
-            const menuName = this.menuData.map(el => el.menuName);
-            const path = this.pathUrl.split('/')[1].toUpperCase();
+            const menuName = this.menuData.map(el => el.menuPathUrl);
+            const path = this.pathUrl.split('/')[1];
             const _index = menuName.findIndex(el => {
-                return el === path;
+                return el === `/${path}`;
             });
             this.activeIndex = _index;
             return {};
@@ -108,65 +110,5 @@ export default {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
-}
-.menu-list {
-    margin-top: 40px;
-    max-height: calc(100% - 40px - 95px);
-}
-.menu-list li {
-    overflow: hidden;
-    transition: height ease-in-out 0.3s;
-}
-.menu-list li button,
-.menu-list li a {
-    position: relative;
-    display: block;
-    width: 100%;
-    border-bottom: 1px solid #000;
-    line-height: 50px;
-    text-align: left;
-    border-radius: 0;
-    font-size: 18px;
-    color: #000;
-    font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
-    letter-spacing: 0.05em;
-}
-.menu-list li button:before,
-.menu-list li a:before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: -10px;
-    display: block;
-    width: 36px;
-    height: 36px;
-    background: url(../../assets/images/svg/icon-plus.svg) no-repeat center;
-    transform: translateY(-50%);
-}
-.menu-list li.active {
-    transition: height ease-in-out 0.3s;
-}
-.menu-list li.active > button:before,
-.menu-list li.active > a:before {
-    background-image: url(../../assets/images/svg/icon-minus.svg);
-}
-.menu-list li button span,
-.menu-list li a span {
-    letter-spacing: 0.2px;
-}
-.depth {
-    padding: 10px 0;
-}
-.depth li a {
-    line-height: 40px;
-    font-size: 16px;
-    color: #888;
-    border: none;
-}
-.depth li a:before {
-    right: 0;
-    width: 20px;
-    height: 20px;
-    background: url(../../assets/images/svg/icon-more-gray.svg) no-repeat center;
 }
 </style>

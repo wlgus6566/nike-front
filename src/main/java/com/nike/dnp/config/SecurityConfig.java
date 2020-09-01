@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.vote.AffirmativeBased;
@@ -29,6 +30,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -174,42 +176,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers(staticPatterns);
 	}
 	/**
-	 * configure
-	 * @param http
-	 * @throws Exception
-	 * @author [윤태호]
-	 */
-	@Override
-	protected void configure(final HttpSecurity http) throws Exception {
-		log.info("SecurityConfig.configure");
-		http.authorizeRequests()
-			.antMatchers(HttpMethod.POST,"/api/login").permitAll()
-			.antMatchers("/api/open/**"
-						, "/api/main"
-						, "/api/main/**"
-						, "/api/mypage/**"
-						, "/api/calendar/eachList/**"
-						, "/api/contents/download/**"
-						, "/api/report/download/**"
-						, "/api/alarm/**"
-						,"/api/join/**").permitAll()
-			.accessDecisionManager(accessDecisionManager())
-			.anyRequest().authenticated()
-			.and()
-			.addFilter(authenticationFilter()) // 인증 필터
-			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository, this.redisService)) //jwt 토큰 인증 필터
-			.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
-			.and()
-			.cors().configurationSource(corsConfigurationSource())
-			.and()
-			.csrf().disable() // csrf 사용 안함
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and()
-			.headers().httpStrictTransportSecurity().includeSubDomains(true).maxAgeInSeconds(31536000)
-		; // 세션 사용안함
-	}
-
-	/**
 	 * cors 설정 추가
 	 *
 	 * @return the cors configuration source
@@ -235,7 +201,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//로컬 설정
 		origins.add("http://localhost:8080");
 		origins.add("http://localhost:8081");
-
 		origins.add("http://localhost:8082");
 		//외부 설정
 		origins.add("https://ckeditor.com");
@@ -248,6 +213,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
+	}
+
+	/**
+	 * configure
+	 * @param http
+	 * @throws Exception
+	 * @author [윤태호]
+	 */
+	@Order(1)
+	@Override
+	protected void configure(final HttpSecurity http) throws Exception {
+		log.info("SecurityConfig.configure");
+		http
+			.cors().and()
+			.authorizeRequests()
+			.antMatchers(HttpMethod.POST,"/api/login").permitAll()
+			.antMatchers("/api/open/**"
+					, "/api/main"
+					, "/api/main/**"
+					, "/api/mypage/**"
+					, "/api/calendar/eachList/**"
+					, "/api/contents/download/**"
+					, "/api/report/download/**"
+					, "/api/alarm/**"
+					,"/api/join/**").permitAll()
+			.accessDecisionManager(accessDecisionManager())
+			.anyRequest().authenticated()
+			.and()
+			.addFilter(authenticationFilter()) // 인증 필터
+			.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository, this.redisService)) //jwt 토큰 인증 필터
+			.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // 권한 체크 핸들러
+			.and()
+			.csrf().disable() // csrf 사용 안함
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+			.headers().referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.ORIGIN_WHEN_CROSS_ORIGIN)
+		; // 세션 사용안함
 	}
 
 	/**
@@ -327,6 +329,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		log.info("SecurityConfig.accessDeniedHandler");
 		return new SimpleAccessDeniedHandler(responseService);
 	}
-
 
 }

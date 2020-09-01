@@ -116,9 +116,10 @@ export default {
         stickyCss() {
             const stickyWrap = document.querySelector('#sticky');
             const contents = document.querySelector('.contents');
+            const contentsH = contents.offsetHeight;
             stickyWrap.style.height = this.stickyH + 'px';
             contents.style.position = 'relative';
-            contents.style.paddingBottom = '100px';
+            contents.style.height = contentsH + 60 + 'px';
         },
         handleScroll() {
             const windowE = document.documentElement;

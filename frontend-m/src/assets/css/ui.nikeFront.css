@@ -869,7 +869,7 @@
     display: -webkit-box;
     -webkit-line-clamp: 2; /* 라인수 */
     -webkit-box-orient: vertical;
-    word-wrap: break-word;
+    word-break: break-word;
 }
 /* Info > AGENCY */
 .inner.bg {
@@ -1677,7 +1677,7 @@
 }
 .upload-file-list {
     max-width: calc(100% - 98px);
-    padding-top: 20px;
+    padding: 20px 20px 0 0;
     display: inline-block;
     white-space: nowrap;
     overflow-x: auto;
@@ -1690,7 +1690,16 @@
     height: 65px;
     background: rgba(0, 0, 0, 0.05) url('../images/svg/img-upload-none.svg') 50%
         50% no-repeat;
-    vertical-align: top;
+}
+.upload-file-list .upload-file-item span {
+    display: inline-block;
+    width: 65px;
+    height: 65px;
+    line-height: 65px;
+    overflow: hidden;
+}
+.upload-file-list .upload-file-item img {
+    vertical-align: middle;
 }
 .upload-file-list .upload-file-item + .upload-file-item {
     margin-left: 15px;
