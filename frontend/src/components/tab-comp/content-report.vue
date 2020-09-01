@@ -168,7 +168,16 @@ export default {
                             config
                         );
                         console.log(response);
+
                         const url = window.URL.createObjectURL(
+                            new Blob([response.data])
+                        );
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.setAttribute('download', el.fileName);
+                        link.click();
+
+                        /*  const url = window.URL.createObjectURL(
                             new Blob([response.data])
                         );
                         const link = document.createElement('a');
@@ -177,7 +186,7 @@ export default {
                         link.setAttribute('download', el.fileName);
                         document.body.appendChild(link);
                         this.link.push(link);
-                        window.URL.revokeObjectURL(url);
+                        window.URL.revokeObjectURL(url);*/
                     } catch (error) {
                         console.error(error);
                     }
