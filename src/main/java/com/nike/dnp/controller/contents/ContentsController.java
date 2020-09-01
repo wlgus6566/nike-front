@@ -285,7 +285,7 @@ public class ContentsController {
      */
     @ApiOperation(value = "컨텐츠 파일 다운로드", notes = REQUEST_CHARACTER)
     @GetMapping(name = "컨텐츠 파일 다운로드", value = "/download/{contentsFileSeq}")
-    //@CrossOrigin(origins = {"https://devwww.nikespace.co.kr", "http://devwww.nikespace.co.kr","http://localhost:8081", "https://localhost:8081"})
+    @CrossOrigin(origins = {"https://devwww.nikespace.co.kr", "http://devwww.nikespace.co.kr","http://localhost:8081", "https://localhost:8081"})
     public ResponseEntity<Resource> downloadContents(
             @ApiParam(name="contentsFileSeq", value = "컨텐츠 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long contentsFileSeq
     ) throws IOException {
