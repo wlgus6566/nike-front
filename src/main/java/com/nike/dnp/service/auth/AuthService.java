@@ -3,6 +3,7 @@ package com.nike.dnp.service.auth;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nike.dnp.common.variable.FailCode;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.auth.AuthSaveDTO;
 import com.nike.dnp.dto.auth.AuthUpdateDTO;
@@ -17,6 +18,7 @@ import com.nike.dnp.repository.auth.AuthMenuRoleRepository;
 import com.nike.dnp.repository.auth.AuthRepository;
 import com.nike.dnp.repository.menu.MenuRepository;
 import com.nike.dnp.repository.menu.MenuRoleResourceRepository;
+import com.nike.dnp.repository.user.UserAuthRepository;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.ObjectMapperUtil;
@@ -99,6 +101,13 @@ public class AuthService {
     private final MenuRepository menuRepository;
 
     /**
+     * UserAuthRepository
+     *
+     * @author [오지훈]
+     */
+    private final UserAuthRepository userAuthRepository;
+
+    /**
      * Find all list.
      *
      * @return the list
@@ -109,6 +118,19 @@ public class AuthService {
     public List<Auth> findAll() {
         log.info("AuthService.findAll");
         return authRepository.findAllByUseYnAndUpperAuthSeqIsNull("Y");
+    }
+
+    /**
+     * Count by auth seq int.
+     *
+     * @param authSeq the auth seq
+     * @return the int
+     * @author [오지훈]
+     * @implNote 해당 권한의 유저 수 확인
+     * @since 2020. 9. 1. 오전 11:06:48
+     */
+    public int countByAuthSeq(final Long authSeq) {
+        return userAuthRepository.findAllByAuthSeq(authSeq).size();
     }
 
     /**
@@ -148,24 +170,41 @@ public class AuthService {
         );
     }
 
+    /**
+     * Find auths list.
+     *
+     * @return the list
+     * @author [오지훈]
+     * @implNote 그룹목록(Tree 구조), 사용안하는 그룹 제외
+     * @since 2020. 9. 1. 오전 10:58:03
+     */
     public List<AuthReturnDTO> findAuths() {
         log.info("AuthService.findAuths");
         final List<AuthReturnDTO> firstAuths = new ArrayList<>();
         for (Auth auth : this.findAll()) {
-            final AuthReturnDTO topAuthDTO = ObjectMapperUtil.map(auth, AuthReturnDTO.class);
-
-            if (auth.getSubAuths().size() > 0) {
-                final List<AuthReturnDTO> secondAuths = new ArrayList<>();
-                for (Auth secondDepth : auth.getSubAuths()) {
-                    final AuthReturnDTO bottomAuthDTO = ObjectMapperUtil.map(secondDepth, AuthReturnDTO.class);
-                    if (secondDepth.getSubAuths().size() > 0) {
-                        bottomAuthDTO.setSubAuths(ObjectMapperUtil.mapAll(secondDepth.getSubAuths(), AuthReturnDTO.class));
+            if (auth.getUseYn().equals(ServiceCode.YesOrNoEnumCode.Y.name())) {
+                final AuthReturnDTO topAuthDTO = ObjectMapperUtil.map(auth, AuthReturnDTO.class);
+                if (auth.getSubAuths().size() > 0) {
+                    final List<AuthReturnDTO> secondAuths = new ArrayList<>();
+                    for (Auth secondDepth : auth.getSubAuths()) {
+                        if (secondDepth.getUseYn().equals(ServiceCode.YesOrNoEnumCode.Y.name())) {
+                            final AuthReturnDTO bottomAuthDTO = ObjectMapperUtil.map(secondDepth, AuthReturnDTO.class);
+                            if (secondDepth.getSubAuths().size() > 0) {
+                                final List<AuthReturnDTO> thirdAuths = new ArrayList<>();
+                                for (Auth thirdDepth : secondDepth.getSubAuths()) {
+                                    if (thirdDepth.getUseYn().equals(ServiceCode.YesOrNoEnumCode.Y.name())) {
+                                        thirdAuths.add(ObjectMapperUtil.map(thirdDepth, AuthReturnDTO.class));
+                                    }
+                                }
+                                bottomAuthDTO.setSubAuths(thirdAuths);
+                            }
+                            secondAuths.add(bottomAuthDTO);
+                        }
                     }
-                    secondAuths.add(bottomAuthDTO);
+                    topAuthDTO.setSubAuths(secondAuths);
                 }
-                topAuthDTO.setSubAuths(secondAuths);
+                firstAuths.add(topAuthDTO);
             }
-            firstAuths.add(topAuthDTO);
         }
 
         return firstAuths;
@@ -493,7 +532,8 @@ public class AuthService {
         log.info("AuthService.delete");
         final Auth auth = this.getById(authSeq);
 
-        if (auth.getSubAuths().size() > 0) {
+        // 그룹에 속한 유저 수 파악
+        if (this.countByAuthSeq(authSeq) > 0) {
             throw new CodeMessageHandleException(
                     FailCode.ConfigureError.FAIL_DELETE.name()
                     , MessageUtil.getMessage(FailCode.ConfigureError.FAIL_DELETE.name())
