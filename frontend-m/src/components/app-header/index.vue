@@ -18,9 +18,11 @@
                 뒤로가기
             </button>
             <div class="inner" v-if="tabMenuData !== null">
-                <h1 class="page-title" v-if="!$route.meta.detail">
-                    {{ tabMenuData.menuName }}
-                </h1>
+                <h1
+                    class="page-title"
+                    v-if="!$route.meta.detail"
+                    v-html="tabMenuData.menuName"
+                />
                 <div class="btn-box" v-if="$route.meta.btn">
                     <button type="button" class="btn-txt" @click="delFn">
                         삭제
@@ -39,7 +41,7 @@
 </template>
 <script>
 import NavItem from '@/components/app-header/nav-item';
-import {deleteReport} from '@/api/report';
+import { deleteReport } from '@/api/report';
 
 export default {
     name: 'headerIndex',
@@ -57,7 +59,8 @@ export default {
         pathUrl() {
             this.tabMenuFn();
         },
-        '$store.state.menuData'() {
+        '$store.state.menuData'(val) {
+            console.log(val);
             this.tabMenuFn();
         },
     },
@@ -108,12 +111,15 @@ export default {
             if (!this.$store.state.menuData) return;
             const titleValue = this.$route.path.split('/')[1];
             this.tabMenuData = this.$store.state.menuData.filter(el => {
-                if (titleValue.toUpperCase() === el.menuName) {
+                if (titleValue.toUpperCase() === el.menuCode) {
                     return el.menuPathUrl === '/' + titleValue;
                 } else {
                     return null;
                 }
             });
+            console.log(titleValue);
+            console.log(this.$store.state.menuData);
+            console.log('tabMenuData', this.tabMenuData);
             this.tabMenuData =
                 this.tabMenuData.length === 0 ? null : this.tabMenuData[0];
             if (this.$route.meta.depth) {
@@ -126,4 +132,8 @@ export default {
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.page-title .ko {
+    display: none;
+}
+</style>

@@ -69,13 +69,25 @@ nav .depth1 > .nav-link span {
     letter-spacing: inherit;
     color: inherit;
     font-family: 'Bebas Neue', sans-serif;
-    transition: color 200ms ease-in-out 0s;
+    transition: all 200ms ease-in-out 0s;
 }
 nav .depth1 > .nav-link span.ko {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    opacity: 0;
     font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+}
+nav .depth1 > .nav-link:hover span {
+    opacity: 0;
 }
 
+nav .depth1 > .nav-link:hover span.ko {
+    opacity: 1;
+}
 nav .nav-link.hasDepth:after {
     content: '';
     position: absolute;
