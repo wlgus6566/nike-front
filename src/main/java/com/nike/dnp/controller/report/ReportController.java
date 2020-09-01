@@ -229,8 +229,7 @@ public class ReportController {
      */
     @ApiOperation(value = "보고서 파일 다운로드", notes = REQUEST_CHARACTER)
     @GetMapping(name = "보고서 파일 다운로드", value = "/download/{reportFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin(origins = {"https://devwww.nikespace.co.kr", "http://devwww.nikespace.co.kr",
-            "http://localhost:8081", "https://localhost:8081"})
+    @CrossOrigin(origins = {"https://www.nikespace.co.kr", "https://www.nikespace.co.kr","https://devwww.nikespace.co.kr", "http://devwww.nikespace.co.kr", "http://localhost:8081", "https://localhost:8081"},maxAge = 3600,methods = {RequestMethod.POST,RequestMethod.OPTIONS})
     public CommonResult downloadFile(
             @ApiParam(name="reportFileSeq", value = "보고서 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long reportFileSeq
     ) {
