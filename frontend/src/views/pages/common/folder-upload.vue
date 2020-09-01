@@ -55,22 +55,30 @@
                         <span class="label-title required">업로드 위치</span>
                     </div>
                     <div class="form-column">
-                        <label
-                            class="check-label"
-                            v-for="item in pageMenuCode"
-                            :key="item"
-                        >
-                            <span class="radio">
-                                <input
-                                    type="radio"
-                                    v-model="menuCode"
-                                    :value="item"
-                                    :disabled="pageMenuCodeDisabled"
-                                />
-                                <i></i>
-                                <span class="txt">{{ item }}</span>
-                            </span>
-                        </label>
+                        <div>
+                            <label
+                                class="check-label"
+                                v-for="item in pageMenuCode"
+                                :key="item"
+                            >
+                                <span class="radio">
+                                    <input
+                                        type="radio"
+                                        v-model="menuCode"
+                                        :value="item"
+                                        :disabled="pageMenuCodeDisabled"
+                                    />
+                                    <i></i>
+                                    <span class="txt">{{ item }}</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-desc-box">
+                            <p class="form-desc-red">
+                                * 업로드 위치를 변경하면 권한설정이 초기화
+                                됩니다.
+                            </p>
+                        </div>
                     </div>
                 </li>
                 <li class="form-row">
