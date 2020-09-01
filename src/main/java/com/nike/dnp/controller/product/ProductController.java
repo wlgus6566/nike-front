@@ -224,23 +224,22 @@ public class ProductController {
 	 * @param result             the result
 	 * @return the single result
 	 * @author [윤태호]
-	 * @since 2020. 6. 26. 오후 3:08:11
 	 * @apiNote 다수 상품 삭제
+	 * @since 2020. 6. 26. 오후 3:08:11
 	 */
 	@ApiOperation(value = "상품 삭제[배열]", notes = BASIC_CHARACTER)
-	@DeleteMapping(name = "상품 삭제[배열]", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(name = "상품 삭제[배열]", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ValidField
 	public SingleResult<Boolean> deleteProduct(@ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO,
-											   @Valid @ApiParam(name = "productViewListDTO", value = "상품 삭제 리스트") @RequestBody final ProductViewListDTO productViewListDTO,
+											   @ApiParam(name = "productViewListDTO", value = "상품 삭제 리스트") @Valid @RequestBody final ProductViewListDTO productViewListDTO,
 											   @ApiIgnore final BindingResult result) {
+
 		log.info("ProductController.deleteProduct");
 		final List<Product> productList = productService.findBySearchId(productViewListDTO.getGoodsSeqList());
 		final ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO();
 		productUpdateDTO.setUseYn("N");
 		productUpdateDTO.setUpdaterSeq(authUserDTO.getUserSeq());
-		final boolean check = productService.deleteArray(
-				productList,
-				productUpdateDTO);
+		final boolean check = productService.deleteArray(productList, productUpdateDTO);
 		return responseService.getSingleResult(check);
 	}
 }
