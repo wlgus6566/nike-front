@@ -203,7 +203,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.cors().configurationSource(corsConfigurationSource())
 			.and()
 			.csrf().disable() // csrf 사용 안함
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용안함
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+			.headers().httpStrictTransportSecurity().includeSubDomains(true).maxAgeInSeconds(31536000)
+		; // 세션 사용안함
 	}
 
 	/**
