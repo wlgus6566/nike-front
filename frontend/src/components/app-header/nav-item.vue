@@ -121,7 +121,7 @@ export default {
         },
     },
     mounted() {
-        this.init(this.$route.matched);
+        //this.init(this.$route.matched);
     },
 };
 </script>
