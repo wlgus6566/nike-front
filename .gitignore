@@ -32,6 +32,7 @@ build/
 .vscode/
 
 ### ignore ###
+.gitignore
 application-local.yml
 application-nikelocal.yml
 logback-local.xml
