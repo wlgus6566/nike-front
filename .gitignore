@@ -33,4 +33,5 @@ build/
 
 ### ignore ###
 application-local.yml
+application-nikelocal.yml
 logback-local.xml
