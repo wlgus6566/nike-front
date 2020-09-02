@@ -59,12 +59,12 @@ export default {
             alarmActive: false,
             totalPage: null,
             page: 0,
-            itemLength: 10,
+            itemLength: 6,
             loadingData: false,
         };
     },
     components: {
-        AlarmModal: () => import('@/views/pages/mypage/alarm-modal/'),
+        AlarmModal: () => import('@/views/pages/mypage/alarm-modal'),
         // Loading: () => import('@/components/loading/'),
     },
     computed: {
@@ -79,16 +79,49 @@ export default {
         },
     },
     mounted() {
-        console.log('mounted');
         this.myMenuFn();
-        this.getAlarmData();
     },
+    created() {
+        this.initFetchData();
+    },
+    activated() {},
+    deactivated() {},
+    destroyed() {},
     watch: {
         '$store.state.menuData'() {
             this.myMenuFn();
         },
     },
     methods: {
+        initFetchData() {
+            this.totalPage = null;
+            this.page = 0;
+            this.alarmList = null;
+            this.getAlarmData();
+        },
+        infiniteScroll() {
+            if (
+                !this.loadingData &&
+                this.totalPage > this.page - 1 &&
+                this.alarmList.length >= this.itemLength &&
+                this.alarmList.length !== 0
+            ) {
+                this.getAlarmData(true);
+            }
+        },
+        //클릭시 업로드 한 폴더 리스트 다시 불러오기
+        handleScroll() {
+            if (this.loadingData) return;
+            const modalContents = document.querySelector('.modal-contents');
+            console.log(modalContents.clientHeight + modalContents.scrollTop);
+            console.log(modalContents.scrollHeight);
+            /*if (
+                modalContents.clientHeight + modalContents.scrollTop >=
+                modalContents.scrollHeight
+            ) {
+                this.infiniteScroll();
+            }*/
+        },
         logout() {
             this.$store.commit('LOGOUT');
             this.$router.push('/login');
@@ -104,7 +137,8 @@ export default {
         },
         //알람
         alarmModal() {
-            this.visible.activeModal = true;
+            this.visible.activeModal = !this.visible.activeModal;
+            this.handleScroll();
         },
         async getAlarmData(infinite) {
             this.loadingData = true;
