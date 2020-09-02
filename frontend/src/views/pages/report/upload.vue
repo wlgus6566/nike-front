@@ -74,35 +74,38 @@
                         </div>
                         <div class="form-column">
                             <div class="upload-file-box">
-                                <div class="upload-file-list">
-                                    <!--actice-->
-                                    <ul>
-                                        <li
-                                            v-for="item in reportDetailData.reportFileSaveDTOList"
-                                            :key="item.fileOrder"
-                                        >
-                                            <label>
-                                                <span class="checkbox">
-                                                    <input
-                                                        type="checkbox"
-                                                        :value="item.fileOrder"
-                                                        v-model="checkedFile"
-                                                    />
-                                                    <i></i>
-                                                </span>
-                                                <span class="txt">
-                                                    {{ item.fileName }}
-                                                </span>
-                                            </label>
-                                            <!--<span
+                                <!--active-->
+                                <ul
+                                    class="upload-file-list"
+                                    :class="{
+                                        'is-file': uploadFileList.length > 0,
+                                    }"
+                                >
+                                    <li
+                                        v-for="item in reportDetailData.reportFileSaveDTOList"
+                                        :key="item.fileOrder"
+                                    >
+                                        <label>
+                                            <span class="checkbox">
+                                                <input
+                                                    type="checkbox"
+                                                    :value="item.fileOrder"
+                                                    v-model="checkedFile"
+                                                />
+                                                <i></i>
+                                            </span>
+                                            <span class="txt">
+                                                {{ item.fileName }}
+                                            </span>
+                                        </label>
+                                        <!--<span
                                                 class="progress"
                                                 :style="{
                                                     width: `${item.progress}%`,
                                                 }"
                                             ></span>-->
-                                        </li>
-                                    </ul>
-                                </div>
+                                    </li>
+                                </ul>
                                 <div class="btn-box">
                                     <div class="fine-file">
                                         <span class="btn-form-gray"

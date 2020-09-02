@@ -24,7 +24,7 @@
         </div>
         <hr />
         <ul class="my-menu">
-            <li v-for="(menu, index) in myMenuData.menus" :key="index">
+            <li v-for="(menu, index) in myMenuData" :key="index">
                 <strong class="title">{{ menu.menuName }}</strong>
                 <ul v-if="menu.menus">
                     <li v-for="(depth, index) in menu.menus" :key="index">
@@ -85,7 +85,7 @@ export default {
     },
     watch: {
         '$store.state.menuData'() {
-            this.menuFn();
+            this.myMenuFn();
         },
     },
     methods: {
@@ -98,7 +98,9 @@ export default {
             const menu = this.$store.state.menuData.filter(
                 el => el.menuCode === 'MYPAGE' && el.mobileYn === 'Y'
             );
-            this.myMenuData = menu[0];
+            this.myMenuData = menu[0].menus.filter(el => {
+                return el.mobileYn === 'Y';
+            });
         },
         //알람
         alarmModal() {

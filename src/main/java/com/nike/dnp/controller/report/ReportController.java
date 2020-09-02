@@ -1,6 +1,7 @@
 package com.nike.dnp.controller.report;
 
 import com.nike.dnp.common.aspect.ValidField;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.report.ReportResultDTO;
 import com.nike.dnp.dto.report.ReportSaveDTO;
@@ -11,6 +12,7 @@ import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.report.ReportService;
+import com.nike.dnp.util.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -227,6 +229,9 @@ public class ReportController {
      */
     @ApiOperation(value = "보고서 파일 다운로드", notes = REQUEST_CHARACTER)
     @GetMapping(name = "보고서 파일 다운로드", value = "/download/{reportFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @CrossOrigin(origins = {"https://www.nikespace.co.kr", "http://www.nikespace.co.kr"
+            ,"https://devwww.nikespace.co.kr", "http://devwww.nikespace.co.kr", "http://localhost:8081"
+            , "https://localhost:8081"}, maxAge = 3600, methods = {RequestMethod.GET,RequestMethod.OPTIONS})
     public CommonResult downloadFile(
             @ApiParam(name="reportFileSeq", value = "보고서 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long reportFileSeq
     ) {

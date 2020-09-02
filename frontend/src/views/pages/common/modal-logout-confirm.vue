@@ -4,7 +4,7 @@
         class="modal-wrap"
         :visible="visible"
         :append-to-body="true"
-        @close="$emit('update:visible', false)"
+        @close="close"
     >
         <el-scrollbar view-class="view-box" :native="false">
             <div class="el-dialog__inner">
@@ -13,42 +13,56 @@
                     <i class="icon-logout"></i>
                     <div class="time-box">
                         <span class="txt">남은시간</span>
-                        <strong class="time">05 : 00</strong>
+                        <strong class="time">{{ time }}</strong>
                     </div>
                     <p class="desc">
                         5분 후 로그인 유지시간이 만료될 예정입니다.<br />
                         계속 이용 하시려면 로그인 시간을 연장해주세요.
                     </p>
                     <div class="btn-area">
-                        <button type="button" class="btn-s-black">
+                        <button
+                            type="button"
+                            class="btn-s-black"
+                            @click="loginUpdate"
+                        >
                             <span>연장</span>
                         </button>
                     </div>
                 </div>
             </div>
         </el-scrollbar>
-
-        <!--        <div slot="footer" class="dialog-footer">-->
-        <!--            <el-button @click="$emit('update:visible', false)" type="info" round>-->
-        <!--                확인-->
-        <!--            </el-button>-->
-        <!--        </div>-->
     </el-dialog>
 </template>
 
 <script>
+import { getLoginUpdate } from '@/api/mypage';
 export default {
-    name: 'LogoutMessage',
+    name: 'ModalLogoutConfirm',
     data() {
         return {
             orderComment: '',
         };
     },
-    props: ['visible'],
-    methods: {},
+    computed: {
+        visible() {
+            return this.$store.state.logoutTimer.modalVisible;
+        },
+        time() {
+            return this.$store.state.logoutTimer.count;
+        },
+    },
+    methods: {
+        async loginUpdate() {
+            await getLoginUpdate();
+            this.close();
+        },
+        close() {
+            this.$store.commit('LOGOUT_MODAL_STATE', false);
+        },
+    },
 };
 </script>
-<style>
+<style scoped>
 .modal-wrap {
     display: flex;
     justify-content: center;

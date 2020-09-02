@@ -9,6 +9,7 @@
             :height="172"
             v-if="pageLoading"
         />
+        <ModalLogoutConfirm />
     </div>
 </template>
 <script>
@@ -21,6 +22,7 @@ import locale from '@/utils/element-lang';
 import App from './App.vue';
 import { layouts } from '@/utils/global-methods';
 import bus from '@/utils/bus';
+import ModalLogoutConfirm from '@/views/pages/common/modal-logout-confirm';
 
 Vue.use(ElementUI, { locale });
 
@@ -44,6 +46,7 @@ export default {
     },
     components: {
         Loading,
+        ModalLogoutConfirm,
         LayoutDefault: layouts('default'),
         LayoutClean: layouts('clean'),
         LayoutPub: layouts('pub'),
