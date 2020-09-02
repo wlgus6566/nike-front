@@ -283,17 +283,24 @@ export default {
         },
         handleScroll() {
             const body = document.querySelector('.fc-daygrid-body');
+
             if (body.childNodes[1]) {
-                body.removeChild(body.childNodes[1]);
+                body.classList.remove('pop-open');
+                //body.removeChild(body.childNodes[1]);
                 window.removeEventListener('scroll', this.handleScroll);
+                window.removeEventListener('resize', this.handleScroll);
             }
         },
         calClickEvent(e) {
+            const body = document.querySelector('.fc-daygrid-body');
+            const tdWidth = e.jsEvent.target.closest('td').offsetWidth / 2;
             const date = this.$moment(e.date).format('YYYY-MM-DD');
             const cal = this.$refs.fullCalendar.$el;
             const td = cal.querySelector(`td[data-date="${date}"]`);
-            td.classList.add('test');
+            body.classList.add('pop-open');
+            //td.classList.add('test');
             window.addEventListener('scroll', this.handleScroll);
+            window.addEventListener('resize', this.handleScroll);
             setTimeout(() => {
                 const modal = document.querySelector('.fc-more-popover');
                 const close = modal.querySelector('.fc-popover-close');
@@ -301,6 +308,7 @@ export default {
                 const a = document.createElement('a');
                 const txt = document.createTextNode('자세히 보기');
                 //TODO router 작업 필요
+                modal.style.marginLeft = `${tdWidth}px`;
                 a.href = '/information/calendar';
                 a.classList.add('fc-more');
                 a.appendChild(txt);
@@ -728,7 +736,8 @@ export default {
 }
 ::v-deep .fc .fc-more-popover {
     margin-top: 45px;
-    margin-left: -2px;
+    transform: translateX(-50%);
+    /*margin-left: -2px;*/
 }
 ::v-deep .fc .fc-more-popover:before {
     position: absolute;
