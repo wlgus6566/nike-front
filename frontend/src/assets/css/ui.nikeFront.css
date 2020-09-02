@@ -3304,6 +3304,9 @@ img.image-grayscale {
     min-width: 50px;
     font-size: 10px;
 }
+.faq-list .cont .btn-area [class^='btn-'] + [class^='btn-'] {
+    margin-left: 5px;
+}
 .faq-list .active .sbj .label,
 .faq-list .active .sbj .title {
     color: #000;
