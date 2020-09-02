@@ -22,7 +22,7 @@
                     <a
                         href="#"
                         class="sbj"
-                        @click="setActiveSeq(item.noticeArticleSeq)"
+                        @click.prevent="setActiveSeq(item.noticeArticleSeq)"
                     >
                         <span class="category"
                             >[<em>{{ item.noticeArticleCategoryValue }}</em
