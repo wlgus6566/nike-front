@@ -465,8 +465,6 @@ public class FileUtil {
 	public static ResponseEntity<Resource> s3FileDownload(String path,final String fileName) throws IOException {
 		log.info("FileUtil.s3FileDownload");
 
-		// "/product/2020082743000R1QYFU8Fqx.jpg"
-//		path = "/contents/20200828676000XmWVAt0XaA.png";
 		final S3ObjectInputStream s3ObjectInputStream = S3Util.getFile(path);
 		final HttpHeaders headers = new HttpHeaders();
 		final Resource resource = new ByteArrayResource(IOUtils.toByteArray(s3ObjectInputStream));
