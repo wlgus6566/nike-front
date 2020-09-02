@@ -45,9 +45,6 @@ public class NoticeService {
      */
     private final NoticeRepository noticeRepository;
 
-    @Value("${nike.file.editorUrl:}")
-    private String editorUrl;
-
     /**
      * Find notice pages page.
      *
@@ -208,7 +205,7 @@ public class NoticeService {
             e.printStackTrace(); //code exception
         }
 
-        return editorUrl + uploadUrl;
+        return uploadUrl;
     }
 
     /**
