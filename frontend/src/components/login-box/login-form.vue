@@ -1,6 +1,6 @@
 <template>
     <form action="#" @submit.prevent="$emit('login')">
-        <div class="login-box">
+        <div class="login-box" ref="loginBox">
             <h1 class="title">
                 <span>WELCOME TO</span>
                 NIKE SPACE
@@ -56,7 +56,19 @@ export default {
     data() {
         return {};
     },
-    methods: {},
+    mounted() {
+        this.endLogo();
+    },
+    methods: {
+        endLogo() {
+            const box = this.$refs.loginBox;
+            document
+                .querySelector('.nike-logo')
+                .addEventListener('webkitAnimationEnd', function () {
+                    box.classList.add('active');
+                });
+        },
+    },
 };
 </script>
 <style scoped>
@@ -70,7 +82,9 @@ export default {
     box-sizing: border-box;
     background: rgba(0, 0, 0, 0.7);
     box-shadow: -20px 20px 8px 0 rgba(0, 0, 0, 0.5);
-    animation: loginAni 3s ease-in-out 3.3s forwards;
+}
+.login-box.active {
+    animation: loginAni 1s ease-in-out 0s forwards;
 }
 @keyframes loginAni {
     from {

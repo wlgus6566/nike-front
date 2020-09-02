@@ -1,7 +1,12 @@
 <template>
     <section class="login">
         <div class="login-inner">
-            <NikeLogo></NikeLogo>
+            <div class="nike-logo" ref="logo">
+                <img
+                    src="@/assets/images/svg/nike-space.svg"
+                    alt="nike space"
+                />
+            </div>
             <component
                 :is="LoginBox"
                 :loginData="loginData"
@@ -20,7 +25,6 @@
 import LoginForm from '@/components/login-box/login-form';
 import CertCode from '@/components/login-box/cert-code';
 import FindPW from '@/components/login-box/find-password';
-import NikeLogo from '@/components/nike-logo/index';
 
 export default {
     name: 'login',
@@ -34,7 +38,10 @@ export default {
             },
         };
     },
-    components: { LoginForm, CertCode, FindPW, NikeLogo },
+    mounted() {
+        this.$refs.logo.classList.add('active');
+    },
+    components: { LoginForm, CertCode, FindPW },
     methods: {
         changeLoginBox(compName) {
             this.LoginBox = compName;
@@ -98,6 +105,30 @@ export default {
     flex-direction: column;
     background: url('../../../assets/images/img-login-main-bg@2x.png') no-repeat
         50% 50% / 3000px 2000px #000;
+}
+.nike-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 370px;
+    height: 390px;
+    transform: translate(-50%, -50%);
+    vertical-align: top;
+}
+.nike-logo.active {
+    animation: logoAni 1s ease-in-out forwards;
+}
+@keyframes logoAni {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+.nike-logo img {
+    width: 100%;
+    vertical-align: top;
 }
 .login-inner {
     position: absolute;
