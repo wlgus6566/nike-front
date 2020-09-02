@@ -3662,6 +3662,9 @@ img.image-grayscale {
     text-indent: -999px;
     overflow: hidden;
 }
+.wish-list-item .btn-s-black-sm span {
+    font-weight: 100;
+}
 .wish-list {
     margin-top: 20px;
 }
