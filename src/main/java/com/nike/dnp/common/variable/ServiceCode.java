@@ -319,6 +319,16 @@ public class ServiceCode {
         , REPORT_MANAGE
     }
 
+    /**
+     * The enum Menu code.
+     */
+    @RequiredArgsConstructor
+    @Getter
+    public enum MenuCode {
+        REPORT_UPLOAD
+        , REPORT_MANAGE
+    }
+
 
     /**
      * The enum File extension enum code.
