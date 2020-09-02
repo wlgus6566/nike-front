@@ -6,12 +6,12 @@ import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.service.ResponseService;
-import com.nike.dnp.util.BeanUtil;
 import com.nike.dnp.util.MessageUtil;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,6 +46,8 @@ public class JoinController {
      */
     private final RedisService redisService;
 
+    @Value("${nike.content.sessionTime:}")
+    final int contentSessionTime;
 
     /**
      * 점유 시간 생성 및 갱신
@@ -67,11 +69,13 @@ public class JoinController {
             redisKey.append(joinDTO.getSeq());
             String redisToken = StringUtils.defaultIfBlank((String)redisService.get(redisKey.toString()),null) ;
             if(ObjectUtils.isEmpty(redisToken)){
-                redisService.set(redisKey.toString(), token, Integer.parseInt(String.valueOf(BeanUtil.getBean("userSessionTime"))));
+                redisService.set(redisKey.toString(), token, contentSessionTime);
             }else{
                 if(!redisToken.equals(token)){
                     throw new CodeMessageHandleException(FailCode.ConfigureError.DUPLICATE_CONTENT.name(),
                                                          MessageUtil.getMessage(FailCode.ConfigureError.DUPLICATE_CONTENT.name()));
+                }else{
+                    redisService.set(redisKey.toString(), token, contentSessionTime);
                 }
             }
         }
