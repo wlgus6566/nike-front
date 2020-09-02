@@ -76,11 +76,11 @@ export default new Vuex.Store({
             state.logoutTimer.modalInterval = setInterval(() => {
                 state.logoutTimer.modalVisible = true;
                 clearInterval(state.logoutTimer.modalInterval);
-            }, 1000 * 60 * 25);
+            }, 1000 * 60 * 1);
 
             clearInterval(state.logoutTimer.timerInterval);
             const expires = new Date();
-            expires.setMinutes(expires.getMinutes() + 30);
+            expires.setMinutes(expires.getMinutes() + 2);
             const countDownDate = expires.getTime();
             state.logoutTimer.timerInterval = setInterval(() => {
                 const now = new Date().getTime();
