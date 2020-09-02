@@ -4210,6 +4210,7 @@ img.image-grayscale {
     justify-content: space-between;
     margin-top: 10px;
     padding: 19px 30px;
+    background: #f7f7f7;
 }
 .schedule-item .content {
     position: relative;
