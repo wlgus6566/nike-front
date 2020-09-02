@@ -239,14 +239,15 @@
 import thumbnail from '@/components/thumbnail/index';
 import FileSettings from '@/components/file-settings/index.vue';
 import ModalAuth from '@/views/pages/common/modal-auth';
-import ModalLogoutConfirm from '@/views/pages/common/modal-logout-confirm';
 import { getContentsView, postContents, putContents } from '@/api/contents';
 import { joinInit, joinDelete } from '@/api/join';
 import bus from '@/utils/bus';
+import { getLoginUpdate } from '@/api/mypage';
 export default {
     name: 'UPLOAD',
     data() {
         return {
+            fileUploadingInterval: null,
             occupyInterval: null,
             maxMemo: 150,
             memoLength: 0,
@@ -414,30 +415,37 @@ export default {
     activated() {
         this.folderSetting();
 
+        clearInterval(this.occupyInterval);
+
         if (this.$route.params.id) {
-            this.visible.ModalLogoutConfirm = true;
             this.joinOccupyFn();
             this.occupyInterval = setInterval(() => {
                 this.joinOccupyFn();
-            }, 1000);
+            }, 1000 * 60 * 4);
         }
     },
     deactivated() {
-        this.deleteOccupyFn();
-        clearInterval(this.occupyInterval);
+        if (this.$route.params.id) {
+            this.deleteOccupyFn();
+            clearInterval(this.occupyInterval);
+        }
     },
     methods: {
+        async loginUpdate() {
+            const response = await getLoginUpdate();
+            console.log(response);
+        },
         async joinOccupyFn() {
             const response = await joinInit({
-                menuCode: this.$route.meta.topMenuCode,
-                set: this.$route.params.id,
+                menuName: this.$route.meta.topMenuCode,
+                seq: this.$route.params.id,
             });
             console.log(response);
         },
         async deleteOccupyFn() {
             const response = await joinDelete({
-                menuCode: this.$route.meta.topMenuCode,
-                set: this.$route.params.id,
+                menuName: this.$route.meta.topMenuCode,
+                seq: this.$route.params.id,
             });
             console.log(response);
         },
@@ -494,23 +502,6 @@ export default {
         ModalAuthOpen() {
             this.visible.ModalAuth = true;
         },
-
-        // minDate(tt) {
-        //     if (tt === 'to') {
-        //         return this.folderDetail.campaignBeginDt;
-        //     }
-        //     if (tt === 'from') {
-        //         return null;
-        //     }
-        // },
-        // maxDate(tt) {
-        //     if (tt === 'to') {
-        //         return null;
-        //     }
-        //     if (tt === 'from') {
-        //         return this.folderDetail.campaignEndDt;
-        //     }
-        // },
         uploadFiles() {
             if (!this.folderDetail.imageBase64) {
                 alert('썸네일을 선택해 주세요.');
@@ -535,6 +526,12 @@ export default {
                 }
             }
             bus.$emit('pageLoading', true);
+
+            clearInterval(this.fileUploadingInterval);
+            this.fileUploadingInterval = setInterval(() => {
+                this.loginUpdate();
+            }, 1000 * 60 * 10);
+
             this.$refs.fileSet.uploadFiles();
         },
         checksUpdate(checksArr) {
@@ -567,14 +564,15 @@ export default {
                 }
 
                 bus.$emit('pageLoading', false);
+                clearInterval(this.fileUploadingInterval);
                 if (response.data.existMsg) {
                     alert(response.data.msg);
                 }
-
                 if (response.data.success) {
                     this.saveFolder = true;
                     this.$store.commit('SET_RELOAD', true);
                     if (this.$route.params.id) {
+                        await this.deleteOccupyFn();
                         await this.$router.push(
                             `/${this.$route.meta.topMenuCode.toLowerCase()}/${
                                 this.$route.params.pathMatch
@@ -588,8 +586,12 @@ export default {
                 }
             } catch (error) {
                 console.error(error.data);
+                clearInterval(this.fileUploadingInterval);
+                bus.$emit('pageLoading', false);
+                if (this.$route.params.id) {
+                    await this.deleteOccupyFn();
+                }
                 if (error.data.code === 'NO_AUTH') {
-                    bus.$emit('pageLoading', false);
                     if (error.data.existMsg) {
                         alert(error.data.msg);
                     }

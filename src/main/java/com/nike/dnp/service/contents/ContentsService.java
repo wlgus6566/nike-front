@@ -140,7 +140,7 @@ public class ContentsService {
         log.info("ContentsService.findAllPaging");
         final Long authSeq = SecurityUtil.currentUser().getAuthSeq();
         // 권한 검사
-        String searchMenuCode = menuCode;
+        String searchMenuCode = topMenuCode+"_"+menuCode;
         if (ObjectUtils.isEmpty(menuCode) || ServiceCode.ContentsMenuCode.ALL.toString().equals(menuCode)) {
             searchMenuCode = topMenuCode+"_"+ServiceCode.ContentsMenuCode.ALL.toString();
 

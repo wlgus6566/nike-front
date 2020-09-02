@@ -32,8 +32,8 @@ import java.util.Optional;
  * CalendarService
  *
  * @author [김형욱]
- * @since 2020. 6. 29. 오후 8:58:21
  * @implNote 달력 Service
+ * @since 2020. 6. 29. 오후 8:58:21
  */
 @Slf4j
 @Service
@@ -61,8 +61,8 @@ public class CalendarService {
      * @param calendarSeq the calendar seq
      * @return the optional
      * @author [윤태호]
-     * @since 2020. 7. 22. 오후 4:45:45
      * @implNote Calendar 단건 조회.
+     * @since 2020. 7. 22. 오후 4:45:45
      */
     public Optional<Calendar> findById(final Long calendarSeq) {
         log.info("CalendarService.findById");
@@ -75,8 +75,8 @@ public class CalendarService {
      * @param calendarSaveDTO the calendar save dto
      * @return the calendar
      * @author [윤태호]
-     * @since 2020. 7. 22. 오후 4:45:45
      * @implNote Calendar 등록
+     * @since 2020. 7. 22. 오후 4:45:45
      */
     @Transactional
     public Calendar save(final CalendarSaveDTO calendarSaveDTO){
@@ -108,8 +108,8 @@ public class CalendarService {
      * @param calendarSearchDTO the calendar search dto
      * @return the page
      * @author [윤태호]
-     * @since 2020. 7. 22. 오후 4:45:45
      * @implNote Calendar 목록 조회
+     * @since 2020. 7. 22. 오후 4:45:45
      */
     public List<CalendarResultDTO> findAll(final CalendarSearchDTO calendarSearchDTO) {
         log.info("CalendarService.findAll");
@@ -117,6 +117,15 @@ public class CalendarService {
         return ObjectMapperUtil.mapAll(calendarRepository.findByMonthSearch(calendarSearchDTO), CalendarResultDTO.class);
     }
 
+    /**
+     * 해당 날짜 일정 건수 확인
+     *
+     * @param calendarSearchDTO the calendar search dto
+     * @return the list
+     * @author [윤태호]
+     * @implNote
+     * @since 2020. 9. 1. 오후 4:54:18
+     */
     public List<CalendarResultDTO> findAllEach(final CalendarSearchDTO calendarSearchDTO) {
         calendarSearchDTO.setYyyyMm(calendarSearchDTO.getYyyyMm().replace(".", ""));
         List<Calendar> findAllList =  calendarRepository.findByMonthSearch(calendarSearchDTO);
@@ -126,14 +135,11 @@ public class CalendarService {
         List<Calendar> eachCalendarList = new ArrayList<>();
 
         for (Calendar calendar : findAllList) {
-            SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
             Date startDate = Timestamp.valueOf(calendar.getBeginDt());
             Date endDate = Timestamp.valueOf(calendar.getEndDt());
 
-            ArrayList<String> dates = new ArrayList<String>();
             Date currentDate = startDate;
             while (currentDate.compareTo(endDate) <= 0) {
-//                dates.add(sdf.format(currentDate));
                 Calendar newCalendar = new Calendar();
                 newCalendar.setBeginDt(LocalDateTime.parse(transFormat.format(currentDate), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                 newCalendar.setEndDt(LocalDateTime.parse(transFormat.format(currentDate), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
@@ -161,8 +167,8 @@ public class CalendarService {
      * @param calendarUpdateDTO the calendar update dto
      * @return the optional
      * @author [윤태호]
-     * @since 2020. 7. 22. 오후 3:58:34
      * @implNote Calendar 수정
+     * @since 2020. 7. 22. 오후 3:58:34
      */
     @Transactional
     public Calendar update(final CalendarUpdateDTO calendarUpdateDTO) {
@@ -196,8 +202,8 @@ public class CalendarService {
      * @param calendarSeq the calendar seq
      * @return the optional
      * @author [윤태호]
-     * @since 2020. 7. 22. 오후 4:45:45
      * @implNote Calendar 삭제
+     * @since 2020. 7. 22. 오후 4:45:45
      */
     @Transactional
     public Long delete(final Long calendarSeq) {
@@ -212,8 +218,8 @@ public class CalendarService {
      * @param calendarDaySearchDTO the calendar day search dto
      * @return the list
      * @author [윤태호]
-     * @since 2020. 7. 22. 오후 4:45:45
      * @implNote calendar 날짜 조회
+     * @since 2020. 7. 22. 오후 4:45:45
      */
     public List<Calendar> findAllToday(final CalendarDaySearchDTO calendarDaySearchDTO) {
         log.info("CalendarService.findAllToday");
@@ -223,6 +229,6 @@ public class CalendarService {
                     LocalDate.parse(calendarDaySearchDTO.getSearchDt() ,DateTimeFormatter.ofPattern("yyyy.MM.dd")),
                     LocalTime.of(1,0,0));
         }
-        return calendarRepository.findAllByBeginDtBeforeAndEndDtAfter(searchDt, searchDt);
+        return calendarRepository.findAllByBeginDtBeforeAndEndDtAfterOrderByRegistrationDtDesc(searchDt, searchDt);
     }
 }

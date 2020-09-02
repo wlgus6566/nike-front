@@ -12,15 +12,14 @@
                     알람
                 </button>
             </div>
-            <div class="modal-wrap">
-                <AlarmModal
-                    ref="Alarm"
-                    :visible.sync="visible.activeModal"
-                    :alarmList="alarmData"
-                    @assetClick="clickAsset"
-                    @prAlarmData="getAlarmData"
-                />
-            </div>
+            <AlarmModal
+                ref="Alarm"
+                :visible.sync="visible.activeModal"
+                :alarmList="alarmData"
+                @assetClick="clickAsset"
+                @prAlarmData="getAlarmData"
+                v-if="alarmData"
+            />
         </div>
         <hr />
         <ul class="my-menu">
@@ -55,16 +54,16 @@ export default {
                 activeModal: false,
             },
             alarmList: null,
-            alarmData: [],
+            alarmData: null,
             alarmActive: false,
             totalPage: null,
             page: 0,
-            itemLength: 10,
+            itemLength: 6,
             loadingData: false,
         };
     },
     components: {
-        AlarmModal: () => import('@/views/pages/mypage/alarm-modal/'),
+        AlarmModal: () => import('@/views/pages/mypage/alarm-modal'),
         // Loading: () => import('@/components/loading/'),
     },
     computed: {
@@ -79,16 +78,58 @@ export default {
         },
     },
     mounted() {
-        console.log('mounted');
         this.myMenuFn();
-        this.getAlarmData();
     },
+    created() {},
     watch: {
         '$store.state.menuData'() {
             this.myMenuFn();
         },
     },
     methods: {
+        initFetchData() {
+            this.totalPage = null;
+            this.page = 0;
+            this.alarmList = null;
+            this.getAlarmData();
+        },
+        infiniteScroll() {
+            if (
+                !this.loadingData &&
+                this.totalPage > this.page - 1 &&
+                this.alarmList.length >= this.itemLength &&
+                this.alarmList.length !== 0
+            ) {
+                this.getAlarmData(true);
+            }
+        },
+        //클릭시 업로드 한 폴더 리스트 다시 불러오기
+        handleScroll() {
+            console.log(221231);
+            if (this.loadingData) return;
+
+            /*if (
+                modalContents.clientHeight + modalContents.scrollTop >=
+                modalContents.scrollHeight
+            ) {
+                this.infiniteScroll();
+            }*/
+        },
+        //알람
+        alarmModal() {
+            this.initFetchData();
+            this.visible.activeModal = !this.visible.activeModal;
+            console.log(this.alarmData.length);
+            this.handleScroll();
+
+            if (this.alarmData.length > 0) {
+                console.log(2);
+                console.log(document.querySelector('.modal'));
+            }
+
+            /*console.log(modalContents.clientHeight + modalContents.scrollTop);
+            console.log(modalContents.scrollHeight);*/
+        },
         logout() {
             this.$store.commit('LOGOUT');
             this.$router.push('/login');
@@ -102,10 +143,6 @@ export default {
                 return el.mobileYn === 'Y';
             });
         },
-        //알람
-        alarmModal() {
-            this.visible.activeModal = true;
-        },
         async getAlarmData(infinite) {
             this.loadingData = true;
             try {
@@ -118,18 +155,14 @@ export default {
                 this.totalPage = response.totalPages;
 
                 if (infinite) {
-                    console.log('getAlarmData infinite : ' + infinite);
                     if (this.totalPage > this.page - 1) {
-                        console.log('getAlarmData : ' + true);
                         this.alarmData = this.alarmData.concat(
                             response.content
                         );
                     } else if (this.totalPage === this.page - 1) {
-                        console.log('getAlarmData : ' + false);
                         this.endPage();
                     }
                 } else {
-                    console.log('getAlarmData infinite : ' + infinite);
                     this.alarmData = response.content;
                 }
 
@@ -139,8 +172,6 @@ export default {
                     if (el.typeCd === 'report_manage') el.typeCd = 'report';
                 });
                 this.page++;
-                console.log(this.totalPage);
-                console.log(this.alarmData);
             } catch (error) {
                 console.log(error);
             }

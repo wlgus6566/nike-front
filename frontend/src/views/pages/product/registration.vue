@@ -300,27 +300,32 @@ export default {
         },
         //이미지 페이지에 삽입
         imageChange(e) {
-            bus.$emit('pageLoading', true);
-            const file = e.target.files[0];
-            console.log(2);
-            new Compress()
-                .compress([file], {
-                    size: 4, // the max size in MB, defaults to 2MB
-                    quality: 1, // the quality of the image, max is 1,
-                    maxWidth: 700, // the max width of the output image, defaults to 1920px
-                    maxHeight: 700, // the max height of the output image, defaults to 1920px
-                    resize: true, // defaults to true, set false if you do not want to resize the image width and height
-                })
-                .then((data) => {
-                    bus.$emit('pageLoading', false);
-                    let url = `${data[0].prefix}${data[0].data}`;
-                    this.detailData.imageBase64 = url;
-                    this.detailData.imageFileName = file.name;
-                })
-                .catch((e) => {
-                    bus.$emit('pageLoading', false);
-                    console.log(e);
-                });
+            var target = e.target || e.srcElement;
+            if (target.value.length == 0) {
+                console.log('Suspect Cancel was hit, no files selected.');
+            } else {
+                console.log('File selected: ', target.value);
+                bus.$emit('pageLoading', true);
+                const file = e.target.files[0];
+                new Compress()
+                    .compress([file], {
+                        size: 4, // the max size in MB, defaults to 2MB
+                        quality: 1, // the quality of the image, max is 1,
+                        maxWidth: 700, // the max width of the output image, defaults to 1920px
+                        maxHeight: 700, // the max height of the output image, defaults to 1920px
+                        resize: true, // defaults to true, set false if you do not want to resize the image width and height
+                    })
+                    .then((data) => {
+                        bus.$emit('pageLoading', false);
+                        let url = `${data[0].prefix}${data[0].data}`;
+                        this.detailData.imageBase64 = url;
+                        this.detailData.imageFileName = file.name;
+                    })
+                    .catch((e) => {
+                        bus.$emit('pageLoading', false);
+                        console.log(e);
+                    });
+            }
         },
 
         //이미지 폼데이터로 변환

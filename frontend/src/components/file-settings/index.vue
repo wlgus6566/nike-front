@@ -257,6 +257,8 @@ export default {
                 })
                 .catch((e) => {
                     console.log(e);
+                    this.uploadFile = [];
+                    this.$emit('submitForm');
                 });
         },
         fileAdd() {

@@ -1,8 +1,6 @@
 package com.nike.dnp.util;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
@@ -35,29 +33,12 @@ import java.util.Date;
 @NoArgsConstructor
 public class S3Util {
 
-
 	/**
 	 * The constant root
 	 *
 	 * @author [윤태호]
 	 */
 	private static String root;
-
-
-	/**
-	 * The constant accessKey
-	 *
-	 * @author [윤태호]
-	 */
-	private static String accessKey;
-
-
-	/**
-	 * The constant secretKey
-	 *
-	 * @author [윤태호]
-	 */
-	private static String secretKey;
 
 	/**
 	 * The constant bucket
@@ -67,11 +48,11 @@ public class S3Util {
 	private static String bucket;
 
 	/**
-	 * The constant region
+	 * The constant profile
 	 *
 	 * @author [윤태호]
 	 */
-	private static String region;
+	private static String profile;
 
 	/**
 	 * The constant client
@@ -87,7 +68,6 @@ public class S3Util {
 	 */
 	private static String editorBucket;
 
-
 	/**
 	 * Set root.
 	 *
@@ -102,32 +82,6 @@ public class S3Util {
 	}
 
 	/**
-	 * Sets access key.
-	 *
-	 * @param accessKey the access key
-	 * @author [윤태호]
-	 * @implNote
-	 * @since 2020. 7. 27. 오후 4:09:51
-	 */
-	@Value("${cloud.aws.credentials.accessKey:}")
-	public void setAccessKey(final String accessKey) {
-		this.accessKey = accessKey;
-	}
-
-	/**
-	 * Sets secret key.
-	 *
-	 * @param secretKey the secret key
-	 * @author [윤태호]
-	 * @implNote
-	 * @since 2020. 7. 27. 오후 4:09:51
-	 */
-	@Value("${cloud.aws.credentials.secretKey:}")
-	public void setSecretKey(final String secretKey) {
-		this.secretKey = secretKey;
-	}
-
-	/**
 	 * Sets bucket.
 	 *
 	 * @param bucket the bucket
@@ -138,19 +92,6 @@ public class S3Util {
 	@Value("${cloud.aws.s3.bucket:}")
 	public void setBucket(final String bucket) {
 		this.bucket = bucket;
-	}
-
-	/**
-	 * Sets region.
-	 *
-	 * @param region the region
-	 * @author [윤태호]
-	 * @implNote
-	 * @since 2020. 7. 27. 오후 4:09:52
-	 */
-	@Value("${cloud.aws.region.static:}")
-	public void setRegion(final String region) {
-		this.region = region;
 	}
 
 	/**
@@ -176,11 +117,10 @@ public class S3Util {
 	 */
 	public static void init(){
 		log.debug("S3 Init");
-		final AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
+		log.debug("profile : " + System.getProperty("spring.profiles.active"));
 		client = AmazonS3ClientBuilder.standard()
-				.withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
-				.withRegion(region).build();
-
+				.withCredentials(new ProfileCredentialsProvider(System.getProperty("spring.profiles.active")))
+				.build();
 	}
 
 	/**
