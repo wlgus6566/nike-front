@@ -108,7 +108,7 @@
                 </li>
             </ul>
             <div class="no-data" v-else>
-                <div>파일 없음</div>
+                <p class="desc">파일없음</p>
             </div>
         </template>
         <fileDetailPopup

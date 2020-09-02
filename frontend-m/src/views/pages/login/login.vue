@@ -43,12 +43,19 @@ export default {
             this.loginData[target] = value;
         },
         async login() {
+            if (!this.loginData.username) {
+                alert('E-MAIL을 입력해 주세요.');
+                return;
+            }
+            if (!this.loginData.password) {
+                alert('비밀번호를 입력해 주세요.');
+                return;
+            }
             try {
                 const bodyFormData = new FormData();
                 bodyFormData.append('username', this.loginData.username);
                 bodyFormData.append('password', this.loginData.password);
                 bodyFormData.append('certCode', this.loginData.certCode);
-
                 const response = await this.$store.dispatch(
                     'LOGIN',
                     bodyFormData
@@ -65,22 +72,15 @@ export default {
                         name: 'agree',
                         params: this.loginData,
                     });
-                } else if (response.data.code === 'OVERTIME_PASSWORD') {
-                    this.updateValue(
-                        'certCode',
-                        response.data.payload[0].certCode
-                    );
-                    await this.$router.push({
-                        name: 'password-change',
-                        params: this.loginData,
-                    });
                 } else if (response.data.code === 'SUCCESS') {
-                    // await this.$router.push('/');
+                    await this.$router.push('/');
                 }
                 console.log(response);
             } catch (error) {
-                console.log(error);
-                alert(error.response.data.msg);
+                console.error(error);
+                if (error.data.existMsg) {
+                    alert(error.data.msg);
+                }
             }
         },
     },
