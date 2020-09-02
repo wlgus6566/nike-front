@@ -1,6 +1,7 @@
 <template>
     <section class="login">
         <div class="login-inner">
+            <NikeLogo></NikeLogo>
             <component
                 :is="LoginBox"
                 :loginData="loginData"
@@ -19,6 +20,7 @@
 import LoginForm from '@/components/login-box/login-form';
 import CertCode from '@/components/login-box/cert-code';
 import FindPW from '@/components/login-box/find-password';
+import NikeLogo from '@/components/nike-logo/index';
 
 export default {
     name: 'login',
@@ -32,7 +34,7 @@ export default {
             },
         };
     },
-    components: { LoginForm, CertCode, FindPW },
+    components: { LoginForm, CertCode, FindPW, NikeLogo },
     methods: {
         changeLoginBox(compName) {
             this.LoginBox = compName;
@@ -102,19 +104,19 @@ export default {
     top: 50%;
     left: 50%;
     display: flex;
-    padding: 30px 30px 50px 30px;
+    padding: 30px;
     flex-direction: column;
     align-items: center;
     transform: translate(-50%, -50%);
 }
-.login-inner:before {
+/*.login-inner:before {
     content: '';
     display: block;
     width: 500px;
     height: 500px;
     background: url('../../../assets/images/svg/img-login-swoosh.svg') no-repeat
         center center / contain;
-}
+}*/
 .login .f-desc {
     display: block;
     margin-top: 30px;

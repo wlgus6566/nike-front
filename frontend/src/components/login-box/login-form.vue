@@ -2,8 +2,8 @@
     <form action="#" @submit.prevent="$emit('login')">
         <div class="login-box">
             <h1 class="title">
-                NIKE ND<span>&amp;</span>P<br />
-                DIGITAL PLATFORM
+                <span>WELCOME TO</span>
+                NIKE SPACE
             </h1>
             <div class="form-box">
                 <div class="input-box">
@@ -61,30 +61,40 @@ export default {
 </script>
 <style scoped>
 .login-box {
+    z-index: 6;
+    opacity: 0;
     position: relative;
     width: 370px;
     height: 390px;
-    margin-top: -100px;
     padding: 50px 45px 45px;
     box-sizing: border-box;
     background: rgba(0, 0, 0, 0.7);
     box-shadow: -20px 20px 8px 0 rgba(0, 0, 0, 0.5);
+    animation: loginAni 3s ease-in-out 3.3s forwards;
+}
+@keyframes loginAni {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 .login-box .title {
     display: block;
     font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
     color: #fff;
-    font-size: 40px;
+    font-size: 46px;
     font-weight: normal;
     letter-spacing: 0.5px;
     line-height: 46px;
 }
 
 .login-box .title span {
-    display: inline-block;
-    margin-right: 5px;
-    font-family: 'Roboto', 'Noto Sans KR', sans-serif;
-    font-weight: 600;
+    display: block;
+    line-height: 36px;
+    font-size: 30px;
+    letter-spacing: 0.5px;
 }
 .login-box .title2 {
     display: block;
@@ -144,5 +154,8 @@ export default {
 }
 .login-box .bnt-box {
     margin-top: 12px;
+}
+[class^='txt-btn'] {
+    line-height: 21px;
 }
 </style>

@@ -32,9 +32,9 @@
     </form>
 </template>
 <script>
-    import {sendEmail} from '@/api/login.js';
+import { sendEmail } from '@/api/login.js';
 
-    export default {
+export default {
     name: 'FindPW',
     data() {
         return {
@@ -52,7 +52,7 @@
             try {
                 const { data: response } = await sendEmail({
                     userId: this.userId,
-                    platform: 'PC'
+                    platform: 'PC',
                 });
                 if (response.existMsg) {
                     alert(response.msg);
@@ -75,7 +75,6 @@
     position: relative;
     width: 370px;
     height: 390px;
-    margin-top: -100px;
     padding: 50px 45px 45px;
     box-sizing: border-box;
     background: rgba(0, 0, 0, 0.7);
