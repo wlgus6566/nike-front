@@ -4839,7 +4839,7 @@ img.image-grayscale {
     font-weight: 500;
     letter-spacing: -0.042px;
     color: #fff;
-    background: #919191;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 .folder-item .view-area .view:before {
     content: '';
@@ -4898,6 +4898,8 @@ img.image-grayscale {
     top: 50%;
     right: 0;
     margin: 0;
+    min-width: 132px;
+    justify-content: center;
     transform: translateY(-50%);
     letter-spacing: 0;
     font-weight: 300;
@@ -4921,8 +4923,19 @@ img.image-grayscale {
     letter-spacing: 0;
     background: transparent;
 }
-.folder-list-row li .view-area .view:before {
-    background-image: url('../../assets/images/svg/icon-view-small.svg');
+.folder-list-row .folder-item .auth,
+.folder-list-row .folder-item .exposure {
+    font-size: 12px;
+}
+.folder-list-row .folder-item .exposure i {
+    width: 30px;
+    height: 30px;
+    background-image: url('../../assets/images/svg/icon-writing-sm.svg');
+}
+.folder-list-row .folder-item .auth i {
+    width: 30px;
+    height: 30px;
+    background-image: url('../../assets/images/svg/icon-no-authority-sm.svg');
 }
 .folder-list-enter-active,
 .folder-list-leave-active {
