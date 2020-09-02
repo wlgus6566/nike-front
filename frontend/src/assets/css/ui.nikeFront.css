@@ -5128,6 +5128,15 @@ img.image-grayscale {
     border-radius: 50%;
     background-color: #555;
 }
+.terms-table {
+    margin: 20px 0;
+}
+.terms-table th,
+.terms-table td {
+    padding: 11px 20px 10px;
+    border: 1px solid #e5e5e5;
+    color: #333;
+}
 
 /*.crop-editor.type2 .preview-crop:before {*/
 /*    top: 64px;*/
