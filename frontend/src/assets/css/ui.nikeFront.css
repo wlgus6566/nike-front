@@ -1370,8 +1370,8 @@
     border: 1px solid #ddd;
     overflow: auto;
 }
-.upload-file-list.actice {
-    background: #f7f7f7;
+.upload-file-list.is-file {
+    background-color: #f7f7f7;
 }
 .upload-file-list li {
     position: relative;
