@@ -598,6 +598,26 @@
     text-indent: -999px;
     overflow: hidden;
 }
+.feedback-wrap .textarea {
+    margin-top: 20px;
+}
+.feedback-list + .textarea {
+    margin-top: 0;
+}
+.textarea {
+    position: relative;
+    border: 1px solid #ddd;
+    padding-bottom: 66px;
+}
+.textarea textarea {
+    border: none;
+    height: 45px;
+}
+.textarea [class^='btn-'] {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
 .sorting-area {
     position: relative;
     display: flex;
