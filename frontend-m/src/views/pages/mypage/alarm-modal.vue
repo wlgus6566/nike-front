@@ -8,30 +8,25 @@
         @close="$emit('update:visible', false)"
     >
         <div class="modal-contents">
-            <template v-if="alarmList">
-                <ul class="alarm-list" v-if="alarmList.length">
-                    <li v-for="(item, index) in alarmList" :key="index">
-                        <a href="#" @click="delAlarmData(item)">
-                            <span
-                                class="title"
-                                v-if="item.typeAction === 'NEW'"
+            <ul class="alarm-list">
+                <li v-for="(item, index) in alarmList" :key="index">
+                    <a href="#" @click="delAlarmData(item)">
+                        <span class="title" v-if="item.typeAction === 'NEW'">
+                            새로 등록된 {{ item.typeCd }}({{
+                                item.folderName
+                            }})이 있습니다.
+                        </span>
+                        <span class="title" v-else
+                            >{{ item.typeCd }}({{ item.folderName }})
+                            <span v-if="item.typeAction === 'FEEDBACK'">
+                                에 피드백이 등록되었습니다.</span
                             >
-                                새로 등록된 {{ item.typeCd }}({{
-                                    item.folderName
-                                }})이 있습니다.
-                            </span>
-                            <span class="title" v-else
-                                >{{ item.typeCd }}({{ item.folderName }})
-                                <span v-if="item.typeAction === 'FEEDBACK'">
-                                    에 피드백이 등록되었습니다.</span
-                                >
-                                <span v-else> 이(가) 업데이트 되었습니다.</span>
-                            </span>
-                            <span class="data">{{ item.registrationDt }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </template>
+                            <span v-else> 이(가) 업데이트 되었습니다.</span>
+                        </span>
+                        <span class="data">{{ item.registrationDt }}</span>
+                    </a>
+                </li>
+            </ul>
         </div>
     </el-dialog>
 </template>
@@ -85,6 +80,10 @@ export default {
 <style>
 .modal-contents {
     margin: 0 -20px;
+}
+.alarm-list {
+    max-height: 420px;
+    overflow: auto;
 }
 .alarm-list li {
     position: relative;
