@@ -101,6 +101,7 @@ export default {
                 .getAttribute('href');
             for (let item in routeArray) {
                 const path = routeArray[item].path;
+
                 if (path === linkPath) {
                     this.$emit('update', this.navIdx, true);
                 }
@@ -120,7 +121,7 @@ export default {
         },
     },
     mounted() {
-        //this.init(this.$route.matched);
+        this.init(this.$route.matched);
     },
 };
 </script>
