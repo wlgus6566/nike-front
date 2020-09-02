@@ -184,6 +184,12 @@
                 </button>
             </div>
         </form>
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
     </div>
 </template>
 <script>
@@ -202,6 +208,7 @@ export default {
     components: {},
     data() {
         return {
+            loadingData: false,
             exposure: {
                 checkItem: [
                     { value: 'Y', title: '노출' },
@@ -358,6 +365,7 @@ export default {
         },
         //에이전시 리스트
         async getAgency() {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -391,6 +399,7 @@ export default {
         },
         // 상품 상세 불러오기
         async detailProduct() {
+            this.loadingData = true;
             if (this.$route.params.id) {
                 try {
                     const { data: response } = await getProductDetail(
@@ -432,6 +441,7 @@ export default {
             if (this.$route.params.id) {
                 let addAlert = confirm('수정하시겠습니까');
                 if (addAlert) {
+                    this.loadingData = true;
                     try {
                         const { data: response } = await putProduct(
                             this.$route.params.id,
@@ -449,6 +459,7 @@ export default {
             } else {
                 let addAlert = confirm('저장하시겠습니까');
                 if (addAlert) {
+                    this.loadingData = true;
                     try {
                         const { data: response } = await postProduct(data);
                         // await getExistMsg(response);
