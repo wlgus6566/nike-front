@@ -65,4 +65,3 @@ cloud:
       editor: 'nike-test-resource-bucket-dnp'
     stack:
       auto:  false
-
