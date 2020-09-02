@@ -1,5 +1,6 @@
 package com.nike.dnp.repository.contents;
 
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
 import com.nike.dnp.dto.contents.ContentsUserEmailDTO;
@@ -156,7 +157,7 @@ public class ContentsRepositoryImpl extends QuerydslRepositorySupport implements
                 .from(qUserContents)
                 .where(qUserContents.contentsSeq.eq(contentsSeq).and(qUserContents.emailReceptionYn.eq("Y")))
                 .innerJoin(qUserAuth).on(qUserContents.authSeq.eq(qUserAuth.authSeq))
-                .innerJoin(qUser).on(qUserAuth.userSeq.eq(qUser.userSeq))
+                .innerJoin(qUser).on(qUserAuth.userSeq.eq(qUser.userSeq).and(qUser.userStatusCode.eq(ServiceCode.UserStatusEnumCode.NORMAL.toString())))
                 .fetch();
     }
 

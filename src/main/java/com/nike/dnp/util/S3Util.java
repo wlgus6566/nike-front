@@ -1,5 +1,6 @@
 package com.nike.dnp.util;
 
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
@@ -45,6 +46,13 @@ public class S3Util {
 	 * @author [윤태호]
 	 */
 	private static String bucket;
+
+	/**
+	 * The constant profile
+	 *
+	 * @author [윤태호]
+	 */
+	private static String profile;
 
 	/**
 	 * The constant client
@@ -109,7 +117,10 @@ public class S3Util {
 	 */
 	public static void init(){
 		log.debug("S3 Init");
-		client = AmazonS3ClientBuilder.standard().build();
+		log.debug("profile : " + System.getProperty("spring.profiles.active"));
+		client = AmazonS3ClientBuilder.standard()
+				.withCredentials(new ProfileCredentialsProvider(System.getProperty("spring.profiles.active")))
+				.build();
 	}
 
 	/**

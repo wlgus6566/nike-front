@@ -184,6 +184,12 @@
                 </button>
             </div>
         </form>
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
     </div>
 </template>
 <script>
@@ -202,6 +208,7 @@ export default {
     components: {},
     data() {
         return {
+            loadingData: false,
             exposure: {
                 checkItem: [
                     { value: 'Y', title: '노출' },
@@ -293,27 +300,32 @@ export default {
         },
         //이미지 페이지에 삽입
         imageChange(e) {
-            bus.$emit('pageLoading', true);
-            const file = e.target.files[0];
-            console.log(2);
-            new Compress()
-                .compress([file], {
-                    size: 4, // the max size in MB, defaults to 2MB
-                    quality: 1, // the quality of the image, max is 1,
-                    maxWidth: 700, // the max width of the output image, defaults to 1920px
-                    maxHeight: 700, // the max height of the output image, defaults to 1920px
-                    resize: true, // defaults to true, set false if you do not want to resize the image width and height
-                })
-                .then((data) => {
-                    bus.$emit('pageLoading', false);
-                    let url = `${data[0].prefix}${data[0].data}`;
-                    this.detailData.imageBase64 = url;
-                    this.detailData.imageFileName = file.name;
-                })
-                .catch((e) => {
-                    bus.$emit('pageLoading', false);
-                    console.log(e);
-                });
+            var target = e.target || e.srcElement;
+            if (target.value.length == 0) {
+                console.log('Suspect Cancel was hit, no files selected.');
+            } else {
+                console.log('File selected: ', target.value);
+                bus.$emit('pageLoading', true);
+                const file = e.target.files[0];
+                new Compress()
+                    .compress([file], {
+                        size: 4, // the max size in MB, defaults to 2MB
+                        quality: 1, // the quality of the image, max is 1,
+                        maxWidth: 700, // the max width of the output image, defaults to 1920px
+                        maxHeight: 700, // the max height of the output image, defaults to 1920px
+                        resize: true, // defaults to true, set false if you do not want to resize the image width and height
+                    })
+                    .then((data) => {
+                        bus.$emit('pageLoading', false);
+                        let url = `${data[0].prefix}${data[0].data}`;
+                        this.detailData.imageBase64 = url;
+                        this.detailData.imageFileName = file.name;
+                    })
+                    .catch((e) => {
+                        bus.$emit('pageLoading', false);
+                        console.log(e);
+                    });
+            }
         },
 
         //이미지 폼데이터로 변환
@@ -358,6 +370,7 @@ export default {
         },
         //에이전시 리스트
         async getAgency() {
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -391,6 +404,7 @@ export default {
         },
         // 상품 상세 불러오기
         async detailProduct() {
+            this.loadingData = true;
             if (this.$route.params.id) {
                 try {
                     const { data: response } = await getProductDetail(
@@ -432,6 +446,7 @@ export default {
             if (this.$route.params.id) {
                 let addAlert = confirm('수정하시겠습니까');
                 if (addAlert) {
+                    this.loadingData = true;
                     try {
                         const { data: response } = await putProduct(
                             this.$route.params.id,
@@ -449,6 +464,7 @@ export default {
             } else {
                 let addAlert = confirm('저장하시겠습니까');
                 if (addAlert) {
+                    this.loadingData = true;
                     try {
                         const { data: response } = await postProduct(data);
                         // await getExistMsg(response);

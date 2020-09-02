@@ -34,10 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * The Class Report service.
@@ -113,15 +110,13 @@ public class ReportService {
     public Page<ReportResultDTO> findAllPaging(final ReportSearchDTO reportSearchDTO) {
         log.info("ReportService.findAllPaging");
         // 권한 검색 조건
-        final List<Long> authSeqList = new ArrayList<>();
-        if (null != reportSearchDTO.getGroupSeq()) {
-            authSeqList.add(reportSearchDTO.getGroupSeq());
-        } else {
-            final List<AuthReturnDTO> authList = authService.findByAuthDepth(SecurityUtil.currentUser().getAuthSeq(), "REPORT_MANAGE", ServiceCode.MenuSkillEnumCode.LIST.toString());
-            for (final AuthReturnDTO authReturnDTO : authList) {
-                authSeqList.add(authReturnDTO.getAuthSeq());
-            }
-        }
+        final UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
+        userAuthSearchDTO.setMenuCode(ServiceCode.MenuCode.REPORT_UPLOAD.toString());
+        userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.REPORT.toString());
+
+        List<AuthReturnDTO> authList = this.findAllAuthListWithDepth(userAuthSearchDTO, "Y");
+        List<Long> authSeqList = this.authDepthToList(authList);
+
         reportSearchDTO.setAuthSeqList(authSeqList);
 
         return reportRepository.findPageReport(
@@ -537,12 +532,37 @@ public class ReportService {
      * @implNote 권한 목록 조회
      * @since 2020. 8. 26. 오후 4:52:23
      */
-    public List<AuthReturnDTO> findAllAuthListWithDepth(final String onlySkillCode) {
-        final UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
-        userAuthSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
-        userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
-
+    public List<AuthReturnDTO> findAllAuthListWithDepth(final UserAuthSearchDTO userAuthSearchDTO, final String onlySkillCode) {
         return authService.getAuthListWithDepth(userAuthSearchDTO, authService.getById(SecurityUtil.currentUser().getAuthSeq()), onlySkillCode);
+    }
+
+    /**
+     * Auth depth to list list.
+     *
+     * @param authReturnDTOList the auth return dto list
+     * @return the list
+     */
+    public List<Long> authDepthToList(List<AuthReturnDTO> authReturnDTOList) {
+        List<Long> authSeqList = new ArrayList<>();
+
+        if (!ObjectUtils.isEmpty(authReturnDTOList)) {
+            for (AuthReturnDTO authReturnDTO : authReturnDTOList) {
+                authSeqList.add(authReturnDTO.getAuthSeq());
+                if (!ObjectUtils.isEmpty(authReturnDTO.getSubAuths())) {
+                    for (AuthReturnDTO depth2 : authReturnDTO.getSubAuths()) {
+                        authSeqList.add(depth2.getAuthSeq());
+                        if (!ObjectUtils.isEmpty(depth2.getSubAuths())) {
+                            for (AuthReturnDTO depth3 : depth2.getSubAuths()) {
+                                authSeqList.add(depth3.getAuthSeq());
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+        return authSeqList;
     }
 
     /**
