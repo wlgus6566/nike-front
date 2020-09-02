@@ -3,10 +3,7 @@ package com.nike.dnp.controller.contents;
 import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
-import com.nike.dnp.dto.contents.ContentsMailSendDTO;
-import com.nike.dnp.dto.contents.ContentsResultDTO;
-import com.nike.dnp.dto.contents.ContentsSaveDTO;
-import com.nike.dnp.dto.contents.ContentsSearchDTO;
+import com.nike.dnp.dto.contents.*;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
@@ -285,6 +282,15 @@ public class ContentsController {
      */
     @ApiOperation(value = "컨텐츠 파일 다운로드", notes = REQUEST_CHARACTER)
     @GetMapping(name = "컨텐츠 파일 다운로드", value = "/download/{contentsFileSeq}")
+<<<<<<< HEAD
+=======
+    @CrossOrigin(origins = {"https://www.nikespace.co.kr",
+            "http://www.nikespace.co.kr",
+            "https://devwww.nikespace.co.kr",
+            "http://devwww.nikespace.co.kr",
+            "http://localhost:8081",
+            "https://localhost:8081"},maxAge = 3600,methods = {RequestMethod.GET,RequestMethod.OPTIONS})
+>>>>>>> product
     public ResponseEntity<Resource> downloadContents(
             @ApiParam(name="contentsFileSeq", value = "컨텐츠 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long contentsFileSeq
     ) throws IOException {
