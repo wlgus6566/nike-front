@@ -1,8 +1,5 @@
 package com.nike.dnp.util;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
@@ -176,11 +173,7 @@ public class S3Util {
 	 */
 	public static void init(){
 		log.debug("S3 Init");
-		final AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
-		client = AmazonS3ClientBuilder.standard()
-				.withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
-				.withRegion(region).build();
-
+		client = AmazonS3ClientBuilder.standard().build();
 	}
 
 	/**
