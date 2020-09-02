@@ -44,8 +44,15 @@ nike:
       pw: '2motion12!@'
     send:
       from: 'admin@nikespace.co.kr'
+  #컨텐츠 점유 시간
+  content:
+    sessionTime: 5
+
 
 ## AWS 설정
 cloud:
   aws:
     keyPairId: 'APKAJNYFE4SZH6RSWVMA'
+
+
+
