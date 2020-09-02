@@ -5,6 +5,7 @@ import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.main.MainResultDTO;
 import com.nike.dnp.dto.notice.CustomerSearchDTO;
 import com.nike.dnp.dto.report.ReportResultDTO;
+import com.nike.dnp.dto.user.UserAuthSearchDTO;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import com.nike.dnp.repository.report.ReportRepository;
 import com.nike.dnp.service.banner.BannerService;
@@ -149,7 +150,11 @@ public class MainService {
      */
     public List<ReportResultDTO> checkReportAuthList() {
         List<ReportResultDTO> reportList = reportRepository.findRecentReport(PageRequest.of(0, 3, Sort.by(SORT_BY).descending()));
-        List<AuthReturnDTO> reportAuthList = reportService.findAllAuthListWithDepth("N");
+
+        final UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
+        userAuthSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
+        userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+        List<AuthReturnDTO> reportAuthList = reportService.findAllAuthListWithDepth(userAuthSearchDTO, "N");
 
         Map<Long, AuthReturnDTO> map = new HashMap<Long, AuthReturnDTO>();
 

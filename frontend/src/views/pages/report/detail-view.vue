@@ -29,6 +29,7 @@
                 <FeedbackList
                     :answerList="answerList"
                     :userId="userId"
+                    registration
                     v-if="answerList.length"
                     @reportAnswerDelete="reportAnswerDelete"
                 />

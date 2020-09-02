@@ -6,6 +6,7 @@ import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.report.ReportResultDTO;
 import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
+import com.nike.dnp.dto.user.UserAuthSearchDTO;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
@@ -215,8 +216,10 @@ public class ReportController {
             , produces = {MediaType.APPLICATION_JSON_VALUE})
     public SingleResult<List<AuthReturnDTO>> findByAuthDepth() {
         log.info("AuthController.findByAuthDepth");
-        return responseService.getSingleResult(
-                reportService.findAllAuthListWithDepth("Y"));
+        final UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
+        userAuthSearchDTO.setMenuCode(ServiceCode.MenuCode.REPORT_UPLOAD.toString());
+        userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.REPORT.toString());
+        return responseService.getSingleResult(reportService.findAllAuthListWithDepth(userAuthSearchDTO, "Y"));
     }
 
     /**
