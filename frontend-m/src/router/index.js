@@ -1,18 +1,21 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+
+// Import methods
+import store from '@/store';
+import { pages } from '@/utils/global-methods';
+import { getAuthFromCookie } from '@/utils/cookies';
+
 // Routes
 import LoginRoutes from './login';
 import FoundationRoutes from './foundation';
 import ToolkitRoutes from './toolkit';
-import RepotRoutes from './report';
+import ReportRoutes from './report';
 import InformationRoutes from './information';
 import MyPageRoutes from './mypage';
 import TermsRoutes from './terms';
 import testRoutes from './test';
 import ErrorRoutes from './error';
-
-// Import methods
-import { pages } from '@/utils/global-methods';
 
 Vue.use(VueRouter);
 
@@ -27,7 +30,7 @@ const router = new VueRouter({
         ...LoginRoutes,
         ...ToolkitRoutes,
         ...FoundationRoutes,
-        ...RepotRoutes,
+        ...ReportRoutes,
         ...InformationRoutes,
         ...MyPageRoutes,
         ...TermsRoutes,
@@ -37,7 +40,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    /*if (to.meta.unauthorized) {
+    if (to.meta.unauthorized) {
         if (store.getters['isLoggedIn'] || getAuthFromCookie()) {
             next('/');
         } else {
@@ -49,7 +52,7 @@ router.beforeEach((to, from, next) => {
         } else {
             next('/login');
         }
-    }*/
+    }
     next();
 });
 export default router;
