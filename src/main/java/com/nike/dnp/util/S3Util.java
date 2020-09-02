@@ -32,7 +32,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class S3Util {
 
-
 	/**
 	 * The constant root
 	 *
@@ -40,35 +39,12 @@ public class S3Util {
 	 */
 	private static String root;
 
-
-	/**
-	 * The constant accessKey
-	 *
-	 * @author [윤태호]
-	 */
-	private static String accessKey;
-
-
-	/**
-	 * The constant secretKey
-	 *
-	 * @author [윤태호]
-	 */
-	private static String secretKey;
-
 	/**
 	 * The constant bucket
 	 *
 	 * @author [윤태호]
 	 */
 	private static String bucket;
-
-	/**
-	 * The constant region
-	 *
-	 * @author [윤태호]
-	 */
-	private static String region;
 
 	/**
 	 * The constant client
@@ -84,7 +60,6 @@ public class S3Util {
 	 */
 	private static String editorBucket;
 
-
 	/**
 	 * Set root.
 	 *
@@ -99,32 +74,6 @@ public class S3Util {
 	}
 
 	/**
-	 * Sets access key.
-	 *
-	 * @param accessKey the access key
-	 * @author [윤태호]
-	 * @implNote
-	 * @since 2020. 7. 27. 오후 4:09:51
-	 */
-	@Value("${cloud.aws.credentials.accessKey:}")
-	public void setAccessKey(final String accessKey) {
-		this.accessKey = accessKey;
-	}
-
-	/**
-	 * Sets secret key.
-	 *
-	 * @param secretKey the secret key
-	 * @author [윤태호]
-	 * @implNote
-	 * @since 2020. 7. 27. 오후 4:09:51
-	 */
-	@Value("${cloud.aws.credentials.secretKey:}")
-	public void setSecretKey(final String secretKey) {
-		this.secretKey = secretKey;
-	}
-
-	/**
 	 * Sets bucket.
 	 *
 	 * @param bucket the bucket
@@ -135,19 +84,6 @@ public class S3Util {
 	@Value("${cloud.aws.s3.bucket:}")
 	public void setBucket(final String bucket) {
 		this.bucket = bucket;
-	}
-
-	/**
-	 * Sets region.
-	 *
-	 * @param region the region
-	 * @author [윤태호]
-	 * @implNote
-	 * @since 2020. 7. 27. 오후 4:09:52
-	 */
-	@Value("${cloud.aws.region.static:}")
-	public void setRegion(final String region) {
-		this.region = region;
 	}
 
 	/**
