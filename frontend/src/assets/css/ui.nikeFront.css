@@ -4570,17 +4570,16 @@ img.image-grayscale {
     border: none;
 }
 .main-fc .fc .fc-daygrid-day-top {
-    padding-top: 8px;
+    padding-top: 12px;
     justify-content: center;
 }
 .main-fc .fc .fc-daygrid-body-balanced .fc-daygrid-day-events {
+    top: 7px;
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 40px;
-    /*width: 40px;*/
+    left: 50%;
+    right: auto;
+    height: 30px;
+    width: 30px;
     margin: 0 0 0 -15px;
 }
 .main-fc .fc .fc-h-event .fc-event-title {
