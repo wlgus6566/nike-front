@@ -364,22 +364,25 @@ export default {
     },
     methods: {
         async sendEmail() {
-            try {
-                const response = await sendMail({
-                    contentsSeq: this.$route.params.id,
-                    contentsUrl: this.$route.fullPath,
-                    // contentsUrl: `/contents/detail/${this.$route.params.id}`,
-                });
-
-                console.log(response);
-                if (response.data.existMsg) {
-                    alert(response.data.msg);
+            const sendAlert = confirm(
+                `${this.folderDetail.recipientsCount}개의 계정에 E-MAIL을 전송하시겠습니까?`
+            );
+            if (sendAlert) {
+                try {
+                    const response = await sendMail({
+                        contentsSeq: this.$route.params.id,
+                        contentsUrl: this.$route.fullPath,
+                        // contentsUrl: `/contents/detail/${this.$route.params.id}`,
+                    });
+                    if (response.data.existMsg) {
+                        alert(response.data.msg);
+                    }
+                } catch (error) {
+                    if (error.data.existMsg) {
+                        alert(error.data.msg);
+                    }
+                    console.error(error);
                 }
-            } catch (error) {
-                if (error.data.existMsg) {
-                    alert(error.data.msg);
-                }
-                console.error(error);
             }
         },
         goToList() {
