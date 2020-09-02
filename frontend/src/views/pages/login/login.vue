@@ -58,6 +58,7 @@ export default {
                     'LOGIN',
                     bodyFormData
                 );
+                console.log(response);
                 if (response.data.existMsg) {
                     alert(response.data.msg);
                 }
@@ -73,11 +74,10 @@ export default {
                 } else if (response.data.code === 'SUCCESS') {
                     await this.$router.push('/');
                 }
-                console.log(response);
             } catch (error) {
-                console.error(error);
-                if (error.data.existMsg) {
-                    alert(error.data.msg);
+                console.error(error.response.data);
+                if (error.response.data.existMsg) {
+                    alert(error.response.data.msg);
                 }
             }
         },
