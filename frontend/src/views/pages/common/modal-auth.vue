@@ -66,23 +66,23 @@ export default {
         this.groupDetailData = [];
     },
     mounted() {
-        bus.$on('groupTreeToggle', authSeq => {
-            if (this.groupTreeOpen.some(el => el === authSeq)) {
+        bus.$on('groupTreeToggle', (authSeq) => {
+            if (this.groupTreeOpen.some((el) => el === authSeq)) {
                 this.groupTreeOpen = this.groupTreeOpen.filter(
-                    el => el !== authSeq
+                    (el) => el !== authSeq
                 );
             } else {
                 this.groupTreeOpen.push(authSeq);
             }
         });
-        bus.$on('detailAuthUpdate', seq => {
+        bus.$on('detailAuthUpdate', (seq) => {
             this.groupTreeDataCheckUpdate(
                 this.groupTreeData,
                 seq,
                 'detailAuthYn'
             );
         });
-        bus.$on('emailReceptionUpdate', seq => {
+        bus.$on('emailReceptionUpdate', (seq) => {
             this.groupTreeDataCheckUpdate(
                 this.groupTreeData,
                 seq,
@@ -96,7 +96,7 @@ export default {
             this.groupTreeData[0].subAuths = checks;
         },
         groupTreeDataCheckUpdate(arr, seq, YN) {
-            arr.forEach(el => {
+            arr.forEach((el) => {
                 if (el.authSeq === seq) {
                     if (el[YN] === 'Y') {
                         el[YN] = 'N';
@@ -119,9 +119,6 @@ export default {
         async getAuthList(menuCode) {
             try {
                 const topMenuCode = this.$route.meta.topMenuCode;
-
-                console.log(topMenuCode);
-                console.log(menuCode);
                 const { data: response } = await getContentsAuthList(
                     topMenuCode,
                     menuCode

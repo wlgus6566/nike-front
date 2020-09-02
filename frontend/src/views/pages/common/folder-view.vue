@@ -50,6 +50,7 @@ import {
     sendMail,
 } from '@/api/contents';
 import router from '@/router';
+import { joinInit } from '@/api/join';
 
 export default {
     name: 'folder-view',
@@ -423,12 +424,22 @@ export default {
                 }
             }
         },
-        modifyFolder() {
-            this.$router.push(
-                `/${this.$route.meta.topMenuCode.toLowerCase()}/${
-                    this.$route.params.pathMatch
-                }/modify/${this.$route.params.id}`
-            );
+
+        async modifyFolder() {
+            const response = await joinInit({
+                menuCode: this.$route.meta.topMenuCode,
+                set: this.$route.params.id,
+            });
+            console.log(response);
+            if (response.data.code === 'SUCCESS') {
+                await this.$router.push(
+                    `/${this.$route.meta.topMenuCode.toLowerCase()}/${
+                        this.$route.params.pathMatch
+                    }/modify/${this.$route.params.id}`
+                );
+            } else {
+                alert(response.data.msg);
+            }
         },
         initFetchData() {
             this.totalPage = null;

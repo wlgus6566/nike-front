@@ -7,10 +7,9 @@ function joinInit(param) {
     });
 }
 // join time delete
-function joinDelete(menuCode, seq) {
+function joinDelete(param) {
     return join.delete(`/delete`, {
-        menuCode: menuCode,
-        seq: seq,
+        params: param,
     });
 }
 export { joinInit, joinDelete };
