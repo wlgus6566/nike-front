@@ -80,11 +80,11 @@
     </div>
 </template>
 <script>
-    import {getCustomerDetail, postFaq, putFaq} from '@/api/customer';
-    import {getCode} from '@/api/code';
-    import {getAuthFromCookie} from '@/utils/cookies';
+import { getCustomerDetail, postFaq, putFaq } from '@/api/customer';
+import { getCode } from '@/api/code';
+import { getAuthFromCookie } from '@/utils/cookies';
 
-    export default {
+export default {
     name: 'faq-form',
     watch: {
         $route() {
@@ -244,10 +244,14 @@
             this.categoryCodeList.value = '';
             this.noticeArticleSeq = '';
         },
-        onEditorInput: function(e) {
+        onEditorInput: function (e) {
             this.faqDetail.contents = e.editor._.editable.$.innerHTML;
         },
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+::v-deep .el-input__suffix {
+    right: 10px;
+}
+</style>
