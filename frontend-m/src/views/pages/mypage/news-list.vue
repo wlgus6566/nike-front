@@ -7,7 +7,7 @@
             <div class="search-input" :class="{ active: isActive }">
                 <div class="input-box">
                     <input
-                        type="text"
+                        type="search"
                         placeholder="검색어를 입력해주세요."
                         @keyup.enter="searchInputActive"
                         v-model="keyword"
@@ -67,9 +67,9 @@
     </div>
 </template>
 <script>
-import { getCustomerList } from '@/api/customer/';
+    import {getCustomerList} from '@/api/customer/';
 
-export default {
+    export default {
     name: 'news-list',
     data() {
         return {
