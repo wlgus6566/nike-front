@@ -51,7 +51,7 @@ export default {
 </script>
 <style scoped>
 .modal-list {
-    z-index: 2;
+    z-index: 12;
     position: fixed;
     bottom: -100%;
     right: 0;
