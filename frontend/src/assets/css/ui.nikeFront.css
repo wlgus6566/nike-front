@@ -4319,7 +4319,7 @@ img.image-grayscale {
 }
 .schedule-item.campaign .title {
     color: #007b68;
-    opacity:1;
+    opacity: 1;
 }
 .schedule-item.campaign .title:before {
     background-color: #007b68;
@@ -4944,7 +4944,7 @@ img.image-grayscale {
     left: auto;
     width: auto;
     padding: 0;
-    margin: 0 157px 0 10px;
+    margin: 0 132px 0 10px;
 }
 .folder-list-row li .view-area .view {
     position: relative;
@@ -4956,6 +4956,9 @@ img.image-grayscale {
     font-size: 12px;
     letter-spacing: 0;
     background: transparent;
+}
+.folder-list-row .folder-item .view-area .view:before {
+    background-image: url('../../assets/images/svg/icon-view-small.svg');
 }
 .folder-list-row .folder-item .auth,
 .folder-list-row .folder-item .exposure {

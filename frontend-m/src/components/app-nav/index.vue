@@ -83,6 +83,7 @@ import * as aniHome from '@/assets/images/lottie/menu_home.json';
 import * as aniReport from '@/assets/images/lottie/menu_report.json';
 import * as aniMy from '@/assets/images/lottie/menu_my.json';
 import * as aniMenu from '@/assets/images/lottie/menu_menu.json';
+import bus from "@/utils/bus";
 export default {
     name: 'navigation',
     data() {
@@ -127,6 +128,7 @@ export default {
     },
     methods: {
         menuLottie(index) {
+            bus.$emit('closeFn');
             this.anim.forEach(el => {
                 el.goToAndStop(0, true);
             });
@@ -143,6 +145,7 @@ export default {
             this.menuData = menu;
         },
         menuOpen() {
+          bus.$emit('closeFn');
             this.topScollVal = document.scrollingElement.scrollTop;
             this.menuUse = true;
             document.querySelector('body').classList.add('menu-open');

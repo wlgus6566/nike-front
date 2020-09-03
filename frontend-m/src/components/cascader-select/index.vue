@@ -38,6 +38,17 @@ export default {
             if (val.disabled) return;
             this.closeModal(val);
         });
+        bus.$on('closeFn', () => {
+          if(this.showList){
+            this.dimmedClose();
+          }
+        });
+    },
+    destroyed() {
+      if(this.showList){
+        this.dimmedClose();
+        document.querySelector(".modal-list.active").remove()
+      }
     },
     methods: {
         changeInput() {
