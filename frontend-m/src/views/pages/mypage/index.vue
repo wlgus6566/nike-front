@@ -18,7 +18,6 @@
                 :alarmList="alarmData"
                 @assetClick="clickAsset"
                 @prAlarmData="getAlarmData"
-                v-if="alarmData"
             />
         </div>
         <hr />
@@ -90,45 +89,34 @@ export default {
         initFetchData() {
             this.totalPage = null;
             this.page = 0;
-            this.alarmList = null;
+            this.alarmData = null;
             this.getAlarmData();
         },
         infiniteScroll() {
             if (
                 !this.loadingData &&
                 this.totalPage > this.page - 1 &&
-                this.alarmList.length >= this.itemLength &&
-                this.alarmList.length !== 0
+                this.alarmData.length >= this.itemLength &&
+                this.alarmData.length !== 0
             ) {
                 this.getAlarmData(true);
             }
         },
         //클릭시 업로드 한 폴더 리스트 다시 불러오기
         handleScroll() {
-            console.log(221231);
             if (this.loadingData) return;
-
-            /*if (
-                modalContents.clientHeight + modalContents.scrollTop >=
-                modalContents.scrollHeight
+            const alarmList = document.querySelector('.alarm-list');
+            if (
+                alarmList.clientHeight + alarmList.scrollTop >=
+                alarmList.scrollHeight
             ) {
                 this.infiniteScroll();
-            }*/
+            }
         },
         //알람
         alarmModal() {
-            this.initFetchData();
-            this.visible.activeModal = !this.visible.activeModal;
-            console.log(this.alarmData.length);
-            this.handleScroll();
-
-            if (this.alarmData.length > 0) {
-                console.log(2);
-                console.log(document.querySelector('.modal'));
-            }
-
-            /*console.log(modalContents.clientHeight + modalContents.scrollTop);
-            console.log(modalContents.scrollHeight);*/
+            this.visible.activeModal = true;
+            this.getAlarmData();
         },
         logout() {
             this.$store.commit('LOGOUT');
@@ -153,7 +141,6 @@ export default {
                     size: this.itemLength,
                 });
                 this.totalPage = response.totalPages;
-
                 if (infinite) {
                     if (this.totalPage > this.page - 1) {
                         this.alarmData = this.alarmData.concat(
@@ -164,14 +151,20 @@ export default {
                     }
                 } else {
                     this.alarmData = response.content;
+                    if (this.alarmData.length > 0) {
+                        await this.handleScroll();
+                        document
+                            .querySelector('.alarm-list')
+                            .addEventListener('scroll', this.handleScroll);
+                    }
                 }
-
                 this.alarmData.forEach(el => {
                     el.typeCd = el.typeCd.toLowerCase();
                     el.menuCode = el.menuCode.toLowerCase();
                     if (el.typeCd === 'report_manage') el.typeCd = 'report';
                 });
                 this.page++;
+                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }

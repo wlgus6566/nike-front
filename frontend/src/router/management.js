@@ -18,7 +18,7 @@ const routes = [
                 meta: {
                     layout: 'Default',
                     aside: 'Default',
-                    title: '메인 비쥬얼 관리',
+                    title: '메인 비주얼 관리',
                 },
             },
             {

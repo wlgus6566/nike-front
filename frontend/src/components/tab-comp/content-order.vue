@@ -230,6 +230,9 @@ export default {
     overflow: hidden;
     line-height: 50px;
     text-align: center;
+    background: url('../../assets/images/img-asset-none@2x.png') no-repeat
+        center;
+    background-size: 100%;
 }
 .cart-item .thumbnail img {
     vertical-align: middle;
