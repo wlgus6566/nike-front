@@ -4,7 +4,6 @@
         class="modal-wrap"
         :visible="visible"
         :append-to-body="true"
-        @close="close"
     >
         <el-scrollbar view-class="view-box" :native="false">
             <div class="el-dialog__inner">
@@ -73,6 +72,9 @@ export default {
 }
 .modal-wrap .el-scrollbar__wrap {
     max-height: 80vh;
+}
+::v-deep .el-dialog__headerbtn {
+    display: none;
 }
 .title {
     margin-top: -10px;
