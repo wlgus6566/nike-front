@@ -117,7 +117,7 @@ public class UserMailService {
     @Transactional
     public String sendMailForSetPassword(final User user, final String platform) {
         final String keyCode = this.createEncodeCertCode(user.getUserId());
-        final String url = platform.equals("MOBILE") ? MOBILE_DOMAIN : PC_DOMAIN + PASSWORD_URL;
+        final String url = (platform.equals("MOBILE") ? MOBILE_DOMAIN : PC_DOMAIN) + PASSWORD_URL;
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());

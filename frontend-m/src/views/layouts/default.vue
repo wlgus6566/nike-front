@@ -12,7 +12,11 @@
             </transition>
         </section>
 
-        <transition name="fade" v-else>
+        <transition
+            mode="out-in"
+            @enter="pageEnter"
+            @leave="pageLeave"
+            v-else>
             <router-view></router-view>
         </transition>
         <Footer v-if="!$route.meta.hideHeaderFooter" />
