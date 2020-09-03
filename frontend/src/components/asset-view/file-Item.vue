@@ -125,9 +125,10 @@
                                 :class="buttonClass(item.contentsFileSeq)"
                                 :disabled="
                                     item.fileKindCode === 'VR' ||
-                                    (item.fileKindCode === 'FILE' &&
-                                        !item.thumbnailFilePhysicalName) ||
-                                    (item.fileKindCode === 'VIDEO' && !item.url)
+                                        (item.fileKindCode === 'FILE' &&
+                                            !item.thumbnailFilePhysicalName) ||
+                                        (item.fileKindCode === 'VIDEO' &&
+                                            !item.url)
                                 "
                                 @click="accordion(item.contentsFileSeq)"
                             >
@@ -221,7 +222,7 @@
                 <div>파일 없음</div>
             </NoData>
         </template>
-        <Loading v-else />
+        <Loading class="list-loading" :width="172" :height="172" v-else />
     </div>
 </template>
 <script>
@@ -276,7 +277,7 @@ export default {
         storeContBasketList: {
             get() {
                 return this.$store.state.contBasketList.map(
-                    (el) => el.contentsFileSeq
+                    el => el.contentsFileSeq
                 );
             },
             set(value) {
@@ -307,7 +308,7 @@ export default {
             //return video_id;
         },
         test(seq) {
-            return this.storeContBasketList.some((el) => el === seq);
+            return this.storeContBasketList.some(el => el === seq);
         },
 
         buttonClass(seq) {
@@ -317,8 +318,8 @@ export default {
             };
         },
         fileItemClass(seq) {
-            const ignore = this.checkContentsFileList.every((el) => el !== seq);
-            const added = this.storeContBasketList.some((el) => el === seq);
+            const ignore = this.checkContentsFileList.every(el => el !== seq);
+            const added = this.storeContBasketList.some(el => el === seq);
             return {
                 'file-item': true,
                 'ignore-elements': ignore || added,
@@ -351,7 +352,7 @@ export default {
             gsap.from(el, 0.3, {
                 height: 0,
                 ease: Cubic.easeInOut,
-                onComplete: function () {
+                onComplete: function() {
                     el.style.height = 'auto';
                     done();
                 },
