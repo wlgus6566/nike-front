@@ -35,6 +35,7 @@ export default {
             },
         };
     },
+
     mounted() {
         this.getNoticeDetail();
     },
@@ -43,7 +44,7 @@ export default {
     },
     methods: {
         goToList() {
-            this.$router.push(`/mypage/news`);
+            this.$router.push(`/mypage/${this.$route.meta.sectionCode}`.toLowerCase());
         },
         //목록이동
         listRoute() {

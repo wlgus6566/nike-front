@@ -24,7 +24,7 @@
             <button
                 type="button"
                 class="btn-close"
-                @click="$emit('changeLoginBox', 'LoginForm')"
+                @click="closePassword"
             >
                 <span>닫기</span>
             </button>
@@ -43,6 +43,12 @@ export default {
     },
 
     methods: {
+        closePassword(){
+          this.$emit('changeLoginBox', 'LoginForm');
+          const nikeLogo = document.querySelector(".nike-logo");
+          nikeLogo.classList.remove("hidden");
+          nikeLogo.classList.add("active");
+        },
         async findPW() {
             if (!this.userId) {
                 alert('E-MAIL을 입력해 주세요.');
@@ -59,6 +65,9 @@ export default {
                 }
                 if (response.success) {
                     this.$emit('changeLoginBox', 'LoginForm');
+                  const nikeLogo = document.querySelector(".nike-logo");
+                  nikeLogo.classList.remove("hidden");
+                  nikeLogo.classList.add("active");
                 } else {
                     this.$refs.mailId.focus();
                 }

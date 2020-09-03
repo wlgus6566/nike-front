@@ -1,14 +1,35 @@
 <template>
     <div class="main-fc">
-        <a :href="mainVisual.linkUrl" class="main-visual">
+        <div class="main-visual">
             <span class="thumbnail">
                 <img :src="mainVisual.mobileImageUrl" alt="" />
             </span>
             <strong class="title" v-text="mainVisual.title"></strong>
             <span class="desc" v-text="mainVisual.contents"> </span>
-        </a>
+        </div>
         <h2 class="main-title">RECENT UPDATE</h2>
         <div class="main-update-list">
+            <div
+                class="update-list-item"
+                v-for="item in toolKitContentsList"
+                :key="item.contentsSeq"
+            >
+                <a
+                        :href="
+                        `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
+                    "
+                >
+                    <span class="thumbnail">
+                        <img :src="item.imageFilePhysicalName" alt="" />
+                    </span>
+                    <span class="info-box">
+                        <span class="label"> TOOLKIT </span>
+                        <span class="desc" v-text="item.folderName">
+                            SP20 나이키 다이렉트
+                        </span>
+                    </span>
+                </a>
+            </div>
             <div
                 class="update-list-item"
                 v-for="item in foundationContentsList"
@@ -24,30 +45,8 @@
                     </span>
                     <span class="info-box">
                         <span class="label"> FOUNDATION </span>
-                        <span class="desc" v-text="item.folderContents"
-                            >SP20 나이키 다이렉트</span
-                        >
-                    </span>
-                </a>
-            </div>
-            <div
-                class="update-list-item"
-                v-for="item in toolKitContentsList"
-                :key="item.contentsSeq"
-            >
-                <a
-                    :href="
-                        `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
-                    "
-                >
-                    <span class="thumbnail">
-                        <img :src="item.imageFilePhysicalName" alt="" />
-                    </span>
-                    <span class="info-box">
-                        <span class="label"> TOOLKIT </span>
-                        <span class="desc" v-text="item.folderContents"
-                            >SP20 나이키 다이렉트</span
-                        >
+                        <span class="desc" v-text="item.folderName">
+                            SP20 나이키 다이렉트</span>
                     </span>
                 </a>
             </div>
@@ -125,16 +124,16 @@
     </div>
 </template>
 <script>
-import {getMain} from '@/api/main';
-import {getCalendarEachList, getTodayCalendar} from '@/api/calendar/';
+    import {getMain} from '@/api/main';
+    import {getCalendarEachList, getTodayCalendar} from '@/api/calendar/';
 
-import moment from 'moment';
-import FullCalendar from '@fullcalendar/vue';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import momentPlugin from '@fullcalendar/moment';
+    import moment from 'moment';
+    import FullCalendar from '@fullcalendar/vue';
+    import dayGridPlugin from '@fullcalendar/daygrid';
+    import interactionPlugin from '@fullcalendar/interaction';
+    import momentPlugin from '@fullcalendar/moment';
 
-export default {
+    export default {
     name: 'MainPage',
     data() {
         return {
