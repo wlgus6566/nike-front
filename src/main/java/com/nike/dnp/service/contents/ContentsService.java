@@ -157,7 +157,7 @@ public class ContentsService {
                 contentsSearchDTO,
                 PageRequest.of(contentsSearchDTO.getPage()
                         , contentsSearchDTO.getSize()
-                        , contentsSearchDTO.equals("START_DATE")
+                        , contentsSearchDTO.getOrderType().equals("START_DATE")
                                 ? Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).ascending() : Sort.by(ServiceCode.SearchEnumCode.LATEST.getValue()).descending()));
     }
 

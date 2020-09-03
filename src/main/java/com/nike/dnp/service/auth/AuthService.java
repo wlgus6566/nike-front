@@ -337,7 +337,7 @@ public class AuthService {
     }
 
     /**
-     * Gets auths menus by role type.
+     * Gets auths menus by role type.`
      *
      * @param authSeq the auth seq
      * @return the auths menus by role type
@@ -362,10 +362,10 @@ public class AuthService {
                         } else {
                             lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
                         }
-                        lowerMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(lowerMenu.getMenuSeq()));
+                        lowerMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, lowerMenu.getMenuSeq()));
                     }
                     upperMenu.setMenus(lowerMenus);
-                    upperMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(upperMenu.getMenuSeq()));
+                    upperMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, upperMenu.getMenuSeq()));
                     menus.add(upperMenu);
                 }
             } else if ("Y".equals(upperMenu.getManagementYn())) {
@@ -377,10 +377,10 @@ public class AuthService {
                         } else {
                             lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
                         }
-                        lowerMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(lowerMenu.getMenuSeq()));
+                        lowerMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, lowerMenu.getMenuSeq()));
                     }
                     upperMenu.setMenus(lowerMenus);
-                    upperMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(upperMenu.getMenuSeq()));
+                    upperMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, upperMenu.getMenuSeq()));
                     menus.add(upperMenu);
                 }
             }
@@ -453,8 +453,8 @@ public class AuthService {
                         .authSeq(auth.getAuthSeq())
                         .menuRoleSeq(menuRoleSeq)
                         .build()).forEach(authMenuRoleRepository::save);
-            this.setAuthsResourcesByRoleType(auth.getRoleType());
-            this.setAuthsMenusByRoleType(auth.getRoleType());
+            //this.setAuthsResourcesByRoleType(auth.getRoleType());
+            //this.setAuthsMenusByRoleType(auth.getRoleType());
         }
 
         return auth;
@@ -488,12 +488,15 @@ public class AuthService {
                             .menuRoleSeq(menuRoleSeq)
                             .build()).forEach(authMenuRoleRepository::save);
 
-            this.setAuthsResourcesByRoleType(roleType);
-            this.setAuthsMenusByRoleType(roleType);
-        } else {
             redisService.delete(REDIS_ROLES_AUTHS + roleType);
             redisService.delete(REDIS_ROLES_MENUS + roleType);
+//            this.setAuthsResourcesByRoleType(roleType);
+//            this.setAuthsMenusByRoleType(roleType);
         }
+//        else {
+//            redisService.delete(REDIS_ROLES_AUTHS + roleType);
+//            redisService.delete(REDIS_ROLES_MENUS + roleType);
+//        }
 
         // 등록/삭제 시퀀스배열이 따로 올 경우 > 이번엔 안하는걸로~
         /*if (auth.isPresent()) {

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+    <g fill="none" fill-rule="evenodd">
+        <g transform="translate(28 22.5) translate(0 .313)">
+            <rect width="48" height="67" x="3" y="5" fill="#CCC" rx="1" transform="rotate(-5 27 38.5)"/>
+            <path fill="#F7F7F7" stroke="#CCC" stroke-linecap="round" d="M9.172 0h38.572c.273 0 .534.112.723.31l7.428 7.775c.177.186.277.434.277.69V66c0 .552-.448 1-1 1h-46c-.553 0-1-.448-1-1V1c0-.552.447-1 1-1z"/>
+            <g>
+                <g fill="#BBB">
+                    <path d="M0 0H35.402V1H0zM0 3.218H24.138V4.218H0zM0 6.437H16.092V7.437H0zM0 9.655H14.483V10.655H0z" transform="translate(14.172 12) translate(0 12.069)"/>
+                </g>
+                <path fill="#888" d="M5.506 4.12c-1.03.273-1.86.237-2.33-.109-1.214-.883-.284-2.664.041-3.199-.59.651-1.182 1.303-1.643 2.012C.852 3.933.542 5.15 1.03 5.929c.88 1.414 2.986.763 4.325.2L17.819.879 5.506 4.119z" transform="translate(14.172 12)"/>
+            </g>
+            <g transform="translate(47.172 55)">
+                <circle cx="8" cy="8" r="8" fill="#FFF" stroke="#888" stroke-width="3"/>
+                <path fill="#888" d="M7 0L10 0 10 16 7 16z" transform="rotate(45 8.5 8)"/>
+            </g>
+        </g>
+        <path fill="#CCC" d="M47.5 0l9 9h-8c-.552 0-1-.448-1-1V0z" transform="translate(28 22.5)"/>
+    </g>
+</svg>

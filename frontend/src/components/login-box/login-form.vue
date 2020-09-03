@@ -61,11 +61,13 @@ export default {
     },
     methods: {
         endLogo() {
+            const logo =  document
+          .querySelector('.nike-logo')
             const box = this.$refs.loginBox;
-            document
-                .querySelector('.nike-logo')
-                .addEventListener('webkitAnimationEnd', function () {
+            logo.addEventListener('webkitAnimationEnd', function () {
                     box.classList.add('active');
+                    logo.classList.add('hidden');
+                    logo.classList.remove('active');
                 });
         },
     },

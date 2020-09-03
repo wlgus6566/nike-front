@@ -83,6 +83,7 @@ nav .depth1 > .nav-link span.ko {
     font-family: 'Noto Sans KR', 'Roboto', sans-serif;
     font-size: 12px;
     font-weight: bold;
+    letter-spacing: -0.5px;
     transform: translateX(-100px);
     letter-spacing: -0.05em;
 }

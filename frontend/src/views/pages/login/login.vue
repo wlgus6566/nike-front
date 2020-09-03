@@ -38,6 +38,13 @@ export default {
             },
         };
     },
+    watch:{
+      LoginBox(){
+        console.log(1)
+        const login = document.querySelector(".login-box");
+        login.classList.add("active");
+      }
+    },
     mounted() {
         this.$refs.logo.classList.add('active');
     },
@@ -118,6 +125,11 @@ export default {
 .nike-logo.active {
     animation: logoAni 1s ease-in-out forwards;
 }
+.nike-logo.hidden {
+ opacity:0;
+}
+
+
 @keyframes logoAni {
     from {
         opacity: 1;
