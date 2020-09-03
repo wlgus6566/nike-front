@@ -13,7 +13,14 @@ function historyFolderViewList(params) {
         params: params,
     });
 }
+
+// login 연장
+function getLoginUpdate() {
+    return myPage.get(`/user/init`);
+}
+
 export {
     uploadFolderViewList,
-    historyFolderViewList
+    historyFolderViewList,
+    getLoginUpdate
 };

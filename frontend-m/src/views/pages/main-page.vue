@@ -15,7 +15,7 @@
                 :key="item.contentsSeq"
             >
                 <a
-                    :href="
+                        :href="
                         `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
                     "
                 >
@@ -24,9 +24,9 @@
                     </span>
                     <span class="info-box">
                         <span class="label"> TOOLKIT </span>
-                        <span class="desc" v-text="item.folderContents"
-                            >SP20 나이키 다이렉트</span
-                        >
+                        <span class="desc" v-text="item.folderName">
+                            SP20 나이키 다이렉트
+                        </span>
                     </span>
                 </a>
             </div>
@@ -35,21 +35,20 @@
                 v-for="item in foundationContentsList"
                 :key="item.contentsSeq"
             >
-              <a
-                  :href="
-                          `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
-                      "
-              >
-                <span class="thumbnail">
-                  <img :src="item.imageFilePhysicalName" alt="" />
-                </span>
-                <span class="info-box">
-                  <span class="label"> FOUNDATION </span>
-                  <span class="desc" v-text="item.folderContents"
-                  >SP20 나이키 다이렉트</span
-                  >
-                </span>
-              </a>
+                <a
+                    :href="
+                        `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
+                    "
+                >
+                    <span class="thumbnail">
+                        <img :src="item.imageFilePhysicalName" alt="" />
+                    </span>
+                    <span class="info-box">
+                        <span class="label"> FOUNDATION </span>
+                        <span class="desc" v-text="item.folderName">
+                            SP20 나이키 다이렉트</span>
+                    </span>
+                </a>
             </div>
         </div>
         <h2 class="main-title">NOTICE</h2>
@@ -125,16 +124,16 @@
     </div>
 </template>
 <script>
-import {getMain} from '@/api/main';
-import {getCalendarEachList, getTodayCalendar} from '@/api/calendar/';
+    import {getMain} from '@/api/main';
+    import {getCalendarEachList, getTodayCalendar} from '@/api/calendar/';
 
-import moment from 'moment';
-import FullCalendar from '@fullcalendar/vue';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import momentPlugin from '@fullcalendar/moment';
+    import moment from 'moment';
+    import FullCalendar from '@fullcalendar/vue';
+    import dayGridPlugin from '@fullcalendar/daygrid';
+    import interactionPlugin from '@fullcalendar/interaction';
+    import momentPlugin from '@fullcalendar/moment';
 
-export default {
+    export default {
     name: 'MainPage',
     data() {
         return {
