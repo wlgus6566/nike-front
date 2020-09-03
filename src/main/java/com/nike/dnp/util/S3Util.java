@@ -303,6 +303,7 @@ public class S3Util {
 		final String ext = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
 		final String awsPath =folder+"/"+FileUtil.makeFileName()+"."+ext;
 		final ObjectMetadata objectMetadata = new ObjectMetadata();
+		objectMetadata.setContentLength(multipartFile.getBytes().length);
 		client.putObject(new PutObjectRequest(bucket,awsPath,multipartFile.getInputStream(),objectMetadata).withCannedAcl(CannedAccessControlList.Private));
 		final URL url = client.getUrl(bucket, awsPath);
 		log.debug("url.toString() {}", url.toString());
@@ -323,9 +324,8 @@ public class S3Util {
 		log.info("S3Util.editorUpload");
 
 		final ObjectMetadata objectMetadata = new ObjectMetadata();
-		client
-				.putObject(new PutObjectRequest(editorBucket, awsPath, multipartFile.getInputStream(), objectMetadata)
-						.withCannedAcl(CannedAccessControlList.PublicRead));
+		objectMetadata.setContentLength(multipartFile.getBytes().length);
+		client.putObject(new PutObjectRequest(editorBucket, awsPath, multipartFile.getInputStream(), objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead));
 		final URL url = client.getUrl(editorBucket, awsPath);
 
 		log.debug("url.toString() {}", url.toString());
