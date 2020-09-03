@@ -40,10 +40,10 @@
     </header>
 </template>
 <script>
-import NavItem from '@/components/app-header/nav-item';
-import { deleteReport } from '@/api/report';
+    import NavItem from '@/components/app-header/nav-item';
+    import {deleteReport} from '@/api/report';
 
-export default {
+    export default {
     name: 'headerIndex',
     data() {
         return {
@@ -93,11 +93,12 @@ export default {
         },
         async delFn() {
             if (this.$route.meta.topCode === 'report') {
-                if (confirm('REPORT를 삭제 하시겠습니까?')) {
+                if (confirm('삭제 시 등록한 내용이 전부 삭제 됩니다. 삭제하시겠습니까?')) {
                     try {
-                        const {
-                            data: { data: response },
-                        } = await deleteReport(this.$route.params.id);
+                        const response = await deleteReport(this.$route.params.id);
+                        if(response.data.success) {
+                            await this.$router.push(`/report/management`);
+                        }
                     } catch (error) {
                         console.log(error);
                     }
