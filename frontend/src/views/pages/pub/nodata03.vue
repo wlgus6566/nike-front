@@ -3,7 +3,9 @@
         <header>
             <div class="inner">
                 <h1>
-                    <a href="#"><img alt="" src="@/assets/images/logo-nike.svg" /></a>
+                    <a href="#"
+                        ><img alt="" src="@/assets/images/logo-nike.svg"
+                    /></a>
                 </h1>
                 <nav>
                     <ul>
@@ -18,14 +20,12 @@
         <section id="container">
             <div class="contents">
                 <div class="no-data">
-                    <i class="icon-order"></i>
+                    <i class="icon-data"></i>
                     <p class="desc">주문 내역이 없습니다.</p>
                 </div>
             </div>
             <aside>
-                <div class="aside-wrap">
-                    aside
-                </div>
+                <div class="aside-wrap">aside</div>
             </aside>
         </section>
         <footer></footer>

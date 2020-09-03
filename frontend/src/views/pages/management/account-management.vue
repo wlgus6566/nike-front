@@ -84,6 +84,7 @@
                                 </div>
                                 <div class="form-column">
                                     <CascaderSelect
+                                        placeholder="권한그룹을 선택해 주세요."
                                         :listCascader="addAuthority"
                                     />
                                 </div>
@@ -176,5 +177,19 @@ export default {
 }
 .modal-wrap .el-scrollbar__wrap {
     max-height: 80vh;
+}
+.cascader-select .el-input--suffix .el-input__inner {
+    height: 39px;
+    font-weight: 400;
+    vertical-align: top;
+}
+.cascader-select .el-input--suffix .el-input__inner[aria-expanded='false'] {
+    color: #888 !important;
+}
+.cascader-select .el-input--suffix .el-input__inner::placeholder {
+    color: #888 !important;
+}
+.cascader-select .el-input--suffix .el-input__inner::-webkit-input-placeholder {
+    color: #888 !important;
 }
 </style>
