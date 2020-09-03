@@ -3,7 +3,9 @@
         <header>
             <div class="inner">
                 <h1>
-                    <a href="#"><img alt="" src="@/assets/images/logo-nike.svg" /></a>
+                    <a href="#"
+                        ><img alt="" src="@/assets/images/logo-nike.svg"
+                    /></a>
                 </h1>
                 <nav>
                     <ul>
@@ -55,7 +57,10 @@
                         </el-select>
                     </div>
                     <div class="search-input">
-                        <input type="text" placeholder="검색어를 입력해주세요." />
+                        <input
+                            type="text"
+                            placeholder="검색어를 입력해주세요."
+                        />
                         <button type="button"><span>검색</span></button>
                     </div>
                 </div>
@@ -71,7 +76,7 @@
                 </div>
 
                 <div class="no-data">
-                    <i class="icon-order"></i>
+                    <i class="icon-data"></i>
                     <p class="desc">주문 내역이 없습니다.</p>
                 </div>
 
@@ -85,7 +90,11 @@
                         { 'folder-list-row': listTypes[1].active },
                     ]"
                 >
-                    <li class="folder-item" v-for="(item, index) in items" :key="index">
+                    <li
+                        class="folder-item"
+                        v-for="(item, index) in items"
+                        :key="index"
+                    >
                         <a href="#">
                             <div class="thumbnail">
                                 <img src="item.img" alt="" />
@@ -103,9 +112,7 @@
                 </ul>
             </div>
             <aside>
-                <div class="aside-wrap">
-                    aside
-                </div>
+                <div class="aside-wrap">aside</div>
             </aside>
         </section>
         <footer></footer>

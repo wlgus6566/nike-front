@@ -3823,14 +3823,14 @@ img.image-grayscale {
 .no-data .icon-search {
     background-image: url('../images/svg/illust-page-search-none.svg');
 }
-.no-data .icon-order {
-    background-image: url('../images/svg/illust-page-folder-order-none.svg');
-}
 .no-data .icon-wish {
     background-image: url('../images/svg/illust-page-folder-wish-none.svg');
 }
 .no-data .icon-folder {
     background-image: url('../images/svg/illust-page-folder-view-none.svg');
+}
+.no-data .icon-file {
+    background-image: url('../images/svg/illust-page-folder-file-none.svg');
 }
 .no-data .icon-drop {
     width: 50px;

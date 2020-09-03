@@ -767,14 +767,14 @@ export default {
     top: 0;
     left: 0;
     display: block;
-    width: 30px;
-    height: 30px;
+    width: 100%;
+    height: 40px;
     font: 0/0 a;
     /*text-indent: -99999px;*/
 }
 ::v-deep .fc-daygrid-more-link:before {
     position: absolute;
-    top: 6px;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
     content: '';
