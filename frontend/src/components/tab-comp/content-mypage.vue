@@ -35,6 +35,7 @@ export default {
             this.$router.push('/login');
         },
         async dataBinding() {
+          if(!this.$store.state.gnbMenuListData) return
             try {
                 const menu = await this.$store.state.gnbMenuListData.filter(
                     (item) => {
