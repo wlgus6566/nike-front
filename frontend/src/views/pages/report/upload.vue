@@ -149,11 +149,13 @@ import {
 } from '@/api/report';
 import { fileUpLoad } from '@/api/file';
 import bus from '@/utils/bus';
+import { getLoginUpdate } from '@/api/mypage';
 
 export default {
     name: 'upload',
     data() {
         return {
+            fileUploadingInterval: null,
             title: this.$route.meta.title,
             checkedFile: [],
             uploadFileList: [],
@@ -193,6 +195,10 @@ export default {
         }
     },
     methods: {
+        async loginUpdate() {
+            const response = await getLoginUpdate();
+            console.log(response);
+        },
         fileOrderSet() {
             this.uploadFileList = this.uploadFileList.filter((a) => {
                 return this.reportDetailData.reportFileSaveDTOList.some((b) => {
@@ -374,6 +380,7 @@ export default {
                     alert(responseData.data.msg);
                 }
                 bus.$emit('pageLoading', false);
+                clearInterval(this.fileUploadingInterval);
                 this.$store.commit('SET_RELOAD', true);
                 this.reportDetailData = {
                     reportName: '',
@@ -390,6 +397,8 @@ export default {
                 }*/
             } catch (error) {
                 console.log(error);
+                bus.$emit('pageLoading', false);
+                clearInterval(this.fileUploadingInterval);
             }
         },
 
@@ -408,6 +417,10 @@ export default {
                 : confirm('저장하시겠습니까?');
             if (addAlert) {
                 bus.$emit('pageLoading', true);
+                clearInterval(this.fileUploadingInterval);
+                this.fileUploadingInterval = setInterval(() => {
+                    this.loginUpdate();
+                }, 1000 * 60 * 10);
                 this.uploadFiles();
             }
         },

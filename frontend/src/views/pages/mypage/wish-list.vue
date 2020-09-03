@@ -32,7 +32,7 @@
                     @click="checkedWishBasket"
                 >
                     <i class="icon-cart"></i>
-                    <span>선택 CART 담기</span>
+                    선택 CART 담기
                 </button>
                 <button
                     type="button"
@@ -40,7 +40,7 @@
                     @click="checkedWishDelete"
                 >
                     <i class="icon-del"></i>
-                    <span>선택삭제</span>
+                    선택삭제
                 </button>
             </div>
         </div>

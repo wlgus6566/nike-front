@@ -53,7 +53,6 @@ nike:
     imageMagickCommand: 'convert'
     ffmpeg: '/usr/bin'
     ffmpegCommand: 'ffmpeg'
-    editorUrl: 'https://nike-test-resource-bucket-dnp.s3.ap-northeast-2.amazonaws.com'
 
 ## AWS
 cloud:

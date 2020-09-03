@@ -8,7 +8,7 @@
         @close="$emit('update:visible', false)"
     >
         <div class="modal-contents">
-            <ul class="alarm-list">
+            <ul class="alarm-list" ref="alarmWrap">
                 <li v-for="(item, index) in alarmList" :key="index">
                     <a href="#" @click="delAlarmData(item)">
                         <span class="title" v-if="item.typeAction === 'NEW'">
@@ -48,10 +48,14 @@ export default {
         Loading,
     },
     props: ['visible', 'alarmList'],
-    mounted() {},
+    mounted() {
+        /*console.log(modalContents.clientHeight + modalContents.scrollTop);
+		console.log(modalContents.scrollHeight);*/
+    },
     methods: {
         detailPageUrl(item) {
-            if (item.typeCd === 'report') {
+            console.log(item.typeCd);
+            if (item.typeCd === 'report_manage') {
                 this.$router.push(`/report/detail/${item.folderSeq}`);
             } else if (item.typeCd === 'asset') {
                 this.$emit('assetClick');

@@ -84,6 +84,7 @@ nav .depth1 > .nav-link span.ko {
     font-size: 12px;
     font-weight: bold;
     transform: translateX(-100px);
+    letter-spacing: -0.05em;
 }
 nav .depth1 > .nav-link:hover span {
     opacity: 1;
