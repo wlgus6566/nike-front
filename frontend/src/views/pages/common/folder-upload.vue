@@ -437,16 +437,15 @@ export default {
         },
         async joinOccupyFn() {
             const response = await joinInit({
-                menuCode: this.$route.meta.topMenuCode,
-                set: this.$route.params.id,
+                menuName: this.$route.meta.topMenuCode,
+                seq: this.$route.params.id,
             });
             console.log(response);
         },
         async deleteOccupyFn() {
-            alert('del');
             const response = await joinDelete({
-                menuCode: this.$route.meta.topMenuCode,
-                set: this.$route.params.id,
+                menuName: this.$route.meta.topMenuCode,
+                seq: this.$route.params.id,
             });
             console.log(response);
         },

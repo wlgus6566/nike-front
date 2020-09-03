@@ -34,7 +34,6 @@ export default {
     position: relative;
     width: 370px;
     height: 390px;
-    margin-top: -100px;
     padding: 50px 45px 45px;
     box-sizing: border-box;
     background: rgba(0, 0, 0, 0.7);

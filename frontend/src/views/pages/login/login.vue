@@ -1,6 +1,12 @@
 <template>
     <section class="login">
         <div class="login-inner">
+            <div class="nike-logo" ref="logo">
+                <img
+                    src="@/assets/images/svg/nike-space.svg"
+                    alt="nike space"
+                />
+            </div>
             <component
                 :is="LoginBox"
                 :loginData="loginData"
@@ -31,6 +37,9 @@ export default {
                 certCode: '',
             },
         };
+    },
+    mounted() {
+        this.$refs.logo.classList.add('active');
     },
     components: { LoginForm, CertCode, FindPW },
     methods: {
@@ -97,24 +106,48 @@ export default {
     background: url('../../../assets/images/img-login-main-bg@2x.png') no-repeat
         50% 50% / 3000px 2000px #000;
 }
+.nike-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 370px;
+    height: 390px;
+    transform: translate(-50%, -50%);
+    vertical-align: top;
+}
+.nike-logo.active {
+    animation: logoAni 1s ease-in-out forwards;
+}
+@keyframes logoAni {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+.nike-logo img {
+    width: 100%;
+    vertical-align: top;
+}
 .login-inner {
     position: absolute;
     top: 50%;
     left: 50%;
     display: flex;
-    padding: 30px 30px 50px 30px;
+    padding: 30px;
     flex-direction: column;
     align-items: center;
     transform: translate(-50%, -50%);
 }
-.login-inner:before {
+/*.login-inner:before {
     content: '';
     display: block;
     width: 500px;
     height: 500px;
     background: url('../../../assets/images/svg/img-login-swoosh.svg') no-repeat
         center center / contain;
-}
+}*/
 .login .f-desc {
     display: block;
     margin-top: 30px;

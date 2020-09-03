@@ -75,11 +75,13 @@ import {
     reportFileDownload,
 } from '@/api/report';
 import bus from '@/utils/bus';
+import { getLoginUpdate } from '@/api/mypage';
 
 export default {
     name: 'FileItem',
     data() {
         return {
+            fileUploadingInterval: null,
             historyTab: {
                 tabClass: 'tab-list-sm',
                 tabList: [
@@ -135,6 +137,10 @@ export default {
         });
     },
     methods: {
+        async loginUpdate() {
+            const response = await getLoginUpdate();
+            console.log(response);
+        },
         loadedUpdate() {
             const loaded = this.downloadFiles.reduce((a, b) => {
                 return a + b.loaded;
@@ -143,6 +149,11 @@ export default {
         },
 
         async fileDownload() {
+            clearInterval(this.fileUploadingInterval);
+            this.fileUploadingInterval = setInterval(() => {
+                this.loginUpdate();
+            }, 1000 * 60 * 10);
+
             this.downloadFiles = [];
             this.link.forEach((el) => {
                 el.remove();
@@ -185,6 +196,7 @@ export default {
                 this.delReportBasket(el.seq);
                 el.click();
             });
+            clearInterval(this.fileUploadingInterval);
             this.loaded = 0;
             this.downloadFiles = null;
         },
