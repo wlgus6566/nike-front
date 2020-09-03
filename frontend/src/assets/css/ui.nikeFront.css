@@ -4494,16 +4494,20 @@ img.image-grayscale {
     font-weight: 600;
     color: #333;
 }
+.fc .fc-daygrid-day.fc-active .fc-daygrid-day-number,
 .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
-    width: 22px;
-    height: 22px;
+    width: 26px;
+    height: 26px;
     line-height: 16px;
     border-radius: 50%;
     white-space: nowrap;
-    background: #000;
+    background-color: #000;
     color: #fff;
     font-size: 11px;
     text-align: center;
+}
+.fc .fc-daygrid-day.fc-active .fc-daygrid-day-number {
+    background-color: #fa5400;
 }
 .fc .fc-h-event {
     height: 18px;
@@ -4944,6 +4948,7 @@ img.image-grayscale {
     left: auto;
     width: auto;
     padding: 0;
+
     margin: 0 132px 0 10px;
 }
 .folder-list-row li .view-area .view {
