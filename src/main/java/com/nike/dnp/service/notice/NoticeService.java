@@ -45,6 +45,9 @@ public class NoticeService {
      */
     private final NoticeRepository noticeRepository;
 
+    @Value("${nike.url.pc.domain:}")
+    private String editorUrl;
+
     /**
      * Find notice pages page.
      *
@@ -186,7 +189,7 @@ public class NoticeService {
      * Upload editor images list.
      *
      *
-     * @param multiReq                 the multi req             
+     * @param multiReq                 the multi req
      * @return noticeArticleSectionCode the notice article section code
      * @author [정주희]
      * @since 2020. 8. 19. 오후 12:17:33
@@ -205,7 +208,7 @@ public class NoticeService {
             e.printStackTrace(); //code exception
         }
 
-        return uploadUrl;
+        return editorUrl + uploadUrl;
     }
 
     /**
