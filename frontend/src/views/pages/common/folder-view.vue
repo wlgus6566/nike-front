@@ -332,7 +332,7 @@ export default {
         contentsFileListTotal() {
             if (this.contentsFileList) {
                 return this.contentsFileList.filter(
-                    (el) => el.fileKindCode === 'FILE'
+                    el => el.fileKindCode === 'FILE'
                 ).length;
             } else {
                 return 0;
@@ -341,7 +341,7 @@ export default {
         storeContBasketList: {
             get() {
                 return this.$store.state.contBasketList.map(
-                    (el) => el.contentsFileSeq
+                    el => el.contentsFileSeq
                 );
             },
             set(value) {
@@ -477,9 +477,9 @@ export default {
         allCheckFn() {
             this.checkAll = !this.checkAll;
             if (this.checkAll) {
-                this.contentsFileList.forEach((el) => {
+                this.contentsFileList.forEach(el => {
                     const indexOfChecked = this.checkContentsFileList.findIndex(
-                        (elChecked) => elChecked === el.contentsFileSeq
+                        elChecked => elChecked === el.contentsFileSeq
                     );
                     if (indexOfChecked === -1 && el.fileKindCode === 'FILE') {
                         this.checkContentsFileList.push(el.contentsFileSeq);
@@ -491,13 +491,13 @@ export default {
         },
         checkContentsFile(seq) {
             const indexOfChecked = this.checkContentsFileList.findIndex(
-                (el) => el === seq
+                el => el === seq
             );
             if (indexOfChecked === -1) {
                 this.checkContentsFileList.push(seq);
             } else {
                 this.checkContentsFileList = this.checkContentsFileList.filter(
-                    (el) => {
+                    el => {
                         return el !== seq;
                     }
                 );
@@ -562,7 +562,7 @@ export default {
                 await addContentsBasket(
                     this.$route.meta.topMenuCode,
                     this.$route.meta.menuCode.toUpperCase(),
-                    seq.filter((el) => {
+                    seq.filter(el => {
                         return !this.storeContBasketList.includes(el);
                     })
                 );
