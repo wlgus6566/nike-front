@@ -4042,12 +4042,10 @@ img.image-grayscale {
 .quantity .el-input-number .el-input__inner {
     height: 16px;
     line-height: 16px;
-    width: auto;
-    max-width: 20px;
+    width: 38px;
     margin: 0 25px;
     padding: 0;
     text-align: center;
-    border-bottom: 1px solid #000;
 }
 .quantity .num {
     display: flex;
