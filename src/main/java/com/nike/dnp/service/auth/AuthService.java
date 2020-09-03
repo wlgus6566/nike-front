@@ -453,8 +453,8 @@ public class AuthService {
                         .authSeq(auth.getAuthSeq())
                         .menuRoleSeq(menuRoleSeq)
                         .build()).forEach(authMenuRoleRepository::save);
-            this.setAuthsResourcesByRoleType(auth.getRoleType());
-            this.setAuthsMenusByRoleType(auth.getRoleType());
+            //this.setAuthsResourcesByRoleType(auth.getRoleType());
+            //this.setAuthsMenusByRoleType(auth.getRoleType());
         }
 
         return auth;
@@ -488,12 +488,13 @@ public class AuthService {
                             .menuRoleSeq(menuRoleSeq)
                             .build()).forEach(authMenuRoleRepository::save);
 
-            this.setAuthsResourcesByRoleType(roleType);
-            this.setAuthsMenusByRoleType(roleType);
-        } else {
-            redisService.delete(REDIS_ROLES_AUTHS + roleType);
-            redisService.delete(REDIS_ROLES_MENUS + roleType);
+//            this.setAuthsResourcesByRoleType(roleType);
+//            this.setAuthsMenusByRoleType(roleType);
         }
+//        else {
+//            redisService.delete(REDIS_ROLES_AUTHS + roleType);
+//            redisService.delete(REDIS_ROLES_MENUS + roleType);
+//        }
 
         // 등록/삭제 시퀀스배열이 따로 올 경우 > 이번엔 안하는걸로~
         /*if (auth.isPresent()) {
