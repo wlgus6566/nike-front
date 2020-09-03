@@ -161,7 +161,6 @@ export default {
                 this.alarmData.forEach(el => {
                     el.typeCd === 'REPORT_MANAGE' ? el.typeCd = 'REPORT' : el.typeCd;
                 });
-                console.log(this.alarmData);
                 this.page++;
                 this.loadingData = false;
             } catch (error) {
