@@ -18,7 +18,7 @@ import java.util.List;
  * @implNote Auth(권한) Repository Interface 작성
  */
 @Repository
-public interface AuthMenuRoleRepository extends JpaRepository<AuthMenuRole, Long> {
+public interface AuthMenuRoleRepository extends JpaRepository<AuthMenuRole, Long>, AuthMenuRoleRepositoryCustom {
 
     /**
      * Find by auth seq list.
