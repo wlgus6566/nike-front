@@ -54,14 +54,16 @@ export default {
     },
     methods: {
         detailPageUrl(item) {
-            console.log(item.typeCd);
-            if (item.typeCd === 'report_manage') {
+            let typeCdLow = item.typeCd.toLowerCase().trim();
+
+            if (typeCdLow === 'report') {
                 this.$router.push(`/report/detail/${item.folderSeq}`);
-            } else if (item.typeCd === 'asset') {
+            } else if (typeCdLow === 'asset') {
                 this.$emit('assetClick');
             } else {
+                let menuCodeLow = item.menuCode.toLowerCase().trim();
                 this.$router.push(
-                    `/${item.typeCd}/${item.menuCode}/${item.folderSeq}`
+                    '/' + typeCdLow + '/' + menuCodeLow + '/' + item.folderSeq
                 );
             }
         },

@@ -159,10 +159,9 @@ export default {
                     }
                 }
                 this.alarmData.forEach(el => {
-                    el.typeCd = el.typeCd.toLowerCase();
-                    el.menuCode = el.menuCode.toLowerCase();
-                    if (el.typeCd === 'report_manage') el.typeCd = 'report';
+                    el.typeCd === 'REPORT_MANAGE' ? el.typeCd = 'REPORT' : el.typeCd;
                 });
+                console.log(this.alarmData);
                 this.page++;
                 this.loadingData = false;
             } catch (error) {
