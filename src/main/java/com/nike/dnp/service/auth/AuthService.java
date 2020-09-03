@@ -337,7 +337,7 @@ public class AuthService {
     }
 
     /**
-     * Gets auths menus by role type.
+     * Gets auths menus by role type.`
      *
      * @param authSeq the auth seq
      * @return the auths menus by role type
@@ -362,10 +362,10 @@ public class AuthService {
                         } else {
                             lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
                         }
-                        lowerMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(lowerMenu.getMenuSeq()));
+                        lowerMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, lowerMenu.getMenuSeq()));
                     }
                     upperMenu.setMenus(lowerMenus);
-                    upperMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(upperMenu.getMenuSeq()));
+                    upperMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, upperMenu.getMenuSeq()));
                     menus.add(upperMenu);
                 }
             } else if ("Y".equals(upperMenu.getManagementYn())) {
@@ -377,10 +377,10 @@ public class AuthService {
                         } else {
                             lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
                         }
-                        lowerMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(lowerMenu.getMenuSeq()));
+                        lowerMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, lowerMenu.getMenuSeq()));
                     }
                     upperMenu.setMenus(lowerMenus);
-                    upperMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(upperMenu.getMenuSeq()));
+                    upperMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, upperMenu.getMenuSeq()));
                     menus.add(upperMenu);
                 }
             }
