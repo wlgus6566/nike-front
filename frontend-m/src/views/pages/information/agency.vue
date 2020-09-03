@@ -5,8 +5,8 @@
                 <strong class="title">{{ item.agencyName }}</strong>
                 <p class="text">{{ item.agencyDescription }}</p>
                 <div class="info-box">
-                    <a :href="'tel:${item.telephoneNumber}'" class="info-txt tel">{{ item.telephoneNumber }}</a>
-                    <a :href="'mailto:${item.email}'" class="info-txt mail">{{ item.email }}</a>
+                    <a :href="`tel:${item.telephoneNumber}`" class="info-txt tel">{{ item.telephoneNumber }}</a>
+                    <a :href="`mailto:${item.email}`" class="info-txt mail">{{ item.email }}</a>
                 </div>
             </div>
         </div>
