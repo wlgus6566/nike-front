@@ -488,6 +488,8 @@ public class AuthService {
                             .menuRoleSeq(menuRoleSeq)
                             .build()).forEach(authMenuRoleRepository::save);
 
+            redisService.delete(REDIS_ROLES_AUTHS + roleType);
+            redisService.delete(REDIS_ROLES_MENUS + roleType);
 //            this.setAuthsResourcesByRoleType(roleType);
 //            this.setAuthsMenusByRoleType(roleType);
         }
