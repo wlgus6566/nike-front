@@ -100,17 +100,17 @@ export default {
     },
 };
 </script>
-<style>
-.modal-wrap {
+<style scoped>
+::v-deep .modal-wrap {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.modal-wrap .el-dialog {
+::v-deep .modal-wrap .el-dialog {
     margin: 0 !important;
     max-width: 600px;
 }
-.modal-wrap .el-scrollbar__wrap {
+::v-deep .modal-wrap .el-scrollbar__wrap {
     max-height: 80vh;
 }
 </style>
