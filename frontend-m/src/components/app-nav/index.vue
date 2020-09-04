@@ -81,7 +81,6 @@ import * as aniReport from '@/assets/images/lottie/menu_report.json';
 import * as aniMy from '@/assets/images/lottie/menu_my.json';
 import * as aniMenu from '@/assets/images/lottie/menu_menu.json';
 import bus from '@/utils/bus';
-import store from '@/store';
 export default {
     name: 'navigation',
     data() {
