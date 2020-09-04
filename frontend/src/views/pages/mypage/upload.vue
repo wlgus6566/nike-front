@@ -15,7 +15,7 @@
             />
             <template v-else>
                 <NoData>
-                    <i class="icon-folder"></i>
+                    <i class="icon-folder-none"></i>
                     <p class="desc">업로드한 폴더가 없습니다.</p>
                 </NoData>
             </template>
