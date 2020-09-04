@@ -29,20 +29,27 @@
                 <span class="info-box">
                     <strong class="title">{{ item.product.goodsName }}</strong>
                     <span class="txt">{{ item.product.goodsDescription }}</span>
-                    <span class="desc-txt-box">
-                        <span class="desc-txt"
-                            >{{ item.product.unitPrice }} 원</span
+                    <div class="desc-txt-box">
+                        <span class="desc-txt">
+                            {{
+                                item.product.unitPrice | formattedNumber('', '')
+                            }}
+                            원</span
                         >
+
                         <span class="desc-txt">
                             {{ item.product.agency.agencyName }}
                         </span>
-                    </span>
+                    </div>
                 </span>
             </a>
             <div class="quantity-box">
                 <span class="title">최소주문수량</span>
                 <span class="num">
-                    <em>{{ item.product.minimumOrderQuantity }}</em
+                    <em>{{
+                        item.product.minimumOrderQuantity
+                            | formattedNumber('', '')
+                    }}</em
                     >개
                 </span>
             </div>

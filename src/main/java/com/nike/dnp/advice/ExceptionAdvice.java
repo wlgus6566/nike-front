@@ -9,7 +9,6 @@ import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.log.ErrorLogService;
 import com.nike.dnp.util.MessageUtil;
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,6 +23,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 /**
  * Global Exception Handler
@@ -64,19 +64,9 @@ public class ExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     protected CommonResult codeMessageHandleException(final CodeMessageHandleException exception) {
-        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        log.error("==================ERROR===================");
-        log.error("Exception Status200Exception", exception);
-        log.error("========================= ErrorLog Start =========================");
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {
-            final ErrorLogSaveDTO errorLog = new ErrorLogSaveDTO();
-            errorLog.setUrl(request.getRequestURI());
-            errorLog.setErrorContents(exception.getMessage());
-            errorLogService.save(errorLog);
-        }
-        log.error("========================= End End =========================");
-
+        log.error("==================Basic ERROR===================");
+        log.error("Exception", exception);
+        this.errorLogInsert(exception);
         return responseService.getFailResult(exception.getCode(), exception.getMessage());
     }
 
@@ -93,19 +83,9 @@ public class ExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.FORBIDDEN)
     protected CommonResult CodeMessageHandleErrorException(final CodeMessageHandleErrorException exception) {
-        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        log.error("==================ERROR===================");
-        log.error("Exception Status403Exception", exception);
-        log.error("========================= ErrorLog Start =========================");
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {
-            final ErrorLogSaveDTO errorLog = new ErrorLogSaveDTO();
-            errorLog.setUrl(request.getRequestURI());
-            errorLog.setErrorContents(exception.getMessage());
-            errorLogService.save(errorLog);
-        }
-        log.error("========================= End End =========================");
-
+        log.error("==================NoAuth ERROR===================");
+        log.error("Exception", exception);
+        this.errorLogInsert(exception);
         return responseService.getFailResult(exception.getCode(), exception.getMessage());
     }
 
@@ -121,20 +101,29 @@ public class ExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     protected CommonResult notFoundException(final NotFoundHandleException exception) {
-        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        log.error("==================ERROR===================");
-        log.error("Exception NotFoundHandleException", exception);
-        log.error("========================= ErrorLog Start =========================");
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {
-            final ErrorLogSaveDTO errorLog = new ErrorLogSaveDTO();
-            errorLog.setUrl(request.getRequestURI());
-            errorLog.setErrorContents(exception.getMessage());
-            errorLogService.save(errorLog);
-        }
-        log.error("========================= End End =========================");
-
+        log.error("==================NotFoundHandler ERROR===================");
+        log.error("Exception", exception);
+        this.errorLogInsert(exception);
         return responseService.getFailResult(exception.getCode(), exception.getMessage());
+    }
+
+    /**
+     * 정의 된 오류 외의 excpetion
+     *
+     * @param exception the e
+     * @return the common result
+     * @author [이소정]
+     * @implNote 정의 된 오류 외의 excpetion
+     * @since 2020. 7. 30. 오후 4:00:38
+     */
+    @ExceptionHandler({InterruptedException.class})
+    @ResponseBody
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public CommonResult interruptedException(final Exception exception) {
+        log.error("==================Interrupted ERROR===================");
+        log.error("Exception", exception);
+        this.errorLogInsert(exception);
+        return responseService.getFailResult(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
     }
 
     /**
@@ -150,9 +139,20 @@ public class ExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public CommonResult globalHandelException(final Exception exception) {
-        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         log.error("==================Global ERROR===================");
         log.error("Exception", exception);
+        this.errorLogInsert(exception);
+        return responseService.getFailResult();
+    }
+
+    /**
+     * Error log insert.
+     *
+     * @param exception the exception
+     */
+    @Transactional
+    public void errorLogInsert(final Exception exception) {
+        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         log.error("========================= ErrorLog Start =========================");
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {
@@ -162,8 +162,6 @@ public class ExceptionAdvice {
             errorLogService.save(errorLog);
         }
         log.error("========================= ErrorLog End =========================");
-
-        return responseService.getFailResult();
     }
 
 }

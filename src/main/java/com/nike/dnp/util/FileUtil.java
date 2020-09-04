@@ -28,6 +28,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -224,6 +226,12 @@ public class FileUtil {
 				resizeExtension = resizeExt;
 			}
 			stopWatch.start("700resize_"+uploadFile.getOriginalFilename());
+
+			List<String> allowedCommands = new ArrayList<>();
+			allowedCommands.add("notepad");
+			allowedCommands.add("calc");
+
+
 			// 이미지 사이즈 700x700 으로 변환
 			final String detailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_detail." + resizeExtension;
 			final StringBuilder detailCommand = new StringBuilder(imageMagick);
@@ -234,12 +242,16 @@ public class FileUtil {
 			}
 			detailCommand.append(" -resize 700x700 -background white -gravity center -extent 700x700 ").append(detailPath);
 			try{
-				final Runtime runtimeDetail = Runtime.getRuntime();
-				final Process procDetail = runtimeDetail.exec(whiteListing(detailCommand.toString()));
+				final String cmd = whiteListing(detailCommand.toString());
+				if (cmd.isEmpty()) {
+					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				}
+				final Process procDetail = Runtime.getRuntime().exec(cmd);
 				procDetail.waitFor();
-			}catch(InterruptedException e){
+			}catch(InterruptedException exception){
+				log.error("exception", exception);
 				// 리사이즈 문제
-				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				//throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
 			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
@@ -263,12 +275,18 @@ public class FileUtil {
 			command.append(" -resize 100x100 -background white -gravity center -extent 100x100 ").append(thumbnailPath);
 
 			try{
-				final Runtime runtime = Runtime.getRuntime();
-				final Process proc = runtime.exec(whiteListing(command.toString()));
+				/*final Runtime runtime = Runtime.getRuntime();
+				final Process proc = runtime.exec(whiteListing(command.toString()));*/
+				final String cmd = whiteListing(command.toString());
+				if (cmd.isEmpty()) {
+					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				}
+				final Process proc = Runtime.getRuntime().exec(cmd);
 				proc.waitFor();
-			}catch(InterruptedException e){
+			}catch(InterruptedException exception){
+				log.error("exception", exception);
 				// 리사이즈 문제
-				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				// throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
 			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
@@ -286,7 +304,13 @@ public class FileUtil {
 
 			// 사이즈 변환시 700:394 를 변경 하면 됨
 			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail.mp4";
-			final String[] command = {whiteListing(ffmpeg + File.separator + ffmpegCommand),"-y","-i",toFile.getPath(),"-vf"
+
+			final String cmd = whiteListing(ffmpeg + File.separator + ffmpegCommand);
+			if (cmd.isEmpty()) {
+				throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+			}
+
+			final String[] command = {cmd,"-y","-i",toFile.getPath(),"-vf"
 					,"scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
 					,thumbnailPath};
 			stopWatch.start("videoResize_"+uploadFile.getOriginalFilename());
@@ -295,21 +319,22 @@ public class FileUtil {
 			Process process = null;
 			try{
 				process = processBuilder.start();
-			}catch(Exception e){
+			}catch(Exception exception){
 				process.destroy();
-				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				log.error("exception", exception);
+				//throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			exhaustInputStream(process.getInputStream());
 			try{
 				process.waitFor();
-			}catch(InterruptedException e){
+			}catch(InterruptedException exception){
 				process.destroy();
-				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				//throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 
 			// 정상 종료가 되지 않았을 경우
 			if(process.exitValue() != 0){
-				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
 			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
