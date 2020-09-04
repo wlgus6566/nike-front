@@ -1569,6 +1569,72 @@
     line-height: 20px;
     color: #555;
 }
+[class*='extension'] {
+    display: inline-block !important;
+    width: 80px !important;
+    height: 80px !important;
+    background: url('../images/icon_extension.png') no-repeat -320px -160px /
+        auto !important;
+}
+.extension-etc {
+    background-position: -320px -160px !important;
+}
+
+.extension-tif {
+    background-position: 100px 100px !important;
+    background-color: red !important;
+}
+.extension-tif:after {
+    content: 'tif 아이콘 tbd';
+}
+.extension-pdf {
+    background-position: 0 0 !important;
+}
+.extension-indd {
+    background-position: -80px 0 !important;
+}
+.extension-ppt {
+    background-position: -160px 0 !important;
+}
+.extension-pptx {
+    background-position: -240px 0 !important;
+}
+.extension-key {
+    background-position: -320px 0 !important;
+}
+.extension-doc {
+    background-position: 0 -80px !important;
+}
+.extension-docx {
+    background-position: -80px -80px !important;
+}
+.extension-xlsx {
+    background-position: -160px -80px !important;
+}
+.extension-xls {
+    background-position: -240px -80px !important;
+}
+.extension-vr {
+    background-position: -320px -80px !important;
+}
+.extension-mp4 {
+    background-position: 0 -160px !important;
+}
+.extension-mov {
+    background-position: -80px -160px !important;
+}
+.extension-url {
+    background-position: -160px -160px !important;
+}
+.extension-avi {
+    background-position: -240px -160px !important;
+}
+.extension-otf {
+    background-position: 0 -240px !important;
+}
+.extension-ttf {
+    background-position: -80px -240px !important;
+}
 .my-main {
     padding: 0 20px;
 }
