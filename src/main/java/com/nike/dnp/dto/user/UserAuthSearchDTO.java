@@ -12,8 +12,8 @@ import java.util.List;
  * UserContentsSearchDTO
  *
  * @author [오지훈]
- * @since 2020. 6. 22. 오후 12:14:01
  * @implNote UserContents(유저 컨텐츠 권한) Search DTO 작성
+ * @since 2020. 6. 22. 오후 12:14:01
  */
 @Getter
 @Setter
@@ -64,5 +64,13 @@ public class UserAuthSearchDTO {
      */
     @ApiModelProperty(name = "createYn", value = "메뉴 코드 목록", hidden = true)
     private List<String> menuCodeList;
+
+    /**
+     *  권한 seq
+     *
+     *  @author [이소정]
+     */
+    @ApiModelProperty(name = "authSeq", value = "권한 seq", hidden = true)
+    private Long authSeq;
 
 }

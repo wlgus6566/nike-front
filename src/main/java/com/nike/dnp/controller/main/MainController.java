@@ -42,12 +42,7 @@ public class MainController {
      */
     private final MainService mainService;
 
-    /**
-     * The Calendar service
-     *
-     * @author [김형욱]
-     */
-    private final CalendarService calendarService;
+    /** 
 
     /**
      * The constant REQUEST_CHARACTER
