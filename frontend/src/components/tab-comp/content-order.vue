@@ -135,14 +135,24 @@ export default {
     },
     mounted() {},
     methods: {
+        // quantityUpdate(e, item) {
+        //     console.log(e.target);
+        //     //const value = e.target.value;
+        //     console.log(item);
+        //     /*const result = value
+        //         .replace(/\D/g, '')
+        //         .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        //     console.log(result);
+        //     return (item.orderQuantity = result);*/
+        // },
         showOrderSheet() {
-            /*this.visible.orderSheet = true;
+            this.visible.orderSheet = true;
             this.orderSeq = this.basketList.map((el) => {
                 return el.goodsSeq;
             });
             this.orderQuan = this.basketList.map((el) => {
                 return el.orderQuantity;
-            });*/
+            });
         },
 
         // 장바구니 삭제 api
