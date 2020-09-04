@@ -9,22 +9,24 @@
                 <span>컬럼타입</span>
             </button>
             <FilterSelect :selectList="listSortSelect"></FilterSelect>
-            <div class="search-input" :class="{ active: isActive }">
-                <div class="input-box">
-                    <input
-                        type="text"
-                        placeholder="검색어를 입력해주세요."
-                        @keyup.enter="onClickSearch"
-                        v-model="searchKeyword"
-                    />
-                    <button type="button" class="search" @click="onClickSearch">
-                        <span>검색</span>
+            <form @submit.prevent="onClickSearch">
+                <div class="search-input" :class="{ active: isActive }">
+                    <div class="input-box">
+                        <input
+                            type="text"
+                            placeholder="검색어를 입력해주세요."
+                            @keyup.enter="onClickSearch"
+                            v-model="searchKeyword"
+                        />
+                        <button type="submit" class="search">
+                            <span>검색</span>
+                        </button>
+                    </div>
+                    <button type="button" class="btn-txt" @click="cancelSearch">
+                        <span>취소</span>
                     </button>
                 </div>
-                <button type="button" class="btn-txt" @click="cancelSearch">
-                    <span>취소</span>
-                </button>
-            </div>
+            </form>
         </div>
         <template v-if="folderListData">
             <ul :class="viewTypeClass" v-if="folderListData.length">
@@ -212,6 +214,7 @@ export default {
         cancelSearch() {
             this.isActive = false;
             this.searchKeyword = null;
+            this.initPageData();
         },
         viewTypeToggle() {
             if (this.viewType) {
