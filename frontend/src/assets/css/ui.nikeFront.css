@@ -4250,6 +4250,7 @@ img.image-grayscale {
     position: relative;
     padding-left: 11px;
     font-size: 14px;
+    color: #888;
     font-weight: normal;
     word-break: break-all;
 }
@@ -4319,7 +4320,7 @@ img.image-grayscale {
 }
 .schedule-item.campaign .title {
     color: #007b68;
-    opacity:1;
+    opacity: 1;
 }
 .schedule-item.campaign .title:before {
     background-color: #007b68;
