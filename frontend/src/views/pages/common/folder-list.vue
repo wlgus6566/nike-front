@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="page-title">{{ title }}</h2>
-        <div class="upload-summury">
+        <div class="upload-summury" v-if="uploadAuth">
             <strong class="title">파일올리기</strong>
             <p class="desc">
                 자료는 NIKE.INC.와 NIKE KOREA LLC.의 자산입니다.<br />
@@ -51,10 +51,11 @@ import SearchInput from '@/components/search-input';
 import FolderList from '@/components/folder-list';
 import Loading from '@/components/loading';
 import NoData from '@/components/no-data';
-
+import { authCheck } from '@/utils/authCheck';
 import { getContents } from '@/api/contents.js';
 
 export default {
+    mixins: [authCheck],
     name: 'folder-list',
     watch: {
         'listSortSelect.value'(val) {
@@ -73,7 +74,7 @@ export default {
     },
     data() {
         return {
-            test: false,
+            uploadAuth: this.authCheckVal('CREATE') || false,
             title: this.$route.meta.title,
             itemLength: 20,
             totalPage: null,

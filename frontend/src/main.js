@@ -49,7 +49,6 @@ Vue.directive('lineClamp', lineClamp);
  * ex) 100000, ￦, '' ->  ￦100,000
  */
 Vue.filter('formattedNumber', (value, prefix, suffix) => {
-    console.log('filter');
     if (!value || value.isNaN) {
         return `${prefix} 0 ${suffix}`;
     }

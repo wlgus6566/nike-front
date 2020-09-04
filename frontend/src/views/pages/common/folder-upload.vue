@@ -287,23 +287,6 @@ export default {
                     },
                 },
             },
-            /*folderSet: {
-                asset: {
-                    folderOptionName: '캠페인',
-                    fileSectionCodeName: ['ASSET', 'GUIDE'],
-                    menuCode: ['SP', 'SU', 'FA', 'HO'],
-                },
-                toolkit: {
-                    folderOptionName: '툴킷',
-                    fileSectionCodeName: ['GUIDE', 'VIDEO'],
-                    menuCode: ['VMS', 'EKIN', 'SOCIAL', 'RB'],
-                },
-                foundation: {
-                    folderOptionName: '폴더',
-                    fileSectionCodeName: ['GUIDE', 'VIDEO'],
-                    menuCode: ['VMS', 'EKIN', 'DIGITAL', 'RB'],
-                },
-            },*/
             title: this.$route.meta.title,
             itemLength: 20,
             totalPage: null,
@@ -367,13 +350,14 @@ export default {
                     }
                 },
             },
+            pageMenuCode: [],
         };
     },
     computed: {
-        pageMenuCode() {
+        /*pageMenuCode() {
             return this.folderSet[this.$route.meta.topMenuCode.toLowerCase()]
                 .menuCodeList;
-        },
+        },*/
         pageOptionName() {
             return this.folderSet[this.$route.meta.topMenuCode.toLowerCase()]
                 .folderOptionName;
@@ -393,6 +377,9 @@ export default {
         },
     },
     watch: {
+        '$store.state.gnbMenuListData'() {
+            this.pageMenuCodeAuth(this.$route.meta.topMenuCode, 'CREATE');
+        },
         BeginDt(date) {
             this.folderDetail.campaignBeginDt = this.$moment(date).format(
                 'yyyy.mm.dd'
@@ -413,10 +400,9 @@ export default {
         //this.folderSetting();
     },
     activated() {
+        this.pageMenuCodeAuth(this.$route.meta.topMenuCode, 'CREATE');
         this.folderSetting();
-
         clearInterval(this.occupyInterval);
-
         if (this.$route.params.id) {
             this.joinOccupyFn();
             this.occupyInterval = setInterval(() => {
@@ -431,9 +417,27 @@ export default {
         }
     },
     methods: {
+        pageMenuCodeAuth(topMenuCode, skillCodes) {
+            const index = this.$store.state.gnbMenuListData.findIndex(
+                (el) => el.menuCode === topMenuCode
+            );
+            if (this.$store.state.gnbMenuListData[index]) {
+                const a = this.$store.state.gnbMenuListData[index].menus.filter(
+                    (aa) => {
+                        return aa.skillCodes.some((bb) => {
+                            return (
+                                bb.code === skillCodes && bb.menuRoleSeq !== 0
+                            );
+                        });
+                    }
+                );
+                this.pageMenuCode = a.map((el) => el.menuName);
+                this.menuCode = this.pageMenuCode[0];
+            }
+        },
+
         async loginUpdate() {
             const response = await getLoginUpdate();
-            console.log(response);
         },
         async joinOccupyFn() {
             const response = await joinInit({
@@ -484,7 +488,6 @@ export default {
         },
 
         folderSetting() {
-            this.dataReset();
             this.saveFolder = false;
             if (this.$route.params.id) {
                 this.getFolderDetail();
@@ -606,6 +609,10 @@ export default {
                     this.$route.params.id
                 );
 
+                if (response.existMsg) {
+                    alert(response.msg);
+                }
+
                 this.menuCode = response.data.menuCode;
                 this.folderDetail = {
                     ...response.data,
@@ -639,7 +646,7 @@ export default {
             this.folderDetail.campaignEndDt = null;
             this.folderDetail.imageFilePhysicalName = '';
             this.folderDetail.exposureYn = 'Y';
-            this.menuCode = this.pageMenuCode[0];
+            console.log(this.pageMenuCode);
             this.folderDetail.folderName = '';
             this.folderDetail.folderContents = '';
             this.folderDetail.campaignPeriodSectionCode = 'SELECT';

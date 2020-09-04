@@ -6,7 +6,10 @@
                     <input
                         type="checkbox"
                         v-model="checkAll"
-                        :disabled="contentsFileList && !contentsFileList.length"
+                        :disabled="
+                            (contentsFileList && !contentsFileList.length) ||
+                            !authCheckVal('DOWNLOAD')
+                        "
                         @click="$emit('allCheckFn')"
                     />
                     <i></i>
@@ -14,7 +17,9 @@
                 <strong class="txt" :class="{ 'fc-black': checkAll }">
                     전체선택 (
                     <em>{{ checkContentsFileList.length }}</em> /
-                    <em>{{ contentsFileListTotal }}</em>
+                    <em>{{
+                        !authCheckVal('DOWNLOAD') ? 0 : contentsFileListTotal
+                    }}</em>
                     )
                 </strong>
             </label>
@@ -52,7 +57,10 @@
                                     type="checkbox"
                                     :value="item.contentsFileSeq"
                                     v-model="checkContentsFileList"
-                                    :disabled="item.fileKindCode !== 'FILE'"
+                                    :disabled="
+                                        item.fileKindCode !== 'FILE' ||
+                                        !authCheckVal('DOWNLOAD')
+                                    "
                                     @click="
                                         $emit(
                                             'checkContentsFile',
@@ -116,6 +124,7 @@
                                         ])
                                     "
                                     v-else
+                                    :disabled="!authCheckVal('DOWNLOAD')"
                                 >
                                     <span>ADD</span>
                                 </button>
@@ -125,10 +134,9 @@
                                 :class="buttonClass(item.contentsFileSeq)"
                                 :disabled="
                                     item.fileKindCode === 'VR' ||
-                                        (item.fileKindCode === 'FILE' &&
-                                            !item.thumbnailFilePhysicalName) ||
-                                        (item.fileKindCode === 'VIDEO' &&
-                                            !item.url)
+                                    (item.fileKindCode === 'FILE' &&
+                                        !item.detailThumbnailFilePhysicalName) ||
+                                    (item.fileKindCode === 'VIDEO' && !item.url)
                                 "
                                 @click="accordion(item.contentsFileSeq)"
                             >
@@ -231,7 +239,9 @@ import FilterSelect from '@/components/filter-select';
 import Loading from '@/components/loading';
 import NoData from '@/components/no-data';
 import { Cubic, gsap } from 'gsap/all';
+import { authCheck } from '@/utils/authCheck';
 export default {
+    mixins: [authCheck],
     name: 'fileItem',
     data() {
         return {
@@ -243,6 +253,25 @@ export default {
             width: '600',
             options: {},
             playerReady: false,
+
+            tt: {
+                contentsFileSeq: 725,
+                contentsSeq: 311,
+                fileSectionCode: 'GUIDE',
+                fileKindCode: 'FILE',
+                fileOrder: 2,
+                detailThumbnailFileName: '12_mcdonalds_200729_detail.mp4',
+                detailThumbnailFileSize: '465703',
+                detailThumbnailFilePhysicalName:
+                    'https://devupload.nikespace.co.kr/contents/2020090151200043VOw5khNz_thumbnail.mp4?Policy=eyJTdGF0ZW1lbnQiOiBbeyJSZXNvdXJjZSI6Imh0dHBzOi8vZGV2dXBsb2FkLm5pa2VzcGFjZS5jby5rci9jb250ZW50cy8yMDIwMDkwMTUxMjAwMDQzVk93NWtoTnpfdGh1bWJuYWlsLm1wNCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTU5OTIwODkyOX0sIklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUdyZWF0ZXJUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE1OTkyMDcwNjl9fX1dfQ__&Signature=FZtYFkemnuU82TKao8Tz~2Z3zrHIUPlKA9ncADMaZmsHhsppYx5oKLxlS-HDCgr97ddfHpsbjEXwg8koXq4T9BrTrQJZbiK25V0JY~8~X082GHIMb4fLeXf2fNkFHHqrTkv5eYDWpLsLDykuhwNmpvNqnnsGAnapPw3POya02ZwT3POs9PRfxfa9Bv8VtpelV3~sYh~FvkbX2VoYb-6qIKgF7C9YDMHd8yAUWSds8j05OL2w5ptw36GfNlNEdX4GYG7V9d6MEBTxjIYvJZ0w46SiBSQLu~sl3re0BmFT355M26S0FkuTS~q03nqI~G5UHWtUivmSrF1B3tXYAXzKeA__&Key-Pair-Id=APKAJNYFE4SZH6RSWVMA',
+                fileContentType: 'video/mp4',
+                fileExtension: 'MP4',
+                fileName: '12_mcdonalds_200729.mp4',
+                fileSize: 20627280,
+                filePhysicalName:
+                    'https://devupload.nikespace.co.kr/contents/2020090151200043VOw5khNz.mp4?Policy=eyJTdGF0ZW1lbnQiOiBbeyJSZXNvdXJjZSI6Imh0dHBzOi8vZGV2dXBsb2FkLm5pa2VzcGFjZS5jby5rci9jb250ZW50cy8yMDIwMDkwMTUxMjAwMDQzVk93NWtoTnoubXA0IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNTk5MjA4OTI5fSwiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlR3JlYXRlclRoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTU5OTIwNzA2OX19fV19&Signature=N29srj2U4fOqfQ1w-~Q41IZs9saw6-BuQ9f26K3OTu-J3Qt4kUisw8skh9Zcs~b-IYxwGAykeONgpcq0dMB6odrBoTY2vNfptxHp9oqFtiLCoPxZeR3bKlQX63cdCHS24B4ZJ1Fl3mQqUD3nVAB4HHnWRvCQQamMw3gzYy8E4S5jcJgvWjN3v07J6xNheBHkcLvtpRDDxAmuX44~S2OTlY5dUxI~VdJogAPXJK1e0~8~OBuhA5s~RTe1UlgwfUUtCJyrd2whsr9dIg4r99bAym36hCfQwJFVZAv3Riww635OrAop6KV2VuoOgl601yOaP17-T6k04u754Euz4IaVBA__&Key-Pair-Id=APKAJNYFE4SZH6RSWVMA',
+                downloadCount: 0,
+            },
         };
     },
     components: {
@@ -277,7 +306,7 @@ export default {
         storeContBasketList: {
             get() {
                 return this.$store.state.contBasketList.map(
-                    el => el.contentsFileSeq
+                    (el) => el.contentsFileSeq
                 );
             },
             set(value) {
@@ -308,7 +337,7 @@ export default {
             //return video_id;
         },
         test(seq) {
-            return this.storeContBasketList.some(el => el === seq);
+            return this.storeContBasketList.some((el) => el === seq);
         },
 
         buttonClass(seq) {
@@ -318,8 +347,8 @@ export default {
             };
         },
         fileItemClass(seq) {
-            const ignore = this.checkContentsFileList.every(el => el !== seq);
-            const added = this.storeContBasketList.some(el => el === seq);
+            const ignore = this.checkContentsFileList.every((el) => el !== seq);
+            const added = this.storeContBasketList.some((el) => el === seq);
             return {
                 'file-item': true,
                 'ignore-elements': ignore || added,
@@ -352,7 +381,7 @@ export default {
             gsap.from(el, 0.3, {
                 height: 0,
                 ease: Cubic.easeInOut,
-                onComplete: function() {
+                onComplete: function () {
                     el.style.height = 'auto';
                     done();
                 },
