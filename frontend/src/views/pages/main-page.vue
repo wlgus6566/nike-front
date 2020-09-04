@@ -298,7 +298,7 @@ export default {
             const cal = this.$refs.fullCalendar.$el;
             const td = cal.querySelector(`td[data-date="${date}"]`);
             body.classList.add('pop-open');
-            //td.classList.add('test');
+            td.classList.add('fc-active');
             window.addEventListener('scroll', this.handleScroll);
             window.addEventListener('resize', this.handleScroll);
             setTimeout(() => {
@@ -314,7 +314,7 @@ export default {
                 a.appendChild(txt);
                 body.appendChild(a);
                 close.addEventListener('click', () => {
-                    td.classList.remove('test');
+                    td.classList.remove('fc-active');
                 });
             }, 0);
         },
@@ -752,9 +752,9 @@ export default {
     border-bottom: 5px solid #ccc;
     border-top: 0;
 }
-::v-deep .test {
-    /*background: red;*/
-}
+/*::v-deep .fc-active {*/
+/*    background-color: #fa5400;*/
+/*}*/
 ::v-deep .fc .fc-daygrid-day-number {
     font-weight: 400;
     font-size: 12px;

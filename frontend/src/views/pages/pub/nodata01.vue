@@ -3,7 +3,9 @@
         <header>
             <div class="inner">
                 <h1>
-                    <a href="#"><img alt="" src="@/assets/images/logo-nike.svg" /></a>
+                    <a href="#"
+                        ><img alt="" src="@/assets/images/logo-nike.svg"
+                    /></a>
                 </h1>
                 <nav>
                     <ul>
@@ -18,7 +20,7 @@
         <section id="container">
             <div class="contents">
                 <div class="no-data">
-                    <i class="icon-file"></i>
+                    <i class="icon-folder"></i>
                     <p class="desc">업로드한 폴더가 없습니다.</p>
                 </div>
             </div>

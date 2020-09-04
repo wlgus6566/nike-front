@@ -10,23 +10,25 @@
             </button>
             <FilterSelect :selectList="selectList"></FilterSelect>
             <CascaderSelect :cascaderList="authority"></CascaderSelect>
-            <div class="search-input" :class="{ active: searchIsActive }">
-                <!-- active 추가하면 검색 화면 보임 -->
-                <div class="input-box">
-                    <input
-                        type="text"
-                        placeholder="검색어를 입력해주세요."
-                        @keyup.enter="search()"
-                        v-model="keyword"
-                    />
-                    <button type="button" class="search" @click="searchView()">
-                        <span>검색</span>
+            <form action="#" @submit.prevent="search">
+                <div class="search-input" :class="{ active: searchIsActive }">
+                    <!-- active 추가하면 검색 화면 보임 -->
+                    <div class="input-box">
+                        <input
+                            type="search"
+                            placeholder="검색어를 입력해주세요."
+                            @keyup.enter="search()"
+                            v-model="keyword"
+                        />
+                        <button type="submit" class="search">
+                            <span>검색</span>
+                        </button>
+                    </div>
+                    <button type="button" class="btn-txt" @click="cancelSearch">
+                        <span>취소</span>
                     </button>
                 </div>
-                <button type="button" class="btn-txt" @click="searchView()">
-                    <span>취소</span>
-                </button>
-            </div>
+            </form>
         </div>
         <template v-if="reportList">
             <ul :class="viewTypeClass" v-if="reportList.length">
@@ -227,12 +229,11 @@ export default {
                 console.log(error);
             }
         },
-        searchView() {
-            if (this.searchIsActive) {
-                this.searchIsActive = false;
-            } else {
-                this.searchIsActive = true;
-            }
+        // 검색 취소
+        cancelSearch() {
+            this.searchIsActive = false;
+            this.keyword = null;
+            this.initRepoerProduct();
         },
         viewTypeToggle() {
             if (this.viewType) {
@@ -244,7 +245,12 @@ export default {
             }
         },
         search() {
-            this.initRepoerProduct();
+            this.searchIsActive = true;
+            if (!!this.keyword) {
+                this.page = 0;
+                this.reportList = null;
+                this.initRepoerProduct();
+            }
         },
         handleScroll() {
             if (this.loadingData) return;

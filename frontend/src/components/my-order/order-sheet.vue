@@ -38,7 +38,12 @@
                             </div>
                             <div class="form-column">
                                 <span class="form-val">
-                                    <em>{{ orderDetailData.totalAmount }}</em>
+                                    <em>
+                                        {{
+                                            orderDetailData.totalAmount
+                                                | formattedNumber('', '')
+                                        }}
+                                    </em>
                                     원
                                 </span>
                             </div>
