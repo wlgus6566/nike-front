@@ -242,7 +242,7 @@ public class FileUtil {
 			detailCommand.append(" -resize 700x700 -background white -gravity center -extent 700x700 ").append(detailPath);
 			try{
 				final String cmd = whiteListing(detailCommand.toString(), folder);
-				if (cmd.isEmpty()) {
+				if (cmd.isEmpty() || "".equals(cmd)) {
 					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 				}
 				final Process procDetail = Runtime.getRuntime().exec(cmd);
@@ -277,7 +277,7 @@ public class FileUtil {
 				/*final Runtime runtime = Runtime.getRuntime();
 				final Process proc = runtime.exec(whiteListing(command.toString()));*/
 				final String cmd = whiteListing(command.toString(), folder);
-				if (cmd.isEmpty()) {
+				if (cmd.isEmpty() || "".equals(cmd)) {
 					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 				}
 				final Process proc = Runtime.getRuntime().exec(cmd);
