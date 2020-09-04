@@ -3,6 +3,12 @@
         <transition name="layout-change" mode="out-in">
             <component :is="AppLayout" :key="$route.meta.layout" />
         </transition>
+        <Loading
+            class="page-loading"
+            :width="172"
+            :height="172"
+            v-if="pageLoading"
+        />
     </div>
 </template>
 <script>
@@ -13,6 +19,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en';
 import App from './App.vue';
 import { layouts } from '@/utils/global-methods';
+import bus from '@/utils/bus';
+import Loading from '@/components/loading/index';
 
 Vue.use(ElementUI, { locale });
 
@@ -25,7 +33,9 @@ export default {
         $route() {},
     },
     data() {
-        return {};
+        return {
+            pageLoading: false,
+        };
     },
     computed: {
         AppLayout() {
@@ -33,8 +43,13 @@ export default {
         },
     },
     mounted() {},
-    created() {},
+    created() {
+        bus.$on('pageLoading', state => {
+            this.pageLoading = state;
+        });
+    },
     components: {
+        Loading,
         LayoutDefault: layouts('default'),
         LayoutClean: layouts('clean'),
         LayoutPub: layouts('pub'),
@@ -48,4 +63,16 @@ export default {
 @import url('assets/css/layout.css');
 @import url('assets/css/reset.css');
 @import url('assets/css/ui.nikeFront.css');
+.page-loading {
+    flex-direction: column;
+    z-index: 2000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 </style>
