@@ -163,8 +163,7 @@ public class FileUtil {
 	public static File makeNewFile(final String folder,final String extension) {
 		log.info("FileUtil.makeNewFile");
 		final String newFilepath = root + File.separator + cleanXSS(folder);
-		final String newFileName = cleanXSS(makeFileName()) + "." + extension;
-		final File result = new File(newFilepath+File.separator + cleanXSS(newFileName));
+		final File result = new File(newFilepath+File.separator + cleanXSS(makeFileName()) + "." + extension);
 		new File(newFilepath).mkdirs();
 		return result;
 	}
@@ -306,7 +305,7 @@ public class FileUtil {
 			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail.mp4";
 
 			final String cmd = whiteListing(ffmpeg + File.separator + ffmpegCommand, folder);
-			if (cmd.isEmpty()) {
+			if (cmd.isEmpty() || "".equals(cmd)) {
 				throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 
@@ -545,7 +544,6 @@ public class FileUtil {
 		value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
 		value = value.replaceAll("script", "");
 		value = value.replaceAll("&", "");
-		value = value.replaceAll("\\.", "");
 		value = value.replaceAll("\\\\", "");
 		value = value.replaceAll("/", " ");
 
@@ -571,17 +569,28 @@ public class FileUtil {
 
 		File files = new File(root + File.separator + cleanXSS(folder));
 
-		final String[] checkStrArray = {imageMagick + File.separator + imageMagickCommand, ffmpeg + File.separator + ffmpegCommand};
-
-		boolean check = false;
-		for(String checkStr : checkStrArray){
-			if(paramStr.indexOf(checkStr) == 0){
-				check = true;
+		boolean checkfile = false;
+		for(File file : files.listFiles()){
+			log.debug("file.getName() > " + file.getName());
+			if(paramStr.contains(file.getName())){
+				checkfile= true;
 			}
 		}
-		if(check){
-			return paramStr;
+
+		if(checkfile){
+			final String[] checkStrArray = {imageMagick + File.separator + imageMagickCommand, ffmpeg + File.separator + ffmpegCommand};
+
+			boolean check = false;
+			for(String checkStr : checkStrArray){
+				if(paramStr.indexOf(checkStr) == 0){
+					check = true;
+				}
+			}
+			if(check){
+				return paramStr;
+			}
 		}
 		return "";
+
 	}
 }
