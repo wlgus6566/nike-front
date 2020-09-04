@@ -181,7 +181,7 @@ export default {
                 // 일자 클릭시
                 // dateClick: this.handleDateClick,
                 dateClick: this.handleDateClick,
-                moreLinkClick: this.test,
+                moreLinkClick: this.calClickEvent,
                 height: 410,
                 events: [],
                 dayMaxEventRows: true,
@@ -275,25 +275,49 @@ export default {
                 console.log(error);
             }
         },
-        test(e) {
+        handleScroll() {
+            const body = document.querySelector('.fc-daygrid-body');
+            const cal = this.$refs.fullCalendar.$el;
+
+            if (body.childNodes[1]) {
+                body.classList.remove('pop-open');
+                cal.querySelectorAll('td').forEach((el) => {
+                    el.classList.remove('fc-active');
+                });
+                //body.removeChild(body.childNodes[1]);
+                window.removeEventListener('scroll', this.handleScroll);
+                window.removeEventListener('resize', this.handleScroll);
+            }
+        },
+        calClickEvent(e) {
             //console.log(e);
+            const body = document.querySelector('.fc-daygrid-body');
+            const tdWidth = e.jsEvent.target.closest('td').offsetWidth / 2;
             const date = this.$moment(e.date).format('YYYY-MM-DD');
             const cal = this.$refs.fullCalendar.$el;
             const td = cal.querySelector(`td[data-date="${date}"]`);
-            td.classList.add('test');
+            body.classList.add('pop-open');
+            cal.querySelectorAll('td').forEach((el) => {
+                el.classList.remove('fc-active');
+            });
+            td.classList.add('fc-active');
+            window.addEventListener('scroll', this.handleScroll);
+            window.addEventListener('resize', this.handleScroll);
 
             setTimeout(() => {
                 const modal = document.querySelector('.fc-more-popover');
                 const close = modal.querySelector('.fc-popover-close');
                 const body = modal.querySelector('.fc-popover-body');
                 const a = document.createElement('a');
-                //TODO router 작업 필요
+                const txt = document.createTextNode('자세히 보기');
+                console.log(tdWidth);
+                modal.style.marginLeft = `${tdWidth}px`;
                 a.href = '/information/calendar';
                 a.classList.add('fc-more');
-                a.append('자세히 보기');
-                body.append(a);
+                a.appendChild(txt);
+                body.appendChild(a);
                 close.addEventListener('click', () => {
-                    td.classList.remove('test');
+                    td.classList.remove('fc-active');
                 });
             }, 0);
         },
@@ -319,7 +343,7 @@ export default {
         // 달력에 맞게 변수명 변경
         transformData() {
             this.calendarOptions.events = [];
-            this.calendarData.forEach(item => {
+            this.calendarData.forEach((item) => {
                 let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
                     className = 'edu';
@@ -341,9 +365,9 @@ export default {
         },
         distinctAndAddEvent() {
             let distinctEventList = [];
-            this.calendarOptions.events.forEach(item => {
+            this.calendarOptions.events.forEach((item) => {
                 let check = false;
-                distinctEventList.forEach(ele => {
+                distinctEventList.forEach((ele) => {
                     if (item.start === ele.start) {
                         check = true;
                     }
@@ -352,7 +376,7 @@ export default {
                     distinctEventList.push(item);
                 }
             });
-            distinctEventList.forEach(item => {
+            distinctEventList.forEach((item) => {
                 this.calendarOptions.events.unshift(item);
             });
         },
@@ -368,10 +392,8 @@ export default {
 </script>
 <style scoped>
 ::v-deep .fc .fc-more-popover {
-    margin-top: 85px;
-}
-::v-deep .test {
-    /*background: red;*/
+    margin-top: 41px;
+    transform: translateX(-50%);
 }
 ::v-deep .fc {
     margin: 15px -20px 0;
@@ -394,12 +416,17 @@ export default {
 }
 ::v-deep .fc-daygrid-day-top {
     display: flex;
-    min-height: 45px;
+    min-height: 40px;
     justify-content: center;
     align-items: center;
 }
 ::v-deep .fc-daygrid-day-bottom {
-    width: 100%;
+    margin: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
 }
 ::v-deep .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
     margin: 0;
@@ -408,7 +435,7 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 5;
     display: block;
     width: 100%;
     height: 40px;
@@ -417,7 +444,7 @@ export default {
 }
 ::v-deep .fc-daygrid-more-link:before {
     position: absolute;
-    top: 3px;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
     content: '';
@@ -427,7 +454,11 @@ export default {
     border-radius: 50%;
     background: #fa5400;
 }
-::v-deep .fc-popover-body .fc-daygrid-event-harness:first-child {
-    display: none;
+/*fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-start fc-event-end fc-event-past*/
+::v-deep .fc .fc-daygrid-day .fc-daygrid-event-harness .fc-daygrid-event {
+    /*display: none;*/
 }
+/*::v-deep .fc-popover-body .fc-daygrid-event-harness:first-child {*/
+/*    display: none;*/
+/*}*/
 </style>
