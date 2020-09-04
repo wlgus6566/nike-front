@@ -35,6 +35,7 @@
 import 'cropperjs/dist/cropper.css';
 import Compress from 'compress.js';
 import cropperModal from './cropperModal';
+import bus from '@/utils/bus';
 
 export default {
     name: 'thumbnailCropper',
@@ -81,6 +82,9 @@ export default {
         },
         inputChangeEvent(e) {
             const file = e.target.files[0];
+            if (file.length === 0) return;
+            bus.$emit('pageLoading', true);
+            console.log(1);
             if (file.type.indexOf('image/') === -1) {
                 alert('Please select an image file');
                 return;
@@ -94,14 +98,16 @@ export default {
                     maxHeight: this.height, // the max height of the output image, defaults to 1920px
                     resize: true, // defaults to true, set false if you do not want to resize the image width and height
                 })
-                .then((data) => {
+                .then(data => {
+                    bus.$emit('pageLoading', false);
                     this.popupOpen();
                     let url = `${data[0].prefix}${data[0].data}`;
                     this.imgSrc = url;
                     this.imgName = file.name;
                     this.$refs.cModal.$refs.cropper.replace(url);
                 })
-                .catch((e) => {
+                .catch(e => {
+                    bus.$emit('pageLoading', false);
                     console.log(e);
                 });
         },

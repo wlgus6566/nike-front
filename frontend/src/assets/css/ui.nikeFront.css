@@ -257,7 +257,7 @@
 }
 [class^='btn-'] .icon-mail {
     background-image: url('../images/svg/icon-mail-send.svg');
-    margin-left: 5px;
+    margin-right: 4px;
 }
 [class^='btn-'] .icon-check {
     background-image: url('../images/svg/icon-btn-check.svg');
@@ -3829,6 +3829,9 @@ img.image-grayscale {
 .no-data .icon-folder {
     background-image: url('../images/svg/illust-page-folder-view-none.svg');
 }
+.no-data .icon-folder-none {
+    background-image: url('../images/svg/illust-page-folder-upload-none.svg');
+}
 .no-data .icon-file {
     background-image: url('../images/svg/illust-page-folder-file-none.svg');
 }
@@ -4250,6 +4253,7 @@ img.image-grayscale {
 .schedule-item .title {
     position: relative;
     padding-left: 11px;
+    line-height: 20px;
     font-size: 14px;
     color: #888;
     font-weight: normal;
@@ -4270,6 +4274,7 @@ img.image-grayscale {
 }
 .schedule-item .desc {
     margin-top: 5px;
+    line-height: 17px;
     padding-left: 11px;
     font-size: 11px;
     color: #555;
@@ -4505,6 +4510,7 @@ img.image-grayscale {
     background-color: #000;
     color: #fff;
     font-size: 11px;
+    font-weight: 600;
     text-align: center;
 }
 .fc .fc-daygrid-day.fc-active .fc-daygrid-day-number {
@@ -4947,7 +4953,7 @@ img.image-grayscale {
     position: relative;
     top: auto;
     left: auto;
-    width: auto;
+    width: 94px;
     padding: 0;
     margin: 0 132px 0 10px;
 }

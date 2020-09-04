@@ -84,7 +84,7 @@ public class UserController {
             + "size||노출갯수|Integer\n\n\n\n")
     @GetMapping(name = "유저 목록 조회"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<Page<UserResultDTO>> getUsers (final UserSearchDTO userSearchDTO) {
+    public SingleResult<Page<UserListDTO>> getUsers (final UserSearchDTO userSearchDTO) {
         log.info("UserController.getUsers");
         return responseService.getSingleResult(userService.findPages(userSearchDTO));
     }
@@ -102,7 +102,7 @@ public class UserController {
             , notes = OPERATION_CHARACTER)
     @GetMapping(name = "유저 상세 조회", value = "/{userSeq}"
             , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SingleResult<UserResultDTO> getUser (
+    public SingleResult<UserListDTO> getUser (
             @ApiParam(value = "유저 시퀀스", required = true) @PathVariable final Long userSeq) {
         log.info("UserController.getUser");
         return responseService.getSingleResult(userService.getUser(userSeq));

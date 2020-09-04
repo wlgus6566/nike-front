@@ -27,7 +27,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserResultDTO {
+public class UserListDTO {
 
     /**
      * 유저 시퀀스
@@ -42,16 +42,9 @@ public class UserResultDTO {
      *
      * @author [오지훈]
      */
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ApiModelProperty(name = "userId", value = "유저 ID")
     private String userId;
-
-    /**
-     * 마스킹 ID
-     *
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "securityId", value = "마스킹 ID")
-    private String securityId;
 
     /**
      * 닉네임
@@ -167,12 +160,23 @@ public class UserResultDTO {
     @ApiModelProperty(name = "authSeqArray", value = "권한 시퀀스 배열")
     private Long[] authSeqArray;
 
-    public String getSecurityId() {
-        String masking = "*";
-        for (int i=0; i<(userId.substring(0, userId.indexOf("@"))).length(); i++) {
-            masking += masking;
+    /**
+     * Gets user id.
+     *
+     * @return the user id
+     */
+    public void setUserId(final String userId) {
+        String securityId = userId;
+
+        if (securityId.length() > 2) {
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i=0; i<securityId.substring(0, securityId.indexOf("@")).length()-2; i++) {
+                strBuilder.append("*");
+            }
+            securityId = securityId.substring(0,2)+strBuilder.toString()+securityId.substring(securityId.indexOf("@"));
         }
-        return userId.substring(0,2)+masking+userId.substring(userId.indexOf("@"));
+
+        this.userId = securityId;
     }
 
     /**

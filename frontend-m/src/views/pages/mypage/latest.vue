@@ -23,7 +23,12 @@
                 <p class="desc">최근 본 폴더가 없습니다.</p>
             </NoData>
         </template>
-        <Loading v-if="loadingData" />
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
     </div>
 </template>
 <script>

@@ -502,3 +502,14 @@ footer .copy {
 .modal.full .modal-contents {
     max-height: none;
 }
+
+.list-loading {
+    position: relative;
+    padding-top: 70%;
+}
+.list-loading .lottie {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

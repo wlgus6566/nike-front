@@ -9,7 +9,15 @@
                 <div class="thumbnail">
                     <img :src="item.imageFilePhysicalName" alt="" />
                 </div>
-                <div class="info-box">
+                <div class="info-box" v-if="item.typeCd === 'REPORT_MANAGE'">
+                    <strong class="title">{{ item.nickname }}</strong>
+                    <p class="date">{{ item.folderName }}</p>
+                    <ul class="location">
+                        <li>REPORT</li>
+                        <li>{{ item.menuCode }}</li>
+                    </ul>
+                </div>
+                <div class="info-box" v-else>
                     <strong class="title">{{ item.folderName }}</strong>
                     <p class="date" v-if="item.typeCd === 'REPORT_MANAGE'">
                         {{ $moment(item.updateDt).format('YYYY.MM.DD') }}
@@ -19,10 +27,9 @@
                         ~ {{ $moment(item.campaignEndDt).format('YYYY.MM.DD') }}
                     </p>
                     <ul class="location">
-                        <li v-if="item.typeCd !== 'REPORT_MANAGE'">
+                        <li>
                             {{ item.topMenuCode }}
                         </li>
-                        <li v-else>REPORT</li>
                         <li>{{ item.menuCode }}</li>
                     </ul>
                 </div>

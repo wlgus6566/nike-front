@@ -1,9 +1,13 @@
 <template>
-    <lottie
-        class="loading"
-        :options="defaultOptions"
-        @animCreated="handleAnimation"
-    />
+    <div class="loading">
+        <lottie
+            class="lottie"
+            :width="width"
+            :height="height"
+            :options="defaultOptions"
+            @animCreated="handleAnimation"
+        />
+    </div>
 </template>
 <script>
 import Lottie from '@/components/lottie';
@@ -14,7 +18,7 @@ export default {
     components: {
         lottie: Lottie,
     },
-    props: ['loadingStyle'],
+    props: ['loadingStyle', 'height', 'width'],
     data() {
         return {
             defaultOptions: { animationData: animationData.default },
@@ -22,25 +26,24 @@ export default {
         };
     },
     methods: {
-        handleAnimation: function (anim) {
+        handleAnimation: function(anim) {
             this.anim = anim;
-            console.log(this.anim);
+            this.anim.setSpeed(0.5);
         },
 
-        stop: function () {
-            console.log(this.anim);
+        stop: function() {
             this.anim.stop();
         },
 
-        play: function () {
+        play: function() {
             this.anim.play();
         },
 
-        pause: function () {
+        pause: function() {
             this.anim.pause();
         },
 
-        onSpeedChange: function () {
+        onSpeedChange: function() {
             this.anim.setSpeed(this.animationSpeed);
         },
     },

@@ -127,7 +127,7 @@ public class UserService implements UserDetailsService {
      * @since 2020. 6. 22. 오후 2:40:43
      * @implNote 페이징 조회(paging)
      */
-    public Page<UserResultDTO> findPages(final UserSearchDTO userSearchDTO) {
+    public Page<UserListDTO> findPages(final UserSearchDTO userSearchDTO) {
         log.info("UserService.findPages");
         return userRepository.findPages(
                 userSearchDTO,
@@ -160,21 +160,16 @@ public class UserService implements UserDetailsService {
      * @since 2020. 7. 6. 오후 2:38:47
      * @implNote 상세 부분 조회
      */
-    public UserResultDTO getUser(final Long userSeq) {
+    public UserListDTO getUser(final Long userSeq) {
         log.info("UserService.getUser");
         final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq)
                 .orElseThrow(NotFoundHandleException::new));
 
-        final UserResultDTO userResultDTO = new UserResultDTO();
+        UserListDTO userListDTO = new UserListDTO();
         if (user.isPresent()) {
-            final User getUser = user.get();
-            userResultDTO.setUserSeq(getUser.getUserSeq());
-            userResultDTO.setNickname(getUser.getNickname());
-            userResultDTO.setUserId(getUser.getUserId());
-            userResultDTO.setUserStatusCode(getUser.getUserStatusCode());
-            userResultDTO.setAuthName(getUser.getUserAuth().getAuth().getAuthName());
-
-            final Auth auth = getUser.getUserAuth().getAuth();
+            userListDTO = ObjectMapperUtil.map(user, UserListDTO.class);
+            userListDTO.setAuthName(user.get().getUserAuth().getAuth().getAuthName());
+            final Auth auth = user.get().getUserAuth().getAuth();
             Long[] authSeqArray;
             if (auth.getAuthDepth().equals(2L)) {
                 authSeqArray = new Long[2];
@@ -190,10 +185,10 @@ public class UserService implements UserDetailsService {
                 authSeqArray = new Long[1];
                 authSeqArray[0] = auth.getAuthSeq();
             }
-            userResultDTO.setAuthSeqArray(authSeqArray);
+            userListDTO.setAuthSeqArray(authSeqArray);
         }
 
-        return userResultDTO;
+        return userListDTO;
     }
 
     /**
