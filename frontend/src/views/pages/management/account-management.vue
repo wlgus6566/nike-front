@@ -84,7 +84,10 @@
                                 </div>
                                 <div class="form-column">
                                     <CascaderSelect
-                                        placeholder="권한그룹을 선택해 주세요."
+                                        :class="{
+                                            readonly:
+                                                addAuthority.value[0] === null,
+                                        }"
                                         :listCascader="addAuthority"
                                     />
                                 </div>
@@ -191,5 +194,8 @@ export default {
 }
 .cascader-select .el-input--suffix .el-input__inner::-webkit-input-placeholder {
     color: #888 !important;
+}
+.cascader-select.readonly .el-input__inner {
+    color: #888;
 }
 </style>
