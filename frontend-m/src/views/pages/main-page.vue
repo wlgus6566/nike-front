@@ -15,9 +15,10 @@
                 :key="item.contentsSeq"
             >
                 <a
-                    :href="
-                        `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
-                    "
+                    @click="onClickDetail(
+                        item
+                        , `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
+                    )"
                 >
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
@@ -36,9 +37,10 @@
                 :key="item.contentsSeq"
             >
                 <a
-                    :href="
-                        `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
-                    "
+                    @click="onClickDetail(
+                        item
+                        , `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
+                    )"
                 >
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
@@ -82,7 +84,7 @@
                 v-for="item in reportMaxList"
                 :key="item.reportSeq"
             >
-                <a :href="'/report/detail/' + item.reportSeq">
+                <a @click="onClickDetail(item, '/report/detail/' + item.reportSeq)">
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
@@ -262,6 +264,13 @@ export default {
         swiper: directive,
     },
     methods: {
+        onClickDetail(item, url) {
+            if (item.detailAuthYn === 'N') {
+                alert('접근 권한이 없습니다.');
+            } else {
+                this.$router.push(url);
+            }
+        },
         swiperFn() {
             this.swiper.slideTo(0, 1000, false);
         },
