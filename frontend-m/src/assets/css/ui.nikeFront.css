@@ -375,6 +375,38 @@
 .folder-list-item a {
     display: block;
 }
+.folder-list-item .auth,
+.folder-list-item .exposure {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 2;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #000;
+}
+.folder-list-item .auth i {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background: url('../../assets/images/svg/icon-authority-no.svg') no-repeat
+        50% 50% / contain;
+}
+.folder-list-item .exposure i {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background: url('../../assets/images/svg/icon-writing.svg') no-repeat 50%
+        50% / contain;
+}
 .folder-list-item .thumbnail {
     position: relative;
     display: block;
@@ -514,6 +546,18 @@
     position: relative;
     display: flex;
     padding: 20px 0;
+}
+.folder-list-row .folder-list-item .exposure,
+.folder-list-row .folder-list-item .auth {
+    font-size: 11px;
+}
+.folder-list-row .folder-list-item .auth i {
+    height: 30px;
+    width: 30px;
+}
+.folder-list-row .folder-list-item .exposure i {
+    height: 30px;
+    width: 30px;
 }
 .folder-list-row > li .thumbnail {
     flex-shrink: 0;
