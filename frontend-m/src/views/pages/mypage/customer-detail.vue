@@ -44,7 +44,6 @@ export default {
             }
         },
         goToNoticeList: function() {
-            debugger;
             if (this.$route.params.sectionCode === 'notice') {
                 this.$router.push('/mypage/notice');
             } else if (this.$route.params.sectionCode === 'news') {
