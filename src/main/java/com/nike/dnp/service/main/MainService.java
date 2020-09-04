@@ -154,6 +154,7 @@ public class MainService {
         final UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
         userAuthSearchDTO.setMenuCode(ServiceCode.HistoryTabEnumCode.REPORT_MANAGE.toString());
         userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+        userAuthSearchDTO.setAuthSeq(SecurityUtil.currentUser().getAuthSeq());
         List<AuthReturnDTO> reportAuthList = reportService.findAllAuthListWithDepth(userAuthSearchDTO, "N");
 
         Map<Long, AuthReturnDTO> map = new HashMap<Long, AuthReturnDTO>();

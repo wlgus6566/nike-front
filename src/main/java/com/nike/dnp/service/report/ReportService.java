@@ -113,6 +113,9 @@ public class ReportService {
         final UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
         userAuthSearchDTO.setMenuCode(ServiceCode.MenuCode.REPORT_UPLOAD.toString());
         userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.REPORT.toString());
+        userAuthSearchDTO.setAuthSeq(
+                ObjectUtils.isEmpty(reportSearchDTO.getGroupSeq()) ? SecurityUtil.currentUser().getAuthSeq() : reportSearchDTO.getGroupSeq()
+        );
 
         List<AuthReturnDTO> authList = this.findAllAuthListWithDepth(userAuthSearchDTO, "Y");
         List<Long> authSeqList = this.authDepthToList(authList);
@@ -532,8 +535,14 @@ public class ReportService {
      * @implNote 권한 목록 조회
      * @since 2020. 8. 26. 오후 4:52:23
      */
-    public List<AuthReturnDTO> findAllAuthListWithDepth(final UserAuthSearchDTO userAuthSearchDTO, final String onlySkillCode) {
-        return authService.getAuthListWithDepth(userAuthSearchDTO, authService.getById(SecurityUtil.currentUser().getAuthSeq()), onlySkillCode);
+    public List<AuthReturnDTO> findAllAuthListWithDepth(
+            final UserAuthSearchDTO userAuthSearchDTO, final String onlySkillCode
+    ) {
+        return authService.getAuthListWithDepth(
+                userAuthSearchDTO
+                , authService.getById(userAuthSearchDTO.getAuthSeq())
+                , onlySkillCode
+        );
     }
 
     /**
