@@ -164,7 +164,7 @@ public class FileUtil {
 		log.info("FileUtil.makeNewFile");
 		final String newFilepath = root + File.separator + cleanXSS(folder);
 		final String newFileName = cleanXSS(makeFileName()) + "." + extension;
-		final File result = new File(cleanXSS(newFilepath+File.separator+ newFileName));
+		final File result = new File(cleanXSS(newFilepath)+File.separator + cleanXSS(newFileName));
 		new File(newFilepath).mkdirs();
 		return result;
 	}
@@ -539,6 +539,10 @@ public class FileUtil {
 		value = value.replaceAll("eval\\((.*)\\)", "");
 		value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
 		value = value.replaceAll("script", "");
+		value = value.replaceAll("&", " ");
+		value = value.replaceAll("\\.", " ");
+		value = value.replaceAll("\\\\", " ");
+		value = value.replaceAll("/", " ");
 
 
 		value = value.replaceAll("\\.\\./", "");
