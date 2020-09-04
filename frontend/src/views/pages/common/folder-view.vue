@@ -558,6 +558,9 @@ export default {
             }
         },
         async addContBasket(seq) {
+            if (!seq.length) {
+                alert('선택한 파일이 없습니다.');
+            }
             try {
                 await addContentsBasket(
                     this.$route.meta.topMenuCode,
@@ -568,6 +571,7 @@ export default {
                 );
                 await this.$store.dispatch('getContBasket');
             } catch (error) {
+                alert(1);
                 if (error.data.code === 'NO_AUTH') {
                     if (error.data.existMsg) {
                         alert(error.data.msg);

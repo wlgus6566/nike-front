@@ -19,6 +19,8 @@ const routes = [
                     layout: 'Default',
                     aside: 'Default',
                     title: 'AGENCY CONTACT',
+                    topMenuCode: 'INFORMATION',
+                    menuCode: 'CONTACT',
                 },
             },
             {
@@ -28,6 +30,8 @@ const routes = [
                     layout: 'Default',
                     aside: 'Default',
                     title: 'CALENDAR',
+                    topMenuCode: 'INFORMATION',
+                    menuCode: 'CALENDAR',
                 },
             },
         ],

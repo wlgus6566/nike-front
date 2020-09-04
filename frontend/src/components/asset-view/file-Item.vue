@@ -191,7 +191,7 @@
 
                                 <div class="down-info">
                                     <span class="key">다운로드 횟수</span>
-                                    <span class="val" is="item.downloadCount">
+                                    <span class="val">
                                         <strong>{{
                                             item.downloadCount
                                         }}</strong>

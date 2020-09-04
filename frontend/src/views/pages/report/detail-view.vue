@@ -186,6 +186,9 @@ export default {
                 await postReportBasket(seq);
                 await this.$store.dispatch('getReportListBasket');
             } catch (error) {
+                if (error.data.existMsg) {
+                    alert(error.data.msg);
+                }
                 console.error(error);
             }
         },

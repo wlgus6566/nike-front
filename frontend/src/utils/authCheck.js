@@ -7,9 +7,6 @@ const authCheck = {
                 this.$route.params.pathMatch || this.$route.meta.menuCode;
             const index = GNB.findIndex((el) => el.menuCode === TopMenuCode);
 
-            console.log(GNB);
-            console.log(TopMenuCode);
-
             if (GNB[index] && MenuCode) {
                 const authDisabled = GNB[index].menus.some((el) => {
                     let elementMenuCode = el.menuCode.split('_');

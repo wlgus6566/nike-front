@@ -31,6 +31,7 @@
                     <button
                         type="button"
                         class="modi"
+                        v-if="folderAuthCheck('CREATE')"
                         v-on:click="
                             $emit(
                                 'detailAgencyManagement',
@@ -53,6 +54,7 @@
                     type="button"
                     class="btn-form-gray"
                     v-on:click="$emit('showAgencyManagement')"
+                    v-if="folderAuthCheck('CREATE')"
                 >
                     <span>등록</span>
                 </button>
@@ -62,21 +64,15 @@
 </template>
 <script>
 import NoData from '@/components/no-data';
+import { authCheck } from '@/utils/authCheck';
 
 export default {
     name: 'index',
-    data() {
-        return {};
-    },
+    mixins: [authCheck],
     components: {
         NoData,
     },
     props: ['agencyData', 'loadingData'],
-    computed: {
-        check() {},
-    },
-    methods: {},
-    created() {},
 };
 </script>
 <style scoped></style>

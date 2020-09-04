@@ -6,7 +6,10 @@
                     <input
                         type="checkbox"
                         v-model="checkAll"
-                        :disabled="reportFileData && !reportFileData.length"
+                        :disabled="
+                            (reportFileData && !reportFileData.length) ||
+                            !folderAuthCheck('DOWNLOAD')
+                        "
                         @click="$emit('allCheckFn')"
                     />
                     <i></i>
@@ -14,7 +17,9 @@
                 <strong class="txt" :class="{ 'fc-black': checkAll }">
                     전체선택 (
                     <em>{{ checkContentsFileList.length }}</em> /
-                    <em>{{ reportFileListTotal }}</em>
+                    <em>{{
+                        !folderAuthCheck('DOWNLOAD') ? 0 : reportFileListTotal
+                    }}</em>
                     )
                 </strong>
             </label>
@@ -48,7 +53,7 @@
                                     type="checkbox"
                                     :value="item.reportFileSeq"
                                     v-model="checkContentsFileList"
-                                    :disabled="item.url"
+                                    :disabled="!folderAuthCheck('DOWNLOAD')"
                                     @click="
                                         $emit(
                                             'checkContentsFile',

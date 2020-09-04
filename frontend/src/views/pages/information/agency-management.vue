@@ -15,7 +15,7 @@
                             <button
                                 type="button"
                                 class="txt-btn-orange"
-                                v-if="agencySeq"
+                                v-if="!!agencySeq && folderAuthCheck('DELETE')"
                                 v-on:click="
                                     $emit('delAgencyManagement', agencySeq)
                                 "
@@ -98,7 +98,7 @@
                         <button
                             type="button"
                             class="btn-s-black"
-                            v-if="agencySeq"
+                            v-if="!!agencySeq"
                             v-on:click="
                                 $emit('modifyAgencyManagement', agencySeq)
                             "
@@ -127,14 +127,16 @@
 </template>
 
 <script>
+import { authCheck } from '@/utils/authCheck';
+
 export default {
     props: {
         visible: Boolean,
         receipt: Object,
         addAgencyData: Object,
-        agencySeq: false,
+        agencySeq: String,
     },
-    created() {},
+    mixins: [authCheck],
     methods: {
         removeBodyClass(className) {
             const body = document.body;

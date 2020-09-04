@@ -117,7 +117,7 @@ export default {
                     data: { data: response },
                 } = await getDetailAgencyContact(agencySeq, {});
                 this.addAgencyData = response;
-                this.agencySeq = agencySeq;
+                this.agencySeq = agencySeq.toString();
             } catch (error) {
                 console.error(error);
             }
