@@ -124,16 +124,16 @@
     </div>
 </template>
 <script>
-    import {getMain} from '@/api/main';
-    import {getCalendarEachList, getTodayCalendar} from '@/api/calendar/';
+import {getMain} from '@/api/main';
+import {getCalendarEachList, getTodayCalendar} from '@/api/calendar/';
 
-    import moment from 'moment';
-    import FullCalendar from '@fullcalendar/vue';
-    import dayGridPlugin from '@fullcalendar/daygrid';
-    import interactionPlugin from '@fullcalendar/interaction';
-    import momentPlugin from '@fullcalendar/moment';
+import moment from 'moment';
+import FullCalendar from '@fullcalendar/vue';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import momentPlugin from '@fullcalendar/moment';
 
-    export default {
+export default {
     name: 'MainPage',
     data() {
         return {
@@ -206,7 +206,9 @@
             try {
                 const {
                     data: { data: response },
-                } = await getMain();
+                } = await getMain({
+                  mobile: 'Y'
+                });
                 this.assetContentsList = response.assetContentsList;
                 this.foundationContentsList = response.foundationContentsList;
                 this.mainVisual = response.mainVisual;
