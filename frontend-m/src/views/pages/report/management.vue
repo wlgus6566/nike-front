@@ -10,7 +10,7 @@
             </button>
             <FilterSelect :selectList="selectList"></FilterSelect>
             <CascaderSelect :cascaderList="authority"></CascaderSelect>
-            <form @submit.prevent="search">
+            <form action="#" @submit.prevent="search">
                 <div class="search-input" :class="{ active: searchIsActive }">
                     <!-- active 추가하면 검색 화면 보임 -->
                     <div class="input-box">

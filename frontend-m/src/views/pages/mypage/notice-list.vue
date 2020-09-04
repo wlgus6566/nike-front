@@ -4,7 +4,7 @@
             <p class="total">
                 전체 <strong>({{ totalElements }})</strong>
             </p>
-            <form @submit.prevent="searchInputActive">
+            <form action="#" @submit.prevent="searchInputActive">
                 <div class="search-input" :class="{ active: isActive }">
                     <div class="input-box">
                         <input

@@ -9,7 +9,7 @@
                 <span>컬럼타입</span>
             </button>
             <FilterSelect :selectList="listSortSelect"></FilterSelect>
-            <form @submit.prevent="onClickSearch">
+            <form action="#" @submit.prevent="onClickSearch">
                 <div class="search-input" :class="{ active: isActive }">
                     <div class="input-box">
                         <input
