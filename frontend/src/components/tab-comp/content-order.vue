@@ -65,7 +65,9 @@
             <div class="total-price">
                 <span class="key">총 예상 금액</span>
                 <strong class="val">
-                    <em>{{ totalPrice }}</em>
+                    <em>
+                        {{ totalPrice | formattedNumber('', '') }}
+                    </em>
                     원
                 </strong>
             </div>
@@ -134,13 +136,13 @@ export default {
     mounted() {},
     methods: {
         showOrderSheet() {
-            this.visible.orderSheet = true;
+            /*this.visible.orderSheet = true;
             this.orderSeq = this.basketList.map((el) => {
                 return el.goodsSeq;
             });
             this.orderQuan = this.basketList.map((el) => {
                 return el.orderQuantity;
-            });
+            });*/
         },
 
         // 장바구니 삭제 api

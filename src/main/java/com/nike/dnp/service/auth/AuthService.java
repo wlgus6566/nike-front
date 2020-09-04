@@ -622,7 +622,7 @@ public class AuthService {
 
             if (1 == auth.getAuthDepth()) {
                 transformAuthList = allAuthList;
-            } else if (2 == auth.getAuthDepth()) {
+            } else {
                 for (AuthReturnDTO authReturnDTO : allAuthList) {
                     if (auth.getAuthSeq().equals(authReturnDTO.getAuthSeq())) {
                         transformAuthList.add(authReturnDTO);
