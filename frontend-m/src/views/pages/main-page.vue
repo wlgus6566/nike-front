@@ -54,7 +54,7 @@
         </div>
         <h2 class="main-title">NOTICE</h2>
         <ul class="notice-list">
-            <li v-for="item in noticeArticleList" :key="item.noticeArticleSeq">
+            <li v-for="item in noticeMaxList" :key="item.noticeArticleSeq">
                 <a :href="'/mypage/notice/detail/' + item.noticeArticleSeq">
                     <span class="label-noti" v-if="item.noticeYn === 'Y'"
                         >중요</span
@@ -79,7 +79,7 @@
         <ul class="main-report-list">
             <li
                 class="report-list-item"
-                v-for="item in reportList"
+                v-for="item in reportMaxList"
                 :key="item.reportSeq"
             >
                 <a :href="'/report/detail/' + item.reportSeq">
@@ -178,6 +178,9 @@ export default {
                 },
                 // Some Swiper option/callback...
             },
+            noticeLength: 5,
+            reportLength: 2,
+            num: 0,
             loading: false,
             assetContentsList: [],
             foundationContentsList: [],
@@ -242,6 +245,16 @@ export default {
     computed: {
         swiper() {
             return this.$refs.mySwiper.$swiper;
+        },
+        noticeMaxList() {
+            const start = this.num * this.noticeLength,
+                end = start + this.noticeLength;
+            return this.noticeArticleList.slice(start, end);
+        },
+        reportMaxList() {
+            const start = this.num * this.reportLength,
+                end = start + this.reportLength;
+            return this.reportList.slice(start, end);
         },
     },
     components: { FullCalendar, Swiper, SwiperSlide },
