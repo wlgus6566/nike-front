@@ -12,10 +12,13 @@
                     <i></i>
                 </span>
                 <strong class="txt" :class="{ 'fc-black': checkAll }">
-                    전체선택 (
-                    <em>{{ checkContentsFileList.length }}</em> /
-                    <em>{{ contentsFileListTotal }}</em>
-                    )
+                    전체선택 (<em
+                        :class="{
+                            'fc-black': checkContentsFileList.length !== 0,
+                        }"
+                        >{{ checkContentsFileList.length }}</em
+                    >/<em>{{ contentsFileListTotal }}</em
+                    >)
                 </strong>
             </label>
             <button
@@ -125,10 +128,9 @@
                                 :class="buttonClass(item.contentsFileSeq)"
                                 :disabled="
                                     item.fileKindCode === 'VR' ||
-                                        (item.fileKindCode === 'FILE' &&
-                                            !item.thumbnailFilePhysicalName) ||
-                                        (item.fileKindCode === 'VIDEO' &&
-                                            !item.url)
+                                    (item.fileKindCode === 'FILE' &&
+                                        !item.thumbnailFilePhysicalName) ||
+                                    (item.fileKindCode === 'VIDEO' && !item.url)
                                 "
                                 @click="accordion(item.contentsFileSeq)"
                             >
@@ -277,7 +279,7 @@ export default {
         storeContBasketList: {
             get() {
                 return this.$store.state.contBasketList.map(
-                    el => el.contentsFileSeq
+                    (el) => el.contentsFileSeq
                 );
             },
             set(value) {
@@ -308,7 +310,7 @@ export default {
             //return video_id;
         },
         test(seq) {
-            return this.storeContBasketList.some(el => el === seq);
+            return this.storeContBasketList.some((el) => el === seq);
         },
 
         buttonClass(seq) {
@@ -318,8 +320,8 @@ export default {
             };
         },
         fileItemClass(seq) {
-            const ignore = this.checkContentsFileList.every(el => el !== seq);
-            const added = this.storeContBasketList.some(el => el === seq);
+            const ignore = this.checkContentsFileList.every((el) => el !== seq);
+            const added = this.storeContBasketList.some((el) => el === seq);
             return {
                 'file-item': true,
                 'ignore-elements': ignore || added,
@@ -352,7 +354,7 @@ export default {
             gsap.from(el, 0.3, {
                 height: 0,
                 ease: Cubic.easeInOut,
-                onComplete: function() {
+                onComplete: function () {
                     el.style.height = 'auto';
                     done();
                 },
