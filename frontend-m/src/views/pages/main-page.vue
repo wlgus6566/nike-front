@@ -14,7 +14,12 @@
                 v-for="item in toolKitContentsList"
                 :key="item.contentsSeq"
             >
-                <router-link :to="setUrl(item)" @click.native="alertMsg(item)">
+                <a
+                    @click="onClickDetail(
+                        item
+                        , `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
+                    )"
+                >
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
@@ -24,14 +29,19 @@
                             SP20 나이키 다이렉트
                         </span>
                     </span>
-                </router-link>
+                </a>
             </div>
             <div
                 class="update-list-item"
                 v-for="item in foundationContentsList"
                 :key="item.contentsSeq"
             >
-                <router-link :to="setUrl(item)" @click.native="alertMsg(item)">
+                <a
+                    @click="onClickDetail(
+                        item
+                        , `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
+                    )"
+                >
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
@@ -41,15 +51,13 @@
                             SP20 나이키 다이렉트</span
                         >
                     </span>
-                </router-link>
+                </a>
             </div>
         </div>
         <h2 class="main-title">NOTICE</h2>
         <ul class="notice-list">
             <li v-for="item in noticeMaxList" :key="item.noticeArticleSeq">
-                <router-link
-                    :to="'/mypage/notice/detail/' + item.noticeArticleSeq"
-                >
+                <a :href="'/mypage/notice/detail/' + item.noticeArticleSeq">
                     <span class="label-noti" v-if="item.noticeYn === 'Y'"
                         >중요</span
                     >
@@ -57,7 +65,7 @@
                         >NIKE 2020 PSKO 일정이 업데이트 되었습니다.</span
                     >
                     <span class="data" v-text="item.updateDt">2020.06.17</span>
-                </router-link>
+                </a>
             </li>
         </ul>
         <h2 class="main-title">CALENDAR</h2>
@@ -76,7 +84,7 @@
                 v-for="item in reportMaxList"
                 :key="item.reportSeq"
             >
-                <router-link :to="setUrl(item)" @click.native="alertMsg(item)">
+                <a @click="onClickDetail(item, '/report/detail/' + item.reportSeq)">
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
@@ -90,7 +98,7 @@
                             컬렉션코리아 팀 스니커즈 컬렉션
                         </p>
                     </span>
-                </router-link>
+                </a>
             </li>
         </ul>
         <h2 class="main-title">NEWS</h2>
@@ -100,9 +108,7 @@
                 v-for="item in newsArticleList"
                 :key="item.noticeArticleSeq"
             >
-                <router-link
-                    :to="'/mypage/news/detail/' + item.noticeArticleSeq"
-                >
+                <a :href="'/mypage/news/detail/' + item.noticeArticleSeq">
                     <span class="thumbnail">
                         <img :src="item.thumbnailFilePhysicalName" alt="" />
                     </span>
@@ -115,7 +121,7 @@
                             >2020. 06. 17.</span
                         >
                     </span>
-                </router-link>
+                </a>
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
@@ -228,21 +234,11 @@ export default {
         swiper: directive,
     },
     methods: {
-        alertMsg(item) {
-            console.log(item.detailAuthYn);
+        onClickDetail(item, url) {
             if (item.detailAuthYn === 'N') {
                 alert('접근 권한이 없습니다.');
-            }
-        },
-        setUrl(item) {
-            if (item.detailAuthYn === 'N') {
-                return `${this.$route.fullPath}`;
             } else {
-                if (item.reportSeq) {
-                    return `/report/detail/${item.reportSeq}`.toLocaleLowerCase();
-                } else {
-                    return `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase();
-                }
+                this.$router.push(url);
             }
         },
         swiperFn() {

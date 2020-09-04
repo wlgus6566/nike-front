@@ -163,8 +163,7 @@ public class FileUtil {
 	public static File makeNewFile(final String folder,final String extension) {
 		log.info("FileUtil.makeNewFile");
 		final String newFilepath = root + File.separator + cleanXSS(folder);
-		final String newFileName = cleanXSS(makeFileName()) + "." + extension;
-		final File result = new File(cleanXSS(newFilepath+File.separator+ newFileName));
+		final File result = new File(newFilepath+File.separator + cleanXSS(makeFileName()) + "." + extension);
 		new File(newFilepath).mkdirs();
 		return result;
 	}
@@ -242,8 +241,8 @@ public class FileUtil {
 			}
 			detailCommand.append(" -resize 700x700 -background white -gravity center -extent 700x700 ").append(detailPath);
 			try{
-				final String cmd = whiteListing(detailCommand.toString());
-				if (cmd.isEmpty()) {
+				final String cmd = whiteListing(detailCommand.toString(), folder);
+				if (cmd.isEmpty() || "".equals(cmd)) {
 					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 				}
 				final Process procDetail = Runtime.getRuntime().exec(cmd);
@@ -277,8 +276,8 @@ public class FileUtil {
 			try{
 				/*final Runtime runtime = Runtime.getRuntime();
 				final Process proc = runtime.exec(whiteListing(command.toString()));*/
-				final String cmd = whiteListing(command.toString());
-				if (cmd.isEmpty()) {
+				final String cmd = whiteListing(command.toString(), folder);
+				if (cmd.isEmpty() || "".equals(cmd)) {
 					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 				}
 				final Process proc = Runtime.getRuntime().exec(cmd);
@@ -305,8 +304,8 @@ public class FileUtil {
 			// 사이즈 변환시 700:394 를 변경 하면 됨
 			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail.mp4";
 
-			final String cmd = whiteListing(ffmpeg + File.separator + ffmpegCommand);
-			if (cmd.isEmpty()) {
+			final String cmd = whiteListing(ffmpeg + File.separator + ffmpegCommand, folder);
+			if (cmd.isEmpty() || "".equals(cmd)) {
 				throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 
@@ -532,6 +531,11 @@ public class FileUtil {
 	 * @since 2020. 8. 25. 오후 5:07:38
 	 */
 	public static String cleanXSS(String value) {
+		String [] replaceStr = {"bin","boot","etc","home","lib","lib64","proc","root","sbin","sys","usr","var"};
+		for(String str : replaceStr){
+			value = value.replaceAll(str, "");
+		}
+
 
 		value = value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 		value = value.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");
@@ -539,9 +543,14 @@ public class FileUtil {
 		value = value.replaceAll("eval\\((.*)\\)", "");
 		value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
 		value = value.replaceAll("script", "");
+		value = value.replaceAll("&", "");
+		value = value.replaceAll("\\\\", "");
+		value = value.replaceAll("/", " ");
 
-
+		value = value.replaceAll("\\.\\.", "");
 		value = value.replaceAll("\\.\\./", "");
+		value = value.replaceAll("\\./", "");
+		value = value.replaceAll("\\.\\\\", "");
 		value = value.replaceAll("\\.\\.\\\\", "");
 		return value;
 	}
@@ -550,36 +559,38 @@ public class FileUtil {
 	 * 화이트 문자열 체트
 	 *
 	 * @param paramStr the param str
+	 * @param folder
 	 * @return the string
 	 * @author [윤태호]
 	 * @implNote
 	 * @since 2020. 8. 31. 오후 12:25:53
 	 */
-	private static String whiteListing(String paramStr) {
-		final String[] checkStrArray = {imageMagick + File.separator + imageMagickCommand, ffmpeg + File.separator + ffmpegCommand};
-		boolean check = false;
-		for(String checkStr : checkStrArray){
-			if(paramStr.indexOf(checkStr) == 0){
-				check = true;
+	private static String whiteListing(String paramStr, String folder) {
+
+		File files = new File(root + File.separator + cleanXSS(folder));
+
+		boolean checkfile = false;
+		for(File file : files.listFiles()){
+			log.debug("file.getName() > " + file.getName());
+			if(paramStr.contains(file.getName())){
+				checkfile= true;
 			}
 		}
-		if(check){
-			return paramStr;
+
+		if(checkfile){
+			final String[] checkStrArray = {imageMagick + File.separator + imageMagickCommand, ffmpeg + File.separator + ffmpegCommand};
+
+			boolean check = false;
+			for(String checkStr : checkStrArray){
+				if(paramStr.indexOf(checkStr) == 0){
+					check = true;
+				}
+			}
+			if(check){
+				return paramStr;
+			}
 		}
 		return "";
-	}
 
-	/**
-	 * The entry point of application.
-	 *
-	 * @param args the input arguments
-	 * @author [윤태호]
-	 * @implNote
-	 * @since 2020. 8. 31. 오후 12:25:54
-	 */
-	public static void main(String[] args) {
-		String test = "d:/test"+File.separator+"test.jpg../../../../.."+File.separator+"sldjflksjdlfjk";
-
-		System.out.println(whiteListing(test));
 	}
 }

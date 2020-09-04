@@ -37,6 +37,14 @@
                 >
                     <router-link :to="setUrl(item)">
                         <div class="thumbnail">
+                            <span class="exposure" v-if="item.exposureYn === 'N'">
+                                <i></i>작성중
+                            </span>
+                            <span
+                                class="auth"
+                                v-if="item.exposureYn === 'Y' && item.detailAuthYn === 'N'">
+                                <i></i>권한 없음
+                            </span>
                             <img :src="item.imageFilePhysicalName" alt="" />
                         </div>
                         <div class="info-box">
