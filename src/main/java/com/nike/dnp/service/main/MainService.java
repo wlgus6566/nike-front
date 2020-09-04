@@ -95,7 +95,7 @@ public class MainService {
      * @implNote 메인 정보 조회 (메인비쥬얼, ASSET, TOOLKIT, FOUNDATION, REPORT, NOTICE, NEWS)
      * @since 2020. 7. 27. 오후 6:53:07
      */
-    public MainResultDTO findMainInfo() {
+    public MainResultDTO findMainInfo(final String mobileYn) {
         final MainResultDTO mainResultDTO = new MainResultDTO();
 
         // 메인 비쥬얼(베너)
@@ -125,7 +125,7 @@ public class MainService {
         CustomerSearchDTO customerSearchDTO = new CustomerSearchDTO();
         customerSearchDTO.setNoticeArticleSectionCode(ServiceCode.NoticeArticleSectionEnumCode.NOTICE.toString());
         customerSearchDTO.setPage(0);
-        customerSearchDTO.setSize(7);
+        customerSearchDTO.setSize("Y".equals(mobileYn) ? 5 : 7);
         mainResultDTO.setNoticeArticleList(noticeService.findNoticePages(customerSearchDTO).getContent());
 
 
