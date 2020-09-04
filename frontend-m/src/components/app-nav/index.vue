@@ -7,8 +7,6 @@
                         class="loading"
                         :options="aniHome"
                         :exact="true"
-                        :width="32"
-                        :height="32"
                         @animCreated="handleAnimation"
                     />
                     <!--                    <i class="icon-home"></i>-->
@@ -23,8 +21,6 @@
                     <lottie
                         class="loading"
                         :options="aniReport"
-                        :width="32"
-                        :height="32"
                         @animCreated="handleAnimation"
                     />
                     <!--                    <i class="icon-report"></i>-->
@@ -36,8 +32,6 @@
                     <lottie
                         class="loading"
                         :options="aniMy"
-                        :width="32"
-                        :height="32"
                         @animCreated="handleAnimation"
                     />
                     <!--                    <i class="icon-my"></i>-->
@@ -55,8 +49,6 @@
                     <Lottie
                         class="loading"
                         :options="aniMenu"
-                        :width="32"
-                        :height="32"
                         @animCreated="handleAnimation"
                     />
                     <!--                    <i class="icon-menu"></i>-->
