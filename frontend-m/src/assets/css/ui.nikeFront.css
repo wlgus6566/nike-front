@@ -2145,11 +2145,12 @@
     font-size: 14px;
     color: #333;
 }
+.fc .fc-daygrid-day.fc-active .fc-daygrid-day-number,
 .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
     width: 26px;
     height: 26px;
     margin: 7px 0 0 7px;
-    line-height: 16px;
+    line-height: 19px;
     border-radius: 50%;
     white-space: nowrap;
     background: #000;
@@ -2157,6 +2158,10 @@
     font-size: 14px;
     font-weight: 600;
     text-align: center;
+}
+.fc .fc-daygrid-day.fc-active .fc-daygrid-day-number {
+    margin: 0;
+    background-color: #fa5400;
 }
 .fc .fc-h-event {
     height: 18px;
@@ -2183,6 +2188,10 @@
 .fc-direction-ltr .fc-daygrid-event.fc-event-end,
 .fc-direction-rtl .fc-daygrid-event.fc-event-start {
     margin-right: 6px !important;
+}
+.fc .fc-daygrid-body-balanced .fc-daygrid-day-events {
+    top: 0;
+    bottom: 0;
 }
 
 /* Calendar Popup */
