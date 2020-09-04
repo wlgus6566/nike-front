@@ -2097,6 +2097,7 @@
 }
 .all-box .check-label .checkbox {
     height: 20px;
+    margin-right: 10px;
     font-size: 12px;
 }
 .all-box .el-checkbox {
