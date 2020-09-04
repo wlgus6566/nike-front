@@ -4253,6 +4253,7 @@ img.image-grayscale {
 .schedule-item .title {
     position: relative;
     padding-left: 11px;
+    line-height: 20px;
     font-size: 14px;
     color: #888;
     font-weight: normal;
@@ -4273,6 +4274,7 @@ img.image-grayscale {
 }
 .schedule-item .desc {
     margin-top: 5px;
+    line-height: 17px;
     padding-left: 11px;
     font-size: 11px;
     color: #555;
