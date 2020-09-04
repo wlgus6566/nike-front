@@ -33,10 +33,8 @@ public class ServiceCode {
     @Getter
     public enum SearchEnumCode {
         LATEST("updateDt") //최신순
-        , START_DATE("campaignBeginDt"); //시작일순
-        //TODO[ojh] 2020/09/03 : 이거 왜 수정한건지 알고싶어요
-        /*LATEST("LATEST") //최신순
-        , START_DATE("START_DATE"); //시작일순*/
+        , START_DATE("campaignBeginDt") //시작일순
+        , PERIOD_SECTION_CODE("campaignPeriodSectionCode");
 
         /**
          * 코드값
