@@ -4499,7 +4499,7 @@ img.image-grayscale {
 .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
     width: 26px;
     height: 26px;
-    line-height: 16px;
+    line-height: 19px;
     border-radius: 50%;
     white-space: nowrap;
     background-color: #000;
