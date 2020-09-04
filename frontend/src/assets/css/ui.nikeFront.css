@@ -3829,6 +3829,9 @@ img.image-grayscale {
 .no-data .icon-folder {
     background-image: url('../images/svg/illust-page-folder-view-none.svg');
 }
+.no-data .icon-folder-none {
+    background-image: url('../images/svg/illust-page-folder-upload-none.svg');
+}
 .no-data .icon-file {
     background-image: url('../images/svg/illust-page-folder-file-none.svg');
 }
