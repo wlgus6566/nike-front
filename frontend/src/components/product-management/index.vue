@@ -3,7 +3,10 @@
         <div class="tbl-list">
             <table>
                 <colgroup>
-                    <col style="width: 60px;" />
+                    <col
+                        style="width: 60px;"
+                        v-if="folderAuthCheck('DELETE')"
+                    />
                     <col style="width: 160px;" />
                     <col style="width: 219px;" />
                     <col style="width: 62px;" />
@@ -14,7 +17,7 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th>
+                        <th v-if="folderAuthCheck('DELETE')">
                             <span class="checkbox">
                                 <input
                                     type="checkbox"
@@ -35,7 +38,7 @@
                 </thead>
                 <tbody v-if="!loading">
                     <tr v-for="item in productListData" :key="item.goodsSeq">
-                        <td>
+                        <td v-if="folderAuthCheck('DELETE')">
                             <span class="checkbox">
                                 <input
                                     type="checkbox"
@@ -51,11 +54,16 @@
                             {{ item.category3Name }}
                         </td>
                         <td>
-                            <router-link :to="setUrl(item)" class="under-link">
+                            <router-link
+                                v-if="folderAuthCheck('CREATE')"
+                                :to="setUrl(item)"
+                                class="under-link"
+                            >
                                 <span>
                                     {{ item.goodsName }}
                                 </span>
                             </router-link>
+                            <span v-else>{{ item.goodsName }}</span>
                         </td>
                         <td>
                             {{ item.minimumOrderQuantity }}
@@ -76,10 +84,15 @@
             </table>
         </div>
         <div class="btn-tbl-box">
-            <button type="button" class="btn-form" @click="$emit('checkDel')">
+            <button
+                type="button"
+                class="btn-form"
+                @click="$emit('checkDel')"
+                v-if="folderAuthCheck('DELETE')"
+            >
                 <span data-v-1756ba49="">삭제</span>
             </button>
-            <div class="right">
+            <div class="right" v-if="folderAuthCheck('CREATE')">
                 <router-link to="/order/registration" class="btn-form-gray">
                     <span data-v-1756ba49="">등록</span>
                 </router-link>
@@ -89,9 +102,11 @@
 </template>
 <script>
 import Loading from '@/components/loading';
+import { authCheck } from '@/utils/authCheck';
 
 export default {
     name: 'index',
+    mixins: [authCheck],
     data() {
         return {};
     },

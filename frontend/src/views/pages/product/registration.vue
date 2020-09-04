@@ -185,7 +185,7 @@
             </div>
         </form>
         <Loading
-            class="list-loading"
+            class="page-loading"
             :width="172"
             :height="172"
             v-if="loadingData"
@@ -202,10 +202,12 @@ import { getCategoryList } from '@/utils/code';
 import { fileUpLoad } from '@/api/file';
 import Compress from 'compress.js';
 import bus from '@/utils/bus';
-
+import Loading from '@/components/loading';
 export default {
     name: 'registration',
-    components: {},
+    components: {
+        Loading,
+    },
     data() {
         return {
             loadingData: false,
@@ -370,7 +372,6 @@ export default {
         },
         //에이전시 리스트
         async getAgency() {
-            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -404,7 +405,6 @@ export default {
         },
         // 상품 상세 불러오기
         async detailProduct() {
-            this.loadingData = true;
             if (this.$route.params.id) {
                 try {
                     const { data: response } = await getProductDetail(
@@ -457,7 +457,9 @@ export default {
                         await this.$router.push('/order/management');
                         await store.dispatch('basketList');
                         this.detailData.imageBase64 = null;
+                        this.loadingData = false;
                     } catch (error) {
+                        this.loadingData = false;
                         console.error(error);
                     }
                 }
@@ -470,7 +472,9 @@ export default {
                         // await getExistMsg(response);
                         this.productDataReset();
                         await this.$router.push('/order/management');
+                        this.loadingData = false;
                     } catch (error) {
+                        this.loadingData = false;
                         console.error(error);
                     }
                 }

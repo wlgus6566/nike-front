@@ -375,7 +375,6 @@ export default {
                 } else {
                     responseData = await postReport(this.reportDetailData);
                 }
-                console.log('responseData', responseData);
                 if (responseData.data.code) {
                     alert(responseData.data.msg);
                 }
@@ -388,6 +387,11 @@ export default {
                     imageBase64: null,
                     reportFileSaveDTOList: [],
                 };
+                if (this.$route.params.id) {
+                    await this.$router.push(
+                        `/report/detail/${this.$route.params.id}`
+                    );
+                }
                 /*if (this.$route.params.id) {
                     await this.$router.push(
                         `/report/detail/${this.$route.params.id}`

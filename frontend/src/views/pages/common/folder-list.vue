@@ -74,7 +74,7 @@ export default {
     },
     data() {
         return {
-            uploadAuth: this.authCheckVal('CREATE') || false,
+            uploadAuth: this.folderAuthCheck('CREATE') || false,
             title: this.$route.meta.title,
             itemLength: 20,
             totalPage: null,

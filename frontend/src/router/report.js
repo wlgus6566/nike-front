@@ -19,6 +19,7 @@ const routes = [
                     layout: 'Default',
                     aside: 'Default',
                     title: 'REPORT <span class="ko">업로드</span>',
+                    topMenuCode: 'REPORT',
                 },
             },
             {
@@ -28,6 +29,8 @@ const routes = [
                     layout: 'Default',
                     aside: 'Report',
                     title: 'REPORT <span class="ko">업로드 수정</span>',
+                    topMenuCode: 'REPORT',
+                    menuCode: 'MANAGE',
                 },
             },
             {
@@ -37,6 +40,8 @@ const routes = [
                     layout: 'Default',
                     aside: 'Report',
                     title: 'REPORT <span class="ko">관리</span>',
+                    topMenuCode: 'REPORT',
+                    menuCode: 'MANAGE',
                 },
             },
             {
@@ -46,6 +51,8 @@ const routes = [
                     layout: 'Default',
                     aside: 'Report',
                     title: 'REPORT 상세',
+                    topMenuCode: 'REPORT',
+                    menuCode: 'MANAGE',
                 },
             },
         ],

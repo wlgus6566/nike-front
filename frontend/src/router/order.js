@@ -10,17 +10,35 @@ const routes = [
             {
                 path: 'registration',
                 component: pages('product/registration'),
-                meta: { layout: 'Default', aside: 'Order', title: '상품 등록' },
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    topMenuCode: 'ORDER',
+                    menuCode: 'PRODUCT',
+                    title: '상품 등록',
+                },
             },
             {
                 path: 'modify/:id',
                 component: pages('product/registration'),
-                meta: { layout: 'Default', aside: 'Order', title: '상품 수정' },
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    topMenuCode: 'ORDER',
+                    menuCode: 'PRODUCT',
+                    title: '상품 수정',
+                },
             },
             {
                 path: 'management',
                 component: pages('product/management'),
-                meta: { layout: 'Default', aside: 'Order', title: '상품 관리' },
+                meta: {
+                    layout: 'Default',
+                    aside: 'Order',
+                    topMenuCode: 'ORDER',
+                    menuCode: 'PRODUCT',
+                    title: '상품 관리',
+                },
             },
             {
                 path: 'complete',

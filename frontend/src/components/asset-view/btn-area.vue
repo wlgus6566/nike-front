@@ -8,7 +8,7 @@
                 type="button"
                 class="btn-o-white"
                 @click="$emit('delete')"
-                v-if="authCheckVal('DELETE')"
+                v-if="folderAuthCheck('DELETE')"
             >
                 <span>삭제</span>
             </button>
@@ -16,7 +16,7 @@
                 type="button"
                 class="btn-o-white"
                 @click="$emit('edit')"
-                v-if="authCheckVal('CREATE')"
+                v-if="folderAuthCheck('CREATE')"
             >
                 <span>수정</span>
             </button>

@@ -8,7 +8,7 @@
                         v-model="checkAll"
                         :disabled="
                             (contentsFileList && !contentsFileList.length) ||
-                            !authCheckVal('DOWNLOAD')
+                            !folderAuthCheck('DOWNLOAD')
                         "
                         @click="$emit('allCheckFn')"
                     />
@@ -18,7 +18,7 @@
                     전체선택 (
                     <em>{{ checkContentsFileList.length }}</em> /
                     <em>{{
-                        !authCheckVal('DOWNLOAD') ? 0 : contentsFileListTotal
+                        !folderAuthCheck('DOWNLOAD') ? 0 : contentsFileListTotal
                     }}</em>
                     )
                 </strong>
@@ -59,7 +59,7 @@
                                     v-model="checkContentsFileList"
                                     :disabled="
                                         item.fileKindCode !== 'FILE' ||
-                                        !authCheckVal('DOWNLOAD')
+                                        !folderAuthCheck('DOWNLOAD')
                                     "
                                     @click="
                                         $emit(
@@ -124,7 +124,7 @@
                                         ])
                                     "
                                     v-else
-                                    :disabled="!authCheckVal('DOWNLOAD')"
+                                    :disabled="!folderAuthCheck('DOWNLOAD')"
                                 >
                                     <span>ADD</span>
                                 </button>

@@ -105,6 +105,7 @@
                                         ])
                                     "
                                     v-else
+                                    :disabled="!folderAuthCheck('DOWNLOAD')"
                                 >
                                     <span>ADD</span>
                                 </button>
@@ -164,8 +165,10 @@ import draggable from 'vuedraggable';
 import Loading from '@/components/loading';
 import NoData from '@/components/no-data';
 import { Cubic, gsap } from 'gsap/all';
+import { authCheck } from '@/utils/authCheck';
 export default {
     name: 'reportItem',
+    mixins: [authCheck],
     data() {
         return { openFile: null, enabled: true, dragging: false };
     },
