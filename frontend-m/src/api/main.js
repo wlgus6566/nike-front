@@ -1,8 +1,10 @@
-import { main } from './index';
+import {main} from './index';
 
 // main
-function getMain() {
-    return main.get(``);
+function getMain(params) {
+    return main.get(``,{
+        params: params,
+    });
 }
 
 export { getMain };
