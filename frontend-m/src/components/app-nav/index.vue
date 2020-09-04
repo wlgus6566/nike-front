@@ -13,11 +13,8 @@
                     <span>HOME</span>
                 </router-link>
             </li>
-            <li>
-                <router-link
-                    to="/report/management"
-                    @click.native="menuLottie(1)"
-                >
+            <li @click="alertMsg">
+                <router-link :to="setUrl()" @click.native="menuLottie(1)">
                     <lottie
                         class="loading"
                         :options="aniReport"
@@ -84,6 +81,7 @@ import * as aniReport from '@/assets/images/lottie/menu_report.json';
 import * as aniMy from '@/assets/images/lottie/menu_my.json';
 import * as aniMenu from '@/assets/images/lottie/menu_menu.json';
 import bus from '@/utils/bus';
+import store from '@/store';
 export default {
     name: 'navigation',
     data() {
@@ -118,17 +116,78 @@ export default {
     },
     watch: {
         pathUrl(val) {
+            console.log(val.split('/')[1]);
             if (val.split('/')[1] === 'report') {
                 this.menuLottie(1);
             }
         },
         '$store.state.menuData'() {
             this.menuFn();
+            this.setUrl();
+            let _lottieIndex = 0;
+            if (this.pathUrl === '/') {
+                _lottieIndex = 0;
+            } else {
+                const path = this.pathUrl.split('/')[1];
+                if (path === 'mypage') {
+                    _lottieIndex = 2;
+                } else if (path === 'report') {
+                    _lottieIndex = 1;
+                } else {
+                    _lottieIndex = 3;
+                }
+            }
+            this.menuLottie(_lottieIndex);
         },
     },
     methods: {
+        alertMsg() {
+            if (!this.$store.state.menuData) return;
+            const state = this.$store.state.menuData.some(
+                el => el.menuCode === 'REPORT'
+            );
+            if (!state) {
+                alert('접근 권한이 없습니다.');
+            }
+        },
+        setUrl() {
+            if (!this.$store.state.menuData) {
+                return this.pathUrl;
+            } else {
+                const state = this.$store.state.menuData.some(
+                    el => el.menuCode === 'REPORT'
+                );
+                if (!state) {
+                    return this.pathUrl;
+                } else {
+                    const idxAuthYn = this.$store.state.menuData.findIndex(
+                        el => el.detailAuthYn === 'N'
+                    );
+                    console.log(idxAuthYn);
+                    if (idxAuthYn !== -1) {
+                        return this.pathUrl;
+                    } else {
+                        console.log(this.pathUrl);
+                        const idx = this.$store.state.menuData.findIndex(
+                            el => el.menuCode === 'REPORT'
+                        );
+                        return this.$store.state.menuData[idx].menus[0]
+                            .menuPathUrl;
+                    }
+                }
+            }
+        },
         menuLottie(index) {
+            if (!this.$store.state.menuData) return;
             bus.$emit('closeFn');
+            const state = this.$store.state.menuData.some(
+                el => el.menuCode === 'REPORT'
+            );
+            if (!state) {
+                if (index === 1) {
+                    return;
+                }
+            }
             this.anim.forEach(el => {
                 el.goToAndStop(0, true);
             });

@@ -14,11 +14,7 @@
                 v-for="item in toolKitContentsList"
                 :key="item.contentsSeq"
             >
-                <a
-                    :href="
-                        `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
-                    "
-                >
+                <router-link :to="setUrl(item)" @click.native="alertMsg(item)">
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
@@ -28,18 +24,14 @@
                             SP20 나이키 다이렉트
                         </span>
                     </span>
-                </a>
+                </router-link>
             </div>
             <div
                 class="update-list-item"
                 v-for="item in foundationContentsList"
                 :key="item.contentsSeq"
             >
-                <a
-                    :href="
-                        `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
-                    "
-                >
+                <router-link :to="setUrl(item)" @click.native="alertMsg(item)">
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
@@ -49,13 +41,15 @@
                             SP20 나이키 다이렉트</span
                         >
                     </span>
-                </a>
+                </router-link>
             </div>
         </div>
         <h2 class="main-title">NOTICE</h2>
         <ul class="notice-list">
             <li v-for="item in noticeMaxList" :key="item.noticeArticleSeq">
-                <a :href="'/mypage/notice/detail/' + item.noticeArticleSeq">
+                <router-link
+                    :to="'/mypage/notice/detail/' + item.noticeArticleSeq"
+                >
                     <span class="label-noti" v-if="item.noticeYn === 'Y'"
                         >중요</span
                     >
@@ -63,7 +57,7 @@
                         >NIKE 2020 PSKO 일정이 업데이트 되었습니다.</span
                     >
                     <span class="data" v-text="item.updateDt">2020.06.17</span>
-                </a>
+                </router-link>
             </li>
         </ul>
         <h2 class="main-title">CALENDAR</h2>
@@ -82,7 +76,7 @@
                 v-for="item in reportMaxList"
                 :key="item.reportSeq"
             >
-                <a :href="'/report/detail/' + item.reportSeq">
+                <router-link :to="setUrl(item)" @click.native="alertMsg(item)">
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
@@ -96,47 +90,19 @@
                             컬렉션코리아 팀 스니커즈 컬렉션
                         </p>
                     </span>
-                </a>
+                </router-link>
             </li>
         </ul>
         <h2 class="main-title">NEWS</h2>
-        <!--    <swiper
-            ref="mySwiper"
-            :options="swiperComponentOption"
-            class="main-news-list"
-        >
-            <swiper-slide
-                class="news-list-item"
-                v-for="item in newsArticleList"
-                :key="item.noticeArticleSeq"
-            >
-                <a :href="'/mypage/news/detail/' + item.noticeArticleSeq">
-                    <span class="thumbnail">
-                        <img :src="item.thumbnailFilePhysicalName" alt="" />
-                    </span>
-                    <span class="info-box">
-                        <strong class="title" v-text="item.title"
-                            >JORDAN SEOUL</strong
-                        >
-                        &lt;!&ndash;                        <p class="desc" v-text="item.contents">조던 서울 오픈 포토 리캡</p>&ndash;&gt;
-                        <span class="date" v-text="item.updateDt"
-                            >2020. 06. 17.</span
-                        >
-                    </span>
-                </a>
-            </swiper-slide>
-            &lt;!&ndash; If we need navigation buttons &ndash;&gt;
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-pagination" slot="pagination"></div>
-        </swiper>-->
         <swiper ref="mySwiper" :options="swiperOptions" class="main-news-list">
             <swiper-slide
                 class="news-list-item"
                 v-for="item in newsArticleList"
                 :key="item.noticeArticleSeq"
             >
-                <a :href="'/mypage/news/detail/' + item.noticeArticleSeq">
+                <router-link
+                    :to="'/mypage/news/detail/' + item.noticeArticleSeq"
+                >
                     <span class="thumbnail">
                         <img :src="item.thumbnailFilePhysicalName" alt="" />
                     </span>
@@ -149,7 +115,7 @@
                             >2020. 06. 17.</span
                         >
                     </span>
-                </a>
+                </router-link>
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
@@ -262,6 +228,23 @@ export default {
         swiper: directive,
     },
     methods: {
+        alertMsg(item) {
+            console.log(item.detailAuthYn);
+            if (item.detailAuthYn === 'N') {
+                alert('접근 권한이 없습니다.');
+            }
+        },
+        setUrl(item) {
+            if (item.detailAuthYn === 'N') {
+                return `${this.$route.fullPath}`;
+            } else {
+                if (item.reportSeq) {
+                    return `/report/detail/${item.reportSeq}`.toLocaleLowerCase();
+                } else {
+                    return `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase();
+                }
+            }
+        },
         swiperFn() {
             this.swiper.slideTo(0, 1000, false);
         },

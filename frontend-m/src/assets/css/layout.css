@@ -328,8 +328,12 @@ footer .copy {
 .user-info .store-name {
     display: block;
     font-size: 16px;
+    margin-right: 25px;
     font-weight: bold;
     line-height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .user-info .store {
     display: block;

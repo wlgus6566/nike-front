@@ -1533,9 +1533,13 @@
 }
 .my-main .user-info .name {
     display: block;
+    max-width: calc(100% - 80px);
     line-height: 60px;
     font-size: 16px;
     color: #000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .my-main .user-info .store {
     display: block;
