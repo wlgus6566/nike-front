@@ -257,7 +257,7 @@
 }
 [class^='btn-'] .icon-mail {
     background-image: url('../images/svg/icon-mail-send.svg');
-    margin-left: 5px;
+    margin-right: 4px;
 }
 [class^='btn-'] .icon-check {
     background-image: url('../images/svg/icon-btn-check.svg');
@@ -4952,7 +4952,7 @@ img.image-grayscale {
     position: relative;
     top: auto;
     left: auto;
-    width: auto;
+    width: 94px;
     padding: 0;
     margin: 0 132px 0 10px;
 }
