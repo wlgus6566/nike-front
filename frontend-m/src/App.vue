@@ -21,7 +21,6 @@ import App from './App.vue';
 import { layouts } from '@/utils/global-methods';
 import bus from '@/utils/bus';
 import Loading from '@/components/loading/index';
-
 Vue.use(ElementUI, { locale });
 
 Vue.use({ locale });

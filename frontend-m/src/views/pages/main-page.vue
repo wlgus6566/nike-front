@@ -15,7 +15,7 @@
                 :key="item.contentsSeq"
             >
                 <a
-                        :href="
+                    :href="
                         `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
                     "
                 >
@@ -46,7 +46,8 @@
                     <span class="info-box">
                         <span class="label"> FOUNDATION </span>
                         <span class="desc" v-text="item.folderName">
-                            SP20 나이키 다이렉트</span>
+                            SP20 나이키 다이렉트</span
+                        >
                     </span>
                 </a>
             </div>
@@ -99,8 +100,38 @@
             </li>
         </ul>
         <h2 class="main-title">NEWS</h2>
-        <div class="main-news-list">
-            <div
+        <!--    <swiper
+            ref="mySwiper"
+            :options="swiperComponentOption"
+            class="main-news-list"
+        >
+            <swiper-slide
+                class="news-list-item"
+                v-for="item in newsArticleList"
+                :key="item.noticeArticleSeq"
+            >
+                <a :href="'/mypage/news/detail/' + item.noticeArticleSeq">
+                    <span class="thumbnail">
+                        <img :src="item.thumbnailFilePhysicalName" alt="" />
+                    </span>
+                    <span class="info-box">
+                        <strong class="title" v-text="item.title"
+                            >JORDAN SEOUL</strong
+                        >
+                        &lt;!&ndash;                        <p class="desc" v-text="item.contents">조던 서울 오픈 포토 리캡</p>&ndash;&gt;
+                        <span class="date" v-text="item.updateDt"
+                            >2020. 06. 17.</span
+                        >
+                    </span>
+                </a>
+            </swiper-slide>
+            &lt;!&ndash; If we need navigation buttons &ndash;&gt;
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>-->
+        <swiper ref="mySwiper" :options="swiperOptions" class="main-news-list">
+            <swiper-slide
                 class="news-list-item"
                 v-for="item in newsArticleList"
                 :key="item.noticeArticleSeq"
@@ -119,13 +150,16 @@
                         >
                     </span>
                 </a>
-            </div>
-        </div>
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
     </div>
 </template>
 <script>
-import {getMain} from '@/api/main';
-import {getCalendarEachList, getTodayCalendar} from '@/api/calendar/';
+import { getMain } from '@/api/main';
+import { getCalendarEachList, getTodayCalendar } from '@/api/calendar/';
+import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper';
+import 'swiper/css/swiper.css';
 
 import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
@@ -137,6 +171,13 @@ export default {
     name: 'MainPage',
     data() {
         return {
+            swiperOptions: {
+                pagination: {
+                    el: '.swiper-pagination',
+                    type: 'fraction',
+                },
+                // Some Swiper option/callback...
+            },
             loading: false,
             assetContentsList: [],
             foundationContentsList: [],
@@ -191,23 +232,33 @@ export default {
             },
         };
     },
-    components: {
-        FullCalendar,
-    },
     created() {
         this.loadCalendar();
     },
     mounted() {
         this.fetchData();
+        this.swiperFn();
+    },
+    computed: {
+        swiper() {
+            return this.$refs.mySwiper.$swiper;
+        },
+    },
+    components: { FullCalendar, Swiper, SwiperSlide },
+    directives: {
+        swiper: directive,
     },
     methods: {
+        swiperFn() {
+            this.swiper.slideTo(0, 1000, false);
+        },
         async fetchData() {
             this.loading = true;
             try {
                 const {
                     data: { data: response },
                 } = await getMain({
-                  mobile: 'Y'
+                    mobile: 'Y',
                 });
                 this.assetContentsList = response.assetContentsList;
                 this.foundationContentsList = response.foundationContentsList;
@@ -264,7 +315,7 @@ export default {
         // 달력에 맞게 변수명 변경
         transformData() {
             this.calendarOptions.events = [];
-            this.calendarData.forEach((item) => {
+            this.calendarData.forEach(item => {
                 let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
                     className = 'edu';
@@ -286,9 +337,9 @@ export default {
         },
         distinctAndAddEvent() {
             let distinctEventList = [];
-            this.calendarOptions.events.forEach((item) => {
+            this.calendarOptions.events.forEach(item => {
                 let check = false;
-                distinctEventList.forEach((ele) => {
+                distinctEventList.forEach(ele => {
                     if (item.start === ele.start) {
                         check = true;
                     }
@@ -297,7 +348,7 @@ export default {
                     distinctEventList.push(item);
                 }
             });
-            distinctEventList.forEach((item) => {
+            distinctEventList.forEach(item => {
                 this.calendarOptions.events.unshift(item);
             });
         },
