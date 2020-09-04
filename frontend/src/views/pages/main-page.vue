@@ -283,12 +283,16 @@ export default {
         },
         handleScroll() {
             const body = document.querySelector('.fc-daygrid-body');
+            // const date = this.$moment(e.date).format('YYYY-MM-DD');
+            // const cal = this.$refs.fullCalendar.$el;
+            // const td = cal.querySelector(`td[data-date="${date}"]`);
 
             if (body.childNodes[1]) {
                 body.classList.remove('pop-open');
                 //body.removeChild(body.childNodes[1]);
                 window.removeEventListener('scroll', this.handleScroll);
                 window.removeEventListener('resize', this.handleScroll);
+                // td.classList.remove('fc-active');
             }
         },
         calClickEvent(e) {
