@@ -4,26 +4,24 @@
             <p class="total">
                 전체 <strong>({{ totalElements }})</strong>
             </p>
-            <div class="search-input" :class="{ active: isActive }">
-                <div class="input-box">
-                    <input
-                        type="search"
-                        placeholder="검색어를 입력해주세요."
-                        @keyup.enter="searchInputActive"
-                        v-model="keyword"
-                    />
-                    <button
-                        type="button"
-                        class="search"
-                        @click="searchInputActive"
-                    >
-                        <span>검색</span>
-                    </button>
+            <form @submit.prevent="searchInputActive">
+                <div class="search-input" :class="{ active: isActive }">
+                    <div class="input-box">
+                        <input
+                            type="search"
+                            placeholder="검색어를 입력해주세요."
+                            @keyup.enter="searchInputActive"
+                            v-model="keyword"
+                        />
+                        <button type="submit" class="search">
+                            <span>검색</span>
+                        </button>
+                    </div>
+                    <div class="btn-txt" @click="searchInputInactive">
+                        <span>취소</span>
+                    </div>
                 </div>
-                <div class="btn-txt" @click="searchInputInactive">
-                    <span>취소</span>
-                </div>
-            </div>
+            </form>
         </div>
         <template v-if="newsData">
             <div class="news-list" v-if="newsData.length > 0">
@@ -67,9 +65,9 @@
     </div>
 </template>
 <script>
-    import {getCustomerList} from '@/api/customer/';
+import { getCustomerList } from '@/api/customer/';
 
-    export default {
+export default {
     name: 'news-list',
     data() {
         return {
