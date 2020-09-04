@@ -13,7 +13,7 @@
                 <div class="search-input" :class="{ active: isActive }">
                     <div class="input-box">
                         <input
-                            type="text"
+                            type="search"
                             placeholder="검색어를 입력해주세요."
                             @keyup.enter="onClickSearch"
                             v-model="searchKeyword"
