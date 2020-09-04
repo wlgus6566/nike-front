@@ -458,7 +458,19 @@ footer .copy {
     text-indent: -9999px;
     background: url('../images/svg/icon-close-popup.svg') no-repeat center;
 }
-.modal.full {
+.el-dialog.full {
+    margin: 0 !important;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+}
+.el-dialog.full .el-dialog__footer {
+    padding: 0;
+    height: 54px;
 }
 
 /*.modal.full .el-dialog {
