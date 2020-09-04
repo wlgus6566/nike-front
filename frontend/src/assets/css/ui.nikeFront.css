@@ -257,7 +257,7 @@
 }
 [class^='btn-'] .icon-mail {
     background-image: url('../images/svg/icon-mail-send.svg');
-    margin-left: 5px;
+    margin-right: 4px;
 }
 [class^='btn-'] .icon-check {
     background-image: url('../images/svg/icon-btn-check.svg');
@@ -1205,7 +1205,7 @@
     color: #000;
     font-weight: 600;
 }
-.select el-input__icon {
+.select .el-input__icon {
     width: 30px;
 }
 /* cascader-select */
@@ -2097,6 +2097,7 @@
 }
 .all-box .check-label .checkbox {
     height: 20px;
+    margin-right: 10px;
     font-size: 12px;
 }
 .all-box .el-checkbox {
@@ -3823,14 +3824,17 @@ img.image-grayscale {
 .no-data .icon-search {
     background-image: url('../images/svg/illust-page-search-none.svg');
 }
-.no-data .icon-order {
-    background-image: url('../images/svg/illust-page-folder-order-none.svg');
-}
 .no-data .icon-wish {
     background-image: url('../images/svg/illust-page-folder-wish-none.svg');
 }
 .no-data .icon-folder {
     background-image: url('../images/svg/illust-page-folder-view-none.svg');
+}
+.no-data .icon-folder-none {
+    background-image: url('../images/svg/illust-page-folder-upload-none.svg');
+}
+.no-data .icon-file {
+    background-image: url('../images/svg/illust-page-folder-file-none.svg');
 }
 .no-data .icon-drop {
     width: 50px;
@@ -4042,12 +4046,10 @@ img.image-grayscale {
 .quantity .el-input-number .el-input__inner {
     height: 16px;
     line-height: 16px;
-    width: auto;
-    max-width: 20px;
+    width: 45px;
     margin: 0 25px;
     padding: 0;
     text-align: center;
-    border-bottom: 1px solid #000;
 }
 .quantity .num {
     display: flex;
@@ -4235,7 +4237,10 @@ img.image-grayscale {
 .schedule-item {
     position: relative;
     display: flex;
+    min-height: 80px;
+    box-sizing: border-box;
     justify-content: space-between;
+    align-items: center;
     margin-top: 10px;
     padding: 19px 30px;
     background: #f7f7f7;
@@ -4249,7 +4254,9 @@ img.image-grayscale {
 .schedule-item .title {
     position: relative;
     padding-left: 11px;
+    line-height: 20px;
     font-size: 14px;
+    color: #888;
     font-weight: normal;
     word-break: break-all;
 }
@@ -4268,6 +4275,7 @@ img.image-grayscale {
 }
 .schedule-item .desc {
     margin-top: 5px;
+    line-height: 17px;
     padding-left: 11px;
     font-size: 11px;
     color: #555;
@@ -4282,7 +4290,6 @@ img.image-grayscale {
     flex-shrink: 0;
     z-index: 2;
     position: relative;
-    margin-top: 14px;
     margin-left: 30px;
 }
 .schedule-item .btn-edit {
@@ -4319,7 +4326,7 @@ img.image-grayscale {
 }
 .schedule-item.campaign .title {
     color: #007b68;
-    opacity:1;
+    opacity: 1;
 }
 .schedule-item.campaign .title:before {
     background-color: #007b68;
@@ -4494,16 +4501,21 @@ img.image-grayscale {
     font-weight: 600;
     color: #333;
 }
+.fc .fc-daygrid-day.fc-active .fc-daygrid-day-number,
 .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
-    width: 22px;
-    height: 22px;
-    line-height: 16px;
+    width: 26px;
+    height: 26px;
+    line-height: 19px;
     border-radius: 50%;
     white-space: nowrap;
-    background: #000;
+    background-color: #000;
     color: #fff;
     font-size: 11px;
+    font-weight: 600;
     text-align: center;
+}
+.fc .fc-daygrid-day.fc-active .fc-daygrid-day-number {
+    background-color: #fa5400;
 }
 .fc .fc-h-event {
     height: 18px;
@@ -4942,9 +4954,9 @@ img.image-grayscale {
     position: relative;
     top: auto;
     left: auto;
-    width: auto;
+    width: 94px;
     padding: 0;
-    margin: 0 157px 0 10px;
+    margin: 0 132px 0 10px;
 }
 .folder-list-row li .view-area .view {
     position: relative;
@@ -4956,6 +4968,9 @@ img.image-grayscale {
     font-size: 12px;
     letter-spacing: 0;
     background: transparent;
+}
+.folder-list-row .folder-item .view-area .view:before {
+    background-image: url('../../assets/images/svg/icon-view-small.svg');
 }
 .folder-list-row .folder-item .auth,
 .folder-list-row .folder-item .exposure {

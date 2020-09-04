@@ -20,7 +20,7 @@ export default {
                 tabClass: 'tab-list',
                 tabList: [
                     {
-                        title: 'MYPAGE',
+                        title: 'MY PAGE',
                         component: 'ContentMypage',
                     },
                     {

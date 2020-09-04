@@ -154,11 +154,12 @@ public class ContentsService {
         // QueryDsl 기능 이용
         contentsSearchDTO.setUserAuthSeq(authSeq);
         return contentsRepository.findPageContents(
-                contentsSearchDTO,
-                PageRequest.of(contentsSearchDTO.getPage()
-                        , contentsSearchDTO.getSize()
-                        , contentsSearchDTO.equals("START_DATE")
-                                ? Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).ascending() : Sort.by(ServiceCode.SearchEnumCode.LATEST.getValue()).descending()));
+            contentsSearchDTO,
+            PageRequest.of(contentsSearchDTO.getPage()
+                , contentsSearchDTO.getSize()
+                , contentsSearchDTO.getOrderType().equals("START_DATE")
+                        ? Sort.by(ServiceCode.SearchEnumCode.PERIOD_SECTION_CODE.getValue()).descending()
+                            .and(Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).ascending()) : Sort.by(ServiceCode.SearchEnumCode.LATEST.getValue()).descending()));
     }
 
     /**

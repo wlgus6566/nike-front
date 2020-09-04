@@ -283,9 +283,13 @@ export default {
         },
         handleScroll() {
             const body = document.querySelector('.fc-daygrid-body');
+            const cal = this.$refs.fullCalendar.$el;
 
             if (body.childNodes[1]) {
                 body.classList.remove('pop-open');
+                cal.querySelectorAll('td').forEach((el) => {
+                    el.classList.remove('fc-active');
+                });
                 //body.removeChild(body.childNodes[1]);
                 window.removeEventListener('scroll', this.handleScroll);
                 window.removeEventListener('resize', this.handleScroll);
@@ -298,7 +302,10 @@ export default {
             const cal = this.$refs.fullCalendar.$el;
             const td = cal.querySelector(`td[data-date="${date}"]`);
             body.classList.add('pop-open');
-            //td.classList.add('test');
+            cal.querySelectorAll('td').forEach((el) => {
+                el.classList.remove('fc-active');
+            });
+            td.classList.add('fc-active');
             window.addEventListener('scroll', this.handleScroll);
             window.addEventListener('resize', this.handleScroll);
             setTimeout(() => {
@@ -314,7 +321,7 @@ export default {
                 a.appendChild(txt);
                 body.appendChild(a);
                 close.addEventListener('click', () => {
-                    td.classList.remove('test');
+                    td.classList.remove('fc-active');
                 });
             }, 0);
         },
@@ -752,9 +759,9 @@ export default {
     border-bottom: 5px solid #ccc;
     border-top: 0;
 }
-::v-deep .test {
-    /*background: red;*/
-}
+/*::v-deep .fc-active {*/
+/*    background-color: #fa5400;*/
+/*}*/
 ::v-deep .fc .fc-daygrid-day-number {
     font-weight: 400;
     font-size: 12px;
@@ -767,14 +774,14 @@ export default {
     top: 0;
     left: 0;
     display: block;
-    width: 30px;
-    height: 30px;
+    width: 100%;
+    height: 40px;
     font: 0/0 a;
     /*text-indent: -99999px;*/
 }
 ::v-deep .fc-daygrid-more-link:before {
     position: absolute;
-    top: 6px;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
     content: '';

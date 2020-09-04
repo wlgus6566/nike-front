@@ -15,8 +15,11 @@
                 :key="item.contentsSeq"
             >
                 <a
-                    :href="
-                        `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
+                    @click="
+                        onClickDetail(
+                            item,
+                            `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
+                        )
                     "
                 >
                     <span class="thumbnail">
@@ -24,9 +27,9 @@
                     </span>
                     <span class="info-box">
                         <span class="label"> TOOLKIT </span>
-                        <span class="desc" v-text="item.folderContents"
-                            >SP20 나이키 다이렉트</span
-                        >
+                        <span class="desc" v-text="item.folderName">
+                            SP20 나이키 다이렉트
+                        </span>
                     </span>
                 </a>
             </div>
@@ -35,27 +38,32 @@
                 v-for="item in foundationContentsList"
                 :key="item.contentsSeq"
             >
-              <a
-                  :href="
-                          `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
-                      "
-              >
-                <span class="thumbnail">
-                  <img :src="item.imageFilePhysicalName" alt="" />
-                </span>
-                <span class="info-box">
-                  <span class="label"> FOUNDATION </span>
-                  <span class="desc" v-text="item.folderContents"
-                  >SP20 나이키 다이렉트</span
-                  >
-                </span>
-              </a>
+                <a
+                    @click="
+                        onClickDetail(
+                            item,
+                            `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
+                        )
+                    "
+                >
+                    <span class="thumbnail">
+                        <img :src="item.imageFilePhysicalName" alt="" />
+                    </span>
+                    <span class="info-box">
+                        <span class="label"> FOUNDATION </span>
+                        <span class="desc" v-text="item.folderName">
+                            SP20 나이키 다이렉트</span
+                        >
+                    </span>
+                </a>
             </div>
         </div>
         <h2 class="main-title">NOTICE</h2>
         <ul class="notice-list">
-            <li v-for="item in noticeArticleList" :key="item.noticeArticleSeq">
-                <a :href="'/mypage/notice/detail/' + item.noticeArticleSeq">
+            <li v-for="item in noticeMaxList" :key="item.noticeArticleSeq">
+                <router-link
+                    :to="'/mypage/notice/detail/' + item.noticeArticleSeq"
+                >
                     <span class="label-noti" v-if="item.noticeYn === 'Y'"
                         >중요</span
                     >
@@ -63,7 +71,7 @@
                         >NIKE 2020 PSKO 일정이 업데이트 되었습니다.</span
                     >
                     <span class="data" v-text="item.updateDt">2020.06.17</span>
-                </a>
+                </router-link>
             </li>
         </ul>
         <h2 class="main-title">CALENDAR</h2>
@@ -79,10 +87,14 @@
         <ul class="main-report-list">
             <li
                 class="report-list-item"
-                v-for="item in reportList"
+                v-for="item in reportMaxList"
                 :key="item.reportSeq"
             >
-                <a :href="'/report/detail/' + item.reportSeq">
+                <a
+                    @click.prevent="
+                        onClickDetail(item, '/report/detail/' + item.reportSeq)
+                    "
+                >
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
@@ -100,13 +112,15 @@
             </li>
         </ul>
         <h2 class="main-title">NEWS</h2>
-        <div class="main-news-list">
-            <div
+        <swiper ref="mySwiper" :options="swiperOptions" class="main-news-list">
+            <swiper-slide
                 class="news-list-item"
                 v-for="item in newsArticleList"
                 :key="item.noticeArticleSeq"
             >
-                <a :href="'/mypage/news/detail/' + item.noticeArticleSeq">
+                <router-link
+                    :to="'/mypage/news/detail/' + item.noticeArticleSeq"
+                >
                     <span class="thumbnail">
                         <img :src="item.thumbnailFilePhysicalName" alt="" />
                     </span>
@@ -119,14 +133,17 @@
                             >2020. 06. 17.</span
                         >
                     </span>
-                </a>
-            </div>
-        </div>
+                </router-link>
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
     </div>
 </template>
 <script>
-import {getMain} from '@/api/main';
-import {getCalendarEachList, getTodayCalendar} from '@/api/calendar/';
+import { getMain } from '@/api/main';
+import { getCalendarEachList, getTodayCalendar } from '@/api/calendar/';
+import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper';
+import 'swiper/css/swiper.css';
 
 import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
@@ -138,6 +155,16 @@ export default {
     name: 'MainPage',
     data() {
         return {
+            swiperOptions: {
+                pagination: {
+                    el: '.swiper-pagination',
+                    type: 'fraction',
+                },
+                // Some Swiper option/callback...
+            },
+            noticeLength: 5,
+            reportLength: 2,
+            num: 0,
             loading: false,
             assetContentsList: [],
             foundationContentsList: [],
@@ -154,7 +181,7 @@ export default {
                 // 일자 클릭시
                 // dateClick: this.handleDateClick,
                 dateClick: this.handleDateClick,
-                moreLinkClick: this.test,
+                moreLinkClick: this.calClickEvent,
                 height: 410,
                 events: [],
                 dayMaxEventRows: true,
@@ -192,22 +219,51 @@ export default {
             },
         };
     },
-    components: {
-        FullCalendar,
-    },
     created() {
         this.loadCalendar();
     },
     mounted() {
         this.fetchData();
+        this.swiperFn();
+    },
+    computed: {
+        swiper() {
+            return this.$refs.mySwiper.$swiper;
+        },
+        noticeMaxList() {
+            const start = this.num * this.noticeLength,
+                end = start + this.noticeLength;
+            return this.noticeArticleList.slice(start, end);
+        },
+        reportMaxList() {
+            const start = this.num * this.reportLength,
+                end = start + this.reportLength;
+            return this.reportList.slice(start, end);
+        },
+    },
+    components: { FullCalendar, Swiper, SwiperSlide },
+    directives: {
+        swiper: directive,
     },
     methods: {
+        onClickDetail(item, url) {
+            if (item.detailAuthYn === 'N') {
+                alert('접근 권한이 없습니다.');
+            } else {
+                this.$router.push(url);
+            }
+        },
+        swiperFn() {
+            this.swiper.slideTo(0, 1000, false);
+        },
         async fetchData() {
             this.loading = true;
             try {
                 const {
                     data: { data: response },
-                } = await getMain();
+                } = await getMain({
+                    mobile: 'Y',
+                });
                 this.assetContentsList = response.assetContentsList;
                 this.foundationContentsList = response.foundationContentsList;
                 this.mainVisual = response.mainVisual;
@@ -219,25 +275,49 @@ export default {
                 console.log(error);
             }
         },
-        test(e) {
+        handleScroll() {
+            const body = document.querySelector('.fc-daygrid-body');
+            const cal = this.$refs.fullCalendar.$el;
+
+            if (body.childNodes[1]) {
+                body.classList.remove('pop-open');
+                cal.querySelectorAll('td').forEach((el) => {
+                    el.classList.remove('fc-active');
+                });
+                //body.removeChild(body.childNodes[1]);
+                window.removeEventListener('scroll', this.handleScroll);
+                window.removeEventListener('resize', this.handleScroll);
+            }
+        },
+        calClickEvent(e) {
             //console.log(e);
+            const body = document.querySelector('.fc-daygrid-body');
+            const tdWidth = e.jsEvent.target.closest('td').offsetWidth / 2;
             const date = this.$moment(e.date).format('YYYY-MM-DD');
             const cal = this.$refs.fullCalendar.$el;
             const td = cal.querySelector(`td[data-date="${date}"]`);
-            td.classList.add('test');
+            body.classList.add('pop-open');
+            cal.querySelectorAll('td').forEach((el) => {
+                el.classList.remove('fc-active');
+            });
+            td.classList.add('fc-active');
+            window.addEventListener('scroll', this.handleScroll);
+            window.addEventListener('resize', this.handleScroll);
 
             setTimeout(() => {
                 const modal = document.querySelector('.fc-more-popover');
                 const close = modal.querySelector('.fc-popover-close');
                 const body = modal.querySelector('.fc-popover-body');
                 const a = document.createElement('a');
-                //TODO router 작업 필요
+                const txt = document.createTextNode('자세히 보기');
+                console.log(tdWidth);
+                modal.style.marginLeft = `${tdWidth}px`;
                 a.href = '/information/calendar';
                 a.classList.add('fc-more');
-                a.append('자세히 보기');
-                body.append(a);
+                a.appendChild(txt);
+                body.appendChild(a);
                 close.addEventListener('click', () => {
-                    td.classList.remove('test');
+                    td.classList.remove('fc-active');
                 });
             }, 0);
         },
@@ -312,10 +392,8 @@ export default {
 </script>
 <style scoped>
 ::v-deep .fc .fc-more-popover {
-    margin-top: 85px;
-}
-::v-deep .test {
-    /*background: red;*/
+    margin-top: 41px;
+    transform: translateX(-50%);
 }
 ::v-deep .fc {
     margin: 15px -20px 0;
@@ -338,12 +416,17 @@ export default {
 }
 ::v-deep .fc-daygrid-day-top {
     display: flex;
-    min-height: 45px;
+    min-height: 40px;
     justify-content: center;
     align-items: center;
 }
 ::v-deep .fc-daygrid-day-bottom {
-    width: 100%;
+    margin: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
 }
 ::v-deep .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
     margin: 0;
@@ -352,7 +435,7 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 5;
     display: block;
     width: 100%;
     height: 40px;
@@ -361,7 +444,7 @@ export default {
 }
 ::v-deep .fc-daygrid-more-link:before {
     position: absolute;
-    top: 3px;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
     content: '';
@@ -371,7 +454,11 @@ export default {
     border-radius: 50%;
     background: #fa5400;
 }
-::v-deep .fc-popover-body .fc-daygrid-event-harness:first-child {
-    display: none;
+/*fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-start fc-event-end fc-event-past*/
+::v-deep .fc .fc-daygrid-day .fc-daygrid-event-harness .fc-daygrid-event {
+    /*display: none;*/
 }
+/*::v-deep .fc-popover-body .fc-daygrid-event-harness:first-child {*/
+/*    display: none;*/
+/*}*/
 </style>

@@ -307,7 +307,7 @@
 }
 .main-news-list {
     display: flex;
-    margin: 15px -20px 0;
+    margin: 15px -20px 0 !important;
 }
 
 .news-list-item {
@@ -351,10 +351,61 @@
     color: #888;
     letter-spacing: 0;
 }
-
+.main-news-list .swiper-pagination-fraction {
+    display: inline-flex;
+    width: auto;
+    height: 24px;
+    padding: 0 10px;
+    border-radius: 12px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    top: 15px;
+    right: 15px;
+    bottom: auto;
+    left: auto;
+    font-size: 12px;
+    letter-spacing: 0;
+    color: rgba(255, 255, 255, 0.6);
+}
+.main-news-list .swiper-pagination-current {
+    color: #fff;
+}
 /* folder-list-item */
 .folder-list-item a {
     display: block;
+}
+.folder-list-item .auth,
+.folder-list-item .exposure {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 2;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #000;
+}
+.folder-list-item .auth i {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background: url('../../assets/images/svg/icon-authority-no.svg') no-repeat
+        50% 50% / contain;
+}
+.folder-list-item .exposure i {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background: url('../../assets/images/svg/icon-writing.svg') no-repeat 50%
+        50% / contain;
 }
 .folder-list-item .thumbnail {
     position: relative;
@@ -495,6 +546,18 @@
     position: relative;
     display: flex;
     padding: 20px 0;
+}
+.folder-list-row .folder-list-item .exposure,
+.folder-list-row .folder-list-item .auth {
+    font-size: 11px;
+}
+.folder-list-row .folder-list-item .auth i {
+    height: 30px;
+    width: 30px;
+}
+.folder-list-row .folder-list-item .exposure i {
+    height: 30px;
+    width: 30px;
 }
 .folder-list-row > li .thumbnail {
     flex-shrink: 0;
@@ -1506,6 +1569,72 @@
     line-height: 20px;
     color: #555;
 }
+[class*='extension'] {
+    display: inline-block !important;
+    width: 80px !important;
+    height: 80px !important;
+    background: url('../images/icon_extension.png') no-repeat -320px -160px /
+        auto !important;
+}
+.extension-etc {
+    background-position: -320px -160px !important;
+}
+
+.extension-tif {
+    background-position: 100px 100px !important;
+    background-color: red !important;
+}
+.extension-tif:after {
+    content: 'tif 아이콘 tbd';
+}
+.extension-pdf {
+    background-position: 0 0 !important;
+}
+.extension-indd {
+    background-position: -80px 0 !important;
+}
+.extension-ppt {
+    background-position: -160px 0 !important;
+}
+.extension-pptx {
+    background-position: -240px 0 !important;
+}
+.extension-key {
+    background-position: -320px 0 !important;
+}
+.extension-doc {
+    background-position: 0 -80px !important;
+}
+.extension-docx {
+    background-position: -80px -80px !important;
+}
+.extension-xlsx {
+    background-position: -160px -80px !important;
+}
+.extension-xls {
+    background-position: -240px -80px !important;
+}
+.extension-vr {
+    background-position: -320px -80px !important;
+}
+.extension-mp4 {
+    background-position: 0 -160px !important;
+}
+.extension-mov {
+    background-position: -80px -160px !important;
+}
+.extension-url {
+    background-position: -160px -160px !important;
+}
+.extension-avi {
+    background-position: -240px -160px !important;
+}
+.extension-otf {
+    background-position: 0 -240px !important;
+}
+.extension-ttf {
+    background-position: -80px -240px !important;
+}
 .my-main {
     padding: 0 20px;
 }
@@ -1514,9 +1643,13 @@
 }
 .my-main .user-info .name {
     display: block;
+    max-width: calc(100% - 80px);
     line-height: 60px;
     font-size: 16px;
     color: #000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .my-main .user-info .store {
     display: block;
@@ -2126,11 +2259,12 @@
     font-size: 14px;
     color: #333;
 }
+.fc .fc-daygrid-day.fc-active .fc-daygrid-day-number,
 .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
     width: 26px;
     height: 26px;
     margin: 7px 0 0 7px;
-    line-height: 16px;
+    line-height: 19px;
     border-radius: 50%;
     white-space: nowrap;
     background: #000;
@@ -2138,6 +2272,10 @@
     font-size: 14px;
     font-weight: 600;
     text-align: center;
+}
+.fc .fc-daygrid-day.fc-active .fc-daygrid-day-number {
+    margin: 0;
+    background-color: #fa5400;
 }
 .fc .fc-h-event {
     height: 18px;
@@ -2164,6 +2302,10 @@
 .fc-direction-ltr .fc-daygrid-event.fc-event-end,
 .fc-direction-rtl .fc-daygrid-event.fc-event-start {
     margin-right: 6px !important;
+}
+.fc .fc-daygrid-body-balanced .fc-daygrid-day-events {
+    top: 0;
+    bottom: 0;
 }
 
 /* Calendar Popup */

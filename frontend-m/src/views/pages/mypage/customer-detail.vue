@@ -11,7 +11,7 @@
             <button
                 type="button"
                 class="btn-s-sm-black"
-                v-on:click="goToNoticeList"
+                @click="goToNoticeList"
             >
                 <span>목록</span>
             </button>
@@ -39,14 +39,16 @@ export default {
                     this.$route.params.id
                 );
                 this.customerData = response.data;
-                console.log(this.$route.params.sectionCode);
-                console.log(this.customerData);
             } catch (error) {
                 console.log(error);
             }
         },
         goToNoticeList: function() {
-            this.$router.go(-1);
+            if (this.$route.params.sectionCode === 'notice') {
+                this.$router.push('/mypage/notice');
+            } else if (this.$route.params.sectionCode === 'news') {
+                this.$router.push('/mypage/news');
+            }
         },
     },
 };

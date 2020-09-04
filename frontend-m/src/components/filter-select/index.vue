@@ -15,6 +15,7 @@
 </template>
 <script>
 import ListModal from '@/components/filter-select/list-modal';
+import bus from "@/utils/bus";
 export default {
     name: 'FilterSelect',
     data() {
@@ -29,16 +30,34 @@ export default {
     components: {
         ListModal,
     },
+    computed:{
+      pathUrl() {
+        return this.$route.path;
+      },
+    },
     watch: {
-        'selectList.value'() {
-            const _index = this.selectList.listSortOptions.findIndex(el => {
-                return el.value === this.selectList.value;
-            });
-            this.selectLabel = this.selectList.listSortOptions[_index].label;
-        },
+      'selectList.value'() {
+        const _index = this.selectList.listSortOptions.findIndex(el => {
+          return el.value === this.selectList.value;
+        });
+        this.selectLabel = this.selectList.listSortOptions[_index].label;
+      },
     },
     mounted() {
         this.findLabel();
+        bus.$on('closeFn', () => {
+          if(this.showList){
+            this.dimmedClose();
+          }
+        });
+    },
+    deactivated() {
+    },
+    destroyed() {
+      if(this.showList){
+        this.dimmedClose();
+        document.querySelector(".modal-list.active").remove()
+      }
     },
     methods: {
         changeLabelFn(value, label) {
@@ -51,6 +70,7 @@ export default {
             this.selectLabel = this.selectList.listSortOptions[_index].label;
         },
         dimmedClose() {
+          console.log(22222)
             this.showList = false;
             document.querySelector('.modal-list-open').style.overflow = '';
             document.querySelector('#wrap').style.margin = '';

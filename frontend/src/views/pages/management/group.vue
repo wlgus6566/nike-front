@@ -311,7 +311,7 @@ export default {
     text-align: center;
     align-items: center;
     box-sizing: border-box;
-    height: 570px;
+    height: 458px;
     border: 1px solid #eee;
 }
 .no-select i {

@@ -104,20 +104,17 @@
     </div>
 </template>
 <script>
-import thumbnail from '@/components/thumbnail/index';
-import {
-    getReportDetail,
-    getReportFile,
-    postReport,
-    putReport,
-} from '@/api/report';
-import { fileUpLoad } from '@/api/file';
-import bus from '@/utils/bus';
+    import thumbnail from '@/components/thumbnail/index';
+    import {getReportDetail, getReportFile, postReport, putReport,} from '@/api/report';
+    import {fileUpLoad} from '@/api/file';
+    import bus from '@/utils/bus';
+    import {getLoginUpdate} from '@/api/mypage';
 
-export default {
+    export default {
     name: 'upload',
     data() {
         return {
+            fileUploadingInterval: null,
             title: this.$route.meta.title,
             checkedFile: [],
             uploadFileList: [],
@@ -158,6 +155,9 @@ export default {
         }
     },
     methods: {
+        async loginUpdate() {
+            const response = await getLoginUpdate();
+        },
         fileOrderSet() {
             this.uploadFileList = this.uploadFileList.filter(a => {
                 return this.reportDetailData.reportFileSaveDTOList.some(b => {
@@ -187,6 +187,7 @@ export default {
             this.reportDetailData.reportFileSaveDTOList = this.reportDetailData.reportFileSaveDTOList.filter(
                 b => b.fileOrder !== order
             );
+            this.uploadFileSize--;
             this.fileOrderSet();
         },
 
@@ -244,10 +245,15 @@ export default {
                     );
                 });
             });
-
-            if (mergeArray.length > 10) {
-                alert('10개 이상 파일을 등록할 수 없습니다.');
-                mergeArray.splice(10, 9999);
+            console.log("mergeArray > "+mergeArray.length);
+            if(mergeArray.length + this.uploadFileList.length > 10) {
+                alert('10개 이상 등록 할 수 없습니다.');
+                if(this.uploadFileList.length === 10) return;
+                let maxNum = 10;
+                if(this.uploadFileList.length > 0) {
+                    maxNum = 10 - this.uploadFileList.length;
+                }
+                mergeArray.splice(maxNum, 9999);
             }
 
             mergeArray.forEach(el => {
@@ -326,28 +332,35 @@ export default {
             this.uploadFileList = [];
         },
         async submitData() {
-            bus.$emit('pageLoading', true);
             //const uploadFn = this.$route.params.id ? putReport : postReport;
+            let responseData = '';
             try {
                 if (this.$route.params.id) {
-                    await putReport(
+                    responseData = await putReport(
                         this.reportDetailData,
                         this.$route.params.id
                     );
                 } else {
-                    await postReport(this.reportDetailData);
+                    responseData =await postReport(this.reportDetailData);
+                }
+                if(responseData.data.code) {
+                    alert(responseData.data.msg);
                 }
                 bus.$emit('pageLoading', false);
+                clearInterval(this.fileUploadingInterval);
                 this.$store.commit('SET_RELOAD', true);
-                if (this.$route.params.id) {
-                    await this.$router.push(
-                        `/report/detail/${this.$route.params.id}`
-                    );
-                } else {
-                    await this.$router.push(`/report/management`);
-                }
+                this.reportDetailData = {
+                    reportName: '',
+                    reportSectionCode: 'SP',
+                    imageBase64: null,
+                    reportFileSaveDTOList: [],
+                };
+                this.uploadFileViewer = false;
+                this.uploadFileSize = 0;
             } catch (error) {
                 console.error(error);
+                bus.$emit('pageLoading', false);
+                clearInterval(this.fileUploadingInterval);
             }
         },
 
@@ -365,6 +378,11 @@ export default {
                 ? confirm('수정하시겠습니까?')
                 : confirm('저장하시겠습니까?');
             if (addAlert) {
+                bus.$emit('pageLoading', true);
+                clearInterval(this.fileUploadingInterval);
+                this.fileUploadingInterval = setInterval(() => {
+                    this.loginUpdate();
+                }, 1000 * 60 * 10);
                 this.uploadFiles();
             }
         },

@@ -28,6 +28,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -161,8 +163,7 @@ public class FileUtil {
 	public static File makeNewFile(final String folder,final String extension) {
 		log.info("FileUtil.makeNewFile");
 		final String newFilepath = root + File.separator + cleanXSS(folder);
-		final String newFileName = cleanXSS(makeFileName()) + "." + extension;
-		final File result = new File(cleanXSS(newFilepath+File.separator+ newFileName));
+		final File result = new File(newFilepath+File.separator + cleanXSS(makeFileName()) + "." + extension);
 		new File(newFilepath).mkdirs();
 		return result;
 	}
@@ -224,6 +225,12 @@ public class FileUtil {
 				resizeExtension = resizeExt;
 			}
 			stopWatch.start("700resize_"+uploadFile.getOriginalFilename());
+
+			List<String> allowedCommands = new ArrayList<>();
+			allowedCommands.add("notepad");
+			allowedCommands.add("calc");
+
+
 			// 이미지 사이즈 700x700 으로 변환
 			final String detailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_detail." + resizeExtension;
 			final StringBuilder detailCommand = new StringBuilder(imageMagick);
@@ -234,12 +241,16 @@ public class FileUtil {
 			}
 			detailCommand.append(" -resize 700x700 -background white -gravity center -extent 700x700 ").append(detailPath);
 			try{
-				final Runtime runtimeDetail = Runtime.getRuntime();
-				final Process procDetail = runtimeDetail.exec(whiteListing(detailCommand.toString()));
+				final String cmd = whiteListing(detailCommand.toString(), folder);
+				if (cmd.isEmpty() || "".equals(cmd)) {
+					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				}
+				final Process procDetail = Runtime.getRuntime().exec(cmd);
 				procDetail.waitFor();
-			}catch(InterruptedException e){
+			}catch(InterruptedException exception){
+				log.error("exception", exception);
 				// 리사이즈 문제
-				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				//throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
 			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
@@ -263,12 +274,18 @@ public class FileUtil {
 			command.append(" -resize 100x100 -background white -gravity center -extent 100x100 ").append(thumbnailPath);
 
 			try{
-				final Runtime runtime = Runtime.getRuntime();
-				final Process proc = runtime.exec(whiteListing(command.toString()));
+				/*final Runtime runtime = Runtime.getRuntime();
+				final Process proc = runtime.exec(whiteListing(command.toString()));*/
+				final String cmd = whiteListing(command.toString(), folder);
+				if (cmd.isEmpty() || "".equals(cmd)) {
+					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				}
+				final Process proc = Runtime.getRuntime().exec(cmd);
 				proc.waitFor();
-			}catch(InterruptedException e){
+			}catch(InterruptedException exception){
+				log.error("exception", exception);
 				// 리사이즈 문제
-				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				// throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
 			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
@@ -286,7 +303,13 @@ public class FileUtil {
 
 			// 사이즈 변환시 700:394 를 변경 하면 됨
 			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail.mp4";
-			final String[] command = {whiteListing(ffmpeg + File.separator + ffmpegCommand),"-y","-i",toFile.getPath(),"-vf"
+
+			final String cmd = whiteListing(ffmpeg + File.separator + ffmpegCommand, folder);
+			if (cmd.isEmpty() || "".equals(cmd)) {
+				throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+			}
+
+			final String[] command = {cmd,"-y","-i",toFile.getPath(),"-vf"
 					,"scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
 					,thumbnailPath};
 			stopWatch.start("videoResize_"+uploadFile.getOriginalFilename());
@@ -295,21 +318,22 @@ public class FileUtil {
 			Process process = null;
 			try{
 				process = processBuilder.start();
-			}catch(Exception e){
+			}catch(Exception exception){
 				process.destroy();
-				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				log.error("exception", exception);
+				//throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			exhaustInputStream(process.getInputStream());
 			try{
 				process.waitFor();
-			}catch(InterruptedException e){
+			}catch(InterruptedException exception){
 				process.destroy();
-				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				//throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 
 			// 정상 종료가 되지 않았을 경우
 			if(process.exitValue() != 0){
-				throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
 			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
@@ -507,6 +531,11 @@ public class FileUtil {
 	 * @since 2020. 8. 25. 오후 5:07:38
 	 */
 	public static String cleanXSS(String value) {
+		String [] replaceStr = {"bin","boot","etc","home","lib","lib64","proc","root","sbin","sys","usr","var"};
+		for(String str : replaceStr){
+			value = value.replaceAll(str, "");
+		}
+
 
 		value = value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 		value = value.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");
@@ -514,9 +543,14 @@ public class FileUtil {
 		value = value.replaceAll("eval\\((.*)\\)", "");
 		value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
 		value = value.replaceAll("script", "");
+		value = value.replaceAll("&", "");
+		value = value.replaceAll("\\\\", "");
+		value = value.replaceAll("/", " ");
 
-
+		value = value.replaceAll("\\.\\.", "");
 		value = value.replaceAll("\\.\\./", "");
+		value = value.replaceAll("\\./", "");
+		value = value.replaceAll("\\.\\\\", "");
 		value = value.replaceAll("\\.\\.\\\\", "");
 		return value;
 	}
@@ -525,36 +559,38 @@ public class FileUtil {
 	 * 화이트 문자열 체트
 	 *
 	 * @param paramStr the param str
+	 * @param folder
 	 * @return the string
 	 * @author [윤태호]
 	 * @implNote
 	 * @since 2020. 8. 31. 오후 12:25:53
 	 */
-	private static String whiteListing(String paramStr) {
-		final String[] checkStrArray = {imageMagick + File.separator + imageMagickCommand, ffmpeg + File.separator + ffmpegCommand};
-		boolean check = false;
-		for(String checkStr : checkStrArray){
-			if(paramStr.indexOf(checkStr) == 0){
-				check = true;
+	private static String whiteListing(String paramStr, String folder) {
+
+		File files = new File(root + File.separator + cleanXSS(folder));
+
+		boolean checkfile = false;
+		for(File file : files.listFiles()){
+			log.debug("file.getName() > " + file.getName());
+			if(paramStr.contains(file.getName())){
+				checkfile= true;
 			}
 		}
-		if(check){
-			return paramStr;
+
+		if(checkfile){
+			final String[] checkStrArray = {imageMagick + File.separator + imageMagickCommand, ffmpeg + File.separator + ffmpegCommand};
+
+			boolean check = false;
+			for(String checkStr : checkStrArray){
+				if(paramStr.indexOf(checkStr) == 0){
+					check = true;
+				}
+			}
+			if(check){
+				return paramStr;
+			}
 		}
 		return "";
-	}
 
-	/**
-	 * The entry point of application.
-	 *
-	 * @param args the input arguments
-	 * @author [윤태호]
-	 * @implNote
-	 * @since 2020. 8. 31. 오후 12:25:54
-	 */
-	public static void main(String[] args) {
-		String test = "d:/test"+File.separator+"test.jpg../../../../.."+File.separator+"sldjflksjdlfjk";
-
-		System.out.println(whiteListing(test));
 	}
 }

@@ -27,7 +27,7 @@
                     :style="{ height: '500px' }"
                     v-if="searchKeyword === ''"
                 >
-                    <i class="icon-file"></i>
+                    <i class="icon-folder-none"></i>
                     <p class="desc">업로드한 폴더가 없습니다.</p>
                 </NoData>
                 <NoData v-else :style="{ height: '500px' }">

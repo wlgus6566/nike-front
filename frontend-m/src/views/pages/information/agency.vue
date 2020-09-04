@@ -5,18 +5,27 @@
                 <strong class="title">{{ item.agencyName }}</strong>
                 <p class="text">{{ item.agencyDescription }}</p>
                 <div class="info-box">
-                    <a :href="'tel:${item.telephoneNumber}'" class="info-txt tel">{{ item.telephoneNumber }}</a>
-                    <a :href="'mailto:${item.email}'" class="info-txt mail">{{ item.email }}</a>
+                    <a
+                        :href="`tel:${item.telephoneNumber}`"
+                        class="info-txt tel"
+                        >{{ item.telephoneNumber }}</a
+                    >
+                    <a :href="`mailto:${item.email}`" class="info-txt mail">{{
+                        item.email
+                    }}</a>
                 </div>
             </div>
         </div>
-        <Loading v-if="loadingData" />
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
     </div>
 </template>
 <script>
-import {
-    getAgencyContact
-} from '@/api/agency';
+import { getAgencyContact } from '@/api/agency';
 import Loading from '@/components/loading';
 
 export default {
@@ -24,11 +33,11 @@ export default {
     data() {
         return {
             agencyData: {},
-            loadingData: false
-        }
+            loadingData: false,
+        };
     },
     components: {
-        Loading
+        Loading,
     },
     mounted() {
         this.getAgencyData();
@@ -38,15 +47,15 @@ export default {
             this.loadingData = true;
             try {
                 const {
-                    data: {data: response},
+                    data: { data: response },
                 } = await getAgencyContact({});
                 this.agencyData = response;
                 this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }
-        }
-    }
+        },
+    },
 };
 </script>
 <style scoped></style>

@@ -1,6 +1,6 @@
 <template>
     <div class="no-data">
-        <i class="icon-data"></i>
+        <i class="icon-file"></i>
         <p class="desc">게시물이 없습니다.</p>
     </div>
 </template>

@@ -1,7 +1,5 @@
 package com.nike.dnp.service.auth;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
@@ -26,7 +24,6 @@ import com.nike.dnp.util.ObjectMapperUtil;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONArray;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -337,7 +334,7 @@ public class AuthService {
     }
 
     /**
-     * Gets auths menus by role type.
+     * Gets auths menus by role type.`
      *
      * @param authSeq the auth seq
      * @return the auths menus by role type
@@ -362,10 +359,10 @@ public class AuthService {
                         } else {
                             lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
                         }
-                        lowerMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(lowerMenu.getMenuSeq()));
+                        lowerMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, lowerMenu.getMenuSeq()));
                     }
                     upperMenu.setMenus(lowerMenus);
-                    upperMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(upperMenu.getMenuSeq()));
+                    upperMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, upperMenu.getMenuSeq()));
                     menus.add(upperMenu);
                 }
             } else if ("Y".equals(upperMenu.getManagementYn())) {
@@ -377,10 +374,10 @@ public class AuthService {
                         } else {
                             lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
                         }
-                        lowerMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(lowerMenu.getMenuSeq()));
+                        lowerMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, lowerMenu.getMenuSeq()));
                     }
                     upperMenu.setMenus(lowerMenus);
-                    upperMenu.setMenuRoles(menuRoleRepository.findByMenuSeq(upperMenu.getMenuSeq()));
+                    upperMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, upperMenu.getMenuSeq()));
                     menus.add(upperMenu);
                 }
             }
@@ -445,18 +442,14 @@ public class AuthService {
     public Auth save(final AuthSaveDTO authSaveDTO) {
         log.info("AuthService.save");
         final Auth auth = authRepository.save(Auth.builder().authSaveDTO(authSaveDTO).build());
-        this.initAuthCache();
-
         if (authSaveDTO.getMenuRoleSeqArray().length > 0) {
             Arrays.stream(authSaveDTO.getMenuRoleSeqArray()).map(
                     menuRoleSeq -> AuthMenuRole.builder()
                         .authSeq(auth.getAuthSeq())
                         .menuRoleSeq(menuRoleSeq)
                         .build()).forEach(authMenuRoleRepository::save);
-            this.setAuthsResourcesByRoleType(auth.getRoleType());
-            this.setAuthsMenusByRoleType(auth.getRoleType());
         }
-
+        this.initAuthCache();
         return auth;
     }
 
@@ -479,7 +472,6 @@ public class AuthService {
         final String roleType = auth.getRoleType();
 
         auth.update(authUpdateDTO);
-        this.initAuthCache();
         this.remove(authSeq);
         if (authUpdateDTO.getMenuRoleSeqArray().length > 0) {
             Arrays.stream(authUpdateDTO.getMenuRoleSeqArray()).map(
@@ -488,12 +480,10 @@ public class AuthService {
                             .menuRoleSeq(menuRoleSeq)
                             .build()).forEach(authMenuRoleRepository::save);
 
-            this.setAuthsResourcesByRoleType(roleType);
-            this.setAuthsMenusByRoleType(roleType);
-        } else {
             redisService.delete(REDIS_ROLES_AUTHS + roleType);
             redisService.delete(REDIS_ROLES_MENUS + roleType);
         }
+        this.initAuthCache();
 
         // 등록/삭제 시퀀스배열이 따로 올 경우 > 이번엔 안하는걸로~
         /*if (auth.isPresent()) {
@@ -553,11 +543,10 @@ public class AuthService {
         }
 
         auth.delete();
-        this.initAuthCache();
-        this.remove(authSeq);
         redisService.delete(REDIS_ROLES_AUTHS+auth.getRoleType());
         redisService.delete(REDIS_ROLES_MENUS+auth.getRoleType());
-
+        this.remove(authSeq);
+        this.initAuthCache();
         return auth;
     }
 
@@ -571,7 +560,7 @@ public class AuthService {
     public void initAuthCache() {
         log.info("AuthService.initAuthCache");
         redisService.delete("cache:auths::SimpleKey []");
-        final ObjectMapper objectMapper = new ObjectMapper();
+        /*final ObjectMapper objectMapper = new ObjectMapper();
         try {
             redisService.set("cache:auths::SimpleKey []", objectMapper.readValue(objectMapper.writeValueAsString(this.findAll()), JSONArray.class), 60 * 24 * 30);
         } catch (JsonProcessingException exception) {
@@ -579,7 +568,7 @@ public class AuthService {
                     FailCode.ExceptionError.ERROR.toString()
                     , exception.getMessage()
             );
-        }
+        }*/
     }
 
     /**
@@ -633,7 +622,7 @@ public class AuthService {
 
             if (1 == auth.getAuthDepth()) {
                 transformAuthList = allAuthList;
-            } else if (2 == auth.getAuthDepth()) {
+            } else {
                 for (AuthReturnDTO authReturnDTO : allAuthList) {
                     if (auth.getAuthSeq().equals(authReturnDTO.getAuthSeq())) {
                         transformAuthList.add(authReturnDTO);

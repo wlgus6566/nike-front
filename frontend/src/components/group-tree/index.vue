@@ -89,9 +89,18 @@ export default {
     width: 220px;
 }
 .group-tree-fixed {
+    display: flex;
+    flex-direction: column;
     width: 220px;
+    min-height: 640px;
     box-sizing: border-box;
     border: 1px solid #ddd;
+}
+::v-deep .group-tree-fixed > .el-scrollbar {
+    flex-grow: 1;
+}
+.group-tree-fixed.top-sticky {
+    /*border: 1px solid red;*/
 }
 .group-tree-inner {
     padding: 40px 25px;

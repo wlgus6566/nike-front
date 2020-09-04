@@ -7,10 +7,12 @@ import com.nike.dnp.service.calendar.CalendarService;
 import com.nike.dnp.service.main.MainService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,11 +45,6 @@ public class MainController {
     private final MainService mainService;
 
     /**
-     * The Calendar service
-     *
-     * @author [김형욱]
-     */
-    private final CalendarService calendarService;
 
     /**
      * The constant REQUEST_CHARACTER
@@ -70,9 +67,11 @@ public class MainController {
         , notes = REQUEST_CHARACTER
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "메인 조회(calendar 제외)")
-    public SingleResult<MainResultDTO> findMainInfo() {
+    public SingleResult<MainResultDTO> findMainInfo(
+            @ApiParam(name = "mobileYn", value = "모바일여부", defaultValue = "N") final String mobileYn
+    ) {
         log.info("MainController.findMainInfo");
-        return responseService.getSingleResult(mainService.findMainInfo());
+        return responseService.getSingleResult(mainService.findMainInfo(mobileYn));
     }
 
 

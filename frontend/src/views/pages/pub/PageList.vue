@@ -708,7 +708,7 @@ export default {
                             comment: '',
                             depth: [
                                 {
-                                    title: '메인 비쥬얼 관리',
+                                    title: '메인 비주얼 관리',
                                     depthTitle: false,
                                     name: '염주성',
                                     filename: 'NIKE_P_MANAGE_01.vue',
