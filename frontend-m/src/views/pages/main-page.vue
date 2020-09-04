@@ -15,10 +15,12 @@
                 :key="item.contentsSeq"
             >
                 <a
-                    @click="onClickDetail(
-                        item
-                        , `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
-                    )"
+                    @click="
+                        onClickDetail(
+                            item,
+                            `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
+                        )
+                    "
                 >
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
@@ -37,10 +39,12 @@
                 :key="item.contentsSeq"
             >
                 <a
-                    @click="onClickDetail(
-                        item
-                        , `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
-                    )"
+                    @click="
+                        onClickDetail(
+                            item,
+                            `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase()
+                        )
+                    "
                 >
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
@@ -57,7 +61,9 @@
         <h2 class="main-title">NOTICE</h2>
         <ul class="notice-list">
             <li v-for="item in noticeMaxList" :key="item.noticeArticleSeq">
-                <a :href="'/mypage/notice/detail/' + item.noticeArticleSeq">
+                <router-link
+                    :to="'/mypage/notice/detail/' + item.noticeArticleSeq"
+                >
                     <span class="label-noti" v-if="item.noticeYn === 'Y'"
                         >중요</span
                     >
@@ -65,7 +71,7 @@
                         >NIKE 2020 PSKO 일정이 업데이트 되었습니다.</span
                     >
                     <span class="data" v-text="item.updateDt">2020.06.17</span>
-                </a>
+                </router-link>
             </li>
         </ul>
         <h2 class="main-title">CALENDAR</h2>
@@ -84,7 +90,11 @@
                 v-for="item in reportMaxList"
                 :key="item.reportSeq"
             >
-                <a @click="onClickDetail(item, '/report/detail/' + item.reportSeq)">
+                <a
+                    @click.prevent="
+                        onClickDetail(item, '/report/detail/' + item.reportSeq)
+                    "
+                >
                     <span class="thumbnail">
                         <img :src="item.imageFilePhysicalName" alt="" />
                     </span>
@@ -108,7 +118,9 @@
                 v-for="item in newsArticleList"
                 :key="item.noticeArticleSeq"
             >
-                <a :href="'/mypage/news/detail/' + item.noticeArticleSeq">
+                <router-link
+                    :to="'/mypage/news/detail/' + item.noticeArticleSeq"
+                >
                     <span class="thumbnail">
                         <img :src="item.thumbnailFilePhysicalName" alt="" />
                     </span>
@@ -121,7 +133,7 @@
                             >2020. 06. 17.</span
                         >
                     </span>
-                </a>
+                </router-link>
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
