@@ -1205,7 +1205,7 @@
     color: #000;
     font-weight: 600;
 }
-.select el-input__icon {
+.select .el-input__icon {
     width: 30px;
 }
 /* cascader-select */
