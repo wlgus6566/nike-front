@@ -27,7 +27,9 @@
                         </div>
                         <div class="form-column">
                             <span class="form-val">
-                                <em>{{ totalPrice }}</em>
+                                <em>{{
+                                    totalPrice | formattedNumber('', '')
+                                }}</em>
                                 원
                             </span>
                         </div>

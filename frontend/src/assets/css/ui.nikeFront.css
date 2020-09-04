@@ -4042,7 +4042,7 @@ img.image-grayscale {
 .quantity .el-input-number .el-input__inner {
     height: 16px;
     line-height: 16px;
-    width: 38px;
+    width: 45px;
     margin: 0 25px;
     padding: 0;
     text-align: center;
@@ -4495,16 +4495,20 @@ img.image-grayscale {
     font-weight: 600;
     color: #333;
 }
+.fc .fc-daygrid-day.fc-active .fc-daygrid-day-number,
 .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
-    width: 22px;
-    height: 22px;
+    width: 26px;
+    height: 26px;
     line-height: 16px;
     border-radius: 50%;
     white-space: nowrap;
-    background: #000;
+    background-color: #000;
     color: #fff;
     font-size: 11px;
     text-align: center;
+}
+.fc .fc-daygrid-day.fc-active .fc-daygrid-day-number {
+    background-color: #fa5400;
 }
 .fc .fc-h-event {
     height: 18px;
