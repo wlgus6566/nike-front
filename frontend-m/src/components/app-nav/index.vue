@@ -7,6 +7,8 @@
                         class="loading"
                         :options="aniHome"
                         :exact="true"
+                        :width="32"
+                        :height="32"
                         @animCreated="handleAnimation"
                     />
                     <!--                    <i class="icon-home"></i>-->
@@ -21,6 +23,8 @@
                     <lottie
                         class="loading"
                         :options="aniReport"
+                        :width="32"
+                        :height="32"
                         @animCreated="handleAnimation"
                     />
                     <!--                    <i class="icon-report"></i>-->
@@ -32,6 +36,8 @@
                     <lottie
                         class="loading"
                         :options="aniMy"
+                        :width="32"
+                        :height="32"
                         @animCreated="handleAnimation"
                     />
                     <!--                    <i class="icon-my"></i>-->
@@ -49,6 +55,8 @@
                     <Lottie
                         class="loading"
                         :options="aniMenu"
+                        :width="32"
+                        :height="32"
                         @animCreated="handleAnimation"
                     />
                     <!--                    <i class="icon-menu"></i>-->
@@ -62,7 +70,7 @@
                 :class="{ active: menuUse === true }"
                 v-if="menuUse"
             >
-                <div class="dimmed"></div>
+                <div class="dimmed" @click="menuClose"></div>
                 <div class="inner">
                     <UserInfo></UserInfo>
                     <MenuList
@@ -83,7 +91,7 @@ import * as aniHome from '@/assets/images/lottie/menu_home.json';
 import * as aniReport from '@/assets/images/lottie/menu_report.json';
 import * as aniMy from '@/assets/images/lottie/menu_my.json';
 import * as aniMenu from '@/assets/images/lottie/menu_menu.json';
-import bus from "@/utils/bus";
+import bus from '@/utils/bus';
 export default {
     name: 'navigation',
     data() {
@@ -145,7 +153,7 @@ export default {
             this.menuData = menu;
         },
         menuOpen() {
-          bus.$emit('closeFn');
+            bus.$emit('closeFn');
             this.topScollVal = document.scrollingElement.scrollTop;
             this.menuUse = true;
             document.querySelector('body').classList.add('menu-open');
