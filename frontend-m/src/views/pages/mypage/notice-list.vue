@@ -46,7 +46,12 @@
                 </NoData>
             </template>
         </template>
-        <Loading v-if="loadingData" />
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
         <template v-if="noticeData">
             <Pagination
                 v-if="noticeData.length"

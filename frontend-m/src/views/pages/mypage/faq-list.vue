@@ -45,7 +45,12 @@
                 <p class="desc">등록된 데이터가 없습니다.</p>
             </NoData>
         </template>
-        <Loading v-if="loadingData" />
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
         <template v-if="faqData">
             <Pagination
                 v-if="faqData.length"
