@@ -16,7 +16,11 @@
                 </span>
                 <strong class="txt" :class="{ 'fc-black': checkAll }">
                     전체선택 (
-                    <em>{{ checkContentsFileList.length }}</em> /
+                    <em
+                        :class="{
+                            'fc-black': checkContentsFileList.length !== 0,
+                        }"
+                    >{{ checkContentsFileList.length }}</em> /
                     <em>{{
                         !folderAuthCheck('DOWNLOAD') ? 0 : contentsFileListTotal
                     }}</em>

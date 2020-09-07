@@ -2537,3 +2537,10 @@
     border-radius: 50%;
     background-color: #555;
 }
+
+.crop-editor {
+    /*overflow: hidden;*/
+}
+.crop-editor img {
+    max-height: 100%;
+}
