@@ -18,6 +18,7 @@
                             @keyup.enter="onClickSearch"
                             v-model="searchKeyword"
                         />
+                        <button type="button" class="btn-del" v-if="searchKeyword" @click="keywordDel">삭제</button>
                         <button type="submit" class="search">
                             <span>검색</span>
                         </button>
@@ -110,6 +111,7 @@ export default {
     },
     data() {
         return {
+            reset : false,
             isActive: false,
             folderListData: null,
             searchKeyword: null,
@@ -172,6 +174,13 @@ export default {
         window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
+        keywordDel(){
+          this.searchKeyword = null;
+          if(this.reset){
+            this.initPageData();
+            this.reset = false
+          }
+        },
         alertMsg(item) {
             if (item.detailAuthYn === 'N') {
                 alert('접근 권한이 없습니다.');
@@ -222,6 +231,9 @@ export default {
         // 검색
         onClickSearch() {
             this.isActive = true;
+            if(this.searchKeyword){
+              this.reset = true;
+            }
             if (!!this.searchKeyword) {
                 this.page = 0;
                 this.folderListData = null;

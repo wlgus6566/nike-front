@@ -744,6 +744,19 @@
     border-color: #f7f7f7;
     background: #f7f7f7;
     padding-left: 51px;
+    padding-right:50px;
+}
+.sorting-area .search-input .btn-del{
+    position:absolute;
+    top: 50%;
+    right: 0;
+    display:none;
+    width:36px;
+    height:36px;
+    text-indent:-9999px;
+    overflow:hidden;
+    background: url('../images/svg/icon-delete-search-on.svg') no-repeat center;
+    transform: translateY(-50%);
 }
 .sorting-area .search-input .search {
     position: absolute;
@@ -772,6 +785,9 @@
 }
 .sorting-area .search-input.active input {
     display: block;
+}
+.sorting-area .search-input.active .btn-del{
+    display:block;
 }
 .sorting-area .search-input.active [class^='btn-txt'] {
     display: block;
