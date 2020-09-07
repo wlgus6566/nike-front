@@ -2487,7 +2487,8 @@
 .terms .select .el-input__inner {
     padding-right: 25px;
     display: inline-block;
-    height: 100%;
+    vertical-align: top;
+    height: 24px;
     box-sizing: border-box;
 }
 .terms-content {
@@ -2534,6 +2535,17 @@
     border-radius: 50%;
     background-color: #555;
 }
+.terms-table {
+    margin: 20px 0;
+}
+.terms-table th,
+.terms-table td {
+    padding: 8px 10px 9px;
+    border: 1px solid #e5e5e5;
+    color: #333;
+    font-size: 12px;
+}
+
 .img-cropper {
     max-height: 50vh;
 }

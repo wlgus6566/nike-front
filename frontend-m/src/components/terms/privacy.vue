@@ -69,8 +69,8 @@
                         <td>제공되는 개인정보</td>
                     </tr>
                     <tr>
-                        <td>EMOTION GLOBAL INC.</td>
-                        <td>일반적인 플랫폼 운영</td>
+                        <td>EMOTION <br />GLOBAL INC.</td>
+                        <td>일반적인 플랫폼<br />운영</td>
                         <td>이메일 주소</td>
                     </tr>
                 </tbody>

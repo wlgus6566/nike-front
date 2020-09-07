@@ -25,7 +25,9 @@
                     </a>
                 </li>
             </ul>
-            <component :is="tabContent" :key="tabContent"></component>
+            <el-scrollbar wrap-class="modal-scroll" :native="false">
+                <component :is="tabContent" :key="tabContent"></component>
+            </el-scrollbar>
         </div>
     </el-dialog>
 </template>
