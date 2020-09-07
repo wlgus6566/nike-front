@@ -23,6 +23,7 @@ import com.nike.dnp.service.alarm.AlarmService;
 import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.history.HistoryService;
 import com.nike.dnp.service.user.UserContentsService;
+import com.nike.dnp.service.user.UserService;
 import com.nike.dnp.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -123,6 +124,13 @@ public class ContentsService {
      * @author [이소정]
      */
     private final AuthService authService;
+
+    /**
+     * The User service
+     *
+     * @author [이소정]
+     */
+    private final UserService userService;
 
 
     /**
@@ -358,6 +366,9 @@ public class ContentsService {
         userAuthSearchDTO.setContentsSeq(contentsSeq);
         ContentsResultDTO contentsResultDTO = ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
         contentsResultDTO.setChecks(authService.getAuthListWithoutN(userAuthSearchDTO));
+        contentsResultDTO.setUserId(
+                EmailPatternUtil.maskingEmail(userService.findByUserSeq(contentsResultDTO.getRegisterSeq()).get().getUserId())
+        );
 
         // 메일 갯수 조회
         List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsSeq);

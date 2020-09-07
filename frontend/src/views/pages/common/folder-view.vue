@@ -220,7 +220,7 @@ export default {
                         value: '',
                         label: '전체확장자',
                     },
-                    {
+                    /*{
                         value: 'ai',
                         label: 'ai',
                     },
@@ -307,7 +307,7 @@ export default {
                     {
                         value: 'INDD',
                         label: 'INDD',
-                    },
+                    },*/
                 ],
                 value: '',
             },
@@ -331,9 +331,15 @@ export default {
     computed: {
         contentsFileListTotal() {
             if (this.contentsFileList) {
-                return this.contentsFileList.filter(
-                    (el) => el.fileKindCode === 'FILE'
-                ).length;
+                return this.contentsFileList.filter((a) => {
+                    return (
+                        a.fileKindCode === 'FILE'
+                        /*&&
+                        this.storeContBasketList.every(
+                            (b) => b !== a.contentsFileSeq
+                        )*/
+                    );
+                }).length;
             } else {
                 return 0;
             }
@@ -361,6 +367,22 @@ export default {
         },
         'fileExtension.value'() {
             this.initFetchData();
+        },
+        contentsFileList() {
+            if (!this.contentsFileList) return;
+            this.contentsFileList.forEach((el) => {
+                if (
+                    el.fileExtension &&
+                    this.fileExtension.listSortOptions.every(
+                        (b) => b.value !== el.fileExtension
+                    )
+                ) {
+                    this.fileExtension.listSortOptions.push({
+                        value: el.fileExtension,
+                        label: el.fileExtension,
+                    });
+                }
+            });
         },
     },
     methods: {
@@ -478,10 +500,15 @@ export default {
             this.checkAll = !this.checkAll;
             if (this.checkAll) {
                 this.contentsFileList.forEach((el) => {
-                    const indexOfChecked = this.checkContentsFileList.findIndex(
-                        (elChecked) => elChecked === el.contentsFileSeq
+                    const Checked = this.checkContentsFileList.every(
+                        (elChecked) => {
+                            return elChecked !== el.contentsFileSeq;
+                        }
                     );
-                    if (indexOfChecked === -1 && el.fileKindCode === 'FILE') {
+                    /*const added = this.storeContBasketList.every((added) => {
+                        return added !== el.contentsFileSeq;
+                    });*/
+                    if (/*added &&*/ Checked && el.fileKindCode === 'FILE') {
                         this.checkContentsFileList.push(el.contentsFileSeq);
                     }
                 });
@@ -561,6 +588,14 @@ export default {
             if (!seq.length) {
                 alert('선택한 파일이 없습니다.');
             }
+            const doubleFile = seq.some((el) => {
+                return this.storeContBasketList.some((b) => b === el);
+            });
+            if (doubleFile) {
+                alert(
+                    '다운로드 보관함에 이미 담긴 파일을 제외한 나머지 파일만 추가됩니다.'
+                );
+            }
             try {
                 await addContentsBasket(
                     this.$route.meta.topMenuCode,
@@ -570,8 +605,11 @@ export default {
                     })
                 );
                 await this.$store.dispatch('getContBasket');
+                this.checkContentsFileList = [];
+                this.checkAll = false;
             } catch (error) {
-                alert(1);
+                this.checkContentsFileList = [];
+                this.checkAll = false;
                 if (error.data.code === 'NO_AUTH') {
                     if (error.data.existMsg) {
                         alert(error.data.msg);

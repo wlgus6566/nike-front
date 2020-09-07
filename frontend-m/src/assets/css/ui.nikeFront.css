@@ -2537,6 +2537,7 @@
     border-radius: 50%;
     background-color: #555;
 }
+.img-cropper {max-height:50vh;}
 
 .crop-editor {
     /*overflow: hidden;*/

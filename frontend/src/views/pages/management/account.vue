@@ -525,7 +525,7 @@ export default {
                 this.addAuthority.value = response.authSeqArray;
                 this.addUserData = response;
                 this.visible.AccountManagement = true;
-                console.log(response.authSeqArray);
+                console.log(response);
             } catch (error) {
                 console.error(error);
             }

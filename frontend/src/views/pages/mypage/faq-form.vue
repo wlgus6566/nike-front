@@ -37,7 +37,7 @@
                             <textarea
                                 cols="100"
                                 rows="2"
-                                style="height: 60px;"
+                                style="height: 60px"
                                 v-model="faqDetail.title"
                                 required
                             ></textarea>
@@ -53,7 +53,7 @@
                             v-model="faqDetail.contents"
                             :config="editorConfig"
                             @blur="onEditorInput"
-                            style="width: 100%;"
+                            style="width: 100%"
                         />
                         <!--                        <span class="textarea">
                             <textarea
@@ -69,9 +69,9 @@
             </ul>
             <hr class="hr-gray" />
             <div class="btn-area">
-                <button type="button" class="btn-s-white" @click="cancelBack()">
+                <router-link to="/mypage/faq" class="btn-s-white">
                     <span>취소</span>
-                </button>
+                </router-link>
                 <button type="submit" class="btn-s-black">
                     <span>저장</span>
                 </button>
@@ -126,6 +126,17 @@ export default {
         this.getCategoryCode();
         if (this.$route.meta.modify) {
             this.getFaqDetail();
+        }
+    },
+    beforeRouteLeave(to, from, next) {
+        const answer = window.confirm(
+            '작성을 취소하시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
+        );
+        if (answer) {
+            next();
+            this.detailDataReset();
+        } else {
+            next(false);
         }
     },
     methods: {
@@ -227,15 +238,6 @@ export default {
             } catch (error) {
                 console.error(error);
             }
-        },
-
-        //작성 취소
-        cancelBack() {
-            if (!confirm('작성을 취소하시겠습니까?')) {
-                return false;
-            }
-            this.detailDataReset();
-            this.$router.go(-1);
         },
         detailDataReset() {
             this.faqDetail.title = '';
