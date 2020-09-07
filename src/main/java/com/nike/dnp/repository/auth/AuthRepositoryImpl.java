@@ -122,7 +122,7 @@ public class AuthRepositoryImpl extends QuerydslRepositorySupport implements Aut
                         menuRole.menuSeq.eq(menu.menuSeq)
                         ,menu.menuCode.in(userAuthSearchDTO.getMenuCodeList())
                 )
-                .where(auth.useYn.eq(ServiceCode.YesOrNoEnumCode.Y.toString()))
+                .where(auth.useYn.eq(ServiceCode.YesOrNoEnumCode.Y.toString()).and(auth.authSeq.eq(userAuthSearchDTO.getAuthSeq())))
                 .fetch();
     }
 

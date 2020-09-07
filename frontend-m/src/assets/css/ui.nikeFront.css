@@ -1278,7 +1278,7 @@
     animation: logoAni 1s ease-in-out forwards;
 }
 .login .nike-logo.hidden {
-    opacity:0;
+    opacity: 0;
 }
 
 @keyframes logoAni {
@@ -1336,13 +1336,12 @@
 .login-form .nike-title span:first-child {
     line-height: 29px;
     font-size: 24px;
-    letter-spacing: 0.05em;
 }
 .login-form .nike-title span {
     display: block;
     line-height: 48px;
     font-size: 40px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.5px;
 }
 .login-form .title {
     display: block;
@@ -1369,11 +1368,7 @@
     opacity: 0.5;
 }
 .login-form .btn-area {
-    position: absolute;
-    top: 236px;
-    left: 35px;
-    width: calc(100% - 75px);
-    margin-top: 0;
+    margin-top: 20px;
     justify-content: left;
     flex-wrap: wrap;
 }
@@ -1407,11 +1402,11 @@
 .login-input input {
     width: 100%;
     height: 40px;
-    border-color: #2b2b2b;
     background-color: rgba(255, 255, 255, 0.15);
     letter-spacing: 0;
     font-size: 14px;
     color: #fff;
+    border: none;
 }
 .login-input input::placeholder,
 .login-input input::-webkit-input-placeholder {
@@ -1454,11 +1449,13 @@
 }
 .login-desc {
     display: block;
-    margin-top: 12px;
+    margin-top: 15px;
     text-align: center;
     font-size: 11px;
+    font-weight: 100;
     color: #fff;
     opacity: 0.4;
+    letter-spacing: -0.5px;
 }
 /* desc-item */
 .desc-list {
@@ -2490,7 +2487,8 @@
 .terms .select .el-input__inner {
     padding-right: 25px;
     display: inline-block;
-    height: 100%;
+    vertical-align: top;
+    height: 24px;
     box-sizing: border-box;
 }
 .terms-content {
@@ -2537,11 +2535,25 @@
     border-radius: 50%;
     background-color: #555;
 }
-.img-cropper {max-height:50vh;}
+.terms-table {
+    margin: 20px 0;
+}
+.terms-table th,
+.terms-table td {
+    padding: 8px 10px 9px;
+    border: 1px solid #e5e5e5;
+    color: #333;
+    font-size: 12px;
+}
+
+.img-cropper {
+    max-height: 50vh;
+}
 
 .crop-editor {
     /*overflow: hidden;*/
 }
 .crop-editor img {
+    vertical-align: top;
     max-height: 100%;
 }

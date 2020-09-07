@@ -574,6 +574,7 @@ public class UserService implements UserDetailsService {
 
         //기존비밀번호확인
         if (!ObjectUtils.isEmpty(userPasswordDTO.getPassword()) && !passwordEncoder.matches(userPasswordDTO.getPassword(), userPasswordDTO.getUserPassword())) {
+            log.debug("기존비밀번호확인");
             throw new CodeMessageHandleException(
                     FailCode.ConfigureError.NOT_MATCH_PASSWORD.name()
                     , MessageUtil.getMessage(FailCode.ConfigureError.NOT_MATCH_PASSWORD.name()));
@@ -581,6 +582,7 @@ public class UserService implements UserDetailsService {
 
         //비밀번호 미입력 시
         if (ObjectUtils.isEmpty(userPasswordDTO.getNewPassword())) {
+            log.debug("비밀번호 미입력 시");
             throw new CodeMessageHandleException(
                     FailCode.ConfigureError.NULL_PASSWORD.name()
                     , MessageUtil.getMessage(FailCode.ConfigureError.NULL_PASSWORD.name()));
@@ -588,6 +590,7 @@ public class UserService implements UserDetailsService {
 
         //입력한 새로운 비밀번호와 확인 비밀번호 비교
         if (!userPasswordDTO.getNewPassword().equals(userPasswordDTO.getConfirmPassword())) {
+            log.debug("입력한 새로운 비밀번호와 확인 비밀번호 비교");
             throw new CodeMessageHandleException(
                     FailCode.ConfigureError.NOT_MATCH_PASSWORD.name()
                     , MessageUtil.getMessage(FailCode.ConfigureError.NOT_MATCH_PASSWORD.name()));
@@ -595,6 +598,7 @@ public class UserService implements UserDetailsService {
 
         //아이디와 비밀번호 비교
         if (PasswordPatternUtil.sameId(userPasswordDTO.getNewPassword(), userPasswordDTO.getUserId())) {
+            log.debug("아이디와 비밀번호 비교");
             throw new CodeMessageHandleException(
                     FailCode.ConfigureError.DUPLICATE_ID_PASSWORD.name()
                     , MessageUtil.getMessage(FailCode.ConfigureError.DUPLICATE_ID_PASSWORD.name()));
@@ -602,12 +606,14 @@ public class UserService implements UserDetailsService {
 
         //비밀번호 정규식 체크
         if (PasswordPatternUtil.invalidPassword(userPasswordDTO.getNewPassword())) {
+            log.debug("비밀번호 정규식 체크");
             throw new CodeMessageHandleException(
                     FailCode.ConfigureError.INVALID_PASSWORD.name()
                     , MessageUtil.getMessage(FailCode.ConfigureError.INVALID_PASSWORD.name()));
         }
 
         //사용되었던 비밀번호 비교 (최근 6개)
+        log.debug("사용되었던 비밀번호 비교 (최근 6개)");
         final List<PasswordHistory> histories = passwordHistoryRepository.findTop6ByUserSeqOrderByRegistrationDtDesc(userPasswordDTO.getUserSeq());
         for (final PasswordHistory history : histories) {
             if (passwordEncoder.matches(userPasswordDTO.getNewPassword(), history.getPassword())) {
@@ -619,6 +625,7 @@ public class UserService implements UserDetailsService {
 
         //공통사전 비교
         if (slangRepository.countBySlangContains(userPasswordDTO.getNewPassword()) > 0) {
+            log.debug("공통사전 비교");
             throw new CodeMessageHandleException(
                     FailCode.ConfigureError.IS_SLANG.name()
                     , MessageUtil.getMessage(FailCode.ConfigureError.IS_SLANG.name()));
@@ -650,5 +657,18 @@ public class UserService implements UserDetailsService {
                     , MessageUtil.getMessage(FailCode.ConfigureError.NOT_MATCH_CERT_CODE.name()));
         }
         return true;
+    }
+
+    /**
+     * Find by user seq optional.
+     *
+     * @param userSeq the user seq
+     * @return the optional
+     * @author [오지훈]
+     * @implNote [Description 작성]
+     * @since 2020. 9. 7. 오후 5:55:22
+     */
+    public Optional<User> findByUserSeq(final Long userSeq) {
+        return userRepository.findByUserSeq(userSeq);
     }
 }

@@ -256,11 +256,13 @@ export default {
         };
     },
     created() {
+        this.$store.state.saveFolder = false;
         this.getAgency();
         this.detailProduct();
         getCategoryList('CATEGORY', this.category2Code.listSortOptions);
     },
     activated() {
+        this.$store.state.saveFolder = false;
         this.detailProduct();
     },
     computed: {
@@ -289,18 +291,6 @@ export default {
             }
         },
     },
-    beforeRouteLeave(to, from, next) {
-        const answer = window.confirm(
-            '작성을 취소하시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
-        );
-        if (answer) {
-            next();
-            this.productDataReset();
-        } else {
-            next(false);
-        }
-    },
-
     methods: {
         selectFocus() {
             console.log(this.category2Code.value);
@@ -422,6 +412,7 @@ export default {
                             goodsSeq: this.$route.params.id,
                         }
                     );
+
                     this.detailData = response.data;
                     if (this.detailData.exposureYn === 'N') {
                         this.exposure.value = 'N';
@@ -463,12 +454,14 @@ export default {
                         );
                         // await getExistMsg(response);
                         console.log(response);
+                        this.$store.state.saveFolder = true;
                         await this.$router.push('/order/management');
                         await store.dispatch('basketList');
                         this.detailData.imageBase64 = null;
                         this.loadingData = false;
                     } catch (error) {
                         this.loadingData = false;
+                        this.$store.state.saveFolder = false;
                         console.error(error);
                     }
                 }
@@ -479,11 +472,13 @@ export default {
                     try {
                         const { data: response } = await postProduct(data);
                         // await getExistMsg(response);
+                        this.$store.state.saveFolder = true;
                         this.productDataReset();
                         await this.$router.push('/order/management');
                         this.loadingData = false;
                     } catch (error) {
                         this.loadingData = false;
+                        this.$store.state.saveFolder = false;
                         console.error(error);
                     }
                 }
@@ -519,6 +514,21 @@ export default {
             this.imageFilePhysicalName = '';
         },
     },
+    beforeRouteLeave(to, from, next) {
+      if (!this.$store.state.saveFolder) {
+        const answer = window.confirm(
+            '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
+        );
+        if (answer) {
+          next();
+        } else {
+          next(false);
+        }
+      } else {
+        next();
+      }
+  },
+
 };
 </script>
 <style scoped>
