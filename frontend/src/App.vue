@@ -58,16 +58,15 @@ export default {
         if(navigator.platform){
           if( filter.indexOf(navigator.platform.toLowerCase())<0 ) {
             console.log("모바일에서 접속하셨습니다");
-            console.log(window.location.href)
+            if(window.location.hostname === 'devwww.nikespace.co.kr'){
+              document.location = "devm.nikespace.co.kr";
+            }
+            if(window.location.hostname === 'nikespace.co.kr'){
+              document.location = "m.nikespace.co.kr";
+            }
           } else{
             console.log("PC에서 접속하셨습니다");
             console.log(window.location.hostname)
-            if(window.location.hostname === 'devm.nikespace.co.kr'){
-              document.location = "devwww.nikespace.co.kr";
-            }
-            if(window.location.hostname === 'm.nikespace.co.kr'){
-              document.location = "nikespace.co.kr";
-            }
           }
         }
       }
