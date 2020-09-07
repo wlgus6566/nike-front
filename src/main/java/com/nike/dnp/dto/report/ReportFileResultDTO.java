@@ -129,6 +129,20 @@ public class ReportFileResultDTO {
     @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "http://cdnUrl/file/report/graphic_file_name_thumbnail.jpg")
     private String thumbnailFilePhysicalName;
 
+    /**
+     * Gets file name.
+     *
+     * @return the file name
+     * @author [이소정]
+     * @implNote 파일 명 특수기호
+     * @since 2020. 9. 7. 오후 6:19:08
+     */
+    public String getFileName() {
+        fileName = fileName.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
+        fileName = fileName.replaceAll("#40;", "(").replaceAll("#41;", ")");
+        fileName = fileName.replaceAll("#39;", "'");
+        return fileName;
+    }
 
     /**
      * Gets detail thumbnail file physical name.
