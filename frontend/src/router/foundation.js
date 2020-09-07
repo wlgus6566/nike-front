@@ -13,7 +13,7 @@ const routes = [
                     layout: 'Default',
                     aside: 'File',
                     topMenuCode: 'FOUNDATION',
-                    menuCode: 'VMS',
+                    menuCode: 'FOUNDATION_VMS',
                     title: 'VMS',
                 },
             },
@@ -24,7 +24,7 @@ const routes = [
                     layout: 'Default',
                     aside: 'File',
                     topMenuCode: 'FOUNDATION',
-                    menuCode: 'EKIN',
+                    menuCode: 'FOUNDATION_EKIN',
                     title: 'EKIN',
                 },
             },
@@ -35,7 +35,7 @@ const routes = [
                     layout: 'Default',
                     aside: 'File',
                     topMenuCode: 'FOUNDATION',
-                    menuCode: 'DIGITAL',
+                    menuCode: 'FOUNDATION_DIGITAL',
                     title: 'DIGITAL',
                 },
             },
@@ -46,7 +46,7 @@ const routes = [
                     layout: 'Default',
                     aside: 'File',
                     topMenuCode: 'FOUNDATION',
-                    menuCode: 'RB',
+                    menuCode: 'FOUNDATION_RB',
                     title: 'RB',
                 },
             },
@@ -79,9 +79,18 @@ const routes = [
                     topMenuCode: 'FOUNDATION',
                 },
                 beforeEnter: (to, from, next) => {
-                    const menuCodeArr = ['vms', 'ekin', 'digital', 'rb'];
+                    const menuCodeArr = [
+                        'FOUNDATION_VMS',
+                        'FOUNDATION_EKIN',
+                        'FOUNDATION_DIGITAL',
+                        'FOUNDATION_RB',
+                    ];
                     const findMenuCode = menuCodeArr.findIndex(
-                        (el) => el === to.params.pathMatch
+                        (el) =>
+                            el ===
+                            `${
+                                to.meta.topMenuCode
+                            }_${to.params.pathMatch.toUpperCase()}`
                     );
                     if (findMenuCode !== -1) {
                         to.meta.menuCode = menuCodeArr[findMenuCode];

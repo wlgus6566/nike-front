@@ -19,6 +19,8 @@ const routes = [
                     layout: 'Default',
                     aside: 'Default',
                     title: '메인 비주얼 관리',
+                    topMenuCode: 'MANAGEMENT',
+                    menuCode: 'MANAGEMENT_VISUAL',
                 },
             },
             {
@@ -28,6 +30,8 @@ const routes = [
                     layout: 'Default',
                     aside: 'Default',
                     title: '계정관리',
+                    topMenuCode: 'MANAGEMENT',
+                    menuCode: 'MANAGEMENT_ACCOUNT',
                 },
             },
             {
@@ -37,6 +41,8 @@ const routes = [
                     layout: 'Default',
                     aside: 'Default',
                     title: '권한 그룹관리',
+                    topMenuCode: 'MANAGEMENT',
+                    menuCode: 'MANAGEMENT_GROUP',
                 },
             },
         ],

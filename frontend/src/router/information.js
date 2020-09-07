@@ -20,7 +20,7 @@ const routes = [
                     aside: 'Default',
                     title: 'AGENCY CONTACT',
                     topMenuCode: 'INFORMATION',
-                    menuCode: 'CONTACT',
+                    menuCode: 'INFORMATION_CONTACT',
                 },
             },
             {
@@ -31,7 +31,7 @@ const routes = [
                     aside: 'Default',
                     title: 'CALENDAR',
                     topMenuCode: 'INFORMATION',
-                    menuCode: 'CALENDAR',
+                    menuCode: 'INFORMATION_CALENDAR',
                 },
             },
         ],

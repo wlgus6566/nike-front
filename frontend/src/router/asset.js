@@ -13,7 +13,7 @@ const routes = [
                     layout: 'Default',
                     aside: 'File',
                     topMenuCode: 'ASSET',
-                    menuCode: 'ALL',
+                    menuCode: 'ASSET_ALL',
                     title: 'ALL',
                 },
             },
@@ -24,7 +24,7 @@ const routes = [
                     layout: 'Default',
                     aside: 'File',
                     topMenuCode: 'ASSET',
-                    menuCode: 'SP',
+                    menuCode: 'ASSET_SP',
                     title: 'SP',
                 },
             },
@@ -35,7 +35,7 @@ const routes = [
                     layout: 'Default',
                     aside: 'File',
                     topMenuCode: 'ASSET',
-                    menuCode: 'SU',
+                    menuCode: 'ASSET_SU',
                     title: 'SU',
                 },
             },
@@ -46,7 +46,7 @@ const routes = [
                     layout: 'Default',
                     aside: 'File',
                     topMenuCode: 'ASSET',
-                    menuCode: 'FA',
+                    menuCode: 'ASSET_FA',
                     title: 'FA',
                 },
             },
@@ -57,7 +57,7 @@ const routes = [
                     layout: 'Default',
                     aside: 'File',
                     topMenuCode: 'ASSET',
-                    menuCode: 'HO',
+                    menuCode: 'ASSET_HO',
                     title: 'HO',
                 },
             },
@@ -90,9 +90,18 @@ const routes = [
                     topMenuCode: 'ASSET',
                 },
                 beforeEnter: (to, from, next) => {
-                    const menuCodeArr = ['sp', 'su', 'fa', 'ho'];
+                    const menuCodeArr = [
+                        'ASSET_SP',
+                        'ASSET_SU',
+                        'ASSET_FA',
+                        'ASSET_HO',
+                    ];
                     const findMenuCode = menuCodeArr.findIndex(
-                        (el) => el === to.params.pathMatch
+                        (el) =>
+                            el ===
+                            `${
+                                to.meta.topMenuCode
+                            }_${to.params.pathMatch.toUpperCase()}`
                     );
                     if (findMenuCode !== -1) {
                         to.meta.menuCode = menuCodeArr[findMenuCode];

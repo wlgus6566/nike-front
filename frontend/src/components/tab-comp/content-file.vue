@@ -229,7 +229,9 @@ export default {
             try {
                 await addContentsBasket(
                     this.$route.meta.topMenuCode,
-                    this.$route.meta.menuCode,
+                    this.$route.meta.menuCode
+                        .replace(`${this.$route.meta.topMenuCode}_`, '')
+                        .toLowerCase(),
                     seqArr
                 );
                 await this.$store.dispatch('getContBasket');

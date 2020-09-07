@@ -289,10 +289,10 @@ public class FileUtil {
 				// throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
-//			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
-			log.info("stopWatch.getLastTaskTimeMillis() {} >> {} :  {} ms", stopWatch.getLastTaskName(), detailFile.getName(), stopWatch.getLastTaskTimeMillis());
 
 			final File thumbnailFile = new File(cleanXSS(thumbnailPath, true));
+//			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
+			log.info("stopWatch.getLastTaskTimeMillis() {} >> {} :  {} ms", stopWatch.getLastTaskName(), thumbnailFile.getName(), stopWatch.getLastTaskTimeMillis());
 			if(thumbnailFile.isFile()){
 				String thumbnail = uploadFile.getOriginalFilename();
 				thumbnail = thumbnail.replace("." + StringUtils.getFilenameExtension(thumbnail), "") + "_thumbnail." + resizeExtension;
@@ -534,7 +534,7 @@ public class FileUtil {
 	 * @since 2020. 8. 25. 오후 5:07:38
 	 */
 	public static String cleanXSS(String value, boolean folder) {
-		String [] replaceStr = {"bin","boot","etc","home","lib","lib64","proc","root","sbin","sys","usr","var"};
+		String [] replaceStr = {"bin","boot","etc","lib","lib64","proc","root","sbin","sys","usr","var"};
 		for(String str : replaceStr){
 			value = value.replaceAll(str, "");
 		}

@@ -124,7 +124,6 @@ export default {
                     menuCode
                 );
                 this.groupTreeData[0].subAuths = response;
-                console.log(this.groupTreeData);
                 this.checksUpdate();
             } catch (error) {
                 console.error(error);

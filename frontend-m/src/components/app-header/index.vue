@@ -21,7 +21,7 @@
                 <h1
                     class="page-title"
                     v-if="!$route.meta.detail"
-                    v-html="tabMenuData.menuName"
+                    v-html="title"
                 />
                 <div class="btn-box" v-if="$route.meta.btn">
                     <button type="button" class="btn-txt" @click="delFn">
@@ -47,6 +47,7 @@
     name: 'headerIndex',
     data() {
         return {
+            title:'',
             tabMenuData: null,
         };
     },
@@ -56,6 +57,14 @@
         },
     },
     watch: {
+        tabMenuData(){
+          const titleValue = this.$route.path.split('/')[1]
+          if(titleValue === 'information'){
+            this.title =  'INFO.'
+          }else{
+            this.title = this.tabMenuData.menuName
+          }
+        },
         pathUrl() {
             this.tabMenuFn();
         },
