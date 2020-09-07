@@ -251,7 +251,6 @@ export default {
             occupyInterval: null,
             maxMemo: 150,
             memoLength: 0,
-            saveFolder: false,
             visible: {
                 ModalAuth: false,
             },
@@ -397,9 +396,11 @@ export default {
         ModalAuth,
     },
     created() {
+        this.$store.state.saveFolder = false;
         //this.folderSetting();
     },
     activated() {
+        this.$store.state.saveFolder = false;
         this.pageMenuCodeAuth(this.$route.meta.topMenuCode, 'CREATE');
         this.folderSetting();
         clearInterval(this.occupyInterval);
@@ -488,7 +489,7 @@ export default {
         },
 
         folderSetting() {
-            this.saveFolder = false;
+            this.$store.state.saveFolder = false;
             if (this.$route.params.id) {
                 this.getFolderDetail();
             } else {
@@ -572,7 +573,7 @@ export default {
                     alert(response.data.msg);
                 }
                 if (response.data.success) {
-                    this.saveFolder = true;
+                    this.$store.state.saveFolder = true;
                     this.$store.commit('SET_RELOAD', true);
                     if (this.$route.params.id) {
                         await this.deleteOccupyFn();
@@ -590,6 +591,7 @@ export default {
             } catch (error) {
                 console.error(error.data);
                 clearInterval(this.fileUploadingInterval);
+                this.$store.state.saveFolder = false;
                 bus.$emit('pageLoading', false);
                 if (this.$route.params.id) {
                     await this.deleteOccupyFn();
@@ -661,9 +663,9 @@ export default {
         },
     },
     beforeRouteLeave(to, from, next) {
-        if (!this.saveFolder) {
+        if (!this.$store.state.saveFolder) {
             const answer = window.confirm(
-                '이 페이지에서 나가시겠습니까?\n변경사항이 저장되지 않을 수 있습니다.'
+                '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
             );
             if (answer) {
                 next();

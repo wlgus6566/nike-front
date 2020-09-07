@@ -228,7 +228,6 @@ public class FileUtil {
 			allowedCommands.add("notepad");
 			allowedCommands.add("calc");
 
-
 			// 이미지 사이즈 700x700 으로 변환
 			final String detailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_detail." + cleanXSS(resizeExtension,false);
 			//final String detailPath = root+File.separator+cleanXSS(folder)+File.separator +cleanXSS(StringUtils.stripFilenameExtension(toFile.getName())) + "_detail." + resizeExtension;
@@ -244,6 +243,7 @@ public class FileUtil {
 				if (cmd.isEmpty() || "".equals(cmd)) {
 					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 				}
+				log.info("700_cmd : ",cmd);
 				final Process procDetail = Runtime.getRuntime().exec(cmd);
 				procDetail.waitFor();
 			}catch(InterruptedException exception){
@@ -279,6 +279,7 @@ public class FileUtil {
 				if (cmd.isEmpty() || "".equals(cmd)) {
 					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 				}
+				log.info("100_cmd : ", cmd);
 				final Process proc = Runtime.getRuntime().exec(cmd);
 				proc.waitFor();
 			}catch(InterruptedException exception){
@@ -535,7 +536,6 @@ public class FileUtil {
 		for(String str : replaceStr){
 			value = value.replaceAll(str, "");
 		}
-
 
 		value = value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 		value = value.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");
