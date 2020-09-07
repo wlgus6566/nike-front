@@ -46,14 +46,6 @@ public class UserResultDTO {
     private String userId;
 
     /**
-     * 마스킹 ID
-     *
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "securityId", value = "마스킹 ID")
-    private String securityId;
-
-    /**
      * 닉네임
      *
      * @author [오지훈]
@@ -166,14 +158,6 @@ public class UserResultDTO {
      */
     @ApiModelProperty(name = "authSeqArray", value = "권한 시퀀스 배열")
     private Long[] authSeqArray;
-
-    public String getSecurityId() {
-        String masking = "*";
-        for (int i=0; i<(userId.substring(0, userId.indexOf("@"))).length(); i++) {
-            masking += masking;
-        }
-        return userId.substring(0,2)+masking+userId.substring(userId.indexOf("@"));
-    }
 
     /**
      * Gets user status code name.
