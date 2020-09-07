@@ -116,6 +116,7 @@ export default {
         };
     },
     created() {
+        this.$store.state.saveFolder = false;
         this.editorConfig.filebrowserImageUploadUrl =
             process.env.VUE_APP_API_URL +
             `/api/customer/${this.$route.meta.sectionCode}/images`;
@@ -128,16 +129,8 @@ export default {
             this.getFaqDetail();
         }
     },
-    beforeRouteLeave(to, from, next) {
-        const answer = window.confirm(
-            '작성을 취소하시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
-        );
-        if (answer) {
-            next();
-            this.detailDataReset();
-        } else {
-            next(false);
-        }
+    activated() {
+      this.$store.state.saveFolder = false;
     },
     methods: {
         submitData() {
@@ -161,6 +154,7 @@ export default {
                     useYn: this.useYn,
                 });
                 //console.log(response);
+                this.$store.state.saveFolder = true;
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
                     this.detailDataReset();
@@ -171,6 +165,7 @@ export default {
                     alert(response.data.msg);
                 }
             } catch (error) {
+                this.$store.state.saveFolder = false;
                 console.error(error);
             }
         },
@@ -190,6 +185,7 @@ export default {
                         noticeArticleSeq: this.$route.params.id,
                         useYn: this.useYn,
                     });
+                    this.$store.state.saveFolder = true;
                     this.$store.commit('SET_RELOAD', true);
                     if (response.data.success) {
                         this.detailDataReset();
@@ -198,6 +194,7 @@ export default {
                         alert(response.data.msg);
                     }
                 } catch (error) {
+                    this.$store.state.saveFolder = false;
                     console.error(error);
                 }
             }
@@ -249,6 +246,20 @@ export default {
         onEditorInput: function (e) {
             this.faqDetail.contents = e.editor._.editable.$.innerHTML;
         },
+    },
+    beforeRouteLeave(to, from, next) {
+        if (!this.$store.state.saveFolder) {
+          const answer = window.confirm(
+              '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
+          );
+          if (answer) {
+            next();
+          } else {
+            next(false);
+          }
+        } else {
+          next();
+        }
     },
 };
 </script>

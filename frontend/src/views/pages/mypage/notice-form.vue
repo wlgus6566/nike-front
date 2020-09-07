@@ -131,6 +131,7 @@ export default {
         };
     },
     created() {
+        this.$store.state.saveFolder = false;
         /* console.log(this.$route.name);*/
         this.editorConfig.filebrowserImageUploadUrl =
             process.env.VUE_APP_API_URL +
@@ -157,19 +158,9 @@ export default {
         }
     },
     activated() {
+        this.$store.state.saveFolder = false;
         this.getNoticeList();
         this.detailDataReset();
-    },
-    beforeRouteLeave(to, from, next) {
-        const answer = window.confirm(
-            '작성을 취소하시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
-        );
-        if (answer) {
-            next();
-            this.detailDataReset();
-        } else {
-            next(false);
-        }
     },
     methods: {
         submitData() {
@@ -191,6 +182,7 @@ export default {
                     title: this.noticeDetail.title,
                     useYn: this.useYn,
                 });
+                this.$store.state.saveFolder = true;
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
                     this.detailDataReset();
@@ -199,12 +191,14 @@ export default {
                     alert(response.data.msg);
                 }
             } catch (error) {
+                this.$store.state.saveFolder = false;
                 console.error(error);
             }
         },
 
         //공지사항 수정
         async modifyData() {
+            this.$store.state.saveFolder = false;
             if (!confirm('수정하시겠습니까?')) {
                 return false;
             }
@@ -218,7 +212,7 @@ export default {
                         title: this.noticeDetail.title,
                         useYn: this.useYn,
                     });
-
+                    this.$store.state.saveFolder = true;
                     this.$store.commit('SET_RELOAD', true);
                     if (response.data.success) {
                         this.detailDataReset();
@@ -230,6 +224,7 @@ export default {
                     console.log('시퀀스');
                     console.log(this.noticeArticleSeq);
                 } catch (error) {
+                    this.$store.state.saveFolder = false;
                     console.error(error);
                 }
             }
@@ -298,6 +293,20 @@ export default {
         onEditorInput: function (e) {
             this.noticeDetail.contents = e.editor._.editable.$.innerHTML;
         },
+    },
+    beforeRouteLeave(to, from, next) {
+        if (!this.$store.state.saveFolder) {
+          const answer = window.confirm(
+              '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
+          );
+          if (answer) {
+            next();
+          } else {
+            next(false);
+          }
+        } else {
+          next();
+        }
     },
 };
 </script>
