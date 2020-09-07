@@ -651,4 +651,8 @@ public class UserService implements UserDetailsService {
         }
         return true;
     }
+
+    public Optional<User> findByUserSeq(final Long userSeq) {
+        return userRepository.findByUserSeq(userSeq);
+    }
 }
