@@ -220,7 +220,12 @@ header .logo span {
     height: 20px;
     background: url(../../assets/images/svg/icon-more-gray.svg) no-repeat center;
 }
-
+.depth li a > span{
+    font-size:14px;
+    font-family:"Noto Sans KR", "Arial", "Apple SD Gothic Neo", sans-serif;
+    font-weight:bold;
+    letter-spacing:-0.05em;
+}
 header + .contents,
 .page-header.header-detail + .contents {
     padding-top: 60px;

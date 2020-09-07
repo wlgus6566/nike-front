@@ -30,7 +30,6 @@ export default {
           else{
             return title
           }
-
         },
         tabItemClass(val) {
             const titleValue = this.$route.path;

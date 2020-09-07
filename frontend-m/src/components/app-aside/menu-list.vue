@@ -20,7 +20,7 @@
                     >
                         <router-link
                             :to="depth.menuPathUrl"
-                            v-html="depth.menuName"
+                            v-html="menuTitle(depth.menuName)"
                         >
                         </router-link>
                     </li>
@@ -51,6 +51,19 @@ export default {
     },
     watch: {},
     methods: {
+        menuTitle(title){
+          if(title === 'REPORT UPLOAD'){
+            console.log(title)
+            return "<span>업로드</span>"
+          } else if(title === 'REPORT <span>관리</span>'){
+            return "<span>관리</span>"
+          } else if(title === 'AGENCY CONTACT'){
+            return "AGENCY"
+          }
+          else{
+            return title
+          }
+        },
         routerFn() {
             const menuName = this.menuData.map(el => el.menuPathUrl);
             const path = this.pathUrl.split('/')[1];
