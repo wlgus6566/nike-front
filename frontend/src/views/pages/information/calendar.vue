@@ -1,8 +1,6 @@
 <template>
     <div>
-        <h2 class="page-title">
-            CALENDAR
-        </h2>
+        <h2 class="page-title">CALENDAR</h2>
         <div class="fullCalendar-wrap">
             <ul class="schedule-type">
                 <li class="edu">교육</li>
@@ -69,7 +67,7 @@
                             수정하기
                         </el-button>
                         <span class="date">
-                            {{ item.beginDt }} ~ {{ item.endDt }}</span
+                            {{ item.beginDt }} - {{ item.endDt }}</span
                         >
                     </div>
                 </li>
