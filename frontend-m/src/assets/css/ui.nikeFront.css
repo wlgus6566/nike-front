@@ -1278,7 +1278,7 @@
     animation: logoAni 1s ease-in-out forwards;
 }
 .login .nike-logo.hidden {
-    opacity:0;
+    opacity: 0;
 }
 
 @keyframes logoAni {
@@ -2543,5 +2543,6 @@
     /*overflow: hidden;*/
 }
 .crop-editor img {
+    vertical-align: top;
     max-height: 100%;
 }
