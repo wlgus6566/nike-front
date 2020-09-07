@@ -138,10 +138,14 @@ public class ReportFileResultDTO {
      * @since 2020. 9. 7. 오후 6:19:08
      */
     public String getFileName() {
-        fileName = fileName.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
-        fileName = fileName.replaceAll("#40;", "(").replaceAll("#41;", ")");
-        fileName = fileName.replaceAll("#39;", "'");
-        return fileName;
+        if (!ObjectUtils.isEmpty(fileName)) {
+            fileName = fileName.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
+            fileName = fileName.replaceAll("#40;", "(").replaceAll("#41;", ")");
+            fileName = fileName.replaceAll("#39;", "'");
+            return fileName;
+        } else {
+            return null;
+        }
     }
 
     /**
