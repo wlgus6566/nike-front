@@ -1,6 +1,6 @@
 <template>
     <form action="#" @submit.prevent="findPW">
-        <div class="login-box">
+        <div class="login-box" ref="loginBox">
             <strong class="title2"> 비밀번호 찾기 </strong>
             <p class="desc">
                 비밀번호 설정 메일 발송을 위한 ID(E-MAIL)을 입력해 주세요.<br />
@@ -41,13 +41,12 @@ export default {
             userId: '',
         };
     },
-
+    mounted() {
+        this.$refs.loginBox.classList.add('active');
+    },
     methods: {
         closePassword(){
           this.$emit('changeLoginBox', 'LoginForm');
-          const nikeLogo = document.querySelector(".nike-logo");
-          nikeLogo.classList.remove("hidden");
-          nikeLogo.classList.add("active");
         },
         async findPW() {
             if (!this.userId) {
@@ -65,9 +64,6 @@ export default {
                 }
                 if (response.success) {
                     this.$emit('changeLoginBox', 'LoginForm');
-                  const nikeLogo = document.querySelector(".nike-logo");
-                  nikeLogo.classList.remove("hidden");
-                  nikeLogo.classList.add("active");
                 } else {
                     this.$refs.mailId.focus();
                 }
@@ -81,6 +77,8 @@ export default {
 </script>
 <style scoped>
 .login-box {
+  z-index: 6;
+  opacity: 0;
     position: relative;
     width: 370px;
     height: 390px;
@@ -88,6 +86,17 @@ export default {
     box-sizing: border-box;
     background: rgba(0, 0, 0, 0.7);
     box-shadow: -20px 20px 8px 0 rgba(0, 0, 0, 0.5);
+}
+.login-box.active {
+  animation: loginAni 1s ease-in-out 0s forwards;
+}
+@keyframes loginAni {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 .login-box .title {
     display: block;

@@ -144,7 +144,7 @@ public class ContentsService {
         if (ObjectUtils.isEmpty(menuCode) || ServiceCode.ContentsMenuCode.ALL.toString().equals(menuCode)) {
             searchMenuCode = topMenuCode+"_"+ServiceCode.ContentsMenuCode.ALL.toString();
 
-            contentsSearchDTO.setExposureYn(this.isAuthForAssetAll(topMenuCode) ? null : "Y");
+            contentsSearchDTO.setExposureYn(this.isAuthForAssetAll(topMenuCode));
         } else {
             contentsSearchDTO.setExposureYn(userContentsService.isAuth(authSeq, searchMenuCode, ServiceCode.MenuSkillEnumCode.CREATE.toString()) ? null : "Y");
         }
@@ -171,7 +171,7 @@ public class ContentsService {
      * @implNote assetAll 관련 권한 조회
      * @since 2020. 8. 31. 오후 9:58:53
      */
-    public boolean isAuthForAssetAll(final String topMenuCode) {
+    public String isAuthForAssetAll(final String topMenuCode) {
         UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
         List<String> menuCodeList = new ArrayList<>();
         menuCodeList.add(topMenuCode+"_"+ServiceCode.AssetMenuCode.SP.toString());
@@ -182,9 +182,9 @@ public class ContentsService {
         userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.CREATE.toString());
         List<AuthReturnDTO> authList = authService.findByConfigForAssetAll(userAuthSearchDTO);
         if (ObjectUtils.isEmpty(authList)) {
-            return false;
+            return "N";
         } else {
-            return true;
+            return "Y";
         }
     }
 
