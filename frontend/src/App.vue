@@ -61,7 +61,7 @@ export default {
             if(window.location.hostname === 'devwww.nikespace.co.kr'){
               document.location = "http://devm.nikespace.co.kr/";
             }
-            if(window.location.hostname === 'nikespace.co.kr'){
+            if(window.location.hostname === 'www.nikespace.co.kr'){
               document.location = "http://m.nikespace.co.kr/";
             }
           } else{
