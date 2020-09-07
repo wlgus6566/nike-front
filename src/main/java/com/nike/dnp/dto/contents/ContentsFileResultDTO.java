@@ -171,6 +171,22 @@ public class ContentsFileResultDTO {
     private long downloadCount;
 
     /**
+     * Gets file name.
+     *
+     * @return the file name
+     * @author [이소정]
+     * @implNote 파일명 특수기호 원복
+     * @since 2020. 9. 7. 오후 5:56:01
+     */
+    public String getFileName() {
+        String transformFileName = fileName;
+        transformFileName = transformFileName.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
+        transformFileName = transformFileName.replaceAll("&#40;", "\\(").replaceAll("&#41;", "\\)");
+        transformFileName = transformFileName.replaceAll("&#39;", "'");
+        return transformFileName;
+    }
+
+    /**
      * Gets thumbnail file physical name.
      *
      * @return the thumbnail file physical name
