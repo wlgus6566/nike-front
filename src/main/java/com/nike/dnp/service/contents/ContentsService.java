@@ -151,8 +151,7 @@ public class ContentsService {
         String searchMenuCode = topMenuCode+"_"+menuCode;
         if (ObjectUtils.isEmpty(menuCode) || ServiceCode.ContentsMenuCode.ALL.toString().equals(menuCode)) {
             searchMenuCode = topMenuCode+"_"+ServiceCode.ContentsMenuCode.ALL.toString();
-
-            contentsSearchDTO.setExposureYn(this.isAuthForAssetAll(topMenuCode));
+            contentsSearchDTO.setExposureYn("Y".equals(this.isAuthForAssetAll(topMenuCode)) ? "Y" : null);
         } else {
             contentsSearchDTO.setExposureYn(userContentsService.isAuth(authSeq, searchMenuCode, ServiceCode.MenuSkillEnumCode.CREATE.toString()) ? null : "Y");
         }
@@ -188,11 +187,12 @@ public class ContentsService {
         menuCodeList.add(topMenuCode+"_"+ServiceCode.AssetMenuCode.HO.toString());
         userAuthSearchDTO.setMenuCodeList(menuCodeList);
         userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.CREATE.toString());
+        userAuthSearchDTO.setAuthSeq(SecurityUtil.currentUser().getAuthSeq());
         List<AuthReturnDTO> authList = authService.findByConfigForAssetAll(userAuthSearchDTO);
         if (ObjectUtils.isEmpty(authList)) {
-            return "N";
-        } else {
             return "Y";
+        } else {
+            return "N";
         }
     }
 
