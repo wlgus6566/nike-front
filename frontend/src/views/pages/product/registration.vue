@@ -26,9 +26,7 @@
                                 :alt="detailData.imageFileName"
                             />
                         </span>
-                        <span class="txt">
-                            이미지 등록
-                        </span>
+                        <span class="txt"> 이미지 등록 </span>
                     </span>
                 </li>
                 <li class="form-row">
@@ -103,7 +101,7 @@
                         <label class="label-title required">에이전시</label>
                     </div>
                     <div class="form-column">
-                        <span class="select" style="width: 100%;">
+                        <span class="select" style="width: 100%">
                             <el-select
                                 v-model="agencySeq.value"
                                 placeholder="Select"
@@ -290,6 +288,17 @@ export default {
                 getCategoryList(val, this.category3Code.listSortOptions);
             }
         },
+    },
+    beforeRouteLeave(to, from, next) {
+        const answer = window.confirm(
+            '작성을 취소하시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
+        );
+        if (answer) {
+            next();
+            this.productDataReset();
+        } else {
+            next(false);
+        }
     },
 
     methods: {
