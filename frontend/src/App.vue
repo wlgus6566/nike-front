@@ -35,6 +35,7 @@ export default {
         };
     },
     created() {
+        this.urlCheck();
         bus.$on('pageLoading', (state) => {
             this.pageLoading = state;
         });
@@ -51,6 +52,20 @@ export default {
         LayoutClean: layouts('clean'),
         LayoutPub: layouts('pub'),
     },
+    methods:{
+      urlCheck(){
+        const filter = "win16|win32|win64|macintel|mac|"; // PC일 경우 가능한 값
+        if(navigator.platform){
+          if( filter.indexOf(navigator.platform.toLowerCase())<0 ) {
+            console.log("모바일에서 접속하셨습니다");
+            console.log(window.location.href)
+          } else{
+            console.log("PC에서 접속하셨습니다");
+            console.log(window.location.href)
+          }
+        }
+      }
+    }
 };
 </script>
 <style>
