@@ -113,9 +113,13 @@ public class ReportService {
         final UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
         userAuthSearchDTO.setMenuCode(ServiceCode.MenuCode.REPORT_UPLOAD.toString());
         userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.REPORT.toString());
-        userAuthSearchDTO.setAuthSeq(
-                ObjectUtils.isEmpty(reportSearchDTO.getGroupSeq()) ? SecurityUtil.currentUser().getAuthSeq() : reportSearchDTO.getGroupSeq()
-        );
+        if (ObjectUtils.isEmpty(reportSearchDTO.getGroupSeq())) {
+            userAuthSearchDTO.setAuthSeq(SecurityUtil.currentUser().getAuthSeq());
+            userAuthSearchDTO.setSearchYn("N");
+        } else {
+            userAuthSearchDTO.setAuthSeq(reportSearchDTO.getGroupSeq());
+            userAuthSearchDTO.setSearchYn("Y");
+        }
 
         List<AuthReturnDTO> authList = this.findAllAuthListWithDepth(userAuthSearchDTO, "Y");
         List<Long> authSeqList = this.authDepthToList(authList);

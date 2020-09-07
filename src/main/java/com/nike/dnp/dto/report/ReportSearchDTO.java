@@ -10,8 +10,8 @@ import java.util.List;
  * The Class Report Search dto.
  *
  * @author [이소정]
- * @since 2020. 7. 29. 오후 6:56:23
  * @implNote 보고서 조회 DTO
+ * @since 2020. 7. 29. 오후 6:56:23
  */
 @Getter
 @Setter

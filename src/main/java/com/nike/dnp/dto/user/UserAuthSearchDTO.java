@@ -2,6 +2,7 @@ package com.nike.dnp.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -72,5 +73,13 @@ public class UserAuthSearchDTO {
      */
     @ApiModelProperty(name = "authSeq", value = "권한 seq", hidden = true)
     private Long authSeq;
+
+    /**
+     * 검색한 seq인지 로그인 계정인지 여부
+     *
+     * @author [이소정]
+     */
+    @ApiParam(name = "searchYn", value = "검색 여부", hidden = true)
+    private String searchYn = "N";
 
 }
