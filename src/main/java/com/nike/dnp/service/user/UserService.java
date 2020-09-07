@@ -165,9 +165,14 @@ public class UserService implements UserDetailsService {
         final Optional<User> user = Optional.ofNullable(userRepository.findById(userSeq)
                 .orElseThrow(NotFoundHandleException::new));
 
-        UserListDTO userListDTO = new UserListDTO();
+        final UserListDTO userListDTO = new UserListDTO();
         if (user.isPresent()) {
-            userListDTO = ObjectMapperUtil.map(user, UserListDTO.class);
+            final User getUser = user.get();
+            userListDTO.setUserSeq(getUser.getUserSeq());
+            userListDTO.setNickname(getUser.getNickname());
+            userListDTO.setUserId(getUser.getUserId());
+            userListDTO.setUserStatusCode(getUser.getUserStatusCode());
+
             userListDTO.setAuthName(user.get().getUserAuth().getAuth().getAuthName());
             final Auth auth = user.get().getUserAuth().getAuth();
             Long[] authSeqArray;
