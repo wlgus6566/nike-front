@@ -1,10 +1,11 @@
 <template>
     <el-dialog
         title="이미지 등록"
-        class="modal-wrap"
+        class="modal full"
         width="100%"
         :visible="visible"
         :append-to-body="true"
+        @close="$emit('update:visible', false)"
     >
         <el-scrollbar wrap-class="modal-scroll" :native="false">
             <!--            <div class="dialog-header">-->
