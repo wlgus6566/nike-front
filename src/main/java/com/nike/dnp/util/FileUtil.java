@@ -199,15 +199,15 @@ public class FileUtil {
 										 final String resizeExt) throws IOException {
 		log.info("FileUtil.fileSave  start");
 		final StopWatch stopWatch = new StopWatch();
-		stopWatch.start("fileUpload_" + uploadFile.getOriginalFilename());
 
 		final String extension = StringUtils.getFilenameExtension(uploadFile.getOriginalFilename());
 
 		final File toFile = makeNewFile(cleanXSS(folder, false), cleanXSS(extension, false));
+		stopWatch.start("fileUpload_" + uploadFile.getOriginalFilename() + " >> "+toFile.getName());
 		uploadFile.transferTo(toFile);
 		stopWatch.getTotalTimeSeconds();
 		stopWatch.stop();
-		log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms",stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
+		log.info("stopWatch.getLastTaskTimeMillis() {} >> {} :  {} ms",stopWatch.getLastTaskName(),toFile.getName(), stopWatch.getLastTaskTimeMillis());
 		final FileResultDTO fileResultDTO = new FileResultDTO();
 		fileResultDTO.setFileName(cleanXSS(uploadFile.getOriginalFilename(), false));
 		fileResultDTO.setFilePhysicalName(toFile.getPath().replace(root, ""));
@@ -222,7 +222,7 @@ public class FileUtil {
 			}else{
 				resizeExtension = resizeExt;
 			}
-			stopWatch.start("700resize_"+uploadFile.getOriginalFilename());
+			stopWatch.start("700resize_"+uploadFile.getOriginalFilename() + " >> "+ toFile.getName());
 
 			List<String> allowedCommands = new ArrayList<>();
 			allowedCommands.add("notepad");
@@ -240,10 +240,11 @@ public class FileUtil {
 			detailCommand.append(" -resize 700x700 -background white -gravity center -extent 700x700 ").append(detailPath);
 			try{
 				final String cmd = whiteListing(detailCommand.toString(), folder);
+				log.info("detailCommand.toString() {} " , detailCommand.toString());
 				if (cmd.isEmpty() || "".equals(cmd)) {
 					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 				}
-				log.info("700_cmd : ",cmd);
+				log.info("700_cmd : {}",cmd);
 				final Process procDetail = Runtime.getRuntime().exec(cmd);
 				procDetail.waitFor();
 			}catch(InterruptedException exception){
@@ -252,8 +253,8 @@ public class FileUtil {
 				//throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
-			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 			final File detailFile = new File(cleanXSS(detailPath,true));
+			log.info("stopWatch.getLastTaskTimeMillis() {} >> {} :  {} ms", stopWatch.getLastTaskName(),detailFile.getName(), stopWatch.getLastTaskTimeMillis());
 			if(detailFile.isFile()){
 				String detailThumbnail = uploadFile.getOriginalFilename();
 				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail." + resizeExtension;
@@ -262,7 +263,7 @@ public class FileUtil {
 				fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
 			}
 
-			stopWatch.start("100resize_" + uploadFile.getOriginalFilename());
+			stopWatch.start("100resize_" + uploadFile.getOriginalFilename() + " >> " + toFile.getName());
 			// 이미지 사이즈 100x100으로 변환
 			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail." + cleanXSS(resizeExtension,false);
 			final StringBuilder command = new StringBuilder(imageMagick);
@@ -279,7 +280,7 @@ public class FileUtil {
 				if (cmd.isEmpty() || "".equals(cmd)) {
 					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 				}
-				log.info("100_cmd : ", cmd);
+				log.info("100_cmd : {}", cmd);
 				final Process proc = Runtime.getRuntime().exec(cmd);
 				proc.waitFor();
 			}catch(InterruptedException exception){
@@ -288,7 +289,8 @@ public class FileUtil {
 				// throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.stop();
-			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
+//			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
+			log.info("stopWatch.getLastTaskTimeMillis() {} >> {} :  {} ms", stopWatch.getLastTaskName(), detailFile.getName(), stopWatch.getLastTaskTimeMillis());
 
 			final File thumbnailFile = new File(cleanXSS(thumbnailPath, true));
 			if(thumbnailFile.isFile()){
@@ -571,16 +573,13 @@ public class FileUtil {
 		File files = new File(root + File.separator + cleanXSS(folder, false));
 		boolean checkfile = false;
 		for(File file : files.listFiles()){
-			log.debug("file.getName() > " + file.getName());
 			if(paramStr.contains(file.getName())){
 				checkfile= true;
 				break;
 			}
 		}
-
 		if(checkfile){
 			final String[] checkStrArray = {imageMagick + File.separator + imageMagickCommand, ffmpeg + File.separator + ffmpegCommand};
-
 			boolean check = false;
 			for(String checkStr : checkStrArray){
 				if(paramStr.indexOf(checkStr) == 0){

@@ -314,9 +314,8 @@ export default {
                 const body = modal.querySelector('.fc-popover-body');
                 const a = document.createElement('a');
                 const txt = document.createTextNode('자세히 보기');
-                //TODO router 작업 필요
                 modal.style.marginLeft = `${tdWidth}px`;
-                a.href = '/information/calendar';
+                a.href = '/information/calendar?yyyyMm='+this.yyyyMm+'&searchDt='+moment(e.date).format('YYYY.MM.DD');
                 a.classList.add('fc-more');
                 a.appendChild(txt);
                 body.appendChild(a);
