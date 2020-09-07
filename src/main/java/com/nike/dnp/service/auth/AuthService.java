@@ -355,7 +355,11 @@ public class AuthService {
                 if (!lowerMenus.isEmpty()) {
                     for (final MenuReturnDTO lowerMenu : lowerMenus) {
                         if ("Y".equals(lowerMenu.getManagementYn())) {
-                            lowerMenu.setMenus(menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L));
+                            final List<MenuReturnDTO> bottomMenus = menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L);
+                            for (final MenuReturnDTO bottomMenu : bottomMenus) {
+                                bottomMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, bottomMenu.getMenuSeq()));
+                            }
+                            lowerMenu.setMenus(bottomMenus);
                         } else {
                             lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
                         }
@@ -370,7 +374,11 @@ public class AuthService {
                 if (!lowerMenus.isEmpty()) {
                     for (final MenuReturnDTO lowerMenu : lowerMenus) {
                         if ("Y".equals(lowerMenu.getManagementYn())) {
-                            lowerMenu.setMenus(menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L));
+                            final List<MenuReturnDTO> bottomMenus = menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L);
+                            for (final MenuReturnDTO bottomMenu : bottomMenus) {
+                                bottomMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, bottomMenu.getMenuSeq()));
+                            }
+                            lowerMenu.setMenus(bottomMenus);
                         } else {
                             lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
                         }
