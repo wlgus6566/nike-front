@@ -35,7 +35,7 @@
                     v-for="(item, index) in folderListData"
                     :key="index"
                 >
-                    <router-link :to="setUrl(item)">
+                    <router-link :to="setUrl(item)" @click.native="alertMsg(item)">
                         <div class="thumbnail">
                             <span class="exposure" v-if="item.exposureYn === 'N'">
                                 <i></i>작성중
@@ -172,6 +172,11 @@ export default {
         window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
+        alertMsg(item) {
+            if (item.detailAuthYn === 'N') {
+                alert('접근 권한이 없습니다.');
+            }
+        },
         initPageData() {
             this.totalPage = null;
             this.page = 0;
@@ -239,7 +244,11 @@ export default {
             }
         },
         setUrl(item) {
-            return `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase();
+            if (item.detailAuthYn === 'N') {
+                return `${this.$route.fullPath}`;
+            } else {
+                return `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase();
+            }
         },
         /**
          * 스크롤 관련 method
