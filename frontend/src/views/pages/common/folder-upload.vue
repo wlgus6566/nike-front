@@ -377,6 +377,11 @@ export default {
         },
     },
     watch: {
+        menuCode(val) {
+            if (!this.$route.params.id) {
+                this.$refs.modalAuth.getAuthList(val);
+            }
+        },
         '$store.state.gnbMenuListData'() {
             this.pageMenuCodeAuth(this.$route.meta.topMenuCode, 'CREATE');
         },
@@ -459,7 +464,6 @@ export default {
          */
         maxLengthCheck() {
             const obj = this.$refs.maxTextarea;
-            console.log(Number(this.byteCheck(obj)));
             if (Number(this.byteCheck(obj)) > Number(this.maxMemo)) {
                 alert('입력가능문자수를 초과하였습니다.');
                 this.folderDetail.memo = obj.value.substr(0, 150);
@@ -491,8 +495,6 @@ export default {
             this.saveFolder = false;
             if (this.$route.params.id) {
                 this.getFolderDetail();
-            } else {
-                this.$refs.modalAuth.getAuthList(this.menuCode);
             }
         },
         FileListUpdate(fileList) {
@@ -554,7 +556,7 @@ export default {
                 if (this.$route.params.id) {
                     response = await putContents(
                         this.$route.meta.topMenuCode,
-                        this.$route.params.pathMatch.toUpperCase(),
+                        this.menuCode,
                         this.$route.params.id,
                         this.folderDetail
                     );
@@ -577,9 +579,9 @@ export default {
                     if (this.$route.params.id) {
                         await this.deleteOccupyFn();
                         await this.$router.push(
-                            `/${this.$route.meta.topMenuCode.toLowerCase()}/${
-                                this.$route.params.pathMatch
-                            }/${this.$route.params.id}`
+                            `/${this.$route.meta.topMenuCode.toLowerCase()}/${this.menuCode.toLowerCase()}/${
+                                this.$route.params.id
+                            }`
                         );
                     } else {
                         await this.$router.push(
@@ -626,7 +628,6 @@ export default {
                     ? new Date(response.data.campaignEndDt)
                     : null;
 
-                console.log(this.folderDetail.checks);
                 await this.$refs.modalAuth.dataInit(this.folderDetail.checks);
                 await this.$refs.fileSet.getFolderDetailFile();
             } catch (error) {
