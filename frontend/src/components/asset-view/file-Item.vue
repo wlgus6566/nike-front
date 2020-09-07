@@ -7,6 +7,7 @@
                         type="checkbox"
                         v-model="checkAll"
                         :disabled="
+                            !contentsFileListTotal ||
                             (contentsFileList && !contentsFileList.length) ||
                             !folderAuthCheck('DOWNLOAD')
                         "
@@ -355,6 +356,7 @@ export default {
             };
         },
         onStart(e) {
+            console.log(123);
             const thumbnail = document.querySelector('.drag-item .thumbnail');
             const absoluteLeft =
                 window.pageXOffset + thumbnail.getBoundingClientRect().left;
