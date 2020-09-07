@@ -2307,7 +2307,7 @@
     font-family: 'Bebas Neue', sans-serif;
 }
 .fc .fc-daygrid-day.fc-day-today {
-    background: none;
+    background-color: transparent !important;
 }
 .fc .fc-daygrid-day-number {
     font-size: 14px;
