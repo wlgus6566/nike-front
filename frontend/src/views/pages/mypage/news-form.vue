@@ -117,6 +117,7 @@ export default {
         thumbnail,
     },
     created() {
+        this.$store.state.saveFolder = false;
         this.editorConfig.filebrowserImageUploadUrl =
             process.env.VUE_APP_API_URL +
             `/api/customer/${this.$route.meta.sectionCode}/images`;
@@ -124,6 +125,7 @@ export default {
             this.$store.state.token || getAuthFromCookie();
     },
     activated() {
+        this.$store.state.saveFolder = false;
         this.$refs.form.reset();
         this.detailDataReset();
     },
@@ -131,17 +133,6 @@ export default {
         console.log(this.noticeArticleSectionCode);
         if (this.$route.meta.modify) {
             this.getNewsDetail();
-        }
-    },
-    beforeRouteLeave(to, from, next) {
-        const answer = window.confirm(
-            '작성을 취소하시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
-        );
-        if (answer) {
-            next();
-            this.detailDataReset();
-        } else {
-            next(false);
         }
     },
     methods: {
@@ -186,7 +177,7 @@ export default {
                 });
 
                 console.log(response);
-
+                this.$store.state.saveFolder = true;
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
                     console.log('성공');
@@ -197,6 +188,7 @@ export default {
                     alert(response.data.msg);
                 }
             } catch (error) {
+                this.$store.state.saveFolder = false;
                 console.error(error);
             }
         },
@@ -222,7 +214,7 @@ export default {
                     });
                     console.log(response);
                     console.log(this.newsDetail.imageBase64);
-
+                    this.$store.state.saveFolder = true;
                     this.$store.commit('SET_RELOAD', true);
                     if (response.data.success) {
                         console.log('수정성공');
@@ -232,6 +224,7 @@ export default {
                         alert(response.data.msg);
                     }
                 } catch (error) {
+                    this.$store.state.saveFolder = false;
                     console.error(error);
                 }
             }
@@ -265,6 +258,20 @@ export default {
         onEditorInput: function (e) {
             this.newsDetail.contents = e.editor._.editable.$.innerHTML;
         },
+    },
+    beforeRouteLeave(to, from, next) {
+        if (!this.$store.state.saveFolder) {
+          const answer = window.confirm(
+              '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
+          );
+          if (answer) {
+            next();
+          } else {
+            next(false);
+          }
+        } else {
+          next();
+        }
     },
 };
 </script>

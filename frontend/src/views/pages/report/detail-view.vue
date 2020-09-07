@@ -44,6 +44,7 @@
                 <textarea
                     v-model="answerData.answerContents"
                     placeholder="댓글을 입력해주세요."
+                    maxlength="100"
                 ></textarea>
                 <button
                     type="button"

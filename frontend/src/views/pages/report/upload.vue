@@ -179,11 +179,13 @@ export default {
         thumbnail,
     },
     created() {
+        this.$store.state.saveFolder = false
         if (this.$route.params.id) {
             this.getReportDetailView();
         }
     },
     activated() {
+        this.$store.state.saveFolder = false
         this.reportDetailData = {
             reportName: '',
             reportSectionCode: 'SP',
@@ -380,6 +382,7 @@ export default {
                 }
                 bus.$emit('pageLoading', false);
                 clearInterval(this.fileUploadingInterval);
+                this.$store.state.saveFolder = true;
                 this.$store.commit('SET_RELOAD', true);
                 this.reportDetailData = {
                     reportName: '',
@@ -399,8 +402,10 @@ export default {
                 } else {
                     await this.$router.push(`/report/management`);
                 }*/
+               this.$store.state.saveFolder = false;
             } catch (error) {
                 console.log(error);
+                this.$store.state.saveFolder = false;
                 bus.$emit('pageLoading', false);
                 clearInterval(this.fileUploadingInterval);
             }
@@ -429,6 +434,20 @@ export default {
             }
         },
     },
+    beforeRouteLeave(to, from, next) {
+      if (!this.$store.state.saveFolder) {
+        const answer = window.confirm(
+            '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
+        );
+        if (answer) {
+          next();
+        } else {
+          next(false);
+        }
+      } else {
+        next();
+      }
+  },
 };
 </script>
 <style scoped></style>

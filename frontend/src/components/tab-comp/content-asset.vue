@@ -8,25 +8,27 @@
                         v-for="(item, index) in historyFolderData"
                         :key="index"
                     >
-                        <div class="thumbnail">
-                            <img :src="item.imageFilePhysicalName" alt="" />
-                        </div>
-                        <div class="info-box">
-                            <p class="title">{{ item.folderName }}</p>
-                            <span class="date">
-                                {{
-                                    $moment(item.campaignBeginDt).format(
-                                        'YYYY.MM.DD'
-                                    )
-                                }}
-                                ~
-                                {{
-                                    $moment(item.campaignEndDt).format(
-                                        'YYYY.MM.DD'
-                                    )
-                                }}
-                            </span>
-                        </div>
+                       <router-link :to="setUrl(item)">
+                           <div class="thumbnail">
+                              <img :src="item.imageFilePhysicalName" alt="" />
+                           </div>
+                           <div class="info-box">
+                               <p class="title">{{ item.folderName }}</p>
+                               <span class="date">
+                                 {{
+                                   $moment(item.campaignBeginDt).format(
+                                       'YYYY.MM.DD'
+                                   )
+                                 }}
+                                 ~
+                                 {{
+                                   $moment(item.campaignEndDt).format(
+                                       'YYYY.MM.DD'
+                                   )
+                                 }}
+                               </span>
+                           </div>
+                       </router-link>
                     </li>
                 </ul>
                 <div class="no-data" v-else>
@@ -70,6 +72,9 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+        },
+        setUrl(item) {
+          return `/${item.topMenuCode}/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
         },
     },
 };
