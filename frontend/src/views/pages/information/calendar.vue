@@ -35,6 +35,7 @@
                     size="small"
                     @click.prevent="onClickToCreate"
                     class="btn-form-gray"
+                    v-if="folderAuthCheck('CREATE')"
                 >
                     <span>등록</span>
                 </a>
@@ -65,6 +66,7 @@
                             type="white"
                             class="btn-edit"
                             @click="onClickToEdit(item)"
+                            v-if="folderAuthCheck('CREATE')"
                         >
                             수정하기
                         </el-button>
@@ -104,6 +106,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import momentPlugin from '@fullcalendar/moment';
 
 import calendarManagement from '@/views/pages/information/calendar-management';
+import { authCheck } from '@/utils/authCheck';
 
 export default {
     name: 'calendar',
@@ -166,6 +169,7 @@ export default {
             },
         };
     },
+    mixins: [authCheck],
     watch: {
         calenderSectionCodeList() {},
     },

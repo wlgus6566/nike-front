@@ -54,7 +54,10 @@
             <div class="tbl-list" v-if="userData.length">
                 <table>
                     <colgroup>
-                        <col style="width: 60px;" />
+                        <col
+                            style="width: 60px;"
+                            v-if="folderAuthCheck('DELETE')"
+                        />
                         <col style="width: auto;" />
                         <col style="width: auto;" />
                         <col style="width: 150px;" />
@@ -63,7 +66,7 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th>
+                            <th v-if="folderAuthCheck('DELETE')">
                                 <span class="checkbox">
                                     <input
                                         type="checkbox"
@@ -82,7 +85,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="item in userData" :key="item.userSeq">
-                            <td>
+                            <td v-if="folderAuthCheck('DELETE')">
                                 <span class="checkbox">
                                     <input
                                         type="checkbox"
@@ -95,11 +98,13 @@
                             </td>
                             <td>
                                 <button
+                                    v-if="folderAuthCheck('CREATE')"
                                     class="under-link"
                                     @click="userDetailView(item.userSeq)"
                                 >
                                     <span>{{ item.nickname }}</span>
                                 </button>
+                                <span v-else>{{ item.nickname }}</span>
                             </td>
                             <td>{{ item.userId }}</td>
                             <td>{{ item.authName }}</td>
@@ -134,12 +139,17 @@
                 type="button"
                 class="btn-form"
                 @click="userArrayDelete"
-                v-if="userData.length"
+                v-if="userData.length && folderAuthCheck('DELETE')"
             >
                 <span>삭제</span>
             </button>
             <div class="right">
-                <button type="button" class="btn-form-gray" @click="openPop">
+                <button
+                    type="button"
+                    class="btn-form-gray"
+                    @click="openPop"
+                    v-if="folderAuthCheck('CREATE')"
+                >
                     <span>등록</span>
                 </button>
             </div>
@@ -183,6 +193,7 @@ import NoData from '@/components/no-data';
 import Pagination from '@/components/pagination';
 import AccountManagement from '@/views/pages/management/account-management.vue';
 import bus from '@/utils/bus';
+import { authCheck } from '@/utils/authCheck';
 export default {
     name: 'account',
     data() {
@@ -272,6 +283,7 @@ export default {
             loadingData: false,
         };
     },
+    mixins: [authCheck],
     components: {
         AccountManagement,
         CascaderSelect,
