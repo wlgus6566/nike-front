@@ -16,13 +16,14 @@
                 v-if="historyFolderData.length"
                 :folderListData="historyFolderData"
             />
-        </template>
-        <template v-else>
-            <NoData>
+            <template v-else>
+              <NoData>
                 <i class="icon-folder"></i>
                 <p class="desc">최근 본 폴더가 없습니다.</p>
-            </NoData>
+              </NoData>
+            </template>
         </template>
+
         <Loading
             class="list-loading"
             :width="172"

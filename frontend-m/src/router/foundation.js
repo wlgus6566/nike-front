@@ -3,7 +3,7 @@ import { pages } from '@/utils/global-methods';
 const routes = [
     {
         path: '/foundation',
-        component: pages('report/index.vue'),
+        component: pages('root'),
         redirect: '/foundation/vms',
         children: [
             {

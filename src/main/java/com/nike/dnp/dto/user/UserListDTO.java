@@ -6,6 +6,7 @@ import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.log.UserLoginLog;
 import com.nike.dnp.entity.user.PasswordHistory;
+import com.nike.dnp.util.EmailPatternUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -166,17 +167,7 @@ public class UserListDTO {
      * @return the user id
      */
     public void setUserId(final String userId) {
-        String securityId = userId;
-
-        if (securityId.length() > 2) {
-            StringBuilder strBuilder = new StringBuilder();
-            for (int i=0; i<securityId.substring(0, securityId.indexOf("@")).length()-2; i++) {
-                strBuilder.append("*");
-            }
-            securityId = securityId.substring(0,2)+strBuilder.toString()+securityId.substring(securityId.indexOf("@"));
-        }
-
-        this.userId = securityId;
+        this.userId = EmailPatternUtil.maskingEmail(userId);
     }
 
     /**

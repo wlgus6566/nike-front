@@ -1261,11 +1261,41 @@
     width: 320px;
     height: 591px;
     display: flex;
-    align-content: flex-end;
+    align-content: center;
     justify-content: center;
     flex-wrap: wrap;
 }
+.login .nike-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 370px;
+    height: 390px;
+    transform: translate(-50%, -50%);
+    vertical-align: top;
+}
+.login .nike-logo.active {
+    animation: logoAni 1s ease-in-out forwards;
+}
+.login .nike-logo.hidden {
+    opacity:0;
+}
+
+@keyframes logoAni {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+.login .nike-logo img {
+    width: 100%;
+    vertical-align: top;
+}
 .login-form {
+    z-index: 6;
+    opacity: 0;
     position: relative;
     flex: 0 0 320px;
     box-sizing: border-box;
@@ -1275,7 +1305,18 @@
     background: rgba(0, 0, 0, 0.7);
     box-shadow: -10px 10px 8px 0 rgba(0, 0, 0, 0.5);
 }
-.login-form:before {
+.login-form.active {
+    animation: loginAni 1s ease-in-out 0s forwards;
+}
+@keyframes loginAni {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+/*.login-form:before {
     position: absolute;
     top: -319px;
     left: 50%;
@@ -1285,7 +1326,7 @@
     height: 430px;
     background: url('../images/img-login-swoosh.svg') no-repeat center;
     transform: translateX(-50%);
-}
+}*/
 .login-form .nike-title {
     display: block;
     font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
@@ -2497,3 +2538,10 @@
     background-color: #555;
 }
 .img-cropper {max-height:50vh;}
+
+.crop-editor {
+    /*overflow: hidden;*/
+}
+.crop-editor img {
+    max-height: 100%;
+}

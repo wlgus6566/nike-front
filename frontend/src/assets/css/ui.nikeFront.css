@@ -2094,6 +2094,7 @@
 .all-box .txt {
     font-size: 12px;
     font-weight: bold;
+    letter-spacing: 0;
 }
 .all-box .check-label .checkbox {
     height: 20px;

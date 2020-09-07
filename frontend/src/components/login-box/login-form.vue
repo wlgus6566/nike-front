@@ -57,6 +57,7 @@ export default {
         return {};
     },
     mounted() {
+      this.$refs.loginBox.classList.add('active');
         this.endLogo();
     },
     methods: {

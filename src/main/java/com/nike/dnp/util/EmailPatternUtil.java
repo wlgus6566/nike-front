@@ -35,4 +35,25 @@ public class EmailPatternUtil {
         return isValid;
     }
 
+    /**
+     * Masking email string.
+     *
+     * @param email the email
+     * @return the string
+     * @author [오지훈]
+     * @implNote 앞의 2자리 제외 마스킹 처리, @뒷부분 유지
+     * @since 2020. 9. 7. 오후 12:09:29
+     */
+    public String maskingEmail(final String email) {
+        String returnEmail = email;
+        if (email.length() > 2) {
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i=0; i<email.substring(0, email.indexOf("@")).length()-2; i++) {
+                strBuilder.append("*");
+            }
+            returnEmail = email.substring(0,2)+strBuilder.toString()+email.substring(email.indexOf("@"));
+        }
+        return returnEmail;
+    }
+
 }

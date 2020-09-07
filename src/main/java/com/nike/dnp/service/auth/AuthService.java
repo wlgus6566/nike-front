@@ -620,8 +620,15 @@ public class AuthService {
 
         if (!ObjectUtils.isEmpty(allAuthList) && !allAuthList.isEmpty()) {
 
-            if (1 == auth.getAuthDepth()) {
+            if (1 == auth.getAuthDepth() && "N".equals(userAuthSearchDTO.getSearchYn())) {
                 transformAuthList = allAuthList;
+            } else if (1 == auth.getAuthDepth() && "Y".equals(userAuthSearchDTO.getSearchYn())) {
+                for (AuthReturnDTO authReturnDTO : allAuthList) {
+                    if (auth.getAuthSeq().equals(authReturnDTO.getAuthSeq())) {
+                        transformAuthList.add(authReturnDTO);
+                        break;
+                    }
+                }
             } else {
                 for (AuthReturnDTO authReturnDTO : allAuthList) {
                     if (auth.getAuthSeq().equals(authReturnDTO.getAuthSeq())) {
@@ -662,7 +669,8 @@ public class AuthService {
                     break;
                 }
 
-                if (!ObjectUtils.isEmpty(findAuth) && !ObjectUtils.isEmpty(authReturnDTO.getSubAuths()) && !authReturnDTO.getSubAuths().isEmpty()) {
+                if (!ObjectUtils.isEmpty(findAuth)
+                        && !ObjectUtils.isEmpty(authReturnDTO.getSubAuths()) && !authReturnDTO.getSubAuths().isEmpty()) {//
                     findAuth = this.findAuthDepthList(authSeq, authReturnDTO.getSubAuths());
                 }
             }

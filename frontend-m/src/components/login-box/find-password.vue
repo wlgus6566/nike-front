@@ -1,5 +1,6 @@
 <template>
    <form action="#" @submit.prevent="findPW">
+     <div class="login-form" ref="loginBox">
         <strong class="title-ko">
             비밀번호 찾기
         </strong>
@@ -24,24 +25,31 @@
         <button
             type="button"
             class="btn-close"
-            @click="$emit('changeLoginBox', 'LoginForm')"
+            @click="closePassword"
         >
             <span>닫기</span>
         </button>
+     </div>
     </form>
+
 </template>
 <script>
     import {sendEmail} from '@/api/login.js';
 
     export default {
-    name: 'FindPW',
-    data() {
-        return {
-            userId: '',
-        };
-    },
-
-    methods: {
+      name: 'FindPW',
+      data() {
+          return {
+              userId: '',
+          };
+      },
+      mounted() {
+        this.$refs.loginBox.classList.add('active');
+      },
+      methods: {
+        closePassword(){
+          this.$emit('changeLoginBox', 'LoginForm');
+        },
         async findPW() {
             try {
                 const { data: response } = await sendEmail({

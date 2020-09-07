@@ -65,7 +65,7 @@
                             v-model="noticeDetail.contents"
                             :config="editorConfig"
                             @blur="onEditorInput"
-                            style="width: 100%;"
+                            style="width: 100%"
                         />
                     </div>
                     <!--                    <div class="form-column">-->
@@ -84,9 +84,9 @@
             </ul>
             <hr class="hr-gray" />
             <div class="btn-area">
-                <button type="button" class="btn-s-white" @click="cancelBack()">
+                <router-link to="/mypage/notice" class="btn-s-white">
                     <span>취소</span>
-                </button>
+                </router-link>
                 <button type="submit" class="btn-s-black">
                     <span>저장</span>
                 </button>
@@ -96,11 +96,16 @@
 </template>
 
 <script>
-    import {getCustomerDetail, getCustomerList, postNotice, putNotice,} from '@/api/customer';
+import {
+    getCustomerDetail,
+    getCustomerList,
+    postNotice,
+    putNotice,
+} from '@/api/customer';
 
-    import {getAuthFromCookie} from '@/utils/cookies';
+import { getAuthFromCookie } from '@/utils/cookies';
 
-    export default {
+export default {
     name: 'notice-form',
     data() {
         return {
@@ -154,6 +159,17 @@
     activated() {
         this.getNoticeList();
         this.detailDataReset();
+    },
+    beforeRouteLeave(to, from, next) {
+        const answer = window.confirm(
+            '작성을 취소하시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
+        );
+        if (answer) {
+            next();
+            this.detailDataReset();
+        } else {
+            next(false);
+        }
     },
     methods: {
         submitData() {
@@ -272,10 +288,6 @@
 
         //작성 취소
         cancelBack() {
-            if (!confirm('작성을 취소하시겠습니까?')) {
-                return false;
-            }
-            this.detailDataReset();
             this.$router.go(-1);
         },
         detailDataReset() {
@@ -283,7 +295,7 @@
             this.noticeDetail.contents = '';
             this.noticeDetail.noticeYn = null;
         },
-        onEditorInput: function(e) {
+        onEditorInput: function (e) {
             this.noticeDetail.contents = e.editor._.editable.$.innerHTML;
         },
     },
