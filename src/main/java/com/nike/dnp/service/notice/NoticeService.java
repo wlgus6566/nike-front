@@ -205,7 +205,7 @@ public class NoticeService {
         try {
             uploadUrl = S3Util.editorUpload(multiReq, awsPath);
         } catch (IOException e) {
-            e.printStackTrace(); //code exception
+            throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
         }
 
         return editorUrl + uploadUrl;

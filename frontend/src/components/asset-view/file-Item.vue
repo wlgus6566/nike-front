@@ -7,6 +7,7 @@
                         type="checkbox"
                         v-model="checkAll"
                         :disabled="
+                            !contentsFileListTotal ||
                             (contentsFileList && !contentsFileList.length) ||
                             !folderAuthCheck('DOWNLOAD')
                         "
@@ -16,7 +17,11 @@
                 </span>
                 <strong class="txt" :class="{ 'fc-black': checkAll }">
                     전체선택 (
-                    <em>{{ checkContentsFileList.length }}</em> /
+                    <em
+                        :class="{
+                            'fc-black': checkContentsFileList.length !== 0,
+                        }"
+                    >{{ checkContentsFileList.length }}</em> /
                     <em>{{
                         !folderAuthCheck('DOWNLOAD') ? 0 : contentsFileListTotal
                     }}</em>
@@ -355,6 +360,7 @@ export default {
             };
         },
         onStart(e) {
+            console.log(123);
             const thumbnail = document.querySelector('.drag-item .thumbnail');
             const absoluteLeft =
                 window.pageXOffset + thumbnail.getBoundingClientRect().left;

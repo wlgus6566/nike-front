@@ -24,9 +24,7 @@
                                     최대 3000*1500입니다.
                                 </span>
                             </template>
-                            <template slot="txt">
-                                NEWS 이미지 재등록
-                            </template>
+                            <template slot="txt"> NEWS 이미지 재등록 </template>
                         </thumbnail>
                     </div>
                 </li>
@@ -51,7 +49,7 @@
                             v-model="newsDetail.contents"
                             :config="editorConfig"
                             @blur="onEditorInput"
-                            style="width: 100%;"
+                            style="width: 100%"
                         />
                         <!--<span class="textarea">
                             <textarea
@@ -67,9 +65,9 @@
             </ul>
             <hr class="hr-gray" />
             <div class="btn-area">
-                <button type="button" class="btn-s-white" @click="cancelBack()">
+                <router-link to="/mypage/news" class="btn-s-white">
                     <span>취소</span>
-                </button>
+                </router-link>
                 <button type="submit" class="btn-s-black">
                     <span>저장</span>
                 </button>
@@ -79,16 +77,16 @@
 </template>
 
 <script>
-    import {getCustomerDetail, postNews, putNews} from '@/api/customer';
-    import thumbnail from '@/components/thumbnail/index';
-    import {getAuthFromCookie} from '@/utils/cookies';
+import { getCustomerDetail, postNews, putNews } from '@/api/customer';
+import thumbnail from '@/components/thumbnail/index';
+import { getAuthFromCookie } from '@/utils/cookies';
 
-    export default {
+export default {
     name: 'notice-form',
     watch: {
-        '$route'() {
+        $route() {
             this.$destroy();
-        }
+        },
     },
     data() {
         return {
@@ -119,6 +117,7 @@
         thumbnail,
     },
     created() {
+        this.$store.state.saveFolder = false;
         this.editorConfig.filebrowserImageUploadUrl =
             process.env.VUE_APP_API_URL +
             `/api/customer/${this.$route.meta.sectionCode}/images`;
@@ -126,6 +125,7 @@
             this.$store.state.token || getAuthFromCookie();
     },
     activated() {
+        this.$store.state.saveFolder = false;
         this.$refs.form.reset();
         this.detailDataReset();
     },
@@ -177,7 +177,7 @@
                 });
 
                 console.log(response);
-
+                this.$store.state.saveFolder = true;
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
                     console.log('성공');
@@ -188,6 +188,7 @@
                     alert(response.data.msg);
                 }
             } catch (error) {
+                this.$store.state.saveFolder = false;
                 console.error(error);
             }
         },
@@ -213,7 +214,7 @@
                     });
                     console.log(response);
                     console.log(this.newsDetail.imageBase64);
-
+                    this.$store.state.saveFolder = true;
                     this.$store.commit('SET_RELOAD', true);
                     if (response.data.success) {
                         console.log('수정성공');
@@ -223,6 +224,7 @@
                         alert(response.data.msg);
                     }
                 } catch (error) {
+                    this.$store.state.saveFolder = false;
                     console.error(error);
                 }
             }
@@ -245,15 +247,6 @@
                 console.error(error);
             }
         },
-
-        //작성 취소
-        cancelBack() {
-            if (!confirm('작성을 취소하시겠습니까?')) {
-                return false;
-            }
-            this.detailDataReset();
-            this.$router.go(-1);
-        },
         detailDataReset() {
             this.newsDetail.title = null;
             this.newsDetail.contents = null;
@@ -262,9 +255,23 @@
             this.newsDetail.thumbnailFilePhysicalName = null;
             this.newsDetail.thumbnailFileSize = null;
         },
-        onEditorInput: function(e) {
+        onEditorInput: function (e) {
             this.newsDetail.contents = e.editor._.editable.$.innerHTML;
         },
+    },
+    beforeRouteLeave(to, from, next) {
+        if (!this.$store.state.saveFolder) {
+          const answer = window.confirm(
+              '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
+          );
+          if (answer) {
+            next();
+          } else {
+            next(false);
+          }
+        } else {
+          next();
+        }
     },
 };
 </script>

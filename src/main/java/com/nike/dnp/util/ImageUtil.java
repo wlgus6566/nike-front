@@ -100,11 +100,9 @@ public class ImageUtil {
 		try{
 			ImageIO.write(image, type, newFile);
 		}catch(IOException e){
-			// TODO[lsj] test
-			e.printStackTrace();
-//			throw (CodeMessageHandleException) new CodeMessageHandleException(
-//					FailCode.ConfigureError.INVALID_FILE.name()
-//					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+			throw (CodeMessageHandleException) new CodeMessageHandleException(
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 		}
 
 		final FileResultDTO fileResultDTO = new FileResultDTO();

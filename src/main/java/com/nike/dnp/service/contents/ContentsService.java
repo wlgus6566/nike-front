@@ -23,6 +23,7 @@ import com.nike.dnp.service.alarm.AlarmService;
 import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.history.HistoryService;
 import com.nike.dnp.service.user.UserContentsService;
+import com.nike.dnp.service.user.UserService;
 import com.nike.dnp.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -124,6 +125,13 @@ public class ContentsService {
      */
     private final AuthService authService;
 
+    /**
+     * The User service
+     *
+     * @author [이소정]
+     */
+    private final UserService userService;
+
 
     /**
      * Find all paging page.
@@ -143,8 +151,7 @@ public class ContentsService {
         String searchMenuCode = topMenuCode+"_"+menuCode;
         if (ObjectUtils.isEmpty(menuCode) || ServiceCode.ContentsMenuCode.ALL.toString().equals(menuCode)) {
             searchMenuCode = topMenuCode+"_"+ServiceCode.ContentsMenuCode.ALL.toString();
-
-            contentsSearchDTO.setExposureYn(this.isAuthForAssetAll(topMenuCode));
+            contentsSearchDTO.setExposureYn("Y".equals(this.isAuthForAssetAll(topMenuCode)) ? "Y" : null);
         } else {
             contentsSearchDTO.setExposureYn(userContentsService.isAuth(authSeq, searchMenuCode, ServiceCode.MenuSkillEnumCode.CREATE.toString()) ? null : "Y");
         }
@@ -180,11 +187,12 @@ public class ContentsService {
         menuCodeList.add(topMenuCode+"_"+ServiceCode.AssetMenuCode.HO.toString());
         userAuthSearchDTO.setMenuCodeList(menuCodeList);
         userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.CREATE.toString());
+        userAuthSearchDTO.setAuthSeq(SecurityUtil.currentUser().getAuthSeq());
         List<AuthReturnDTO> authList = authService.findByConfigForAssetAll(userAuthSearchDTO);
         if (ObjectUtils.isEmpty(authList)) {
-            return "N";
-        } else {
             return "Y";
+        } else {
+            return "N";
         }
     }
 
@@ -358,6 +366,9 @@ public class ContentsService {
         userAuthSearchDTO.setContentsSeq(contentsSeq);
         ContentsResultDTO contentsResultDTO = ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
         contentsResultDTO.setChecks(authService.getAuthListWithoutN(userAuthSearchDTO));
+        contentsResultDTO.setUserId(
+                EmailPatternUtil.maskingEmail(userService.findByUserSeq(contentsResultDTO.getRegisterSeq()).get().getUserId())
+        );
 
         // 메일 갯수 조회
         List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsSeq);
