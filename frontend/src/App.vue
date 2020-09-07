@@ -61,7 +61,13 @@ export default {
             console.log(window.location.href)
           } else{
             console.log("PC에서 접속하셨습니다");
-            console.log(window.location.href)
+            console.log(window.location.hostname)
+            if(window.location.hostname === 'devm.nikespace.co.kr'){
+              document.location = "devwww.nikespace.co.kr";
+            }
+            if(window.location.hostname === 'm.nikespace.co.kr'){
+              document.location = "nikespace.co.kr";
+            }
           }
         }
       }
