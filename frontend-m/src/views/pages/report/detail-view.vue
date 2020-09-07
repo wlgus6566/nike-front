@@ -48,7 +48,11 @@
                 </ul>
             </template>
             <div class="textarea">
-                <textarea v-model="answerContents"></textarea>
+                <textarea
+                    v-model="answerContents"
+                    maxlength="100"
+                    placeholder="댓글을 입력해주세요."
+                ></textarea>
                 <button
                     type="button"
                     class="btn-form-gray"
