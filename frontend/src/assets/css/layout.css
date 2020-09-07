@@ -464,7 +464,8 @@ footer > .inner .info-list {
 .history-box {
     margin-top: 10px;
 }
-.item-list .item {
+.item-list .item {}
+.item-list .item a{
     display: flex;
     align-items: center;
     padding: 5px 0;
