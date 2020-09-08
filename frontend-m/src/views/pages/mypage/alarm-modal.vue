@@ -98,17 +98,7 @@ export default {
 .alarm-list li + li {
     border-top: 1px solid #eee;
 }
-.alarm-list li:before {
-    content: '';
-    position: absolute;
-    top: 24px;
-    left: 20px;
-    display: block;
-    width: 4px;
-    height: 4px;
-    border-radius: 100%;
-    background: #fa5400;
-}
+
 .alarm-list li a {
     display: block;
     padding: 15px 20px 15px 29px;
@@ -117,10 +107,25 @@ export default {
     padding-top: 5px;
 }
 .alarm-list li .title {
+    positoin: relative;
     display: block;
     font-size: 14px;
     line-height: 20px;
     color: #333;
+}
+.alarm-list li .title:before {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: 20px;
+    display: block;
+    width: 4px;
+    height: 4px;
+    border-radius: 100%;
+    background: #fa5400;
+}
+.alarm-list li:first-child .title:before {
+    top: 12px;
 }
 .alarm-list li .data {
     display: block;
