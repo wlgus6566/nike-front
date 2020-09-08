@@ -145,7 +145,6 @@ import { getCalendarEachList, getTodayCalendar } from '@/api/calendar/';
 import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
 
-import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -174,7 +173,7 @@ export default {
             reportList: [],
             toolKitContentsList: [],
             todayData: [],
-            yyyyMm: moment(new Date()).format('YYYY.MM'),
+            yyyyMm: this.$moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
@@ -202,7 +201,7 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
                             this.getCalendarEachList(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format('YYYY.MM')
                             );
                         },
                     },
@@ -212,7 +211,7 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
                             this.getCalendarEachList(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format('YYYY.MM')
                             );
                         },
                     },
@@ -317,7 +316,7 @@ export default {
                     '/information/calendar?yyyyMm=' +
                     this.yyyyMm +
                     '&searchDt=' +
-                    moment(e.date).format('YYYY.MM.DD');
+                    this.$moment(e.date).format('YYYY.MM.DD');
                 a.classList.add('fc-more');
                 a.appendChild(txt);
                 body.appendChild(a);
