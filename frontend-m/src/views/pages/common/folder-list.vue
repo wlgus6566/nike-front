@@ -60,7 +60,7 @@
                             </p>
                             <p v-else class="date">
                                 {{
-                                    $moment(item.campaignBeginDt).format(
+                                $moment(item.campaignBeginDt).format(
                                         'YYYY.MM.DD'
                                     )
                                 }}

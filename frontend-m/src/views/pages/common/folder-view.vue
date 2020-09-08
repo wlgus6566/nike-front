@@ -237,7 +237,6 @@ export default {
             if (
                 !this.loadingData &&
                 this.totalPage > this.page - 1 &&
-                !this.fileList &&
                 this.fileList.length >= this.size &&
                 this.fileList.length !== 0 &&
                 !this.pageLast
