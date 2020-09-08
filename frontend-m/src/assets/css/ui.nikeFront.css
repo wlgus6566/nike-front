@@ -2638,15 +2638,15 @@
     color: #333;
     font-size: 12px;
 }
-
+/*
 .img-cropper {
     max-height: 50vh;
-}
+}*/
 
 .crop-editor {
     /*overflow: hidden;*/
 }
 .crop-editor img {
-    vertical-align: top;
+    vertical-align: middle;
     max-height: 100%;
 }
