@@ -28,7 +28,7 @@
                 <a
                     href="#"
                     class="under-link"
-                    @click.prevent="$emit('changeLoginBox', 'FindPW')"
+                    @click.prevent="$emit('changeLoginBox', 'FindPW', false)"
                     ><span>비밀번호 찾기</span></a
                 >
             </div>
@@ -36,21 +36,25 @@
     </form>
 </template>
 <script>
+import password from '@/views/pages/mypage/password';
+
 export default {
     name: 'loginForm',
-    props: ['loginData'],
+    props: ['loginData', 'activeState'],
     data() {
         return {};
     },
     mounted() {
-        this.$refs.loginBox.classList.add('active');
+        if (this.activeState) {
+            this.$refs.loginBox.classList.add('active');
+        }
         this.endLogo();
     },
     methods: {
         endLogo() {
             const logo = document.querySelector('.nike-logo');
             const box = this.$refs.loginBox;
-            logo.addEventListener('webkitAnimationEnd', function () {
+            logo.addEventListener('webkitAnimationEnd', function() {
                 box.classList.add('active');
                 logo.classList.add('hidden');
                 logo.classList.remove('active');
