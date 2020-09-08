@@ -116,7 +116,7 @@ export default {
             contentsDetail: {},
             fileList: [],
             page: 0,
-            size: 3,
+            size: 9999,
             totalPage: 0,
             fileListLast: false,
             loadingData: false,
@@ -150,15 +150,6 @@ export default {
         this.initPageData();
         window.addEventListener('scroll', this.handleScroll);
     },
-    activated() {
-        window.addEventListener('scroll', this.handleScroll);
-    },
-    deactivated() {
-        window.removeEventListener('scroll', this.handleScroll);
-    },
-    destroyed() {
-        window.removeEventListener('scroll', this.handleScroll);
-    },
     methods: {
         initPageData() {
             this.fileList = null;
@@ -182,7 +173,7 @@ export default {
                 console.log(error);
             }
         },
-        async getFileList(paging) {
+        async getFileList() {
             this.loading = true;
             try {
                 const {
@@ -197,11 +188,7 @@ export default {
                         sectionCode: this.selectTabValue,
                     }
                 );
-                if (paging) {
-                    this.fileList = this.fileList.concat(response.content);
-                } else {
-                    this.fileList = response.content;
-                }
+                this.fileList = response.content;
                 this.totalPage = response.totalPages;
                 this.fileListLast = response.last;
                 this.loading = false;
@@ -217,33 +204,6 @@ export default {
         onClickTab(value) {
             this.selectTabValue = value;
             this.initPageData();
-        },
-        handleScroll() {
-            if (this.loadingData) return;
-            const windowE = document.documentElement;
-            console.log(
-                'dddd',
-                windowE.clientHeight + windowE.scrollTop,
-                windowE.scrollHeight
-            );
-            if (
-                windowE.clientHeight + windowE.scrollTop >=
-                windowE.scrollHeight
-            ) {
-                this.infiniteScroll();
-            }
-        },
-        infiniteScroll() {
-            if (
-                !this.loadingData &&
-                this.totalPage > this.page - 1 &&
-                this.fileList.length >= this.size &&
-                this.fileList.length !== 0 &&
-                !this.pageLast
-            ) {
-                this.page++;
-                this.getFileList(true);
-            }
         },
     },
 };
