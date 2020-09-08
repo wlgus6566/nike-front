@@ -31,6 +31,15 @@ export default {
         },
         tabItemClass(val) {
             const titleValue = this.$route.path;
+            if (val === '/report/upload') {
+                const reportArry = titleValue.split('/');
+                const reportModify = reportArry.some(el => {
+                    return el === 'modify';
+                });
+                if (reportModify) {
+                    return { active: true };
+                }
+            }
             return {
                 active: titleValue === val,
             };
