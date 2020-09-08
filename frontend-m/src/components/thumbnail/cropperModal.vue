@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         title="이미지 등록"
-        class="modal full cropper-modal"
+        class="modal full img-crop-modal"
         fullscreen
         :visible="visible"
         :append-to-body="true"
