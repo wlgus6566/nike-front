@@ -2698,24 +2698,27 @@
     color: #333;
     font-size: 12px;
 }
-.modal.cropper-modal {
+.modal.img-crop-modal {
     opacity: 1;
 }
-.cropper-modal .modal-contents {
+.img-crop-modal .modal-contents {
     display: flex;
 }
-.cropper-modal .crop-editor {
+.img-crop-modal .crop-editor {
     min-height: 100%;
 }
-.cropper-modal .preview-original {
+.img-crop-modal .preview-original {
     height: 100%;
 }
-.cropper-modal .img-cropper {
+.img-crop-modal .img-cropper {
     height: 100%;
 }
-.cropper-modal .img-cropper > div {
+.img-crop-modal .img-cropper > div {
     height: 100%;
     background: rgba(0, 0, 0, 0.3);
+}
+.img-crop-modal .cropper-modal {
+    width: 100%;
 }
 .cropper-container {
     position: absolute;
