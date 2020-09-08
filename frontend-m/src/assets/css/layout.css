@@ -537,31 +537,6 @@ footer .copy {
 .modal.full .modal-contents {
     min-height: 100%;
 }
-.modal.cropper-modal {
-    opacity: 1;
-}
-.cropper-modal .modal-contents {
-    display: flex;
-}
-.cropper-modal .crop-editor {
-    min-height: 100%;
-}
-.cropper-modal .preview-original {
-    height: 100%;
-}
-.cropper-modal .img-cropper {
-    height: 100%;
-}
-.cropper-modal .img-cropper > div {
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-}
-.cropper-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
 .list-loading {
     position: relative;
     padding-top: 70%;
