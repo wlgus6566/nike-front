@@ -40,14 +40,14 @@
     </header>
 </template>
 <script>
-    import NavItem from '@/components/app-header/nav-item';
-    import {deleteReport} from '@/api/report';
+import NavItem from '@/components/app-header/nav-item';
+import { deleteReport } from '@/api/report';
 
-    export default {
+export default {
     name: 'headerIndex',
     data() {
         return {
-            title:'',
+            title: '',
             tabMenuData: null,
         };
     },
@@ -57,13 +57,15 @@
         },
     },
     watch: {
-        tabMenuData(){
-          const titleValue = this.$route.path.split('/')[1]
-          if(titleValue === 'information'){
-            this.title =  'INFO.'
-          }else{
-            this.title = this.tabMenuData.menuName
-          }
+        tabMenuData() {
+            if (this.tabMenuData) {
+                const titleValue = this.$route.path.split('/')[1];
+                if (titleValue === 'information') {
+                    this.title = 'INFO.';
+                } else {
+                    this.title = this.tabMenuData.menuName;
+                }
+            }
         },
         pathUrl() {
             this.tabMenuFn();
@@ -102,10 +104,16 @@
         },
         async delFn() {
             if (this.$route.meta.topCode === 'report') {
-                if (confirm('삭제 시 등록한 내용이 전부 삭제 됩니다. 삭제하시겠습니까?')) {
+                if (
+                    confirm(
+                        '삭제 시 등록한 내용이 전부 삭제 됩니다. 삭제하시겠습니까?'
+                    )
+                ) {
                     try {
-                        const response = await deleteReport(this.$route.params.id);
-                        if(response.data.success) {
+                        const response = await deleteReport(
+                            this.$route.params.id
+                        );
+                        if (response.data.success) {
                             await this.$router.push(`/report/management`);
                         }
                     } catch (error) {
@@ -127,9 +135,6 @@
                     return null;
                 }
             });
-            console.log(titleValue);
-            console.log(this.$store.state.menuData);
-            console.log('tabMenuData', this.tabMenuData);
             this.tabMenuData =
                 this.tabMenuData.length === 0 ? null : this.tabMenuData[0];
             if (this.$route.meta.depth) {
