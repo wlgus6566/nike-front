@@ -62,6 +62,18 @@
                                 :player-width="width"
                             ></vimeo-player>
                         </div>
+                        <div
+                            class="thumbnail"
+                            v-else-if="filePopupFile.fileKindCode === 'VR'"
+                        >
+                            <span class="etc">
+                                <i class="icon-file"></i>
+                                <span class="txt">
+                                    해당파일은 미리보기를<br />
+                                    제공하지 않습니다.
+                                </span>
+                            </span>
+                        </div>
                         <div class="thumbnail" v-else>
                             <div class="video-filePopupFile">
                                 <youtube
