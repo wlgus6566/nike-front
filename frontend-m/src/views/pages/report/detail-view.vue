@@ -80,7 +80,7 @@
                     v-for="item in fileList"
                     :key="item.reportFileSeq"
                 >
-                    <a href="#" @click="fileDetailModal(item)">
+                    <a href="#" @click.prevent="fileDetailModal(item)">
                         <span class="thumbnail">
                             <img
                                 :src="item.thumbnailFilePhysicalName"

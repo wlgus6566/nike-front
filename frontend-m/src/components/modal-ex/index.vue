@@ -4,11 +4,12 @@
         class="modal"
         :visible="visible"
         :append-to-body="true"
+        :lock-scroll="false"
         @close="$emit('update:visible', false)"
     >
-      <div class="modal-contents">
-        모달 컨텐츠 등록
-      </div>
+        <div class="modal-contents">
+            모달 컨텐츠 등록
+        </div>
 
         <!--        <div slot="footer" class="dialog-footer">-->
         <!--            <el-button @click="$emit('update:visible', false)" type="info" round>-->

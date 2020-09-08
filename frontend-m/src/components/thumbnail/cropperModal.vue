@@ -5,6 +5,7 @@
         fullscreen
         :visible="visible"
         :append-to-body="true"
+        :lock-scroll="false"
         @close="$emit('update:visible', false)"
     >
         <!-- <el-scrollbar wrap-class="modal-scroll" :native="false">
