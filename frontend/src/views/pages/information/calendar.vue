@@ -122,8 +122,12 @@ export default {
             },
             calendarSeq: null,
             loadingData: false,
-            yyyyMm: !!this.$route.query.yyyyMm ? this.$route.query.yyyyMm : moment(new Date()).format('YYYY.MM'),
-            searchDt: !!this.$route.query.searchDt ? this.$route.query.searchDt : moment(new Date()).format('YYYY.MM.DD'),
+            yyyyMm: !!this.$route.query.yyyyMm
+                ? this.$route.query.yyyyMm
+                : moment(new Date()).format('YYYY.MM'),
+            searchDt: !!this.$route.query.searchDt
+                ? this.$route.query.searchDt
+                : moment(new Date()).format('YYYY.MM.DD'),
             currentDate: moment(new Date()).format('YYYY.MM.DD'),
             statusCode: null,
             calendarDetail: {},
@@ -322,7 +326,15 @@ export default {
     },
 };
 </script>
-<style type="text/css">
+<style scoped>
+::v-deep .fc .fc-daygrid-day.fc-active .fc-daygrid-day-number,
+::v-deep .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+    width: 22px;
+    height: 22px;
+}
+::v-deep .fc .fc-daygrid-day-top {
+    padding-bottom: 3px;
+}
 /*TODO 주말 색 변경필오*/
 .fc-day-sun.fc-daygrid-day-frame.fc-daygrid-day-top.fc-daygrid-day-number {
     color: #0000ff;

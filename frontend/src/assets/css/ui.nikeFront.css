@@ -4564,8 +4564,14 @@ img.image-grayscale {
 .fc .fc-daygrid-event {
     margin-top: 2px !important;
 }
+.fc .fc-daygrid-event-harness {
+    /*margin-top: 2px;*/
+}
 .fc-direction-ltr .fc-daygrid-event {
     border-radius: 0;
+}
+.fc .fc-daygrid-body-natural .fc-daygrid-day-events {
+    margin-bottom: 8px !important;
 }
 .fc-direction-rtl .fc-daygrid-event.fc-event-end,
 .fc-direction-ltr .fc-daygrid-event.fc-event-start {
