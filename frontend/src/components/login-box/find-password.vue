@@ -21,11 +21,7 @@
                     <span>E-MAIL 발송</span>
                 </button>
             </div>
-            <button
-                type="button"
-                class="btn-close"
-                @click="closePassword"
-            >
+            <button type="button" class="btn-close" @click="closePassword">
                 <span>닫기</span>
             </button>
         </div>
@@ -41,12 +37,13 @@ export default {
             userId: '',
         };
     },
+    props: ['activeState'],
     mounted() {
         this.$refs.loginBox.classList.add('active');
     },
     methods: {
-        closePassword(){
-          this.$emit('changeLoginBox', 'LoginForm');
+        closePassword() {
+            this.$emit('changeLoginBox', 'LoginForm', true);
         },
         async findPW() {
             if (!this.userId) {
@@ -63,7 +60,7 @@ export default {
                     alert(response.msg);
                 }
                 if (response.success) {
-                    this.$emit('changeLoginBox', 'LoginForm');
+                    this.$emit('changeLoginBox', 'LoginForm', true);
                 } else {
                     this.$refs.mailId.focus();
                 }
@@ -76,28 +73,6 @@ export default {
 };
 </script>
 <style scoped>
-.login-box {
-  z-index: 6;
-  opacity: 0;
-    position: relative;
-    width: 370px;
-    height: 390px;
-    padding: 50px 45px 45px;
-    box-sizing: border-box;
-    background: rgba(0, 0, 0, 0.7);
-    box-shadow: -20px 20px 8px 0 rgba(0, 0, 0, 0.5);
-}
-.login-box.active {
-  animation: loginAni 1s ease-in-out 0s forwards;
-}
-@keyframes loginAni {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 .login-box .title {
     display: block;
     font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;

@@ -10,6 +10,7 @@
             <component
                 :is="LoginBox"
                 :loginData="loginData"
+                :activeState="activeState"
                 @login="login"
                 @updateValue="updateValue"
                 @changeLoginBox="changeLoginBox"
@@ -30,6 +31,7 @@ export default {
     name: 'login',
     data() {
         return {
+            activeState: false,
             LoginBox: 'LoginForm',
             loginData: {
                 username: '',
@@ -44,7 +46,8 @@ export default {
         this.$refs.logo.classList.add('active');
     },
     methods: {
-        changeLoginBox(compName) {
+        changeLoginBox(compName, state) {
+            this.activeState = state;
             this.LoginBox = compName;
         },
         updateValue(target, value) {
