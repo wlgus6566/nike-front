@@ -26,6 +26,8 @@ const routes = [
                     layout: 'Default',
                     aside: 'Report',
                     title: 'REPORT <span class="ko">업로드 수정</span>',
+                    topCode: 'report',
+                    historyBack: null,
                 },
             },
             {

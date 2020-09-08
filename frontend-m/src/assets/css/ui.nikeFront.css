@@ -939,6 +939,19 @@
 .sorting-list li:first-child {
     margin-left: -15px;
 }
+.sorting-list li {
+    position: relative;
+}
+.sorting-list li + li:before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 10px;
+    background: #ddd;
+}
 .sorting-list li button,
 .sorting-list li div {
     position: relative;
