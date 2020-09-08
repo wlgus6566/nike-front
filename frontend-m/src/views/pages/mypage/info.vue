@@ -91,7 +91,6 @@ export default {
             contents.classList.add('my-info');
         },
         pageRemoveClass() {
-            console.log('떠남');
             const contents = document.querySelector('.contents');
             contents.classList.remove('my-info');
         },

@@ -62,7 +62,6 @@ export default {
         },
         depthMenuTitle(title) {
             if (title === 'REPORT UPLOAD') {
-                console.log(title);
                 return '<span>업로드</span>';
             } else if (title === 'REPORT <span>관리</span>') {
                 return '<span>관리</span>';

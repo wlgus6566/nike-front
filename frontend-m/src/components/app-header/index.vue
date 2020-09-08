@@ -70,8 +70,7 @@ export default {
         pathUrl() {
             this.tabMenuFn();
         },
-        '$store.state.menuData'(val) {
-            console.log(val);
+        '$store.state.menuData'() {
             this.tabMenuFn();
         },
     },

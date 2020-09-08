@@ -82,12 +82,10 @@ export default {
             );
         },
         pageAddClass() {
-            console.log('클래스추가');
             const contents = document.querySelector('.el-dialog');
             contents.classList.add('full');
         },
         pageRemoveClass() {
-            console.log('떠남');
             const contents = document.querySelector('.el-dialog');
             contents.classList.remove('full');
         },

@@ -37,7 +37,7 @@ export default {
     },
     watch: {
         'selectList.value'() {
-            const _index = this.selectList.listSortOptions.findIndex((el) => {
+            const _index = this.selectList.listSortOptions.findIndex(el => {
                 return el.value === this.selectList.value;
             });
             this.selectLabel = this.selectList.listSortOptions[_index].label;
@@ -63,13 +63,12 @@ export default {
             this.closeModal(label);
         },
         findLabel() {
-            const _index = this.selectList.listSortOptions.findIndex((el) => {
+            const _index = this.selectList.listSortOptions.findIndex(el => {
                 return el.value === this.selectList.value;
             });
             this.selectLabel = this.selectList.listSortOptions[_index].label;
         },
         dimmedClose() {
-            console.log(22222);
             this.showList = false;
             document.querySelector('.modal-list-open').style.overflow = '';
             document.querySelector('#wrap').style.margin = '';
