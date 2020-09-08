@@ -1390,7 +1390,7 @@
     vertical-align: top;
 }
 .login .nike-logo.active {
-    animation: logoAni 1s ease-in-out forwards;
+    animation: logoAni 1.5s ease-in-out 0s forwards;
 }
 .login .nike-logo.hidden {
     opacity: 0;
@@ -1421,7 +1421,7 @@
     box-shadow: -10px 10px 8px 0 rgba(0, 0, 0, 0.5);
 }
 .login-form.active {
-    animation: loginAni 1s ease-in-out 0s forwards;
+    animation: loginAni 1.5s ease-in-out 0s forwards;
 }
 @keyframes loginAni {
     from {

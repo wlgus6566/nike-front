@@ -316,6 +316,29 @@
     border: 1px solid #fa5400;
     background: #fff7f3;
 }
+/* login */
+.login-box {
+    z-index: 6;
+    opacity: 0;
+    position: relative;
+    width: 370px;
+    height: 390px;
+    padding: 50px 45px 45px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: -20px 20px 8px 0 rgba(0, 0, 0, 0.5);
+}
+.login-box.active {
+    animation: loginAni 1.5s ease-in-out 0s forwards;
+}
+@keyframes loginAni {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 /* input-box */
 .input-box {
     position: relative;
