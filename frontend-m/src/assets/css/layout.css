@@ -36,14 +36,20 @@ header {
 header .logo {
     width: 120px;
     height: 40px;
-    background: url('../images/img-main-logo.svg') 0 0 no-repeat;
+    /*background: url('../images/img-main-logo.svg') 0 0 no-repeat;*/
     background-size: 120px auto;
 }
-header .logo span {
+header .logo a {
     display: block;
-    overflow: hidden;
-    text-indent: -9999px;
 }
+header .logo svg {
+    vertical-align: top;
+}
+/*header .logo span {*/
+/*    display: block;*/
+/*    overflow: hidden;*/
+/*    text-indent: -9999px;*/
+/*}*/
 /*.sticky-header header {
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
 }*/
