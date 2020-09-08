@@ -63,7 +63,7 @@
                     v-for="item in fileList"
                     :key="item.contentsFileSeq"
                 >
-                    <a href="#" @click="fileDetailModal(item)">
+                    <a href="#" @click.prevent="fileDetailModal(item)">
                         <span class="thumbnail">
                             <span
                                 :class="[`extension-vr`]"
@@ -196,7 +196,7 @@ export default {
                     this.$route.params.pathMatch.toUpperCase(),
                     this.$route.params.id,
                     {
-                        'orderType': 'ORDER',
+                        orderType: 'ORDER',
                         page: this.page,
                         size: this.size,
                         sectionCode: this.selectTabValue,

@@ -9,7 +9,7 @@
             <button
                 type="button"
                 @click="menuFn($event, menu.menuSeq)"
-                v-html="menu.menuName"
+                v-html="menuTitle(menu.menuName)"
             />
             <transition @enter="itemOpen" @leave="itemClose">
                 <ul class="depth" v-if="activeIndex === index">
@@ -20,7 +20,7 @@
                     >
                         <router-link
                             :to="depth.menuPathUrl"
-                            v-html="menuTitle(depth.menuName)"
+                            v-html="depthMenuTitle(depth.menuName)"
                         >
                         </router-link>
                     </li>
@@ -51,18 +51,25 @@ export default {
     },
     watch: {},
     methods: {
-        menuTitle(title){
-          if(title === 'REPORT UPLOAD'){
-            console.log(title)
-            return "<span>업로드</span>"
-          } else if(title === 'REPORT <span>관리</span>'){
-            return "<span>관리</span>"
-          } else if(title === 'AGENCY CONTACT'){
-            return "AGENCY"
-          }
-          else{
-            return title
-          }
+        menuTitle(title) {
+            const info =
+                '<span>INFORMATION</span><span class="ko">에이전시 정보</span>';
+            if (title === info) {
+                return '<span>INFO.</span>';
+            } else {
+                return title;
+            }
+        },
+        depthMenuTitle(title) {
+            if (title === 'REPORT UPLOAD') {
+                return '<span>업로드</span>';
+            } else if (title === 'REPORT <span>관리</span>') {
+                return '<span>관리</span>';
+            } else if (title === 'AGENCY CONTACT') {
+                return 'AGENCY';
+            } else {
+                return title;
+            }
         },
         routerFn() {
             const menuName = this.menuData.map(el => el.menuPathUrl);

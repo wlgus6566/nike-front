@@ -18,24 +18,19 @@ export default {
     created() {},
     computed: {},
     methods: {
-        menuTitle(title){
-          if(title === 'REPORT UPLOAD'){
-            console.log(title)
-            return "업로드"
-          } else if(title === 'REPORT <span>관리</span>'){
-            return "관리"
-          } else if(title === 'AGENCY CONTACT'){
-            return "AGENCY"
-          }
-          else{
-            return title
-          }
+        menuTitle(title) {
+            if (title === 'REPORT UPLOAD') {
+                return '업로드';
+            } else if (title === 'REPORT <span>관리</span>') {
+                return '관리';
+            } else if (title === 'AGENCY CONTACT') {
+                return 'AGENCY';
+            } else {
+                return title;
+            }
         },
         tabItemClass(val) {
             const titleValue = this.$route.path;
-            if (titleValue === val) {
-                console.log(1);
-            }
             return {
                 active: titleValue === val,
             };

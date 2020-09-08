@@ -115,7 +115,6 @@ export default {
     },
     watch: {
         pathUrl(val) {
-            console.log(val.split('/')[1]);
             if (val.split('/')[1] === 'report') {
                 this.menuLottie(1);
             }
@@ -162,11 +161,9 @@ export default {
                     const idxAuthYn = this.$store.state.menuData.findIndex(
                         el => el.detailAuthYn === 'N'
                     );
-                    console.log(idxAuthYn);
                     if (idxAuthYn !== -1) {
                         return this.pathUrl;
                     } else {
-                        console.log(this.pathUrl);
                         const idx = this.$store.state.menuData.findIndex(
                             el => el.menuCode === 'REPORT'
                         );

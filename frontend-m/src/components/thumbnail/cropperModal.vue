@@ -5,6 +5,7 @@
         fullscreen
         :visible="visible"
         :append-to-body="true"
+        :lock-scroll="false"
         @close="$emit('update:visible', false)"
     >
         <!-- <el-scrollbar wrap-class="modal-scroll" :native="false">
@@ -82,12 +83,10 @@ export default {
             );
         },
         pageAddClass() {
-            console.log('클래스추가');
             const contents = document.querySelector('.el-dialog');
             contents.classList.add('full');
         },
         pageRemoveClass() {
-            console.log('떠남');
             const contents = document.querySelector('.el-dialog');
             contents.classList.remove('full');
         },
