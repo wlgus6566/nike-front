@@ -53,8 +53,4 @@ export default {
     },
 };
 </script>
-<style scoped>
-::v-deep #wrap {
-    padding-bottom: 0;
-}
-</style>
+<style scoped></style>
