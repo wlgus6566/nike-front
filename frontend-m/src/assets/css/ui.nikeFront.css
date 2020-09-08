@@ -240,6 +240,7 @@
     font-size: 14px;
     color: #fff;
     letter-spacing: 0.05em;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 .update-list-item .info-box .desc {
     display: block;
