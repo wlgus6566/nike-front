@@ -186,6 +186,13 @@ export default {
         // 달력에 일자 클릭시
         handleDateClick(arg) {
             this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
+            const date = this.$moment(arg.date).format('YYYY-MM-DD');
+            const cal = this.$refs.fullCalendar.$el;
+            const td = cal.querySelector(`td[data-date="${date}"]`);
+            cal.querySelectorAll('td').forEach((el) => {
+                el.classList.remove('fc-active');
+            });
+            td.classList.add('fc-active');
         },
         // 캘린더 코드 목록 조회
         async loadCalendarCode() {

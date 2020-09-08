@@ -2422,7 +2422,7 @@
 .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
     width: 26px;
     height: 26px;
-    margin: 7px 0 0 7px;
+    margin: 7px 0 7px 7px;
     line-height: 19px;
     border-radius: 50%;
     white-space: nowrap;
@@ -2433,7 +2433,6 @@
     text-align: center;
 }
 .fc .fc-daygrid-day.fc-active .fc-daygrid-day-number {
-    margin: 0;
     background-color: #fa5400;
 }
 .fc .fc-h-event {

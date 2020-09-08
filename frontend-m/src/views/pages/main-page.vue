@@ -433,6 +433,7 @@ export default {
     right: 0;
     bottom: 0;
 }
+::v-deep .fc .fc-daygrid-day.fc-active .fc-daygrid-day-number,
 ::v-deep .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
     margin: 0;
 }
