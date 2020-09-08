@@ -23,7 +23,7 @@
                         <em>{{ contentsDetail.campaignEndDt }}</em>
                     </span>
                     <span class="email">
-                        nike@nikespace.co.kr
+                        {{ contentsDetail.userId }}
                     </span>
                 </span>
                 <p class="folder-memo">{{ contentsDetail.memo }}</p>
