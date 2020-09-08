@@ -317,7 +317,9 @@ export default {
         this.sectionCode.listSortOptions = [
             { value: 'ALL', title: 'ALL' },
             ...this.folderSet[this.$route.meta.topMenuCode.toLowerCase()][
-                this.$route.meta.menuCode.toLowerCase()
+                this.$route.meta.menuCode
+                    .replace(`${this.$route.meta.topMenuCode}_`, '')
+                    .toLowerCase()
             ],
         ];
         console.log(this.sectionCode);
@@ -426,7 +428,9 @@ export default {
             try {
                 const { data: response } = await deleteContents(
                     this.$route.meta.topMenuCode,
-                    this.$route.meta.menuCode.toUpperCase(),
+                    this.$route.meta.menuCode
+                        .replace(`${this.$route.meta.topMenuCode}_`, '')
+                        .toUpperCase(),
                     this.$route.params.id
                 );
                 console.log(response);
@@ -599,7 +603,9 @@ export default {
             try {
                 await addContentsBasket(
                     this.$route.meta.topMenuCode,
-                    this.$route.meta.menuCode.toUpperCase(),
+                    this.$route.meta.menuCode
+                        .replace(`${this.$route.meta.topMenuCode}_`, '')
+                        .toUpperCase(),
                     seq.filter((el) => {
                         return !this.storeContBasketList.includes(el);
                     })

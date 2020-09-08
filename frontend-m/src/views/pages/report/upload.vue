@@ -8,12 +8,8 @@
                         @cropImage="cropImage"
                         :imageBase64="reportDetailData.imageBase64"
                     >
-                        <template slot="txt-up">
-                            썸네일 이미지 등록
-                        </template>
-                        <template slot="txt">
-                            썸네일 이미지 재등록
-                        </template>
+                        <template slot="txt-up"> 썸네일 이미지 등록 </template>
+                        <template slot="txt"> 썸네일 이미지 재등록 </template>
                     </thumbnail>
                     <div class="upload-file-box">
                         <div class="fine-file">
@@ -78,6 +74,7 @@
                                     v-model="reportDetailData.reportSectionCode"
                                     :value="radio"
                                 />
+                                <i></i>
                                 <span class="txt" v-text="radio">SP</span>
                             </label>
                         </div>
@@ -104,13 +101,18 @@
     </div>
 </template>
 <script>
-    import thumbnail from '@/components/thumbnail/index';
-    import {getReportDetail, getReportFile, postReport, putReport,} from '@/api/report';
-    import {fileUpLoad} from '@/api/file';
-    import bus from '@/utils/bus';
-    import {getLoginUpdate} from '@/api/mypage';
+import thumbnail from '@/components/thumbnail/index';
+import {
+    getReportDetail,
+    getReportFile,
+    postReport,
+    putReport,
+} from '@/api/report';
+import { fileUpLoad } from '@/api/file';
+import bus from '@/utils/bus';
+import { getLoginUpdate } from '@/api/mypage';
 
-    export default {
+export default {
     name: 'upload',
     data() {
         return {
@@ -159,8 +161,8 @@
             const response = await getLoginUpdate();
         },
         fileOrderSet() {
-            this.uploadFileList = this.uploadFileList.filter(a => {
-                return this.reportDetailData.reportFileSaveDTOList.some(b => {
+            this.uploadFileList = this.uploadFileList.filter((a) => {
+                return this.reportDetailData.reportFileSaveDTOList.some((b) => {
                     return (
                         a.name === b.fileName &&
                         a.type === b.fileContentType &&
@@ -177,15 +179,15 @@
         },
 
         selectFile(seq) {
-            if (this.checkedFile.some(el => el === seq)) {
-                this.checkedFile = this.checkedFile.filter(el => el !== seq);
+            if (this.checkedFile.some((el) => el === seq)) {
+                this.checkedFile = this.checkedFile.filter((el) => el !== seq);
             } else {
                 this.checkedFile.push(seq);
             }
         },
         removeFile(order) {
             this.reportDetailData.reportFileSaveDTOList = this.reportDetailData.reportFileSaveDTOList.filter(
-                b => b.fileOrder !== order
+                (b) => b.fileOrder !== order
             );
             this.uploadFileSize--;
             this.fileOrderSet();
@@ -238,27 +240,30 @@
             const files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
 
-            let mergeArray = Array.from(files).filter(item => {
-                return this.reportDetailData.reportFileSaveDTOList.every(el => {
-                    return (
-                        item.name !== el.fileName && item.size !== el.fileSize
-                    );
-                });
+            let mergeArray = Array.from(files).filter((item) => {
+                return this.reportDetailData.reportFileSaveDTOList.every(
+                    (el) => {
+                        return (
+                            item.name !== el.fileName &&
+                            item.size !== el.fileSize
+                        );
+                    }
+                );
             });
-            console.log("mergeArray > "+mergeArray.length);
-            if(mergeArray.length + this.uploadFileList.length > 10) {
+            console.log('mergeArray > ' + mergeArray.length);
+            if (mergeArray.length + this.uploadFileList.length > 10) {
                 alert('10개 이상 등록 할 수 없습니다.');
-                if(this.uploadFileList.length === 10) return;
+                if (this.uploadFileList.length === 10) return;
                 let maxNum = 10;
-                if(this.uploadFileList.length > 0) {
+                if (this.uploadFileList.length > 0) {
                     maxNum = 10 - this.uploadFileList.length;
                 }
                 mergeArray.splice(maxNum, 9999);
             }
 
-            mergeArray.forEach(el => {
+            mergeArray.forEach((el) => {
                 let reader = new FileReader();
-                reader.onloadend = e => {
+                reader.onloadend = (e) => {
                     //this.reportDetailData.reportFileSaveDTOList[this.reportDetailData.reportFileSaveDTOList.length-1].thumbnailFilePhysicalName = e.target.result;
                     this.reportDetailData.reportFileSaveDTOList.push({
                         fileOrder: this.reportDetailData.reportFileSaveDTOList
@@ -280,18 +285,18 @@
 
         async uploadFiles() {
             await Promise.all(
-                this.uploadFileList.map(async el => {
+                this.uploadFileList.map(async (el) => {
                     try {
                         const formData = new FormData();
                         formData.append('uploadFile', el);
                         const config = {
-                            onUploadProgress: progressEvent => {
+                            onUploadProgress: (progressEvent) => {
                                 const percentCompleted = Math.round(
                                     (progressEvent.loaded * 100) /
                                         progressEvent.total
                                 );
                                 this.reportDetailData.reportFileSaveDTOList.forEach(
-                                    item => {
+                                    (item) => {
                                         if (
                                             item.fileName === el.name &&
                                             item.fileContentType === el.type &&
@@ -341,9 +346,9 @@
                         this.$route.params.id
                     );
                 } else {
-                    responseData =await postReport(this.reportDetailData);
+                    responseData = await postReport(this.reportDetailData);
                 }
-                if(responseData.data.code) {
+                if (responseData.data.code) {
                     alert(responseData.data.msg);
                 }
                 bus.$emit('pageLoading', false);

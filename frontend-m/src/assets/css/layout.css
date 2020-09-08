@@ -220,7 +220,12 @@ header .logo span {
     height: 20px;
     background: url(../../assets/images/svg/icon-more-gray.svg) no-repeat center;
 }
-
+.depth li a > span{
+    font-size:14px;
+    font-family:"Noto Sans KR", "Arial", "Apple SD Gothic Neo", sans-serif;
+    font-weight:bold;
+    letter-spacing:-0.05em;
+}
 header + .contents,
 .page-header.header-detail + .contents {
     padding-top: 60px;
@@ -305,13 +310,13 @@ footer .copy {
     color: #888;
 }
 .tab-bar li a div,
-.tab-bar li button div{
-    display:flex;
-    width:100%;
-    height:42px;
+.tab-bar li button div {
+    display: flex;
+    width: 100%;
+    height: 42px;
 }
 .tab-bar li span {
-    display:block;
+    display: block;
     letter-spacing: 0.05em;
 }
 .tab-bar li i {
@@ -483,7 +488,10 @@ footer .copy {
     padding: 0;
     height: 54px;
 }
-
+.modal.full,
+.modal.full .el-dialog {
+    overflow: hidden;
+}
 /*.modal.full .el-dialog {
     display: flex;
     width: 100%;
@@ -497,6 +505,9 @@ footer .copy {
 .modal.full .el-dialog__body {
     /*flex-grow: 1;*/
     padding: 0;
+    height: calc(100% - 50px);
+    padding-bottom: 50px;
+    box-sizing: border-box;
 }
 .modal-contents {
     max-height: 420px;
@@ -524,7 +535,7 @@ footer .copy {
 }
 
 .modal.full .modal-contents {
-    max-height: none;
+    max-height: 100%;
 }
 
 .list-loading {

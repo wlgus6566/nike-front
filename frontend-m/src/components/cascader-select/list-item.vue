@@ -62,6 +62,7 @@ export default {
 }
 .select-list-wrap > .select-options-list > li:first-child .select-label {
     background: inherit;
+    font-weight: 600;
 }
 .select-list-wrap > .select-options-list > li > .select-label {
     background: #f7f7f7;

@@ -194,6 +194,7 @@ export default {
                     right: 'next',
                 },
                 titleFormat: 'yyyy.MM',
+
                 customButtons: {
                     prev: {
                         // this overrides the prev button
@@ -312,7 +313,11 @@ export default {
                 const txt = document.createTextNode('자세히 보기');
                 console.log(tdWidth);
                 modal.style.marginLeft = `${tdWidth}px`;
-                a.href = '/information/calendar?yyyyMm='+this.yyyyMm+'&searchDt='+moment(e.date).format('YYYY.MM.DD');
+                a.href =
+                    '/information/calendar?yyyyMm=' +
+                    this.yyyyMm +
+                    '&searchDt=' +
+                    moment(e.date).format('YYYY.MM.DD');
                 a.classList.add('fc-more');
                 a.appendChild(txt);
                 body.appendChild(a);
