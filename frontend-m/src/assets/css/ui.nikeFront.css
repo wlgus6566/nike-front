@@ -1320,6 +1320,8 @@
     opacity: 0.5;
     color: #fff;
     font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 .member-inquiry .info-list dd {
     margin-top: 8px;
@@ -1333,6 +1335,7 @@
 .member-inquiry .data-list {
     display: flex;
     flex-wrap: wrap;
+    max-width: 210px;
     margin: 8px 0 0 -10px;
 }
 .member-inquiry .data-list li {
@@ -1347,19 +1350,19 @@
 .member-inquiry .data-list + .data-list {
     margin-top: 5px;
 }
-.member-inquiry .data-list li:before {
+.member-inquiry .data-list li:nth-child(n + 3) {
+    margin-top: 5px;
+}
+.member-inquiry .data-list li:nth-child(even):before {
     position: absolute;
     top: 50%;
-    right: 0;
+    left: 0;
     content: '';
     display: block;
     width: 1px;
     height: 8px;
     margin-top: -4px;
     background: rgba(255, 255, 255, 0.3);
-}
-.member-inquiry .data-list li:last-child:before {
-    display: none;
 }
 
 /* login */
