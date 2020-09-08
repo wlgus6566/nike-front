@@ -598,7 +598,7 @@
     font-size: 20px;
     font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
     font-weight: normal;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.05px;
     color: #000;
     line-height: 24px;
 }
@@ -744,17 +744,17 @@
     border-color: #f7f7f7;
     background: #f7f7f7;
     padding-left: 51px;
-    padding-right:50px;
+    padding-right: 50px;
 }
-.sorting-area .search-input .btn-del{
-    position:absolute;
+.sorting-area .search-input .btn-del {
+    position: absolute;
     top: 50%;
     right: 0;
-    display:none;
-    width:36px;
-    height:36px;
-    text-indent:-9999px;
-    overflow:hidden;
+    display: none;
+    width: 36px;
+    height: 36px;
+    text-indent: -9999px;
+    overflow: hidden;
     background: url('../images/svg/icon-delete-search-on.svg') no-repeat center;
     transform: translateY(-50%);
 }
@@ -786,8 +786,8 @@
 .sorting-area .search-input.active input {
     display: block;
 }
-.sorting-area .search-input.active .btn-del{
-    display:block;
+.sorting-area .search-input.active .btn-del {
+    display: block;
 }
 .sorting-area .search-input.active [class^='btn-txt'] {
     display: block;
@@ -1850,11 +1850,11 @@
     height: 65px;
     margin-top: 20px;
     margin-right: 15px;
-    border: 1px dotted #ccc;
+    border: 1.5px dotted #ccc;
     box-sizing: border-box;
     vertical-align: top;
-    background: rgba(0, 0, 0, 0.05)
-        url('../images/svg/icon-upload-img-small.svg') 50% 10px no-repeat;
+    background: #fff url('../images/svg/icon-upload-img-small.svg') 50% 10px
+        no-repeat;
 }
 .upload-file-box .fine-file input[type='file'] {
     position: absolute;
