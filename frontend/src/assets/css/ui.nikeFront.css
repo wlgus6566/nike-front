@@ -1806,6 +1806,14 @@
     color: #888;
     line-height: 24px;
 }
+.folder-memo {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    font-weight: 300;
+    color: #888;
+    line-height: 24px;
+}
 
 .noti-box {
     margin-top: 40px;

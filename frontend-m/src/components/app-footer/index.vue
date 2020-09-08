@@ -2,12 +2,12 @@
     <footer>
         <ul class="info-list">
             <li>
-                <a href="#" @click="termsOpen('service')">
+                <a href="#" @click.prevent="termsOpen('service')">
                     <span>이용약관</span>
                 </a>
             </li>
             <li>
-                <a href="#" @click="termsOpen('privacy')">
+                <a href="#" @click.prevent="termsOpen('privacy')">
                     <span>개인정보처리방침</span>
                 </a>
             </li>

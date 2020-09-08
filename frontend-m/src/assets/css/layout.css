@@ -22,7 +22,7 @@ body {
     overflow: hidden;
 }
 header {
-    z-index: 2;
+    z-index: 4;
     position: fixed;
     top: 0;
     left: 0;
@@ -220,11 +220,11 @@ header .logo span {
     height: 20px;
     background: url(../../assets/images/svg/icon-more-gray.svg) no-repeat center;
 }
-.depth li a > span{
-    font-size:14px;
-    font-family:"Noto Sans KR", "Arial", "Apple SD Gothic Neo", sans-serif;
-    font-weight:bold;
-    letter-spacing:-0.05em;
+.depth li a > span {
+    font-size: 14px;
+    font-family: 'Noto Sans KR', 'Arial', 'Apple SD Gothic Neo', sans-serif;
+    font-weight: bold;
+    letter-spacing: -0.05em;
 }
 header + .contents,
 .page-header.header-detail + .contents {
@@ -505,7 +505,7 @@ footer .copy {
 .modal.full .el-dialog__body {
     /*flex-grow: 1;*/
     padding: 0;
-    height: calc(100% - 50px);
+    height: calc(100% - 54px);
     padding-bottom: 50px;
     box-sizing: border-box;
 }
@@ -535,9 +535,8 @@ footer .copy {
 }
 
 .modal.full .modal-contents {
-    max-height: 100%;
+    min-height: 100%;
 }
-
 .list-loading {
     position: relative;
     padding-top: 70%;

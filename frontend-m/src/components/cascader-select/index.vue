@@ -95,7 +95,7 @@ export default {
 .filter-select button {
     color: #000;
     font-size: 14px;
-    line-height: 20px;
+    line-height: 21px;
     font-weight: bold;
     padding-right: 25px;
     background: url(../../assets/images/svg/icon-filter-arrow-down.svg)
