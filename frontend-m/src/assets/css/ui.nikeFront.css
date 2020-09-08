@@ -612,6 +612,11 @@
     width: 100%;
     vertical-align: top;
 }
+.folder-detail .thumbnail iframe {
+    width: 100%;
+    vertical-align: top;
+    height: auto;
+}
 .folder-detail .thumbnail .etc {
     display: block;
     padding: 21px 0;

@@ -142,7 +142,7 @@ export default {
         alertMsg() {
             if (!this.$store.state.menuData) return;
             const state = this.$store.state.menuData.some(
-                (el) => el.menuCode === 'REPORT'
+                el => el.menuCode === 'REPORT'
             );
             if (!state) {
                 alert('접근 권한이 없습니다.');
@@ -153,19 +153,19 @@ export default {
                 return this.pathUrl;
             } else {
                 const state = this.$store.state.menuData.some(
-                    (el) => el.menuCode === 'REPORT'
+                    el => el.menuCode === 'REPORT'
                 );
                 if (!state) {
                     return this.pathUrl;
                 } else {
                     const idxAuthYn = this.$store.state.menuData.findIndex(
-                        (el) => el.detailAuthYn === 'N'
+                        el => el.detailAuthYn === 'N'
                     );
                     if (idxAuthYn !== -1) {
                         return this.pathUrl;
                     } else {
                         const idx = this.$store.state.menuData.findIndex(
-                            (el) => el.menuCode === 'REPORT'
+                            el => el.menuCode === 'REPORT'
                         );
                         return this.$store.state.menuData[idx].menus[0]
                             .menuPathUrl;
@@ -177,14 +177,14 @@ export default {
             if (!this.$store.state.menuData) return;
             bus.$emit('closeFn');
             const state = this.$store.state.menuData.some(
-                (el) => el.menuCode === 'REPORT'
+                el => el.menuCode === 'REPORT'
             );
             if (!state) {
                 if (index === 1) {
                     return;
                 }
             }
-            this.anim.forEach((el) => {
+            this.anim.forEach(el => {
                 el.goToAndStop(0, true);
             });
             this.anim[index].play();
@@ -192,7 +192,7 @@ export default {
         menuFn() {
             if (!this.$store.state.menuData) return;
             const menu = this.$store.state.menuData.filter(
-                (el) =>
+                el =>
                     el.menuCode !== 'MYPAGE' &&
                     el.menuCode !== 'HOME' &&
                     el.mobileYn === 'Y'
@@ -215,7 +215,7 @@ export default {
             window.scrollTo(0, this.topScollVal);
             document.querySelector('body').classList.remove('menu-open');
         },
-        handleAnimation: function (anim) {
+        handleAnimation: function(anim) {
             this.anim.push(anim);
             anim.stop();
             anim.loop = false;
@@ -257,7 +257,7 @@ export default {
 }
 .aside-wrap .inner .btn-close {
     position: absolute;
-    top: 36px;
+    top: 10px;
     right: 10px;
     display: block;
     width: 36px;
