@@ -166,8 +166,8 @@ export default {
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: item.beginDt.replace(/\./gi, "-"),
-                    end: moment(item.endDt).add(1, 'days')._i.replace(/\./gi, "-"),
+                    start: item.beginDt.replace(/\./gi, '-'),
+                    end: item.viewEndDt.replace(/\./gi, '-'),
                     className: className,
                 });
             });
