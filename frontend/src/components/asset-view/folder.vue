@@ -12,7 +12,8 @@
                 -
                 <em>{{ folderDetail.campaignEndDt }}</em>
             </span>
-            <p class="folder-name">{{ folderDetail.memo }}</p>
+            <p class="folder-name">{{ folderDetail.userId }}</p>
+            <p class="folder-memo">{{ folderDetail.memo }}</p>
         </div>
 
         <div class="noti-box">

@@ -52,6 +52,7 @@
                                     삭제
                                 </button>
                             </li>
+                            <li class="upload-file-item" v-for="item in reportTempFileList"></li>
                         </ul>
                     </div>
                     <p class="desc">
@@ -102,15 +103,10 @@
 </template>
 <script>
 import thumbnail from '@/components/thumbnail/index';
-import {
-    getReportDetail,
-    getReportFile,
-    postReport,
-    putReport,
-} from '@/api/report';
-import { fileUpLoad } from '@/api/file';
+import {getReportDetail, getReportFile, postReport, putReport,} from '@/api/report';
+import {fileUpLoad} from '@/api/file';
 import bus from '@/utils/bus';
-import { getLoginUpdate } from '@/api/mypage';
+import {getLoginUpdate} from '@/api/mypage';
 
 export default {
     name: 'upload',
@@ -135,6 +131,7 @@ export default {
             },
             reportSectionCodeList: ['SP', 'SU', 'FA', 'HO'],
             uploadFileViewer: false,
+            reportTempFileList : [{},{},{},{},{},{},{},{},{},{}]
         };
     },
     components: {
@@ -190,6 +187,7 @@ export default {
                 b => b.fileOrder !== order
             );
             this.uploadFileSize--;
+            this.reportTempFileList.push([]);
             this.fileOrderSet();
         },
 
@@ -230,6 +228,7 @@ export default {
                     this.uploadFileViewer = true;
                     this.uploadFileSize = this.reportDetailData.reportFileSaveDTOList.length;
                 }
+              this.reportTempFileList.splice(0, this.reportDetailData.reportFileSaveDTOList.length);
                 this.fileOrderSet();
             } catch (error) {
                 console.error(error);
@@ -277,6 +276,7 @@ export default {
                 reader.readAsDataURL(el);
             });
             this.uploadFileList = this.uploadFileList.concat(mergeArray);
+            this.reportTempFileList.splice(0, mergeArray.length);
             this.uploadFileViewer = true;
         },
 

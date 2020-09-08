@@ -252,12 +252,12 @@ export default {
     box-sizing: border-box;
     height: 100vh;
     width: 270px;
-    padding: 24px 20px 40px;
+    padding: 0 20px 40px;
     background: #fff;
 }
 .aside-wrap .inner .btn-close {
     position: absolute;
-    top: 36px;
+    top: 10px;
     right: 10px;
     display: block;
     width: 36px;
