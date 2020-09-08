@@ -993,7 +993,7 @@
     color: #333;
 }
 .info-agency-list .text {
-    margin-top: 15px;
+    margin-top: 13px;
     padding-top: 15px;
     border-top: 1px solid #eee;
     line-height: 20px;
@@ -2075,6 +2075,12 @@
 .schedule-item {
     margin-top: 10px;
     padding: 15px 20px;
+    background-color: #f7f7f7;
+}
+.schedule-item.no-data {
+    padding: 40px 20px;
+    text-align: left;
+    color: #888;
 }
 .schedule-item .content {
     z-index: 2;
@@ -2116,19 +2122,19 @@
     background-color: rgba(247, 102, 102, 0.05);
 }
 .schedule-item.edu .title {
-    color: #f76666;
+    color: #be1767;
 }
 .schedule-item.official {
     background-color: rgba(78, 83, 239, 0.05);
 }
 .schedule-item.official .title {
-    color: #4e53ef;
+    color: #2c0fb4;
 }
 .schedule-item.campaign {
     background-color: rgba(0, 179, 152, 0.05);
 }
 .schedule-item.campaign .title {
-    color: #00b398;
+    color: #007b68;
 }
 .fc .fc-view-harness-active > .fc-view,
 .fc .fc-scroller-liquid-absolute {

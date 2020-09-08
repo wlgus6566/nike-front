@@ -14,14 +14,19 @@
             </ul>
             <h3 class="schedule-title">{{ searchDt }}</h3>
             <ul class="schedule-list">
+                <li class="schedule-item no-data" v-if="todayData.length == 0">
+                    <p>등록된 일정이 없습니다.</p>
+                </li>
                 <li
                     class="schedule-item"
-                    :class="{ 'edu':item.calendarSectionCode === 'EDUCATION'
-                        , 'campaign':item.calendarSectionCode === 'CAMPAIGN'
-                        , 'official':item.calendarSectionCode === 'ETC'
+                    :class="{
+                        edu: item.calendarSectionCode === 'EDUCATION',
+                        campaign: item.calendarSectionCode === 'CAMPAIGN',
+                        official: item.calendarSectionCode === 'ETC',
                     }"
                     v-for="item in todayData"
                     :key="item.calendarSeq"
+                    v-else
                 >
                     <div class="content">
                         <h4 class="title">{{ item.scheduleName }}</h4>
@@ -29,7 +34,7 @@
                     </div>
                     <div class="info">
                         <span class="date">
-                        {{ item.beginDt }} ~ {{ item.endDt }}</span
+                            {{ item.beginDt }} - {{ item.endDt }}</span
                         >
                     </div>
                 </li>
@@ -65,8 +70,12 @@ export default {
             },
             calendarSeq: null,
             loadingData: false,
-            yyyyMm: !!this.$route.query.yyyyMm ? this.$route.query.yyyyMm : moment(new Date()).format('YYYY.MM'),
-            searchDt: !!this.$route.query.searchDt ? this.$route.query.searchDt : moment(new Date()).format('YYYY.MM.DD'),
+            yyyyMm: !!this.$route.query.yyyyMm
+                ? this.$route.query.yyyyMm
+                : moment(new Date()).format('YYYY.MM'),
+            searchDt: !!this.$route.query.searchDt
+                ? this.$route.query.searchDt
+                : moment(new Date()).format('YYYY.MM.DD'),
             currentDate: moment(new Date()).format('YYYY.MM.DD'),
             statusCode: null,
             calendarDetail: {},
@@ -166,8 +175,10 @@ export default {
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: item.beginDt.replace(/\./gi, "-"),
-                    end: moment(item.endDt).add(1, 'days')._i.replace(/\./gi, "-"),
+                    start: item.beginDt.replace(/\./gi, '-'),
+                    end: moment(item.endDt)
+                        .add(1, 'days')
+                        ._i.replace(/\./gi, '-'),
                     className: className,
                 });
             });
