@@ -12,9 +12,9 @@
                 <div class="inner">
                     <span class="thumbnail">
                         <img
-                            :src="filePopupFile.thumbnailFilePhysicalName"
-                            :alt="filePopupFile.thumbnailFileName"
-                            v-if="filePopupFile.thumbnailFilePhysicalName"
+                            :src="filePopupFile.detailThumbnailFilePhysicalName"
+                            :alt="filePopupFile.detailThumbnailFileName"
+                            v-if="filePopupFile.detailThumbnailFilePhysicalName"
                         />
                         <span class="etc" v-else>
                             <i class="icon-file"></i>
