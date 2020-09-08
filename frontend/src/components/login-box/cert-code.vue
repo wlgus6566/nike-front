@@ -1,6 +1,6 @@
 <template>
     <form action="#" @submit.prevent="$emit('login')">
-        <div class="login-box">
+        <div class="login-box" ref="loginBox">
             <strong class="title2"> E-MAIL 인증 </strong>
             <p class="desc">
                 해당 계정의 E-MAIL로 인증코드가 발송되었습니다.<br />
@@ -26,19 +26,13 @@ export default {
     data() {
         return {};
     },
-    props: ['loginData'],
+    props: ['loginData', 'activeState'],
+    mounted() {
+        this.$refs.loginBox.classList.add('active');
+    },
 };
 </script>
 <style scoped>
-.login-box {
-    position: relative;
-    width: 370px;
-    height: 390px;
-    padding: 50px 45px 45px;
-    box-sizing: border-box;
-    background: rgba(0, 0, 0, 0.7);
-    box-shadow: -20px 20px 8px 0 rgba(0, 0, 0, 0.5);
-}
 .login-box .title {
     display: block;
     font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
