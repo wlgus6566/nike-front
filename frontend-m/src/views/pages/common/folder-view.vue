@@ -51,29 +51,30 @@
                         "
                     >
                         <span class="thumbnail">
-<!--                            <img :src="item.thumbnailFilePhysicalName" alt="" />-->
                             <span
                                 :class="[`extension-vr`]"
                                 v-if="item.fileKindCode === 'VR'"
                             ></span>
-                                <span
-                                    :class="[`extension-url`]"
-                                    v-else-if="item.fileKindCode === 'VIDEO'"
-                                ></span>
-                                <img
-                                    :src="item.thumbnailFilePhysicalName"
-                                    :alt="item.thumbnailFileName"
-                                    v-else-if="item.thumbnailFilePhysicalName"
-                                />
-                                <span
-                                    :class="[
-                                    `extension-${item.fileExtension.toLowerCase()}`,
-                                    ]"
-                                    v-else
-                                ></span>
+                            <span
+                                :class="[`extension-url`]"
+                                v-else-if="item.fileKindCode === 'VIDEO'"
+                            ></span>
+                            <img
+                                :src="item.thumbnailFilePhysicalName"
+                                :alt="item.thumbnailFileName"
+                                v-else-if="item.thumbnailFilePhysicalName"
+                            />
+                            <span
+                                :class="[
+                                `extension-${item.fileExtension.toLowerCase()}`,
+                                ]"
+                                v-else
+                            ></span>
                         </span>
                         <span class="info-box">
-                            <strong class="title">{{ item.fileName }}</strong>
+                            <strong class="title">
+                                {{ item.title || item.fileName }}
+                            </strong>
                         </span>
                     </a>
                 </li>
@@ -183,6 +184,7 @@ export default {
                     this.$route.params.pathMatch.toUpperCase(),
                     this.$route.params.id,
                     {
+                        'orderType': 'ORDER',
                         page: this.page,
                         size: this.size,
                         sectionCode: this.selectTabValue,
