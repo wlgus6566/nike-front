@@ -17,10 +17,10 @@
                 :folderListData="historyFolderData"
             />
             <template v-else>
-              <NoData>
-                <i class="icon-folder"></i>
-                <p class="desc">최근 본 폴더가 없습니다.</p>
-              </NoData>
+                <NoData>
+                    <i class="icon-folder"></i>
+                    <p class="desc">최근 본 폴더가 없습니다.</p>
+                </NoData>
             </template>
         </template>
 
@@ -165,4 +165,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+::v-deep .no-data-wrap {
+    min-height: calc(100vh - 345px);
+}
+</style>

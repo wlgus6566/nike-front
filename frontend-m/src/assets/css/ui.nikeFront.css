@@ -822,7 +822,7 @@
 .sorting-area .search-input .search {
     position: absolute;
     top: 50%;
-    left: 0;
+    left: 5px;
     display: block;
     width: 36px;
     height: 36px;
