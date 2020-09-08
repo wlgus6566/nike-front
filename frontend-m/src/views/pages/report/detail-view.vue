@@ -80,27 +80,19 @@
                     v-for="item in fileList"
                     :key="item.reportFileSeq"
                 >
-                    <a
-                        href="#"
-                        @click="
-                            fileDetailModal(
-                                item.reportFileSeq,
-                                item.filePhysicalName,
-                                item.fileName
-                            )
-                        "
-                    >
+                    <a href="#" @click="fileDetailModal(item)">
                         <span class="thumbnail">
                             <img
-                                v-if="item.fileContentType.search('image') > -1"
                                 :src="item.thumbnailFilePhysicalName"
-                                :alt="item.fileExtension"
+                                :alt="item.thumbnailFileName"
+                                v-if="item.thumbnailFilePhysicalName"
                             />
-                            <!--<img v-else-if="item.fileExtension === 'PDF'" src="/assets/images/svg/icon-illust-file-pdf.svg" alt="PDF" />-->
-                            <!--<img v-else-if="item.fileExtension === 'MOV'" src="/assets/images/svg/icon-illust-file-pdf.svg" alt="PDF" />
-                        <img v-else-if="item.fileExtension === 'TTF'" src="/assets/images/svg/icon-illust-file-pdf.svg" alt="PDF" />
-                        <img v-else-if="item.fileExtension === 'PDF'" src="/assets/images/svg/icon-illust-file-pdf.svg" alt="PDF" />
-                        <img v-else-if="item.fileExtension === 'PDF'" src="/assets/images/svg/icon-illust-file-pdf.svg" alt="PDF" />-->
+                            <span
+                                :class="[
+                                    `extension-${item.fileExtension.toLowerCase()}`,
+                                ]"
+                                v-else
+                            ></span>
                         </span>
                         <span class="info-box">
                             <strong
@@ -118,7 +110,6 @@
         <fileDetailPopup
             :visible.sync="visible.modalEx"
             :filePopupFile="filePopupFile"
-            :filePopupName="filePopupName"
         />
     </div>
 </template>
@@ -150,7 +141,6 @@ export default {
                 modalEx: false,
             },
             filePopupFile: '',
-            filePopupName: '',
         };
     },
     mounted() {
@@ -236,9 +226,9 @@ export default {
                 }
             }
         },
-        fileDetailModal(reportFileSeq, filePhysicalName, fileName) {
-            this.filePopupFile = filePhysicalName;
-            this.filePopupName = fileName;
+        fileDetailModal(item) {
+            console.log(item);
+            this.filePopupFile = item;
             this.visible.modalEx = true;
         },
     },

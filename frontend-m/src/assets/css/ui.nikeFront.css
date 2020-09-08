@@ -100,6 +100,16 @@
     background: #ccc !important;
     color: #fff;
 }
+[class^='btn-'] [class^='icon-'] {
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: no-repeat center;
+}
+[class^='btn-'] .icon-link {
+    background-image: url('../images/svg/icon-btn-link.svg');
+}
 /* main */
 .main .contents {
     padding-bottom: 50px;
@@ -590,6 +600,51 @@
 .folder-list-row > li .view-area .view:before {
     left: 5px;
 }
+.folder-detail .thumbnail {
+    display: block;
+    background: #f7f7f7;
+    text-align: center;
+}
+.folder-detail .thumbnail img {
+    vertical-align: top;
+}
+.folder-detail .thumbnail video {
+    width: 100%;
+    vertical-align: top;
+}
+.folder-detail .thumbnail .etc {
+    display: block;
+    padding: 21px 0;
+    height: 200px;
+    box-sizing: border-box;
+}
+.folder-detail .thumbnail .etc .icon-file {
+    display: block;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    background: url(../images/svg/illust-page-file-none.svg) no-repeat center;
+}
+.folder-detail .thumbnail .etc .txt {
+    display: block;
+    text-align: center;
+    line-height: 18px;
+    font-size: 13px;
+    color: #888;
+}
+.folder-detail .info-box {
+    display: block;
+    margin-top: 15px;
+}
+.folder-detail .info-box .title {
+    display: block;
+    line-height: 18px;
+    font-size: 13px;
+    color: #000;
+}
+.folder-detail .info-box .btn-area {
+    margin-top: 20px;
+}
 .feedback-wrap {
     margin-top: 46px;
 }
@@ -818,6 +873,28 @@
     font-size: 12px;
     color: #888;
     line-height: 14px;
+}
+.folder-date .date {
+    display: inline-flex;
+}
+.folder-date .email {
+    display: inline-flex;
+}
+.folder-date .date + .email {
+    position: relative;
+    margin-left: 10px;
+    padding-left: 11px;
+}
+.folder-date .date + .email:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 10px;
+    margin-top: -5px;
+    background: #d8d8d8;
 }
 .noti-box {
     margin: 30px -20px 0;
