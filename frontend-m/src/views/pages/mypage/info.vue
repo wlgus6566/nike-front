@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="member-inquiry">
-            <div class="inner">
+            <div class="inner" v-if="userData">
                 <span class="desc">HELLO!</span>
                 <strong class="name"
                     ><em>{{ userData.nickname }}</em
@@ -15,7 +15,7 @@
                     <dt>최종접속일시</dt>
                     <dd>
                         {{ loginLogs[0].loginDt }}
-                        <ul class="data-list">
+                        <ul class="data-list" v-if="loginLogs">
                             <li
                                 v-for="(loginLog, index) in loginLogs"
                                 :key="index"
@@ -40,12 +40,7 @@ import { getMyInfo } from '@/api/my-page';
 export default {
     data() {
         return {
-            userData: {
-                authName: '',
-                loginLogs: '',
-                nickname: '',
-                userId: '',
-            },
+            userData: null,
             logLength: 5,
             num: 0,
         };
@@ -70,9 +65,11 @@ export default {
             return log;
         },
         loginLogs() {
-            const start = this.num * this.logLength,
-                end = start + this.logLength;
-            return this.userData.loginLogs.slice(start, end);
+            if (this.userData) {
+                const start = this.num * this.logLength,
+                    end = start + this.logLength;
+                return this.userData.loginLogs.slice(start, end);
+            }
         },
     },
     methods: {
