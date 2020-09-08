@@ -34,26 +34,26 @@ export default {
     //   }
     // },
     mounted() {
-        bus.$on('changeInput', val => {
+        bus.$on('changeInput', (val) => {
             if (val.disabled) return;
             this.closeModal(val);
         });
         bus.$on('closeFn', () => {
-          if(this.showList){
-            this.dimmedClose();
-          }
+            if (this.showList) {
+                this.dimmedClose();
+            }
         });
     },
     destroyed() {
-      if(this.showList){
-        this.dimmedClose();
-        document.querySelector(".modal-list.active").remove()
-      }
+        if (this.showList) {
+            this.dimmedClose();
+            document.querySelector('.modal-list.active').remove();
+        }
     },
     methods: {
         changeInput() {
             // console.log(1);
-            // console.log(val);
+            // console.log(val);u
             // this.selectLabel = val;
         },
         dimmedClose() {
@@ -99,6 +99,6 @@ export default {
     font-weight: bold;
     padding-right: 25px;
     background: url(../../assets/images/svg/icon-filter-arrow-down.svg)
-        no-repeat center right;
+        no-repeat 100% -2px;
 }
 </style>
