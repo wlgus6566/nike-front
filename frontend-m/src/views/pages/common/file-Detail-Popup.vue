@@ -92,6 +92,7 @@
 
 <script>
 export default {
+    name: 'fileDetailPopup',
     data() {
         return {
             orderComment: '',
