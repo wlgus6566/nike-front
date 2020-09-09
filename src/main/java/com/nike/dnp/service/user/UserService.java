@@ -4,6 +4,7 @@ import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.user.*;
 import com.nike.dnp.entity.auth.Auth;
+import com.nike.dnp.entity.slang.Slang;
 import com.nike.dnp.entity.user.PasswordHistory;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.entity.user.UserAuth;
@@ -32,6 +33,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 
@@ -624,11 +626,16 @@ public class UserService implements UserDetailsService {
         }
 
         //공통사전 비교
-        if (slangRepository.countBySlangContains(userPasswordDTO.getNewPassword()) > 0) {
+        final List<Slang> slangs = slangRepository.findAll();
+        if (slangs.size() > 0) {
             log.debug("공통사전 비교");
-            throw new CodeMessageHandleException(
-                    FailCode.ConfigureError.IS_SLANG.name()
-                    , MessageUtil.getMessage(FailCode.ConfigureError.IS_SLANG.name()));
+            for (final Slang slang : slangs) {
+                if (userPasswordDTO.getNewPassword().toLowerCase(Locale.KOREA).contains(slang.getSlang().toLowerCase(Locale.KOREA))) {
+                    throw new CodeMessageHandleException(
+                            FailCode.ConfigureError.IS_SLANG.name()
+                            , MessageUtil.getMessage(FailCode.ConfigureError.IS_SLANG.name()));
+                }
+            }
         }
     }
 
