@@ -5,7 +5,7 @@
         :visible="visible"
         :append-to-body="true"
         :lock-scroll="false"
-        @close="$emit('update:visible', false)"
+        @close="$emit('closeModal')"
     >
         <div class="modal-contents">
             <div class="folder-detail">
@@ -113,7 +113,6 @@ export default {
     mounted() {},
     methods: {
         videoCheck(url) {
-            console.log(url);
             url.match(
                 /(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/
             );

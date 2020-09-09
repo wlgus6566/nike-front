@@ -103,6 +103,7 @@
         <fileDetailPopup
             :visible.sync="visible.modalEx"
             :filePopupFile="filePopupFile"
+            @closeModal="closeModal"
         />
         <Loading
             class="list-loading"
@@ -164,6 +165,10 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     methods: {
+        closeModal() {
+            this.visible.modalEx = false;
+            this.filePopupFile = '';
+        },
         initPageData() {
             this.fileList = null;
             this.page = 0;
