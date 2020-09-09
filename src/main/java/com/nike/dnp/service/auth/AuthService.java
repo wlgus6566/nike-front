@@ -10,6 +10,7 @@ import com.nike.dnp.dto.menu.MenuRoleResourceReturnDTO;
 import com.nike.dnp.dto.user.UserAuthSearchDTO;
 import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.auth.AuthMenuRole;
+import com.nike.dnp.entity.menu.MenuRole;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.auth.AuthMenuRoleRepository;
@@ -349,6 +350,7 @@ public class AuthService {
 
         for (final MenuReturnDTO upperMenu : upperMenus) {
             if ("HOME".equals(upperMenu.getMenuCode())) {
+                upperMenu.setListYn("Y");
                 menus.add(upperMenu);
             } else if ("N".equals(upperMenu.getManagementYn())) {
                 final List<MenuReturnDTO> lowerMenus = menuRepository.getSubMenus(upperMenu.getMenuSeq(), 2L);
@@ -357,37 +359,74 @@ public class AuthService {
                         if ("Y".equals(lowerMenu.getManagementYn())) {
                             final List<MenuReturnDTO> bottomMenus = menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L);
                             for (final MenuReturnDTO bottomMenu : bottomMenus) {
-                                bottomMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, bottomMenu.getMenuSeq()));
+                                final List<MenuRole> menuRoles = (authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, bottomMenu.getMenuSeq()));
+                                int cnt = 0;
+                                for (MenuRole menuRole : menuRoles) {
+                                    if (menuRole.getMenuSkillCode().equals(ServiceCode.MenuSkillEnumCode.LIST.toString())) {
+                                        cnt++;
+                                    }
+                                }
+                                bottomMenu.setListYn(cnt > 0 ? "Y" : "N");
+                                bottomMenu.setMenuRoles(menuRoles);
                             }
                             lowerMenu.setMenus(bottomMenus);
                         } else {
                             lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
                         }
+                        lowerMenu.setListYn("Y");
                         lowerMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, lowerMenu.getMenuSeq()));
                     }
                     upperMenu.setMenus(lowerMenus);
                     upperMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, upperMenu.getMenuSeq()));
-                    menus.add(upperMenu);
+                    upperMenu.setListYn("Y");
                 }
+                menus.add(upperMenu);
             } else if ("Y".equals(upperMenu.getManagementYn())) {
                 final List<MenuReturnDTO> lowerMenus = menuRepository.getLowerMenus(authSeq, upperMenu.getMenuSeq(), 2L);
+
+                if (upperMenu.getMenuSeq().equals(6L)) {
+                    System.out.println("======================================================");
+                    for (final MenuReturnDTO lowerMenu : lowerMenus) {
+                        System.out.println(lowerMenu.getMenuName());
+                    }
+                    System.out.println("======================================================");
+                }
+
                 if (!lowerMenus.isEmpty()) {
                     for (final MenuReturnDTO lowerMenu : lowerMenus) {
+                        final List<MenuRole> lowerMenuRoles = (authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, lowerMenu.getMenuSeq()));
+                        int cnt1 = 0;
+                        for (MenuRole menuRole : lowerMenuRoles) {
+                            if (menuRole.getMenuSkillCode().equals(ServiceCode.MenuSkillEnumCode.LIST.toString())) {
+                                cnt1++;
+                            }
+                        }
+
                         if ("Y".equals(lowerMenu.getManagementYn())) {
                             final List<MenuReturnDTO> bottomMenus = menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L);
                             for (final MenuReturnDTO bottomMenu : bottomMenus) {
-                                bottomMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, bottomMenu.getMenuSeq()));
+                                final List<MenuRole> bottomMenuRoles = (authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, bottomMenu.getMenuSeq()));
+                                int cnt2 = 0;
+                                for (MenuRole menuRole : bottomMenuRoles) {
+                                    if (menuRole.getMenuSkillCode().equals(ServiceCode.MenuSkillEnumCode.LIST.toString())) {
+                                        cnt2++;
+                                    }
+                                }
+                                bottomMenu.setListYn(cnt2 > 0 ? "Y" : "N");
+                                bottomMenu.setMenuRoles(bottomMenuRoles);
                             }
                             lowerMenu.setMenus(bottomMenus);
                         } else {
                             lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
                         }
-                        lowerMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, lowerMenu.getMenuSeq()));
+                        lowerMenu.setListYn(cnt1 > 0 ? "Y" : "N");
+                        lowerMenu.setMenuRoles(lowerMenuRoles);
                     }
                     upperMenu.setMenus(lowerMenus);
                     upperMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, upperMenu.getMenuSeq()));
-                    menus.add(upperMenu);
+                    upperMenu.setListYn("Y");
                 }
+                menus.add(upperMenu);
             }
         }
 
