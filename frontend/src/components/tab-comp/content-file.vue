@@ -203,7 +203,6 @@ export default {
             this.downloadFiles = null;
         },
         basketEnter() {
-            console.log(this.$store.state.SET_FILE_MOUSEENTER);
             this.$store.commit('SET_FILE_MOUSEENTER', true);
         },
         basketLeave() {

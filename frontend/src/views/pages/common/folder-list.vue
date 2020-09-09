@@ -74,7 +74,7 @@ export default {
     },
     data() {
         return {
-            uploadAuth: this.folderAuthCheck('CREATE') || false,
+            uploadAuth: false,
             title: this.$route.meta.title,
             itemLength: 20,
             totalPage: null,
@@ -191,6 +191,7 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
+        this.uploadAuth = this.folderAuthCheck('CREATE');
         if (this.$store.state.reload) {
             this.initFetchData();
             this.$store.dispatch('getContBasket');
