@@ -951,7 +951,7 @@
 .sorting-list li + li:before {
     content: '';
     position: absolute;
-    top: 10px;
+    top: 12px;
     left: 0;
     display: block;
     width: 1px;
@@ -968,8 +968,8 @@
 .sorting-list li div span {
     position: relative;
     display: inline-block;
-    padding: 6px 0 15px;
-    line-height: 20px;
+    padding: 6px 0 10px;
+    line-height: 24px;
     font-size: 20px;
     color: #ccc;
     font-weight: 500;
@@ -984,7 +984,7 @@
 .sorting-list li.active div span:after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -1px;
     left: 50%;
     display: block;
     width: 100%;
@@ -1637,6 +1637,7 @@
     margin: 0 0 0 5px;
     vertical-align: 4px;
     background: #ed6161;
+    border-radius: 50%;
 }
 .form-column input[type='text'],
 .form-column input[type='password'] {
@@ -1908,7 +1909,7 @@
     display: block;
     width: 100%;
     padding-top: 100%;
-    background: #eeeeee;
+    background: #f7f7f7;
     overflow: hidden;
 }
 .thumb-file .thumb img {
@@ -1959,11 +1960,10 @@
     overflow: hidden;
     margin-top: 20px;
     margin-right: 15px;
-    border: 2px dotted #ccc;
     box-sizing: border-box;
     vertical-align: top;
-    background: #fff url('../images/svg/icon-upload-img-small.svg') 50% 10px
-        no-repeat;
+    background: url('../images/icon-upload-img.png') 0 0 no-repeat;
+    background-size: 100% auto;
 }
 .upload-file-box .fine-file input[type='file'] {
     position: absolute;
@@ -1976,7 +1976,7 @@
     opacity: 0;
 }
 .upload-file-box .fine-file .txt {
-    margin-top: 37px;
+    margin-top: 39px;
     font-size: 11px;
     color: #333;
     text-align: center;
@@ -2004,8 +2004,9 @@
     display: inline-block;
     width: 65px;
     height: 65px;
-    background: rgba(0, 0, 0, 0.05) url('../images/svg/img-upload-none.svg') 50%
-        50% no-repeat;
+    vertical-align: top;
+    background: #f7f7f7 url('../images/svg/img-upload-none.svg') 50% 50%
+        no-repeat;
 }
 .upload-file-list .upload-file-item span {
     display: inline-block;

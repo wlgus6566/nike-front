@@ -124,7 +124,7 @@ export default {
                 options: [
                     {
                         value: null,
-                        label: '전체 그룹',
+                        label: '전체그룹',
                     },
                 ],
             },
