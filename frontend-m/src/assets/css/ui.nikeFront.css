@@ -746,7 +746,7 @@
     position: relative;
     display: flex;
     height: 50px;
-    margin: 10px -20px 0;
+    margin: 10px -15px 0 -30px;
     padding: 0 20px;
     align-items: center;
 }
@@ -951,7 +951,7 @@
 .sorting-list li + li:before {
     content: '';
     position: absolute;
-    top: 10px;
+    top: 12px;
     left: 0;
     display: block;
     width: 1px;
@@ -968,8 +968,8 @@
 .sorting-list li div span {
     position: relative;
     display: inline-block;
-    padding: 6px 0 15px;
-    line-height: 20px;
+    padding: 6px 0 10px;
+    line-height: 24px;
     font-size: 20px;
     color: #ccc;
     font-weight: 500;
@@ -984,7 +984,7 @@
 .sorting-list li.active div span:after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -1px;
     left: 50%;
     display: block;
     width: 100%;
@@ -1260,6 +1260,9 @@
 }
 .no-data .icon-upload {
     background-image: url('../images/svg/icon-illust-page-folder-upload-none.svg');
+}
+.no-data .icon-file {
+    background-image: url('../images/svg/illust-page-file-none.svg');
 }
 .no-data .desc {
     line-height: 20px;
@@ -1637,6 +1640,7 @@
     margin: 0 0 0 5px;
     vertical-align: 4px;
     background: #ed6161;
+    border-radius: 50%;
 }
 .form-column input[type='text'],
 .form-column input[type='password'] {
@@ -1997,16 +2001,17 @@
     display: inline-block;
     white-space: nowrap;
     overflow-x: auto;
-    vertical-align: middle;
+    vertical-align: top;
 }
 .upload-file-list .upload-file-item {
     position: relative;
     display: inline-block;
     width: 65px;
     height: 65px;
-    background: rgba(0, 0, 0, 0.05) url('../images/svg/img-upload-none.svg') 50%
-        50% no-repeat;
     vertical-align: middle;
+    vertical-align: top;
+    background: #f7f7f7 url('../images/svg/img-upload-none.svg') 50% 50%
+        no-repeat;
 }
 .upload-file-list .upload-file-item span {
     display: inline-block;
@@ -2739,4 +2744,38 @@
 .crop-editor img {
     vertical-align: middle;
     max-height: 100%;
+}
+.video-filePopupFile {
+    position: relative;
+}
+.pause .btn-play {
+    opacity: 0;
+}
+.btn-play {
+    opacity: 1;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 9999;
+    /*background: red;*/
+    pointer-events: all;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.btn-play:after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: url('../../assets/images/svg/icon-view-play-small.svg') 50% 50%
+        no-repeat;
+    background-size: 100%;
+    pointer-events: none;
 }

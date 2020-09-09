@@ -137,13 +137,13 @@ nav .nav-link.router-link-active:after {
 nav .nav-link.router-link-active {
     color: #000 !important;
 }
-nav .nav-link.router-link-active span {
+/*nav .nav-link.router-link-active span {
     opacity: 1 !important;
     transform: translateY(0) !important;
 }
 nav .nav-link.router-link-active span.ko {
     opacity: 0 !important;
-}
+}*/
 nav .depth2 > .nav-link {
     color: #888;
 }

@@ -34,7 +34,7 @@ public class CloudFrontUtil {
      *
      * @author [오지훈]
      */
-    private final static Integer BASIC_MINUTE = 30;
+    private final static Integer BASIC_MINUTE = 1;
 
     /**
      * The DistributionDomain
@@ -150,7 +150,7 @@ public class CloudFrontUtil {
         return ObjectUtils.isEmpty(objectKey) ? "" : createCustomSingedUrl(objectKey, BASIC_MINUTE);
     }
 
-    public static void addProviderSecurity() {
+    private static void addProviderSecurity() {
         Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
     }
 
@@ -164,7 +164,7 @@ public class CloudFrontUtil {
      * @implNote AWS 기본 정책 URL 생성
      * @since 2020. 8. 7. 오후 3:07:14
      */
-    public static String createSignedUrlCanned(final String objectKey, final int minute) {
+    private static String createSignedUrlCanned(final String objectKey, final int minute) {
         final String newObjectKey = S3Util.awsPathReplace(objectKey);
 
         try {
@@ -199,7 +199,7 @@ public class CloudFrontUtil {
      * @implNote 사용자 지정 정책 URL 생성
      * @since 2020. 8. 7. 오후 4:32:57
      */
-    public static String createCustomSingedUrl(final String objectKey, final int minute) {
+    private static String createCustomSingedUrl(final String objectKey, final int minute) {
         final String newObjectKey = S3Util.awsPathReplace(objectKey);
 
         try {

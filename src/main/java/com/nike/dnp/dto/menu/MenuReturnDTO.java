@@ -88,12 +88,20 @@ public class MenuReturnDTO {
     private String mobileYn;
 
     /**
-     * 부
+     * 권한 관리 여부
      *
      * @author [오지훈]
      */
-    @ApiModelProperty(name = "managementYn", value = "managementYn", required = true)
+    @ApiModelProperty(name = "managementYn", value = "권한 관리 여부", required = true)
     private String managementYn;
+
+    /**
+     * GNB 노출 여부
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "listYn", value = "GNB 노출 여부", required = true)
+    private String listYn = ServiceCode.YesOrNoEnumCode.N.name();
 
     /**
      * 하위 메뉴 목록
