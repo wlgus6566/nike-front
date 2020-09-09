@@ -144,9 +144,14 @@ export default {
         getCategoryList('CATEGORY', this.category2Code.listSortOptions);
     },
     activated() {
-        this.getProduct();
+        this.serchReset();
     },
     methods: {
+        //검색후 페이지 이동 리셋
+        serchReset() {
+            this.searchKeyword = '';
+            this.searchSubmit(this.searchKeyword);
+        },
         selectFocus() {
             console.log(this.category2Code.value);
             if (this.category2Code.value === '') {

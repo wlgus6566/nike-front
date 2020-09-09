@@ -116,6 +116,11 @@ export default {
         Loading,
     },
     methods: {
+        //검색후 페이지 이동 리셋
+        serchReset() {
+            this.searchKeyword = '';
+            this.searchSubmit(this.searchKeyword);
+        },
         handleScroll() {
             if (this.loadingData) return;
             const windowE = document.documentElement;
@@ -191,6 +196,7 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
+        this.serchReset();
         if (this.$store.state.reload) {
             this.initFetchData();
             this.$store.dispatch('getContBasket');

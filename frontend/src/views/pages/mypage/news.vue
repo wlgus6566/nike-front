@@ -71,12 +71,18 @@ export default {
         this.getNewsList();
     },
     activated() {
+        this.serchReset();
         if (this.$store.state.reload) {
             this.getNewsList();
             this.$store.commit('SET_RELOAD', false);
         }
     },
     methods: {
+        //검색후 페이지 이동 리셋
+        serchReset() {
+            this.searchKeyword = '';
+            this.searchSubmit(this.searchKeyword);
+        },
         //뉴스 리스트
         async getNewsList() {
             try {
