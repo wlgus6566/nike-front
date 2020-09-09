@@ -8,7 +8,7 @@
         >
             <router-view></router-view>
         </transition>
-        <Navigation></Navigation>
+        <Navigation />
     </div>
 </template>
 <script>
@@ -18,6 +18,9 @@ export default {
     name: 'LayoutIndex',
     components: {
         Navigation,
+    },
+    created() {
+        this.gnbMenuList();
     },
     methods: {
         pageEnter(el, done) {
@@ -55,6 +58,13 @@ export default {
                     },
                 }
             );
+        },
+        async gnbMenuList() {
+            try {
+                await this.$store.dispatch('gnbMenuList');
+            } catch (error) {
+                console.error(error);
+            }
         },
     },
 };
