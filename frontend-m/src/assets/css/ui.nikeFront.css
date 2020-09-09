@@ -1997,7 +1997,7 @@
     display: inline-block;
     white-space: nowrap;
     overflow-x: auto;
-    vertical-align: top;
+    vertical-align: middle;
 }
 .upload-file-list .upload-file-item {
     position: relative;
@@ -2006,6 +2006,7 @@
     height: 65px;
     background: rgba(0, 0, 0, 0.05) url('../images/svg/img-upload-none.svg') 50%
         50% no-repeat;
+    vertical-align: middle;
 }
 .upload-file-list .upload-file-item span {
     display: inline-block;
