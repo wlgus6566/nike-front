@@ -1909,7 +1909,7 @@
     display: block;
     width: 100%;
     padding-top: 100%;
-    background: #f7f7f7;
+    background: #eeeeee;
     overflow: hidden;
 }
 .thumb-file .thumb img {
@@ -1960,10 +1960,11 @@
     overflow: hidden;
     margin-top: 20px;
     margin-right: 15px;
+    border: 2px dotted #ccc;
     box-sizing: border-box;
     vertical-align: top;
-    background: url('../images/icon-upload-img.png') 0 0 no-repeat;
-    background-size: 100% auto;
+    background: #fff url('../images/svg/icon-upload-img-small.svg') 50% 10px
+        no-repeat;
 }
 .upload-file-box .fine-file input[type='file'] {
     position: absolute;
@@ -1976,7 +1977,7 @@
     opacity: 0;
 }
 .upload-file-box .fine-file .txt {
-    margin-top: 39px;
+    margin-top: 37px;
     font-size: 11px;
     color: #333;
     text-align: center;
@@ -2004,6 +2005,7 @@
     display: inline-block;
     width: 65px;
     height: 65px;
+    vertical-align: middle;
     vertical-align: top;
     background: #f7f7f7 url('../images/svg/img-upload-none.svg') 50% 50%
         no-repeat;

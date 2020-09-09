@@ -110,6 +110,7 @@
         <fileDetailPopup
             :visible.sync="visible.modalEx"
             :filePopupFile="filePopupFile"
+            @closeModal="closeModal"
         />
     </div>
 </template>
@@ -150,6 +151,10 @@ export default {
         fileDetailPopup: fileDetailPopup,
     },
     methods: {
+        closeModal() {
+            this.visible.modalEx = false;
+            this.filePopupFile = '';
+        },
         fetchData() {
             this.getDetailData();
             this.getAnswerList();

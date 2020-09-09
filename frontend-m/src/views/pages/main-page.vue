@@ -352,16 +352,20 @@ export default {
             this.calendarOptions.events = [];
             this.calendarData.forEach(item => {
                 let className;
+                let tarnsformContents;
                 if (item.calendarSectionCode === 'EDUCATION') {
                     className = 'edu';
+                    tarnsformContents = '[교육] '+item.scheduleName;
                 } else if (item.calendarSectionCode === 'CAMPAIGN') {
                     className = 'campaign';
+                    tarnsformContents = '[캠페인] '+item.scheduleName;
                 } else {
                     className = 'official';
+                    tarnsformContents = '[기타 교육일정] '+item.scheduleName;
                 }
                 this.calendarOptions.events.push({
                     ...item,
-                    title: item.scheduleName,
+                    title: tarnsformContents,
                     description: item.contents,
                     start: item.beginDt.replace(/\./gi, '-'),
                     end: item.viewEndDt.replace(/\./gi, '-'),

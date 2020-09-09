@@ -65,7 +65,7 @@ const routes = [
             sectionCode: 'NOTICE',
             title: '공지사항',
             topMenuCode: 'MYPAGE',
-            menuCode: 'MYPAGE',
+            menuCode: 'CUSTOMER_NOTICE',
         },
     },
     {
@@ -77,6 +77,8 @@ const routes = [
             aside: 'Default',
             sectionCode: 'NOTICE',
             title: '공지사항',
+            topMenuCode: 'MYPAGE',
+            menuCode: 'CUSTOMER_NOTICE',
         },
     },
     {
@@ -87,6 +89,8 @@ const routes = [
             aside: 'Default',
             sectionCode: 'NOTICE',
             title: '공지사항',
+            topMenuCode: 'MYPAGE',
+            menuCode: 'CUSTOMER_NOTICE',
         },
     },
     {
@@ -98,6 +102,8 @@ const routes = [
             sectionCode: 'NOTICE',
             title: '공지사항',
             modify: true,
+            topMenuCode: 'MYPAGE',
+            menuCode: 'CUSTOMER_NOTICE',
         },
     },
     //NEWS
@@ -159,6 +165,8 @@ const routes = [
             aside: 'Default',
             sectionCode: 'QNA',
             title: '자주 묻는 질문',
+            topMenuCode: 'MYPAGE',
+            menuCode: 'CUSTOMER_FAQ',
         },
     },
     {
@@ -169,6 +177,8 @@ const routes = [
             aside: 'Default',
             sectionCode: 'QNA',
             title: '자주 묻는 질문',
+            topMenuCode: 'MYPAGE',
+            menuCode: 'CUSTOMER_FAQ',
         },
     },
     {
@@ -180,6 +190,8 @@ const routes = [
             sectionCode: 'QNA',
             title: '자주 묻는 질문',
             modify: true,
+            topMenuCode: 'MYPAGE',
+            menuCode: 'CUSTOMER_FAQ',
         },
     },
 ];

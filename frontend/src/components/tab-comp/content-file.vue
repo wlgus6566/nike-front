@@ -141,8 +141,7 @@ export default {
     },
     methods: {
         async loginUpdate() {
-            const response = await getLoginUpdate();
-            console.log(response);
+            await getLoginUpdate();
         },
         loadedUpdate() {
             const loaded = this.downloadFiles.reduce((a, b) => {
@@ -203,7 +202,6 @@ export default {
             this.downloadFiles = null;
         },
         basketEnter() {
-            console.log(this.$store.state.SET_FILE_MOUSEENTER);
             this.$store.commit('SET_FILE_MOUSEENTER', true);
         },
         basketLeave() {

@@ -116,20 +116,18 @@ export default {
     },
     watch: {
         'category2Code.value'(val) {
-            if (val === '') {
-                this.category3Code = {
-                    listSortOptions: [
-                        {
-                            value: '',
-                            label: '소구분',
-                        },
-                    ],
-                    value: '',
-                };
-            } else {
+            this.category3Code = {
+                listSortOptions: [
+                    {
+                        value: '',
+                        label: '소구분',
+                    },
+                ],
+                value: '',
+            };
+            if (val !== '') {
                 getCategoryList(val, this.category3Code.listSortOptions);
             }
-
             this.getProduct();
         },
         'category3Code.value'() {
