@@ -359,13 +359,9 @@ public class ContentsService {
         // history 저장
         historyService.saveViewHistory(contentsSeq, topMenuCode);
 
-        // 권한 목록 조회
-        UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
-        userAuthSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
-        userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
-        userAuthSearchDTO.setContentsSeq(contentsSeq);
         ContentsResultDTO contentsResultDTO = ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
-        contentsResultDTO.setChecks(authService.getAuthListWithoutN(userAuthSearchDTO));
+
+        // 사용자 계정 조회
         contentsResultDTO.setUserId(
                 EmailPatternUtil.maskingEmail(userService.findByUserSeq(contentsResultDTO.getRegisterSeq()).get().getUserId())
         );
@@ -645,7 +641,6 @@ public class ContentsService {
                 checkedContentsFileList.add(contentsFileSaveDTO);
             }
 
-
             for (ContentsFileSaveDTO contentsFile : contentsFileList) {
                 if (ObjectUtils.isEmpty(contentsFile.getFileName())
                         && 0l == contentsFile.getFileSize()
@@ -776,22 +771,42 @@ public class ContentsService {
      *
      * @param topMenuCode the top menu code
      * @param menuCode    the menu code
+     * @param contentsSeq the contents seq
      * @return the list
      * @author [이소정]
-     * @implNote 콘텐츠 권한 목록 조회
+     * @implNote 콘텐츠 권한 목록 조회 등록/수정 분기
+     * @since 2020. 9. 9. 오후 5:35:01
+     */
+    public List<AuthReturnDTO> loadAuthList(final String topMenuCode, final String menuCode, final Long contentsSeq) {
+        final String searchMenuCode = topMenuCode+"_"+menuCode;
+        UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
+        userAuthSearchDTO.setMenuCode(searchMenuCode);
+        userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+
+        if (!ObjectUtils.isEmpty(contentsSeq) && 0 != contentsSeq) {
+            return this.loadDefaultAuthList(userAuthSearchDTO);
+        } else {
+            userAuthSearchDTO.setContentsSeq(contentsSeq);
+            return authService.getAuthListWithoutN(userAuthSearchDTO);
+        }
+    }
+
+    /**
+     * Load auth list list.
+     *
+     * @param userAuthSearchDTO the user auth search dto
+     * @return the list
+     * @author [이소정]
+     * @implNote 콘텐츠 권한 목록 조회 (등록시 사용)
      * @since 2020. 8. 13. 오후 9:26:08
      */
-    public List<AuthReturnDTO> loadAuthList(final String topMenuCode, final String menuCode) {
+    public List<AuthReturnDTO> loadDefaultAuthList(final UserAuthSearchDTO userAuthSearchDTO) {
         // 상세 권한 조회
-        final String searchMenuCode = topMenuCode+"_"+menuCode;
-        UserAuthSearchDTO viewAuthSearchDTO = new UserAuthSearchDTO();
-        viewAuthSearchDTO.setMenuCode(searchMenuCode);
-        viewAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
-        List<AuthReturnDTO> authReturnDTOList = authService.getAuthListWithoutN(viewAuthSearchDTO);
+        List<AuthReturnDTO> authReturnDTOList = authService.getAuthListWithoutN(userAuthSearchDTO);
 
         // 등록/수정권한 목록 조회
         UserAuthSearchDTO createAuthSearchDTO = new UserAuthSearchDTO();
-        createAuthSearchDTO.setMenuCode(searchMenuCode);
+        createAuthSearchDTO.setMenuCode(userAuthSearchDTO.getMenuCode());
         createAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.CREATE.toString());
         List<AuthReturnDTO> createAuthList = authService.getAuthListWithoutN(createAuthSearchDTO);
 
