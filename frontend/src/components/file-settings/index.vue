@@ -128,6 +128,9 @@ export default {
         this.defaultFileData.fileSectionCode = this.pageFileSectionCodeName[0];
         this.emitFileList();
     },
+    activated() {
+        this.fileReset();
+    },
     watch: {
         pageFileSectionCodeName() {
             console.log(this.pageFileSectionCodeName);
@@ -138,6 +141,29 @@ export default {
         draggable,
     },
     methods: {
+        fileReset() {
+            this.FileList = [
+                {
+                    progress: 0,
+                    detailThumbnailFileName: '',
+                    detailThumbnailFilePhysicalName: '',
+                    detailThumbnailFileSize: '',
+                    fileContentType: '',
+                    fileExtension: '',
+                    fileKindCode: 'FILE',
+                    fileName: '',
+                    fileOrder: 0,
+                    filePhysicalName: '',
+                    fileSectionCode: null,
+                    fileSize: 0,
+                    thumbnailFileName: '',
+                    thumbnailFilePhysicalName: '',
+                    thumbnailFileSize: '',
+                    title: '',
+                    url: '',
+                },
+            ];
+        },
         emitFileList() {
             this.FileList.forEach((el, index) => {
                 el.fileOrder = index;
@@ -147,8 +173,8 @@ export default {
         uploadIptChange(e) {
             const files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
-            let mergeArray = Array.from(files).filter(item => {
-                return this.FileList.every(el => {
+            let mergeArray = Array.from(files).filter((item) => {
+                return this.FileList.every((el) => {
                     return (
                         item.name !== el.fileName && item.size !== el.fileSize
                     );
@@ -161,8 +187,8 @@ export default {
                 );
             }
 
-            mergeArray.forEach(el => {
-                const idx = this.FileList.findIndex(el => {
+            mergeArray.forEach((el) => {
+                const idx = this.FileList.findIndex((el) => {
                     return el.fileKindCode === 'FILE' && !el.fileName;
                 });
 
@@ -200,7 +226,7 @@ export default {
         },
         async uploadFiles() {
             Promise.all(
-                this.uploadFile.map(async el => {
+                this.uploadFile.map(async (el) => {
                     try {
                         const formData = new FormData();
                         formData.append('uploadFile', el);
@@ -213,7 +239,7 @@ export default {
                                 console.log(percentCompleted);
                             },*/
 
-                            onUploadProgress: progressEvent => {
+                            onUploadProgress: (progressEvent) => {
                                 let percentCompleted = Math.round(
                                     (progressEvent.loaded * 95) /
                                         progressEvent.total
@@ -251,11 +277,11 @@ export default {
                     }
                 })
             )
-                .then(values => {
+                .then((values) => {
                     this.uploadFile = [];
                     this.$emit('submitForm');
                 })
-                .catch(e => {
+                .catch((e) => {
                     console.log(e);
                     this.uploadFile = [];
                     this.$emit('submitForm');
@@ -266,7 +292,7 @@ export default {
             this.emitFileList();
         },
         fileDelete(file) {
-            const idx = this.FileList.findIndex(el => {
+            const idx = this.FileList.findIndex((el) => {
                 return el.fileOrder === file.fileOrder;
             });
             this.FileList.splice(idx, 1);
