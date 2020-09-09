@@ -128,7 +128,6 @@ export default {
             if (val !== '') {
                 getCategoryList(val, this.category3Code.listSortOptions);
             }
-
             this.getProduct();
         },
         'category3Code.value'() {
@@ -143,17 +142,9 @@ export default {
         getCategoryList('CATEGORY', this.category2Code.listSortOptions);
     },
     activated() {
-        //initializationData
+        this.getProduct();
     },
     methods: {
-        //검색후 페이지 이동 리셋
-        /*  initializationData() {
-            this.searchKeyword = '';
-            this.searchSubmit(this.searchKeyword);
-            this.category2Code.value = '';
-            this.category3Code.value = '';
-            this.agencySeq.value = '';
-        },*/
         selectFocus() {
             console.log(this.category2Code.value);
             if (this.category2Code.value === '') {
