@@ -782,13 +782,79 @@ public class ContentsService {
      * @since 2020. 8. 13. 오후 9:26:08
      */
     public List<AuthReturnDTO> loadAuthList(final String topMenuCode, final String menuCode) {
-        // 권한 목록 조회
-        UserAuthSearchDTO userContentsSearchDTO = new UserAuthSearchDTO();
-        userContentsSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
-        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
-        userContentsSearchDTO.setCreateYn("Y");
-        return authService.getAuthListWithoutN(userContentsSearchDTO);
+        // 상세 권한 조회
+        final String searchMenuCode = topMenuCode+"_"+menuCode;
+        UserAuthSearchDTO viewAuthSearchDTO = new UserAuthSearchDTO();
+        viewAuthSearchDTO.setMenuCode(searchMenuCode);
+        viewAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+        List<AuthReturnDTO> authReturnDTOList = authService.getAuthListWithoutN(viewAuthSearchDTO);
 
+        // 등록/수정권한 목록 조회
+        UserAuthSearchDTO createAuthSearchDTO = new UserAuthSearchDTO();
+        createAuthSearchDTO.setMenuCode(searchMenuCode);
+        createAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.CREATE.toString());
+        List<AuthReturnDTO> createAuthList = authService.getAuthListWithoutN(createAuthSearchDTO);
+
+        // 등록/수정 권한 목록을 depth -> list 로 변환
+        List<Long> oneDepthAuthSeqList = new ArrayList<>();
+        List<Long> twoDepthAuthSeqList = new ArrayList<>();
+        List<Long> threeDepthAuthSeqList = new ArrayList<>();
+        // 1depth
+        for (AuthReturnDTO oneDepth : createAuthList) {
+            if ("Y".equals(oneDepth.getCheckBoxYn())) {
+                oneDepthAuthSeqList.add(oneDepth.getAuthSeq());
+            }
+            // 2depth
+            for (AuthReturnDTO secondDepth : oneDepth.getSubAuths()) {
+                if ("Y".equals(secondDepth.getCheckBoxYn())) {
+                    twoDepthAuthSeqList.add(secondDepth.getAuthSeq());
+                }
+
+                // 3depth
+                for (AuthReturnDTO thirdDepth : secondDepth.getSubAuths()) {
+                    if ("Y".equals(thirdDepth.getCheckBoxYn())) {
+                        threeDepthAuthSeqList.add(thirdDepth.getAuthSeq());
+                    }
+                }
+            }
+        }
+
+        return this.applyCreateAuth(authReturnDTOList, oneDepthAuthSeqList, twoDepthAuthSeqList, threeDepthAuthSeqList);
     }
 
+    public List<AuthReturnDTO> applyCreateAuth(
+            final List<AuthReturnDTO> viewAuthList
+            , final List<Long> oneDepthSeqList, final List<Long> twoDepthSeqList, final List<Long> threeDepthSeqList
+    ) {
+        // 1depth
+        for (AuthReturnDTO oneDepth : viewAuthList) {
+            for (Long authSeq : oneDepthSeqList) {
+                if (oneDepth.getAuthSeq().equals(authSeq)) {
+                    oneDepth.setDetailAuthYn("Y");
+                    oneDepth.setEmailReceptionYn("Y");
+                }
+            }
+
+            // 2depth
+            for (AuthReturnDTO secondDepth : oneDepth.getSubAuths()) {
+                for (Long authSeq : twoDepthSeqList) {
+                    if (secondDepth.getAuthSeq().equals(authSeq)) {
+                        secondDepth.setDetailAuthYn("Y");
+                        secondDepth.setEmailReceptionYn("Y");
+                    }
+                }
+
+                // 3depth
+                for (AuthReturnDTO threeDepth : secondDepth.getSubAuths()) {
+                    for (Long authSeq : threeDepthSeqList) {
+                        if (threeDepth.getAuthSeq().equals(authSeq)) {
+                            threeDepth.setDetailAuthYn("Y");
+                            threeDepth.setEmailReceptionYn("Y");
+                        }
+                    }
+                }
+            }
+        }
+        return viewAuthList;
+    }
 }
