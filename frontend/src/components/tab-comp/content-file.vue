@@ -141,8 +141,7 @@ export default {
     },
     methods: {
         async loginUpdate() {
-            const response = await getLoginUpdate();
-            console.log(response);
+            await getLoginUpdate();
         },
         loadedUpdate() {
             const loaded = this.downloadFiles.reduce((a, b) => {
