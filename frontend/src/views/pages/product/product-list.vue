@@ -81,7 +81,7 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
-        this.serchReset();
+        //initializationData
         window.addEventListener('scroll', this.handleScroll);
     },
     deactivated() {
@@ -102,10 +102,10 @@ export default {
     },
     methods: {
         //검색후 페이지 이동 리셋
-        serchReset() {
+        /*initializationData() {
             this.searchKeyword = '';
             this.searchSubmit(this.searchKeyword);
-        },
+        },*/
         handleScroll() {
             if (this.loadingData) return;
             const windowE = document.documentElement;

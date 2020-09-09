@@ -299,7 +299,7 @@ export default {
         getCategoryList('USER_STATUS', this.listSortSelect.listSortOptions);
     },
     activated() {
-        this.serchReset();
+        //initializationData
         this.compMount();
     },
     deactivated() {
@@ -321,11 +321,11 @@ export default {
         },
     },
     methods: {
-        //검색후 페이지 이동 리셋
-        serchReset() {
+        /*//검색후 페이지 이동 리셋
+        initializationData() {
             this.searchKeyword = '';
             this.searchSubmit(this.searchKeyword);
-        },
+        },*/
         compMount() {
             document
                 .querySelector('html')

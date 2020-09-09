@@ -120,10 +120,15 @@ export default {
     },
     methods: {
         //검색후 페이지 이동 리셋
-        serchReset() {
-            this.searchKeyword = '';
-            this.searchSubmit(this.searchKeyword);
-        },
+        /*initializationData() {
+		   this.searchKeyword = '';
+		   this.searchSubmit(this.searchKeyword);
+		   this.listSortSelect.value = 'LATEST';
+		   if (this.listTypes[1].active) {
+			   this.listTypes[1].active = false;
+			   this.listTypes[0].active = true;
+		   }
+	    },*/
         handleScroll() {
             if (this.loadingData) return;
             const windowE = document.documentElement;
@@ -199,7 +204,7 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
-        this.serchReset();
+        //initializationData
         this.uploadAuth = this.folderAuthCheck('CREATE');
         if (this.$store.state.reload) {
             this.initFetchData();

@@ -76,7 +76,7 @@ export default {
         this.getNoticeList();
     },
     activated() {
-        this.serchReset();
+        //initializationData
         if (this.$store.state.reload) {
             this.getNoticeList();
             this.$store.commit('SET_RELOAD', false);
@@ -84,10 +84,10 @@ export default {
     },
     methods: {
         //검색후 페이지 이동 리셋
-        serchReset() {
+        /* initializationData() {
             this.searchKeyword = '';
             this.searchSubmit(this.searchKeyword);
-        },
+        },*/
         //검색
         searchSubmit(val) {
             console.log(val);

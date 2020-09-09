@@ -276,17 +276,16 @@ export default {
     },
     watch: {
         'category2Code.value'(val) {
-            if (val === '') {
-                this.category3Code = {
-                    listSortOptions: [
-                        {
-                            value: '',
-                            label: '소구분',
-                        },
-                    ],
-                    value: '',
-                };
-            } else {
+            this.category3Code = {
+                listSortOptions: [
+                    {
+                        value: '',
+                        label: '소구분',
+                    },
+                ],
+                value: '',
+            };
+            if (val !== '') {
                 getCategoryList(val, this.category3Code.listSortOptions);
             }
         },
@@ -514,7 +513,9 @@ export default {
                         label: el.codeName,
                     });
                 });
-            } catch {}
+            } catch (error) {
+                console.error(error);
+            }
         },
         //데이터 초기화
         productDataReset() {

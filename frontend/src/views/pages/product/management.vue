@@ -116,17 +116,16 @@ export default {
     },
     watch: {
         'category2Code.value'(val) {
-            if (val === '') {
-                this.category3Code = {
-                    listSortOptions: [
-                        {
-                            value: '',
-                            label: '소구분',
-                        },
-                    ],
-                    value: '',
-                };
-            } else {
+            this.category3Code = {
+                listSortOptions: [
+                    {
+                        value: '',
+                        label: '소구분',
+                    },
+                ],
+                value: '',
+            };
+            if (val !== '') {
                 getCategoryList(val, this.category3Code.listSortOptions);
             }
 
@@ -144,14 +143,17 @@ export default {
         getCategoryList('CATEGORY', this.category2Code.listSortOptions);
     },
     activated() {
-        this.serchReset();
+        //initializationData
     },
     methods: {
         //검색후 페이지 이동 리셋
-        serchReset() {
+        /*  initializationData() {
             this.searchKeyword = '';
             this.searchSubmit(this.searchKeyword);
-        },
+            this.category2Code.value = '';
+            this.category3Code.value = '';
+            this.agencySeq.value = '';
+        },*/
         selectFocus() {
             console.log(this.category2Code.value);
             if (this.category2Code.value === '') {

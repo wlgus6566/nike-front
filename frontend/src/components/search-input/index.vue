@@ -29,9 +29,7 @@ export default {
             }
         },
     },
-    activated() {
-        this.input = null;
-    },
+    activated() {},
 };
 </script>
 <style scoped></style>
