@@ -24,8 +24,12 @@
         </div>
 
         <div class="feedback-wrap">
-            <strong class="title">FEEDBACK</strong>
             <template v-if="answerList">
+                <strong
+                    class="title"
+                    v-if="folderAuthCheck('DOWNLOAD') || answerList.length"
+                    >FEEDBACK</strong
+                >
                 <FeedbackList
                     :answerList="answerList"
                     :userId="userId"
@@ -40,7 +44,7 @@
                 :height="172"
                 v-if="loadingData"
             />
-            <div class="textarea">
+            <div class="textarea" v-if="folderAuthCheck('DOWNLOAD')">
                 <textarea
                     v-model="answerData.answerContents"
                     placeholder="댓글을 입력해주세요."
@@ -88,6 +92,7 @@ import FeedbackList from '@/components/feedback-list';
 import SortingList from '@/components/asset-view/sorting-list.vue';
 import ReportItem from '@/components/report-view/report-Item.vue';
 import { getUserIdFromCookie } from '@/utils/cookies';
+import { authCheck } from '@/utils/authCheck';
 export default {
     name: 'detail-view',
     data() {
@@ -118,6 +123,7 @@ export default {
             },
         };
     },
+    mixins: [authCheck],
     components: {
         BtnArea,
         FeedbackList,
