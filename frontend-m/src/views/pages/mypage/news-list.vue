@@ -13,11 +13,12 @@
                             @keyup.enter="searchInputActive"
                             v-model="keyword"
                         />
+                        <button type="button" class="btn-del" v-if="keyword" @click="keywordDel">삭제</button>
                         <button type="submit" class="search">
                             <span>검색</span>
                         </button>
                     </div>
-                    <div class="btn-txt" @click="searchInputInactive">
+                    <div class="btn-txt" @click="cancelSearch">
                         <span>취소</span>
                     </div>
                 </div>
@@ -76,6 +77,7 @@ export default {
     name: 'news-list',
     data() {
         return {
+            reset:false,
             newsList: null,
             newsData: null,
             page: 0,
@@ -96,11 +98,24 @@ export default {
         this.initListData();
     },
     methods: {
+        keywordDel(){
+          this.keyword = null;
+          if(this.reset){
+            this.initListData();
+            this.reset = false
+          }
+        },
         initListData() {
             this.totalElements = 0;
             this.page = 0;
             this.newsData = null;
             this.getNewsList();
+        },
+        // 검색 취소
+        cancelSearch() {
+          this.isActive = false;
+          this.keyword = null;
+          this.initListData();
         },
         async getNewsList() {
             this.loadingData = true;
@@ -121,10 +136,14 @@ export default {
             }
         },
         searchInputActive: function() {
-            if (this.isActive) {
-                this.initListData();
-            } else {
-                this.isActive = true;
+            this.isActive = true;
+            if(this.keyword){
+              this.reset = true;
+            }
+            if (!!this.keyword) {
+              this.page = 0;
+              this.newsData = null;
+              this.initListData();
             }
         },
         searchInputInactive: function() {

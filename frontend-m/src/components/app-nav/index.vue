@@ -115,7 +115,6 @@ export default {
     },
     watch: {
         pathUrl(val) {
-            console.log(val.split('/')[1]);
             if (val.split('/')[1] === 'report') {
                 this.menuLottie(1);
             }
@@ -162,11 +161,9 @@ export default {
                     const idxAuthYn = this.$store.state.menuData.findIndex(
                         el => el.detailAuthYn === 'N'
                     );
-                    console.log(idxAuthYn);
                     if (idxAuthYn !== -1) {
                         return this.pathUrl;
                     } else {
-                        console.log(this.pathUrl);
                         const idx = this.$store.state.menuData.findIndex(
                             el => el.menuCode === 'REPORT'
                         );
@@ -255,12 +252,12 @@ export default {
     box-sizing: border-box;
     height: 100vh;
     width: 270px;
-    padding: 24px 20px 40px;
+    padding: 0 20px 40px;
     background: #fff;
 }
 .aside-wrap .inner .btn-close {
     position: absolute;
-    top: 36px;
+    top: 10px;
     right: 10px;
     display: block;
     width: 36px;

@@ -10,6 +10,7 @@
             <component
                 :is="LoginBox"
                 :loginData="loginData"
+                :activeState="activeState"
                 @login="login"
                 @updateValue="updateValue"
                 @changeLoginBox="changeLoginBox"
@@ -30,6 +31,7 @@ export default {
     name: 'login',
     data() {
         return {
+            activeState: false,
             LoginBox: 'LoginForm',
             loginData: {
                 username: '',
@@ -40,7 +42,6 @@ export default {
     },
     watch: {
         LoginBox() {
-            console.log(1);
             const login = document.querySelector('.login-box');
             login.classList.add('active');
         },
@@ -50,7 +51,8 @@ export default {
     },
     components: { LoginForm, CertCode, FindPW },
     methods: {
-        changeLoginBox(compName) {
+        changeLoginBox(compName, state) {
+            this.activeState = state;
             this.LoginBox = compName;
         },
         updateValue(target, value) {
@@ -123,7 +125,7 @@ export default {
     vertical-align: top;
 }
 .nike-logo.active {
-    animation: logoAni 1s ease-in-out forwards;
+    animation: logoAni 1.5s ease-in-out forwards;
 }
 .nike-logo.hidden {
     opacity: 0;

@@ -41,7 +41,9 @@
                     <a
                         href="#"
                         class="txt-btn"
-                        @click.prevent="$emit('changeLoginBox', 'FindPW')"
+                        @click.prevent="
+                            $emit('changeLoginBox', 'FindPW', false)
+                        "
                         ><span>비밀번호 찾기</span></a
                     >
                 </div>
@@ -52,51 +54,30 @@
 <script>
 export default {
     name: 'loginForm',
-    props: ['loginData'],
+    props: ['loginData', 'activeState'],
     data() {
         return {};
     },
     mounted() {
-      this.$refs.loginBox.classList.add('active');
+        if (this.activeState) {
+            this.$refs.loginBox.classList.add('active');
+        }
         this.endLogo();
     },
     methods: {
         endLogo() {
-            const logo =  document
-          .querySelector('.nike-logo')
+            const logo = document.querySelector('.nike-logo');
             const box = this.$refs.loginBox;
             logo.addEventListener('webkitAnimationEnd', function () {
-                    box.classList.add('active');
-                    logo.classList.add('hidden');
-                    logo.classList.remove('active');
-                });
+                box.classList.add('active');
+                logo.classList.add('hidden');
+                logo.classList.remove('active');
+            });
         },
     },
 };
 </script>
 <style scoped>
-.login-box {
-    z-index: 6;
-    opacity: 0;
-    position: relative;
-    width: 370px;
-    height: 390px;
-    padding: 50px 45px 45px;
-    box-sizing: border-box;
-    background: rgba(0, 0, 0, 0.7);
-    box-shadow: -20px 20px 8px 0 rgba(0, 0, 0, 0.5);
-}
-.login-box.active {
-    animation: loginAni 1s ease-in-out 0s forwards;
-}
-@keyframes loginAni {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
 .login-box .title {
     display: block;
     font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;

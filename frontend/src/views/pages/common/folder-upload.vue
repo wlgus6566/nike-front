@@ -415,6 +415,7 @@ export default {
                 this.joinOccupyFn();
             }, 1000 * 60 * 4);
         }
+        this.detailReset();
     },
     deactivated() {
         if (this.$route.params.id) {
@@ -423,6 +424,28 @@ export default {
         }
     },
     methods: {
+        detailReset() {
+            this.folderDetail = {
+                campaignBeginDt: null,
+                campaignEndDt: null,
+                campaignPeriodSectionCode: 'SELECT',
+                checks: [
+                    {
+                        authSeq: 0,
+                        detailAuthYn: 'N',
+                        emailReceptionYn: 'N',
+                    },
+                ],
+                contentsFileList: [],
+                exposureYn: 'Y',
+                folderContents: '',
+                folderName: '',
+                imageBase64: '',
+                memo: '',
+            };
+            this.BeginDt = null;
+            this.EndDt = null;
+        },
         pageMenuCodeAuth(topMenuCode, skillCodes) {
             const index = this.$store.state.gnbMenuListData.findIndex(
                 (el) => el.menuCode === topMenuCode

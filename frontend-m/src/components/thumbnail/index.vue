@@ -84,7 +84,6 @@ export default {
             const file = e.target.files[0];
             if (file.length === 0) return;
             bus.$emit('pageLoading', true);
-            console.log(1);
             if (file.type.indexOf('image/') === -1) {
                 alert('Please select an image file');
                 return;
@@ -108,7 +107,6 @@ export default {
                 })
                 .catch(e => {
                     bus.$emit('pageLoading', false);
-                    console.log(e);
                 });
         },
         popupOpen() {

@@ -15,10 +15,10 @@
                 :folderListData="uploadFolderData"
             />
             <template v-else>
-              <NoData>
-                <i class="icon-upload"></i>
-                <p class="desc">업로드한 폴더가 없습니다.</p>
-              </NoData>
+                <NoData>
+                    <i class="icon-upload"></i>
+                    <p class="desc">업로드한 폴더가 없습니다.</p>
+                </NoData>
             </template>
         </template>
         <Loading
@@ -162,4 +162,8 @@ export default {
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+::v-deep .no-data-wrap {
+    min-height: calc(100vh - 345px);
+}
+</style>

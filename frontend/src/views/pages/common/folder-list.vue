@@ -119,6 +119,11 @@ export default {
         Loading,
     },
     methods: {
+        //검색후 페이지 이동 리셋
+        serchReset() {
+            this.searchKeyword = '';
+            this.searchSubmit(this.searchKeyword);
+        },
         handleScroll() {
             if (this.loadingData) return;
             const windowE = document.documentElement;
@@ -194,7 +199,7 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
-        console.log(123);
+        this.serchReset();
         this.uploadAuth = this.folderAuthCheck('CREATE');
         if (this.$store.state.reload) {
             this.initFetchData();

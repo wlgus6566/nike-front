@@ -8,12 +8,8 @@
                         @cropImage="cropImage"
                         :imageBase64="reportDetailData.imageBase64"
                     >
-                        <template slot="txt-up">
-                            썸네일 이미지 등록
-                        </template>
-                        <template slot="txt">
-                            썸네일 이미지 재등록
-                        </template>
+                        <template slot="txt-up"> 썸네일 이미지 등록 </template>
+                        <template slot="txt"> 썸네일 이미지 재등록 </template>
                     </thumbnail>
                     <div class="upload-file-box">
                         <div class="fine-file">
@@ -56,6 +52,7 @@
                                     삭제
                                 </button>
                             </li>
+                            <li class="upload-file-item" v-for="item in reportTempFileList"></li>
                         </ul>
                     </div>
                     <p class="desc">
@@ -78,6 +75,7 @@
                                     v-model="reportDetailData.reportSectionCode"
                                     :value="radio"
                                 />
+                                <i></i>
                                 <span class="txt" v-text="radio">SP</span>
                             </label>
                         </div>
@@ -104,13 +102,13 @@
     </div>
 </template>
 <script>
-    import thumbnail from '@/components/thumbnail/index';
-    import {getReportDetail, getReportFile, postReport, putReport,} from '@/api/report';
-    import {fileUpLoad} from '@/api/file';
-    import bus from '@/utils/bus';
-    import {getLoginUpdate} from '@/api/mypage';
+import thumbnail from '@/components/thumbnail/index';
+import {getReportDetail, getReportFile, postReport, putReport,} from '@/api/report';
+import {fileUpLoad} from '@/api/file';
+import bus from '@/utils/bus';
+import {getLoginUpdate} from '@/api/mypage';
 
-    export default {
+export default {
     name: 'upload',
     data() {
         return {
@@ -133,6 +131,7 @@
             },
             reportSectionCodeList: ['SP', 'SU', 'FA', 'HO'],
             uploadFileViewer: false,
+            reportTempFileList : [{},{},{},{},{},{},{},{},{},{}]
         };
     },
     components: {
@@ -188,6 +187,7 @@
                 b => b.fileOrder !== order
             );
             this.uploadFileSize--;
+            this.reportTempFileList.push([]);
             this.fileOrderSet();
         },
 
@@ -228,6 +228,7 @@
                     this.uploadFileViewer = true;
                     this.uploadFileSize = this.reportDetailData.reportFileSaveDTOList.length;
                 }
+              this.reportTempFileList.splice(0, this.reportDetailData.reportFileSaveDTOList.length);
                 this.fileOrderSet();
             } catch (error) {
                 console.error(error);
@@ -245,12 +246,12 @@
                     );
                 });
             });
-            console.log("mergeArray > "+mergeArray.length);
-            if(mergeArray.length + this.uploadFileList.length > 10) {
+            /*console.log('mergeArray > ' + mergeArray.length);*/
+            if (mergeArray.length + this.uploadFileList.length > 10) {
                 alert('10개 이상 등록 할 수 없습니다.');
-                if(this.uploadFileList.length === 10) return;
+                if (this.uploadFileList.length === 10) return;
                 let maxNum = 10;
-                if(this.uploadFileList.length > 0) {
+                if (this.uploadFileList.length > 0) {
                     maxNum = 10 - this.uploadFileList.length;
                 }
                 mergeArray.splice(maxNum, 9999);
@@ -275,6 +276,7 @@
                 reader.readAsDataURL(el);
             });
             this.uploadFileList = this.uploadFileList.concat(mergeArray);
+            this.reportTempFileList.splice(0, mergeArray.length);
             this.uploadFileViewer = true;
         },
 
@@ -341,9 +343,9 @@
                         this.$route.params.id
                     );
                 } else {
-                    responseData =await postReport(this.reportDetailData);
+                    responseData = await postReport(this.reportDetailData);
                 }
-                if(responseData.data.code) {
+                if (responseData.data.code) {
                     alert(responseData.data.msg);
                 }
                 bus.$emit('pageLoading', false);

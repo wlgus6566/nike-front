@@ -447,11 +447,13 @@ export default {
     white-space: nowrap;
 }
 .space-info .mail {
+    color: #888;
     display: flex;
-    height: 14px;
+    line-height: 14px;
     margin-top: 5px;
     align-content: center;
     opacity: 0.6;
+    letter-spacing: -0.5px;
 }
 .fade-enter-active,
 .fade-leave-active {

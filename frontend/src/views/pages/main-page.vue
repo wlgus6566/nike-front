@@ -197,7 +197,6 @@ import {
     getTodayCalendar, // CALENDAR 오늘 조회
 } from '@/api/calendar';
 
-import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -209,7 +208,7 @@ export default {
         return {
             mainData: null,
             todayData: [],
-            yyyyMm: moment(new Date()).format('YYYY.MM'),
+            yyyyMm: this.$moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
@@ -236,7 +235,7 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
                             this.getCalendarEachList(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format('YYYY.MM')
                             );
                         },
                     },
@@ -246,7 +245,7 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
                             this.getCalendarEachList(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format('YYYY.MM')
                             );
                         },
                     },

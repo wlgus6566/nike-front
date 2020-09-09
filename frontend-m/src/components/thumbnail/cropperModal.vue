@@ -1,16 +1,20 @@
 <template>
     <el-dialog
         title="이미지 등록"
-        class="modal full"
-        width="100%"
+        class="modal full img-crop-modal"
+        fullscreen
         :visible="visible"
         :append-to-body="true"
+        :lock-scroll="false"
         @close="$emit('update:visible', false)"
     >
-        <el-scrollbar wrap-class="modal-scroll" :native="false">
-            <!--            <div class="dialog-header">-->
-            <!--                <h2 class="dialog-title">이미지등록</h2>-->
-            <!--            </div>-->
+        <!-- <el-scrollbar wrap-class="modal-scroll" :native="false">
+            &lt;!&ndash;            <div class="dialog-header">&ndash;&gt;
+            &lt;!&ndash;                <h2 class="dialog-title">이미지등록</h2>&ndash;&gt;
+            &lt;!&ndash;            </div>&ndash;&gt;
+
+        </el-scrollbar>-->
+        <div class="modal-contents">
             <div class="crop-editor">
                 <div class="preview-original">
                     <div class="img-cropper">
@@ -31,7 +35,7 @@
                 <!--                    </div>-->
                 <!--                </div>-->
             </div>
-        </el-scrollbar>
+        </div>
 
         <div slot="footer" class="dialog-footer">
             <button
@@ -79,12 +83,10 @@ export default {
             );
         },
         pageAddClass() {
-            console.log('클래스추가');
             const contents = document.querySelector('.el-dialog');
             contents.classList.add('full');
         },
         pageRemoveClass() {
-            console.log('떠남');
             const contents = document.querySelector('.el-dialog');
             contents.classList.remove('full');
         },
