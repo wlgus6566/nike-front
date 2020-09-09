@@ -64,6 +64,9 @@ export default {
             }
             this.initFetchData();
         },
+        '$store.state.gnbMenuListData'() {
+            this.uploadAuth = this.folderAuthCheck('CREATE');
+        },
     },
     computed: {
         uploadLink() {
@@ -191,6 +194,7 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
+        console.log(123);
         this.uploadAuth = this.folderAuthCheck('CREATE');
         if (this.$store.state.reload) {
             this.initFetchData();
