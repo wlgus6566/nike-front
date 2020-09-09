@@ -125,7 +125,7 @@ public class OrderProductMappingService {
 				builder.append("	<td style=\"width:50px; margin:0; padding:15px; border-bottom:1px solid #ddd;\">");
 				builder.append("		<div style=\"width:50px; height:50px; overflow:hidden; margin:0; padding:0; line-height:50px; background:#f7f7f7; \">");
 				builder.append("			<img width=\"50\" style=\"width:50px; vertical-align:middle;\" src=\"");
-				builder.append(CloudFrontUtil.createCustomSingedUrl(dto.getImageFilePhysicalName(), 259200));
+				builder.append(CloudFrontUtil.getCustomSignedUrl(dto.getImageFilePhysicalName(), 259200));
 				builder.append("\" alt=\"\" >");
 				builder.append("		</div>");
 				builder.append("	</td>");
