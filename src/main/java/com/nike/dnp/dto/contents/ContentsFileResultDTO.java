@@ -222,7 +222,7 @@ public class ContentsFileResultDTO {
      * @since 2020. 8. 14. 오후 7:50:44
      */
     public String getDetailThumbnailFilePhysicalName() {
-        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName) ? detailThumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName);
+        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName) ? detailThumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName, 30);
     }
 
 }

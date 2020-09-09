@@ -1,5 +1,5 @@
 <template>
-    <li :class="[`depth${this.depth}`]">
+    <li :class="[`depth${this.depth}`]" v-if="item.listYn === 'Y'">
         <router-link
             @click.native.prevent="toggle()"
             :to="item.menuPathUrl"
