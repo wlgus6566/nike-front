@@ -702,13 +702,13 @@ public class AuthService {
 
         for (AuthReturnDTO authReturnDTO : auths) {
             for (AuthReturnDTO config : findByConfig) {
-                this.authConfig(authReturnDTO, config, userAuthSearchDTO.getCreateYn());
+                this.authConfig(authReturnDTO, config);
 
                 for (AuthReturnDTO dto2 : authReturnDTO.getSubAuths()) {
-                    this.authConfig(dto2, config, userAuthSearchDTO.getCreateYn());
+                    this.authConfig(dto2, config);
 
                     for (AuthReturnDTO dto3 : dto2.getSubAuths()) {
-                        this.authConfig(dto3, config, userAuthSearchDTO.getCreateYn());
+                        this.authConfig(dto3, config);
                     }
                 }
             }
@@ -757,13 +757,13 @@ public class AuthService {
 
         for (AuthReturnDTO authReturnDTO : auths) {
             for (AuthReturnDTO config : findByConfig) {
-                this.authConfig(authReturnDTO, config, userAuthSearchDTO.getCreateYn());
+                this.authConfig(authReturnDTO, config);
 
                 for (AuthReturnDTO dto2 : authReturnDTO.getSubAuths()) {
-                    this.authConfig(dto2, config, userAuthSearchDTO.getCreateYn());
+                    this.authConfig(dto2, config);
 
                     for (AuthReturnDTO dto3 : dto2.getSubAuths()) {
-                        this.authConfig(dto3, config, userAuthSearchDTO.getCreateYn());
+                        this.authConfig(dto3, config);
                     }
                 }
             }
@@ -851,22 +851,16 @@ public class AuthService {
     /**
      * Auth config.
      *
-     * @param target   the target
-     * @param config   the config
-     * @param createYn the create yn
+     * @param target the target
+     * @param config the config
      * @author [오지훈]
      * @implNote authConfig
      * @since 2020. 8. 14. 오후 5:23:07
      */
-    private void authConfig(final AuthReturnDTO target, final AuthReturnDTO config, final String createYn) {
+    private void authConfig(final AuthReturnDTO target, final AuthReturnDTO config) {
         if (target.getAuthSeq().equals(config.getAuthSeq())) {
-            if ("Y".equals(createYn)) {
-                target.setDetailAuthYn("Y");
-                target.setEmailReceptionYn("Y");
-            } else {
-                target.setDetailAuthYn(config.getDetailAuthYn());
-                target.setEmailReceptionYn(config.getEmailReceptionYn());
-            }
+            target.setDetailAuthYn(config.getDetailAuthYn());
+            target.setEmailReceptionYn(config.getEmailReceptionYn());
 
             target.setViewYn("Y");
             target.setCheckBoxYn("Y");
