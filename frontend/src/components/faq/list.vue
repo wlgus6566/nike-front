@@ -21,11 +21,18 @@
             <transition @enter="itemOpen" @leave="itemClose">
                 <div class="cont" v-if="isActive === item.noticeArticleSeq">
                     <div class="cont-unit" v-html="item.contents"></div>
-                    <div class="btn-area">
+                    <div
+                        class="btn-area"
+                        v-if="
+                            folderAuthCheck('DELETE') ||
+                            folderAuthCheck('CREATE')
+                        "
+                    >
                         <button
                             type="button"
                             class="btn-s-lightgray-sm"
                             @click="$emit('delete', item.noticeArticleSeq)"
+                            v-if="folderAuthCheck('DELETE')"
                         >
                             <span>삭제</span>
                         </button>
@@ -33,6 +40,7 @@
                             type="button"
                             class="btn-s-lightgray-sm"
                             @click="$emit('edit', item.noticeArticleSeq)"
+                            v-if="folderAuthCheck('CREATE')"
                         >
                             <span>수정</span>
                         </button>
@@ -45,12 +53,14 @@
 
 <script>
 import { Cubic, gsap } from 'gsap/all';
+import { authCheck } from '@/utils/authCheck';
 
 export default {
     name: 'faq-list',
     data() {
         return {};
     },
+    mixins: [authCheck],
     props: ['faqData', 'isActive'],
     methods: {
         itemOpen(el, done) {
