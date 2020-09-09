@@ -11,7 +11,13 @@
                 <div>
                     <div class="title-wrap">
                         <h3 class="form-title mt0">CALENDAR 관리</h3>
-                        <div class="right" v-if="calendarDetail.calendarSeq">
+                        <div
+                            class="right"
+                            v-if="
+                                calendarDetail.calendarSeq &&
+                                folderAuthCheck('DELETE')
+                            "
+                        >
                             <button
                                 type="button"
                                 class="txt-btn-orange"
@@ -147,6 +153,8 @@
 </template>
 
 <script>
+import { authCheck } from '@/utils/authCheck';
+
 export default {
     props: {
         visible: Boolean,
@@ -231,6 +239,7 @@ export default {
             },
         };
     },
+    mixins: [authCheck],
     watch: {
         calendarDetail() {
             if (!!this.calendarSeq) {

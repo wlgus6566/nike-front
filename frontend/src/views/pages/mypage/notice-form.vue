@@ -65,7 +65,7 @@
                             v-model="noticeDetail.contents"
                             :config="editorConfig"
                             @blur="onEditorInput"
-                            style="width: 100%;"
+                            style="width: 100%"
                         />
                     </div>
                     <!--                    <div class="form-column">-->
@@ -84,9 +84,9 @@
             </ul>
             <hr class="hr-gray" />
             <div class="btn-area">
-                <button type="button" class="btn-s-white" @click="cancelBack()">
+                <router-link to="/mypage/notice" class="btn-s-white">
                     <span>취소</span>
-                </button>
+                </router-link>
                 <button type="submit" class="btn-s-black">
                     <span>저장</span>
                 </button>
@@ -96,11 +96,16 @@
 </template>
 
 <script>
-    import {getCustomerDetail, getCustomerList, postNotice, putNotice,} from '@/api/customer';
+import {
+    getCustomerDetail,
+    getCustomerList,
+    postNotice,
+    putNotice,
+} from '@/api/customer';
 
-    import {getAuthFromCookie} from '@/utils/cookies';
+import { getAuthFromCookie } from '@/utils/cookies';
 
-    export default {
+export default {
     name: 'notice-form',
     data() {
         return {
@@ -126,6 +131,7 @@
         };
     },
     created() {
+        this.$store.state.saveFolder = false;
         /* console.log(this.$route.name);*/
         this.editorConfig.filebrowserImageUploadUrl =
             process.env.VUE_APP_API_URL +
@@ -152,6 +158,7 @@
         }
     },
     activated() {
+        this.$store.state.saveFolder = false;
         this.getNoticeList();
         this.detailDataReset();
     },
@@ -175,6 +182,7 @@
                     title: this.noticeDetail.title,
                     useYn: this.useYn,
                 });
+                this.$store.state.saveFolder = true;
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
                     this.detailDataReset();
@@ -183,12 +191,14 @@
                     alert(response.data.msg);
                 }
             } catch (error) {
+                this.$store.state.saveFolder = false;
                 console.error(error);
             }
         },
 
         //공지사항 수정
         async modifyData() {
+            this.$store.state.saveFolder = false;
             if (!confirm('수정하시겠습니까?')) {
                 return false;
             }
@@ -202,7 +212,7 @@
                         title: this.noticeDetail.title,
                         useYn: this.useYn,
                     });
-
+                    this.$store.state.saveFolder = true;
                     this.$store.commit('SET_RELOAD', true);
                     if (response.data.success) {
                         this.detailDataReset();
@@ -214,6 +224,7 @@
                     console.log('시퀀스');
                     console.log(this.noticeArticleSeq);
                 } catch (error) {
+                    this.$store.state.saveFolder = false;
                     console.error(error);
                 }
             }
@@ -272,10 +283,6 @@
 
         //작성 취소
         cancelBack() {
-            if (!confirm('작성을 취소하시겠습니까?')) {
-                return false;
-            }
-            this.detailDataReset();
             this.$router.go(-1);
         },
         detailDataReset() {
@@ -283,9 +290,23 @@
             this.noticeDetail.contents = '';
             this.noticeDetail.noticeYn = null;
         },
-        onEditorInput: function(e) {
+        onEditorInput: function (e) {
             this.noticeDetail.contents = e.editor._.editable.$.innerHTML;
         },
+    },
+    beforeRouteLeave(to, from, next) {
+        if (!this.$store.state.saveFolder) {
+          const answer = window.confirm(
+              '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
+          );
+          if (answer) {
+            next();
+          } else {
+            next(false);
+          }
+        } else {
+          next();
+        }
     },
 };
 </script>

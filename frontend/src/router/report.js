@@ -20,6 +20,7 @@ const routes = [
                     aside: 'Default',
                     title: 'REPORT <span class="ko">업로드</span>',
                     topMenuCode: 'REPORT',
+                    menuCode: 'REPORT_UPLOAD',
                 },
             },
             {
@@ -30,7 +31,7 @@ const routes = [
                     aside: 'Report',
                     title: 'REPORT <span class="ko">업로드 수정</span>',
                     topMenuCode: 'REPORT',
-                    menuCode: 'MANAGE',
+                    menuCode: 'REPORT_MANAGE',
                 },
             },
             {
@@ -41,7 +42,7 @@ const routes = [
                     aside: 'Report',
                     title: 'REPORT <span class="ko">관리</span>',
                     topMenuCode: 'REPORT',
-                    menuCode: 'MANAGE',
+                    menuCode: 'REPORT_MANAGE',
                 },
             },
             {
@@ -52,7 +53,7 @@ const routes = [
                     aside: 'Report',
                     title: 'REPORT 상세',
                     topMenuCode: 'REPORT',
-                    menuCode: 'MANAGE',
+                    menuCode: 'REPORT_MANAGE',
                 },
             },
         ],

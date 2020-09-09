@@ -10,6 +10,7 @@ import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -149,6 +150,14 @@ public class ContentsResultDTO extends BaseTimeEntity {
      */
     @ApiModelProperty(name = "recipientsCount", value = "메일 수신자 갯수")
     private int recipientsCount = 0;
+
+    /**
+     * 유저 ID
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "userId", value = "유저 ID", required = true, example = "test@nike.co.kr")
+    private String userId;
 
     /**
      * Gets image file physical name.

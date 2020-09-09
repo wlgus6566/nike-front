@@ -18,6 +18,14 @@
                             @keyup.enter="onClickSearch"
                             v-model="searchKeyword"
                         />
+                        <button
+                            type="button"
+                            class="btn-del"
+                            v-if="searchKeyword"
+                            @click="keywordDel"
+                        >
+                            삭제
+                        </button>
                         <button type="submit" class="search">
                             <span>검색</span>
                         </button>
@@ -35,21 +43,31 @@
                     v-for="(item, index) in folderListData"
                     :key="index"
                 >
-                    <router-link :to="setUrl(item)">
+                    <router-link
+                        :to="setUrl(item)"
+                        @click.native="alertMsg(item)"
+                    >
                         <div class="thumbnail">
-                            <span class="exposure" v-if="item.exposureYn === 'N'">
+                            <span
+                                class="exposure"
+                                v-if="item.exposureYn === 'N'"
+                            >
                                 <i></i>작성중
                             </span>
                             <span
                                 class="auth"
-                                v-if="item.exposureYn === 'Y' && item.detailAuthYn === 'N'">
+                                v-if="
+                                    item.exposureYn === 'Y' &&
+                                        item.detailAuthYn === 'N'
+                                "
+                            >
                                 <i></i>권한 없음
                             </span>
                             <img :src="item.imageFilePhysicalName" alt="" />
                         </div>
                         <div class="info-box">
                             <strong class="title">{{ item.folderName }}</strong>
-                            <p class="txt">{{ item.folderContents }}</p>
+                            <!-- <p class="txt">{{ item.folderContents }}</p>-->
                             <p
                                 v-if="
                                     item.campaignPeriodSectionCode === 'EVERY'
@@ -60,7 +78,7 @@
                             </p>
                             <p v-else class="date">
                                 {{
-                                    $moment(item.campaignBeginDt).format(
+                                $moment(item.campaignBeginDt).format(
                                         'YYYY.MM.DD'
                                     )
                                 }}
@@ -110,6 +128,7 @@ export default {
     },
     data() {
         return {
+            reset: false,
             isActive: false,
             folderListData: null,
             searchKeyword: null,
@@ -172,6 +191,18 @@ export default {
         window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
+        keywordDel() {
+            this.searchKeyword = null;
+            if (this.reset) {
+                this.initPageData();
+                this.reset = false;
+            }
+        },
+        alertMsg(item) {
+            if (item.detailAuthYn === 'N') {
+                alert('접근 권한이 없습니다.');
+            }
+        },
         initPageData() {
             this.totalPage = null;
             this.page = 0;
@@ -217,6 +248,9 @@ export default {
         // 검색
         onClickSearch() {
             this.isActive = true;
+            if (this.searchKeyword) {
+                this.reset = true;
+            }
             if (!!this.searchKeyword) {
                 this.page = 0;
                 this.folderListData = null;
@@ -239,7 +273,11 @@ export default {
             }
         },
         setUrl(item) {
-            return `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase();
+            if (item.detailAuthYn === 'N') {
+                return `${this.$route.fullPath}`;
+            } else {
+                return `/${item.topMenuCode}/${item.menuCode}/${item.contentsSeq}`.toLocaleLowerCase();
+            }
         },
         /**
          * 스크롤 관련 method

@@ -64,6 +64,8 @@ const routes = [
             aside: 'Default',
             sectionCode: 'NOTICE',
             title: '공지사항',
+            topMenuCode: 'MYPAGE',
+            menuCode: 'MYPAGE',
         },
     },
     {
@@ -107,6 +109,8 @@ const routes = [
             aside: 'Default',
             sectionCode: 'NEWS',
             title: 'NEWS',
+            topMenuCode: 'MYPAGE',
+            menuCode: 'CUSTOMER_NEWS',
         },
     },
     {
@@ -117,6 +121,8 @@ const routes = [
             aside: 'Default',
             sectionCode: 'NEWS',
             title: 'NEWS',
+            topMenuCode: 'MYPAGE',
+            menuCode: 'CUSTOMER_NEWS',
         },
     },
     {
@@ -127,6 +133,8 @@ const routes = [
             aside: 'Default',
             sectionCode: 'NEWS',
             title: 'NEWS',
+            topMenuCode: 'MYPAGE',
+            menuCode: 'CUSTOMER_NEWS',
         },
     },
     {
@@ -138,6 +146,8 @@ const routes = [
             sectionCode: 'NEWS',
             title: 'NEWS',
             modify: true,
+            topMenuCode: 'MYPAGE',
+            menuCode: 'CUSTOMER_NEWS',
         },
     },
     //FAQ

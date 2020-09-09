@@ -1,6 +1,6 @@
 <template>
     <form action="#" @submit.prevent="findPW">
-        <div class="login-box">
+        <div class="login-box" ref="loginBox">
             <strong class="title2"> 비밀번호 찾기 </strong>
             <p class="desc">
                 비밀번호 설정 메일 발송을 위한 ID(E-MAIL)을 입력해 주세요.<br />
@@ -21,11 +21,7 @@
                     <span>E-MAIL 발송</span>
                 </button>
             </div>
-            <button
-                type="button"
-                class="btn-close"
-                @click="closePassword"
-            >
+            <button type="button" class="btn-close" @click="closePassword">
                 <span>닫기</span>
             </button>
         </div>
@@ -41,13 +37,13 @@ export default {
             userId: '',
         };
     },
-
+    props: ['activeState'],
+    mounted() {
+        this.$refs.loginBox.classList.add('active');
+    },
     methods: {
-        closePassword(){
-          this.$emit('changeLoginBox', 'LoginForm');
-          const nikeLogo = document.querySelector(".nike-logo");
-          nikeLogo.classList.remove("hidden");
-          nikeLogo.classList.add("active");
+        closePassword() {
+            this.$emit('changeLoginBox', 'LoginForm', true);
         },
         async findPW() {
             if (!this.userId) {
@@ -64,10 +60,7 @@ export default {
                     alert(response.msg);
                 }
                 if (response.success) {
-                    this.$emit('changeLoginBox', 'LoginForm');
-                  const nikeLogo = document.querySelector(".nike-logo");
-                  nikeLogo.classList.remove("hidden");
-                  nikeLogo.classList.add("active");
+                    this.$emit('changeLoginBox', 'LoginForm', true);
                 } else {
                     this.$refs.mailId.focus();
                 }
@@ -80,15 +73,6 @@ export default {
 };
 </script>
 <style scoped>
-.login-box {
-    position: relative;
-    width: 370px;
-    height: 390px;
-    padding: 50px 45px 45px;
-    box-sizing: border-box;
-    background: rgba(0, 0, 0, 0.7);
-    box-shadow: -20px 20px 8px 0 rgba(0, 0, 0, 0.5);
-}
 .login-box .title {
     display: block;
     font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;

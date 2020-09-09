@@ -7,6 +7,7 @@
                         type="checkbox"
                         v-model="checkAll"
                         :disabled="
+                            !contentsFileListTotal ||
                             (contentsFileList && !contentsFileList.length) ||
                             !folderAuthCheck('DOWNLOAD')
                         "
@@ -16,7 +17,13 @@
                 </span>
                 <strong class="txt" :class="{ 'fc-black': checkAll }">
                     전체선택 (
-                    <em>{{ checkContentsFileList.length }}</em> /
+                    <em
+                        :class="{
+                            'fc-black': checkContentsFileList.length !== 0,
+                        }"
+                        >{{ checkContentsFileList.length }}</em
+                    >
+                    /
                     <em>{{
                         !folderAuthCheck('DOWNLOAD') ? 0 : contentsFileListTotal
                     }}</em>
@@ -254,7 +261,7 @@ export default {
             options: {},
             playerReady: false,
 
-            tt: {
+            /*tt: {
                 contentsFileSeq: 725,
                 contentsSeq: 311,
                 fileSectionCode: 'GUIDE',
@@ -271,7 +278,7 @@ export default {
                 filePhysicalName:
                     'https://devupload.nikespace.co.kr/contents/2020090151200043VOw5khNz.mp4?Policy=eyJTdGF0ZW1lbnQiOiBbeyJSZXNvdXJjZSI6Imh0dHBzOi8vZGV2dXBsb2FkLm5pa2VzcGFjZS5jby5rci9jb250ZW50cy8yMDIwMDkwMTUxMjAwMDQzVk93NWtoTnoubXA0IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNTk5MjA4OTI5fSwiSXBBZGRyZXNzIjp7IkFXUzpTb3VyY2VJcCI6IjAuMC4wLjAvMCJ9LCJEYXRlR3JlYXRlclRoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTU5OTIwNzA2OX19fV19&Signature=N29srj2U4fOqfQ1w-~Q41IZs9saw6-BuQ9f26K3OTu-J3Qt4kUisw8skh9Zcs~b-IYxwGAykeONgpcq0dMB6odrBoTY2vNfptxHp9oqFtiLCoPxZeR3bKlQX63cdCHS24B4ZJ1Fl3mQqUD3nVAB4HHnWRvCQQamMw3gzYy8E4S5jcJgvWjN3v07J6xNheBHkcLvtpRDDxAmuX44~S2OTlY5dUxI~VdJogAPXJK1e0~8~OBuhA5s~RTe1UlgwfUUtCJyrd2whsr9dIg4r99bAym36hCfQwJFVZAv3Riww635OrAop6KV2VuoOgl601yOaP17-T6k04u754Euz4IaVBA__&Key-Pair-Id=APKAJNYFE4SZH6RSWVMA',
                 downloadCount: 0,
-            },
+            },*/
         };
     },
     components: {
@@ -355,6 +362,7 @@ export default {
             };
         },
         onStart(e) {
+            console.log(123);
             const thumbnail = document.querySelector('.drag-item .thumbnail');
             const absoluteLeft =
                 window.pageXOffset + thumbnail.getBoundingClientRect().left;

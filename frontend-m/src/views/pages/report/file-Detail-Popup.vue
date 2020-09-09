@@ -1,52 +1,64 @@
 <template>
     <el-dialog
-            title="상세보기"
-            class="modal-wrap"
-            :visible="visible"
-            :append-to-body="true"
-            @close="$emit('update:visible', false)"
+        title="상세보기"
+        class="modal"
+        :visible="visible"
+        :append-to-body="true"
+        :lock-scroll="false"
+        @close="$emit('update:visible', false)"
     >
-        <el-scrollbar view-class="view-box" :native="false">
-            <div class="el-dialog__inner">
-                <img :src="filePopupFile" />
-                <p v-text="filePopupName"></p>
+        <div class="modal-contents">
+            <div class="folder-detail">
+                <div class="inner">
+                    <span class="thumbnail">
+                        <img
+                            :src="filePopupFile.detailThumbnailFilePhysicalName"
+                            :alt="filePopupFile.detailThumbnailFileName"
+                            v-if="filePopupFile.detailThumbnailFilePhysicalName"
+                        />
+                        <span class="etc" v-else>
+                            <i class="icon-file"></i>
+                            <span class="txt">
+                                해당파일은 미리보기를<br />
+                                제공하지 않습니다.
+                            </span>
+                        </span>
+                    </span>
+                </div>
+                <span class="info-box">
+                    <em class="title">
+                        {{ filePopupFile.title || filePopupFile.fileName }}
+                    </em>
+                </span>
             </div>
-            <div></div>
-        </el-scrollbar>
-
-        <!--        <div slot="footer" class="dialog-footer">-->
-        <!--            <el-button @click="$emit('update:visible', false)" type="info" round>-->
-        <!--                확인-->
-        <!--            </el-button>-->
-        <!--        </div>-->
+        </div>
     </el-dialog>
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                orderComment: '',
-            };
-        },
-        props: ['visible' ,'filePopupFile','filePopupName'],
-        mounted() {
-        },
-        methods: {},
-    };
+export default {
+    data() {
+        return {
+            orderComment: '',
+        };
+    },
+    props: ['visible', 'filePopupFile'],
+    mounted() {},
+    methods: {},
+};
 </script>
 <style>
-    .modal-wrap {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+.modal-wrap {
+    display: flex;
+    justify-content: center;
+    align-filepopupfiles: center;
+}
 
-    .modal-wrap .el-dialog {
-        margin: 0 !important;
-    }
+.modal-wrap .el-dialog {
+    margin: 0 !important;
+}
 
-    .modal-wrap .el-scrollbar__wrap {
-        max-height: 80vh;
-    }
+.modal-wrap .el-scrollbar__wrap {
+    max-height: 80vh;
+}
 </style>

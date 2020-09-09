@@ -194,6 +194,7 @@ export default {
                     right: 'next',
                 },
                 titleFormat: 'yyyy.MM',
+
                 customButtons: {
                     prev: {
                         // this overrides the prev button
@@ -312,7 +313,11 @@ export default {
                 const txt = document.createTextNode('자세히 보기');
                 console.log(tdWidth);
                 modal.style.marginLeft = `${tdWidth}px`;
-                a.href = '/information/calendar';
+                a.href =
+                    '/information/calendar?yyyyMm=' +
+                    this.yyyyMm +
+                    '&searchDt=' +
+                    moment(e.date).format('YYYY.MM.DD');
                 a.classList.add('fc-more');
                 a.appendChild(txt);
                 body.appendChild(a);
@@ -428,6 +433,7 @@ export default {
     right: 0;
     bottom: 0;
 }
+::v-deep .fc .fc-daygrid-day.fc-active .fc-daygrid-day-number,
 ::v-deep .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
     margin: 0;
 }

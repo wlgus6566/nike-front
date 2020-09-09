@@ -203,6 +203,7 @@ export default {
             this.downloadFiles = null;
         },
         basketEnter() {
+            console.log(this.$store.state.SET_FILE_MOUSEENTER);
             this.$store.commit('SET_FILE_MOUSEENTER', true);
         },
         basketLeave() {
@@ -228,7 +229,9 @@ export default {
             try {
                 await addContentsBasket(
                     this.$route.meta.topMenuCode,
-                    this.$route.meta.menuCode,
+                    this.$route.meta.menuCode
+                        .replace(`${this.$route.meta.topMenuCode}_`, '')
+                        .toLowerCase(),
                     seqArr
                 );
                 await this.$store.dispatch('getContBasket');
@@ -285,6 +288,7 @@ export default {
     padding: 18px 0 18px 18px;
     overflow: auto;
     background: #eee;
+    min-height: 360px;
 }
 .file-list li {
     position: relative;

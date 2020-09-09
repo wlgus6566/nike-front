@@ -10,12 +10,13 @@
             <component
                 :is="LoginBox"
                 :loginData="loginData"
+                :activeState="activeState"
                 @login="login"
                 @updateValue="updateValue"
                 @changeLoginBox="changeLoginBox"
             />
             <p class="f-desc">
-                사용자는 NIKE D&P Plarform에 로그인함으로써, <br />
+                사용자는 NIKE SPACE에 로그인함으로써,<br />
                 개인정보 처리방침 및 이용약관에 동의합니다.
             </p>
         </div>
@@ -30,6 +31,7 @@ export default {
     name: 'login',
     data() {
         return {
+            activeState: false,
             LoginBox: 'LoginForm',
             loginData: {
                 username: '',
@@ -38,19 +40,19 @@ export default {
             },
         };
     },
-    watch:{
-      LoginBox(){
-        console.log(1)
-        const login = document.querySelector(".login-box");
-        login.classList.add("active");
-      }
+    watch: {
+        LoginBox() {
+            const login = document.querySelector('.login-box');
+            login.classList.add('active');
+        },
     },
     mounted() {
         this.$refs.logo.classList.add('active');
     },
     components: { LoginForm, CertCode, FindPW },
     methods: {
-        changeLoginBox(compName) {
+        changeLoginBox(compName, state) {
+            this.activeState = state;
             this.LoginBox = compName;
         },
         updateValue(target, value) {
@@ -123,12 +125,11 @@ export default {
     vertical-align: top;
 }
 .nike-logo.active {
-    animation: logoAni 1s ease-in-out forwards;
+    animation: logoAni 1.5s ease-in-out forwards;
 }
 .nike-logo.hidden {
- opacity:0;
+    opacity: 0;
 }
-
 
 @keyframes logoAni {
     from {

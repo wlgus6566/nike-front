@@ -89,6 +89,7 @@ export default {
     max-height: 360px;
     overflow: auto;
 }
+
 .select-options-list li {
     padding: 0 20px;
     line-height: 45px;

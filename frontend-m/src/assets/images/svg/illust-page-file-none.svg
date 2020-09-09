@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g>
+                    <g>
+                        <g transform="translate(-120 -220) translate(20 139) translate(100 81) translate(30 24)">
+                            <g>
+                                <path fill="#AAA" d="M1 6h46c.552 0 1 .448 1 1v65c0 .552-.448 1-1 1H1c-.552 0-1-.448-1-1V7c0-.552.448-1 1-1z"/>
+                                <rect width="48" height="67" x="6" fill="#CCC" rx="1"/>
+                                <path fill="#FFF" d="M4 3h38.572c.273 0 .535.112.723.31l7.428 7.775c.178.186.277.434.277.69V69c0 .552-.448 1-1 1H4c-.552 0-1-.448-1-1V4c0-.552.448-1 1-1z"/>
+                                <g>
+                                    <g fill="#BBB">
+                                        <path d="M0 0H35.402V1H0zM0 3.218H24.138V4.218H0zM0 6.437H16.092V7.437H0zM0 9.655H14.483V10.655H0z" transform="translate(8.655 14.678) translate(0 12.069)"/>
+                                    </g>
+                                    <path fill="#888" d="M5.508 4.152c-1.026.283-1.857.254-2.33-.088-1.221-.872-.307-2.66.013-3.198-.585.656-1.171 1.312-1.625 2.025-.713 1.116-1.012 2.336-.517 3.11.891 1.406 2.992.737 4.326.162L17.793.805 5.508 4.152z" transform="translate(8.655 14.678) rotate(.5 9.299 3.82)"/>
+                                </g>
+                                <path fill="#AAA" d="M43 3l8 8h-7c-.552 0-1-.448-1-1V3z"/>
+                            </g>
+                            <circle cx="52.5" cy="56.5" r="11" fill="#FFF" stroke="#888" stroke-width="3"/>
+                            <path fill="#888" d="M51 46L54 46 54 67 51 67z" transform="rotate(45 52.5 56.5)"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

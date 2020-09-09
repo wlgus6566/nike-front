@@ -156,7 +156,10 @@ export default {
                     data: { data: response },
                 } = await getContents(
                     this.$route.meta.topMenuCode,
-                    this.$route.meta.menuCode,
+                    this.$route.meta.menuCode.replace(
+                        `${this.$route.meta.topMenuCode}_`,
+                        ''
+                    ),
                     {
                         page: this.page,
                         size: this.itemLength,

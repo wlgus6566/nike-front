@@ -37,7 +37,7 @@
                             <textarea
                                 cols="100"
                                 rows="2"
-                                style="height: 60px;"
+                                style="height: 60px"
                                 v-model="faqDetail.title"
                                 required
                             ></textarea>
@@ -53,7 +53,7 @@
                             v-model="faqDetail.contents"
                             :config="editorConfig"
                             @blur="onEditorInput"
-                            style="width: 100%;"
+                            style="width: 100%"
                         />
                         <!--                        <span class="textarea">
                             <textarea
@@ -69,9 +69,9 @@
             </ul>
             <hr class="hr-gray" />
             <div class="btn-area">
-                <button type="button" class="btn-s-white" @click="cancelBack()">
+                <router-link to="/mypage/faq" class="btn-s-white">
                     <span>취소</span>
-                </button>
+                </router-link>
                 <button type="submit" class="btn-s-black">
                     <span>저장</span>
                 </button>
@@ -116,6 +116,7 @@ export default {
         };
     },
     created() {
+        this.$store.state.saveFolder = false;
         this.editorConfig.filebrowserImageUploadUrl =
             process.env.VUE_APP_API_URL +
             `/api/customer/${this.$route.meta.sectionCode}/images`;
@@ -127,6 +128,9 @@ export default {
         if (this.$route.meta.modify) {
             this.getFaqDetail();
         }
+    },
+    activated() {
+      this.$store.state.saveFolder = false;
     },
     methods: {
         submitData() {
@@ -150,6 +154,7 @@ export default {
                     useYn: this.useYn,
                 });
                 //console.log(response);
+                this.$store.state.saveFolder = true;
                 this.$store.commit('SET_RELOAD', true);
                 if (response.data.success) {
                     this.detailDataReset();
@@ -160,6 +165,7 @@ export default {
                     alert(response.data.msg);
                 }
             } catch (error) {
+                this.$store.state.saveFolder = false;
                 console.error(error);
             }
         },
@@ -179,6 +185,7 @@ export default {
                         noticeArticleSeq: this.$route.params.id,
                         useYn: this.useYn,
                     });
+                    this.$store.state.saveFolder = true;
                     this.$store.commit('SET_RELOAD', true);
                     if (response.data.success) {
                         this.detailDataReset();
@@ -187,6 +194,7 @@ export default {
                         alert(response.data.msg);
                     }
                 } catch (error) {
+                    this.$store.state.saveFolder = false;
                     console.error(error);
                 }
             }
@@ -228,15 +236,6 @@ export default {
                 console.error(error);
             }
         },
-
-        //작성 취소
-        cancelBack() {
-            if (!confirm('작성을 취소하시겠습니까?')) {
-                return false;
-            }
-            this.detailDataReset();
-            this.$router.go(-1);
-        },
         detailDataReset() {
             this.faqDetail.title = '';
             this.faqDetail.contents = '';
@@ -247,6 +246,20 @@ export default {
         onEditorInput: function (e) {
             this.faqDetail.contents = e.editor._.editable.$.innerHTML;
         },
+    },
+    beforeRouteLeave(to, from, next) {
+        if (!this.$store.state.saveFolder) {
+          const answer = window.confirm(
+              '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
+          );
+          if (answer) {
+            next();
+          } else {
+            next(false);
+          }
+        } else {
+          next();
+        }
     },
 };
 </script>

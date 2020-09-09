@@ -355,7 +355,11 @@ public class AuthService {
                 if (!lowerMenus.isEmpty()) {
                     for (final MenuReturnDTO lowerMenu : lowerMenus) {
                         if ("Y".equals(lowerMenu.getManagementYn())) {
-                            lowerMenu.setMenus(menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L));
+                            final List<MenuReturnDTO> bottomMenus = menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L);
+                            for (final MenuReturnDTO bottomMenu : bottomMenus) {
+                                bottomMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, bottomMenu.getMenuSeq()));
+                            }
+                            lowerMenu.setMenus(bottomMenus);
                         } else {
                             lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
                         }
@@ -370,7 +374,11 @@ public class AuthService {
                 if (!lowerMenus.isEmpty()) {
                     for (final MenuReturnDTO lowerMenu : lowerMenus) {
                         if ("Y".equals(lowerMenu.getManagementYn())) {
-                            lowerMenu.setMenus(menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L));
+                            final List<MenuReturnDTO> bottomMenus = menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L);
+                            for (final MenuReturnDTO bottomMenu : bottomMenus) {
+                                bottomMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, bottomMenu.getMenuSeq()));
+                            }
+                            lowerMenu.setMenus(bottomMenus);
                         } else {
                             lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
                         }
@@ -620,8 +628,15 @@ public class AuthService {
 
         if (!ObjectUtils.isEmpty(allAuthList) && !allAuthList.isEmpty()) {
 
-            if (1 == auth.getAuthDepth()) {
+            if (1 == auth.getAuthDepth() && "N".equals(userAuthSearchDTO.getSearchYn())) {
                 transformAuthList = allAuthList;
+            } else if (1 == auth.getAuthDepth() && "Y".equals(userAuthSearchDTO.getSearchYn())) {
+                for (AuthReturnDTO authReturnDTO : allAuthList) {
+                    if (auth.getAuthSeq().equals(authReturnDTO.getAuthSeq())) {
+                        transformAuthList.add(authReturnDTO);
+                        break;
+                    }
+                }
             } else {
                 for (AuthReturnDTO authReturnDTO : allAuthList) {
                     if (auth.getAuthSeq().equals(authReturnDTO.getAuthSeq())) {
@@ -662,7 +677,8 @@ public class AuthService {
                     break;
                 }
 
-                if (!ObjectUtils.isEmpty(findAuth) && !ObjectUtils.isEmpty(authReturnDTO.getSubAuths()) && !authReturnDTO.getSubAuths().isEmpty()) {
+                if (!ObjectUtils.isEmpty(findAuth)
+                        && !ObjectUtils.isEmpty(authReturnDTO.getSubAuths()) && !authReturnDTO.getSubAuths().isEmpty()) {//
                     findAuth = this.findAuthDepthList(authSeq, authReturnDTO.getSubAuths());
                 }
             }

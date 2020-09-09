@@ -14,14 +14,19 @@
             </ul>
             <h3 class="schedule-title">{{ searchDt }}</h3>
             <ul class="schedule-list">
+                <li class="schedule-item no-data" v-if="todayData.length == 0">
+                    <p>등록된 일정이 없습니다.</p>
+                </li>
                 <li
                     class="schedule-item"
-                    :class="{ 'edu':item.calendarSectionCode === 'EDUCATION'
-                        , 'campaign':item.calendarSectionCode === 'CAMPAIGN'
-                        , 'official':item.calendarSectionCode === 'ETC'
+                    :class="{
+                        edu: item.calendarSectionCode === 'EDUCATION',
+                        campaign: item.calendarSectionCode === 'CAMPAIGN',
+                        official: item.calendarSectionCode === 'ETC',
                     }"
                     v-for="item in todayData"
                     :key="item.calendarSeq"
+                    v-else
                 >
                     <div class="content">
                         <h4 class="title">{{ item.scheduleName }}</h4>
@@ -29,7 +34,7 @@
                     </div>
                     <div class="info">
                         <span class="date">
-                        {{ item.beginDt }} ~ {{ item.endDt }}</span
+                            {{ item.beginDt }} - {{ item.endDt }}</span
                         >
                     </div>
                 </li>
@@ -65,8 +70,12 @@ export default {
             },
             calendarSeq: null,
             loadingData: false,
-            yyyyMm: moment(new Date()).format('YYYY.MM'),
-            searchDt: moment(new Date()).format('YYYY.MM.DD'),
+            yyyyMm: !!this.$route.query.yyyyMm
+                ? this.$route.query.yyyyMm
+                : moment(new Date()).format('YYYY.MM'),
+            searchDt: !!this.$route.query.searchDt
+                ? this.$route.query.searchDt
+                : moment(new Date()).format('YYYY.MM.DD'),
             currentDate: moment(new Date()).format('YYYY.MM.DD'),
             statusCode: null,
             calendarDetail: {},
@@ -118,6 +127,8 @@ export default {
     },
     mounted() {
         this.fetchData();
+        let calendarApi = this.$refs.fullCalendar.getApi();
+        calendarApi.gotoDate(moment(this.searchDt).format('YYYY-MM-DD'));
     },
     methods: {
         async fetchData() {
@@ -164,8 +175,10 @@ export default {
                     ...item,
                     title: item.scheduleName,
                     description: item.contents,
-                    start: item.beginDt.replace(/\./gi, "-"),
-                    end: moment(item.endDt).add(1, 'days')._i.replace(/\./gi, "-"),
+                    start: item.beginDt.replace(/\./gi, '-'),
+                    end: moment(item.endDt)
+                        .add(1, 'days')
+                        ._i.replace(/\./gi, '-'),
                     className: className,
                 });
             });
@@ -173,6 +186,13 @@ export default {
         // 달력에 일자 클릭시
         handleDateClick(arg) {
             this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
+            const date = this.$moment(arg.date).format('YYYY-MM-DD');
+            const cal = this.$refs.fullCalendar.$el;
+            const td = cal.querySelector(`td[data-date="${date}"]`);
+            cal.querySelectorAll('td').forEach((el) => {
+                el.classList.remove('fc-active');
+            });
+            td.classList.add('fc-active');
         },
         // 캘린더 코드 목록 조회
         async loadCalendarCode() {

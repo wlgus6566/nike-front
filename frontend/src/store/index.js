@@ -24,6 +24,7 @@ export default new Vuex.Store({
         nick: '',
         token: '',
         authName: '',
+        saveFolder:false,
         gnbMenuListData: [],
         basketItemDrag: false,
         fileMouseenter: false,

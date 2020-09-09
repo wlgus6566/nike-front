@@ -1,8 +1,6 @@
 <template>
     <div>
-        <h2 class="page-title">
-            CALENDAR
-        </h2>
+        <h2 class="page-title">CALENDAR</h2>
         <div class="fullCalendar-wrap">
             <ul class="schedule-type">
                 <li class="edu">교육</li>
@@ -35,6 +33,7 @@
                     size="small"
                     @click.prevent="onClickToCreate"
                     class="btn-form-gray"
+                    v-if="folderAuthCheck('CREATE')"
                 >
                     <span>등록</span>
                 </a>
@@ -65,11 +64,12 @@
                             type="white"
                             class="btn-edit"
                             @click="onClickToEdit(item)"
+                            v-if="folderAuthCheck('CREATE')"
                         >
                             수정하기
                         </el-button>
                         <span class="date">
-                            {{ item.beginDt }} ~ {{ item.endDt }}</span
+                            {{ item.beginDt }} - {{ item.endDt }}</span
                         >
                     </div>
                 </li>
@@ -104,6 +104,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import momentPlugin from '@fullcalendar/moment';
 
 import calendarManagement from '@/views/pages/information/calendar-management';
+import { authCheck } from '@/utils/authCheck';
 
 export default {
     name: 'calendar',
@@ -121,8 +122,8 @@ export default {
             },
             calendarSeq: null,
             loadingData: false,
-            yyyyMm: moment(new Date()).format('YYYY.MM'),
-            searchDt: moment(new Date()).format('YYYY.MM.DD'),
+            yyyyMm: !!this.$route.query.yyyyMm ? this.$route.query.yyyyMm : moment(new Date()).format('YYYY.MM'),
+            searchDt: !!this.$route.query.searchDt ? this.$route.query.searchDt : moment(new Date()).format('YYYY.MM.DD'),
             currentDate: moment(new Date()).format('YYYY.MM.DD'),
             statusCode: null,
             calendarDetail: {},
@@ -166,6 +167,7 @@ export default {
             },
         };
     },
+    mixins: [authCheck],
     watch: {
         calenderSectionCodeList() {},
     },
@@ -175,6 +177,8 @@ export default {
     },
     mounted() {
         this.fetchData();
+        let calendarApi = this.$refs.fullCalendar.getApi();
+        calendarApi.gotoDate(moment(this.searchDt).format('YYYY-MM-DD'));
     },
     methods: {
         // 초기 데이타 조회

@@ -20,6 +20,7 @@
                             @keyup.enter="search()"
                             v-model="keyword"
                         />
+                        <button type="button" class="btn-del" v-if="keyword" @click="keywordDel">삭제</button>
                         <button type="submit" class="search">
                             <span>검색</span>
                         </button>
@@ -94,6 +95,7 @@ export default {
     name: 'management',
     data() {
         return {
+            reset : false,
             loadingData: false,
             page: 0,
             size: 10,
@@ -163,6 +165,13 @@ export default {
         },
     },
     methods: {
+        keywordDel(){
+          this.keyword = null;
+          if(this.reset){
+            this.initRepoerProduct();
+            this.reset = false
+          }
+        },
         initRepoerProduct() {
             this.totalPage = null;
             this.page = 0;
@@ -246,6 +255,9 @@ export default {
         },
         search() {
             this.searchIsActive = true;
+            if(this.keyword){
+                this.reset = true;
+            }
             if (!!this.keyword) {
                 this.page = 0;
                 this.reportList = null;

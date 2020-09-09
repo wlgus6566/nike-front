@@ -14,14 +14,13 @@
                 v-if="uploadFolderData.length"
                 :folderListData="uploadFolderData"
             />
-        </template>
-        <template v-else>
-            <NoData>
+            <template v-else>
+              <NoData>
                 <i class="icon-upload"></i>
                 <p class="desc">업로드한 폴더가 없습니다.</p>
-            </NoData>
+              </NoData>
+            </template>
         </template>
-
         <Loading
             class="list-loading"
             :width="172"
