@@ -104,7 +104,8 @@
                 </li>
             </ul>
             <div class="no-data" v-else>
-                <p class="desc">파일없음</p>
+                <i class="icon-file"></i>
+                <p class="desc">등록된 파일이 없습니다.</p>
             </div>
         </template>
         <fileDetailPopup
@@ -242,5 +243,8 @@ export default {
 <style scoped>
 .no-data {
     padding: 30px 0;
+}
+.no-data .desc {
+    color: #888;
 }
 </style>
