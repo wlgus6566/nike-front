@@ -2700,6 +2700,7 @@
 }
 .feedback-item .txt {
     display: block;
+	word-break:break-all;
     display: -webkit-box;
     max-height: 40px;
     font-size: 14px;
