@@ -10,7 +10,7 @@
                     type="button"
                     class="btn-o-gray"
                     @click="sendEmail"
-                    v-if="uploadAuth"
+                    v-if="folderAuthCheck('CREATE')"
                 >
                     <i class="icon-mail"></i>
                     <span>알림메일전송</span>
@@ -58,7 +58,6 @@ export default {
     name: 'folder-view',
     data() {
         return {
-            uploadAuth: false,
             totalPage: null,
             loadingData: false,
             page: 0,
@@ -361,9 +360,6 @@ export default {
         },
     },
     watch: {
-        '$store.state.gnbMenuListData'() {
-            this.uploadAuth = this.folderAuthCheck('CREATE');
-        },
         'sectionCode.value'() {
             this.initFetchData();
         },
