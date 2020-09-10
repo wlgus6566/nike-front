@@ -17,6 +17,8 @@ const routes = [
                 meta: {
                     layout: 'Default',
                     historyBack: null,
+                    topMenuCode: 'REPORT',
+                    menuCode: 'REPORT_UPLOAD',
                 },
             },
             {
@@ -28,6 +30,8 @@ const routes = [
                     title: 'REPORT <span class="ko">업로드 수정</span>',
                     topCode: 'report',
                     historyBack: null,
+                    topMenuCode: 'REPORT',
+                    menuCode: 'REPORT_MANAGE',
                 },
             },
             {
@@ -36,6 +40,8 @@ const routes = [
                 meta: {
                     layout: 'Default',
                     historyBack: null,
+                    topMenuCode: 'REPORT',
+                    menuCode: 'REPORT_MANAGE',
                 },
             },
             {
@@ -44,6 +50,8 @@ const routes = [
                 meta: {
                     layout: 'Default',
                     topCode: 'report',
+                    topMenuCode: 'REPORT',
+                    menuCode: 'REPORT_MANAGE',
                     detail: true,
                     btn: true,
                 },
