@@ -1,6 +1,6 @@
 <template>
     <div class="main-fc">
-        <div class="main-visual">
+        <div class="main-visual" >
             <span class="thumbnail">
                 <img :src="mainVisual.mobileImageUrl" alt="" />
             </span>
@@ -140,9 +140,9 @@
     </div>
 </template>
 <script>
-import { getMain } from '@/api/main';
-import { getCalendarEachList, getTodayCalendar } from '@/api/calendar/';
-import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper';
+import {getMain} from '@/api/main';
+import {getCalendarEachList, getTodayCalendar} from '@/api/calendar/';
+import {directive, Swiper, SwiperSlide} from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
 
 import FullCalendar from '@fullcalendar/vue';

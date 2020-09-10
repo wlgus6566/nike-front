@@ -6,8 +6,8 @@
             </span>
             <div class="side">
                 <template v-if="alarmDataListCont">
-                    <button type="button" class="btn-out" @click="logout">
-                        <span>로그아웃</span>
+                    <button type="button" class="logout" @click="logout">
+                        로그아웃
                     </button>
                     <button
                         type="button"
@@ -349,9 +349,23 @@ export default {
     margin-right: -2px;
     margin-left: 10px;
 }
-.user-info .side .btn-out {
-    background-image: url('../../assets/images/svg/icon-logout.svg');
+.user-info .side .logout {
+    line-height: 17px;
+    font-size: 11px;
+    color: #000;
+    vertical-align: -1px;
 }
+.user-info .side .logout:after {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 10px;
+    margin: 0 10px;
+    background-color: #ddd;
+}
+/*.user-info .side .btn-out {*/
+/*    background-image: url('../../assets/images/svg/icon-logout.svg');*/
+/*}*/
 .user-info .side .btn-alarm {
     background-image: url('../../assets/images/svg/icon-alarm-off.svg');
 }
