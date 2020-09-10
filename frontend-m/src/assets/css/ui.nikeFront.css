@@ -1801,6 +1801,12 @@
 .extension-ttf {
     background-position: -80px -240px !important;
 }
+.my-main-contents {
+    display: block;
+    flex-direction: inherit;
+    padding: 0;
+    flex: none;
+}
 .my-main {
     padding: 0 20px;
 }

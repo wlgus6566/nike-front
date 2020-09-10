@@ -1,6 +1,11 @@
 <template>
     <div id="app">
-        <transition name="layout-change" mode="out-in">
+        <transition
+            mode="out-in"
+            @enter="pageEnter"
+            @leave="pageLeave"
+            name="page-change"
+        >
             <component :is="AppLayout" :key="$route.meta.layout" />
         </transition>
         <Loading
@@ -12,6 +17,8 @@
     </div>
 </template>
 <script>
+import { Cubic, gsap } from 'gsap/all';
+
 require('es6-promise/auto');
 import Vue from 'vue';
 import ElementUI from 'element-ui';
@@ -72,6 +79,42 @@ export default {
                     }
                 }
             }
+        },
+        pageEnter(el, done) {
+            this.pageAnimation(
+                el,
+                { translateY: '30px', opacity: 0 },
+                { translateY: '0', opacity: 1 },
+                done
+            );
+        },
+        pageLeave(el, done) {
+            this.pageAnimation(
+                el,
+                { translateY: '0', opacity: 1 },
+                { translateY: '30px', opacity: 0 },
+                done
+            );
+        },
+        pageAnimation(el, fromVal, toVal, done) {
+            gsap.fromTo(
+                el,
+                0.3,
+                {
+                    ...fromVal,
+                    ease: Cubic.easeInOut,
+                },
+                {
+                    ...toVal,
+                    ease: Cubic.easeInOut,
+                    onComplete: () => {
+                        el.style.transform = 'none';
+                        if (done) {
+                            done();
+                        }
+                    },
+                }
+            );
         },
     },
 };
