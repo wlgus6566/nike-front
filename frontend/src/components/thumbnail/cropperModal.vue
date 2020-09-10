@@ -5,6 +5,7 @@
         width="700px"
         :visible="visible"
         :append-to-body="true"
+        @close="$emit('popupClose')"
     >
         <el-scrollbar wrap-class="modal-scroll" :native="false">
             <div class="dialog-header">
@@ -40,7 +41,7 @@
                 type="button"
                 class="btn-s"
                 role="button"
-                @click="$emit('update:visible', false)"
+                @click="$emit('popupClose')"
             >
                 취소
             </button>
@@ -53,14 +54,6 @@
                 확인
             </button>
         </div>
-
-        <button
-            class="modal-close"
-            type="button"
-            @click.prevent="$emit('update:visible', false)"
-        >
-            Close
-        </button>
     </el-dialog>
 </template>
 <script>
@@ -73,9 +66,6 @@ export default {
         VueCropper,
     },
     methods: {
-        test(url) {
-            this.$refs.cropper.replace(url);
-        },
         crop() {
             this.$emit(
                 'cropImage',
