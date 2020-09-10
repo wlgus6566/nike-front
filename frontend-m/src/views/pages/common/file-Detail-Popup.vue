@@ -23,11 +23,6 @@
                                     type="video/mp4"
                                 />
                             </video>
-                            <button
-                                type="button"
-                                @click="playControls(playState)"
-                                class="btn-play"
-                            ></button>
                         </div>
                     </div>
 
@@ -121,20 +116,6 @@ export default {
         // console.log(this.filePopupFile);
     },
     methods: {
-        playControls(val) {
-            const video = document.querySelector('.video');
-            const videoWrap = video.closest('.thumbnail');
-            // console.log(val);
-            if (val === false) {
-                videoWrap.classList.add('pause');
-                video.play();
-                this.playState = true;
-            } else {
-                videoWrap.classList.remove('pause');
-                video.pause();
-                this.playState = false;
-            }
-        },
         videoCheck(url) {
             url.match(
                 /(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/
