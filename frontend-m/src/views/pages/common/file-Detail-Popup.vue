@@ -33,9 +33,9 @@
 
                     <span class="thumbnail" v-else>
                         <img
-                            :src="filePopupFile.thumbnailFilePhysicalName"
-                            :alt="filePopupFile.thumbnailFileName"
-                            v-if="filePopupFile.thumbnailFilePhysicalName"
+                            :src="filePopupFile.detailThumbnailFilePhysicalName"
+                            :alt="filePopupFile.detailThumbnailFileName"
+                            v-if="filePopupFile.detailThumbnailFilePhysicalName"
                         />
                         <span
                             class="etc"

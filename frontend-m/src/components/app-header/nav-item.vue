@@ -1,7 +1,7 @@
 <template>
     <ul class="nav-tab" v-if="tabMenuData">
         <li
-            v-for="menu in tabMenuData"
+            v-for="menu in tabMenuList(tabMenuData)"
             :key="menu.menuSeq"
             :class="tabItemClass(menu.menuPathUrl)"
         >
@@ -18,6 +18,12 @@ export default {
     created() {},
     computed: {},
     methods: {
+        tabMenuList(tabMenu) {
+            const menu = tabMenu.filter(el => {
+                return el.listYn === 'Y';
+            });
+            return menu;
+        },
         menuTitle(title) {
             if (title === 'REPORT UPLOAD') {
                 return '업로드';
