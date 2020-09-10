@@ -4615,7 +4615,7 @@ img.image-grayscale {
     font-weight: 400;
 }
 .main-fc .fc-theme-standard .fc-scrollgrid {
-    padding: 0 30px 26px;
+    padding: 0 30px 0;
     border: none;
 }
 .main-fc .fc .fc-daygrid-day.fc-day-today {

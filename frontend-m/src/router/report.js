@@ -5,10 +5,13 @@ const routes = [
         path: '/report',
         component: pages('report/index.vue'),
         redirect: () => {
-            const idx = store.state.menuData.findIndex(
+            const depth1Idx = store.state.menuData.findIndex(
                 el => el.menuCode === 'REPORT'
             );
-            return store.state.menuData[idx].menus[0].menuPathUrl;
+            const depth2Idx = store.state.gnbMenuListData[
+                depth1Idx
+            ].menus.findIndex(el => el.listYn === 'Y');
+            return store.state.menuData[depth1Idx].menus[depth2Idx].menuPathUrl;
         },
         children: [
             {

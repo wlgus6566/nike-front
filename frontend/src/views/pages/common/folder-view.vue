@@ -10,7 +10,7 @@
                     type="button"
                     class="btn-o-gray"
                     @click="sendEmail"
-                    v-if="folderDetail.exposureYn === 'Y'"
+                    v-if="folderAuthCheck('CREATE')"
                 >
                     <i class="icon-mail"></i>
                     <span>알림메일전송</span>
@@ -42,6 +42,7 @@ import BtnArea from '@/components/asset-view/btn-area.vue';
 import folder from '@/components/asset-view/folder.vue';
 import SortingList from '@/components/asset-view/sorting-list.vue';
 import fileItem from '@/components/asset-view/file-Item.vue';
+import { authCheck } from '@/utils/authCheck';
 import {
     addContentsBasket,
     deleteContents,
@@ -53,6 +54,7 @@ import router from '@/router';
 import { joinInit } from '@/api/join';
 
 export default {
+    mixins: [authCheck],
     name: 'folder-view',
     data() {
         return {

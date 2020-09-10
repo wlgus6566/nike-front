@@ -314,7 +314,7 @@ export default {
                 const a = document.createElement('a');
                 const txt = document.createTextNode('자세히 보기');
                 console.log(tdWidth);
-                modal.style.marginLeft = `${tdWidth}px`;
+                //modal.style.marginLeft = `${tdWidth}px`;
                 a.href =
                     '/information/calendar?yyyyMm=' +
                     this.yyyyMm +
@@ -404,7 +404,7 @@ export default {
 <style scoped>
 ::v-deep .fc .fc-more-popover {
     margin-top: 41px;
-    transform: translateX(-50%);
+    /*transform: translateX(-50%);*/
 }
 ::v-deep .fc {
     margin: 15px -20px 0;
