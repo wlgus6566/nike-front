@@ -35,11 +35,15 @@ export default {
             this.$router.push('/login');
         },
         async dataBinding() {
-          if(!this.$store.state.gnbMenuListData) return
+            if (!this.$store.state.gnbMenuListData) return;
             try {
                 const menu = await this.$store.state.gnbMenuListData.filter(
                     (item) => {
-                        if (item.menuCode === 'MYPAGE' && item.pcYn === 'Y')
+                        if (
+                            item.menuCode === 'MYPAGE' &&
+                            item.pcYn === 'Y' &&
+                            item.listYn === 'Y'
+                        )
                             return item;
                     }
                 );

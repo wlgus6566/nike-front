@@ -359,16 +359,22 @@ public class ContentsService {
         // history 저장
         historyService.saveViewHistory(contentsSeq, topMenuCode);
 
+
+        ContentsResultDTO contentsResultDTO = ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
+
         // 권한 목록 조회
+        // TODO[lsj] front 에서 상세권한 조회 별도로 api 빼놓은거에 붙이면 삭제예정 2020.09.10
         UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
         userAuthSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
         userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
         userAuthSearchDTO.setContentsSeq(contentsSeq);
-        ContentsResultDTO contentsResultDTO = ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
         contentsResultDTO.setChecks(authService.getAuthListWithoutN(userAuthSearchDTO));
+
+        // 사용자 계정 조회
         contentsResultDTO.setUserId(
                 EmailPatternUtil.maskingEmail(userService.findByUserSeq(contentsResultDTO.getRegisterSeq()).get().getUserId())
         );
+
 
         // 메일 갯수 조회
         List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsSeq);
@@ -645,7 +651,6 @@ public class ContentsService {
                 checkedContentsFileList.add(contentsFileSaveDTO);
             }
 
-
             for (ContentsFileSaveDTO contentsFile : contentsFileList) {
                 if (ObjectUtils.isEmpty(contentsFile.getFileName())
                         && 0l == contentsFile.getFileSize()
@@ -776,19 +781,105 @@ public class ContentsService {
      *
      * @param topMenuCode the top menu code
      * @param menuCode    the menu code
+     * @param contentsSeq the contents seq
      * @return the list
      * @author [이소정]
-     * @implNote 콘텐츠 권한 목록 조회
-     * @since 2020. 8. 13. 오후 9:26:08
+     * @implNote 콘텐츠 권한 목록 조회 등록/수정 분기
+     * @since 2020. 9. 9. 오후 5:35:01
      */
-    public List<AuthReturnDTO> loadAuthList(final String topMenuCode, final String menuCode) {
-        // 권한 목록 조회
-        UserAuthSearchDTO userContentsSearchDTO = new UserAuthSearchDTO();
-        userContentsSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
-        userContentsSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
-        userContentsSearchDTO.setCreateYn("Y");
-        return authService.getAuthListWithoutN(userContentsSearchDTO);
+    public List<AuthReturnDTO> loadAuthList(final String topMenuCode, final String menuCode, final Long contentsSeq) {
+        final String searchMenuCode = topMenuCode+"_"+menuCode;
+        UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
+        userAuthSearchDTO.setMenuCode(searchMenuCode);
+        userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
 
+        if (ObjectUtils.isEmpty(contentsSeq) || 0 == contentsSeq) {
+            return this.loadDefaultAuthList(userAuthSearchDTO);
+        } else {
+            userAuthSearchDTO.setContentsSeq(contentsSeq);
+            return authService.getAuthListWithoutN(userAuthSearchDTO);
+        }
     }
 
+    /**
+     * Load auth list list.
+     *
+     * @param userAuthSearchDTO the user auth search dto
+     * @return the list
+     * @author [이소정]
+     * @implNote 콘텐츠 권한 목록 조회 (등록시 사용)
+     * @since 2020. 8. 13. 오후 9:26:08
+     */
+    public List<AuthReturnDTO> loadDefaultAuthList(final UserAuthSearchDTO userAuthSearchDTO) {
+        // 상세 권한 조회
+        List<AuthReturnDTO> authReturnDTOList = authService.getAuthListWithoutN(userAuthSearchDTO);
+
+        // 등록/수정권한 목록 조회
+        UserAuthSearchDTO createAuthSearchDTO = new UserAuthSearchDTO();
+        createAuthSearchDTO.setMenuCode(userAuthSearchDTO.getMenuCode());
+        createAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.CREATE.toString());
+        List<AuthReturnDTO> createAuthList = authService.getAuthListWithoutN(createAuthSearchDTO);
+
+        // 등록/수정 권한 목록을 depth -> list 로 변환
+        List<Long> oneDepthAuthSeqList = new ArrayList<>();
+        List<Long> twoDepthAuthSeqList = new ArrayList<>();
+        List<Long> threeDepthAuthSeqList = new ArrayList<>();
+        // 1depth
+        for (AuthReturnDTO oneDepth : createAuthList) {
+            if ("Y".equals(oneDepth.getCheckBoxYn())) {
+                oneDepthAuthSeqList.add(oneDepth.getAuthSeq());
+            }
+            // 2depth
+            for (AuthReturnDTO secondDepth : oneDepth.getSubAuths()) {
+                if ("Y".equals(secondDepth.getCheckBoxYn())) {
+                    twoDepthAuthSeqList.add(secondDepth.getAuthSeq());
+                }
+
+                // 3depth
+                for (AuthReturnDTO thirdDepth : secondDepth.getSubAuths()) {
+                    if ("Y".equals(thirdDepth.getCheckBoxYn())) {
+                        threeDepthAuthSeqList.add(thirdDepth.getAuthSeq());
+                    }
+                }
+            }
+        }
+
+        return this.applyCreateAuth(authReturnDTOList, oneDepthAuthSeqList, twoDepthAuthSeqList, threeDepthAuthSeqList);
+    }
+
+    public List<AuthReturnDTO> applyCreateAuth(
+            final List<AuthReturnDTO> viewAuthList
+            , final List<Long> oneDepthSeqList, final List<Long> twoDepthSeqList, final List<Long> threeDepthSeqList
+    ) {
+        // 1depth
+        for (AuthReturnDTO oneDepth : viewAuthList) {
+            for (Long authSeq : oneDepthSeqList) {
+                if (oneDepth.getAuthSeq().equals(authSeq)) {
+                    oneDepth.setDetailAuthYn("Y");
+                    oneDepth.setEmailReceptionYn("Y");
+                }
+            }
+
+            // 2depth
+            for (AuthReturnDTO secondDepth : oneDepth.getSubAuths()) {
+                for (Long authSeq : twoDepthSeqList) {
+                    if (secondDepth.getAuthSeq().equals(authSeq)) {
+                        secondDepth.setDetailAuthYn("Y");
+                        secondDepth.setEmailReceptionYn("Y");
+                    }
+                }
+
+                // 3depth
+                for (AuthReturnDTO threeDepth : secondDepth.getSubAuths()) {
+                    for (Long authSeq : threeDepthSeqList) {
+                        if (threeDepth.getAuthSeq().equals(authSeq)) {
+                            threeDepth.setDetailAuthYn("Y");
+                            threeDepth.setEmailReceptionYn("Y");
+                        }
+                    }
+                }
+            }
+        }
+        return viewAuthList;
+    }
 }

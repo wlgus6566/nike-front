@@ -1269,7 +1269,9 @@
     letter-spacing: -0.5px;
     font-size: 14px;
 }
-
+.no-data-wrap.file-type .desc {
+    color: #888;
+}
 /* Mypage > 회원정보조회 */
 .contents.my-info {
     padding-bottom: 0;
@@ -1800,6 +1802,12 @@
 }
 .extension-ttf {
     background-position: -80px -240px !important;
+}
+.my-main-contents {
+    display: block;
+    flex-direction: inherit;
+    padding: 0;
+    flex: none;
 }
 .my-main {
     padding: 0 20px;
@@ -2744,4 +2752,38 @@
 .crop-editor img {
     vertical-align: middle;
     max-height: 100%;
+}
+.video-filePopupFile {
+    position: relative;
+}
+.pause .btn-play {
+    opacity: 0;
+}
+.btn-play {
+    opacity: 1;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 9999;
+    /*background: red;*/
+    pointer-events: all;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.btn-play:after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: url('../../assets/images/svg/icon-view-play-small.svg') 50% 50%
+        no-repeat;
+    background-size: 100%;
+    pointer-events: none;
 }
