@@ -74,8 +74,8 @@ export default {
 .aside-menu .menu li a {
     display: block;
     line-height: 30px;
-    font-size: 12px;
-    color: #000;
+    font-size: 11px;
+    color: #555;
 }
 .aside-menu .menu li .router-link-active {
     font-weight: bold;
