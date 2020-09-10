@@ -45,10 +45,7 @@
                     v-for="item in reportList"
                     :key="item.reportSeq"
                 >
-                    <router-link
-                        :to="setUrl(item)"
-                        @click.native="alertMsg(item)"
-                    >
+                    <router-link :to="setUrl(item)">
                         <div class="thumbnail">
                             <!-- <span class="auth" v-if="item.detailAuthYn === 'N'">
                                 <i></i>권한 없음
@@ -179,17 +176,18 @@ export default {
     },
     methods: {
         setUrl(item) {
-            if (item.detailAuthYn === 'N') {
+            /* if (item.detailAuthYn === 'N') {
                 return `${this.$route.fullPath}`;
             } else {
                 return `/report/detail/${item.reportSeq}`;
-            }
+            }*/
+            return `/report/detail/${item.reportSeq}`;
         },
-        alertMsg(item) {
+        /*alertMsg(item) {
             if (item.detailAuthYn === 'N') {
                 alert('접근 권한이 없습니다.');
             }
-        },
+        },*/
         keywordDel() {
             this.keyword = null;
             if (this.reset) {
