@@ -27,6 +27,7 @@
             :imgName="this.imgName"
             :size="this.size"
             @cropImage="cropImage"
+            @popupClose="popupClose"
         />
     </div>
 </template>
@@ -72,15 +73,17 @@ export default {
 
     computed: {},
     methods: {
+        inputReset() {
+            this.$refs.input.value = '';
+            this.$refs.input.type = 'radio';
+            this.$refs.input.type = 'file';
+        },
         cropImage(cropperUrl) {
             this.imgName = null;
             this.imgSrc = null;
             this.cropImg = cropperUrl;
-            this.$refs.input.value = '';
-            this.$refs.input.type = 'radio';
-            this.$refs.input.type = 'file';
             this.$emit('cropImage', this.cropImg, this.imgName);
-            this.visible.cropperModal = false;
+            this.popupClose();
         },
         inputChangeEvent(e) {
             const file = e.target.files[0];
@@ -112,6 +115,10 @@ export default {
                     bus.$emit('pageLoading', false);
                     console.log(e);
                 });
+        },
+        popupClose() {
+            this.inputReset();
+            this.visible.cropperModal = false;
         },
         popupOpen() {
             this.visible.cropperModal = true;
