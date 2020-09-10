@@ -243,9 +243,9 @@ public class User extends BaseTimeEntity {
      */
     public void delete(final Long userSeq) {
         log.info("User.delete");
-        this.userId = String.valueOf(userSeq);
+        //this.userId = String.valueOf(userSeq);
+        //this.nickname = String.valueOf(userSeq);
         this.password = String.valueOf(userSeq);
-        this.nickname = String.valueOf(userSeq);
         this.userStatusCode = ServiceCode.UserStatusEnumCode.DELETE.toString();
     }
 
