@@ -359,12 +359,22 @@ public class ContentsService {
         // history 저장
         historyService.saveViewHistory(contentsSeq, topMenuCode);
 
+
         ContentsResultDTO contentsResultDTO = ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
+
+        // 권한 목록 조회
+        // TODO[lsj] front 에서 상세권한 조회 별도로 api 빼놓은거에 붙이면 삭제예정 2020.09.10
+        UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
+        userAuthSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
+        userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
+        userAuthSearchDTO.setContentsSeq(contentsSeq);
+        contentsResultDTO.setChecks(authService.getAuthListWithoutN(userAuthSearchDTO));
 
         // 사용자 계정 조회
         contentsResultDTO.setUserId(
                 EmailPatternUtil.maskingEmail(userService.findByUserSeq(contentsResultDTO.getRegisterSeq()).get().getUserId())
         );
+
 
         // 메일 갯수 조회
         List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsSeq);
