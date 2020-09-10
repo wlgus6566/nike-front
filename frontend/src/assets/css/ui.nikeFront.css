@@ -2700,7 +2700,7 @@
 }
 .feedback-item .txt {
     display: block;
-	word-break:break-all;
+    word-break: break-all;
     display: -webkit-box;
     max-height: 40px;
     font-size: 14px;
@@ -3843,6 +3843,10 @@ img.image-grayscale {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+.no-data.file-type {
+    margin-top: 0;
+    border-width: 1px 0 0;
 }
 .no-data [class^='icon-'] {
     display: block;

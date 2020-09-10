@@ -233,8 +233,9 @@
                     </transition>
                 </li>
             </draggable>
-            <NoData class="no-data" v-else>
-                <div>파일 없음</div>
+            <NoData v-else class="file-type">
+                <i class="icon-file"></i>
+                <p class="desc">등록된 파일이 없습니다.</p>
             </NoData>
         </template>
         <Loading class="list-loading" :width="172" :height="172" v-else />
@@ -406,12 +407,6 @@ export default {
 };
 </script>
 <style scoped>
-.no-data {
-    height: 140px;
-    margin-top: 0;
-    border-left: 0;
-    border-right: 0;
-}
 .drag-item {
     opacity: 1 !important;
     border: none !important;

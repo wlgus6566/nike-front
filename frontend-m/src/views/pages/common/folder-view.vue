@@ -93,10 +93,10 @@
                     </a>
                 </li>
             </ul>
-            <div class="no-data" v-else>
+            <NoData v-else class="file-type">
                 <i class="icon-file"></i>
                 <p class="desc">등록된 파일이 없습니다.</p>
-            </div>
+            </NoData>
         </template>
         <fileDetailPopup
             :visible.sync="visible.modalEx"
@@ -224,11 +224,4 @@ export default {
     },
 };
 </script>
-<style scoped>
-.no-data {
-    padding: 30px 0;
-}
-.no-data .desc {
-    color: #888;
-}
-</style>
+<style scoped></style>
