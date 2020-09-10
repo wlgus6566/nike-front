@@ -155,11 +155,11 @@ public class MenuRepositoryImpl extends QuerydslRepositorySupport implements Men
                         qMenu.upperMenuSeq.eq(qUpperMenu.menuSeq)
                         , qUpperMenu.menuSeq.eq(menuSeq)
                 )
-                .innerJoin(qMenuRole).on(
+                .leftJoin(qMenuRole).on(
                         qMenu.menuSeq.eq(qMenuRole.menuSeq)
                         //, qMenuRole.menuSkillCode.eq(ServiceCode.MenuSkillEnumCode.LIST.toString())
                 ).fetchJoin()
-                .innerJoin(qAuthMenuRole).on(
+                .leftJoin(qAuthMenuRole).on(
                         qMenuRole.menuRoleSeq.eq(qAuthMenuRole.menuRoleSeq)
                         , qAuthMenuRole.authSeq.eq(authSeq)
                 ).fetchJoin()

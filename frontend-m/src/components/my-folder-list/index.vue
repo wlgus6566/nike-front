@@ -43,14 +43,14 @@
 <script>
 export default {
     name: 'my-folder-list',
-    props: ['folderListData'],
+    props: ['folderListData', 'mypageYn'],
     mounted() {},
     methods: {
         setUrl(item) {
             if (item.topMenuCode) {
                 return `/${item.topMenuCode}/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
             } else {
-                return `/report/detail/${item.folderSeq}`.toLocaleLowerCase();
+                return `/report/detail/${item.folderSeq}`.toLocaleLowerCase()+'?mypageYn='+this.mypageYn;
             }
         },
     },

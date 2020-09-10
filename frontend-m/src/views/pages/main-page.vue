@@ -142,7 +142,7 @@
 <script>
 import { getMain } from '@/api/main';
 import { getCalendarEachList, getTodayCalendar } from '@/api/calendar/';
-import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper';
+import { directive, Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
 
 import FullCalendar from '@fullcalendar/vue';
@@ -181,7 +181,7 @@ export default {
                 // dateClick: this.handleDateClick,
                 dateClick: this.handleDateClick,
                 moreLinkClick: this.calClickEvent,
-                height: 410,
+                height: 350,
                 events: [],
                 dayMaxEventRows: true,
                 timeGrid: {
@@ -355,13 +355,13 @@ export default {
                 let tarnsformContents;
                 if (item.calendarSectionCode === 'EDUCATION') {
                     className = 'edu';
-                    tarnsformContents = '[교육] '+item.scheduleName;
+                    tarnsformContents = '[교육] ' + item.scheduleName;
                 } else if (item.calendarSectionCode === 'CAMPAIGN') {
                     className = 'campaign';
-                    tarnsformContents = '[캠페인] '+item.scheduleName;
+                    tarnsformContents = '[캠페인] ' + item.scheduleName;
                 } else {
                     className = 'official';
-                    tarnsformContents = '[기타 교육일정] '+item.scheduleName;
+                    tarnsformContents = '[기타 교육일정] ' + item.scheduleName;
                 }
                 this.calendarOptions.events.push({
                     ...item,

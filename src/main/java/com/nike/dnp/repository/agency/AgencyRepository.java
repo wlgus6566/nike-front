@@ -28,7 +28,7 @@ public interface AgencyRepository extends JpaRepository<Agency, Long> {
      * @since 2020. 7. 20. 오후 12:08:03
      * @implNote
      */
-    List<Agency> findAllByUseYn(String useYn);
+    List<Agency> findAllByUseYnOrderByAgencyNameAsc(String useYn);
 
     /**
      * Find by id and use yn agency.

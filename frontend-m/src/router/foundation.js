@@ -1,10 +1,19 @@
 import { pages } from '@/utils/global-methods';
+import store from '@/store';
 
 const routes = [
     {
         path: '/foundation',
         component: pages('root'),
-        redirect: '/foundation/vms',
+        redirect: () => {
+            const depth1Idx = store.state.menuData.findIndex(
+                el => el.menuCode === 'FOUNDATION'
+            );
+            const depth2Idx = store.state.gnbMenuListData[
+                depth1Idx
+            ].menus.findIndex(el => el.listYn === 'Y');
+            return store.state.menuData[depth1Idx].menus[depth2Idx].menuPathUrl;
+        },
         children: [
             {
                 path: 'vms',
@@ -63,7 +72,7 @@ const routes = [
                 beforeEnter: (to, from, next) => {
                     const menuCodeArr = ['vms', 'ekin', 'digital', 'rb'];
                     const findMenuCode = menuCodeArr.findIndex(
-                        (el) => el === to.params.pathMatch
+                        el => el === to.params.pathMatch
                     );
                     if (findMenuCode !== -1) {
                         to.meta.menuCode = menuCodeArr[findMenuCode];
