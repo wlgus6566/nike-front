@@ -20,7 +20,6 @@
                     :groupTreeOpen="groupTreeOpen"
                     :groupTreeAddItem="groupTreeAddItem"
                     :depth="0"
-                    :checks="checks"
                 />
             </div>
         </el-scrollbar>
@@ -93,7 +92,9 @@ export default {
     props: ['visible', 'checks', 'menuCode'],
     methods: {
         dataInit(checks) {
-            this.groupTreeData[0].subAuths = checks;
+            console.log(123123);
+            console.log(checks);
+            this.groupTreeData[0].subAuths = [...checks];
         },
         groupTreeDataCheckUpdate(arr, seq, YN) {
             arr.forEach((el) => {
@@ -116,21 +117,8 @@ export default {
             });
         },
 
-        async getAuthList(menuCode) {
-            try {
-                const topMenuCode = this.$route.meta.topMenuCode;
-                const { data: response } = await getContentsAuthList(
-                    topMenuCode,
-                    menuCode
-                );
-                this.groupTreeData[0].subAuths = response;
-                this.checksUpdate();
-            } catch (error) {
-                console.error(error);
-            }
-        },
         checksUpdate() {
-            this.$emit('checksUpdate', this.groupTreeData);
+            this.$emit('checksUpdate', this.groupTreeData[0].subAuths);
         },
     },
     components: { GroupTreeListTable },

@@ -56,10 +56,20 @@
                     v-html="title"
                 />
                 <div class="btn-box" v-if="$route.meta.btn">
-                    <button type="button" class="btn-txt" @click="delFn">
+                    <button
+                        type="button"
+                        class="btn-txt"
+                        @click="delFn"
+                        v-if="folderAuthCheck('DELETE')"
+                    >
                         삭제
                     </button>
-                    <button type="button" class="btn-txt" @click="modiFn">
+                    <button
+                        type="button"
+                        class="btn-txt"
+                        @click="modiFn"
+                        v-if="folderAuthCheck('CREATE')"
+                    >
                         수정
                     </button>
                 </div>
@@ -72,11 +82,13 @@
     </header>
 </template>
 <script>
+import { authCheck } from '@/utils/authCheck';
 import NavItem from '@/components/app-header/nav-item';
 import { deleteReport } from '@/api/report';
 
 export default {
     name: 'headerIndex',
+    mixins: [authCheck],
     data() {
         return {
             title: '',
@@ -160,7 +172,7 @@ export default {
         tabMenuFn() {
             if (!this.$store.state.menuData) return;
             const titleValue = this.$route.path.split('/')[1];
-            this.tabMenuData = this.$store.state.menuData.filter((el) => {
+            this.tabMenuData = this.$store.state.menuData.filter(el => {
                 if (titleValue.toUpperCase() === el.menuCode) {
                     return el.menuPathUrl === '/' + titleValue;
                 } else {
@@ -170,7 +182,7 @@ export default {
             this.tabMenuData =
                 this.tabMenuData.length === 0 ? null : this.tabMenuData[0];
             if (this.$route.meta.depth) {
-                const menu = this.tabMenuData.menus.filter((el) => {
+                const menu = this.tabMenuData.menus.filter(el => {
                     return el.menuPathUrl === this.$route.meta.depth;
                 });
                 this.tabMenuData = menu.length === 0 ? null : menu[0];

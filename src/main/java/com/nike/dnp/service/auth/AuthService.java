@@ -352,46 +352,46 @@ public class AuthService {
             if ("HOME".equals(upperMenu.getMenuCode())) {
                 upperMenu.setListYn("Y");
                 menus.add(upperMenu);
+
             } else if ("N".equals(upperMenu.getManagementYn())) {
+                // MYPAGE ~
                 final List<MenuReturnDTO> lowerMenus = menuRepository.getSubMenus(upperMenu.getMenuSeq(), 2L);
                 if (!lowerMenus.isEmpty()) {
                     for (final MenuReturnDTO lowerMenu : lowerMenus) {
+                        List<MenuReturnDTO> bottomMenus;
                         if ("Y".equals(lowerMenu.getManagementYn())) {
-                            final List<MenuReturnDTO> bottomMenus = menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L);
-                            for (final MenuReturnDTO bottomMenu : bottomMenus) {
-                                final List<MenuRole> menuRoles = (authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, bottomMenu.getMenuSeq()));
-                                int cnt = 0;
-                                for (MenuRole menuRole : menuRoles) {
+                            bottomMenus = menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L);
+                            for (MenuReturnDTO bottomMenu : bottomMenus) {
+                                final List<MenuRole> bottomMenuRoles = (authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, bottomMenu.getMenuSeq()));
+                                int bottomCount = 0;
+                                for (MenuRole menuRole : bottomMenuRoles) {
                                     if (menuRole.getMenuSkillCode().equals(ServiceCode.MenuSkillEnumCode.LIST.toString())) {
-                                        cnt++;
+                                        bottomCount++;
                                     }
                                 }
-                                bottomMenu.setListYn(cnt > 0 ? "Y" : "N");
-                                bottomMenu.setMenuRoles(menuRoles);
+                                bottomMenu.setListYn(bottomCount > 0 ? "Y" : "N");
                             }
-                            lowerMenu.setMenus(bottomMenus);
                         } else {
-                            lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
+                            bottomMenus = menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L);
+                            for (MenuReturnDTO bottomMenu : bottomMenus) {
+                                bottomMenu.setListYn("Y");
+                            }
                         }
+
+                        lowerMenu.setMenus(bottomMenus);
                         lowerMenu.setListYn("Y");
                         lowerMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, lowerMenu.getMenuSeq()));
+
+
                     }
                     upperMenu.setMenus(lowerMenus);
-                    upperMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, upperMenu.getMenuSeq()));
                     upperMenu.setListYn("Y");
+                    upperMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, upperMenu.getMenuSeq()));
                 }
                 menus.add(upperMenu);
             } else if ("Y".equals(upperMenu.getManagementYn())) {
+                // MYPAGE 외에 1depth 메뉴들 ~
                 final List<MenuReturnDTO> lowerMenus = menuRepository.getLowerMenus(authSeq, upperMenu.getMenuSeq(), 2L);
-
-                if (upperMenu.getMenuSeq().equals(6L)) {
-                    System.out.println("======================================================");
-                    for (final MenuReturnDTO lowerMenu : lowerMenus) {
-                        System.out.println(lowerMenu.getMenuName());
-                    }
-                    System.out.println("======================================================");
-                }
-
                 if (!lowerMenus.isEmpty()) {
                     for (final MenuReturnDTO lowerMenu : lowerMenus) {
                         final List<MenuRole> lowerMenuRoles = (authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, lowerMenu.getMenuSeq()));
@@ -402,29 +402,40 @@ public class AuthService {
                             }
                         }
 
+                        List<MenuReturnDTO> bottomMenus;
                         if ("Y".equals(lowerMenu.getManagementYn())) {
-                            final List<MenuReturnDTO> bottomMenus = menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L);
-                            for (final MenuReturnDTO bottomMenu : bottomMenus) {
+                            bottomMenus = menuRepository.getLowerMenus(authSeq, lowerMenu.getMenuSeq(), 3L);
+                            for (MenuReturnDTO bottomMenu : bottomMenus) {
                                 final List<MenuRole> bottomMenuRoles = (authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, bottomMenu.getMenuSeq()));
-                                int cnt2 = 0;
+                                int bottomCount = 0;
                                 for (MenuRole menuRole : bottomMenuRoles) {
                                     if (menuRole.getMenuSkillCode().equals(ServiceCode.MenuSkillEnumCode.LIST.toString())) {
-                                        cnt2++;
+                                        bottomCount++;
                                     }
                                 }
-                                bottomMenu.setListYn(cnt2 > 0 ? "Y" : "N");
-                                bottomMenu.setMenuRoles(bottomMenuRoles);
+                                bottomMenu.setListYn(bottomCount > 0 ? "Y" : "N");
                             }
-                            lowerMenu.setMenus(bottomMenus);
                         } else {
-                            lowerMenu.setMenus(menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L));
+                            bottomMenus = menuRepository.getSubMenus(lowerMenu.getMenuSeq(), 3L);
+                            for (MenuReturnDTO bottomMenu : bottomMenus) {
+                                bottomMenu.setListYn("Y");
+                            }
                         }
+
+                        lowerMenu.setMenus(bottomMenus);
                         lowerMenu.setListYn(cnt1 > 0 ? "Y" : "N");
                         lowerMenu.setMenuRoles(lowerMenuRoles);
+
                     }
                     upperMenu.setMenus(lowerMenus);
                     upperMenu.setMenuRoles(authMenuRoleRepository.findByAuthMenuRoleJoinMenuRole(authSeq, upperMenu.getMenuSeq()));
-                    upperMenu.setListYn("Y");
+
+                    for (final MenuReturnDTO lowerMenu : lowerMenus) {
+                        if (lowerMenu.getListYn().equals("Y")) {
+                            upperMenu.setListYn("Y");
+                            break;
+                        }
+                    }
                 }
                 menus.add(upperMenu);
             }

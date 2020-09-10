@@ -1,6 +1,6 @@
 <template>
     <div class="main-fc">
-        <div class="main-visual">
+        <div class="main-visual" >
             <span class="thumbnail">
                 <img :src="mainVisual.mobileImageUrl" alt="" />
             </span>
@@ -140,9 +140,9 @@
     </div>
 </template>
 <script>
-import { getMain } from '@/api/main';
-import { getCalendarEachList, getTodayCalendar } from '@/api/calendar/';
-import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper';
+import {getMain} from '@/api/main';
+import {getCalendarEachList, getTodayCalendar} from '@/api/calendar/';
+import {directive, Swiper, SwiperSlide} from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
 
 import FullCalendar from '@fullcalendar/vue';
@@ -314,7 +314,7 @@ export default {
                 const a = document.createElement('a');
                 const txt = document.createTextNode('자세히 보기');
                 console.log(tdWidth);
-                modal.style.marginLeft = `${tdWidth}px`;
+                //modal.style.marginLeft = `${tdWidth}px`;
                 a.href =
                     '/information/calendar?yyyyMm=' +
                     this.yyyyMm +
@@ -404,7 +404,7 @@ export default {
 <style scoped>
 ::v-deep .fc .fc-more-popover {
     margin-top: 41px;
-    transform: translateX(-50%);
+    /*transform: translateX(-50%);*/
 }
 ::v-deep .fc {
     margin: 15px -20px 0;

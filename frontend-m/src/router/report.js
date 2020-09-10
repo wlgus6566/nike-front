@@ -5,10 +5,13 @@ const routes = [
         path: '/report',
         component: pages('report/index.vue'),
         redirect: () => {
-            const idx = store.state.menuData.findIndex(
+            const depth1Idx = store.state.menuData.findIndex(
                 el => el.menuCode === 'REPORT'
             );
-            return store.state.menuData[idx].menus[0].menuPathUrl;
+            const depth2Idx = store.state.gnbMenuListData[
+                depth1Idx
+            ].menus.findIndex(el => el.listYn === 'Y');
+            return store.state.menuData[depth1Idx].menus[depth2Idx].menuPathUrl;
         },
         children: [
             {
@@ -17,6 +20,8 @@ const routes = [
                 meta: {
                     layout: 'Default',
                     historyBack: null,
+                    topMenuCode: 'REPORT',
+                    menuCode: 'REPORT_UPLOAD',
                 },
             },
             {
@@ -28,6 +33,8 @@ const routes = [
                     title: 'REPORT <span class="ko">업로드 수정</span>',
                     topCode: 'report',
                     historyBack: null,
+                    topMenuCode: 'REPORT',
+                    menuCode: 'REPORT_MANAGE',
                 },
             },
             {
@@ -36,6 +43,8 @@ const routes = [
                 meta: {
                     layout: 'Default',
                     historyBack: null,
+                    topMenuCode: 'REPORT',
+                    menuCode: 'REPORT_MANAGE',
                 },
             },
             {
@@ -44,6 +53,8 @@ const routes = [
                 meta: {
                     layout: 'Default',
                     topCode: 'report',
+                    topMenuCode: 'REPORT',
+                    menuCode: 'REPORT_MANAGE',
                     detail: true,
                     btn: true,
                 },

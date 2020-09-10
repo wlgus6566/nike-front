@@ -1,10 +1,19 @@
 import { pages } from '@/utils/global-methods';
+import store from '@/store';
 
 const routes = [
     {
         path: '/toolkit',
         component: pages('root'),
-        redirect: '/toolkit/vms',
+        redirect: () => {
+            const depth1Idx = store.state.menuData.findIndex(
+                el => el.menuCode === 'TOOLKIT'
+            );
+            const depth2Idx = store.state.gnbMenuListData[
+                depth1Idx
+            ].menus.findIndex(el => el.listYn === 'Y');
+            return store.state.menuData[depth1Idx].menus[depth2Idx].menuPathUrl;
+        },
         children: [
             {
                 path: 'vms',
@@ -63,7 +72,7 @@ const routes = [
                 beforeEnter: (to, from, next) => {
                     const menuCodeArr = ['vms', 'ekin', 'social', 'rb'];
                     const findMenuCode = menuCodeArr.some(
-                        (el) => el === to.params.pathMatch
+                        el => el === to.params.pathMatch
                     );
                     if (findMenuCode) {
                         to.meta.menuCode = menuCodeArr[findMenuCode];

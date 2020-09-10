@@ -1,11 +1,22 @@
 import { pages } from '@/utils/global-methods';
+import store from '@/store';
 
 const routes = [
     {
         path: '/order',
         component: pages('product'),
         meta: { layout: 'Default', aside: 'Order', title: '부자재 주문' },
-        redirect: '/order/subsidiary/operating',
+        redirect: () => {
+            const depth1Idx = store.state.gnbMenuListData.findIndex(
+                (el) => el.menuCode === 'ORDER'
+            );
+            const depth2Idx = store.state.gnbMenuListData[
+                depth1Idx
+            ].menus.findIndex((el) => el.listYn === 'Y');
+
+            return store.state.gnbMenuListData[depth1Idx].menus[depth2Idx]
+                .menuPathUrl;
+        },
         children: [
             {
                 path: 'registration',

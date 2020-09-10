@@ -20,7 +20,14 @@
                             @keyup.enter="search()"
                             v-model="keyword"
                         />
-                        <button type="button" class="btn-del" v-if="keyword" @click="keywordDel">삭제</button>
+                        <button
+                            type="button"
+                            class="btn-del"
+                            v-if="keyword"
+                            @click="keywordDel"
+                        >
+                            삭제
+                        </button>
                         <button type="submit" class="search">
                             <span>검색</span>
                         </button>
@@ -38,8 +45,11 @@
                     v-for="item in reportList"
                     :key="item.reportSeq"
                 >
-                    <router-link :to="`/report/detail/${item.reportSeq}`">
+                    <router-link :to="setUrl(item)">
                         <div class="thumbnail">
+                            <!-- <span class="auth" v-if="item.detailAuthYn === 'N'">
+                                <i></i>권한 없음
+                            </span>-->
                             <img :src="item.imageFilePhysicalName" alt="" />
                         </div>
                         <div class="info-box">
@@ -95,7 +105,7 @@ export default {
     name: 'management',
     data() {
         return {
-            reset : false,
+            reset: false,
             loadingData: false,
             page: 0,
             size: 10,
@@ -165,12 +175,25 @@ export default {
         },
     },
     methods: {
-        keywordDel(){
-          this.keyword = null;
-          if(this.reset){
-            this.initRepoerProduct();
-            this.reset = false
-          }
+        setUrl(item) {
+            /* if (item.detailAuthYn === 'N') {
+                return `${this.$route.fullPath}`;
+            } else {
+                return `/report/detail/${item.reportSeq}`;
+            }*/
+            return `/report/detail/${item.reportSeq}`;
+        },
+        /*alertMsg(item) {
+            if (item.detailAuthYn === 'N') {
+                alert('접근 권한이 없습니다.');
+            }
+        },*/
+        keywordDel() {
+            this.keyword = null;
+            if (this.reset) {
+                this.initRepoerProduct();
+                this.reset = false;
+            }
         },
         initRepoerProduct() {
             this.totalPage = null;
@@ -255,7 +278,7 @@ export default {
         },
         search() {
             this.searchIsActive = true;
-            if(this.keyword){
+            if (this.keyword) {
                 this.reset = true;
             }
             if (!!this.keyword) {
