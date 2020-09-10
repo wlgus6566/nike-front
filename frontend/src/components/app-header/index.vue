@@ -2,14 +2,25 @@
     <div class="inner">
         <h1 class="gnb-logo">
             <router-link exact to="/">
-                <!--                <img-->
-                <!--                    alt=""-->
-                <!--                    class="logo1"-->
-                <!--                    src="@/assets/images/logo-nike2.svg"-->
-                <!--                />-->
-                <img alt="" class="logo2" src="@/assets/images/logo-nike.svg" />
+                <img
+                    alt=""
+                    class="logo-nike-space"
+                    src="@/assets/images/logo-nike-space.svg"
+                />
+                <img
+                    alt=""
+                    class="logo-nike"
+                    src="@/assets/images/logo-nike.svg"
+                />
             </router-link>
         </h1>
+        <div class="back">
+            <img
+                alt=""
+                class="logo-nike"
+                src="@/assets/images/icon-lnb-back.svg"
+            />
+        </div>
         <nav>
             <navWrap />
         </nav>
@@ -26,23 +37,4 @@ export default {
     components: { navWrap },
 };
 </script>
-<style>
-.gnb-logo {
-}
-/*.gnb-logo {*/
-/*    width: 75px;*/
-/*    height: 88px;*/
-/*    !*background: url('../../assets/images/logo-nike2.svg') 0 0 no-repeat;*!*/
-/*}*/
-/*.gnb-logo img {*/
-/*    transition: opacity 0.2s ease-in;*/
-/*}*/
-/*.gnb-logo .logo1 {*/
-/*    opacity: 1;*/
-/*}*/
-/*.gnb-logo .logo2 {*/
-/*    margin-left: 8px;*/
-/*    !*display: none;*!*/
-/*    opacity: 0;*/
-/*}*/
-</style>
+<style scoped></style>
