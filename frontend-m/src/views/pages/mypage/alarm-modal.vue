@@ -54,7 +54,7 @@ export default {
             if (typeCdLow === 'report') {
                 this.$router.push(`/report/detail/${item.folderSeq}`);
             } else if (typeCdLow === 'asset') {
-                this.$emit('assetClick');
+                alert('해당 메뉴는 모바일 버전에서 제공되지 않습니다. 자세한 내용은 PC로 접속 시 확인할 수 있습니다.');
             } else {
                 let menuCodeLow = item.menuCode.toLowerCase().trim();
                 this.$router.push(
