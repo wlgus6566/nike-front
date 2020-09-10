@@ -2512,7 +2512,7 @@
     border: 1px solid #ccc !important;
 }
 .fc .fc-more-popover:before {
-    position: absolute;
+    /*position: absolute;
     left: 50%;
     transform: translateX(-50%);
     top: -5px;
@@ -2522,7 +2522,7 @@
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-bottom: 5px solid #ccc;
-    border-top: 0;
+    border-top: 0;*/
 }
 .fc.fc-theme-standard .fc-popover-header {
     position: relative;

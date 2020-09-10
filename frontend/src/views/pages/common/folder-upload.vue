@@ -239,7 +239,12 @@
 import thumbnail from '@/components/thumbnail/index';
 import FileSettings from '@/components/file-settings/index.vue';
 import ModalAuth from '@/views/pages/common/modal-auth';
-import { getContentsView, postContents, putContents } from '@/api/contents';
+import {
+    getContentsAuthList,
+    getContentsView,
+    postContents,
+    putContents,
+} from '@/api/contents';
 import { joinInit, joinDelete } from '@/api/join';
 import bus from '@/utils/bus';
 import { getLoginUpdate } from '@/api/mypage';
@@ -311,9 +316,15 @@ export default {
                 campaignPeriodSectionCode: 'SELECT',
                 checks: [
                     {
+                        authDepth: 0,
+                        authName: '전체',
                         authSeq: 0,
+                        checkBoxYn: 'N',
                         detailAuthYn: 'N',
                         emailReceptionYn: 'N',
+                        roleType: null,
+                        subAuths: [],
+                        viewYn: null,
                     },
                 ],
                 contentsFileList: [],
@@ -377,9 +388,7 @@ export default {
     },
     watch: {
         menuCode(val) {
-            if (!this.$route.params.id) {
-                this.$refs.modalAuth.getAuthList(val);
-            }
+            this.getAuthList(val, this.$route.params.id);
         },
         '$store.state.gnbMenuListData'() {
             this.pageMenuCodeAuth(this.$route.meta.topMenuCode, 'CREATE');
@@ -415,7 +424,7 @@ export default {
                 this.joinOccupyFn();
             }, 1000 * 60 * 4);
         }
-        this.detailReset();
+        //this.detailReset();
     },
     deactivated() {
         if (this.$route.params.id) {
@@ -424,6 +433,21 @@ export default {
         }
     },
     methods: {
+        async getAuthList(menuCode, seq) {
+            try {
+                const topMenuCode = this.$route.meta.topMenuCode;
+                const { data: response } = await getContentsAuthList(
+                    topMenuCode,
+                    menuCode,
+                    {
+                        contentsSeq: seq,
+                    }
+                );
+                this.folderDetail.checks = response;
+            } catch (error) {
+                console.error(error);
+            }
+        },
         detailReset() {
             this.folderDetail = {
                 campaignBeginDt: null,
@@ -431,9 +455,15 @@ export default {
                 campaignPeriodSectionCode: 'SELECT',
                 checks: [
                     {
+                        authDepth: 0,
+                        authName: '전체',
                         authSeq: 0,
+                        checkBoxYn: 'N',
                         detailAuthYn: 'N',
                         emailReceptionYn: 'N',
+                        roleType: null,
+                        subAuths: [],
+                        viewYn: null,
                     },
                 ],
                 contentsFileList: [],
@@ -530,6 +560,7 @@ export default {
         },
         ModalAuthOpen() {
             this.visible.ModalAuth = true;
+            this.$refs.modalAuth.dataInit(this.folderDetail.checks);
         },
         uploadFiles() {
             if (!this.folderDetail.imageBase64) {
@@ -564,7 +595,7 @@ export default {
             this.$refs.fileSet.uploadFiles();
         },
         checksUpdate(checksArr) {
-            this.folderDetail.checks = checksArr[0].subAuths;
+            this.folderDetail.checks = checksArr;
             this.visible.ModalAuth = false;
         },
         async submitForm() {

@@ -1,10 +1,21 @@
 import { pages } from '@/utils/global-methods';
+import store from '@/store';
 
 const routes = [
     {
         path: '/asset',
         component: pages('root'),
-        redirect: '/asset/all',
+        redirect: () => {
+            const depth1Idx = store.state.gnbMenuListData.findIndex(
+                (el) => el.menuCode === 'ASSET'
+            );
+            const depth2Idx = store.state.gnbMenuListData[
+                depth1Idx
+            ].menus.findIndex((el) => el.listYn === 'Y');
+
+            return store.state.gnbMenuListData[depth1Idx].menus[depth2Idx]
+                .menuPathUrl;
+        },
         children: [
             {
                 path: 'all',

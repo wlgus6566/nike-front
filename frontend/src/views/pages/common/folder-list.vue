@@ -56,7 +56,7 @@ import { getContents } from '@/api/contents.js';
 
 export default {
     mixins: [authCheck],
-    name: 'folder-list',
+    name: 'folderList',
     watch: {
         'listSortSelect.value'(val) {
             if (val === '') {
@@ -201,6 +201,7 @@ export default {
     },
     created() {
         this.initFetchData();
+        this.uploadAuth = this.folderAuthCheck('CREATE');
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {

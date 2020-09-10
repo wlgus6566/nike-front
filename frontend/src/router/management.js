@@ -6,10 +6,15 @@ const routes = [
         path: '/management',
         component: pages('management'),
         redirect: () => {
-            const idx = store.state.gnbMenuListData.findIndex(
+            const depth1Idx = store.state.gnbMenuListData.findIndex(
                 (el) => el.menuCode === 'MANAGEMENT'
             );
-            return store.state.gnbMenuListData[idx].menus[0].menuPathUrl;
+            const depth2Idx = store.state.gnbMenuListData[
+                depth1Idx
+            ].menus.findIndex((el) => el.listYn === 'Y');
+
+            return store.state.gnbMenuListData[depth1Idx].menus[depth2Idx]
+                .menuPathUrl;
         },
         children: [
             {
