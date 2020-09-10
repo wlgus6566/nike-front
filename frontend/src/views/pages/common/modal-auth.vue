@@ -34,7 +34,6 @@
 
 <script>
 import GroupTreeListTable from '@/components/group-tree/tree-list-table';
-import { getContentsAuthList } from '@/api/contents';
 import bus from '@/utils/bus';
 export default {
     name: 'ModalAuth',
@@ -91,11 +90,48 @@ export default {
     },
     props: ['visible', 'checks', 'menuCode'],
     methods: {
-        dataInit(checks) {
-            console.log(123123);
-            console.log(checks);
-            this.groupTreeData[0].subAuths = [...checks];
+        copyObj(obj) {
+            let copy = {};
+            if (Array.isArray(obj)) {
+                copy = obj.slice().map((v) => {
+                    return this.copyObj(v);
+                });
+            } else if (typeof obj === 'object' && obj !== null) {
+                for (let attr in obj) {
+                    if (obj.hasOwnProperty(attr)) {
+                        copy[attr] = this.copyObj(obj[attr]);
+                    }
+                }
+            } else {
+                copy = obj;
+            }
+            return copy;
         },
+        dataInit() {
+            this.groupTreeData = [
+                {
+                    authDepth: 0,
+                    authName: '전체',
+                    authSeq: 0,
+                    checkBoxYn: 'N',
+                    detailAuthYn: 'N',
+                    emailReceptionYn: 'N',
+                    roleType: null,
+                    subAuths: this.copyObj(this.checks),
+                    viewYn: null,
+                },
+            ];
+        },
+
+        childYN(arr, value, YN) {
+            arr.forEach((el) => {
+                el[YN] = value;
+                if (el.subAuths) {
+                    this.childYN(el.subAuths, value, YN);
+                }
+            });
+        },
+
         groupTreeDataCheckUpdate(arr, seq, YN) {
             arr.forEach((el) => {
                 if (el.authSeq === seq) {
@@ -103,15 +139,30 @@ export default {
                         el[YN] = 'N';
                         if (YN === 'detailAuthYn') {
                             el['emailReceptionYn'] = 'N';
+                            if (el.subAuths) {
+                                this.childYN(
+                                    el.subAuths,
+                                    'N',
+                                    'emailReceptionYn'
+                                );
+                            }
+                        }
+                        if (el.subAuths) {
+                            this.childYN(el.subAuths, 'N', YN);
                         }
                     } else {
                         el[YN] = 'Y';
                         if (YN === 'emailReceptionYn') {
                             el['detailAuthYn'] = 'Y';
+                            if (el.subAuths) {
+                                this.childYN(el.subAuths, 'Y', 'detailAuthYn');
+                            }
+                        }
+                        if (el.subAuths) {
+                            this.childYN(el.subAuths, 'Y', YN);
                         }
                     }
-                }
-                if (el.subAuths) {
+                } else if (el.subAuths) {
                     this.groupTreeDataCheckUpdate(el.subAuths, seq, YN);
                 }
             });

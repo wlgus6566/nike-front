@@ -47,8 +47,10 @@ function delContentsBasket(contentsBasketSeq) {
 }
 
 // 컨텐츠 권한 목록 조회
-function getContentsAuthList(topMenuCode, menuCode) {
-    return contents.get(`/${topMenuCode}/${menuCode}/authList`);
+function getContentsAuthList(topMenuCode, menuCode, params) {
+    return contents.get(`/${topMenuCode}/${menuCode}/authList`, {
+        params: params,
+    });
 }
 
 // 컨텐츠 권한 목록 조회
