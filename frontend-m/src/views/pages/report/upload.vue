@@ -16,7 +16,6 @@
                             <input
                                 type="file"
                                 ref="fileInput"
-                                accept="image/*"
                                 multiple
                                 @change="uploadIptChange"
                             />
@@ -41,8 +40,16 @@
                                 <span class="thumbnail">
                                     <img
                                         :src="item.thumbnailFilePhysicalName"
-                                        alt="샘플이미지"
+                                        :alt="item.thumbnailFileName"
+                                        v-if="item.thumbnailFilePhysicalName"
                                     />
+                                    <span
+                                        :class="[
+                                        `extension-${item.fileExtension.toLowerCase()}`,
+                                        ]"
+                                        v-else
+                                     >
+                                    </span>
                                 </span>
                                 <button
                                     type="button"
@@ -138,9 +145,6 @@ export default {
         thumbnail,
     },
     created() {
-        if (this.$route.params.id) {
-            this.getReportDetailView();
-        }
     },
     activated() {
         this.reportDetailData = {
@@ -216,6 +220,7 @@ export default {
         },
         // 리포트 상세 파일 데이터
         async getReportFileData() {
+            console.log("getReportFileData");
             try {
                 const {
                     data: { data: response },
@@ -223,12 +228,14 @@ export default {
                     page: 0,
                     size: 1000,
                 });
+
                 this.reportDetailData.reportFileSaveDTOList = response.content;
                 if (this.reportDetailData.reportFileSaveDTOList.length > 0) {
                     this.uploadFileViewer = true;
                     this.uploadFileSize = this.reportDetailData.reportFileSaveDTOList.length;
                 }
-              this.reportTempFileList.splice(0, this.reportDetailData.reportFileSaveDTOList.length);
+                console.log(this.reportDetailData.reportFileSaveDTOList.length);
+                this.reportTempFileList.splice(0, this.reportDetailData.reportFileSaveDTOList.length);
                 this.fileOrderSet();
             } catch (error) {
                 console.error(error);
@@ -260,14 +267,18 @@ export default {
             mergeArray.forEach(el => {
                 let reader = new FileReader();
                 reader.onloadend = e => {
-                    //this.reportDetailData.reportFileSaveDTOList[this.reportDetailData.reportFileSaveDTOList.length-1].thumbnailFilePhysicalName = e.target.result;
+                    let thumbnailImage = '';
+                    if(el.type.indexOf('image')>-1){
+                        thumbnailImage = e.target.result;
+                    }
+                    console.log(thumbnailImage);
                     this.reportDetailData.reportFileSaveDTOList.push({
-                        fileOrder: this.reportDetailData.reportFileSaveDTOList
-                            .length,
+                        fileOrder: this.reportDetailData.reportFileSaveDTOList.length,
                         fileName: el.name,
                         fileSize: el.size,
                         fileContentType: el.type,
-                        thumbnailFilePhysicalName: e.target.result,
+                        fileExtension: el.name.split('.').pop(),
+                        thumbnailFilePhysicalName: thumbnailImage,
                         progress: 0,
                     });
 
