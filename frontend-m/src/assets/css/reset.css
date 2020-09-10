@@ -337,14 +337,3 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     box-shadow: 0 0 0 100px white inset !important;
 }
-/*video::-webkit-media-controls {*/
-/*    display: none !important;*/
-/*}*/
-video::-webkit-media-controls-start-playback-button {
-    display: none !important;
-    -webkit-appearance: none;
-}
-/*video::-webkit-media-controls-play-button {*/
-/*    display: none !important;*/
-/*    -webkit-appearance: none;*/
-/*}*/

@@ -146,7 +146,7 @@ export default {
         },
         headerAni(headerActiveNav) {
             const header = document.querySelector('header');
-            const logo = header.querySelector('h1');
+            const logo = header.querySelector('.gnb-logo');
             const bg = header.querySelector('.header-bg');
             const nav = header.querySelector('nav');
             const anchor = headerActiveNav
@@ -180,6 +180,13 @@ export default {
                     backgroundImage:
                         'linear-gradient(to right, rgba(255,255,255,1) 100%, rgba(0,0,0,0) 100%)',
                 })
+                // .set(logo.querySelector('.logo1'), {
+                //     opacity: '0',
+                // })
+                // .set(logo.querySelector('.logo2'), {
+                //     display: 'block',
+                //     opacity: '1',
+                // })
                 .to(
                     logo,
                     0.5,

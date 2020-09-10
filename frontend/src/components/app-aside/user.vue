@@ -49,8 +49,8 @@
                             >
                                 <li
                                     class="alarm-item active"
-                                    v-for="item in alarmDataListCont"
-                                    :key="item.alarmSeq"
+                                    v-for="(item, index) in alarmDataListCont"
+                                    :key="index"
                                     @click="delAlarmData(item.alarmSeq)"
                                 >
                                     <router-link
@@ -156,7 +156,11 @@ export default {
     components: {
         Loading,
     },
-    watch: {},
+    watch: {
+        $route(to, from) {
+            this.initFetchData();
+        },
+    },
     computed: {
         userNickname() {
             return this.$store.state.nick || getUserNickFromCookie();
@@ -168,6 +172,7 @@ export default {
             return this.$store.state.authName || getAuthNameFromCookie();
         },
     },
+    activated() {},
     methods: {
         openAlarm() {
             if (this.alarmDataList.content.length !== 0) {
@@ -191,6 +196,10 @@ export default {
             this.$router.push('/login');
         },
         initFetchData() {
+            this.totalPage = null;
+            this.page = 0;
+            this.alarmDataListCont = null;
+            console.log(this.page);
             this.alarmData();
         },
         //클릭시 업로드 한 폴더 리스트 다시 불러오기
@@ -221,11 +230,12 @@ export default {
         // 알람목록
         async alarmData(infinite) {
             this.loadingData = true;
+            console.log(this.page);
             try {
                 const {
                     data: { data: response },
                 } = await getAlarm({
-                    page: this.page,
+                    page: 0,
                     size: this.size,
                 });
                 this.totalPage = response.totalPages;
