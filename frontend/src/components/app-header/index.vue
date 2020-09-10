@@ -1,8 +1,13 @@
 <template>
     <div class="inner">
-        <h1>
+        <h1 class="gnb-logo">
             <router-link exact to="/">
-                <img alt="" src="@/assets/images/logo-nike.svg" />
+                <img
+                    alt=""
+                    class="logo1"
+                    src="@/assets/images/logo-nike2.svg"
+                />
+                <img alt="" class="logo2" src="@/assets/images/logo-nike.svg" />
             </router-link>
         </h1>
         <nav>
@@ -21,4 +26,17 @@ export default {
     components: { navWrap },
 };
 </script>
-<style scoped></style>
+<style>
+.gnb-logo {
+    /*width: 75px;*/
+    /*height: 88px;*/
+    /*background: url('../../assets/images/logo-nike2.svg') 0 0 no-repeat;*/
+}
+.gnb-logo .logo2 {
+    margin-left: 8px;
+    display: none;
+}
+.gnb-logo a {
+    display: block;
+}
+</style>
