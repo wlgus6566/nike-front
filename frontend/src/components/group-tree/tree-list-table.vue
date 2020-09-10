@@ -21,6 +21,7 @@
                         <input
                             type="checkbox"
                             :checked="item.detailAuthYn === 'Y'"
+                            :disabled="item.checkBoxYn === 'N'"
                             @click="detailAuthUpdate(item.authSeq)"
                         />
                         <i></i>
@@ -31,6 +32,7 @@
                         <input
                             type="checkbox"
                             :checked="item.emailReceptionYn === 'Y'"
+                            :disabled="item.checkBoxYn === 'N'"
                             @click="emailReceptionUpdate(item.authSeq)"
                         />
                         <i></i>

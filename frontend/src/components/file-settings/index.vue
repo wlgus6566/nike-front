@@ -322,9 +322,10 @@ export default {
                         fileExtension: '',
                     }
                 );
-
                 if (response.content && response.content.length) {
                     this.FileList = response.content;
+                } else {
+                    this.FileList = [this.defaultFileData];
                 }
 
                 this.emitFileList();
