@@ -325,9 +325,9 @@ public class ContentsController {
     @ApiOperation(value = "컨텐츠 권한 목록 조회", notes = REQUEST_CHARACTER)
     @GetMapping(name = "컨텐츠 권한 목록 조회", value = "/{topMenuCode}/{menuCode}/authList", produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<AuthReturnDTO> loadAuthList(
-            @ApiParam(name = TOP_MENU_CODE, value = TOP_MENU_VALUE, defaultValue = TOP_MENU_EXAMPLE, required = true) @PathVariable final String topMenuCode
+            @ApiParam(name = "contentsSeq", value = "콘텐츠 일련번호", defaultValue = "4") final Long contentsSeq
+            ,@ApiParam(name = TOP_MENU_CODE, value = TOP_MENU_VALUE, defaultValue = TOP_MENU_EXAMPLE, required = true) @PathVariable final String topMenuCode
             , @ApiParam(name = MENU_CODE, value = MENU_CODE_VALUE, defaultValue = "SP", required = true) @PathVariable final String menuCode
-            , @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = false) final Long contentsSeq
     ) {
         return contentsService.loadAuthList(topMenuCode, menuCode, contentsSeq);
     }
