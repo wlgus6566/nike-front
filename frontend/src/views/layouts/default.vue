@@ -180,12 +180,13 @@ export default {
                     backgroundImage:
                         'linear-gradient(to right, rgba(255,255,255,1) 100%, rgba(0,0,0,0) 100%)',
                 })
-                .set(logo.querySelector('.logo1'), {
-                    display: 'none',
-                })
-                .set(logo.querySelector('.logo2'), {
-                    display: 'block',
-                })
+                // .set(logo.querySelector('.logo1'), {
+                //     opacity: '0',
+                // })
+                // .set(logo.querySelector('.logo2'), {
+                //     display: 'block',
+                //     opacity: '1',
+                // })
                 .to(
                     logo,
                     0.5,
