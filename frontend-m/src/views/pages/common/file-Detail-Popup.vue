@@ -27,9 +27,7 @@
                                 type="button"
                                 @click="playControls(playState)"
                                 class="btn-play"
-                            >
-                                플레이
-                            </button>
+                            ></button>
                         </div>
                     </div>
 
