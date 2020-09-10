@@ -144,9 +144,10 @@ export default {
                         const response = await deleteReport(
                             this.$route.params.id
                         );
-                        if (response.data.success) {
+                        if (response.data.success && this.$route.query.mypageYn === 'Y') {
+                            await this.$router.push(`/mypage/upload`);
+                        } else if (response.data.success)
                             await this.$router.push(`/report/management`);
-                        }
                     } catch (error) {
                         console.log(error);
                     }
