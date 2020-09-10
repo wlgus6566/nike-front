@@ -329,7 +329,7 @@ public class AuthService {
         List<MenuReturnDTO> redisMenus = (List<MenuReturnDTO>) redisService.get(REDIS_ROLES_MENUS+roleType);
         if (ObjectUtils.isEmpty(redisMenus)) {
             redisMenus = this.getAuthsMenusByRoleType(this.getByRoleType(roleType).getAuthSeq());
-            //redisService.set(REDIS_ROLES_MENUS+roleType, redisMenus, 60);
+            redisService.set(REDIS_ROLES_MENUS+roleType, redisMenus, 60);
         }
         return redisMenus;
     }
