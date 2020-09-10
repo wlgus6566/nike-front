@@ -103,10 +103,10 @@
                     </a>
                 </li>
             </ul>
-            <div class="no-data" v-else>
+            <NoData v-else class="file-type">
                 <i class="icon-file"></i>
                 <p class="desc">등록된 파일이 없습니다.</p>
-            </div>
+            </NoData>
         </template>
         <fileDetailPopup
             :visible.sync="visible.modalEx"
@@ -125,6 +125,7 @@ import {
 } from '@/api/report';
 import { getUserIdFromCookie } from '@/utils/cookies';
 import fileDetailPopup from '@/views/pages/report/file-Detail-Popup';
+import NoData from '@/components/no-data/';
 
 export default {
     name: 'detail-view',
@@ -149,7 +150,8 @@ export default {
         this.fetchData();
     },
     components: {
-        fileDetailPopup: fileDetailPopup,
+        fileDetailPopup,
+        NoData,
     },
     methods: {
         closeModal() {
@@ -240,11 +242,4 @@ export default {
     },
 };
 </script>
-<style scoped>
-.no-data {
-    padding: 30px 0;
-}
-.no-data .desc {
-    color: #888;
-}
-</style>
+<style scoped></style>
