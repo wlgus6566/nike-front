@@ -201,8 +201,8 @@ export default {
     data() {
         return {
             detailData: Object,
-            beginDt: new Date(),
-            endDt: new Date(),
+            beginDt: null,
+            endDt: null,
             today: new Date(),
             calendarDialogInitData: {
                 calendarSectionCode: 'EDUCATION',
@@ -261,8 +261,8 @@ export default {
                 this.endDt = endDtDtdate;
             } else {
                 this.detailData = this.calendarDetail;
-                this.beginDt = this.today;
-                this.endDt = this.today;
+                this.beginDt = null;
+                this.endDt = null;
             }
         },
     },
