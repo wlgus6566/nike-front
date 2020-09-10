@@ -1269,7 +1269,9 @@
     letter-spacing: -0.5px;
     font-size: 14px;
 }
-
+.no-data-wrap.file-type .desc {
+    color: #888;
+}
 /* Mypage > 회원정보조회 */
 .contents.my-info {
     padding-bottom: 0;
@@ -1800,6 +1802,12 @@
 }
 .extension-ttf {
     background-position: -80px -240px !important;
+}
+.my-main-contents {
+    display: block;
+    flex-direction: inherit;
+    padding: 0;
+    flex: none;
 }
 .my-main {
     padding: 0 20px;

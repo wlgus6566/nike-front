@@ -1,7 +1,7 @@
 <template>
     <div id="wrap">
-        <Header v-if="!$route.meta.hideHeaderFooter" />
-        <section class="contents" v-if="!$route.meta.hideHeaderFooter">
+        <Header />
+        <section class="contents">
             <transition
                 mode="out-in"
                 @enter="pageEnter"
@@ -11,15 +11,7 @@
                 <router-view></router-view>
             </transition>
         </section>
-
-        <transition
-            mode="out-in"
-            @enter="pageEnter"
-            @leave="pageLeave"
-            v-else>
-            <router-view></router-view>
-        </transition>
-        <Footer v-if="!$route.meta.hideHeaderFooter" />
+        <Footer />
         <Navigation />
     </div>
 </template>

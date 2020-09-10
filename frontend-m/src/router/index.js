@@ -20,8 +20,16 @@ import ErrorRoutes from './error';
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-    scrollBehavior (to, from, savedPosition) {
-        return { x: 0, y: 0 }
+    scrollBehavior(to, from, savedPosition) {
+        let position = { x: 0, y: 0 };
+        if (savedPosition) {
+            position = savedPosition;
+        }
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(position);
+            }, 310);
+        });
     },
     mode: 'history',
     routes: [
@@ -58,6 +66,5 @@ router.beforeEach((to, from, next) => {
     }
     next();
 });
-
 
 export default router;
