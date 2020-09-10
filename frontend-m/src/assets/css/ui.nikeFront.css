@@ -2635,7 +2635,7 @@
 
 /* 이용약관 & 개인정보처리방침 */
 .terms {
-    padding: 0 20px 40px;
+    padding: 0 20px 40px !important;
 }
 .terms .nav-tab {
     position: relative;
@@ -2664,8 +2664,14 @@
     font-weight: 600;
     color: #000 !important;
 }
-.terms .el-input__suffix {
+.terms .el-select {
+}
+.terms .select .el-input__suffix {
     right: 0;
+}
+.terms .select .el-input__suffix-inner {
+    display: inline-block;
+    height: 24px;
 }
 .terms .select .el-input__inner {
     padding-right: 25px;
