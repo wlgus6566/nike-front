@@ -14,7 +14,7 @@
             <transition @enter="itemOpen" @leave="itemClose">
                 <ul class="depth" v-if="activeIndex === index">
                     <li
-                        v-for="depth in menu.menus"
+                        v-for="depth in depthMenu(menu.menus)"
                         :key="depth.menuSeq"
                         @click="$emit('menuClose')"
                     >
@@ -51,6 +51,13 @@ export default {
     },
     watch: {},
     methods: {
+        depthMenu(menus) {
+            const depth = menus.filter(el => {
+                return el.listYn === 'Y';
+            });
+            console.log(depth);
+            return depth;
+        },
         menuTitle(title) {
             const info =
                 '<span>INFORMATION</span><span class="ko">에이전시 정보</span>';

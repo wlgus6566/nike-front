@@ -95,6 +95,7 @@ export default {
             animationSpeed: 1,
             show: false,
             topScollVal: 0,
+            reportUrl: null,
         };
     },
     components: {
@@ -122,11 +123,16 @@ export default {
         '$store.state.menuData'() {
             this.menuFn();
             this.setUrl();
+            this.pathLottie();
+        },
+    },
+    methods: {
+        pathLottie() {
             let _lottieIndex = 0;
+            const path = this.pathUrl.split('/')[1];
             if (this.pathUrl === '/') {
                 _lottieIndex = 0;
             } else {
-                const path = this.pathUrl.split('/')[1];
                 if (path === 'mypage') {
                     _lottieIndex = 2;
                 } else if (path === 'report') {
@@ -137,41 +143,31 @@ export default {
             }
             this.menuLottie(_lottieIndex);
         },
-    },
-    methods: {
         alertMsg() {
-            if (!this.$store.state.menuData) return;
-            const state = this.$store.state.menuData.some(
-                el => el.menuCode === 'REPORT'
-            );
-            if (!state) {
+            if (this.reportUrl.split('/')[1] !== 'report') {
                 alert('접근 권한이 없습니다.');
+                this.pathLottie();
             }
         },
         setUrl() {
+            let _reportUrl = '';
             if (!this.$store.state.menuData) {
-                return this.pathUrl;
+                _reportUrl = this.pathUrl;
             } else {
-                const state = this.$store.state.menuData.some(
+                const report = this.$store.state.menuData.filter(
                     el => el.menuCode === 'REPORT'
                 );
-                if (!state) {
-                    return this.pathUrl;
+                if (report[0].listYn === 'Y') {
+                    const reportMenus = report[0].menus.filter(menu => {
+                        return menu.listYn === 'Y';
+                    });
+                    _reportUrl = reportMenus[0].menuPathUrl;
                 } else {
-                    const idxAuthYn = this.$store.state.menuData.findIndex(
-                        el => el.detailAuthYn === 'N'
-                    );
-                    if (idxAuthYn !== -1) {
-                        return this.pathUrl;
-                    } else {
-                        const idx = this.$store.state.menuData.findIndex(
-                            el => el.menuCode === 'REPORT'
-                        );
-                        return this.$store.state.menuData[idx].menus[0]
-                            .menuPathUrl;
-                    }
+                    _reportUrl = this.$route.path;
                 }
             }
+            this.reportUrl = _reportUrl;
+            return _reportUrl;
         },
         menuLottie(index) {
             if (!this.$store.state.menuData) return;
@@ -195,7 +191,8 @@ export default {
                 el =>
                     el.menuCode !== 'MYPAGE' &&
                     el.menuCode !== 'HOME' &&
-                    el.mobileYn === 'Y'
+                    el.mobileYn === 'Y' &&
+                    el.listYn === 'Y'
             );
             this.menuData = menu;
         },
