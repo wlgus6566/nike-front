@@ -30,12 +30,12 @@ header .header-inner {
 header nav {
     width: 200px;
     box-sizing: border-box;
-    padding: 146px 30px 130px 30px;
+    padding: 160px 30px 130px 30px;
 }
 header h1 {
     z-index: 1;
     position: absolute;
-    top: 80px;
+    top: 50px;
     left: 30px;
     transform-origin: 0 0;
 }
