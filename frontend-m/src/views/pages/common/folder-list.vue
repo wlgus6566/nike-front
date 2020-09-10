@@ -78,7 +78,7 @@
                             </p>
                             <p v-else class="date">
                                 {{
-                                $moment(item.campaignBeginDt).format(
+                                    $moment(item.campaignBeginDt).format(
                                         'YYYY.MM.DD'
                                     )
                                 }}
@@ -173,9 +173,9 @@ export default {
             this.initPageData();
         },
         // 라우터 변경 감지
-        $route(to, from) {
+        /* $route(to, from) {
             this.initPageData();
-        },
+        },*/
     },
     created() {
         this.initPageData();

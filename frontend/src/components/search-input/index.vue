@@ -29,6 +29,7 @@ export default {
             }
         },
     },
+    activated() {},
 };
 </script>
 <style scoped></style>

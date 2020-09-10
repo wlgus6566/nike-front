@@ -1,6 +1,11 @@
 <template>
     <div id="app">
-        <transition name="layout-change" mode="out-in">
+        <transition
+            mode="out-in"
+            @enter="pageEnter"
+            @leave="pageLeave"
+            name="page-change"
+        >
             <component :is="AppLayout" :key="$route.meta.layout" />
         </transition>
         <Loading
@@ -12,6 +17,8 @@
     </div>
 </template>
 <script>
+import { Cubic, gsap } from 'gsap/all';
+
 require('es6-promise/auto');
 import Vue from 'vue';
 import ElementUI from 'element-ui';
@@ -56,23 +63,59 @@ export default {
         LayoutIndex: layouts('index'),
     },
     methods: {
-      urlCheck(){
-        const filter = "win16|win32|win64|macintel|mac|"; // PC일 경우 가능한 값
-        if(navigator.platform){
-          if( filter.indexOf(navigator.platform.toLowerCase())<0 ) {
-            console.log("모바일에서 접속하셨습니다");
-          } else{
-            console.log("PC에서 접속하셨습니다");
-            console.log(window.location.hostname)
-            if(window.location.hostname === 'devm.nikespace.co.kr'){
-              document.location = "https://devwww.nikespace.co.kr/";
+        urlCheck() {
+            const filter = 'win16|win32|win64|macintel|mac|'; // PC일 경우 가능한 값
+            if (navigator.platform) {
+                if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
+                    console.log('모바일에서 접속하셨습니다');
+                } else {
+                    console.log('PC에서 접속하셨습니다');
+                    console.log(window.location.hostname);
+                    if (window.location.hostname === 'devm.nikespace.co.kr') {
+                        document.location = 'https://devwww.nikespace.co.kr/';
+                    }
+                    if (window.location.hostname === 'm.nikespace.co.kr') {
+                        document.location = 'https://www.nikespace.co.kr/';
+                    }
+                }
             }
-            if(window.location.hostname === 'm.nikespace.co.kr'){
-              document.location = "https://www.nikespace.co.kr/";
-            }
-          }
-        }
-      }
+        },
+        pageEnter(el, done) {
+            this.pageAnimation(
+                el,
+                { translateY: '30px', opacity: 0 },
+                { translateY: '0', opacity: 1 },
+                done
+            );
+        },
+        pageLeave(el, done) {
+            this.pageAnimation(
+                el,
+                { translateY: '0', opacity: 1 },
+                { translateY: '30px', opacity: 0 },
+                done
+            );
+        },
+        pageAnimation(el, fromVal, toVal, done) {
+            gsap.fromTo(
+                el,
+                0.3,
+                {
+                    ...fromVal,
+                    ease: Cubic.easeInOut,
+                },
+                {
+                    ...toVal,
+                    ease: Cubic.easeInOut,
+                    onComplete: () => {
+                        el.style.transform = 'none';
+                        if (done) {
+                            done();
+                        }
+                    },
+                }
+            );
+        },
     },
 };
 </script>

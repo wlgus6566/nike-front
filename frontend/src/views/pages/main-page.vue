@@ -197,7 +197,6 @@ import {
     getTodayCalendar, // CALENDAR 오늘 조회
 } from '@/api/calendar';
 
-import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -209,7 +208,7 @@ export default {
         return {
             mainData: null,
             todayData: [],
-            yyyyMm: moment(new Date()).format('YYYY.MM'),
+            yyyyMm: this.$moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
@@ -236,7 +235,7 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
                             this.getCalendarEachList(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format('YYYY.MM')
                             );
                         },
                     },
@@ -246,7 +245,7 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
                             this.getCalendarEachList(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format('YYYY.MM')
                             );
                         },
                     },
@@ -296,6 +295,7 @@ export default {
             }
         },
         calClickEvent(e) {
+            console.log('e / ', e)
             const body = document.querySelector('.fc-daygrid-body');
             const tdWidth = e.jsEvent.target.closest('td').offsetWidth / 2;
             const date = this.$moment(e.date).format('YYYY-MM-DD');
@@ -315,7 +315,7 @@ export default {
                 const a = document.createElement('a');
                 const txt = document.createTextNode('자세히 보기');
                 modal.style.marginLeft = `${tdWidth}px`;
-                a.href = '/information/calendar?yyyyMm='+this.yyyyMm+'&searchDt='+moment(e.date).format('YYYY.MM.DD');
+                a.href = '/information/calendar?yyyyMm='+this.yyyyMm+'&searchDt='+this.$moment(e.date).format('YYYY.MM.DD');
                 a.classList.add('fc-more');
                 a.appendChild(txt);
                 body.appendChild(a);
@@ -360,16 +360,20 @@ export default {
             this.calendarOptions.events = [];
             this.calendarData.forEach((item) => {
                 let className;
+                let tarnsformContents;
                 if (item.calendarSectionCode === 'EDUCATION') {
                     className = 'edu';
+                    tarnsformContents = '[교육] '+item.scheduleName;
                 } else if (item.calendarSectionCode === 'CAMPAIGN') {
                     className = 'campaign';
+                    tarnsformContents = '[캠페인] '+item.scheduleName;
                 } else {
                     className = 'official';
+                    tarnsformContents = '[기타 교육일정] '+item.scheduleName;
                 }
                 this.calendarOptions.events.push({
                     ...item,
-                    title: item.scheduleName,
+                    title: tarnsformContents,
                     description: item.contents,
                     start: item.beginDt.replace(/\./gi, '-'),
                     end: item.viewEndDt.replace(/\./gi, '-'),

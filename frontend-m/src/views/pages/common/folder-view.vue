@@ -93,16 +93,15 @@
                     </a>
                 </li>
             </ul>
-            <template v-else>
-                <NoData>
-                    <i class="icon-file"></i>
-                    <p class="desc">파일 없음</p>
-                </NoData>
-            </template>
+            <NoData v-else class="file-type">
+                <i class="icon-file"></i>
+                <p class="desc">등록된 파일이 없습니다.</p>
+            </NoData>
         </template>
         <fileDetailPopup
             :visible.sync="visible.modalEx"
             :filePopupFile="filePopupFile"
+            @closeModal="closeModal"
         />
         <Loading
             class="list-loading"
@@ -164,6 +163,10 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     methods: {
+        closeModal() {
+            this.visible.modalEx = false;
+            this.filePopupFile = '';
+        },
         initPageData() {
             this.fileList = null;
             this.page = 0;

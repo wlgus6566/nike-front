@@ -304,7 +304,7 @@ public class FileUtil {
 		}else if(resize && (uploadFile.getContentType().toUpperCase(Locale.getDefault()).contains("VIDEO"))){
 
 			// 사이즈 변환시 700:394 를 변경 하면 됨
-			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail.mp4";
+			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_detail.mp4";
 
 			final String[] command = {ffmpeg + File.separator + ffmpegCommand,"-y","-i",toFile.getPath(),"-vf"
 					,"scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
@@ -339,7 +339,7 @@ public class FileUtil {
 			}
 			stopWatch.stop();
 			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
-			final File detailFile = new File(cleanXSS(thumbnailPath, false));
+			final File detailFile = new File(cleanXSS(thumbnailPath, true));
 			if(detailFile.isFile()){
 				String detailThumbnail = uploadFile.getOriginalFilename();
 				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail.mp4";

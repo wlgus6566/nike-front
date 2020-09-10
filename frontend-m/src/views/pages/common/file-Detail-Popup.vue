@@ -5,7 +5,7 @@
         :visible="visible"
         :append-to-body="true"
         :lock-scroll="false"
-        @close="$emit('update:visible', false)"
+        @close="$emit('closeModal')"
     >
         <div class="modal-contents">
             <div class="folder-detail">
@@ -17,14 +17,17 @@
                         "
                     >
                         <div class="video-filePopupFile">
-                            <video controls>
+                            <video controls class="video">
                                 <source
-                                    :src="
-                                        filePopupFile.detailThumbnailFilePhysicalName
-                                    "
+                                    :src="filePopupFile.filePhysicalName"
                                     type="video/mp4"
                                 />
                             </video>
+                            <button
+                                type="button"
+                                @click="playControls(playState)"
+                                class="btn-play"
+                            ></button>
                         </div>
                     </div>
 
@@ -64,6 +67,18 @@
                                 :player-width="width"
                             ></vimeo-player>
                         </div>
+                        <div
+                            class="thumbnail"
+                            v-else-if="filePopupFile.fileKindCode === 'VR'"
+                        >
+                            <span class="etc">
+                                <i class="icon-file"></i>
+                                <span class="txt">
+                                    해당파일은 미리보기를<br />
+                                    제공하지 않습니다.
+                                </span>
+                            </span>
+                        </div>
                         <div class="thumbnail" v-else>
                             <div class="video-filePopupFile">
                                 <youtube
@@ -76,6 +91,7 @@
                         </div>
                     </template>
                 </div>
+
                 <span class="info-box">
                     <em class="title">{{
                         filePopupFile.title || filePopupFile.fileName
@@ -97,11 +113,28 @@ export default {
     data() {
         return {
             orderComment: '',
+            playState: false,
         };
     },
     props: ['visible', 'filePopupFile'],
-    mounted() {},
+    mounted() {
+        // console.log(this.filePopupFile);
+    },
     methods: {
+        playControls(val) {
+            const video = document.querySelector('.video');
+            const videoWrap = video.closest('.thumbnail');
+            // console.log(val);
+            if (val === false) {
+                videoWrap.classList.add('pause');
+                video.play();
+                this.playState = true;
+            } else {
+                videoWrap.classList.remove('pause');
+                video.pause();
+                this.playState = false;
+            }
+        },
         videoCheck(url) {
             url.match(
                 /(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/

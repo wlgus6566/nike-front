@@ -2700,6 +2700,7 @@
 }
 .feedback-item .txt {
     display: block;
+    word-break: break-all;
     display: -webkit-box;
     max-height: 40px;
     font-size: 14px;
@@ -3843,6 +3844,10 @@ img.image-grayscale {
     align-items: center;
     flex-direction: column;
 }
+.no-data.file-type {
+    margin-top: 0;
+    border-width: 1px 0 0;
+}
 .no-data [class^='icon-'] {
     display: block;
     width: 120px;
@@ -4564,8 +4569,14 @@ img.image-grayscale {
 .fc .fc-daygrid-event {
     margin-top: 2px !important;
 }
+.fc .fc-daygrid-event-harness {
+    /*margin-top: 2px;*/
+}
 .fc-direction-ltr .fc-daygrid-event {
     border-radius: 0;
+}
+.fc .fc-daygrid-body-natural .fc-daygrid-day-events {
+    margin-bottom: 8px !important;
 }
 .fc-direction-rtl .fc-daygrid-event.fc-event-end,
 .fc-direction-ltr .fc-daygrid-event.fc-event-start {

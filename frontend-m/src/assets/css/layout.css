@@ -36,14 +36,20 @@ header {
 header .logo {
     width: 120px;
     height: 40px;
-    background: url('../images/img-main-logo.svg') 0 0 no-repeat;
+    /*background: url('../images/img-main-logo.svg') 0 0 no-repeat;*/
     background-size: 120px auto;
 }
-header .logo span {
+header .logo a {
     display: block;
-    overflow: hidden;
-    text-indent: -9999px;
 }
+header .logo svg {
+    vertical-align: top;
+}
+/*header .logo span {*/
+/*    display: block;*/
+/*    overflow: hidden;*/
+/*    text-indent: -9999px;*/
+/*}*/
 /*.sticky-header header {
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
 }*/
@@ -57,6 +63,7 @@ header .logo span {
     border: none;
     z-index: 10;
 }
+
 .btn-back {
     flex: 0 0 36px;
     display: block;
@@ -66,6 +73,10 @@ header .logo span {
     text-indent: -999px;
     overflow: hidden;
     transform: rotate(45deg);
+}
+.page-header .inner-wrap {
+    display: flex;
+    width: calc(100% - 20px);
 }
 .page-header .inner {
     flex: 1 1 auto;
@@ -547,3 +558,14 @@ footer .copy {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+/*.page-change-enter-active {
+    transition: opacity 0.3s ease-in-out;
+}
+.page-change-leave-active {
+    transition: opacity 0.3s ease-in-out;
+}
+.page-change-enter,
+.page-change-leave-to {
+    opacity: 0;
+}*/

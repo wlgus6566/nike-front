@@ -145,7 +145,6 @@ import {getCalendarEachList, getTodayCalendar} from '@/api/calendar/';
 import {directive, Swiper, SwiperSlide} from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
 
-import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -174,7 +173,7 @@ export default {
             reportList: [],
             toolKitContentsList: [],
             todayData: [],
-            yyyyMm: moment(new Date()).format('YYYY.MM'),
+            yyyyMm: this.$moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
@@ -202,7 +201,9 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
                             this.getCalendarEachList(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format(
+                                    'YYYY.MM'
+                                )
                             );
                         },
                     },
@@ -212,7 +213,9 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
                             this.getCalendarEachList(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format(
+                                    'YYYY.MM'
+                                )
                             );
                         },
                     },
@@ -279,26 +282,25 @@ export default {
         handleScroll() {
             const body = document.querySelector('.fc-daygrid-body');
             const cal = this.$refs.fullCalendar.$el;
-
+            console.log(cal);
             if (body.childNodes[1]) {
                 body.classList.remove('pop-open');
-                cal.querySelectorAll('td').forEach((el) => {
+                cal.querySelectorAll('td').forEach(el => {
                     el.classList.remove('fc-active');
                 });
-                //body.removeChild(body.childNodes[1]);
+                body.removeChild(body.childNodes[1]);
                 window.removeEventListener('scroll', this.handleScroll);
                 window.removeEventListener('resize', this.handleScroll);
             }
         },
         calClickEvent(e) {
-            //console.log(e);
             const body = document.querySelector('.fc-daygrid-body');
             const tdWidth = e.jsEvent.target.closest('td').offsetWidth / 2;
             const date = this.$moment(e.date).format('YYYY-MM-DD');
             const cal = this.$refs.fullCalendar.$el;
             const td = cal.querySelector(`td[data-date="${date}"]`);
             body.classList.add('pop-open');
-            cal.querySelectorAll('td').forEach((el) => {
+            cal.querySelectorAll('td').forEach(el => {
                 el.classList.remove('fc-active');
             });
             td.classList.add('fc-active');
@@ -317,7 +319,7 @@ export default {
                     '/information/calendar?yyyyMm=' +
                     this.yyyyMm +
                     '&searchDt=' +
-                    moment(e.date).format('YYYY.MM.DD');
+                    this.$moment(e.date).format('YYYY.MM.DD');
                 a.classList.add('fc-more');
                 a.appendChild(txt);
                 body.appendChild(a);
@@ -348,18 +350,22 @@ export default {
         // 달력에 맞게 변수명 변경
         transformData() {
             this.calendarOptions.events = [];
-            this.calendarData.forEach((item) => {
+            this.calendarData.forEach(item => {
                 let className;
+                let tarnsformContents;
                 if (item.calendarSectionCode === 'EDUCATION') {
                     className = 'edu';
+                    tarnsformContents = '[교육] '+item.scheduleName;
                 } else if (item.calendarSectionCode === 'CAMPAIGN') {
                     className = 'campaign';
+                    tarnsformContents = '[캠페인] '+item.scheduleName;
                 } else {
                     className = 'official';
+                    tarnsformContents = '[기타 교육일정] '+item.scheduleName;
                 }
                 this.calendarOptions.events.push({
                     ...item,
-                    title: item.scheduleName,
+                    title: tarnsformContents,
                     description: item.contents,
                     start: item.beginDt.replace(/\./gi, '-'),
                     end: item.viewEndDt.replace(/\./gi, '-'),
@@ -370,9 +376,9 @@ export default {
         },
         distinctAndAddEvent() {
             let distinctEventList = [];
-            this.calendarOptions.events.forEach((item) => {
+            this.calendarOptions.events.forEach(item => {
                 let check = false;
-                distinctEventList.forEach((ele) => {
+                distinctEventList.forEach(ele => {
                     if (item.start === ele.start) {
                         check = true;
                     }
@@ -381,7 +387,7 @@ export default {
                     distinctEventList.push(item);
                 }
             });
-            distinctEventList.forEach((item) => {
+            distinctEventList.forEach(item => {
                 this.calendarOptions.events.unshift(item);
             });
         },

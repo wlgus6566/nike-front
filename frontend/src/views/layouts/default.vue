@@ -91,6 +91,7 @@ export default {
             activeLink: null,
             activeParent: null,
             activeUl: null,
+            menuHoverState: false,
         };
     },
     computed: {
@@ -167,7 +168,12 @@ export default {
             gsap.set(nav.querySelectorAll('.depth1 > a'), {
                 clearProps: 'all',
             });
-
+            gsap.set(nav.querySelectorAll('.depth1 span '), {
+                clearProps: 'all',
+            });
+            gsap.set(anchor.querySelectorAll('span '), {
+                clearProps: 'all',
+            });
             this.tw.clear();
             this.tw
                 .set(header, {
@@ -244,6 +250,12 @@ export default {
                     },
                     0.3
                 )
+                .set(anchor.querySelector('span'), {
+                    translateY: '0',
+                })
+                .set(anchor.querySelector('.ko'), {
+                    opacity: '0',
+                })
                 .set(
                     ul,
                     {
@@ -321,13 +333,33 @@ export default {
         },
 
         toggleHeader(status, duration) {
+            const anchor = document.querySelector(
+                '.depth1 > .router-link-active'
+            );
             if (status) {
+                this.menuHoverState = false;
+                anchor.removeEventListener('mouseover', this.menuHover);
                 this.tw.play(duration);
             } else {
+                this.menuHoverState = true;
+                anchor.addEventListener('mouseover', this.menuHover);
                 this.tw.reverse();
             }
         },
-
+        menuHover() {
+            const anchor = document.querySelector(
+                '.depth1 > .router-link-active'
+            );
+            const en = anchor.querySelector('span');
+            const ko = anchor.querySelector('.ko');
+            if (this.menuHoverState) {
+                en.removeAttribute('style');
+                ko.removeAttribute('style');
+            } else {
+                en.style.transform = 'translateY(0)';
+                ko.style.opacity = '0';
+            }
+        },
         mouseEvent(status) {
             if (this.headerActiveNav) {
                 this.toggleHeader(status);

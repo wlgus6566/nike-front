@@ -5,7 +5,7 @@
         :visible="visible"
         :append-to-body="true"
         :lock-scroll="false"
-        @close="$emit('update:visible', false)"
+        @close="$emit('closeModal')"
     >
         <div class="modal-contents">
             <div class="folder-detail">

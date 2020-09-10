@@ -97,7 +97,6 @@ import {
 
 import { getCode } from '@/api/code';
 
-import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -122,9 +121,13 @@ export default {
             },
             calendarSeq: null,
             loadingData: false,
-            yyyyMm: !!this.$route.query.yyyyMm ? this.$route.query.yyyyMm : moment(new Date()).format('YYYY.MM'),
-            searchDt: !!this.$route.query.searchDt ? this.$route.query.searchDt : moment(new Date()).format('YYYY.MM.DD'),
-            currentDate: moment(new Date()).format('YYYY.MM.DD'),
+            yyyyMm: !!this.$route.query.yyyyMm
+                ? this.$route.query.yyyyMm
+                : this.$moment(new Date()).format('YYYY.MM'),
+            searchDt: !!this.$route.query.searchDt
+                ? this.$route.query.searchDt
+                : this.$moment(new Date()).format('YYYY.MM.DD'),
+            currentDate: this.$moment(new Date()).format('YYYY.MM.DD'),
             statusCode: null,
             calendarDetail: {},
             calenderSectionCodeList: [],
@@ -149,7 +152,7 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
                             this.getCalendarList(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format('YYYY.MM')
                             );
                         },
                     },
@@ -159,7 +162,7 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
                             this.getCalendarList(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format('YYYY.MM')
                             );
                         },
                     },
@@ -178,7 +181,7 @@ export default {
     mounted() {
         this.fetchData();
         let calendarApi = this.$refs.fullCalendar.getApi();
-        calendarApi.gotoDate(moment(this.searchDt).format('YYYY-MM-DD'));
+        calendarApi.gotoDate(this.searchDt.replace(/\./gi, '-'));
     },
     methods: {
         // 초기 데이타 조회
@@ -240,7 +243,7 @@ export default {
                     .classList.remove('active');
             }
             arg.dayEl.classList.add('active');
-            this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
+            this.getTodayCalendar(this.$moment(arg.dateStr).format('YYYY.MM.DD'));
         },
         // 일정 등록 클릭시
         onClickToCreate() {
@@ -322,7 +325,15 @@ export default {
     },
 };
 </script>
-<style type="text/css">
+<style scoped>
+::v-deep .fc .fc-daygrid-day.fc-active .fc-daygrid-day-number,
+::v-deep .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+    width: 22px;
+    height: 22px;
+}
+::v-deep .fc .fc-daygrid-day-top {
+    padding-bottom: 3px;
+}
 /*TODO 주말 색 변경필오*/
 .fc-day-sun.fc-daygrid-day-frame.fc-daygrid-day-top.fc-daygrid-day-number {
     color: #0000ff;

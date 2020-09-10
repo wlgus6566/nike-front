@@ -101,7 +101,7 @@
                         <label class="label-title required">에이전시</label>
                     </div>
                     <div class="form-column">
-                        <span class="select" style="width: 100%">
+                        <span class="select" style="width: 100%;">
                             <el-select
                                 v-model="agencySeq.value"
                                 placeholder="Select"
@@ -276,17 +276,16 @@ export default {
     },
     watch: {
         'category2Code.value'(val) {
-            if (val === '') {
-                this.category3Code = {
-                    listSortOptions: [
-                        {
-                            value: '',
-                            label: '소구분',
-                        },
-                    ],
-                    value: '',
-                };
-            } else {
+            this.category3Code = {
+                listSortOptions: [
+                    {
+                        value: '',
+                        label: '소구분',
+                    },
+                ],
+                value: '',
+            };
+            if (val !== '') {
                 getCategoryList(val, this.category3Code.listSortOptions);
             }
         },
@@ -439,10 +438,10 @@ export default {
                 minimumOrderQuantity: this.detailData.minimumOrderQuantity,
                 unitPrice: this.detailData.unitPrice,
             };
-            if (Object.values(data).some((el) => el === '' || el === null)) {
-                alert('필수 입력 값이 누락 되었습니다.');
-                return;
-            }
+            /*  if (Object.values(data).some((el) => el === '' || el === null)) {
+					alert('필수 입력 값이 누락 되었습니다.');
+					return;
+				}*/
             if (this.$route.params.id) {
                 let addAlert = confirm('수정하시겠습니까');
                 if (addAlert) {
@@ -454,6 +453,14 @@ export default {
                         );
                         // await getExistMsg(response);
                         console.log(response);
+                        if (!response.success) {
+                            alert(response.msg);
+                            this.loadingData = false;
+                            return;
+                        }
+                        if (response.existMsg) {
+                            alert(response.msg);
+                        }
                         this.$store.state.saveFolder = true;
                         await this.$router.push('/order/management');
                         await store.dispatch('basketList');
@@ -471,7 +478,16 @@ export default {
                     this.loadingData = true;
                     try {
                         const { data: response } = await postProduct(data);
-                        // await getExistMsg(response);
+                        console.log(response);
+                        if (!response.success) {
+                            alert(response.msg);
+                            this.loadingData = false;
+                            return;
+                        }
+                        if (response.existMsg) {
+                            alert(response.msg);
+                        }
+
                         this.$store.state.saveFolder = true;
                         this.productDataReset();
                         await this.$router.push('/order/management');
@@ -497,7 +513,9 @@ export default {
                         label: el.codeName,
                     });
                 });
-            } catch {}
+            } catch (error) {
+                console.error(error);
+            }
         },
         //데이터 초기화
         productDataReset() {
@@ -515,20 +533,19 @@ export default {
         },
     },
     beforeRouteLeave(to, from, next) {
-      if (!this.$store.state.saveFolder) {
-        const answer = window.confirm(
-            '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
-        );
-        if (answer) {
-          next();
+        if (!this.$store.state.saveFolder) {
+            const answer = window.confirm(
+                '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
+            );
+            if (answer) {
+                next();
+            } else {
+                next(false);
+            }
         } else {
-          next(false);
+            next();
         }
-      } else {
-        next();
-      }
-  },
-
+    },
 };
 </script>
 <style scoped>

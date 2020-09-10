@@ -26,7 +26,11 @@
         />
         <div class="btn-tbl-box">
             <div class="right">
-                <router-link to="/mypage/faq/form" class="btn-form-gray">
+                <router-link
+                    to="/mypage/faq/form"
+                    class="btn-form-gray"
+                    v-if="folderAuthCheck('CREATE')"
+                >
                     <span>등록</span>
                 </router-link>
             </div>
@@ -44,9 +48,11 @@
 <script>
 import { getCustomerList, deleteCustomer } from '@/api/customer';
 import { getCode } from '@/api/code';
+import { authCheck } from '@/utils/authCheck';
 
 export default {
     name: 'faq',
+    mixins: [authCheck],
     data() {
         return {
             faqData: null,

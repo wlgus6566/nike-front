@@ -51,7 +51,6 @@ import {
 
 import { getCode } from '@/api/code';
 
-import moment from 'moment';
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -72,11 +71,11 @@ export default {
             loadingData: false,
             yyyyMm: !!this.$route.query.yyyyMm
                 ? this.$route.query.yyyyMm
-                : moment(new Date()).format('YYYY.MM'),
+                : this.$moment(new Date()).format('YYYY.MM'),
             searchDt: !!this.$route.query.searchDt
                 ? this.$route.query.searchDt
-                : moment(new Date()).format('YYYY.MM.DD'),
-            currentDate: moment(new Date()).format('YYYY.MM.DD'),
+                : this.$moment(new Date()).format('YYYY.MM.DD'),
+            currentDate: this.$moment(new Date()).format('YYYY.MM.DD'),
             statusCode: null,
             calendarDetail: {},
             calenderSectionCodeList: [],
@@ -101,7 +100,7 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
                             this.getCalendarList(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format('YYYY.MM')
                             );
                         },
                     },
@@ -111,7 +110,7 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
                             this.getCalendarList(
-                                moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format('YYYY.MM')
                             );
                         },
                     },
@@ -128,7 +127,7 @@ export default {
     mounted() {
         this.fetchData();
         let calendarApi = this.$refs.fullCalendar.getApi();
-        calendarApi.gotoDate(moment(this.searchDt).format('YYYY-MM-DD'));
+        calendarApi.gotoDate(this.searchDt.replace(/\./gi, '-'));
     },
     methods: {
         async fetchData() {
@@ -176,16 +175,14 @@ export default {
                     title: item.scheduleName,
                     description: item.contents,
                     start: item.beginDt.replace(/\./gi, '-'),
-                    end: moment(item.endDt)
-                        .add(1, 'days')
-                        ._i.replace(/\./gi, '-'),
+                    end: item.viewEndDt.replace(/\./gi, '-'),
                     className: className,
                 });
             });
         },
         // 달력에 일자 클릭시
         handleDateClick(arg) {
-            this.getTodayCalendar(moment(arg.dateStr).format('YYYY.MM.DD'));
+            this.getTodayCalendar(this.$moment(arg.dateStr).format('YYYY.MM.DD'));
             const date = this.$moment(arg.date).format('YYYY-MM-DD');
             const cal = this.$refs.fullCalendar.$el;
             const td = cal.querySelector(`td[data-date="${date}"]`);

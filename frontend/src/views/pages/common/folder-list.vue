@@ -64,6 +64,9 @@ export default {
             }
             this.initFetchData();
         },
+        '$store.state.gnbMenuListData'() {
+            this.uploadAuth = this.folderAuthCheck('CREATE');
+        },
     },
     computed: {
         uploadLink() {
@@ -74,7 +77,7 @@ export default {
     },
     data() {
         return {
-            uploadAuth: this.folderAuthCheck('CREATE') || false,
+            uploadAuth: false,
             title: this.$route.meta.title,
             itemLength: 20,
             totalPage: null,
@@ -116,6 +119,16 @@ export default {
         Loading,
     },
     methods: {
+        //검색후 페이지 이동 리셋
+        /*initializationData() {
+		   this.searchKeyword = '';
+		   this.searchSubmit(this.searchKeyword);
+		   this.listSortSelect.value = 'LATEST';
+		   if (this.listTypes[1].active) {
+			   this.listTypes[1].active = false;
+			   this.listTypes[0].active = true;
+		   }
+	    },*/
         handleScroll() {
             if (this.loadingData) return;
             const windowE = document.documentElement;
@@ -191,6 +204,8 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
+        //initializationData
+        this.uploadAuth = this.folderAuthCheck('CREATE');
         if (this.$store.state.reload) {
             this.initFetchData();
             this.$store.dispatch('getContBasket');
