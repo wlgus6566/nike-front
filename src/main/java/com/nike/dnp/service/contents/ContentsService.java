@@ -793,7 +793,7 @@ public class ContentsService {
         userAuthSearchDTO.setMenuCode(searchMenuCode);
         userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
 
-        if (!ObjectUtils.isEmpty(contentsSeq) && 0 != contentsSeq) {
+        if (ObjectUtils.isEmpty(contentsSeq) || 0 == contentsSeq) {
             return this.loadDefaultAuthList(userAuthSearchDTO);
         } else {
             userAuthSearchDTO.setContentsSeq(contentsSeq);
