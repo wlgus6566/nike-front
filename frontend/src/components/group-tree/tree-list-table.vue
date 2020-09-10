@@ -49,7 +49,6 @@
                     :groupTreeAddItem="groupTreeAddItem"
                     :detailAuthCheck="detailAuthCheck"
                     :emailReceptionCheck="emailReceptionCheck"
-                    :checks="checks"
                     :depth="depth + 1"
                 />
             </transition>
@@ -65,14 +64,18 @@ export default {
         return {};
     },
     computed: {
-        detailAuthYn() {
-            const arr = this.checks.filter((el) => el.detailAuthYn === 'Y');
+        /*detailAuthYn() {
+            const arr = this.groupTreeData.filter(
+                (el) => el.detailAuthYn === 'Y'
+            );
             return arr.map((el) => el.authSeq);
         },
         emailReceptionYn() {
-            const arr = this.checks.filter((el) => el.emailReceptionYn === 'Y');
+            const arr = this.groupTreeData.filter(
+                (el) => el.emailReceptionYn === 'Y'
+            );
             return arr.map((el) => el.authSeq);
-        },
+        },*/
     },
     components: {},
     props: [
@@ -82,7 +85,6 @@ export default {
         'detailAuthCheck',
         'emailReceptionCheck',
         'depth',
-        'checks',
     ],
     methods: {
         detailAuthUpdate(seq) {
