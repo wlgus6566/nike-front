@@ -54,7 +54,7 @@ public class AgencyService {
      * @since 2020. 7. 20. 오후 12:08:40
      */
     public List<Agency> findAll() {
-        return agencyRepository.findAllByUseYn("Y");
+        return agencyRepository.findAllByUseYnOrderByAgencyNameAsc("Y");
     }
 
     /**
