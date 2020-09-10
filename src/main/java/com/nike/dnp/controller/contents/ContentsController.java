@@ -20,12 +20,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.persistence.Id;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
@@ -325,7 +327,7 @@ public class ContentsController {
     @ApiOperation(value = "컨텐츠 권한 목록 조회", notes = REQUEST_CHARACTER)
     @GetMapping(name = "컨텐츠 권한 목록 조회", value = "/{topMenuCode}/{menuCode}/authList", produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<AuthReturnDTO> loadAuthList(
-            @ApiParam(name = "contentsSeq", value = "콘텐츠 일련번호", defaultValue = "4") final Long contentsSeq
+            @ApiParam(name = "contentsSeq", value = "콘텐츠 일련번호", defaultValue = "4") @RequestParam final Long contentsSeq
             ,@ApiParam(name = TOP_MENU_CODE, value = TOP_MENU_VALUE, defaultValue = TOP_MENU_EXAMPLE, required = true) @PathVariable final String topMenuCode
             , @ApiParam(name = MENU_CODE, value = MENU_CODE_VALUE, defaultValue = "SP", required = true) @PathVariable final String menuCode
     ) {
