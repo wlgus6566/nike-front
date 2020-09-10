@@ -273,6 +273,9 @@ input[type='date']::-webkit-outer-spin-button {
     margin: 0;
     -webkit-appearance: none;
 }
+input[type='text']::-ms-clear {
+    display: none;
+}
 
 button {
     box-sizing: border-box;

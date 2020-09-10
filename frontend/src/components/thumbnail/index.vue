@@ -77,6 +77,8 @@ export default {
             this.imgSrc = null;
             this.cropImg = cropperUrl;
             this.$refs.input.value = '';
+            this.$refs.input.type = 'radio';
+            this.$refs.input.type = 'file';
             this.$emit('cropImage', this.cropImg, this.imgName);
             this.visible.cropperModal = false;
         },
