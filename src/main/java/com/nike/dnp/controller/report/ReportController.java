@@ -8,7 +8,6 @@ import com.nike.dnp.dto.report.ReportSaveDTO;
 import com.nike.dnp.dto.report.ReportSearchDTO;
 import com.nike.dnp.dto.user.UserAuthSearchDTO;
 import com.nike.dnp.entity.report.Report;
-import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.auth.AuthService;
@@ -19,13 +18,16 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -233,11 +235,10 @@ public class ReportController {
      */
     @ApiOperation(value = "보고서 파일 다운로드", notes = REQUEST_CHARACTER)
     @GetMapping(name = "보고서 파일 다운로드", value = "/download/{reportFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public CommonResult downloadFile(
+    public ResponseEntity<Resource> downloadFile(
             @ApiParam(name="reportFileSeq", value = "보고서 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long reportFileSeq
-    ) {
-        responseService.getSingleResult(reportService.downloadFile(reportFileSeq));
-        return responseService.getSuccessResult();
+    ) throws IOException {
+        return reportService.downloadFile(reportFileSeq);
     }
 }
 
