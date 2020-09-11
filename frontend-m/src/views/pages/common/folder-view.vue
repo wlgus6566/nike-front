@@ -67,8 +67,8 @@
                         :href="item.filePhysicalName"
                         :download="item.fileName"
                         v-if="
-                            item.fileExtension === 'PPT' &&
-                                item.fileExtension === 'PPTX' &&
+                            item.fileExtension === 'PPT' ||
+                                item.fileExtension === 'PPTX' ||
                                 item.fileExtension === 'PDF'
                         "
                     >
