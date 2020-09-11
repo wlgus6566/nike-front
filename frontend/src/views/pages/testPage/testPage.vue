@@ -77,8 +77,6 @@ export default {
 
         let concatArray = this.x.concat(this.y);
 
-        console.log(concatArray);
-
         let testArray = this.x.filter((item) => {
             return this.y.every((el) => {
                 console.log(item.tit !== el.tit || item.txt !== el.txt);
@@ -86,7 +84,7 @@ export default {
             });
         });
 
-        console.log(this.y.concat(testArray));
+        //console.log(this.y.concat(testArray));
     },
     components: { testModal },
     methods: {
@@ -97,7 +95,6 @@ export default {
         testArr(arr, sep) {
             arr.forEach((el) => {
                 if (el.value === sep) {
-                    console.log(el.label);
                     this.cloneTxt = this.cloneTxt + el.label;
                 }
                 if (el.children) {

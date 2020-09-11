@@ -220,7 +220,6 @@ export default {
                     sectionCode: this.listSortSelect.value,
                     groupSeq: this.authority.value.slice(-1)[0],
                 });
-                console.log(response);
                 this.totalPage = response.totalPages - 1;
                 if (infinite) {
                     if (this.totalPage > this.page - 1) {

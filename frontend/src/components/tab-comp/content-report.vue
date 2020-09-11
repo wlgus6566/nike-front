@@ -170,7 +170,7 @@ export default {
                                     total: progressEvent.total,
                                     loaded: progressEvent.loaded,
                                 };
-                                console.log(progressEvent.loaded);
+                                //console.log(progressEvent.loaded);
                                 this.loadedUpdate();
                             },
                         };
@@ -236,7 +236,6 @@ export default {
             }
         },
         async addContBasket(seq) {
-            console.log(seq);
             try {
                 await postReportBasket();
                 await this.$store.dispatch('getReportListBasket');
@@ -245,7 +244,6 @@ export default {
             }
         },
         async delReportBasket(seq) {
-            console.log(seq);
             this.deleteLoading.push(seq);
             try {
                 await deleteReportBasket(seq);

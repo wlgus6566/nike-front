@@ -76,7 +76,7 @@ export default {
                     'LOGIN',
                     bodyFormData
                 );
-                console.log(response);
+                //console.log(response);
                 if (response.data.existMsg) {
                     alert(response.data.msg);
                 }

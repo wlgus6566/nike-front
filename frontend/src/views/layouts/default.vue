@@ -110,7 +110,6 @@ export default {
             this.newRoutePath = newRoute.path;
             this.oldRoutePath = oldRoute.path;
             this.activeSet();
-            console.log(1111);
         },
     },
     components: {
@@ -342,7 +341,6 @@ export default {
             this.tw.eventCallback('onReverseComplete', function () {
                 const menuTitle = document.querySelectorAll('.nav-link span');
                 menuTitle.forEach((el) => {
-                    console.log(el);
                     el.removeAttribute('style');
                 });
             });
@@ -394,7 +392,6 @@ export default {
         },
 
         toggleHeader(status, duration) {
-            console.log(444);
             const anchor = document.querySelector(
                 '.depth1 > .router-link-active'
             );
@@ -413,7 +410,6 @@ export default {
             }
         },
         menuHover() {
-            console.log(333);
             const anchor = document.querySelector(
                 '.depth1 > .router-link-active'
             );
