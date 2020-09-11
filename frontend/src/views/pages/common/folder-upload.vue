@@ -574,14 +574,14 @@ export default {
                 menuName: this.$route.meta.topMenuCode,
                 seq: this.$route.params.id,
             });
-            console.log(response);
+            //console.log(response);
         },
         async deleteOccupyFn() {
             const response = await joinDelete({
                 menuName: this.$route.meta.topMenuCode,
                 seq: this.$route.params.id,
             });
-            console.log(response);
+            //console.log(response);
         },
 
         /**
@@ -772,7 +772,7 @@ export default {
             this.folderDetail.campaignEndDt = null;
             this.folderDetail.imageFilePhysicalName = '';
             this.folderDetail.exposureYn = 'Y';
-            console.log(this.pageMenuCode);
+            //console.log(this.pageMenuCode);
             this.folderDetail.folderName = '';
             this.folderDetail.folderContents = '';
             this.folderDetail.campaignPeriodSectionCode = 'SELECT';

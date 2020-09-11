@@ -124,7 +124,6 @@ export default {
                     password: this.password,
                 });
                 this.msg = res.data.msg;
-                console.log(res);
                 if (res.data.success) {
                     alert('변경되었습니다.');
                     this.password = '';

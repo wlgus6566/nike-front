@@ -231,7 +231,7 @@ export default {
                 const {
                     data: { data: response },
                 } = await this.$store.dispatch('getContBasket');
-                console.log(response);
+                //console.log(response);
                 this.contBasketList = response;
             } catch (error) {
                 console.error(error);

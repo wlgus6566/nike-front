@@ -79,7 +79,7 @@ export default {
             }
         },
         toggleProductBasket(item) {
-            console.log(this.basketList);
+            //console.log(this.basketList);
             if (this.basketList) {
                 const findIndex = this.basketList.findIndex((el) => {
                     return el.goodsSeq === item.goodsSeq;

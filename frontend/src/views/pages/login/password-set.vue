@@ -85,7 +85,7 @@ export default {
                 if (response.existMsg) {
                     alert(response.msg);
                 }
-                console.log(response);
+                //console.log(response);
                 if (response.success) {
                     await this.$router.push('/login');
                 }

@@ -49,7 +49,7 @@
                             v-model="newsDetail.contents"
                             :config="editorConfig"
                             @blur="onEditorInput"
-                            style="width: 100%"
+                            style="width: 100%;"
                         />
                         <!--<span class="textarea">
                             <textarea
@@ -130,7 +130,7 @@ export default {
         this.detailDataReset();
     },
     mounted() {
-        console.log(this.noticeArticleSectionCode);
+        //console.log(this.noticeArticleSectionCode);
         if (this.$route.meta.modify) {
             this.getNewsDetail();
         }
@@ -261,16 +261,16 @@ export default {
     },
     beforeRouteLeave(to, from, next) {
         if (!this.$store.state.saveFolder) {
-          const answer = window.confirm(
-              '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
-          );
-          if (answer) {
-            next();
-          } else {
-            next(false);
-          }
+            const answer = window.confirm(
+                '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
+            );
+            if (answer) {
+                next();
+            } else {
+                next(false);
+            }
         } else {
-          next();
+            next();
         }
     },
 };

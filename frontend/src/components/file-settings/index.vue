@@ -282,7 +282,7 @@ export default {
                     this.$emit('submitForm');
                 })
                 .catch((e) => {
-                    console.log(e);
+                    //console.log(e);
                     this.uploadFile = [];
                     this.$emit('submitForm');
                 });
