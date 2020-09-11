@@ -63,7 +63,43 @@
                     v-for="item in fileList"
                     :key="item.contentsFileSeq"
                 >
-                    <a href="#" @click.prevent="fileDetailModal(item)">
+                    <a
+                        :href="item.filePhysicalName"
+                        :download="item.fileName"
+                        v-if="
+                            item.fileExtension === 'PPT' ||
+                                item.fileExtension === 'PPTX' ||
+                                item.fileExtension === 'PDF'
+                        "
+                    >
+                        <span class="thumbnail">
+                            <span
+                                :class="[`extension-vr`]"
+                                v-if="item.fileKindCode === 'VR'"
+                            ></span>
+                            <span
+                                :class="[`extension-url`]"
+                                v-else-if="item.fileKindCode === 'VIDEO'"
+                            ></span>
+                            <img
+                                :src="item.thumbnailFilePhysicalName"
+                                :alt="item.thumbnailFileName"
+                                v-else-if="item.thumbnailFilePhysicalName"
+                            />
+                            <span
+                                :class="[
+                                    `extension-${item.fileExtension.toLowerCase()}`,
+                                ]"
+                                v-else
+                            ></span>
+                        </span>
+                        <span class="info-box">
+                            <strong class="title">
+                                {{ item.title || item.fileName }}
+                            </strong>
+                        </span>
+                    </a>
+                    <a href="#" @click.prevent="fileDetailModal(item)" v-else>
                         <span class="thumbnail">
                             <span
                                 :class="[`extension-vr`]"
@@ -161,6 +197,16 @@ export default {
     created() {
         this.initPageData();
         window.addEventListener('scroll', this.handleScroll);
+    },
+    activated() {
+        this.initPageData();
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    deactivated() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
         closeModal() {

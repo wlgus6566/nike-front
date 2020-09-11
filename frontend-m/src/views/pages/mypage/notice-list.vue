@@ -28,9 +28,7 @@
             <ul class="notice-list" v-if="noticeData.length > 0">
                 <li v-for="(item, index) in noticeData" :key="index">
                     <a :href="`/mypage/notice/detail/${item.noticeArticleSeq}`">
-                        <span class="label-noti" v-if="item.noticeYn === 'Y'"
-                            >중요</span
-                        >
+                        <span class="label-noti" v-if="item.noticeYn === 'Y'">중요</span>
                         <span class="title">{{ item.title }}</span>
                         <span class="data">{{ item.updateDt }}</span>
                     </a>
@@ -147,7 +145,6 @@ export default {
         },
         handleCurrentChange(val) {
             this.page = val;
-            this.noticeData = null;
             this.getNoticeList();
         },
     },

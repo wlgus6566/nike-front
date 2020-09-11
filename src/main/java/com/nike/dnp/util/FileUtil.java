@@ -161,7 +161,7 @@ public class FileUtil {
 	public static File makeNewFile(final String folder,final String extension) {
 		log.info("FileUtil.makeNewFile");
 		final String newFilepath = root + File.separator + cleanXSS(folder, false);
-		final File result = new File(newFilepath+File.separator + cleanXSS(makeFileName(), false) + "." + extension);
+		final File result = new File(newFilepath + File.separator + cleanXSS(makeFileName(), false) + "." + cleanXSS(extension, false));
 		new File(newFilepath).mkdirs();
 		return result;
 	}
@@ -526,37 +526,37 @@ public class FileUtil {
 	/**
 	 * xss 필터 및 path 수정
 	 *
-	 * @param value  the value
+	 * @param str  the value
 	 * @param folder 폴더 구분
 	 * @return the string
 	 * @author [윤태호]
 	 * @implNote
 	 * @since 2020. 8. 25. 오후 5:07:38
 	 */
-	public static String cleanXSS(String value, boolean folder) {
+	public static String cleanXSS(String str, boolean folder) {
 		String [] replaceStr = {"bin","boot","etc","lib","lib64","proc","root","sbin","sys","usr","var"};
-		for(String str : replaceStr){
-			value = value.replaceAll(str, "");
+		for(String temp : replaceStr){
+			str = str.replaceAll(temp, "");
 		}
 
-		value = value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-		value = value.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");
-		value = value.replaceAll("'", "&#39;");
-		value = value.replaceAll("eval\\((.*)\\)", "");
-		value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
-		value = value.replaceAll("script", "");
-		value = value.replaceAll("&", "");
+		str = str.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+		str = str.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");
+		str = str.replaceAll("'", "&#39;");
+		str = str.replaceAll("eval\\((.*)\\)", "");
+		str = str.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
+		str = str.replaceAll("script", "");
+		str = str.replaceAll("&", "");
 		if(!folder){
-			value = value.replaceAll("\\\\", "");
-			value = value.replaceAll("/", " ");
+			str = str.replaceAll("\\\\", "");
+			str = str.replaceAll("/", " ");
 		}
 
-		value = value.replaceAll("\\.\\.", "");
-		value = value.replaceAll("\\.\\./", "");
-		value = value.replaceAll("\\./", "");
-		value = value.replaceAll("\\.\\\\", "");
-		value = value.replaceAll("\\.\\.\\\\", "");
-		return value;
+		str = str.replaceAll("\\.\\.", "");
+		str = str.replaceAll("\\.\\./", "");
+		str = str.replaceAll("\\./", "");
+		str = str.replaceAll("\\.\\\\", "");
+		str = str.replaceAll("\\.\\.\\\\", "");
+		return str;
 	}
 
 	/**

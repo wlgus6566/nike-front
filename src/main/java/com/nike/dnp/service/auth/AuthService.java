@@ -369,6 +369,7 @@ public class AuthService {
                                         bottomCount++;
                                     }
                                 }
+                                bottomMenu.setMenuRoles(bottomMenuRoles);
                                 bottomMenu.setListYn(bottomCount > 0 ? "Y" : "N");
                             }
                         } else {
@@ -413,6 +414,7 @@ public class AuthService {
                                         bottomCount++;
                                     }
                                 }
+                                bottomMenu.setMenuRoles(bottomMenuRoles);
                                 bottomMenu.setListYn(bottomCount > 0 ? "Y" : "N");
                             }
                         } else {

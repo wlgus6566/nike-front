@@ -129,7 +129,7 @@ export default {
             const navH = document.querySelector('.nav-area').offsetHeight;
             const stickyWrap = document.querySelector('#sticky');
             if (
-                windowE.clientHeight + windowE.scrollTop - navH - footerH >=
+                windowE.offsetHeight + windowE.scrollTop - navH - footerH >=
                 stickyWrap.offsetTop
             ) {
                 btnWrap.style.position = 'relative';
