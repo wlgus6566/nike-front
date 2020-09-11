@@ -178,23 +178,37 @@ export default {
                             el.reportFileSeq,
                             config
                         );
-                        const url = window.URL.createObjectURL(
-                            new Blob([response.data])
-                        );
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.seq = el.reportBasketSeq;
-                        link.setAttribute('download', el.fileName);
-                        document.body.appendChild(link);
-                        this.link.push(link);
+
+                        if (window.navigator.msSaveBlob) {
+                            this.link.push({
+                                data: response.data,
+                                name: el.fileName,
+                                seq: el.reportBasketSeq,
+                            });
+                        } else {
+                            const url = window.URL.createObjectURL(
+                                new Blob([response.data])
+                            );
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.seq = el.reportBasketSeq;
+                            link.setAttribute('download', el.fileName);
+                            document.body.appendChild(link);
+                            this.link.push(link);
+                        }
                     } catch (error) {
                         console.error(error);
                     }
                 })
             );
             this.link.forEach((el) => {
-                this.delReportBasket(el.seq);
-                el.click();
+                if (window.navigator.msSaveBlob) {
+                    window.navigator.msSaveBlob(new Blob([el.data]), el.name);
+                    this.delReportBasket(el.seq);
+                } else {
+                    el.click();
+                    this.delReportBasket(el.seq);
+                }
             });
             clearInterval(this.fileUploadingInterval);
             this.loaded = 0;
