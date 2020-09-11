@@ -24,10 +24,9 @@
                         class="sbj"
                         @click.prevent="setActiveSeq(item.noticeArticleSeq)"
                     >
-                        <span class="category"
-                            >[<em>{{ item.noticeArticleCategoryValue }}</em
-                            >]</span
-                        >
+                        <span class="category">
+                            [<em>{{ item.noticeArticleCategoryValue }}</em>]
+                        </span>
                         <span class="title">{{ item.title }}</span>
                         <i class="arrow"></i>
                     </a>
@@ -179,7 +178,6 @@ export default {
         },
         handleCurrentChange(val) {
             this.page = val;
-            this.faqData = null;
             this.getFaqList();
         },
     },
