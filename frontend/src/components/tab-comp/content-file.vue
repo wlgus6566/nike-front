@@ -179,23 +179,37 @@ export default {
                             el.contentsFileSeq,
                             config
                         );
-                        const url = window.URL.createObjectURL(
-                            new Blob([response.data])
-                        );
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.seq = el.contentsBasketSeq;
-                        link.setAttribute('download', el.fileName);
-                        document.body.appendChild(link);
-                        this.link.push(link);
+
+                        if (window.navigator.msSaveBlob) {
+                            this.link.push({
+                                data: response.data,
+                                name: el.fileName,
+                                seq: el.contentsBasketSeq,
+                            });
+                        } else {
+                            const url = window.URL.createObjectURL(
+                                new Blob([response.data])
+                            );
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.seq = el.contentsBasketSeq;
+                            link.setAttribute('download', el.fileName);
+                            document.body.appendChild(link);
+                            this.link.push(link);
+                        }
                     } catch (error) {
                         console.error(error);
                     }
                 })
             );
             this.link.forEach((el) => {
-                this.delContBasket(el.seq);
-                el.click();
+                if (window.navigator.msSaveBlob) {
+                    window.navigator.msSaveBlob(new Blob([el.data]), el.name);
+                    this.delContBasket(el.seq);
+                } else {
+                    el.click();
+                    this.delContBasket(el.seq);
+                }
             });
             clearInterval(this.fileUploadingInterval);
             this.loaded = 0;
