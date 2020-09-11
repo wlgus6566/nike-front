@@ -63,7 +63,7 @@
                     v-for="item in fileList"
                     :key="item.contentsFileSeq"
                 >
-                    <a href="#" @click.prevent="fileDetailModal(item)">
+                    <a :href="item.filePhysicalName" target="_blank" download>
                         <span class="thumbnail">
                             <span
                                 :class="[`extension-vr`]"
