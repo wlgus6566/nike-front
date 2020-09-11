@@ -33,8 +33,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The Class Report service.
@@ -377,12 +381,12 @@ public class ReportService {
      * @since 2020. 7. 31. 오후 3:24:10
      */
     @Transactional
-    public ResponseEntity<Resource> downloadFile(final Long reportFileSeq) {
+    public ResponseEntity<Resource> downloadFile(final Long reportFileSeq) throws IOException {
         log.info("ReportService.downloadFile");
         final Optional<ReportFile> reportFile = this.findByFileId(reportFileSeq);
         if (reportFile.isPresent()) {
             reportFile.ifPresent(value -> value.updateDownloadCount(reportFile.get().getDownloadCount()));
-            return FileUtil.fileDownload(reportFile.get().getFilePhysicalName());
+            return FileUtil.s3FileDownload(reportFile.get().getFilePhysicalName(), reportFile.get().getFileName());
         } else {
             return null;
         }
