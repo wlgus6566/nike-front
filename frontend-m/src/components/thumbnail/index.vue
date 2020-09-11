@@ -26,7 +26,6 @@
             :cropImg="this.cropImg"
             :imgName="this.imgName"
             :size="this.size"
-            :checkOrientation="false"
             @cropImage="cropImage"
         />
     </div>
@@ -90,7 +89,22 @@ export default {
                 return;
             }
 
-            new Compress()
+            if (typeof FileReader === 'function') {
+                const reader = new FileReader();
+                reader.onload = event => {
+                    bus.$emit('pageLoading', false);
+                    this.popupOpen();
+                    let url = event.target.result;
+                    this.imgSrc = url;
+                    this.imgName = file.name;
+                    this.$refs.cModal.$refs.cropper.replace(url);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Sorry, FileReader API not supported');
+            }
+
+            /* new Compress()
                 .compress([file], {
                     size: 4, // the max size in MB, defaults to 2MB
                     quality: 1, // the quality of the image, max is 1,
@@ -108,7 +122,7 @@ export default {
                 })
                 .catch(e => {
                     bus.$emit('pageLoading', false);
-                });
+                });*/
         },
         popupOpen() {
             this.visible.cropperModal = true;
