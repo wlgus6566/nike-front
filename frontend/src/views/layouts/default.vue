@@ -110,6 +110,7 @@ export default {
             this.newRoutePath = newRoute.path;
             this.oldRoutePath = oldRoute.path;
             this.activeSet();
+            console.log(1111);
         },
     },
     components: {
@@ -157,9 +158,13 @@ export default {
                 : nav.querySelector('.depth1 > .router-link-active');
             let parentN = null;
             let ul = null;
+            let anchorEn = null;
+            let anchorKo = null;
             if (anchor) {
                 parentN = anchor.parentNode;
                 ul = anchor.nextSibling;
+                anchorEn = anchor.querySelector('span');
+                anchorKo = anchor.querySelector('.ko');
             }
 
             gsap.set(header, { clearProps: 'all' });
@@ -174,10 +179,7 @@ export default {
             gsap.set(nav.querySelectorAll('.depth1 > a'), {
                 clearProps: 'all',
             });
-            gsap.set(nav.querySelectorAll('.depth1 span '), {
-                clearProps: 'all',
-            });
-            gsap.set(anchor.querySelectorAll('span '), {
+            gsap.set(nav.querySelectorAll('.nav-link span '), {
                 clearProps: 'all',
             });
             this.tw.clear();
@@ -189,13 +191,6 @@ export default {
                 .set(nikeSpace, {
                     opacity: '1',
                 })
-                // .set(logo.querySelector('.logo1'), {
-                //     opacity: '0',
-                // })
-                // .set(logo.querySelector('.logo2'), {
-                //     display: 'block',
-                //     opacity: '1',
-                // })
                 .to(
                     logo,
                     0.5,
@@ -275,10 +270,10 @@ export default {
                     },
                     0.3
                 )
-                .set(anchor.querySelector('span'), {
+                .set(anchorEn, {
                     translateY: '0',
                 })
-                .set(anchor.querySelector('.ko'), {
+                .set(anchorKo, {
                     opacity: '0',
                 })
                 .set(
@@ -338,10 +333,19 @@ export default {
                     {
                         opacity: '1',
                         translateX: '0',
+
                         ease: Cubic.easeInOut,
                     },
                     0.4
                 );
+
+            this.tw.eventCallback('onReverseComplete', function () {
+                const menuTitle = document.querySelectorAll('.nav-link span');
+                menuTitle.forEach((el) => {
+                    console.log(el);
+                    el.removeAttribute('style');
+                });
+            });
         },
         pageEnter(el, done) {
             this.pageAnimation(
@@ -390,20 +394,26 @@ export default {
         },
 
         toggleHeader(status, duration) {
+            console.log(444);
             const anchor = document.querySelector(
                 '.depth1 > .router-link-active'
             );
             if (status) {
                 this.menuHoverState = false;
-                anchor.removeEventListener('mouseover', this.menuHover);
+                if (anchor) {
+                    anchor.removeEventListener('mouseover', this.menuHover);
+                }
                 this.tw.play(duration);
             } else {
                 this.menuHoverState = true;
-                anchor.addEventListener('mouseover', this.menuHover);
+                if (anchor) {
+                    anchor.addEventListener('mouseover', this.menuHover);
+                }
                 this.tw.reverse();
             }
         },
         menuHover() {
+            console.log(333);
             const anchor = document.querySelector(
                 '.depth1 > .router-link-active'
             );

@@ -16,7 +16,6 @@
                 ref="Alarm"
                 :visible.sync="visible.activeModal"
                 :alarmList="alarmData"
-                @assetClick="clickAsset"
                 @prAlarmData="getAlarmData"
             />
         </div>
@@ -116,7 +115,7 @@ export default {
         //알람
         alarmModal() {
             this.visible.activeModal = true;
-            this.getAlarmData();
+            this.initFetchData();
         },
         logout() {
             this.$store.commit('LOGOUT');
@@ -168,13 +167,6 @@ export default {
             } catch (error) {
                 console.log(error);
             }
-        },
-        clickAsset() {
-            console.log('clickAsset');
-            alert(
-                '해당 메뉴는 모바일 버전에서 제공되지 않습니다. 자세한 내용은 PC로 접속 시 확인할 수 있습니다.'
-            );
-            this.getAlarmData();
         },
     },
 };
