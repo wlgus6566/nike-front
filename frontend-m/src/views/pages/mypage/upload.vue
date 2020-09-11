@@ -147,6 +147,7 @@ export default {
                 windowE.clientHeight + windowE.scrollTop >=
                 windowE.scrollHeight
             ) {
+                console.log(1);
                 this.infiniteScroll();
             }
         },

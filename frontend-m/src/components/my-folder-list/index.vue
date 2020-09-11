@@ -2,8 +2,8 @@
     <transition-group name="folder-list" tag="ul" class="folder-list-row">
         <li
             class="folder-list-item"
-            v-for="item in folderListData"
-            :key="item.historySeq"
+            v-for="(item, index) in folderListData"
+            :key="index"
         >
             <router-link :to="setUrl(item)">
                 <div class="thumbnail">
@@ -50,7 +50,11 @@ export default {
             if (item.topMenuCode) {
                 return `/${item.topMenuCode}/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
             } else {
-                return `/report/detail/${item.folderSeq}`.toLocaleLowerCase()+'?mypageYn='+this.mypageYn;
+                return (
+                    `/report/detail/${item.folderSeq}`.toLocaleLowerCase() +
+                    '?mypageYn=' +
+                    this.mypageYn
+                );
             }
         },
     },
