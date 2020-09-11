@@ -157,9 +157,12 @@ export default {
             }, 1000 * 60 * 10);
 
             this.downloadFiles = [];
-            this.link.forEach((el) => {
-                el.remove();
-            });
+            if (!window.navigator.msSaveBlob) {
+                this.link.forEach((el) => {
+                    console.log(el);
+                    document.querySelector('body').removeChild(el);
+                });
+            }
             this.link = [];
             await Promise.all(
                 this.contBasketList.map(async (el, i) => {
