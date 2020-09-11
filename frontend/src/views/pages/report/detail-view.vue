@@ -176,7 +176,11 @@ export default {
                 this.$store.commit('SET_RELOAD', true);
                 await this.$store.dispatch('getReportListBasket');
                 if (response.data.success) {
-                    await this.$router.push('/report/management');
+                    if (this.reportDetailData.detailAuthYn !== 'N') {
+                        await this.$router.push('/report/management');
+                    } else {
+                        await this.$router.push('/mypage/upload');
+                    }
                 }
                 console.log(response);
             } catch (error) {

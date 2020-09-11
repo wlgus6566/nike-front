@@ -5,8 +5,8 @@
             <div class="store">{{ userAuthName }}</div>
             <div class="email">{{ userIdVal }}</div>
             <div class="btn-box">
-                <button type="button" class="btn-out" @click="logout">
-                    나가기
+                <button type="button" class="logout" @click="logout">
+                    로그아웃
                 </button>
                 <button type="button" class="btn-alarm" @click="alarmModal">
                     알람
@@ -124,9 +124,9 @@ export default {
         myMenuFn() {
             if (!this.$store.state.menuData) return;
             const menu = this.$store.state.menuData.filter(
-                el => el.menuCode === 'MYPAGE' && el.mobileYn === 'Y'
+                (el) => el.menuCode === 'MYPAGE' && el.mobileYn === 'Y'
             );
-            this.myMenuData = menu[0].menus.filter(el => {
+            this.myMenuData = menu[0].menus.filter((el) => {
                 return el.mobileYn === 'Y';
             });
         },
@@ -157,8 +157,10 @@ export default {
                             .addEventListener('scroll', this.handleScroll);
                     }
                 }
-                this.alarmData.forEach(el => {
-                    el.typeCd === 'REPORT_MANAGE' ? el.typeCd = 'REPORT' : el.typeCd;
+                this.alarmData.forEach((el) => {
+                    el.typeCd === 'REPORT_MANAGE'
+                        ? (el.typeCd = 'REPORT')
+                        : el.typeCd;
                 });
                 this.page++;
                 this.loadingData = false;

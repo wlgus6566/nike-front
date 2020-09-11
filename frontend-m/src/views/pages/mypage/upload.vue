@@ -13,6 +13,7 @@
             <MyFolderList
                 v-if="uploadFolderData.length"
                 :folderListData="uploadFolderData"
+                :mypageYn="mypageYn"
             />
             <template v-else>
                 <NoData>
@@ -39,6 +40,7 @@ export default {
     name: 'upload',
     data() {
         return {
+            mypageYn: 'Y',
             uploadFolderDataList: null,
             uploadFolderData: null,
             page: 0,

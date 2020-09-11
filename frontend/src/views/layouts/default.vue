@@ -110,6 +110,7 @@ export default {
             this.newRoutePath = newRoute.path;
             this.oldRoutePath = oldRoute.path;
             this.activeSet();
+            console.log(1111);
         },
     },
     components: {
@@ -146,7 +147,10 @@ export default {
         },
         headerAni(headerActiveNav) {
             const header = document.querySelector('header');
+            const back = document.querySelector('.back');
             const logo = header.querySelector('.gnb-logo');
+            const nikeSpace = logo.querySelector('.logo-nike-space');
+            const nike = logo.querySelector('.logo-nike');
             const bg = header.querySelector('.header-bg');
             const nav = header.querySelector('nav');
             const anchor = headerActiveNav
@@ -154,13 +158,20 @@ export default {
                 : nav.querySelector('.depth1 > .router-link-active');
             let parentN = null;
             let ul = null;
+            let anchorEn = null;
+            let anchorKo = null;
             if (anchor) {
                 parentN = anchor.parentNode;
                 ul = anchor.nextSibling;
+                anchorEn = anchor.querySelector('span');
+                anchorKo = anchor.querySelector('.ko');
             }
 
             gsap.set(header, { clearProps: 'all' });
+            gsap.set(back, { clearProps: 'all' });
             gsap.set(logo, { clearProps: 'all' });
+            gsap.set(nikeSpace, { clearProps: 'all' });
+            gsap.set(nike, { clearProps: 'all' });
             gsap.set(bg, { clearProps: 'all' });
             gsap.set(nav, { clearProps: 'all' });
             gsap.set(nav.querySelectorAll('.depth1'), { clearProps: 'all' });
@@ -168,10 +179,7 @@ export default {
             gsap.set(nav.querySelectorAll('.depth1 > a'), {
                 clearProps: 'all',
             });
-            gsap.set(nav.querySelectorAll('.depth1 span '), {
-                clearProps: 'all',
-            });
-            gsap.set(anchor.querySelectorAll('span '), {
+            gsap.set(nav.querySelectorAll('.nav-link span '), {
                 clearProps: 'all',
             });
             this.tw.clear();
@@ -180,19 +188,15 @@ export default {
                     backgroundImage:
                         'linear-gradient(to right, rgba(255,255,255,1) 100%, rgba(0,0,0,0) 100%)',
                 })
-                // .set(logo.querySelector('.logo1'), {
-                //     opacity: '0',
-                // })
-                // .set(logo.querySelector('.logo2'), {
-                //     display: 'block',
-                //     opacity: '1',
-                // })
+                .set(nikeSpace, {
+                    opacity: '1',
+                })
                 .to(
                     logo,
                     0.5,
                     {
                         translateX: '-23px',
-                        translateY: '-30px',
+                        translateY: '0',
                         scale: 0.25,
                         ease: Cubic.easeInOut,
                     },
@@ -204,6 +208,15 @@ export default {
                     {
                         backgroundImage:
                             'linear-gradient(to right, rgba(247,247,247,1) 20%, rgba(0,0,0,0) 20%)',
+                        ease: Cubic.easeInOut,
+                    },
+                    0
+                )
+                .to(
+                    nikeSpace,
+                    0.5,
+                    {
+                        opacity: '0',
                         ease: Cubic.easeInOut,
                     },
                     0
@@ -257,12 +270,26 @@ export default {
                     },
                     0.3
                 )
-                .set(anchor.querySelector('span'), {
+                .set(anchorEn, {
                     translateY: '0',
                 })
-                .set(anchor.querySelector('.ko'), {
+                .set(anchorKo, {
                     opacity: '0',
                 })
+                .set(
+                    back,
+                    {
+                        opacity: '0',
+                    },
+                    0.3
+                )
+                .set(
+                    nike,
+                    {
+                        opacity: '0',
+                    },
+                    0.3
+                )
                 .set(
                     ul,
                     {
@@ -283,15 +310,42 @@ export default {
                     0.3
                 )
                 .to(
+                    back,
+                    0.3,
+                    {
+                        opacity: '1',
+                        ease: Cubic.easeInOut,
+                    },
+                    0.4
+                )
+                .to(
+                    nike,
+                    0.3,
+                    {
+                        opacity: '1',
+                        ease: Cubic.easeInOut,
+                    },
+                    0.4
+                )
+                .to(
                     ul,
                     0.3,
                     {
                         opacity: '1',
                         translateX: '0',
+
                         ease: Cubic.easeInOut,
                     },
                     0.4
                 );
+
+            this.tw.eventCallback('onReverseComplete', function () {
+                const menuTitle = document.querySelectorAll('.nav-link span');
+                menuTitle.forEach((el) => {
+                    console.log(el);
+                    el.removeAttribute('style');
+                });
+            });
         },
         pageEnter(el, done) {
             this.pageAnimation(
@@ -340,20 +394,26 @@ export default {
         },
 
         toggleHeader(status, duration) {
+            console.log(444);
             const anchor = document.querySelector(
                 '.depth1 > .router-link-active'
             );
             if (status) {
                 this.menuHoverState = false;
-                anchor.removeEventListener('mouseover', this.menuHover);
+                if (anchor) {
+                    anchor.removeEventListener('mouseover', this.menuHover);
+                }
                 this.tw.play(duration);
             } else {
                 this.menuHoverState = true;
-                anchor.addEventListener('mouseover', this.menuHover);
+                if (anchor) {
+                    anchor.addEventListener('mouseover', this.menuHover);
+                }
                 this.tw.reverse();
             }
         },
         menuHover() {
+            console.log(333);
             const anchor = document.querySelector(
                 '.depth1 > .router-link-active'
             );

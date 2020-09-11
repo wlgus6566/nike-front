@@ -101,6 +101,7 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
+        this.initFetchData();
         window.addEventListener('scroll', this.handleScroll);
     },
     deactivated() {

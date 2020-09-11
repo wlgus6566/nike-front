@@ -4390,6 +4390,9 @@ img.image-grayscale {
     top: 5px;
     left: 0;
 }
+.fc .fc-scroller-liquid-absolute {
+    overflow: hidden !important;
+}
 .fc .fc-toolbar.fc-header-toolbar {
     justify-content: center;
 }
@@ -4595,7 +4598,7 @@ img.image-grayscale {
     border: 1px solid #eee;
 }
 .main-fc .fc .fc-toolbar.fc-header-toolbar {
-    padding: 20px 20px 12px;
+    padding: 20px 20px 10px;
     margin-bottom: 0;
 }
 .main-fc .fc .fc-header-toolbar .fc-toolbar-title {

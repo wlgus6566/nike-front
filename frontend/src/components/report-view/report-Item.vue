@@ -78,9 +78,9 @@
                                 ></span>
                             </span>
                             <span class="info-box">
-                                <strong class="title">{{
-                                    item.title || item.thumbnailFileName
-                                }}</strong>
+                                <strong class="title">
+                                    {{ item.title || item.fileName }}
+                                </strong>
                             </span>
                         </label>
                         <div class="btn-box">
@@ -119,12 +119,22 @@
                                 type="button"
                                 :class="buttonClass(item.reportFileSeq)"
                                 :disabled="
-                                    item.fileKindCode === 'VR' || item.url
+                                    !item.detailThumbnailFilePhysicalName
                                 "
                                 @click="accordion(item.reportFileSeq)"
                             >
                                 <span>더보기</span>
                             </button>
+                            <!-- <button
+                                type="button"
+                                :class="buttonClass(item.reportFileSeq)"
+                                :disabled="
+                                    item.fileKindCode === 'VR' || item.url
+                                "
+                                @click="accordion(item.reportFileSeq)"
+                            >
+                                <span>더보기</span>
+                            </button>-->
                         </div>
                     </div>
                     <transition

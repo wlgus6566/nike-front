@@ -387,8 +387,8 @@ export default {
         },
     },
     watch: {
-        menuCode(val) {
-            this.getAuthList(val, this.$route.params.id);
+        menuCode() {
+            this.getAuthList(this.$route.params.id);
         },
         '$store.state.gnbMenuListData'() {
             this.pageMenuCodeAuth(this.$route.meta.topMenuCode, 'CREATE');
@@ -433,12 +433,12 @@ export default {
         }
     },
     methods: {
-        async getAuthList(menuCode, seq) {
+        async getAuthList(seq) {
             try {
                 const topMenuCode = this.$route.meta.topMenuCode;
                 const { data: response } = await getContentsAuthList(
                     topMenuCode,
-                    menuCode,
+                    this.menuCode,
                     {
                         contentsSeq: seq,
                     }
@@ -560,7 +560,7 @@ export default {
         },
         ModalAuthOpen() {
             this.visible.ModalAuth = true;
-            this.$refs.modalAuth.dataInit(this.folderDetail.checks);
+            this.$refs.modalAuth.dataInit();
         },
         uploadFiles() {
             if (!this.folderDetail.imageBase64) {
@@ -683,8 +683,6 @@ export default {
                 this.EndDt = response.data.campaignEndDt
                     ? new Date(response.data.campaignEndDt)
                     : null;
-
-                await this.$refs.modalAuth.dataInit(this.folderDetail.checks);
                 await this.$refs.fileSet.getFolderDetailFile();
             } catch (error) {
                 console.error(error);
@@ -708,13 +706,6 @@ export default {
             this.folderDetail.folderContents = '';
             this.folderDetail.campaignPeriodSectionCode = 'SELECT';
             this.folderDetail.memo = '';
-            /* this.folderDetail.checks = [
-                {
-                    authSeq: 0,
-                    detailAuthYn: 'N',
-                    emailReceptionYn: 'N',
-                },
-            ];*/
         },
     },
     beforeRouteLeave(to, from, next) {

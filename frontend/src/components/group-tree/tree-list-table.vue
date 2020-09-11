@@ -21,6 +21,7 @@
                         <input
                             type="checkbox"
                             :checked="item.detailAuthYn === 'Y'"
+                            :disabled="item.checkBoxYn === 'N'"
                             @click="detailAuthUpdate(item.authSeq)"
                         />
                         <i></i>
@@ -31,6 +32,7 @@
                         <input
                             type="checkbox"
                             :checked="item.emailReceptionYn === 'Y'"
+                            :disabled="item.checkBoxYn === 'N'"
                             @click="emailReceptionUpdate(item.authSeq)"
                         />
                         <i></i>
@@ -49,7 +51,6 @@
                     :groupTreeAddItem="groupTreeAddItem"
                     :detailAuthCheck="detailAuthCheck"
                     :emailReceptionCheck="emailReceptionCheck"
-                    :checks="checks"
                     :depth="depth + 1"
                 />
             </transition>
@@ -65,14 +66,18 @@ export default {
         return {};
     },
     computed: {
-        detailAuthYn() {
-            const arr = this.checks.filter((el) => el.detailAuthYn === 'Y');
+        /*detailAuthYn() {
+            const arr = this.groupTreeData.filter(
+                (el) => el.detailAuthYn === 'Y'
+            );
             return arr.map((el) => el.authSeq);
         },
         emailReceptionYn() {
-            const arr = this.checks.filter((el) => el.emailReceptionYn === 'Y');
+            const arr = this.groupTreeData.filter(
+                (el) => el.emailReceptionYn === 'Y'
+            );
             return arr.map((el) => el.authSeq);
-        },
+        },*/
     },
     components: {},
     props: [
@@ -82,7 +87,6 @@ export default {
         'detailAuthCheck',
         'emailReceptionCheck',
         'depth',
-        'checks',
     ],
     methods: {
         detailAuthUpdate(seq) {
