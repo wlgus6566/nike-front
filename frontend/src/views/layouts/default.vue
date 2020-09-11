@@ -63,12 +63,12 @@
                 </span>
                 <ul class="info-list">
                     <li>
-                        <router-link to="/terms/privacy"
-                            >개인정보처리방침</router-link
-                        >
+                        <router-link to="/terms/service">이용약관</router-link>
                     </li>
                     <li>
-                        <router-link to="/terms/service">이용약관</router-link>
+                        <router-link to="/terms/privacy">
+                            <strong>개인정보처리방침</strong>
+                        </router-link>
                     </li>
                 </ul>
             </div>
@@ -413,14 +413,16 @@ export default {
             const anchor = document.querySelector(
                 '.depth1 > .router-link-active'
             );
-            const en = anchor.querySelector('span');
-            const ko = anchor.querySelector('.ko');
-            if (this.menuHoverState) {
-                en.removeAttribute('style');
-                ko.removeAttribute('style');
-            } else {
-                en.style.transform = 'translateY(0)';
-                ko.style.opacity = '0';
+            if (anchor) {
+                const en = anchor.querySelector('span');
+                const ko = anchor.querySelector('.ko');
+                if (this.menuHoverState) {
+                    en.removeAttribute('style');
+                    ko.removeAttribute('style');
+                } else {
+                    en.style.transform = 'translateY(0)';
+                    ko.style.opacity = '0';
+                }
             }
         },
         mouseEvent(status) {

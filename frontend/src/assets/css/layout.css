@@ -308,12 +308,26 @@ footer > .inner .copy {
 footer > .inner .info-list {
     margin-left: auto;
 }
+footer > .inner .info-list li + li {
+    position: relative;
+}
+footer > .inner .info-list li + li:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 10px;
+    margin-top: -5px;
+    background: #ddd;
+    opacity: 0.4;
+}
 footer > .inner .info-list li a {
     display: block;
     padding: 0 15px;
-    font-size: 11px;
+    font-size: 13px;
     color: #fff;
-    opacity: 0.6;
     line-height: 30px;
     font-weight: 100;
 }
