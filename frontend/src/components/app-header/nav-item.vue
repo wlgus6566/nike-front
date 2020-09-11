@@ -58,7 +58,7 @@ export default {
     props: ['item', 'depth', 'navIdx', 'activeIndex'],
     watch: {
         $route(newRoute) {
-            //this.init(newRoute.matched);
+            this.init(newRoute.matched);
         },
     },
     data: function () {
@@ -96,14 +96,16 @@ export default {
             });
         },
         init(routeArray) {
-            const linkPath = this.$el
-                .querySelector(':scope > .nav-link')
-                .getAttribute('href');
-            for (let item in routeArray) {
-                const path = routeArray[item].path;
+            if (this.$el.tagName) {
+                const linkPath = this.$el
+                    .querySelector(':scope > .nav-link')
+                    .getAttribute('href');
+                for (let item in routeArray) {
+                    const path = routeArray[item].path;
 
-                if (path === linkPath) {
-                    this.$emit('update', this.navIdx, true);
+                    if (path === linkPath) {
+                        this.$emit('update', this.navIdx, true);
+                    }
                 }
             }
         },
