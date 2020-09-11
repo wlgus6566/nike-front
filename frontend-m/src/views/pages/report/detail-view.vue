@@ -138,7 +138,7 @@
             </ul>
             <NoData v-else class="file-type">
                 <i class="icon-file"></i>
-                <p class="desc">등록된 파일이 없습니다.</p>
+                <p class="desc">등록된 데이터가 없습니다.</p>
             </NoData>
         </template>
         <fileDetailPopup
