@@ -152,7 +152,7 @@ export default {
             //this.addAuthority.value = null;
         },
         'addAuthority.value'(val) {
-            console.log(val);
+            //console.log(val);
             if (val[0] === null) {
                 if (this.addUserData.authSeqArray === null) return;
                 if (this.addUserData.authSeqArray.length) {

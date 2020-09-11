@@ -139,7 +139,7 @@ export default {
     methods: {
         async loginUpdate() {
             const response = await getLoginUpdate();
-            console.log(response);
+            //console.log(response);
         },
         loadedUpdate() {
             const loaded = this.downloadFiles.reduce((a, b) => {
@@ -155,9 +155,12 @@ export default {
             }, 1000 * 60 * 10);
 
             this.downloadFiles = [];
-            this.link.forEach((el) => {
-                el.remove();
-            });
+            if (!window.navigator.msSaveBlob) {
+                this.link.forEach((el) => {
+                    console.log(el);
+                    document.querySelector('body').removeChild(el);
+                });
+            }
             this.link = [];
             await Promise.all(
                 this.reportBasketList.map(async (el, i) => {
@@ -170,7 +173,7 @@ export default {
                                     total: progressEvent.total,
                                     loaded: progressEvent.loaded,
                                 };
-                                console.log(progressEvent.loaded);
+                                //console.log(progressEvent.loaded);
                                 this.loadedUpdate();
                             },
                         };
@@ -178,23 +181,37 @@ export default {
                             el.reportFileSeq,
                             config
                         );
-                        const url = window.URL.createObjectURL(
-                            new Blob([response.data])
-                        );
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.seq = el.reportBasketSeq;
-                        link.setAttribute('download', el.fileName);
-                        document.body.appendChild(link);
-                        this.link.push(link);
+
+                        if (window.navigator.msSaveBlob) {
+                            this.link.push({
+                                data: response.data,
+                                name: el.fileName,
+                                seq: el.reportBasketSeq,
+                            });
+                        } else {
+                            const url = window.URL.createObjectURL(
+                                new Blob([response.data])
+                            );
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.seq = el.reportBasketSeq;
+                            link.setAttribute('download', el.fileName);
+                            document.body.appendChild(link);
+                            this.link.push(link);
+                        }
                     } catch (error) {
                         console.error(error);
                     }
                 })
             );
             this.link.forEach((el) => {
-                this.delReportBasket(el.seq);
-                el.click();
+                if (window.navigator.msSaveBlob) {
+                    window.navigator.msSaveBlob(new Blob([el.data]), el.name);
+                    this.delReportBasket(el.seq);
+                } else {
+                    el.click();
+                    this.delReportBasket(el.seq);
+                }
             });
             clearInterval(this.fileUploadingInterval);
             this.loaded = 0;
@@ -222,7 +239,6 @@ export default {
             }
         },
         async addContBasket(seq) {
-            console.log(seq);
             try {
                 await postReportBasket();
                 await this.$store.dispatch('getReportListBasket');
@@ -231,7 +247,6 @@ export default {
             }
         },
         async delReportBasket(seq) {
-            console.log(seq);
             this.deleteLoading.push(seq);
             try {
                 await deleteReportBasket(seq);

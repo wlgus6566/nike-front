@@ -175,14 +175,14 @@ export default {
 
         // 주문서 발송
         async orderSave(orderComment) {
-            console.log(this.orderSeq);
-            console.log(this.orderQuan);
-            console.log({
+            //console.log(this.orderSeq);
+            //console.log(this.orderQuan);
+            /*console.log({
                 goodsSeqList: this.orderSeq,
                 orderDescription: orderComment,
                 orderQuantityList: this.orderQuan,
                 totalAmount: this.totalPrice,
-            });
+            });*/
             try {
                 const { data: response } = await postOrderSave({
                     goodsSeqList: this.orderSeq,
@@ -190,7 +190,7 @@ export default {
                     orderQuantityList: this.orderQuan,
                     totalAmount: this.totalPrice,
                 });
-                console.log(response);
+                //console.log(response);
                 if (response.existMsg) {
                     await getExistMsg(response);
                 } else {

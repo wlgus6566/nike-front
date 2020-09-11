@@ -95,7 +95,7 @@ export default {
         },*/
         //검색
         searchSubmit(val) {
-            console.log(val);
+            //console.log(val);
             this.searchKeyword = val;
             this.getNoticeList();
         },

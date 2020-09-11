@@ -17,7 +17,7 @@ export default {
     props: ['itemLength', 'pageCount', 'totalItem'],
     methods: {
         handleCurrentChange(val) {
-            console.log(val);
+            //console.log(val);
             this.$emit('handleCurrentChange', val - 1);
         },
     },

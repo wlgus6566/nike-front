@@ -164,7 +164,7 @@ export default {
                 if (response.data.existMsg) {
                     alert(response.data.msg);
                 }
-                console.log(response.data);
+                //console.log(response.data);
             } catch (error) {
                 console.error(error);
             }
@@ -214,7 +214,7 @@ export default {
                     if (response.existMsg) {
                         alert(response.msg);
                     }
-                    console.log('delAuth', response);
+                    //console.log('delAuth', response);
                 } catch (error) {
                     console.error(error);
                 }

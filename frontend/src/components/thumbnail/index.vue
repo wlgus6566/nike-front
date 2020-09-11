@@ -113,7 +113,7 @@ export default {
                 })
                 .catch((e) => {
                     bus.$emit('pageLoading', false);
-                    console.log(e);
+                    //console.log(e);
                 });
         },
         popupClose() {

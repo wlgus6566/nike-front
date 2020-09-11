@@ -130,9 +130,6 @@ export default {
                     beginDt: this.$moment(this.beginDt).format('YYYY-MM-DD'),
                     endDt: this.$moment(this.endDt).format('YYYY-MM-DD'),
                 });
-                console.log(response);
-                console.log(this.beginDt);
-                console.log(this.endDt);
                 this.orderList = response.content;
                 this.loadingData = false;
             } catch (error) {
@@ -140,7 +137,6 @@ export default {
             }
         },
         async showOrderDetail(seq) {
-            console.log(seq);
             this.visible.orderSheet = true;
             try {
                 const {
