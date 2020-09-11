@@ -153,7 +153,6 @@ export default {
         },
         handleCurrentChange(val) {
             this.page = val;
-            this.newsData = null;
             this.getNewsList();
         },
     },
