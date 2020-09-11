@@ -295,7 +295,7 @@ export default {
             console.log('scrollHeight', windowE.scrollHeight);
 
             if (
-                windowE.offsetHeight + windowE.scrollTop >=
+                windowE.clientHeight + windowE.scrollTop + 30 >=
                 windowE.scrollHeight
             ) {
                 this.infiniteScroll();
