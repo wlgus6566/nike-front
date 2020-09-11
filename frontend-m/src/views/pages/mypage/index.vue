@@ -16,7 +16,6 @@
                 ref="Alarm"
                 :visible.sync="visible.activeModal"
                 :alarmList="alarmData"
-                @assetClick="clickAsset"
                 @prAlarmData="getAlarmData"
             />
         </div>
@@ -107,7 +106,7 @@ export default {
             if (this.loadingData) return;
             const alarmList = document.querySelector('.alarm-list');
             if (
-                alarmList.clientHeight + alarmList.scrollTop >=
+                alarmList.offsetHeight + alarmList.scrollTop >=
                 alarmList.scrollHeight
             ) {
                 this.infiniteScroll();
@@ -116,7 +115,7 @@ export default {
         //알람
         alarmModal() {
             this.visible.activeModal = true;
-            this.getAlarmData();
+            this.initFetchData();
         },
         logout() {
             this.$store.commit('LOGOUT');
@@ -125,9 +124,9 @@ export default {
         myMenuFn() {
             if (!this.$store.state.menuData) return;
             const menu = this.$store.state.menuData.filter(
-                (el) => el.menuCode === 'MYPAGE' && el.mobileYn === 'Y'
+                el => el.menuCode === 'MYPAGE' && el.mobileYn === 'Y'
             );
-            this.myMenuData = menu[0].menus.filter((el) => {
+            this.myMenuData = menu[0].menus.filter(el => {
                 return el.mobileYn === 'Y';
             });
         },
@@ -158,7 +157,7 @@ export default {
                             .addEventListener('scroll', this.handleScroll);
                     }
                 }
-                this.alarmData.forEach((el) => {
+                this.alarmData.forEach(el => {
                     el.typeCd === 'REPORT_MANAGE'
                         ? (el.typeCd = 'REPORT')
                         : el.typeCd;
@@ -168,13 +167,6 @@ export default {
             } catch (error) {
                 console.log(error);
             }
-        },
-        clickAsset() {
-            console.log('clickAsset');
-            alert(
-                '해당 메뉴는 모바일 버전에서 제공되지 않습니다. 자세한 내용은 PC로 접속 시 확인할 수 있습니다.'
-            );
-            this.getAlarmData();
         },
     },
 };

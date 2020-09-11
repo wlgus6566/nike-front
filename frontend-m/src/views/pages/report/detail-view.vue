@@ -16,8 +16,12 @@
         </div>
 
         <div class="feedback-wrap">
-            <strong class="title">FEEDBACK </strong>
             <template v-if="feedbackList">
+                <strong
+                    class="title"
+                    v-if="folderAuthCheck('DOWNLOAD') || feedbackList.length"
+                    >FEEDBACK
+                </strong>
                 <ul class="feedback-list" v-if="feedbackList.length">
                     <li
                         class="feedback-item"
@@ -47,7 +51,7 @@
                     </li>
                 </ul>
             </template>
-            <div class="textarea">
+            <div class="textarea" v-if="folderAuthCheck('DOWNLOAD')">
                 <textarea
                     v-model="answerContents"
                     maxlength="100"
@@ -126,9 +130,10 @@ import {
 import { getUserIdFromCookie } from '@/utils/cookies';
 import fileDetailPopup from '@/views/pages/report/file-Detail-Popup';
 import NoData from '@/components/no-data/';
-
+import { authCheck } from '@/utils/authCheck';
 export default {
     name: 'detail-view',
+    mixins: [authCheck],
     data() {
         return {
             loading: false,
@@ -147,6 +152,9 @@ export default {
         };
     },
     mounted() {
+        this.fetchData();
+    },
+    activated() {
         this.fetchData();
     },
     components: {

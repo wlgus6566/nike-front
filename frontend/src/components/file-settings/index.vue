@@ -299,6 +299,17 @@ export default {
             if (!this.FileList.length) {
                 this.FileList.push({ ...this.defaultFileData });
             }
+
+            this.uploadFile = this.uploadFile.filter((a) => {
+                return this.FileList.some((b) => {
+                    return (
+                        a.name === b.fileName &&
+                        a.type === b.fileContentType &&
+                        a.size === b.fileSize
+                    );
+                });
+            });
+
             this.emitFileList();
         },
         fileSelect() {

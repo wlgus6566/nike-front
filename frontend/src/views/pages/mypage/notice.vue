@@ -30,7 +30,11 @@
         />
         <div class="btn-tbl-box">
             <div class="right">
-                <router-link to="/mypage/notice/form" class="btn-form-gray">
+                <router-link
+                    to="/mypage/notice/form"
+                    class="btn-form-gray"
+                    v-if="folderAuthCheck('CREATE')"
+                >
                     <span>등록</span>
                 </router-link>
             </div>
@@ -49,9 +53,10 @@
 
 <script>
 import { getCustomerList } from '@/api/customer';
-
+import { authCheck } from '@/utils/authCheck';
 export default {
     name: 'notice-list',
+    mixins: [authCheck],
     data() {
         return {
             noticeData: null,

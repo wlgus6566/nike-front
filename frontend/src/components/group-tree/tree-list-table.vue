@@ -16,7 +16,8 @@
                         "
                     ></i>
                 </button>
-                <label v-if="depth !== 0">
+                <label
+                    ><!-- v-if="depth !== 0"-->
                     <span class="checkbox">
                         <input
                             type="checkbox"
@@ -27,7 +28,8 @@
                         <i></i>
                     </span>
                 </label>
-                <label v-if="depth !== 0">
+                <label
+                    ><!-- v-if="depth !== 0"-->
                     <span class="checkbox">
                         <input
                             type="checkbox"

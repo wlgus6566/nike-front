@@ -119,6 +119,7 @@ export default {
             if (val.split('/')[1] === 'report') {
                 this.menuLottie(1);
             }
+            this.pathLottie();
         },
         '$store.state.menuData'() {
             this.menuFn();

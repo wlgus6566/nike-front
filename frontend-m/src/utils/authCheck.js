@@ -1,6 +1,7 @@
 const authCheck = {
     methods: {
         folderAuthCheck(skillCodes, topMenuCode, menuCode) {
+            if (!this.$store.state.menuData) return;
             const GNB = this.$store.state.menuData;
             const TopMenuCode = topMenuCode || this.$route.meta.topMenuCode;
             const MenuCode = menuCode || this.$route.meta.menuCode;
