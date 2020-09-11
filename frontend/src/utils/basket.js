@@ -14,7 +14,7 @@ const addProductBasket = async (goodsSeq, orderQuantity, msg) => {
             goodsSeq: goodsSeq,
             orderQuantity: orderQuantity,
         });
-        console.log(response);
+        //console.log(response);
         await store.dispatch('basketList');
         if (msg) {
             alert('CART에 담겼습니다');

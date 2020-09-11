@@ -179,13 +179,13 @@ export default {
         thumbnail,
     },
     created() {
-        this.$store.state.saveFolder = false
+        this.$store.state.saveFolder = false;
         if (this.$route.params.id) {
             this.getReportDetailView();
         }
     },
     activated() {
-        this.$store.state.saveFolder = false
+        this.$store.state.saveFolder = false;
         this.reportDetailData = {
             reportName: '',
             reportSectionCode: 'SP',
@@ -199,7 +199,7 @@ export default {
     methods: {
         async loginUpdate() {
             const response = await getLoginUpdate();
-            console.log(response);
+            //console.log(response);
         },
         fileOrderSet() {
             this.uploadFileList = this.uploadFileList.filter((a) => {
@@ -337,7 +337,7 @@ export default {
                             },
                         };
                         const response = await fileUpLoad(formData, config);
-                        console.log(response);
+                        //console.log(response);
                         if (response.existMsg) {
                             alert(response.msg);
                         }
@@ -402,7 +402,7 @@ export default {
                 } else {
                     await this.$router.push(`/report/management`);
                 }*/
-               this.$store.state.saveFolder = false;
+                this.$store.state.saveFolder = false;
             } catch (error) {
                 console.log(error);
                 this.$store.state.saveFolder = false;
@@ -435,19 +435,19 @@ export default {
         },
     },
     beforeRouteLeave(to, from, next) {
-      if (!this.$store.state.saveFolder) {
-        const answer = window.confirm(
-            '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
-        );
-        if (answer) {
-          next();
+        if (!this.$store.state.saveFolder) {
+            const answer = window.confirm(
+                '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
+            );
+            if (answer) {
+                next();
+            } else {
+                next(false);
+            }
         } else {
-          next(false);
+            next();
         }
-      } else {
-        next();
-      }
-  },
+    },
 };
 </script>
 <style scoped></style>

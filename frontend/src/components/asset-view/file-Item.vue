@@ -363,7 +363,7 @@ export default {
             };
         },
         onStart(e) {
-            console.log(123);
+            //console.log(123);
             const thumbnail = document.querySelector('.drag-item .thumbnail');
             const absoluteLeft =
                 window.pageXOffset + thumbnail.getBoundingClientRect().left;

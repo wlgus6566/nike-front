@@ -18,7 +18,7 @@ export default {
         termsService: () => import('@/components/terms/privacy'),
     },
     mounted() {
-        console.log(this.tabName);
+        //console.log(this.tabName);
     },
     data() {
         return {

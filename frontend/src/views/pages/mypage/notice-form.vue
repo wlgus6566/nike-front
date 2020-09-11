@@ -65,7 +65,7 @@
                             v-model="noticeDetail.contents"
                             :config="editorConfig"
                             @blur="onEditorInput"
-                            style="width: 100%"
+                            style="width: 100%;"
                         />
                     </div>
                     <!--                    <div class="form-column">-->
@@ -220,9 +220,9 @@ export default {
                     } else {
                         alert(response.data.msg);
                     }
-                    console.log(response);
+                    /* console.log(response);
                     console.log('시퀀스');
-                    console.log(this.noticeArticleSeq);
+                    console.log(this.noticeArticleSeq);*/
                 } catch (error) {
                     this.$store.state.saveFolder = false;
                     console.error(error);
@@ -264,7 +264,7 @@ export default {
                     this.$route.meta.sectionCode,
                     this.$route.params.id
                 );
-                console.log(response);
+                //console.log(response);
                 this.noticeDetail = response;
                 this.noticeArticleSeq = response.noticeArticleSeq;
             } catch (error) {
@@ -296,16 +296,16 @@ export default {
     },
     beforeRouteLeave(to, from, next) {
         if (!this.$store.state.saveFolder) {
-          const answer = window.confirm(
-              '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
-          );
-          if (answer) {
-            next();
-          } else {
-            next(false);
-          }
+            const answer = window.confirm(
+                '이 페이지에서 나가시겠습니까?\n작업중인 내역은 저장되지 않습니다.'
+            );
+            if (answer) {
+                next();
+            } else {
+                next(false);
+            }
         } else {
-          next();
+            next();
         }
     },
 };

@@ -128,7 +128,7 @@ export default {
             if (delAlert) {
                 try {
                     const response = await delAgencyContact(agencySeq);
-                    console.log(response);
+                    //console.log(response);
                     if (response.data.existMsg) {
                         alert(response.data.msg);
                     }
