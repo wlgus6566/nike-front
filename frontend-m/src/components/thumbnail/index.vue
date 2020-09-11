@@ -26,6 +26,7 @@
             :cropImg="this.cropImg"
             :imgName="this.imgName"
             :size="this.size"
+            :checkOrientation="false"
             @cropImage="cropImage"
         />
     </div>
