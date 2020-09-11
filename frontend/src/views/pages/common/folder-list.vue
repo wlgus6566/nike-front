@@ -14,7 +14,7 @@
         <div class="sorting-area">
             <ListSorting :listTypes="listTypes" />
             <FilterSelect :listSortSelect="listSortSelect" />
-            <SearchInput @searchSubmit="searchSubmit" />
+            <SearchInput ref="searchInput" @searchSubmit="searchSubmit" />
         </div>
         <template v-if="folderListData">
             <FolderList
@@ -205,6 +205,12 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
+        if (this.searchKeyword !== '') {
+            this.$refs.searchInput.input = '';
+            this.searchKeyword = '';
+            this.initFetchData();
+        }
+
         //initializationData
         this.uploadAuth = this.folderAuthCheck('CREATE');
         if (this.$store.state.reload) {
