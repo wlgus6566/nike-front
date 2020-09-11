@@ -3,6 +3,7 @@ package com.nike.dnp.service.alarm;
 import com.nike.dnp.dto.SearchDTO;
 import com.nike.dnp.dto.alarm.AlarmResultDTO;
 import com.nike.dnp.entity.alarm.Alarm;
+import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.alarm.AlarmRepository;
 import com.nike.dnp.util.SecurityUtil;
@@ -14,6 +15,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -103,5 +107,21 @@ public class AlarmService {
         );
         alarmRepositoryl.delete(alarm.get());
         return alarm.get();
+    }
+
+    /**
+     * Delete alarm scheduler.
+     *
+     * @author [이소정]
+     * @implNote 7일 이전 알림 삭제
+     * @since 2020. 9. 11. 오후 3:24:12
+     */
+    @Transactional
+    public void deleteAlarmScheduler() {
+        final List<Alarm> contentsList
+                = alarmRepositoryl.findByRegistrationDtBefore(
+                        LocalDateTime.of(LocalDate.now().plusDays(-7), LocalTime.of(0,0,0))
+        );
+        alarmRepositoryl.deleteAll(contentsList);
     }
 }
