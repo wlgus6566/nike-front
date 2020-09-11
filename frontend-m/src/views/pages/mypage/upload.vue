@@ -144,7 +144,7 @@ export default {
             if (this.loadingData) return;
             const windowE = document.documentElement;
             if (
-                windowE.clientHeight + windowE.scrollTop >=
+                windowE.offsetHeight + windowE.scrollTop >=
                 windowE.scrollHeight
             ) {
                 console.log(1);

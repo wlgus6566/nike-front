@@ -290,10 +290,6 @@ export default {
         handleScroll() {
             if (this.loadingData) return;
             const windowE = document.documentElement;
-            console.log('clientHeight', windowE.offsetHeight);
-            console.log('scrollTop', windowE.scrollTop);
-            console.log('scrollHeight', windowE.scrollHeight);
-
             if (
                 windowE.offsetHeight + windowE.scrollTop >=
                 windowE.scrollHeight
