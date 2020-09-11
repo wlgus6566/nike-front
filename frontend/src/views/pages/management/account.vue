@@ -297,7 +297,6 @@ export default {
         this.getUserList();
         this.authCacheList();
         getCategoryList('USER_STATUS', this.listSortSelect.listSortOptions);
-        this.compMount();
     },
     activated() {
         //initializationData
@@ -310,7 +309,10 @@ export default {
         'listSortSelect.value'() {
             this.getUserList();
         },
-        'authority.value'() {
+        'authority.value'(val) {
+            if (val.length === 0) {
+                this.authority.value = [null];
+            }
             this.getUserList();
         },
         beginDt() {
@@ -377,6 +379,7 @@ export default {
         //dataPicker show
         dataPickerShow() {
             this.dataPickerShowData.visible = !this.dataPickerShowData.visible;
+            this.compMount();
         },
         dates() {},
         // checkbox
