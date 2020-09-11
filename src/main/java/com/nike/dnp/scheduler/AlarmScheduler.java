@@ -33,9 +33,7 @@ public class AlarmScheduler {
 	 * @implNote 알림 삭제
 	 * @since 2020. 9. 11. 오후 3:08:20
 	 */
-//	@Scheduled(cron = "30 0 0 * * *")
-//	@Scheduled(cron = "0 47 15 * * *")
-	// TODO[lsj] local 테스트 후 올릴 예정
+	@Scheduled(cron = "30 0 0 * * *")
 	public void deleteAlarmScheduler() {
 		log.info("AlarmScheduler.deleteAlarmScheduler");
 		alarmService.deleteAlarmScheduler();
