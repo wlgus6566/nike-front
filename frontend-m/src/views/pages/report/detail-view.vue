@@ -84,7 +84,36 @@
                     v-for="item in fileList"
                     :key="item.reportFileSeq"
                 >
-                    <a href="#" @click.prevent="fileDetailModal(item)">
+                    <a
+                        :href="item.filePhysicalName"
+                        :download="item.fileName"
+                        v-if="
+                            item.fileExtension === 'PPT' ||
+                                item.fileExtension === 'PPTX' ||
+                                item.fileExtension === 'PDF'
+                        "
+                    >
+                        <span class="thumbnail">
+                            <img
+                                :src="item.thumbnailFilePhysicalName"
+                                :alt="item.thumbnailFileName"
+                                v-if="item.thumbnailFilePhysicalName"
+                            />
+                            <span
+                                :class="[
+                                    `extension-${item.fileExtension.toLowerCase()}`,
+                                ]"
+                                v-else
+                            ></span>
+                        </span>
+                        <span class="info-box">
+                            <strong
+                                class="title"
+                                v-text="item.fileName"
+                            ></strong>
+                        </span>
+                    </a>
+                    <a href="#" @click.prevent="fileDetailModal(item)" v-else>
                         <span class="thumbnail">
                             <img
                                 :src="item.thumbnailFilePhysicalName"
