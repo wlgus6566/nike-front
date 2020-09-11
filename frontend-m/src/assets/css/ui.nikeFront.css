@@ -2741,6 +2741,7 @@
     display: flex;
 }
 .img-crop-modal .crop-editor {
+    min-width: 100%;
     min-height: 100%;
 }
 .img-crop-modal .preview-original {

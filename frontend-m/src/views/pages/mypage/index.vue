@@ -106,7 +106,7 @@ export default {
             if (this.loadingData) return;
             const alarmList = document.querySelector('.alarm-list');
             if (
-                alarmList.clientHeight + alarmList.scrollTop >=
+                alarmList.offsetHeight + alarmList.scrollTop >=
                 alarmList.scrollHeight
             ) {
                 this.infiniteScroll();
@@ -124,9 +124,9 @@ export default {
         myMenuFn() {
             if (!this.$store.state.menuData) return;
             const menu = this.$store.state.menuData.filter(
-                (el) => el.menuCode === 'MYPAGE' && el.mobileYn === 'Y'
+                el => el.menuCode === 'MYPAGE' && el.mobileYn === 'Y'
             );
-            this.myMenuData = menu[0].menus.filter((el) => {
+            this.myMenuData = menu[0].menus.filter(el => {
                 return el.mobileYn === 'Y';
             });
         },
@@ -157,7 +157,7 @@ export default {
                             .addEventListener('scroll', this.handleScroll);
                     }
                 }
-                this.alarmData.forEach((el) => {
+                this.alarmData.forEach(el => {
                     el.typeCd === 'REPORT_MANAGE'
                         ? (el.typeCd = 'REPORT')
                         : el.typeCd;

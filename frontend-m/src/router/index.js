@@ -28,8 +28,13 @@ const router = new VueRouter({
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(position);
-            }, 310);
+            }, 0);
         });
+        /* return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(position);
+            }, 310);
+        });*/
     },
     mode: 'history',
     routes: [

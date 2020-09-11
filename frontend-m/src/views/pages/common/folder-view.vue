@@ -63,7 +63,7 @@
                     v-for="item in fileList"
                     :key="item.contentsFileSeq"
                 >
-                    <a href="#" @click.prevent="fileDetailModal(item)">
+                    <a :href="item.filePhysicalName" target="_blank">
                         <span class="thumbnail">
                             <span
                                 :class="[`extension-vr`]"
@@ -161,6 +161,16 @@ export default {
     created() {
         this.initPageData();
         window.addEventListener('scroll', this.handleScroll);
+    },
+    activated() {
+        this.initPageData();
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    deactivated() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
         closeModal() {
