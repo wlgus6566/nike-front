@@ -63,10 +63,7 @@
                     v-for="item in fileList"
                     :key="item.contentsFileSeq"
                 >
-                    <a
-                        href="javascript:void(0)"
-                        :download="item.filePhysicalName"
-                    >
+                    <a :href="item.filePhysicalName" :download="item.fileName">
                         <span class="thumbnail">
                             <span
                                 :class="[`extension-vr`]"
