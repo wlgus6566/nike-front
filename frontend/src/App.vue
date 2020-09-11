@@ -52,25 +52,24 @@ export default {
         LayoutClean: layouts('clean'),
         LayoutPub: layouts('pub'),
     },
-    methods:{
-      urlCheck(){
-        const filter = "win16|win32|win64|macintel|mac|"; // PC일 경우 가능한 값
-        if(navigator.platform){
-          if( filter.indexOf(navigator.platform.toLowerCase())<0 ) {
-            console.log("모바일에서 접속하셨습니다");
-            if(window.location.hostname === 'devwww.nikespace.co.kr'){
-              document.location = "http://devm.nikespace.co.kr/";
+    methods: {
+        urlCheck() {
+            const filter = 'win16|win32|win64|macintel|mac|'; // PC일 경우 가능한 값
+            if (navigator.platform) {
+                if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
+                    console.log('모바일에서 접속하셨습니다');
+                    if (window.location.hostname === 'devwww.nikespace.co.kr') {
+                        document.location = 'http://devm.nikespace.co.kr/';
+                    }
+                    if (window.location.hostname === 'www.nikespace.co.kr') {
+                        document.location = 'http://m.nikespace.co.kr/';
+                    }
+                } else {
+                    console.log('PC에서 접속하셨습니다');
+                }
             }
-            if(window.location.hostname === 'www.nikespace.co.kr'){
-              document.location = "http://m.nikespace.co.kr/";
-            }
-          } else{
-            console.log("PC에서 접속하셨습니다");
-            console.log(window.location.hostname)
-          }
-        }
-      }
-    }
+        },
+    },
 };
 </script>
 <style>

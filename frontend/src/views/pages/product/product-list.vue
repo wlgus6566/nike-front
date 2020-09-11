@@ -123,7 +123,6 @@ export default {
                 this.userProductListData.length >= this.itemLength &&
                 this.userProductListData.length !== 0
             ) {
-                console.log('infiniteScroll');
                 this.getUserProduct(true);
             }
         },
@@ -185,14 +184,13 @@ export default {
 
         // 위시리스트에 상품 추가
         async addWishList(goodsSeq) {
-            console.log(goodsSeq.goodsSeq);
             try {
                 const {
                     data: { data: response },
                 } = await getWishCheck({
                     goodsSeq: goodsSeq.goodsSeq,
                 });
-                console.log(response);
+                //console.log(response);
                 if (response.existMsg) {
                     alert(response.msg);
                 }
