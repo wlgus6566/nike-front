@@ -325,15 +325,17 @@ footer .copy {
     display: flex;
     width: 100%;
     height: 42px;
+    align-items: center;
+    justify-content: center;
 }
 .tab-bar li span {
     display: block;
     letter-spacing: 0.05em;
 }
-.tab-bar li i {
+.tab-bar li svg {
     display: block;
-    width: 32px;
-    height: 32px;
+    width: 32px !important;
+    height: 32px !important;
     background: no-repeat center;
 }
 .tab-bar li .icon-home {
