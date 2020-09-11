@@ -154,6 +154,9 @@ export default {
     mounted() {
         this.fetchData();
     },
+    activated() {
+        this.fetchData();
+    },
     components: {
         fileDetailPopup,
         NoData,

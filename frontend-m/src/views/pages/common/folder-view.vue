@@ -162,6 +162,16 @@ export default {
         this.initPageData();
         window.addEventListener('scroll', this.handleScroll);
     },
+    activated() {
+        this.initPageData();
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    deactivated() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
     methods: {
         closeModal() {
             this.visible.modalEx = false;
