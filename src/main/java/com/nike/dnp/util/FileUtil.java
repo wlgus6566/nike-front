@@ -309,13 +309,13 @@ public class FileUtil {
 			final String[] command = {ffmpeg + File.separator + ffmpegCommand,"-y","-i",toFile.getPath(),"-vf"
 					,"scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
 					,thumbnailPath};
-			boolean check = whiteListing(folder, command);
-			if (!check) {
+			List<String> cmd = whiteListing(folder, command);
+			if (cmd == null) {
 				throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.start("videoResize_"+uploadFile.getOriginalFilename());
 
-			final ProcessBuilder processBuilder = new ProcessBuilder(command);
+			final ProcessBuilder processBuilder = new ProcessBuilder(cmd);
 			processBuilder.redirectErrorStream(true);
 			Process process = null;
 			try{
@@ -603,7 +603,7 @@ public class FileUtil {
 	 * @implNote
 	 * @since 2020. 9. 7. 오후 3:47:30
 	 */
-	private static boolean whiteListing(String folder, String... paramStrArray){
+	private static List<String> whiteListing(String folder, String... paramStrArray){
 
 		File files = new File(root + File.separator + cleanXSS(folder, false));
 
@@ -621,6 +621,9 @@ public class FileUtil {
 				}
 			}
 		}
-		return check;
+		if(check){
+			return command;
+		}
+		return null;
 	}
 }
