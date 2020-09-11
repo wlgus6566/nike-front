@@ -297,12 +297,12 @@ export default {
         this.getUserList();
         this.authCacheList();
         getCategoryList('USER_STATUS', this.listSortSelect.listSortOptions);
+        this.compMount();
     },
     activated() {
         //initializationData
-        this.compMount();
     },
-    deactivated() {
+    destroy() {
         this.compDestroy();
     },
     computed: {},

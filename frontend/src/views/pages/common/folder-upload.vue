@@ -482,7 +482,15 @@ export default {
     },
     created() {
         this.$store.state.saveFolder = false;
-        //this.folderSetting();
+        this.pageMenuCodeAuth(this.$route.meta.topMenuCode, 'CREATE');
+        this.folderSetting();
+        clearInterval(this.occupyInterval);
+        if (this.$route.params.id) {
+            this.joinOccupyFn();
+            this.occupyInterval = setInterval(() => {
+                this.joinOccupyFn();
+            }, 1000 * 60 * 4);
+        }
     },
     activated() {
         this.$store.state.saveFolder = false;

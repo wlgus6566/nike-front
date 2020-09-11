@@ -205,9 +205,13 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
-        if (this.searchKeyword !== '') {
+        if (
+            this.searchKeyword !== '' ||
+            this.listSortSelect.value !== 'LATEST'
+        ) {
             this.$refs.searchInput.input = '';
             this.searchKeyword = '';
+            this.listSortSelect.value = 'LATEST';
             this.initFetchData();
         }
 

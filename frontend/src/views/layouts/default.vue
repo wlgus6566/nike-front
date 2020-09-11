@@ -28,9 +28,9 @@
                     @enter="pageEnter"
                     @leave="pageLeave"
                 >
-                    <keep-alive max="2">
-                        <router-view :key="$route.fullPath" />
-                    </keep-alive>
+                    <!--<keep-alive max="2">-->
+                    <router-view :key="$route.fullPath" />
+                    <!--</keep-alive>-->
                 </transition>
             </div>
             <aside class="sticky-container" sticky-container>

@@ -140,10 +140,9 @@ export default {
     mounted() {
         this.getAgency();
         getCategoryList('CATEGORY', this.category2Code.listSortOptions);
-    },
-    activated() {
         this.getProduct();
     },
+    activated() {},
     methods: {
         selectFocus() {
             console.log(this.category2Code.value);

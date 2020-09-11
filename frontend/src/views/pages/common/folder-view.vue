@@ -627,6 +627,7 @@ export default {
         },
     },
     created() {
+        this.$store.dispatch('getContBasket');
         this.getFolderDetail();
         this.initFetchData();
         window.addEventListener('scroll', this.handleScroll);

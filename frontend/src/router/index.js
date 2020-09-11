@@ -47,9 +47,9 @@ const router = new VueRouter({
     ],
     scrollBehavior(to, from, savedPosition) {
         let position = { x: 0, y: 0 };
-        if (savedPosition) {
+        /*if (savedPosition) {
             position = savedPosition;
-        }
+        }*/
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(position);
@@ -58,6 +58,7 @@ const router = new VueRouter({
     },
 });
 router.beforeEach((to, from, next) => {
+    store.state.saveFolder = false;
     if (to.meta.unauthorized) {
         if (store.state.token || getAuthFromCookie()) {
             next('/');

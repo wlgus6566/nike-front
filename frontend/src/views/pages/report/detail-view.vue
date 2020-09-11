@@ -137,6 +137,7 @@ export default {
         },
     },
     created() {
+        this.$store.dispatch('getReportListBasket');
         this.reportDetailView();
         this.reportAnswerList();
         this.initFetchData();

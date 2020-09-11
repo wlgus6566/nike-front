@@ -5,7 +5,7 @@
             <ListSorting :listTypes="listTypes" />
             <FilterSelect :listSortSelect="listSortSelect" />
             <CascaderSelect :listCascader="authority" />
-            <SearchInput @searchSubmit="searchSubmit" />
+            <SearchInput ref="searchInput" @searchSubmit="searchSubmit" />
         </div>
         <template v-if="reportListData">
             <ReportList
@@ -100,6 +100,12 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
+        if (this.searchKeyword !== '') {
+            this.$refs.searchInput.input = '';
+            this.searchKeyword = '';
+            this.authCacheList();
+            this.initReportProduct();
+        }
         //initializationData
         if (this.$store.state.reload) {
             this.initReportProduct();
