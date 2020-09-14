@@ -138,7 +138,7 @@ export default {
     },
 };
 </script>
-<style scope>
+<style scoped>
 .modal-wrap {
     display: flex;
     justify-content: center;

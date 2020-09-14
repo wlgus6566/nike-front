@@ -87,7 +87,7 @@ export default {
     },
 };
 </script>
-<style scope>
+<style scoped>
 .modal-contents {
     margin: 0 -20px;
 }
