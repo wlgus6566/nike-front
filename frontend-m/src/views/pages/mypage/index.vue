@@ -103,13 +103,13 @@ export default {
         },
         //클릭시 업로드 한 폴더 리스트 다시 불러오기
         handleScroll() {
-            console.log(1);
             if (this.loadingData) return;
-            const alarmList = document.querySelector('.alarm-list');
+            const alarmList = document.querySelector('.modal-contents');
             if (
                 alarmList.offsetHeight + alarmList.scrollTop >=
                 alarmList.scrollHeight
             ) {
+                console.log(1);
                 this.infiniteScroll();
             }
         },
