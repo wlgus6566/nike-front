@@ -45,7 +45,7 @@ export default {
     },
     computed: {
         AppLayout() {
-            return `Layout${this.$route.meta.layout || 'Clean'}`;
+            return `Layout${this.$route.meta.layout || 'Default'}`;
         },
     },
     mounted() {},

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import router from '@/router';
 import { loginUser } from '@/api/login';
 import { getGnbMenu } from '@/api/my-page';
 
@@ -54,6 +55,7 @@ export default new Vuex.Store({
             state.timerInterval = setInterval(() => {
                 const now = new Date().getTime();
                 const distance = countDownDate - now;
+                console.log(distance);
                 if (distance <= 0) {
                     state.saveFolder = true;
                     this.commit('LOGOUT');
@@ -75,6 +77,7 @@ export default new Vuex.Store({
             deleteCookie('user_nick');
             deleteCookie('user_token');
             deleteCookie('user_authName');
+            router.push('/login');
         },
         SET_CONT_BASKET(state, data) {
             state.contBasketList = data;
