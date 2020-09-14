@@ -210,7 +210,7 @@ public class FileUtil {
 		log.info("stopWatch.getLastTaskTimeMillis() {} >> {} :  {} ms",stopWatch.getLastTaskName(),toFile.getName(), stopWatch.getLastTaskTimeMillis());
 		final FileResultDTO fileResultDTO = new FileResultDTO();
 		fileResultDTO.setFileName(cleanXSS(uploadFile.getOriginalFilename(), false));
-		fileResultDTO.setFilePhysicalName(toFile.getPath().replace(root, ""));
+		fileResultDTO.setFilePhysicalName(toFile.getCanonicalPath ().replace(root, ""));
 		fileResultDTO.setFileSize(toFile.length());
 		fileResultDTO.setFileContentType(uploadFile.getContentType());
 		fileResultDTO.setFileExtension(extension);
@@ -229,10 +229,10 @@ public class FileUtil {
 			allowedCommands.add("calc");
 
 			// 이미지 사이즈 700x700 으로 변환
-			final String detailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_detail." + cleanXSS(resizeExtension,false);
+			final String detailPath = StringUtils.stripFilenameExtension(toFile.getCanonicalPath ()) + "_detail." + cleanXSS(resizeExtension,false);
 			//final String detailPath = root+File.separator+cleanXSS(folder)+File.separator +cleanXSS(StringUtils.stripFilenameExtension(toFile.getName())) + "_detail." + resizeExtension;
 			final StringBuilder detailCommand = new StringBuilder(imageMagick);
-			detailCommand.append(File.separator).append(imageMagickCommand + " ").append(toFile.getPath());
+			detailCommand.append(File.separator).append(imageMagickCommand + " ").append(toFile.getCanonicalPath ());
 			if(extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(Locale.getDefault()).contains("AI") || extension.toUpperCase(Locale.getDefault()).contains("TIF")
 					|| extension.toUpperCase(Locale.getDefault()).contains("GIF")){
 				detailCommand.append("[0]");
@@ -259,15 +259,15 @@ public class FileUtil {
 				String detailThumbnail = uploadFile.getOriginalFilename();
 				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail." + resizeExtension;
 				fileResultDTO.setDetailThumbnailFileName(detailThumbnail);
-				fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getPath().replace(root, ""));
+				fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getCanonicalPath ().replace(root, ""));
 				fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
 			}
 
 			stopWatch.start("100resize_" + uploadFile.getOriginalFilename() + " >> " + toFile.getName());
 			// 이미지 사이즈 100x100으로 변환
-			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_thumbnail." + cleanXSS(resizeExtension,false);
+			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getCanonicalPath ()) + "_thumbnail." + cleanXSS(resizeExtension,false);
 			final StringBuilder command = new StringBuilder(imageMagick);
-			command.append(File.separator).append(imageMagickCommand+" ").append(detailFile.getPath());
+			command.append(File.separator).append(imageMagickCommand+" ").append(detailFile.getCanonicalPath ());
 			if(extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(Locale.getDefault()).contains("AI")){
 				command.append("[0]");
 			}
@@ -297,25 +297,25 @@ public class FileUtil {
 				String thumbnail = uploadFile.getOriginalFilename();
 				thumbnail = thumbnail.replace("." + StringUtils.getFilenameExtension(thumbnail), "") + "_thumbnail." + resizeExtension;
 				fileResultDTO.setThumbnailFileName(thumbnail);
-				fileResultDTO.setThumbnailFilePhysicalName(thumbnailFile.getPath().replace(root, ""));
+				fileResultDTO.setThumbnailFilePhysicalName(thumbnailFile.getCanonicalPath ().replace(root, ""));
 				fileResultDTO.setThumbnailFileSize(thumbnailFile.length());
 			}
 
 		}else if(resize && (uploadFile.getContentType().toUpperCase(Locale.getDefault()).contains("VIDEO"))){
 
 			// 사이즈 변환시 700:394 를 변경 하면 됨
-			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getPath()) + "_detail.mp4";
+			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getCanonicalPath ()) + "_detail.mp4";
 
-			final String[] command = {ffmpeg + File.separator + ffmpegCommand,"-y","-i",toFile.getPath(),"-vf"
+			final String[] command = {ffmpeg + File.separator + ffmpegCommand,"-y","-i",toFile.getCanonicalPath (),"-vf"
 					,"scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
 					,thumbnailPath};
-			boolean check = whiteListing(folder, command);
-			if (!check) {
+			List<String> cmd = whiteListing(folder, command);
+			if (cmd == null) {
 				throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 			}
 			stopWatch.start("videoResize_"+uploadFile.getOriginalFilename());
 
-			final ProcessBuilder processBuilder = new ProcessBuilder(command);
+			final ProcessBuilder processBuilder = new ProcessBuilder(cmd);
 			processBuilder.redirectErrorStream(true);
 			Process process = null;
 			try{
@@ -344,7 +344,7 @@ public class FileUtil {
 				String detailThumbnail = uploadFile.getOriginalFilename();
 				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail.mp4";
 				fileResultDTO.setDetailThumbnailFileName(detailThumbnail);
-				fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getPath().replace(root, ""));
+				fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getCanonicalPath ().replace(root, ""));
 				fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
 			}
 		}
@@ -425,7 +425,7 @@ public class FileUtil {
 	 * @implNote
 	 * @since 2020. 7. 13. 오후 4:55:25
 	 */
-	public static void deleteTemp() {
+	public static void deleteTemp() throws IOException {
 		log.info("FileUtil.deleteTemp");
 		final File tempFile = new File(root+File.separator+ ServiceCode.FileFolderEnumCode.TEMP.getFolder());
 		final File[] files = tempFile.listFiles();
@@ -435,7 +435,7 @@ public class FileUtil {
 			updateDate = updateDate.plusHours(24);
 			final LocalDateTime today = LocalDateTime.now();
 			if(updateDate.isBefore(today) && file.isFile()){
-				final String awsDeleteFile = file.getPath().replace(root, "");
+				final String awsDeleteFile = file.getCanonicalPath ().replace(root, "");
 				file.delete();
 				try{
 					S3Util.fileDelete(awsDeleteFile);
@@ -603,7 +603,7 @@ public class FileUtil {
 	 * @implNote
 	 * @since 2020. 9. 7. 오후 3:47:30
 	 */
-	private static boolean whiteListing(String folder, String... paramStrArray){
+	private static List<String> whiteListing(String folder, String... paramStrArray){
 
 		File files = new File(root + File.separator + cleanXSS(folder, false));
 
@@ -621,6 +621,9 @@ public class FileUtil {
 				}
 			}
 		}
-		return check;
+		if(check){
+			return command;
+		}
+		return null;
 	}
 }
