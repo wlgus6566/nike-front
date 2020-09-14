@@ -79,7 +79,7 @@
         <br />
         <button type="button" @click="openModal">팝업</button> <br />
         <button type="button" @click="openModal2">팝업 full</button>
-        <div class="modal-wrap">
+        <div>
             <ModalEx :visible.sync="visible.modalEx" />
             <ModalFull :visible.sync="visible.modalFull" />
         </div>
