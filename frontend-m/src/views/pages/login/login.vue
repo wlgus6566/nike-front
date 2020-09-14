@@ -35,7 +35,7 @@ export default {
             LoginBox: 'LoginForm',
             loginData: {
                 username: '',
-                pawd: '',
+                password: '',
                 certCode: '',
             },
         };
@@ -58,14 +58,14 @@ export default {
                 alert('E-MAIL을 입력해 주세요.');
                 return;
             }
-            if (!this.loginData.pawd) {
+            if (!this.loginData.password) {
                 alert('비밀번호를 입력해 주세요.');
                 return;
             }
             try {
                 const bodyFormData = new FormData();
                 bodyFormData.append('username', this.loginData.username);
-                bodyFormData.append('pawd', this.loginData.pawd);
+                bodyFormData.append('password', this.loginData.password);
                 bodyFormData.append('certCode', this.loginData.certCode);
                 const response = await this.$store.dispatch(
                     'LOGIN',

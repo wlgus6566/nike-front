@@ -16,8 +16,10 @@
                 />
                 <input
                     type="password"
-                    :value="loginData.pawd"
-                    @input="$emit('updateValue', 'pawd', $event.target.value)"
+                    :value="loginData.password"
+                    @input="
+                        $emit('updateValue', 'password', $event.target.value)
+                    "
                     placeholder="PW"
                 />
             </div>
