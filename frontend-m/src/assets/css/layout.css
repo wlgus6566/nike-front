@@ -11,10 +11,10 @@ body {
 }
 html {
     height: 100%;
-}
-body {
     overflow-x: hidden;
     overflow-y: scroll;
+}
+body {
     padding: var(--safeTop) 0 var(--safeBtm);
 }
 body.el-popup-parent--hidden {
