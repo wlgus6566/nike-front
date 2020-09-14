@@ -94,7 +94,7 @@ export default {
 }
 .alarm-list {
     max-height: 420px;
-    overflow: auto;
+    overflow: scroll;
 }
 .alarm-list li {
     position: relative;
