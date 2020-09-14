@@ -30,4 +30,4 @@ export default {
     methods: {},
 };
 </script>
-<style></style>
+<style scope></style>

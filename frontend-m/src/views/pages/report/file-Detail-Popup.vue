@@ -46,7 +46,7 @@ export default {
     methods: {},
 };
 </script>
-<style>
+<style scope>
 .modal-wrap {
     display: flex;
     justify-content: center;
