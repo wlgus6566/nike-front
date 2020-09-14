@@ -291,13 +291,15 @@ export default {
         };*/
     },
     beforeRouteLeave(to, from, next) {
-        const answer = window.confirm(
-            '이 페이지에서 나가시겠습니까?\n변경사항이 저장되지 않을 수 있습니다.'
-        );
-        if (answer) {
-            next();
-        } else {
-            next(false);
+        if (!this.$store.state.saveFolder) {
+            const answer = window.confirm(
+                '이 페이지에서 나가시겠습니까?\n변경사항이 저장되지 않을 수 있습니다.'
+            );
+            if (answer) {
+                next();
+            } else {
+                next(false);
+            }
         }
     },
 };
