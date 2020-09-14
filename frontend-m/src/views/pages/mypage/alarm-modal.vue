@@ -5,7 +5,6 @@
         class="modal"
         :visible="visible"
         :append-to-body="true"
-        :lock-scroll="true"
         @close="$emit('update:visible', false)"
     >
         <div class="modal-contents">
@@ -88,13 +87,13 @@ export default {
     },
 };
 </script>
-<style>
+<style scoped>
 .modal-contents {
     margin: 0 -20px;
+    max-height: 340px;
+    overflow: auto;
 }
 .alarm-list {
-    max-height: 420px;
-    overflow: auto;
 }
 .alarm-list li {
     position: relative;

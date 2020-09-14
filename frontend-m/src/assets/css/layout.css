@@ -13,6 +13,9 @@ body {
 body {
     padding: var(--safeTop) 0 var(--safeBtm);
 }
+body.el-popup-parent--hidden {
+    height: auto;
+}
 #wrap {
     display: flex;
     flex-direction: column;
@@ -274,6 +277,7 @@ footer .info-list li a {
     padding: 0 10px;
     height: 17px;
     line-height: 17px;
+    color: #fff;
 }
 footer .info-list li + li:before {
     position: absolute;
@@ -461,11 +465,17 @@ footer .copy {
 }
 
 /* el-dialog */
-.el-dialog__wrapper.modal {
+.el-dialog__wrapper {
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .el-dialog {
+    margin: 0 !important;
     width: calc(100% - 40px);
+    max-height: calc(100% - 100px);
+    overflow: hidden;
 }
 
 .el-dialog__header {
@@ -475,6 +485,7 @@ footer .copy {
 }
 .el-dialog__body {
     padding-top: 0;
+    max-height: calc(100% - 60px);
 }
 .el-dialog__title {
     font-size: 16px;
@@ -498,6 +509,7 @@ footer .copy {
     right: 0;
     bottom: 0;
     display: flex;
+    max-height: 100%;
     flex-direction: column;
 }
 .el-dialog.full .el-dialog__footer {
@@ -507,6 +519,7 @@ footer .copy {
 .modal.full,
 .modal.full .el-dialog {
     overflow: hidden;
+    max-height: 100%;
 }
 /*.modal.full .el-dialog {
     display: flex;
@@ -526,8 +539,6 @@ footer .copy {
     box-sizing: border-box;
 }
 .modal-contents {
-    max-height: 420px;
-    overflow: auto;
 }
 .modal.full .el-dialog__footer {
     position: absolute;

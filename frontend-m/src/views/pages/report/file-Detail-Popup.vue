@@ -4,7 +4,6 @@
         class="modal"
         :visible="visible"
         :append-to-body="true"
-        :lock-scroll="true"
         @close="$emit('closeModal')"
     >
         <div class="modal-contents">
@@ -47,7 +46,7 @@ export default {
     methods: {},
 };
 </script>
-<style>
+<style scoped>
 .modal-wrap {
     display: flex;
     justify-content: center;

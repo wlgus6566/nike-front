@@ -1,5 +1,5 @@
-import {pages} from '@/utils/global-methods';
-import {certCode} from '@/api/login';
+import { pages } from '@/utils/global-methods';
+import { certCode } from '@/api/login';
 
 const routes = [
     {
@@ -20,8 +20,8 @@ const routes = [
         },
     },
     {
-        path: '/password-set',
-        component: pages('login/password-set'),
+        path: '/pawd-set',
+        component: pages('login/pawd-set'),
         meta: {
             layout: 'Clean',
             unauthorized: true,
@@ -46,9 +46,9 @@ const routes = [
         },
     },
     {
-        path: '/password-change',
-        name: 'password-change',
-        component: pages('login/password-change'),
+        path: '/pawd-change',
+        name: 'pawd-change',
+        component: pages('login/pawd-change'),
         meta: {
             layout: 'Clean',
             unauthorized: true,
