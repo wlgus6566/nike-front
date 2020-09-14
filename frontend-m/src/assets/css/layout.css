@@ -9,7 +9,12 @@ html,
 body {
     box-sizing: border-box;
 }
+html {
+    height: 100%;
+}
 body {
+    overflow-x: hidden;
+    overflow-y: scroll;
     padding: var(--safeTop) 0 var(--safeBtm);
 }
 body.el-popup-parent--hidden {
