@@ -461,6 +461,9 @@ footer .copy {
 }
 
 /* el-dialog */
+.el-dialog__wrapper.modal {
+    overflow: hidden;
+}
 .el-dialog {
     width: calc(100% - 40px);
 }
