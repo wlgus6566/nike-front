@@ -21,6 +21,7 @@ export default new Vuex.Store({
         nick: '',
         token: '',
         authName: '',
+        timerInterval: null,
     },
     getters: {},
     mutations: {
@@ -44,6 +45,21 @@ export default new Vuex.Store({
         },
         SET_BASKETDEL(state, goodsBasketSeq) {
             state.goodsBasketSeq = goodsBasketSeq;
+        },
+        SET_LOGOUT_TIMER(state) {
+            clearInterval(state.timerInterval);
+            const expires = new Date();
+            expires.setMinutes(expires.getMinutes() + 30);
+            const countDownDate = expires.getTime();
+            state.timerInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                if (distance <= 0) {
+                    state.saveFolder = true;
+                    this.commit('LOGOUT');
+                    clearInterval(state.timerInterval);
+                }
+            }, 1000);
         },
         LOGOUT(state) {
             state.user = '';
