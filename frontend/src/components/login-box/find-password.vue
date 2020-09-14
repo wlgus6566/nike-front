@@ -1,7 +1,7 @@
 <template>
     <form action="#" @submit.prevent="findPW">
         <div class="login-box" ref="loginBox">
-            <strong class="title2"> 비밀번호 찾기 </strong>
+            <strong class="title2"> 비밀번호 설정 </strong>
             <p class="desc">
                 비밀번호 설정 메일 발송을 위한 ID(E-MAIL)을 입력해 주세요.<br />
                 입력하신 E-MAIL로 비밀번호 설정을 위한 URL이 전송 됩니다.
