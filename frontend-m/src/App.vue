@@ -4,9 +4,9 @@
             mode="out-in"
             @enter="pageEnter"
             @leave="pageLeave"
-            name="page-change"
+            name="layout-change"
         >
-            <component :is="AppLayout" :key="$route.meta.layout" />
+            <component :is="AppLayout" :key="AppLayout" />
         </transition>
         <Loading
             class="page-loading"
@@ -17,8 +17,6 @@
     </div>
 </template>
 <script>
-import { Cubic, gsap } from 'gsap/all';
-
 require('es6-promise/auto');
 import Vue from 'vue';
 import ElementUI from 'element-ui';
@@ -45,7 +43,7 @@ export default {
     },
     computed: {
         AppLayout() {
-            return `Layout${this.$route.meta.layout || 'Clean'}`;
+            return `Layout${this.$route.meta.layout || 'Default'}`;
         },
     },
     mounted() {},
@@ -63,6 +61,14 @@ export default {
         LayoutIndex: layouts('index'),
     },
     methods: {
+        pageEnter(el, done) {
+            console.log(el);
+            done();
+        },
+        pageLeave(el, done) {
+            console.log(el);
+            done();
+        },
         urlCheck() {
             const filter = 'win16|win32|win64|macintel|mac|'; // PC일 경우 가능한 값
             if (navigator.platform) {
@@ -79,42 +85,6 @@ export default {
                     }
                 }
             }
-        },
-        pageEnter(el, done) {
-            this.pageAnimation(
-                el,
-                { translateY: '30px', opacity: 0 },
-                { translateY: '0', opacity: 1 },
-                done
-            );
-        },
-        pageLeave(el, done) {
-            this.pageAnimation(
-                el,
-                { translateY: '0', opacity: 1 },
-                { translateY: '30px', opacity: 0 },
-                done
-            );
-        },
-        pageAnimation(el, fromVal, toVal, done) {
-            gsap.fromTo(
-                el,
-                0.3,
-                {
-                    ...fromVal,
-                    ease: Cubic.easeInOut,
-                },
-                {
-                    ...toVal,
-                    ease: Cubic.easeInOut,
-                    onComplete: () => {
-                        el.style.transform = 'none';
-                        if (done) {
-                            done();
-                        }
-                    },
-                }
-            );
         },
     },
 };
@@ -135,5 +105,13 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.layout-change-enter-active,
+.layout-change-leave-active {
+    transition: opacity 0.4s;
+}
+.layout-change-enter,
+.layout-change-leave-to {
+    opacity: 0;
 }
 </style>
