@@ -4,7 +4,7 @@ const routes = [
     {
         path: '/test',
         component: pages('testPage/testPage'),
-        meta: { layout: 'Default', aside: 'Order', title: 'ALL' },
+        meta: { layout: 'Clean', aside: 'Order', title: 'ALL' },
     },
     {
         path: '/file',

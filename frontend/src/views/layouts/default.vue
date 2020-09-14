@@ -63,7 +63,9 @@
                 </span>
                 <ul class="info-list">
                     <li>
-                        <router-link to="/terms/service">이용약관</router-link>
+                        <router-link to="/terms/service">
+                            <strong>이용약관</strong>
+                        </router-link>
                     </li>
                     <li>
                         <router-link to="/terms/privacy">

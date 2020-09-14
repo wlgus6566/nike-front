@@ -2,10 +2,10 @@
     <div id="wrap" class="sticky-wrap">
         <header class="page-header">
             <div class="inner">
-                <h1 class="page-title"><span>비밀번호 변경</span></h1>
+                <h1 class="page-title"><span>비밀번호 설정</span></h1>
             </div>
         </header>
-        <form action="" @submit.prevent="passwordChange">
+        <form action="" @submit.prevent="pawdSet">
             <section class="contents">
                 <ul class="desc-list">
                     <li class="desc-item">
@@ -31,34 +31,17 @@
                     <li class="form-item">
                         <span class="form-column">
                             <label class="label-title required"
-                                >기존 비밀번호</label
-                            >
-                        </span>
-                        <span class="form-column">
-                            <input
-                                type="password"
-                                id="change-pw0"
-                                class="input-box"
-                                maxlength="16"
-                                placeholder=""
-                                v-model="password"
-                            />
-                        </span>
-                    </li>
-                    <li class="form-item">
-                        <span class="form-column">
-                            <label class="label-title required"
                                 >새 비밀번호</label
                             >
                         </span>
                         <span class="form-column">
                             <input
                                 type="password"
-                                id="change-pw1"
+                                id="newpawd"
+                                v-model="newpawd"
                                 class="input-box"
                                 maxlength="16"
                                 placeholder="(8~16자/대소문자/숫자/특수문자 포함)"
-                                v-model="newPassword"
                             />
                         </span>
                     </li>
@@ -71,11 +54,11 @@
                         <span class="form-column">
                             <input
                                 type="password"
-                                id="change-pw2"
+                                id="confirmpawd"
+                                v-model="confirmpawd"
                                 class="input-box"
                                 maxlength="16"
                                 placeholder=""
-                                v-model="confirmPassword"
                             />
                         </span>
                     </li>
@@ -88,25 +71,24 @@
     </div>
 </template>
 <script>
-import { changePassword } from '@/api/login';
+import { setpawd } from '@/api/login';
 
 export default {
-    name: 'PasswordChange',
+    name: 'pawdSet',
     data() {
         return {
-            password: '',
-            newPassword: '',
-            confirmPassword: '',
+            newpawd: '',
+            confirmpawd: '',
         };
     },
+    created() {},
     methods: {
-        async passwordChange() {
+        async pawdSet() {
             try {
-                const { data: response } = await changePassword({
-                    certCode: this.$route.params.certCode,
-                    password: this.password,
-                    newPassword: this.newPassword,
-                    confirmPassword: this.confirmPassword,
+                const { data: response } = await setpawd({
+                    certCode: encodeURIComponent(this.$route.query.certCode),
+                    newpawd: this.newpawd,
+                    confirmpawd: this.confirmpawd,
                 });
                 if (response.existMsg) {
                     alert(response.msg);
