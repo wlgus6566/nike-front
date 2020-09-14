@@ -7,6 +7,8 @@
 body {
     font-size: 14px;
     color: #101010;
+    overflow-x: auto;
+    overflow-y: scroll;
 }
 body,
 p,
