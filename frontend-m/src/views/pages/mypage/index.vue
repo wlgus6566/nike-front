@@ -103,6 +103,7 @@ export default {
         },
         //클릭시 업로드 한 폴더 리스트 다시 불러오기
         handleScroll() {
+            console.log(1);
             if (this.loadingData) return;
             const alarmList = document.querySelector('.alarm-list');
             if (
@@ -153,7 +154,7 @@ export default {
                     if (this.alarmData.length > 0) {
                         await this.handleScroll();
                         document
-                            .querySelector('.alarm-list')
+                            .querySelector('.modal-contents')
                             .addEventListener('scroll', this.handleScroll);
                     }
                 }
