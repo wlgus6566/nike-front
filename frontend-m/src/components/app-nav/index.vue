@@ -106,9 +106,7 @@ export default {
     created() {
         this.menuFn();
     },
-    mounted() {
-        this.menuLottie(0);
-    },
+    mounted() {},
     computed: {
         pathUrl() {
             return this.$route.path;
