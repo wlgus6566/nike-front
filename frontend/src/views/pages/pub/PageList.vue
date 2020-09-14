@@ -23,7 +23,9 @@
                     {{ item.name }}
                 </span>
                 <span class="filename">
-                    <router-link :to="item.link" target="_blank">{{ item.filename }}</router-link>
+                    <router-link :to="item.link" target="_blank">{{
+                        item.filename
+                    }}</router-link>
                 </span>
                 <span class="name">
                     {{ item.com }}
@@ -69,9 +71,11 @@
                                     {{ item.name }}
                                 </span>
                                 <span class="filename">
-                                    <router-link :to="item.link" target="_blank">{{
-                                        item.filename
-                                    }}</router-link>
+                                    <router-link
+                                        :to="item.link"
+                                        target="_blank"
+                                        >{{ item.filename }}</router-link
+                                    >
                                 </span>
                                 <span class="name">
                                     {{ item.com }}
@@ -93,9 +97,13 @@
                                             {{ item.name }}
                                         </span>
                                         <span class="filename">
-                                            <router-link :to="item.link" target="_blank">{{
-                                                item.filename
-                                            }}</router-link>
+                                            <router-link
+                                                :to="item.link"
+                                                target="_blank"
+                                                >{{
+                                                    item.filename
+                                                }}</router-link
+                                            >
                                         </span>
                                         <span class="name">
                                             {{ item.com }}
@@ -108,18 +116,25 @@
                                         </span>
                                         <ul v-if="item.depth">
                                             <li
-                                                v-for="(item, index) in item.depth"
+                                                v-for="(item,
+                                                index) in item.depth"
                                                 :key="index"
-                                                :class="{ depth: item.depthTitle }"
+                                                :class="{
+                                                    depth: item.depthTitle,
+                                                }"
                                             >
                                                 <span>{{ item.title }}</span>
                                                 <span class="name">
                                                     {{ item.name }}
                                                 </span>
                                                 <span class="filename">
-                                                    <router-link :to="item.link" target="_blank">{{
-                                                        item.filename
-                                                    }}</router-link>
+                                                    <router-link
+                                                        :to="item.link"
+                                                        target="_blank"
+                                                        >{{
+                                                            item.filename
+                                                        }}</router-link
+                                                    >
                                                 </span>
                                                 <span class="name">
                                                     {{ item.com }}
@@ -302,7 +317,7 @@ export default {
                             depth: false,
                         },
                         {
-                            title: '비밀번호 찾기',
+                            title: '비밀번호 설정',
                             depthTitle: false,
                             name: '지은유',
                             filename: 'NIKE_P_LOGIN_03.vue',
@@ -732,7 +747,8 @@ export default {
                                             title: '목록',
                                             depthTitle: false,
                                             name: '지은유',
-                                            filename: 'NIKE_P_MANAGE_02_001.vue',
+                                            filename:
+                                                'NIKE_P_MANAGE_02_001.vue',
                                             link: 'NIKE_P_MANAGE_02_001',
                                             com: '',
                                             abc: '',
@@ -743,7 +759,8 @@ export default {
                                             title: '계정 관리',
                                             depthTitle: false,
                                             name: '염주성',
-                                            filename: 'NIKE_P_MANAGE_02_002P.vue',
+                                            filename:
+                                                'NIKE_P_MANAGE_02_002P.vue',
                                             link: 'NIKE_P_MANAGE_02_002P',
                                             com: '2020.07.09',
                                             abc: '',
@@ -845,7 +862,8 @@ export default {
                                                     title: '상품 크게보기 팝업',
                                                     depthTitle: false,
                                                     name: '지은유',
-                                                    filename: 'NIKE_P_ORDER_01P.vue',
+                                                    filename:
+                                                        'NIKE_P_ORDER_01P.vue',
                                                     link: 'NIKE_P_ORDER_01P',
                                                     com: '2020.07.08',
                                                     abc: '',
@@ -856,7 +874,8 @@ export default {
                                                     title: '주문서 발송 팝업',
                                                     depthTitle: false,
                                                     name: '지은유',
-                                                    filename: 'NIKE_P_ORDER_02P.vue',
+                                                    filename:
+                                                        'NIKE_P_ORDER_02P.vue',
                                                     link: 'NIKE_P_ORDER_02P',
                                                     com: '2020.07.09',
                                                     abc: '',
@@ -936,7 +955,8 @@ export default {
                                                     title: '목록',
                                                     depthTitle: false,
                                                     name: '지은유',
-                                                    filename: 'NIKE_P_MY_04_001.vue',
+                                                    filename:
+                                                        'NIKE_P_MY_04_001.vue',
                                                     link: 'NIKE_P_MY_04_001',
                                                     com: '2020.07.03',
                                                     abc: '',
@@ -947,7 +967,8 @@ export default {
                                                     title: '상세',
                                                     depthTitle: false,
                                                     name: '지은유',
-                                                    filename: 'NIKE_P_MY_04_002.vue',
+                                                    filename:
+                                                        'NIKE_P_MY_04_002.vue',
                                                     link: 'NIKE_P_MY_04_002',
                                                     com: '2020.07.03',
                                                     abc: '',
@@ -958,7 +979,8 @@ export default {
                                                     title: '등록/수정',
                                                     depthTitle: false,
                                                     name: '지은유',
-                                                    filename: 'NIKE_P_MY_04_003.vue',
+                                                    filename:
+                                                        'NIKE_P_MY_04_003.vue',
                                                     link: 'NIKE_P_MY_04_003',
                                                     com: '2020.07.03',
                                                     abc: '',
@@ -981,7 +1003,8 @@ export default {
                                                     title: '목록',
                                                     depthTitle: false,
                                                     name: '지은유',
-                                                    filename: 'NIKE_P_MY_04_004.vue',
+                                                    filename:
+                                                        'NIKE_P_MY_04_004.vue',
                                                     link: 'NIKE_P_MY_04_004',
                                                     com: '2020.07.03',
                                                     abc: '',
@@ -992,7 +1015,8 @@ export default {
                                                     title: '상세',
                                                     depthTitle: false,
                                                     name: '지은유',
-                                                    filename: 'NIKE_P_MY_04_005.vue',
+                                                    filename:
+                                                        'NIKE_P_MY_04_005.vue',
                                                     link: 'NIKE_P_MY_04_005',
                                                     com: '2020.07.03',
                                                     abc: '',
@@ -1003,7 +1027,8 @@ export default {
                                                     title: '등록/수정',
                                                     depthTitle: false,
                                                     name: '지은유',
-                                                    filename: 'NIKE_P_MY_04_006.vue',
+                                                    filename:
+                                                        'NIKE_P_MY_04_006.vue',
                                                     link: 'NIKE_P_MY_04_006',
                                                     com: '2020.07.03',
                                                     abc: '',
@@ -1026,7 +1051,8 @@ export default {
                                                     title: '목록',
                                                     depthTitle: false,
                                                     name: '지은유',
-                                                    filename: 'NIKE_P_MY_04_007.vue',
+                                                    filename:
+                                                        'NIKE_P_MY_04_007.vue',
                                                     link: 'NIKE_P_MY_04_007',
                                                     com: '2020.07.06',
                                                     abc: '',
@@ -1037,7 +1063,8 @@ export default {
                                                     title: '등록/수정',
                                                     depthTitle: false,
                                                     name: '지은유',
-                                                    filename: 'NIKE_P_MY_04_009.vue',
+                                                    filename:
+                                                        'NIKE_P_MY_04_009.vue',
                                                     link: 'NIKE_P_MY_04_009',
                                                     com: '2020.07.06',
                                                     abc: '',

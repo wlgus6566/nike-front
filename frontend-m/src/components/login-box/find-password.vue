@@ -2,7 +2,7 @@
     <form action="#" @submit.prevent="findPW">
         <div class="login-form" ref="loginBox">
             <strong class="title-ko">
-                비밀번호 찾기
+                비밀번호 설정
             </strong>
             <p class="title-desc">
                 비밀번호 설정을 위한 ID(E-MAIL) 을 입력해주세요.<br />
