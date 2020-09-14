@@ -90,10 +90,10 @@ export default {
 <style scoped>
 .modal-contents {
     margin: 0 -20px;
+    max-height: 340px;
+    overflow: auto;
 }
 .alarm-list {
-    max-height: 420px;
-    overflow: scroll;
 }
 .alarm-list li {
     position: relative;
