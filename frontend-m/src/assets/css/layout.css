@@ -277,6 +277,7 @@ footer .info-list li a {
     padding: 0 10px;
     height: 17px;
     line-height: 17px;
+    color: #fff;
 }
 footer .info-list li + li:before {
     position: absolute;
