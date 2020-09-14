@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+
 /**
  * The Class File scheduler.
  *
@@ -27,7 +29,7 @@ public class FileScheduler {
 	 */
 	@Scheduled(cron = "0 0 0 * * *")
 //	@Scheduled(cron = "*/10 * * * * *")
-	public void fileDeleteScheduler() {
+	public void fileDeleteScheduler() throws IOException {
 		log.debug("===== temp 파일 삭제 ==== ");
 		FileUtil.deleteTemp();
 
