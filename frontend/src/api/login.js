@@ -9,16 +9,16 @@ function loginUser(data) {
     return apiLogin.post('/login', data);
 }
 
-function setPassword(data) {
-    return apiLogin.put('/open/login/set/password', data);
+function setpawd(data) {
+    return apiLogin.put('/open/login/set/pawd', data);
 }
 
 function certCode(data) {
     return apiLogin.post('/open/login/check/cert', data);
 }
 
-function changePassword(data) {
-    return apiLogin.put('/open/login/change/password', data);
+function changepawd(data) {
+    return apiLogin.put('/open/login/change/pawd', data);
 }
 
 function sendEmail(params) {
@@ -27,4 +27,4 @@ function sendEmail(params) {
     });
 }
 
-export { loginUser, sendEmail, setPassword, changePassword, certCode };
+export { loginUser, sendEmail, setpawd, changepawd, certCode };

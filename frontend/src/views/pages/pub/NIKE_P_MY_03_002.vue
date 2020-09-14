@@ -3,7 +3,9 @@
         <header>
             <div class="inner">
                 <h1>
-                    <a href="#"><img alt="" src="@/assets/images/logo-nike.svg" /></a>
+                    <a href="#"
+                        ><img alt="" src="@/assets/images/logo-nike.svg"
+                    /></a>
                 </h1>
                 <nav>
                     <ul>
@@ -20,18 +22,21 @@
                 <div class="login-wrap">
                     <div class="title">비밀번호 변경</div>
                     <div class="bullet-list">
-                        <p class="bullet-item">아이디와 비밀번호는 중복 불가합니다</p>
                         <p class="bullet-item">
-                            비밀번호에는 공통 사전 단어(예: NIKE(나이키), JORDAN(조던) 등)를 포함할
-                            수 없습니다.
+                            아이디와 비밀번호는 중복 불가합니다
                         </p>
                         <p class="bullet-item">
-                            비밀번호는 동일한 글자, 문자, 숫자 등을 2글자이상 반복할 수 없습니다.
-                            (예: AA1234! / A12345@@ 등)
+                            비밀번호에는 공통 사전 단어(예: NIKE(나이키),
+                            JORDAN(조던) 등)를 포함할 수 없습니다.
                         </p>
                         <p class="bullet-item">
-                            비밀번호 재사용: 비밀번호 변경 시 현재 사용 중인 비밀번호의 재사용은
-                            불가능하며, 기존과는 다른 비밀번호로 변경하셔야 합니다.
+                            비밀번호는 동일한 글자, 문자, 숫자 등을 2글자이상
+                            반복할 수 없습니다. (예: AA1234! / A12345@@ 등)
+                        </p>
+                        <p class="bullet-item">
+                            비밀번호 재사용: 비밀번호 변경 시 현재 사용 중인
+                            비밀번호의 재사용은 불가능하며, 기존과는 다른
+                            비밀번호로 변경하셔야 합니다.
                         </p>
                     </div>
                     <div class="table-form">
@@ -50,7 +55,9 @@
                                     /></label>
                                     <label for="change-pw2"
                                         ><span class="tit"
-                                            ><span class="required">새 비밀번호</span></span
+                                            ><span class="required"
+                                                >새 비밀번호</span
+                                            ></span
                                         ><input
                                             type="password"
                                             id="change-pw2"
@@ -60,7 +67,9 @@
                                     /></label>
                                     <label for="change-pw3"
                                         ><span class="tit"
-                                            ><span class="required">새 비밀번호(확인)</span></span
+                                            ><span class="required"
+                                                >새 비밀번호(확인)</span
+                                            ></span
                                         ><input
                                             type="password"
                                             id="change-pw3"
