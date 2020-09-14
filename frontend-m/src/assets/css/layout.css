@@ -10,8 +10,6 @@ body {
     box-sizing: border-box;
 }
 html {
-    overflow-x: hidden;
-    overflow-y: scroll;
 }
 body {
     padding: var(--safeTop) 0 var(--safeBtm);
