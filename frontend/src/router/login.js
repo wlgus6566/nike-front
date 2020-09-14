@@ -20,8 +20,8 @@ const routes = [
         },
     },
     {
-        path: '/pawd-set',
-        component: pages('login/pawd-set'),
+        path: '/password-set',
+        component: pages('login/password-set'),
         meta: {
             layout: 'Clean',
             unauthorized: true,
@@ -46,8 +46,8 @@ const routes = [
         },
     },
     {
-        path: '/pawd-change',
-        component: pages('login/pawd-change'),
+        path: '/password-change',
+        component: pages('login/password-change'),
         meta: {
             layout: 'Clean',
         },

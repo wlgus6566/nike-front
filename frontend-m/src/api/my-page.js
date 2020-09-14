@@ -12,8 +12,8 @@ function getMyInfo(params) {
     });
 }
 // MYPAGE MY INFO 비밀번호 변경
-function changepawd(data) {
-    return myPage.put(`/user/change/pawd`, data);
+function changepassword(data) {
+    return myPage.put(`/user/change/password`, data);
 }
 
-export { getGnbMenu, getMyInfo, changepawd };
+export { getGnbMenu, getMyInfo, changepassword };

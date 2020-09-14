@@ -21,9 +21,13 @@
                     />
                     <input
                         type="password"
-                        :value="loginData.pawd"
+                        :value="loginData.password"
                         @input="
-                            $emit('updateValue', 'pawd', $event.target.value)
+                            $emit(
+                                'updateValue',
+                                'password',
+                                $event.target.value
+                            )
                         "
                         placeholder="PW"
                     />

@@ -17,7 +17,7 @@
             </p>
         </div>
         <div class="table-form">
-            <form action="#" @submit.prevent="pawdChange">
+            <form action="#" @submit.prevent="passwordChange">
                 <div class="table">
                     <div class="table-row">
                         <label for="change-pw1" class="table-th">
@@ -29,7 +29,7 @@
                                 id="change-pw1"
                                 class="input-box"
                                 maxlength="16"
-                                v-model="pawd"
+                                v-model="password"
                             />
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                                 class="input-box"
                                 maxlength="16"
                                 placeholder="(8~16자/대소문자/숫자/특수문자 포함)"
-                                v-model="newpawd"
+                                v-model="newpassword"
                             />
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                                 class="input-box"
                                 maxlength="16"
                                 placeholder=""
-                                v-model="confirmpawd"
+                                v-model="confirmpassword"
                             />
                         </div>
                     </div>
@@ -72,9 +72,9 @@
                         type="submit"
                         class="btn-s-black"
                         :disabled="
-                            pawd.length < 1 ||
-                            newpawd.length < 1 ||
-                            confirmpawd.length < 1
+                            password.length < 1 ||
+                            newpassword.length < 1 ||
+                            confirmpassword.length < 1
                         "
                     >
                         <span>저장</span>
@@ -86,14 +86,14 @@
 </template>
 
 <script>
-import { changepawd } from '@/api/mypage';
+import { changepassword } from '@/api/mypage';
 
 export default {
     data() {
         return {
-            pawd: '',
-            newpawd: '',
-            confirmpawd: '',
+            password: '',
+            newpassword: '',
+            confirmpassword: '',
         };
     },
     mounted() {
@@ -110,25 +110,25 @@ export default {
     },
     methods: {
         reset() {
-            this.pawd = '';
-            this.newpawd = '';
-            this.confirmpawd = '';
+            this.password = '';
+            this.newpassword = '';
+            this.confirmpassword = '';
         },
-        async pawdChange() {
+        async passwordChange() {
             try {
-                const res = await changepawd({
+                const res = await changepassword({
                     certCode:
                         'y1v0LCq93KX05pR%2FWw3zF65hK%2FCOqYTZDdIXzM0BsC97m%2Fg1QcY1sCZAEvuTFgmcVg3a8J6xDFalUNjUfmmtu5sWZuI%3D',
-                    confirmpawd: this.confirmpawd,
-                    newpawd: this.newpawd,
-                    pawd: this.pawd,
+                    confirmpassword: this.confirmpassword,
+                    newpassword: this.newpassword,
+                    password: this.password,
                 });
                 this.msg = res.data.msg;
                 if (res.data.success) {
                     alert('변경되었습니다.');
-                    this.pawd = '';
-                    this.newpawd = '';
-                    this.confirmpawd = '';
+                    this.password = '';
+                    this.newpassword = '';
+                    this.confirmpassword = '';
                     this.$router.push('/mypage/info');
                 } else {
                     alert(res.data.msg);
