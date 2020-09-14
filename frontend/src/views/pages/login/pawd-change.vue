@@ -81,7 +81,7 @@
 </template>
 <script>
 export default {
-    name: 'PasswordChange',
+    name: 'pawdChange',
     data() {
         return {};
     },

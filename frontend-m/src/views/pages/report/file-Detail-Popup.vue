@@ -4,7 +4,7 @@
         class="modal"
         :visible="visible"
         :append-to-body="true"
-        :lock-scroll="false"
+        :lock-scroll="true"
         @close="$emit('closeModal')"
     >
         <div class="modal-contents">

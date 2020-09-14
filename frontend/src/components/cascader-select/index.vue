@@ -1,5 +1,5 @@
 <template>
-    <div class="cascader-select">
+    <div class="cascader-select" :style="{ opacity: complete }">
         <el-cascader
             ref="select"
             v-model="listCascader.value"
@@ -14,6 +14,7 @@ export default {
     name: 'cascader-select',
     data() {
         return {
+            complete: 0,
             cloneTxt: '',
         };
     },
@@ -62,6 +63,7 @@ export default {
                 Math.ceil(widthGuideTxt.offsetWidth) + 30
             }px`;
             widthGuideTxt.parentNode.removeChild(widthGuideTxt);
+            this.complete = 1;
         },
     },
 };

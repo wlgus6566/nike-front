@@ -107,7 +107,7 @@ export default {
             //check: this.items.state,
         };
     },
-    activated() {
+    mounted() {
         this.fetchData();
         this.checkAll = false;
         this.checkWishItem = [];

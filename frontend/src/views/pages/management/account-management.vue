@@ -183,7 +183,6 @@ export default {
 }
 .cascader-select .el-input--suffix .el-input__inner {
     height: 39px;
-    font-weight: 400;
     vertical-align: top;
 }
 .cascader-select .el-input--suffix .el-input__inner[aria-expanded='false'] {

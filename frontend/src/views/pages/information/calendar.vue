@@ -152,7 +152,9 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
                             this.getCalendarList(
-                                this.$moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format(
+                                    'YYYY.MM'
+                                )
                             );
                         },
                     },
@@ -162,7 +164,9 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
                             this.getCalendarList(
-                                this.$moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format(
+                                    'YYYY.MM'
+                                )
                             );
                         },
                     },
@@ -243,7 +247,9 @@ export default {
                     .classList.remove('active');
             }
             arg.dayEl.classList.add('active');
-            this.getTodayCalendar(this.$moment(arg.dateStr).format('YYYY.MM.DD'));
+            this.getTodayCalendar(
+                this.$moment(arg.dateStr).format('YYYY.MM.DD')
+            );
         },
         // 일정 등록 클릭시
         onClickToCreate() {
@@ -326,6 +332,7 @@ export default {
 };
 </script>
 <style scoped>
+::v-deep .fullCalendar-wrap .fc .fc-daygrid-body .active .fc-daygrid-day-number,
 ::v-deep .fc .fc-daygrid-day.fc-active .fc-daygrid-day-number,
 ::v-deep .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
     width: 22px;

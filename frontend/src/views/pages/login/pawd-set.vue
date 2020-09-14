@@ -19,17 +19,17 @@
                 </p>
             </div>
             <div class="table-form">
-                <form action="" @submit.prevent="passwordSet">
+                <form action="" @submit.prevent="pawdSet">
                     <div class="table">
                         <div class="table-row">
-                            <label for="newPassword" class="table-th">
+                            <label for="newpawd" class="table-th">
                                 <span class="required">새 비밀번호</span>
                             </label>
                             <div class="table-td">
                                 <input
                                     type="password"
-                                    id="newPassword"
-                                    v-model="newPassword"
+                                    id="newpawd"
+                                    v-model="newpawd"
                                     class="input-box"
                                     maxlength="16"
                                     placeholder="(8~16자/대소문자/숫자/특수문자 포함)"
@@ -37,14 +37,14 @@
                             </div>
                         </div>
                         <div class="table-row">
-                            <label for="confirmPassword" class="table-th">
+                            <label for="confirmpawd" class="table-th">
                                 <span class="required">새 비밀번호(확인)</span>
                             </label>
                             <div class="table-td">
                                 <input
                                     type="password"
-                                    id="confirmPassword"
-                                    v-model="confirmPassword"
+                                    id="confirmpawd"
+                                    v-model="confirmpawd"
                                     class="input-box"
                                     maxlength="16"
                                     placeholder=""
@@ -63,24 +63,24 @@
     </div>
 </template>
 <script>
-import { setPassword } from '@/api/login';
+import { setpawd } from '@/api/login';
 
 export default {
-    name: 'PasswordSet',
+    name: 'pawdSet',
     data() {
         return {
-            newPassword: '',
-            confirmPassword: '',
+            newpawd: '',
+            confirmpawd: '',
         };
     },
     created() {},
     methods: {
-        async passwordSet() {
+        async pawdSet() {
             try {
-                const { data: response } = await setPassword({
+                const { data: response } = await setpawd({
                     certCode: encodeURIComponent(this.$route.query.certCode),
-                    newPassword: this.newPassword,
-                    confirmPassword: this.confirmPassword,
+                    newpawd: this.newpawd,
+                    confirmpawd: this.confirmpawd,
                 });
                 if (response.existMsg) {
                     alert(response.msg);

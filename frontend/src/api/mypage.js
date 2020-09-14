@@ -26,8 +26,8 @@ function getMyInfo(params) {
     });
 }
 // MYPAGE MY INFO 비밀번호 변경
-function changePassword(data) {
-    return myPage.put(`/user/change/password`, data);
+function changepawd(data) {
+    return myPage.put(`/user/change/pawd`, data);
     //console.log(params);
 }
 
@@ -40,6 +40,6 @@ export {
     uploadFolderViewList,
     historyFolderViewList,
     getMyInfo,
-    changePassword,
+    changepawd,
     getLoginUpdate,
 };

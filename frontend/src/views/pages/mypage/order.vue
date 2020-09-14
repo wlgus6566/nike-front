@@ -106,7 +106,9 @@ export default {
         this.fetchData();
     },
     created() {},
-    mounted() {},
+    mounted() {
+        this.fetchData();
+    },
     watch: {
         beginDt() {
             this.fetchData();

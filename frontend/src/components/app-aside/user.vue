@@ -228,7 +228,6 @@ export default {
         // 알람목록
         async alarmData(infinite) {
             this.loadingData = true;
-            console.log(this.page);
             try {
                 const {
                     data: { data: response },

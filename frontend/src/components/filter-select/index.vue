@@ -1,5 +1,5 @@
 <template>
-    <div class="filter-select">
+    <div class="filter-select" :style="{ opacity: complete }">
         <el-select
             clearable
             ref="select"
@@ -21,7 +21,9 @@
 export default {
     name: 'SelectBox',
     data() {
-        return {};
+        return {
+            complete: 0,
+        };
     },
     watch: {
         'listSortSelect.value'() {
@@ -52,6 +54,7 @@ export default {
                 Math.ceil(widthGuideTxt.offsetWidth) + 30
             }px`;
             widthGuideTxt.parentNode.removeChild(widthGuideTxt);
+            this.complete = 1;
         },
     },
     mounted() {

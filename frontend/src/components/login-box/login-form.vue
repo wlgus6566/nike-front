@@ -21,13 +21,9 @@
                     />
                     <input
                         type="password"
-                        :value="loginData.password"
+                        :value="loginData.pawd"
                         @input="
-                            $emit(
-                                'updateValue',
-                                'password',
-                                $event.target.value
-                            )
+                            $emit('updateValue', 'pawd', $event.target.value)
                         "
                         placeholder="PW"
                     />
@@ -44,7 +40,7 @@
                         @click.prevent="
                             $emit('changeLoginBox', 'FindPW', false)
                         "
-                        ><span>비밀번호 찾기</span></a
+                        ><span>비밀번호 설정</span></a
                     >
                 </div>
             </div>

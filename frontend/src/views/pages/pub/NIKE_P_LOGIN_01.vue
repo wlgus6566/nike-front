@@ -13,9 +13,13 @@
                     </div>
                 </div>
                 <div class="login-btn-wrap">
-                    <button type="button" class="btn-s-lg-orage"><span>로그인</span></button>
+                    <button type="button" class="btn-s-lg-orage">
+                        <span>로그인</span>
+                    </button>
                     <div class="bnt-box">
-                        <a href="#" class="txt-btn"><span>비밀번호 찾기</span></a>
+                        <a href="#" class="txt-btn"
+                            ><span>비밀번호 찾기</span></a
+                        >
                     </div>
                 </div>
             </div>
