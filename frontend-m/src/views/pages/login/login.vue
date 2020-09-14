@@ -25,7 +25,7 @@
 <script>
 import LoginForm from '@/components/login-box/login-form';
 import CertCode from '@/components/login-box/cert-code';
-import FindPW from '@/components/login-box/find-password';
+import FindPW from '@/components/login-box/find-pawd';
 
 export default {
     name: 'login',
@@ -35,7 +35,7 @@ export default {
             LoginBox: 'LoginForm',
             loginData: {
                 username: '',
-                password: '',
+                pawd: '',
                 certCode: '',
             },
         };
@@ -58,14 +58,14 @@ export default {
                 alert('E-MAIL을 입력해 주세요.');
                 return;
             }
-            if (!this.loginData.password) {
+            if (!this.loginData.pawd) {
                 alert('비밀번호를 입력해 주세요.');
                 return;
             }
             try {
                 const bodyFormData = new FormData();
                 bodyFormData.append('username', this.loginData.username);
-                bodyFormData.append('password', this.loginData.password);
+                bodyFormData.append('pawd', this.loginData.pawd);
                 bodyFormData.append('certCode', this.loginData.certCode);
                 const response = await this.$store.dispatch(
                     'LOGIN',

@@ -41,8 +41,8 @@ const routes = [
                 },
             },
             {
-                path: 'password',
-                component: pages('mypage/password.vue'),
+                path: 'pawd',
+                component: pages('mypage/pawd.vue'),
                 meta: {
                     layout: 'Default',
                     depth: '/mypage/myinfo',

@@ -17,7 +17,7 @@
                 사용은 불가능하며, 기존과는 다른 비밀번호로 변경하셔야 합니다.
             </li>
         </ul>
-        <form action="#" @submit.prevent="passwordChange">
+        <form action="#" @submit.prevent="pawdChange">
             <ul class="form-list">
                 <li class="form-item">
                     <span class="form-column">
@@ -31,7 +31,7 @@
                             id="change-pw1"
                             class="input-box"
                             maxlength="16"
-                            v-model="password"
+                            v-model="pawd"
                         />
                     </span>
                 </li>
@@ -46,7 +46,7 @@
                             class="input-box"
                             maxlength="16"
                             placeholder="(8~16자/대소문자/숫자/특수문자 포함)"
-                            v-model="newPassword"
+                            v-model="newpawd"
                         />
                     </span>
                 </li>
@@ -63,7 +63,7 @@
                             class="input-box"
                             maxlength="16"
                             placeholder=""
-                            v-model="confirmPassword"
+                            v-model="confirmpawd"
                         />
                     </span>
                 </li>
@@ -78,14 +78,14 @@
 </template>
 
 <script>
-import { changePassword } from '@/api/my-page';
+import { changepawd } from '@/api/my-page';
 
 export default {
     data() {
         return {
-            password: '',
-            newPassword: '',
-            confirmPassword: '',
+            pawd: '',
+            newpawd: '',
+            confirmpawd: '',
         };
     },
     computed: {
@@ -94,9 +94,9 @@ export default {
         },
     },
     mounted() {
-        this.password = '';
-        this.newPassword = '';
-        this.confirmPassword = '';
+        this.pawd = '';
+        this.newpawd = '';
+        this.confirmpawd = '';
         this.stickyCss();
         this.handleScroll();
     },
@@ -140,12 +140,12 @@ export default {
                 contents.style.paddingBottom = '';
             }
         },
-        async passwordChange() {
+        async pawdChange() {
             try {
-                const res = await changePassword({
-                    confirmPassword: this.confirmPassword,
-                    newPassword: this.newPassword,
-                    password: this.password,
+                const res = await changepawd({
+                    confirmpawd: this.confirmpawd,
+                    newpawd: this.newpawd,
+                    pawd: this.pawd,
                 });
 
                 console.log(res);

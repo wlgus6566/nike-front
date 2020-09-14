@@ -16,10 +16,8 @@
                 />
                 <input
                     type="password"
-                    :value="loginData.password"
-                    @input="
-                        $emit('updateValue', 'password', $event.target.value)
-                    "
+                    :value="loginData.pawd"
+                    @input="$emit('updateValue', 'pawd', $event.target.value)"
                     placeholder="PW"
                 />
             </div>
@@ -36,7 +34,7 @@
     </form>
 </template>
 <script>
-import password from '@/views/pages/mypage/password';
+import pawd from '@/views/pages/mypage/pawd';
 
 export default {
     name: 'loginForm',
