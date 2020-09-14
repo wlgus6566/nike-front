@@ -45,10 +45,10 @@
                                     />
                                     <span
                                         :class="[
-                                        `extension-${item.fileExtension.toLowerCase()}`,
+                                            `extension-${item.fileExtension.toLowerCase()}`,
                                         ]"
                                         v-else
-                                     >
+                                    >
                                     </span>
                                 </span>
                                 <button
@@ -59,7 +59,10 @@
                                     삭제
                                 </button>
                             </li>
-                            <li class="upload-file-item" v-for="item in reportTempFileList"></li>
+                            <li
+                                class="upload-file-item"
+                                v-for="item in reportTempFileList"
+                            ></li>
                         </ul>
                     </div>
                     <p class="desc">
@@ -110,10 +113,15 @@
 </template>
 <script>
 import thumbnail from '@/components/thumbnail/index';
-import {getReportDetail, getReportFile, postReport, putReport,} from '@/api/report';
-import {fileUpLoad} from '@/api/file';
+import {
+    getReportDetail,
+    getReportFile,
+    postReport,
+    putReport,
+} from '@/api/report';
+import { fileUpLoad } from '@/api/file';
 import bus from '@/utils/bus';
-import {getLoginUpdate} from '@/api/mypage';
+import { getLoginUpdate } from '@/api/mypage';
 
 export default {
     name: 'upload',
@@ -138,14 +146,13 @@ export default {
             },
             reportSectionCodeList: ['SP', 'SU', 'FA', 'HO'],
             uploadFileViewer: false,
-            reportTempFileList : [{},{},{},{},{},{},{},{},{},{}]
+            reportTempFileList: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
         };
     },
     components: {
         thumbnail,
     },
-    created() {
-    },
+    created() {},
     activated() {
         this.reportDetailData = {
             reportName: '',
@@ -220,7 +227,7 @@ export default {
         },
         // 리포트 상세 파일 데이터
         async getReportFileData() {
-            console.log("getReportFileData");
+            console.log('getReportFileData');
             try {
                 const {
                     data: { data: response },
@@ -235,7 +242,10 @@ export default {
                     this.uploadFileSize = this.reportDetailData.reportFileSaveDTOList.length;
                 }
                 console.log(this.reportDetailData.reportFileSaveDTOList.length);
-                this.reportTempFileList.splice(0, this.reportDetailData.reportFileSaveDTOList.length);
+                this.reportTempFileList.splice(
+                    0,
+                    this.reportDetailData.reportFileSaveDTOList.length
+                );
                 this.fileOrderSet();
             } catch (error) {
                 console.error(error);
@@ -268,12 +278,13 @@ export default {
                 let reader = new FileReader();
                 reader.onloadend = e => {
                     let thumbnailImage = '';
-                    if(el.type.indexOf('image')>-1){
+                    if (el.type.indexOf('image') > -1) {
                         thumbnailImage = e.target.result;
                     }
                     console.log(thumbnailImage);
                     this.reportDetailData.reportFileSaveDTOList.push({
-                        fileOrder: this.reportDetailData.reportFileSaveDTOList.length,
+                        fileOrder: this.reportDetailData.reportFileSaveDTOList
+                            .length,
                         fileName: el.name,
                         fileSize: el.size,
                         fileContentType: el.type,

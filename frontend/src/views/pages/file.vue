@@ -94,7 +94,7 @@ export default {
                 authSeq: 0,
                 managerId: '',
                 managerName: '',
-                password: '',
+                pawd: '',
             },
         };
     },
@@ -102,9 +102,9 @@ export default {
         getData() {
             let vm = this;
             axios.detail(vm.key).then((response) => {
-                console.log('=======param start=====');
+                /*console.log('=======param start=====');
                 console.log('사용하는 데이터부분');
-                console.log(response.data.data);
+                console.log(response.data.data);*/
                 vm.info = response.data.data;
             });
         },
@@ -133,12 +133,12 @@ export default {
                                 total += dataFile[fileData]['totalSize'];
                                 cur += dataFile[fileData]['curSize'];
                             }
-                            console.log(
+                            /* console.log(
                                 '=============i ::::' +
                                     i +
                                     '::::' +
                                     Math.round((cur * 100) / total)
-                            );
+                            );*/
                         },
                     })
                     .then((response) => {
@@ -160,9 +160,9 @@ export default {
     },
     created() {
         const vm = this;
-        console.log('created');
+        /* console.log('created');
         console.log(vm.$route.params);
-        console.log(vm.$route.params.key);
+        console.log(vm.$route.params.key);*/
         vm.key = vm.$route.params.key;
         // vm.$route.params.evntSn
 

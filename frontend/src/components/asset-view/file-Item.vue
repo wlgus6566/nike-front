@@ -235,7 +235,7 @@
             </draggable>
             <NoData v-else class="file-type">
                 <i class="icon-file"></i>
-                <p class="desc">등록된 파일이 없습니다.</p>
+                <p class="desc">등록된 데이터가 없습니다.</p>
             </NoData>
         </template>
         <Loading class="list-loading" :width="172" :height="172" v-else />
@@ -363,7 +363,7 @@ export default {
             };
         },
         onStart(e) {
-            console.log(123);
+            //console.log(123);
             const thumbnail = document.querySelector('.drag-item .thumbnail');
             const absoluteLeft =
                 window.pageXOffset + thumbnail.getBoundingClientRect().left;

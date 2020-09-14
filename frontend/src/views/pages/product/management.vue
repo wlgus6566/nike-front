@@ -140,13 +140,11 @@ export default {
     mounted() {
         this.getAgency();
         getCategoryList('CATEGORY', this.category2Code.listSortOptions);
-    },
-    activated() {
         this.getProduct();
     },
+    activated() {},
     methods: {
         selectFocus() {
-            console.log(this.category2Code.value);
             if (this.category2Code.value === '') {
                 alert('대구분을 선택해 주세요 ');
                 this.$refs.focusOut.focus();
@@ -159,7 +157,6 @@ export default {
                     data: { data: response },
                 } = await getAgencyContact();
                 const agencyData = response;
-                console.log(response);
                 agencyData.forEach((item) => {
                     const agencyList = {
                         value: item.agencySeq,

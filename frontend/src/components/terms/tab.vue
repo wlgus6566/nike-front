@@ -13,7 +13,7 @@ export default {
     name: 'termsTab',
     props: ['tabName'],
     mounted() {
-        console.log(this.tabName);
+        //console.log(this.tabName);
     },
     data() {
         return {

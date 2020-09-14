@@ -106,7 +106,78 @@
                         </el-input>
                     </div>
                 </li>
-                <li class="form-row">
+                <li class="form-row" v-if="pageOptionName === '캠페인'">
+                    <div class="form-column">
+                        <span class="label-title"
+                            >{{ pageOptionName }} 기간</span
+                        >
+                    </div>
+                    <div class="form-column">
+                        <div>
+                            <div class="form-desc-wrap">
+                                <label class="check-label">
+                                    <span class="radio">
+                                        <input
+                                            type="radio"
+                                            v-model="
+                                                folderDetail.campaignPeriodSectionCode
+                                            "
+                                            value="SELECT"
+                                        />
+                                        <i></i>
+                                        <span class="txt">날짜선택</span>
+                                    </span>
+                                </label>
+                                <label class="check-label">
+                                    <span class="radio">
+                                        <input
+                                            type="radio"
+                                            v-model="
+                                                folderDetail.campaignPeriodSectionCode
+                                            "
+                                            value="EVERY"
+                                        />
+                                        <i></i>
+                                        <span class="txt">365</span>
+                                    </span>
+                                </label>
+                                <p class="form-desc-red">
+                                    * Asset은 6개월 이후에 자동삭제 됩니다.
+                                </p>
+                            </div>
+                            <div
+                                class="date-picker-range"
+                                v-if="
+                                    folderDetail.campaignPeriodSectionCode ===
+                                    'SELECT'
+                                "
+                            >
+                                <div class="date-picker">
+                                    <el-date-picker
+                                        v-model="BeginDt"
+                                        type="date"
+                                        placeholder="YYYY.MM.DD"
+                                        format="yyyy.MM.dd"
+                                        :picker-options="pickerBeginOption"
+                                    >
+                                    </el-date-picker>
+                                </div>
+                                <i class="dash"></i>
+                                <div class="date-picker">
+                                    <el-date-picker
+                                        v-model="EndDt"
+                                        type="date"
+                                        placeholder="YYYY.MM.DD"
+                                        format="yyyy.MM.dd"
+                                        :picker-options="pickerEndOption"
+                                    >
+                                    </el-date-picker>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="form-row" v-else>
                     <div class="form-column">
                         <span class="label-title">기간</span>
                     </div>
@@ -195,7 +266,7 @@
                 </li>
                 <li class="form-row">
                     <div class="form-column">
-                        <label class="label-title">권한 설정</label>
+                        <label class="label-title required">권한 설정</label>
                     </div>
                     <div class="form-column">
                         <button
@@ -411,7 +482,15 @@ export default {
     },
     created() {
         this.$store.state.saveFolder = false;
-        //this.folderSetting();
+        this.pageMenuCodeAuth(this.$route.meta.topMenuCode, 'CREATE');
+        this.folderSetting();
+        clearInterval(this.occupyInterval);
+        if (this.$route.params.id) {
+            this.joinOccupyFn();
+            this.occupyInterval = setInterval(() => {
+                this.joinOccupyFn();
+            }, 1000 * 60 * 4);
+        }
     },
     activated() {
         this.$store.state.saveFolder = false;
@@ -503,14 +582,14 @@ export default {
                 menuName: this.$route.meta.topMenuCode,
                 seq: this.$route.params.id,
             });
-            console.log(response);
+            //console.log(response);
         },
         async deleteOccupyFn() {
             const response = await joinDelete({
                 menuName: this.$route.meta.topMenuCode,
                 seq: this.$route.params.id,
             });
-            console.log(response);
+            //console.log(response);
         },
 
         /**
@@ -701,7 +780,7 @@ export default {
             this.folderDetail.campaignEndDt = null;
             this.folderDetail.imageFilePhysicalName = '';
             this.folderDetail.exposureYn = 'Y';
-            console.log(this.pageMenuCode);
+            //console.log(this.pageMenuCode);
             this.folderDetail.folderName = '';
             this.folderDetail.folderContents = '';
             this.folderDetail.campaignPeriodSectionCode = 'SELECT';

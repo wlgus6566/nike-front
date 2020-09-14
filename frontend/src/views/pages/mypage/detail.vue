@@ -44,7 +44,9 @@ export default {
     },
     methods: {
         goToList() {
-            this.$router.push(`/mypage/${this.$route.meta.sectionCode}`.toLowerCase());
+            this.$router.push(
+                `/mypage/${this.$route.meta.sectionCode}`.toLowerCase()
+            );
         },
         //목록이동
         listRoute() {
@@ -63,7 +65,7 @@ export default {
                     this.$route.meta.sectionCode,
                     this.$route.params.id
                 );
-                console.log(response);
+                //console.log(response);
 
                 this.noticeDetail = response;
                 this.noticeArticleSectionCode =

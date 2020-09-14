@@ -74,7 +74,7 @@ export default {
                 const {
                     data: { data: response },
                 } = await getMyInfo({});
-                console.log(response);
+                //console.log(response);
                 this.userData = response;
             } catch (error) {
                 console.error(error);

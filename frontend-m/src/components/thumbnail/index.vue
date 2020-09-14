@@ -47,14 +47,14 @@ export default {
             imgSrc: null,
             cropImg: null,
             imgName: null,
-            width: 1000,
-            height: 1000,
+            width: 768,
+            height: 768,
         };
     },
     mounted() {
         this.cropImg = this.imageBase64;
-        this.height = this.imgHeight;
-        this.width = this.imgWidth;
+        this.height = this.imgHeight || this.height;
+        this.width = this.imgWidth || this.width;
     },
     activated() {
         this.cropImg = this.imageBase64;
@@ -73,12 +73,38 @@ export default {
     computed: {},
     methods: {
         cropImage(cropperUrl) {
-            this.imgName = null;
-            this.imgSrc = null;
-            this.cropImg = cropperUrl;
-            this.$refs.input.value = '';
-            this.$emit('cropImage', this.cropImg, this.imgName);
-            this.visible.cropperModal = false;
+            let arr = cropperUrl.split(',');
+            let mime = arr[0].match(/:(.*?);/)[1];
+            let bstr = atob(arr[1]);
+            let n = bstr.length;
+            let u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            const newFile = new File([u8arr], this.fileName, {
+                type: mime,
+            });
+            console.log(this.width);
+            new Compress()
+                .compress([newFile], {
+                    size: 100, // the max size in MB, defaults to 2MB
+                    quality: 1, // the quality of the image, max is 1,
+                    maxWidth: this.width, // the max width of the output image, defaults to 1920px
+                    maxHeight: this.height, // the max height of the output image, defaults to 1920px
+                    resize: true, // defaults to true, set false if you do not want to resize the image width and height
+                })
+                .then(data => {
+                    let url = `${data[0].prefix}${data[0].data}`;
+                    this.imgName = null;
+                    this.imgSrc = null;
+                    this.cropImg = url;
+                    this.$refs.input.value = '';
+                    this.$emit('cropImage', this.cropImg, this.imgName);
+                    this.visible.cropperModal = false;
+                })
+                .catch(e => {
+                    bus.$emit('pageLoading', false);
+                });
         },
         inputChangeEvent(e) {
             const file = e.target.files[0];
@@ -89,7 +115,22 @@ export default {
                 return;
             }
 
-            new Compress()
+            if (typeof FileReader === 'function') {
+                const reader = new FileReader();
+                reader.onload = event => {
+                    bus.$emit('pageLoading', false);
+                    this.popupOpen();
+                    let url = event.target.result;
+                    this.imgSrc = url;
+                    this.imgName = file.name;
+                    this.$refs.cModal.$refs.cropper.replace(url);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Sorry, FileReader API not supported');
+            }
+
+            /* new Compress()
                 .compress([file], {
                     size: 4, // the max size in MB, defaults to 2MB
                     quality: 1, // the quality of the image, max is 1,
@@ -107,7 +148,7 @@ export default {
                 })
                 .catch(e => {
                     bus.$emit('pageLoading', false);
-                });
+                });*/
         },
         popupOpen() {
             this.visible.cropperModal = true;

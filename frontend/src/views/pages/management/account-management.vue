@@ -152,7 +152,7 @@ export default {
             //this.addAuthority.value = null;
         },
         'addAuthority.value'(val) {
-            console.log(val);
+            //console.log(val);
             if (val[0] === null) {
                 if (this.addUserData.authSeqArray === null) return;
                 if (this.addUserData.authSeqArray.length) {
@@ -183,7 +183,6 @@ export default {
 }
 .cascader-select .el-input--suffix .el-input__inner {
     height: 39px;
-    font-weight: 400;
     vertical-align: top;
 }
 .cascader-select .el-input--suffix .el-input__inner[aria-expanded='false'] {

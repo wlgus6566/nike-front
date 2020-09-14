@@ -18,9 +18,7 @@
 export default {
     name: 'SortingList',
     props: ['sectionCode'],
-    mounted() {
-        console.log(this.sectionCode);
-    },
+    mounted() {},
     methods: {
         activeClass(value) {
             return value === this.sectionCode.value ? 'active' : '';

@@ -135,7 +135,7 @@ export default {
     },
     props: ['visible', 'orderDetailData'],
     created() {
-        console.log(this.orderDetailData);
+        //console.log(this.orderDetailData);
     },
     computed: {
         userNickname() {

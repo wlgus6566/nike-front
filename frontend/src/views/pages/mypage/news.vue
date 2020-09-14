@@ -99,7 +99,7 @@ export default {
                     size: this.itemLength,
                     keyword: this.searchKeyword,
                 });
-                console.log(response);
+                //console.log(response);
                 this.newsData = response;
                 this.newsDataContent = response.content;
                 this.totalItem = this.newsData.totalElements;

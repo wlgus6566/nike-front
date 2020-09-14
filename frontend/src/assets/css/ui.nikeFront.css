@@ -1531,6 +1531,13 @@
 .form-column .check-label.type2 {
     min-width: 115px;
 }
+.form-desc-wrap {
+    display: flex;
+    align-items: center;
+}
+.form-desc-wrap [class^='form-desc'] {
+    margin: 0 0 0 auto;
+}
 .form-column input[type='text'],
 .form-column input[type='email'],
 .form-column input[type='tel'],

@@ -300,9 +300,8 @@ export default {
     },
     activated() {
         //initializationData
-        this.compMount();
     },
-    deactivated() {
+    destroy() {
         this.compDestroy();
     },
     computed: {},
@@ -310,7 +309,10 @@ export default {
         'listSortSelect.value'() {
             this.getUserList();
         },
-        'authority.value'() {
+        'authority.value'(val) {
+            if (val.length === 0) {
+                this.authority.value = [null];
+            }
             this.getUserList();
         },
         beginDt() {
@@ -377,6 +379,7 @@ export default {
         //dataPicker show
         dataPickerShow() {
             this.dataPickerShowData.visible = !this.dataPickerShowData.visible;
+            this.compMount();
         },
         dates() {},
         // checkbox
@@ -543,7 +546,7 @@ export default {
                 this.addAuthority.value = response.authSeqArray;
                 this.addUserData = response;
                 this.visible.AccountManagement = true;
-                console.log(response);
+                //console.log(response);
             } catch (error) {
                 console.error(error);
             }

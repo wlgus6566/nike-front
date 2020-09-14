@@ -299,9 +299,9 @@ export default {
             }
         },
         calClickEvent(e) {
-            console.log('e / ', e);
+            //console.log('e / ', e);
             const body = document.querySelector('.fc-daygrid-body');
-            const tdWidth = e.jsEvent.target.closest('td').offsetWidth / 2;
+            //const tdWidth = e.jsEvent.target.closest('td').offsetWidth / 2; IE 지원 안함
             const date = this.$moment(e.date).format('YYYY-MM-DD');
             const cal = this.$refs.fullCalendar.$el;
             const td = cal.querySelector(`td[data-date="${date}"]`);
@@ -339,7 +339,7 @@ export default {
                     data: { data: response },
                 } = await getMain();
                 this.mainData = response;
-                console.log(response);
+                //console.log(response);
             } catch (error) {
                 console.error(error);
             }

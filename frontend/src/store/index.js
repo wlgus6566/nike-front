@@ -24,7 +24,7 @@ export default new Vuex.Store({
         nick: '',
         token: '',
         authName: '',
-        saveFolder:false,
+        saveFolder: false,
         gnbMenuListData: [],
         basketItemDrag: false,
         fileMouseenter: false,
@@ -92,6 +92,7 @@ export default new Vuex.Store({
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
                 state.logoutTimer.count = `${minutes}:${seconds}`;
                 if (distance <= 0) {
+                    state.saveFolder = false;
                     state.logoutTimer.modalVisible = false;
                     this.commit('LOGOUT');
                     clearInterval(state.logoutTimer.timerInterval);
@@ -139,7 +140,7 @@ export default new Vuex.Store({
     actions: {
         async LOGIN({ commit }, data) {
             const response = await loginUser(data);
-            console.log(response);
+            //console.log(response);
             if (response.data.code === 'SUCCESS') {
                 /*commit('SET_USER', response.data.data.userId);
                 commit('SET_NICK', response.data.data.nickname);

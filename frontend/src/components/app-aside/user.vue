@@ -199,7 +199,6 @@ export default {
             this.totalPage = null;
             this.page = 0;
             this.alarmDataListCont = null;
-            console.log(this.page);
             this.alarmData();
         },
         //클릭시 업로드 한 폴더 리스트 다시 불러오기
@@ -210,7 +209,6 @@ export default {
                 alarmList.clientHeight + alarmList.scrollTop >=
                 alarmList.scrollHeight
             ) {
-                console.log(1);
                 this.infiniteScroll();
             }
         },
@@ -230,7 +228,6 @@ export default {
         // 알람목록
         async alarmData(infinite) {
             this.loadingData = true;
-            console.log(this.page);
             try {
                 const {
                     data: { data: response },
@@ -263,7 +260,7 @@ export default {
                 const {
                     data: { data: response },
                 } = await delAlarm(seq);
-                console.log(response);
+                //console.log(response);
                 await this.alarmData();
                 this.alarmActive = false;
             } catch (error) {

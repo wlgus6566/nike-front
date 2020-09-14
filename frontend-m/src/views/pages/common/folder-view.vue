@@ -41,6 +41,9 @@
                         자료의 조회와 다운로드 이력이 추적 / 관리됩니다. 자료의
                         불법적인 유출은 관련 법에 의거 처벌될 수 있습니다.
                     </li>
+                    <li class="noti-item">
+                        이용 약관은 페이지 하단에서 확인 할 수 있습니다.
+                    </li>
                 </ul>
             </div>
         </div>
@@ -63,7 +66,43 @@
                     v-for="item in fileList"
                     :key="item.contentsFileSeq"
                 >
-                    <a :href="item.filePhysicalName" :download="item.fileName">
+                    <a
+                        :href="item.filePhysicalName"
+                        :download="item.fileName"
+                        v-if="
+                            item.fileExtension === 'PPT' ||
+                                item.fileExtension === 'PPTX' ||
+                                item.fileExtension === 'PDF'
+                        "
+                    >
+                        <span class="thumbnail">
+                            <span
+                                :class="[`extension-vr`]"
+                                v-if="item.fileKindCode === 'VR'"
+                            ></span>
+                            <span
+                                :class="[`extension-url`]"
+                                v-else-if="item.fileKindCode === 'VIDEO'"
+                            ></span>
+                            <img
+                                :src="item.thumbnailFilePhysicalName"
+                                :alt="item.thumbnailFileName"
+                                v-else-if="item.thumbnailFilePhysicalName"
+                            />
+                            <span
+                                :class="[
+                                    `extension-${item.fileExtension.toLowerCase()}`,
+                                ]"
+                                v-else
+                            ></span>
+                        </span>
+                        <span class="info-box">
+                            <strong class="title">
+                                {{ item.title || item.fileName }}
+                            </strong>
+                        </span>
+                    </a>
+                    <a href="#" @click.prevent="fileDetailModal(item)" v-else>
                         <span class="thumbnail">
                             <span
                                 :class="[`extension-vr`]"
@@ -95,7 +134,7 @@
             </ul>
             <NoData v-else class="file-type">
                 <i class="icon-file"></i>
-                <p class="desc">등록된 파일이 없습니다.</p>
+                <p class="desc">등록된 데이터가 없습니다.</p>
             </NoData>
         </template>
         <fileDetailPopup

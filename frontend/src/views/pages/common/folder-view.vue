@@ -324,7 +324,7 @@ export default {
                     .toLowerCase()
             ],
         ];
-        console.log(this.sectionCode);
+        //console.log(this.sectionCode);
     },
     components: {
         BtnArea,
@@ -435,7 +435,7 @@ export default {
                         .toUpperCase(),
                     this.$route.params.id
                 );
-                console.log(response);
+                //console.log(response);
                 if (response.success) {
                     this.$store.commit('SET_RELOAD', true);
                     await this.$router.push(
@@ -458,7 +458,7 @@ export default {
                 menuName: this.$route.meta.topMenuCode,
                 seq: this.$route.params.id,
             });
-            console.log(response);
+            //console.log(response);
             if (response.data.code === 'SUCCESS') {
                 await this.$router.push(
                     `/${this.$route.meta.topMenuCode.toLowerCase()}/${
@@ -627,6 +627,7 @@ export default {
         },
     },
     created() {
+        this.$store.dispatch('getContBasket');
         this.getFolderDetail();
         this.initFetchData();
         window.addEventListener('scroll', this.handleScroll);

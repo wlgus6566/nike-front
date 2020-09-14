@@ -5,17 +5,23 @@
         class="modal"
         :visible="visible"
         :append-to-body="true"
-        :lock-scroll="false"
-        @close="$emit('update:visible', false)">
+        :lock-scroll="true"
+        @close="$emit('update:visible', false)"
+    >
         <div class="modal-contents">
             <ul class="alarm-list" ref="alarmWrap">
                 <li v-for="(item, index) in alarmList" :key="index">
                     <a href="#" @click="delAlarmData(item, index)">
                         <span class="title" v-if="item.typeAction === 'NEW'">
-                            새로 등록된 {{ item.typeCd }}({{item.folderName}})이 있습니다.
+                            새로 등록된 {{ item.typeCd }}({{
+                                item.folderName
+                            }})이 있습니다.
                         </span>
-                        <span class="title" v-else>{{ item.typeCd }}({{ item.folderName }})
-                            <span v-if="item.typeAction === 'FEEDBACK'"> 에 피드백이 등록되었습니다.</span>
+                        <span class="title" v-else
+                            >{{ item.typeCd }}({{ item.folderName }})
+                            <span v-if="item.typeAction === 'FEEDBACK'">
+                                에 피드백이 등록되었습니다.</span
+                            >
                             <span v-else> 이(가) 업데이트 되었습니다.</span>
                         </span>
                         <span class="data">{{ item.registrationDt }}</span>
@@ -54,7 +60,9 @@ export default {
             if (typeCdLow === 'report') {
                 this.$router.push(`/report/detail/${item.folderSeq}`);
             } else if (typeCdLow === 'asset') {
-                alert('해당 메뉴는 모바일 버전에서 제공되지 않습니다. 자세한 내용은 PC로 접속 시 확인할 수 있습니다.');
+                alert(
+                    '해당 메뉴는 모바일 버전에서 제공되지 않습니다. 자세한 내용은 PC로 접속 시 확인할 수 있습니다.'
+                );
             } else {
                 let menuCodeLow = item.menuCode.toLowerCase().trim();
                 this.$router.push(
@@ -130,5 +138,4 @@ export default {
     line-height: 18px;
     color: #888;
 }
-
 </style>
