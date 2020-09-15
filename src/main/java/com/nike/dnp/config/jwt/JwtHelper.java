@@ -13,18 +13,17 @@ import lombok.experimental.UtilityClass;
 public class JwtHelper {
 
 	/**
-	 * The Secret
+	 * The JWT_VARIABLE
 	 *
 	 * @author [오지훈]
 	 */
-	public final String SECRET = "NIKE_DNP";
+	public final String JWT_VARIABLE = "NIKE_DNP";
 
 	/**
 	 * The constant EXPIRATION_TIME
 	 *
 	 * @author [오지훈]
 	 */
-//public static final int EXPIRATION_TIME = 86400000; // 하루
 	public final Long EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 365L;//365일
 
 	/**

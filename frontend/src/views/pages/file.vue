@@ -94,7 +94,7 @@ export default {
                 authSeq: 0,
                 managerId: '',
                 managerName: '',
-                pawd: '',
+                password: '',
             },
         };
     },

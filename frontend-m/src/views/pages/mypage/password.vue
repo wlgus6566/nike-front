@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import { changePassword } from '@/api/my-page';
+import { changepassword } from '@/api/my-page';
 
 export default {
     data() {
@@ -142,7 +142,7 @@ export default {
         },
         async passwordChange() {
             try {
-                const res = await changePassword({
+                const res = await changepassword({
                     confirmPassword: this.confirmPassword,
                     newPassword: this.newPassword,
                     password: this.password,

@@ -88,10 +88,10 @@
     </div>
 </template>
 <script>
-import { changePassword } from '@/api/login';
+import { changepassword } from '@/api/login';
 
 export default {
-    name: 'PasswordChange',
+    name: 'passwordChange',
     data() {
         return {
             password: '',
@@ -102,7 +102,7 @@ export default {
     methods: {
         async passwordChange() {
             try {
-                const { data: response } = await changePassword({
+                const { data: response } = await changepassword({
                     certCode: this.$route.params.certCode,
                     password: this.password,
                     newPassword: this.newPassword,

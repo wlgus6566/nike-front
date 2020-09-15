@@ -166,7 +166,7 @@ public class ContentsService {
                 , contentsSearchDTO.getSize()
                 , contentsSearchDTO.getOrderType().equals("START_DATE")
                         ? Sort.by(ServiceCode.SearchEnumCode.PERIOD_SECTION_CODE.getValue()).descending()
-                            .and(Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).ascending()) : Sort.by(ServiceCode.SearchEnumCode.LATEST.getValue()).descending()));
+                            .and(Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).descending()) : Sort.by(ServiceCode.SearchEnumCode.LATEST.getValue()).descending()));
     }
 
     /**

@@ -1,5 +1,5 @@
 <template>
-    <section class="login">
+    <section ref="wrap" class="login">
         <div class="login-inner">
             <div class="nike-logo" ref="logo">
                 <img
@@ -7,14 +7,16 @@
                     alt="nike space"
                 />
             </div>
-            <component
-                :is="LoginBox"
-                :loginData="loginData"
-                :activeState="activeState"
-                @login="login"
-                @updateValue="updateValue"
-                @changeLoginBox="changeLoginBox"
-            />
+            <transition name="box-change" mode="out-in">
+                <component
+                    :is="LoginBox"
+                    :loginData="loginData"
+                    :activeState="activeState"
+                    @login="login"
+                    @updateValue="updateValue"
+                    @changeLoginBox="changeLoginBox"
+                />
+            </transition>
             <p class="f-desc">
                 사용자는 NIKE SPACE에 로그인함으로써,<br />
                 개인정보 처리방침 및 이용약관에 동의합니다.
@@ -25,7 +27,7 @@
 <script>
 import LoginForm from '@/components/login-box/login-form';
 import CertCode from '@/components/login-box/cert-code';
-import FindPW from '@/components/login-box/find-pawd';
+import FindPW from '@/components/login-box/find-password';
 
 export default {
     name: 'login',
@@ -35,19 +37,16 @@ export default {
             LoginBox: 'LoginForm',
             loginData: {
                 username: '',
-                pawd: '',
+                password: '',
                 certCode: '',
             },
         };
     },
-    watch: {
-        LoginBox() {
-            const login = document.querySelector('.login-box');
-            login.classList.add('active');
-        },
-    },
+    watch: {},
     mounted() {
-        this.$refs.logo.classList.add('active');
+        setTimeout(() => {
+            this.$refs.wrap.classList.add('active');
+        }, 10);
     },
     components: { LoginForm, CertCode, FindPW },
     methods: {
@@ -63,14 +62,14 @@ export default {
                 alert('E-MAIL을 입력해 주세요.');
                 return;
             }
-            if (!this.loginData.pawd) {
+            if (!this.loginData.password) {
                 alert('비밀번호를 입력해 주세요.');
                 return;
             }
             try {
                 const bodyFormData = new FormData();
                 bodyFormData.append('username', this.loginData.username);
-                bodyFormData.append('pawd', this.loginData.pawd);
+                bodyFormData.append('password', this.loginData.password);
                 bodyFormData.append('certCode', this.loginData.certCode);
                 const response = await this.$store.dispatch(
                     'LOGIN',
@@ -104,71 +103,12 @@ export default {
 </script>
 
 <style scoped>
-.login {
-    position: relative;
-    display: flex;
-    width: 100%;
-    min-height: 940px;
-    height: 100%;
-    align-items: center;
-    flex-direction: column;
-    background: url('../../../assets/images/img-login-main-bg@2x.png') no-repeat
-        50% 50% / 3000px 2000px #000;
+.box-change-enter-active,
+.box-change-leave-active {
+    transition: opacity 0.4s;
 }
-.nike-logo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 370px;
-    height: 390px;
-    transform: translate(-50%, -50%);
-    vertical-align: top;
-}
-.nike-logo.active {
-    animation: logoAni 1.5s ease-in-out forwards;
-}
-.nike-logo.hidden {
+.box-change-enter,
+.box-change-leave-to {
     opacity: 0;
-}
-
-@keyframes logoAni {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-.nike-logo img {
-    width: 100%;
-    vertical-align: top;
-}
-.login-inner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    display: flex;
-    padding: 30px;
-    flex-direction: column;
-    align-items: center;
-    transform: translate(-50%, -50%);
-}
-/*.login-inner:before {
-    content: '';
-    display: block;
-    width: 500px;
-    height: 500px;
-    background: url('../../../assets/images/svg/img-login-swoosh.svg') no-repeat
-        center center / contain;
-}*/
-.login .f-desc {
-    display: block;
-    margin-top: 30px;
-    text-align: center;
-    color: #fff;
-    opacity: 0.4;
-    font-size: 12px;
-    line-height: 18px;
-    letter-spacing: -0.55px;
 }
 </style>

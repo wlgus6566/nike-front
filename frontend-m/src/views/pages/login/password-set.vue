@@ -71,10 +71,10 @@
     </div>
 </template>
 <script>
-import { setPassword } from '@/api/login';
+import { setpassword } from '@/api/login';
 
 export default {
-    name: 'PasswordSet',
+    name: 'passwordSet',
     data() {
         return {
             newPassword: '',
@@ -85,7 +85,7 @@ export default {
     methods: {
         async passwordSet() {
             try {
-                const { data: response } = await setPassword({
+                const { data: response } = await setpassword({
                     certCode: encodeURIComponent(this.$route.query.certCode),
                     newPassword: this.newPassword,
                     confirmPassword: this.confirmPassword,
@@ -93,7 +93,6 @@ export default {
                 if (response.existMsg) {
                     alert(response.msg);
                 }
-                console.log(response);
                 if (response.success) {
                     await this.$router.push('/login');
                 }

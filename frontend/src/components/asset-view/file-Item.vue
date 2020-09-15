@@ -218,7 +218,12 @@
                                         :player-width="width"
                                     ></vimeo-player>
                                 </div>
-                                <div class="thumbnail" v-else>
+                                <div
+                                    class="thumbnail"
+                                    v-else-if="
+                                        videoCheck(item.url).type === 'youtube'
+                                    "
+                                >
                                     <div class="video-item">
                                         <youtube
                                             :video-id="videoCheck(item.url).id"
@@ -226,6 +231,37 @@
                                                 autoplay: 1,
                                             }"
                                         ></youtube>
+                                    </div>
+                                </div>
+                                <div
+                                    class="thumbnail"
+                                    v-else-if="
+                                        videoCheck(item.url).type ===
+                                        'brightcove'
+                                    "
+                                >
+                                    <div class="video-item">
+                                        <iframe
+                                            :src="videoCheck(item.url).id"
+                                            allowfullscreen
+                                            webkitallowfullscreen
+                                            mozallowfullscreen
+                                        ></iframe>
+                                    </div>
+                                </div>
+                                <div
+                                    class="thumbnail"
+                                    v-else-if="
+                                        videoCheck(item.url).type === 'mp4'
+                                    "
+                                >
+                                    <div class="video-item">
+                                        <video controls>
+                                            <source
+                                                :src="videoCheck(item.url).id"
+                                                type="video/mp4"
+                                            />
+                                        </video>
                                     </div>
                                 </div>
                             </div>
@@ -327,22 +363,27 @@ export default {
             url.match(
                 /(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/
             );
-            let type;
             if (RegExp.$3.indexOf('youtu') > -1) {
-                type = 'youtube';
+                return {
+                    type: 'youtube',
+                    id: RegExp.$6,
+                };
             } else if (RegExp.$3.indexOf('vimeo') > -1) {
-                type = 'vimeo';
+                return {
+                    type: 'vimeo',
+                    id: RegExp.$6,
+                };
+            } else if (url.indexOf('brightcove') > -1) {
+                return {
+                    type: 'brightcove',
+                    id: url,
+                };
+            } else {
+                return {
+                    type: 'mp4',
+                    id: url,
+                };
             }
-
-            return {
-                type: type,
-                id: RegExp.$6,
-            };
-            /*let ampersandPosition = video_id.indexOf('&');
-            if (ampersandPosition != -1) {
-                video_id = video_id.substring(0, ampersandPosition);
-            }*/
-            //return video_id;
         },
         test(seq) {
             return this.storeContBasketList.some((el) => el === seq);

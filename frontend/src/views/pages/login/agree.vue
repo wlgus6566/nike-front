@@ -235,7 +235,7 @@ export default {
             try {
                 const bodyFormData = new FormData();
                 bodyFormData.append('username', this.$route.params.username);
-                bodyFormData.append('pawd', this.$route.params.pawd);
+                bodyFormData.append('password', this.$route.params.password);
                 bodyFormData.append('certCode', this.$route.params.certCode);
                 bodyFormData.append('termsAgreeYn', this.termsAgreeYn);
                 const response = await this.$store.dispatch(

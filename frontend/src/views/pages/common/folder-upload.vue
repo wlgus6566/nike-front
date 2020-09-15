@@ -113,7 +113,7 @@
                         >
                     </div>
                     <div class="form-column">
-                        <div>
+                        <div class="form-date-picker">
                             <div class="form-desc-wrap">
                                 <label class="check-label">
                                     <span class="radio">

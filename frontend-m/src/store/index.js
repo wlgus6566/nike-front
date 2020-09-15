@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import router from '@/router';
 import { loginUser } from '@/api/login';
 import { getGnbMenu } from '@/api/my-page';
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
         nick: '',
         token: '',
         authName: '',
+        timerInterval: null,
     },
     getters: {},
     mutations: {
@@ -45,6 +47,21 @@ export default new Vuex.Store({
         SET_BASKETDEL(state, goodsBasketSeq) {
             state.goodsBasketSeq = goodsBasketSeq;
         },
+        SET_LOGOUT_TIMER(state) {
+            clearInterval(state.timerInterval);
+            const expires = new Date();
+            expires.setMinutes(expires.getMinutes() + 30);
+            const countDownDate = expires.getTime();
+            state.timerInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                if (distance <= 0) {
+                    state.saveFolder = true;
+                    this.commit('LOGOUT');
+                    clearInterval(state.timerInterval);
+                }
+            }, 1000);
+        },
         LOGOUT(state) {
             state.user = '';
             state.nick = '';
@@ -59,6 +76,7 @@ export default new Vuex.Store({
             deleteCookie('user_nick');
             deleteCookie('user_token');
             deleteCookie('user_authName');
+            router.push('/login');
         },
         SET_CONT_BASKET(state, data) {
             state.contBasketList = data;

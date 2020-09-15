@@ -1,25 +1,29 @@
 function saveAuthToCookie(value) {
-    document.cookie = `user_token=${value}`;
+    setCookie('user_token', value);
 }
 function saveAuthNameToCookie(value) {
-    document.cookie = `user_authName=${value}`;
+    setCookie('user_authName', value);
 }
 function saveUserNickToCookie(value) {
-    document.cookie = `user_nick=${value}`;
+    setCookie('user_nick', value);
 }
 function saveUserIdToCookie(value) {
-    document.cookie = `user_id=${value}`;
+    setCookie('user_id', value);
 }
-
-function getAuthFromCookie() {
-    return document.cookie.replace(
-        /(?:(?:^|.*;\s*)user_token\s*=\s*([^;]*).*$)|^.*$/,
-        '$1'
-    );
+function setCookie(cname, cvalue) {
+    const expires = new Date();
+    expires.setMinutes(expires.getMinutes() + 30);
+    document.cookie = `${cname}=${cvalue}; path=/; expires=${expires.toGMTString()}`;
 }
 function getAuthNameFromCookie() {
     return document.cookie.replace(
         /(?:(?:^|.*;\s*)user_authName\s*=\s*([^;]*).*$)|^.*$/,
+        '$1'
+    );
+}
+function getAuthFromCookie() {
+    return document.cookie.replace(
+        /(?:(?:^|.*;\s*)user_token\s*=\s*([^;]*).*$)|^.*$/,
         '$1'
     );
 }
@@ -36,18 +40,30 @@ function getUserIdFromCookie() {
     );
 }
 
+function updateCookie() {
+    if (!getAuthFromCookie()) return;
+    saveAuthToCookie(getAuthFromCookie());
+    saveAuthNameToCookie(getAuthNameFromCookie());
+    saveUserNickToCookie(getUserNickFromCookie());
+    saveUserIdToCookie(getUserIdFromCookie());
+}
+
 function deleteCookie(value) {
-    document.cookie = `${value}=; expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+    //console.log(value);
+    const expires = new Date();
+    expires.setMinutes(expires.getMinutes() - 30);
+    document.cookie = `${value}=; path=/; expires=${expires.toGMTString()}`;
 }
 
 export {
     saveAuthToCookie,
+    saveAuthNameToCookie,
     saveUserNickToCookie,
     saveUserIdToCookie,
-    saveAuthNameToCookie,
     getAuthNameFromCookie,
     getAuthFromCookie,
     getUserNickFromCookie,
     getUserIdFromCookie,
     deleteCookie,
+    updateCookie,
 };
