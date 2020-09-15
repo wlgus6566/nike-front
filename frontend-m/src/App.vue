@@ -62,11 +62,9 @@ export default {
     },
     methods: {
         pageEnter(el, done) {
-            console.log(el);
             done();
         },
         pageLeave(el, done) {
-            console.log(el);
             done();
         },
         urlCheck() {

@@ -206,8 +206,8 @@ export default {
     },
     methods: {
         fileOrderSet() {
-            this.uploadFileList = this.uploadFileList.filter((a) => {
-                return this.reportDetailData.reportFileSaveDTOList.some((b) => {
+            this.uploadFileList = this.uploadFileList.filter(a => {
+                return this.reportDetailData.reportFileSaveDTOList.some(b => {
                     return (
                         a.name === b.fileName &&
                         a.type === b.fileContentType &&
@@ -224,16 +224,16 @@ export default {
         },
 
         selectFile(seq) {
-            if (this.checkedFile.some((el) => el === seq)) {
-                this.checkedFile = this.checkedFile.filter((el) => el !== seq);
+            if (this.checkedFile.some(el => el === seq)) {
+                this.checkedFile = this.checkedFile.filter(el => el !== seq);
             } else {
                 this.checkedFile.push(seq);
             }
         },
         removeFile() {
-            this.checkedFile.forEach((a) => {
+            this.checkedFile.forEach(a => {
                 this.reportDetailData.reportFileSaveDTOList = this.reportDetailData.reportFileSaveDTOList.filter(
-                    (b) => b.fileOrder !== a
+                    b => b.fileOrder !== a
                 );
             });
             this.checkedFile = [];
@@ -282,15 +282,12 @@ export default {
             const files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
 
-            let mergeArray = Array.from(files).filter((item) => {
-                return this.reportDetailData.reportFileSaveDTOList.every(
-                    (el) => {
-                        return (
-                            item.name !== el.fileName &&
-                            item.size !== el.fileSize
-                        );
-                    }
-                );
+            let mergeArray = Array.from(files).filter(item => {
+                return this.reportDetailData.reportFileSaveDTOList.every(el => {
+                    return (
+                        item.name !== el.fileName && item.size !== el.fileSize
+                    );
+                });
             });
 
             if (mergeArray.length > 10) {
@@ -298,7 +295,7 @@ export default {
                 mergeArray.splice(10, 9999);
             }
 
-            mergeArray.forEach((el) => {
+            mergeArray.forEach(el => {
                 this.reportDetailData.reportFileSaveDTOList.push({
                     fileOrder: this.reportDetailData.reportFileSaveDTOList
                         .length,
@@ -313,18 +310,18 @@ export default {
 
         async uploadFiles() {
             await Promise.all(
-                this.uploadFileList.map(async (el) => {
+                this.uploadFileList.map(async el => {
                     try {
                         const formData = new FormData();
                         formData.append('uploadFile', el);
                         const config = {
-                            onUploadProgress: (progressEvent) => {
+                            onUploadProgress: progressEvent => {
                                 const percentCompleted = Math.round(
                                     (progressEvent.loaded * 100) /
                                         progressEvent.total
                                 );
                                 this.reportDetailData.reportFileSaveDTOList.forEach(
-                                    (item) => {
+                                    item => {
                                         if (
                                             item.fileName === el.name &&
                                             item.fileContentType === el.type &&
@@ -337,7 +334,6 @@ export default {
                             },
                         };
                         const response = await fileUpLoad(formData, config);
-                        console.log(response);
                         if (response.existMsg) {
                             alert(response.msg);
                         }

@@ -227,7 +227,6 @@ export default {
         },
         // 리포트 상세 파일 데이터
         async getReportFileData() {
-            console.log('getReportFileData');
             try {
                 const {
                     data: { data: response },
@@ -281,7 +280,6 @@ export default {
                     if (el.type.indexOf('image') > -1) {
                         thumbnailImage = e.target.result;
                     }
-                    console.log(thumbnailImage);
                     this.reportDetailData.reportFileSaveDTOList.push({
                         fileOrder: this.reportDetailData.reportFileSaveDTOList
                             .length,

@@ -55,7 +55,6 @@ export default new Vuex.Store({
             state.timerInterval = setInterval(() => {
                 const now = new Date().getTime();
                 const distance = countDownDate - now;
-                console.log(distance);
                 if (distance <= 0) {
                     state.saveFolder = true;
                     this.commit('LOGOUT');
