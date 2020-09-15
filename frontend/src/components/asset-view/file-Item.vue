@@ -378,7 +378,7 @@ export default {
                     type: 'brightcove',
                     id: url,
                 };
-            } else if (url.indexOf('.mp4') > -1) {
+            } else {
                 return {
                     type: 'mp4',
                     id: url,

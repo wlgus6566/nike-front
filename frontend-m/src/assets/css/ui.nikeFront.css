@@ -614,11 +614,6 @@
     width: 100%;
     vertical-align: top;
 }
-.folder-detail .thumbnail iframe {
-    width: 100%;
-    vertical-align: top;
-    height: auto;
-}
 .folder-detail .thumbnail .etc {
     display: block;
     padding: 21px 0;
@@ -2787,7 +2782,18 @@
 }
 .video-filePopupFile {
     position: relative;
+    padding-top: 53%;
 }
+
+.video-filePopupFile video,
+.video-filePopupFile iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
 .pause .btn-play {
     opacity: 0;
 }
