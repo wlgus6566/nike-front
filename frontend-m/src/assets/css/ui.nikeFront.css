@@ -2642,13 +2642,17 @@
     display: flex;
     flex-direction: column;
     padding: 0 !important;
+    margin-top: -60px;
 }
 .terms .nav-tab {
     position: relative;
     margin: 0 5px;
     width: calc(100% - 10px);
-    height: 40px;
-    flex: 0 0 40px;
+    height: 60px;
+    flex: 0 0 60px;
+}
+.terms .nav-tab li span {
+    padding: 20px 0;
 }
 .terms .terms-content-wrap {
     padding: 20px 20px 40px;
