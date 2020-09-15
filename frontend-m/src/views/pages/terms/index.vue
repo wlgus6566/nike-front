@@ -51,9 +51,6 @@ export default {
     height: 100% !important;
     padding-bottom: 0 !important;
 }
-.modal.full .modal-contents {
-    overflow: hidden;
-}
 ::v-deep .terms-cont {
     height: 100%;
     overflow: scroll;

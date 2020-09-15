@@ -2648,6 +2648,7 @@
     margin: 0 5px;
     width: calc(100% - 10px);
     height: 40px;
+    flex: 0 0 40px;
 }
 .terms .terms-content-wrap {
     padding: 20px 20px 40px;
@@ -2694,6 +2695,7 @@
     display: inline-block;
     vertical-align: top;
     height: 24px;
+    line-height: 24px;
     box-sizing: border-box;
 }
 .terms .select .el-input__icon {
