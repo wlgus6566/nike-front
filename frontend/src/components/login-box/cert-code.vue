@@ -27,9 +27,7 @@ export default {
         return {};
     },
     props: ['loginData', 'activeState'],
-    mounted() {
-        this.$refs.loginBox.classList.add('active');
-    },
+    mounted() {},
 };
 </script>
 <style scoped>

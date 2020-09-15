@@ -58,23 +58,8 @@ export default {
     data() {
         return {};
     },
-    mounted() {
-        if (this.activeState) {
-            this.$refs.loginBox.classList.add('active');
-        }
-        this.endLogo();
-    },
-    methods: {
-        endLogo() {
-            const logo = document.querySelector('.nike-logo');
-            const box = this.$refs.loginBox;
-            logo.addEventListener('webkitAnimationEnd', function () {
-                box.classList.add('active');
-                logo.classList.add('hidden');
-                logo.classList.remove('active');
-            });
-        },
-    },
+    mounted() {},
+    methods: {},
 };
 </script>
 <style scoped>

@@ -38,9 +38,7 @@ export default {
         };
     },
     props: ['activeState'],
-    mounted() {
-        this.$refs.loginBox.classList.add('active');
-    },
+    mounted() {},
     methods: {
         closepassword() {
             this.$emit('changeLoginBox', 'LoginForm', true);
