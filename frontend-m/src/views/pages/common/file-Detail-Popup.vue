@@ -46,44 +46,77 @@
                         </span>
                     </span>
                 </div>
-                <div class="inner" v-else>
-                    <template v-if="filePopupFile.contentsSeq">
-                        <div
-                            class="thumbnail"
-                            v-if="
-                                videoCheck(filePopupFile.url).type === 'vimeo'
-                            "
-                        >
-                            <vimeo-player
-                                class="video-filePopupFile"
-                                :video-id="videoCheck(filePopupFile.url).id"
-                                :player-height="height"
-                                :player-width="width"
-                            ></vimeo-player>
-                        </div>
-                        <div
-                            class="thumbnail"
-                            v-else-if="filePopupFile.fileKindCode === 'VR'"
-                        >
-                            <span class="etc">
-                                <i class="icon-file"></i>
-                                <span class="txt">
-                                    해당파일은 미리보기를<br />
-                                    제공하지 않습니다.
-                                </span>
+                <div
+                    class="inner"
+                    v-else-if="filePopupFile.fileKindCode === 'VR'"
+                >
+                    <div class="thumbnail">
+                        <span class="etc">
+                            <i class="icon-file"></i>
+                            <span class="txt">
+                                해당파일은 미리보기를<br />
+                                제공하지 않습니다.
                             </span>
+                        </span>
+                    </div>
+                </div>
+                <div
+                    class="inner"
+                    v-else-if="filePopupFile.fileKindCode === 'VIDEO'"
+                >
+                    <div
+                        class="thumbnail"
+                        v-if="videoCheck(filePopupFile.url).type === 'vimeo'"
+                    >
+                        <vimeo-player
+                            class="video-filePopupFile"
+                            :video-id="videoCheck(filePopupFile.url).id"
+                            :player-height="height"
+                            :player-width="width"
+                        ></vimeo-player>
+                    </div>
+                    <div
+                        class="thumbnail"
+                        v-if="videoCheck(filePopupFile.url).type === 'youtube'"
+                    >
+                        <div class="video-filePopupFile">
+                            <youtube
+                                :video-id="videoCheck(filePopupFile.url).id"
+                                :player-vars="{
+                                    autoplay: 1,
+                                }"
+                            ></youtube>
                         </div>
-                        <div class="thumbnail" v-else>
-                            <div class="video-filePopupFile">
-                                <youtube
-                                    :video-id="videoCheck(filePopupFile.url).id"
-                                    :player-vars="{
-                                        autoplay: 1,
-                                    }"
-                                ></youtube>
-                            </div>
+                    </div>
+
+                    <div
+                        class="thumbnail"
+                        v-if="
+                            videoCheck(filePopupFile.url).type === 'brightcove'
+                        "
+                    >
+                        <div class="video-filePopupFile">
+                            <iframe
+                                :src="videoCheck(filePopupFile.url).id"
+                                allowfullscreen
+                                webkitallowfullscreen
+                                mozallowfullscreen
+                            ></iframe>
                         </div>
-                    </template>
+                    </div>
+                    <div
+                        class="thumbnail"
+                        v-if="videoCheck(filePopupFile.url).type === 'mp4'"
+                    >
+                        <div class="video-filePopupFile">
+                            <video controls>
+                                <source
+                                    :src="videoCheck(filePopupFile.url).id"
+                                    type="video/mp4"
+                                />
+                            </video>
+                        </div>
+                    </div>
                 </div>
 
                 <span class="info-box">
@@ -108,6 +141,8 @@ export default {
         return {
             orderComment: '',
             playState: false,
+            height: 'auto',
+            width: '600',
         };
     },
     props: ['visible', 'filePopupFile'],
@@ -119,21 +154,27 @@ export default {
             url.match(
                 /(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/
             );
-            let type;
             if (RegExp.$3.indexOf('youtu') > -1) {
-                type = 'youtube';
+                return {
+                    type: 'youtube',
+                    id: RegExp.$6,
+                };
             } else if (RegExp.$3.indexOf('vimeo') > -1) {
-                type = 'vimeo';
+                return {
+                    type: 'vimeo',
+                    id: RegExp.$6,
+                };
+            } else if (url.indexOf('brightcove') > -1) {
+                return {
+                    type: 'brightcove',
+                    id: url,
+                };
+            } else {
+                return {
+                    type: 'mp4',
+                    id: url,
+                };
             }
-            return {
-                type: type,
-                id: RegExp.$6,
-            };
-            /*let ampersandPosition = video_id.indexOf('&');
-            if (ampersandPosition != -1) {
-                video_id = video_id.substring(0, ampersandPosition);
-            }*/
-            //return video_id;
         },
     },
 };

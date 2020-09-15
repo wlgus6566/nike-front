@@ -166,7 +166,7 @@ public class ContentsService {
                 , contentsSearchDTO.getSize()
                 , contentsSearchDTO.getOrderType().equals("START_DATE")
                         ? Sort.by(ServiceCode.SearchEnumCode.PERIOD_SECTION_CODE.getValue()).descending()
-                            .and(Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).ascending()) : Sort.by(ServiceCode.SearchEnumCode.LATEST.getValue()).descending()));
+                            .and(Sort.by(ServiceCode.SearchEnumCode.START_DATE.getValue()).descending()) : Sort.by(ServiceCode.SearchEnumCode.LATEST.getValue()).descending()));
     }
 
     /**
@@ -361,14 +361,6 @@ public class ContentsService {
 
 
         ContentsResultDTO contentsResultDTO = ObjectMapperUtil.map(findContents, ContentsResultDTO.class);
-
-        // 권한 목록 조회
-        // TODO[lsj] front 에서 상세권한 조회 별도로 api 빼놓은거에 붙이면 삭제예정 2020.09.10
-        UserAuthSearchDTO userAuthSearchDTO = new UserAuthSearchDTO();
-        userAuthSearchDTO.setMenuCode(topMenuCode+"_"+menuCode);
-        userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.VIEW.toString());
-        userAuthSearchDTO.setContentsSeq(contentsSeq);
-        contentsResultDTO.setChecks(authService.getAuthListWithoutN(userAuthSearchDTO));
 
         // 사용자 계정 조회
         contentsResultDTO.setUserId(

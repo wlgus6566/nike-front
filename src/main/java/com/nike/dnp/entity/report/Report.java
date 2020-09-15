@@ -239,10 +239,4 @@ public class Report extends BaseTimeWithoutUpdateDtEntity {
         this.readCount = readCount + 1;
     }
 
-
-//     TODO[lsj]
-//    @ManyToOne
-//    @JoinColumn(name="userSeq", foreignKey = @ForeignKey(name = "registerSeq"))
-//    private User user;
-
 }
