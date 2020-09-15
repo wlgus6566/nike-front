@@ -181,7 +181,7 @@ export default {
                 // dateClick: this.handleDateClick,
                 dateClick: this.handleDateClick,
                 moreLinkClick: this.calClickEvent,
-                height: 350,
+                height: 378,
                 events: [],
                 dayMaxEventRows: true,
                 timeGrid: {
@@ -419,6 +419,8 @@ export default {
 }
 ::v-deep .fc .fc-view-harness {
     height: 316px;
+}
+::v-deep .fc .fc-view-harness {
 }
 ::v-deep .fc-theme-standard td,
 ::v-deep .fc-theme-standard th {
