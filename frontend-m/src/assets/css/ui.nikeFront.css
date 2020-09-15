@@ -1321,6 +1321,7 @@
 .member-inquiry .info-list {
     position: absolute;
     bottom: 60px;
+    width: calc(100% - 40px);
 }
 @media screen and (max-width: 350px) {
     .member-inquiry .info-list {
@@ -1347,12 +1348,13 @@
 .member-inquiry .data-list {
     display: flex;
     flex-wrap: wrap;
-    max-width: 210px;
-    margin: 8px 0 0 -10px;
+    /*  max-width: 210px;*/
+    margin: 3px 0 0 -10px;
 }
 .member-inquiry .data-list li {
     position: relative;
     padding: 0 10px;
+    margin-top: 5px;
     line-height: 14px;
     color: #fff;
     opacity: 0.55;
@@ -1360,9 +1362,6 @@
     font-size: 12px;
 }
 .member-inquiry .data-list + .data-list {
-    margin-top: 5px;
-}
-.member-inquiry .data-list li:nth-child(n + 3) {
     margin-top: 5px;
 }
 .member-inquiry .data-list li:nth-child(even):before {

@@ -20,11 +20,7 @@
                                 v-for="(loginLog, index) in loginLogs"
                                 :key="index"
                             >
-                                {{
-                                    $moment(loginLog.loginDt).format(
-                                        'YYYY.MM.DD HH:mm'
-                                    )
-                                }}
+                                {{ loginLog.loginDt }}
                             </li>
                         </ul>
                     </dd>
