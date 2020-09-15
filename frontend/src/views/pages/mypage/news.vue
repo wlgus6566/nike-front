@@ -38,6 +38,7 @@
             </div>
         </div>
         <Pagination
+            ref="paging"
             v-if="newsDataContent.length"
             :itemLength="itemLength"
             :pageCount="pageCount"
@@ -84,11 +85,12 @@ export default {
         }
     },
     methods: {
-        //검색후 페이지 이동 리셋
-        /*initializationData() {
-            this.searchKeyword = '';
-            this.searchSubmit(this.searchKeyword);
-        },*/
+        pageReset() {
+            this.page = 0;
+            if (this.$refs.paging) {
+                this.$refs.paging.page = 1;
+            }
+        },
         //뉴스 리스트
         async getNewsList() {
             try {
@@ -116,6 +118,7 @@ export default {
         //검색
         searchSubmit(val) {
             this.searchKeyword = val;
+            this.pageReset();
             this.getNewsList();
         },
         // 페이징

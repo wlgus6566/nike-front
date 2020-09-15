@@ -34,10 +34,12 @@
                 </NoData>
             </template>
             <Pagination
+                ref="paging"
                 v-if="productListData.length"
                 :itemLength="itemLength"
                 :pageCount="pageCount"
                 :totalItem="totalItem"
+                :currentPage="currentPage"
                 @handleCurrentChange="handleCurrentChange"
             />
         </template>
@@ -57,6 +59,7 @@ export default {
     name: 'management',
     data() {
         return {
+            currentPage: 1,
             productList: null,
             productListData: null,
             pageCount: 11,
@@ -128,15 +131,19 @@ export default {
             if (val !== '') {
                 getCategoryList(val, this.category3Code.listSortOptions);
             }
+            this.pageReset();
             this.getProduct();
         },
         'category3Code.value'() {
+            this.pageReset();
             this.getProduct();
         },
         'agencySeq.value'() {
+            this.pageReset();
             this.getProduct();
         },
     },
+
     mounted() {
         this.getAgency();
         getCategoryList('CATEGORY', this.category2Code.listSortOptions);
@@ -144,6 +151,12 @@ export default {
     },
     activated() {},
     methods: {
+        pageReset() {
+            this.page = 0;
+            if (this.$refs.paging) {
+                this.$refs.paging.page = 1;
+            }
+        },
         selectFocus() {
             if (this.category2Code.value === '') {
                 alert('대구분을 선택해 주세요 ');
@@ -237,6 +250,7 @@ export default {
         // 상품 검색 api
         searchSubmit(val) {
             this.searchKeyword = val;
+            this.pageReset();
             this.getProduct();
         },
         // 상품 리스트 api
