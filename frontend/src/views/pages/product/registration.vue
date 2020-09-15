@@ -208,6 +208,7 @@ export default {
     },
     data() {
         return {
+            init: false,
             loadingData: false,
             exposure: {
                 checkItem: [
@@ -276,18 +277,21 @@ export default {
     },
     watch: {
         'category2Code.value'(val) {
-            this.category3Code = {
-                listSortOptions: [
-                    {
-                        value: '',
-                        label: '소구분',
-                    },
-                ],
-                value: '',
-            };
+            if (this.init) {
+                this.category3Code = {
+                    listSortOptions: [
+                        {
+                            value: '',
+                            label: '소구분',
+                        },
+                    ],
+                    value: '',
+                };
+            }
             if (val !== '') {
                 getCategoryList(val, this.category3Code.listSortOptions);
             }
+            this.init = true;
         },
     },
     methods: {
@@ -416,6 +420,8 @@ export default {
                     if (this.detailData.exposureYn === 'N') {
                         this.exposure.value = 'N';
                     }
+                    console.log(this.detailData.category2Code);
+                    console.log(this.detailData.category3Code);
                     this.category2Code.value = this.detailData.category2Code;
                     this.category3Code.value = this.detailData.category3Code;
                     this.agencySeq.value = this.detailData.agencySeq;
