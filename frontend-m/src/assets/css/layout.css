@@ -126,12 +126,13 @@ header .logo svg {
 }
 .nav-tab {
     display: flex;
+    background: #fff;
     margin: 0 0 0 -15px;
 }
 .nav-tab:after {
     content: '';
     position: absolute;
-    bottom: 0;
+    top: 40px;
     left: 0;
     display: block;
     width: 100%;
