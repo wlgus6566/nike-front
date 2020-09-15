@@ -5,7 +5,7 @@
                 <h1 class="page-title"><span>비밀번호 설정</span></h1>
             </div>
         </header>
-        <form action="" @submit.prevent="pawdSet">
+        <form action="" @submit.prevent="passwordSet">
             <section class="contents">
                 <ul class="desc-list">
                     <li class="desc-item">
@@ -37,8 +37,8 @@
                         <span class="form-column">
                             <input
                                 type="password"
-                                id="newpawd"
-                                v-model="newpawd"
+                                id="newpassword"
+                                v-model="newpassword"
                                 class="input-box"
                                 maxlength="16"
                                 placeholder="(8~16자/대소문자/숫자/특수문자 포함)"
@@ -54,8 +54,8 @@
                         <span class="form-column">
                             <input
                                 type="password"
-                                id="confirmpawd"
-                                v-model="confirmpawd"
+                                id="confirmpassword"
+                                v-model="confirmpassword"
                                 class="input-box"
                                 maxlength="16"
                                 placeholder=""
@@ -71,29 +71,28 @@
     </div>
 </template>
 <script>
-import { setpawd } from '@/api/login';
+import { setpassword } from '@/api/login';
 
 export default {
-    name: 'pawdSet',
+    name: 'passwordSet',
     data() {
         return {
-            newpawd: '',
-            confirmpawd: '',
+            newpassword: '',
+            confirmpassword: '',
         };
     },
     created() {},
     methods: {
-        async pawdSet() {
+        async passwordSet() {
             try {
-                const { data: response } = await setpawd({
+                const { data: response } = await setpassword({
                     certCode: encodeURIComponent(this.$route.query.certCode),
-                    newpawd: this.newpawd,
-                    confirmpawd: this.confirmpawd,
+                    newpassword: this.newpassword,
+                    confirmpassword: this.confirmpassword,
                 });
                 if (response.existMsg) {
                     alert(response.msg);
                 }
-                console.log(response);
                 if (response.success) {
                     await this.$router.push('/login');
                 }

@@ -1,19 +1,21 @@
 import axios from 'axios';
 import { setInterceptors } from './config/interceptors';
 
-function createWithAuth(url, options) {
-    const instance = axios.create(Object.assign({ baseURL: process.env.VUE_APP_API_URL + url }, options));
-    setInterceptors(instance);
+function createWithAuth(url, options, sessionUpdate) {
+    const instance = axios.create(
+        Object.assign({ baseURL: process.env.VUE_APP_API_URL + url }, options)
+    );
+    setInterceptors(instance, sessionUpdate);
     return instance;
 }
 
-export const myPage = createWithAuth(`/api/mypage`, { timeout: 3000 });
-export const report = createWithAuth(`/api/report`, {timeout: 3000});
-export const agency = createWithAuth(`/api/agency`, { timeout: 3000 });
-export const auth = createWithAuth('/api/auth', { timeout: 3000 });
-export const code = createWithAuth(`/api/open/code`, { timeout: 3000 });
-export const main = createWithAuth(`/api/main`, {timeout: 3000});
-export const alarm = createWithAuth(`/api/alarm`, { timeout: 3000 });
-export const calendar = createWithAuth(`/api/calendar`, { timeout: 3000 });
-export const contents = createWithAuth(`/api/contents`, { timeout: 3000 });
+export const myPage = createWithAuth(`/api/mypage`, { timeout: 0 }, true);
+export const report = createWithAuth(`/api/report`, { timeout: 0 }, true);
+export const agency = createWithAuth(`/api/agency`, { timeout: 0 }, true);
+export const auth = createWithAuth('/api/auth', { timeout: 0 }, true);
+export const code = createWithAuth(`/api/open/code`, { timeout: 0 }, true);
+export const main = createWithAuth(`/api/main`, { timeout: 0 }, true);
+export const alarm = createWithAuth(`/api/alarm`, { timeout: 0 }, true);
+export const calendar = createWithAuth(`/api/calendar`, { timeout: 0 }, true);
+export const contents = createWithAuth(`/api/contents`, { timeout: 0 }, true);
 export const file = createWithAuth(`/api/open`);

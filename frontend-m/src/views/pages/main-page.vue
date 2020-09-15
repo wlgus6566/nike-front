@@ -313,7 +313,6 @@ export default {
                 const body = modal.querySelector('.fc-popover-body');
                 const a = document.createElement('a');
                 const txt = document.createTextNode('자세히 보기');
-                console.log(tdWidth);
                 //modal.style.marginLeft = `${tdWidth}px`;
                 a.href =
                     '/information/calendar?yyyyMm=' +

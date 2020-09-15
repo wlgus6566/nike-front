@@ -92,7 +92,7 @@ export default new Vuex.Store({
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
                 state.logoutTimer.count = `${minutes}:${seconds}`;
                 if (distance <= 0) {
-                    state.saveFolder = false;
+                    state.saveFolder = true;
                     state.logoutTimer.modalVisible = false;
                     this.commit('LOGOUT');
                     clearInterval(state.logoutTimer.timerInterval);

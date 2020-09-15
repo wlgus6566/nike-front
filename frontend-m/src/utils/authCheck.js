@@ -6,8 +6,6 @@ const authCheck = {
             const TopMenuCode = topMenuCode || this.$route.meta.topMenuCode;
             const MenuCode = menuCode || this.$route.meta.menuCode;
             const index = GNB.findIndex(el => el.menuCode === TopMenuCode);
-            console.log(GNB);
-            console.log(MenuCode);
             if (GNB[index] && MenuCode) {
                 const authDisabled = menus => {
                     return menus.some(el => {

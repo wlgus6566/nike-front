@@ -1525,6 +1525,9 @@
     flex-basis: auto;
     align-items: center;
 }
+.form-column .form-date-picker {
+    width: 100%;
+}
 .form-column .check-label {
     /*min-width: 95px;*/
 }
@@ -1536,13 +1539,16 @@
     align-items: center;
 }
 .form-desc-wrap [class^='form-desc'] {
-    margin: 0 0 0 auto;
+    margin: 7px 0 0 auto;
 }
 .form-column input[type='text'],
 .form-column input[type='email'],
 .form-column input[type='tel'],
 .form-column input[type='number'] {
     width: 100%;
+}
+.form-date-picker .date-picker-range .date-picker {
+    flex: 1 1 auto;
 }
 .form-column .data-picker {
     width: 100%;

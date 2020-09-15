@@ -55,7 +55,6 @@ export default {
             const depth = menus.filter(el => {
                 return el.listYn === 'Y';
             });
-            console.log(depth);
             return depth;
         },
         menuTitle(title) {

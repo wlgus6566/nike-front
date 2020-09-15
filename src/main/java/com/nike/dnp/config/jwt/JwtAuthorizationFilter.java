@@ -42,7 +42,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	 *
 	 * @author [오지훈]
 	 */
-	private static final String SECRET_KEY = JwtHelper.SECRET;
+	private static final String SECRET_KEY = JwtHelper.JWT_VARIABLE;
 
 	/**
 	 * The User repository

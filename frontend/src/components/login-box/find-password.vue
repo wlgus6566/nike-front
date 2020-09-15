@@ -21,7 +21,7 @@
                     <span>E-MAIL 발송</span>
                 </button>
             </div>
-            <button type="button" class="btn-close" @click="closepawd">
+            <button type="button" class="btn-close" @click="closepassword">
                 <span>닫기</span>
             </button>
         </div>
@@ -42,7 +42,7 @@ export default {
         this.$refs.loginBox.classList.add('active');
     },
     methods: {
-        closepawd() {
+        closepassword() {
             this.$emit('changeLoginBox', 'LoginForm', true);
         },
         async findPW() {

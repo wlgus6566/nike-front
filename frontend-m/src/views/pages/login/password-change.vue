@@ -5,7 +5,7 @@
                 <h1 class="page-title"><span>비밀번호 변경</span></h1>
             </div>
         </header>
-        <form action="" @submit.prevent="pawdChange">
+        <form action="" @submit.prevent="passwordChange">
             <section class="contents">
                 <ul class="desc-list">
                     <li class="desc-item">
@@ -41,7 +41,7 @@
                                 class="input-box"
                                 maxlength="16"
                                 placeholder=""
-                                v-model="pawd"
+                                v-model="password"
                             />
                         </span>
                     </li>
@@ -58,7 +58,7 @@
                                 class="input-box"
                                 maxlength="16"
                                 placeholder="(8~16자/대소문자/숫자/특수문자 포함)"
-                                v-model="newpawd"
+                                v-model="newpassword"
                             />
                         </span>
                     </li>
@@ -75,7 +75,7 @@
                                 class="input-box"
                                 maxlength="16"
                                 placeholder=""
-                                v-model="confirmpawd"
+                                v-model="confirmpassword"
                             />
                         </span>
                     </li>
@@ -88,25 +88,25 @@
     </div>
 </template>
 <script>
-import { changepawd } from '@/api/login';
+import { changepassword } from '@/api/login';
 
 export default {
-    name: 'pawdChange',
+    name: 'passwordChange',
     data() {
         return {
-            pawd: '',
-            newpawd: '',
-            confirmpawd: '',
+            password: '',
+            newpassword: '',
+            confirmpassword: '',
         };
     },
     methods: {
-        async pawdChange() {
+        async passwordChange() {
             try {
-                const { data: response } = await changepawd({
+                const { data: response } = await changepassword({
                     certCode: this.$route.params.certCode,
-                    pawd: this.pawd,
-                    newpawd: this.newpawd,
-                    confirmpawd: this.confirmpawd,
+                    password: this.password,
+                    newpassword: this.newpassword,
+                    confirmpassword: this.confirmpassword,
                 });
                 if (response.existMsg) {
                     alert(response.msg);
