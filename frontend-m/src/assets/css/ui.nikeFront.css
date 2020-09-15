@@ -1348,12 +1348,18 @@
 .member-inquiry .data-list {
     display: flex;
     flex-wrap: wrap;
-    /*  max-width: 210px;*/
-    margin: 3px 0 0 -10px;
+    max-width: 300px;
+}
+.member-inquiry .data-list li:first-child {
+    padding: 0;
+    width: 100%;
+    margin-bottom: 3px;
+    line-height: 19px;
+    font-size: 16px;
+    opacity: 1;
 }
 .member-inquiry .data-list li {
     position: relative;
-    padding: 0 10px;
     margin-top: 5px;
     line-height: 14px;
     color: #fff;
@@ -1362,12 +1368,16 @@
     font-size: 12px;
 }
 .member-inquiry .data-list + .data-list {
-    margin-top: 5px;
+    margin-top: 10px;
 }
-.member-inquiry .data-list li:nth-child(even):before {
+.member-inquiry .data-list li:nth-child(2n) {
+    padding-right: 10px;
+    margin-right: 10px;
+}
+.member-inquiry .data-list li:nth-child(2n):before {
     position: absolute;
     top: 50%;
-    left: 0;
+    right: 0;
     content: '';
     display: block;
     width: 1px;

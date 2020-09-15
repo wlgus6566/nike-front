@@ -14,7 +14,6 @@
                     <dd>{{ userData.userId }}</dd>
                     <dt>최종접속일시</dt>
                     <dd>
-                        {{ loginLogs[0].loginDt }}
                         <ul class="data-list" v-if="loginLogs">
                             <li
                                 v-for="(loginLog, index) in loginLogs"
