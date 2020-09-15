@@ -3,7 +3,7 @@ package com.nike.dnp.util;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 /**
  * RandomUtil
@@ -25,9 +25,9 @@ public class RandomUtil {
 	 * @since 2020. 6. 19. 오후 5:45:12
 	 * @implNote 인증코드 생성 방법
 	 */
-	public String randomCertCode1(final int size) {
+	/*public String randomCertCode1(final int size) {
 		final StringBuilder temp = new StringBuilder();
-		final Random rnd = new Random();
+		final SecureRandom rnd = new SecureRandom();
 		for (int i = 0; i < size; i++) {
 			switch (rnd.nextInt(7)) {
 				case 0:
@@ -64,7 +64,7 @@ public class RandomUtil {
 		}
 
 		return temp.toString();
-	}
+	}*/
 
 	/**
 	 * Random cert code 2 string.
@@ -77,7 +77,7 @@ public class RandomUtil {
 	 */
 	public String randomCertCode2(final int size) {
 		final StringBuilder temp = new StringBuilder();
-		final Random rnd = new Random();
+		final SecureRandom rnd = new SecureRandom();
 		for (int i = 0; i < size; i++) {
 			temp.append((char) (rnd.nextInt(93) + 33));
 		}
