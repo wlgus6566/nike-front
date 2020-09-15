@@ -680,6 +680,8 @@
     position: absolute;
     top: 20px;
     left: 0;
+    height: 14px;
+    line-height: 14px;
 }
 .feedback-item .info .name {
     display: inline-flex;
@@ -1698,6 +1700,10 @@
     background: #f7f7f7;
     font-size: 14px;
     line-height: 20px;
+}
+.faq-list li.active span {
+    font-weight: bold;
+    color: #000;
 }
 .faq-list li.active a .arrow {
     background-image: url(../images/svg/icon-arrow-up.svg);
