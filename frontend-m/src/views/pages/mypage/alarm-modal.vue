@@ -70,7 +70,6 @@ export default {
             }
         },
         async delAlarmData(item, key) {
-            console.log('delAlarmData');
             try {
                 const {
                     data: { data: response },

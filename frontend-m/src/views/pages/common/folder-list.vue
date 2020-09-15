@@ -77,17 +77,8 @@
                                 365
                             </p>
                             <p v-else class="date">
-                                {{
-                                    $moment(item.campaignBeginDt).format(
-                                        'YYYY.MM.DD'
-                                    )
-                                }}
-                                ~
-                                {{
-                                    $moment(item.campaignEndDt).format(
-                                        'YYYY.MM.DD'
-                                    )
-                                }}
+                                {{ item.campaignBeginDt }} ~
+                                {{ item.campaignEndDt }}
                             </p>
                         </div>
                         <div class="view-area">

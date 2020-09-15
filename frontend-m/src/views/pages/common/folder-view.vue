@@ -263,6 +263,7 @@ export default {
             }
         },
         fileDetailModal(item) {
+            console.log(item);
             this.filePopupFile = item;
             this.visible.modalEx = true;
         },
