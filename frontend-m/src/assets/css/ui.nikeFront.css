@@ -2646,6 +2646,7 @@
 .terms .nav-tab {
     position: relative;
     margin: 0 5px;
+    width: calc(100% - 10px);
     height: 40px;
 }
 .terms .terms-content-wrap {
