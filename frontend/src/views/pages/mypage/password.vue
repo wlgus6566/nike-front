@@ -44,7 +44,7 @@
                                 class="input-box"
                                 maxlength="16"
                                 placeholder="(8~16자/대소문자/숫자/특수문자 포함)"
-                                v-model="newpassword"
+                                v-model="newPassword"
                             />
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                                 class="input-box"
                                 maxlength="16"
                                 placeholder=""
-                                v-model="confirmpassword"
+                                v-model="confirmPassword"
                             />
                         </div>
                     </div>
@@ -73,8 +73,8 @@
                         class="btn-s-black"
                         :disabled="
                             password.length < 1 ||
-                            newpassword.length < 1 ||
-                            confirmpassword.length < 1
+                            newPassword.length < 1 ||
+                            confirmPassword.length < 1
                         "
                     >
                         <span>저장</span>
@@ -92,8 +92,8 @@ export default {
     data() {
         return {
             password: '',
-            newpassword: '',
-            confirmpassword: '',
+            newPassword: '',
+            confirmPassword: '',
         };
     },
     mounted() {
@@ -111,24 +111,24 @@ export default {
     methods: {
         reset() {
             this.password = '';
-            this.newpassword = '';
-            this.confirmpassword = '';
+            this.newPassword = '';
+            this.confirmPassword = '';
         },
         async passwordChange() {
             try {
                 const res = await changepassword({
                     certCode:
                         'y1v0LCq93KX05pR%2FWw3zF65hK%2FCOqYTZDdIXzM0BsC97m%2Fg1QcY1sCZAEvuTFgmcVg3a8J6xDFalUNjUfmmtu5sWZuI%3D',
-                    confirmpassword: this.confirmpassword,
-                    newpassword: this.newpassword,
+                    confirmPassword: this.confirmPassword,
+                    newPassword: this.newPassword,
                     password: this.password,
                 });
                 this.msg = res.data.msg;
                 if (res.data.success) {
                     alert('변경되었습니다.');
                     this.password = '';
-                    this.newpassword = '';
-                    this.confirmpassword = '';
+                    this.newPassword = '';
+                    this.confirmPassword = '';
                     this.$router.push('/mypage/info');
                 } else {
                     alert(res.data.msg);

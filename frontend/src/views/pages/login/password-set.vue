@@ -22,14 +22,14 @@
                 <form action="" @submit.prevent="passwordSet">
                     <div class="table">
                         <div class="table-row">
-                            <label for="newpassword" class="table-th">
+                            <label for="newPassword" class="table-th">
                                 <span class="required">새 비밀번호</span>
                             </label>
                             <div class="table-td">
                                 <input
                                     type="password"
-                                    id="newpassword"
-                                    v-model="newpassword"
+                                    id="newPassword"
+                                    v-model="newPassword"
                                     class="input-box"
                                     maxlength="16"
                                     placeholder="(8~16자/대소문자/숫자/특수문자 포함)"
@@ -37,14 +37,14 @@
                             </div>
                         </div>
                         <div class="table-row">
-                            <label for="confirmpassword" class="table-th">
+                            <label for="confirmPassword" class="table-th">
                                 <span class="required">새 비밀번호(확인)</span>
                             </label>
                             <div class="table-td">
                                 <input
                                     type="password"
-                                    id="confirmpassword"
-                                    v-model="confirmpassword"
+                                    id="confirmPassword"
+                                    v-model="confirmPassword"
                                     class="input-box"
                                     maxlength="16"
                                     placeholder=""
@@ -69,8 +69,8 @@ export default {
     name: 'passwordSet',
     data() {
         return {
-            newpassword: '',
-            confirmpassword: '',
+            newPassword: '',
+            confirmPassword: '',
         };
     },
     created() {},
@@ -79,8 +79,8 @@ export default {
             try {
                 const { data: response } = await setpassword({
                     certCode: encodeURIComponent(this.$route.query.certCode),
-                    newpassword: this.newpassword,
-                    confirmpassword: this.confirmpassword,
+                    newPassword: this.newPassword,
+                    confirmPassword: this.confirmPassword,
                 });
                 if (response.existMsg) {
                     alert(response.msg);
