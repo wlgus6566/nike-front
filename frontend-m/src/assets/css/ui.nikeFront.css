@@ -2687,6 +2687,7 @@
 .terms .select .el-input__suffix-inner {
     display: inline-block;
     height: 24px;
+    line-height: 24px;
 }
 .terms .select .el-input__inner {
     padding-right: 25px;
@@ -2694,6 +2695,9 @@
     vertical-align: top;
     height: 24px;
     box-sizing: border-box;
+}
+.terms .select .el-input__icon {
+    line-height: 24px;
 }
 .terms-content {
     font-size: 13px;
