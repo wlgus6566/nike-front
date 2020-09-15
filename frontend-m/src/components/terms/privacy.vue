@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="terms-content-wrap">
         <div class="select">
             <el-select v-model="termsHistory">
                 <el-option value="2020-09-21">2020.09.21</el-option>

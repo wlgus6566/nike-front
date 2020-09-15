@@ -25,9 +25,8 @@
                     </a>
                 </li>
             </ul>
-            <el-scrollbar wrap-class="modal-scroll" :native="false">
-                <component :is="tabContent" :key="tabContent"></component>
-            </el-scrollbar>
+
+            <component :is="tabContent" :key="tabContent"></component>
         </div>
     </el-dialog>
 </template>
@@ -47,4 +46,16 @@ export default {
     methods: {},
 };
 </script>
-<style scoped></style>
+<style scoped>
+::v-deep .el-dialog__body {
+    height: 100% !important;
+    padding-bottom: 0 !important;
+}
+.modal.full .modal-contents {
+    overflow: hidden;
+}
+::v-deep .terms-cont {
+    height: 100%;
+    overflow: scroll;
+}
+</style>
