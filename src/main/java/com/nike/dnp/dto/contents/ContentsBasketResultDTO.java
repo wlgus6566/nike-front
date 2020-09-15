@@ -5,6 +5,7 @@ import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.ObjectUtils;
 
 
 /**
@@ -64,6 +65,13 @@ public class ContentsBasketResultDTO {
 
     /**
      * 파일 물리 명
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명")
+    private String filePhysicalName;
+
+    /**
+     * 파일 물리 명
      *
      * @author [이소정]
      */
@@ -96,6 +104,18 @@ public class ContentsBasketResultDTO {
      */
     public String getThumbnailFilePhysicalName() {
         return CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
+    }
+
+    /**
+     * Gets thumbnail file physical name.
+     *
+     * @return the thumbnail file physical name
+     * @author [이소정]
+     * @implNote
+     * @since 2020. 8. 14. 오후 7:48:12
+     */
+    public String getFilePhysicalName() {
+        return ObjectUtils.isEmpty(filePhysicalName) ? filePhysicalName : CloudFrontUtil.getSignedUrl(filePhysicalName);
     }
 
 }
