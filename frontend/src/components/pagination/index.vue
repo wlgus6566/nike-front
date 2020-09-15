@@ -5,6 +5,7 @@
         layout="prev, pager, next"
         :total="totalItem"
         @current-change="handleCurrentChange"
+        :current-page.sync="page"
     >
     </el-pagination>
 </template>
@@ -12,12 +13,15 @@
 export default {
     name: 'pagination',
     data() {
-        return {};
+        return {
+            page: 1,
+        };
     },
-    props: ['itemLength', 'pageCount', 'totalItem'],
+    watch: {},
+    props: ['itemLength', 'pageCount', 'totalItem', 'currentPage'],
     methods: {
         handleCurrentChange(val) {
-            //console.log(val);
+            this.page = val;
             this.$emit('handleCurrentChange', val - 1);
         },
     },

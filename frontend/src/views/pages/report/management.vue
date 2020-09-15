@@ -143,11 +143,6 @@ export default {
     },
 
     methods: {
-        //검색후 페이지 이동 리셋
-        /* initializationData() {
-            this.searchKeyword = '';
-            this.searchSubmit(this.searchKeyword);
-        },*/
         initReportProduct() {
             this.totalPage = null;
             this.page = 0;

@@ -104,8 +104,6 @@
 </template>
 <script>
 import { getContents } from '@/api/contents';
-
-import ListSorting from '@/components/list-sorting/index';
 import FilterSelect from '@/components/filter-select';
 import NoData from '@/components/no-data';
 
@@ -115,7 +113,6 @@ export default {
         FilterSelect,
         NoData,
         Loading: () => import('@/components/loading/'),
-        ListSorting,
     },
     data() {
         return {
