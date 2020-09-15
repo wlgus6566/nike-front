@@ -58,7 +58,7 @@
                                 class="input-box"
                                 maxlength="16"
                                 placeholder="(8~16자/대소문자/숫자/특수문자 포함)"
-                                v-model="newpassword"
+                                v-model="newPassword"
                             />
                         </span>
                     </li>
@@ -75,7 +75,7 @@
                                 class="input-box"
                                 maxlength="16"
                                 placeholder=""
-                                v-model="confirmpassword"
+                                v-model="confirmPassword"
                             />
                         </span>
                     </li>
@@ -95,8 +95,8 @@ export default {
     data() {
         return {
             password: '',
-            newpassword: '',
-            confirmpassword: '',
+            newPassword: '',
+            confirmPassword: '',
         };
     },
     methods: {
@@ -105,8 +105,8 @@ export default {
                 const { data: response } = await changepassword({
                     certCode: this.$route.params.certCode,
                     password: this.password,
-                    newpassword: this.newpassword,
-                    confirmpassword: this.confirmpassword,
+                    newPassword: this.newPassword,
+                    confirmPassword: this.confirmPassword,
                 });
                 if (response.existMsg) {
                     alert(response.msg);
