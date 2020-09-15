@@ -13,7 +13,14 @@
                             @keyup.enter="searchInputActive"
                             v-model="keyword"
                         />
-                        <button type="button" class="btn-del" v-if="keyword" @click="keywordDel">삭제</button>
+                        <button
+                            type="button"
+                            class="btn-del"
+                            v-if="keyword"
+                            @click="keywordDel"
+                        >
+                            삭제
+                        </button>
                         <button type="submit" class="search">
                             <span>검색</span>
                         </button>
@@ -28,7 +35,9 @@
             <ul class="notice-list" v-if="noticeData.length > 0">
                 <li v-for="(item, index) in noticeData" :key="index">
                     <a :href="`/mypage/notice/detail/${item.noticeArticleSeq}`">
-                        <span class="label-noti" v-if="item.noticeYn === 'Y'">중요</span>
+                        <span class="label-noti" v-if="item.noticeYn === 'Y'"
+                            >중요</span
+                        >
                         <span class="title">{{ item.title }}</span>
                         <span class="data">{{ item.updateDt }}</span>
                     </a>
@@ -53,6 +62,7 @@
         />
         <template v-if="noticeData">
             <Pagination
+                ref="paging"
                 v-if="noticeData.length"
                 :itemLength="itemLength"
                 :pageCount="pageCount"
@@ -69,7 +79,7 @@ export default {
     name: 'notice-list',
     data() {
         return {
-            reset:false,
+            reset: false,
             noticeList: {},
             noticeData: null,
             page: 0,
@@ -90,12 +100,19 @@ export default {
         this.initListData();
     },
     methods: {
-        keywordDel(){
-          this.keyword = null;
-          if(this.reset){
-            this.initListData();
-            this.reset = false
-          }
+        pageReset() {
+            this.page = 0;
+            if (this.$refs.paging) {
+                this.$refs.paging.page = 1;
+            }
+        },
+        keywordDel() {
+            this.keyword = null;
+            if (this.reset) {
+                this.pageReset();
+                this.initListData();
+                this.reset = false;
+            }
         },
         initListData() {
             this.totalElements = 0;
@@ -105,9 +122,10 @@ export default {
         },
         // 검색 취소
         cancelSearch() {
-          this.isActive = false;
-          this.keyword = null;
-          this.initListData();
+            this.isActive = false;
+            this.keyword = null;
+            this.pageReset();
+            this.initListData();
         },
         async getNoticeList() {
             this.loadingData = true;
@@ -128,19 +146,21 @@ export default {
             }
         },
         searchInputActive: function() {
-          this.isActive = true;
-          if(this.keyword){
-            this.reset = true;
-          }
-          if (!!this.keyword) {
-            this.page = 0;
-            this.newsData = null;
-            this.initListData();
-          }
+            this.isActive = true;
+            if (this.keyword) {
+                this.reset = true;
+            }
+            if (!!this.keyword) {
+                this.page = 0;
+                this.newsData = null;
+                this.pageReset();
+                this.initListData();
+            }
         },
         searchInputInactive: function() {
             this.isActive = false;
             this.keyword = '';
+            this.pageReset();
             this.initListData();
         },
         handleCurrentChange(val) {
