@@ -28,11 +28,25 @@
                 </div>
             </div>
         </div>
-        <MyOrderNodata v-if="orderList && orderList.length === 0" />
-        <MyOrder
-            v-if="orderList"
-            :orderList="orderList"
-            @showOrderDetail="showOrderDetail"
+
+        <template v-if="orderList">
+            <MyOrder
+                v-if="orderList.length"
+                :orderList="orderList"
+                @showOrderDetail="showOrderDetail"
+            />
+            <template v-else>
+                <NoData>
+                    <i class="icon-data"></i>
+                    <p class="desc">주문 내역이 없습니다.</p>
+                </NoData>
+            </template>
+        </template>
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
         />
         <OrderSheet
             v-if="orderDetailData"
@@ -49,16 +63,19 @@ export default {
     name: 'my-order',
     components: {
         MyOrder: () => import('@/components/my-order/index'),
-        MyOrderNodata: () => import('@/components/my-order/nodata'),
+        NoData: () => import('@/components/no-data/index'),
         OrderSheet: () => import('@/components/my-order/order-sheet'),
+        Loading: () => import('@/components/loading'),
     },
     data() {
         return {
+            loadingData: false,
             orderList: null,
             orderDetailData: null,
             page: 0,
             itemLength: 20,
             selectedDate: null,
+            totalPage: null,
             placeholder: 'abc',
             visible: {
                 orderSheet: false,
@@ -102,26 +119,58 @@ export default {
             },
         };
     },
-    activated() {
-        this.fetchData();
+    created() {
+        this.initFetchData();
+        window.addEventListener('scroll', this.handleScroll);
     },
-    created() {},
-    mounted() {
-        this.fetchData();
+    activated() {
+        this.initFetchData();
+        window.addEventListener('scroll', this.handleScroll);
+    },
+
+    deactivated() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
     },
     watch: {
         beginDt() {
-            this.fetchData();
+            this.initFetchData();
         },
         endDt() {
-            this.fetchData();
+            this.initFetchData();
         },
     },
     methods: {
-        // showOrderSheet() {
-        //     this.visible.orderSheet = true;
-        // },
-        async fetchData() {
+        //클릭시 업로드 한 폴더 리스트 다시 불러오기
+        handleScroll() {
+            if (this.loadingData) return;
+            const windowE = document.documentElement;
+            if (
+                windowE.clientHeight + windowE.scrollTop >=
+                windowE.scrollHeight
+            ) {
+                this.infiniteScroll();
+            }
+        },
+        initFetchData() {
+            this.totalPage = null;
+            this.page = 0;
+            this.orderList = null;
+            this.fetchData();
+        },
+        infiniteScroll() {
+            if (
+                !this.loadingData &&
+                this.totalPage > this.page - 1 &&
+                this.orderList.length >= this.itemLength &&
+                this.orderList.length !== 0
+            ) {
+                this.fetchData(true);
+            }
+        },
+        async fetchData(infinite) {
             this.loadingData = true;
             try {
                 const {
@@ -132,11 +181,26 @@ export default {
                     beginDt: this.$moment(this.beginDt).format('YYYY-MM-DD'),
                     endDt: this.$moment(this.endDt).format('YYYY-MM-DD'),
                 });
-                this.orderList = response.content;
+                this.totalPage = response.totalPages;
+                if (infinite) {
+                    if (this.totalPage > this.page - 1) {
+                        this.orderList = this.orderList.concat(
+                            response.content
+                        );
+                    } else if (this.totalPage === this.page - 1) {
+                        this.endPage();
+                    }
+                } else {
+                    this.orderList = response.content;
+                }
+                this.page++;
                 this.loadingData = false;
             } catch (error) {
                 console.error(error);
             }
+        },
+        endPage() {
+            alert('마지막 페이지 입니다.');
         },
         async showOrderDetail(seq) {
             this.visible.orderSheet = true;

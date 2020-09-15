@@ -541,6 +541,7 @@ footer .copy {
     box-sizing: border-box;
 }
 .modal-contents {
+    overflow: auto;
 }
 .modal.full .el-dialog__footer {
     position: absolute;
