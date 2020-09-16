@@ -183,4 +183,11 @@ export default {
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.list-loading {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>

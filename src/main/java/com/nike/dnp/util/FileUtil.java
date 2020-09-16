@@ -298,7 +298,8 @@ public class FileUtil {
 
 		if (resize) {
 			if (contentType.contains("IMAGE") || extension.contains("PSD") || extension.contains("AI")) {
-				final String detailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail." + resizeExtension, true);
+				final String detailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail." + resizeExtension, true)).toString();
+//				final String detailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail." + resizeExtension, true);
 				final StringBuilder detailCommand = new StringBuilder(imageMagick)
 						.append(File.separator)
 						.append(imageMagickCommand)
@@ -324,7 +325,8 @@ public class FileUtil {
 					log.error("exception", exception);
 				}
 
-				final File detailFile = new File(detailPath);
+				final File detailFile = Paths.get(detailPath).toFile();
+//				final File detailFile = new File(detailPath);
 				if(detailFile.isFile()){
 					String detailThumbnail = originalFileName;
 					detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail." + resizeExtension;
@@ -334,7 +336,8 @@ public class FileUtil {
 				}
 
 				// 이미지 사이즈 100x100으로 변환
-				final String thumbnailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_thumbnail." + resizeExtension, true);
+				final String thumbnailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_thumbnail." + resizeExtension, true)).toString();
+//				final String thumbnailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_thumbnail." + resizeExtension, true);
 				final StringBuilder command = new StringBuilder(imageMagick)
 						.append(File.separator)
 						.append(imageMagickCommand)
@@ -359,9 +362,10 @@ public class FileUtil {
 					log.error("exception", exception);
 				}
 
-				final File thumbnailFile = new File(thumbnailPath);
+				final File thumbnailFile = Paths.get(thumbnailPath).toFile();
+//				final File thumbnailFile = new File(thumbnailPath);
 				if(thumbnailFile.isFile()){
-					String thumbnail = uploadFile.getOriginalFilename();
+					String thumbnail = originalFileName;
 					thumbnail = thumbnail.replace("." + StringUtils.getFilenameExtension(thumbnail), "") + "_thumbnail." + resizeExtension;
 					fileResultDTO.setThumbnailFileName(thumbnail);
 					fileResultDTO.setThumbnailFilePhysicalName(thumbnailFile.getCanonicalPath().replace(root, ""));
@@ -370,12 +374,19 @@ public class FileUtil {
 			}
 			else if (contentType.contains("VIDEO")) {
 				// 사이즈 변환시 700:394 를 변경 하면 됨
-				final String thumbnailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.mp4", true);
+				final String thumbnailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.mp4", true)).toString();
+//				final String thumbnailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.mp4", true);
 				final String[] command = {
 						ffmpeg + File.separator + ffmpegCommand
 						,"-y"
 						,"-i"
 						,toFile.getCanonicalPath()
+						, "-codec:v"
+						, "libx264"
+						, "-preset"
+						, "ultrafast"
+						, "-crf"
+						, "33"
 						,"-vf"
 						,"scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
 						,thumbnailPath
@@ -413,9 +424,10 @@ public class FileUtil {
 					);
 				}
 
-				final File detailFile = new File(thumbnailPath);
+				final File detailFile = Paths.get(thumbnailPath).toFile();
+				//final File detailFile = new File(thumbnailPath);
 				if(detailFile.isFile()){
-					String detailThumbnail = uploadFile.getOriginalFilename();
+					String detailThumbnail = originalFileName;
 					detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail.mp4";
 					fileResultDTO.setDetailThumbnailFileName(detailThumbnail);
 					fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getCanonicalPath().replace(root, ""));
@@ -433,6 +445,7 @@ public class FileUtil {
 	 * @param uploadFile the upload file
 	 * @return the file result dto
 	 * @throws IOException the io exception
+	 *
 	 * @author [윤태호]
 	 * @implNote
 	 * @since 2020. 7. 13. 오후 4:55:25

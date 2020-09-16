@@ -400,6 +400,8 @@
     z-index: 3;
     position: relative;
     display: inline-block;
+    width: 20px;
+    height: 20px;
 }
 .checkbox input {
     position: absolute;
@@ -1195,7 +1197,7 @@
     transform: translateY(-50%);
 }
 .el-select-dropdown {
-    min-width: 50px !important;
+    min-width: 160px !important;
     border-color: #ddd;
     border-radius: 0;
 }
@@ -1691,6 +1693,8 @@
     display: inline-block;
     text-align: center;
     width: 190px;
+    border: 1px solid #eee;
+    box-sizing: border-box;
     vertical-align: top;
 }
 .thumb-file input {
@@ -1708,7 +1712,8 @@
     display: block;
     width: 100%;
     padding-top: 100%;
-    background: #eeeeee;
+
+    background: #f7f7f7;
     overflow: hidden;
 }
 .thumb-file .thumb img {
@@ -1746,6 +1751,9 @@
     color: #888;
     line-height: 18px;
 }
+.thumb-file.file-upload {
+    border: none;
+}
 .thumb-file.file-upload .thumb img {
     display: block;
 }
@@ -1755,10 +1763,10 @@
     left: auto;
     display: inline-block;
     width: auto;
-    margin-top: 15px;
+    margin-top: 20px;
     border-bottom: 1px solid #333;
     transform: translate(0, 0);
-    line-height: 18px;
+    line-height: 16px;
     font-size: 12px;
     font-weight: bold;
 }
@@ -2375,15 +2383,21 @@
 .agree-list .agree-content {
     margin-top: 20px;
     height: 160px;
+    box-sizing: border-box;
+    padding: 20px 10px;
     background-color: #f7f7f7;
 }
-.agree-list .agree-content .info {
-    display: inline-block;
-    margin: 20px 0;
-    width: calc(100% - 70px);
+.agree-list .agree-content .info-scroll {
     height: 120px;
-    padding: 0 30px 0 30px;
-    overflow-y: auto;
+}
+.agree-list .agree-content .info-scroll .el-scrollbar__thumb {
+    width: 4px;
+    background: #ccc;
+}
+.agree-list .agree-content .info {
+    padding: 0 20px;
+    font-size: 12px;
+    color: #555;
 }
 .agree-content .info pre {
     font-size: 12px;
@@ -4674,9 +4688,10 @@ img.image-grayscale {
 /* Main Full calendar */
 .main-fc {
     margin-top: 20px;
+    padding-bottom: 20px;
+    border: 1px solid #eee;
 }
 .main-fc .fc {
-    border: 1px solid #eee;
 }
 .main-fc .fc .fc-toolbar.fc-header-toolbar {
     padding: 20px 20px 10px;
@@ -4684,6 +4699,7 @@ img.image-grayscale {
 }
 .main-fc .fc .fc-header-toolbar .fc-toolbar-title {
     font-size: 20px;
+    line-height: 24px;
 }
 .main-fc .fc .fc-prev-button {
     margin-right: 40px;
@@ -4692,9 +4708,11 @@ img.image-grayscale {
     margin-left: 40px;
 }
 .main-fc .fc .fc-col-header-cell-cushion {
+    padding: 0;
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 0.5px;
     font-size: 14px;
+    line-height: 40px;
     color: #888;
     font-weight: 400;
 }
@@ -4710,7 +4728,7 @@ img.image-grayscale {
     border: none;
 }
 .main-fc .fc .fc-daygrid-day-top {
-    padding-top: 12px;
+    padding-top: 10px;
     justify-content: center;
 }
 .main-fc .fc .fc-daygrid-body-balanced .fc-daygrid-day-events {
@@ -4718,9 +4736,15 @@ img.image-grayscale {
     position: absolute;
     left: 50%;
     right: auto;
-    height: 30px;
+    height: 27px;
     width: 30px;
     margin: 0 0 0 -15px;
+}
+.main-fc .fc-daygrid-day-frame:after {
+    display: none;
+}
+.main-fc .fc .fc-daygrid-body-balanced .fc-daygrid-day-bg {
+    display: none;
 }
 .main-fc .fc .fc-h-event .fc-event-title {
     max-width: 160px;
