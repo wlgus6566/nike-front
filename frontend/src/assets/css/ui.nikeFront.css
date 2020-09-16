@@ -1936,6 +1936,7 @@
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: 100px;
+    width: 100px;
     height: 100px;
     overflow: hidden;
     background: url('../../assets/images/img-asset-none@2x.png') no-repeat
@@ -1951,6 +1952,7 @@
 .file-item .list .info-box {
     flex-grow: 0;
     flex-shrink: 1;
+    display: block;
     flex-basis: calc(100% - 125px);
     width: calc(100% - 125px);
     margin-left: 25px;

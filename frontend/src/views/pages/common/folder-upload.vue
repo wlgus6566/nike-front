@@ -182,7 +182,7 @@
                         <span class="label-title">기간</span>
                     </div>
                     <div class="form-column">
-                        <div>
+                        <div class="form-date-picker">
                             <label class="check-label">
                                 <span class="radio">
                                     <input
