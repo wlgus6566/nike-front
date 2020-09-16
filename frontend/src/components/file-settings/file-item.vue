@@ -57,7 +57,10 @@
                     <span class="label-title">업로드 된 파일</span>
                 </div>
                 <div class="form-column">
-                    <div class="form-file-wrap">
+                    <div
+                        class="form-file-wrap"
+                        :class="{ 'has-file': file.fileName }"
+                    >
                         <span class="txt">{{ file.fileName }}</span>
                         <button
                             type="button"
@@ -143,7 +146,7 @@ export default {
 </script>
 <style scoped>
 .form-file-wrap.has-file {
-    background: #ddd;
+    background: #f7f7f7;
 }
 .form-file-wrap {
     padding: 4px;
