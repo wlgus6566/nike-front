@@ -180,10 +180,16 @@ public class FileUtil {
 		}
 
 		final File path = Paths.get(root, folderParam).toFile();
+		log.debug(" makeNewFile root > {}", root);
+		log.debug(" makeNewFile root > {}", folderParam);
 		if (path.exists()) {
 			path.mkdir();
+			log.debug("경로 생성");
 		}
-		return Paths.get(root, folderParam, cleanXSS(makeFileName(), false) + "." + cleanXSS(extension, false)).toFile();
+		final File result = Paths.get(root, folderParam, cleanXSS(makeFileName(), false) + "." + cleanXSS(extension, false)).toFile();
+		log.debug("result.toString() > {}", result.toString());
+		return result;
+
 
 		/*
 		final String newFilepath = root + File.separator + folderParam;
