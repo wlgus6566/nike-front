@@ -468,4 +468,8 @@ export default {
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.contents > * {
+    opacity: 0;
+}
+</style>

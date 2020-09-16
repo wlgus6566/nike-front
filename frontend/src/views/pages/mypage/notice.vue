@@ -40,6 +40,7 @@
             </div>
         </div>
         <Pagination
+            ref="paging"
             v-if="noticeDataContent.length"
             :itemLength="itemLength"
             :pageCount="pageCount"
@@ -88,15 +89,17 @@ export default {
         }
     },
     methods: {
-        //검색후 페이지 이동 리셋
-        /* initializationData() {
-            this.searchKeyword = '';
-            this.searchSubmit(this.searchKeyword);
-        },*/
+        pageReset() {
+            this.page = 0;
+            if (this.$refs.paging) {
+                this.$refs.paging.page = 1;
+            }
+        },
         //검색
         searchSubmit(val) {
-            //console.log(val);
             this.searchKeyword = val;
+            this.pageReset();
+
             this.getNoticeList();
         },
         // 페이징

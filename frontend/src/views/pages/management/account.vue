@@ -156,6 +156,7 @@
         </div>
 
         <Pagination
+            ref="paging"
             v-if="userData.length"
             :itemLength="itemLength"
             :pageCount="pageCount"
@@ -307,27 +308,32 @@ export default {
     computed: {},
     watch: {
         'listSortSelect.value'() {
+            this.pageReset();
             this.getUserList();
         },
         'authority.value'(val) {
             if (val.length === 0) {
                 this.authority.value = [null];
             }
+            this.pageReset();
             this.getUserList();
         },
         beginDt() {
+            this.pageReset();
             this.getUserList();
         },
         endDt() {
+            this.pageReset();
             this.getUserList();
         },
     },
     methods: {
-        /*//검색후 페이지 이동 리셋
-        initializationData() {
-            this.searchKeyword = '';
-            this.searchSubmit(this.searchKeyword);
-        },*/
+        pageReset() {
+            this.page = 0;
+            if (this.$refs.paging) {
+                this.$refs.paging.page = 1;
+            }
+        },
         compMount() {
             document
                 .querySelector('html')
@@ -413,6 +419,7 @@ export default {
         // 상품 검색 api
         searchSubmit(val) {
             this.searchKeyword = val;
+            this.pageReset();
             this.getUserList();
         },
         // Pagination fn

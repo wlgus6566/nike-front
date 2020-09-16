@@ -680,6 +680,8 @@
     position: absolute;
     top: 20px;
     left: 0;
+    height: 14px;
+    line-height: 14px;
 }
 .feedback-item .info .name {
     display: inline-flex;
@@ -1699,6 +1701,10 @@
     font-size: 14px;
     line-height: 20px;
 }
+.faq-list li.active span {
+    font-weight: bold;
+    color: #000;
+}
 .faq-list li.active a .arrow {
     background-image: url(../images/svg/icon-arrow-up.svg);
 }
@@ -2639,15 +2645,31 @@
 
 /* 이용약관 & 개인정보처리방침 */
 .terms {
-    padding: 0 20px 40px !important;
+    display: flex;
+    flex-direction: column;
+    padding: 0 !important;
+    margin-top: -60px;
 }
 .terms .nav-tab {
     position: relative;
-    margin: 0 -20px;
-    padding: 0 5px;
+    margin: 0 5px;
+    width: calc(100% - 10px);
+    height: 60px;
+    flex: 0 0 60px;
+}
+.terms .nav-tab li span {
+    padding: 20px 0;
+}
+.terms .terms-content-wrap {
+    padding: 20px 20px 40px;
+    max-height: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+}
+.terms-content {
+    margin: 20px 0 0 0;
 }
 .terms .select {
-    margin: 20px 0;
     text-align: right;
 }
 .terms .el-select {
@@ -2676,13 +2698,18 @@
 .terms .select .el-input__suffix-inner {
     display: inline-block;
     height: 24px;
+    line-height: 24px;
 }
 .terms .select .el-input__inner {
     padding-right: 25px;
     display: inline-block;
     vertical-align: top;
     height: 24px;
+    line-height: 24px;
     box-sizing: border-box;
+}
+.terms .select .el-input__icon {
+    line-height: 24px;
 }
 .terms-content {
     font-size: 13px;
