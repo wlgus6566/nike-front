@@ -784,7 +784,7 @@ public class FileUtil {
 
 	private static boolean whiteFolderList(final String folder) {
 		for (ServiceCode.FileFolderEnumCode code : ServiceCode.FileFolderEnumCode.values()) {
-			if (code.name().equals(folder)) {
+			if (code.getFolder().equals(folder)) {
 				return true;
 			}
 		}
