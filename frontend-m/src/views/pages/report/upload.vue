@@ -16,6 +16,7 @@
                             <input
                                 type="file"
                                 ref="fileInput"
+                                accept="image/*"
                                 multiple
                                 @change="uploadIptChange"
                             />
