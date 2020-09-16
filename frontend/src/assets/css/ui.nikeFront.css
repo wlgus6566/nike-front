@@ -1233,6 +1233,9 @@
     color: #000;
     font-weight: 600;
 }
+.select .el-input__suffix {
+    right: 10px;
+}
 .select .el-input__icon {
     width: 20px;
 }
@@ -3530,7 +3533,7 @@ img.image-grayscale {
 }
 .contact-list li {
     flex-basis: calc(50% - 10px);
-    max-width: calc(50% - 10px);
+    width: calc(50% - 10px);
     -ms-flex-preferred-size: calc(50% - 80px);
 }
 .contact-list li:nth-child(2n) {
