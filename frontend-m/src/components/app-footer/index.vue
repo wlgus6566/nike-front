@@ -13,6 +13,9 @@
             </li>
         </ul>
         <p class="copy">© 2020 Nike Korea LLC. All Rights Reserved.</p>
+        <a href="mailto:privacy@nike.com?subject=[NIKE SPACE]" class="btn-help"
+            >고객문의</a
+        >
         <terms
             :visible.sync="visible.termsModal"
             :tabContent="tabContent"

@@ -442,6 +442,7 @@
     width: 20px;
     height: 20px;
     background: url('../images/svg/icon-radio-off.svg') no-repeat center;
+    vertical-align: middle;
 }
 .radio input:checked + i {
     background-image: url('../images/svg/icon-radio-on.svg');
@@ -454,7 +455,7 @@
     display: inline-block;
     margin-left: 5px;
     line-height: 20px;
-    vertical-align: top;
+    vertical-align: middle;
 }
 .checkbox input:checked ~ .txt,
 .radio input:checked ~ .txt {
@@ -1231,6 +1232,9 @@
 .select .el-select .el-input .el-select__caret {
     color: #000;
     font-weight: 600;
+}
+.select .el-input__suffix {
+    right: 10px;
 }
 .select .el-input__icon {
     width: 20px;
@@ -2421,23 +2425,28 @@
     border-bottom: 1px solid #ccc;
 }
 .table .table-row {
-    display: flex;
-    align-items: center;
     padding: 15px 40px;
     color: #333;
+}
+.table .table-row:after {
+    content: '';
+    display: block;
+    clear: both;
 }
 .table .table-row + .table-row {
     border-top: 1px solid #eee;
 }
 .table .table-th {
-    flex-grow: 0;
-    flex-shrink: 0;
-    flex-basis: 200px;
+    float: left;
+    display: block;
+    width: 200px;
+}
+.table .table-th span {
+    line-height: 40px;
 }
 .table .table-td {
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 100%;
+    float: left;
+    width: calc(100% - 200px);
 }
 .table .input-box {
     height: 40px;
@@ -3532,7 +3541,7 @@ img.image-grayscale {
 }
 .contact-list li {
     flex-basis: calc(50% - 10px);
-    max-width: calc(50% - 10px);
+    width: calc(50% - 10px);
     -ms-flex-preferred-size: calc(50% - 80px);
 }
 .contact-list li:nth-child(2n) {
@@ -3595,6 +3604,7 @@ img.image-grayscale {
 }
 .period-list-item .cont .thumbnail {
     position: relative;
+    display: block;
     width: 100px;
     height: 100px;
     overflow: hidden;

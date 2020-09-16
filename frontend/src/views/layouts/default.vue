@@ -62,15 +62,22 @@
                     ⓒ 2020 Nike Korea LLC. All Rights Reserved
                 </span>
                 <ul class="info-list">
-                    <li>
+                    <li class="info-list-item">
                         <router-link to="/terms/service">
                             <strong>이용약관</strong>
                         </router-link>
                     </li>
-                    <li>
+                    <li class="info-list-item">
                         <router-link to="/terms/privacy">
                             <strong>개인정보처리방침</strong>
                         </router-link>
+                    </li>
+                    <li>
+                        <a
+                            href="mailto:privacy@nike.com?subject=[NIKE SPACE]"
+                            class="btn-help"
+                            >고객문의</a
+                        >
                     </li>
                 </ul>
             </div>
