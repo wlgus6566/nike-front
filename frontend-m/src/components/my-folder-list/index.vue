@@ -19,12 +19,12 @@
                 </div>
                 <div class="info-box" v-else>
                     <strong class="title">{{ item.folderName }}</strong>
-                    <p class="date" v-if="item.typeCd === 'REPORT_MANAGE'">
-                        {{ $moment(item.updateDt).format('YYYY.MM.DD') }}
+                    <p v-if="item.campaignPeriodSectionCode === 'EVERY'" class="date">
+                        365
                     </p>
-                    <p class="date" v-else>
-                        {{ $moment(item.campaignBeginDt).format('YYYY.MM.DD') }}
-                        ~ {{ $moment(item.campaignEndDt).format('YYYY.MM.DD') }}
+                    <p v-else class="date">
+                        {{ item.campaignBeginDt }} ~
+                        {{ item.campaignEndDt }}
                     </p>
                     <ul class="location">
                         <li>
