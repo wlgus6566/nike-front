@@ -292,26 +292,28 @@ footer {
     background: #000;
     box-sizing: border-box;
 }
-footer > .inner {
+footer .inner {
+    position: relative;
     display: flex;
     padding: 0 345px 0 260px;
     height: 70px;
     align-items: center;
+    justify-content: space-between;
 }
-footer > .inner .copy {
+footer .copy {
     font-size: 11px;
     color: #fff;
     opacity: 0.6;
     letter-spacing: -0.5px;
     font-weight: 100;
 }
-footer > .inner .info-list {
-    margin-left: auto;
+footer .info-list {
+    display: flex;
 }
-footer > .inner .info-list li + li {
+footer .info-list .info-list-item {
     position: relative;
 }
-footer > .inner .info-list li + li:before {
+footer .info-list .info-list-item + .info-list-item:before {
     content: '';
     position: absolute;
     top: 50%;
@@ -323,7 +325,7 @@ footer > .inner .info-list li + li:before {
     background: #ddd;
     opacity: 0.4;
 }
-footer > .inner .info-list li a {
+footer .info-list .info-list-item a {
     display: block;
     padding: 0 15px;
     font-size: 13px;
@@ -331,8 +333,20 @@ footer > .inner .info-list li a {
     line-height: 30px;
     font-weight: 100;
 }
-footer > .inner .info-list {
-    display: flex;
+
+footer .info-list .btn-help {
+    display: inline-block;
+    width: 90px;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 15px;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 100;
+    text-align: center;
+    border: 1px solid #555;
+    border-radius: 2px;
+    box-sizing: border-box;
 }
 /*.aside-ani-enter-active {*/
 /*    transition: all 0.3s ease-in-out;*/
