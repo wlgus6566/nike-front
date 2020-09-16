@@ -174,4 +174,7 @@ export default {
     margin-left: -20px;
     margin-right: -20px;
 }
+.btn-wrap .btn-s-black-lg:active {
+    background: #222;
+}
 </style>

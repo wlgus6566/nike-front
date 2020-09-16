@@ -350,7 +350,6 @@ export default {
     line-height: 17px;
     font-size: 11px;
     color: #000;
-    vertical-align: -1px;
 }
 .user-info .side .logout:after {
     content: '';
@@ -473,7 +472,6 @@ export default {
     line-height: 14px;
     margin-top: 5px;
     align-content: center;
-    opacity: 0.6;
     letter-spacing: -0.5px;
 }
 .fade-enter-active,
