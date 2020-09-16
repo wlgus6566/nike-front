@@ -8,27 +8,19 @@
                         v-for="(item, index) in historyFolderData"
                         :key="index"
                     >
-                       <router-link :to="setUrl(item)">
-                           <div class="thumbnail">
-                              <img :src="item.imageFilePhysicalName" alt="" />
-                           </div>
-                           <div class="info-box">
-                               <p class="title">{{ item.folderName }}</p>
-                               <span class="date">
-                                 {{
-                                   $moment(item.campaignBeginDt).format(
-                                       'YYYY.MM.DD'
-                                   )
-                                 }}
-                                 ~
-                                 {{
-                                   $moment(item.campaignEndDt).format(
-                                       'YYYY.MM.DD'
-                                   )
-                                 }}
-                               </span>
-                           </div>
-                       </router-link>
+                        <router-link :to="setUrl(item)">
+                            <div class="thumbnail">
+                                <img :src="item.imageFilePhysicalName" alt="" />
+                            </div>
+                            <div class="info-box">
+                                <p class="title">{{ item.folderName }}</p>
+                                <span class="date">
+                                    {{ item.campaignBeginDt }}
+                                    ~
+                                    {{ item.campaignEndDt }}
+                                </span>
+                            </div>
+                        </router-link>
                     </li>
                 </ul>
                 <div class="no-data" v-else>
@@ -74,7 +66,7 @@ export default {
             }
         },
         setUrl(item) {
-          return `/${item.topMenuCode}/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
+            return `/${item.topMenuCode}/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
         },
     },
 };
