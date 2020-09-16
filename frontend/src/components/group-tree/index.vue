@@ -100,7 +100,7 @@ export default {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: auto;
-    min-height: calc(100% - 37px);
+    min-height: calc(640px - 37px);
 }
 .group-tree-fixed.top-sticky {
     /*border: 1px solid red;*/
