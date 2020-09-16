@@ -2376,6 +2376,8 @@
 }
 .agree-list .agree-content {
     margin-top: 20px;
+    height: 160px;
+    box-sizing: border-box;
     padding: 20px 10px;
     background-color: #f7f7f7;
 }
