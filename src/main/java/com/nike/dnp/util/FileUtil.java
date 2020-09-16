@@ -288,7 +288,7 @@ public class FileUtil {
 
 		final File toFile = makeNewFile(folderParam, extension);
 		uploadFile.transferTo(toFile);
-
+		log.debug("toFile.toString() > {}", toFile.toString());
 		final FileResultDTO fileResultDTO = new FileResultDTO();
 		fileResultDTO.setFileName(originalFileName);
 		fileResultDTO.setFilePhysicalName(toFile.getCanonicalPath().replace(root, ""));
@@ -299,6 +299,7 @@ public class FileUtil {
 		if (resize) {
 			if (contentType.contains("IMAGE") || extension.contains("PSD") || extension.contains("AI")) {
 				final String detailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail." + resizeExtension, true)).toString();
+				log.debug("detailPath > {}", detailPath);
 //				final String detailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail." + resizeExtension, true);
 				final StringBuilder detailCommand = new StringBuilder(imageMagick)
 						.append(File.separator)
@@ -319,6 +320,7 @@ public class FileUtil {
 								, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 						);
 					}
+					log.debug("cmd > {}", cmd);
 					final Process procDetail = Runtime.getRuntime().exec(cmd);
 					procDetail.waitFor();
 				}catch(InterruptedException exception){
@@ -327,6 +329,7 @@ public class FileUtil {
 
 				final File detailFile = Paths.get(detailPath).toFile();
 //				final File detailFile = new File(detailPath);
+				log.debug("detailFile.toString() > {}", detailFile.toString());
 				if(detailFile.isFile()){
 					String detailThumbnail = originalFileName;
 					detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail." + resizeExtension;
@@ -337,6 +340,7 @@ public class FileUtil {
 
 				// 이미지 사이즈 100x100으로 변환
 				final String thumbnailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_thumbnail." + resizeExtension, true)).toString();
+				log.debug("thumbnailPath > {}", thumbnailPath);
 //				final String thumbnailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_thumbnail." + resizeExtension, true);
 				final StringBuilder command = new StringBuilder(imageMagick)
 						.append(File.separator)
@@ -356,6 +360,7 @@ public class FileUtil {
 								, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 						);
 					}
+					log.debug("cmd > {}", cmd);
 					final Process proc = Runtime.getRuntime().exec(cmd);
 					proc.waitFor();
 				}catch(InterruptedException exception){
@@ -364,6 +369,7 @@ public class FileUtil {
 
 				final File thumbnailFile = Paths.get(thumbnailPath).toFile();
 //				final File thumbnailFile = new File(thumbnailPath);
+				log.debug("thumbnailFile.toString() > {}", thumbnailFile.toString());
 				if(thumbnailFile.isFile()){
 					String thumbnail = originalFileName;
 					thumbnail = thumbnail.replace("." + StringUtils.getFilenameExtension(thumbnail), "") + "_thumbnail." + resizeExtension;
@@ -376,6 +382,7 @@ public class FileUtil {
 				// 사이즈 변환시 700:394 를 변경 하면 됨
 				final String thumbnailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.mp4", true)).toString();
 //				final String thumbnailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.mp4", true);
+				log.debug("thumbnailPath > {}", thumbnailPath);
 				final String[] command = {
 						ffmpeg + File.separator + ffmpegCommand
 						,"-y"
@@ -393,6 +400,7 @@ public class FileUtil {
 				};
 
 				final List<String> cmd = whiteListing(folder, command);
+				cmd.stream().forEach(s -> log.debug("cmd > {}", s));
 				if (ObjectUtils.isEmpty(cmd)) {
 					throw new CodeMessageHandleException(
 							FailCode.ConfigureError.INVALID_FILE.name()
@@ -426,6 +434,7 @@ public class FileUtil {
 
 				final File detailFile = Paths.get(thumbnailPath).toFile();
 				//final File detailFile = new File(thumbnailPath);
+				log.debug("detailFile > {}", detailFile);
 				if(detailFile.isFile()){
 					String detailThumbnail = originalFileName;
 					detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail.mp4";
