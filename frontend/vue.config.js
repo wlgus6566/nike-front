@@ -16,8 +16,7 @@ module.exports = {
     devServer: {
         /*proxy: {
             '/api': {
-                //target: 'https://devapi.nikespace.co.kr',
-                target: 'http://localhost:8080',
+                target: 'https://devapi.nikespace.co.kr',
                 changeOrigin: true,
                 ws: true,
                 pathReWrite: {
