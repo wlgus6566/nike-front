@@ -43,6 +43,12 @@
                 @handleCurrentChange="handleCurrentChange"
             />
         </template>
+        <Loading
+            class="list-loading"
+            :width="172"
+            :height="172"
+            v-if="loadingData"
+        />
     </div>
 </template>
 <script>
@@ -50,6 +56,7 @@ import SearchInput from '@/components/search-input';
 import FilterSelect from '@/components/filter-select';
 import ProductManagement from '@/components/product-management';
 import Pagination from '@/components/pagination';
+import Loading from '@/components/loading';
 import NoData from '@/components/no-data';
 import { delProduct, getProductList } from '@/api/product';
 import { getAgencyContact } from '@/api/agency';
@@ -59,6 +66,7 @@ export default {
     name: 'management',
     data() {
         return {
+            loadingData: false,
             currentPage: 1,
             productList: null,
             productListData: null,
@@ -70,7 +78,6 @@ export default {
             checkAll: false,
             checkItem: [],
             deleteLoading: [],
-            loading: false,
             category2Code: {
                 listSortOptions: [
                     {
@@ -106,6 +113,7 @@ export default {
         ProductManagement,
         Pagination,
         NoData,
+        Loading,
     },
     created() {},
     computed: {
@@ -256,7 +264,7 @@ export default {
         // 상품 리스트 api
         async getProduct() {
             this.checkAll = false;
-            this.loading = true;
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -270,7 +278,7 @@ export default {
                 });
                 this.productList = response;
                 this.productListData = response.content;
-                this.loading = false;
+                this.loadingData = false;
                 this.totalItem = this.productList.totalElements;
             } catch (error) {
                 console.error(error);
