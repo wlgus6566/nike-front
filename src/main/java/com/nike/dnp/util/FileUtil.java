@@ -250,7 +250,7 @@ public class FileUtil {
 					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
 			);
 		} else {
-			folderParam = cleanXSS(folderParam.toUpperCase(Locale.getDefault()),false);
+			folderParam = cleanXSS(folderParam,false);
 		}
 
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
@@ -293,8 +293,10 @@ public class FileUtil {
 		}
 
 		final File toFile = makeNewFile(folderParam, extension);
-		uploadFile.transferTo(toFile);
 		log.debug("toFile.toString() > {}", toFile.toString());
+		log.debug("uploadFile.toString() > {}", uploadFile.toString());
+		uploadFile.transferTo(toFile);
+		log.debug("파일 저장 완료");
 		final FileResultDTO fileResultDTO = new FileResultDTO();
 		fileResultDTO.setFileName(originalFileName);
 		fileResultDTO.setFilePhysicalName(toFile.getCanonicalPath().replace(root, ""));
@@ -302,8 +304,11 @@ public class FileUtil {
 		fileResultDTO.setFileContentType(contentType);
 		fileResultDTO.setFileExtension(extension);
 
+
 		if (resize) {
+			log.debug("파일 리사이즈 =========================================================");
 			if (contentType.contains("IMAGE") || extension.contains("PSD") || extension.contains("AI")) {
+				log.debug("toFile.getCanonicalPath() > {}", toFile.getCanonicalPath());
 				final String detailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail." + resizeExtension, true)).toString();
 				log.debug("detailPath > {}", detailPath);
 //				final String detailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail." + resizeExtension, true);
