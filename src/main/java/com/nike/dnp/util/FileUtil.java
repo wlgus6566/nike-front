@@ -381,6 +381,12 @@ public class FileUtil {
 						,"-y"
 						,"-i"
 						,toFile.getCanonicalPath()
+						, "-codec:v"
+						, "libx264"
+						, "-preset"
+						, "ultrafast"
+						, "-crf"
+						, "33"
 						,"-vf"
 						,"scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
 						,thumbnailPath
