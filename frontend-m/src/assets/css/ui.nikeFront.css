@@ -2837,6 +2837,7 @@
     pointer-events: all;
     background-color: rgba(0, 0, 0, 0.5);
 }
+/* btn */
 .btn-play:after {
     content: '';
     display: block;
