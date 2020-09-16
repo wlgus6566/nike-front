@@ -1933,6 +1933,7 @@
 }
 .file-item .list .thumbnail {
     position: relative;
+    display: block;
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: 100px;

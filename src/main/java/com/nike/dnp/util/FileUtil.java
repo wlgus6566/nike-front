@@ -13,15 +13,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
@@ -607,12 +611,37 @@ public class FileUtil {
 	 */
 	public static ResponseEntity<Resource> s3FileDownload(String path,final String fileName) throws IOException {
 		log.info("FileUtil.s3FileDownload");
+		System.out.println("======================================================");
+		System.out.println("path : " + path);
+		System.out.println("fileName : " + fileName);
+		System.out.println("======================================================");
 
+		final URL url = new URL(CloudFrontUtil.getCustomSignedUrl(path, 100));
+		final Resource resource = new UrlResource(url);
+		final HttpHeaders headers = new HttpHeaders();
+		final String encodeFileName = URLEncoder.encode(fileName,"UTF-8").trim().replace("+", "%20");
+
+		//headers.set("Content-Transfer-Encoding", "binary");
+		//headers.set("Content-Disposition", "attachment;filename=" + encodeFileName + ";filename*= UTF-8''" + encodeFileName);
+		//headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + encodeFileName + ";filename*= UTF-8''" + encodeFileName);
+
+		headers.add(HttpHeaders.TRANSFER_ENCODING, "binary");
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodeFileName +"\"");
+		headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.contentLength()));
+		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+	}
+
+	public static ResponseEntity<Resource> s3FileDownload_original(String path,final String fileName) throws IOException {
+		log.info("FileUtil.s3FileDownload");
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
 		final S3ObjectInputStream s3ObjectInputStream = S3Util.getFile(path);
 		final HttpHeaders headers = new HttpHeaders();
 		final Resource resource = new ByteArrayResource(IOUtils.toByteArray(s3ObjectInputStream));
 		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
 		headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.contentLength()));
+		stopWatch.stop();
+		stopWatch.prettyPrint();
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 
@@ -784,7 +813,7 @@ public class FileUtil {
 
 	private static boolean whiteFolderList(final String folder) {
 		for (ServiceCode.FileFolderEnumCode code : ServiceCode.FileFolderEnumCode.values()) {
-			if (code.name().equals(folder)) {
+			if (code.getFolder().equals(folder)) {
 				return true;
 			}
 		}
