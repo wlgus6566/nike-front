@@ -216,7 +216,7 @@ export default {
                 // dateClick: this.handleDateClick,
                 dateClick: this.handleDateClick,
                 moreLinkClick: this.calClickEvent,
-                height: 358,
+                height: 336,
                 events: [],
                 dayMaxEventRows: true,
                 timeGrid: {
@@ -606,6 +606,7 @@ export default {
     font-size: 10px;
     color: #555;
     transform: translateY(-50%);
+    font-weight: 300;
 }
 
 .main-report-list {
@@ -667,6 +668,7 @@ export default {
     font-size: 10px;
     line-height: 15px;
     color: #fff;
+    font-weight: 300;
     text-overflow: ellipsis;
     white-space: nowrap;
     word-wrap: normal;
@@ -751,6 +753,7 @@ export default {
     font-size: 12px;
     line-height: 14px;
     color: #888;
+    font-weight: 300;
 }
 ::v-deep .fc .fc-more-popover {
     margin-top: 45px;
@@ -786,13 +789,13 @@ export default {
     left: 0;
     display: block;
     width: 100%;
-    height: 40px;
+    height: 28px;
     font: 0/0 a;
     /*text-indent: -99999px;*/
 }
 ::v-deep .fc-daygrid-more-link:before {
     position: absolute;
-    top: 0;
+    top: -2px;
     left: 50%;
     transform: translateX(-50%);
     content: '';
