@@ -181,7 +181,7 @@ export default {
                 // dateClick: this.handleDateClick,
                 dateClick: this.handleDateClick,
                 moreLinkClick: this.calClickEvent,
-                height: 350,
+                height: 440,
                 events: [],
                 dayMaxEventRows: true,
                 timeGrid: {
@@ -407,7 +407,7 @@ export default {
 }
 ::v-deep .fc {
     margin: 15px -20px 0;
-    padding-top: 14px;
+    padding: 14px 10px 0;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
 }
@@ -420,13 +420,15 @@ export default {
 ::v-deep .fc .fc-view-harness {
     height: 316px;
 }
+::v-deep .fc .fc-view-harness {
+}
 ::v-deep .fc-theme-standard td,
 ::v-deep .fc-theme-standard th {
     border: none;
 }
 ::v-deep .fc-daygrid-day-top {
     display: flex;
-    min-height: 40px;
+    min-height: 50px;
     justify-content: center;
     align-items: center;
 }
@@ -469,7 +471,7 @@ export default {
 ::v-deep .fc .fc-daygrid-day .fc-daygrid-event-harness .fc-daygrid-event {
     /*display: none;*/
 }
-/*::v-deep .fc-popover-body .fc-daygrid-event-harness:first-child {*/
-/*    display: none;*/
-/*}*/
+::v-deep .fc .fc-daygrid-day .fc-daygrid-event-harness {
+    visibility: hidden;
+}
 </style>

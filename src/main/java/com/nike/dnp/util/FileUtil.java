@@ -17,7 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StopWatch;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -160,10 +160,37 @@ public class FileUtil {
 	 */
 	public static File makeNewFile(final String folder,final String extension) {
 		log.info("FileUtil.makeNewFile");
-		final String newFilepath = root + File.separator + cleanXSS(folder, false);
-		final File result = new File(newFilepath + File.separator + cleanXSS(makeFileName(), false) + "." + cleanXSS(extension, false));
+		String folderParam = folder;
+		// [공백 폴더명] 권한 없음 처리
+		if (ObjectUtils.isEmpty(folderParam)) {
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.NO_AUTH.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+			);
+		} else {
+			folderParam = cleanXSS(folderParam.toUpperCase(Locale.getDefault()),false);
+		}
+
+		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
+		if (!whiteFolderList(folderParam) ) {
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.NO_AUTH.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+			);
+		}
+
+		final File path = Paths.get(root, folderParam).toFile();
+		if (path.exists()) {
+			path.mkdir();
+		}
+		return Paths.get(root, folderParam, cleanXSS(makeFileName(), false) + "." + cleanXSS(extension, false)).toFile();
+
+		/*
+		final String newFilepath = root + File.separator + folderParam;
+		final File result = new File(cleanXSS(newFilepath, false) + File.separator + cleanXSS(makeFileName(), false) + "." + cleanXSS(extension, false));
 		new File(newFilepath).mkdirs();
 		return result;
+		*/
 	}
 
 	/**
@@ -198,159 +225,217 @@ public class FileUtil {
 										 final boolean resize,
 										 final String resizeExt) throws IOException {
 		log.info("FileUtil.fileSave  start");
-		final StopWatch stopWatch = new StopWatch();
+		String originalFileName = uploadFile.getOriginalFilename();
+		// [공백 originalFileName] 권한 없음 처리
+		if (ObjectUtils.isEmpty(originalFileName)) {
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.NO_AUTH.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+			);
+		} else {
+			originalFileName = cleanXSS(originalFileName.toUpperCase(Locale.getDefault()), false);
+		}
 
-		final String extension = StringUtils.getFilenameExtension(uploadFile.getOriginalFilename());
+		String folderParam = folder;
+		// [공백 폴더명] 권한 없음 처리
+		if (ObjectUtils.isEmpty(folderParam)) {
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.NO_AUTH.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+			);
+		} else {
+			folderParam = cleanXSS(folderParam.toUpperCase(Locale.getDefault()),false);
+		}
 
-		final File toFile = makeNewFile(cleanXSS(folder, false), cleanXSS(extension, false));
-		stopWatch.start("fileUpload_" + uploadFile.getOriginalFilename() + " >> "+toFile.getName());
+		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
+		if (!whiteFolderList(folderParam) ) {
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.NO_AUTH.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+			);
+		}
+
+		String contentType = uploadFile.getContentType();
+		// [공백 ContentType] 권한 없음 처리
+		if (ObjectUtils.isEmpty(contentType)) {
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.NO_AUTH.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+			);
+		} else {
+			contentType = contentType.toUpperCase(Locale.getDefault());
+		}
+
+		String extension = StringUtils.getFilenameExtension(originalFileName);
+		// [허용 가능 목록에 없는 확장자 / 공백 확장자] 권한 없음 처리
+		if (!whiteExtensionList(extension) || ObjectUtils.isEmpty(extension)) {
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.NO_AUTH.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+			);
+		} else {
+			extension = extension.toUpperCase(Locale.getDefault());
+		}
+
+		String resizeExtension = ObjectUtils.isEmpty(resizeExt) ? "JPG" : cleanXSS(resizeExt.toUpperCase(Locale.getDefault()),false);
+		// [허용 가능 목록에 없는 확장자 / 공백 확장자] 권한 없음 처리
+		if (!whiteExtensionList(resizeExtension)) {
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.NO_AUTH.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+			);
+		}
+
+		final File toFile = makeNewFile(folderParam, extension);
 		uploadFile.transferTo(toFile);
-		stopWatch.getTotalTimeSeconds();
-		stopWatch.stop();
-		log.info("stopWatch.getLastTaskTimeMillis() {} >> {} :  {} ms",stopWatch.getLastTaskName(),toFile.getName(), stopWatch.getLastTaskTimeMillis());
+
 		final FileResultDTO fileResultDTO = new FileResultDTO();
-		fileResultDTO.setFileName(cleanXSS(uploadFile.getOriginalFilename(), false));
-		fileResultDTO.setFilePhysicalName(toFile.getCanonicalPath ().replace(root, ""));
+		fileResultDTO.setFileName(originalFileName);
+		fileResultDTO.setFilePhysicalName(toFile.getCanonicalPath().replace(root, ""));
 		fileResultDTO.setFileSize(toFile.length());
-		fileResultDTO.setFileContentType(uploadFile.getContentType());
+		fileResultDTO.setFileContentType(contentType);
 		fileResultDTO.setFileExtension(extension);
-		if(resize && (uploadFile.getContentType().toUpperCase(Locale.getDefault()).contains("IMAGE") || extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(
-				Locale.getDefault()).contains("AI"))){
-			String resizeExtension;
-			if(StringUtils.isEmpty(resizeExt)){
-				resizeExtension = "jpg";
-			}else{
-				resizeExtension = resizeExt;
-			}
-			stopWatch.start("700resize_"+uploadFile.getOriginalFilename() + " >> "+ toFile.getName());
 
-			List<String> allowedCommands = new ArrayList<>();
-			allowedCommands.add("notepad");
-			allowedCommands.add("calc");
+		if (resize) {
+			if (contentType.contains("IMAGE") || extension.contains("PSD") || extension.contains("AI")) {
+				final String detailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail." + resizeExtension, true)).toString();
+//				final String detailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail." + resizeExtension, true);
+				final StringBuilder detailCommand = new StringBuilder(imageMagick)
+						.append(File.separator)
+						.append(imageMagickCommand)
+						.append(" ")
+						.append(toFile.getCanonicalPath());
 
-			// 이미지 사이즈 700x700 으로 변환
-			final String detailPath = StringUtils.stripFilenameExtension(toFile.getCanonicalPath ()) + "_detail." + cleanXSS(resizeExtension,false);
-			//final String detailPath = root+File.separator+cleanXSS(folder)+File.separator +cleanXSS(StringUtils.stripFilenameExtension(toFile.getName())) + "_detail." + resizeExtension;
-			final StringBuilder detailCommand = new StringBuilder(imageMagick);
-			detailCommand.append(File.separator).append(imageMagickCommand + " ").append(toFile.getCanonicalPath ());
-			if(extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(Locale.getDefault()).contains("AI") || extension.toUpperCase(Locale.getDefault()).contains("TIF")
-					|| extension.toUpperCase(Locale.getDefault()).contains("GIF")){
-				detailCommand.append("[0]");
-			}
-			detailCommand.append(" -resize 700x700 -background white -gravity center -extent 700x700 ").append(detailPath);
-			try{
-				final String cmd = whiteListing(detailCommand.toString(), folder);
-				log.info("detailCommand.toString() {} " , detailCommand.toString());
-				if (cmd.isEmpty() || "".equals(cmd)) {
-					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				if(extension.contains("PSD") || extension.contains("AI") || extension.contains("TIF") || extension.contains("GIF")){
+					detailCommand.append("[0]");
 				}
-				log.info("700_cmd : {}",cmd);
-				final Process procDetail = Runtime.getRuntime().exec(cmd);
-				procDetail.waitFor();
-			}catch(InterruptedException exception){
-				log.error("exception", exception);
-				// 리사이즈 문제
-				//throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
-			}
-			stopWatch.stop();
-			final File detailFile = new File(cleanXSS(detailPath,true));
-			log.info("stopWatch.getLastTaskTimeMillis() {} >> {} :  {} ms", stopWatch.getLastTaskName(),detailFile.getName(), stopWatch.getLastTaskTimeMillis());
-			if(detailFile.isFile()){
-				String detailThumbnail = uploadFile.getOriginalFilename();
-				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail." + resizeExtension;
-				fileResultDTO.setDetailThumbnailFileName(detailThumbnail);
-				fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getCanonicalPath ().replace(root, ""));
-				fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
-			}
+				detailCommand.append(" -resize 700x700 -background white -gravity center -extent 700x700 ").append(detailPath);
 
-			stopWatch.start("100resize_" + uploadFile.getOriginalFilename() + " >> " + toFile.getName());
-			// 이미지 사이즈 100x100으로 변환
-			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getCanonicalPath ()) + "_thumbnail." + cleanXSS(resizeExtension,false);
-			final StringBuilder command = new StringBuilder(imageMagick);
-			command.append(File.separator).append(imageMagickCommand+" ").append(detailFile.getCanonicalPath ());
-			if(extension.toUpperCase(Locale.getDefault()).contains("PSD") || extension.toUpperCase(Locale.getDefault()).contains("AI")){
-				command.append("[0]");
-			}
-			command.append(" -resize 100x100 -background white -gravity center -extent 100x100 ").append(thumbnailPath);
-
-			try{
-				/*final Runtime runtime = Runtime.getRuntime();
-				final Process proc = runtime.exec(whiteListing(command.toString()));*/
-				final String cmd = whiteListing(command.toString(), folder);
-				if (cmd.isEmpty() || "".equals(cmd)) {
-					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				try{
+					final String cmd = whiteListing(detailCommand.toString(), folder);
+					if (ObjectUtils.isEmpty(cmd)) {
+						throw new CodeMessageHandleException(
+								FailCode.ConfigureError.INVALID_FILE.name()
+								, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
+						);
+					}
+					final Process procDetail = Runtime.getRuntime().exec(cmd);
+					procDetail.waitFor();
+				}catch(InterruptedException exception){
+					log.error("exception", exception);
 				}
-				log.info("100_cmd : {}", cmd);
-				final Process proc = Runtime.getRuntime().exec(cmd);
-				proc.waitFor();
-			}catch(InterruptedException exception){
-				log.error("exception", exception);
-				// 리사이즈 문제
-				// throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
-			}
-			stopWatch.stop();
 
-			final File thumbnailFile = new File(cleanXSS(thumbnailPath, true));
-//			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
-			log.info("stopWatch.getLastTaskTimeMillis() {} >> {} :  {} ms", stopWatch.getLastTaskName(), thumbnailFile.getName(), stopWatch.getLastTaskTimeMillis());
-			if(thumbnailFile.isFile()){
-				String thumbnail = uploadFile.getOriginalFilename();
-				thumbnail = thumbnail.replace("." + StringUtils.getFilenameExtension(thumbnail), "") + "_thumbnail." + resizeExtension;
-				fileResultDTO.setThumbnailFileName(thumbnail);
-				fileResultDTO.setThumbnailFilePhysicalName(thumbnailFile.getCanonicalPath ().replace(root, ""));
-				fileResultDTO.setThumbnailFileSize(thumbnailFile.length());
-			}
+				final File detailFile = Paths.get(detailPath).toFile();
+//				final File detailFile = new File(detailPath);
+				if(detailFile.isFile()){
+					String detailThumbnail = originalFileName;
+					detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail." + resizeExtension;
+					fileResultDTO.setDetailThumbnailFileName(detailThumbnail);
+					fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getCanonicalPath().replace(root, ""));
+					fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
+				}
 
-		}else if(resize && (uploadFile.getContentType().toUpperCase(Locale.getDefault()).contains("VIDEO"))){
+				// 이미지 사이즈 100x100으로 변환
+				final String thumbnailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_thumbnail." + resizeExtension, true)).toString();
+//				final String thumbnailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_thumbnail." + resizeExtension, true);
+				final StringBuilder command = new StringBuilder(imageMagick)
+						.append(File.separator)
+						.append(imageMagickCommand)
+						.append(" ")
+						.append(detailFile.getCanonicalPath());
+				if(extension.contains("PSD") || extension.contains("AI")){
+					command.append("[0]");
+				}
+				command.append(" -resize 100x100 -background white -gravity center -extent 100x100 ").append(thumbnailPath);
 
-			// 사이즈 변환시 700:394 를 변경 하면 됨
-			final String thumbnailPath = StringUtils.stripFilenameExtension(toFile.getCanonicalPath ()) + "_detail.mp4";
+				try{
+					final String cmd = whiteListing(command.toString(), folder);
+					if (ObjectUtils.isEmpty(cmd)) {
+						throw new CodeMessageHandleException(
+								FailCode.ConfigureError.INVALID_FILE.name()
+								, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
+						);
+					}
+					final Process proc = Runtime.getRuntime().exec(cmd);
+					proc.waitFor();
+				}catch(InterruptedException exception){
+					log.error("exception", exception);
+				}
 
-			final String[] command = {ffmpeg + File.separator + ffmpegCommand,"-y","-i",toFile.getCanonicalPath (),"-vf"
-					,"scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
-					,thumbnailPath};
-			List<String> cmd = whiteListing(folder, command);
-			if (cmd == null) {
-				throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+				final File thumbnailFile = Paths.get(thumbnailPath).toFile();
+//				final File thumbnailFile = new File(thumbnailPath);
+				if(thumbnailFile.isFile()){
+					String thumbnail = originalFileName;
+					thumbnail = thumbnail.replace("." + StringUtils.getFilenameExtension(thumbnail), "") + "_thumbnail." + resizeExtension;
+					fileResultDTO.setThumbnailFileName(thumbnail);
+					fileResultDTO.setThumbnailFilePhysicalName(thumbnailFile.getCanonicalPath().replace(root, ""));
+					fileResultDTO.setThumbnailFileSize(thumbnailFile.length());
+				}
 			}
-			stopWatch.start("videoResize_"+uploadFile.getOriginalFilename());
+			else if (contentType.contains("VIDEO")) {
+				// 사이즈 변환시 700:394 를 변경 하면 됨
+				final String thumbnailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.mp4", true)).toString();
+//				final String thumbnailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.mp4", true);
+				final String[] command = {
+						ffmpeg + File.separator + ffmpegCommand
+						,"-y"
+						,"-i"
+						,toFile.getCanonicalPath()
+						, "-codec:v"
+						, "libx264"
+						, "-preset"
+						, "ultrafast"
+						, "-crf"
+						, "33"
+						,"-vf"
+						,"scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
+						,thumbnailPath
+				};
 
-			final ProcessBuilder processBuilder = new ProcessBuilder(cmd);
-			processBuilder.redirectErrorStream(true);
-			Process process = null;
-			try{
-				process = processBuilder.start();
-			}catch(Exception exception){
-				process.destroy();
-				log.error("exception", exception);
-				//throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
-			}
-			exhaustInputStream(process.getInputStream());
-			try{
-				process.waitFor();
-			}catch(InterruptedException exception){
-				process.destroy();
-				//throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
-			}
+				final List<String> cmd = whiteListing(folder, command);
+				if (ObjectUtils.isEmpty(cmd)) {
+					throw new CodeMessageHandleException(
+							FailCode.ConfigureError.INVALID_FILE.name()
+							, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
+					);
+				}
 
-			// 정상 종료가 되지 않았을 경우
-			if(process.exitValue() != 0){
-				throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
-			}
-			stopWatch.stop();
-			log.info("stopWatch.getLastTaskTimeMillis() {} :  {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
-			final File detailFile = new File(cleanXSS(thumbnailPath, true));
-			if(detailFile.isFile()){
-				String detailThumbnail = uploadFile.getOriginalFilename();
-				detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail.mp4";
-				fileResultDTO.setDetailThumbnailFileName(detailThumbnail);
-				fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getCanonicalPath ().replace(root, ""));
-				fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
+				final ProcessBuilder processBuilder = new ProcessBuilder(cmd);
+				processBuilder.redirectErrorStream(true);
+				Process process = null;
+				try{
+					process = processBuilder.start();
+				}catch(Exception exception){
+					process.destroy();
+					log.error("exception", exception);
+				}
+				exhaustInputStream(process.getInputStream());
+				try{
+					process.waitFor();
+				}catch(InterruptedException exception){
+					process.destroy();
+				}
+
+				// 정상 종료가 되지 않았을 경우
+				if(process.exitValue() != 0){
+					throw new CodeMessageHandleException(
+							FailCode.ConfigureError.INVALID_FILE.name()
+							, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
+					);
+				}
+
+				final File detailFile = Paths.get(thumbnailPath).toFile();
+				//final File detailFile = new File(thumbnailPath);
+				if(detailFile.isFile()){
+					String detailThumbnail = originalFileName;
+					detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail.mp4";
+					fileResultDTO.setDetailThumbnailFileName(detailThumbnail);
+					fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getCanonicalPath().replace(root, ""));
+					fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
+				}
 			}
 		}
-		log.info("stopWatch.getTotalTimeSeconds() {} :  {} s", uploadFile.getOriginalFilename(),stopWatch.getTotalTimeSeconds());
-		log.info("stopWatch.prettyPrint() {}", stopWatch.prettyPrint());
-		log.info("FileUtil.fileSave  end");
+
 		return fileResultDTO;
 	}
 
@@ -360,6 +445,7 @@ public class FileUtil {
 	 * @param uploadFile the upload file
 	 * @return the file result dto
 	 * @throws IOException the io exception
+	 *
 	 * @author [윤태호]
 	 * @implNote
 	 * @since 2020. 7. 13. 오후 4:55:25
@@ -399,7 +485,25 @@ public class FileUtil {
 	 */
 	public static FileResultDTO fileSave(final MultipartFile uploadFile, final String folder) throws IOException {
 		log.info("FileUtil.fileSave");
-		return fileSave(uploadFile, folder, false, null);
+		String folderParam = folder;
+		// [공백 폴더명] 권한 없음 처리
+		if (ObjectUtils.isEmpty(folderParam)) {
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.NO_AUTH.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+			);
+		} else {
+			folderParam = cleanXSS(folderParam.toUpperCase(Locale.getDefault()),false);
+		}
+
+		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
+		if (!whiteFolderList(folderParam) ) {
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.NO_AUTH.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+			);
+		}
+		return fileSave(uploadFile, folderParam, false, null);
 	}
 
 	/**
@@ -435,7 +539,7 @@ public class FileUtil {
 			updateDate = updateDate.plusHours(24);
 			final LocalDateTime today = LocalDateTime.now();
 			if(updateDate.isBefore(today) && file.isFile()){
-				final String awsDeleteFile = file.getCanonicalPath ().replace(root, "");
+				final String awsDeleteFile = file.getCanonicalPath().replace(root, "");
 				file.delete();
 				try{
 					S3Util.fileDelete(awsDeleteFile);
@@ -462,16 +566,9 @@ public class FileUtil {
 	public static ResponseEntity<Resource> fileDownload(final String filePath) {
 		log.info("FileUtil.fileDownload");
 		final Path path = Paths.get(filePath);
-
 		final HttpHeaders headers = new HttpHeaders();
-
-//		String contentType = Files.probeContentType(path);
-//		headers.add(HttpHeaders.CONTENT_TYPE,contentType); //이미지일경우 바로 뷰
-
 		headers.add(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=" + path.getFileName().toString());
 		headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(path.toFile().length()));
-
-//		final Resource resource = new InputStreamResource(Files.newInputStream(path));
 		final Resource resource = new FileSystemResource(new File(path.toUri()));
 		return new ResponseEntity<>(resource,headers, HttpStatus.OK);
 	}
@@ -527,36 +624,37 @@ public class FileUtil {
 	 * xss 필터 및 path 수정
 	 *
 	 * @param str  the value
-	 * @param folder 폴더 구분
 	 * @return the string
 	 * @author [윤태호]
 	 * @implNote
 	 * @since 2020. 8. 25. 오후 5:07:38
 	 */
-	public static String cleanXSS(String str, boolean folder) {
+	public static String cleanXSS(String str, boolean isFolder) {
+		String result = str;
 		String [] replaceStr = {"bin","boot","etc","lib","lib64","proc","root","sbin","sys","usr","var"};
 		for(String temp : replaceStr){
-			str = str.replaceAll(temp, "");
+			result = result.replaceAll(temp, "");
 		}
 
-		str = str.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-		str = str.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");
-		str = str.replaceAll("'", "&#39;");
-		str = str.replaceAll("eval\\((.*)\\)", "");
-		str = str.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
-		str = str.replaceAll("script", "");
-		str = str.replaceAll("&", "");
-		if(!folder){
-			str = str.replaceAll("\\\\", "");
-			str = str.replaceAll("/", " ");
+		result = result.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+		result = result.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");
+		result = result.replaceAll("'", "&#39;");
+		result = result.replaceAll("eval\\((.*)\\)", "");
+		result = result.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
+		result = result.replaceAll("script", "");
+		result = result.replaceAll("&", "");
+
+		if(!isFolder){
+			result = result.replaceAll("\\\\", "");
+			result = result.replaceAll("/", " ");
 		}
 
-		str = str.replaceAll("\\.\\.", "");
-		str = str.replaceAll("\\.\\./", "");
-		str = str.replaceAll("\\./", "");
-		str = str.replaceAll("\\.\\\\", "");
-		str = str.replaceAll("\\.\\.\\\\", "");
-		return str;
+		result = result.replaceAll("\\.\\.", "");
+		result = result.replaceAll("\\.\\./", "");
+		result = result.replaceAll("\\./", "");
+		result = result.replaceAll("\\.\\\\", "");
+		result = result.replaceAll("\\.\\.\\\\", "");
+		return result;
 	}
 
 	/**
@@ -570,7 +668,26 @@ public class FileUtil {
 	 * @since 2020. 8. 31. 오후 12:25:53
 	 */
 	private static String whiteListing(String paramStr, String folder) {
-		File files = new File(root + File.separator + cleanXSS(folder, false));
+		String folderParam = folder;
+		// [공백 폴더명] 권한 없음 처리
+		if (ObjectUtils.isEmpty(folderParam)) {
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.NO_AUTH.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+			);
+		} else {
+			folderParam = cleanXSS(folderParam.toUpperCase(Locale.getDefault()),false);
+		}
+
+		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
+		if (!whiteFolderList(folderParam) ) {
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.NO_AUTH.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+			);
+		}
+
+		File files = new File(cleanXSS(root,false) + File.separator + folderParam);
 		boolean checkfile = false;
 		for(File file : files.listFiles()){
 			if(paramStr.contains(file.getName())){
@@ -604,8 +721,26 @@ public class FileUtil {
 	 * @since 2020. 9. 7. 오후 3:47:30
 	 */
 	private static List<String> whiteListing(String folder, String... paramStrArray){
+		String folderParam = folder;
+		// [공백 폴더명] 권한 없음 처리
+		if (ObjectUtils.isEmpty(folderParam)) {
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.NO_AUTH.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+			);
+		} else {
+			folderParam = cleanXSS(folderParam.toUpperCase(Locale.getDefault()),false);
+		}
 
-		File files = new File(root + File.separator + cleanXSS(folder, false));
+		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
+		if (!whiteFolderList(folderParam) ) {
+			throw new CodeMessageHandleException(
+					FailCode.ConfigureError.NO_AUTH.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+			);
+		}
+
+		File files = new File(root + File.separator + cleanXSS(folderParam, false));
 
 		final List<String> command;
 		command = new ArrayList<>(paramStrArray.length);
@@ -626,4 +761,23 @@ public class FileUtil {
 		}
 		return null;
 	}
+
+	private static boolean whiteFolderList(final String folder) {
+		for (ServiceCode.FileFolderEnumCode code : ServiceCode.FileFolderEnumCode.values()) {
+			if (code.name().equals(folder)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean whiteExtensionList(final String extension) {
+		for (ServiceCode.FileExtensionEnumCode code : ServiceCode.FileExtensionEnumCode.values()) {
+			if (code.name().equals(extension)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
