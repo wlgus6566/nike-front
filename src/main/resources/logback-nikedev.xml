@@ -48,14 +48,14 @@
 	<logger name="org.springframework" level="INFO" />
 	<logger name="com.nike.dnp" level="INFO" />
 	<logger name="jdbc.sqlonly" level="ERROR" />
-	<logger name="com.nike.dnp.util.FileUtil" level="TRACE" />
+	<logger name="com.nike.dnp.util.FileUtil" level="DEBUG" />
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="ERROR_FILE" />
 	</root>
 
-	<root level="TRACE">
+	<root level="INFO">
 		<appender-ref ref="FILE_ERROR_FILE" />
 	</root>
 
