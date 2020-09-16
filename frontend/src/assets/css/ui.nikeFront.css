@@ -2018,6 +2018,7 @@
 }
 
 .file-item .detail {
+    position: relative;
     overflow: hidden;
 }
 .file-item .detail .inner {
@@ -2034,7 +2035,7 @@
 
 .file-item .detail:before {
     position: absolute;
-    top: -15px;
+    top: 0;
     left: 73px;
     content: '';
     display: block;
@@ -2098,6 +2099,8 @@
     left: 0;
     height: 100%;
     width: 100%;
+    z-index: 2;
+    zoom: 1;
 }
 .file-item .detail .down-info {
     margin-top: 20px;
