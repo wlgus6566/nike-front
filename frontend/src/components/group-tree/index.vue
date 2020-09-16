@@ -98,6 +98,8 @@ export default {
 }
 ::v-deep .group-tree-fixed > .el-scrollbar {
     flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
 }
 .group-tree-fixed.top-sticky {
     /*border: 1px solid red;*/
