@@ -150,7 +150,37 @@ export default {
             this.loaded = Math.round((loaded * 100) / this.totalSize);
         },
 
-        async fileDownload() {
+        fileDownload() {
+            this.link.forEach((el) => {
+                document.querySelector('body').removeChild(el);
+            });
+            this.link = [];
+            this.contBasketList.forEach((el) => {
+                if (window.navigator.msSaveBlob) {
+                    window.navigator.msSaveBlob(
+                        new Blob([el.filePhysicalName]),
+                        el.fileName
+                    );
+                    this.delContBasket(el.contentsBasketSeq);
+                } else {
+                    const url = window.URL.createObjectURL(
+                        new Blob([el.filePhysicalName])
+                    );
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', el.fileName);
+                    link.seq = el.contentsBasketSeq;
+                    this.link.push(link);
+                    document.body.appendChild(link);
+                }
+            });
+            this.link.forEach((el) => {
+                el.click();
+                //this.delContBasket(el.seq);
+            });
+        },
+
+        /*async fileDownload() {
             clearInterval(this.fileUploadingInterval);
             this.fileUploadingInterval = setInterval(() => {
                 this.loginUpdate();
@@ -159,7 +189,6 @@ export default {
             this.downloadFiles = [];
             if (!window.navigator.msSaveBlob) {
                 this.link.forEach((el) => {
-                    console.log(el);
                     document.querySelector('body').removeChild(el);
                 });
             }
@@ -217,7 +246,7 @@ export default {
             clearInterval(this.fileUploadingInterval);
             this.loaded = 0;
             this.downloadFiles = null;
-        },
+        },*/
         basketEnter() {
             this.$store.commit('SET_FILE_MOUSEENTER', true);
         },
