@@ -86,11 +86,17 @@ export default new Vuex.Store({
             state.logoutTimer.timerInterval = setInterval(() => {
                 const now = new Date().getTime();
                 const distance = countDownDate - now;
-                const minutes = Math.floor(
-                    (distance % (1000 * 60 * 60)) / (1000 * 60)
+                const minutes = Math.max(
+                    Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+                    0
                 );
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                state.logoutTimer.count = `${minutes}:${seconds}`;
+                const seconds = Math.max(
+                    Math.floor((distance % (1000 * 60)) / 1000),
+                    0
+                );
+                state.logoutTimer.count = `${
+                    minutes >= 10 ? minutes : '0' + minutes
+                }:${seconds >= 10 ? seconds : '0' + seconds}`;
                 if (distance <= 0) {
                     state.saveFolder = true;
                     state.logoutTimer.modalVisible = false;

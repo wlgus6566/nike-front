@@ -322,6 +322,7 @@ export default {
                 chosenClass: 'chosen',
                 forceFallback: true,
                 filter: '.ignore-elements',
+                preventOnFilter: false,
                 sort: false,
             };
         },
