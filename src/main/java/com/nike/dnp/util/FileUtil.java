@@ -164,7 +164,7 @@ public class FileUtil {
 	 */
 	public static File makeNewFile(final String folder,final String extension) {
 		log.info("FileUtil.makeNewFile");
-		String folderParam = folder;
+		String folderParam = whiteFolderSelect(folder);
 		// [공백 폴더명] 권한 없음 처리
 		if (ObjectUtils.isEmpty(folderParam)) {
 			throw new CodeMessageHandleException(
@@ -186,8 +186,8 @@ public class FileUtil {
 		final File path = Paths.get(root, folderParam).toFile();
 		log.debug(" makeNewFile root > {}", root);
 		log.debug(" makeNewFile root > {}", folderParam);
-		if (path.exists()) {
-			path.mkdir();
+		if (!path.exists()) {
+			boolean mkdirs = path.mkdirs();
 			log.debug("경로 생성");
 		}
 		final File result = Paths.get(root, folderParam, cleanXSS(makeFileName(), false) + "." + cleanXSS(extension, false)).toFile();
@@ -235,6 +235,14 @@ public class FileUtil {
 										 final boolean resize,
 										 final String resizeExt) throws IOException {
 		log.info("FileUtil.fileSave  start");
+
+		System.out.println("======================================================");
+		System.out.println("folder : " + folder);
+		System.out.println("resize : " + resize);
+		System.out.println("resizeExt : " + resizeExt);
+		System.out.println("======================================================");
+
+
 		String originalFileName = uploadFile.getOriginalFilename();
 		// [공백 originalFileName] 권한 없음 처리
 		if (ObjectUtils.isEmpty(originalFileName)) {
@@ -283,7 +291,7 @@ public class FileUtil {
 					FailCode.ConfigureError.NO_AUTH.name()
 					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
 			);
-		}else{
+		} else {
 			extension = extension.toUpperCase(Locale.getDefault());
 		}
 
@@ -509,7 +517,7 @@ public class FileUtil {
 	 */
 	public static FileResultDTO fileSave(final MultipartFile uploadFile, final String folder) throws IOException {
 		log.info("FileUtil.fileSave");
-		String folderParam = folder;
+		String folderParam = whiteFolderSelect(folder);
 		// [공백 폴더명] 권한 없음 처리
 		if (ObjectUtils.isEmpty(folderParam)) {
 			throw new CodeMessageHandleException(
@@ -517,7 +525,7 @@ public class FileUtil {
 					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
 			);
 		} else {
-			folderParam = cleanXSS(folderParam.toUpperCase(Locale.getDefault()),false);
+			folderParam = cleanXSS(folderParam,false);
 		}
 
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
@@ -555,7 +563,8 @@ public class FileUtil {
 	 */
 	public static void deleteTemp() throws IOException {
 		log.info("FileUtil.deleteTemp");
-		final File tempFile = new File(root+File.separator+ ServiceCode.FileFolderEnumCode.TEMP.getFolder());
+		//final File tempFile = new File(root+File.separator+ ServiceCode.FileFolderEnumCode.TEMP.getFolder());
+		final File tempFile = Paths.get(root, ServiceCode.FileFolderEnumCode.TEMP.getFolder()).toFile();
 		final File[] files = tempFile.listFiles();
 
 		for(final File file : files){
@@ -593,7 +602,8 @@ public class FileUtil {
 		final HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=" + path.getFileName().toString());
 		headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(path.toFile().length()));
-		final Resource resource = new FileSystemResource(new File(path.toUri()));
+		final Resource resource = new FileSystemResource(Paths.get(path.toUri()).toFile());
+		//final Resource resource = new FileSystemResource(new File(path.toUri()));
 		return new ResponseEntity<>(resource,headers, HttpStatus.OK);
 	}
 
@@ -614,18 +624,19 @@ public class FileUtil {
 		System.out.println("======================================================");
 		System.out.println("path : " + path);
 		System.out.println("fileName : " + fileName);
+		System.out.println("fileName : " + decleanXSS(fileName));
 		System.out.println("======================================================");
 
 		final URL url = new URL(CloudFrontUtil.getCustomSignedUrl(path, 100));
 		final Resource resource = new UrlResource(url);
 		final HttpHeaders headers = new HttpHeaders();
-		final String encodeFileName = URLEncoder.encode(fileName,"UTF-8").trim().replace("+", "%20");
+		final String encodeFileName = URLEncoder.encode(decleanXSS(fileName),"UTF-8").trim().replace("+", "%20");
 
 		//headers.set("Content-Transfer-Encoding", "binary");
 		//headers.set("Content-Disposition", "attachment;filename=" + encodeFileName + ";filename*= UTF-8''" + encodeFileName);
 		//headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + encodeFileName + ";filename*= UTF-8''" + encodeFileName);
 
-		headers.add(HttpHeaders.TRANSFER_ENCODING, "binary");
+		//headers.add(HttpHeaders.TRANSFER_ENCODING, "binary");
 		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodeFileName +"\"");
 		headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.contentLength()));
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
@@ -706,6 +717,16 @@ public class FileUtil {
 		return result;
 	}
 
+	public static String decleanXSS(String str) {
+		String result = str;
+		result = result.replaceAll("&lt;","<")
+						.replaceAll("&gt;",">");
+		result = result.replaceAll("#40;", "\\(")
+						.replaceAll("#41;", "\\)");
+		result = result.replaceAll("&#39;", "'");
+		return result;
+	}
+
 	/**
 	 * 화이트 문자열 체트 [이미지용]
 	 *
@@ -717,7 +738,7 @@ public class FileUtil {
 	 * @since 2020. 8. 31. 오후 12:25:53
 	 */
 	private static String whiteListing(String paramStr, String folder) {
-		String folderParam = folder;
+		String folderParam = whiteFolderSelect(folder);
 		// [공백 폴더명] 권한 없음 처리
 		if (ObjectUtils.isEmpty(folderParam)) {
 			throw new CodeMessageHandleException(
@@ -736,7 +757,8 @@ public class FileUtil {
 			);
 		}
 
-		File files = new File(cleanXSS(root,true) + File.separator + folderParam);
+		//File files = new File(cleanXSS(root,false) + File.separator + folderParam);
+		File files = Paths.get(root, folderParam).toFile();
 		boolean checkfile = false;
 		for(File file : files.listFiles()){
 			if(paramStr.contains(file.getName())){
@@ -770,7 +792,7 @@ public class FileUtil {
 	 * @since 2020. 9. 7. 오후 3:47:30
 	 */
 	private static List<String> whiteListing(String folder, String... paramStrArray){
-		String folderParam = folder;
+		String folderParam = whiteFolderSelect(folder);
 		// [공백 폴더명] 권한 없음 처리
 		if (ObjectUtils.isEmpty(folderParam)) {
 			throw new CodeMessageHandleException(
@@ -789,7 +811,8 @@ public class FileUtil {
 			);
 		}
 
-		File files = new File(root + File.separator + cleanXSS(folderParam, false));
+		//File files = new File(root + File.separator + cleanXSS(folderParam, false));
+		File files = Paths.get(root, folderParam).toFile();
 
 		final List<String> command;
 		command = new ArrayList<>(paramStrArray.length);
@@ -809,6 +832,15 @@ public class FileUtil {
 			return command;
 		}
 		return null;
+	}
+
+	private static String whiteFolderSelect(final String folder) {
+		for (ServiceCode.FileFolderEnumCode code : ServiceCode.FileFolderEnumCode.values()) {
+			if (code.getFolder().equals(folder)) {
+				return code.getFolder();
+			}
+		}
+		return "";
 	}
 
 	private static boolean whiteFolderList(final String folder) {
