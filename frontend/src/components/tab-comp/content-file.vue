@@ -150,7 +150,7 @@ export default {
             this.loaded = Math.round((loaded * 100) / this.totalSize);
         },
 
-        fileDownload() {
+        /*fileDownload() {
             this.link.forEach((el) => {
                 document.querySelector('body').removeChild(el);
             });
@@ -178,9 +178,9 @@ export default {
                 el.click();
                 //this.delContBasket(el.seq);
             });
-        },
+        },*/
 
-        /*async fileDownload() {
+        async fileDownload() {
             clearInterval(this.fileUploadingInterval);
             this.fileUploadingInterval = setInterval(() => {
                 this.loginUpdate();
@@ -246,7 +246,7 @@ export default {
             clearInterval(this.fileUploadingInterval);
             this.loaded = 0;
             this.downloadFiles = null;
-        },*/
+        },
         basketEnter() {
             this.$store.commit('SET_FILE_MOUSEENTER', true);
         },
