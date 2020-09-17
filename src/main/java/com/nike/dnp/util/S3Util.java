@@ -168,9 +168,17 @@ public class S3Util {
 	 */
 	private static void s3upload(final String filePath){
 		log.info("S3Util.s3upload");
+		System.out.println("======================================================");
+		System.out.println(filePath);
+		System.out.println("======================================================");
 		final File file = new File(root + filePath);
 		final String uploadUrl = awsPathReplace(filePath);
-		client.putObject(new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.Private));
+		final PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.Private);
+		final ObjectMetadata metadata = new ObjectMetadata();
+		metadata.setContentDisposition("attachment;");
+		//metadata.setContentDisposition(filePath);
+		putObjectRequest.setMetadata(metadata);
+		client.putObject(putObjectRequest);
 		final URL url = client.getUrl(bucket, uploadUrl);
 		log.debug("url.getPath() {}", url.getPath());
 	}
