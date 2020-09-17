@@ -5,21 +5,14 @@
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="guide.css">
-	<link rel="stylesheet" type="text/css" href="layout.css">
-	<link rel="stylesheet" type="text/css" href="ui.nikeFront.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/layout.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/ui.nikeFront.css">
 </head>
 <body style="overflow:hidden;">
 <div class="out-wrap">
 	<header class="out-header">
 		<h1>
-			<svg
-					width="120px"
-					height="40px"
-					viewBox="0 0 120 40"
-					version="1.1"
-					xmlns="http://www.w3.org/2000/svg"
-					xmlns:xlink="http://www.w3.org/1999/xlink"
-			>
+			<svg width="120px" height="40px" viewBox="0 0 120 40" version="1.1" xmlns="http://www.w3.org/2000/svg">
 				<title>07.이미지/메인-로고</title>
 				<defs>
 					<filter
@@ -100,45 +93,30 @@
 
 			<pre style="margin-top:20px;"><code class="html">
 
-├── pub                                                       # html 파일 폴더
-│   ├── guide /                                                 # guide 폴더
-│   │       └── *.jsp
-│   └── *.jsp
-└── resources/                                                   # pc 리소스 파일 폴더
-    └── mo/
-		└── assets/
-			    ├── css/                                         # css 폴더
-				│	├── library/                                 # 라이브러리 css
-				│	│	├── datepicker.min.css                    # 달력 라이브러리 css
-				│	│	├── OverlayScrollbars.css                    # 스크롤바 라이브러리 css
-				│	│	└── swiper.min.css                           # 슬라이드 라이브러리 css
-				│	├── guide.css                                     # gide 용 css
-				│	├── layout.css                                   # pc 레이아웃 css
-				│	├── reset.css                                    # pc css 리셋 및 폰트 정의 css
-				│	└── ui.ticketbay.pc.css                           # pc ui css (layout.css , layout.css 이 이 파일에 import 되어있다.)
-				├── fonts/                                               # pc font 폴더
-				│	└── *.woff , *woff2
-				├── images/                                               # pc 이미지 폴더
-				│	├── common/                                          # 기본 이미지
-				│	│	└── *.png, *.svg , *jpg
-				│	└── temp/                                               # temp 이미지
-				│	│	└── *.png, *jpg
-				│	└── *.png, *.svg , *jpg
-				├── include/                                            # 페이지에 들어가는 공통 layout 파일 폴더
-				│		├── footer.jsp                                   # footer layout html 파일
-				│		├── head.jsp                                      # head 인클루드 파일 (doctype, meta tag, css, title)
-				│		├── header.jsp                                    # header layout html 파일
-				│		├── nav.jsp                                        # 전체메뉴 html 파일
-				│		├── script.jsp                                       # 라이브러리, js 파일 불러오기
-				│		└── search.jsp                                       # 검색 html 파일
-				└── js/                                                      # js 파일 폴더
-					├── library/                                            # 라이브러리 js
-					│		├── datepicker.min.js                           # 달력 라이브러리
-					│		├── fontfaceobserver.js                           # 폰트 로드 후 js 호출 라이브러리
-					│		├── jquery-3.4.1.min.js                              # 스크립트 라이브러리(제이쿼리)
-					│		├── swiper.min.js                                   # 슬라이드 라이브러리
-					│		└── jquery.overlayScrollbars.min.js                        # 스크롤바 라이브러리
-					└── ui.ticketbay.pc.js                                    # UI 스크립트 파일
+├─ node_modules
+├─ public
+├─ package.json
+├─ babel.config.js
+├─ postcss.config.js
+├─ vue.config.js
+└─ src
+	├─ api
+	├─ components
+	├─ pub
+	├─ router
+	├─ store
+	├─ utils
+	├─ App.vue
+	├─ main.js
+	├─ assets
+		├─ css
+		├─ fonts
+		├─ lottie
+		└─ images
+			└─ svg
+	└─ views
+		├─ layouts
+		└─ pages
 
 
 		</code></pre>
@@ -312,10 +290,14 @@ body , html{margin:0; padding:0;}
 			<h3 class="item-title2">모든 속성은 영문 소문자로만 작성한다</h3>
 			<pre style="margin-top:20px;"><code class="css">
 /* 잘못된 예 */
-.contents{color:#FFF;}
+.contents{
+	color:#FFF;
+}
 
 /* 올바른 예 */
-.contents{color:#fff;}
+.contents{
+	color:#fff;
+}
 			</code></pre>
 			<h3 class="item-title2">세미콜론(;)</h3>
 			<ul class="desc-list">
@@ -323,28 +305,46 @@ body , html{margin:0; padding:0;}
 			</ul>
 			<pre style="margin-top:20px;"><code class="css">
 /* 잘못된 예 */
-.contents{color:#FFF; padding-left:0}
+.contents{
+	color:#FFF;
+	padding-left:0
+}
 
 /* 올바른 예 */
-.contents{color:#fff;  padding-left:0;}
+.contents{
+	color:#fff;
+	padding-left:0;
+}
 			</code></pre>
 			<h3 class="item-title2">들여쓰기/줄 바꿈</h3>
 			<ul class="desc-list">
-				<li>CSS 코드 작성시 들여쓰기는 허용하지 않는다.</li>
-				<li>공통으로 사용되는 속성의 선택자간의 줄 바꿈은 허용하며 이 외의 줄바꿈은 허용하지 않는다.</li>
+				<li>CSS 코드 작성시 속성마다 줄 바꿈, 들여쓰기로 가독성을 높인다.</li>
 			</ul>
 			<pre style="margin-top:20px;"><code class="css">
 /* 잘못된 예 */
 .contents{
-		position:relative;
-		display:block; width:10px;
-		height:10px;
+	position:relative;
+	display:block;
+	width:10px;
+	height:10px;
+	margin:0;
+	padding:0;
+	font-size:12px;
+	color:red;
+}
+.box,
+.box2{
+	float:left;
+	display:block;
 }
 
 /* 올바른 예 */
-.contents{position:relative; display:block; width:10px; height:10px; margin:0; padding:0; font-size:12px; color:red;}
-.box,
-.box2{float:left; display:block;}
+.contents{
+	position:relative;
+	display:block;
+	width:10px;
+	height:10px;
+}
 			</code></pre>
 			<h4 class="item-title3">속성의 선언 순서</h4>
 			<ul class="desc-list">
@@ -352,10 +352,28 @@ body , html{margin:0; padding:0;}
 			</ul>
 			<pre style="margin-top:20px;"><code class="css">
 /* 잘못된 예 */
-.contents{color:red; margin:0; padding:0; display:block; font-size:12px; position:relative; width:10px; height:10px;}
+.contents{
+	color:red;
+	margin:0;
+	padding:0;
+	display:block;
+	font-size:12px;
+	position:relative;
+	width:10px;
+	height:10px;
+}
 
 /* 올바른 예 */
-.contents{position:relative; display:block; width:10px; height:10px; margin:0; padding:0; font-size:12px; color:red;}
+.contents{
+	position:relative;
+	display:block;
+	width:10px;
+	height:10px;
+	margin:0;
+	padding:0;
+	font-size:12px;
+	color:red;
+}
 			</code></pre>
 			<h3 class="item-title2">주석 / 빈줄</h3>
 			<ul class="desc-list">
@@ -364,84 +382,99 @@ body , html{margin:0; padding:0;}
 			</ul>
 			<pre style="margin-top:20px;"><code class="css">
 /* title */
-.title{color:red; margin:0; padding:0; display:block; font-size:12px; position:relative; width:10px; height:10px;}
-.sub-title{color:red; margin:0; padding:0; display:block; font-size:12px; position:relative; width:10px; height:10px;}
+.title{
+	color:red;
+	margin:0;
+	padding:0;
+	display:block;
+	font-size:12px;
+	position:relative;
+	width:10px;
+	height:10px;
+}
+.sub-title{
+	color:red;
+	margin:0;
+	padding:0;
+	display:block;
+	font-size:12px;
+	position:relative;
+	width:10px;
+	height:10px;
+}
 
 /* button*/
-.btn-red{position:relative; display:block; width:10px; height:10px; margin:0; padding:0; font-size:12px; color:red;}
-.btn-blue{position:relative; display:block; width:10px; height:10px; margin:0; padding:0; font-size:12px; color:blue;}
+.btn-red{
+	position:relative;
+	display:block;
+	width:10px;
+	height:10px;
+	margin:0;
+	padding:0;
+	font-size:12px;
+	color:red;
+}
+.btn-blue{
+	position:relative;
+	display:block;
+	width:10px;
+	height:10px;
+	margin:0;
+	padding:0;
+	font-size:12px;
+	color:blue;
+}
 			</code></pre>
 			<h2 class="item-title" id="ui-override">css 재정의</h2>
-			<h3 class="item-title3">ui.ticketbay.mo.css 파일에 재정의가 필요한 공통 클래스 명시</h3>
+			<h3 class="item-title3">ui.nikeFront.css 파일에 재정의가 필요한 공통 클래스 명시</h3>
 			<ul class="desc-list">
 				<li>margin, border, padding, font-size, text-align의 재정의 만 필요할 경우 하단의 클래스를 추가 하여 사용한다.</li>
 				<li>하단의 클래스로 재정의가 불가능할 경우 하단의 클래스 규칙에 맞춰 클래스를 추가 하여 사용한다.</li>
 				<li>margin, padding의 경우 5px단위로만 정의 하여 사용한다.</li>
 			</ul>
 			<pre style="margin-top:20px;"><code class="css">
+/* common */
+.min100 {
+    min-width: 100px !important;
+}
 /* margin */
-.mt0 {margin-top:0 !important;}
-.mt5 {margin-top:5px !important;}
-.mt10 {margin-top:10px !important;}
-.mt15 {margin-top:15px !important;}
-.mt20 {margin-top:20px !important;}
-.mt25 {margin-top:25px !important;}
-.mt30 {margin-top:30px !important;}
-.mt35 {margin-top:35px !important;}
-.mt40 {margin-top:40px !important;}
-.mt45 {margin-top:45px !important;}
-.mt50 {margin-top:50px !important;}
-.mt55 {margin-top:55px !important;}
-.mt60 {margin-top:60px !important;}
-.mt65 {margin-top:65px !important;}
-.mt75 {margin-top:75px !important;}
-.mt80 {margin-top:80px !important;}
-.mr5 {margin-right:5px !important;}
-.mb0 {margin-bottom:0 !important;}
-.ml0 {margin-left:0 !important;}
-.ml15 {margin-left:15px !important;}
-.ml30 {margin-left:30px !important;}
+.mt0 {
+    margin-top: 0 !important;
+}
+.mt10 {
+    margin-top: 10px !important;
+}
+.mt20 {
+    margin-top: 20px !important;
+}
+.mt40 {
+    margin-top: 40px !important;
+}
 
-/* border */
-.bt0 {border-top:none !important;}
-
-/* padding */
-.side-pd0 {padding-right:0 !important; padding-left:0 !important;}
-.pd0 {padding:0 !important;}
-.pb0 {padding-bottom:0 !important;}
-.pb10 {padding-bottom:10px !important;}
-.pb20 {padding-bottom:20px !important;}
-.pb60 {padding-bottom:60px !important;}
-
-/* hr */
-.hr {margin:0; border:none; border-top:1px solid #f2f2f2;}
-.hr-deep {margin:0; border:none; border-top:1px solid #d0d0d0;}
-.hr-escape{margin:40px -40px;}
-
+.bebas {
+    font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif !important;
+    letter-spacing: 0.5px;
+}
 /* align */
-.agl {text-align:left !important;}
-.agc {text-align:center !important;}
-.agr {text-align:right !important;}
-
-/* color */
-.fc-black {color:#101010 !important;}
-.fc-blue {color:#7aa3d6 !important;}
-.fc-green {color:#8fc741 !important;}
-.fc-gray {color:#999 !important;}
-
-/* font size */
-.fs12 {font-size:12px !important;}
-.fs14 {font-size:14px !important;}
-.fs15 {font-size:15px !important;}
-.fs16 {font-size:16px !important; line-height:23px;}
-.fs18 {font-size:18px !important; line-height:27px;}
-.fs20 {font-size:20px !important;}
-
-/* bg */
-.bg-blue{padding-bottom:150px; background:#f4f7fd;}
-
-/* flex align */
-.justi-center{-webkit-box-pack:center !important;-ms-flex-pack:center !important;justify-content:center !important;}
+.agc {
+    text-align: center !important;
+}
+.agl {
+    text-align: left !important;
+}
+.agr {
+    text-align: right !important;
+}
+/* font */
+.fc-orage {
+    color: #fa5400 !important;
+}
+.fc-lightgray {
+    color: #ccc !important;
+}
+.fc-black {
+    color: #000 !important;
+}
 			</code></pre>
 			<h2 class="item-title" id="ui-font">폰트 정의</h2>
 			<ul class="desc-list">
@@ -553,11 +586,18 @@ body , html{margin:0; padding:0;}
 
 			<h3 class="item-title2">font-family 정의 방법</h3>
 			<pre style="margin-top:20px;"><code class="css">
-body {font-family: "Roboto", "Noto Sans KR", "Arial", "Apple SD Gothic Neo",sans-serif;}
+body {
+	font-family: "Roboto", "Noto Sans KR", "Arial", "Apple SD Gothic Neo",sans-serif;
+}
+.bebas {
+	font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif !important;
+	letter-spacing: 0.5px;
+}
 			</code></pre>
 			<ul class="desc-list">
 				<li>1순위로 영문(Roboto), 국문(Noto Sans KR)로 정의한다.</li>
 				<li>강조 영문 폰트는 Bebas Neue로 정의한다.</li>
+				<li>Bebas Neue 사용시 font-family를 재정의 하거나 클래스 .bebas를 사용한다.</li>
 			</ul>
 			<h3 class="item-title2">font-size</h3>
 			<ul class="desc-list">
