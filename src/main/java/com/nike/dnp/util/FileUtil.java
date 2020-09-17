@@ -13,15 +13,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
@@ -168,7 +172,7 @@ public class FileUtil {
 					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
 			);
 		} else {
-			folderParam = cleanXSS(folderParam.toUpperCase(Locale.getDefault()),false);
+			folderParam = cleanXSS(folderParam,false);
 		}
 
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
@@ -180,10 +184,16 @@ public class FileUtil {
 		}
 
 		final File path = Paths.get(root, folderParam).toFile();
+		log.debug(" makeNewFile root > {}", root);
+		log.debug(" makeNewFile root > {}", folderParam);
 		if (path.exists()) {
 			path.mkdir();
+			log.debug("경로 생성");
 		}
-		return Paths.get(root, folderParam, cleanXSS(makeFileName(), false) + "." + cleanXSS(extension, false)).toFile();
+		final File result = Paths.get(root, folderParam, cleanXSS(makeFileName(), false) + "." + cleanXSS(extension, false)).toFile();
+		log.debug("result.toString() > {}", result.toString());
+		return result;
+
 
 		/*
 		final String newFilepath = root + File.separator + folderParam;
@@ -233,7 +243,7 @@ public class FileUtil {
 					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
 			);
 		} else {
-			originalFileName = cleanXSS(originalFileName.toUpperCase(Locale.getDefault()), false);
+			originalFileName = cleanXSS(originalFileName, false);
 		}
 
 		String folderParam = folder;
@@ -244,7 +254,7 @@ public class FileUtil {
 					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
 			);
 		} else {
-			folderParam = cleanXSS(folderParam.toUpperCase(Locale.getDefault()),false);
+			folderParam = cleanXSS(folderParam,false);
 		}
 
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
@@ -273,22 +283,17 @@ public class FileUtil {
 					FailCode.ConfigureError.NO_AUTH.name()
 					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
 			);
-		} else {
+		}else{
 			extension = extension.toUpperCase(Locale.getDefault());
 		}
 
-		String resizeExtension = ObjectUtils.isEmpty(resizeExt) ? "JPG" : cleanXSS(resizeExt.toUpperCase(Locale.getDefault()),false);
-		// [허용 가능 목록에 없는 확장자 / 공백 확장자] 권한 없음 처리
-		if (!whiteExtensionList(resizeExtension)) {
-			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
-			);
-		}
+
 
 		final File toFile = makeNewFile(folderParam, extension);
+		log.debug("toFile.toString() > {}", toFile.toString());
+		log.debug("uploadFile.toString() > {}", uploadFile.toString());
 		uploadFile.transferTo(toFile);
-
+		log.debug("파일 저장 완료");
 		final FileResultDTO fileResultDTO = new FileResultDTO();
 		fileResultDTO.setFileName(originalFileName);
 		fileResultDTO.setFilePhysicalName(toFile.getCanonicalPath().replace(root, ""));
@@ -296,9 +301,20 @@ public class FileUtil {
 		fileResultDTO.setFileContentType(contentType);
 		fileResultDTO.setFileExtension(extension);
 
+
 		if (resize) {
+			log.debug("파일 리사이즈 =========================================================");
 			if (contentType.contains("IMAGE") || extension.contains("PSD") || extension.contains("AI")) {
+
+				String resizeExtension = ObjectUtils.isEmpty(resizeExt) ? "JPG" : cleanXSS(resizeExt.toUpperCase(Locale.getDefault()), false);
+				// [허용 가능 목록에 없는 확장자 / 공백 확장자] 권한 없음 처리
+				if(!whiteExtensionList(resizeExtension)){
+					throw new CodeMessageHandleException(FailCode.ConfigureError.NO_AUTH.name(), MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name()));
+				}
+
+				log.debug("toFile.getCanonicalPath() > {}", toFile.getCanonicalPath());
 				final String detailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail." + resizeExtension, true)).toString();
+				log.debug("detailPath > {}", detailPath);
 //				final String detailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail." + resizeExtension, true);
 				final StringBuilder detailCommand = new StringBuilder(imageMagick)
 						.append(File.separator)
@@ -319,6 +335,7 @@ public class FileUtil {
 								, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 						);
 					}
+					log.debug("cmd > {}", cmd);
 					final Process procDetail = Runtime.getRuntime().exec(cmd);
 					procDetail.waitFor();
 				}catch(InterruptedException exception){
@@ -327,6 +344,7 @@ public class FileUtil {
 
 				final File detailFile = Paths.get(detailPath).toFile();
 //				final File detailFile = new File(detailPath);
+				log.debug("detailFile.toString() > {}", detailFile.toString());
 				if(detailFile.isFile()){
 					String detailThumbnail = originalFileName;
 					detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail." + resizeExtension;
@@ -337,6 +355,7 @@ public class FileUtil {
 
 				// 이미지 사이즈 100x100으로 변환
 				final String thumbnailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_thumbnail." + resizeExtension, true)).toString();
+				log.debug("thumbnailPath > {}", thumbnailPath);
 //				final String thumbnailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_thumbnail." + resizeExtension, true);
 				final StringBuilder command = new StringBuilder(imageMagick)
 						.append(File.separator)
@@ -356,6 +375,7 @@ public class FileUtil {
 								, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 						);
 					}
+					log.debug("cmd > {}", cmd);
 					final Process proc = Runtime.getRuntime().exec(cmd);
 					proc.waitFor();
 				}catch(InterruptedException exception){
@@ -364,6 +384,7 @@ public class FileUtil {
 
 				final File thumbnailFile = Paths.get(thumbnailPath).toFile();
 //				final File thumbnailFile = new File(thumbnailPath);
+				log.debug("thumbnailFile.toString() > {}", thumbnailFile.toString());
 				if(thumbnailFile.isFile()){
 					String thumbnail = originalFileName;
 					thumbnail = thumbnail.replace("." + StringUtils.getFilenameExtension(thumbnail), "") + "_thumbnail." + resizeExtension;
@@ -374,8 +395,9 @@ public class FileUtil {
 			}
 			else if (contentType.contains("VIDEO")) {
 				// 사이즈 변환시 700:394 를 변경 하면 됨
-				final String thumbnailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.mp4", true)).toString();
+				final String thumbnailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.MP4", true)).toString();
 //				final String thumbnailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.mp4", true);
+				log.debug("thumbnailPath > {}", thumbnailPath);
 				final String[] command = {
 						ffmpeg + File.separator + ffmpegCommand
 						,"-y"
@@ -393,6 +415,7 @@ public class FileUtil {
 				};
 
 				final List<String> cmd = whiteListing(folder, command);
+				cmd.stream().forEach(s -> log.debug("cmd > {}", s));
 				if (ObjectUtils.isEmpty(cmd)) {
 					throw new CodeMessageHandleException(
 							FailCode.ConfigureError.INVALID_FILE.name()
@@ -426,6 +449,7 @@ public class FileUtil {
 
 				final File detailFile = Paths.get(thumbnailPath).toFile();
 				//final File detailFile = new File(thumbnailPath);
+				log.debug("detailFile > {}", detailFile);
 				if(detailFile.isFile()){
 					String detailThumbnail = originalFileName;
 					detailThumbnail = detailThumbnail.replace("." + StringUtils.getFilenameExtension(detailThumbnail), "") + "_detail.mp4";
@@ -587,12 +611,37 @@ public class FileUtil {
 	 */
 	public static ResponseEntity<Resource> s3FileDownload(String path,final String fileName) throws IOException {
 		log.info("FileUtil.s3FileDownload");
+		System.out.println("======================================================");
+		System.out.println("path : " + path);
+		System.out.println("fileName : " + fileName);
+		System.out.println("======================================================");
 
+		final URL url = new URL(CloudFrontUtil.getCustomSignedUrl(path, 100));
+		final Resource resource = new UrlResource(url);
+		final HttpHeaders headers = new HttpHeaders();
+		final String encodeFileName = URLEncoder.encode(fileName,"UTF-8").trim().replace("+", "%20");
+
+		//headers.set("Content-Transfer-Encoding", "binary");
+		//headers.set("Content-Disposition", "attachment;filename=" + encodeFileName + ";filename*= UTF-8''" + encodeFileName);
+		//headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + encodeFileName + ";filename*= UTF-8''" + encodeFileName);
+
+		headers.add(HttpHeaders.TRANSFER_ENCODING, "binary");
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodeFileName +"\"");
+		headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.contentLength()));
+		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+	}
+
+	public static ResponseEntity<Resource> s3FileDownload_original(String path,final String fileName) throws IOException {
+		log.info("FileUtil.s3FileDownload");
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
 		final S3ObjectInputStream s3ObjectInputStream = S3Util.getFile(path);
 		final HttpHeaders headers = new HttpHeaders();
 		final Resource resource = new ByteArrayResource(IOUtils.toByteArray(s3ObjectInputStream));
 		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
 		headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.contentLength()));
+		stopWatch.stop();
+		stopWatch.prettyPrint();
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 
@@ -676,7 +725,7 @@ public class FileUtil {
 					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
 			);
 		} else {
-			folderParam = cleanXSS(folderParam.toUpperCase(Locale.getDefault()),false);
+			folderParam = cleanXSS(folderParam,false);
 		}
 
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
@@ -687,7 +736,7 @@ public class FileUtil {
 			);
 		}
 
-		File files = new File(cleanXSS(root,false) + File.separator + folderParam);
+		File files = new File(cleanXSS(root,true) + File.separator + folderParam);
 		boolean checkfile = false;
 		for(File file : files.listFiles()){
 			if(paramStr.contains(file.getName())){
@@ -729,7 +778,7 @@ public class FileUtil {
 					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
 			);
 		} else {
-			folderParam = cleanXSS(folderParam.toUpperCase(Locale.getDefault()),false);
+			folderParam = cleanXSS(folderParam,false);
 		}
 
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
@@ -764,7 +813,7 @@ public class FileUtil {
 
 	private static boolean whiteFolderList(final String folder) {
 		for (ServiceCode.FileFolderEnumCode code : ServiceCode.FileFolderEnumCode.values()) {
-			if (code.name().equals(folder)) {
+			if (code.getFolder().equals(folder)) {
 				return true;
 			}
 		}
@@ -773,7 +822,7 @@ public class FileUtil {
 
 	private static boolean whiteExtensionList(final String extension) {
 		for (ServiceCode.FileExtensionEnumCode code : ServiceCode.FileExtensionEnumCode.values()) {
-			if (code.name().equals(extension)) {
+			if (code.name().equals(extension.toUpperCase(Locale.getDefault()))) {
 				return true;
 			}
 		}

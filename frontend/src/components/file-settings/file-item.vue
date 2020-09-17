@@ -149,12 +149,15 @@ export default {
     background: #f7f7f7;
 }
 .form-file-wrap {
+    position: relative;
     padding: 4px;
     display: flex;
     border: 1px solid #ddd;
     width: 100%;
 }
 .form-file-wrap .txt {
+    display: block;
+    box-sizing: border-box;
     color: #000;
     padding-left: 10px;
     font-size: 14px;

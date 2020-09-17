@@ -2,6 +2,7 @@
     <transition-group
         name="folder-list"
         tag="ul"
+        class="mt0"
         v-bind:class="[
             { 'folder-list': listTypes[0].active },
             { 'folder-list-row': listTypes[1].active },

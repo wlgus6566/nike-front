@@ -12,8 +12,8 @@
                         v-on:change="allCheckFn"
                     />
                     <i></i>
-                    <strong class="txt">전체선택</strong>
                 </span>
+                <strong class="txt">전체선택</strong>
             </label>
 
             <p class="desc">

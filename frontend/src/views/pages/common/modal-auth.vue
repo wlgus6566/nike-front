@@ -192,14 +192,15 @@ export default {
     padding-right: 40px;
     border-top: 2px solid #000;
     border-bottom: 1px solid #000;
-    display: flex;
     line-height: 28px;
     color: #000;
     font-size: 12px;
     font-weight: bold;
     justify-content: space-between;
+    overflow: hidden;
 }
 .auth-title span {
+    float: left;
     text-align: center;
     width: 100px;
 }

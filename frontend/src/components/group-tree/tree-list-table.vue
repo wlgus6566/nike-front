@@ -198,13 +198,14 @@ export default {
     transform: rotate(-180deg);
 }
 .tree-item > .inner {
-    display: flex;
+    overflow: hidden;
     padding-right: 40px;
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid #eee;
 }
 .tree-item > .inner .tree-txt {
+    float: left;
     display: flex;
     line-height: 20px;
     padding: 10px;
@@ -213,7 +214,10 @@ export default {
     align-items: center;
 }
 .tree-item > .inner label {
+    float: left;
     width: 100px;
+    box-sizing: border-box;
+    padding: 9px 10px;
     text-align: center;
 }
 </style>

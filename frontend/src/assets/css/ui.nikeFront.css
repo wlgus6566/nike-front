@@ -442,6 +442,7 @@
     width: 20px;
     height: 20px;
     background: url('../images/svg/icon-radio-off.svg') no-repeat center;
+    vertical-align: middle;
 }
 .radio input:checked + i {
     background-image: url('../images/svg/icon-radio-on.svg');
@@ -454,7 +455,7 @@
     display: inline-block;
     margin-left: 5px;
     line-height: 20px;
-    vertical-align: top;
+    vertical-align: middle;
 }
 .checkbox input:checked ~ .txt,
 .radio input:checked ~ .txt {
@@ -1232,8 +1233,11 @@
     color: #000;
     font-weight: 600;
 }
+.select .el-input__suffix {
+    right: 10px;
+}
 .select .el-input__icon {
-    width: 30px;
+    width: 20px;
 }
 /* cascader-select */
 .cascader-select {
@@ -1929,9 +1933,11 @@
 }
 .file-item .list .thumbnail {
     position: relative;
+    display: block;
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: 100px;
+    width: 100px;
     height: 100px;
     overflow: hidden;
     background: url('../../assets/images/img-asset-none@2x.png') no-repeat
@@ -1947,6 +1953,7 @@
 .file-item .list .info-box {
     flex-grow: 0;
     flex-shrink: 1;
+    display: block;
     flex-basis: calc(100% - 125px);
     width: calc(100% - 125px);
     margin-left: 25px;
@@ -2026,6 +2033,7 @@
 }
 
 .file-item .detail {
+    position: relative;
     overflow: hidden;
 }
 .file-item .detail .inner {
@@ -2042,7 +2050,7 @@
 
 .file-item .detail:before {
     position: absolute;
-    top: -15px;
+    top: 0;
     left: 73px;
     content: '';
     display: block;
@@ -2106,6 +2114,8 @@
     left: 0;
     height: 100%;
     width: 100%;
+    z-index: 2;
+    zoom: 1;
 }
 .file-item .detail .down-info {
     margin-top: 20px;
@@ -2418,23 +2428,28 @@
     border-bottom: 1px solid #ccc;
 }
 .table .table-row {
-    display: flex;
-    align-items: center;
     padding: 15px 40px;
     color: #333;
+}
+.table .table-row:after {
+    content: '';
+    display: block;
+    clear: both;
 }
 .table .table-row + .table-row {
     border-top: 1px solid #eee;
 }
 .table .table-th {
-    flex-grow: 0;
-    flex-shrink: 0;
-    flex-basis: 200px;
+    float: left;
+    display: block;
+    width: 200px;
+}
+.table .table-th span {
+    line-height: 40px;
 }
 .table .table-td {
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 100%;
+    float: left;
+    width: calc(100% - 200px);
 }
 .table .input-box {
     height: 40px;
@@ -2745,6 +2760,7 @@
     line-height: 20px;
     font-size: 14px;
     text-align: center;
+    font-weight: 300;
     color: #555;
 }
 
@@ -3528,7 +3544,7 @@ img.image-grayscale {
 }
 .contact-list li {
     flex-basis: calc(50% - 10px);
-    max-width: calc(50% - 10px);
+    width: calc(50% - 10px);
     -ms-flex-preferred-size: calc(50% - 80px);
 }
 .contact-list li:nth-child(2n) {
@@ -3591,6 +3607,7 @@ img.image-grayscale {
 }
 .period-list-item .cont .thumbnail {
     position: relative;
+    display: block;
     width: 100px;
     height: 100px;
     overflow: hidden;
@@ -4542,8 +4559,8 @@ img.image-grayscale {
 }
 .fullCalendar-wrap .fc .fc-daygrid-body .fc-daygrid-day-number {
     display: inline-flex;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 100%;
     padding: 0;
     line-height: 11px;

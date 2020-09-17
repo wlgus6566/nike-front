@@ -253,6 +253,7 @@ export default {
 .product-list li {
     flex-grow: 0;
     flex-basis: calc((100% - 60px) / 4);
+    width: calc((100% - 60px) / 4);
     margin-left: 20px;
 }
 .product-list li:nth-child(4n + 1) {

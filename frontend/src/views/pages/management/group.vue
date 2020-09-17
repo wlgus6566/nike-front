@@ -344,18 +344,19 @@ export default {
     margin-left: 30px;
 }
 .group-name {
-    display: flex;
-    align-items: center;
+    overflow: hidden;
     border: solid #ddd;
     padding: 15px 0;
     border-width: 1px 0;
 }
 .group-name label {
-    flex: 0 0 auto;
+    float: left;
     width: 100px;
+    line-height: 40px;
     font-weight: 700;
 }
 .group-name input {
-    flex: 1 1 auto;
+    float: left;
+    width: calc(100% - 100px);
 }
 </style>
