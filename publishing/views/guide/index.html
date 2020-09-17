@@ -89,35 +89,79 @@
 				<li>디자인최적화 해상도 PC: 1440*900 </li>
 				<li>디자인최적화 해상도 MO:  720 </li>
 			</ul>
+			<h2 class="item-title" id="ui-vue">Nike D&P Platform 구축 ?..</h2>
+			<p>Nike D&P Platform는 Vue 기반으로 작업 된 프로젝트 입니다.</p>
+
+			<h3 class="item-title2">vue 서버 세팅</h3>
+			<p>vue를 사용하기 위해선 npm, node.js가 필요</p>
+
+			<h4 class="item-title3">Node.js와 NPM 설치하기</h4>
+			<p>npm의 경우는 Node Package Manager이기 때문에 node.js를 설치하면 같이 설치됩니다.</p>
+			<pre style="margin-top:20px;"><code class="html">
+$ node -v
+			</code></pre>
+
+			<p>설치 완료 후 하단의 명령 프롬포트를 실행하여 version 확인 한다</p>
+			<p>npm 버전 확인</p>
+			<pre style="margin-top:20px;"><code class="html">
+$ npm -v
+			</code></pre>
+
+
+			**node 버전 확인**
+			<pre style="margin-top:20px;"><code class="html">
+$ node -v
+			</code></pre>
+
+			<p>Nike D&P Platform 구축 프로젝트에서 사용된 버전은 하단과 같다.</p>
+			<ul class="desc-list">
+				<li>npm version - 6.11.3</li>
+				<li>Node version - v10.17.0</li>
+			</ul>
+
+			<h4 class="item-title3"서버 세팅</h4>
+			<p>package.json에 명시된 라이브러리등 설치</p>
+			<pre style="margin-top:20px;"><code class="html">
+$ npm install
+			</code></pre>
+
+			<h4 class="item-title3">서버 실행</h4>
+			<pre style="margin-top:20px;"><code class="html">
+$ npm run serve
+			</code></pre>
+			<ul class="desc-list">
+				<li>PC localhost:8081</li>
+				<li>MO localhost:8082**</li>
+			</ul>
+
 			<h2 class="item-title" id="ui-directory">디렉토리 구조(폴더구조)</h2>
 
 			<pre style="margin-top:20px;"><code class="html">
 
-├─ node_modules
+├─ node_modules             - npm으로 설치되는 서드파트 라이브러리들이 모여 있는 디렉토리
 ├─ public
 ├─ package.json
 ├─ babel.config.js
 ├─ postcss.config.js
 ├─ vue.config.js
-└─ src
-	├─ api
-	├─ components
-	├─ pub
-	├─ router
-	├─ store
-	├─ utils
-	├─ App.vue
-	├─ main.js
-	├─ assets
-		├─ css
-		├─ fonts
-		├─ lottie
-		└─ images
-			└─ svg
-	└─ views
-		├─ layouts
-		└─ pages
-
+└─ src                      - 실제 코딩이 이루어지는 디렉토리
+    ├─ api                  - api js 디렉토리
+    ├─ components           - 컴포넌트 디렉토리
+    ├─ pub
+    ├─ router               - 라우터 디렉토리
+    ├─ store                - 상태관리 디렉토리
+    ├─ utils                - 필터 등의 유틸리티 함수 디렉토리
+    ├─ App.vue
+    ├─ main.js              -  Vue 인스턴스를 생성, 가장 먼저 실행되는 javascript 파일
+    ├─ assets               - 리소스 리렉토리
+    │   ├─ css              - css
+    │   ├─ fonts            - 폰트 파일
+    │   ├─ lottie           - 로띠
+    │   └─ images           - 이미지
+    │       └─ svg          - svg
+    └─ views                - 라우터 페이지 디렉토리
+        ├─ layouts          - 레이아웃 디렉토리
+        └─ pages            - 페이지 디렉토리
 
 		</code></pre>
 
