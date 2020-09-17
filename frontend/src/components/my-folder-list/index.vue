@@ -40,13 +40,20 @@
                         <li>REPORT</li>
                         <li>{{ item.menuCode }}</li>
                     </ul>
-                    <p class="date" v-if="item.topMenuCode">
-                        {{ $moment(item.campaignBeginDt).format('YYYY.MM.DD') }}
-                        ~
-                        {{ $moment(item.campaignEndDt).format('YYYY.MM.DD') }}
+                    <p
+                        class="date"
+                        v-if="item.campaignPeriodSectionCode === 'SELECT'"
+                    >
+                        {{ item.campaignBeginDt }} ~ {{ item.campaignEndDt }}
+                    </p>
+                    <p
+                        class="date"
+                        v-else-if="item.campaignPeriodSectionCode === 'EVERY'"
+                    >
+                        365
                     </p>
                     <p class="date" v-else>
-                        {{ $moment(item.updateDt).format('YYYY.MM.DD') }}
+                        {{ item.updateDt }}
                     </p>
                 </div>
                 <div class="view-area">

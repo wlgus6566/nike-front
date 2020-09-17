@@ -118,4 +118,23 @@ public class ContentsBasketResultDTO {
         return ObjectUtils.isEmpty(filePhysicalName) ? filePhysicalName : CloudFrontUtil.getSignedUrl(filePhysicalName);
     }
 
+    /**
+     * Gets file name.
+     *
+     * @return the file name
+     * @author [이소정]
+     * @implNote 파일명 특수기호 원복
+     * @since 2020. 9. 7. 오후 5:56:01
+     */
+    public String getFileName() {
+        if (!ObjectUtils.isEmpty(fileName)) {
+            fileName = fileName.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
+            fileName = fileName.replaceAll("#40;", "(").replaceAll("#41;", ")");
+            fileName = fileName.replaceAll("#39;", "'");
+            return fileName;
+        } else {
+            return null;
+        }
+    }
+
 }

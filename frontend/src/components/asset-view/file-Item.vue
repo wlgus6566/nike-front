@@ -165,9 +165,9 @@
                                 <div
                                     class="thumbnail"
                                     v-if="
-                                        item.fileContentType.indexOf(
-                                            'video'
-                                        ) === 0
+                                        item.fileContentType
+                                            .toLowerCase()
+                                            .indexOf('video') === 0
                                     "
                                 >
                                     <div class="video-item">
@@ -246,12 +246,7 @@
                                         ></iframe>
                                     </div>
                                 </div>
-                                <div
-                                    class="thumbnail"
-                                    v-else-if="
-                                        videoCheck(item.url).type === 'mp4'
-                                    "
-                                >
+                                <div class="thumbnail" v-else>
                                     <div class="video-item">
                                         <video controls>
                                             <source
