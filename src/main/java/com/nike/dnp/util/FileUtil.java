@@ -408,18 +408,24 @@ public class FileUtil {
 				log.debug("thumbnailPath > {}", thumbnailPath);
 				final String[] command = {
 						ffmpeg + File.separator + ffmpegCommand
-						,"-y"
-						,"-i"
-						,toFile.getCanonicalPath()
+						, "-y"
+						, "-i"
+						, toFile.getCanonicalPath()
 						, "-codec:v"
 						, "libx264"
+						, "-x264-params"
+						, "opencl = true"
 						, "-preset"
 						, "ultrafast"
 						, "-crf"
 						, "33"
-						,"-vf"
-						,"scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
-						,thumbnailPath
+						, "-movflags"
+						, "faststart"
+						, "-tune"
+						, "zerolatency"
+						, "-vf"
+						, "scale=700:394:force_original_aspect_ratio=decrease,pad=700:394:(ow-iw/2):(oh-ih)/2:white"
+						, thumbnailPath
 				};
 
 				final List<String> cmd = whiteListing(folder, command);
@@ -637,9 +643,30 @@ public class FileUtil {
 		//headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + encodeFileName + ";filename*= UTF-8''" + encodeFileName);
 
 		//headers.add(HttpHeaders.TRANSFER_ENCODING, "binary");
+		headers.add(HttpHeaders.CONTENT_TYPE, "application/octet-stream; charset=utf-8");
 		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodeFileName +"\"");
 		headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.contentLength()));
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+	}
+
+	public static void s3FileDownload2(String path,final String fileName) throws IOException {
+		log.info("FileUtil.s3FileDownload");
+		System.out.println("======================================================");
+		System.out.println("path : " + path);
+		System.out.println("fileName : " + fileName);
+		System.out.println("fileName : " + decleanXSS(fileName));
+		System.out.println("======================================================");
+
+		final URL url = new URL(CloudFrontUtil.getCustomSignedUrl(path, 100));
+		final Resource resource = new UrlResource(url);
+		final HttpHeaders headers = new HttpHeaders();
+		final String encodeFileName = URLEncoder.encode(decleanXSS(fileName),"UTF-8").trim().replace("+", "%20");
+
+		headers.add(HttpHeaders.CONTENT_TYPE, "application/octet-stream; charset=utf-8");
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodeFileName +"\"");
+		headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.contentLength()));
+
+		new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 
 	public static ResponseEntity<Resource> s3FileDownload_original(String path,final String fileName) throws IOException {
