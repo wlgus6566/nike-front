@@ -172,7 +172,7 @@ public class FileUtil {
 					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
 			);
 		} else {
-			folderParam = cleanXSS(folderParam.toUpperCase(Locale.getDefault()),false);
+			folderParam = cleanXSS(folderParam,false);
 		}
 
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
@@ -243,7 +243,7 @@ public class FileUtil {
 					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
 			);
 		} else {
-			originalFileName = cleanXSS(originalFileName.toUpperCase(Locale.getDefault()), false);
+			originalFileName = cleanXSS(originalFileName, false);
 		}
 
 		String folderParam = folder;
@@ -283,18 +283,11 @@ public class FileUtil {
 					FailCode.ConfigureError.NO_AUTH.name()
 					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
 			);
-		} else {
+		}else{
 			extension = extension.toUpperCase(Locale.getDefault());
 		}
 
-		String resizeExtension = ObjectUtils.isEmpty(resizeExt) ? "JPG" : cleanXSS(resizeExt.toUpperCase(Locale.getDefault()),false);
-		// [허용 가능 목록에 없는 확장자 / 공백 확장자] 권한 없음 처리
-		if (!whiteExtensionList(resizeExtension)) {
-			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
-			);
-		}
+
 
 		final File toFile = makeNewFile(folderParam, extension);
 		log.debug("toFile.toString() > {}", toFile.toString());
@@ -312,6 +305,13 @@ public class FileUtil {
 		if (resize) {
 			log.debug("파일 리사이즈 =========================================================");
 			if (contentType.contains("IMAGE") || extension.contains("PSD") || extension.contains("AI")) {
+
+				String resizeExtension = ObjectUtils.isEmpty(resizeExt) ? "JPG" : cleanXSS(resizeExt.toUpperCase(Locale.getDefault()), false);
+				// [허용 가능 목록에 없는 확장자 / 공백 확장자] 권한 없음 처리
+				if(!whiteExtensionList(resizeExtension)){
+					throw new CodeMessageHandleException(FailCode.ConfigureError.NO_AUTH.name(), MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name()));
+				}
+
 				log.debug("toFile.getCanonicalPath() > {}", toFile.getCanonicalPath());
 				final String detailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail." + resizeExtension, true)).toString();
 				log.debug("detailPath > {}", detailPath);
@@ -395,7 +395,7 @@ public class FileUtil {
 			}
 			else if (contentType.contains("VIDEO")) {
 				// 사이즈 변환시 700:394 를 변경 하면 됨
-				final String thumbnailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.mp4", true)).toString();
+				final String thumbnailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.MP4", true)).toString();
 //				final String thumbnailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.mp4", true);
 				log.debug("thumbnailPath > {}", thumbnailPath);
 				final String[] command = {
@@ -725,7 +725,7 @@ public class FileUtil {
 					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
 			);
 		} else {
-			folderParam = cleanXSS(folderParam.toUpperCase(Locale.getDefault()),false);
+			folderParam = cleanXSS(folderParam,false);
 		}
 
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
@@ -736,7 +736,7 @@ public class FileUtil {
 			);
 		}
 
-		File files = new File(cleanXSS(root,false) + File.separator + folderParam);
+		File files = new File(cleanXSS(root,true) + File.separator + folderParam);
 		boolean checkfile = false;
 		for(File file : files.listFiles()){
 			if(paramStr.contains(file.getName())){
@@ -778,7 +778,7 @@ public class FileUtil {
 					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
 			);
 		} else {
-			folderParam = cleanXSS(folderParam.toUpperCase(Locale.getDefault()),false);
+			folderParam = cleanXSS(folderParam,false);
 		}
 
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
@@ -822,7 +822,7 @@ public class FileUtil {
 
 	private static boolean whiteExtensionList(final String extension) {
 		for (ServiceCode.FileExtensionEnumCode code : ServiceCode.FileExtensionEnumCode.values()) {
-			if (code.name().equals(extension)) {
+			if (code.name().equals(extension.toUpperCase(Locale.getDefault()))) {
 				return true;
 			}
 		}
