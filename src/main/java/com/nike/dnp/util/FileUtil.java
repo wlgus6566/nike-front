@@ -402,10 +402,17 @@ public class FileUtil {
 				}
 			}
 			else if (contentType.contains("VIDEO")) {
+				//TODO[ojh] 2020/09/18 : 동영상 인코딩 issue, 추후 디벨롭 예정
+				//fileResultDTO.setDetailThumbnailFileName(fileResultDTO.getFileName());
+				//fileResultDTO.setDetailThumbnailFilePhysicalName(fileResultDTO.getFilePhysicalName());
+				//fileResultDTO.setDetailThumbnailFileSize(fileResultDTO.getFileSize());
+
+				/*
 				// 사이즈 변환시 700:394 를 변경 하면 됨
 				final String thumbnailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.MP4", true)).toString();
-//				final String thumbnailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.mp4", true);
+				//final String thumbnailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.mp4", true);
 				log.debug("thumbnailPath > {}", thumbnailPath);
+
 				final String[] command = {
 						ffmpeg + File.separator + ffmpegCommand
 						, "-y"
@@ -419,7 +426,7 @@ public class FileUtil {
 						, "ultrafast"
 						, "-crf"
 						, "33"
-						, "-movflags"
+						, "-movflags"정
 						, "faststart"
 						, "-tune"
 						, "zerolatency"
@@ -471,6 +478,7 @@ public class FileUtil {
 					fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getCanonicalPath().replace(root, ""));
 					fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
 				}
+				*/
 			}
 		}
 
