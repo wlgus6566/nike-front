@@ -791,6 +791,7 @@
 .sorting-area [class^='type-list'] {
     width: 36px;
     height: 36px;
+    margin-left: -10px;
     background: url(../images/svg/icon-filter-list-off.svg);
     text-indent: -9999px;
     overflow: hidden;
