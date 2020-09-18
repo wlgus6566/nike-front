@@ -637,20 +637,35 @@ public class ContentsService {
      * @since 2020. 8. 14. 오후 9:36:19
      */
     public List<ContentsFileSaveDTO> checkAndRemoveFile(final List<ContentsFileSaveDTO> contentsFileList) {
+        log.info("ContentsService.checkAndRemoveFile");
         List<ContentsFileSaveDTO> checkedContentsFileList = new ArrayList<>();
         if (!ObjectUtils.isEmpty(contentsFileList) && !contentsFileList.isEmpty()) {
-            for (ContentsFileSaveDTO contentsFileSaveDTO : contentsFileList) {
-                checkedContentsFileList.add(contentsFileSaveDTO);
-            }
+
+//            for (ContentsFileSaveDTO contentsFileSaveDTO : contentsFileList) {
+//                checkedContentsFileList.add(contentsFileSaveDTO);
+//            }
 
             for (ContentsFileSaveDTO contentsFile : contentsFileList) {
-                if (ObjectUtils.isEmpty(contentsFile.getFileName())
-                        && 0l == contentsFile.getFileSize()
-                        && ObjectUtils.isEmpty(contentsFile.getFilePhysicalName())
-                        && ObjectUtils.isEmpty(contentsFile.getTitle())
-                        && ObjectUtils.isEmpty(contentsFile.getUrl())) {
-                    checkedContentsFileList.remove(contentsFile);
+                if (
+                    (contentsFile.getFileKindCode().equals(ServiceCode.ContentsFileKindCode.VIDEO.toString())
+                                && !ObjectUtils.isEmpty(contentsFile.getTitle()) && !ObjectUtils.isEmpty(contentsFile.getUrl())
+                    ) || (
+                        contentsFile.getFileKindCode().equals(ServiceCode.ContentsFileKindCode.FILE.toString())
+                            && !ObjectUtils.isEmpty(contentsFile.getFileName())
+                            && !ObjectUtils.isEmpty(contentsFile.getFilePhysicalName())
+                            && 0l != contentsFile.getFileSize()
+                    )
+                ) {
+                    checkedContentsFileList.add(contentsFile);
                 }
+
+//                if (ObjectUtils.isEmpty(contentsFile.getFileName())
+//                        && 0l == contentsFile.getFileSize()
+//                        && ObjectUtils.isEmpty(contentsFile.getFilePhysicalName())
+//                        && ObjectUtils.isEmpty(contentsFile.getTitle())
+//                        && ObjectUtils.isEmpty(contentsFile.getUrl())) {
+//                    checkedContentsFileList.remove(contentsFile);
+//                }
             }
 
         }
@@ -670,21 +685,19 @@ public class ContentsService {
         // 파일 종류가 FILE인 경우 파일 정보 필수
         if (ServiceCode.ContentsFileKindCode.FILE.toString().equals(contentsFileSaveDTO.getFileKindCode())) {
             // 새로 등록한 파일 인 경우에만 validation check
-                if ((ObjectUtils.isEmpty(contentsFileSaveDTO.getContentsFileSeq()) || 0l == contentsFileSaveDTO.getContentsFileSeq())
-                        && (ObjectUtils.isEmpty(contentsFileSaveDTO.getFileName())
-                            || Objects.isNull(contentsFileSaveDTO.getFileSize())
-                            || ObjectUtils.isEmpty(contentsFileSaveDTO.getFilePhysicalName()))) {
-                    throw new CodeMessageHandleException(FailCode.ConfigureError.SELECT_FILE.name(),
-                            MessageUtil.getMessage(FailCode.ConfigureError.SELECT_FILE.name()));
-                }
+            if ((ObjectUtils.isEmpty(contentsFileSaveDTO.getContentsFileSeq()) || 0l == contentsFileSaveDTO.getContentsFileSeq())
+                    && (ObjectUtils.isEmpty(contentsFileSaveDTO.getFileName())
+                        || Objects.isNull(contentsFileSaveDTO.getFileSize())
+                        || ObjectUtils.isEmpty(contentsFileSaveDTO.getFilePhysicalName()))) {
+                log.error("콘텐츠 파일 정보 없음. fileName", contentsFileSaveDTO.getFileName(),
+                        " / fileSize : ", contentsFileSaveDTO.getFileSize()
+                        , " / filePhysicalName : ", contentsFileSaveDTO.getFilePhysicalName());
+            }
         } else {
             // 파일 종류가 VIDEO/VR 인 경우 타이틀, url 필수
-            if (ObjectUtils.isEmpty(contentsFileSaveDTO.getTitle())) {
-                throw new CodeMessageHandleException(FailCode.ConfigureError.NULL_TITLE.name(),
-                        MessageUtil.getMessage(FailCode.ConfigureError.NULL_TITLE.name()));
-            } else if (ObjectUtils.isEmpty(contentsFileSaveDTO.getUrl())) {
-                throw new CodeMessageHandleException(FailCode.ConfigureError.NULL_URL.name(),
-                        MessageUtil.getMessage(FailCode.ConfigureError.NULL_URL.name()));
+            if (ObjectUtils.isEmpty(contentsFileSaveDTO.getTitle()) || ObjectUtils.isEmpty(contentsFileSaveDTO.getUrl())) {
+                log.error("콘텐츠 파일 정보 없음. title", contentsFileSaveDTO.getTitle(),
+                        " / url : ", contentsFileSaveDTO.getUrl());
             }
         }
     }
