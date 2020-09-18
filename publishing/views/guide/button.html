@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="guide.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/layout.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/ui.nikeFront.css">
+</head>
+<body style="overflow:hidden;">
+<div class="out-wrap">
+	<section class="guide-section">
+		<h1 class="guide-title">BUTTON</h1>
+		<div>
+			<h2 class="section-title">기본</h2>
+			<h3 class="cont-title">html</h3>
+			<pre><code class="html">
+&#60;%-- Static Type --%&#62;
+&#60;button type="button" class="btn-blue"&#62;BUTTON&#60;/button&#62;
+&#60;a href="#" class="btn-blue"&#62;LINK&#60;/a&#62;
+
+&#60;%-- btn-blue disabled --%&#62;
+&#60;button type="button" class="btn-blue" disabled&#62;BUTTON&#60;/button&#62;
+&#60;a href="#" class="btn-blue disabled"&#62;LINK&#60;/a&#62;
+
+&#60;%-- btn-white --%&#62;
+&#60;button type="button" class="btn-white"&#62;BUTTON&#60;/button&#62;
+&#60;a href="#" class="btn-white"&#62;LINK&#60;/a&#62;
+
+&#60;%-- btn-white disabled --%&#62;
+&#60;button type="button" class="btn-white" disabled&#62;BUTTON&#60;/button&#62;
+&#60;a href="#" class="btn-white disabled"&#62;LINK&#60;/a&#62;
+
+&#60;%-- btn-white2 --%&#62;
+&#60;button type="button" class="btn-white2"&#62;BUTTON&#60;/button&#62;
+&#60;a href="#" class="btn-white2"&#62;LINK&#60;/a&#62;
+
+&#60;%-- btn-white2 disabled --%&#62;
+&#60;button type="button" class="btn-white2" disabled&#62;BUTTON&#60;/button&#62;
+&#60;a href="#" class="btn-white2 disabled"&#62;LINK&#60;/a&#62;
+
+&#60;%-- btn-info --%&#62;
+&#60;a href="#" class="btn-info"&#62;Buying&#60;/a&#62;
+
+&#60;%-- btn-area : 버튼 하나 일때 --%&#62;
+&#60;div class="btn-area"&#62;
+	&#60;button type="submit" class="btn-blue"&#62;Sign up&#60;/button&#62;
+&#60;/div&#62;
+
+&#60;%-- btn-area : 버튼 두개 일떄 --%&#62;
+&#60;div class="btn-area"&#62;
+	&#60;button type="button" class="btn-white"&#62;Cancel&#60;/button&#62;
+	&#60;button type="button" class="btn-blue"&#62;Send Email&#60;/button&#62;
+&#60;/div&#62;
+			</code></pre>
+			<h3 class="cont-title">view</h3>
+			<h4 class="sub-title">Static Type</h4>
+			<div class="guide-item">
+				<button type="button" class="btn-s-white"><span>btn-s</span></button>
+				<button type="button" class="btn-s-black"><span>btn-s-black</span></button>
+				<button type="button" class="btn-s-orage"><span>btn-s-orag</span></button>
+				<button type="button" class="btn-s-gray"><span>btn-s-gray</span></button>
+				<button type="button" class="btn-s-lightgray"><span>btn-s-lightgray</span></button>
+			</div>
+			<h4 class="sub-title">Small Type</h4>
+			<div class="guide-item">
+				<button type="button" class="btn-s-sm-white"><span>btn-s-sm-white</span></button>
+				<button type="button" class="btn-s-sm-black"><span>btn-s-sm-black</span></button>
+				<button type="button" class="btn-s-sm-orage"><span>btn-s-sm-orag</span></button>
+				<button type="button" class="btn-s-sm-gray"><span>btn-s-sm-gray</span></button>
+				<button type="button" class="btn-s-sm-lightgray"><span>btn-s-sm-lightgray</span></button>
+			</div>
+			<h4 class="sub-title">Lg Type</h4>
+			<div class="guide-item">
+				<button type="button" class="btn-s-lg-white"><span>btn-s-lg-white</span></button>
+				<button type="button" class="btn-s-lg-black"><span>btn-s-lg-black</span></button>
+				<button type="button" class="btn-s-lg-orage"><span>btn-s-lg-orag</span></button>
+				<button type="button" class="btn-s-lg-gray"><span>btn-s-lg-gray</span></button>
+				<button type="button" class="btn-s-lg-lightgray"><span>btn-s-lg-lightgray</span></button>
+			</div>
+		</div>
+
+	</section>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+	$(".out-lnb a").off("click.anchor").on("click.anchor", function (e) {
+		e.preventDefault();
+		var $anchor = $(this).attr("href");
+		var scollTop = $($anchor).offset().top - 100;
+		$(".conts").animate({scrollTop: scollTop} , 300);
+	});
+</script>
+</body>
+</html>
+

@@ -247,12 +247,23 @@ input::-webkit-input-placeholder {
     font-weight: normal;
     color: #bbb !important;
 }
-textarea::placeholder,
+textarea::placeholder {
+    font-size: 14px;
+    font-weight: 300;
+    color: #888 !important;
+    opacity: 1;
+}
 textarea::-webkit-input-placeholder {
     font-size: 14px;
     font-weight: 300;
     color: #888 !important;
 }
+textarea:-ms-input-placeholder {
+    font-size: 14px;
+    font-weight: 300;
+    color: #888 !important;
+}
+
 /* input search cancel button */
 input::-webkit-search-cancel-button {
     display: none;
