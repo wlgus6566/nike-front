@@ -689,14 +689,14 @@ public class ContentsService {
                     && (ObjectUtils.isEmpty(contentsFileSaveDTO.getFileName())
                         || Objects.isNull(contentsFileSaveDTO.getFileSize())
                         || ObjectUtils.isEmpty(contentsFileSaveDTO.getFilePhysicalName()))) {
-                log.error("콘텐츠 파일 정보 없음. fileName", contentsFileSaveDTO.getFileName(),
+                log.error("File 콘텐츠 파일 정보 없음. fileName", contentsFileSaveDTO.getFileName(),
                         " / fileSize : ", contentsFileSaveDTO.getFileSize()
                         , " / filePhysicalName : ", contentsFileSaveDTO.getFilePhysicalName());
             }
         } else {
             // 파일 종류가 VIDEO/VR 인 경우 타이틀, url 필수
             if (ObjectUtils.isEmpty(contentsFileSaveDTO.getTitle()) || ObjectUtils.isEmpty(contentsFileSaveDTO.getUrl())) {
-                log.error("콘텐츠 파일 정보 없음. title", contentsFileSaveDTO.getTitle(),
+                log.error("VIDEO/VR 콘텐츠 파일 정보 없음. title", contentsFileSaveDTO.getTitle(),
                         " / url : ", contentsFileSaveDTO.getUrl());
             }
         }
