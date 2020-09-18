@@ -1,6 +1,6 @@
 <template>
     <div class="aside-file">
-        <div>
+        <div style="position: relative;">
             <el-scrollbar
                 class="file-list-scroll"
                 wrap-class="file-list-wrap"
@@ -49,19 +49,52 @@
                     </NoData>
                 </div>
             </el-scrollbar>
-            <button
-                v-if="!downloadFiles"
-                type="button"
-                class="btn-download"
-                @click="fileDownload"
-                :disabled="contBasketList.length === 0"
-            >
-                <span class="txt">DOWNLOAD</span>
-            </button>
-            <span v-else class="btn-download active">
-                <span class="txt">DOWNLOADING({{ this.loaded }}%)…</span>
-                <span class="gage" :style="{ width: `${this.loaded}%` }"></span>
-            </span>
+            <template v-if="ie">
+                <Loading
+                    v-if="downloadFiles"
+                    :width="100"
+                    :height="100"
+                    style="
+                        z-index: 50;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        display: flex;
+                        justify-content: center;
+                        flex-direction: column;
+                        align-items: center;
+                        align-content: center;
+                    "
+                />
+                <button
+                    type="button"
+                    class="btn-download"
+                    @click="fileDownload"
+                    :disabled="contBasketList.length === 0 && downloadFiles"
+                >
+                    <span class="txt">DOWNLOAD</span>
+                </button>
+            </template>
+            <template v-else>
+                <button
+                    v-if="!downloadFiles"
+                    type="button"
+                    class="btn-download"
+                    @click="fileDownload"
+                    :disabled="contBasketList.length === 0"
+                >
+                    <span class="txt">DOWNLOAD</span>
+                </button>
+                <span v-else class="btn-download active">
+                    <span class="txt">DOWNLOADING({{ this.loaded }}%)…</span>
+                    <span
+                        class="gage"
+                        :style="{ width: `${this.loaded}%` }"
+                    ></span>
+                </span>
+            </template>
         </div>
         <strong class="tab-title">HISTORY</strong>
         <TabComponent v-bind:tabMenus="historyTab"></TabComponent>
@@ -71,6 +104,7 @@
 import TabComponent from '@/components/tab-comp';
 import NoData from '@/components/no-data';
 import Loading from '@/components/loading';
+import fetchProgress from 'fetch-progress';
 import {
     addContentsBasket,
     delContentsBasket,
@@ -109,6 +143,10 @@ export default {
         };
     },
     computed: {
+        ie() {
+            console.log(window.fetch.polyfill);
+            return window.fetch.polyfill;
+        },
         contBasketList: {
             get() {
                 return this.$store.state.contBasketList;
@@ -145,33 +183,75 @@ export default {
         },
         loadedUpdate() {
             const loaded = this.downloadFiles.reduce((a, b) => {
-                return a + b.loaded;
+                return a + b.transferred;
             }, 0);
             this.loaded = Math.round((loaded * 100) / this.totalSize);
         },
 
-        fileDownload() {
-            if (window.navigator.msSaveBlob) {
-                this.contBasketList.forEach((el) => {
-                    window.navigator.msSaveBlob(
-                        new Blob([el.filePhysicalName]),
-                        el.fileName
-                    );
-                    this.delContBasket(el.contentsBasketSeq);
+        async fileDownload() {
+            const vm = this;
+            clearInterval(this.fileUploadingInterval);
+            this.fileUploadingInterval = setInterval(() => {
+                this.loginUpdate();
+            }, 1000 * 60 * 10);
+
+            this.downloadFiles = [];
+            if (!window.navigator.msSaveBlob) {
+                this.link.forEach((el) => {
+                    document.querySelector('body').removeChild(el);
                 });
-            } else {
-                if (!this.contBasketList.length) return;
-                const file = this.contBasketList.pop();
-                //this.delContBasket(file.contentsBasketSeq);
-                const link = document.createElement('a');
-                link.setAttribute('href', file.filePhysicalName);
-                link.setAttribute('download', file.fileName);
-                document.body.appendChild(link);
-                console.log(link);
-                link.click();
-                link.remove();
-                this.fileDownload();
             }
+            this.link = [];
+            await Promise.all(
+                this.contBasketList.map(async (el, i) => {
+                    await fetch(el.filePhysicalName)
+                        .then(
+                            fetchProgress({
+                                onProgress(progress) {
+                                    console.log(progress);
+                                    vm.downloadFiles[i] = {
+                                        total: progress.total,
+                                        transferred: progress.transferred,
+                                    };
+                                    vm.loadedUpdate();
+                                },
+                                onComplete() {},
+                                onError(err) {
+                                    console.log(err);
+                                },
+                            })
+                        )
+                        .then((r) => r.blob())
+                        .then((src) => {
+                            if (window.navigator.msSaveBlob) {
+                                this.link.push({
+                                    data: src,
+                                    name: el.fileName,
+                                    seq: el.contentsBasketSeq,
+                                });
+                            } else {
+                                const link = document.createElement('a');
+                                link.href = URL.createObjectURL(src);
+                                link.seq = el.contentsBasketSeq;
+                                link.setAttribute('download', el.fileName);
+                                document.body.appendChild(link);
+                                this.link.push(link);
+                            }
+                        });
+                })
+            );
+            this.link.forEach((el) => {
+                if (window.navigator.msSaveBlob) {
+                    window.navigator.msSaveBlob(new Blob([el.data]), el.name);
+                    this.delContBasket(el.seq);
+                } else {
+                    el.click();
+                    this.delContBasket(el.seq);
+                }
+            });
+            clearInterval(this.fileUploadingInterval);
+            this.loaded = 0;
+            this.downloadFiles = null;
         },
 
         /*async fileDownload() {
