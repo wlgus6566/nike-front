@@ -150,37 +150,31 @@ export default {
             this.loaded = Math.round((loaded * 100) / this.totalSize);
         },
 
-        /*fileDownload() {
-            this.link.forEach((el) => {
-                document.querySelector('body').removeChild(el);
-            });
-            this.link = [];
-            this.contBasketList.forEach((el) => {
-                if (window.navigator.msSaveBlob) {
+        fileDownload() {
+            if (window.navigator.msSaveBlob) {
+                this.contBasketList.forEach((el) => {
                     window.navigator.msSaveBlob(
                         new Blob([el.filePhysicalName]),
                         el.fileName
                     );
                     this.delContBasket(el.contentsBasketSeq);
-                } else {
-                    const url = window.URL.createObjectURL(
-                        new Blob([el.filePhysicalName])
-                    );
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.setAttribute('download', el.fileName);
-                    link.seq = el.contentsBasketSeq;
-                    this.link.push(link);
-                    document.body.appendChild(link);
-                }
-            });
-            this.link.forEach((el) => {
-                el.click();
-                //this.delContBasket(el.seq);
-            });
-        },*/
+                });
+            } else {
+                if (!this.contBasketList.length) return;
+                const file = this.contBasketList.pop();
+                //this.delContBasket(file.contentsBasketSeq);
+                const link = document.createElement('a');
+                link.setAttribute('href', file.filePhysicalName);
+                link.setAttribute('download', file.fileName);
+                document.body.appendChild(link);
+                console.log(link);
+                link.click();
+                link.remove();
+                this.fileDownload();
+            }
+        },
 
-        async fileDownload() {
+        /*async fileDownload() {
             clearInterval(this.fileUploadingInterval);
             this.fileUploadingInterval = setInterval(() => {
                 this.loginUpdate();
@@ -246,7 +240,7 @@ export default {
             clearInterval(this.fileUploadingInterval);
             this.loaded = 0;
             this.downloadFiles = null;
-        },
+        },*/
         basketEnter() {
             this.$store.commit('SET_FILE_MOUSEENTER', true);
         },

@@ -141,17 +141,23 @@ public class S3Util {
 			stopWatch.stop();
 			log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms",stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 		}
-		if(!ObjectUtils.isEmpty(fileResultDTO.getThumbnailFilePhysicalName())){
-			stopWatch.start("thumbnail upload");
-			s3upload(fileResultDTO.getThumbnailFilePhysicalName());
-			stopWatch.stop();
-			log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
-		}
-		if(!ObjectUtils.isEmpty(fileResultDTO.getDetailThumbnailFilePhysicalName())){
-			stopWatch.start("detailThumbnail upload");
-			s3upload(fileResultDTO.getDetailThumbnailFilePhysicalName());
-			stopWatch.stop();
-			log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
+
+		//TODO[ojh] 2020/09/18 : 동영상 이슈 해결 후 조건 제거 예정
+		if (!ObjectUtils.isEmpty(fileResultDTO.getFileContentType())
+				&& fileResultDTO.getFileContentType().contains("VIDEO")) {}
+		else {
+			if(!ObjectUtils.isEmpty(fileResultDTO.getThumbnailFilePhysicalName())){
+				stopWatch.start("thumbnail upload");
+				s3upload(fileResultDTO.getThumbnailFilePhysicalName());
+				stopWatch.stop();
+				log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
+			}
+			if(!ObjectUtils.isEmpty(fileResultDTO.getDetailThumbnailFilePhysicalName())){
+				stopWatch.start("detailThumbnail upload");
+				s3upload(fileResultDTO.getDetailThumbnailFilePhysicalName());
+				stopWatch.stop();
+				log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
+			}
 		}
 		log.debug("stopWatch.getTotalTimeSeconds()  s3upload : {} s", stopWatch.getTotalTimeSeconds());
 		log.debug("stopWatch.shortSummary() {}", stopWatch.shortSummary());
@@ -168,9 +174,17 @@ public class S3Util {
 	 */
 	private static void s3upload(final String filePath){
 		log.info("S3Util.s3upload");
+		System.out.println("======================================================");
+		System.out.println(filePath);
+		System.out.println("======================================================");
 		final File file = new File(root + filePath);
 		final String uploadUrl = awsPathReplace(filePath);
-		client.putObject(new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.Private));
+		final PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.Private);
+		final ObjectMetadata metadata = new ObjectMetadata();
+		metadata.setContentDisposition("attachment;");
+		//metadata.setContentDisposition(filePath);
+		putObjectRequest.setMetadata(metadata);
+		client.putObject(putObjectRequest);
 		final URL url = client.getUrl(bucket, uploadUrl);
 		log.debug("url.getPath() {}", url.getPath());
 	}
