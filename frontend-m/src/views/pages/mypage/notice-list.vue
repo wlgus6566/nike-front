@@ -128,8 +128,6 @@ export default {
             this.initListData();
         },
         async getNoticeList() {
-            this.noticeData = null;
-            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -141,7 +139,6 @@ export default {
                 this.noticeList = response;
                 this.noticeData = response.content;
                 this.totalElements = response.totalElements;
-                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }

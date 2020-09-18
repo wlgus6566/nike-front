@@ -1919,6 +1919,7 @@
     background: #f7f7f7;
 }
 .my-menu > li + li {
+    margin-top: 10px;
     border-top: 1px solid #eee;
 }
 .my-menu .title {

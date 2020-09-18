@@ -134,8 +134,6 @@ export default {
             });
         },
         async getFaqList() {
-            this.faqData = null;
-            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -147,7 +145,6 @@ export default {
                 this.faqList = response;
                 this.faqData = response.content;
                 this.totalElements = response.totalElements;
-                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }
