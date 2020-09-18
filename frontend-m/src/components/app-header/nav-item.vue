@@ -25,7 +25,7 @@ export default {
             return menu;
         },
         menuTitle(title) {
-            if (title === 'REPORT UPLOAD') {
+            if (title === 'REPORT <span>업로드</span>') {
                 return '업로드';
             } else if (title === 'REPORT <span>관리</span>') {
                 return '관리';
