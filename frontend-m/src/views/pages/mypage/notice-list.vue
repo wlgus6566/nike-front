@@ -128,8 +128,8 @@ export default {
             this.initListData();
         },
         async getNoticeList() {
-            this.noticeData = null;
             this.loadingData = true;
+            this.noticeData = null;
             try {
                 const {
                     data: { data: response },
