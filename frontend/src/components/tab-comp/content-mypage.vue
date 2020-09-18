@@ -13,7 +13,10 @@
                 </ul>
             </li>
         </ul>
-        <a href="mailto:privacy@nike.com?subject=[NIKE SPACE]" class="btn-help">
+        <a
+            href="mailto:NIKESPACE@NIKE.COM?subject=[NIKE SPACE]"
+            class="btn-help"
+        >
             고객문의
         </a>
     </div>
