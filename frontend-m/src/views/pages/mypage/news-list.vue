@@ -134,8 +134,8 @@ export default {
             this.initListData();
         },
         async getNewsList() {
-            this.loadingData = true;
             this.newsData = null;
+            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
