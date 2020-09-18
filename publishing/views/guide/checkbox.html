@@ -1,0 +1,125 @@
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/reset.css">
+<link rel="stylesheet" type="text/css" href="guide.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/layout.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/ui.nikeFront.css">
+<section class="guide-section">
+	<h1 class="guide-title">CHECKBOX</h1>
+	<div>
+		<h2 class="section-title">Static</h2>
+		<h3 class="cont-title">code</h3>
+		<pre><code class="html">
+&#60;span class="checkbox"&#62;
+	&#60;input type="checkbox" /&#62;
+	&#60;i&#62;&#60;/i&#62;
+&#60;/span&#62;
+			</code></pre>
+		<h3 class="cont-title">view</h3>
+		<h4 class="sub-title">Static Type</h4>
+		<div class="guide-item">
+			<span class="checkbox">
+				<input type="checkbox" />
+				<i></i>
+			</span>
+		</div>
+	</div>
+
+	<div>
+		<h2 class="section-title">All Check</h2>
+		<h3 class="cont-title">code</h3>
+		<pre><code class="html">
+&#60;%-- Static Type --%&#62;
+&#60;div class="all-box"&#62;
+	&#60;label class="check-label"&#62;
+		&#60;span class="checkbox"&#62;
+			&#60;input type="checkbox"/&#62;
+			&#60;i&#62;&#60;/i&#62;
+		&#60;/span&#62;
+		&#60;strong class="txt"&#62;
+			전체선택(&#60;em&#62;0&#60;/em&#62;/&#60;em&#62;0&#60;/em&#62;)
+		&#60;/strong&#62;
+	&#60;/label&#62;
+	&#60;button type="button" class="txt-btn"&#62;
+		&#60;span&#62;선택 담기&#60;/span&#62;
+	&#60;/button&#62;
+&#60;/div&#62;
+
+&#60;%-- All Check Sorting Type --%&#62;
+&#60;div class="all-box"&#62;
+	&#60;label class="check-label"&#62;
+		&#60;span class="checkbox"&#62;
+			&#60;input type="checkbox"/&#62;
+			&#60;i&#62;&#60;/i&#62;
+		&#60;/span&#62;
+		&#60;strong class="txt"&#62;
+			전체선택(&#60;em&#62;0&#60;/em&#62;/&#60;em&#62;0&#60;/em&#62;)
+		&#60;/strong&#62;
+	&#60;/label&#62;
+	&#60;button type="button" class="txt-btn"&#62;
+		&#60;span&#62;선택 담기&#60;/span&#62;
+	&#60;/button&#62;
+	&#60;div class="right"&#62;
+		&#60;div class="filter-select"&#62;
+			&#60;FilterSelect :listSortSelect="selectOption1" /&#62;
+		&#60;/div&#62;
+		&#60;div class="filter-select"&#62;
+			&#60;FilterSelect :listSortSelect="selectOption2" /&#62;
+		&#60;/div&#62;
+	&#60;/div&#62;
+&#60;/div&#62;
+			</code></pre>
+		<h3 class="cont-title">view</h3>
+		<h4 class="sub-title">Static Type</h4>
+		<div class="guide-item">
+			<div class="all-box">
+				<label class="check-label">
+					<span class="checkbox">
+						<input type="checkbox"/>
+						<i></i>
+					</span>
+					<strong class="txt">
+						전체선택(<em>0</em>/<em>0</em>)
+					</strong>
+				</label>
+				<button type="button" class="txt-btn">
+					<span>선택 담기</span>
+				</button>
+			</div>
+		</div>
+		<h4 class="sub-title">All Check Sorting Type</h4>
+		<div class="guide-item">
+			<div class="all-box">
+				<label class="check-label">
+					<span class="checkbox">
+						<input type="checkbox"/>
+						<i></i>
+					</span>
+					<strong class="txt">
+						전체선택(<em>0</em>/<em>0</em>)
+					</strong>
+				</label>
+				<button type="button" class="txt-btn">
+					<span>선택 담기</span>
+				</button>
+				<div class="right">
+					<div class="filter-select">
+						<select>
+							<option value="select">select</option>
+						</select>
+					</div>
+					<div class="filter-select">
+						<select>
+							<option value="select">select</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<ul class="desc-list">
+			<li>select 박스의 경우<a href="https://element.eleme.io/?ref=madewithvuejs.com#/en-US/component/dialog" target="_blank" class="guide-link">ELEMENT UI</a>를 사용한다.</li>
+			<li>select 박스 guide는 SELECT 메뉴에서 확인</li>
+		</ul>
+	</div>
+
+</section>

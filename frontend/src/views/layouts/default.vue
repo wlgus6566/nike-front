@@ -72,13 +72,6 @@
                             <strong>개인정보처리방침</strong>
                         </router-link>
                     </li>
-                    <li>
-                        <a
-                            href="mailto:privacy@nike.com?subject=[NIKE SPACE]"
-                            class="btn-help"
-                            >고객문의</a
-                        >
-                    </li>
                 </ul>
             </div>
         </footer>

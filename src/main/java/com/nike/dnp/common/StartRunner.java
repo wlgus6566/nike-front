@@ -36,6 +36,13 @@ public class StartRunner implements ApplicationRunner {
 
         //S3 init
         S3Util.init();
+
+
+        /*System.out.println("======================================================");
+        System.out.println(CloudFrontUtil.getCustomSignedUrl("/contents/20200915174918.mp4", 1000));
+        System.out.println(CloudFrontUtil.getCustomSignedUrl("/contents/20200917343000TFpzuDjPsx.MP4", 1000));
+        System.out.println(CloudFrontUtil.getCustomSignedUrl("/contents/20200917361000NqhCWXAaGB.PNG", 1000));
+        System.out.println("======================================================");*/
     }
 
 }

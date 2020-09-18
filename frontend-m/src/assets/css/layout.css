@@ -261,7 +261,7 @@ header + .contents,
 footer {
     position: relative;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     flex-direction: column;
     height: 70px;
@@ -301,7 +301,7 @@ footer .copy {
     margin-top: 6px;
     line-height: 13px;
 }
-footer .btn-help {
+/*footer .btn-help {
     position: absolute;
     right: 20px;
     top: 20px;
@@ -316,7 +316,7 @@ footer .btn-help {
     border: 1px solid #555;
     border-radius: 2px;
     box-sizing: border-box;
-}
+}*/
 
 .nav-area {
     z-index: 20;
@@ -342,11 +342,14 @@ footer .btn-help {
     width: 100%;
     flex-direction: column;
     align-items: center;
-    align-items: center;
     height: 60px;
     font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
     font-size: 12px;
     color: #888;
+}
+.tab-bar li.active a,
+.tab-bar li.active button {
+    color: #000;
 }
 .tab-bar li a div,
 .tab-bar li button div {

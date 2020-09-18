@@ -1,0 +1,43 @@
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/reset.css">
+<link rel="stylesheet" type="text/css" href="guide.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/layout.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/ui.nikeFront.css">
+<section class="guide-section">
+	<h1 class="guide-title">SEARCH INPUT</h1>
+	<div>
+		<h3 class="cont-title">code</h3>
+		<pre><code class="html">
+&#60;template&#62;
+	&#60;div&#62;
+	    &#60;SearchInput ref="searchInput" @searchSubmit="searchSubmit" /&#62;
+	&#60;/div&#62;
+&#60;/template&#62;
+import SearchInput from '@/components/search-input';
+export default {
+    data() {
+        return {
+            searchKeyword: '',
+    },
+    components: {
+        SearchInput,
+    },
+    methods: {
+        //검색
+        searchSubmit(val) {
+            this.searchKeyword = val;
+            this.initFetchData(); // -&#62; 검색시 api 재호출
+        }
+    }
+};
+&#60;/script&#62;
+
+		</code></pre>
+		<ul class="desc-list">
+			<li>input은 <a href="https://element.eleme.io/?ref=madewithvuejs.com#/en-US/component/input" target="_blank" class="guide-link">ELEMENT UI</a>를 사용한다.</li>
+			<li>src>components 디렉토리에 search-input 컴포넌트로 작업되어있다.</li>
+			<li>parent 컴포넌트에 search-input 컴포넌트를 import 시켜 작업한다. 하단의 마크업 참고</li>
+		</ul>
+	</div>
+</section>

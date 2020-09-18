@@ -141,17 +141,23 @@ public class S3Util {
 			stopWatch.stop();
 			log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms",stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 		}
-		if(!ObjectUtils.isEmpty(fileResultDTO.getThumbnailFilePhysicalName())){
-			stopWatch.start("thumbnail upload");
-			s3upload(fileResultDTO.getThumbnailFilePhysicalName());
-			stopWatch.stop();
-			log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
-		}
-		if(!ObjectUtils.isEmpty(fileResultDTO.getDetailThumbnailFilePhysicalName())){
-			stopWatch.start("detailThumbnail upload");
-			s3upload(fileResultDTO.getDetailThumbnailFilePhysicalName());
-			stopWatch.stop();
-			log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
+
+		//TODO[ojh] 2020/09/18 : 동영상 이슈 해결 후 조건 제거 예정
+		if (!ObjectUtils.isEmpty(fileResultDTO.getFileContentType())
+				&& fileResultDTO.getFileContentType().contains("VIDEO")) {}
+		else {
+			if(!ObjectUtils.isEmpty(fileResultDTO.getThumbnailFilePhysicalName())){
+				stopWatch.start("thumbnail upload");
+				s3upload(fileResultDTO.getThumbnailFilePhysicalName());
+				stopWatch.stop();
+				log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
+			}
+			if(!ObjectUtils.isEmpty(fileResultDTO.getDetailThumbnailFilePhysicalName())){
+				stopWatch.start("detailThumbnail upload");
+				s3upload(fileResultDTO.getDetailThumbnailFilePhysicalName());
+				stopWatch.stop();
+				log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
+			}
 		}
 		log.debug("stopWatch.getTotalTimeSeconds()  s3upload : {} s", stopWatch.getTotalTimeSeconds());
 		log.debug("stopWatch.shortSummary() {}", stopWatch.shortSummary());

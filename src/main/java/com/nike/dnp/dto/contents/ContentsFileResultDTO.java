@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ObjectUtils;
 
 /**
@@ -222,7 +221,10 @@ public class ContentsFileResultDTO {
      * @since 2020. 8. 14. 오후 7:50:44
      */
     public String getDetailThumbnailFilePhysicalName() {
-        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName) ? detailThumbnailFilePhysicalName : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName, 30);
+        //TODO[ojh] 2020/09/18 : 동영상 인코딩 이슈 해결 후 수정 예정
+        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName)
+                ? CloudFrontUtil.getCustomSignedUrl(filePhysicalName, 30)
+                : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName, 30);
     }
 
 }

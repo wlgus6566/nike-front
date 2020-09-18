@@ -791,6 +791,7 @@
 .sorting-area [class^='type-list'] {
     width: 36px;
     height: 36px;
+    margin-left: -10px;
     background: url(../images/svg/icon-filter-list-off.svg);
     text-indent: -9999px;
     overflow: hidden;
@@ -1919,6 +1920,7 @@
     background: #f7f7f7;
 }
 .my-menu > li + li {
+    margin-top: 10px;
     border-top: 1px solid #eee;
 }
 .my-menu .title {
@@ -1930,7 +1932,8 @@
     font-weight: normal;
     letter-spacing: 0.5px;
 }
-.my-menu a {
+.my-menu a,
+.btn-help {
     display: block;
     line-height: 40px;
     font-size: 14px;
@@ -2068,10 +2071,8 @@
     display: inline-block;
     width: 65px;
     height: 65px;
-    vertical-align: middle;
     vertical-align: top;
-    background: #f7f7f7 url('../images/svg/img-upload-none.svg') 50% 50%
-        no-repeat;
+    background: url('../images/svg/img-upload-none.svg') center no-repeat;
 }
 .upload-file-list .upload-file-item span {
     position: relative;

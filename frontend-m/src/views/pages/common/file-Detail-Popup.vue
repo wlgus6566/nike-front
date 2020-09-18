@@ -12,7 +12,9 @@
                     <div
                         class="thumbnail"
                         v-if="
-                            filePopupFile.fileContentType.indexOf('video') === 0
+                            filePopupFile.fileContentType
+                                .toLowerCase()
+                                .indexOf('video') === 0
                         "
                     >
                         <div class="video-filePopupFile">

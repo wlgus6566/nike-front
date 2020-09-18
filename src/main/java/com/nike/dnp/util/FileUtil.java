@@ -168,8 +168,8 @@ public class FileUtil {
 		// [공백 폴더명] 권한 없음 처리
 		if (ObjectUtils.isEmpty(folderParam)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			folderParam = cleanXSS(folderParam,false);
@@ -178,8 +178,8 @@ public class FileUtil {
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
 		if (!whiteFolderList(folderParam) ) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		}
 
@@ -247,8 +247,8 @@ public class FileUtil {
 		// [공백 originalFileName] 권한 없음 처리
 		if (ObjectUtils.isEmpty(originalFileName)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			originalFileName = cleanXSS(originalFileName, false);
@@ -258,8 +258,8 @@ public class FileUtil {
 		// [공백 폴더명] 권한 없음 처리
 		if (ObjectUtils.isEmpty(folderParam)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			folderParam = cleanXSS(folderParam,false);
@@ -268,8 +268,8 @@ public class FileUtil {
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
 		if (!whiteFolderList(folderParam) ) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		}
 
@@ -277,8 +277,8 @@ public class FileUtil {
 		// [공백 ContentType] 권한 없음 처리
 		if (ObjectUtils.isEmpty(contentType)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			contentType = contentType.toUpperCase(Locale.getDefault());
@@ -288,8 +288,8 @@ public class FileUtil {
 		// [허용 가능 목록에 없는 확장자 / 공백 확장자] 권한 없음 처리
 		if (!whiteExtensionList(extension) || ObjectUtils.isEmpty(extension)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			extension = extension.toUpperCase(Locale.getDefault());
@@ -317,7 +317,7 @@ public class FileUtil {
 				String resizeExtension = ObjectUtils.isEmpty(resizeExt) ? "JPG" : cleanXSS(resizeExt.toUpperCase(Locale.getDefault()), false);
 				// [허용 가능 목록에 없는 확장자 / 공백 확장자] 권한 없음 처리
 				if(!whiteExtensionList(resizeExtension)){
-					throw new CodeMessageHandleException(FailCode.ConfigureError.NO_AUTH.name(), MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name()));
+					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 				}
 
 				log.debug("toFile.getCanonicalPath() > {}", toFile.getCanonicalPath());
@@ -402,10 +402,17 @@ public class FileUtil {
 				}
 			}
 			else if (contentType.contains("VIDEO")) {
+				//TODO[ojh] 2020/09/18 : 동영상 인코딩 issue, 추후 디벨롭 예정
+				//fileResultDTO.setDetailThumbnailFileName(fileResultDTO.getFileName());
+				//fileResultDTO.setDetailThumbnailFilePhysicalName(fileResultDTO.getFilePhysicalName());
+				//fileResultDTO.setDetailThumbnailFileSize(fileResultDTO.getFileSize());
+
+				/*
 				// 사이즈 변환시 700:394 를 변경 하면 됨
 				final String thumbnailPath = Paths.get(cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.MP4", true)).toString();
-//				final String thumbnailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.mp4", true);
+				//final String thumbnailPath = cleanXSS(StringUtils.stripFilenameExtension(toFile.getCanonicalPath()) + "_detail.mp4", true);
 				log.debug("thumbnailPath > {}", thumbnailPath);
+
 				final String[] command = {
 						ffmpeg + File.separator + ffmpegCommand
 						, "-y"
@@ -419,7 +426,7 @@ public class FileUtil {
 						, "ultrafast"
 						, "-crf"
 						, "33"
-						, "-movflags"
+						, "-movflags"정
 						, "faststart"
 						, "-tune"
 						, "zerolatency"
@@ -471,6 +478,7 @@ public class FileUtil {
 					fileResultDTO.setDetailThumbnailFilePhysicalName(detailFile.getCanonicalPath().replace(root, ""));
 					fileResultDTO.setDetailThumbnailFileSize(detailFile.length());
 				}
+				*/
 			}
 		}
 
@@ -527,8 +535,8 @@ public class FileUtil {
 		// [공백 폴더명] 권한 없음 처리
 		if (ObjectUtils.isEmpty(folderParam)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			folderParam = cleanXSS(folderParam,false);
@@ -537,8 +545,8 @@ public class FileUtil {
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
 		if (!whiteFolderList(folderParam) ) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		}
 		return fileSave(uploadFile, folderParam, false, null);
@@ -769,8 +777,8 @@ public class FileUtil {
 		// [공백 폴더명] 권한 없음 처리
 		if (ObjectUtils.isEmpty(folderParam)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			folderParam = cleanXSS(folderParam,false);
@@ -779,8 +787,8 @@ public class FileUtil {
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
 		if (!whiteFolderList(folderParam) ) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		}
 
@@ -823,8 +831,8 @@ public class FileUtil {
 		// [공백 폴더명] 권한 없음 처리
 		if (ObjectUtils.isEmpty(folderParam)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			folderParam = cleanXSS(folderParam,false);
@@ -833,8 +841,8 @@ public class FileUtil {
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
 		if (!whiteFolderList(folderParam) ) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		}
 

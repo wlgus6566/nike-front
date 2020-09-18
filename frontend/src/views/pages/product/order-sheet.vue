@@ -82,6 +82,7 @@
                     <span class="textarea">
                         <textarea
                             style="height: 80px;"
+                            placeholder="에이전시에서 오더 확인 후 연락 가능한 매장 연락처, 업무용 이메일, 배송 받으실 주소를 기재하시길 바랍니다."
                             v-model="orderComment"
                         />
                     </span>

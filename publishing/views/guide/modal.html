@@ -1,0 +1,108 @@
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/reset.css">
+<link rel="stylesheet" type="text/css" href="guide.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/layout.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/ui.nikeFront.css">
+<section class="guide-section">
+	<h1 class="guide-title">MODAL</h1>
+	<div>
+		<h2 class="section-title">modalVue.vue file</h2>
+		<h3 class="cont-title">code</h3>
+		<pre><code class="html">
+&#60;template&#62;
+    &#60;el-dialog
+	    class="modal-wrap"
+	    :visible="visible"
+	    :append-to-body="true"
+	    @close="$emit('update:visible', false)"
+    &#62;
+        &#60;el-scrollbar view-class="view-box" :native="false"&#62;
+            &#60;div class="el-dialog__inner"&#62;
+
+
+                MODAL CONTENTS
+
+
+
+            &#60;/div&#62;
+        &#60;/el-scrollbar&#62;
+    &#60;/el-dialog&#62;
+&#60;/template&#62;
+&#60;script&#62;
+
+export default {
+	data() {
+		return {};
+	},
+	props: {
+		visible: Boolean,
+	},
+};
+&#60;/script&#62;
+			</code></pre>
+		<ul class="desc-list">
+			<li><a href="https://element.eleme.io/?ref=madewithvuejs.com#/en-US/component/dialog" target="_blank" class="guide-link">ELEMENT UI</a>를 사용한다.</li>
+			<li>별도의 vue 파일을 만들어 위와 같이 마크업 한다.</li>
+			<li>Modal 파일의 위치는 Parent 파일과 같은 폴더안에 만든다.</li>
+		</ul>
+	</div>
+
+	<div>
+		<h2 class="section-title">Parent File</h2>
+		<h3 class="cont-title">code</h3>
+		<pre><code class="html">
+&#60;template&#62;
+	&#60;div&#62;
+		&#60;button type="button" @click="modalOpen"&#62;Modal Open&#60;/button&#62;
+
+		&#60;ModalName
+			:visible.sync="visible.detailView"
+		/&#62;
+
+	&#60;/div&#62;
+&#60;/template&#62;
+&#60;script&#62;
+import ModalName from '@/경로/ModalName.vue';
+
+export default {
+	data() {
+		return {
+			 visible: {
+                detailView: false,
+            },
+		};
+	},
+    components: {
+       ModalName
+    },
+	methods: {
+		modalOpen() {
+            this.visible.detailView = true;
+        },
+	},
+};
+&#60;/script&#62;
+			</code></pre>
+		<ul class="desc-list">
+			<li>Parent Vue 파일에 모달 파일은 Modal.vue을 import 시키며 위와 같이 마크업 한다.</li>
+		</ul>
+	</div>
+
+	<div>
+		<h2 class="section-title">Modal이 포함된 디렉토리 구조 예시</h2>
+		<h3 class="cont-title">code</h3>
+		<pre><code class="html">
+└─ views                            # 라우터 페이지 디렉토리
+    ├─ layouts                      # 레이아웃 디렉토리
+    └─ pages                        # 페이지 디렉토리
+        └─ report                   # report 디렉토리
+           ├─ detail-view.vue       # modal vue file
+           └─ management.vue        # modal의 parent vue file
+
+		</code></pre>
+	</div>
+
+
+
+</section>
