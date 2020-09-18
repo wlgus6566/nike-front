@@ -46,7 +46,7 @@
 	
 	<!-- Loggers -->
 	<logger name="org.springframework" level="INFO" />
-	<logger name="com.nike.dnp" level="INFO" />
+	<logger name="com.nike.dnp" level="DEBUG" />
 	<logger name="jdbc.sqlonly" level="ERROR" />
 	<logger name="com.nike.dnp.util.FileUtil" level="DEBUG" />
 

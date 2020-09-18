@@ -25,7 +25,7 @@ public class RandomUtil {
 	 * @since 2020. 6. 19. 오후 5:45:12
 	 * @implNote 인증코드 생성 방법
 	 */
-	/*public String randomCertCode1(final int size) {
+	public String randomCertCode2(final int size) {
 		final StringBuilder temp = new StringBuilder();
 		final SecureRandom rnd = new SecureRandom();
 		for (int i = 0; i < size; i++) {
@@ -44,7 +44,12 @@ public class RandomUtil {
 					break;
 				case 3:
 					// 특수문자1
-					temp.append((char) (rnd.nextInt(16) + 33));
+					int srKey = (rnd.nextInt(16) + 33);
+					if (srKey == 34 || srKey == 39) {
+						temp.append("X");
+						break;
+					}
+					temp.append((char) srKey);
 					break;
 				case 4:
 					// 특수문자2
@@ -64,7 +69,7 @@ public class RandomUtil {
 		}
 
 		return temp.toString();
-	}*/
+	}
 
 	/**
 	 * Random cert code 2 string.
@@ -75,7 +80,7 @@ public class RandomUtil {
 	 * @since 2020. 6. 19. 오후 5:45:12
 	 * @implNote 인증코드 생성 방법
 	 */
-	public String randomCertCode2(final int size) {
+	/*public String randomCertCode(final int size) {
 		final StringBuilder temp = new StringBuilder();
 		final SecureRandom rnd = new SecureRandom();
 		for (int i = 0; i < size; i++) {
@@ -83,6 +88,6 @@ public class RandomUtil {
 		}
 
 		return temp.toString();
-	}
+	}*/
 
 }
