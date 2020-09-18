@@ -72,7 +72,7 @@
                     type="button"
                     class="btn-download"
                     @click="fileDownload"
-                    :disabled="contBasketList.length === 0 && downloadFiles"
+                    :disabled="contBasketList.length === 0 || downloadFiles"
                 >
                     <span class="txt">DOWNLOAD</span>
                 </button>
