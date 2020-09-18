@@ -1543,7 +1543,7 @@
     align-items: center;
 }
 .form-desc-wrap [class^='form-desc'] {
-    margin: 7px 0 0 auto;
+    margin: 0 0 0 auto;
 }
 .form-column input[type='text'],
 .form-column input[type='email'],
@@ -2916,9 +2916,11 @@
 
 .input-txt {
     position: relative;
+    display: block;
     width: 100%;
 }
 .input-txt input {
+    width: 100%;
     padding-right: 35px;
     text-align: right;
 }

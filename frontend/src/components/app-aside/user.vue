@@ -325,8 +325,10 @@ export default {
     position: absolute;
     top: -2px;
     right: 0;
+    display: flex;
     width: 100%;
-    text-align: right;
+    align-items: center;
+    justify-content: flex-end;
 }
 .user-info .side [class^='btn-'] {
     display: inline-flex;
@@ -347,17 +349,24 @@ export default {
     margin-left: 10px;
 }
 .user-info .side .logout {
-    line-height: 17px;
+    position: relative;
+    display: inline-flex;
+    margin: 0 10px;
+    padding: 0 10px;
+    line-height: 22px;
     font-size: 11px;
     color: #000;
 }
 .user-info .side .logout:after {
+    position: absolute;
+    top: 50%;
+    right: 0;
     content: '';
     display: inline-block;
     width: 1px;
     height: 10px;
-    margin: 0 10px;
     background-color: #ddd;
+    transform: translateY(-50%);
 }
 /*.user-info .side .btn-out {*/
 /*    background-image: url('../../assets/images/svg/icon-logout.svg');*/
