@@ -128,6 +128,7 @@ export default {
             this.initListData();
         },
         async getNoticeList() {
+            this.noticeData = null;
             this.loadingData = true;
             try {
                 const {
