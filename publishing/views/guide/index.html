@@ -3,12 +3,12 @@
 <head>
 	<meta charset="UTF-8">
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="guide.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/layout.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/ui.nikeFront.css">
+	<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/layout.css">
+	<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/ui.nikeFront.css">
 </head>
-<body style="overflow:hidden;">
+<body>
 <div class="out-wrap">
 	<header class="out-header">
 		<h1>
@@ -62,7 +62,7 @@
 		</h1>
 		<ul class="tab-gnb">
 			<li class="active"><a href="index.html">서버 세팅</a></li>
-			<li class="active"><a href="index.html">작업규칙</a></li>
+			<li><a href="htm-guide.html">작업규칙</a></li>
 			<li><a href="html.html">HTML 가이드</a></li>
 			<li><a href="/pub/index.html" target="_blank">HTML 리스트</a></li>
 		</ul>
@@ -71,14 +71,13 @@
 		<aside class="out-lnb">
 			<ul>
 				<li><a href="#ui-directory1">Nike-front</a></li>
-				<li><a href="#ui-directory">디렉토리 구조(폴더구조)</a></li>
-				<li><a href="#ui-id">ID 네이밍 규칙</a></li>
-				<li><a href="#ui-class">Class 네이밍 규칙</a></li>
-				<li><a href="#ui-code">HTML 코드 작성 규칙</a></li>
-				<li><a href="#ui-element">HTML 엘리먼트 작성 규칙</a></li>
-				<li><a href="#ui-css">CSS 코드 작성 규칙</a></li>
-				<li><a href="#ui-override">CSS 재정의</a></li>
-				<li><a href="#ui-font">font 정의</a></li>
+				<li><a href="#ui-server">vue 서버 세팅</a></li>
+				<li><a href="#ui-node">Node와 NPM 설치하기</a></li>
+				<li><a href="#ui-npmV">npm 버전 확인</a></li>
+				<li><a href="#ui-nodeV">node 버전 확인</a></li>
+				<li><a href="#ui-setting">서버 세팅</a></li>
+				<li><a href="#ui-run">서버 실행</a></li>
+				<li><a href="#ui-directory2">작업 디렉토리 구조</a></li>
 			</ul>
 		</aside>
 		<div class="conts">
@@ -138,7 +137,7 @@ $ npm run serve
 				<li>MO localhost:8082**</li>
 			</ul>
 
-			<h2 class="item-title" id="ui-directory">작업 디렉토리 구조</h2>
+			<h2 class="item-title" id="ui-directory2">작업 디렉토리 구조</h2>
 			<p class="txt">frontend와 frontend-m의 디렉토리 구조는 동일</p>
 
 			<pre style="margin-top:20px;"><code class="html">

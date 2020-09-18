@@ -1,17 +1,22 @@
 <template>
-    <ul class="aside-menu" v-if="myMenu">
-        <li v-for="(menu, index) in myMenu" :key="index">
-            <strong class="title" v-html="menu.menuName" />
-            <ul class="menu" v-if="menu.menus">
-                <li v-for="(depth, index) in menu.menus" :key="index">
-                    <router-link
-                        :to="depth.menuPathUrl"
-                        v-html="depth.menuName"
-                    />
-                </li>
-            </ul>
-        </li>
-    </ul>
+    <div>
+        <ul class="aside-menu" v-if="myMenu">
+            <li v-for="(menu, index) in myMenu" :key="index">
+                <strong class="title" v-html="menu.menuName" />
+                <ul class="menu" v-if="menu.menus">
+                    <li v-for="(depth, index) in menu.menus" :key="index">
+                        <router-link
+                            :to="depth.menuPathUrl"
+                            v-html="depth.menuName"
+                        />
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <a href="mailto:privacy@nike.com?subject=[NIKE SPACE]" class="btn-help">
+            고객문의
+        </a>
+    </div>
 </template>
 <script>
 export default {
@@ -71,7 +76,8 @@ export default {
 .aside-menu li + li .title {
     margin-top: 10px;
 }
-.aside-menu .menu li a {
+.aside-menu .menu li a,
+.btn-help {
     display: block;
     line-height: 30px;
     font-size: 11px;

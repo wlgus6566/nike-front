@@ -261,7 +261,7 @@ header + .contents,
 footer {
     position: relative;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     flex-direction: column;
     height: 70px;
@@ -301,7 +301,7 @@ footer .copy {
     margin-top: 6px;
     line-height: 13px;
 }
-footer .btn-help {
+/*footer .btn-help {
     position: absolute;
     right: 20px;
     top: 20px;
@@ -316,7 +316,7 @@ footer .btn-help {
     border: 1px solid #555;
     border-radius: 2px;
     box-sizing: border-box;
-}
+}*/
 
 .nav-area {
     z-index: 20;
