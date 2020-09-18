@@ -1930,7 +1930,8 @@
     font-weight: normal;
     letter-spacing: 0.5px;
 }
-.my-menu a {
+.my-menu a,
+.btn-help {
     display: block;
     line-height: 40px;
     font-size: 14px;

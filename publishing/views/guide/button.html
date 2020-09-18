@@ -1,58 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="guide.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/layout.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/ui.nikeFront.css">
-</head>
-<body style="overflow:hidden;">
-<div class="out-wrap">
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/reset.css">
+<link rel="stylesheet" type="text/css" href="guide.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/layout.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/ui.nikeFront.css">
 	<section class="guide-section">
 		<h1 class="guide-title">BUTTON</h1>
 		<div>
-			<h2 class="section-title">기본</h2>
+			<h2 class="section-title">Static</h2>
 			<h3 class="cont-title">html</h3>
 			<pre><code class="html">
 &#60;%-- Static Type --%&#62;
 &#60;button type="button" class="btn-blue"&#62;BUTTON&#60;/button&#62;
-&#60;a href="#" class="btn-blue"&#62;LINK&#60;/a&#62;
-
-&#60;%-- btn-blue disabled --%&#62;
-&#60;button type="button" class="btn-blue" disabled&#62;BUTTON&#60;/button&#62;
-&#60;a href="#" class="btn-blue disabled"&#62;LINK&#60;/a&#62;
-
-&#60;%-- btn-white --%&#62;
-&#60;button type="button" class="btn-white"&#62;BUTTON&#60;/button&#62;
-&#60;a href="#" class="btn-white"&#62;LINK&#60;/a&#62;
-
-&#60;%-- btn-white disabled --%&#62;
-&#60;button type="button" class="btn-white" disabled&#62;BUTTON&#60;/button&#62;
-&#60;a href="#" class="btn-white disabled"&#62;LINK&#60;/a&#62;
-
-&#60;%-- btn-white2 --%&#62;
-&#60;button type="button" class="btn-white2"&#62;BUTTON&#60;/button&#62;
-&#60;a href="#" class="btn-white2"&#62;LINK&#60;/a&#62;
-
-&#60;%-- btn-white2 disabled --%&#62;
-&#60;button type="button" class="btn-white2" disabled&#62;BUTTON&#60;/button&#62;
-&#60;a href="#" class="btn-white2 disabled"&#62;LINK&#60;/a&#62;
-
-&#60;%-- btn-info --%&#62;
-&#60;a href="#" class="btn-info"&#62;Buying&#60;/a&#62;
-
-&#60;%-- btn-area : 버튼 하나 일때 --%&#62;
-&#60;div class="btn-area"&#62;
-	&#60;button type="submit" class="btn-blue"&#62;Sign up&#60;/button&#62;
-&#60;/div&#62;
-
-&#60;%-- btn-area : 버튼 두개 일떄 --%&#62;
-&#60;div class="btn-area"&#62;
-	&#60;button type="button" class="btn-white"&#62;Cancel&#60;/button&#62;
-	&#60;button type="button" class="btn-blue"&#62;Send Email&#60;/button&#62;
-&#60;/div&#62;
 			</code></pre>
 			<h3 class="cont-title">view</h3>
 			<h4 class="sub-title">Static Type</h4>
@@ -71,7 +30,7 @@
 				<button type="button" class="btn-s-sm-gray"><span>btn-s-sm-gray</span></button>
 				<button type="button" class="btn-s-sm-lightgray"><span>btn-s-sm-lightgray</span></button>
 			</div>
-			<h4 class="sub-title">Lg Type</h4>
+			<h4 class="sub-title">large </h4>
 			<div class="guide-item">
 				<button type="button" class="btn-s-lg-white"><span>btn-s-lg-white</span></button>
 				<button type="button" class="btn-s-lg-black"><span>btn-s-lg-black</span></button>
@@ -79,19 +38,96 @@
 				<button type="button" class="btn-s-lg-gray"><span>btn-s-lg-gray</span></button>
 				<button type="button" class="btn-s-lg-lightgray"><span>btn-s-lg-lightgray</span></button>
 			</div>
+
+			<h4 class="sub-title">Button Group </h4>
+			<div class="guide-item">
+				<div class="btn-area">
+					<button type="button" class="btn-s-white"><span>btn-s</span></button>
+					<button type="button" class="btn-s-black"><span>btn-s-black</span></button>
+				</div>
+			</div>
+			<h4 class="sub-title">English Type</h4>
+			<div class="guide-item">
+				<button type="button" class="btn-s-black"><span class="bebas">ORDER</span></button>
+			</div>
+			<h4 class="sub-title">IconType</h4>
+			<div class="guide-item">
+				<button type="button" class="btn-s-white-sm">
+					<i class="icon-link"></i>
+					<span>LINK</span>
+				</button>
+				<button type="button" class="btn-s-white-sm">
+					<i class="icon-check"></i>
+					<span>ADDED</span>
+				</button>
+			</div>
+		</div>
+
+		<div>
+			<h2 class="section-title">Form</h2>
+			<h3 class="cont-title">html</h3>
+			<pre><code class="html">
+&#60;%-- Static Type --%&#62;
+&#60;button type="button" class="btn-blue"&#62;BUTTON&#60;/button&#62;
+			</code></pre>
+			<h3 class="cont-title">view</h3>
+			<div class="guide-item">
+				<button type="button" class="btn-form"><span>btn-form</span></button>
+				<a href="#" class="btn-form-gray"><span>btn-form-gray</span></a>
+			</div>
+		</div>
+
+		<div>
+			<h2 class="section-title">Text</h2>
+			<h3 class="cont-title">html</h3>
+			<pre><code class="html">
+&#60;%-- Static Type --%&#62;
+&#60;button type="button" class="btn-blue"&#62;BUTTON&#60;/button&#62;
+			</code></pre>
+			<h3 class="cont-title">view</h3>
+			<h4 class="sub-title">Static Type</h4>
+			<div class="guide-item">
+				<a href="#" class="txt-btn"><span>더보기</span></a> <br>
+				<button type="button" class="txt-btn-black"><span>이미지 재등록</span></button> <br>
+				<button type="button" class="txt-btn-orange"><span>이미지 재등록</span></button> <br>
+			</div>
+			<h4 class="sub-title">Add Type</h4>
+			<div class="guide-item">
+				<button class="btn-file-txt">
+					<i class="icon-add"></i>
+					<span>파일 추가하기</span>
+				</button>
+			</div>
+			<h4 class="sub-title">Box Type</h4>
+			<div class="guide-item">
+				<div class="btn-area-txt">
+					<button type="button" class="txt-btn"><span>추가</span></button>
+					<button type="button" class="txt-btn"><span>식제</span></button>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<h2 class="section-title">Detail View Button Group</h2>
+			<h3 class="cont-title">html</h3>
+			<pre><code class="html">
+&#60;%-- Static Type --%&#62;
+&#60;button type="button" class="btn-blue"&#62;BUTTON&#60;/button&#62;
+			</code></pre>
+			<h3 class="cont-title">view</h3>
+			<div class="guide-item">
+				<div class="btn-detail">
+					<a href="#" class="btn-list"><span>목록으로 가기</span></a>
+					<div class="btn-box">
+						<button type="button" class="btn-o-white"><span>삭제</span></button>
+						<button type="button" class="btn-o-white"><span>수정</span></button>
+						<button type="button" class="btn-o-gray">
+							<i class="icon-mail"></i>
+							<span>알림메일전송</span>
+						</button>
+					</div>
+				</div>
+			</div>
 		</div>
 
 	</section>
-</div>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script>
-	$(".out-lnb a").off("click.anchor").on("click.anchor", function (e) {
-		e.preventDefault();
-		var $anchor = $(this).attr("href");
-		var scollTop = $($anchor).offset().top - 100;
-		$(".conts").animate({scrollTop: scollTop} , 300);
-	});
-</script>
-</body>
-</html>
-
