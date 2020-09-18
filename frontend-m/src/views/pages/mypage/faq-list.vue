@@ -25,7 +25,8 @@
                         @click.prevent="setActiveSeq(item.noticeArticleSeq)"
                     >
                         <span class="category">
-                            [<em>{{ item.noticeArticleCategoryValue }}</em>]
+                            [<em>{{ item.noticeArticleCategoryValue }}</em
+                            >]
                         </span>
                         <span class="title">{{ item.title }}</span>
                         <i class="arrow"></i>
@@ -133,6 +134,7 @@ export default {
             });
         },
         async getFaqList() {
+            this.faqData = null;
             this.loadingData = true;
             try {
                 const {
