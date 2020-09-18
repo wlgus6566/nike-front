@@ -3,8 +3,24 @@ spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://nike-prod-db.c9c2dtiz524o.ap-northeast-2.rds.amazonaws.com:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
-    #username:
-    #password:
+  jpa:
+    database: mysql
+    show-sql: false
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        show-sql: false
+        SQL: info
+        format_sql: false
+        use_sql_comments: false
+        type:
+          descriptor:
+            sql: info
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   devtools:
     livereload:
       enabled: false

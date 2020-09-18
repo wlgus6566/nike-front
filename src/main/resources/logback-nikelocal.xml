@@ -23,7 +23,8 @@
 	<logger name="jdbc.sqlonly" level="ERROR" />
 	<logger name="jdbc.audit" level="ERROR" />
 	<logger name="jdbc.resultset" level="ERROR" />
-	<logger name="jdbc.resultsettable" level="DEBUG" />
+	<logger name="jdbc.resultsettable" level="ERROR" />
+	<logger name="jdbc.sqltiming" level="ERROR" />
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />

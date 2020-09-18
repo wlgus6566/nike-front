@@ -5,6 +5,24 @@ spring:
     url: jdbc:mysql://nike-test-db.c9c2dtiz524o.ap-northeast-2.rds.amazonaws.com:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
     username: nikemanager
     password: 'emotion!@'
+  jpa:
+    database: mysql
+    show-sql: false
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        show-sql: false
+        SQL: info
+        format_sql: false
+        use_sql_comments: false
+        type:
+          descriptor:
+            sql: info
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   devtools:
     livereload:
       enabled: false
