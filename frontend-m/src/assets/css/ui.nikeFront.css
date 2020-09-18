@@ -2069,7 +2069,6 @@
     display: inline-block;
     width: 65px;
     height: 65px;
-    vertical-align: middle;
     vertical-align: top;
     background: #f7f7f7 url('../images/svg/img-upload-none.svg') 50% 50%
         no-repeat;

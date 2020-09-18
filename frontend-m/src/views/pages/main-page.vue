@@ -78,6 +78,7 @@
         <div>
             <FullCalendar
                 ref="fullCalendar"
+                class="main-fc"
                 :options="calendarOptions"
                 defaultView="month"
                 :editable="false"
@@ -407,9 +408,18 @@ export default {
 }
 ::v-deep .fc {
     margin: 15px -20px 0;
-    padding: 14px 10px 0;
+    padding: 25px 10px 0;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
+}
+::v-deep .fc .fc-toolbar.fc-header-toolbar {
+    margin: 0 0 18px !important;
+}
+::v-deep .fc .fc-header-toolbar .fc-toolbar-title {
+    margin: 0 22px;
+}
+::v-deep .fc .fc-col-header-cell-cushion {
+    padding: 9px 4px !important;
 }
 ::v-deep .fc .fc-scrollgrid-liquid {
     border: none;
@@ -426,9 +436,15 @@ export default {
 ::v-deep .fc-theme-standard th {
     border: none;
 }
+::v-deep .fc-theme-standard .fc-daygrid-day {
+    padding-top: 10px;
+}
+::v-deep .fc .fc-h-event {
+    line-height: 10px;
+}
 ::v-deep .fc-daygrid-day-top {
     display: flex;
-    min-height: 50px;
+    min-height: 40px;
     justify-content: center;
     align-items: center;
 }

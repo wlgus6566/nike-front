@@ -210,6 +210,7 @@ export default {
             document.querySelector('#wrap').style.margin = '';
             window.scrollTo(0, this.topScollVal);
             document.querySelector('body').classList.remove('menu-open');
+            this.pathLottie();
         },
         handleAnimation: function(anim) {
             this.anim.push(anim);
