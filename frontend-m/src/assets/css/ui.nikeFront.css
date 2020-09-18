@@ -2072,8 +2072,7 @@
     width: 65px;
     height: 65px;
     vertical-align: top;
-    background: #f7f7f7 url('../images/svg/img-upload-none.svg') 50% 50%
-        no-repeat;
+    background: url('../images/svg/img-upload-none.svg') center no-repeat;
 }
 .upload-file-list .upload-file-item span {
     position: relative;
