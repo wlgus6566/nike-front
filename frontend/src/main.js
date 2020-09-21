@@ -1,6 +1,6 @@
 import '@babel/polyfill';
 require('es6-promise/auto');
-
+import 'whatwg-fetch';
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
@@ -10,8 +10,6 @@ import VueMoment from 'vue-moment';
 import CKEditor from 'ckeditor4-vue';
 import VueYoutube from 'vue-youtube';
 import vueVimeoPlayer from 'vue-vimeo-player';
-// import VCalendar from 'v-calendar';
-import VModal from 'vue-js-modal';
 import lineClamp from './utils/lineclamp';
 
 Vue.config.productionTip = false;

@@ -353,7 +353,6 @@ export default {
     display: inline-flex;
     margin: 0 10px;
     padding: 0 10px;
-    line-height: 22px;
     font-size: 11px;
     color: #000;
 }

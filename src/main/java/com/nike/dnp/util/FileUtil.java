@@ -168,8 +168,8 @@ public class FileUtil {
 		// [공백 폴더명] 권한 없음 처리
 		if (ObjectUtils.isEmpty(folderParam)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			folderParam = cleanXSS(folderParam,false);
@@ -178,8 +178,8 @@ public class FileUtil {
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
 		if (!whiteFolderList(folderParam) ) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		}
 
@@ -247,8 +247,8 @@ public class FileUtil {
 		// [공백 originalFileName] 권한 없음 처리
 		if (ObjectUtils.isEmpty(originalFileName)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			originalFileName = cleanXSS(originalFileName, false);
@@ -258,8 +258,8 @@ public class FileUtil {
 		// [공백 폴더명] 권한 없음 처리
 		if (ObjectUtils.isEmpty(folderParam)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			folderParam = cleanXSS(folderParam,false);
@@ -268,8 +268,8 @@ public class FileUtil {
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
 		if (!whiteFolderList(folderParam) ) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		}
 
@@ -277,8 +277,8 @@ public class FileUtil {
 		// [공백 ContentType] 권한 없음 처리
 		if (ObjectUtils.isEmpty(contentType)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			contentType = contentType.toUpperCase(Locale.getDefault());
@@ -288,8 +288,8 @@ public class FileUtil {
 		// [허용 가능 목록에 없는 확장자 / 공백 확장자] 권한 없음 처리
 		if (!whiteExtensionList(extension) || ObjectUtils.isEmpty(extension)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			extension = extension.toUpperCase(Locale.getDefault());
@@ -317,7 +317,7 @@ public class FileUtil {
 				String resizeExtension = ObjectUtils.isEmpty(resizeExt) ? "JPG" : cleanXSS(resizeExt.toUpperCase(Locale.getDefault()), false);
 				// [허용 가능 목록에 없는 확장자 / 공백 확장자] 권한 없음 처리
 				if(!whiteExtensionList(resizeExtension)){
-					throw new CodeMessageHandleException(FailCode.ConfigureError.NO_AUTH.name(), MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name()));
+					throw new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
 				}
 
 				log.debug("toFile.getCanonicalPath() > {}", toFile.getCanonicalPath());
@@ -535,8 +535,8 @@ public class FileUtil {
 		// [공백 폴더명] 권한 없음 처리
 		if (ObjectUtils.isEmpty(folderParam)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			folderParam = cleanXSS(folderParam,false);
@@ -545,8 +545,8 @@ public class FileUtil {
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
 		if (!whiteFolderList(folderParam) ) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		}
 		return fileSave(uploadFile, folderParam, false, null);
@@ -777,8 +777,8 @@ public class FileUtil {
 		// [공백 폴더명] 권한 없음 처리
 		if (ObjectUtils.isEmpty(folderParam)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			folderParam = cleanXSS(folderParam,false);
@@ -787,8 +787,8 @@ public class FileUtil {
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
 		if (!whiteFolderList(folderParam) ) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		}
 
@@ -831,8 +831,8 @@ public class FileUtil {
 		// [공백 폴더명] 권한 없음 처리
 		if (ObjectUtils.isEmpty(folderParam)) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		} else {
 			folderParam = cleanXSS(folderParam,false);
@@ -841,8 +841,8 @@ public class FileUtil {
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
 		if (!whiteFolderList(folderParam) ) {
 			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.NO_AUTH.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name())
+					FailCode.ConfigureError.INVALID_FILE.name()
+					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		}
 

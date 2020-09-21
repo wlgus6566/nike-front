@@ -1,7 +1,7 @@
 <template>
     <nav class="nav-area">
         <ul class="tab-bar">
-            <li>
+            <li :class="{ active: page === 0 }">
                 <router-link to="/" @click.native="menuLottie(0)">
                     <lottie
                         class="loading"
@@ -13,7 +13,7 @@
                     <span>HOME</span>
                 </router-link>
             </li>
-            <li @click="alertMsg">
+            <li @click="alertMsg" :class="{ active: page === 1 }">
                 <router-link :to="setUrl()" @click.native="menuLottie(1)">
                     <lottie
                         class="loading"
@@ -24,7 +24,7 @@
                     <span>REPORT</span>
                 </router-link>
             </li>
-            <li>
+            <li :class="{ active: page === 2 }">
                 <router-link to="/mypage" @click.native="menuLottie(2)">
                     <lottie
                         class="loading"
@@ -35,7 +35,7 @@
                     <span>MY</span>
                 </router-link>
             </li>
-            <li>
+            <li :class="{ active: page === 3 }">
                 <button
                     type="button"
                     @click="
@@ -96,6 +96,7 @@ export default {
             show: false,
             topScollVal: 0,
             reportUrl: null,
+            page: 0,
         };
     },
     components: {
@@ -169,6 +170,7 @@ export default {
             return _reportUrl;
         },
         menuLottie(index) {
+            this.page = index;
             if (!this.$store.state.menuData) return;
             bus.$emit('closeFn');
             const state = this.$store.state.menuData.some(
@@ -210,6 +212,7 @@ export default {
             document.querySelector('#wrap').style.margin = '';
             window.scrollTo(0, this.topScollVal);
             document.querySelector('body').classList.remove('menu-open');
+            this.pathLottie();
         },
         handleAnimation: function(anim) {
             this.anim.push(anim);

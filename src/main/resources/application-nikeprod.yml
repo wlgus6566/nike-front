@@ -3,8 +3,45 @@ spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://nike-prod-db.c9c2dtiz524o.ap-northeast-2.rds.amazonaws.com:3306/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
-    #username:
-    #password:
+  hikari:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    minimumIdle: 200
+    maximumPoolSize: 200
+    poolName: SpringBootJPAHikariCP
+    idleTimeout: 10000
+    connection-timeout: 10000
+    validation-timeout: 10000
+    maxLifetime: 580000
+    data-source-properties:
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      useServerPrepStmts: true
+      useLocalSessionState: true
+      useLocalTransactionState: true
+      rewriteBatchedStatements: true
+      cacheResultSetMetadata: true
+      cacheServerConfiguration: true
+      elideSetAutoCommits: true
+      maintainTimeStats: false
+  jpa:
+    database: mysql
+    show-sql: false
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        show-sql: false
+        SQL: info
+        format_sql: false
+        use_sql_comments: false
+        type:
+          descriptor:
+            sql: info
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   devtools:
     livereload:
       enabled: false
