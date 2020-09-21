@@ -641,15 +641,11 @@ public class ContentsService {
         log.info("ContentsService.checkAndRemoveFile");
         List<ContentsFileSaveDTO> checkedContentsFileList = new ArrayList<>();
         if (!ObjectUtils.isEmpty(contentsFileList) && !contentsFileList.isEmpty()) {
-
-//            for (ContentsFileSaveDTO contentsFileSaveDTO : contentsFileList) {
-//                checkedContentsFileList.add(contentsFileSaveDTO);
-//            }
-
             for (ContentsFileSaveDTO contentsFile : contentsFileList) {
                 if (
-                    (contentsFile.getFileKindCode().equals(ServiceCode.ContentsFileKindCode.VIDEO.toString())
-                                && !ObjectUtils.isEmpty(contentsFile.getTitle()) && !ObjectUtils.isEmpty(contentsFile.getUrl())
+                    ((contentsFile.getFileKindCode().equals(ServiceCode.ContentsFileKindCode.VIDEO.toString())
+                            || contentsFile.getFileKindCode().equals(ServiceCode.ContentsFileKindCode.VR.toString())
+                        ) && !ObjectUtils.isEmpty(contentsFile.getTitle()) && !ObjectUtils.isEmpty(contentsFile.getUrl())
                     ) || (
                         contentsFile.getFileKindCode().equals(ServiceCode.ContentsFileKindCode.FILE.toString())
                             && !ObjectUtils.isEmpty(contentsFile.getFileName())
@@ -659,16 +655,7 @@ public class ContentsService {
                 ) {
                     checkedContentsFileList.add(contentsFile);
                 }
-
-//                if (ObjectUtils.isEmpty(contentsFile.getFileName())
-//                        && 0l == contentsFile.getFileSize()
-//                        && ObjectUtils.isEmpty(contentsFile.getFilePhysicalName())
-//                        && ObjectUtils.isEmpty(contentsFile.getTitle())
-//                        && ObjectUtils.isEmpty(contentsFile.getUrl())) {
-//                    checkedContentsFileList.remove(contentsFile);
-//                }
             }
-
         }
         return checkedContentsFileList;
     }
