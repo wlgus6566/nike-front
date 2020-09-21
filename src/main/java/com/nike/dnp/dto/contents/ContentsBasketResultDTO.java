@@ -103,7 +103,7 @@ public class ContentsBasketResultDTO {
      * @since 2020. 7. 29. 오후 6:48:59
      */
     public String getThumbnailFilePhysicalName() {
-        return CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
+        return CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName, 30);
     }
 
     /**
@@ -115,7 +115,7 @@ public class ContentsBasketResultDTO {
      * @since 2020. 8. 14. 오후 7:48:12
      */
     public String getFilePhysicalName() {
-        return ObjectUtils.isEmpty(filePhysicalName) ? filePhysicalName : CloudFrontUtil.getSignedUrl(filePhysicalName);
+        return ObjectUtils.isEmpty(filePhysicalName) ? filePhysicalName : CloudFrontUtil.getSignedUrl(filePhysicalName, 30);
     }
 
     /**

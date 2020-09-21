@@ -14,11 +14,7 @@
                     {{ reportDetailData.nickname }}
                 </p>
                 <span class="folder-date">
-                    {{
-                        $moment(reportDetailData.registrationDt).format(
-                            'YYYY.MM.DD'
-                        )
-                    }}
+                    {{ reportDetailData.updateDt }}
                 </span>
             </div>
         </div>

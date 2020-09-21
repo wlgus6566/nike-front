@@ -1,0 +1,106 @@
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/reset.css">
+<link rel="stylesheet" type="text/css" href="guide.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/layout.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/ui.nikeFront.css">
+<section class="guide-section">
+	<h1 class="guide-title">TAB</h1>
+	<div>
+		<h2 class="section-title">Ch</h2>
+		<h3 class="cont-title">Children Components</h3>
+		<pre><code class="html">
+&#60;template&#62;
+    &#60;div&#62;
+        &#60;ul v-bind:class="tabMenus.tabClass"&#62;
+            &#60;li
+		            v-bind:class="{ active: tabMenu.component === tabContent }"
+		            v-for="(tabMenu, index) in tabMenus.tabList"
+		            v-bind:key="index"
+		            v-on:click="tabClick(index)"
+            &#62;
+                &#60;a href="javascript:void(0);"
+                &#62;&#60;span&#62;{{ tabMenu.title }}&#60;/span&#62;&#60;/a
+                &#62;
+            &#60;/li&#62;
+        &#60;/ul&#62;
+        &#60;keep-alive&#62;
+            &#60;component v-bind:is="tabContent"&#62;&#60;/component&#62;
+        &#60;/keep-alive&#62;
+    &#60;/div&#62;
+&#60;/template&#62;
+&#60;script&#62;
+export default {
+	data() {
+		return {
+			tabContent: this.tabMenus.tabList[this.tabMenus.showIndex]
+				.component,
+		};
+	},
+	name: 'TabComponent.vue',
+	props: ['tabMenus'],
+	components: {
+		ContentMypage: () =&#62; import('@/components/tab-comp/content-mypage.vue'),
+		ContentOrder: () =&#62; import('@/components/tab-comp/content-order.vue'),
+		ContentReport: () =&#62; import('@/components/tab-comp/content-report.vue'),
+		ContentFile: () =&#62; import('@/components/tab-comp/content-file.vue'),
+		ContentAsset: () =&#62; import('@/components/tab-comp/content-asset.vue'),
+		ContentToolKit: () =&#62;
+			import('@/components/tab-comp/content-toolkit.vue'),
+		ContentFoundation: () =&#62;
+			import('@/components/tab-comp/content-foundation.vue'),
+	},
+	methods: {
+		tabClick(index) {
+			this.tabContent = this.tabMenus.tabList[index].component;
+		},
+	},
+};
+&#60;/script&#62;
+
+		</code></pre>
+		<h3 class="cont-title">
+			경로 : src > components > tab-comp > index.vue
+		</h3>
+		<ul class="desc-list">
+			<li>src>components 디렉토리에 cascader-select 컴포넌트로 작업되어 있는 것을 사용한다.</li>
+			<li>parent 컴포넌트에 위와같이 cascader-select 컴포넌트를 import 시키며 위의 예시를 참고 한다.</li>
+		</ul>
+
+
+		<h3 class="cont-title">view</h3>
+		<h4 class="sub-title">height 80</h4>
+		<div class="guide-item">
+			<span class="textarea">
+				<textarea style="height: 80px;"></textarea>
+			</span>
+		</div>
+		<h4 class="sub-title">height 100</h4>
+		<div class="guide-item">
+			<span class="textarea">
+				<textarea style="height: 100px;"></textarea>
+			</span>
+		</div>
+	</div>
+
+	<div>
+		<h2 class="section-title">Static</h2>
+		<h3 class="cont-title">code</h3>
+		<pre><code class="html">
+
+		</code></pre>
+		<h3 class="cont-title">view</h3>
+		<h4 class="sub-title">Static Type</h4>
+		<div class="guide-item">
+			<span class="textarea">
+				<textarea></textarea>
+				<span class="count">
+					<strong>0</strong> /
+					<em>150</em>
+					byte
+				</span>
+			</span>
+		</div>
+	</div>
+
+</section>
