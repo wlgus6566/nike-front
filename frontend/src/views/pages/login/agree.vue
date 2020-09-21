@@ -13,11 +13,10 @@
                                 @change="allAgreeCheck"
                             />
                             <i></i>
-                            <span class="txt"
-                                >서비스 이용약관 안내, 개인정보 처리방침에 대한
-                                안내를 모두 읽었으며 아래내용에 모두
-                                동의합니다.</span
-                            >
+                        </span>
+                        <span class="txt"
+                            >서비스 이용약관 안내, 개인정보 처리방침에 대한
+                            안내를 모두 읽었으며 아래내용에 모두 동의합니다.
                         </span>
                     </label>
                 </div>
@@ -33,14 +32,19 @@
                                     @change="agreeCheck"
                                 />
                                 <i></i>
-                                <span class="txt"
-                                    >약관을 읽었으며 이에 동의합니다.</span
-                                >
+                            </span>
+                            <span class="txt">
+                                약관을 읽었으며 이에 동의합니다.
                             </span>
                         </label>
                         <div class="agree-content">
-                            <div class="info">
-                                <pre><strong>NIKE SPACE 이용약관</strong>
+                            <el-scrollbar
+                                class="info-scroll"
+                                wrap-class="info-scroll-wrap"
+                                :native="false"
+                            >
+                                <div class="info">
+                                    <pre><strong>NIKE SPACE 이용약관</strong>
 
 본 이용 약관 (“약관”)의 목적은 유한회사 나이키코리아 (“회사”)가 제공하는 NIKE SPACE 서비스와 관련해 “회사”와 사용자들 (“회사”의 어카운트들 및 직원 포함)(통칭하여 “사용자”)의 권리와 의무, 그리고 책임에 대해 정의하기 위함입니다.
 
@@ -97,7 +101,8 @@ _NIKE SPACE 사용 등과 관련하여 문의 사항이 있는 경우 아래로 
 이메일: eunji.lee@nike.com
 부칙 (2020년 9월 1일)
 본 이용약관은 2020년 9월 1일부터 시행됩니다.</pre>
-                            </div>
+                                </div>
+                            </el-scrollbar>
                         </div>
                     </div>
                     <div class="agree-item">
@@ -111,14 +116,19 @@ _NIKE SPACE 사용 등과 관련하여 문의 사항이 있는 경우 아래로 
                                     @change="agreeCheck"
                                 />
                                 <i></i>
-                                <span class="txt"
-                                    >약관을 읽었으며 이에 동의합니다.</span
-                                >
+                            </span>
+                            <span class="txt">
+                                약관을 읽었으며 이에 동의합니다.
                             </span>
                         </label>
                         <div class="agree-content">
-                            <div class="info">
-                                <pre><strong>개인정보 처리방침</strong>
+                            <el-scrollbar
+                                class="info-scroll"
+                                wrap-class="info-scroll-wrap"
+                                :native="false"
+                            >
+                                <div class="info">
+                                    <pre><strong>개인정보 처리방침</strong>
 
 유한회사 나이키코리아는 [사이트 주소 입력](이하 “웹사이트”라 함)을(를) 통해 취득한 귀하의 개인정보 처리에 대한 책임을 지고 있습니다.
 
@@ -141,23 +151,25 @@ _NIKE SPACE 사용 등과 관련하여 문의 사항이 있는 경우 아래로 
 
 당사가 웹사이트를 통해 취득한 개인 정보는 당사를 대신하여 제3자들이 서비스나 기타 업무를 수행할 수 있도록 제3자와 공유할 수 있습니다 (예: 당사 플랫폼 운영 대리인). 이러한 제3자들은 당사를 대신하여, 이 방침에 언급된 목적의 지시 사항에 따라서만 개인정보를 처리합니다
 </pre>
-                                <div class="tbl-list">
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <th>수탁인</th>
-                                                <th>위탁 업무</th>
-                                                <th>제공되는 개인정보</th>
-                                            </tr>
-                                            <tr>
-                                                <td>EMOTION GLOBAL INC.</td>
-                                                <td>일반적인 플랫폼 운영</td>
-                                                <td>이메일 주소</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <pre>
+                                    <div class="tbl-list">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <th>수탁인</th>
+                                                    <th>위탁 업무</th>
+                                                    <th>제공되는 개인정보</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>EMOTION GLOBAL INC.</td>
+                                                    <td>
+                                                        일반적인 플랫폼 운영
+                                                    </td>
+                                                    <td>이메일 주소</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <pre>
                                     당사는 정부의 요청, 법원 명령이나 법령에 의해 요구되거나 또는 제3자의 권리, 재산 및 안전을 보호하기 위해 귀하의 개인정보를 공개할 수 있습니다. 당사는 또한 사이트의 불법 사용 방지 또는 이용 약관의 위반을 방지하거나 제3자의 청구로부터 당사를 방어하기 위해 정보를 공유할 수 있습니다.
 
 당사는 마케팅 목적으로 외부 혹은 에이전트에게 귀하의 개인정보를 제공하지 않으며 본 방침에 명시되지 않은 외부 당사들에게 귀하의 개인정보를 판매, 거래, 공유 혹은 이전하지 않습니다.
@@ -192,7 +204,8 @@ _NIKE SPACE 사용 등과 관련하여 문의 사항이 있는 경우 아래로 
 개인정보 처리방침 (변경) 공지 일자:
 (변경된) 개인정보 처리방침 발효일:
                                 </pre>
-                            </div>
+                                </div>
+                            </el-scrollbar>
                         </div>
                     </div>
                 </div>
