@@ -258,6 +258,8 @@ export default {
 
             let mergeArray = Array.from(files).filter(item => {
                 return this.reportDetailData.reportFileSaveDTOList.every(el => {
+                    console.log(item);
+                    console.log(el);
                     return (
                         item.name !== el.fileName && item.size !== el.fileSize
                     );
