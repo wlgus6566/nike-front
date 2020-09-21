@@ -1,6 +1,7 @@
 package com.nike.dnp.dto.contents;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -222,9 +223,15 @@ public class ContentsFileResultDTO {
      */
     public String getDetailThumbnailFilePhysicalName() {
         //TODO[ojh] 2020/09/18 : 동영상 인코딩 이슈 해결 후 수정 예정
-        return ObjectUtils.isEmpty(detailThumbnailFilePhysicalName)
-                ? CloudFrontUtil.getCustomSignedUrl(filePhysicalName, 30)
-                : CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName, 30);
+        if (this.getFileKindCode().equals(ServiceCode.ContentsFileKindCode.FILE.toString())
+                && this.getFileExtension().toUpperCase().contains("VIDEO/")
+                && ObjectUtils.isEmpty(detailThumbnailFilePhysicalName)) {
+            return CloudFrontUtil.getCustomSignedUrl(filePhysicalName, 30);
+        } else if (ObjectUtils.isEmpty(detailThumbnailFilePhysicalName)) {
+            return detailThumbnailFilePhysicalName;
+        } else {
+            return CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName, 30);
+        }
     }
 
 }
