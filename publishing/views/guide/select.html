@@ -1,0 +1,142 @@
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/reset.css">
+<link rel="stylesheet" type="text/css" href="guide.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/layout.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/ui.nikeFront.css">
+<section class="guide-section">
+	<h1 class="guide-title">SELECT</h1>
+
+	<div>
+		<h2 class="section-title">Static</h2>
+		<h3 class="cont-title">code</h3>
+		<pre><code class="html">
+&#60;template&#62;
+	&#60;span class="select"&#62;
+		&#60;el-select placeholder="Select" &#62;
+			&#60;el-option
+				v-for="item in category2Code.listSortOptions"
+				:key="item.value"
+				:label="item.label"
+				:value="item.value"
+			&#62;
+			&#60;/el-option&#62;
+		&#60;/el-select&#62;
+	&#60;/span&#62;
+&#60;/template&#62;
+
+&#60;script&#62;
+export default {
+	data() {
+		return {
+			category2Code: {
+				listSortOptions: [
+					{
+						value: '',
+						label: '대구분',
+					},
+					{
+						value: '11',
+						label: '운영비품',
+					},
+				],
+				value: '',
+			},
+		};
+	},
+};
+&#60;/script&#62;
+		</code></pre>
+		<ul class="desc-list">
+			<li>select는<a href="https://element.eleme.io/?ref=madewithvuejs.com#/en-US/component/select" target="_blank" class="guide-link"> ELEMENT UI</a>를 사용한다.</li>
+			<li>기본 셀렉트 박스는 위와 같이 사용한다.</li>
+		</ul>
+	</div>
+
+	<div>
+		<h2 class="section-title">Filter Select</h2>
+		<h3 class="cont-title">code</h3>
+		<pre><code class="html">
+&#60;template&#62;
+    &#60;FilterSelect :listSortSelect="category2Code" /&#62;
+&#60;/template&#62;
+&#60;script&#62;
+import FilterSelect from '@/components/filter-select';
+export default {
+	data() {
+		return {
+			category2Code: {
+				listSortOptions: [
+					{
+						value: '',
+						label: '대구분',
+					},
+					{
+						value: '',
+						label: '운영비품',
+					},
+				],
+				value: '',
+			},
+		};
+	},
+	components: {
+		FilterSelect
+	},
+};
+&#60;/script&#62;
+
+		</code></pre>
+		<ul class="desc-list">
+			<li>src>components 디렉토리에 filter-select 컴포넌트로 작업되어 있는 것을 사용한다.</li>
+			<li>parent 컴포넌트에 위와같이 filter-select 컴포넌트를 import 시키며 위의 예시를 참고 한다.</li>
+		</ul>
+	</div>
+
+
+	<div>
+		<h2 class="section-title">Multiple  Select</h2>
+		<h3 class="cont-title">code</h3>
+		<pre><code class="html">
+&#60;template&#62;
+    &#60;CascaderSelect :listCascader="authority" /&#62;
+&#60;/template&#62;
+&#60;script&#62;
+import CascaderSelect from '@/components/cascader-select';
+export default {
+	data() {
+		return {
+			 authority: {
+                value: [null],
+                options: [
+                    {
+                        value: null,
+                        label: '전체 그룹',
+                    },
+			        {
+                        value: 1,
+                        label: 'NIKE ADMIN',
+						children:[
+						    {
+		                        value: 2,
+		                        label: 'Nike',
+		                    },
+						]
+                    },
+                ],
+            },
+		};
+	},
+	components: {
+		CascaderSelect
+	},
+};
+&#60;/script&#62;
+
+		</code></pre>
+		<ul class="desc-list">
+			<li>src>components 디렉토리에 cascader-select 컴포넌트로 작업되어 있는 것을 사용한다.</li>
+			<li>parent 컴포넌트에 위와같이 cascader-select 컴포넌트를 import 시키며 위의 예시를 참고 한다.</li>
+		</ul>
+	</div>
+</section>

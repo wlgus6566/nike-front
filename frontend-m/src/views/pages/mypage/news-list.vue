@@ -134,8 +134,6 @@ export default {
             this.initListData();
         },
         async getNewsList() {
-            this.newsData = null;
-            this.loadingData = true;
             try {
                 const {
                     data: { data: response },
@@ -147,7 +145,6 @@ export default {
                 this.newsList = response;
                 this.newsData = response.content;
                 this.totalElements = response.totalElements;
-                this.loadingData = false;
             } catch (error) {
                 console.log(error);
             }

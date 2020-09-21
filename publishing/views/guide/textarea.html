@@ -1,0 +1,111 @@
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/reset.css">
+<link rel="stylesheet" type="text/css" href="guide.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/layout.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/ui.nikeFront.css">
+<section class="guide-section">
+	<h1 class="guide-title">RADIO</h1>
+	<div>
+		<h2 class="section-title">Static</h2>
+		<h3 class="cont-title">code</h3>
+		<pre><code class="html">
+
+
+
+		</code></pre>
+		<h3 class="cont-title">view</h3>
+		<h4 class="sub-title">height 80</h4>
+		<div class="guide-item">
+			<span class="textarea">
+                <textarea style="height: 80px;"></textarea>
+			</span>
+		</div>
+		<h4 class="sub-title">height 100</h4>
+		<div class="guide-item">
+			<span class="textarea">
+				<textarea style="height: 100px;"></textarea>
+			</span>
+		</div>
+	</div>
+
+	<div>
+		<h2 class="section-title">Static</h2>
+		<h3 class="cont-title">code</h3>
+		<pre><code class="html">
+ &#60;span class="textarea"&#62;
+    &#60;textarea
+        ref="maxTextarea"
+        style="height: 80px;"
+        v-model="folderDetail.memo"
+        @input="maxLengthCheck"
+    /&#62;
+    &#60;span class="count"&#62;
+        &#60;strong&#62;{{ memoLength }}&#60;/strong&#62; /
+        &#60;em&#62;{{ maxMemo }}&#60;/em
+        &#62;byte
+    &#60;/span&#62;
+&#60;/span&#62;
+....
+....
+export default {
+    name: 'UPLOAD',
+    data() {
+        return {
+           folderDetail: {
+                  memo:''
+               }
+           }
+	}
+	methods: {
+	    /**
+         * 바이트 문자 입력가능 문자수 체크
+         */
+        maxLengthCheck() {
+            const obj = this.$refs.maxTextarea;
+            if (Number(this.byteCheck(obj)) > Number(this.maxMemo)) {
+                alert('입력가능문자수를 초과하였습니다.');
+                this.folderDetail.memo = obj.value.substr(0, 150);
+                obj.focus();
+            }
+            this.memoLength = this.folderDetail.memo.length;
+        },
+        /**
+         * 바이트수 반환
+         * @param el : tag jquery object
+         * @returns {Number}
+         */
+        byteCheck(el) {
+            var codeByte = 0;
+            for (var idx = 0; idx < el.value.length; idx++) {
+                var oneChar = escape(el.value.charAt(idx));
+                if (oneChar.length == 1) {
+                    codeByte++;
+                } else if (oneChar.indexOf('%u') != -1) {
+                    codeByte += 2;
+                } else if (oneChar.indexOf('%') != -1) {
+                    codeByte++;
+                }
+            }
+            return codeByte;
+        },
+
+
+	}
+}
+		</code></pre>
+		<h3 class="cont-title">view</h3>
+		<h4 class="sub-title">Static Type</h4>
+		<div class="guide-item">
+			<span class="textarea">
+				<textarea></textarea>
+				<span class="count">
+					<strong>0</strong> /
+					<em>150</em>
+					byte
+				</span>
+			</span>
+		</div>
+	</div>
+
+</section>
