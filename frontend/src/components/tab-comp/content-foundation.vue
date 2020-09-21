@@ -9,25 +9,26 @@
                         :key="index"
                     >
                         <router-link :to="setUrl(item)">
-                          <div class="thumbnail">
-                              <img :src="item.imageFilePhysicalName" alt="" />
-                          </div>
-                          <div class="info-box">
-                              <p class="title">{{ item.folderName }}</p>
-                              <span class="date">
-                                  {{
-                                      $moment(item.campaignBeginDt).format(
-                                          'YYYY.MM.DD'
-                                      )
-                                  }}
-                                  ~
-                                  {{
-                                      $moment(item.campaignEndDt).format(
-                                          'YYYY.MM.DD'
-                                      )
-                                  }}
-                              </span>
-                          </div>
+                            <div class="thumbnail">
+                                <img :src="item.imageFilePhysicalName" alt="" />
+                            </div>
+                            <div class="info-box">
+                                <p class="title">{{ item.folderName }}</p>
+                                <span
+                                    class="date"
+                                    v-if="
+                                        item.campaignPeriodSectionCode ===
+                                        'EVERY'
+                                    "
+                                >
+                                    365
+                                </span>
+                                <span class="date" v-else>
+                                    {{ item.campaignBeginDt }}
+                                    ~
+                                    {{ item.campaignEndDt }}
+                                </span>
+                            </div>
                         </router-link>
                     </li>
                 </ul>
@@ -74,7 +75,7 @@ export default {
             }
         },
         setUrl(item) {
-          return `/${item.topMenuCode}/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
+            return `/${item.topMenuCode}/${item.menuCode}/${item.folderSeq}`.toLocaleLowerCase();
         },
     },
 };

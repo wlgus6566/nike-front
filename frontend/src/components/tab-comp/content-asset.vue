@@ -14,7 +14,16 @@
                             </div>
                             <div class="info-box">
                                 <p class="title">{{ item.folderName }}</p>
-                                <span class="date">
+                                <span
+                                    class="date"
+                                    v-if="
+                                        item.campaignPeriodSectionCode ===
+                                        'EVERY'
+                                    "
+                                >
+                                    365
+                                </span>
+                                <span class="date" v-else>
                                     {{ item.campaignBeginDt }}
                                     ~
                                     {{ item.campaignEndDt }}
