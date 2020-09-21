@@ -7,11 +7,15 @@
             <p class="folder-desc">
                 {{ folderDetail.folderContents }}
             </p>
-            <span class="folder-date">
+            <span
+                class="folder-date"
+                v-if="folderDetail.campaignPeriodSectionCode === 'SELECT'"
+            >
                 <em>{{ folderDetail.campaignBeginDt }}</em>
                 -
                 <em>{{ folderDetail.campaignEndDt }}</em>
             </span>
+            <span class="folder-date" v-else>365</span>
             <p class="folder-name">{{ folderDetail.userId }}</p>
             <p class="folder-memo">{{ folderDetail.memo }}</p>
         </div>
