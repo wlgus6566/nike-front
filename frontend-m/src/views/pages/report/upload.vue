@@ -265,6 +265,7 @@ export default {
                     );
                 });
             });
+            console.log(mergeArray);
             /*console.log('mergeArray > ' + mergeArray.length);*/
             if (mergeArray.length + this.uploadFileList.length > 10) {
                 alert('10개 이상 등록 할 수 없습니다.');
