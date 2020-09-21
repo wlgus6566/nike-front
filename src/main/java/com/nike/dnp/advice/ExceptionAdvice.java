@@ -4,6 +4,7 @@ import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.log.ErrorLogSaveDTO;
 import com.nike.dnp.exception.CodeMessageHandleErrorException;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.FileHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.service.ResponseService;
@@ -90,6 +91,25 @@ public class ExceptionAdvice {
     }
 
     /**
+     * File Exception
+     *
+     * @param exception the exception
+     * @return 상태값 : 500, 코드, 메세지
+     * @author [이소정]
+     * @implNote File Exception
+     * @since 2020. 8. 31. 오후 3:59:34
+     */
+    @ExceptionHandler(FileHandleException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult fileHandleException(final FileHandleException exception) {
+        log.error("==================NoAuth ERROR===================");
+        log.error("Exception", exception);
+        this.errorLogInsert(exception);
+        return responseService.getFailResult(exception.getCode(), exception.getMessage());
+    }
+
+    /**
      * status 200 Exception
      *
      * @param exception the exception
@@ -125,6 +145,8 @@ public class ExceptionAdvice {
         this.errorLogInsert(exception);
         return responseService.getFailResult(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
     }
+
+
 
     /**
      * 정의 된 오류 외의 excpetion

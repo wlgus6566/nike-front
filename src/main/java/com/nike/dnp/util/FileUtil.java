@@ -6,6 +6,7 @@ import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.FileHandleException;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
@@ -250,6 +251,7 @@ public class FileUtil {
 					FailCode.ConfigureError.INVALID_FILE.name()
 					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
+//			throw new FileHandleException();
 		} else {
 			originalFileName = cleanXSS(originalFileName, false);
 		}
@@ -261,25 +263,28 @@ public class FileUtil {
 					FailCode.ConfigureError.INVALID_FILE.name()
 					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
+//			throw new FileHandleException();
 		} else {
 			folderParam = cleanXSS(folderParam,false);
 		}
 
 		// [허용 가능 목록에 없는 폴더명 / 공백 폴더명] 권한 없음 처리
 		if (!whiteFolderList(folderParam) ) {
-			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.INVALID_FILE.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
-			);
+//			throw new CodeMessageHandleException(
+//					FailCode.ConfigureError.INVALID_FILE.name()
+//					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
+//			);
+			throw new FileHandleException();
 		}
 
 		String contentType = uploadFile.getContentType();
 		// [공백 ContentType] 권한 없음 처리
 		if (ObjectUtils.isEmpty(contentType)) {
-			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.INVALID_FILE.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
-			);
+//			throw new CodeMessageHandleException(
+//					FailCode.ConfigureError.INVALID_FILE.name()
+//					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
+//			);
+			throw new FileHandleException();
 		} else {
 			contentType = contentType.toUpperCase(Locale.getDefault());
 		}
@@ -287,10 +292,11 @@ public class FileUtil {
 		String extension = StringUtils.getFilenameExtension(originalFileName);
 		// [허용 가능 목록에 없는 확장자 / 공백 확장자] 권한 없음 처리
 		if (!whiteExtensionList(extension) || ObjectUtils.isEmpty(extension)) {
-			throw new CodeMessageHandleException(
-					FailCode.ConfigureError.INVALID_FILE.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
-			);
+//			throw new CodeMessageHandleException(
+//					FailCode.ConfigureError.INVALID_FILE.name()
+//					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
+//			);
+			throw new FileHandleException();
 		} else {
 			extension = extension.toUpperCase(Locale.getDefault());
 		}
@@ -338,10 +344,11 @@ public class FileUtil {
 				try{
 					final String cmd = whiteListing(detailCommand.toString(), folder);
 					if (ObjectUtils.isEmpty(cmd)) {
-						throw new CodeMessageHandleException(
-								FailCode.ConfigureError.INVALID_FILE.name()
-								, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
-						);
+//						throw new CodeMessageHandleException(
+//								FailCode.ConfigureError.INVALID_FILE.name()
+//								, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
+//						);
+						throw new FileHandleException();
 					}
 					log.debug("cmd > {}", cmd);
 					final Process procDetail = Runtime.getRuntime().exec(cmd);
@@ -378,10 +385,11 @@ public class FileUtil {
 				try{
 					final String cmd = whiteListing(command.toString(), folder);
 					if (ObjectUtils.isEmpty(cmd)) {
-						throw new CodeMessageHandleException(
-								FailCode.ConfigureError.INVALID_FILE.name()
-								, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
-						);
+//						throw new CodeMessageHandleException(
+//								FailCode.ConfigureError.INVALID_FILE.name()
+//								, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
+//						);
+						throw new FileHandleException();
 					}
 					log.debug("cmd > {}", cmd);
 					final Process proc = Runtime.getRuntime().exec(cmd);

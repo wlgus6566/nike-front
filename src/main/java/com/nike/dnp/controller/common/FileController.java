@@ -4,6 +4,7 @@ import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.file.FileUploadDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.exception.FileHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.util.FileUtil;
@@ -131,11 +132,8 @@ public class FileController {
 		try{
 			return FileUtil.fileTempSaveAndImageResize(fileUploadDTO.getUploadFile());
 			//fileResultDTO = FileUtil.fileSave(fileUploadDTO.getUploadFile(),"temp");
-		}catch(IOException e){
-			// 리사이즈 문제
-			throw (CodeMessageHandleException)new CodeMessageHandleException(
-					FailCode.ConfigureError.INVALID_FILE.name()
-					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+		} catch(IOException e) {
+			throw new FileHandleException();
 		}
 	}
 
