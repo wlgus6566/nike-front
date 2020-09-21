@@ -1538,7 +1538,7 @@
     opacity: 0.5;
 }
 .login-form .btn-area {
-    margin-top: 20px;
+    margin-top: 15px;
     justify-content: left;
     flex-wrap: wrap;
 }
@@ -1589,24 +1589,24 @@
     margin-top: 8px;
 }
 .login-input.pw-type {
-    margin-top: 39px;
+    margin-top: 45px;
 }
 .certified-input {
     display: flex;
-    margin-top: 25px;
+    margin-top: 45px;
     justify-content: space-between;
-    padding: 0 17px;
 }
 .certified-input input {
-    width: 20px;
+    width: 100% !important;
     height: 40px;
     padding: 0;
     border: none;
     border-bottom: 2px solid #2c2c2c;
     background: transparent;
-    font-size: 20px;
+    font-size: 14px;
     color: #fff;
     text-align: center;
+    background-color: rgba(255, 255, 255, 0.15);
 }
 .under-link {
     display: inline-flex;
