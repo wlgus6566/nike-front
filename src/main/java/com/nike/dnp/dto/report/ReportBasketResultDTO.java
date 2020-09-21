@@ -81,8 +81,28 @@ public class ReportBasketResultDTO {
     @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드(FILE/VIDEO/VR)", required = true)
     private String fileKindCode;
 
+    /**
+     * 파일 물리 명
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "filePhysicalName", value = "파일 물리 명")
+    private String filePhysicalName;
+
+
     public String getThumbnailFilePhysicalName() {
-        return CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
+        return CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName, 30);
+    }
+
+    /**
+     * Gets thumbnail file physical name.
+     *
+     * @return the thumbnail file physical name
+     * @author [이소정]
+     * @implNote
+     * @since 2020. 8. 14. 오후 7:48:12
+     */
+    public String getFilePhysicalName() {
+        return ObjectUtils.isEmpty(filePhysicalName) ? filePhysicalName : CloudFrontUtil.getSignedUrl(filePhysicalName, 30);
     }
 
     /**
