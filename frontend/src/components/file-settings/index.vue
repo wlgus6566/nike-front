@@ -250,6 +250,7 @@ export default {
                         };
 
                         const response = await fileUpLoad(formData, config);
+                        console.log(response);
                         this.progressUpdate(100, el);
                         if (response.data.existMsg) {
                             alert(response.data.msg);
@@ -278,13 +279,14 @@ export default {
                 })
             )
                 .then((values) => {
+                    console.log('success');
                     this.uploadFile = [];
                     this.$emit('submitForm');
                 })
                 .catch((e) => {
-                    //console.log(e);
+                    console.log('failed');
                     this.uploadFile = [];
-                    this.$emit('submitForm');
+                    //this.$emit('submitForm');
                 });
         },
         fileAdd() {

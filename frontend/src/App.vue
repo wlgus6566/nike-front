@@ -42,6 +42,15 @@ export default {
             this.pageLoading = state;
         });
     },
+    mounted() {
+        document.addEventListener('keydown', function (e) {
+            const keyCode = e.keyCode;
+            if (keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    },
     computed: {
         AppLayout() {
             return `Layout${this.$route.meta.layout || 'Clean'}`;

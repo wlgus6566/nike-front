@@ -105,11 +105,7 @@ import TabComponent from '@/components/tab-comp';
 import NoData from '@/components/no-data';
 import Loading from '@/components/loading';
 import fetchProgress from 'fetch-progress';
-import {
-    addContentsBasket,
-    delContentsBasket,
-    contentFileDownload,
-} from '@/api/contents';
+import { addContentsBasket, delContentsBasket } from '@/api/contents';
 import bus from '@/utils/bus';
 import { getLoginUpdate } from '@/api/mypage';
 
@@ -237,17 +233,26 @@ export default {
                                 document.body.appendChild(link);
                                 this.link.push(link);
                             }
+                        })
+                        .catch((e) => {
+                            console.log(e);
                         });
                 })
             );
-            this.link.forEach((el) => {
-                if (window.navigator.msSaveBlob) {
-                    window.navigator.msSaveBlob(new Blob([el.data]), el.name);
-                    this.delContBasket(el.seq);
-                } else {
-                    el.click();
-                    this.delContBasket(el.seq);
-                }
+
+            this.link.forEach((el, i) => {
+                setTimeout(() => {
+                    if (window.navigator.msSaveBlob) {
+                        window.navigator.msSaveBlob(
+                            new Blob([el.data]),
+                            el.name
+                        );
+                        this.delContBasket(el.seq);
+                    } else {
+                        el.click();
+                        this.delContBasket(el.seq);
+                    }
+                }, 100 * i);
             });
             clearInterval(this.fileUploadingInterval);
             this.loaded = 0;

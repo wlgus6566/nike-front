@@ -49,7 +49,53 @@
                     </NoData>
                 </div>
             </el-scrollbar>
-            <button
+            <template v-if="ie">
+                <Loading
+                    v-if="downloadFiles"
+                    :width="100"
+                    :height="100"
+                    style="
+                        z-index: 50;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        display: flex;
+                        justify-content: center;
+                        flex-direction: column;
+                        align-items: center;
+                        align-content: center;
+                    "
+                />
+                <button
+                    type="button"
+                    class="btn-download"
+                    @click="fileDownload"
+                    :disabled="reportBasketList.length === 0 || downloadFiles"
+                >
+                    <span class="txt">DOWNLOAD</span>
+                </button>
+            </template>
+            <template v-else>
+                <button
+                    v-if="!downloadFiles"
+                    type="button"
+                    class="btn-download"
+                    @click="fileDownload"
+                    :disabled="reportBasketList.length === 0"
+                >
+                    <span class="txt">DOWNLOAD</span>
+                </button>
+                <span v-else class="btn-download active">
+                    <span class="txt">DOWNLOADING({{ this.loaded }}%)…</span>
+                    <span
+                        class="gage"
+                        :style="{ width: `${this.loaded}%` }"
+                    ></span>
+                </span>
+            </template>
+            <!--<button
                 v-if="!downloadFiles"
                 type="button"
                 class="btn-download"
@@ -62,18 +108,15 @@
             <span v-else class="btn-download active">
                 <span class="txt">DOWNLOADING({{ this.loaded }}%)…</span>
                 <span class="gage" :style="{ width: `${this.loaded}%` }"></span>
-            </span>
+            </span>-->
         </div>
     </div>
 </template>
 <script>
 import NoData from '@/components/no-data';
 import Loading from '@/components/loading';
-import {
-    postReportBasket,
-    deleteReportBasket,
-    reportFileDownload,
-} from '@/api/report';
+import fetchProgress from 'fetch-progress';
+import { postReportBasket, deleteReportBasket } from '@/api/report';
 import bus from '@/utils/bus';
 import { getLoginUpdate } from '@/api/mypage';
 
@@ -106,6 +149,10 @@ export default {
         };
     },
     computed: {
+        ie() {
+            console.log(window.fetch.polyfill);
+            return window.fetch.polyfill;
+        },
         reportBasketList: {
             get() {
                 return this.$store.state.reportBasketList;
@@ -149,6 +196,7 @@ export default {
         },
 
         async fileDownload() {
+            const vm = this;
             clearInterval(this.fileUploadingInterval);
             this.fileUploadingInterval = setInterval(() => {
                 this.loginUpdate();
@@ -157,55 +205,55 @@ export default {
             this.downloadFiles = [];
             if (!window.navigator.msSaveBlob) {
                 this.link.forEach((el) => {
-                    console.log(el);
                     document.querySelector('body').removeChild(el);
                 });
             }
             this.link = [];
             await Promise.all(
                 this.reportBasketList.map(async (el, i) => {
-                    try {
-                        const config = {
-                            responseType: 'blob',
-                            timeout: 0,
-                            onDownloadProgress: (progressEvent) => {
-                                this.downloadFiles[i] = {
-                                    total: progressEvent.total,
-                                    loaded: progressEvent.loaded,
-                                };
-                                //console.log(progressEvent.loaded);
-                                this.loadedUpdate();
-                            },
-                        };
-                        const response = await reportFileDownload(
-                            el.reportFileSeq,
-                            config
-                        );
-
-                        if (window.navigator.msSaveBlob) {
-                            this.link.push({
-                                data: response.data,
-                                name: el.fileName,
-                                seq: el.reportBasketSeq,
-                            });
-                        } else {
-                            const url = window.URL.createObjectURL(
-                                new Blob([response.data])
-                            );
-                            const link = document.createElement('a');
-                            link.href = url;
-                            link.seq = el.reportBasketSeq;
-                            link.setAttribute('download', el.fileName);
-                            document.body.appendChild(link);
-                            this.link.push(link);
-                        }
-                    } catch (error) {
-                        console.error(error);
-                    }
+                    await fetch(el.filePhysicalName)
+                        .then(
+                            fetchProgress({
+                                onProgress(progress) {
+                                    console.log(progress);
+                                    vm.downloadFiles[i] = {
+                                        total: progress.total,
+                                        transferred: progress.transferred,
+                                    };
+                                    vm.loadedUpdate();
+                                },
+                                onComplete() {},
+                                onError(err) {
+                                    console.log(err);
+                                },
+                            })
+                        )
+                        .then((r) => r.blob())
+                        .then((src) => {
+                            console.log(el);
+                            if (window.navigator.msSaveBlob) {
+                                this.link.push({
+                                    data: src,
+                                    name: el.fileName,
+                                    seq: el.reportBasketSeq,
+                                });
+                            } else {
+                                const link = document.createElement('a');
+                                link.href = URL.createObjectURL(src);
+                                link.seq = el.reportBasketSeq;
+                                link.setAttribute('download', el.fileName);
+                                document.body.appendChild(link);
+                                this.link.push(link);
+                            }
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                        });
                 })
             );
             this.link.forEach((el) => {
                 if (window.navigator.msSaveBlob) {
+                    console.log(el.seq);
                     window.navigator.msSaveBlob(new Blob([el.data]), el.name);
                     this.delReportBasket(el.seq);
                 } else {
