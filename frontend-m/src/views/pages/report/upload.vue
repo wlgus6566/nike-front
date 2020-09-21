@@ -258,15 +258,11 @@ export default {
 
             let mergeArray = Array.from(files).filter(item => {
                 return this.reportDetailData.reportFileSaveDTOList.every(el => {
-                    console.log(item);
-                    console.log(el);
                     return (
-                        item.name !== el.fileName && item.size !== el.fileSize
+                        item.name !== el.fileName || item.size !== el.fileSize
                     );
                 });
             });
-            console.log(mergeArray);
-            /*console.log('mergeArray > ' + mergeArray.length);*/
             if (mergeArray.length + this.uploadFileList.length > 10) {
                 alert('10개 이상 등록 할 수 없습니다.');
                 if (this.uploadFileList.length === 10) return;
@@ -302,6 +298,7 @@ export default {
             this.uploadFileList = this.uploadFileList.concat(mergeArray);
             this.reportTempFileList.splice(0, mergeArray.length);
             this.uploadFileViewer = true;
+            this.$refs.fileInput.value = null;
         },
 
         async uploadFiles() {
