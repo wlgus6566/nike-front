@@ -261,7 +261,7 @@ export default {
                             ) {
                                 array[idx] = {
                                     fileKindCode: 'FILE',
-                                    fileSectionCode: 'GUIDE',
+                                    fileSectionCode: item.fileSectionCode,
                                     progress: 100,
                                     title: '',
                                     url: '',
