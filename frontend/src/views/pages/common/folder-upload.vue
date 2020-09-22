@@ -459,6 +459,13 @@ export default {
         },
     },
     watch: {
+        'folderDetail.checks': {
+            handler() {
+                console.log('----------------------');
+                console.log('deep', this.folderDetail);
+                console.log('deep2', this.folderDetail.checks);
+            },
+        },
         menuCode() {
             this.getAuthList(this.$route.params.id);
         },
@@ -504,7 +511,6 @@ export default {
                 this.joinOccupyFn();
             }, 1000 * 60 * 4);
         }
-        //this.detailReset();
     },
     deactivated() {
         if (this.$route.params.id) {
@@ -523,38 +529,11 @@ export default {
                         contentsSeq: seq,
                     }
                 );
+                console.log('getAuthList', response);
                 this.folderDetail.checks = response;
             } catch (error) {
                 console.error(error);
             }
-        },
-        detailReset() {
-            this.folderDetail = {
-                campaignBeginDt: null,
-                campaignEndDt: null,
-                campaignPeriodSectionCode: 'SELECT',
-                checks: [
-                    {
-                        authDepth: 0,
-                        authName: '전체',
-                        authSeq: 0,
-                        checkBoxYn: 'Y',
-                        detailAuthYn: 'N',
-                        emailReceptionYn: 'N',
-                        roleType: null,
-                        subAuths: [],
-                        viewYn: null,
-                    },
-                ],
-                contentsFileList: [],
-                exposureYn: 'Y',
-                folderContents: '',
-                folderName: '',
-                imageBase64: '',
-                memo: '',
-            };
-            this.BeginDt = null;
-            this.EndDt = null;
         },
         pageMenuCodeAuth(topMenuCode, skillCodes) {
             const index = this.$store.state.gnbMenuListData.findIndex(
@@ -675,6 +654,7 @@ export default {
             this.$refs.fileSet.uploadFiles();
         },
         checksUpdate(checksArr) {
+            console.log('checksUpdate', checksArr);
             this.folderDetail.checks = checksArr;
             this.visible.ModalAuth = false;
         },
@@ -752,11 +732,13 @@ export default {
                 }
 
                 this.menuCode = response.data.menuCode;
+                console.log('init', this.folderDetail.checks);
                 this.folderDetail = {
                     ...response.data,
                     imageBase64: response.data.imageFilePhysicalName,
                     contentsFileList: [],
                 };
+                console.log('init2', this.folderDetail.checks);
                 this.BeginDt = response.data.campaignBeginDt
                     ? new Date(response.data.campaignBeginDt)
                     : null;
