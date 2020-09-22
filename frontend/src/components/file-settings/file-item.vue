@@ -1,5 +1,5 @@
 <template>
-    <li class="file-setting">
+    <li :class="{ 'file-setting': true, error: this.file.progress === true }">
         <transition name="fade">
             <!--<span
                 class="progress"
@@ -106,6 +106,7 @@ export default {
     name: 'file-item',
     props: {
         file: Object,
+        errorFile: Array,
         listLength: Number,
         pageFileSectionCodeName: Array,
         menuCode: String,
@@ -179,5 +180,8 @@ export default {
 .fade-enter,
 .fade-leave-to {
     opacity: 0;
+}
+.error {
+    border-color: #f20000;
 }
 </style>

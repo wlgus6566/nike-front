@@ -59,9 +59,9 @@ function sendMail(data) {
 }
 
 // 컨텐츠 파일 다운로드
-function contentFileDownload(seq, config) {
+/*function contentFileDownload(seq, config) {
     return contents.get(`/download/${seq}`, config);
-}
+}*/
 
 export {
     getContents,
@@ -75,5 +75,5 @@ export {
     delContentsBasket,
     getContentsAuthList,
     sendMail,
-    contentFileDownload,
+    //contentFileDownload,
 };

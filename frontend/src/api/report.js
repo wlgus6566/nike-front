@@ -68,9 +68,9 @@ function deleteReportBasket(reportBasketSeq, data) {
 }
 
 //REPORT 파일 다운로드
-function reportFileDownload(reportBasketSeq, config) {
+/*function reportFileDownload(reportBasketSeq, config) {
     return report.get(`/download/${reportBasketSeq}`, config);
-}
+}*/
 
 export {
     getReportList,
@@ -86,5 +86,5 @@ export {
     postReportBasket,
     deleteReportBasket,
     getReportFile,
-    reportFileDownload,
+    //reportFileDownload,
 };

@@ -29,6 +29,7 @@
                     :listLength="FileList.length"
                     :file="file"
                     :key="file.fileOrder"
+                    :errorFile="errorFile"
                     :pageFileSectionCodeName="pageFileSectionCodeName"
                     :menuCode="menuCode"
                     @fileSelect="fileSelect"
@@ -49,11 +50,13 @@ import draggable from 'vuedraggable';
 import FileItem from '@/components/file-settings/file-item.vue';
 import { fileUpLoad } from '@/api/file';
 import { getContentsViewFile } from '@/api/contents';
+import bus from '@/utils/bus';
 export default {
     name: 'FileSettings',
     data() {
         return {
             uploadFile: [],
+            errorFile: [],
 
             test: {
                 detailThumbnailFileName: '',
@@ -176,7 +179,7 @@ export default {
             let mergeArray = Array.from(files).filter((item) => {
                 return this.FileList.every((el) => {
                     return (
-                        item.name !== el.fileName && item.size !== el.fileSize
+                        item.name !== el.fileName || item.size !== el.fileSize
                     );
                 });
             });
@@ -223,6 +226,7 @@ export default {
             });
         },
         async uploadFiles() {
+            this.errorFile = [];
             Promise.all(
                 this.uploadFile.map(async (el) => {
                     try {
@@ -272,17 +276,31 @@ export default {
                             }
                         });
                     } catch (error) {
-                        console.error(error);
+                        this.FileList.forEach((item) => {
+                            if (
+                                item.fileName === el.name &&
+                                item.fileSize === el.size
+                            ) {
+                                alert(
+                                    `${item.fileName} 파일 업로드에 실패 하였습니다.`
+                                );
+                                item.progress = true;
+                                this.errorFile.push(item);
+                            }
+                        });
+                        this.emitFileList();
                     }
                 })
             )
                 .then((values) => {
-                    console.log('success');
-                    this.uploadFile = [];
-                    this.$emit('submitForm');
+                    if (!this.errorFile.length) {
+                        this.uploadFile = [];
+                        this.$emit('submitForm');
+                    } else {
+                        bus.$emit('pageLoading', false);
+                    }
                 })
                 .catch((e) => {
-                    console.log('failed');
                     this.uploadFile = [];
                     //this.$emit('submitForm');
                 });
