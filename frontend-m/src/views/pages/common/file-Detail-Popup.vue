@@ -28,11 +28,17 @@
                     </div>
 
                     <span class="thumbnail" v-else>
-                        <img
-                            :src="filePopupFile.detailThumbnailFilePhysicalName"
-                            :alt="filePopupFile.detailThumbnailFileName"
+                        <span
+                            class="inner"
                             v-if="filePopupFile.detailThumbnailFilePhysicalName"
-                        />
+                        >
+                            <img
+                                :src="
+                                    filePopupFile.detailThumbnailFilePhysicalName
+                                "
+                                :alt="filePopupFile.detailThumbnailFileName"
+                            />
+                        </span>
                         <span
                             class="etc"
                             :class="[

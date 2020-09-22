@@ -637,12 +637,16 @@
     left: 5px;
 }
 .folder-detail .thumbnail {
-    position: relative;
     display: block;
     background: #f7f7f7;
     text-align: center;
 }
-.folder-detail .thumbnail:after {
+.folder-detail .thumbnail .inner {
+    position: relative;
+    display: block;
+    text-align: center;
+}
+.folder-detail .thumbnail .inner:after {
     z-index: 1;
     content: '워터마크';
     position: absolute;
@@ -657,7 +661,7 @@
 }
 .folder-detail .thumbnail img {
     vertical-align: top;
-    width: 100%;
+    max-width: 100%;
 }
 .folder-detail .thumbnail video {
     width: 100%;
