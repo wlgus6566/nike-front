@@ -155,7 +155,7 @@ export default {
             get() {
                 return this.$store.state.contBasketList.reduce(
                     (acc, current) => {
-                        return acc + current.fileSize;
+                        return acc + current.fileSize * 1;
                     },
                     0
                 );

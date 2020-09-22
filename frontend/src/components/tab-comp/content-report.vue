@@ -165,7 +165,7 @@ export default {
             get() {
                 return this.$store.state.reportBasketList.reduce(
                     (acc, current) => {
-                        return acc + current.fileSize;
+                        return acc + current.fileSize * 1;
                     },
                     0
                 );
@@ -190,7 +190,7 @@ export default {
         },
         loadedUpdate() {
             const loaded = this.downloadFiles.reduce((a, b) => {
-                return a + b.loaded;
+                return a + b.transferred;
             }, 0);
             this.loaded = Math.round((loaded * 100) / this.totalSize);
         },
@@ -215,7 +215,6 @@ export default {
                         .then(
                             fetchProgress({
                                 onProgress(progress) {
-                                    console.log(progress);
                                     vm.downloadFiles[i] = {
                                         total: progress.total,
                                         transferred: progress.transferred,
@@ -230,7 +229,6 @@ export default {
                         )
                         .then((r) => r.blob())
                         .then((src) => {
-                            console.log(el);
                             if (window.navigator.msSaveBlob) {
                                 this.link.push({
                                     data: src,
