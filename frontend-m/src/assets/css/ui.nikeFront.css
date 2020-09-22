@@ -2639,7 +2639,7 @@
     display: inline-block;
     position: absolute;
     left: 0;
-    top: 7px;
+    top: 4px;
     width: 4px;
     height: 4px;
     border-radius: 50%;
@@ -2886,4 +2886,8 @@
         no-repeat;
     background-size: 100%;
     pointer-events: none;
+}
+
+.main-fc .fc-popover-body .fc-daygrid-event-harness:first-child {
+    display: none;
 }
