@@ -65,71 +65,74 @@
             <hr class="hr-gray" />
             <h3 class="form-title">파일 설정</h3>
             <hr class="hr-black" />
-            <div class="file-setting">
-                <ul class="form-list">
-                    <!-- todo 추가 스크립트 작업 필요  -->
-                    <li class="form-row">
-                        <div class="form-column">
-                            <span class="label-title">파일 찾기</span>
-                        </div>
-                        <div class="form-column">
-                            <div class="upload-file-box">
-                                <!--active-->
-                                <ul
-                                    class="upload-file-list"
-                                    :class="{
-                                        'is-file': uploadFileList.length > 0,
-                                    }"
-                                >
-                                    <li
-                                        v-for="item in reportDetailData.reportFileSaveDTOList"
-                                        :key="item.fileOrder"
+            <div class="file-setting-wrap">
+                <div class="file-setting">
+                    <ul class="form-list">
+                        <!-- todo 추가 스크립트 작업 필요  -->
+                        <li class="form-row">
+                            <div class="form-column">
+                                <span class="label-title">파일 찾기</span>
+                            </div>
+                            <div class="form-column">
+                                <div class="upload-file-box">
+                                    <!--active-->
+                                    <ul
+                                        class="upload-file-list"
+                                        :class="{
+                                            'is-file':
+                                                uploadFileList.length > 0,
+                                        }"
                                     >
-                                        <label>
-                                            <span class="checkbox">
-                                                <input
-                                                    type="checkbox"
-                                                    :value="item.fileOrder"
-                                                    v-model="checkedFile"
-                                                />
-                                                <i></i>
-                                            </span>
-                                            <span class="txt">
-                                                {{ item.fileName }}
-                                            </span>
-                                        </label>
-                                        <!--<span
+                                        <li
+                                            v-for="item in reportDetailData.reportFileSaveDTOList"
+                                            :key="item.fileOrder"
+                                        >
+                                            <label>
+                                                <span class="checkbox">
+                                                    <input
+                                                        type="checkbox"
+                                                        :value="item.fileOrder"
+                                                        v-model="checkedFile"
+                                                    />
+                                                    <i></i>
+                                                </span>
+                                                <span class="txt">
+                                                    {{ item.fileName }}
+                                                </span>
+                                            </label>
+                                            <!--<span
                                                 class="progress"
                                                 :style="{
                                                     width: `${item.progress}%`,
                                                 }"
                                             ></span>-->
-                                    </li>
-                                </ul>
-                                <div class="btn-box">
-                                    <div class="fine-file">
-                                        <span class="btn-form-gray"
-                                            ><span>찾기</span></span
+                                        </li>
+                                    </ul>
+                                    <div class="btn-box">
+                                        <div class="fine-file">
+                                            <span class="btn-form-gray"
+                                                ><span>찾기</span></span
+                                            >
+                                            <input
+                                                type="file"
+                                                ref="fileInput"
+                                                multiple
+                                                @change="uploadIptChange"
+                                            />
+                                        </div>
+                                        <button
+                                            type="button"
+                                            class="btn-form"
+                                            @click="removeFile"
                                         >
-                                        <input
-                                            type="file"
-                                            ref="fileInput"
-                                            multiple
-                                            @change="uploadIptChange"
-                                        />
+                                            <span>삭제</span>
+                                        </button>
                                     </div>
-                                    <button
-                                        type="button"
-                                        class="btn-form"
-                                        @click="removeFile"
-                                    >
-                                        <span>삭제</span>
-                                    </button>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="btn-area">
                 <button type="submit" class="btn-s-black">
@@ -450,4 +453,8 @@ export default {
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.file-setting-wrap {
+    padding: 20px 20px 0;
+}
+</style>

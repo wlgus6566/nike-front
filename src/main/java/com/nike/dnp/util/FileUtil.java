@@ -339,7 +339,7 @@ public class FileUtil {
 				if(extension.contains("PSD") || extension.contains("AI") || extension.contains("TIF") || extension.contains("GIF")){
 					detailCommand.append("[0]");
 				}
-				detailCommand.append(" -resize 700x700 -background white -gravity center -extent 700x700 ").append(detailPath);
+				detailCommand.append(" -resize 700x700 -background #f7f7f7 -gravity center -extent 700x700 ").append(detailPath);
 
 				try{
 					final String cmd = whiteListing(detailCommand.toString(), folder);

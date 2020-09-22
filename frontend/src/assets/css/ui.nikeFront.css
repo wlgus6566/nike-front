@@ -1776,8 +1776,12 @@
 .thumb-file.file-upload .txt .sub {
     display: none;
 }
+.new-upload {
+    width: 100%;
+}
 .new-upload .thumb-file {
-    width: 660px;
+    min-width: 660px;
+    width: 100%;
 }
 .new-upload .thumb-file .thumb {
     padding-top: 50%;
@@ -2088,7 +2092,8 @@
     width: 100%;
     text-indent: -9999px;
     overflow: hidden;
-    background: url('../images/svg/logo_watermark.svg') no-repeat center / cover;
+    background: url('../images/svg/logo_watermark.svg') repeat center / 20%;
+    opacity: 0.6;
 }
 .file-item .detail .thumbnail img {
     max-width: 100%;

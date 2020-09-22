@@ -100,7 +100,7 @@ export default {
 }
 .login-box .desc {
     display: block;
-    margin-top: 5px;
+    margin-top: 9px;
     font-size: 14px;
     color: #fff;
     line-height: 20px;
@@ -109,9 +109,9 @@ export default {
 .login-box .txt-btn {
     font-weight: normal;
 }
-.form-box {
+/*.form-box {
     margin-top: 20px;
-}
+}*/
 .form-box input {
     width: 100%;
     background: rgba(255, 255, 255, 0.15);
@@ -131,8 +131,11 @@ export default {
 .form-box input + input {
     margin-top: 8px;
 }
+.pw-box input {
+    margin-top: 28px;
+}
 .login-btn-wrap {
-    margin-top: 20px;
+    margin-top: 6px;
 }
 .login-btn-wrap.half [class^='btn-s'] {
     flex-basis: calc((100% - 10px) / 2);

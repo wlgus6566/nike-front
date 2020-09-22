@@ -53,7 +53,12 @@ public class RandomUtil {
 					break;
 				case 4:
 					// 특수문자2
-					temp.append((char) (rnd.nextInt(7) + 58));
+					int srKey1 = (rnd.nextInt(7) + 58);
+					if (srKey1 == 60 || srKey1 == 62) {
+						temp.append("Z");
+						break;
+					}
+					temp.append((char) srKey1);
 					break;
 				case 5:
 					// 특수문자3

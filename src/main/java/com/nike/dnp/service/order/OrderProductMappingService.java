@@ -122,14 +122,14 @@ public class OrderProductMappingService {
 			final StringBuilder builder = new StringBuilder();
 			for(final OrderProductDTO dto : sendDTO.getProductList()){
 				builder.append("<tr>");
-				builder.append("	<td style=\"width:50px; margin:0; padding:15px; border-bottom:1px solid #ddd;\">");
+				builder.append("	<td style=\"width:90px; margin:0; padding:15px 0 15px 30px; border-bottom:1px solid #ddd;\">");
 				builder.append("		<div style=\"width:50px; height:50px; overflow:hidden; margin:0; padding:0; line-height:50px; background:#f7f7f7; \">");
 				builder.append("			<img width=\"50\" style=\"width:50px; vertical-align:middle;\" src=\"");
 				builder.append(CloudFrontUtil.getCustomSignedUrl(dto.getImageFilePhysicalName(), 259200));
 				builder.append("\" alt=\"\" >");
 				builder.append("		</div>");
 				builder.append("	</td>");
-				builder.append("	<td style=\"margin:0; padding:15px; border-bottom:1px solid #ddd;\">");
+				builder.append("	<td style=\"width:365px; margin:0; padding:15px; border-bottom:1px solid #ddd;\">");
 				builder.append("		<p style=\"margin:0; font-size:12px; color:#333; line-height:18px;\">");
 				builder.append(dto.getProductName());
 				builder.append("		</p>");
