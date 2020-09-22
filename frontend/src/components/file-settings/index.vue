@@ -252,7 +252,6 @@ export default {
                         };
 
                         const response = await fileUpLoad(formData, config);
-                        console.log(response);
                         this.progressUpdate(100, el);
                         if (response.data.existMsg) {
                             alert(response.data.msg);
@@ -351,13 +350,14 @@ export default {
                         fileExtension: '',
                     }
                 );
+                console.log(123123123123);
                 if (response.content && response.content.length) {
                     this.FileList = response.content;
                 } else {
                     this.FileList = [this.defaultFileData];
                 }
-
                 this.emitFileList();
+                this.$emit('getAuthList', this.$route.params.id);
             } catch (error) {
                 console.error(error);
             }

@@ -294,6 +294,7 @@
                 :menuCode="menuCode"
                 @FileListUpdate="FileListUpdate"
                 @submitForm="submitForm"
+                @getAuthList="getAuthList"
             />
             <div class="btn-area">
                 <button type="button" class="btn-s-white" @click="cancelBack()">
