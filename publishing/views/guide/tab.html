@@ -7,8 +7,8 @@
 <section class="guide-section">
 	<h1 class="guide-title">TAB</h1>
 	<div>
-		<h2 class="section-title">Ch</h2>
-		<h3 class="cont-title">Children Components</h3>
+		<h2 class="section-title">Children Components</h2>
+		<h3 class="cont-title">Code</h3>
 		<pre><code class="html">
 &#60;template&#62;
     &#60;div&#62;
@@ -66,41 +66,59 @@ export default {
 			<li>src>components 디렉토리에 cascader-select 컴포넌트로 작업되어 있는 것을 사용한다.</li>
 			<li>parent 컴포넌트에 위와같이 cascader-select 컴포넌트를 import 시키며 위의 예시를 참고 한다.</li>
 		</ul>
-
-
-		<h3 class="cont-title">view</h3>
-		<h4 class="sub-title">height 80</h4>
-		<div class="guide-item">
-			<span class="textarea">
-				<textarea style="height: 80px;"></textarea>
-			</span>
-		</div>
-		<h4 class="sub-title">height 100</h4>
-		<div class="guide-item">
-			<span class="textarea">
-				<textarea style="height: 100px;"></textarea>
-			</span>
-		</div>
 	</div>
 
 	<div>
-		<h2 class="section-title">Static</h2>
-		<h3 class="cont-title">code</h3>
+		<h2 class="section-title">Parent Components</h2>
+		<h3 class="cont-title">Code</h3>
 		<pre><code class="html">
+&#60;template&#62;
+    &#60;div"&#62;
+       &#60;TabComponent v-bind:tabMenus="tabMenus"&#62;&#60;/TabComponent&#62;
+    &#60;/div&#62;
+&#60;/template&#62;
+&#60;script&#62;
+import Sticky from 'vue-sticky-directive';
+import UserInfo from './user.vue';
+import TabComponent from '@/components/tab-comp/index.vue';
+
+export default {
+	name: 'AsideFile',
+	data: function () {
+		return {
+			tabMenus: {
+				tabClass: 'tab-list',
+				tabList: [
+					{
+						title: 'MY PAGE',
+						component: 'ContentMypage',
+					},
+					{
+						title: 'FILE',
+						component: 'ContentFile',
+					},
+				],
+				showIndex: 1,
+			},
+		};
+	},
+	components: {
+		TabComponent,
+	},
+	methods: {},
+};
+&#60;/script&#62;
+&#60;style scoped&#62;&#60;/style&#62;
 
 		</code></pre>
-		<h3 class="cont-title">view</h3>
-		<h4 class="sub-title">Static Type</h4>
-		<div class="guide-item">
-			<span class="textarea">
-				<textarea></textarea>
-				<span class="count">
-					<strong>0</strong> /
-					<em>150</em>
-					byte
-				</span>
-			</span>
-		</div>
+		<h3 class="cont-title">
+			경로 : src > components > tab-comp > index.vue
+		</h3>
+		<ul class="desc-list">
+			<li>Parent Component에 components>tab-comp>index.vue 파일을 import 시킨다</li>
+			<li>components>tab-comp 폴더안에 tab-fileName.vue 파일을 만든다. (탭 컨텐츠 컴퍼넌트 파일)</li>
+			<li>위의 코드와 같이 title과 component명을 매칭시켜준다 여기서 component명은 components>tab-comp 폴더안에 있는 파일이다.</li>
+		</ul>
 	</div>
 
 </section>

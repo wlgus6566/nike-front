@@ -18,16 +18,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 
@@ -233,12 +230,13 @@ public class ReportController {
      * @implNote 보고서 파일 다운로드
      * @since 2020. 7. 15. 오후 6:30:45
      */
-    @ApiOperation(value = "보고서 파일 다운로드", notes = REQUEST_CHARACTER)
+    //TODO[ojh] 2020/09/22 : 사용안함 주석
+    /*@ApiOperation(value = "보고서 파일 다운로드", notes = REQUEST_CHARACTER)
     @GetMapping(name = "보고서 파일 다운로드", value = "/download/{reportFileSeq}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Resource> downloadFile(
             @ApiParam(name="reportFileSeq", value = "보고서 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long reportFileSeq
     ) throws IOException {
         return reportService.downloadFile(reportFileSeq);
-    }
+    }*/
 }
 

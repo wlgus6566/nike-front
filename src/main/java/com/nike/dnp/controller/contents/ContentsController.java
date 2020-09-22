@@ -18,18 +18,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.persistence.Id;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -285,13 +280,14 @@ public class ContentsController {
      * @implNote 콘텐츠 파일 다운로드
      * @since 2020. 7. 15. 오후 6:30:45
      */
-    @ApiOperation(value = "컨텐츠 파일 다운로드", notes = REQUEST_CHARACTER)
+    //TODO[ojh] 2020/09/22 : 사용안함 주석
+    /*@ApiOperation(value = "컨텐츠 파일 다운로드", notes = REQUEST_CHARACTER)
     @GetMapping(name = "컨텐츠 파일 다운로드", value = "/download/{contentsFileSeq}")
     public ResponseEntity<Resource> downloadContents(
             @ApiParam(name="contentsFileSeq", value = "컨텐츠 파일 시퀀스", defaultValue = "1", required = true) @PathVariable final Long contentsFileSeq
     ) throws IOException {
         return contentsFileService.downloadFile(contentsFileSeq);
-    }
+    }*/
 
     /**
      * Send email common result.
