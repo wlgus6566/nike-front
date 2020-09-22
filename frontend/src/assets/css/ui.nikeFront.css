@@ -1776,8 +1776,12 @@
 .thumb-file.file-upload .txt .sub {
     display: none;
 }
+.new-upload {
+    width: 100%;
+}
 .new-upload .thumb-file {
-    width: 660px;
+    min-width: 660px;
+    width: 100%;
 }
 .new-upload .thumb-file .thumb {
     padding-top: 50%;
