@@ -619,7 +619,8 @@ export default {
         },
         ModalAuthOpen() {
             this.visible.ModalAuth = true;
-            this.$refs.modalAuth.dataInit();
+            console.log(this.folderDetail.checks);
+            this.$refs.modalAuth.dataInit(this.folderDetail.checks);
         },
         uploadFiles() {
             if (!this.folderDetail.imageBase64) {

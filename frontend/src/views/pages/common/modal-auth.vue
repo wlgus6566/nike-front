@@ -107,8 +107,8 @@ export default {
             }
             return copy;
         },
-        dataInit() {
-            console.log(this.copyObj(this.checks));
+        dataInit(arr) {
+            console.log(this.copyObj(arr));
             this.groupTreeData = [
                 {
                     authDepth: 0,
@@ -118,7 +118,7 @@ export default {
                     detailAuthYn: 'N',
                     emailReceptionYn: 'N',
                     roleType: null,
-                    subAuths: this.copyObj(this.checks),
+                    subAuths: this.copyObj(arr),
                     viewYn: null,
                 },
             ];
