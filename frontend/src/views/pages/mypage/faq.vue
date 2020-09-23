@@ -165,9 +165,15 @@ export default {
                 //console.log(response);
 
                 response.forEach((el) => {
+                    let label = el.codeName;
+                    console.log(label);
+                    if (label === 'ASSET/TOOLKIT/FOUNDATION') {
+                        console.log(1);
+                        label = 'ASSET, TOOLKIT,<br>FOUNDATION';
+                    }
                     this.categoryCodeList.listSortOptions.push({
                         value: el.code,
-                        label: el.codeName,
+                        label: label,
                     });
                 });
             } catch (error) {

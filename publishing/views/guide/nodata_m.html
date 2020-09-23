@@ -1,13 +1,13 @@
 <meta charset="UTF-8">
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/atom-one-dark-reasonable.min.css">
-<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/reset.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend-m/src/assets/css/reset.css">
 <link rel="stylesheet" type="text/css" href="guide.css">
-<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/layout.css">
-<link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/ui.nikeFront.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend-m/src/assets/css/layout.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend-m/src/assets/css/ui.nikeFront.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<section class="guide-section">
+<section class="guide-section mo">
 	<h1 class="guide-title">NO DATA</h1>
 	<div>
 		<h2 class="section-title">Children Components</h2>
@@ -28,11 +28,11 @@ export default {
 &#60;style scoped&#62;&#60;/style&#62;
 		</code></pre>
 		<h3 class="cont-title">
-			경로 : src > components > tab-comp > index.vue
+			경로 : src > components > no-data > index.vue
 		</h3>
 		<ul class="desc-list">
-			<li>src>components 디렉토리에 cascader-select 컴포넌트로 작업되어 있는 것을 사용한다.</li>
-			<li>parent 컴포넌트에 위와같이 cascader-select 컴포넌트를 import 시키며 위의 예시를 참고 한다.</li>
+			<li>src>components 디렉토리에 no-data 컴포넌트로 작업되어 있는 것을 사용한다.</li>
+			<li>parent 컴포넌트에 위와같이 no-data 컴포넌트를 import 시키며 위의 예시를 참고 한다.</li>
 		</ul>
 	</div>
 
@@ -65,14 +65,19 @@ export default {
 .....
 import NoData from '@/components/no-data';
 		</code></pre>
-		<h3 class="cont-title">views</h3>
-		<div class="no-data">
-			<i class="icon-upload"></i>
-			<p class="desc">등록된 데이터가 없습니다.</p>
+		<h3 class="cont-title">등록된 데이터 views</h3>
+		<div class="no-data-wrap">
+			<div class="no-data">
+				<i class="icon-upload"></i>
+				<p class="desc">등록된 데이터가 없습니다.</p>
+			</div>
 		</div>
-		<div class="no-data">
-			<i class="icon-search"></i>
-			<p class="desc">검색 결과가 없습니다.</p>
+		<h3 class="cont-title">검색 결과 views</h3>
+		<div class="no-data-wrap">
+			<div class="no-data">
+				<i class="icon-search"></i>
+				<p class="desc">검색 결과가 없습니다.</p>
+			</div>
 		</div>
 	</div>
 

@@ -1,0 +1,53 @@
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/atom-one-dark-reasonable.min.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend-m/src/assets/css/reset.css">
+<link rel="stylesheet" type="text/css" href="guide.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend-m/src/assets/css/layout.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend-m/src/assets/css/ui.nikeFront.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<section class="guide-section mo">
+	<h1 class="guide-title">MULTIPLE SELECT</h1>
+
+	<div>
+		<h2 class="section-title">Static</h2>
+		<h3 class="cont-title">code</h3>
+		<pre><code class="html">
+&#60;template&#62;
+    &#60;div&#62;
+        &#60;CascaderSelect :cascaderList="authority"&#62;&#60;/CascaderSelect&#62;
+    &#60;/div&#62;
+&#60;/template&#62;
+&#60;script&#62;
+import CascaderSelect from '@/components/cascader-select';
+
+export default {
+	data() {
+		return {
+			authority: {
+				value: null,
+				name: 'authority',
+				options: [
+					{
+						value: null,
+						label: '전체 그룹',
+					},
+				],
+			},
+		};
+	},
+	components: {
+		CascaderSelect,
+	},
+};
+&#60;/script&#62;
+&#60;style scoped&#62;&#60;/style&#62;
+
+		</code></pre>
+		<ul class="desc-list">
+			<li>Multiple Select는 src > components > cascader-select component를 사용한다.</li>
+			<li>parent component에 위와같이 Multiple Select를 import 해서 사용한다.</li>
+		</ul>
+	</div>
+</section>

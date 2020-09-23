@@ -890,7 +890,8 @@
     background: url('../images/svg/icon-input-calender.svg') right 10px
         no-repeat;
 }
-.date-picker .el-input__prefix {
+.date-picker .el-input__prefix,
+.date-picker .el-input__suffix-inner {
     display: none;
 }
 .el-date-picker__header {
