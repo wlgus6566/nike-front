@@ -169,7 +169,7 @@ export default {
                     console.log(label);
                     if (label === 'ASSET/TOOLKIT/FOUNDATION') {
                         console.log(1);
-                        label = 'ASSET,TOOLKIT,<br>FOUNDATION';
+                        label = 'ASSET, TOOLKIT,<br>FOUNDATION';
                     }
                     this.categoryCodeList.listSortOptions.push({
                         value: el.code,
