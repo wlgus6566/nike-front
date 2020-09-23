@@ -6,7 +6,7 @@
             :class="{ active: categoryCodeList.value === item.value }"
         >
             <a href="#" @click.prevent="$emit('tabFnc', item.value)">
-                <span>{{ item.label }}</span>
+                <span v-html="item.label"></span>
             </a>
         </li>
     </ul>

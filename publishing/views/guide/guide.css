@@ -1,7 +1,7 @@
 @charset "UTF-8";
 body,html{height:100%;}
 body, body * {margin:0; padding:0;}
-.guide-section{ padding:30px; box-sizing:border-box}
+.guide-section{ padding:0; box-sizing:border-box}
 .guide-section.mo{ max-width:700px;}
 .guide-section .guide-title{font-size:20px; font-weight:bold}
 .guide-section .section-title {position:relative;margin:30px 20px 15px 0;height:22px; padding:0 0 0 12px; color:#333; font-size:16px; line-height:22px;}
@@ -25,7 +25,7 @@ a {color:inherit; text-decoration:none;}
 .out-header {position:fixed; top:0; left:0; z-index: 5; display:flex; width:100%; height:60px; border-bottom:2px solid #000; box-sizing:border-box; align-items:center; background:#fff;}
 .out-header h1 {margin-left:20px;}
 .out-header h1 img {width:120px;}
-.tab-gnb {display:flex; height:40px; margin-top:20px; margin-left:100px; align-items:center;}
+.tab-gnb {display:flex; height:40px; margin-top:20px; margin-left:59px; align-items:center;}
 .tab-gnb li {height:100%; list-style:none;}
 .tab-gnb li.active a {color:#fff; background:#000; border-radius:5px 5px 0 0;}
 .tab-gnb li a {display:flex; height:100%; padding:0 40px; align-items:center;}
@@ -35,6 +35,7 @@ a {color:inherit; text-decoration:none;}
 .out-lnb ul li a{display:block; padding:7px 30px 8px 20px; font-size: 12px; line-height: 18px; color: #fff;}
 .out-contents .conts{box-sizing:border-box; flex:1 0 0px; padding:20px; height:100%; overflow:auto;}
 .out-contents .guide-contents {height:100%;}
+.conts-title{font-size:26px; font-weight:bold}
 .out-contents .guide-contents iframe{width:100%; height:100%;}
 .item-title{margin-top:30px; font-size:16px;}
 .item-title + .item-title2{margin-top:10px;}
