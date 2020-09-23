@@ -1,9 +1,13 @@
 <meta charset="UTF-8">
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/atom-one-dark-reasonable.min.css">
 <link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/reset.css">
 <link rel="stylesheet" type="text/css" href="guide.css">
 <link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/layout.css">
 <link rel="stylesheet" type="text/css" href="../../../frontend/src/assets/css/ui.nikeFront.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 	<section class="guide-section">
 		<h1 class="guide-title">BUTTON</h1>
 		<div>
@@ -11,8 +15,49 @@
 			<h3 class="cont-title">code</h3>
 			<pre><code class="html">
 &#60;%-- Static Type --%&#62;
-&#60;button type="button" class="btn-blue"&#62;BUTTON&#60;/button&#62;
+&#60;button type="button" class="btn-s-white"&#62;&#60;span&#62;btn-s&#60;/span&#62;&#60;/button&#62;
+&#60;button type="button" class="btn-s-black"&#62;&#60;span&#62;btn-s-black&#60;/span&#62;&#60;/button&#62;
+&#60;button type="button" class="btn-s-orage"&#62;&#60;span&#62;btn-s-orag&#60;/span&#62;&#60;/button&#62;
+&#60;button type="button" class="btn-s-gray"&#62;&#60;span&#62;btn-s-gray&#60;/span&#62;&#60;/button&#62;
+&#60;button type="button" class="btn-s-lightgray"&#62;&#60;span&#62;btn-s-lightgray&#60;/span&#62;&#60;/button&#62;
+
+&#60;%-- Small Type --%&#62;
+&#60;button type="button" class="btn-s-sm-white"&#62;&#60;span&#62;btn-s-sm-white&#60;/span&#62;&#60;/button&#62;
+&#60;button type="button" class="btn-s-sm-black"&#62;&#60;span&#62;btn-s-sm-black&#60;/span&#62;&#60;/button&#62;
+&#60;button type="button" class="btn-s-sm-orage"&#62;&#60;span&#62;btn-s-sm-orag&#60;/span&#62;&#60;/button&#62;
+&#60;button type="button" class="btn-s-sm-gray"&#62;&#60;span&#62;btn-s-sm-gray&#60;/span&#62;&#60;/button&#62;
+&#60;button type="button" class="btn-s-sm-lightgray"&#62;&#60;span&#62;btn-s-sm-lightgray&#60;/span&#62;&#60;/button&#62;
+
+&#60;%-- large Type --%&#62;
+&#60;button type="button" class="btn-s-lg-white"&#62;&#60;span&#62;btn-s-lg-white&#60;/span&#62;&#60;/button&#62;
+&#60;button type="button" class="btn-s-lg-black"&#62;&#60;span&#62;btn-s-lg-black&#60;/span&#62;&#60;/button&#62;
+&#60;button type="button" class="btn-s-lg-orage"&#62;&#60;span&#62;btn-s-lg-orag&#60;/span&#62;&#60;/button&#62;
+&#60;button type="button" class="btn-s-lg-gray"&#62;&#60;span&#62;btn-s-lg-gray&#60;/span&#62;&#60;/button&#62;
+&#60;button type="button" class="btn-s-lg-lightgray"&#62;&#60;span&#62;btn-s-lg-lightgray&#60;/span&#62;&#60;/button&#62;
+
+&#60;%--Button Group --%&#62;
+
+&#60;div class="btn-area"&#62;
+	&#60;button type="button" class="btn-s-white"&#62;&#60;span&#62;btn-s&#60;/span&#62;&#60;/button&#62;
+	&#60;button type="button" class="btn-s-black"&#62;&#60;span&#62;btn-s-black&#60;/span&#62;&#60;/button&#62;
+&#60;/div&#62;
+
+&#60;%--English Type --%&#62;
+&#60;button type="button" class="btn-s-black"&#62;&#60;span class="bebas"&#62;ORDER&#60;/span&#62;&#60;/button&#62;
+
+&#60;%--IconType --%&#62;
+&#60;button type="button" class="btn-s-white-sm"&#62;
+	&#60;i class="icon-link"&#62;&#60;/i&#62;
+	&#60;span&#62;LINK&#60;/span&#62;
+&#60;/button&#62;
+&#60;button type="button" class="btn-s-white-sm"&#62;
+	&#60;i class="icon-check"&#62;&#60;/i&#62;
+	&#60;span&#62;ADDED&#60;/span&#62;
+&#60;/button&#62;
 			</code></pre>
+			<ul class="desc-list">
+				<li>code 작성시 Link Type의 경우 button tag를 a tag 혹은 router-link tag로 변경해서 작성한다</li>
+			</ul>
 			<h3 class="cont-title">view</h3>
 			<h4 class="sub-title">Static Type</h4>
 			<div class="guide-item">
@@ -30,7 +75,7 @@
 				<button type="button" class="btn-s-sm-gray"><span>btn-s-sm-gray</span></button>
 				<button type="button" class="btn-s-sm-lightgray"><span>btn-s-sm-lightgray</span></button>
 			</div>
-			<h4 class="sub-title">large </h4>
+			<h4 class="sub-title">large Type</h4>
 			<div class="guide-item">
 				<button type="button" class="btn-s-lg-white"><span>btn-s-lg-white</span></button>
 				<button type="button" class="btn-s-lg-black"><span>btn-s-lg-black</span></button>
@@ -38,7 +83,6 @@
 				<button type="button" class="btn-s-lg-gray"><span>btn-s-lg-gray</span></button>
 				<button type="button" class="btn-s-lg-lightgray"><span>btn-s-lg-lightgray</span></button>
 			</div>
-
 			<h4 class="sub-title">Button Group </h4>
 			<div class="guide-item">
 				<div class="btn-area">
@@ -67,8 +111,8 @@
 			<h2 class="section-title">Form</h2>
 			<h3 class="cont-title">code</h3>
 			<pre><code class="html">
-&#60;%-- Static Type --%&#62;
-&#60;button type="button" class="btn-blue"&#62;BUTTON&#60;/button&#62;
+&#60;button type="button" class="btn-form"&#62;&#60;span&#62;btn-form&#60;/span&#62;&#60;/button&#62;
+&#60;a href="#" class="btn-form-gray"&#62;&#60;span&#62;btn-form-gray&#60;/span&#62;&#60;/a&#62;
 			</code></pre>
 			<h3 class="cont-title">view</h3>
 			<div class="guide-item">
@@ -82,7 +126,21 @@
 			<h3 class="cont-title">code</h3>
 			<pre><code class="html">
 &#60;%-- Static Type --%&#62;
-&#60;button type="button" class="btn-blue"&#62;BUTTON&#60;/button&#62;
+&#60;a href="#" class="txt-btn"&#62;&#60;span&#62;더보기&#60;/span&#62;&#60;/a&#62; &#60;br&#62;
+&#60;button type="button" class="txt-btn-black"&#62;&#60;span&#62;이미지 재등록&#60;/span&#62;&#60;/button&#62;
+&#60;button type="button" class="txt-btn-orange"&#62;&#60;span&#62;이미지 재등록&#60;/span&#62;&#60;/button&#62;
+
+&#60;%-- Add Type --%&#62;
+&#60;button class="btn-file-txt"&#62;
+	&#60;i class="icon-add"&#62;&#60;/i&#62;
+	&#60;span&#62;파일 추가하기&#60;/span&#62;
+&#60;/button&#62;
+
+&#60;%-- Box Type --%&#62;
+&#60;div class="btn-area-txt"&#62;
+	&#60;button type="button" class="txt-btn"&#62;&#60;span&#62;추가&#60;/span&#62;&#60;/button&#62;
+	&#60;button type="button" class="txt-btn"&#62;&#60;span&#62;식제&#60;/span&#62;&#60;/button&#62;
+&#60;/div&#62;
 			</code></pre>
 			<h3 class="cont-title">view</h3>
 			<h4 class="sub-title">Static Type</h4>
@@ -111,8 +169,17 @@
 			<h2 class="section-title">Detail View Button Group</h2>
 			<h3 class="cont-title">code</h3>
 			<pre><code class="html">
-&#60;%-- Static Type --%&#62;
-&#60;button type="button" class="btn-blue"&#62;BUTTON&#60;/button&#62;
+&#60;div class="btn-detail"&#62;
+	&#60;a href="#" class="btn-list"&#62;&#60;span&#62;목록으로 가기&#60;/span&#62;&#60;/a&#62;
+	&#60;div class="btn-box"&#62;
+		&#60;button type="button" class="btn-o-white"&#62;&#60;span&#62;삭제&#60;/span&#62;&#60;/button&#62;
+		&#60;button type="button" class="btn-o-white"&#62;&#60;span&#62;수정&#60;/span&#62;&#60;/button&#62;
+		&#60;button type="button" class="btn-o-gray"&#62;
+			&#60;i class="icon-mail"&#62;&#60;/i&#62;
+			&#60;span&#62;알림메일전송&#60;/span&#62;
+		&#60;/button&#62;
+	&#60;/div&#62;
+&#60;/div&#62;
 			</code></pre>
 			<h3 class="cont-title">view</h3>
 			<div class="guide-item">
