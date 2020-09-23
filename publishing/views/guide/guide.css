@@ -2,6 +2,7 @@
 body,html{height:100%;}
 body, body * {margin:0; padding:0;}
 .guide-section{ padding:30px; box-sizing:border-box}
+.guide-section.mo{ max-width:700px;}
 .guide-section .guide-title{font-size:20px; font-weight:bold}
 .guide-section .section-title {position:relative;margin:30px 20px 15px 0;height:22px; padding:0 0 0 12px; color:#333; font-size:16px; line-height:22px;}
 .guide-section .section-title:before, .section-title:after {content:'';position:absolute;left:0;top:2px;}

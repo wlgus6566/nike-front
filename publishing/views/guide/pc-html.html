@@ -61,9 +61,9 @@
 			</svg>
 		</h1>
 		<ul class="tab-gnb">
-			<li class="active"><a href="index.html">서버 세팅</a></li>
+			<li><a href="index.html">서버 세팅</a></li>
 			<li ><a href="htm-guide.html">작업규칙</a></li>
-			<li><a href="pc-html.html">PC 가이드</a></li>
+			<li class="active"><a href="pc-html.html">PC 가이드</a></li>
 			<li><a href="mo-html.html">MO 가이드</a></li>
 			<li><a href="/pub/index.html" target="_blank">HTML 리스트</a></li>
 		</ul>
@@ -71,115 +71,32 @@
 	<section class="out-contents">
 		<aside class="out-lnb">
 			<ul>
-				<li><a href="#ui-directory1">Nike-front</a></li>
-				<li><a href="#ui-server">vue 서버 세팅</a></li>
-				<li><a href="#ui-node">Node와 NPM 설치하기</a></li>
-				<li><a href="#ui-npmV">npm 버전 확인</a></li>
-				<li><a href="#ui-nodeV">node 버전 확인</a></li>
-				<li><a href="#ui-setting">서버 세팅</a></li>
-				<li><a href="#ui-run">서버 실행</a></li>
-				<li><a href="#ui-directory2">작업 디렉토리 구조</a></li>
+				<li><a href="button.html">BUTTON</a></li>
+				<li><a href="modal.html">MODAL</a></li>
+				<li><a href="checkbox.html">CHECKBOX</a></li>
+				<li><a href="radio.html">RADIO</a></li>
+				<li><a href="input.html">INPUT</a></li>
+				<li><a href="select.html">SELECT</a></li>
+				<li><a href="textarea.html">TEXTAREA</a></li>
+				<li><a href="tab.html">TAB</a></li>
+				<li><a href="nodata.html">NODATA</a></li>
 			</ul>
 		</aside>
 		<div class="conts">
-			<p class="txt-guide">Nike D&P Platform는 Vue 기반으로 작업되었기 때문에 node 서버 세팅이 필요함</p>
-			<h2 class="item-title" id="ui-directory1">Nike-front 디렉토리 구조</h2>
-
-			<pre style="margin-top:20px;"><code class="html">
-
-├─ deploy
-├─ frontend           # PC
-├─ frontend-m         # Mobile
-├─ mdFile
-├─ publishing         # guide
-├─ restApi
-└─ src
-
-		</code></pre>
-			<p class="txt-guide">Nike-front를 최초에 받았을때의 디렉토리 구조이며 PC,MO 각 각의 서버 세팅이 필요함</p>
-
-			<h2 class="item-title" id="ui-server">vue 서버 세팅</h2>
-			<p class="txt-guide">vue를 사용하기 위해선 npm, node.js가 필요</p>
-
-			<h2 class="item-title" id="ui-node">Node.js와 NPM 설치하기</h2>
-			<p class="txt-guide">npm의 경우는 Node Package Manager이기 때문에 node.js를 설치하면 같이 설치됩니다.</p>
-			<pre style="margin-top:20px;"><code class="html">
-$ node -v
-			</code></pre>
-
-			<p class="txt-guide">설치 완료 후 하단의 명령 프롬포트를 실행하여 version 확인 한다</p>
-			<h2 class="item-title" id="ui-npmV">npm 버전 확인</h2>
-			<pre style="margin-top:20px;"><code class="html">
-$ npm -v
-			</code></pre>
-
-			<h2 class="item-title" id="ui-nodeV">node 버전 확인</h2>
-			<pre style="margin-top:20px;"><code class="html">
-$ node -v
-			</code></pre>
-			<h3 class="item-title2" >Nike D&P Platform 구축 프로젝트에서 사용된 버전은 하단과 같다.</h3>
-			<ul class="desc-list">
-				<li>npm version - 6.11.3</li>
-				<li>Node version - v10.17.0</li>
-			</ul>
-
-			<h2 class="item-title" id="ui-setting">서버 세팅</h2>
-			<p class="txt-guide">package.json에 명시된 라이브러리등 설치</p>
-			<pre style="margin-top:20px;"><code class="html">
-$ npm install
-			</code></pre>
-
-			<h2 class="item-title" id="ui-run">서버 실행</h2>
-			<pre style="margin-top:20px;"><code class="html">
-$ npm run serve
-			</code></pre>
-			<ul class="desc-list">
-				<li>PC localhost:8081</li>
-				<li>MO localhost:8082**</li>
-			</ul>
-
-			<h2 class="item-title" id="ui-directory2">작업 디렉토리 구조</h2>
-			<p class="txt-guide">frontend와 frontend-m의 디렉토리 구조는 동일</p>
-
-			<pre style="margin-top:20px;"><code class="html">
-
-├─ node_modules             # npm으로 설치되는 서드파트 라이브러리들이 모여 있는 디렉토리
-├─ public
-├─ package.json             # 빌드 스크립트
-├─ babel.config.js          # 트랜스파일러
-├─ postcss.config.js        # css 자동화
-├─ vue.config.js
-├─ .gitignore               # git 예외처리
-└─ src                      # 실제 코딩이 이루어지는 디렉토리
-    ├─ api                  # api js 디렉토리
-    ├─ components           # 컴포넌트 디렉토리
-    ├─ pub
-    ├─ router               # 라우터 디렉토리
-    ├─ store                # 상태관리 디렉토리
-    ├─ utils                # 필터 등의 유틸리티 함수 디렉토리
-    ├─ App.vue
-    ├─ main.js              #  Vue 인스턴스를 생성, 가장 먼저 실행되는 javascript 파일
-    ├─ assets               # 리소스 리렉토리
-    │   ├─ css              # css
-    │   ├─ fonts            # 폰트 파일
-    │   ├─ lottie           # 로띠
-    │   └─ images           # 이미지
-    │       └─ svg          # svg
-    └─ views                # 라우터 페이지 디렉토리
-        ├─ layouts          # 레이아웃 디렉토리
-        └─ pages            # 페이지 디렉토리
-
-		</code></pre>
+			<div class="guide-contents">
+				<iframe src="button.html"></iframe>
+			</div>
 		</div>
 	</section>
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
-	$(".out-lnb a").off("click.anchor").on("click.anchor", function (e) {
-		e.preventDefault();
-		var $anchor = $(this).attr("href");
-		var scollTop = $($anchor).offset().top - 100;
-		$(".conts").animate({scrollTop: scollTop} , 300);
+	$(document).ready(function(){
+		$('.out-lnb a').off('click.guide-nav').on('click.guide-nav', function (e) {
+			e.preventDefault();
+			$url = $(this).attr('href');
+			$(this).closest(".out-contents").find('.guide-contents iframe').attr('src', $url);
+		});
 	});
 </script>
 </body>
