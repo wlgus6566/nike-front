@@ -139,6 +139,18 @@ public class UserService implements UserDetailsService {
     }
 
     /**
+     * Find by normal list.
+     *
+     * @return the list
+     * @author [오지훈]
+     * @implNote [정상] 상태 유저 목록 조회
+     * @since 2020. 9. 23. 오전 11:36:54
+     */
+    public List<User> findByNormal() {
+        return userRepository.findByUserStatusCode("NORMAL");
+    }
+
+    /**
      * Find by id optional.
      *
      * @param userSeq the user seq
