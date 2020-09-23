@@ -350,7 +350,6 @@ export default {
                         fileExtension: '',
                     }
                 );
-                console.log(123123123123);
                 if (response.content && response.content.length) {
                     this.FileList = response.content;
                 } else {

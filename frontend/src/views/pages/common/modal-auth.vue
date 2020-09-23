@@ -108,7 +108,6 @@ export default {
             return copy;
         },
         dataInit(arr) {
-            console.log(this.copyObj(arr));
             this.groupTreeData = [
                 {
                     authDepth: 0,
@@ -122,7 +121,6 @@ export default {
                     viewYn: null,
                 },
             ];
-            console.log(this.groupTreeData[0]);
         },
 
         childYN(arr, value, YN) {

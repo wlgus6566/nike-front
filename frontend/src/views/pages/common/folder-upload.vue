@@ -459,13 +459,6 @@ export default {
         },
     },
     watch: {
-        'folderDetail.checks': {
-            handler() {
-                console.log('----------------------');
-                console.log('deep', this.folderDetail);
-                console.log('deep2', this.folderDetail.checks);
-            },
-        },
         menuCode() {
             this.getAuthList(this.$route.params.id);
         },
@@ -529,7 +522,6 @@ export default {
                         contentsSeq: seq,
                     }
                 );
-                console.log('getAuthList', response);
                 this.folderDetail.checks = response;
             } catch (error) {
                 console.error(error);
@@ -619,7 +611,6 @@ export default {
         },
         ModalAuthOpen() {
             this.visible.ModalAuth = true;
-            console.log(this.folderDetail.checks);
             this.$refs.modalAuth.dataInit(this.folderDetail.checks);
         },
         uploadFiles() {
@@ -655,7 +646,6 @@ export default {
             this.$refs.fileSet.uploadFiles();
         },
         checksUpdate(checksArr) {
-            console.log('checksUpdate', checksArr);
             this.folderDetail.checks = checksArr;
             this.visible.ModalAuth = false;
         },
@@ -733,13 +723,11 @@ export default {
                 }
 
                 this.menuCode = response.data.menuCode;
-                console.log('init', this.folderDetail.checks);
                 this.folderDetail = {
                     ...response.data,
                     imageBase64: response.data.imageFilePhysicalName,
                     contentsFileList: [],
                 };
-                console.log('init2', this.folderDetail.checks);
                 this.BeginDt = response.data.campaignBeginDt
                     ? new Date(response.data.campaignBeginDt)
                     : null;
@@ -764,7 +752,6 @@ export default {
             this.folderDetail.campaignEndDt = null;
             this.folderDetail.imageFilePhysicalName = '';
             this.folderDetail.exposureYn = 'Y';
-            //console.log(this.pageMenuCode);
             this.folderDetail.folderName = '';
             this.folderDetail.folderContents = '';
             this.folderDetail.campaignPeriodSectionCode = 'SELECT';
