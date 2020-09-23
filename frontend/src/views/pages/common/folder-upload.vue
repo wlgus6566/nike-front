@@ -729,15 +729,22 @@ export default {
                     contentsFileList: [],
                 };
                 this.BeginDt = response.data.campaignBeginDt
-                    ? new Date(response.data.campaignBeginDt)
+                    ? this.newDt(response.data.campaignBeginDt)
                     : null;
                 this.EndDt = response.data.campaignEndDt
-                    ? new Date(response.data.campaignEndDt)
+                    ? this.newDt(response.data.campaignEndDt)
                     : null;
                 await this.$refs.fileSet.getFolderDetailFile();
             } catch (error) {
                 console.error(error);
             }
+        },
+        newDt(val) {
+            const year = val.substr(0, 4);
+            const month = val.substr(5, 2) - 1;
+            const day = val.substr(8, 2);
+            const _date = new Date(year, month, day); // date로 변경
+            return _date;
         },
         cancelBack() {
             /*if (!confirm('작성을 취소하시겠습니까?')) {
