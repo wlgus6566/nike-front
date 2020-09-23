@@ -1,0 +1,81 @@
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../../../frontend-m/src/assets/css/reset.css">
+<link rel="stylesheet" type="text/css" href="guide.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend-m/src/assets/css/layout.css">
+<link rel="stylesheet" type="text/css" href="../../../frontend-m/src/assets/css/ui.nikeFront.css">
+<section class="guide-section mo">
+	<h1 class="guide-title">NO DATA</h1>
+	<div>
+		<h2 class="section-title">Children Components</h2>
+		<h3 class="cont-title">Code</h3>
+		<pre><code class="html">
+&#60;template&#62;
+    &#60;div class="no-data-wrap"&#62;
+        &#60;div class="no-data"&#62;
+            &#60;slot /&#62;
+        &#60;/div&#62;
+    &#60;/div&#62;
+&#60;/template&#62;
+&#60;script&#62;
+export default {
+	name: 'nodata',
+};
+&#60;/script&#62;
+&#60;style scoped&#62;&#60;/style&#62;
+		</code></pre>
+		<h3 class="cont-title">
+			경로 : src > components > no-data > index.vue
+		</h3>
+		<ul class="desc-list">
+			<li>src>components 디렉토리에 no-data 컴포넌트로 작업되어 있는 것을 사용한다.</li>
+			<li>parent 컴포넌트에 위와같이 no-data 컴포넌트를 import 시키며 위의 예시를 참고 한다.</li>
+		</ul>
+	</div>
+
+	<div>
+		<h2 class="section-title">Parent Components</h2>
+		<h3 class="cont-title">Code</h3>
+		<pre><code class="html">
+ &#60;NoData v-else&#62;
+    &#60;i class="icon-search"&#62;&#60;/i&#62;
+    &#60;p class="desc"&#62;검색 결과가 없습니다.&#60;/p&#62;
+&#60;/NoData&#62;
+
+ &#60;NoData v-else&#62;
+	&#60;i class="icon-folder">&#60;/i&#62;
+	&#60;p class="desc"&#62;최근 본 폴더가 없습니다.&#60;/p&#62;
+&#60;/NoData&#62;
+
+&#60;NoData v-if="keyword === ''"&#62;
+    &#60;i class="icon-upload"&#62;&#60;/i&#62;
+    &#60;p class="desc"&#62;등록된 데이터가 없습니다.&#60;/p&#62;
+&#60;/NoData&#62;
+
+
+ &#60;NoData v-else class="file-type"&#62;
+    &#60;i class="icon-file"&#62;&#60;/i&#62;
+    &#60;p class="desc"&#62;등록된 데이터가 없습니다.&#60;/p&#62;
+&#60;/NoData&#62;
+
+.....
+.....
+import NoData from '@/components/no-data';
+		</code></pre>
+		<h3 class="cont-title">등록된 데이터 views</h3>
+		<div class="no-data-wrap">
+			<div class="no-data">
+				<i class="icon-upload"></i>
+				<p class="desc">등록된 데이터가 없습니다.</p>
+			</div>
+		</div>
+		<h3 class="cont-title">검색 결과 views</h3>
+		<div class="no-data-wrap">
+			<div class="no-data">
+				<i class="icon-search"></i>
+				<p class="desc">검색 결과가 없습니다.</p>
+			</div>
+		</div>
+	</div>
+
+</section>
