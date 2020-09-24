@@ -344,7 +344,7 @@ export default {
                     this.$route.params.id,
                     {
                         page: this.page,
-                        size: this.itemLength,
+                        size: 999,
                         sectionCode: 'ALL',
                         orderType: '',
                         fileExtension: '',

@@ -570,7 +570,7 @@ export default {
                     this.$route.params.id,
                     {
                         page: this.page,
-                        size: this.itemLength,
+                        size: 999,
                         sectionCode: this.sectionCode.value,
                         orderType: this.orderType.value,
                         fileExtension: this.fileExtension.value,
