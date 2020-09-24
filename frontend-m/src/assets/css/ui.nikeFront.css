@@ -656,7 +656,7 @@
     width: 100%;
     text-indent: -9999px;
     overflow: hidden;
-    background: url(../images/svg/logo_watermark.svg) repeat center / 30%;
+    background: url(../images/svg/logo_watermark.svg) repeat center;
     opacity: 0.6;
 }
 .folder-detail .thumbnail img {

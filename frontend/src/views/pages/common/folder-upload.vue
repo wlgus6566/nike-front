@@ -294,6 +294,7 @@
                 :menuCode="menuCode"
                 @FileListUpdate="FileListUpdate"
                 @submitForm="submitForm"
+                @getAuthList="getAuthList"
             />
             <div class="btn-area">
                 <button type="button" class="btn-s-white" @click="cancelBack()">
@@ -503,7 +504,6 @@ export default {
                 this.joinOccupyFn();
             }, 1000 * 60 * 4);
         }
-        //this.detailReset();
     },
     deactivated() {
         if (this.$route.params.id) {
@@ -526,34 +526,6 @@ export default {
             } catch (error) {
                 console.error(error);
             }
-        },
-        detailReset() {
-            this.folderDetail = {
-                campaignBeginDt: null,
-                campaignEndDt: null,
-                campaignPeriodSectionCode: 'SELECT',
-                checks: [
-                    {
-                        authDepth: 0,
-                        authName: '전체',
-                        authSeq: 0,
-                        checkBoxYn: 'Y',
-                        detailAuthYn: 'N',
-                        emailReceptionYn: 'N',
-                        roleType: null,
-                        subAuths: [],
-                        viewYn: null,
-                    },
-                ],
-                contentsFileList: [],
-                exposureYn: 'Y',
-                folderContents: '',
-                folderName: '',
-                imageBase64: '',
-                memo: '',
-            };
-            this.BeginDt = null;
-            this.EndDt = null;
         },
         pageMenuCodeAuth(topMenuCode, skillCodes) {
             const index = this.$store.state.gnbMenuListData.findIndex(
@@ -639,7 +611,7 @@ export default {
         },
         ModalAuthOpen() {
             this.visible.ModalAuth = true;
-            this.$refs.modalAuth.dataInit();
+            this.$refs.modalAuth.dataInit(this.folderDetail.checks);
         },
         uploadFiles() {
             if (!this.folderDetail.imageBase64) {
@@ -757,15 +729,22 @@ export default {
                     contentsFileList: [],
                 };
                 this.BeginDt = response.data.campaignBeginDt
-                    ? new Date(response.data.campaignBeginDt)
+                    ? this.newDt(response.data.campaignBeginDt)
                     : null;
                 this.EndDt = response.data.campaignEndDt
-                    ? new Date(response.data.campaignEndDt)
+                    ? this.newDt(response.data.campaignEndDt)
                     : null;
                 await this.$refs.fileSet.getFolderDetailFile();
             } catch (error) {
                 console.error(error);
             }
+        },
+        newDt(val) {
+            const year = val.substr(0, 4);
+            const month = val.substr(5, 2) - 1;
+            const day = val.substr(8, 2);
+            const _date = new Date(year, month, day); // date로 변경
+            return _date;
         },
         cancelBack() {
             /*if (!confirm('작성을 취소하시겠습니까?')) {
@@ -780,7 +759,6 @@ export default {
             this.folderDetail.campaignEndDt = null;
             this.folderDetail.imageFilePhysicalName = '';
             this.folderDetail.exposureYn = 'Y';
-            //console.log(this.pageMenuCode);
             this.folderDetail.folderName = '';
             this.folderDetail.folderContents = '';
             this.folderDetail.campaignPeriodSectionCode = 'SELECT';

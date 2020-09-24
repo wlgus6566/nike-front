@@ -38,6 +38,17 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
     List<User> findAllByUserSeqIn(Long... userSeqArray);
 
     /**
+     * Find by user status code list.
+     *
+     * @param userStatusCode the user status code
+     * @return the list
+     * @author [오지훈]
+     * @implNote 정상 상태 유저 목록 조회
+     * @since 2020. 9. 23. 오전 11:35:52
+     */
+    List<User> findByUserStatusCode(String userStatusCode);
+
+    /**
      * Count by user id int.
      *
      * @param userId the user id
