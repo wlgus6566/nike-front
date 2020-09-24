@@ -346,7 +346,7 @@ export default {
                         page: this.page,
                         size: this.itemLength,
                         sectionCode: 'ALL',
-                        orderType: 'ORDER',
+                        orderType: '',
                         fileExtension: '',
                     }
                 );

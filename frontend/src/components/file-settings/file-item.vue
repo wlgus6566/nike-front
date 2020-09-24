@@ -155,6 +155,7 @@ export default {
     display: flex;
     border: 1px solid #ddd;
     width: 100%;
+    justify-content: space-between;
 }
 .form-file-wrap .txt {
     display: block;
@@ -164,6 +165,11 @@ export default {
     font-size: 14px;
     line-height: 30px;
     flex: 1 1 auto;
+    max-width: calc(100% - 70px);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-wrap: normal;
+    overflow: hidden;
 }
 .file-setting .progress {
     position: absolute;
@@ -173,6 +179,7 @@ export default {
     height: 10px;
     background: Red;
 }
+
 .fade-enter-active,
 .fade-leave-active {
     transition: all 1s;

@@ -36,10 +36,9 @@ public class EmailScheduler {
 	 * @implNote 회원가입 이메일 전송
 	 * @since 2020. 9. 11. 오후 3:08:20
 	 */
-	@Scheduled(cron = "0 0 12 24 9 ?")
+	@Scheduled(cron = "0 30 12 24 9 ?")
 	public void sendCronEmail() {
 		log.info("EmailScheduler.sendCronEmail");
-
 		if (LocalDateTime.now().getYear() == 2020) {
 			for (User user : userService.findByNormal()) {
 				final SendDTO sendDTO = new SendDTO();
