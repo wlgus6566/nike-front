@@ -108,6 +108,9 @@ import fetchProgress from 'fetch-progress';
 import { addContentsBasket, delContentsBasket } from '@/api/contents';
 import bus from '@/utils/bus';
 import { getLoginUpdate } from '@/api/mypage';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+import JSZipUtils from 'jszip-utils';
 
 export default {
     name: 'FileItem',
@@ -140,7 +143,6 @@ export default {
     },
     computed: {
         ie() {
-            console.log(window.fetch.polyfill);
             return window.fetch.polyfill;
         },
         contBasketList: {
@@ -181,7 +183,7 @@ export default {
             const loaded = this.downloadFiles.reduce((a, b) => {
                 return a + b.transferred;
             }, 0);
-            this.loaded = Math.round((loaded * 100) / this.totalSize);
+            this.loaded = Math.round((loaded * 90) / this.totalSize);
         },
 
         async fileDownload() {
@@ -204,7 +206,6 @@ export default {
                         .then(
                             fetchProgress({
                                 onProgress(progress) {
-                                    console.log(progress);
                                     vm.downloadFiles[i] = {
                                         total: progress.total,
                                         transferred: progress.transferred,
@@ -218,114 +219,46 @@ export default {
                             })
                         )
                         .then((r) => r.blob())
-                        .then((src) => {
-                            if (window.navigator.msSaveBlob) {
-                                this.link.push({
-                                    data: src,
-                                    name: el.fileName,
-                                    seq: el.contentsBasketSeq,
-                                });
-                            } else {
-                                const link = document.createElement('a');
-                                link.href = URL.createObjectURL(src);
-                                link.seq = el.contentsBasketSeq;
-                                link.setAttribute('download', el.fileName);
-                                document.body.appendChild(link);
-                                this.link.push(link);
-                            }
+                        .then((blob) => {
+                            this.link.push({
+                                data: blob,
+                                name: el.fileName,
+                                seq: el.contentsBasketSeq,
+                            });
                         })
                         .catch((e) => {
                             console.log(e);
                         });
                 })
             );
-
-            this.link.forEach((el, i) => {
-                setTimeout(() => {
-                    if (window.navigator.msSaveBlob) {
-                        window.navigator.msSaveBlob(
-                            new Blob([el.data]),
-                            el.name
-                        );
-                        this.delContBasket(el.seq);
-                    } else {
-                        el.click();
-                        this.delContBasket(el.seq);
-                    }
-                }, 100 * i);
-            });
-            clearInterval(this.fileUploadingInterval);
-            this.loaded = 0;
-            this.downloadFiles = null;
-        },
-
-        /*async fileDownload() {
-            clearInterval(this.fileUploadingInterval);
-            this.fileUploadingInterval = setInterval(() => {
-                this.loginUpdate();
-            }, 1000 * 60 * 10);
-
-            this.downloadFiles = [];
-            if (!window.navigator.msSaveBlob) {
-                this.link.forEach((el) => {
-                    document.querySelector('body').removeChild(el);
-                });
-            }
-            this.link = [];
+            const zip = new JSZip();
             await Promise.all(
-                this.contBasketList.map(async (el, i) => {
-                    try {
-                        const config = {
-                            responseType: 'blob',
-                            timeout: 0,
-                            onDownloadProgress: (progressEvent) => {
-                                this.downloadFiles[i] = {
-                                    total: progressEvent.total,
-                                    loaded: progressEvent.loaded,
-                                };
-                                this.loadedUpdate();
-                            },
-                        };
-                        const response = await contentFileDownload(
-                            el.contentsFileSeq,
-                            config
-                        );
-
-                        if (window.navigator.msSaveBlob) {
-                            this.link.push({
-                                data: response.data,
-                                name: el.fileName,
-                                seq: el.contentsBasketSeq,
-                            });
-                        } else {
-                            const url = window.URL.createObjectURL(
-                                new Blob([response.data])
-                            );
-                            const link = document.createElement('a');
-                            link.href = url;
-                            link.seq = el.contentsBasketSeq;
-                            link.setAttribute('download', el.fileName);
-                            document.body.appendChild(link);
-                            this.link.push(link);
-                        }
-                    } catch (error) {
-                        console.error(error);
-                    }
+                this.link.map((el) => {
+                    zip.file(el.name, el.data);
                 })
             );
-            this.link.forEach((el) => {
-                if (window.navigator.msSaveBlob) {
-                    window.navigator.msSaveBlob(new Blob([el.data]), el.name);
+            await zip
+                .generateAsync(
+                    {
+                        type: 'blob',
+                    },
+                    (metadata) => {
+                        this.loaded = 90 + Math.round(metadata.percent * 0.1);
+                    }
+                )
+                .then((content) => {
+                    saveAs(content, 'download.zip');
+                });
+            await Promise.all(
+                this.link.map((el) => {
                     this.delContBasket(el.seq);
-                } else {
-                    el.click();
-                    this.delContBasket(el.seq);
-                }
-            });
+                })
+            );
             clearInterval(this.fileUploadingInterval);
-            this.loaded = 0;
             this.downloadFiles = null;
-        },*/
+            this.loaded = 0;
+        },
+
         basketEnter() {
             this.$store.commit('SET_FILE_MOUSEENTER', true);
         },
