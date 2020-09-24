@@ -194,11 +194,6 @@ export default {
             }, 1000 * 60 * 10);
 
             this.downloadFiles = [];
-            if (!window.navigator.msSaveBlob) {
-                this.link.forEach((el) => {
-                    document.querySelector('body').removeChild(el);
-                });
-            }
             this.link = [];
             await Promise.all(
                 this.contBasketList.map(async (el, i) => {
