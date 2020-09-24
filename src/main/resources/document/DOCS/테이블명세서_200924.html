@@ -1,0 +1,5217 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>테이블 정의서(HTML)</title>
+<style type="text/css">
+<!--
+.entity{
+	width: 1024px;
+	margin-bottom: 50px;
+	page-break-before: always;
+}
+.entity-header tr td, .entity-header tr th{
+	text-align: left;
+	padding-left: 5px;
+	padding-right: 5px;
+	vertical-align: top;
+}
+.entity-header{
+	border-spacing: 0px;
+	border-top: solid 2px black;
+	margin:0px;
+}
+.column-list{
+	width: 100%;
+	border-spacing: 0px;
+	margin: 0px;
+	border-bottom: solid 2px black;
+}
+.column-list th{
+	border-bottom: solid 2px black;
+	border-top: solid 2px black;
+	text-align: left;
+}
+.column-list th, .column-list td{
+	padding-left: 5px;
+	padding-right: 5px;
+	vertical-align: top;
+}
+.under-line{
+	border-bottom: solid 1px gray;
+}
+.right-line{
+	border-right: solid 1px gray;
+}
+.left-line{
+	border-left: solid 1px gray;
+}
+th{
+	background-color: #eee;
+}
+-->
+</style>
+</head>
+<body>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">에이젼시</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_AGENCY</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">AGENCY_SEQ</td>
+						<td class="right-line">에이젼시_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">AGENCY_NAME</td>
+						<td class="right-line">에이젼시_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">AGENCY_DESCRIPTION</td>
+						<td class="right-line">에이젼시_설명</td>
+						<td class="right-line">콘텐츠</td>
+						<td class="right-line">TEXT</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">TELEPHONE_NUMBER</td>
+						<td class="right-line">전화번호</td>
+						<td class="right-line">암호화</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">EMAIL</td>
+						<td class="right-line">이메일</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">USE_YN</td>
+						<td class="right-line">사용_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">9</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">10</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">권한</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_AUTH</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">AUTH_SEQ</td>
+						<td class="right-line">권한_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">UPPER_AUTH_SEQ</td>
+						<td class="right-line">상위_권한_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">AUTH_NAME</td>
+						<td class="right-line">권한_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">ROLE_TYPE</td>
+						<td class="right-line">역할_타입</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">USE_YN</td>
+						<td class="right-line">사용_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line"></td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">AUTH_DEPTH</td>
+						<td class="right-line">권한_깊이</td>
+						<td class="right-line">숫자</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">9</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">10</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">권한_메뉴_역할</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_AUTH_MENU_ROLE</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">AUTH_MENU_ROLE_SEQ</td>
+						<td class="right-line">권한_메뉴_역할_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">AUTH_SEQ</td>
+						<td class="right-line">권한_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">MENU_ROLE_SEQ</td>
+						<td class="right-line">메뉴_역할_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">달력</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_CALENDAR</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">CALENDAR_SEQ</td>
+						<td class="right-line">달력_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">CALENDAR_SECTION_CODE</td>
+						<td class="right-line">달력_구분_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">SCHEDULE_NAME</td>
+						<td class="right-line">일정_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">CONTENTS</td>
+						<td class="right-line">내용</td>
+						<td class="right-line">콘텐츠</td>
+						<td class="right-line">TEXT</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">BEGIN_DT</td>
+						<td class="right-line">시작_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">END_DT</td>
+						<td class="right-line">종료_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">9</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">10</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">컨텐츠</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_CONTENTS</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">CONTENTS_SEQ</td>
+						<td class="right-line">컨텐츠_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">TOP_MENU_CODE</td>
+						<td class="right-line">최고_메뉴_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">MENU_CODE</td>
+						<td class="right-line">메뉴_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">IMAGE_FILE_NAME</td>
+						<td class="right-line">이미지_파일_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">IMAGE_FILE_SIZE</td>
+						<td class="right-line">이미지_파일_사이즈</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">IMAGE_FILE_PHYSICAL_NAME</td>
+						<td class="right-line">이미지_파일_물리_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">FOLDER_NAME</td>
+						<td class="right-line">폴더_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">FOLDER_CONTENTS</td>
+						<td class="right-line">폴더_내용</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">9</td>
+						<td class="right-line">CAMPAIGN_PERIOD_SECTION_CODE</td>
+						<td class="right-line">캠페인_기간_구분_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">10</td>
+						<td class="right-line">CAMPAIGN_BEGIN_DT</td>
+						<td class="right-line">캠페인_시작_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">11</td>
+						<td class="right-line">CAMPAIGN_END_DT</td>
+						<td class="right-line">캠페인_종료_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">12</td>
+						<td class="right-line">MEMO</td>
+						<td class="right-line">메모</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">13</td>
+						<td class="right-line">READ_COUNT</td>
+						<td class="right-line">조회수</td>
+						<td class="right-line">조회수</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">0</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">14</td>
+						<td class="right-line">EXPOSURE_YN</td>
+						<td class="right-line">노출_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">15</td>
+						<td class="right-line">USE_YN</td>
+						<td class="right-line">사용_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">16</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">17</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">18</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">19</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">컨텐츠_장바구니</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_CONTENTS_BASKET</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">CONTENTS_BASKET_SEQ</td>
+						<td class="right-line">컨텐츠_장바구니_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">USER_SEQ</td>
+						<td class="right-line">유저_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">CONTENTS_FILE_SEQ</td>
+						<td class="right-line">컨텐츠_파일_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">컨텐츠_파일</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_CONTENTS_FILE</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">CONTENTS_FILE_SEQ</td>
+						<td class="right-line">컨텐츠_파일_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">CONTENTS_SEQ</td>
+						<td class="right-line">컨텐츠_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">FILE_SECTION_CODE</td>
+						<td class="right-line">파일_구분_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">FILE_KIND_CODE</td>
+						<td class="right-line">파일_종류_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">TITLE</td>
+						<td class="right-line">타이틀</td>
+						<td class="right-line">제목</td>
+						<td class="right-line">VARCHAR(100)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">URL</td>
+						<td class="right-line">URL</td>
+						<td class="right-line">웹주소</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">FILE_NAME</td>
+						<td class="right-line">파일_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">FILE_SIZE</td>
+						<td class="right-line">파일_사이즈</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">9</td>
+						<td class="right-line">FILE_PHYSICAL_NAME</td>
+						<td class="right-line">파일_물리_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">10</td>
+						<td class="right-line">FILE_CONTENT_TYPE</td>
+						<td class="right-line">파일_컨텐트_타입</td>
+						<td class="right-line">중문</td>
+						<td class="right-line">VARCHAR(100)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">11</td>
+						<td class="right-line">FILE_EXTENSION</td>
+						<td class="right-line">파일_확장자</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">12</td>
+						<td class="right-line">THUMBNAIL_FILE_NAME</td>
+						<td class="right-line">썸네일_파일_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">13</td>
+						<td class="right-line">THUMBNAIL_FILE_SIZE</td>
+						<td class="right-line">썸네일_파일_사이즈</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">14</td>
+						<td class="right-line">THUMBNAIL_FILE_PHYSICAL_NAME</td>
+						<td class="right-line">썸네일_파일_물리_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">15</td>
+						<td class="right-line">DETAIL_THUMBNAIL_FILE_NAME</td>
+						<td class="right-line">상세_썸네일_파일_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">16</td>
+						<td class="right-line">DETAIL_THUMBNAIL_FILE_SIZE</td>
+						<td class="right-line">상세_썸네일_파일_사이즈</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">17</td>
+						<td class="right-line">DETAIL_THUMBNAIL_FILE_PHYSICAL_NAME</td>
+						<td class="right-line">상세_썸네일_파일_물리_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">18</td>
+						<td class="right-line">DOWNLOAD_COUNT</td>
+						<td class="right-line">다운로드_수</td>
+						<td class="right-line">조회수</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">0</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">19</td>
+						<td class="right-line">FILE_ORDER</td>
+						<td class="right-line">파일_순서</td>
+						<td class="right-line">숫자</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">20</td>
+						<td class="right-line">USE_YN</td>
+						<td class="right-line">사용_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">21</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">22</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">23</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">24</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">메일_발송_로그</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_EMAIL_SENDING_LOG</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">EMAIL_SENDING_LOG_SEQ</td>
+						<td class="right-line">메일_발송_로그_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">EMAIL</td>
+						<td class="right-line">이메일</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">TITLE</td>
+						<td class="right-line">타이틀</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">CONTENTS</td>
+						<td class="right-line">내용</td>
+						<td class="right-line">콘텐츠</td>
+						<td class="right-line">TEXT</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">오류 로그</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_ERROR_LOG</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">ERROR_LOG_SEQ</td>
+						<td class="right-line">오류_로그_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">URL</td>
+						<td class="right-line">URL</td>
+						<td class="right-line">웹주소</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">ERROR_CONTENTS</td>
+						<td class="right-line">오류_내용</td>
+						<td class="right-line">콘텐츠</td>
+						<td class="right-line">TEXT</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">상품_장바구니</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_GOODS_BASKET</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">GOODS_BASKET_SEQ</td>
+						<td class="right-line">상품_장바구니_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">USER_SEQ</td>
+						<td class="right-line">유저_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">GOODS_SEQ</td>
+						<td class="right-line">상품_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">ORDER_QUANTITY</td>
+						<td class="right-line">주문_수량</td>
+						<td class="right-line">수량</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">0</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">공휴일</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_HOLIDAY</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">HOLIDAY_SEQ</td>
+						<td class="right-line">공휴일_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">HOLIDAY_NAME</td>
+						<td class="right-line">공휴일_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">HOLIDAY_DT</td>
+						<td class="right-line">공휴일_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">메뉴_역할</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_MENU_ROLE</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">MENU_ROLE_SEQ</td>
+						<td class="right-line">메뉴_역할_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">MENU_SEQ</td>
+						<td class="right-line">메뉴_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">MENU_SKILL_CODE</td>
+						<td class="right-line">메뉴_기능_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">MENU_SKILL_NAME</td>
+						<td class="right-line">메뉴_기능_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">메뉴_역할_리소스</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_MENU_ROLE_RESOURCE</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">MENU_ROLE_RESOURCE_SEQ</td>
+						<td class="right-line">메뉴_역할_리소스_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">MENU_ROLE_SEQ</td>
+						<td class="right-line">메뉴_역할_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">RESOURCE_URL</td>
+						<td class="right-line">리소스_URL</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">RESOURCE_METHOD</td>
+						<td class="right-line">리소스_메소드</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">주문</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_ORDER</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">ORDER_SEQ</td>
+						<td class="right-line">주문_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">ORDER_DESCRIPTION</td>
+						<td class="right-line">주문_설명</td>
+						<td class="right-line">콘텐츠</td>
+						<td class="right-line">TEXT</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">TOTAL_AMOUNT</td>
+						<td class="right-line">총_금액</td>
+						<td class="right-line">금액</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">USE_YN</td>
+						<td class="right-line">사용_여부</td>
+						<td class="right-line">Y/N</td>
+						<td class="right-line">VARCHAR(1)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">주문_상품_매핑</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_ORDER_PRODUCT_MAPPING</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">ORDER_GOODS_SEQ</td>
+						<td class="right-line">주문_상품_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">ORDER_SEQ</td>
+						<td class="right-line">주문_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">GOODS_SEQ</td>
+						<td class="right-line">상품_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">ORDER_QUANTITY</td>
+						<td class="right-line">주문_수량</td>
+						<td class="right-line">수량</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">0</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">상품</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_PRODUCT</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">GOODS_SEQ</td>
+						<td class="right-line">상품_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">CATEGORY2_CODE</td>
+						<td class="right-line">카테고리2_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">CATEGORY3_CODE</td>
+						<td class="right-line">카테고리3_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">AGENCY_SEQ</td>
+						<td class="right-line">에이젼시_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">IMAGE_FILE_NAME</td>
+						<td class="right-line">이미지_파일_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">IMAGE_FILE_SIZE</td>
+						<td class="right-line">이미지_파일_사이즈</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">IMAGE_FILE_PHYSICAL_NAME</td>
+						<td class="right-line">이미지_파일_물리_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">THUMBNAIL_FILE_NAME</td>
+						<td class="right-line">썸네일_파일_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">9</td>
+						<td class="right-line">THUMBNAIL_FILE_SIZE</td>
+						<td class="right-line">썸네일_파일_사이즈</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">10</td>
+						<td class="right-line">THUMBNAIL_FILE_PHYSICAL_NAME</td>
+						<td class="right-line">썸네일_파일_물리_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">11</td>
+						<td class="right-line">GOODS_NAME</td>
+						<td class="right-line">상품_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">12</td>
+						<td class="right-line">GOODS_DESCRIPTION</td>
+						<td class="right-line">상품_설명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">13</td>
+						<td class="right-line">SIZE</td>
+						<td class="right-line">사이즈</td>
+						<td class="right-line">중문</td>
+						<td class="right-line">VARCHAR(100)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">14</td>
+						<td class="right-line">UNIT_PRICE</td>
+						<td class="right-line">단가</td>
+						<td class="right-line">금액</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">0</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">15</td>
+						<td class="right-line">MINIMUM_ORDER_QUANTITY</td>
+						<td class="right-line">최소_주문_수량</td>
+						<td class="right-line">수량</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">0</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">16</td>
+						<td class="right-line">EXPOSURE_YN</td>
+						<td class="right-line">노출_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">17</td>
+						<td class="right-line">USE_YN</td>
+						<td class="right-line">사용_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">18</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">19</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">20</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">21</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">보고서</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_REPORT</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">REPORT_SEQ</td>
+						<td class="right-line">보고서_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">AUTH_SEQ</td>
+						<td class="right-line">권한_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">REPORT_SECTION_CODE</td>
+						<td class="right-line">보고서_구분_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">REPORT_NAME</td>
+						<td class="right-line">보고서_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">IMAGE_FILE_NAME</td>
+						<td class="right-line">이미지_파일_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">IMAGE_FILE_SIZE</td>
+						<td class="right-line">이미지_파일_사이즈</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">IMAGE_FILE_PHYSICAL_NAME</td>
+						<td class="right-line">이미지_파일_물리_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">THUMBNAIL_FILE_NAME</td>
+						<td class="right-line">썸네일_파일_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">9</td>
+						<td class="right-line">THUMBNAIL_FILE_SIZE</td>
+						<td class="right-line">썸네일_파일_사이즈</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">10</td>
+						<td class="right-line">THUMBNAIL_FILE_PHYSICAL_NAME</td>
+						<td class="right-line">썸네일_파일_물리_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">11</td>
+						<td class="right-line">READ_COUNT</td>
+						<td class="right-line">조회수</td>
+						<td class="right-line">조회수</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line">0</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">12</td>
+						<td class="right-line">USE_YN</td>
+						<td class="right-line">사용_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">13</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">14</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">15</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">16</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">보고서_파일</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_REPORT_FILE</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">REPORT_FILE_SEQ</td>
+						<td class="right-line">보고서_파일_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">REPORT_SEQ</td>
+						<td class="right-line">보고서_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">FILE_KIND_CODE</td>
+						<td class="right-line">파일_종류_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">FILE_NAME</td>
+						<td class="right-line">파일_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">FILE_SIZE</td>
+						<td class="right-line">파일_사이즈</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">FILE_PHYSICAL_NAME</td>
+						<td class="right-line">파일_물리_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">FILE_CONTENT_TYPE</td>
+						<td class="right-line">파일_컨텐트_타입</td>
+						<td class="right-line">중문</td>
+						<td class="right-line">VARCHAR(100)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">FILE_EXTENSION</td>
+						<td class="right-line">파일_확장자</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">9</td>
+						<td class="right-line">THUMBNAIL_FILE_NAME</td>
+						<td class="right-line">썸네일_파일_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">10</td>
+						<td class="right-line">THUMBNAIL_FILE_SIZE</td>
+						<td class="right-line">썸네일_파일_사이즈</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">11</td>
+						<td class="right-line">THUMBNAIL_FILE_PHYSICAL_NAME</td>
+						<td class="right-line">썸네일_파일_물리_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">12</td>
+						<td class="right-line">DETAIL_THUMBNAIL_FILE_NAME</td>
+						<td class="right-line">상세_썸네일_파일_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">13</td>
+						<td class="right-line">DETAIL_THUMBNAIL_FILE_SIZE</td>
+						<td class="right-line">상세_썸네일_파일_사이즈</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">14</td>
+						<td class="right-line">DETAIL_THUMBNAIL_FILE_PHYSICAL_NAME</td>
+						<td class="right-line">상세_썸네일_파일_물리_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">15</td>
+						<td class="right-line">DOWNLOAD_COUNT</td>
+						<td class="right-line">다운로드_수</td>
+						<td class="right-line">조회수</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">0</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">16</td>
+						<td class="right-line">USE_YN</td>
+						<td class="right-line">사용_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">17</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">18</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">19</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">20</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">유저</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_USER</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">USER_SEQ</td>
+						<td class="right-line">유저_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">USER_ID</td>
+						<td class="right-line">유저_아이디</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">PASSWORD</td>
+						<td class="right-line">비밀번호</td>
+						<td class="right-line">암호화</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">NICKNAME</td>
+						<td class="right-line">닉네임</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">LOGIN_IP</td>
+						<td class="right-line">로그인_아이피</td>
+						<td class="right-line">아이피</td>
+						<td class="right-line">VARCHAR(100)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">LOGIN_DT</td>
+						<td class="right-line">로그인_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">USER_STATUS_CODE</td>
+						<td class="right-line">유저_상태_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">TERMS_AGREE_YN</td>
+						<td class="right-line">약관_동의_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">9</td>
+						<td class="right-line">LOGIN_BROWSER_HEADER</td>
+						<td class="right-line">로그인_브라우저_헤더</td>
+						<td class="right-line">암호화_문자열</td>
+						<td class="right-line">VARCHAR(500)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">10</td>
+						<td class="right-line">PASSWORD_LAST_UPDATE_DT</td>
+						<td class="right-line">비밀번호_최종_수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">11</td>
+						<td class="right-line">PASSWORD_CHANGE_YN</td>
+						<td class="right-line">비밀번호_변경_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'Y'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">12</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">13</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">14</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">15</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">유저_활동_로그</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_USER_ACTION_LOG</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">ACTION_LOG_SEQ</td>
+						<td class="right-line">활동_로그_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">USER_SEQ</td>
+						<td class="right-line">유저_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">URL</td>
+						<td class="right-line">URL</td>
+						<td class="right-line">웹주소</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">METHOD_TYPE_NAME</td>
+						<td class="right-line">메소드_타입_명</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">METHOD_SIGNATURE</td>
+						<td class="right-line">메소드_시그니처</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">PARAMETER</td>
+						<td class="right-line">파라미터</td>
+						<td class="right-line">콘텐츠</td>
+						<td class="right-line">TEXT</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">9</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">10</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">유저_권한</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_USER_AUTH</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">USER_AUTH_SEQ</td>
+						<td class="right-line">유저_권한_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">USER_SEQ</td>
+						<td class="right-line">유저_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">AUTH_SEQ</td>
+						<td class="right-line">권한_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">컨텐츠_권한</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_USER_CONTENTS</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">CONTENTS_AUTH_SEQ</td>
+						<td class="right-line">컨텐츠_권한_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">AUTH_SEQ</td>
+						<td class="right-line">권한_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">CONTENTS_SEQ</td>
+						<td class="right-line">컨텐츠_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">비밀번호_이력</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_PASSWORD_HISTORY</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">PASSWORD_HISTORY_SEQ</td>
+						<td class="right-line">비밀번호_이력_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">USER_SEQ</td>
+						<td class="right-line">유저_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">PASSWORD</td>
+						<td class="right-line">비밀번호</td>
+						<td class="right-line">암호화</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">금칙어</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_SLANG</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">SLANG_SEQ</td>
+						<td class="right-line">금칙어_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">SLANG</td>
+						<td class="right-line">금칙어</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">위시리스트</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_WISH_LIST</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">WISH_LIST_SEQ</td>
+						<td class="right-line">위시리스트_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">USER_SEQ</td>
+						<td class="right-line">유저_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">GOODS_SEQ</td>
+						<td class="right-line">상품_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">게시물</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_NOTICE_ARTICLE</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">NOTICE_ARTICLE_SEQ</td>
+						<td class="right-line">게시물_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">NOTICE_ARTICLE_SECTION_CODE</td>
+						<td class="right-line">게시물_구분_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">NOTICE_ARTICLE_CATEGORY_CODE</td>
+						<td class="right-line">게시물_카테고리_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">NOTICE_YN</td>
+						<td class="right-line">공지_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">THUMBNAIL_FILE_NAME</td>
+						<td class="right-line">썸네일_파일_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">THUMBNAIL_FILE_SIZE</td>
+						<td class="right-line">썸네일_파일_사이즈</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">THUMBNAIL_FILE_PHYSICAL_NAME</td>
+						<td class="right-line">썸네일_파일_물리_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">TITLE</td>
+						<td class="right-line">제목</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">9</td>
+						<td class="right-line">CONTENTS</td>
+						<td class="right-line">내용</td>
+						<td class="right-line">콘텐츠</td>
+						<td class="right-line">TEXT</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">10</td>
+						<td class="right-line">USE_YN</td>
+						<td class="right-line">사용_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">11</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">12</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">13</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">14</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">보고서_답글</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_REPORT_ANSWER</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">ANSWER_SEQ</td>
+						<td class="right-line">답글_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">REPORT_SEQ</td>
+						<td class="right-line">보고서_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">ANSWER_CONTENTS</td>
+						<td class="right-line">답글_내용</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">USE_YN</td>
+						<td class="right-line">사용_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">배너</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_BANNER</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">BANNER_SEQ</td>
+						<td class="right-line">배너_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">TITLE</td>
+						<td class="right-line">제목</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">CONTENTS</td>
+						<td class="right-line">내용</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">IMAGE_FILE_NAME</td>
+						<td class="right-line">이미지_파일_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">IMAGE_FILE_SIZE</td>
+						<td class="right-line">이미지_파일_사이즈</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">IMAGE_FILE_PHYSICAL_NAME</td>
+						<td class="right-line">이미지_파일_물리_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">MOBILE_IMAGE_FILE_NAME</td>
+						<td class="right-line">모바일_이미지_파일_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">MOBILE_IMAGE_FILE_SIZE</td>
+						<td class="right-line">모바일_이미지_파일_사이즈</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">9</td>
+						<td class="right-line">MOBILE_IMAGE_FILE_PHYSICAL_NAME</td>
+						<td class="right-line">모바일_이미지_파일_물리_명</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">10</td>
+						<td class="right-line">LINK_URL_TYPE_CODE</td>
+						<td class="right-line">링크_URL_타입_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">11</td>
+						<td class="right-line">LINK_URL</td>
+						<td class="right-line">링크_URL</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">12</td>
+						<td class="right-line">USE_YN</td>
+						<td class="right-line">사용_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">13</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">14</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">15</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">16</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">보고서_장바구니</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_REPORT_BASKET</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">REPORT_BASKET_SEQ</td>
+						<td class="right-line">보고서_장바구니_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">USER_SEQ</td>
+						<td class="right-line">유저_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">REPORT_FILE_SEQ</td>
+						<td class="right-line">보고서_파일_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">히스토리</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_HISTORY</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">HISTORY_SEQ</td>
+						<td class="right-line">히스토리_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">REPORT_SEQ</td>
+						<td class="right-line">보고서_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">CONTENTS_SEQ</td>
+						<td class="right-line">컨텐츠_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">TYPE_CD</td>
+						<td class="right-line">타입_코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">메뉴</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_MENU</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">MENU_SEQ</td>
+						<td class="right-line">메뉴_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">MENU_CODE</td>
+						<td class="right-line">메뉴_공통코드</td>
+						<td class="right-line">단문</td>
+						<td class="right-line">VARCHAR(50)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">UPPER_MENU_SEQ</td>
+						<td class="right-line">상위_메뉴_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">MENU_NAME</td>
+						<td class="right-line">메뉴_이름</td>
+						<td class="right-line">장문</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">MENU_PATH_URL</td>
+						<td class="right-line">메뉴_경로_URL</td>
+						<td class="right-line">중문</td>
+						<td class="right-line">VARCHAR(100)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">CREATION_AUTH_YN</td>
+						<td class="right-line">생성_권한_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">DELETE_AUTH_YN</td>
+						<td class="right-line">삭제_권한_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">DOWNLOAD_AUTH_YN</td>
+						<td class="right-line">다운로드_권한_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">9</td>
+						<td class="right-line">LIST_AUTH_YN</td>
+						<td class="right-line">목록_권한_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">10</td>
+						<td class="right-line">DETAIL_AUTH_YN</td>
+						<td class="right-line">상세_권한_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">11</td>
+						<td class="right-line">REPORT_AUTH_YN</td>
+						<td class="right-line">보고서_권한_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">12</td>
+						<td class="right-line">MENU_ORDER</td>
+						<td class="right-line">메뉴_순서</td>
+						<td class="right-line">순서</td>
+						<td class="right-line">INT</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">0</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">13</td>
+						<td class="right-line">MENU_DEPTH</td>
+						<td class="right-line">메뉴_깊이</td>
+						<td class="right-line">숫자</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">14</td>
+						<td class="right-line">USE_YN</td>
+						<td class="right-line">사용_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">15</td>
+						<td class="right-line">PC_YN</td>
+						<td class="right-line">PC_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">16</td>
+						<td class="right-line">MOBILE_YN</td>
+						<td class="right-line">모바일_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">17</td>
+						<td class="right-line">MANAGEMENT_YN</td>
+						<td class="right-line">관리_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">18</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">19</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">20</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">21</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">유저_로그인_로그</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_USER_LOGIN_LOG</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">LOGIN_LOG_SEQ</td>
+						<td class="right-line">로그인_로그_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">USER_SEQ</td>
+						<td class="right-line">유저_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">LOGIN_DT</td>
+						<td class="right-line">로그인_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">LOGIN_IP</td>
+						<td class="right-line">로그인_아이피</td>
+						<td class="right-line">아이피</td>
+						<td class="right-line">VARCHAR(100)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">공통코드</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_CODE</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">CODE_SEQ</td>
+						<td class="right-line">공통코드_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">CODE</td>
+						<td class="right-line">공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">UPPER_CODE</td>
+						<td class="right-line">상위_공통코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">CODE_NAME</td>
+						<td class="right-line">공통코드_명</td>
+						<td class="right-line">문자</td>
+						<td class="right-line">VARCHAR(255)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">CODE_DESCRIPTION</td>
+						<td class="right-line">공통코드_설명</td>
+						<td class="right-line">콘텐츠</td>
+						<td class="right-line">TEXT</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">CODE_ORDER</td>
+						<td class="right-line">공통코드_순서</td>
+						<td class="right-line">순서</td>
+						<td class="right-line">INT</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">0</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">USE_YN</td>
+						<td class="right-line">사용_여부</td>
+						<td class="right-line">여부</td>
+						<td class="right-line">CHAR(1)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line">'N'</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">9</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">10</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">11</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">알림</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_ALARM</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">ALARM_SEQ</td>
+						<td class="right-line">알림_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">CONTENTS_SEQ</td>
+						<td class="right-line">컨텐츠_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">REPORT_SEQ</td>
+						<td class="right-line">보고서_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">USER_SEQ</td>
+						<td class="right-line">유저_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">TYPE_ACTION</td>
+						<td class="right-line">타입_행위</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">TYPE_CD</td>
+						<td class="right-line">타입_코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">9</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">10</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="entity" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table width="100%" class="entity-header">
+					<tr>
+						<th class="under-line right-line" width="140px">엔티티 타입명</th>
+						<td class="under-line right-line">최근업로드폴더</td>
+						<th class="under-line right-line" width="70px">작성일</th>
+						<td class="under-line">20xx xx xx</td>
+					</tr>
+					<tr>
+						<th class="under-line right-line">테이블명</th>
+						<td class="under-line right-line">TB_RECENT_UPLOAD</td>
+						<th class="under-line right-line">작성자</th>
+						<td class="under-line">홍길동</td>
+					</tr>
+					<tr>
+						<th class="right-line">테이블 설명</th>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="column-list">
+					<tr>
+						<th class="right-line" width="40px">번호</th>
+						<th class="right-line">컬럼명</th>
+						<th class="right-line">속성명</th>
+						<th class="right-line">도메인</th>
+						<th class="right-line">데이터타입</th>
+						<th class="right-line">NULL여부</th>
+						<th class="right-line">기본값</th>
+						<th>KEY</th>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">1</td>
+						<td class="right-line">RECENT_UPLOAD_SEQ</td>
+						<td class="right-line">최근_업로드_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td>PK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">2</td>
+						<td class="right-line">REPORT_SEQ</td>
+						<td class="right-line">보고서_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">3</td>
+						<td class="right-line">CONTENTS_SEQ</td>
+						<td class="right-line">컨텐츠_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line"></td>
+						<td class="right-line"></td>
+						<td>FK</td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">4</td>
+						<td class="right-line">TYPE_CD</td>
+						<td class="right-line">타입_코드</td>
+						<td class="right-line">코드</td>
+						<td class="right-line">VARCHAR(20)</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">5</td>
+						<td class="right-line">REGISTER_SEQ</td>
+						<td class="right-line">등록자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">6</td>
+						<td class="right-line">REGISTRATION_DT</td>
+						<td class="right-line">등록_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">7</td>
+						<td class="right-line">UPDATER_SEQ</td>
+						<td class="right-line">수정자_시퀀스</td>
+						<td class="right-line">시퀀스</td>
+						<td class="right-line">INTEGER</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="right-line" style="text-align:right;">8</td>
+						<td class="right-line">UPDATE_DT</td>
+						<td class="right-line">수정_일시</td>
+						<td class="right-line">일시</td>
+						<td class="right-line">DATETIME</td>
+						<td class="right-line">Not Null</td>
+						<td class="right-line"></td>
+						<td></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
