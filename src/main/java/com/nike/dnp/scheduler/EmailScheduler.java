@@ -7,6 +7,7 @@ import com.nike.dnp.entity.user.User;
 import com.nike.dnp.service.user.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -35,7 +36,7 @@ public class EmailScheduler {
 	 * @implNote 회원가입 이메일 전송
 	 * @since 2020. 9. 11. 오후 3:08:20
 	 */
-	//@Scheduled(cron = "0 0 12 24 9 ?")
+	@Scheduled(cron = "0 30 12 24 9 ?")
 	public void sendCronEmail() {
 		log.info("EmailScheduler.sendCronEmail");
 
