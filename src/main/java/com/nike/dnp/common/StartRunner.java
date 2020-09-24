@@ -3,12 +3,9 @@ package com.nike.dnp.common;
 import com.nike.dnp.util.S3Util;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jets3t.service.CloudFrontServiceException;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-
-import java.text.ParseException;
 
 /**
  * Runner
@@ -31,18 +28,11 @@ public class StartRunner implements ApplicationRunner {
      * @implNote
      */
     @Override
-    public void run(final ApplicationArguments args) throws CloudFrontServiceException, ParseException {
+    public void run(final ApplicationArguments args) {
         log.info("Application Runner!!");
 
         //S3 init
         S3Util.init();
-
-
-        /*System.out.println("======================================================");
-        System.out.println(CloudFrontUtil.getCustomSignedUrl("/contents/20200915174918.mp4", 1000));
-        System.out.println(CloudFrontUtil.getCustomSignedUrl("/contents/20200917343000TFpzuDjPsx.MP4", 1000));
-        System.out.println(CloudFrontUtil.getCustomSignedUrl("/contents/20200917361000NqhCWXAaGB.PNG", 1000));
-        System.out.println("======================================================");*/
     }
 
 }

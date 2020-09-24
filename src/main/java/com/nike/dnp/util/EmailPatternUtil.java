@@ -26,7 +26,8 @@ public class EmailPatternUtil {
      */
     public boolean isValidEmail(final String email) {
         boolean isValid = false;
-        final String regex = "^[_a-zA-Z0-9-]+(.[_a-zA-Z0-9-]+)*@(?:\\w+\\.)+\\w+$";
+        //final String regex = "^[_a-zA-Z0-9-]+(.[_a-zA-Z0-9-]+)*@(?:\\w+\\.)+\\w+$";
+        final String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
         final Pattern pattern = Pattern.compile(regex);
         final Matcher matcher = pattern.matcher(email);
         if(matcher.matches()) {

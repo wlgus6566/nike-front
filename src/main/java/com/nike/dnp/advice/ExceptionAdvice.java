@@ -65,7 +65,8 @@ public class ExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     protected CommonResult codeMessageHandleException(final CodeMessageHandleException exception) {
-        log.error("==================Basic ERROR===================");
+        log.error("================== Basic ERROR ===================");
+        log.error("message", exception.getMessage());
         this.errorLogInsert(exception);
         return responseService.getFailResult(exception.getCode(), exception.getMessage());
     }
@@ -83,7 +84,8 @@ public class ExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.FORBIDDEN)
     protected CommonResult CodeMessageHandleErrorException(final CodeMessageHandleErrorException exception) {
-        log.error("==================NoAuth ERROR===================");
+        log.error("================== NoAuth ERROR ===================");
+        log.error("message", exception.getMessage());
         this.errorLogInsert(exception);
         return responseService.getFailResult(exception.getCode(), exception.getMessage());
     }
@@ -101,7 +103,8 @@ public class ExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult fileHandleException(final FileHandleException exception) {
-        log.error("==================File ERROR===================");
+        log.error("================== File ERROR ===================");
+        log.error("message", exception.getMessage());
         this.errorLogInsert(exception);
         return responseService.getFailResult(exception.getCode(), exception.getMessage());
     }
@@ -118,7 +121,8 @@ public class ExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     protected CommonResult notFoundException(final NotFoundHandleException exception) {
-        log.error("==================NotFoundHandler ERROR===================");
+        log.error("================== NotFoundHandler ERROR ===================");
+        log.error("message", exception.getMessage());
         this.errorLogInsert(exception);
         return responseService.getFailResult(exception.getCode(), exception.getMessage());
     }
@@ -136,7 +140,8 @@ public class ExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public CommonResult interruptedException(final Exception exception) {
-        log.error("==================Interrupted ERROR===================");
+        log.error("==================Interrupted ERROR ===================");
+        log.error("message", exception.getMessage());
         this.errorLogInsert(exception);
         return responseService.getFailResult(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
     }
@@ -154,7 +159,8 @@ public class ExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public CommonResult globalHandelException(final Exception exception) {
-        log.error("==================Global ERROR===================");
+        log.error("==================Global ERROR ===================");
+        log.error("message", exception.getMessage());
         this.errorLogInsert(exception);
         return responseService.getFailResult();
     }
