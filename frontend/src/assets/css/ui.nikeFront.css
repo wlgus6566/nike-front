@@ -3196,6 +3196,9 @@
     border-width: 0;
 }
 
+.detail-view .detail-cont table {
+    width: auto !important;
+}
 .detail-view .detail-cont blockquote {
     padding-left: 20px;
     padding-right: 8px;

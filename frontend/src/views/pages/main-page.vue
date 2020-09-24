@@ -570,6 +570,8 @@ export default {
 }
 .main-notice-list {
     margin-top: 20px;
+    /*   height: 358px;
+    box-sizing: border-box;*/
     border: 1px solid #eee;
     border-radius: 2px;
 }

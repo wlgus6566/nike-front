@@ -1201,6 +1201,224 @@
     word-break: keep-all;
     color: #333;
 }
+
+.detail-view .detail-cont blockquote {
+    font-style: italic;
+    padding: 2px 0;
+    border-style: solid;
+    border-color: #ccc;
+    border-width: 0;
+}
+
+.detail-view .detail-cont table {
+    width: auto !important;
+}
+.detail-view .detail-cont blockquote {
+    padding-left: 20px;
+    padding-right: 8px;
+    border-left-width: 5px;
+}
+
+/*
+.detail-view .detail-cont .cke_contents_rtl blockquote {
+    padding-left: 8px;
+    padding-right: 20px;
+    border-right-width: 5px;
+}
+*/
+
+.detail-view .detail-cont a {
+    color: #0782c1;
+}
+
+.detail-view .detail-cont ol li {
+    list-style-type: decimal;
+}
+.detail-view .detail-cont ul li {
+    list-style-type: disc;
+}
+.detail-view .detail-cont ol,
+.detail-view .detail-cont ul,
+.detail-view .detail-cont dl {
+    /* IE7: reset rtl list margin. (#7334) */
+    *margin-right: 0px;
+    /* Preserved spaces for list items with text direction different than the list. (#6249,#8049)*/
+    padding: 0 40px;
+}
+
+.detail-view .detail-cont h1,
+.detail-view .detail-cont h2,
+.detail-view .detail-cont h3,
+.detail-view .detail-cont h4,
+.detail-view .detail-cont h5,
+.detail-view .detail-cont h6 {
+    font-weight: normal;
+    line-height: 1.7;
+}
+
+.detail-view .detail-cont hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+}
+
+.detail-view .detail-cont img.right {
+    border: 1px solid #ccc;
+    float: right;
+    margin-left: 15px;
+    padding: 5px;
+}
+
+.detail-view .detail-cont img.left {
+    border: 1px solid #ccc;
+    float: left;
+    margin-right: 15px;
+    padding: 5px;
+}
+
+.detail-view .detail-cont pre {
+    white-space: pre-wrap; /* CSS 2.1 */
+    word-wrap: break-word; /* IE7 */
+    -moz-tab-size: 4;
+    tab-size: 4;
+}
+
+.detail-view .detail-cont .marker {
+    background-color: Yellow;
+}
+
+.detail-view .detail-cont span[lang] {
+    font-style: italic;
+}
+
+.detail-view .detail-cont figure {
+    text-align: center;
+    outline: solid 1px #ccc;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    margin: 10px 20px;
+    display: inline-block;
+}
+
+.detail-view .detail-cont figure > figcaption {
+    text-align: center;
+    display: block; /* For IE8 */
+}
+
+.detail-view .detail-cont a > img {
+    padding: 1px;
+    margin: 1px;
+    border: none;
+    outline: 1px solid #0782c1;
+}
+.detail-view .detail-cont blockquote {
+    font-style: italic;
+    padding: 2px 0;
+    border-style: solid;
+    border-color: #ccc;
+    border-width: 0;
+}
+
+.detail-view .detail-cont table {
+    width: auto !important;
+}
+.detail-view .detail-cont blockquote {
+    padding-left: 20px;
+    padding-right: 8px;
+    border-left-width: 5px;
+}
+
+/*
+.detail-view .detail-cont .cke_contents_rtl blockquote {
+    padding-left: 8px;
+    padding-right: 20px;
+    border-right-width: 5px;
+}
+*/
+
+.detail-view .detail-cont a {
+    color: #0782c1;
+}
+
+.detail-view .detail-cont ol li {
+    list-style-type: decimal;
+}
+.detail-view .detail-cont ul li {
+    list-style-type: disc;
+}
+.detail-view .detail-cont ol,
+.detail-view .detail-cont ul,
+.detail-view .detail-cont dl {
+    /* IE7: reset rtl list margin. (#7334) */
+    *margin-right: 0px;
+    /* Preserved spaces for list items with text direction different than the list. (#6249,#8049)*/
+    padding: 0 40px;
+}
+
+.detail-view .detail-cont h1,
+.detail-view .detail-cont h2,
+.detail-view .detail-cont h3,
+.detail-view .detail-cont h4,
+.detail-view .detail-cont h5,
+.detail-view .detail-cont h6 {
+    font-weight: normal;
+    line-height: 1.7;
+}
+
+.detail-view .detail-cont hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+}
+
+.detail-view .detail-cont img.right {
+    border: 1px solid #ccc;
+    float: right;
+    margin-left: 15px;
+    padding: 5px;
+}
+
+.detail-view .detail-cont img.left {
+    border: 1px solid #ccc;
+    float: left;
+    margin-right: 15px;
+    padding: 5px;
+}
+
+.detail-view .detail-cont pre {
+    white-space: pre-wrap; /* CSS 2.1 */
+    word-wrap: break-word; /* IE7 */
+    -moz-tab-size: 4;
+    tab-size: 4;
+}
+
+.detail-view .detail-cont .marker {
+    background-color: Yellow;
+}
+
+.detail-view .detail-cont span[lang] {
+    font-style: italic;
+}
+
+.detail-view .detail-cont figure {
+    text-align: center;
+    outline: solid 1px #ccc;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    margin: 10px 20px;
+    display: inline-block;
+}
+
+.detail-view .detail-cont figure > figcaption {
+    text-align: center;
+    display: block; /* For IE8 */
+}
+
+.detail-view .detail-cont a > img {
+    padding: 1px;
+    margin: 1px;
+    border: none;
+    outline: 1px solid #0782c1;
+}
+
 .detail-cont:first-child .img {
     margin-top: 0;
 }
