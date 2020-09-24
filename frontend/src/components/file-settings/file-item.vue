@@ -165,7 +165,7 @@ export default {
     font-size: 14px;
     line-height: 30px;
     flex: 1 1 auto;
-    max-width: calc(100% - 70px);
+    width: calc(100% - 70px);
     white-space: nowrap;
     text-overflow: ellipsis;
     word-wrap: normal;
