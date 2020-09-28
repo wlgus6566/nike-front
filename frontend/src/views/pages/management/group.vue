@@ -115,6 +115,7 @@ export default {
     },
     methods: {
         allCheckFn(arr, val) {
+            console.log(val);
             if (val) {
                 arr.forEach((el) => {
                     const idx = this.menuRoleSeqArray.indexOf(el);

@@ -15,9 +15,8 @@
                     <label class="group-check-all">
                         <input
                             type="checkbox"
-                            :value="false"
                             v-model="checkAll"
-                            @click="allCheckFn()"
+                            @change="allCheckFn()"
                         />
                         <i />
                         <span v-html="table.menuName"></span>
@@ -48,7 +47,7 @@
                             :disabled="!td.menuRoleSeq"
                             :value="td.menuRoleSeq"
                             v-model="menuRoleSeqArray"
-                            @click="toggleCheck(td.menuRoleSeq)"
+                            @click.prevent="toggleCheck(td.menuRoleSeq)"
                         />
                         <i />
                     </label>
@@ -85,6 +84,7 @@ export default {
     },
     methods: {
         allCheckFn() {
+            this.checkAll = !this.checkAll;
             let array = [];
             this.table.subMenus.forEach((a) => {
                 a.skillCodes.forEach((b) => {
@@ -93,7 +93,6 @@ export default {
                     }
                 });
             });
-
             this.$emit('allCheckFn', array, this.checkAll);
         },
         toggleCheck(seq) {

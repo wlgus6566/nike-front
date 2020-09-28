@@ -71,7 +71,7 @@
                                     <input
                                         type="checkbox"
                                         v-model="checkAll"
-                                        @click="allCheckFn()"
+                                        @change="allCheckFn()"
                                     />
                                     <i></i>
                                 </span>
@@ -91,7 +91,7 @@
                                         type="checkbox"
                                         :value="item.userSeq"
                                         v-model="checkItem"
-                                        @click="checked(item.userSeq)"
+                                        @change="checked()"
                                     />
                                     <i></i>
                                 </span>
@@ -389,20 +389,12 @@ export default {
         },
         dates() {},
         // checkbox
-        checked(seq, del) {
-            const indexOfChecked = this.checkItem.findIndex((el) => el === seq);
-            if (!del && indexOfChecked === -1) {
-                this.checkItem.push(seq);
-            } else {
-                this.checkItem = this.checkItem.filter((el) => {
-                    return el !== seq;
-                });
-            }
+        checked(seq, del, obj) {
             this.checkAll = this.checkItem.length === this.userData.length;
         },
         // 전체 checkbox
         allCheckFn() {
-            this.checkAll = !this.checkAll;
+            //this.checkAll = !this.checkAll;
             if (this.checkAll) {
                 this.userData.forEach((el) => {
                     const indexOfChecked = this.checkItem.findIndex(
@@ -515,6 +507,8 @@ export default {
                         if (response.data.success) {
                             this.getUserList();
                         }
+                        this.checkItem = [];
+                        this.checkAll = false;
                     } catch (error) {
                         console.error(error);
                     }
