@@ -160,7 +160,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public CommonResult globalHandelException(final Exception exception) {
         log.error("==================Global ERROR ===================");
-        log.error("message", exception.getMessage());
+        log.error("message", exception);
         this.errorLogInsert(exception);
         return responseService.getFailResult();
     }

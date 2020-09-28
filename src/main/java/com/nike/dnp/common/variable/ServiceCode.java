@@ -410,4 +410,9 @@ public class ServiceCode {
         , NEWS
         , QNA
     }
+
+    public enum DownloadTypeEnumCode {
+        CONTENTS
+        , REPORT
+    }
 }
