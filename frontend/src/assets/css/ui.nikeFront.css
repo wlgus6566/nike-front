@@ -1851,6 +1851,34 @@
     font-weight: 300;
     word-break: break-all;
 }
+.folder-info {
+    overflow: hidden;
+    margin-top: 20px;
+}
+.folder-info .folder-date {
+    position: relative;
+    top: auto;
+    right: auto;
+    float: left;
+    line-height: 24px;
+}
+.folder-info .folder-name {
+    position: relative;
+    float: left;
+    margin: 0 0 0 10px;
+    padding-left: 10px;
+}
+.folder-info .folder-name:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 10px;
+    margin-top: -5px;
+    background: #ddd;
+}
 .folder-date {
     position: absolute;
     top: 3px;
@@ -3172,7 +3200,7 @@
 }
 .detail-view .title-box {
     position: relative;
-    padding-right: 180px;
+    /*padding-right: 180px;*/
 }
 .detail-view .title-box .title {
     display: block;
@@ -3183,15 +3211,41 @@
     font-weight: bold;
     word-break: break-all;
 }
-.detail-view .title-box .date {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    display: inline-block;
+.detail-view .title-box .info {
+    overflow: hidden;
+    margin-top: 20px;
     font-size: 12px;
     color: #888;
+}
+.detail-view .title-box .info .name {
+    position: relative;
+    float: left;
+    display: inline-block;
     letter-spacing: 0;
     font-weight: 300;
+}
+
+.detail-view .title-box .info .date {
+    position: relative;
+    float: left;
+    display: inline-block;
+    letter-spacing: 0;
+    font-weight: 300;
+}
+.detail-view .title-box .info .name + .date {
+    padding-left: 10px;
+    margin-left: 10px;
+}
+.detail-view .title-box .info .name + .date:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 10px;
+    margin-top: -5px;
+    background: #ddd;
 }
 .detail-view .detail-cont {
     margin-top: 40px;

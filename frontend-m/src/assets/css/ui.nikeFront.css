@@ -1183,13 +1183,38 @@
     color: #000;
     word-break: keep-all;
 }
-.detail-view .title-box .date {
-    display: block;
+.detail-view .title-box .info {
+    overflow: hidden;
     margin-top: 10px;
     font-size: 12px;
     line-height: 15px;
-    letter-spacing: 0;
     color: #888;
+}
+.detail-view .title-box .name {
+    float: left;
+    display: block;
+    letter-spacing: 0;
+}
+.detail-view .title-box .date {
+    position: relative;
+    float: left;
+    display: block;
+    letter-spacing: 0;
+}
+.detail-view .title-box .info .name + .date {
+    padding-left: 10px;
+    margin-left: 10px;
+}
+.detail-view .title-box .info .name + .date:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 10px;
+    margin-top: -5px;
+    background: #ddd;
 }
 .detail-cont {
     margin-top: 30px;
