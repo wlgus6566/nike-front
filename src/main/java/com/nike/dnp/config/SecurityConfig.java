@@ -238,6 +238,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					, "/api/alarm/**"
 					,"/api/join/**"
 					,"/api/log/**"
+					,"/api/report/answer**"
+					//,"/api/report/answer/**"
 			).permitAll()
 			.accessDecisionManager(accessDecisionManager())
 			.anyRequest().authenticated()
