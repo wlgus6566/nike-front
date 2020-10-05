@@ -44,7 +44,46 @@ public class CustomExpression {
      * @implNote Expressions DateDiff
      */
     public NumberExpression<Integer> dateDiff(final DateTimePath<LocalDateTime> date) {
-        return Expressions.numberTemplate(Integer.class, "DATEDIFF(SYSDATE(), {0})", date);
+        return Expressions.numberTemplate(
+                Integer.class
+                , "DATEDIFF(SYSDATE(), {0})"
+                , date);
+    }
+
+    /**
+     * Date add date template.
+     *
+     * @param date     the date
+     * @param interval the interval
+     * @return the date template
+     * @author [오지훈]
+     * @implNote Expressions ADDDATE
+     * @since 2020. 10. 5. 오후 4:26:51
+     */
+    public DateTemplate<LocalDateTime> dateAdd(final DateTimePath<LocalDateTime> date, final int interval) {
+        return Expressions.dateTemplate(
+                LocalDateTime.class
+                , "ADDDATE({0}, {1})"
+                , date
+                , interval);
+    }
+
+    /**
+     * Date diff and add number expression.
+     *
+     * @param date     the date
+     * @param interval the interval
+     * @return the number expression
+     * @author [오지훈]
+     * @implNote Expressions DATEDIFF & ADDDATE
+     * @since 2020. 10. 5. 오후 4:26:52
+     */
+    public NumberExpression<Integer> dateDiffAndAdd(final DateTimePath<LocalDateTime> date, final int interval) {
+        return Expressions.numberTemplate(
+                Integer.class
+                , "DATEDIFF(ADDDATE({0}, {1}), NOW())"
+                , date
+                , interval);
     }
 
 }

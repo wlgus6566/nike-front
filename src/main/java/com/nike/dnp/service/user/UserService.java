@@ -151,6 +151,19 @@ public class UserService implements UserDetailsService {
     }
 
     /**
+     * Find by password change list.
+     *
+     * @param days the days
+     * @return the list
+     * @author [오지훈]
+     * @implNote 패스워드 변경일 90일 [days]일 전 유저 목록
+     * @since 2020. 10. 5. 오후 12:17:56
+     */
+    public List<User> findByPasswordChange(final int days) {
+        return userRepository.findByPasswordChangeConfigure(days);
+    }
+
+    /**
      * Find by id optional.
      *
      * @param userSeq the user seq
@@ -252,6 +265,11 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUserId(userId).orElseThrow(NotFoundHandleException::new);
     }
 
+    public User findByUserSeq(final Long userSeq) {
+        log.info("UserService.findByUserSeq");
+        return userRepository.findByUserSeq(userSeq).orElseThrow(NotFoundHandleException::new);
+    }
+
     /**
      * Find by user id return optional optional.
      *
@@ -262,7 +280,7 @@ public class UserService implements UserDetailsService {
      * @implNote 상세 조회
      */
     public Optional<User> findByUserIdReturnOptional(final String userId) {
-        log.info("UserService.findByUserId");
+        log.info("UserService.findByUserIdReturnOptional");
         return userRepository.findByUserId(userId);
     }
 
@@ -687,7 +705,7 @@ public class UserService implements UserDetailsService {
      * @implNote [Description 작성]
      * @since 2020. 9. 7. 오후 5:55:22
      */
-    public Optional<User> findByUserSeq(final Long userSeq) {
+    /*public Optional<User> findByUserSeq(final Long userSeq) {
         return userRepository.findByUserSeq(userSeq);
-    }
+    }*/
 }

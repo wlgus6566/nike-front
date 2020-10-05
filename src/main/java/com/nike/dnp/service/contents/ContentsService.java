@@ -353,8 +353,7 @@ public class ContentsService {
         }
 
         final Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
-        final Contents findContents = contents.orElseThrow(
-                () -> new NotFoundHandleException());
+        final Contents findContents = contents.orElseThrow(NotFoundHandleException::new);
         findContents.updateReadCount(findContents.getReadCount());
 
         // history 저장
@@ -365,7 +364,7 @@ public class ContentsService {
 
         // 사용자 계정 조회
         contentsResultDTO.setUserId(
-                EmailPatternUtil.maskingEmail(userService.findByUserSeq(contentsResultDTO.getRegisterSeq()).get().getUserId())
+                EmailPatternUtil.maskingEmail(userService.findByUserSeq(contentsResultDTO.getRegisterSeq()).getUserId())
         );
 
 

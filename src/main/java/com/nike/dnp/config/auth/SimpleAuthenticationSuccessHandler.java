@@ -151,7 +151,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		}
 
 		// PW 90일 체크
-		if (isValid && userRepository.countByPaswordChangePeriod(authUserDTO.getUserSeq()) > 0) {
+		if (isValid && userRepository.countByPasswordChangePeriod(authUserDTO.getUserSeq()) > 0) {
 			final String randomCode = RandomUtil.randomCertCode2(10);
 			final String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(authUserDTO.getUserId() + REGEX + randomCode, "Nike DnP"));
 			if (FailCode.ExceptionError.ERROR.name().equals(encodeCertCode)) {

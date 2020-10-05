@@ -122,11 +122,24 @@ public class UserPredicateHelper {
      *
      * @return the predicate
      * @author [오지훈]
-     * @implNote [method 설명]
+     * @implNote 패스워드 변경일이 90일 이상된 경우
      * @since 2020. 7. 31. 오후 4:12:30
      */
     public Predicate comparePasswordChangePeriod() {
         return new BooleanBuilder().and(
                 CustomExpression.dateDiff(QUser.user.passwordLastUpdateDt).gt(90));
+    }
+
+    /**
+     * Compare password change period add days predicate.
+     *
+     * @param days the days
+     * @return the predicate
+     * @author [오지훈]
+     * @implNote 패스워드 변경일이 90일 이상된 경우(1,3,7일 전)
+     * @since 2020. 10. 5. 오후 12:16:17
+     */
+    public Predicate comparePasswordChangePeriodAddDays(final int days) {
+        return new BooleanBuilder(CustomExpression.dateDiffAndAdd(QUser.user.passwordLastUpdateDt, 90).eq(days));
     }
 }
