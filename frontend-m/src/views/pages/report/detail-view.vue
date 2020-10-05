@@ -17,11 +17,7 @@
 
         <div class="feedback-wrap">
             <template v-if="feedbackList">
-                <strong
-                    class="title"
-                    v-if="folderAuthCheck('DOWNLOAD') || feedbackList.length"
-                    >FEEDBACK
-                </strong>
+                <strong class="title">FEEDBACK </strong>
                 <ul class="feedback-list" v-if="feedbackList.length">
                     <li
                         class="feedback-item"
@@ -51,7 +47,7 @@
                     </li>
                 </ul>
             </template>
-            <div class="textarea" v-if="folderAuthCheck('DOWNLOAD')">
+            <div class="textarea">
                 <textarea
                     v-model="answerContents"
                     maxlength="100"

@@ -21,11 +21,7 @@
 
         <div class="feedback-wrap">
             <template v-if="answerList">
-                <strong
-                    class="title"
-                    v-if="folderAuthCheck('DOWNLOAD') || answerList.length"
-                    >FEEDBACK</strong
-                >
+                <strong class="title">FEEDBACK</strong>
                 <FeedbackList
                     :answerList="answerList"
                     :userId="userId"
@@ -40,7 +36,7 @@
                 :height="172"
                 v-if="loadingData"
             />
-            <div class="textarea" v-if="folderAuthCheck('DOWNLOAD')">
+            <div class="textarea">
                 <textarea
                     v-model="answerData.answerContents"
                     placeholder="댓글을 입력해주세요."
