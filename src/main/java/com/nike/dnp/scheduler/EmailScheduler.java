@@ -26,6 +26,8 @@ public class EmailScheduler {
 
 	private final UserMailService userMailService;
 	private final UserService userService;
+	private final static String PROD_SERVER_IP = "10.0.1.93";
+	private final static String TEST_SERVER_IP = "10.0.11.39";
 
 	/**
 	 * Send user mail by password change.
@@ -38,10 +40,8 @@ public class EmailScheduler {
 	public void sendUserMailByPasswordChangeOne() {
 		log.info("EmailScheduler.sendUserMailByPasswordChangeOne");
 		try {
-			final String prodIp = "10.0.1.93";
-			final String testIp = "10.0.11.39";
 			final InetAddress ip = InetAddress.getLocalHost();
-			if (prodIp.equals(ip.getHostAddress()) || testIp.equals(ip.getHostAddress())) {
+			if (PROD_SERVER_IP.equals(ip.getHostAddress()) || TEST_SERVER_IP.equals(ip.getHostAddress())) {
 				for (User user : userService.findByPasswordChange(0)) {
 					userMailService.sendMailForChangePassword(user);
 				}
@@ -57,10 +57,8 @@ public class EmailScheduler {
 	public void sendUserMailByPasswordChangeThree() {
 		log.info("EmailScheduler.sendUserMailByPasswordChangeThree");
 		try {
-			final String prodIp = "10.0.1.93";
-			final String testIp = "10.0.11.39";
 			final InetAddress ip = InetAddress.getLocalHost();
-			if (prodIp.equals(ip.getHostAddress()) || testIp.equals(ip.getHostAddress())) {
+			if (PROD_SERVER_IP.equals(ip.getHostAddress()) || TEST_SERVER_IP.equals(ip.getHostAddress())) {
 				for (User user : userService.findByPasswordChange(2)) {
 					userMailService.sendMailForChangePassword(user);
 				}
@@ -76,10 +74,8 @@ public class EmailScheduler {
 	public void sendUserMailByPasswordChangeSeven() {
 		log.info("EmailScheduler.sendUserMailByPasswordChangeSeven");
 		try {
-			final String prodIp = "10.0.1.93";
-			final String testIp = "10.0.11.39";
 			final InetAddress ip = InetAddress.getLocalHost();
-			if (prodIp.equals(ip.getHostAddress()) || testIp.equals(ip.getHostAddress())) {
+			if (PROD_SERVER_IP.equals(ip.getHostAddress()) || TEST_SERVER_IP.equals(ip.getHostAddress())) {
 				for (User user : userService.findByPasswordChange(6)) {
 					userMailService.sendMailForChangePassword(user);
 				}
