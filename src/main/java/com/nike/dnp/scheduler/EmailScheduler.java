@@ -34,8 +34,7 @@ public class EmailScheduler {
 	 * @implNote 90일 비밀번호 변경 안내 메일 전송, 오전 8시 일괄 발송
 	 * @since 2020. 9. 11. 오후 3:08:20
 	 */
-	//@Scheduled(cron = "0 0 8 * * *")
-	@Scheduled(cron = "0 0 11 * * *")
+	@Scheduled(cron = "0 0 8 * * *")
 	public void sendUserMailByPasswordChangeOne() {
 		log.info("EmailScheduler.sendUserMailByPasswordChangeOne");
 		try {
@@ -54,8 +53,7 @@ public class EmailScheduler {
 		}
 	}
 
-	//@Scheduled(cron = "0 5 8 * * *")
-	@Scheduled(cron = "0 1 11 * * *")
+	@Scheduled(cron = "0 5 8 * * *")
 	public void sendUserMailByPasswordChangeThree() {
 		log.info("EmailScheduler.sendUserMailByPasswordChangeThree");
 		try {
@@ -74,8 +72,7 @@ public class EmailScheduler {
 		}
 	}
 
-	//@Scheduled(cron = "0 10 8 * * *")
-	@Scheduled(cron = "0 2 11 * * *")
+	@Scheduled(cron = "0 10 8 * * *")
 	public void sendUserMailByPasswordChangeSeven() {
 		log.info("EmailScheduler.sendUserMailByPasswordChangeSeven");
 		try {
