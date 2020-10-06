@@ -35,7 +35,7 @@ public class EmailScheduler {
 	 * @since 2020. 9. 11. 오후 3:08:20
 	 */
 	//@Scheduled(cron = "0 0 8 * * *")
-	@Scheduled(cron = "0 35 17 * * *")
+	@Scheduled(cron = "0 30 10 * * *")
 	public void sendUserMailByPasswordChangeOne() {
 		log.info("EmailScheduler.sendUserMailByPasswordChangeOne");
 		try {
@@ -43,7 +43,7 @@ public class EmailScheduler {
 			final String testIp = "10.0.11.39";
 			final InetAddress ip = InetAddress.getLocalHost();
 			if (prodIp.equals(ip.getHostAddress()) || testIp.equals(ip.getHostAddress())) {
-				for (User user : userService.findByPasswordChange(1)) {
+				for (User user : userService.findByPasswordChange(0)) {
 					userMailService.sendMailForChangePassword(user);
 				}
 			} else {
@@ -55,21 +55,21 @@ public class EmailScheduler {
 	}
 
 	//@Scheduled(cron = "0 5 8 * * *")
-	//@Scheduled(cron = "0 41 16 * * *")
+	@Scheduled(cron = "0 31 10 * * *")
 	public void sendUserMailByPasswordChangeThree() {
 		log.info("EmailScheduler.sendUserMailByPasswordChangeThree");
 
-		for (User user : userService.findByPasswordChange(3)) {
+		for (User user : userService.findByPasswordChange(2)) {
 			userMailService.sendMailForChangePassword(user);
 		}
 	}
 
 	//@Scheduled(cron = "0 10 8 * * *")
-	//@Scheduled(cron = "0 42 16 * * *")
+	@Scheduled(cron = "0 32 10 * * *")
 	public void sendUserMailByPasswordChangeSeven() {
 		log.info("EmailScheduler.sendUserMailByPasswordChangeSeven");
 
-		for (User user : userService.findByPasswordChange(7)) {
+		for (User user : userService.findByPasswordChange(6)) {
 			userMailService.sendMailForChangePassword(user);
 		}
 	}
