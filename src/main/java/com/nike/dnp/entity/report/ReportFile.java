@@ -4,11 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.report.ReportFileSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
-import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;

@@ -2,10 +2,7 @@ package com.nike.dnp.dto.report;
 
 import com.nike.dnp.dto.SearchDTO;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiParam;
 import lombok.*;
-
-import java.util.List;
 
 
 /**

@@ -7,16 +7,27 @@
             <p class="folder-desc">
                 {{ folderDetail.folderContents }}
             </p>
-            <span
-                class="folder-date"
-                v-if="folderDetail.campaignPeriodSectionCode === 'SELECT'"
-            >
-                <em>{{ folderDetail.campaignBeginDt }}</em>
-                -
-                <em>{{ folderDetail.campaignEndDt }}</em>
-            </span>
-            <span class="folder-date" v-else>365</span>
-            <p class="folder-name">{{ folderDetail.userId }}</p>
+            <div class="folder-info">
+                <span class="folder-date">
+                    <span v-if="folderDetail.topMenuCode === 'ASSET'">
+                        캠페인 기간 :
+                    </span>
+                    <span
+                        v-if="
+                            folderDetail.campaignPeriodSectionCode === 'SELECT'
+                        "
+                    >
+                        <em>{{ folderDetail.campaignBeginDt }}</em>
+                        -
+                        <em>{{ folderDetail.campaignEndDt }}</em>
+                    </span>
+                    <span v-else>
+                        365
+                    </span>
+                </span>
+                <p class="folder-name">{{ folderDetail.userId }}</p>
+            </div>
+
             <p class="folder-memo">{{ folderDetail.memo }}</p>
         </div>
 

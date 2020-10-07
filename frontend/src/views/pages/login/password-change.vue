@@ -19,7 +19,7 @@
                 </p>
             </div>
             <div class="table-form">
-                <form action="" class="">
+                <form action="" @submit.prevent="passwordChange">
                     <fieldset>
                         <legend>비밀번호 설정</legend>
                         <div class="table">
@@ -34,6 +34,7 @@
                                         class="input-box"
                                         maxlength="16"
                                         placeholder=""
+                                        v-model="password"
                                     />
                                 </div>
                             </div>
@@ -48,6 +49,7 @@
                                         class="input-box"
                                         maxlength="16"
                                         placeholder="(8~16자/대소문자/숫자/특수문자 포함)"
+                                        v-model="newPassword"
                                     />
                                 </div>
                             </div>
@@ -64,12 +66,13 @@
                                         class="input-box"
                                         maxlength="16"
                                         placeholder=""
+                                        v-model="confirmPassword"
                                     />
                                 </div>
                             </div>
                         </div>
                         <div class="btn-area">
-                            <button type="button" class="btn-s-black">
+                            <button type="submit" class="btn-s-black">
                                 <span>저장</span>
                             </button>
                         </div>
@@ -80,12 +83,38 @@
     </div>
 </template>
 <script>
-export default {
+    import {changepassword} from '@/api/login';
+
+    export default {
     name: 'passwordChange',
     data() {
-        return {};
+        return {
+            password: '',
+            newPassword: '',
+            confirmPassword: '',
+        };
     },
-    methods: {},
+    methods: {
+        async passwordChange() {
+            try {
+                const { data: response } = await changepassword({
+                    certCode: this.$route.params.certCode,
+                    password: this.password,
+                    newPassword: this.newPassword,
+                    confirmPassword: this.confirmPassword,
+                });
+                if (response.existMsg) {
+                    alert(response.msg);
+                }
+                console.log(response);
+                if (response.success) {
+                    await this.$router.push('/login');
+                }
+            } catch (error) {
+                console.log('error', error);
+            }
+        },
+    },
 };
 </script>
 <style scoped></style>

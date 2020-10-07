@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class StartRunner implements ApplicationRunner {
 
-    /**
+   /**
      * Run.
      *
      * @param args the args

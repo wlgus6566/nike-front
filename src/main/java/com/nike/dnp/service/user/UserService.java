@@ -147,7 +147,22 @@ public class UserService implements UserDetailsService {
      * @since 2020. 9. 23. 오전 11:36:54
      */
     public List<User> findByNormal() {
+        log.info("UserService.findByNormal");
         return userRepository.findByUserStatusCode("NORMAL");
+    }
+
+    /**
+     * Find by password change list.
+     *
+     * @param days the days
+     * @return the list
+     * @author [오지훈]
+     * @implNote 패스워드 변경일 90일 [days]일 전 유저 목록
+     * @since 2020. 10. 5. 오후 12:17:56
+     */
+    public List<User> findByPasswordChange(final int days) {
+        log.info("UserService.findByPasswordChange");
+        return userRepository.findByPasswordChangeConfigure(days);
     }
 
     /**
@@ -253,6 +268,20 @@ public class UserService implements UserDetailsService {
     }
 
     /**
+     * Find by user seq user.
+     *
+     * @param userSeq the user seq
+     * @return the user
+     * @author [오지훈]
+     * @implNote 상세 조회
+     * @since 2020. 10. 7. 오전 11:04:24
+     */
+    public User findByUserSeq(final Long userSeq) {
+        log.info("UserService.findByUserSeq");
+        return userRepository.findByUserSeq(userSeq).orElseThrow(NotFoundHandleException::new);
+    }
+
+    /**
      * Find by user id return optional optional.
      *
      * @param userId the user id
@@ -262,7 +291,7 @@ public class UserService implements UserDetailsService {
      * @implNote 상세 조회
      */
     public Optional<User> findByUserIdReturnOptional(final String userId) {
-        log.info("UserService.findByUserId");
+        log.info("UserService.findByUserIdReturnOptional");
         return userRepository.findByUserId(userId);
     }
 
@@ -276,6 +305,7 @@ public class UserService implements UserDetailsService {
      * @implNote 유저 권한 조회
      */
     public Optional<UserAuth> findByUser(final User user) {
+        log.info("UserService.findByUser");
         return Optional.ofNullable(userAuthRepository.findByUser(user).orElseThrow(NotFoundHandleException::new));
     }
 
@@ -443,6 +473,7 @@ public class UserService implements UserDetailsService {
      * @since 2020. 7. 1. 오후 2:52:56
      */
     public Integer checkId(final String userId) {
+        log.info("UserService.checkId");
         if (EmailPatternUtil.isValidEmail(userId)) {
             if (this.countByUserId(userId) > 0) {
                 throw new CodeMessageHandleException(
@@ -507,10 +538,15 @@ public class UserService implements UserDetailsService {
         final String userId = decodeCertCode.split(REGEX)[0];
         final String certKey = decodeCertCode.split(REGEX)[1];
         final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));
-        final String password = userCertDTO.getPassword();
-        final String newPassword = userCertDTO.getNewPassword();
-        final String confirmPassword = ObjectUtils.isEmpty(userCertDTO.getConfirmPassword()) ? "" : userCertDTO.getConfirmPassword();
-        final String certPassword = ObjectUtils.isEmpty(newPassword) ? "" : passwordEncoder.encode(newPassword);
+        final char[] pwd = userCertDTO.getPassword();
+        final char[] newPwd = userCertDTO.getNewPassword();
+        final char[] confirmPwd = userCertDTO.getConfirmPassword();
+        char[] certPwd = null;
+
+        if (!ObjectUtils.isEmpty(newPwd)) {
+            certPwd = ConvertUtil.convertStringToCharacter(passwordEncoder.encode(ConvertUtil.convertCharacterToString(newPwd)));
+        }
+
         final User user = this.findByUserId(userId);
         this.checkCertCode(certCode, certKey);
         this.checkPassword(
@@ -518,21 +554,32 @@ public class UserService implements UserDetailsService {
                         .userSeq(user.getUserSeq())
                         .userId(user.getUserId())
                         .userPassword(user.getPassword())
-                        .password(password)
-                        .newPassword(newPassword)
-                        .confirmPassword(confirmPassword)
+                        .password(ConvertUtil.convertCharacterToString(pwd))
+                        .newPassword(ConvertUtil.convertCharacterToString(newPwd))
+                        .confirmPassword(ConvertUtil.convertCharacterToString(confirmPwd))
                         .build());
 
         //비밀번호 업데이트
-        user.updatePassword(certPassword);
+        user.updatePassword(ConvertUtil.convertCharacterToString(certPwd));
         passwordHistoryRepository.save(
                 PasswordHistory.builder()
                         .userSeq(user.getUserSeq())
-                        .password(certPassword)
+                        .password(ConvertUtil.convertCharacterToString(certPwd))
                         .build());
 
         //인증코드 삭제
         redisService.delete("cert:" + userId);
+
+        //비밀번호 치환
+        ConvertUtil.cleanValue(pwd);
+        ConvertUtil.cleanValue(newPwd);
+        ConvertUtil.cleanValue(confirmPwd);
+        ConvertUtil.cleanValue(certPwd);
+
+        /*throw new CodeMessageHandleException(
+                FailCode.ExceptionError.ERROR.name()
+                ,MessageUtil.getMessage(FailCode.ExceptionError.ERROR.name())
+        );*/
 
         final UserResultDTO userResultDTO = new UserResultDTO();
         userResultDTO.setUserSeq(user.getUserSeq());
@@ -552,23 +599,37 @@ public class UserService implements UserDetailsService {
     @Transactional
     public UserResultDTO confirmPassword(final String userId, final UserCertDTO userCertDTO) {
         log.info("UserService.confirmPassword2");
-        final String password = userCertDTO.getPassword();
-        final String newPassword = userCertDTO.getNewPassword();
-        final String confirmPassword = ObjectUtils.isEmpty(userCertDTO.getConfirmPassword()) ? "" : userCertDTO.getConfirmPassword();
-        final String certPassword = ObjectUtils.isEmpty(newPassword) ? "" : passwordEncoder.encode(newPassword);
+        final char[] pwd = userCertDTO.getPassword();
+        final char[] newPwd = userCertDTO.getNewPassword();
+        final char[] confirmPwd = userCertDTO.getConfirmPassword();
+        char[] certPwd = null;
+
+        if (!ObjectUtils.isEmpty(newPwd)) {
+            certPwd = ConvertUtil.convertStringToCharacter(passwordEncoder.encode(ConvertUtil.convertCharacterToString(newPwd)));
+        }
+
         final User user = this.findByUserId(userId);
         this.checkPassword(UserPasswordDTO.builder()
                 .userSeq(user.getUserSeq())
                 .userId(userId)
                 .userPassword(user.getPassword())
-                .password(password)
-                .newPassword(newPassword)
-                .confirmPassword(confirmPassword)
+                .password(ConvertUtil.convertCharacterToString(pwd))
+                .newPassword(ConvertUtil.convertCharacterToString(newPwd))
+                .confirmPassword(ConvertUtil.convertCharacterToString(confirmPwd))
                 .build());
 
         //비밀번호 업데이트
-        user.updatePassword(certPassword);
-        passwordHistoryRepository.save(PasswordHistory.builder().userSeq(user.getUserSeq()).password(certPassword).build());
+        user.updatePassword(ConvertUtil.convertCharacterToString(certPwd));
+        passwordHistoryRepository.save(PasswordHistory.builder()
+                                                    .userSeq(user.getUserSeq())
+                                                    .password(ConvertUtil.convertCharacterToString(certPwd))
+                                                    .build());
+
+        //비밀번호 치환
+        ConvertUtil.cleanValue(pwd);
+        ConvertUtil.cleanValue(newPwd);
+        ConvertUtil.cleanValue(confirmPwd);
+        ConvertUtil.cleanValue(certPwd);
 
         final UserResultDTO userResultDTO = new UserResultDTO();
         userResultDTO.setUserSeq(user.getUserSeq());
@@ -678,16 +739,4 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    /**
-     * Find by user seq optional.
-     *
-     * @param userSeq the user seq
-     * @return the optional
-     * @author [오지훈]
-     * @implNote [Description 작성]
-     * @since 2020. 9. 7. 오후 5:55:22
-     */
-    public Optional<User> findByUserSeq(final Long userSeq) {
-        return userRepository.findByUserSeq(userSeq);
-    }
 }

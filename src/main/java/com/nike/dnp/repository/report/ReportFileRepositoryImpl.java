@@ -1,15 +1,9 @@
 package com.nike.dnp.repository.report;
 
-import com.nike.dnp.dto.contents.ContentsFileResultDTO;
-import com.nike.dnp.dto.contents.ContentsFileSearchDTO;
 import com.nike.dnp.dto.report.ReportFileResultDTO;
 import com.nike.dnp.dto.report.ReportFileSearchDTO;
-import com.nike.dnp.entity.contents.ContentsFile;
-import com.nike.dnp.entity.contents.QContentsFile;
 import com.nike.dnp.entity.report.QReportFile;
 import com.nike.dnp.entity.report.ReportFile;
-import com.nike.dnp.repository.contents.ContentsFilePredicateHelper;
-import com.nike.dnp.repository.contents.ContentsFileRepositoryCustom;
 import com.nike.dnp.util.ObjectMapperUtil;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;

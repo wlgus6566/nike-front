@@ -3,12 +3,9 @@ package com.nike.dnp.dto.notice;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.util.CloudFrontUtil;
-import io.netty.util.internal.StringUtil;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiParam;
 import lombok.*;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -115,6 +112,17 @@ public class CustomerResultDTO {
      */
     @ApiModelProperty(name = "useYn", value = "게시글 사용 여부")
     private String useYn;
+
+    /**
+     * The nickname
+     *
+     * @author [오지훈]
+     */
+    @ApiModelProperty(name = "nickname", value = "최초 작성자")
+    private String nickname;
+
+    @ApiModelProperty(name = "registerSeq", value = "최초 작성자 시퀀스")
+    private Long registerSeq;
 
     /**
      * 최종 수정일

@@ -229,13 +229,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.cors().and()
 			.authorizeRequests()
 			.antMatchers(HttpMethod.POST,"/api/login").permitAll()
-			.antMatchers("/api/open/**"
+			.antMatchers(
+					"/api/open/**"
 					, "/api/main"
 					, "/api/main/**"
 					, "/api/calendar/eachList/**"
 					, "/api/mypage/**"
 					, "/api/alarm/**"
-					,"/api/join/**").permitAll()
+					,"/api/join/**"
+					,"/api/log/**"
+					,"/api/report/answer**"
+					//,"/api/report/answer/**"
+			).permitAll()
 			.accessDecisionManager(accessDecisionManager())
 			.anyRequest().authenticated()
 			.and()

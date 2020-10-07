@@ -237,13 +237,6 @@ public class FileUtil {
 										 final String resizeExt) throws IOException {
 		log.info("FileUtil.fileSave  start");
 
-		System.out.println("======================================================");
-		System.out.println("folder : " + folder);
-		System.out.println("resize : " + resize);
-		System.out.println("resizeExt : " + resizeExt);
-		System.out.println("======================================================");
-
-
 		String originalFileName = uploadFile.getOriginalFilename();
 		// [공백 originalFileName] 권한 없음 처리
 		if (ObjectUtils.isEmpty(originalFileName)) {
@@ -600,9 +593,9 @@ public class FileUtil {
 					S3Util.fileDelete(awsDeleteFile);
 				}catch(Exception exception){
 					// TODO [YTH] 아마존 파일 없음
-					throw (CodeMessageHandleException) new CodeMessageHandleException(
+					throw new CodeMessageHandleException(
 							FailCode.ExceptionError.ERROR.name()
-							, exception.getMessage()
+							, MessageUtil.getMessage(FailCode.ExceptionError.ERROR.name())
 					);
 				}
 			}
@@ -643,22 +636,12 @@ public class FileUtil {
 	 */
 	public static ResponseEntity<Resource> s3FileDownload(String path,final String fileName) throws IOException {
 		log.info("FileUtil.s3FileDownload");
-		System.out.println("======================================================");
-		System.out.println("path : " + path);
-		System.out.println("fileName : " + fileName);
-		System.out.println("fileName : " + decleanXSS(fileName));
-		System.out.println("======================================================");
 
 		final URL url = new URL(CloudFrontUtil.getCustomSignedUrl(path, 100));
 		final Resource resource = new UrlResource(url);
 		final HttpHeaders headers = new HttpHeaders();
 		final String encodeFileName = URLEncoder.encode(decleanXSS(fileName),"UTF-8").trim().replace("+", "%20");
 
-		//headers.set("Content-Transfer-Encoding", "binary");
-		//headers.set("Content-Disposition", "attachment;filename=" + encodeFileName + ";filename*= UTF-8''" + encodeFileName);
-		//headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + encodeFileName + ";filename*= UTF-8''" + encodeFileName);
-
-		//headers.add(HttpHeaders.TRANSFER_ENCODING, "binary");
 		headers.add(HttpHeaders.CONTENT_TYPE, "application/octet-stream; charset=utf-8");
 		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodeFileName +"\"");
 		headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.contentLength()));
@@ -667,12 +650,6 @@ public class FileUtil {
 
 	public static void s3FileDownload2(String path,final String fileName) throws IOException {
 		log.info("FileUtil.s3FileDownload");
-		System.out.println("======================================================");
-		System.out.println("path : " + path);
-		System.out.println("fileName : " + fileName);
-		System.out.println("fileName : " + decleanXSS(fileName));
-		System.out.println("======================================================");
-
 		final URL url = new URL(CloudFrontUtil.getCustomSignedUrl(path, 100));
 		final Resource resource = new UrlResource(url);
 		final HttpHeaders headers = new HttpHeaders();

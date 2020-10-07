@@ -106,9 +106,6 @@ public class CryptoUtil {
             return Base64.getEncoder().encodeToString(buffer);
         } catch (Exception exception) {
             return FailCode.ExceptionError.ERROR.name();
-            /*throw new CodeMessageHandleException(
-                    FailCode.ExceptionError.ERROR.name()
-                    , exception.getMessage());*/
         }
     }
 
@@ -144,9 +141,6 @@ public class CryptoUtil {
             return new String(cipher.doFinal(encryoptedTextBytes));
         } catch (Exception exception) {
             return FailCode.ExceptionError.ERROR.name();
-            /*throw new CodeMessageHandleException(
-                    FailCode.ExceptionError.ERROR.name()
-                    , exception.getMessage());*/
         }
     }
 
@@ -164,9 +158,6 @@ public class CryptoUtil {
             return URLEncoder.encode(value, BASIC_ENCODE);
         } catch (UnsupportedEncodingException exception) {
             return FailCode.ExceptionError.ERROR.name();
-            /*throw new CodeMessageHandleException(
-                    FailCode.ExceptionError.ERROR.name()
-                    , exception.getMessage());*/
         }
     }
 
@@ -184,9 +175,6 @@ public class CryptoUtil {
             return URLDecoder.decode(value, BASIC_ENCODE);
         } catch (UnsupportedEncodingException exception) {
             return FailCode.ExceptionError.ERROR.name();
-            /*throw new CodeMessageHandleException(
-                    FailCode.ExceptionError.ERROR.name()
-                    , exception.getMessage());*/
         }
     }
 }

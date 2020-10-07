@@ -7,6 +7,7 @@ import com.nike.dnp.entity.notice.NoticeArticle;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.notice.NoticeRepository;
+import com.nike.dnp.service.user.UserService;
 import com.nike.dnp.util.FileUtil;
 import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.ObjectMapperUtil;
@@ -29,8 +30,8 @@ import java.util.List;
  * The Class Notice service.
  *
  * @author [정주희]
+ * @implNote 작성]
  * @since 2020. 7. 13. 오후 6:15:37
- * @implNote
  */
 @Slf4j
 @Service
@@ -44,6 +45,13 @@ public class NoticeService {
      * @author [정주희]
      */
     private final NoticeRepository noticeRepository;
+
+    /**
+     * UserService
+     *
+     * @author [오지훈]
+     */
+    private final UserService userService;
 
     @Value("${nike.url.pc.domain:}")
     private String editorUrl;
@@ -85,8 +93,9 @@ public class NoticeService {
      */
     public CustomerResultDTO findById(final Long noticeSeq) {
         log.info("NoticeService.findById");
-
-        return ObjectMapperUtil.map(noticeRepository.findByNoticeArticleSeq(noticeSeq), CustomerResultDTO.class);
+        CustomerResultDTO result = ObjectMapperUtil.map(noticeRepository.findByNoticeArticleSeq(noticeSeq), CustomerResultDTO.class);
+        result.setNickname(userService.findByUserSeq(result.getRegisterSeq()).getNickname());
+        return result;
     }
 
     /**
@@ -162,7 +171,7 @@ public class NoticeService {
         return noticeRepository
                 .findById(noticeSeq)
                 .map(i -> i.update(customerUpdateDTO))
-                .orElseThrow(NotFoundHandleException::new); //error code : NotFoundException
+                .orElseThrow(NotFoundHandleException::new);
     }
 
     /**

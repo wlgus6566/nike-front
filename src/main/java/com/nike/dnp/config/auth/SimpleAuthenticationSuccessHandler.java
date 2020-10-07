@@ -151,7 +151,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		}
 
 		// PW 90일 체크
-		if (isValid && userRepository.countByPaswordChangePeriod(authUserDTO.getUserSeq()) > 0) {
+		if (isValid && userRepository.countByPasswordChangePeriod(authUserDTO.getUserSeq()) > 0) {
 			final String randomCode = RandomUtil.randomCertCode2(10);
 			final String encodeCertCode = CryptoUtil.urlEncode(CryptoUtil.encryptAES256(authUserDTO.getUserId() + REGEX + randomCode, "Nike DnP"));
 			if (FailCode.ExceptionError.ERROR.name().equals(encodeCertCode)) {
@@ -179,7 +179,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		}
 
 		// 비밀번호가 변경되었을 경우
-		if (isValid && user.get().getPasswordChangeYn().equals("Y")) {
+		if (isValid && user.get().getPwdChangeYn().equals("Y")) {
 			if (ObjectUtils.isEmpty(certCode)) {
 				// [인증코드] 메일 발송
 				userMailService.sendMailForAuthEmail(user.get());
@@ -239,7 +239,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 					.sign(algorithm);
 
 			// header 에 토큰 입력
-			authUserDTO.setPassword(""); // 비밀번호 삭제
+			authUserDTO.setPwd(""); // 비밀번호 삭제
 			response.addHeader(JwtHelper.HEADER_STRING, JwtHelper.TOKEN_PREFIX +token);
 			JsonUtil.write(response.getWriter(), responseService.getSingleResult(authUserDTO));
 

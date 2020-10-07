@@ -2,7 +2,6 @@ package com.nike.dnp.dto.email;
 
 import lombok.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +21,7 @@ public class SendDTO {
 
     /**
      * The Nickname
+     * 계정명
      *
      * @author [오지훈]
      */
@@ -29,6 +29,7 @@ public class SendDTO {
 
     /**
      * The Email
+     * 수신 이메일
      *
      * @author [오지훈]
      */
@@ -43,6 +44,7 @@ public class SendDTO {
 
     /**
      * The Cert code
+     * 인증코드
      *
      * @author [오지훈]
      */
@@ -50,6 +52,7 @@ public class SendDTO {
 
     /**
      * The Contents name
+     * 컨텐츠 명
      *
      * @author [오지훈]
      */
@@ -57,11 +60,13 @@ public class SendDTO {
 
     /**
      * The Contents img.
+     * 컨텐츠 이미지
      */
     private String contentsImg = "";
 
     /**
      * The Agency name
+     * 에이전시 명
      *
      * @author [오지훈]
      */
@@ -69,6 +74,7 @@ public class SendDTO {
 
     /**
      * The Order comment
+     * 주문 코멘트
      *
      * @author [오지훈]
      */
@@ -76,6 +82,7 @@ public class SendDTO {
 
     /**
      * The Order area
+     * 주문상품 영역
      *
      * @author [오지훈]
      */
@@ -83,6 +90,7 @@ public class SendDTO {
 
     /**
      * The Order dt
+     * 주문일
      *
      * @author [오지훈]
      */
@@ -97,6 +105,7 @@ public class SendDTO {
 
     /**
      * The Login url
+     * 로그인 링크
      *
      * @author [오지훈]
      */
@@ -104,13 +113,15 @@ public class SendDTO {
 
     /**
      * The Password url
+     * 패스워드 설정 링크
      *
      * @author [오지훈]
      */
-    private String passwordUrl;
+    private String pwdUrl;
 
     /**
      * The Contents url
+     * 컨텐츠 링크
      *
      * @author [오지훈]
      */
@@ -118,6 +129,7 @@ public class SendDTO {
 
     /**
      * The Product list
+     * 상품 목록
      *
      * @author [오지훈]
      */
@@ -131,8 +143,8 @@ public class SendDTO {
      * @since 2020. 7. 3. 오전 11:22:37
      * @implNote
      */
-    public String getProcessingDt() {
+    /*public String getProcessingDt() {
         final LocalDate currentDate = LocalDate.now();
         return currentDate.getYear() + "년 " + currentDate.getMonthValue() + "월 " + currentDate.getDayOfMonth() + "일";
-    }
+    }*/
 }

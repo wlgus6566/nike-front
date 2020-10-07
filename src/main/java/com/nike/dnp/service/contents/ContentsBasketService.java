@@ -1,14 +1,11 @@
 package com.nike.dnp.service.contents;
 
-import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.contents.ContentsBasketResultDTO;
 import com.nike.dnp.entity.contents.ContentsBasket;
 import com.nike.dnp.entity.contents.ContentsFile;
-import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.contents.ContentsBasketRepository;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
-import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,14 +1,11 @@
 package com.nike.dnp.service.code;
 
-import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.code.CodeSaveDTO;
 import com.nike.dnp.dto.code.CodeUpdateDTO;
 import com.nike.dnp.entity.code.Code;
-import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.code.CodeRepository;
 import com.nike.dnp.service.RedisService;
-import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;

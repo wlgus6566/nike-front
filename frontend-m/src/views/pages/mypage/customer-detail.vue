@@ -3,7 +3,17 @@
         <div class="detail-view">
             <div class="title-box">
                 <h2 class="title">{{ customerData.title }}</h2>
-                <span class="date">{{ customerData.updateDt }}</span>
+                <div class="info">
+                    <span
+                        class="name"
+                        v-if="
+                            customerData.noticeArticleSectionCode === 'NOTICE'
+                        "
+                    >
+                        {{ customerData.nickname }}
+                    </span>
+                    <span class="date">{{ customerData.updateDt }}</span>
+                </div>
             </div>
             <div class="detail-cont" v-html="customerData.contents"></div>
         </div>

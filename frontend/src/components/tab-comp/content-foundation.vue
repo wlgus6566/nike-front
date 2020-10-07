@@ -56,6 +56,11 @@ export default {
     created() {
         this.historyViewDataList();
     },
+    watch: {
+        '$route.fullPath'() {
+            this.historyViewDataList();
+        },
+    },
     methods: {
         //최근 본 폴더 리스트
         async historyViewDataList() {

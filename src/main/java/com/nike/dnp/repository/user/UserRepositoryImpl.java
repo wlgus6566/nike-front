@@ -92,7 +92,7 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
      * @implNote 90일 지난 패스워드 체크
      */
     @Override
-    public long countByPaswordChangePeriod(final Long userSeq) {
+    public long countByPasswordChangePeriod(final Long userSeq) {
         final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
         return queryFactory
                 .selectFrom(QUser.user)
@@ -100,5 +100,27 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
                         ,UserPredicateHelper.comparePasswordChangePeriod())
                 .fetchCount();
     }
+
+    /**
+     * Find by password change configure list.
+     *
+     * @param days the days
+     * @return the list
+     * @author [오지훈]
+     * @implNote 패스워드 변경일 90일 [days]일 전 유저 목록
+     * @since 2020. 10. 5. 오후 12:11:39
+     */
+    @Override
+    public List<User> findByPasswordChangeConfigure(final int days) {
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        return queryFactory
+                .selectFrom(QUser.user)
+                .where(
+                        UserPredicateHelper.comparePasswordChangePeriodAddDays(days)
+                        ,QUser.user.userStatusCode.eq(ServiceCode.UserStatusEnumCode.NORMAL.name())
+                )
+                .fetch();
+    }
+
 
 }

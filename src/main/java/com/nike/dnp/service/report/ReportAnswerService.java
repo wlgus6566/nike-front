@@ -1,16 +1,13 @@
 package com.nike.dnp.service.report;
 
-import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.report.ReportAnswerResultDTO;
 import com.nike.dnp.dto.report.ReportAnswerSaveDTO;
 import com.nike.dnp.entity.report.Report;
 import com.nike.dnp.entity.report.ReportAnswer;
-import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.report.ReportAnswerRepository;
 import com.nike.dnp.service.alarm.AlarmService;
-import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -8,7 +8,16 @@
         <div class="detail-view">
             <div class="title-box">
                 <h2 class="title">{{ noticeDetail.title }}</h2>
-                <span class="date">{{ noticeDetail.updateDt }}</span>
+                <div class="info">
+                    <span
+                        class="name"
+                        v-if="
+                            noticeDetail.noticeArticleSectionCode === 'NOTICE'
+                        "
+                        >{{ noticeDetail.nickname }}</span
+                    >
+                    <span class="date">{{ noticeDetail.updateDt }}</span>
+                </div>
             </div>
             <div class="detail-cont" v-html="noticeDetail.contents"></div>
         </div>

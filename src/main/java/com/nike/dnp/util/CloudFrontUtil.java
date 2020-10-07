@@ -184,7 +184,7 @@ public class CloudFrontUtil {
             log.error("exception", exception);
             throw new CodeMessageHandleException(
                     FailCode.ExceptionError.ERROR.name()
-                    , exception.getMessage()
+                    , MessageUtil.getMessage(FailCode.ExceptionError.ERROR.name())
             );
         }
     }
@@ -226,7 +226,7 @@ public class CloudFrontUtil {
             log.error("exception", exception);
             throw new CodeMessageHandleException(
                     FailCode.ExceptionError.ERROR.name()
-                    , exception.getMessage()
+                    , MessageUtil.getMessage(FailCode.ExceptionError.ERROR.name())
             );
         }
     }

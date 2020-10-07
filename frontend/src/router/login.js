@@ -1,5 +1,5 @@
-import { pages } from '@/utils/global-methods';
-import { certCode } from '@/api/login';
+import {pages} from '@/utils/global-methods';
+import {certCode} from '@/api/login';
 
 const routes = [
     {
@@ -45,11 +45,38 @@ const routes = [
             }
         },
     },
-    {
+    /*{
         path: '/password-change',
         component: pages('login/password-change'),
         meta: {
             layout: 'Clean',
+        },
+    },*/
+    {
+        path: '/password-change',
+        name: 'password-change',
+        component: pages('login/password-change'),
+        meta: {
+            layout: 'Clean',
+            unauthorized: true,
+        },
+        beforeEnter: async (to, from, next) => {
+            try {
+                const { data: response } = await certCode({
+                    certCode: to.params.certCode,
+                });
+                if (response.success) {
+                    next();
+                } else {
+                    if (response.existMsg) {
+                        alert(response.msg);
+                    }
+                    next('/login');
+                }
+            } catch (error) {
+                console.log(error);
+                next();
+            }
         },
     },
 ];
