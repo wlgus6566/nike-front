@@ -349,7 +349,7 @@ public class ContentsService {
         log.info("ContentsService.findByContentsSeq");
         // 상세 권한 여부 조회
         if (!this.isAuthForContents(contentsSeq, SecurityUtil.currentUser().getAuthSeq())) {
-            throw new CodeMessageHandleErrorException(FailCode.ConfigureError.NO_AUTH.name(), MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name()));
+            throw new CodeMessageHandleErrorException();
         }
 
         final Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
@@ -366,7 +366,6 @@ public class ContentsService {
         contentsResultDTO.setUserId(
                 EmailPatternUtil.maskingEmail(userService.findByUserSeq(contentsResultDTO.getRegisterSeq()).getUserId())
         );
-
 
         // 메일 갯수 조회
         List<ContentsUserEmailDTO> emailAuthUserList = contentsRepository.findAllContentsMailAuthUser(contentsSeq);

@@ -1,14 +1,11 @@
 package com.nike.dnp.controller.common;
 
-import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.file.FileUploadDTO;
-import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.FileHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.util.FileUtil;
-import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.S3Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -66,9 +66,10 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.OK)
     protected CommonResult codeMessageHandleException(final CodeMessageHandleException exception) {
         log.error("================== Basic ERROR ===================");
-        log.error("message", exception.getMessage());
         this.errorLogInsert(exception);
-        return responseService.getFailResult(exception.getCode(), exception.getMessage());
+        return responseService.getFailResult(
+                exception.getCode()
+                , exception.getDescription());
     }
 
     /**
@@ -85,9 +86,10 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     protected CommonResult CodeMessageHandleErrorException(final CodeMessageHandleErrorException exception) {
         log.error("================== NoAuth ERROR ===================");
-        log.error("message", exception.getMessage());
         this.errorLogInsert(exception);
-        return responseService.getFailResult(exception.getCode(), exception.getMessage());
+        return responseService.getFailResult(
+                FailCode.ConfigureError.NO_AUTH.name()
+                , MessageUtil.getMessage(FailCode.ConfigureError.NO_AUTH.name()));
     }
 
     /**
@@ -104,9 +106,10 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult fileHandleException(final FileHandleException exception) {
         log.error("================== File ERROR ===================");
-        log.error("message", exception.getMessage());
         this.errorLogInsert(exception);
-        return responseService.getFailResult(exception.getCode(), exception.getMessage());
+        return responseService.getFailResult(
+                FailCode.ConfigureError.INVALID_FILE.name()
+                , MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
     }
 
     /**
@@ -121,38 +124,40 @@ public class ExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     protected CommonResult notFoundException(final NotFoundHandleException exception) {
-        log.error("================== NotFoundHandler ERROR ===================");
-        log.error("message", exception.getMessage());
+        log.error("================== NotFound ERROR ===================");
         this.errorLogInsert(exception);
-        return responseService.getFailResult(exception.getCode(), exception.getMessage());
+        return responseService.getFailResult(
+                FailCode.ExceptionError.NOT_FOUND.name()
+                , MessageUtil.getMessage(FailCode.ExceptionError.NOT_FOUND.name()));
     }
 
     /**
-     * 정의 된 오류 외의 excpetion
+     * 정의 된 오류 외의 exception
      *
      * @param exception the e
-     * @return the common result
+     * @return 상태값 : 500, 코드, 메세지
      * @author [이소정]
-     * @implNote 정의 된 오류 외의 excpetion
+     * @implNote 정의 된 오류 외의 exception
      * @since 2020. 7. 30. 오후 4:00:38
      */
     @ExceptionHandler({InterruptedException.class})
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public CommonResult interruptedException(final Exception exception) {
-        log.error("==================Interrupted ERROR ===================");
-        log.error("message", exception.getMessage());
+        log.error("================== Interrupted ERROR ===================");
         this.errorLogInsert(exception);
-        return responseService.getFailResult(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
+        return responseService.getFailResult(
+                FailCode.ConfigureError.INVALID_FILE.name()
+                , MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
     }
 
     /**
-     * 정의 된 오류 외의 excpetion
+     * 정의 된 오류 외의 exception
      *
      * @param exception the e
-     * @return the common result
+     * @return 상태값 : 500, 코드, 메세지
      * @author [이소정]
-     * @implNote 정의 된 오류 외의 excpetion
+     * @implNote 정의 된 오류 외의 exception
      * @since 2020. 7. 30. 오후 4:00:38
      */
     @ExceptionHandler({Exception.class})

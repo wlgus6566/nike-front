@@ -117,7 +117,7 @@ public class SendDTO {
      *
      * @author [오지훈]
      */
-    private String passwordUrl;
+    private String pwdUrl;
 
     /**
      * The Contents url

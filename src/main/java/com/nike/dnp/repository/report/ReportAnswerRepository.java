@@ -1,11 +1,8 @@
 package com.nike.dnp.repository.report;
 
-import com.nike.dnp.dto.report.ReportAnswerResultDTO;
 import com.nike.dnp.entity.report.ReportAnswer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * The Interface Report answer repository.

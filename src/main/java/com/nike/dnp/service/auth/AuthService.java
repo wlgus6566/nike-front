@@ -229,18 +229,6 @@ public class AuthService {
         log.info("AuthService.findAllByCache");
         return this.findAuths();
     }
-    /*public JSONArray findAllByCache() {
-        log.info("AuthService.findAllByCache");
-        final ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.readValue(objectMapper.writeValueAsString(this.findAll()), JSONArray.class);
-        } catch (JsonProcessingException exception) {
-            throw (CodeMessageHandleException) new CodeMessageHandleException(
-                    FailCode.ExceptionError.ERROR.toString()
-                    , exception.getMessage()
-            );
-        }
-    }*/
 
     /**
      * Find by role type optional.
@@ -620,15 +608,6 @@ public class AuthService {
     public void initAuthCache() {
         log.info("AuthService.initAuthCache");
         redisService.delete("cache:auths::SimpleKey []");
-        /*final ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            redisService.set("cache:auths::SimpleKey []", objectMapper.readValue(objectMapper.writeValueAsString(this.findAll()), JSONArray.class), 60 * 24 * 30);
-        } catch (JsonProcessingException exception) {
-            throw (CodeMessageHandleException) new CodeMessageHandleException(
-                    FailCode.ExceptionError.ERROR.toString()
-                    , exception.getMessage()
-            );
-        }*/
     }
 
     /**

@@ -1,7 +1,8 @@
 package com.nike.dnp.service.report;
 
 import com.nike.dnp.common.variable.ServiceCode;
-import com.nike.dnp.dto.report.*;
+import com.nike.dnp.dto.report.ReportFileResultDTO;
+import com.nike.dnp.dto.report.ReportFileSearchDTO;
 import com.nike.dnp.repository.report.ReportFileRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

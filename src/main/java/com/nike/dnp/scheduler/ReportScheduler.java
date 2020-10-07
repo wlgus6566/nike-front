@@ -1,7 +1,5 @@
 package com.nike.dnp.scheduler;
 
-import com.nike.dnp.common.variable.ServiceCode;
-import com.nike.dnp.service.contents.ContentsBasketService;
 import com.nike.dnp.service.report.ReportBasketService;
 import com.nike.dnp.service.report.ReportService;
 import lombok.AllArgsConstructor;

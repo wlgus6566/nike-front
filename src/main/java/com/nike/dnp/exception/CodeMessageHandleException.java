@@ -22,6 +22,13 @@ public class CodeMessageHandleException extends RuntimeException implements Seri
     private String code;
 
     /**
+     * 응답 내용
+     *
+     * @author [이소정]
+     */
+    private String description;
+
+    /**
      * Instantiates a new Code message handle exception.
      *
      * @param code 코드
@@ -33,5 +40,6 @@ public class CodeMessageHandleException extends RuntimeException implements Seri
     public CodeMessageHandleException(final String code, final String msg) {
         super(msg);
         this.code = code;
+        this.description = msg;
     }
 }

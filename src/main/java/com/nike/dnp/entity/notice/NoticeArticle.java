@@ -1,6 +1,5 @@
 package com.nike.dnp.entity.notice;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.notice.CustomerSaveDTO;
@@ -11,7 +10,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;

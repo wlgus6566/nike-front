@@ -57,8 +57,7 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 
 		// 비밀번호 틀림
 		if (exception instanceof BadCredentialsException) {
-			final String password = request.getParameter("password");
-			if (ObjectUtils.isEmpty(password)) {
+			if (ObjectUtils.isEmpty(request.getParameter("password"))) {
 				JsonUtil.write(response.getWriter()
 						, responseService.getFailResult(
 								FailCode.ConfigureError.CHECK_ID_PASSWORD.name()
@@ -84,7 +83,7 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 			JsonUtil.write(response.getWriter()
 					, responseService.getFailResult(
 							FailCode.ExceptionError.ERROR.name()
-							, exception.getMessage()
+							, MessageUtil.getMessage(FailCode.ExceptionError.ERROR.name())
 					));
 		}
 

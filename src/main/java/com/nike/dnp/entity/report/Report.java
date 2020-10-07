@@ -7,18 +7,11 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.nike.dnp.dto.report.ReportSaveDTO;
-import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.entity.BaseTimeWithoutUpdateDtEntity;
 import com.nike.dnp.entity.user.User;
-import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;

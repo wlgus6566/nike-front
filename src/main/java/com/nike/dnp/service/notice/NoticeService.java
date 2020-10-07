@@ -171,7 +171,7 @@ public class NoticeService {
         return noticeRepository
                 .findById(noticeSeq)
                 .map(i -> i.update(customerUpdateDTO))
-                .orElseThrow(NotFoundHandleException::new); //error code : NotFoundException
+                .orElseThrow(NotFoundHandleException::new);
     }
 
     /**

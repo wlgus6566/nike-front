@@ -138,7 +138,7 @@ public class User extends BaseTimeEntity {
      */
     @Column(name = "PASSWORD_CHANGE_YN")
     @ApiModelProperty(name = "passwordChangeYn", value = "비밀번호 변경 여부", required = true, example = "N")
-    private String passwordChangeYn;
+    private String pwdChangeYn;
 
     /**
      * 유저권한 맵핑
@@ -171,7 +171,7 @@ public class User extends BaseTimeEntity {
     @PrePersist
     public void prePersist() {
         this.termsAgreeYn = this.termsAgreeYn == null ? "N" : this.termsAgreeYn;
-        this.passwordChangeYn = this.passwordChangeYn == null ? "N" : this.passwordChangeYn;
+        this.pwdChangeYn = this.pwdChangeYn == null ? "N" : this.pwdChangeYn;
         this.userStatusCode = ServiceCode.UserStatusEnumCode.NORMAL.toString();
     }
 
@@ -217,7 +217,7 @@ public class User extends BaseTimeEntity {
         log.info("User.updatePassword");
         this.password = password;
         this.passwordLastUpdateDt = LocalDateTime.now();
-        this.passwordChangeYn = "Y";
+        this.pwdChangeYn = "Y";
     }
 
     /**
@@ -283,7 +283,7 @@ public class User extends BaseTimeEntity {
      */
     public void updatePasswordChange() {
         log.info("User.updatePasswordChange");
-        this.passwordChangeYn = "N";
+        this.pwdChangeYn = "N";
     }
 
 }

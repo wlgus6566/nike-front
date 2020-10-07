@@ -46,10 +46,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		log.info("AuthenticationFilter.attemptAuthentication");
 		UsernamePasswordAuthenticationToken token = null;
 		try {
-			final String username = obtainUsername(request);
-			final String password = obtainPassword(request);
-			token = new UsernamePasswordAuthenticationToken(username, password);
-
+			token = new UsernamePasswordAuthenticationToken(obtainUsername(request), obtainPassword(request));
 
 		} catch (AuthenticationException exception) {
 			log.error("AuthenticationException", exception);

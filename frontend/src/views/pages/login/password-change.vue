@@ -83,8 +83,9 @@
     </div>
 </template>
 <script>
-import { changepassword } from '@/api/mypage';
-export default {
+    import {changepassword} from '@/api/login';
+
+    export default {
     name: 'passwordChange',
     data() {
         return {

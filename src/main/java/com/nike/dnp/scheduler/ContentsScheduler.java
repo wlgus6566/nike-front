@@ -3,8 +3,6 @@ package com.nike.dnp.scheduler;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.service.contents.ContentsBasketService;
 import com.nike.dnp.service.contents.ContentsService;
-import com.nike.dnp.service.goodsbasket.GoodsBasketService;
-import com.nike.dnp.util.FileUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

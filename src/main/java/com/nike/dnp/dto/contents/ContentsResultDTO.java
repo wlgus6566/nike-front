@@ -1,18 +1,13 @@
 package com.nike.dnp.dto.contents;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * The Class Contents list dto.

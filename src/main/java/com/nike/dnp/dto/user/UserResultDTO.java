@@ -112,14 +112,6 @@ public class UserResultDTO {
     private LocalDateTime passwordLastUpdateDt;
 
     /**
-     * 비밀번호 변경 여부
-     *
-     * @author [오지훈]
-     */
-    @ApiModelProperty(name = "passwordChangeYn", value = "비밀번호 변경 여부")
-    private String passwordChangeYn;
-
-    /**
      * 유저권한 맵핑
      *
      * @author [오지훈]

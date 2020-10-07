@@ -1,14 +1,11 @@
 package com.nike.dnp.service.report;
 
-import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.report.ReportBasketResultDTO;
 import com.nike.dnp.entity.report.ReportBasket;
 import com.nike.dnp.entity.report.ReportFile;
-import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.report.ReportBasketRepository;
 import com.nike.dnp.repository.report.ReportFileRepository;
-import com.nike.dnp.util.MessageUtil;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

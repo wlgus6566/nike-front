@@ -179,7 +179,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		}
 
 		// 비밀번호가 변경되었을 경우
-		if (isValid && user.get().getPasswordChangeYn().equals("Y")) {
+		if (isValid && user.get().getPwdChangeYn().equals("Y")) {
 			if (ObjectUtils.isEmpty(certCode)) {
 				// [인증코드] 메일 발송
 				userMailService.sendMailForAuthEmail(user.get());

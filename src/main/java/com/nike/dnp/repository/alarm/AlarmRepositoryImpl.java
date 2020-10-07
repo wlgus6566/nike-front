@@ -2,7 +2,6 @@ package com.nike.dnp.repository.alarm;
 
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.alarm.AlarmResultDTO;
-import com.nike.dnp.dto.contents.ContentsFileResultDTO;
 import com.nike.dnp.entity.alarm.Alarm;
 import com.nike.dnp.entity.alarm.QAlarm;
 import com.nike.dnp.util.ObjectMapperUtil;

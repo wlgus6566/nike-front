@@ -36,9 +36,9 @@ public class JsonUtil {
 		try {
 			new ObjectMapper().writeValue(writer, value);
 		} catch (IOException exception) {
-			throw (CodeMessageHandleException) new CodeMessageHandleException(
+			throw new CodeMessageHandleException(
 					FailCode.ExceptionError.ERROR.name()
-					, exception.getMessage());
+					, MessageUtil.getMessage(FailCode.ExceptionError.ERROR.name()));
 		}
 	}
 
