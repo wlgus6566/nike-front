@@ -96,18 +96,17 @@
 			<h2 class="item-title" id="ui-id">ID 네이밍 규칙</h2>
 			<table class="tbl">
 				<tr>
-					<th>잘못된 예</th>
 					<th>올바른 예</th>
 				</tr>
 				<tr>
 					<td>tab<br>accordinon<br>ui-Tab </td>
-					<td>ui-tab<br>ui-accordinon</td>
 				</tr>
 			</table>
 			<ul class="desc-list">
-				<li>UI를 위한 ID 값이 필요한 경우 ID의 네이밍의 시작을 "ui-"로 시작한다</li>
-				<li>영문 대문자를 사용하지 않는다.</li>
 				<li>중복된 ID 값을 쓰지않는다.</li>
+				<li>영문, 숫자, 하이픈(-), 언더스코프(_)만 사용할 수 있다.</li>
+				<li>하이픈(-)은 2개 이상의 단어를 조합할 때만 사용한다.</li>
+				<li>하이픈(-)을 이용하여 3단계를 초과하여 사용하는 방법은 지양한다.</li>
 			</ul>
 			<h2 class="item-title" id="ui-class">Class 네이밍 규칙</h2>
 			<table class="tbl">
@@ -130,13 +129,10 @@
 			<h3 class="item-title2">파일의 경로</h3>
 			<pre style="margin-top:20px;"><code class="html">
 &#60;!-- 공통 css --&#62;
-&#60;link rel="stylesheet" href="/resources/pc/assets/css/ui.ticketbay.pc.css"&#62;
-&#60;!-- ui script --&#62;
-&#60;script src="/resources/pc/assets/js/library/jquery-3.4.1.min.js"&#62;&#60;/script&#62;
-&#60;script src="/resources/pc/assets/js/ui.ticketbay.pc.js"&#62;&#60;/script&#62;
+&#60;link rel="stylesheet" href="assets/css/ui.nikeFront.css"&#62;
 ...
 &#60;!-- 이미지 파일 경로 --&#62;
-&#60;img src="/resources/pc/assets/images/images.jpg" alt="대체텍스트" &#62;
+&#60;img src="@/assets/images/images.jpg" alt="대체텍스트" &#62;
 			</code></pre>
 			<h3 class="item-title2">표준 문법의 사용</h3>
 			<ul class="desc-list">
@@ -192,7 +188,7 @@
 
 &#60;/head&#62;
 &#60;body&#62;
-&#60;div id="wrap"&#62;
+&#60;div id="app"&#62;
 
 &#60;/div&#62;
 &#60;/body&#62;
@@ -200,7 +196,7 @@
 			</code></pre>
 			<ul class="desc-list">
 				<li>html의 자식 엘리먼트인 head, body</li>
-				<li>body의 자식 첫 번째 엘리먼트 div="wrap"</li>
+				<li>body의 자식 첫 번째 엘리먼트 div="app"</li>
 			</ul>
 			<h3 class="item-title2">주석</h3>
 			<ui class="desc-list">
@@ -209,7 +205,7 @@
 			<pre style="margin-top:20px;"><code class="html">
 &#60;%-- header// --%&#62;
 &#60;header id="header"&#62;
-    &#60;a href="#none"&#62;ticketbay&#60;/a&#62;  &#60;%-- logo --%&#62;
+    &#60;a href="#none"&#62;nike&#60;/a&#62;  &#60;%-- logo --%&#62;
 &#60;/header&#62;
 &#60;%-- //header --%&#62;
 
