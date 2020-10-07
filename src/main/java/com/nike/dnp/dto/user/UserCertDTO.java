@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.validation.GroupSequence;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -36,27 +37,27 @@ public class UserCertDTO {
      *
      * @author [오지훈]
      */
-    @NotBlank(message = "userCert.password", groups = {ValidationGroups.Group2.class})
+    @NotNull(message = "userCert.password", groups = {ValidationGroups.Group2.class})
     @ApiModelProperty(value = "기존 비밀번호", name = "password")
-    private String password;
+    private char[] password;
 
     /**
      * 새로운 비밀번호
      *
      * @author [오지훈]
      */
-    @NotBlank(message = "userCert.newPassword", groups = {ValidationGroups.Group3.class})
+    @NotNull(message = "userCert.newPassword", groups = {ValidationGroups.Group3.class})
     @ApiModelProperty(value = "새 비밀번호", name = "newPassword")
-    private String newPassword;
+    private char[] newPassword;
 
     /**
      * 확인 비밀번호
      *
      * @author [오지훈]
      */
-    @NotBlank(message = "userCert.confirmPassword", groups = {ValidationGroups.Group4.class})
+    @NotNull(message = "userCert.confirmPassword", groups = {ValidationGroups.Group4.class})
     @ApiModelProperty(value = "새 비밀번호(확인)", name = "confirmPassword")
-    private String confirmPassword;
+    private char[] confirmPassword;
 
     /**
      * The interface Set password.

@@ -538,9 +538,9 @@ public class UserService implements UserDetailsService {
         final String userId = decodeCertCode.split(REGEX)[0];
         final String certKey = decodeCertCode.split(REGEX)[1];
         final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));
-        final char[] pwd = ConvertUtil.convertStringToCharacter(userCertDTO.getPassword());
-        final char[] newPwd = ConvertUtil.convertStringToCharacter(userCertDTO.getNewPassword());
-        final char[] confirmPwd = ConvertUtil.convertStringToCharacter(userCertDTO.getConfirmPassword());
+        final char[] pwd = userCertDTO.getPassword();
+        final char[] newPwd = userCertDTO.getNewPassword();
+        final char[] confirmPwd = userCertDTO.getConfirmPassword();
         char[] certPwd = null;
 
         if (!ObjectUtils.isEmpty(newPwd)) {
@@ -576,6 +576,11 @@ public class UserService implements UserDetailsService {
         ConvertUtil.cleanValue(confirmPwd);
         ConvertUtil.cleanValue(certPwd);
 
+        /*throw new CodeMessageHandleException(
+                FailCode.ExceptionError.ERROR.name()
+                ,MessageUtil.getMessage(FailCode.ExceptionError.ERROR.name())
+        );*/
+
         final UserResultDTO userResultDTO = new UserResultDTO();
         userResultDTO.setUserSeq(user.getUserSeq());
         return userResultDTO;
@@ -594,9 +599,9 @@ public class UserService implements UserDetailsService {
     @Transactional
     public UserResultDTO confirmPassword(final String userId, final UserCertDTO userCertDTO) {
         log.info("UserService.confirmPassword2");
-        final char[] pwd = ConvertUtil.convertStringToCharacter(userCertDTO.getPassword());
-        final char[] newPwd = ConvertUtil.convertStringToCharacter(userCertDTO.getNewPassword());
-        final char[] confirmPwd = ConvertUtil.convertStringToCharacter(userCertDTO.getConfirmPassword());
+        final char[] pwd = userCertDTO.getPassword();
+        final char[] newPwd = userCertDTO.getNewPassword();
+        final char[] confirmPwd = userCertDTO.getConfirmPassword();
         char[] certPwd = null;
 
         if (!ObjectUtils.isEmpty(newPwd)) {
@@ -641,11 +646,6 @@ public class UserService implements UserDetailsService {
      */
     public void checkPassword(final UserPasswordDTO userPasswordDTO) {
         log.info("UserService.checkPassword");
-
-        System.out.println("======================================================");
-        System.out.println(userPasswordDTO.getPassword());
-        System.out.println(userPasswordDTO.getNewPassword());
-        System.out.println("======================================================");
 
         //기존비밀번호확인
         if (!ObjectUtils.isEmpty(userPasswordDTO.getPassword()) && !passwordEncoder.matches(userPasswordDTO.getPassword(), userPasswordDTO.getUserPassword())) {

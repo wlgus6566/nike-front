@@ -239,7 +239,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 					.sign(algorithm);
 
 			// header 에 토큰 입력
-			authUserDTO.setPassword(""); // 비밀번호 삭제
+			authUserDTO.setPwd(""); // 비밀번호 삭제
 			response.addHeader(JwtHelper.HEADER_STRING, JwtHelper.TOKEN_PREFIX +token);
 			JsonUtil.write(response.getWriter(), responseService.getSingleResult(authUserDTO));
 

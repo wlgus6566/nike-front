@@ -61,7 +61,7 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 *
 	 * @author [윤태호]
 	 */
-	private String password;
+	private String pwd;
 
 	/**
 	 * The Role
@@ -96,7 +96,7 @@ public class AuthUserDTO implements UserDetails, Serializable {
 		this.userSeq = user.getUserSeq();
 		this.userId = user.getUserId();
 		this.nickname = user.getNickname();
-		this.password = user.getPassword();
+		this.pwd = user.getPassword();
 		this.role = user.getUserAuth().getAuth().getRoleType();
 		this.authSeq = user.getUserAuth().getAuth().getAuthSeq();
 		this.authName = user.getUserAuth().getAuth().getAuthName();
@@ -112,7 +112,7 @@ public class AuthUserDTO implements UserDetails, Serializable {
 	 */
 	@Override
 	public String getPassword() {
-		return password;
+		return pwd;
 	}
 
 	/**
