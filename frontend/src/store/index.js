@@ -50,7 +50,7 @@ export default new Vuex.Store({
         },*/
     },
     mutations: {
-        SET_USER(state, user) {
+        /*SET_USER(state, user) {
             state.user = user;
         },
         SET_NICK(state, nick) {
@@ -61,7 +61,7 @@ export default new Vuex.Store({
         },
         SET_AUTHNAME(state, authName) {
             state.authName = authName;
-        },
+        },*/
         SET_GNB(state, gnbMenu) {
             state.gnbMenuListData = gnbMenu;
         },
@@ -98,7 +98,6 @@ export default new Vuex.Store({
                     minutes >= 10 ? minutes : '0' + minutes
                 }:${seconds >= 10 ? seconds : '0' + seconds}`;
                 if (distance <= 0) {
-                    state.saveFolder = true;
                     state.logoutTimer.modalVisible = false;
                     this.commit('LOGOUT');
                     clearInterval(state.logoutTimer.timerInterval);
@@ -110,10 +109,12 @@ export default new Vuex.Store({
         },
 
         LOGOUT(state) {
+            console.log(state.saveFolder);
             state.user = '';
             state.nick = '';
             state.token = '';
             state.authName = '';
+            state.saveFolder = true;
             state.gnbMenuListData = [];
             state.basketItemDrag = false;
             state.fileMouseenter = false;
@@ -125,6 +126,7 @@ export default new Vuex.Store({
             deleteCookie('user_nick');
             deleteCookie('user_token');
             deleteCookie('user_authName');
+            console.log(state.saveFolder);
             router.push('/login');
         },
         SET_CONT_BASKET(state, data) {

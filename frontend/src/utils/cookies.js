@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 function saveAuthToCookie(value) {
     setCookie('user_token', value);
 }
@@ -11,33 +13,19 @@ function saveUserIdToCookie(value) {
     setCookie('user_id', value);
 }
 function setCookie(cname, cvalue) {
-    const expires = new Date();
-    expires.setMinutes(expires.getMinutes() + 30);
-    document.cookie = `${cname}=${cvalue}; path=/; expires=${expires.toGMTString()}`;
+    Vue.$cookies.set(cname, cvalue, '30min', '/', null, null, 'strict');
 }
 function getAuthNameFromCookie() {
-    return document.cookie.replace(
-        /(?:(?:^|.*;\s*)user_authName\s*=\s*([^;]*).*$)|^.*$/,
-        '$1'
-    );
+    return Vue.$cookies.get('user_authName');
 }
 function getAuthFromCookie() {
-    return document.cookie.replace(
-        /(?:(?:^|.*;\s*)user_token\s*=\s*([^;]*).*$)|^.*$/,
-        '$1'
-    );
+    return Vue.$cookies.get('user_token');
 }
 function getUserNickFromCookie() {
-    return document.cookie.replace(
-        /(?:(?:^|.*;\s*)user_nick\s*=\s*([^;]*).*$)|^.*$/,
-        '$1'
-    );
+    return Vue.$cookies.get('user_nick');
 }
 function getUserIdFromCookie() {
-    return document.cookie.replace(
-        /(?:(?:^|.*;\s*)user_id\s*=\s*([^;]*).*$)|^.*$/,
-        '$1'
-    );
+    return Vue.$cookies.get('user_id');
 }
 
 function updateCookie() {
@@ -49,10 +37,7 @@ function updateCookie() {
 }
 
 function deleteCookie(value) {
-    //console.log(value);
-    const expires = new Date();
-    expires.setMinutes(expires.getMinutes() - 30);
-    document.cookie = `${value}=; path=/; expires=${expires.toGMTString()}`;
+    Vue.$cookies.remove(value);
 }
 
 export {

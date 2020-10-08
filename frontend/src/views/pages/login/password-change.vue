@@ -83,9 +83,9 @@
     </div>
 </template>
 <script>
-    import {changepassword} from '@/api/login';
+import { changepassword } from '@/api/login';
 
-    export default {
+export default {
     name: 'passwordChange',
     data() {
         return {

@@ -163,13 +163,13 @@ export default {
     },
     computed: {
         userNickname() {
-            return this.$store.state.nick || getUserNickFromCookie();
+            return getUserNickFromCookie();
         },
         userIdVal() {
-            return this.$store.state.user || getUserIdFromCookie();
+            return getUserIdFromCookie();
         },
         userAuthName() {
-            return this.$store.state.authName || getAuthNameFromCookie();
+            return getAuthNameFromCookie();
         },
     },
     activated() {},
@@ -193,7 +193,7 @@ export default {
         },
         logout() {
             this.$store.commit('LOGOUT');
-            this.$router.push('/login');
+            //this.$router.push('/login');
         },
         initFetchData() {
             this.totalPage = null;

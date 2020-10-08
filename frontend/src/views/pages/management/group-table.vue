@@ -12,15 +12,11 @@
         <thead>
             <tr>
                 <th>
-                    <label class="group-check-all">
-                        <input
-                            type="checkbox"
-                            v-model="checkAll"
-                            @change="allCheckFn()"
-                        />
+                    <span class="group-check-all" @click.prevent="allCheckFn()">
+                        <input type="checkbox" :checked="checkAll" />
                         <i />
                         <span v-html="table.menuName"></span>
-                    </label>
+                    </span>
                 </th>
                 <th
                     v-for="(thead, theadIndex) in table.skillCodes"
@@ -84,7 +80,7 @@ export default {
     },
     methods: {
         allCheckFn() {
-            this.checkAll = !this.checkAll;
+            //this.checkAll = !this.checkAll;
             let array = [];
             this.table.subMenus.forEach((a) => {
                 a.skillCodes.forEach((b) => {
@@ -188,11 +184,21 @@ export default {
     background: #f7f7f7;
 }
 .group-check-all {
+    overflow: hidden;
+    cursor: pointer;
     line-height: 20px;
+    font-size: 14px;
+    font-family: 'Roboto', 'Noto Sans KR', 'Arial', 'Apple SD Gothic Neo',
+        sans-serif;
+    font-weight: 700;
+    color: #000;
 }
 .group-check-all input {
     opacity: 0;
+    height: 1px;
+    width: 1px;
     position: absolute;
+    left: -10px;
 }
 .group-check-all span {
     display: inline-block;

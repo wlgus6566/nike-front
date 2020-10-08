@@ -301,6 +301,8 @@ export default {
             } else {
                 next(false);
             }
+        } else {
+            next();
         }
     },
 };
