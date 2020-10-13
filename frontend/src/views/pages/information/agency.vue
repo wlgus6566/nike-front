@@ -98,15 +98,18 @@ export default {
             if (addAlert) {
                 try {
                     const response = await postAgencyContact(addData);
-
+                    if (response.data.existMsg) {
+                        alert(response.data.msg);
+                    }
                     if (response.data.success) {
                         this.visible.agencyManagement = false;
                         await this.getAgencyData();
-                    } else {
-                        alert(response.data.msg);
                     }
                 } catch (error) {
                     console.error(error);
+                    if (error.data.existMsg) {
+                        alert(error.data.msg);
+                    }
                 }
             }
         },
@@ -144,20 +147,27 @@ export default {
         },
         async modifyAgencyManagement(agencySeq) {
             try {
-                const {
-                    data: { data: response },
-                } = await putAgencyContact(agencySeq, {
+                const response = await putAgencyContact(agencySeq, {
                     agencyDescription: this.addAgencyData.agencyDescription,
                     agencyName: this.addAgencyData.agencyName,
                     email: this.addAgencyData.email,
                     telephoneNumber: this.addAgencyData.telephoneNumber,
                     agencySeq: agencySeq,
                 });
-                this.addAgencyData = response;
-                this.visible.agencyManagement = false;
-                await this.getAgencyData();
+
+                if (response.data.existMsg) {
+                    alert(response.data.msg);
+                }
+                if (response.data.success) {
+                    this.addAgencyData = response;
+                    this.visible.agencyManagement = false;
+                    await this.getAgencyData();
+                }
             } catch (error) {
                 console.error(error);
+                if (error.data.existMsg) {
+                    alert(error.data.msg);
+                }
             }
         },
     },
