@@ -1,5 +1,5 @@
-import {pages} from '@/utils/global-methods';
-import {certCode} from '@/api/login';
+import { pages } from '@/utils/global-methods';
+import { certCode } from '@/api/login';
 
 const routes = [
     {
