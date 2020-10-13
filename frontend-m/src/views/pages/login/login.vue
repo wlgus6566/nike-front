@@ -90,6 +90,9 @@
                         name: 'password-change',
                         params: this.loginData,
                     });
+                } else if (response.data.code === 'IS_DORMANT') {
+                    // 휴면회원 안내 화면
+
                 } else if (response.data.code === 'SUCCESS') {
                     await this.$router.push('/');
                 }
