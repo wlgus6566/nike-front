@@ -108,7 +108,7 @@ import fetchProgress from 'fetch-progress';
 import { addContentsBasket, delContentsBasket } from '@/api/contents';
 import bus from '@/utils/bus';
 import { getLoginUpdate } from '@/api/mypage';
-
+import { fileDownloadLog } from '@/api/log';
 export default {
     name: 'FileItem',
     data() {
@@ -239,6 +239,11 @@ export default {
                         });
                 })
             );
+
+            await fileDownloadLog({
+                downloadType: 'CONTENTS',
+                seqArray: this.link.map((el) => el.seq),
+            });
 
             this.link.forEach((el, i) => {
                 setTimeout(() => {

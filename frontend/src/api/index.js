@@ -34,3 +34,4 @@ export const alarm = createWithAuth(`/api/alarm`, { timeout: 0 }, true);
 export const banner = createWithAuth(`/api/banner`, { timeout: 0 }, true);
 export const main = createWithAuth(`/api/main`, { timeout: 0 }, true);
 export const join = createWithAuth(`/api/join`, { timeout: 0 }, false);
+export const log = createWithAuth(`/api/log`, { timeout: 0 }, false);
