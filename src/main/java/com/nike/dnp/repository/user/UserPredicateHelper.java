@@ -142,4 +142,17 @@ public class UserPredicateHelper {
     public Predicate comparePasswordChangePeriodAddDays(final int days) {
         return new BooleanBuilder(CustomExpression.dateDiffAndAdd(QUser.user.passwordLastUpdateDt, 90).eq(days));
     }
+
+    /**
+     * Compare dormant prev period add days predicate.
+     *
+     * @param days the days
+     * @return the predicate
+     * @author [오지훈]
+     * @implNote 휴면 회원 전환 예정 [days]전
+     * @since 2020. 10. 13. 오전 11:54:02
+     */
+    public Predicate compareDormantPrevPeriodAddDays(final int days) {
+        return new BooleanBuilder(CustomExpression.dateDiffAndAdd(QUser.user.loginDt, 365).eq(days));
+    }
 }

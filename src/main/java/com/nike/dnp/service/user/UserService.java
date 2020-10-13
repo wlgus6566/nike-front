@@ -166,6 +166,33 @@ public class UserService implements UserDetailsService {
     }
 
     /**
+     * Find by dormant configure list.
+     *
+     * @param days the days
+     * @return the list
+     * @author [오지훈]
+     * @implNote 휴면 회원 예정 목록
+     * @since 2020. 10. 13. 오전 11:55:52
+     */
+    public List<User> findByDormantConfigure(final int days) {
+        log.info("UserService.findByDormantConfigure");
+        return userRepository.findByDormantPrevConfigure(days);
+    }
+
+    /**
+     * Find by dormant delete list.
+     *
+     * @return the list
+     * @author [오지훈]
+     * @implNote 휴면 회원 삭제 예정 목록
+     * @since 2020. 10. 13. 오후 1:29:25
+     */
+    public List<User> findByDormantDelete() {
+        log.info("UserService.findByDormantDelete");
+        return userRepository.findByDormantDelete();
+    }
+
+    /**
      * Find by id optional.
      *
      * @param userSeq the user seq
@@ -304,9 +331,9 @@ public class UserService implements UserDetailsService {
      * @since 2020. 6. 30. 오후 4:46:46
      * @implNote 유저 권한 조회
      */
-    public Optional<UserAuth> findByUser(final User user) {
+    public UserAuth findByUser(final User user) {
         log.info("UserService.findByUser");
-        return Optional.ofNullable(userAuthRepository.findByUser(user).orElseThrow(NotFoundHandleException::new));
+        return userAuthRepository.findByUser(user).orElseThrow(NotFoundHandleException::new);
     }
 
     /**
@@ -369,16 +396,16 @@ public class UserService implements UserDetailsService {
             , final UserUpdateDTO userUpdateDTO
     ) {
         log.info("UserService.update");
-        final Optional<User> user = this.findById(userSeq);
-        user.ifPresent(value -> value.update(userUpdateDTO));
+        final User user = this.findByUserSeq(userSeq);
+        user.update(userUpdateDTO);
 
-        final Optional<UserAuth> userAuth = this.findByUser(user.get());
-        userAuth.ifPresent(value -> value.update(userUpdateDTO));
+        final UserAuth userAuth = this.findByUser(user);
+        userAuth.update(userUpdateDTO);
 
         final UserResultDTO userResultDTO = new UserResultDTO();
-        userResultDTO.setUserSeq(user.get().getUserSeq());
-        userResultDTO.setUserId(user.get().getUserId());
-        userResultDTO.setAuthName(userAuth.get().getAuth().getAuthName());
+        userResultDTO.setUserSeq(user.getUserSeq());
+        userResultDTO.setUserId(user.getUserId());
+        userResultDTO.setAuthName(userAuth.getAuth().getAuthName());
         return userResultDTO;
     }
 
@@ -393,17 +420,14 @@ public class UserService implements UserDetailsService {
      * @implNote 상태값 변경
      */
     @Transactional
-    public UserResultDTO updateStatus(
+    public UserResultDTO updateStatus (
             final Long userSeq
             , final UserUpdateStatusDTO userUpdateStatusDTO
     ) {
         log.info("UserService.updateStatus");
-        final Optional<User> user = this.findById(userSeq);
-        user.ifPresent(value -> value.updateStatus(userUpdateStatusDTO.getUserStatusCode()));
-
-        final UserResultDTO userResultDTO = new UserResultDTO();
-        userResultDTO.setUserSeq(user.get().getUserSeq());
-        return userResultDTO;
+        final User user = this.findByUserSeq(userSeq);
+        user.updateStatus(userUpdateStatusDTO.getUserStatusCode());
+        return ObjectMapperUtil.map(user, UserResultDTO.class);
     }
 
     /**
@@ -418,12 +442,9 @@ public class UserService implements UserDetailsService {
     @Transactional
     public UserResultDTO deleteOne(final Long userSeq) {
         log.info("UserService.deleteOne");
-        final Optional<User> user = this.findById(userSeq);
-        user.ifPresent(value -> value.delete(userSeq));
-
-        final UserResultDTO userResultDTO = new UserResultDTO();
-        userResultDTO.setUserSeq(user.get().getUserSeq());
-        return userResultDTO;
+        final User user = this.findByUserSeq(userSeq);
+        user.delete();
+        return ObjectMapperUtil.map(user, UserResultDTO.class);
     }
 
     /**
@@ -441,7 +462,7 @@ public class UserService implements UserDetailsService {
         final List<User> users = userRepository.findAllByUserSeqIn(userDeleteDTO.getUserSeqArray());
         final List<Long> list = new ArrayList<>();
         for (final User user : users) {
-            user.delete(user.getUserSeq());
+            user.delete();
             list.add(user.getUserSeq());
         }
 

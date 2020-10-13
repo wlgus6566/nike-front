@@ -51,4 +51,25 @@ public interface UserRepositoryCustom {
      */
     List<User> findByPasswordChangeConfigure(final int days);
 
+    /**
+     * Find by dormant prev configure list.
+     *
+     * @param days the days
+     * @return the list
+     * @author [오지훈]
+     * @implNote 휴면회원 예정 [days]일 전 유저 목록
+     * @since 2020. 10. 13. 오전 11:38:20
+     */
+    List<User> findByDormantPrevConfigure(final int days);
+
+    /**
+     * Find by dormant delete list.
+     *
+     * @return the list
+     * @author [오지훈]
+     * @implNote 휴면회원 삭제 예정 목록
+     * @since 2020. 10. 13. 오후 1:29:50
+     */
+    List<User> findByDormantDelete();
+
 }

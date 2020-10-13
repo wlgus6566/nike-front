@@ -161,6 +161,9 @@ public class User extends BaseTimeEntity {
     @ApiModelProperty(name = "histories", value = "비밀번호 변경 이력")
     private List<PasswordHistory> histories = new ArrayList<>();
 
+    @Transient
+    private LocalDateTime loginOneYear;
+
     /**
      * 쿼리 실행 전 기본값 설정
      *
@@ -236,16 +239,13 @@ public class User extends BaseTimeEntity {
     /**
      * Delete user.
      *
-     * @param userSeq the user seq
      * @author [오지훈]
      * @since 2020. 6. 23. 오후 5:41:15
      * @implNote 삭제
      */
-    public void delete(final Long userSeq) {
+    public void delete() {
         log.info("User.delete");
-        //this.userId = String.valueOf(userSeq);
-        //this.nickname = String.valueOf(userSeq);
-        this.password = String.valueOf(userSeq);
+        this.password = String.valueOf(this.userSeq);
         this.userStatusCode = ServiceCode.UserStatusEnumCode.DELETE.toString();
     }
 
@@ -286,4 +286,7 @@ public class User extends BaseTimeEntity {
         this.pwdChangeYn = "N";
     }
 
+    public LocalDateTime getLoginOneYear() {
+        return this.loginDt.plusYears(1);
+    }
 }

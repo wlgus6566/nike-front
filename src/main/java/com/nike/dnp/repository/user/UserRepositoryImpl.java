@@ -7,6 +7,7 @@ import com.nike.dnp.entity.auth.QAuth;
 import com.nike.dnp.entity.user.QUser;
 import com.nike.dnp.entity.user.QUserAuth;
 import com.nike.dnp.entity.user.User;
+import com.nike.dnp.util.CustomExpression;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -122,5 +123,45 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
                 .fetch();
     }
 
+    /**
+     * Find by dormant prev configure list.
+     *
+     * @param days the days
+     * @return the list
+     * @author [오지훈]
+     * @implNote 휴면회원 예정 [days]일 전 유저 목록
+     * @since 2020. 10. 13. 오전 11:38:20
+     */
+    @Override
+    public List<User> findByDormantPrevConfigure(final int days) {
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        return queryFactory
+                .selectFrom(QUser.user)
+                .where(
+                        QUser.user.userStatusCode.eq(ServiceCode.UserStatusEnumCode.NORMAL.name())
+                        , QUser.user.loginDt.isNotNull()
+                        , UserPredicateHelper.compareDormantPrevPeriodAddDays(days)
+                )
+                .fetch();
+    }
 
+    /**
+     * Find by dormant delete list.
+     *
+     * @return the list
+     * @author [오지훈]
+     * @implNote 휴면회원 삭제 예정 목록
+     * @since 2020. 10. 13. 오후 1:29:50
+     */
+    @Override
+    public List<User> findByDormantDelete() {
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        return queryFactory
+                .selectFrom(QUser.user)
+                .where(
+                        QUser.user.userStatusCode.eq(ServiceCode.UserStatusEnumCode.DORMANT.name())
+                        , CustomExpression.dateDiff(QUser.user.updateDt).gt(90)
+                )
+                .fetch();
+    }
 }

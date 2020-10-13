@@ -62,12 +62,6 @@ public class UserMailService {
     private String MOBILE_DOMAIN;
 
     /**
-     * MOBILE Password 설정 Url
-     *
-     * @author [오지훈]
-     */
-
-    /**
      * RedisService
      *
      * @author [오지훈]
@@ -85,13 +79,12 @@ public class UserMailService {
      * Send mail for create user string.
      *
      * @param user the user
-     * @return the string
      * @author [오지훈]
      * @since 2020. 7. 3. 오전 11:06:21
      * @implNote 계정 생성 안내 메일 발송
      */
     @Transactional
-    public String sendMailForCreateUser(final User user) {
+    public void sendMailForCreateUser(final User user) {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
@@ -102,8 +95,6 @@ public class UserMailService {
                 , ServiceCode.EmailTypeEnumCode.USER_CREATE.getMessage()
                 , sendDTO
         );
-
-        return user.getUserId();
     }
 
     /**
@@ -192,7 +183,7 @@ public class UserMailService {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
-        //sendDTO.setProcessingDt(this.getCurrentDate());
+        sendDTO.setProcessingDt(user.getLoginOneYear().getYear() + "년 " + user.getLoginOneYear().getMonthValue() + "월 " + user.getLoginOneYear().getDayOfMonth() + "일");
         sendDTO.setLoginUrl(PC_DOMAIN + LOGIN_URL);
 
         mailService.sendMail(
@@ -215,7 +206,7 @@ public class UserMailService {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
-        //sendDTO.setProcessingDt(this.getCurrentDate());
+        sendDTO.setProcessingDt(LocalDate.now().getYear() + "년 " + LocalDate.now().getMonthValue() + "월 " + LocalDate.now().getDayOfMonth() + "일");
         sendDTO.setLoginUrl(PC_DOMAIN + LOGIN_URL);
 
         mailService.sendMail(
@@ -275,18 +266,5 @@ public class UserMailService {
         final String certCode = RandomUtil.randomCertCode2(10);
         redisService.set("cert:"+userId, certCode, 60);
         return certCode;
-    }
-
-    /**
-     * Gets current date.
-     *
-     * @return the current date
-     * @author [오지훈]
-     * @since 2020. 7. 3. 오전 11:19:34
-     * @implNote 현재 년,월,일 가져오기
-     */
-    public String getCurrentDate() {
-        final LocalDate currentDate = LocalDate.now();
-        return currentDate.getYear() + "년 " + currentDate.getMonthValue() + "월 " + currentDate.getDayOfMonth() + "일";
     }
 }

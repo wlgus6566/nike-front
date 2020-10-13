@@ -135,16 +135,4 @@ public class SendDTO {
      */
     private List<OrderProductDTO> productList = new ArrayList<>();
 
-    /**
-     * Gets processing dt.
-     *
-     * @return the processing dt
-     * @author [오지훈]
-     * @since 2020. 7. 3. 오전 11:22:37
-     * @implNote
-     */
-    /*public String getProcessingDt() {
-        final LocalDate currentDate = LocalDate.now();
-        return currentDate.getYear() + "년 " + currentDate.getMonthValue() + "월 " + currentDate.getDayOfMonth() + "일";
-    }*/
 }

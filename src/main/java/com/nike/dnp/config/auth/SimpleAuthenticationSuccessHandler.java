@@ -122,7 +122,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 			isValid = false;
 		}
 
-		//TODO[ojh] 2020-07-02 : 휴면회원 확인 (추후 로직 추가예정)
+		// 휴면회원 체크
 		if (isValid && ServiceCode.UserStatusEnumCode.DORMANT.toString().equals(user.get().getUserStatusCode())) {
 			if (certCode.isEmpty()) {
 				userMailService.createCertCode(authUserDTO.getUserId());
@@ -134,18 +134,26 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 						));
 				isValid = false;
 			} else {
-				final String decodeCertCode = CryptoUtil.decryptAES256(CryptoUtil.urlDecode(certCode), "Nike DnP").split(REGEX)[1];
-				if (FailCode.ExceptionError.ERROR.name().equals(decodeCertCode)) {
+				final String redisCertCode = (String) redisService.get("cert:"+authUserDTO.getUserId());
+				if(ObjectUtils.isEmpty(redisCertCode)) {
 					JsonUtil.write(response.getWriter()
 							, responseService.getFailResult(
 									FailCode.ConfigureError.EXPIRED_CERT_CODE.name()
 									, MessageUtil.getMessage(FailCode.ConfigureError.EXPIRED_CERT_CODE.name())
 							));
 					isValid = false;
+				} else if(!redisCertCode.equals(certCode)) {
+					JsonUtil.write(response.getWriter()
+							, responseService.getFailResult(
+									FailCode.ConfigureError.NOT_MATCH_CERT_CODE.name()
+									, MessageUtil.getMessage(FailCode.ConfigureError.NOT_MATCH_CERT_CODE.name())
+							));
+					isValid = false;
 				}
-				if (isValid && certCode.equals(decodeCertCode)) {
+
+				if (isValid) {
 					user.get().updateStatus(ServiceCode.UserStatusEnumCode.NORMAL.toString());
-					userMailService.sendMailForChangeDormant(user.get());
+					userMailService.sendMailForReleaseDormant(user.get());
 				}
 			}
 		}
