@@ -636,6 +636,20 @@
 .folder-list-row > li .view-area .view:before {
     left: 5px;
 }
+@media screen and (min-width: 768px) {
+    .folder-list li {
+        flex-basis: calc((100% - 30px) / 4) !important;
+        max-width: calc((100% - 30px) / 4) !important;
+        margin-left: 10px !important;
+        margin-top: 0 !important;
+    }
+    .folder-list li:nth-child(4n + 1) {
+        margin-left: 0 !important;
+    }
+    .folder-list li:nth-child(n + 5) {
+        margin-top: 30px;
+    }
+}
 .folder-detail .thumbnail {
     display: block;
     background: #f7f7f7;

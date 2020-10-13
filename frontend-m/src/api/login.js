@@ -26,5 +26,17 @@ function sendEmail(params) {
         params: params,
     });
 }
+function sendCode(params) {
+    return apiLogin.get('/open/login/send/cert/code', {
+        params: params,
+    });
+}
 
-export { loginUser, sendEmail, setpassword, changepassword, certCode };
+export {
+    loginUser,
+    sendEmail,
+    setpassword,
+    changepassword,
+    certCode,
+    sendCode,
+};
