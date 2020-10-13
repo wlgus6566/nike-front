@@ -163,17 +163,20 @@ public class UserMailService {
      * @implNote email인증 안내 메일(인증코드)
      */
     @Transactional
-    public void sendMailForAuthEmail(final User user) {
+    public String sendMailForAuthEmail(final User user) {
+        final String certCode = this.createCertCode(user.getUserId());
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
-        sendDTO.setCertCode(this.createCertCode(user.getUserId()));
+        sendDTO.setCertCode(certCode);
 
         mailService.sendMail(
                 ServiceCode.EmailTypeEnumCode.CERT_CODE_SEND.toString()
                 , ServiceCode.EmailTypeEnumCode.CERT_CODE_SEND.getMessage()
                 , sendDTO
         );
+
+        return certCode;
     }
 
     /**

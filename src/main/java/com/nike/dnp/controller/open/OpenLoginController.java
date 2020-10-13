@@ -74,9 +74,9 @@ public class OpenLoginController {
      * @return the single result
      * @author [오지훈]
      * @since 2020. 7. 2. 오전 11:30:10
-     * @apiNote 인증코드 생성 및 이메일 발송
+     * @apiNote ID 확인, 인증코드 생성 및 비밀번호 설정 이메일 발송
      */
-    @ApiOperation(value = "ID 확인, 인증코드 생성 및 이메일 발송", notes = OPERATION_CHARACTER)
+    @ApiOperation(value = "ID 확인, 인증코드 생성 및 비밀번호 설정 이메일 발송", notes = OPERATION_CHARACTER)
     @GetMapping(name = "ID 확인, 인증코드 생성 및 비밀번호 설정 이메일 발송", value = "/send/cert")
     @ValidField
     public SingleResult<String> sendCert (
@@ -93,6 +93,39 @@ public class OpenLoginController {
 
         return responseService.getSingleResult(
                 userMailService.sendMailForSetPassword(user, userIdDTO.getPlatform())
+                , SuccessCode.ConfigureSuccess.SEND_EMAIL.name()
+                , MessageUtil.getMessage(SuccessCode.ConfigureSuccess.SEND_EMAIL.name())
+                , true
+        );
+    }
+
+    /**
+     * Send cert code single result.
+     *
+     * @param userIdDTO the user id dto
+     * @param result    the result
+     * @return the single result
+     * @author [오지훈]
+     * @implNote 인증코드 생성 및 이메일 발송
+     * @since 2020. 10. 13. 오전 11:27:38
+     */
+    @ApiOperation(value = "인증코드 생성 및 이메일 발송", notes = OPERATION_CHARACTER)
+    @GetMapping(name = "인증코드 생성 및 이메일 발송", value = "/send/cert/code")
+    @ValidField
+    public SingleResult<String> sendCertCode (
+            @ModelAttribute @Validated({ValidationGroups.Group1.class}) final UserIdDTO userIdDTO
+            , @ApiIgnore final BindingResult result) {
+        log.info("UserController.sendCertCode");
+
+        final User user = userService.findByUserIdReturnOptional(userIdDTO.getUserId()).orElseThrow(
+                () -> new CodeMessageHandleException(
+                        FailCode.ConfigureError.RETRY_CONFIRM_EMAIL.name()
+                        , MessageUtil.getMessage(FailCode.ConfigureError.RETRY_CONFIRM_EMAIL.name())
+                )
+        );
+
+        return responseService.getSingleResult(
+                userMailService.sendMailForAuthEmail(user)
                 , SuccessCode.ConfigureSuccess.SEND_EMAIL.name()
                 , MessageUtil.getMessage(SuccessCode.ConfigureSuccess.SEND_EMAIL.name())
                 , true
