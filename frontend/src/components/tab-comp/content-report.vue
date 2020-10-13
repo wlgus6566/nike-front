@@ -119,6 +119,7 @@ import fetchProgress from 'fetch-progress';
 import { postReportBasket, deleteReportBasket } from '@/api/report';
 import bus from '@/utils/bus';
 import { getLoginUpdate } from '@/api/mypage';
+import { fileDownloadLog } from '@/api/log';
 
 export default {
     name: 'FileItem',
@@ -249,6 +250,10 @@ export default {
                         });
                 })
             );
+            await fileDownloadLog({
+                downloadType: 'REPORT',
+                seqArray: this.link.map((el) => el.seq),
+            });
             this.link.forEach((el) => {
                 if (window.navigator.msSaveBlob) {
                     console.log(el.seq);
