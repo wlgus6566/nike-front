@@ -108,7 +108,7 @@ public class EmailScheduler {
 	 * @implNote 휴면 회원 변경 사전 안내 1일전
 	 * @since 2020. 10. 13. 오후 1:55:32
 	 */
-	@Scheduled(cron = "0 58 13 * * *")
+	@Scheduled(cron = "0 5 9 * * *")
 	public void sendUserMailByDormantPrevOne() {
 		if (isIp()) {
 			log.info("EmailScheduler.sendUserMailByDormantPrevOne");
@@ -125,7 +125,7 @@ public class EmailScheduler {
 	 * @implNote 휴면 회원 변경 사전 안내 3일전
 	 * @since 2020. 10. 13. 오후 1:55:54
 	 */
-	@Scheduled(cron = "0 59 13 * * *")
+	@Scheduled(cron = "0 10 9 * * *")
 	public void sendUserMailByDormantPrevThree() {
 		if (isIp()) {
 			log.info("EmailScheduler.sendUserMailByDormantPrevThree");
@@ -142,7 +142,7 @@ public class EmailScheduler {
 	 * @implNote 휴면 회원 변경 사전 안내 7일전
 	 * @since 2020. 10. 13. 오후 1:55:59
 	 */
-	@Scheduled(cron = "0 0 14 * * *")
+	@Scheduled(cron = "0 15 9 * * *")
 	public void sendUserMailByDormantPrevSeven() {
 		if (isIp()) {
 			log.info("EmailScheduler.sendUserMailByDormantPrevSeven");
@@ -159,7 +159,7 @@ public class EmailScheduler {
 	 * @implNote 휴면회원으로 전환
 	 * @since 2020. 10. 13. 오후 1:38:53
 	 */
-	@Scheduled(cron = "0 57 13 * * *")
+	@Scheduled(cron = "0 1 9 * * *")
 	@Transactional
 	public void sendUserMailByDormantActive() {
 		if (isIp()) {
