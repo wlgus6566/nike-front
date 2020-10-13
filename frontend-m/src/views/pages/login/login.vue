@@ -23,11 +23,12 @@
     </div>
 </template>
 <script>
-    import LoginForm from '@/components/login-box/login-form';
-    import CertCode from '@/components/login-box/cert-code';
-    import FindPW from '@/components/login-box/find-password';
+import LoginForm from '@/components/login-box/login-form';
+import CertCode from '@/components/login-box/cert-code';
+import FindPW from '@/components/login-box/find-password';
+import DormantMember from '@/components/login-box/dormant-member';
 
-    export default {
+export default {
     name: 'login',
     data() {
         return {
@@ -40,7 +41,7 @@
             },
         };
     },
-    components: { LoginForm, CertCode, FindPW },
+    components: { LoginForm, CertCode, FindPW, DormantMember },
     watch: {},
     mounted() {
         this.$refs.logo.classList.add('active');
@@ -85,14 +86,17 @@
                         params: this.loginData,
                     });
                 } else if (response.data.code === 'OVERTIME_PASSWORD') {
-                    this.updateValue('certCode', response.data.payload[0].certCode);
+                    this.updateValue(
+                        'certCode',
+                        response.data.payload[0].certCode
+                    );
                     await this.$router.push({
                         name: 'password-change',
                         params: this.loginData,
                     });
                 } else if (response.data.code === 'IS_DORMANT') {
                     // 휴면회원 안내 화면
-
+                    this.changeLoginBox('DormantMember');
                 } else if (response.data.code === 'SUCCESS') {
                     await this.$router.push('/');
                 }
