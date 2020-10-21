@@ -338,4 +338,13 @@ export default {
 .form-list .check-label:last-child {
     margin-right: 0;
 }
+.check-label {
+    margin-right: 16px;
+}
+.check-label:last-child {
+    margin-right: 0;
+}
+.check-label .radio {
+    margin: 0;
+}
 </style>
