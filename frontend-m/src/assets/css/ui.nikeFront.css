@@ -2544,6 +2544,12 @@
 .schedule-type .official:before {
     background-color: #2c0fb4;
 }
+.schedule-type .upload {
+    color: #853405;
+}
+.schedule-type .upload:before {
+    background-color: #853405;
+}
 .schedule-title {
     margin-top: 15px;
     line-height: 21px;
@@ -2632,6 +2638,13 @@
 .fullCalendar-wrap {
     position: relative;
     margin-top: 20px;
+}
+.fullCalendar-wrap .desc {
+    margin-top: 15px;
+    line-height: 17px;
+    font-size: 11px;
+    font-weight: 300;
+    color: #888888;
 }
 .fullCalendar-wrap .fc {
     margin: 0 -20px;

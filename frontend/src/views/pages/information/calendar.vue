@@ -14,6 +14,10 @@
                 defaultView="month"
                 :editable="false"
             />
+            <p class="desc">
+                * 각 해당일은 예정일로 일부 변경, 지연 될 수 있는 점 감안 부탁
+                드립니다.
+            </p>
         </div>
 
         <calendarManagement
