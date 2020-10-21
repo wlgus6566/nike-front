@@ -47,6 +47,6 @@ public interface CodeRepository extends JpaRepository<Code, Long>, CodeRepositor
      * @since 2020. 7. 7. 오전 11:50:44
      * @implNote 상위코드로 하위코드 목록 조회
      */
-    List<Code> findByUpperCode(String upperCode);
+    List<Code> findByUpperCodeOrderByCodeOrder(String upperCode);
 
 }

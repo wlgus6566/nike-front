@@ -54,7 +54,7 @@ public class CodeService {
      */
     @Cacheable(value = "cache:codes", cacheManager = "cacheManager")
     public List<Code> findCodesByUpperCode(final String upperCode) {
-        return codeRepository.findByUpperCode(upperCode);
+        return codeRepository.findByUpperCodeOrderByCodeOrder(upperCode);
     }
 
     /**
@@ -146,7 +146,7 @@ public class CodeService {
      */
     public void redisSaveUpperCode(final String upperCode) {
         log.info("CodeService.redisSaveUpperCode");
-        redisService.set("cache:codes:"+upperCode, codeRepository.findByUpperCode(upperCode), 60);
+        redisService.set("cache:codes:"+upperCode, codeRepository.findByUpperCodeOrderByCodeOrder(upperCode), 60);
     }
 
 }
