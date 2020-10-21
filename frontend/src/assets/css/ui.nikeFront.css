@@ -4458,6 +4458,12 @@ img.image-grayscale {
 .schedule-type .official:before {
     background-color: #2c0fb4;
 }
+.schedule-type .upload {
+    color: #853405;
+}
+.schedule-type .upload:before {
+    background-color: #853405;
+}
 .schedule-title {
     margin-top: 56px;
     font-family: 'Bebas Neue', sans-serif;
