@@ -11,6 +11,7 @@
                 <li class="edu">교육</li>
                 <li class="campaign">캠페인</li>
                 <li class="official">기타 공개일정</li>
+                <li class="upload">자료 업로드일</li>
             </ul>
             <h3 class="schedule-title">{{ searchDt }}</h3>
             <ul class="schedule-list">
@@ -22,6 +23,7 @@
                     :class="{
                         edu: item.calendarSectionCode === 'EDUCATION',
                         campaign: item.calendarSectionCode === 'CAMPAIGN',
+                        upload: item.calendarSectionCode === 'UPLOAD_DATE',
                         official: item.calendarSectionCode === 'ETC',
                     }"
                     v-for="item in todayData"
@@ -100,7 +102,9 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
                             this.getCalendarList(
-                                this.$moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format(
+                                    'YYYY.MM'
+                                )
                             );
                         },
                     },
@@ -110,7 +114,9 @@ export default {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
                             this.getCalendarList(
-                                this.$moment(calendarApi.getDate()).format('YYYY.MM')
+                                this.$moment(calendarApi.getDate()).format(
+                                    'YYYY.MM'
+                                )
                             );
                         },
                     },
@@ -161,12 +167,14 @@ export default {
         // 달력에 맞게 변수명 변경
         transformData() {
             this.calendarOptions.events = [];
-            this.calendarData.forEach((item) => {
+            this.calendarData.forEach(item => {
                 let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
                     className = 'edu';
                 } else if (item.calendarSectionCode === 'CAMPAIGN') {
                     className = 'campaign';
+                } else if (item.calendarSectionCode === 'UPLOAD_DATE') {
+                    className = 'upload';
                 } else {
                     className = 'official';
                 }
@@ -182,11 +190,13 @@ export default {
         },
         // 달력에 일자 클릭시
         handleDateClick(arg) {
-            this.getTodayCalendar(this.$moment(arg.dateStr).format('YYYY.MM.DD'));
+            this.getTodayCalendar(
+                this.$moment(arg.dateStr).format('YYYY.MM.DD')
+            );
             const date = this.$moment(arg.date).format('YYYY-MM-DD');
             const cal = this.$refs.fullCalendar.$el;
             const td = cal.querySelector(`td[data-date="${date}"]`);
-            cal.querySelectorAll('td').forEach((el) => {
+            cal.querySelectorAll('td').forEach(el => {
                 el.classList.remove('fc-active');
             });
             td.classList.add('fc-active');

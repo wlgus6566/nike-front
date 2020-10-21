@@ -6,6 +6,7 @@
                 <li class="edu">교육</li>
                 <li class="campaign">캠페인</li>
                 <li class="official">기타 공개일정</li>
+                <li class="upload">자료 업로드일</li>
             </ul>
             <FullCalendar
                 ref="fullCalendar"
@@ -47,6 +48,7 @@
                     :class="{
                         edu: item.calendarSectionCode === 'EDUCATION',
                         campaign: item.calendarSectionCode === 'CAMPAIGN',
+                        upload: item.calendarSectionCode === 'UPLOAD_DATE',
                         official: item.calendarSectionCode === 'ETC',
                     }"
                     v-for="item in todayData"
@@ -226,6 +228,8 @@ export default {
                     className = 'edu';
                 } else if (item.calendarSectionCode === 'CAMPAIGN') {
                     className = 'campaign';
+                } else if (item.calendarSectionCode === 'UPLOAD_DATE') {
+                    className = 'upload';
                 } else {
                     className = 'official';
                 }
