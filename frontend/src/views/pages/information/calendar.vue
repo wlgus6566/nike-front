@@ -3,10 +3,10 @@
         <h2 class="page-title">CALENDAR</h2>
         <div class="fullCalendar-wrap">
             <ul class="schedule-type">
-                <li class="edu">교육</li>
-                <li class="campaign">캠페인</li>
-                <li class="official">기타 공개일정</li>
+                <li class="campaign">캠페인 런칭</li>
                 <li class="upload">자료 업로드일</li>
+                <li class="edu">교육</li>
+                <li class="official">기타</li>
             </ul>
             <FullCalendar
                 ref="fullCalendar"
