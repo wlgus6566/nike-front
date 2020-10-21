@@ -358,13 +358,13 @@ export default {
                     tarnsformContents = '[교육] ' + item.scheduleName;
                 } else if (item.calendarSectionCode === 'CAMPAIGN') {
                     className = 'campaign';
-                    tarnsformContents = '[캠페인] ' + item.scheduleName;
+                    tarnsformContents = '[캠페인 런칭] ' + item.scheduleName;
                 } else if (item.calendarSectionCode === 'UPLOAD_DATE') {
                     className = 'upload';
                     tarnsformContents = '[자료 업로드일] ' + item.scheduleName;
                 } else {
                     className = 'official';
-                    tarnsformContents = '[기타 교육일정] ' + item.scheduleName;
+                    tarnsformContents = '[기타] ' + item.scheduleName;
                 }
                 this.calendarOptions.events.push({
                     ...item,
