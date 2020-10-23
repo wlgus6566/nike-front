@@ -33,7 +33,9 @@ public class CalendarSaveDTO extends BasicDTO {
      *
      * @author [김형욱]
      */
-    @ApiModelProperty(name = "calendarSectionCode", value = "달력 구분 공통코드(교육: EDUCATION, 캠페인 : CAMPAIGN, 기타 공개일정: ETC )", required = true, example = "EDUCATION")
+    @ApiModelProperty(name = "calendarSectionCode"
+            , value = "달력 구분 공통코드(교육: EDUCATION, 캠페인 : CAMPAIGN, 기타 공개일정: ETC,  자료 업로드일 : UPLOAD_DATE)"
+            , required = true, example = "EDUCATION")
     @NotBlank(message = "calendar.calendarSectionCode")
     private String calendarSectionCode;
 
