@@ -59,20 +59,15 @@ public class LogAspect {
         log.info("LogAspect.onAroundActionLog");
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {
-            System.out.println("authentication.getAuthorities().toString() = " + authentication.getAuthorities().toString());
             final HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
             final AuthUserDTO authUserDTO = (AuthUserDTO) authentication.getPrincipal();
-            for (final Object obj : joinPoint.getArgs()) {
-                if (!ObjectUtils.isEmpty(obj)) {
-                    final UserActionLogSaveDTO actionLog = new UserActionLogSaveDTO();
-                    actionLog.setUserSeq(authUserDTO.getUserSeq());
-                    actionLog.setUrl(request.getRequestURI());
-                    actionLog.setParameter(Arrays.toString(joinPoint.getArgs()));
-                    actionLog.setMethodTypeName(request.getMethod());
-                    actionLog.setMethodSignature(joinPoint.getSignature().getName());
-                    actionLogService.save(actionLog);
-                }
-            }
+            final UserActionLogSaveDTO actionLog = new UserActionLogSaveDTO();
+            actionLog.setUserSeq(authUserDTO.getUserSeq());
+            actionLog.setUrl(request.getRequestURI());
+            actionLog.setParameter(Arrays.toString(joinPoint.getArgs()));
+            actionLog.setMethodTypeName(request.getMethod());
+            actionLog.setMethodSignature(joinPoint.getSignature().getName());
+            actionLogService.save(actionLog);
         }
         return joinPoint.proceed();
     }
