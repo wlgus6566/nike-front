@@ -39,6 +39,15 @@ const router = new VueRouter({
     },
     mode: 'history',
     routes: [
+        /**
+         * 시스템 점검 팝업
+         */
+        /*{
+            path: '*',
+            name: 'system',
+            component: pages('error/system'),
+            meta: { layout: 'Clean', unauthorized: true },
+        },*/
         {
             path: '*',
             name: 'system',

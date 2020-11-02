@@ -354,7 +354,7 @@ public class ContentsService {
 
         final Optional<Contents> contents = contentsRepository.findByContentsSeqAndTopMenuCodeAndMenuCodeAndUseYn(contentsSeq, topMenuCode, menuCode, "Y");
         final Contents findContents = contents.orElseThrow(NotFoundHandleException::new);
-        findContents.updateReadCount(findContents.getReadCount());
+         findContents.updateReadCount(findContents.getReadCount());
 
         // history 저장
         historyService.saveViewHistory(contentsSeq, topMenuCode);
