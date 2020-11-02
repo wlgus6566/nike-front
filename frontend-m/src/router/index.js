@@ -40,6 +40,12 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
+            path: '*',
+            name: 'system',
+            component: pages('error/system'),
+            meta: { layout: 'Clean', unauthorized: true },
+        },
+        /*{
             path: '/',
             component: pages('main-page'),
             meta: { layout: 'Default' },
@@ -52,7 +58,7 @@ const router = new VueRouter({
         ...MyPageRoutes,
         ...TermsRoutes,
         ...testRoutes,
-        ...ErrorRoutes,
+        ...ErrorRoutes,*/
     ],
 });
 
