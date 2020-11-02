@@ -1,6 +1,8 @@
 package com.nike.dnp.common.aspect;
 
 import com.nike.dnp.common.variable.FailCode;
+import com.nike.dnp.dto.auth.AuthUserDTO;
+import com.nike.dnp.dto.log.UserActionLogSaveDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.service.log.UserActionLogService;
 import com.nike.dnp.util.MessageUtil;
@@ -9,9 +11,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * LogAspect
@@ -44,7 +54,7 @@ public class LogAspect {
      * @implNote 유저 활동 로그 등록
      */
     //@Around("execution(public * com.nike.dnp.controller..*Controller.*(..)) && args(requestDTO,..)")
-    /*@Around("execution(public * com.nike.dnp.controller..*Controller.*(..))")
+    @Around("execution(public * com.nike.dnp.controller..*Controller.*(..))")
     public Object onAroundActionLog(final ProceedingJoinPoint joinPoint) throws Throwable {
         log.info("LogAspect.onAroundActionLog");
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -60,7 +70,7 @@ public class LogAspect {
             actionLogService.save(actionLog);
         }
         return joinPoint.proceed();
-    }*/
+    }
 
     /**
      * On around valid field object.
