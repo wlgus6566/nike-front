@@ -33,7 +33,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_CONTENTS")
-@DynamicUpdate
+//@DynamicUpdate
 public class Contents extends BaseTimeWithoutUpdateDtEntity {
 
     /**
