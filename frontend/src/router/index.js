@@ -27,6 +27,12 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
+            path: '*',
+            name: 'system',
+            component: pages('error/system'),
+            meta: { layout: 'Clean', unauthorized: true },
+        },
+        /*{
             path: '/',
             component: pages('main-page'),
             meta: { layout: 'Default', aside: 'Default' },
@@ -43,7 +49,7 @@ const router = new VueRouter({
         ...ErrorRoutes,
         ...PubRoutes,
         ...TermsRoutes,
-        ...testRoutes,
+        ...testRoutes,*/
     ],
     scrollBehavior(to, from, savedPosition) {
         let position = { x: 0, y: 0 };
