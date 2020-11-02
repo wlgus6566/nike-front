@@ -13,6 +13,7 @@ import com.nike.dnp.util.LocalDateUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
@@ -32,6 +33,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "TB_CONTENTS")
+//@DynamicUpdate
 public class Contents extends BaseTimeWithoutUpdateDtEntity {
 
     /**
