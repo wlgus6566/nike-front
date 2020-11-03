@@ -49,12 +49,6 @@ const router = new VueRouter({
             meta: { layout: 'Clean', unauthorized: true },
         },*/
         {
-            path: '*',
-            name: 'system',
-            component: pages('error/system'),
-            meta: { layout: 'Clean', unauthorized: true },
-        },
-        /*{
             path: '/',
             component: pages('main-page'),
             meta: { layout: 'Default' },
@@ -67,7 +61,7 @@ const router = new VueRouter({
         ...MyPageRoutes,
         ...TermsRoutes,
         ...testRoutes,
-        ...ErrorRoutes,*/
+        ...ErrorRoutes,
     ],
 });
 

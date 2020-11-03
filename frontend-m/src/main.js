@@ -3,12 +3,14 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import VModal from 'vue-js-modal';
+import VueCookies from 'vue-cookies';
 import VueYoutube from 'vue-youtube';
 import vueVimeoPlayer from 'vue-vimeo-player';
 
 Vue.config.productionTip = false;
 Vue.use(VueYoutube);
 Vue.use(vueVimeoPlayer);
+Vue.use(VueCookies);
 Vue.use(require('vue-moment'));
 Vue.use(VModal, {
     dynamicDefaults: {
