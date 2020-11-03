@@ -24,7 +24,7 @@ public class FailCode {
     @RequiredArgsConstructor
     @Getter
     public enum ExceptionError {
-        ERROR, NOT_FOUND, INVALID
+        ERROR, NOT_FOUND, INVALID, METHOD
     }
 
     /**
