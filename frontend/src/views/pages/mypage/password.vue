@@ -29,7 +29,7 @@
                                 id="change-pw1"
                                 class="input-box"
                                 maxlength="16"
-                                v-model="password"
+                                v-model="encryption"
                             />
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                         type="submit"
                         class="btn-s-black"
                         :disabled="
-                            password.length < 1 ||
+                            encryption.length < 1 ||
                             newEncryption.length < 1 ||
                             confirmEncryption.length < 1
                         "
@@ -91,7 +91,7 @@ import { changepassword } from '@/api/mypage';
 export default {
     data() {
         return {
-            password: '',
+            encryption: '',
             newEncryption: '',
             confirmEncryption: '',
         };
@@ -110,7 +110,7 @@ export default {
     },
     methods: {
         reset() {
-            this.password = '';
+            this.encryption = '';
             this.newEncryption = '';
             this.confirmEncryption = '';
         },
@@ -121,12 +121,12 @@ export default {
                         'y1v0LCq93KX05pR%2FWw3zF65hK%2FCOqYTZDdIXzM0BsC97m%2Fg1QcY1sCZAEvuTFgmcVg3a8J6xDFalUNjUfmmtu5sWZuI%3D',
                     confirmEncryption: this.confirmEncryption,
                     newEncryption: this.newEncryption,
-                    password: this.password,
+                    encryption: this.encryption,
                 });
                 this.msg = res.data.msg;
                 if (res.data.success) {
                     alert('변경되었습니다.');
-                    this.password = '';
+                    this.encryption = '';
                     this.newEncryption = '';
                     this.confirmEncryption = '';
                     this.$router.push('/mypage/info');
