@@ -34,7 +34,7 @@
                                         class="input-box"
                                         maxlength="16"
                                         placeholder=""
-                                        v-model="password"
+                                        v-model="encryption"
                                     />
                                 </div>
                             </div>
@@ -89,7 +89,7 @@ export default {
     name: 'passwordChange',
     data() {
         return {
-            password: '',
+            encryption: '',
             newEncryption: '',
             confirmEncryption: '',
         };
@@ -99,7 +99,7 @@ export default {
             try {
                 const { data: response } = await changepassword({
                     certCode: this.$route.params.certCode,
-                    password: this.password,
+                    encryption: this.encryption,
                     newEncryption: this.newEncryption,
                     confirmEncryption: this.confirmEncryption,
                 });
