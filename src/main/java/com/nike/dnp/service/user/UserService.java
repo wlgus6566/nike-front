@@ -559,13 +559,13 @@ public class UserService implements UserDetailsService {
         final String userId = decodeCertCode.split(REGEX)[0];
         final String certKey = decodeCertCode.split(REGEX)[1];
         final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));
-        final char[] pwd = userCertDTO.getPassword();
-        final char[] newPwd = userCertDTO.getNewPassword();
-        final char[] confirmPwd = userCertDTO.getConfirmPassword();
-        char[] certPwd = null;
+        final char[] pwd = userCertDTO.getEncryption();
+        final char[] newPwd = userCertDTO.getNewEncryption();
+        final char[] confirmPwd = userCertDTO.getConfirmEncryption();
+        char[] certEncryption = null;
 
         if (!ObjectUtils.isEmpty(newPwd)) {
-            certPwd = ConvertUtil.convertStringToCharacter(passwordEncoder.encode(ConvertUtil.convertCharacterToString(newPwd)));
+            certEncryption = ConvertUtil.convertStringToCharacter(passwordEncoder.encode(ConvertUtil.convertCharacterToString(newPwd)));
         }
 
         final User user = this.findByUserId(userId);
@@ -581,11 +581,11 @@ public class UserService implements UserDetailsService {
                         .build());
 
         //비밀번호 업데이트
-        user.updatePassword(ConvertUtil.convertCharacterToString(certPwd));
+        user.updatePassword(ConvertUtil.convertCharacterToString(certEncryption));
         passwordHistoryRepository.save(
                 PasswordHistory.builder()
                         .userSeq(user.getUserSeq())
-                        .password(ConvertUtil.convertCharacterToString(certPwd))
+                        .password(ConvertUtil.convertCharacterToString(certEncryption))
                         .build());
 
         //인증코드 삭제
@@ -595,7 +595,7 @@ public class UserService implements UserDetailsService {
         ConvertUtil.cleanValue(pwd);
         ConvertUtil.cleanValue(newPwd);
         ConvertUtil.cleanValue(confirmPwd);
-        ConvertUtil.cleanValue(certPwd);
+        ConvertUtil.cleanValue(certEncryption);
 
         /*throw new CodeMessageHandleException(
                 FailCode.ExceptionError.ERROR.name()
@@ -620,9 +620,9 @@ public class UserService implements UserDetailsService {
     @Transactional
     public UserResultDTO confirmPassword(final String userId, final UserCertDTO userCertDTO) {
         log.info("UserService.confirmPassword2");
-        final char[] pwd = userCertDTO.getPassword();
-        final char[] newPwd = userCertDTO.getNewPassword();
-        final char[] confirmPwd = userCertDTO.getConfirmPassword();
+        final char[] pwd = userCertDTO.getEncryption();
+        final char[] newPwd = userCertDTO.getNewEncryption();
+        final char[] confirmPwd = userCertDTO.getConfirmEncryption();
         char[] certPwd = null;
 
         if (!ObjectUtils.isEmpty(newPwd)) {

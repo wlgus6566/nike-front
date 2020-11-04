@@ -97,12 +97,12 @@ public class CryptoUtil {
 
             final AlgorithmParameters params = cipher.getParameters();
             final byte[] ivBytes = params.getParameterSpec(IvParameterSpec.class).getIV();
-            final byte[] encryptedTextBytes = cipher.doFinal(msg.getBytes(StandardCharsets.UTF_8));
-            final byte[] buffer = new byte[_bytes.length + ivBytes.length + encryptedTextBytes.length];
+            final byte[] encryptionTextBytes = cipher.doFinal(msg.getBytes(StandardCharsets.UTF_8));
+            final byte[] buffer = new byte[_bytes.length + ivBytes.length + encryptionTextBytes.length];
 
             System.arraycopy(_bytes, 0, buffer, 0, _bytes.length);
             System.arraycopy(ivBytes, 0, buffer, _bytes.length, ivBytes.length);
-            System.arraycopy(encryptedTextBytes, 0, buffer, _bytes.length + ivBytes.length, encryptedTextBytes.length);
+            System.arraycopy(encryptionTextBytes, 0, buffer, _bytes.length + ivBytes.length, encryptionTextBytes.length);
             return Base64.getEncoder().encodeToString(buffer);
         } catch (Exception exception) {
             return FailCode.ExceptionError.ERROR.name();
@@ -130,15 +130,15 @@ public class CryptoUtil {
             final byte[] ivBytes = new byte[cipher.getBlockSize()];
             buffer.get(ivBytes, 0, ivBytes.length);
 
-            final byte[] encryoptedTextBytes = new byte[buffer.capacity() - _bytes.length - ivBytes.length];
-            buffer.get(encryoptedTextBytes);
+            final byte[] encryoptionTextBytes = new byte[buffer.capacity() - _bytes.length - ivBytes.length];
+            buffer.get(encryoptionTextBytes);
 
             final SecretKeyFactory factory = SecretKeyFactory.getInstance(SECRET_INSTANCE);
             final PBEKeySpec spec = new PBEKeySpec(key.toCharArray(), _bytes, HASH_CYCLE, HASH_BIT);
             cipher.init(Cipher.DECRYPT_MODE
                     , new SecretKeySpec(factory.generateSecret(spec).getEncoded(), SECRET_SPEC)
                     , new IvParameterSpec(ivBytes));
-            return new String(cipher.doFinal(encryoptedTextBytes));
+            return new String(cipher.doFinal(encryoptionTextBytes));
         } catch (Exception exception) {
             return FailCode.ExceptionError.ERROR.name();
         }
