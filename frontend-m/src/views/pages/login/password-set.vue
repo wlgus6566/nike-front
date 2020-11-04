@@ -37,8 +37,8 @@
                         <span class="form-column">
                             <input
                                 type="password"
-                                id="newPassword"
-                                v-model="newPassword"
+                                id="newEncryption"
+                                v-model="newEncryption"
                                 class="input-box"
                                 maxlength="16"
                                 placeholder="(8~16자/대소문자/숫자/특수문자 포함)"
@@ -54,8 +54,8 @@
                         <span class="form-column">
                             <input
                                 type="password"
-                                id="confirmPassword"
-                                v-model="confirmPassword"
+                                id="confirmEncryption"
+                                v-model="confirmEncryption"
                                 class="input-box"
                                 maxlength="16"
                                 placeholder=""
@@ -77,8 +77,8 @@ export default {
     name: 'passwordSet',
     data() {
         return {
-            newPassword: '',
-            confirmPassword: '',
+            newEncryption: '',
+            confirmEncryption: '',
         };
     },
     created() {},
@@ -87,8 +87,8 @@ export default {
             try {
                 const { data: response } = await setpassword({
                     certCode: encodeURIComponent(this.$route.query.certCode),
-                    newPassword: this.newPassword,
-                    confirmPassword: this.confirmPassword,
+                    newEncryption: this.newEncryption,
+                    confirmEncryption: this.confirmEncryption,
                 });
                 if (response.existMsg) {
                     alert(response.msg);

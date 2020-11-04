@@ -46,7 +46,7 @@
                             class="input-box"
                             maxlength="16"
                             placeholder="(8~16자/대소문자/숫자/특수문자 포함)"
-                            v-model="newPassword"
+                            v-model="newEncryption"
                         />
                     </span>
                 </li>
@@ -63,7 +63,7 @@
                             class="input-box"
                             maxlength="16"
                             placeholder=""
-                            v-model="confirmPassword"
+                            v-model="confirmEncryption"
                         />
                     </span>
                 </li>
@@ -84,8 +84,8 @@ export default {
     data() {
         return {
             password: '',
-            newPassword: '',
-            confirmPassword: '',
+            newEncryption: '',
+            confirmEncryption: '',
         };
     },
     computed: {
@@ -95,8 +95,8 @@ export default {
     },
     mounted() {
         this.password = '';
-        this.newPassword = '';
-        this.confirmPassword = '';
+        this.newEncryption = '';
+        this.confirmEncryption = '';
         this.stickyCss();
         this.handleScroll();
     },
@@ -143,8 +143,8 @@ export default {
         async passwordChange() {
             try {
                 const res = await changepassword({
-                    confirmPassword: this.confirmPassword,
-                    newPassword: this.newPassword,
+                    confirmEncryption: this.confirmEncryption,
+                    newEncryption: this.newEncryption,
                     password: this.password,
                 });
 
