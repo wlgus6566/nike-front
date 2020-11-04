@@ -31,7 +31,7 @@
                             id="change-pw1"
                             class="input-box"
                             maxlength="16"
-                            v-model="password"
+                            v-model="encryption"
                         />
                     </span>
                 </li>
@@ -83,7 +83,7 @@ import { changepassword } from '@/api/my-page';
 export default {
     data() {
         return {
-            password: '',
+            encryption: '',
             newEncryption: '',
             confirmEncryption: '',
         };
@@ -94,7 +94,7 @@ export default {
         },
     },
     mounted() {
-        this.password = '';
+        this.encryption = '';
         this.newEncryption = '';
         this.confirmEncryption = '';
         this.stickyCss();
@@ -145,7 +145,7 @@ export default {
                 const res = await changepassword({
                     confirmEncryption: this.confirmEncryption,
                     newEncryption: this.newEncryption,
-                    password: this.password,
+                    encryption: this.encryption,
                 });
 
                 console.log(res);
