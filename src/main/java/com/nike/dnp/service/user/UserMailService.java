@@ -43,7 +43,7 @@ public class UserMailService {
      * @author [오지훈]
      */
     @Value("${nike.url.password}")
-    private String ENCRYPTED_URL;
+    private String ENCRYPTION_URL;
 
     /**
      * PC Domain
@@ -108,7 +108,7 @@ public class UserMailService {
     @Transactional
     public String sendMailForSetPassword(final User user, final String platform) {
         final String keyCode = this.createEncodeCertCode(user.getUserId());
-        final String url = (platform.equals("MOBILE") ? MOBILE_DOMAIN : PC_DOMAIN) + ENCRYPTED_URL;
+        final String url = (platform.equals("MOBILE") ? MOBILE_DOMAIN : PC_DOMAIN) + ENCRYPTION_URL;
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());

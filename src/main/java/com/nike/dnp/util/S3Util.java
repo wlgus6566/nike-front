@@ -1,6 +1,7 @@
 package com.nike.dnp.util;
 
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
@@ -9,6 +10,7 @@ import com.nike.dnp.dto.file.FileResultDTO;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StopWatch;
@@ -119,6 +121,7 @@ public class S3Util {
 		log.debug("S3 Init");
 		log.debug("profile : " + System.getProperty("spring.profiles.active"));
 		client = AmazonS3ClientBuilder.standard()
+				//.withRegion("ap-northeast-2")
 				.withCredentials(new ProfileCredentialsProvider(System.getProperty("spring.profiles.active")))
 				.build();
 	}

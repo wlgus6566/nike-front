@@ -187,7 +187,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		}
 
 		// 비밀번호가 변경되었을 경우
-		if (isValid && user.get().getPwdChangeYn().equals("Y")) {
+		if (isValid && user.get().getEncryptionChangeYn().equals("Y")) {
 			if (ObjectUtils.isEmpty(certCode)) {
 				// [인증코드] 메일 발송
 				userMailService.sendMailForAuthEmail(user.get());
@@ -247,7 +247,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 					.sign(algorithm);
 
 			// header 에 토큰 입력
-			authUserDTO.setPwd(""); // 비밀번호 삭제
+			authUserDTO.setEncryption(""); // 비밀번호 삭제
 			response.addHeader(JwtHelper.HEADER_STRING, JwtHelper.TOKEN_PREFIX +token);
 			JsonUtil.write(response.getWriter(), responseService.getSingleResult(authUserDTO));
 

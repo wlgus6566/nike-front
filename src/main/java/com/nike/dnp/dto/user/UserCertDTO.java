@@ -37,27 +37,27 @@ public class UserCertDTO {
      *
      * @author [오지훈]
      */
-    @NotNull(message = "userCert.password", groups = {ValidationGroups.Group2.class})
-    @ApiModelProperty(value = "기존 비밀번호", name = "password")
-    private char[] password;
+    @NotNull(message = "userCert.encryption", groups = {ValidationGroups.Group2.class})
+    @ApiModelProperty(value = "기존 비밀번호", name = "encryption")
+    private char[] encryption;
 
     /**
      * 새로운 비밀번호
      *
      * @author [오지훈]
      */
-    @NotNull(message = "userCert.newPassword", groups = {ValidationGroups.Group3.class})
-    @ApiModelProperty(value = "새 비밀번호", name = "newPassword")
-    private char[] newPassword;
+    @NotNull(message = "userCert.newEncryption", groups = {ValidationGroups.Group3.class})
+    @ApiModelProperty(value = "새 비밀번호", name = "newEncryption")
+    private char[] newEncryption;
 
     /**
      * 확인 비밀번호
      *
      * @author [오지훈]
      */
-    @NotNull(message = "userCert.confirmPassword", groups = {ValidationGroups.Group4.class})
-    @ApiModelProperty(value = "새 비밀번호(확인)", name = "confirmPassword")
-    private char[] confirmPassword;
+    @NotNull(message = "userCert.confirmEncryption", groups = {ValidationGroups.Group4.class})
+    @ApiModelProperty(value = "새 비밀번호(확인)", name = "confirmEncryption")
+    private char[] confirmEncryption;
 
     /**
      * The interface Set password.
