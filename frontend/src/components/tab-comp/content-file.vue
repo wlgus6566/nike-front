@@ -224,11 +224,13 @@ export default {
                                     data: src,
                                     name: el.fileName,
                                     seq: el.contentsBasketSeq,
+                                    fileSeq: el.contentsFileSeq,
                                 });
                             } else {
                                 const link = document.createElement('a');
                                 link.href = URL.createObjectURL(src);
                                 link.seq = el.contentsBasketSeq;
+                                link.fileSeq = el.contentsFileSeq;
                                 link.setAttribute('download', el.fileName);
                                 document.body.appendChild(link);
                                 this.link.push(link);
@@ -242,7 +244,8 @@ export default {
 
             await fileDownloadLog({
                 downloadType: 'CONTENTS',
-                seqArray: this.link.map((el) => el.seq),
+                /*seqArray: this.link.map((el) => el.seq),*/
+                seqArray: this.link.map((el) => el.fileSeq),
             });
 
             this.link.forEach((el, i) => {
