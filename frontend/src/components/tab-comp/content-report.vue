@@ -235,13 +235,13 @@ export default {
                                     data: src,
                                     name: el.fileName,
                                     seq: el.reportBasketSeq,
-                                    fileSeq: el.contentsFileSeq,
+                                    fileSeq: el.reportFileSeq,
                                 });
                             } else {
                                 const link = document.createElement('a');
                                 link.href = URL.createObjectURL(src);
                                 link.seq = el.reportBasketSeq;
-                                link.fileSeq = el.contentsFileSeq;
+                                link.fileSeq = el.reportFileSeq;
                                 link.setAttribute('download', el.fileName);
                                 document.body.appendChild(link);
                                 this.link.push(link);
@@ -256,6 +256,9 @@ export default {
                 downloadType: 'REPORT',
                 /*seqArray: this.link.map((el) => el.seq),*/
                 seqArray: this.link.map((el) => el.fileSeq),
+            });
+            this.link.map((el) => {
+                console.log(el.fileSeq);
             });
             this.link.forEach((el) => {
                 if (window.navigator.msSaveBlob) {
