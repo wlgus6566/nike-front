@@ -112,7 +112,7 @@ public class UserMailService {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setNickname(user.getNickname());
         sendDTO.setEmail(user.getUserId());
-        sendDTO.setPwdUrl(url+"?certCode="+keyCode);
+        sendDTO.setEncryptionUrl(url+"?certCode="+keyCode);
 
         mailService.sendMail(
                 ServiceCode.EmailTypeEnumCode.PASSWORD_SETTING.toString()

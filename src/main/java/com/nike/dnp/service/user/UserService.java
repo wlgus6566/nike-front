@@ -559,13 +559,13 @@ public class UserService implements UserDetailsService {
         final String userId = decodeCertCode.split(REGEX)[0];
         final String certKey = decodeCertCode.split(REGEX)[1];
         final String certCode = StringUtils.defaultString((String) redisService.get("cert:" + userId));
-        final char[] pwd = userCertDTO.getEncryption();
-        final char[] newPwd = userCertDTO.getNewEncryption();
-        final char[] confirmPwd = userCertDTO.getConfirmEncryption();
+        final char[] encryption = userCertDTO.getEncryption();
+        final char[] newEncryption = userCertDTO.getNewEncryption();
+        final char[] confirmEncryption = userCertDTO.getConfirmEncryption();
         char[] certEncryption = null;
 
-        if (!ObjectUtils.isEmpty(newPwd)) {
-            certEncryption = ConvertUtil.convertStringToCharacter(passwordEncoder.encode(ConvertUtil.convertCharacterToString(newPwd)));
+        if (!ObjectUtils.isEmpty(newEncryption)) {
+            certEncryption = ConvertUtil.convertStringToCharacter(passwordEncoder.encode(ConvertUtil.convertCharacterToString(newEncryption)));
         }
 
         final User user = this.findByUserId(userId);
@@ -575,9 +575,9 @@ public class UserService implements UserDetailsService {
                         .userSeq(user.getUserSeq())
                         .userId(user.getUserId())
                         .userPassword(user.getPassword())
-                        .password(ConvertUtil.convertCharacterToString(pwd))
-                        .newPassword(ConvertUtil.convertCharacterToString(newPwd))
-                        .confirmPassword(ConvertUtil.convertCharacterToString(confirmPwd))
+                        .password(ConvertUtil.convertCharacterToString(encryption))
+                        .newPassword(ConvertUtil.convertCharacterToString(newEncryption))
+                        .confirmPassword(ConvertUtil.convertCharacterToString(confirmEncryption))
                         .build());
 
         //비밀번호 업데이트
@@ -592,9 +592,9 @@ public class UserService implements UserDetailsService {
         redisService.delete("cert:" + userId);
 
         //비밀번호 치환
-        ConvertUtil.cleanValue(pwd);
-        ConvertUtil.cleanValue(newPwd);
-        ConvertUtil.cleanValue(confirmPwd);
+        ConvertUtil.cleanValue(encryption);
+        ConvertUtil.cleanValue(newEncryption);
+        ConvertUtil.cleanValue(confirmEncryption);
         ConvertUtil.cleanValue(certEncryption);
 
         /*throw new CodeMessageHandleException(
@@ -620,13 +620,13 @@ public class UserService implements UserDetailsService {
     @Transactional
     public UserResultDTO confirmPassword(final String userId, final UserCertDTO userCertDTO) {
         log.info("UserService.confirmPassword2");
-        final char[] pwd = userCertDTO.getEncryption();
-        final char[] newPwd = userCertDTO.getNewEncryption();
-        final char[] confirmPwd = userCertDTO.getConfirmEncryption();
-        char[] certPwd = null;
+        final char[] encryption = userCertDTO.getEncryption();
+        final char[] newEncryption = userCertDTO.getNewEncryption();
+        final char[] confirmEncryption = userCertDTO.getConfirmEncryption();
+        char[] certEncryption = null;
 
-        if (!ObjectUtils.isEmpty(newPwd)) {
-            certPwd = ConvertUtil.convertStringToCharacter(passwordEncoder.encode(ConvertUtil.convertCharacterToString(newPwd)));
+        if (!ObjectUtils.isEmpty(newEncryption)) {
+            certEncryption = ConvertUtil.convertStringToCharacter(passwordEncoder.encode(ConvertUtil.convertCharacterToString(newEncryption)));
         }
 
         final User user = this.findByUserId(userId);
@@ -634,23 +634,23 @@ public class UserService implements UserDetailsService {
                 .userSeq(user.getUserSeq())
                 .userId(userId)
                 .userPassword(user.getPassword())
-                .password(ConvertUtil.convertCharacterToString(pwd))
-                .newPassword(ConvertUtil.convertCharacterToString(newPwd))
-                .confirmPassword(ConvertUtil.convertCharacterToString(confirmPwd))
+                .password(ConvertUtil.convertCharacterToString(encryption))
+                .newPassword(ConvertUtil.convertCharacterToString(newEncryption))
+                .confirmPassword(ConvertUtil.convertCharacterToString(confirmEncryption))
                 .build());
 
         //비밀번호 업데이트
-        user.updatePassword(ConvertUtil.convertCharacterToString(certPwd));
+        user.updatePassword(ConvertUtil.convertCharacterToString(certEncryption));
         passwordHistoryRepository.save(PasswordHistory.builder()
                                                     .userSeq(user.getUserSeq())
-                                                    .password(ConvertUtil.convertCharacterToString(certPwd))
+                                                    .password(ConvertUtil.convertCharacterToString(certEncryption))
                                                     .build());
 
         //비밀번호 치환
-        ConvertUtil.cleanValue(pwd);
-        ConvertUtil.cleanValue(newPwd);
-        ConvertUtil.cleanValue(confirmPwd);
-        ConvertUtil.cleanValue(certPwd);
+        ConvertUtil.cleanValue(encryption);
+        ConvertUtil.cleanValue(newEncryption);
+        ConvertUtil.cleanValue(confirmEncryption);
+        ConvertUtil.cleanValue(certEncryption);
 
         final UserResultDTO userResultDTO = new UserResultDTO();
         userResultDTO.setUserSeq(user.getUserSeq());
