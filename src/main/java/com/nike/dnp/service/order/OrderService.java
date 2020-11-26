@@ -5,6 +5,7 @@ import com.nike.dnp.dto.order.OrderProductSaveDTO;
 import com.nike.dnp.dto.order.OrderSearchDTO;
 import com.nike.dnp.entity.order.OrderEntity;
 import com.nike.dnp.repository.order.OrderRepository;
+import com.nike.dnp.service.DeviceService;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -37,6 +39,13 @@ public class OrderService {
 	 * @author [윤태호]
 	 */
 	private final OrderRepository orderRepository;
+
+	/**
+	 * The Device service
+	 *
+	 * @author [이소정]
+	 */
+	private final DeviceService deviceService;
 
 	/**
 	 * 주문 저장

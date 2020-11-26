@@ -9,8 +9,8 @@ import javax.persistence.Column;
  * UserActionLogSaveDTO
  *
  * @author [오지훈]
- * @since 2020. 6. 24. 오후 6:09:08
  * @implNote UserActionLog(유저_활동_로그) Save DTO 작성
+ * @since 2020. 6. 24. 오후 6:09:08
  */
 @Getter
 @Setter
@@ -58,5 +58,13 @@ public class UserActionLogSaveDTO {
      */
     @ApiModelProperty(name = "parameter", value = "Parameter", required = true)
     private String parameter;
+
+    /**
+     * The Device
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "device", value = "디바이스 정보", example = "PC", hidden = true)
+    private String device;
 
 }

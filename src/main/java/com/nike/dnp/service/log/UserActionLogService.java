@@ -45,6 +45,7 @@ public class UserActionLogService {
         saveLog.setMethodTypeName(saveDTO.getMethodTypeName());
         saveLog.setMethodSignature(saveDTO.getMethodSignature());
         saveLog.setParameter(saveDTO.getParameter());
+        saveLog.setDevice(saveDTO.getDevice());
         return logRepository.save(saveLog);
     }
 

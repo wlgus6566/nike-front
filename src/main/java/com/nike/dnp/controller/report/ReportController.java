@@ -24,6 +24,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -124,11 +125,12 @@ public class ReportController {
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "보고서 등록")
     @ValidField
     public SingleResult<Report> saveReport(
-            @RequestBody @Valid final ReportSaveDTO reportSaveDTO
+            final HttpServletRequest request
+            , @RequestBody @Valid final ReportSaveDTO reportSaveDTO
             , @ApiIgnore final BindingResult result
     ) {
         log.info("ReportController.saveReport");
-        return responseService.getSingleResult(reportService.save(reportSaveDTO));
+        return responseService.getSingleResult(reportService.save(reportSaveDTO, request));
     }
 
     /**

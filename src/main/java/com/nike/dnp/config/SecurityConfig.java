@@ -4,6 +4,7 @@ import com.nike.dnp.config.auth.*;
 import com.nike.dnp.config.jwt.JwtAuthorizationFilter;
 import com.nike.dnp.config.jwt.JwtHelper;
 import com.nike.dnp.repository.user.UserRepository;
+import com.nike.dnp.service.DeviceService;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.auth.AuthService;
@@ -98,6 +99,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * @author [윤태호]
 	 */
 	private final AuthService authService;
+
+	/**
+	 * The Device service
+	 *
+	 * @author [이소정]
+	 */
+	private final DeviceService deviceService;
 
 	/**
 	 * Auth url string.
@@ -306,6 +314,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				, redisService
 				, userRepository
 				, userMailService
+				, deviceService
 		);
 	}
 

@@ -19,6 +19,7 @@ import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
+import com.nike.dnp.service.DeviceService;
 import com.nike.dnp.service.alarm.AlarmService;
 import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.history.HistoryService;
@@ -35,6 +36,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -132,6 +134,13 @@ public class ContentsService {
      */
     private final UserService userService;
 
+    /**
+     * The Device service
+     *
+     * @author [이소정]
+     */
+    private final DeviceService deviceService;
+
 
     /**
      * Find all paging page.
@@ -210,23 +219,25 @@ public class ContentsService {
         return userContentsService.isAuthForContents(contentsSeq, authSeq);
     }
 
-
-
     /**
      * Save contents.
      *
      * @param contentsSaveDTO the contents save dto
+     * @param request         the request
      * @return the contents
      * @author [이소정]
      * @implNote 컨텐츠 저장
      * @since 2020. 6. 24. 오후 3:22:15
      */
     @Transactional
-    public Contents save(final ContentsSaveDTO contentsSaveDTO) {
+    public Contents save(final ContentsSaveDTO contentsSaveDTO, final HttpServletRequest request) {
         log.info("contentsService.save");
 
         // validation check
         this.checkContentsValidation(contentsSaveDTO);
+
+        // device check
+        contentsSaveDTO.setDevice(deviceService.checkDevice(request));
 
         // 썸네일 base64 -> file 정보로 변환
         if (!ObjectUtils.isEmpty(contentsSaveDTO.getImageBase64())) {
@@ -662,6 +673,7 @@ public class ContentsService {
      * Check contents file validation.
      *
      * @param contentsFileSaveDTO the contents file save dto
+     * @return the boolean
      * @author [이소정]
      * @implNote 콘텐츠 파일 유효성 체크
      * @since 2020. 8. 3. 오후 3:07:54
@@ -841,6 +853,18 @@ public class ContentsService {
         return this.applyCreateAuth(authReturnDTOList, oneDepthAuthSeqList, twoDepthAuthSeqList, threeDepthAuthSeqList);
     }
 
+    /**
+     * Apply create auth list.
+     *
+     * @param viewAuthList      the view auth list
+     * @param oneDepthSeqList   the one depth seq list
+     * @param twoDepthSeqList   the two depth seq list
+     * @param threeDepthSeqList the three depth seq list
+     * @return the list
+     * @author [이소정]
+     * @implNote [method 설명]
+     * @since 2020. 11. 24. 오후 6:42:00
+     */
     public List<AuthReturnDTO> applyCreateAuth(
             final List<AuthReturnDTO> viewAuthList
             , final List<Long> oneDepthSeqList, final List<Long> twoDepthSeqList, final List<Long> threeDepthSeqList

@@ -20,10 +20,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -176,7 +179,8 @@ public class ContentsController {
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 등록", value = "/{topMenuCode}/{menuCode}")
     @ValidField
     public SingleResult<Contents> saveContents(
-            @ApiParam(name = TOP_MENU_CODE, value = TOP_MENU_VALUE, defaultValue = TOP_MENU_EXAMPLE, required = true) @PathVariable final String topMenuCode
+            HttpServletRequest request
+            , @ApiParam(name = TOP_MENU_CODE, value = TOP_MENU_VALUE, defaultValue = TOP_MENU_EXAMPLE, required = true) @PathVariable final String topMenuCode
             , @ApiParam(name = MENU_CODE, value = MENU_CODE_VALUE, defaultValue = "SP", required = true) @PathVariable final String menuCode
             , @RequestBody @Valid final ContentsSaveDTO contentsSaveDTO
             , @ApiIgnore final BindingResult result
@@ -184,7 +188,7 @@ public class ContentsController {
         contentsSaveDTO.setTopMenuCode(topMenuCode);
         contentsSaveDTO.setMenuCode(menuCode);
         return responseService.getSingleResult(
-                contentsService.save(contentsSaveDTO)
+                contentsService.save(contentsSaveDTO, request)
                 , ServiceCode.ReturnTypeEnumCode.CREATE.toString()
                 , ServiceCode.ReturnTypeEnumCode.CREATE.getMessage()
                 , true

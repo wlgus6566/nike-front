@@ -100,10 +100,12 @@ public class OrderController {
 	/**
 	 * 주문 등록
 	 *
+	 * @param request             the request
 	 * @param orderProductSaveDTO the order product save dto
 	 * @param result              the result
 	 * @return the single result
 	 * @author [윤태호]
+	 * @implNote [method 설명]
 	 * @apiNote 주문 등록
 	 * @since 2020. 7. 1. 오후 2:48:06
 	 */
@@ -111,8 +113,9 @@ public class OrderController {
 	@PostMapping(value = "/order/save", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Transactional
 	@ValidField
-	public SingleResult<OrderEntity> saveOrder(@RequestBody @Valid final OrderProductSaveDTO orderProductSaveDTO,
-											   @ApiIgnore final BindingResult result) {
+	public SingleResult<OrderEntity> saveOrder(
+			@RequestBody @Valid final OrderProductSaveDTO orderProductSaveDTO
+			, @ApiIgnore final BindingResult result) {
 		log.info("OrderController.saveOrder");
 		final List<Long> goodsSeqList = orderProductSaveDTO.getGoodsSeqList();
 		final List<Long> orderQuantityList = orderProductSaveDTO.getOrderQuantityList();
@@ -150,6 +153,7 @@ public class OrderController {
 	 * @param orderSearchDTO the order search dto
 	 * @return the single result
 	 * @author [윤태호]
+	 * @implNote [method 설명]
 	 * @apiNote 주문내역 조회
 	 * @since 2020. 7. 7. 오전 11:25:09
 	 */
@@ -166,6 +170,7 @@ public class OrderController {
 	 * @param orderSeq the order seq
 	 * @return the single result
 	 * @author [윤태호]
+	 * @implNote [method 설명]
 	 * @apiNote 주문 상세 내역
 	 * @since 2020. 7. 7. 오후 2:43:50
 	 */

@@ -277,6 +277,12 @@ public class ContentsSaveDTO {
     @ApiModelProperty(name = "checks", value = "컨텐츠 권한 목록")
     private List<AuthReturnDTO> checks;
 
+    /**
+     * The Device info
+     */
+    @ApiModelProperty(name = "device", value = "디바이스 정보", example = "PC", hidden = true)
+    private String device;
+
 //    /**
 //     * 권한 체크 목록
 //     *

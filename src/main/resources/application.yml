@@ -29,6 +29,9 @@ spring:
       max-request-size: 10000MB
   redis:
     userSessionTime: 30
+  mobile:
+    devicedelegatingviewresolver:
+      enabled: true
 
 ## 시큐리티 url/ ip 체크 flag
 security:
@@ -54,6 +57,5 @@ nike:
 cloud:
   aws:
     keyPairId: 'APKAJNYFE4SZH6RSWVMA'
-
 
 

@@ -162,6 +162,15 @@ public class Report extends BaseTimeWithoutUpdateDtEntity {
 //    }
 
     /**
+     * The DEVICE
+     *
+     * @author [이소정]
+     */
+    @Column(name = "DEVICE")
+    @ApiModelProperty(name = "device", value = "디바이스 정보", example = "PC", hidden = true)
+    private String device;
+
+    /**
      * Save report.
      *
      * @param reportSaveDTO the report save dto
@@ -179,6 +188,7 @@ public class Report extends BaseTimeWithoutUpdateDtEntity {
         savedReport.setImageFileSize(reportSaveDTO.getImageFileSize());
         savedReport.setImageFilePhysicalName(reportSaveDTO.getImageFilePhysicalName());
         savedReport.setAuthSeq(reportSaveDTO.getAuthSeq());
+        savedReport.setDevice(reportSaveDTO.getDevice());
         savedReport.setReadCount(0l);
         savedReport.setUseYn("Y");
         savedReport.setUpdateDt(LocalDateTime.now());

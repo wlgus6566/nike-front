@@ -205,4 +205,12 @@ public class ReportSaveDTO {
     @ApiModelProperty(name = "reportFileSaveDTOList", value = "보고서 파일 목록")
     private List<ReportFileSaveDTO> reportFileSaveDTOList;
 
+    /**
+     * The Device
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "device", value = "디바이스 정보", example = "PC", hidden = true)
+    private String device;
+
 }

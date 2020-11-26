@@ -197,6 +197,15 @@ public class Contents extends BaseTimeWithoutUpdateDtEntity {
     private LocalDateTime updateDt;
 
     /**
+     * The DEVICE
+     *
+     * @author [이소정]
+     */
+    @Column(name = "DEVICE")
+    @ApiModelProperty(name = "device", value = "디바이스 정보", example = "PC", hidden = true)
+    private String device;
+
+    /**
      * Save contents.
      *
      * @param contentsSaveDTO the contents save dto
@@ -230,7 +239,7 @@ public class Contents extends BaseTimeWithoutUpdateDtEntity {
             saveContents.setCampaignEndDt(null);
         }
         saveContents.setMemo(contentsSaveDTO.getMemo());
-
+        saveContents.setDevice(contentsSaveDTO.getDevice());
         saveContents.setUpdateDt(LocalDateTime.now());
 
         return saveContents;

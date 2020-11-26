@@ -2,6 +2,8 @@ package com.nike.dnp.common;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -96,5 +98,7 @@ public class GlobalInterceptor extends HandlerInterceptorAdapter {
 			, final Object handler) {
 		log.info("GlobalInterceptor.afterConcurrentHandlingStarted");
 	}
+
+
 
 }

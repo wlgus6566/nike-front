@@ -64,4 +64,13 @@ public class UserLoginLog extends BaseTimeEntity {
     @ApiModelProperty(name = "loginIp", value = "IP", required = true)
     private String loginIp;
 
+    /**
+     * The DEVICE
+     *
+     * @author [이소정]
+     */
+    @Column(name = "DEVICE")
+    @ApiModelProperty(name = "device", value = "디바이스 정보", example = "PC", hidden = true)
+    private String device;
+
 }

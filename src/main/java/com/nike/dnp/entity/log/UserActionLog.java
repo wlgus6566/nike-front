@@ -10,8 +10,8 @@ import javax.persistence.*;
  * UserActionLog Entity
  *
  * @author [오지훈]
- * @since 2020. 6. 24. 오후 6:10:30
  * @implNote UserActionLog(유저_활동_로그) Entity 작성
+ * @since 2020. 6. 24. 오후 6:10:30
  */
 @Getter
 @Setter
@@ -77,4 +77,12 @@ public class UserActionLog extends BaseTimeEntity {
     @ApiModelProperty(name = "parameter", value = "Parameter", required = true)
     private String parameter;
 
+    /**
+     * The DEVICE
+     *
+     * @author [이소정]
+     */
+    @Column(name = "DEVICE")
+    @ApiModelProperty(name = "device", value = "디바이스 정보", example = "PC", hidden = true)
+    private String device;
 }

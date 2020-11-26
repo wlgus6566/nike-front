@@ -55,4 +55,12 @@ public class OrderProductSaveDTO extends BasicDTO {
 	 */
 	@ApiModelProperty(name="orderDescription",value = "주문 코맨트",example = "코멘트")
 	private String orderDescription;
+
+	/**
+	 * The Device
+	 *
+	 * @author [이소정]
+	 */
+	@ApiModelProperty(name = "device", value = "디바이스 정보", example = "PC", hidden = true)
+	private String device;
 }

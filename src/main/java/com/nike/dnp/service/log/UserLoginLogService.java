@@ -44,6 +44,8 @@ public class UserLoginLogService {
         saveLog.setLoginIp(saveDTO.getLoginIp());
         saveLog.setRegisterSeq(saveDTO.getUserSeq());
         saveLog.setUpdaterSeq(saveDTO.getUserSeq());
+        saveLog.setDevice(saveDTO.getDevice());
+
         return logRepository.save(saveLog);
     }
 

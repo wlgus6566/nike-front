@@ -4,6 +4,7 @@ import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.UserActionLogSaveDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
+import com.nike.dnp.service.DeviceService;
 import com.nike.dnp.service.log.UserActionLogService;
 import com.nike.dnp.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,8 @@ import java.util.Objects;
  * LogAspect
  *
  * @author [오지훈]
- * @since 2020. 6. 24. 오후 6:05:00
  * @implNote LogAspect 작성
+ * @since 2020. 6. 24. 오후 6:05:00
  */
 @Slf4j
 @Aspect
@@ -44,16 +45,23 @@ public class LogAspect {
     private final UserActionLogService actionLogService;
 
     /**
+     * The Device service
+     *
+     * @author [이소정]
+     */
+    private final DeviceService deviceService;
+
+    /**
      * On around action log object.
      *
      * @param joinPoint the join point
      * @return the object
      * @throws Throwable the throwable
      * @author [오지훈]
-     * @since 2020. 6. 24. 오후 6:05:00
      * @implNote 유저 활동 로그 등록
+     * @since 2020. 6. 24. 오후 6:05:00
      */
-    //@Around("execution(public * com.nike.dnp.controller..*Controller.*(..)) && args(requestDTO,..)")
+//@Around("execution(public * com.nike.dnp.controller..*Controller.*(..)) && args(requestDTO,..)")
     @Around("execution(public * com.nike.dnp.controller..*Controller.*(..))")
     public Object onAroundActionLog(final ProceedingJoinPoint joinPoint) throws Throwable {
         log.info("LogAspect.onAroundActionLog");
@@ -67,6 +75,8 @@ public class LogAspect {
             actionLog.setParameter(Arrays.toString(joinPoint.getArgs()));
             actionLog.setMethodTypeName(request.getMethod());
             actionLog.setMethodSignature(joinPoint.getSignature().getName());
+            actionLog.setDevice(deviceService.checkDevice(request));
+
             actionLogService.save(actionLog);
         }
         return joinPoint.proceed();
@@ -79,8 +89,8 @@ public class LogAspect {
      * @return the object
      * @throws Throwable the throwable
      * @author [오지훈]
-     * @since 2020. 7. 22. 오후 3:53:47
      * @implNote 필드 필수 체크
+     * @since 2020. 7. 22. 오후 3:53:47
      */
     @Around("@annotation(ValidField)")
     public Object onAroundValidField(final ProceedingJoinPoint joinPoint) throws Throwable {

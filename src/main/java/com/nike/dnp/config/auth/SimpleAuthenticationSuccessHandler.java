@@ -10,6 +10,7 @@ import com.nike.dnp.dto.auth.AuthUserDTO;
 import com.nike.dnp.dto.log.UserLoginLogSaveDTO;
 import com.nike.dnp.entity.user.User;
 import com.nike.dnp.repository.user.UserRepository;
+import com.nike.dnp.service.DeviceService;
 import com.nike.dnp.service.RedisService;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.log.UserLoginLogService;
@@ -19,6 +20,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceResolver;
+import org.springframework.mobile.device.LiteDeviceResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,8 +42,8 @@ import java.util.Optional;
  * 로그인 성공 후 핸들러
  *
  * @author [오지훈]
- * @since 2020. 7. 3. 오전 11:30:01
  * @implNote
+ * @since 2020. 7. 3. 오전 11:30:01
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -88,6 +92,13 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 	private final UserMailService userMailService;
 
 	/**
+	 * The Device service
+	 *
+	 * @author [이소정]
+	 */
+	private final DeviceService deviceService;
+
+	/**
 	 * 로그인 성공 처리
 	 *
 	 * @param request        the request
@@ -95,8 +106,8 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 	 * @param authentication the authentication
 	 * @throws IOException the io exception
 	 * @author [오지훈]
+	 * @implNote 설명]
 	 * @since 2020. 7. 3. 오전 11:30:01
-	 * @implNote
 	 */
 	@Transactional
 	@Override
@@ -275,11 +286,18 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 
 			// 비밀번호 변경 여부 수정
 			user.ifPresent(User::updatePasswordChange);
-
+			DeviceResolver deviceResolver = new LiteDeviceResolver();
+			deviceResolver.resolveDevice(request);
 			// 로그인 로그 등록
 			final UserLoginLogSaveDTO saveDTO = new UserLoginLogSaveDTO();
 			saveDTO.setUserSeq(authUserDTO.getUserSeq());
 			saveDTO.setLoginIp(request.getRemoteAddr());
+			String deviceString = ServiceCode.DeviceEnumCode.PC.toString();
+			Device device = deviceResolver.resolveDevice(request);
+			if (device.isMobile() || device.isTablet()) {
+				deviceString = ServiceCode.DeviceEnumCode.MO.toString();
+			}
+			saveDTO.setDevice(deviceString);
 			loginLogService.save(saveDTO);
 
 			// redis 인증코드 삭제

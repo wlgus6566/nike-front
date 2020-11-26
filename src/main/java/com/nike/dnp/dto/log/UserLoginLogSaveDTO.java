@@ -7,8 +7,8 @@ import lombok.*;
  * UserLoginLogSaveDTO
  *
  * @author [오지훈]
- * @since 2020. 6. 24. 오후 6:09:11
  * @implNote UserLoginLog(유저_로그인_로그) Save DTO 작성
+ * @since 2020. 6. 24. 오후 6:09:11
  */
 @Getter
 @Setter
@@ -32,5 +32,13 @@ public class UserLoginLogSaveDTO {
      */
     @ApiModelProperty(name = "loginIp", value = "IP", required = true)
     private String loginIp;
+
+    /**
+     * The Device
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "device", value = "디바이스 정보", example = "PC", hidden = true)
+    private String device;
 
 }

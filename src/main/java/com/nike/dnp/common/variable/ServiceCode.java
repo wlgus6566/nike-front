@@ -415,4 +415,13 @@ public class ServiceCode {
         CONTENTS
         , REPORT
     }
+
+    /**
+     * 디바이스 정보
+     * PC/Mobile
+     */
+    public enum DeviceEnumCode {
+        PC
+        , MO
+    }
 }

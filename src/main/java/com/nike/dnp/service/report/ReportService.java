@@ -18,6 +18,7 @@ import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.report.ReportFileRepository;
 import com.nike.dnp.repository.report.ReportRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
+import com.nike.dnp.service.DeviceService;
 import com.nike.dnp.service.alarm.AlarmService;
 import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.history.HistoryService;
@@ -33,6 +34,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -103,6 +105,13 @@ public class ReportService {
     private final ReportBasketService reportBasketService;
 
     /**
+     * The Device service
+     *
+     * @author [이소정]
+     */
+    private final DeviceService deviceService;
+
+    /**
      * Find all paging page.
      *
      * @param reportSearchDTO the report search dto
@@ -142,13 +151,14 @@ public class ReportService {
      * Save report.
      *
      * @param reportSaveDTO the report save dto
+     * @param request       the request
      * @return the report
      * @author [이소정]
      * @implNote 보고서 저장
      * @since 2020. 7. 8. 오후 5:28:20
      */
     @Transactional
-    public Report save(final ReportSaveDTO reportSaveDTO) {
+    public Report save(final ReportSaveDTO reportSaveDTO, final HttpServletRequest request) {
         log.info("ReportService.save");
         reportSaveDTO.setAuthSeq(SecurityUtil.currentUser().getAuthSeq());
 
@@ -161,6 +171,8 @@ public class ReportService {
             reportSaveDTO.setImageFileSize(String.valueOf(fileResultDTO.getFileSize()));
             reportSaveDTO.setImageFilePhysicalName(fileResultDTO.getFilePhysicalName().replace("//", "/"));
         }
+
+        reportSaveDTO.setDevice(deviceService.checkDevice(request));
 
         final Report savedReport = reportRepository.save(new Report().save(reportSaveDTO));
         final List<ReportFile> reportFileList = new ArrayList<>();
@@ -236,7 +248,7 @@ public class ReportService {
      * @param reportSaveDTO the report save dto
      * @return the optional
      * @author [이소정]
-     * @implNote
+     * @implNote 설명] 설명]
      * @CreatedOn 2020. 7. 9. 오후 6:49:17
      * @Description
      * @since 2020. 7. 30. 오후 2:58:57
@@ -359,7 +371,7 @@ public class ReportService {
      * Delete report.
      * 수정일 기준 일정기간 이전 보고서 삭제 - 배치용
      *
-     * @param beforeDate  the before date
+     * @param beforeDate the before date
      * @author [이소정]
      * @implNote 수정일 기준 일정기간 이전 보고서 삭제 - 배치용
      * @since 2020. 7. 30. 오후 6:29:17
@@ -376,6 +388,7 @@ public class ReportService {
      *
      * @param reportFileSeq the report file seq
      * @return the response entity
+     * @throws IOException the io exception
      * @author [이소정]
      * @implNote 보고서 파일 다운로드
      * @since 2020. 7. 31. 오후 3:24:10
@@ -414,7 +427,7 @@ public class ReportService {
      *
      * @param reportFileSaveDTO the report file save dto
      * @author [이소정]
-     * @implNote
+     * @implNote 설명] 설명]
      * @since 2020. 8. 13. 오후 7:07:34
      */
     public void checkReportFileValidation(final ReportFileSaveDTO reportFileSaveDTO) {
@@ -451,6 +464,8 @@ public class ReportService {
     /**
      * 보고서 상세 권한 있는 그룹의 회원 목록
      *
+     * @param authSeq   the auth seq
+     * @param authDepth the auth depth
      * @return the list
      * @author [이소정]
      * @implNote 보고서 상세 권한 있고 depth에 맞는 그룹의 회원 목록
@@ -534,10 +549,11 @@ public class ReportService {
     }
 
 
-
     /**
      * Find all auth user with depth list.
      *
+     * @param userAuthSearchDTO the user auth search dto
+     * @param onlySkillCode     the only skill code
      * @return the list
      * @author [이소정]
      * @implNote 권한 목록 조회
@@ -558,6 +574,9 @@ public class ReportService {
      *
      * @param authReturnDTOList the auth return dto list
      * @return the list
+     * @author [이소정]
+     * @implNote [method 설명]
+     * @since 2020. 11. 24. 오후 7:24:14
      */
     public List<Long> authDepthToList(List<AuthReturnDTO> authReturnDTOList) {
         List<Long> authSeqList = new ArrayList<>();
