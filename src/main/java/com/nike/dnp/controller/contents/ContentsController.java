@@ -179,7 +179,7 @@ public class ContentsController {
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 등록", value = "/{topMenuCode}/{menuCode}")
     @ValidField
     public SingleResult<Contents> saveContents(
-            HttpServletRequest request
+            @ApiIgnore HttpServletRequest request
             , @ApiParam(name = TOP_MENU_CODE, value = TOP_MENU_VALUE, defaultValue = TOP_MENU_EXAMPLE, required = true) @PathVariable final String topMenuCode
             , @ApiParam(name = MENU_CODE, value = MENU_CODE_VALUE, defaultValue = "SP", required = true) @PathVariable final String menuCode
             , @RequestBody @Valid final ContentsSaveDTO contentsSaveDTO

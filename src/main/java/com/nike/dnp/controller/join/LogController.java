@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -74,12 +75,13 @@ public class LogController {
     @PostMapping(value = "/download", name = "다운로드 로그 기록")
     @ValidField
     public SingleResult<List<DownloadLog>> downloadLog(
-            @ApiParam(value = "다운로드 로그 기록", required = true) @Valid @RequestBody DownloadLogSaveDTO downloadLogSaveDTO
+            @ApiIgnore HttpServletRequest request
+            , @ApiParam(value = "다운로드 로그 기록", required = true) @Valid @RequestBody DownloadLogSaveDTO downloadLogSaveDTO
             , @ApiIgnore final BindingResult result
     ) {
         log.info("LogController.downloadLog");
         return responseService.getSingleResult(
-                downloadLogService.save(downloadLogSaveDTO)
+                downloadLogService.save(downloadLogSaveDTO, request)
                 , SuccessCode.ConfigureSuccess.SUCCESS.name()
                 , MessageUtil.getMessage(SuccessCode.ConfigureSuccess.SUCCESS.name())
                 , false

@@ -3,6 +3,7 @@ package com.nike.dnp.dto.log;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -37,5 +38,13 @@ public class DownloadLogSaveDTO {
     @NotBlank(message = "download.type")
     @ApiModelProperty(name = "downloadType", value = "다운로드 구분", required = true, allowableValues = "CONTENTS,REPORT")
     private String downloadType;
+
+    /**
+     * The DEVICE
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "device", value = "디바이스 정보", example = "PC", hidden = true)
+    private String device;
 
 }

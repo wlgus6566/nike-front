@@ -11,8 +11,8 @@ import javax.persistence.*;
  * DownLoadLog Entity
  *
  * @author [오지훈]
- * @since 2020. 6. 24. 오후 6:10:25
  * @implNote DownLoadLog(다운로드 로그) Entity 작성
+ * @since 2020. 6. 24. 오후 6:10:25
  */
 @Getter
 @Setter
@@ -63,11 +63,21 @@ public class DownloadLog extends BaseTimeEntity {
     private String fileSeqArray;
 
     /**
+     * The DEVICE
+     *
+     * @author [이소정]
+     */
+    @Column(name = "DEVICE")
+    @ApiModelProperty(name = "device", value = "디바이스 정보", example = "PC", hidden = true)
+    private String device;
+
+    /**
      * Instantiates a new Download log.
      *
      * @param downloadType the download type
      * @param fileSeq      the file seq
      * @param fileSeqArray the file seq array
+     * @param device       the device
      * @author [오지훈]
      * @implNote 생성자 주입
      * @since 2020. 9. 28. 오전 10:36:00
@@ -77,10 +87,13 @@ public class DownloadLog extends BaseTimeEntity {
             final String downloadType
             , final Long fileSeq
             , final String fileSeqArray
+            , final String device
     ) {
         log.info("DownloadLog.DownloadLog");
         this.downloadType = downloadType;
         this.fileSeq = fileSeq;
         this.fileSeqArray = fileSeqArray;
+        this.device = device;
     }
+
 }
