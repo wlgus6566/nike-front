@@ -1,11 +1,20 @@
 package com.nike.dnp.dto.contents;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.util.ObjectUtils;
+
+import javax.persistence.Column;
+import java.time.LocalDateTime;
 
 /**
  * The Class Contents list dto.
@@ -171,6 +180,17 @@ public class ContentsFileResultDTO {
     private long downloadCount;
 
     /**
+     * 최초 작성일
+     *
+     * @author [이소정]
+     */
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    @ApiModelProperty(name = "registrationDt", value = "최초 작성일", hidden = true)
+    private LocalDateTime registrationDt;
+
+    /**
      * Gets file name.
      *
      * @return the file name
@@ -233,5 +253,7 @@ public class ContentsFileResultDTO {
             return CloudFrontUtil.getCustomSignedUrl(detailThumbnailFilePhysicalName, 30);
         }
     }
+
+
 
 }

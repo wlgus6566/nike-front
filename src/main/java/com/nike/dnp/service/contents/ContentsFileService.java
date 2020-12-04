@@ -52,13 +52,23 @@ public class ContentsFileService {
      */
     public Page<ContentsFileResultDTO> findAllContentsFilePaging(final ContentsFileSearchDTO contentsFileSearchDTO) {
         log.info("ContentsFileService.findAllContentsFilePaging");
+        String searchOrderType = contentsFileSearchDTO.getOrderType();
+        Sort sort = Sort.by(ServiceCode.ContentsFileSearchCode.ORDER.getValue()).ascending();
+
+        if (searchOrderType.equals(ServiceCode.ContentsFileSearchCode.UPLOAD.toString())) {
+            sort = Sort.by(ServiceCode.ContentsFileSearchCode.UPLOAD.getValue()).descending();
+        } else if (searchOrderType.equals(ServiceCode.ContentsFileSearchCode.FILE_NAME.toString())) {
+            sort = Sort.by(ServiceCode.ContentsFileSearchCode.FILE_NAME.getValue()).ascending();
+        }
+
+
         // QueryDsl 기능 이용
         return contentsFileRepository.findAllContentsFilePaging(
                 contentsFileSearchDTO,
                 PageRequest.of(contentsFileSearchDTO.getPage()
                 , contentsFileSearchDTO.getSize()
-                , contentsFileSearchDTO.getOrderType().equals(ServiceCode.ContentsFileSearchCode.ORDER.toString())
-                        ? Sort.by(ServiceCode.ContentsFileSearchCode.ORDER.getValue()).ascending() : Sort.by(ServiceCode.ContentsFileSearchCode.FILE_NAME.getValue()).ascending()));
+                , sort)
+        );
     }
 
     /**

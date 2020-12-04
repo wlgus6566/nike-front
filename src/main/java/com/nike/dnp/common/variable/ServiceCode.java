@@ -53,6 +53,7 @@ public class ServiceCode {
     @Getter
     public enum ContentsFileSearchCode {
         ORDER("fileOrder") // 정렬번호 순
+        , UPLOAD("registrationDt") // 업로드 순
         , FILE_NAME("fileName"); // 파일명
 
         /**
