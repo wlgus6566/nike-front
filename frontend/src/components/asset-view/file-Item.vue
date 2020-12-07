@@ -35,7 +35,10 @@
                 <span>선택 담기</span>
             </button>
             <div class="right">
-                <FilterSelect :listSortSelect="orderType" />
+                <template>
+                  <FilterSelect v-if="$route.path.split('/')[1] === 'asset'" :listSortSelect="orderTypeAsset" />
+                  <FilterSelect v-else :listSortSelect="orderType" />
+                </template>
                 <FilterSelect :listSortSelect="fileExtension" />
             </div>
         </div>
@@ -99,6 +102,9 @@
                                 <em class="title">{{
                                     item.title || item.fileName
                                 }}</em>
+                                <span class="date" v-if="item.fileSectionCode === 'ASSET'">
+                                  {{item.registrationDt}}
+                                </span>
                             </span>
                         </label>
                         <div class="btn-box">
@@ -301,6 +307,7 @@ export default {
         'contentsFileList',
         'checkAll',
         'orderType',
+        'orderTypeAsset',
         'fileExtension',
         'checkContentsFileList',
         'contentsFileListTotal',
