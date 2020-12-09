@@ -1,5 +1,6 @@
 <template>
     <div v-if="mainData">
+      <a href="/down" target="_blank">down</a>
         <div class="main-banner">
             <div class="thumbnail">
                 <img
