@@ -135,12 +135,12 @@ public class S3Util {
 	 * @implNote
 	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
-	public static void upload(final FileResultDTO fileResultDTO) {
+	public static void upload(final FileResultDTO fileResultDTO, final String privateYn) {
 		log.info("S3Util.upload");
 		final StopWatch stopWatch = new StopWatch("S3Util.upload");
 		if(!ObjectUtils.isEmpty(fileResultDTO.getFilePhysicalName())){
 			stopWatch.start("original upload");
-			s3upload(fileResultDTO.getFilePhysicalName());
+			s3upload(fileResultDTO.getFilePhysicalName(), privateYn);
 			stopWatch.stop();
 			log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms",stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 		}
@@ -151,13 +151,13 @@ public class S3Util {
 		else {
 			if(!ObjectUtils.isEmpty(fileResultDTO.getThumbnailFilePhysicalName())){
 				stopWatch.start("thumbnail upload");
-				s3upload(fileResultDTO.getThumbnailFilePhysicalName());
+				s3upload(fileResultDTO.getThumbnailFilePhysicalName(), privateYn);
 				stopWatch.stop();
 				log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 			}
 			if(!ObjectUtils.isEmpty(fileResultDTO.getDetailThumbnailFilePhysicalName())){
 				stopWatch.start("detailThumbnail upload");
-				s3upload(fileResultDTO.getDetailThumbnailFilePhysicalName());
+				s3upload(fileResultDTO.getDetailThumbnailFilePhysicalName(), privateYn);
 				stopWatch.stop();
 				log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 			}
@@ -175,21 +175,43 @@ public class S3Util {
 	 * @author [윤태호]
 	 * @since 2020. 7. 31. 오전 11:15:34
 	 */
-	private static void s3upload(final String filePath){
+	private static void s3upload(final String filePath, final String privateYn){
 		log.info("S3Util.s3upload");
 		final File file = new File(root + filePath);
 		final String uploadUrl = awsPathReplace(filePath);
-		final PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.Private);
+		final PutObjectRequest putObjectRequest;
 		final ObjectMetadata metadata = new ObjectMetadata();
-		// 첨부파일
-		metadata.setContentDisposition("attachment;");
-		// 창에서 열리도록
-//		metadata.setContentDisposition("inline");
+		if (privateYn.equals("Y")) {
+			putObjectRequest = new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.Private);
+			metadata.setContentDisposition("attachment;");
+		} else {
+			putObjectRequest = new PutObjectRequest(editorBucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.PublicRead);
+			metadata.setContentDisposition("inline");
+		}
 		putObjectRequest.setMetadata(metadata);
 		client.putObject(putObjectRequest);
 		final URL url = client.getUrl(bucket, uploadUrl);
 		log.debug("url.getPath() {}", url.getPath());
 	}
+
+
+//	private static void s3upload(final String filePath){
+//		log.info("S3Util.s3upload");
+//		final File file = new File(root + filePath);
+//		final String uploadUrl = awsPathReplace(filePath);
+////		final PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.Private);
+//		final PutObjectRequest putObjectRequest = new PutObjectRequest(editorBucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.PublicRead);
+//		final ObjectMetadata metadata = new ObjectMetadata();
+//		// 첨부파일
+////		metadata.setContentDisposition("attachment;");
+//		// 창에서 열리도록
+//		metadata.setContentDisposition("inline");
+//		putObjectRequest.setMetadata(metadata);
+//		client.putObject(putObjectRequest);
+//		final URL url = client.getUrl(bucket, uploadUrl);
+//		log.debug("url.getPath() {}", url.getPath());
+//	}
+//
 
 	/**
 	 * S3 파일 복사

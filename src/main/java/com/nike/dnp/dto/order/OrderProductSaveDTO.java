@@ -5,15 +5,15 @@ import com.nike.dnp.dto.BasicDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
  * The Class Order product save dto.
  *
- * @author [윤태호]
- * @since 2020. 6. 30. 오후 5:21:31
- * @implNote
+ * @author [이소정]
+ * @since 2020. 12. 14. 오후 5:08:12
  */
 @Getter
 @Setter
@@ -22,45 +22,39 @@ import java.util.List;
 public class OrderProductSaveDTO extends BasicDTO {
 
 	/**
-	 * 상품 리스트
-	 *
-	 * @author [윤태호]
-	 */
-	@ApiModelProperty(name="goodsSeqList",value="상품 시퀀스", allowableValues="28,30,31")
-	@NotNull(message = "order.goodsSeqList")
-	private List<Long> goodsSeqList;
-
-	/**
-	 * 상품 수량
-	 *
-	 * @author [윤태호]
-	 */
-	@ApiModelProperty(name = "orderQuantityList", value = "상품 시퀀스별 수량", allowableValues = "10,20,30")
-	@NotNull(message = "order.orderQuantityList")
-	private List<Long> orderQuantityList;
-
-	/**
-	 * 총 금액
-	 *
-	 * @author [윤태호]
-	 */
-	@ApiModelProperty(name="totalAmount",value="총 금액",example = "100000")
-	@NotNull(message = "order.totalAmount")
-	private Long totalAmount;
-
-	/**
-	 * 주문 설명
-	 *
-	 * @author [윤태호]
-	 */
-	@ApiModelProperty(name="orderDescription",value = "주문 코맨트",example = "코멘트")
-	private String orderDescription;
-
-	/**
-	 * The Device
+	 * The Goods seq
+	 * 상품 seq
 	 *
 	 * @author [이소정]
 	 */
-	@ApiModelProperty(name = "device", value = "디바이스 정보", example = "PC", hidden = true)
-	private String device;
+	@ApiModelProperty(name="goodsSeq",value="상품 seq", example="28")
+	@NotNull(message = "order.goodsSeq")
+	private Long goodsSeq;
+
+	/**
+	 * The Order quantity
+	 * 주문 수량
+	 *
+	 * @author [이소정]
+	 */
+	@ApiModelProperty(name="orderQuantity",value="주문 수량", example="10")
+	@NotNull(message = "order.goodsSeqList")
+	private Long orderQuantity;
+
+	/**
+	 * 상품 설명
+	 *
+	 * @author [이소정]
+	 */
+	@ApiModelProperty(name = "productDescription", value = "상품 설명", example = "상품 설명입니다.")
+	private String productDescription;
+
+	/**
+	 * The File list
+	 *
+	 * @author [이소정]
+	 */
+	@ApiModelProperty(name = "fileList", value = "파일 목록")
+	private List<OrderProductFileSaveDTO> fileList;
+
 }

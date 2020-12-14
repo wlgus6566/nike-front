@@ -296,7 +296,8 @@ public class ServiceCode {
         REPORT("report"),
         TEMP("temp"),
         NEWS("NEWS"),
-        BANNER("banner")
+        BANNER("banner"),
+        ORDER_PRODUCT("orderProduct")
         ;
 
         /**
