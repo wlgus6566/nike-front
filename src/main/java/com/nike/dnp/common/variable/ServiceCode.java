@@ -426,4 +426,27 @@ public class ServiceCode {
         PC
         , MO
     }
+
+    /**
+     * The enum Atf file section.
+     *
+     * @author [이소정]
+     */
+    public enum Atf_File_section {
+        ASSET
+        , ATT
+        , ENG
+        , RN
+        , TR
+        , NSW
+        , FB
+        , BB
+        , JD
+        , KIDS
+        , OTHERS
+        , DIGITAL
+        , GUIDE
+        , VIDEO
+        , VR
+    }
 }
