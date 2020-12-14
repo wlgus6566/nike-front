@@ -182,9 +182,9 @@ public class S3Util {
 		final PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.Private);
 		final ObjectMetadata metadata = new ObjectMetadata();
 		// 첨부파일
-//		metadata.setContentDisposition("attachment;");
+		metadata.setContentDisposition("attachment;");
 		// 창에서 열리도록
-		metadata.setContentDisposition("inline");
+//		metadata.setContentDisposition("inline");
 		putObjectRequest.setMetadata(metadata);
 		client.putObject(putObjectRequest);
 		final URL url = client.getUrl(bucket, uploadUrl);
