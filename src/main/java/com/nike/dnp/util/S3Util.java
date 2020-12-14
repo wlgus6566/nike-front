@@ -181,8 +181,8 @@ public class S3Util {
 		final String uploadUrl = awsPathReplace(filePath);
 		final PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.Private);
 		final ObjectMetadata metadata = new ObjectMetadata();
-//		metadata.setContentDisposition("attachment;");
-		metadata.setContentDisposition(filePath);
+		metadata.setContentDisposition("attachment;");
+//		metadata.setContentDisposition(filePath);
 //		metadata.setContentDisposition("image/jpeg");
 		putObjectRequest.setMetadata(metadata);
 		client.putObject(putObjectRequest);
