@@ -36,7 +36,6 @@
             :contentsFileListTotal="contentsFileListTotal"
             :checkAll="checkAll"
             :orderType="orderType"
-            :orderTypeAsset="orderTypeAsset"
             :fileExtension="fileExtension"
             :checkContentsFileList="checkContentsFileList"
             @allCheckFn="allCheckFn"
@@ -226,27 +225,13 @@ export default {
                         value: 'FILE_NAME',
                         label: '파일명 순',
                     },
+                    {
+                      value: 'UPLOAD',
+                      label: '최신파일 순',
+                    },
                 ],
                 value: 'ORDER',
             },
-            orderTypeAsset: {
-              listSortOptions: [
-                {
-                  value: 'ORDER',
-                  label: '기본 정렬',
-                },
-                {
-                  value: 'FILE_NAME',
-                  label: '파일명 순',
-                },
-                {
-                  value: 'UPLOAD',
-                  label: '최신파일 순',
-                },
-              ],
-              value: 'ORDER',
-            },
-
             fileExtension: {
                 listSortOptions: [
                     {
