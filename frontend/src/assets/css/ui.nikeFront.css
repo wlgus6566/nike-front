@@ -4178,6 +4178,7 @@ img.image-grayscale {
 /* sheet-item */
 .sheet-item {
     display: flex;
+    flex-wrap:wrap;
     padding: 15px 20px 15px 10px;
 }
 .sheet-item + .sheet-item {
@@ -4235,6 +4236,21 @@ img.image-grayscale {
 }
 .sheet-item .quantity-txt em {
     font-weight: bold;
+}
+.sheet-item .add-file{
+    width:calc(100% - 65px);
+    margin:15px 0 0 65px;
+    padding:10px 0 5px;
+    border-top:1px solid #ddd;
+}
+.sheet-item .add-file .textarea{
+    margin-top:5px;
+}
+.sheet-item .add-file textarea{
+    font-size:11px;
+}
+.sheet-item .add-file textarea::placeholder{
+    font-size:11px;
 }
 .sheet-list-scroll {
     box-sizing: border-box;

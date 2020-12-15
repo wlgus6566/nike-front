@@ -15,6 +15,13 @@
                     <i class="icon-mail"></i>
                     <span>알림메일전송</span>
                 </button>
+                <button
+                    type="button"
+                    class="btn-o-gray"
+                    @click="alarmOpen">
+                  <i class="icon-mail"></i>
+                  <span>알림메일전송2</span>
+                </button>
             </template>
         </BtnArea>
         <folder :folderDetail="folderDetail" v-if="folderDetail"></folder>
@@ -36,6 +43,7 @@
             @checkContentsFile="checkContentsFile"
             @addContBasket="addContBasket"
         ></fileItem>
+        <ModalAlarm :visible.sync="visible.alarm"></ModalAlarm>
     </div>
 </template>
 <script>
@@ -43,6 +51,7 @@ import BtnArea from '@/components/asset-view/btn-area.vue';
 import folder from '@/components/asset-view/folder.vue';
 import SortingList from '@/components/asset-view/sorting-list.vue';
 import fileItem from '@/components/asset-view/file-Item.vue';
+import ModalAlarm from '@/views/pages/common/modal-alarm';
 import { authCheck } from '@/utils/authCheck';
 import {
     addContentsBasket,
@@ -59,6 +68,9 @@ export default {
     name: 'folder-view',
     data() {
         return {
+            visible: {
+              alarm: false,
+            },
             totalPage: null,
             loadingData: false,
             page: 0,
@@ -350,6 +362,7 @@ export default {
         folder,
         SortingList,
         fileItem,
+        ModalAlarm
     },
     computed: {
         contentsFileListTotal() {
@@ -409,6 +422,9 @@ export default {
         },
     },
     methods: {
+        alarmOpen(){
+          this.visible.alarm = true;
+        },
         async sendEmail() {
             const sendAlert = confirm(
                 `${this.folderDetail.recipientsCount}개의 계정에 E-MAIL을 전송하시겠습니까?`
