@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.io.File;
+
 /**
  * The Class File upload dto.
  *
  * @author [윤태호]
- * @since 2020. 7. 10. 오전 10:09:12
  * @implNote
+ * @since 2020. 7. 10. 오전 10:09:12
  */
 @Getter
 @Setter
@@ -117,6 +119,12 @@ public class FileResultDTO {
 	 */
 	@ApiModelProperty(name = "detailThumbnailFilePhysicalName", value = "디테일 썸네일 파일 사이즈")
 	private String detailThumbnailFilePhysicalName;
+
+	/**
+	 * The Thumb file
+	 */
+	@ApiModelProperty(name = "thumbFile", value = "썸네일 파일", hidden = true)
+	private File thumbFile;
 
 
 }

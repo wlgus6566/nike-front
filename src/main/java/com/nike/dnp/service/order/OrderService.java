@@ -2,6 +2,7 @@ package com.nike.dnp.service.order;
 
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.order.OrderProductSaveDTO;
+import com.nike.dnp.dto.order.OrderSaveDTO;
 import com.nike.dnp.dto.order.OrderSearchDTO;
 import com.nike.dnp.entity.order.OrderEntity;
 import com.nike.dnp.repository.order.OrderRepository;
@@ -23,8 +24,8 @@ import java.util.List;
  * The Class Order service.
  *
  * @author [윤태호]
- * @since 2020. 6. 30. 오후 5:37:34
  * @implNote
+ * @since 2020. 6. 30. 오후 5:37:34
  */
 @Slf4j
 @Service
@@ -50,18 +51,18 @@ public class OrderService {
 	/**
 	 * 주문 저장
 	 *
-	 * @param orderProductSaveDTO the order product save dto
+	 * @param orderSaveDTO the order save dto
 	 * @return the order
 	 * @author [윤태호]
-	 * @since 2020. 7. 1. 오후 2:47:41
 	 * @implNote 주문 저장
+	 * @since 2020. 7. 1. 오후 2:47:41
 	 */
 	@Transactional
-	public OrderEntity saveOrder(final OrderProductSaveDTO orderProductSaveDTO) {
+	public OrderEntity saveOrder(final OrderSaveDTO orderSaveDTO) {
 		log.info("OrderService.saveOrder");
 		final OrderEntity orderEntity = new OrderEntity();
-		orderEntity.setOrderDescription(orderProductSaveDTO.getOrderDescription());
-		orderEntity.setTotalAmount(orderProductSaveDTO.getTotalAmount());
+		orderEntity.setOrderDescription(orderSaveDTO.getOrderDescription());
+		orderEntity.setTotalAmount(orderSaveDTO.getTotalAmount());
 		orderEntity.setUseYn(ServiceCode.YesOrNoEnumCode.Y.name());
 		return orderRepository.save(orderEntity);
 	}

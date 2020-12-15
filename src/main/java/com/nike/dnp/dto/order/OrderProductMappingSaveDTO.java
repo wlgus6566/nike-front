@@ -1,13 +1,14 @@
 package com.nike.dnp.dto.order;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 /**
  * The Class Order product mapping save dto.
  *
  * @author [윤태호]
- * @since 2020. 7. 1. 오후 12:00:47
  * @implNote
+ * @since 2020. 7. 1. 오후 12:00:47
  */
 @Getter
 @Setter
@@ -43,12 +44,20 @@ public class OrderProductMappingSaveDTO {
 	private Long agencySeq;
 
 	/**
+	 * 상품 설명
+	 *
+	 * @author [이소정]
+	 */
+	private String productDescription;
+
+	/**
 	 * Instantiates a new Order product mapping save dto.
 	 *
-	 * @param goodsSeq      the goods seq
-	 * @param orderSeq      the order seq
-	 * @param agencySeq     the agency seq
-	 * @param orderQuantity the order quantity
+	 * @param goodsSeq           the goods seq
+	 * @param orderSeq           the order seq
+	 * @param agencySeq          the agency seq
+	 * @param orderQuantity      the order quantity
+	 * @param productDescription the product description
 	 * @author [오지훈]
 	 * @implNote 생성자 주입 *
 	 * @since 2020. 7. 31. 오후 3:56:29
@@ -59,11 +68,13 @@ public class OrderProductMappingSaveDTO {
 			, final Long orderSeq
 			, final Long agencySeq
 			, final Long orderQuantity
+			, final String productDescription
 	) {
 		this.goodsSeq = goodsSeq;
 		this.orderSeq = orderSeq;
 		this.agencySeq = agencySeq;
 		this.orderQuantity = orderQuantity;
+		this.productDescription = productDescription;
 	}
 
 }

@@ -296,7 +296,8 @@ public class ServiceCode {
         REPORT("report"),
         TEMP("temp"),
         NEWS("NEWS"),
-        BANNER("banner")
+        BANNER("banner"),
+        ORDER_PRODUCT("orderProduct")
         ;
 
         /**
@@ -424,5 +425,28 @@ public class ServiceCode {
     public enum DeviceEnumCode {
         PC
         , MO
+    }
+
+    /**
+     * The enum Atf file section.
+     *
+     * @author [이소정]
+     */
+    public enum Atf_File_section {
+        ASSET
+        , ATT
+        , ENG
+        , RN
+        , TR
+        , NSW
+        , FB
+        , BB
+        , JD
+        , KIDS
+        , OTHERS
+        , DIGITAL
+        , GUIDE
+        , VIDEO
+        , VR
     }
 }

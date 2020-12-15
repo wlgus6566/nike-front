@@ -1,5 +1,6 @@
 package com.nike.dnp.controller.common;
 
+import com.nike.dnp.dto.file.FileCheckDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.file.FileUploadDTO;
 import com.nike.dnp.exception.FileHandleException;
@@ -85,7 +86,7 @@ public class FileController {
 							   @ApiParam(name = "uploadFile", value = "파일업로드") final MultipartFile uploadFile) throws IOException {
 		log.info("FileController.upload");
 		final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO);
-		S3Util.upload(fileResultDTO);
+		S3Util.upload(fileResultDTO, "Y");
 		return responseService.getSingleResult(fileResultDTO);
 	}
 
@@ -101,14 +102,17 @@ public class FileController {
 	 */
 	@ApiOperation(value = "파일 업로드 리스트", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/api/open/uploadList", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public SingleResult<List<FileResultDTO>> uploadList(final FileUploadDTO fileUploadDTO, @ApiParam(name = "uploadFileList", value = "파일업로드") final List<MultipartFile> uploadFileList) {
+	public SingleResult<List<FileResultDTO>> uploadList(
+			final FileUploadDTO fileUploadDTO
+			, @ApiParam(name = "uploadFileList", value = "파일업로드") final List<MultipartFile> uploadFileList
+	) {
 		log.info("FileController.uploadList");
 		final List<FileResultDTO> resultList = new ArrayList<>();
 		fileUploadDTO.getUploadFileList().forEach(multipartFile -> {
 			final FileUploadDTO fileParam = new FileUploadDTO();
 			fileParam.setUploadFile(multipartFile);
 			final FileResultDTO fileResultDTO = fileUpload(fileParam);
-			S3Util.upload(fileResultDTO);
+			S3Util.upload(fileResultDTO, "Y");
 			resultList.add(fileResultDTO);
 		});
 

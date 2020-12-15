@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.file.FileCheckDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.FileHandleException;
@@ -880,5 +881,4 @@ public class FileUtil {
 		}
 		return false;
 	}
-
 }

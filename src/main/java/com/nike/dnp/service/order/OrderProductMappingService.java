@@ -67,7 +67,10 @@ public class OrderProductMappingService {
 		orderProductMapping.setGoodsSeq(orderProductMappingSaveDTO.getGoodsSeq());
 		orderProductMapping.setOrderSeq(orderProductMappingSaveDTO.getOrderSeq());
 		orderProductMapping.setOrderQuantity(orderProductMappingSaveDTO.getOrderQuantity());
+		orderProductMapping.setProductDescription(orderProductMappingSaveDTO.getProductDescription());
 		return orderProductMapperRepository.save(orderProductMapping);
+
+
 	}
 
 	/**

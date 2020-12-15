@@ -1,6 +1,7 @@
 package com.nike.dnp.entity.order;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.entity.BaseTimeEntity;
 import com.nike.dnp.entity.product.Product;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,13 +9,14 @@ import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * The Class Order product mapping.
  *
  * @author [윤태호]
- * @since 2020. 6. 26. 오후 4:16:42
  * @implNote
+ * @since 2020. 6. 26. 오후 4:16:42
  */
 @Getter
 @Setter
@@ -24,7 +26,6 @@ import javax.persistence.*;
 @DynamicUpdate
 @Table(name = "TB_ORDER_PRODUCT_MAPPING")
 public class OrderProductMapping extends BaseTimeEntity {
-
 
     /**
      * 주문 상품 시퀀스
@@ -87,5 +88,24 @@ public class OrderProductMapping extends BaseTimeEntity {
     @JsonBackReference
     @ApiModelProperty(name = "order", value = "주문 정보")
     private OrderEntity orderEntity;
+
+    /**
+     * 상품 설명
+     *
+     * @author [이소정]
+     */
+    @Column(name = "PRODUCT_DESCRIPTION")
+    @ApiModelProperty(name = "productDescription", value = "상품 설명")
+    private String productDescription;
+
+    /**
+     * The Order product file list
+     *
+     * @author [이소정]
+     */
+    @OneToMany(mappedBy = "orderProduct")
+    @ApiModelProperty(name = "orderProductFileList", value = "주문 상품 파일 목록")
+    @JsonManagedReference
+    private List<OrderProductFile> orderProductFileList;
 
 }
