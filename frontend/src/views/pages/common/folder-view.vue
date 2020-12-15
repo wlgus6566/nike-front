@@ -83,44 +83,204 @@ export default {
                 asset: {
                     sp: [
                         {
-                            value: 'ASSET',
-                            title: 'ASSET',
+                            value: 'ATT',
+                            title: 'ATT',
                         },
                         {
-                            value: 'GUIDE',
-                            title: 'GUIDE',
+                            value: 'ENG',
+                            title: 'ENG',
+                        },
+                        {
+                          value: 'RN',
+                          title: 'RN',
+                        },
+                        {
+                          value: 'TR',
+                          title: 'TR',
+                        },
+                        {
+                          value: 'NSW',
+                          title: 'NSW',
+                        },
+                        {
+                          value: 'FB',
+                          title: 'FB',
+                        },
+                        {
+                          value: 'BB',
+                          title: 'BB',
+                        },
+                        {
+                          value: 'JD',
+                          title: 'JD',
+                        },
+                        {
+                          value: 'KIDS',
+                          title: 'KIDS',
+                        },
+                        {
+                          value: 'OTHERS',
+                          title: 'OTHERS',
+                        },
+                        {
+                          value: 'DIGITAL',
+                          title: 'DIGITAL',
+                        },
+                        {
+                          value: 'GUIDE',
+                          title: 'GUIDE',
                         },
                     ],
                     su: [
-                        {
-                            value: 'ASSET',
-                            title: 'ASSET',
-                        },
-                        {
-                            value: 'GUIDE',
-                            title: 'GUIDE',
-                        },
-                    ],
+                    {
+                      value: 'ATT',
+                      title: 'ATT',
+                    },
+                    {
+                      value: 'ENG',
+                      title: 'ENG',
+                    },
+                    {
+                      value: 'RN',
+                      title: 'RN',
+                    },
+                    {
+                      value: 'TR',
+                      title: 'TR',
+                    },
+                    {
+                      value: 'NSW',
+                      title: 'NSW',
+                    },
+                    {
+                      value: 'FB',
+                      title: 'FB',
+                    },
+                    {
+                      value: 'BB',
+                      title: 'BB',
+                    },
+                    {
+                      value: 'JD',
+                      title: 'JD',
+                    },
+                    {
+                      value: 'KIDS',
+                      title: 'KIDS',
+                    },
+                    {
+                      value: 'OTHERS',
+                      title: 'OTHERS',
+                    },
+                    {
+                      value: 'DIGITAL',
+                      title: 'DIGITAL',
+                    },
+                    {
+                      value: 'GUIDE',
+                      title: 'GUIDE',
+                    },
+                  ],
                     fa: [
-                        {
-                            value: 'ASSET',
-                            title: 'ASSET',
-                        },
-                        {
-                            value: 'GUIDE',
-                            title: 'GUIDE',
-                        },
-                    ],
+                    {
+                      value: 'ATT',
+                      title: 'ATT',
+                    },
+                    {
+                      value: 'ENG',
+                      title: 'ENG',
+                    },
+                    {
+                      value: 'RN',
+                      title: 'RN',
+                    },
+                    {
+                      value: 'TR',
+                      title: 'TR',
+                    },
+                    {
+                      value: 'NSW',
+                      title: 'NSW',
+                    },
+                    {
+                      value: 'FB',
+                      title: 'FB',
+                    },
+                    {
+                      value: 'BB',
+                      title: 'BB',
+                    },
+                    {
+                      value: 'JD',
+                      title: 'JD',
+                    },
+                    {
+                      value: 'KIDS',
+                      title: 'KIDS',
+                    },
+                    {
+                      value: 'OTHERS',
+                      title: 'OTHERS',
+                    },
+                    {
+                      value: 'DIGITAL',
+                      title: 'DIGITAL',
+                    },
+                    {
+                      value: 'GUIDE',
+                      title: 'GUIDE',
+                    },
+                  ],
                     ho: [
-                        {
-                            value: 'ASSET',
-                            title: 'ASSET',
-                        },
-                        {
-                            value: 'GUIDE',
-                            title: 'GUIDE',
-                        },
-                    ],
+                    {
+                      value: 'ATT',
+                      title: 'ATT',
+                    },
+                    {
+                      value: 'ENG',
+                      title: 'ENG',
+                    },
+                    {
+                      value: 'RN',
+                      title: 'RN',
+                    },
+                    {
+                      value: 'TR',
+                      title: 'TR',
+                    },
+                    {
+                      value: 'NSW',
+                      title: 'NSW',
+                    },
+                    {
+                      value: 'FB',
+                      title: 'FB',
+                    },
+                    {
+                      value: 'BB',
+                      title: 'BB',
+                    },
+                    {
+                      value: 'JD',
+                      title: 'JD',
+                    },
+                    {
+                      value: 'KIDS',
+                      title: 'KIDS',
+                    },
+                    {
+                      value: 'OTHERS',
+                      title: 'OTHERS',
+                    },
+                    {
+                      value: 'DIGITAL',
+                      title: 'DIGITAL',
+                    },
+                    {
+                      value: 'GUIDE',
+                      title: 'GUIDE',
+                    },
+                  ],
                 },
                 toolkit: {
                     vms: [

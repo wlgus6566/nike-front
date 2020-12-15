@@ -336,10 +336,10 @@ export default {
                     folderOptionName: '캠페인',
                     menuCodeList: ['SP', 'SU', 'FA', 'HO'],
                     fileSectionCodeName: {
-                        SP: ['ASSET', 'GUIDE'],
-                        SU: ['ASSET', 'GUIDE'],
-                        FA: ['ASSET', 'GUIDE'],
-                        HO: ['ASSET', 'GUIDE'],
+                        SP: ['ATT', 'ENG', 'RN', 'TR', 'NSW', 'FB', 'BB', 'JD', 'KIDS', 'OTHERS', 'DIGITAL', 'GUIDE'],
+                        SU: ['ATT', 'ENG', 'RN', 'TR', 'NSW', 'FB', 'BB', 'JD', 'KIDS', 'OTHERS', 'DIGITAL', 'GUIDE'],
+                        FA: ['ATT', 'ENG', 'RN', 'TR', 'NSW', 'FB', 'BB', 'JD', 'KIDS', 'OTHERS', 'DIGITAL', 'GUIDE'],
+                        HO: ['ATT', 'ENG', 'RN', 'TR', 'NSW', 'FB', 'BB', 'JD', 'KIDS', 'OTHERS', 'DIGITAL', 'GUIDE'],
                     },
                 },
                 toolkit: {
@@ -433,6 +433,7 @@ export default {
                 },
             },
             pageMenuCode: [],
+
         };
     },
     computed: {
