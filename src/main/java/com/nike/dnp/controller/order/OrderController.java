@@ -154,6 +154,7 @@ public class OrderController {
 			// 파일 저장
 			if (!ObjectUtils.isEmpty(orderProductSaveDTO.getFileList()) && !orderProductSaveDTO.getFileList().isEmpty()) {
 				for (OrderProductFileSaveDTO orderProductFileSaveDTO : orderProductSaveDTO.getFileList()) {
+					orderProductFileSaveDTO.setOrderGoodsSeq(orderProduct.getOrderGoodsSeq());
 					orderProductFileService.saveOrderProductFile(orderProductFileSaveDTO);
 				}
 			}
@@ -246,25 +247,6 @@ public class OrderController {
 		return responseService.getSingleResult(
 				orderProductFileService.uploadFile(fileUploadDTO, uploadFile)
 		);
-	}
-
-	/**
-	 * 파일 업로드
-	 *
-	 * @param fileUploadDTO the file upload dto
-	 * @return the file result dto
-	 * @author [윤태호]
-	 * @implNote
-	 * @since 2020. 7. 28. 오전 11:08:35
-	 */
-	private FileResultDTO fileUpload(final FileUploadDTO fileUploadDTO) {
-		log.info("FileController.fileUpload");
-		try{
-			return FileUtil.fileTempSaveAndImageResize(fileUploadDTO.getUploadFile());
-			//fileResultDTO = FileUtil.fileSave(fileUploadDTO.getUploadFile(),"temp");
-		} catch(IOException e) {
-			throw new FileHandleException();
-		}
 	}
 
 }
