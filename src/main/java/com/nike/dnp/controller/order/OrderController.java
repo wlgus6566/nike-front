@@ -165,9 +165,6 @@ public class OrderController {
 			);
 		}
 
-
-
-
 //			for(int i = 0; i < goodsSeqListSize; i++){
 ////				final Long goodsSeq = goodsSeqList.get(i);
 ////				final Long orderQuantity = orderQuantityList.get(i);
