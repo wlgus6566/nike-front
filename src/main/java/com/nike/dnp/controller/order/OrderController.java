@@ -223,27 +223,4 @@ public class OrderController {
 		return responseService.getSingleResult(orderService.findByOrderSeqAndUseYn(orderSeq, ServiceCode.YesOrNoEnumCode.Y.name()));
 	}
 
-
-	/**
-	 * Upload order product file single result.
-	 *
-	 * @param fileUploadDTO the file upload dto
-	 * @param uploadFile    the upload file
-	 * @return the single result
-	 * @author [이소정]
-	 * @implNote 주문 파일 업로드
-	 * @since 2020. 12. 14. 오후 7:44:13
-	 */
-	@ApiOperation(value = "파일 업로드", notes = BASIC_CHARACTER)
-	@PostMapping(value = "/open/order/upload", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public SingleResult<FileResultDTO> uploadOrderProductFile (
-			final FileUploadDTO fileUploadDTO,
-			@ApiParam(name = "uploadFile", value = "파일업로드") final MultipartFile uploadFile
-	) throws IOException {
-		log.info("OrderController.uploadOrderProductFile");
-		return responseService.getSingleResult(
-				orderProductFileService.uploadFile(fileUploadDTO, uploadFile)
-		);
-	}
-
 }
