@@ -1,6 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-    <g>
-        <path d="M17 15.667L17 17.167 3 17.167 3 15.667zM10.75 3L10.75 11.6 9.25 11.6 9.25 3z"/>
-        <path d="M13.487 7.453L14.513 8.547 10 12.778 5.487 8.547 6.513 7.453 10 10.722z"/>
+    <g fill="none" fill-rule="evenodd">
+        <g fill="#000" fill-rule="nonzero">
+            <g>
+                <g>
+                    <g>
+                        <path d="M17 15.667L17 17.167 3 17.167 3 15.667zM10.75 3L10.75 11.6 9.25 11.6 9.25 3z" transform="translate(-280 -606) translate(260 590) translate(20 16)"/>
+                        <path d="M13.487 7.453L14.513 8.547 10 12.778 5.487 8.547 6.513 7.453 10 10.722z" transform="translate(-280 -606) translate(260 590) translate(20 16)"/>
+                    </g>
+                </g>
+            </g>
+        </g>
     </g>
 </svg>

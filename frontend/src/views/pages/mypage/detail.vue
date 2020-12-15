@@ -20,6 +20,16 @@
                 </div>
             </div>
             <div class="detail-cont" v-html="noticeDetail.contents"></div>
+            <div class="detail-file">
+              <ul class="detail-file-list">
+                <li>
+                  <a href="#">첨부파첨부파일첨부파일첨부파일 첨부파일.png</a>
+                </li>
+                <li>
+                  <a href="#">첨부파일.png</a>
+                </li>
+              </ul>
+            </div>
         </div>
         <div class="btn-area">
             <button type="button" class="btn-s-black" @click="listRoute">

@@ -3264,6 +3264,7 @@
     color: #333;
     line-height: 2;
 }
+
 .detail-view .detail-cont blockquote {
     font-style: italic;
     padding: 2px 0;
@@ -3448,6 +3449,36 @@ img.image-grayscale {
     vertical-align: top;
     max-width: 100%;
 }
+.detail-view .detail-file {
+    padding:15px 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.detail-view .detail-file-list li + li{
+    margin-top:15px;
+}
+.detail-view .detail-file-list li a{
+    position:relative;
+    display:block;
+    padding-left:25px;
+    line-height:20px;
+  /*  text-overflow:ellipsis;
+    white-space:nowrap;
+    word-wrap:normal;
+    overflow:hidden;*/
+}
+
+.detail-view .detail-file-list li a:before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    display:block;
+    width: 20px;
+    height: 20px;
+    background:url(../images/svg/icon-view-download.svg) no-repeat center;
+}
+
 .faq-tab {
     display: flex;
     margin-top: 20px;
