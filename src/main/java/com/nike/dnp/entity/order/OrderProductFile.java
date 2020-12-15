@@ -126,7 +126,7 @@ public class OrderProductFile extends BaseTimeEntity {
      */
     @ManyToOne
     @JoinColumn(name="ORDER_GOODS_SEQ",insertable = false,updatable = false)
-//    @JsonBackReference
+    @JsonBackReference
     @ApiModelProperty(name = "주문 상품 정보", value = "주문 상품 정보")
     private OrderProductMapping orderProduct;
 

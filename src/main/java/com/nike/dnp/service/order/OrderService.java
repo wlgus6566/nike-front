@@ -7,9 +7,11 @@ import com.nike.dnp.dto.order.OrderSearchDTO;
 import com.nike.dnp.entity.order.OrderEntity;
 import com.nike.dnp.repository.order.OrderRepository;
 import com.nike.dnp.service.DeviceService;
+import com.nike.dnp.service.user.UserService;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -47,6 +49,21 @@ public class OrderService {
 	 * @author [이소정]
 	 */
 	private final DeviceService deviceService;
+
+	/**
+	 * The User service
+	 *
+	 * @author [이소정]
+	 */
+	private final UserService userService;
+
+	/**
+	 * The Editor url
+	 *
+	 * @author [이소정]
+	 */
+	@Value("${nike.url.pc.domain:}")
+	private String editorUrl;
 
 	/**
 	 * 주문 저장
@@ -95,6 +112,14 @@ public class OrderService {
 	 */
 	public OrderEntity findByOrderSeqAndUseYn(final Long orderSeq, String useYn) {
 		log.info("OrderService.findByOrderSeqAndUseYn");
+
+		OrderEntity orderEntity = orderRepository.findByOrderSeqAndUseYn(orderSeq, useYn);
+
+		// 주문자 이메일 추가
+		orderEntity.setUserEmail(userService.findById(orderEntity.getRegisterSeq()).get().getUserId());
+		// 파일 cdnUrl 추가
+		orderEntity.setCdnUrl(editorUrl);
+
 		return orderRepository.findByOrderSeqAndUseYn(orderSeq, useYn);
 	}
 
