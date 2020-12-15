@@ -56,25 +56,4 @@ public class OrderProductFileService {
 				OrderProductFile.builder().orderProductFileSaveDTO(orderProductFileSaveDTO).build()
 		);
 	}
-
-	/**
-	 * Upload file file result dto.
-	 *
-	 * @param fileUploadDTO the file upload dto
-	 * @param uploadFile    the upload file
-	 * @return the file result dto
-	 * @throws IOException the io exception
-	 * @author [이소정]
-	 * @implNote 파일 업로드
-	 * @since 2020. 12. 14. 오후 8:49:25
-	 */
-	public FileResultDTO uploadFile(
-			final FileUploadDTO fileUploadDTO
-			, final MultipartFile uploadFile
-	) throws IOException {
-		log.info("OrderProductFileService.uploadEditorImages");
-		FileResultDTO fileResultDTO = FileUtil.fileSave(uploadFile, ServiceCode.FileFolderEnumCode.ORDER_PRODUCT.getFolder(), true, null);
-		S3Util.upload(fileResultDTO, "N");
-		return fileResultDTO;
-	}
 }

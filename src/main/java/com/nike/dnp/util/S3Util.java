@@ -75,7 +75,7 @@ public class S3Util {
 	 *
 	 * @param root the root
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 27. 오후 4:09:51
 	 */
 	@Value("${nike.file.root:}")
@@ -88,7 +88,7 @@ public class S3Util {
 	 *
 	 * @param bucket the bucket
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
 	@Value("${cloud.aws.s3.bucket:}")
@@ -114,7 +114,7 @@ public class S3Util {
 	 *
 	 * @return the amazon s 3
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
 	public static void init(){
@@ -130,17 +130,19 @@ public class S3Util {
 	 * S3 업로드
 	 *
 	 * @param fileResultDTO the file result dto
+	 * @param privateYn     the private yn
+	 * @param downloadYn    the download yn
 	 * @return the url
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
-	public static void upload(final FileResultDTO fileResultDTO, final String privateYn) {
+	public static void upload(final FileResultDTO fileResultDTO, final String privateYn, final String downloadYn) {
 		log.info("S3Util.upload");
 		final StopWatch stopWatch = new StopWatch("S3Util.upload");
 		if(!ObjectUtils.isEmpty(fileResultDTO.getFilePhysicalName())){
 			stopWatch.start("original upload");
-			s3upload(fileResultDTO.getFilePhysicalName(), privateYn);
+			s3upload(fileResultDTO.getFilePhysicalName(), privateYn, downloadYn);
 			stopWatch.stop();
 			log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms",stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 		}
@@ -151,13 +153,13 @@ public class S3Util {
 		else {
 			if(!ObjectUtils.isEmpty(fileResultDTO.getThumbnailFilePhysicalName())){
 				stopWatch.start("thumbnail upload");
-				s3upload(fileResultDTO.getThumbnailFilePhysicalName(), privateYn);
+				s3upload(fileResultDTO.getThumbnailFilePhysicalName(), privateYn, downloadYn);
 				stopWatch.stop();
 				log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 			}
 			if(!ObjectUtils.isEmpty(fileResultDTO.getDetailThumbnailFilePhysicalName())){
 				stopWatch.start("detailThumbnail upload");
-				s3upload(fileResultDTO.getDetailThumbnailFilePhysicalName(), privateYn);
+				s3upload(fileResultDTO.getDetailThumbnailFilePhysicalName(), privateYn, downloadYn);
 				stopWatch.stop();
 				log.debug("stopWatch.getLastTaskTimeMillis()  {} : {} ms", stopWatch.getLastTaskName(), stopWatch.getLastTaskTimeMillis());
 			}
@@ -170,12 +172,15 @@ public class S3Util {
 	/**
 	 * s3 파일 업로드
 	 *
-	 * @param filePath the file path
+	 * @param filePath   the file path
+	 * @param privateYn  the private yn
+	 * @param downloadYn the download yn
 	 * @return the string
 	 * @author [윤태호]
+	 * @implNote [method 설명]
 	 * @since 2020. 7. 31. 오전 11:15:34
 	 */
-	private static void s3upload(final String filePath, final String privateYn){
+	private static void s3upload(final String filePath, final String privateYn, final String downloadYn){
 		log.info("S3Util.s3upload");
 		final File file = new File(root + filePath);
 		final String uploadUrl = awsPathReplace(filePath);
@@ -183,9 +188,13 @@ public class S3Util {
 		final ObjectMetadata metadata = new ObjectMetadata();
 		if (privateYn.equals("Y")) {
 			putObjectRequest = new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.Private);
-			metadata.setContentDisposition("attachment;");
 		} else {
 			putObjectRequest = new PutObjectRequest(editorBucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.PublicRead);
+		}
+
+		if (downloadYn.equals("Y")) {
+			metadata.setContentDisposition("attachment;");
+		} else {
 			metadata.setContentDisposition("inline");
 		}
 		putObjectRequest.setMetadata(metadata);
@@ -193,25 +202,6 @@ public class S3Util {
 		final URL url = client.getUrl(bucket, uploadUrl);
 		log.debug("url.getPath() {}", url.getPath());
 	}
-
-
-//	private static void s3upload(final String filePath){
-//		log.info("S3Util.s3upload");
-//		final File file = new File(root + filePath);
-//		final String uploadUrl = awsPathReplace(filePath);
-////		final PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.Private);
-//		final PutObjectRequest putObjectRequest = new PutObjectRequest(editorBucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.PublicRead);
-//		final ObjectMetadata metadata = new ObjectMetadata();
-//		// 첨부파일
-////		metadata.setContentDisposition("attachment;");
-//		// 창에서 열리도록
-//		metadata.setContentDisposition("inline");
-//		putObjectRequest.setMetadata(metadata);
-//		client.putObject(putObjectRequest);
-//		final URL url = client.getUrl(bucket, uploadUrl);
-//		log.debug("url.getPath() {}", url.getPath());
-//	}
-//
 
 	/**
 	 * S3 파일 복사
@@ -221,7 +211,7 @@ public class S3Util {
 	 * @param oldFileDelete 기존 파일 삭제 유무
 	 * @return the url
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
 	public static String fileCopy(final String oldFile, final String newFolder,final boolean oldFileDelete) {
@@ -248,7 +238,7 @@ public class S3Util {
 	 * @param newFolder 복사할 폴더
 	 * @return the url
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
 	public static String fileCopyAndOldFileDelete(final String oldFile, final String newFolder) {
@@ -267,7 +257,7 @@ public class S3Util {
 	 * @param newFolder 복사할 폴더
 	 * @return the url
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 27. 오후 4:11:49
 	 */
 	public static String fileCopy(final String oldFile, final String newFolder) {
@@ -280,7 +270,7 @@ public class S3Util {
 	 *
 	 * @param deleteFile the delete file
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 27. 오후 4:58:52
 	 */
 	public static void tempFileDelete(final String deleteFile){
@@ -301,7 +291,7 @@ public class S3Util {
 	 *
 	 * @param deleteFile 삭제 버킷 경로
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 27. 오후 4:58:52
 	 */
 	public static void fileDelete(final String deleteFile) {
@@ -316,6 +306,7 @@ public class S3Util {
 	 * @param path the path
 	 * @return the file
 	 * @author [윤태호]
+	 * @implNote [method 설명]
 	 * @since 2020. 7. 28. 오후 2:18:36
 	 */
 	public static S3ObjectInputStream getFile(final String path) {
@@ -334,6 +325,7 @@ public class S3Util {
 	 * @return the string
 	 * @throws IOException the io exception
 	 * @author [윤태호]
+	 * @implNote [method 설명]
 	 * @since 2020. 7. 29. 오후 2:03:53
 	 */
 	public static String upload(final MultipartFile multipartFile,final String folder) throws IOException {
@@ -356,6 +348,7 @@ public class S3Util {
 	 * @return the string
 	 * @throws IOException the io exception
 	 * @author [정주희]
+	 * @implNote [method 설명]
 	 * @since 2020. 8. 19. 오후 2:52:50
 	 */
 	public static String editorUpload(final MultipartFile multipartFile, final String awsPath) throws IOException {
@@ -376,7 +369,7 @@ public class S3Util {
 	 * @param oldPath the old path
 	 * @return the string
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 27. 오후 4:09:53
 	 */
 	public static String awsPathReplace(final String oldPath) {
