@@ -94,7 +94,7 @@ public class FileUtil {
 	 *
 	 * @param root the root
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 10. 오후 2:39:36
 	 */
 	@Value("${nike.file.root:}")
@@ -107,7 +107,7 @@ public class FileUtil {
 	 *
 	 * @param imageMagick the image magick
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 13. 오후 2:30:09
 	 */
 	@Value("${nike.file.imageMagick:}")
@@ -120,7 +120,7 @@ public class FileUtil {
 	 *
 	 * @param imageMagickCommand the image magick command
 	 * @author [김형욱]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 17. 오전 11:55:43
 	 */
 	@Value("${nike.file.imageMagickCommand:}")
@@ -133,7 +133,7 @@ public class FileUtil {
 	 *
 	 * @param ffmpeg the ffmpeg
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 27. 오후 4:58:36
 	 */
 	@Value("${nike.file.ffmpeg:}")
@@ -146,7 +146,7 @@ public class FileUtil {
 	 *
 	 * @param ffmpegCommand the ffmpeg command
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 27. 오후 4:58:36
 	 */
 	@Value("${nike.file.ffmpegCommand:}")
@@ -161,7 +161,7 @@ public class FileUtil {
 	 * @param extension 파일 확장자
 	 * @return the file
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 10. 오후 2:39:36
 	 */
 	public static File makeNewFile(final String folder,final String extension) {
@@ -210,7 +210,7 @@ public class FileUtil {
 	 *
 	 * @return the string
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 29. 오후 2:02:25
 	 */
 	public static String makeFileName(){
@@ -229,7 +229,7 @@ public class FileUtil {
 	 * @return the file result dto
 	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 13. 오후 4:55:25
 	 */
 	public static FileResultDTO fileSave(final MultipartFile uploadFile,
@@ -491,34 +491,35 @@ public class FileUtil {
 	 * 파일을 temp에 저장 및 이미지 리사이즈
 	 *
 	 * @param uploadFile the upload file
+	 * @param folder     the folder
 	 * @return the file result dto
 	 * @throws IOException the io exception
-	 *
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 13. 오후 4:55:25
 	 */
-	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile) throws IOException {
+	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile, final boolean resize, final String folder) throws IOException {
 		log.info("FileUtil.fileTempSaveAndImageResize");
-		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder(), true, null);
+		return fileSave(uploadFile, folder, resize, null);
 	}
 
-	/**
-	 * 파일을 temp에 저장 및 이미지 리사이즈
-	 *
-	 * @param uploadFile the upload file
-	 * @param resizeExt  리사이즈 확장 명
-	 * @return the file result dto
-	 * @throws IOException the io exception
-	 * @author [윤태호]
-	 * @implNote
-	 * @since 2020. 7. 13. 오후 4:55:25
-	 */
-	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile,
-														   final String resizeExt) throws IOException  {
-		log.info("FileUtil.fileTempSaveAndImageResize");
-		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder(), true, resizeExt);
-	}
+//	사용하지 않아서 주석처리
+//	/**
+//	 * 파일을 temp에 저장 및 이미지 리사이즈
+//	 *
+//	 * @param uploadFile the upload file
+//	 * @param resizeExt  리사이즈 확장 명
+//	 * @return the file result dto
+//	 * @throws IOException the io exception
+//	 * @author [윤태호]
+//	 * @implNote
+//	 * @since 2020. 7. 13. 오후 4:55:25
+//	 */
+//	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile,
+//														   final String resizeExt) throws IOException  {
+//		log.info("FileUtil.fileTempSaveAndImageResize");
+//		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder(), true, resizeExt);
+//	}
 
 	/**
 	 * 파일 저장
@@ -528,7 +529,7 @@ public class FileUtil {
 	 * @return the file result dto
 	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 13. 오후 4:55:25
 	 */
 	public static FileResultDTO fileSave(final MultipartFile uploadFile, final String folder) throws IOException {
@@ -561,7 +562,7 @@ public class FileUtil {
 	 * @return the file result dto
 	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 13. 오후 4:55:25
 	 */
 	public static FileResultDTO fileTempSave(final MultipartFile uploadFile) throws IOException {
@@ -573,8 +574,9 @@ public class FileUtil {
 	/**
 	 * temp 폴더 파일 삭제 (등록후 24시간 지난 파일들만 삭제 처리)
 	 *
+	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 13. 오후 4:55:25
 	 */
 	public static void deleteTemp() throws IOException {
@@ -609,7 +611,7 @@ public class FileUtil {
 	 * @param filePath the file path
 	 * @return the single result
 	 * @author [이소정]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 16. 오후 6:15:26
 	 */
 	public static ResponseEntity<Resource> fileDownload(final String filePath) {
@@ -632,7 +634,7 @@ public class FileUtil {
 	 * @return the response entity
 	 * @throws IOException the io exception
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 28. 오후 2:19:30
 	 */
 	public static ResponseEntity<Resource> s3FileDownload(String path,final String fileName) throws IOException {
@@ -649,6 +651,16 @@ public class FileUtil {
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 
+	/**
+	 * S 3 file download 2.
+	 *
+	 * @param path     the path
+	 * @param fileName the file name
+	 * @throws IOException the io exception
+	 * @author [이소정]
+	 * @implNote [method 설명]
+	 * @since 2020. 12. 15. 오후 4:07:22
+	 */
 	public static void s3FileDownload2(String path,final String fileName) throws IOException {
 		log.info("FileUtil.s3FileDownload");
 		final URL url = new URL(CloudFrontUtil.getCustomSignedUrl(path, 100));
@@ -663,6 +675,17 @@ public class FileUtil {
 		new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 
+	/**
+	 * S 3 file download original response entity.
+	 *
+	 * @param path     the path
+	 * @param fileName the file name
+	 * @return the response entity
+	 * @throws IOException the io exception
+	 * @author [이소정]
+	 * @implNote [method 설명]
+	 * @since 2020. 12. 15. 오후 4:07:22
+	 */
 	public static ResponseEntity<Resource> s3FileDownload_original(String path,final String fileName) throws IOException {
 		log.info("FileUtil.s3FileDownload");
 		StopWatch stopWatch = new StopWatch();
@@ -682,7 +705,7 @@ public class FileUtil {
 	 *
 	 * @param is the is
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 7. 27. 오후 4:52:29
 	 */
 	private static void exhaustInputStream(final InputStream is) {
@@ -704,10 +727,11 @@ public class FileUtil {
 	/**
 	 * xss 필터 및 path 수정
 	 *
-	 * @param str  the value
+	 * @param str      the value
+	 * @param isFolder the is folder
 	 * @return the string
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 8. 25. 오후 5:07:38
 	 */
 	public static String cleanXSS(String str, boolean isFolder) {
@@ -738,6 +762,15 @@ public class FileUtil {
 		return result;
 	}
 
+	/**
+	 * Declean xss string.
+	 *
+	 * @param str the str
+	 * @return the string
+	 * @author [이소정]
+	 * @implNote [method 설명]
+	 * @since 2020. 12. 15. 오후 4:07:22
+	 */
 	public static String decleanXSS(String str) {
 		String result = str;
 		result = result.replaceAll("&lt;","<")
@@ -755,7 +788,7 @@ public class FileUtil {
 	 * @param folder   the folder
 	 * @return the string
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 8. 31. 오후 12:25:53
 	 */
 	private static String whiteListing(String paramStr, String folder) {
@@ -809,7 +842,7 @@ public class FileUtil {
 	 * @param paramStrArray the param str array
 	 * @return the boolean
 	 * @author [윤태호]
-	 * @implNote
+	 * @implNote 설명]
 	 * @since 2020. 9. 7. 오후 3:47:30
 	 */
 	private static List<String> whiteListing(String folder, String... paramStrArray){
@@ -855,6 +888,15 @@ public class FileUtil {
 		return null;
 	}
 
+	/**
+	 * White folder select string.
+	 *
+	 * @param folder the folder
+	 * @return the string
+	 * @author [이소정]
+	 * @implNote [method 설명]
+	 * @since 2020. 12. 15. 오후 4:07:22
+	 */
 	private static String whiteFolderSelect(final String folder) {
 		for (ServiceCode.FileFolderEnumCode code : ServiceCode.FileFolderEnumCode.values()) {
 			if (code.getFolder().equals(folder)) {
@@ -864,6 +906,15 @@ public class FileUtil {
 		return "";
 	}
 
+	/**
+	 * White folder list boolean.
+	 *
+	 * @param folder the folder
+	 * @return the boolean
+	 * @author [이소정]
+	 * @implNote [method 설명]
+	 * @since 2020. 12. 15. 오후 4:07:22
+	 */
 	private static boolean whiteFolderList(final String folder) {
 		for (ServiceCode.FileFolderEnumCode code : ServiceCode.FileFolderEnumCode.values()) {
 			if (code.getFolder().equals(folder)) {
@@ -873,6 +924,15 @@ public class FileUtil {
 		return false;
 	}
 
+	/**
+	 * White extension list boolean.
+	 *
+	 * @param extension the extension
+	 * @return the boolean
+	 * @author [이소정]
+	 * @implNote [method 설명]
+	 * @since 2020. 12. 15. 오후 4:07:22
+	 */
 	private static boolean whiteExtensionList(final String extension) {
 		for (ServiceCode.FileExtensionEnumCode code : ServiceCode.FileExtensionEnumCode.values()) {
 			if (code.name().equals(extension.toUpperCase(Locale.getDefault()))) {

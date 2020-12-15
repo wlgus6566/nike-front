@@ -110,7 +110,7 @@ public class ImageUtil {
 		fileResultDTO.setFilePhysicalName(StringUtils.remove(newFile.getPath(), root));
 		fileResultDTO.setFileSize(newFile.length());
 		// S3 업로드
-		S3Util.upload(fileResultDTO, "Y");
+		S3Util.upload(fileResultDTO, "Y", "Y");
 
 		return fileResultDTO;
 
