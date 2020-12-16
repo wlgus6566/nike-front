@@ -133,11 +133,6 @@ public class OrderController {
 			@RequestBody @Valid final OrderSaveDTO orderSaveDTO
 			, @ApiIgnore final BindingResult result) {
 		log.info("OrderController.saveOrder");
-//		final List<Long> goodsSeqList = orderProductSaveDTO.getGoodsSeqList();
-//		final List<Long> orderQuantityList = orderProductSaveDTO.getOrderQuantityList();
-//		final int goodsSeqListSize = goodsSeqList.size();
-//		final int orderQuantityListSize = orderQuantityList.size();
-//		if(goodsSeqListSize == orderQuantityListSize){
 		final OrderEntity orderEntity = orderService.saveOrder(orderSaveDTO);
 		for (OrderProductSaveDTO orderProductSaveDTO : orderSaveDTO.getOrderProductList()) {
 			final Product product = productService.findByGoodsSeq(orderProductSaveDTO.getGoodsSeq());
@@ -164,29 +159,8 @@ public class OrderController {
 					orderProductSaveDTO.getGoodsSeq(), SecurityUtil.currentUser().getUserSeq()
 			);
 		}
-
-//			for(int i = 0; i < goodsSeqListSize; i++){
-////				final Long goodsSeq = goodsSeqList.get(i);
-////				final Long orderQuantity = orderQuantityList.get(i);
-////				final Product product = productService.findByGoodsSeq(goodsSeq);
-//
-//				orderProductMappingService.saveOrderProductMapping(
-//						OrderProductMappingSaveDTO.builder()
-//								.goodsSeq(goodsSeq)
-//								.orderSeq(orderEntity.getOrderSeq())
-//								.agencySeq(product.getAgencySeq())
-//								.orderQuantity(orderQuantity)
-//								.build()
-//				);
-//				goodsBasketService.deleteByGoodsSeqAndUserSeq(goodsSeq, SecurityUtil.currentUser().getUserSeq());
-//			}
 			orderProductMappingService.orderSheetSend(orderEntity);
 			return responseService.getSingleResult(orderEntity);
-//		}else{
-//			throw new CodeMessageHandleException(
-//					FailCode.ConfigureError.INVALID_ORDER.name()
-//					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_ORDER.name()));
-//		}
 	}
 
 	/**
