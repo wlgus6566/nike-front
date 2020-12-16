@@ -221,8 +221,9 @@ export default {
                 initialView: 'dayGridMonth',
                 // 일자 클릭시
                 // dateClick: this.handleDateClick,
+                 //moreLinkClick: this.calClickEvent,
                 eventClick: this.eventClickEvent,
-                //moreLinkClick: this.calClickEvent,
+                //eventMouseEnter:this.mouserOverEvent,
                 height: 'auto',
                 events: [],
                 dayMaxEventRows: true,
@@ -276,7 +277,29 @@ export default {
         this.main();
     },
     methods: {
-          over(w){
+          mouserOverEvent(e){
+            this.calendarData = e.event
+            console.log(e.event)
+            console.log(e.el)
+            e.el.classList.add("asd")
+            e.el.setAttribute('data-tooltip', 'tooltip text')
+            const a = document.createElement('span');
+            const txt = document.createTextNode('자세히 보기');
+            a.classList.add('fc-more');
+            a.appendChild(txt);
+            e.el.appendChild(a);
+
+            const tooltip = require('tooltip')
+            const config  = {
+              showDelay: 100,
+              style: {
+                padding: 5
+              }
+            }
+
+            tooltip(config)
+
+            //this.visible.calendar = true;
           },
           alertMsg(item) {
               if (item.detailAuthYn === 'N') {
