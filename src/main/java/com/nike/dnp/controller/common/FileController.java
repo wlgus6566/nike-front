@@ -85,7 +85,7 @@ public class FileController {
 	public SingleResult<FileResultDTO> upload(
 			final FileUploadDTO fileUploadDTO
 			, @ApiParam(name = "uploadFile", value = "파일업로드") final MultipartFile uploadFile
-			, @RequestParam @ApiParam(name = "menuCode", value = "메뉴코드(default:null/주문:order/공지사항:notice)") final String menuCode
+			, @ApiParam(name = "menuCode", value = "메뉴코드(default:null/주문:order/공지사항:notice)") final String menuCode
 	) throws IOException {
 		log.info("FileController.upload");
 
