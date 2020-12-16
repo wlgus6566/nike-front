@@ -174,7 +174,7 @@ export default {
         },
 
         // 주문서 발송
-        async orderSave(orderComment) {
+        async orderSave(orderComment ,orderProductList) {
             //console.log(this.orderSeq);
             //console.log(this.orderQuan);
             /*console.log({
@@ -183,12 +183,16 @@ export default {
                 orderQuantityList: this.orderQuan,
                 totalAmount: this.totalPrice,
             });*/
+
             try {
                 const { data: response } = await postOrderSave({
-                    goodsSeqList: this.orderSeq,
+                  orderDescription : orderComment,
+                  orderProductList : orderProductList ,
+                  totalAmount : this.totalPrice,
+                    /*goodsSeqList: this.orderSeq,
                     orderDescription: orderComment,
                     orderQuantityList: this.orderQuan,
-                    totalAmount: this.totalPrice,
+                    totalAmount: this.totalPrice,*/
                 });
                 //console.log(response);
                 if (response.existMsg) {
